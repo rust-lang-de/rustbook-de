@@ -1,4 +1,4 @@
-# Die Programmiersprache Rusto
+# Die Programmiersprache Rust
 
 Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust Buches](https://doc.rust-lang.org/book/).
 
