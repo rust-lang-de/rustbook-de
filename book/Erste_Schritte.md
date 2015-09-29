@@ -1,58 +1,6 @@
-# Test
+# Erste Schritte
 
-f
-f
-f
-f
-
-
-
-f
-
-f
-f
-f
-
-
-
-
-sfere
-
-
-
-re
-
-gre
-
-
-gre
-g
-e
-
-
-
-
-gre
-
-## Test Anker
-
-Foo
-
-fre
-r
-r
-r
-
-
-
-
-r
-
-r
-
-
-
-r
-
-r
-r
+Dieser erste Abschnitt des Buches wird dich mit Rust und seinen Werkzeugen in
+Fahrt bringen. Zuerst werden wir Rust installieren. Dann kommt das klassische
+‘Hallo Welt’ Programm. Zum Schluss werden wir über Cargo, dem Buildsystem und
+Paketmanager von Rust, reden.
