@@ -60,7 +60,7 @@ $ ./main # oder main.exe unter Windows
 Hallo Welt!
 ```
 
-Erfolg! Lass uns durchgehen was gerade im Detail passiert ist.
+Erfolg! Lass uns im Detail durchgehen was gerade passiert ist.
 
 ```rust
 fn main() {
