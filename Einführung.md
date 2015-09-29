@@ -174,7 +174,7 @@ das `y` nicht aktualisiert werden würde und wir somit einen ‘hängenden Zeige
 Fehler in diesem Fall und somit hat der Compiler diesen für uns abgefangen.
 
 Wie lösen wir also dieses Problem? Es gibt zwei mögliche Lösungsansätze.
-Der erste ist eine Kopie zu machen anstatt eine Referenz zu benutzen:
+Der Erste ist eine Kopie zu machen anstatt eine Referenz zu benutzen:
 
 ```rust
 fn main() {
