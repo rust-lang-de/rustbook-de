@@ -94,7 +94,7 @@ Du solltest eine Versionsnummer, einen Commit Hash und ein Commit Datum sehen.
 Wenn du gerade die Version 1.3.0 installiert hast, dann solltest du folgendes
 sehen:
 
-```bash
+```text
 rustc 1.3.0 (9a92aaf19 2015-09-15)
 ```
 
