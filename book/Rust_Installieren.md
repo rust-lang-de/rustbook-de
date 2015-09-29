@@ -98,7 +98,7 @@ sehen:
 rustc 1.3.0 (9a92aaf19 2015-09-15)
 ```
 
-Falls ja, dann hast du Rust erfolgreich installiert! Gratulation!
+Falls ja, dann hast du Rust erfolgreich installiert! Gratuliere!
 
 Falls nicht, und du Windows nutzt, dann Prüfe, dass Rust in deiner `%PATH%`
 Systemvariable ist. Wenn nicht, dann starte den Installer nochmal und wähle
@@ -110,12 +110,12 @@ du sie offline lesen kannst. Auf UNIX Systemen findet man sie in
 `/usr/local/share/doc/rust`. Auf Windows ist sie in dem `share/doc` Ordner, wo
 auch immer du Rust hin installiert hast.
 
-Falls nicht gibt es eine Reihe von Orten wo Hilfe bekommen kannst.
-Der leichteste ist
+Falls nicht gibt es eine Reihe von Orten wo du Hilfe bekommen kannst.
+Der beste ist
 [der englischsprachige #rust IRC Channel auf irc.mozilla.org][irc],
 welchen du mittels [Mibbit][mibbit] betreten kannst. Klick auf den Link und
 Chattest sofort mit anderen Rustlern. Falls du dich lieber auf deutsch
-unterhalten möchtest, dann kannst du auch [#rust-de hier betreten][mibbit-de].
+unterhalten möchtest, dann kannst du auch [#rust-de via Mibbit betreten][mibbit-de].
 Andere großartige Ressourcen beinhalten das [Benutzerforum][users] und
 [Stack Overflow][stackoverflow].
 
