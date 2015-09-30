@@ -36,7 +36,7 @@
     * [Enums](book/Enums.md)
     * [Match](book/Match.md)
     * [Muster](book/Muster.md)
-    * [Methoden Syntax](book/Methoden_Syntax.md)
+    * [Methodensyntax](book/Methodensyntax.md)
     * [Vektoren](book/Vektoren.md)
     * [Strings](book/Strings.md)
     * [Generics](book/Generics.md)
