@@ -53,7 +53,7 @@
     * [Zwischen typen umwandeln](book/Zwischen_Typen_Umwandeln.md)
     * [Assoziierte Typen](book/Assoziierte_Typen.md)
     * [Operatoren und Überladen](book/Operatoren_Und_Überladen.md)
-    * [Deref Regeln](book/Deref_Regeln.md)
+    * [Deref Umwandlung](book/Deref_Umwandlung.md)
     * [Makros](book/Makros.md)
     * [Raw Zeiger](book/Raw_Zeiger.md)
     * [`unsafe`](book/Unsafe.md)
