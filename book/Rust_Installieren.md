@@ -120,7 +120,7 @@ Andere großartige Ressourcen beinhalten das [Benutzerforum][users] und
 [Stack Overflow][stackoverflow].
 
 [irc]: irc://irc.mozilla.org/#rust
-[mibbit]: http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust
-[mibbit-de]: http://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-de
+[mibbit]: https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust
+[mibbit-de]: https://chat.mibbit.com/?server=irc.mozilla.org&channel=%23rust-de
 [users]: https://users.rust-lang.org/
-[stackoverflow]: http://stackoverflow.com/questions/tagged/rust
+[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
