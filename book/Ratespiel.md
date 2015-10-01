@@ -1,7 +1,8 @@
 # Ratespiel
 
-Für unser erstes Projekt ein klassische Anfängeraufgabe implementieren:
-das Ratespiel. So funktioniert es: Unser Programm wird eine zufällige
+Für unser erstes Projekt wollen wir eine
+klassische Anfängeraufgabe implementieren: das Ratespiel.
+So funktioniert es: Unser Programm wird eine zufällige
 ganze Zahl zwischen eins und hundert erzeugen.
 Es wird uns dann fragen sie zu erraten.
 Bei einem Rateversuch wird es uns sagen, ob wir zu niedrig oder zu hoch liegen.
