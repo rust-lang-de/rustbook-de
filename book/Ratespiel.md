@@ -267,7 +267,7 @@ Dies hilft einem lange Zeilen aufzuteilen. Wir _hätten_ auch das tun können:
     io::stdin().read_line(&mut vermutung).ok().expect("Fehler beim Lesen der Zeile");
 ```
 
-Aber das ist schwerer zu lesen.Also haben wir es aufgeteilt in drei Zeilen für
+Aber das ist schwerer zu lesen. Also haben wir es aufgeteilt in drei Zeilen für
 drei Methodenaufrufe. Wir haben bereits über `read_line()` geredet,
 aber was ist mit `ok()` und `expect()`? Nun, wir haben bereits erwähnt,
 dass `read_line()` das, was der Benutzer eingibt, in den `&mut String` steckt,
