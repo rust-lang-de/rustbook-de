@@ -4,7 +4,7 @@ Die Rust Programmiersprache hat eine Reihe von Typen die als "primitiv"
 angesehen werden. Das bedeutet, dass sie in die Sprache eingebaut sind.
 Rust ist so strukturiert, dass die Standardbibliothek auch eine Menge
 nützlicher Typen zur Verfügung stellt,
-auch welche auf primitiven Typen aufbauen, aber diese hier sind am
+auch welche auf die primitiven Typen aufbauen, aber diese hier sind am
 "primitivsten".
 
 # Booleans
