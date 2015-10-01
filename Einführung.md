@@ -85,7 +85,7 @@ angeben. Rust hat *type inference* [engl.: Typinferenz, Typableitung] um
 die Stärke statischer Typen und der Ausführlichkeit des Angeben von Typen 
 auszubalancieren.
 
-Rust allokiert Daten bevorzugt auf dem Stack als auf dem Heap: `x` wird direkt
+Rust alloziert Daten bevorzugt auf dem Stack als auf dem Heap: `x` wird direkt
 auf dem Stack platziert. Der `Vec<T>` Typ jedoch reserviert Speicher für die
 Elemente des Vektors auf dem Heap. Falls du nicht mit dieser Unterscheidung
 vertraut bist, dann kannst du sie fürs erste ignorieren oder einen Blick in
