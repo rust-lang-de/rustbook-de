@@ -52,6 +52,7 @@
     * [`type` Aliase](book/Type_Aliase.md)
     * [Zwischen typen umwandeln](book/Zwischen_Typen_Umwandeln.md)
     * [Assoziierte Typen](book/Assoziierte_Typen.md)
+    * [Größenlose Typen](book/Größenlose_Typen.md)
     * [Operatoren und Überladen](book/Operatoren_Und_Überladen.md)
     * [Deref Umwandlung](book/Deref_Umwandlung.md)
     * [Makros](book/Makros.md)
