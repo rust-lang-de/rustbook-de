@@ -214,6 +214,7 @@ Wenn wir nun die Funktion ausführen und `Box::new()` aufrufen,
 wird der Speicher auf dem Heap alloziert und `5` dorthin geschrieben.
 Der Speicher sieht also eigentlich etwa so aus:
 
+
 | Adresse              | Name | Wert                   |
 |----------------------|------|------------------------|
 | (2<sup>30</sup>) - 1 |      | 5                      |
@@ -221,12 +222,13 @@ Der Speicher sieht also eigentlich etwa so aus:
 | 1                    | y    | 42                     |
 | 0                    | x    | → (2<sup>30</sup>) - 1 |
 
+
 Wir haben (2<sup>30</sup>) - 1 Adressen in unserem imaginären 1GB RAM.
 Da der Stack von 0 nach oben wächst ist es am einfachsten die Adressen von Oben nach unten für den Heap zu verwenden.
 Der erste Wert steht also an der höchsten Stelle im Speicher.
-Das `struct` auf `x` hat einen [Raw Pointer][Raw Zeiger] auf die Stelle an der wir den Speicher auf dem Heap alloziert haben, also den Wert (2<sup>30</sup>) - 1.
+Das `struct` auf `x` hat einen [raw Zeiger](Raw_Zeiger.md) auf die Stelle an der wir den Speicher auf dem Heap alloziert haben,
 
-[Raw Zeiger]: book/Raw Zeiger.html
+also den Wert (2<sup>30</sup>) - 1.
 
 Wir habe noch nicht wirklich viel darüber gesprochen, was es eigentlich bedeutet in diesen Kontexten Speicher zu allozieren und zu deallozieren.
 Das zu vertiefen würde den Rahmen dieses Tutorials sprengen,
@@ -260,7 +262,7 @@ Rust Programme verwenden [jemalloc][jemalloc].
 
 Zurück zu unserem Beispiel.
 Da sich diese Werte auf dem Heap befinden, können sich länger existieren als die Funktion die die Box erzeugt hat.
-In diesem Fall jedoch nicht.[^moving]
+In diesem Fall jedoch nicht.[^1]
 Wenn eine Funktion endet wird ihr Stackframe freigegeben.
 `Box<T>` hat einen Trick: [Drop][drop].
 Es implementiert `Drop` und gibt sobald die ihr Wert auf dem Stack freigegeben wird ebenfalls den Speicher auf dem Heap frei.
@@ -273,9 +275,6 @@ Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap fre
 
 [drop]: drop.html
 
-[^moving]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen
-           das heißt manchmal ‘moving out of the box’.
-           Komplexere Beispiele folgen später.
 
 Sobald der Stackframe verschwindet, wird der gesamte verwendete Speicher freigegeben.
 
@@ -527,12 +526,11 @@ Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Chara
 # Was soll ich benutzen?
 
 Der Stack ist schneller und einfacher zu handhaben, wofür also den Heal=p?
-Ein wichtiger Grund ist dass Stack-allozieren alleine nur LIFO[^lifo] Verhalten bietet.
-Heap-Allokation ist vielseitiger und erlaubt schnelles Übergeben von großen Werten ohne Kopieren.
+Ein wichtiger Grund ist dass Stack-allozieren alleine nur LIFO[^2] Verhalten bietet.
+Heapallokation ist vielseitiger und erlaubt schnelles Übergeben von großen Werten ohne Kopieren.
 
-[^lifo]: Last in first out.
 
-Allgemein ist Stack-Allokation zu bevorzugen, weshalb Rust standardmässig den Stack, das ist grundlegend einfacher und meistens effizienter.
+Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmässig den Stack, das ist grundlegend einfacher und meistens effizienter.
 
 ## Laufzeiteffizienz
 
@@ -555,4 +553,8 @@ jedoch könnte ein nicht automatisch zur Compilezeit abgeleiten werden,
 wann Speicher freigegeben werden kann.
 Ein Compiler müsste sich auf dynamische Protokolle, potentiell außerhalb der Sprache selbst, verlassen (zum Beispiel *reference counting* wie in `Rc<T>` und `Arc<T>`).
 
-Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heap-Allokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen GarbageCollector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
+Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heapallokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen GarbageCollector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
+
+[^1]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen das heißt manchmal ‘moving out of the box’. Komplexere Beispiele folgen später.
+
+[^2]: Last in first out.
