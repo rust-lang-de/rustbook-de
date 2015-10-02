@@ -227,3 +227,332 @@ Der erste Wert steht also an der höchsten Stelle im Speicher.
 Das `struct` auf `x` hat einen [Raw Pointer][Raw Zeiger] auf die Stelle an der wir den Speicher auf dem Heap alloziert haben, also den Wert (2<sup>30</sup>) - 1.
 
 [Raw Zeiger]: book/Raw Zeiger.html
+
+Wir habe noch nicht wirklich viel darüber gesprochen, was es eigentlich bedeutet in diesen Kontexten Speicher zu allozieren und zu deallozieren.
+Das zu vertiefen würde den Rahmen dieses Tutorials sprengen,
+aber was wichtig ist mitzunehmen, ist dass der Heap nicht einfach nur ein von oben nach unten wachsender Stack ist.
+Im Gegensatz um Stack muss der Heap nicht in einer festen Reihenfolge alloziert und freigegeben werden kann.
+Dadurch kann er allerdings Löcher haben.
+Dazu wird es später ein Beispiel.
+Hier erst mal ein kleines Diagramm des Speicherlayouts eines Programms das schon ein Weilchen lief:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 5                      |
+| (2<sup>30</sup>) - 2 |      |                        |
+| (2<sup>30</sup>) - 3 |      |                        |
+| (2<sup>30</sup>) - 4 |      | 42                     |
+| ...                  | ...  | ...                    |
+| 3                    | y    | → (2<sup>30</sup>) - 4 |
+| 2                    | y    | 42                     |
+| 1                    | y    | 42                     |
+| 0                    | x    | → (2<sup>30</sup>) - 1 |
+
+In diesem Fall haben wir 4 Werte auf dem Heap alloziert, aber deallozieren zwei davon.
+Es gibt eine Lücke zwischen (2<sup>30</sup>) - 1 und (2<sup>30</sup>) - 4,
+die momentan nicht benutzt wird.
+Die genauen Details wie und warum das passiert hängen davon ab mit welcher Strategie man seinen Heap verwaltet.
+Verschiedene Programme können unterschiedliche Speicherallokatoren verwenden,
+also Bibliotheken, die einem das abnehmen.
+Rust Programme verwenden [jemalloc][jemalloc].
+
+[jemalloc]: http://www.canonware.com/jemalloc/
+
+Zurück zu unserem Beispiel.
+Da sich diese Werte auf dem Heap befinden, können sich länger existieren als die Funktion die die Box erzeugt hat.
+In diesem Fall jedoch nicht.[^moving]
+Wenn eine Funktion endet wird ihr Stackframe freigegeben.
+`Box<T>` hat einen Trick: [Drop][drop].
+Es implementiert `Drop` und gibt sobald die ihr Wert auf dem Stack freigegeben wird ebenfalls den Speicher auf dem Heap frei.
+Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap frei:
+
+| Adresse | Name | Wert   |
+|---------|------|--------|
+| 1       | y    | 42     |
+| 0       | x    | ?????? |
+
+[drop]: drop.html
+
+[^moving]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen
+           das heißt manchmal ‘moving out of the box’.
+           Komplexere Beispiele folgen später.
+
+Sobald der Stackframe verschwindet, wird der gesamte verwendete Speicher freigegeben.
+
+# Argumente und Ausleihen
+
+Wir hatten bereits ein paar Grundlegende Beispiele für Stack und Heap,
+aber was ist mit Funktionsargumenten und Ausleihen?
+
+```rust
+fn foo(i: &i32) {
+    let z = 42;
+}
+
+fn main() {
+    let x = 5;
+    let y = &x;
+
+    foo(y);
+}
+```
+
+
+
+
+Wenn ihr `main()` betreten sieht der Speicher so aus:
+
+| Adresse | Name | Wert   |
+|---------|------|--------|
+| 1       | y    | → 0    |
+| 0       | x    | 5      |
+
+`x` ist einfach wieder `5` und `y` ist eine Referenz auf `x`.
+Sein Wert ist also die Speicheradresse von `x`, in diesem Fall also `0`.
+
+Was passiert wenn wir nun `foo()` aufrufen und `y` übergeben?
+
+| Adresse | Name | Wert   |
+|---------|------|--------|
+| 3       | z    | 42     |
+| 2       | i    | → 0    |
+| 1       | y    | → 0    |
+| 0       | x    | 5      |
+
+Stackframes sind nicht nur für Lokale Zuweisungen, sie sind auch für Argumente gedacht.
+In diesem Fall also brauchen wir sowohl `i`, das Argument und `z`, die lokale Variable.
+`i` ist die Kopie des Arguments `y`, also auch `0`.
+
+Das ist der Grund dafür dass man ausgeliehenen Speicher nicht deallozieren kann. Wenn man wir nun `x` freigeben würde, würden `y` und `i` auf ungültigen Speicher zeigen.
+Das ist in Sprachen wie C möglich, aber nicht in Rust.
+
+# Ein komplexes Beispiel
+
+Gehen wir das hier mal Schritt für Schritt durch:
+
+```rust
+fn foo(x: &i32) {
+    let y = 10;
+    let z = &y;
+
+    baz(z);
+    bar(x, z);
+}
+
+fn bar(a: &i32, b: &i32) {
+    let c = 5;
+    let d = Box::new(5);
+    let e = &d;
+
+    baz(e);
+}
+
+fn baz(f: &i32) {
+    let g = 100;
+}
+
+fn main() {
+    let h = 3;
+    let i = Box::new(20);
+    let j = &h;
+
+    foo(j);
+}
+```
+
+Als erstes rufen wir `main()` auf:
+
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Wir allozieren Speicher für `j`, `i` und `h`.
+`i` liegt auf dem Heap, beinhaltet also einen Adresswert dort hin.
+
+Als nächstes wird am ende von `main()` `foo()` aufgerufen:
+
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Speicher wird für `x`, `y` und `z` belegt.
+Das Argument `x` hat den gleichen Wert wie `j`, da wird das ja übergeben haben, ein Zeiger auf die Adresse `0`, da `j` auf `h` zeigt.
+
+Danach ruft `foo()` `baz()` auf und übergibt `z`:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 7                    | g    | 100                    |
+| 6                    | f    | → 4                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Wir haben Speicher für `f` und `g` alloziert.
+`baz()` ist sehr kurz und wenn es vorbei ist wird sein Stackframe freigegeben:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Danach ruft `foo()` `bar()` mit `x` und `z` auf:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| (2<sup>30</sup>) - 2 |      | 5                      |
+| ...                  | ...  | ...                    |
+| 10                   | e    | → 9                    |
+| 9                    | d    | → (2<sup>30</sup>) - 2 |
+| 8                    | c    | 5                      |
+| 7                    | b    | → 4                    |
+| 6                    | a    | → 0                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Wir allozieren also einen weiteren Wert auf dem Heap und müssen eins von (2<sup>30</sup>) - 1 abziehen.
+Das ist einfacher das zu schreiben als `1,073,741,822` ☺.
+Jedenfalls, hier die Variablen wie gewohnt.
+
+Am ende von `bar()` wird wieder `baz()` aufgerufen:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| (2<sup>30</sup>) - 2 |      | 5                      |
+| ...                  | ...  | ...                    |
+| 12                   | g    | 100                    |
+| 11                   | f    | → 9                    |
+| 10                   | e    | → 9                    |
+| 9                    | d    | → (2<sup>30</sup>) - 2 |
+| 8                    | c    | 5                      |
+| 7                    | b    | → 4                    |
+| 6                    | a    | → 0                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+So, jetzt haben wir den tiefsten Punkt in unserer Schachtelung erreicht,
+Glückwunsch, du bist bist jetzt noch dran geblieben.
+
+Nachdem `baz()` nun zu ende ist können wir `f` und `g` wegwerfen:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| (2<sup>30</sup>) - 2 |      | 5                      |
+| ...                  | ...  | ...                    |
+| 10                   | e    | → 9                    |
+| 9                    | d    | → (2<sup>30</sup>) - 2 |
+| 8                    | c    | 5                      |
+| 7                    | b    | → 4                    |
+| 6                    | a    | → 0                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Danach endet `bar()`. `d` ist hier ja eine `Box<T>`, also geben wir noch den Speicher an der Adresse frei, auf die sie zeigt:(2<sup>30</sup>) - 2.
+
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 5                    | z    | → 4                    |
+| 4                    | y    | 10                     |
+| 3                    | x    | → 0                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Dann ist `foo()` fertig:
+
+| Adresse              | Name | Wert                   |
+|----------------------|------|------------------------|
+| (2<sup>30</sup>) - 1 |      | 20                     |
+| ...                  | ...  | ...                    |
+| 2                    | j    | → 0                    |
+| 1                    | i    | → (2<sup>30</sup>) - 1 |
+| 0                    | h    | 3                      |
+
+Und endlich auch `main()`.
+Hiernach wir der Rest aufgeräumt.
+Sobald `i` ge`Drop`pt wird, wird auch der Rest vom Heap geleert.
+
+# Was machen andere Sprachen?
+
+Viele Sprachen verwenden heutzutage einen GarbageCollector.
+Das hat einige Vorteile, die Beschreibung welcher allerdings den Rahmen dieses Tutorials übersteigt.
+Dort hat meinen keinen manuellen Einfluß darauf, ob Speicher auf dem Heap oder Stack verwendet wird.
+Stattdessen liegt fast alles auf dem Heap und der GarbageCollector hält regelmäßig das Programm kurz an und räumt auf.
+
+Bei Sprachen wie C/C++ kann man zwischen Stack und Heap unterscheiden, muss allerdings manuell seinen Speicher aufräumen.
+Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc, Konzepte wie "Besitz" und "Ausleihen" sind allerdings noch kein Kernfeature der Sprache.
+
+# Was soll ich benutzen?
+
+Der Stack ist schneller und einfacher zu handhaben, wofür also den Heal=p?
+Ein wichtiger Grund ist dass Stack-allozieren alleine nur LIFO[^lifo] Verhalten bietet.
+Heap-Allokation ist vielseitiger und erlaubt schnelles Übergeben von großen Werten ohne Kopieren.
+
+[^lifo]: Last in first out.
+
+Allgemein ist Stack-Allokation zu bevorzugen, weshalb Rust standardmässig den Stack, das ist grundlegend einfacher und meistens effizienter.
+
+## Laufzeiteffizienz
+
+Speicher auf dem Stack verwalten ist trivial:
+Die Maschine inkrementiert und dekrementiert einfach den sogenannten *Stack-Pointer*.
+Speicher auf dem Heap verwalten ist nicht trivial:
+Speicher auf dem Heap kann beliebig freigegeben werden und jeder Block auf dem Heap kann eine beliebige Größe haben, es ist allgemein schwerer wiederverwendbare Bereiche zu identifizieren.
+
+Um hier noch tiefer einzusteigen kannst du [diese Paper][wilson](englisch) lesen oder Grundstudiums-"Betriebssysteme"-Vorlesungen der Uni deiner Wahl besuchen :D
+
+[wilson]: http://citeseerx.ist.psu.edu/viewdoc/summary?d
+
+## Semantische Bedeutung
+
+Stackallokation beeinflusst nicht nur Rust selbst, sondern auch das mentale Modell des Entwicklers.
+LIFO-Semantik definiert Rusts automatische Speicherverwaltung.
+Selbst die Freigabe von Heap-allozierten Boxen mit einem einzelnen Besitzer wird von der LIFO-Semantik des Stacks bestimmt, wie bereits oben demonstriert.
+Nicht-LIFO-Semantik würde zwar mehr Flexibilität bieten,
+jedoch könnte ein nicht automatisch zur Compilezeit abgeleiten werden,
+wann Speicher freigegeben werden kann.
+Ein Compiler müsste sich auf dynamische Protokolle, potentiell außerhalb der Sprache selbst, verlassen (zum Beispiel *reference counting* wie in `Rc<T>` und `Arc<T>`).
+
+Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heap-Allokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen GarbageCollector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
