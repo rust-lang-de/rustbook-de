@@ -541,7 +541,7 @@ Speicher auf dem Heap kann beliebig freigegeben werden und jeder Block auf dem H
 
 Um hier noch tiefer einzusteigen kannst du [diese Paper][wilson](englisch) lesen oder Grundstudiums-"Betriebssysteme"-Vorlesungen der Uni deiner Wahl besuchen :D
 
-[wilson]: http://citeseerx.ist.psu.edu/viewdoc/summary?d
+[wilson]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.143.4688
 
 ## Semantische Bedeutung
 
