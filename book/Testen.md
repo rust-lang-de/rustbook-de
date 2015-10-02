@@ -65,7 +65,7 @@ Beachte dass hier der Name unserer Funktion `it_works` steht.
 
 ```rust
 fn it_works() {
-# }
+}
 ```
 
 Warum schlägt dieser leere Test aber nun nicht fehl?
@@ -135,8 +135,8 @@ Auf Windows in `cmd` :
 oder PowerShell:
 
 ```bash
-> echo $LASTEXITCODE # the code itself
-> echo $? # a boolean, fail or succeed
+> echo $LASTEXITCODE # Der Exitcode selbst
+> echo $? # ein boolean, Erfolgreich oder nicht
 ```
 
 Das ist nützlich wenn du `cargo test` in andere Tools integrieren willst.
@@ -235,7 +235,7 @@ Das ist ein klassischer Fall für `assert_eq!`: Wir rufen eine Funktion auf und 
 
 # Das `ignore` Attribut
 
-Manchmal wollen wir bestimmte Tests nicht immer mit ausführen, besonders, wenn sie teuer sind.
+In Manchen Situationen wollen wir bestimmte Tests nicht immer mit ausführen, besonders, wenn sie teuer sind.
 Diese kann man dann mit `ignore` ausschalten:
 
 
@@ -248,7 +248,7 @@ fn it_works() {
 #[test]
 #[ignore]
 fn expensive_test() {
-    // code that takes an hour to run
+    // Code der eine Stunde läuft
 }
 ```
 
@@ -290,14 +290,17 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
 ```
 
-Wichtig: `--ignored` ist ein Argument, das von dem Testbinary interpretiert wird, nicht von Cargo. Das wird mit den extra `--` vermittelt.
+Wichtig: `--ignored` ist ein Argument, das von dem Testbinary interpretiert wird, nicht von Cargo selbst.
+Das wird mit den extra `--` vermittelt.
 
 # Das `tests` Modul
 
-So richtig Stilecht waren unsere Tests bislang nicht, eigentlich sollten sie innerhalb eines `tests` Moduls implementiert sein.
+Was ist allerdings, wenn wir noch Hilfsfunktionen für unsere Tests brauchen,
+die selbst keine Tests sind, die wir aber auch nicht mit ausliefern wollen?
+Dafür kann man Tests innerhalb eines `tests` Moduls implementieren.
 So in etwa:
 
-```rust,ignore
+```rust
 pub fn add_two(a: i32) -> i32 {
     a + 2
 }
@@ -313,13 +316,11 @@ mod tests {
 }
 ```
 
-Hier gibt es ein paar Unterschiede.
-Als erste wird das Modul `mod tests` mit dem `cfg` Attribut eröffnet.
-Das erlaubt es uns alle unsere Tests hier zu gruppieren und zusätzlich auch noch ggf. Hilfsfunktionen zu implementieren die keine Tests sind.
-Dieses gesamte Modul wird nicht in unser crate kompiliert, wenn wir nicht explizit als Test kompilieren, wir haben also nie Testcode in unserem Produkt.
-Das spart nicht nur Kompilierzeit, sondern auch noch Binarygröße.
+Das erlaubt es uns alle unsere Tests hier zu gruppieren und zusätzlich auch noch ggf. Hilfsfunktionen zu implementieren.
+Dieses gesamte Modul wird nicht in unser crate kompiliert, wenn wir es nicht explizit als Test kompilieren, wir haben also nie Testcode in unserer Bibliothek.
+Das spart nicht nur Kompilierzeit, sondern auch noch Platz.
 
-Die zweite Änderung ist die `use` Deklaration.
+Eine weitere Änderung ist die `use` Deklaration.
 Weil wir uns hier in einem Untermodul und damit einem anderen Namespace befinden müssen, müssen wir die zu testende Funktion quasi importieren.
 Das kann nerven, wenn wir irgendwann größere Projekte haben, also vereinfachen wir das doch einfach mit `*`
 
@@ -424,7 +425,7 @@ Rust macht damit Schluss, indem es automatisch den Code in der Dokumentation mit
 *Allerdings nur bei Bibliothek-Crates, nicht Binary-Crates.*
 Hier nochmal `src/lib.rs` mit Beispielen:
 
-```rust,ignore
+<pre><code class="lang-rust">
 //! The `adder` crate provides functions that add numbers to other numbers.
 //!
 //! # Examples
@@ -455,7 +456,7 @@ mod tests {
         assert_eq!(4, add_two(2));
     }
 }
-```
+</code></pre>
 
 
 Wichtig hier: Moduldokumentation beginnt mit `//!` und Funktionsdokumentation mit `///`.
