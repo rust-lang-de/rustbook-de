@@ -1,6 +1,6 @@
 # Variablenbindung
 
-Fast jedes nicht-triviales Rust Programm verwendet *Variablenbindungen*.
+Fast jedes nicht-triviale Rust Programm verwendet *Variablenbindungen*.
 Sie sehen so aus:
 
 ```rust
