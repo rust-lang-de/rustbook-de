@@ -108,7 +108,7 @@ anders als C Makros, falls du die mal benutzt hast. Hab keine Angst Makros zu
 benutzen. Wir werden die Details später noch behandeln, aber für den Moment
 musst du uns vertrauen.
 
-[macro]: book/Makros.md
+[macro]: Makros.md
 
 Weiter gehts. "Hallo World" ist ein ‘String’. Strings sind ein überraschend
 kompliziertes Thema in einer Systemprogrammiersprache, und dies ist ein
@@ -117,7 +117,7 @@ dann schau dir [der Stack und der Heap][allocation], aber du musst es nicht
 unbedingt wenn du nicht möchtest. Wir übergeben den String als Argument an
 `println!`, was dann den String auf dem Bildschirm ausgibt. Leicht genug!
 
-[allocation]: book/Der_Stack_Und_Der_Heap.md
+[allocation]: Der_Stack_Und_Der_Heap.md
 
 Weiterhin endet die Zeile mit einem Semikolon (`;`). Rust ist eine
 [‘Ausdrucksorientierte’ Sprache][expression-oriented language], was bedeuted,

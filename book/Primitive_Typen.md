@@ -20,7 +20,7 @@ let y: bool = false;
 
 Eine übliche Nutzung ist in [`if` Bedingungen][if].
 
-[if]: book/If.md
+[if]: If.md
 
 Du findest mehr Dokumentation zu `bool`s
 [in der Dokumentation der Standardbibliothek][bool].
@@ -185,7 +185,7 @@ let complete = &a[..]; // Ein Slice mit allen Elementen von a
 Slices haben den Typ `&[T]`. Wir werden über dieses `T` sprechen, wenn wir
 [Generics][generics] behandeln.
 
-[generics]: book/Generics.md
+[generics]: Generics.md
 
 Du findest mehr Dokumentation über `Slice`s
 [in der Dokumentation der Standardbibliothek][slice].
@@ -199,8 +199,8 @@ Als ein [größenloser Typ][dst] ist er alleine nicht sehr nützlich,
 aber er wird sehr nützlich in Kombination mit einer Referenz, wie
 zum Beispiel [`&str`][strings]. Von daher belassen wir es dabei.
 
-[dst]: book/Größenlose_Typen.md
-[strings]: book/Strings.md
+[dst]: Größenlose_Typen.md
+[strings]: Strings.md
 
 Du findest mehr Dokumentation über `str`s
 [in der Dokumentation der Standardbibliothek][str].
@@ -227,7 +227,7 @@ Tupel können einander zugewiesen werden, wenn die enthaltenen Typen und
 die [Stelligkeit][arity] identisch sind. Tupel haben die gleiche Stelligkeit,
 wenn sie dieselbe Länge haben.
 
-[arity]: book/Gloassar.md#stelligkeit
+[arity]: Gloassar.md#stelligkeit
 
 ```rust
 let mut x = (1, 2); // x: (i32, i32)
@@ -252,7 +252,7 @@ verwenden und, wenn es zu der rechten Seite passt, mehrere Variablenbindungen
 gleichzeitig zuweisen. In diesem Fall "destrukturiert" `let` das Tupel bzw.
 "nimmt es auseinander" und bindet die Teilstücke an Variablen.
 
-[let]: book/Variablenbindung.md
+[let]: Variablenbindung.md
 
 Dieses Muster ist sehr mächtig und wir werden es später noch öfters sehen.
 

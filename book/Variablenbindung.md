@@ -29,7 +29,7 @@ Muster sind wirklich mächtig und haben [ihren eigenen Abschnitt][pattern]
 im Buch. Wir brauchen diese Features fürs erste nicht, also behalten wir
 uns das hier erstmal im Hinterkopf während wir weiter machen.
 
-[pattern]: book/Muster.md
+[pattern]: Muster.md
 
 Rust ist eine statisch typisierte Sprache, was bedeutet, dass wir unsere
 Typen im Voraus angeben müssen und diese zur Kompilierzeit überprüft werden.

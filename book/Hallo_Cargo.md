@@ -223,5 +223,5 @@ Erfahrenere Systemprogrammierer werden ‘Lerne Rust’ vorziehen, wärend Leute
 mit Hintergrund in dynamischen Sprachen beides vevorzugen könnten.
 Verschiedene Leute lernen verschieden! Wähle was dir am besten liegt.
 
-[learnrust]: book/Lerne_Rust.md
-[syntax]: book/Syntax_und_Semantik.md
+[learnrust]: Lerne_Rust.md
+[syntax]: Syntax_Und_Semantik.md

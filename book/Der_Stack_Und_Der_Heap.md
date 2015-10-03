@@ -273,7 +273,7 @@ Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap fre
 | 1       | y    | 42     |
 | 0       | x    | ?????? |
 
-[drop]: drop.html
+[drop]: Drop.md
 
 
 Sobald der Stackframe verschwindet, wird der gesamte verwendete Speicher freigegeben.

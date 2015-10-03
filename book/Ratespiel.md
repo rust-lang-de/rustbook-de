@@ -119,7 +119,7 @@ zeigen an, dass es keine Argumente gibt und `{` beginnt den
 Körper der Funktion. Weil wir keinen Rückgabewert angegeben haben, wird
 automatisch angenommn, dass dieser `()`, ein leeres [Tupel][tuples] ist.
 
-[tuples]: book/Primitive_Typen.md#Tupel
+[tuples]: Primitive_Typen.md#Tupel
 
 ```rust
     println!("Rate die Zahl!");
@@ -130,8 +130,8 @@ automatisch angenommn, dass dieser `()`, ein leeres [Tupel][tuples] ist.
 Wir haben zuvor gelernt, dass `println!()` ein [Makro][macros] ist, dass
 einen [String][strings] auf dem Bildschirm ausgibt.
 
-[macros]: book/Makros.md
-[strings]: book/Strings.md
+[macros]: Makros.md
+[strings]: Strings.md
 
 ```rust
     let mut vermutung = String::new();
@@ -146,7 +146,7 @@ Sie nehmen diese Form an:
 let foo = bar;
 ```
 
-[let]: book/Variablenbindung.md
+[let]: Variablenbindung.md
 
 Dies wird eine neue Bindung namens `foo` erzeugen
 und den Wert `bar` daran binden. In vielen Sprachen wird das eine ‘Variable’
@@ -164,8 +164,8 @@ let foo = 5; // immutable (unveränderbar)
 let mut bar = 5; // mutable (veränderbar)
 ```
 
-[immutable]: book/Veränderbarkeit.md
-[patterns]: book/Muster.md
+[immutable]: Veränderbarkeit.md
+[patterns]: Muster.md
 
 Oh, und `//` leitet einen Kommentar bis zum Ende der Zeile ein.
 Rust ignoriert alles in [Kommentaren][comments].
@@ -229,7 +229,7 @@ jeweilige Instanz eines Types verfügbar, anstatt für den Typ selbst. Wir
 übergeben außerdem ein Argument an `read_line()`: `&mut vermutung`.
 
 [read_line]: https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line
-[method]: book/Methodensyntax.md
+[method]: Methodensyntax.md
 
 Erinnerst du dich wir oben `vermutung` gebunden haben? Wir hatten gesagt, dass
 es *mutable* ist. Jedoch nimmt `read_line` keinen `String` als Argument: Es
@@ -248,7 +248,7 @@ Funktion ist es die Eingaben des Benutzers auf der Standardeingabe zu nehmen
 und in einem String zu platzieren. Also nimmt sie einen String als
 Argument, und um die Eingabe hinzuzufügen muss dieser *mutable* sein.
 
-[references]: book/Referenzen_Und_Ausleihen.md
+[references]: Referenzen_Und_Ausleihen.md
 
 Aber wir sind noch nicht ganz fertig mit dieser Zeile Code.
 Während es sich um eine einzelne Textzeile handelt, ist es nur der erste
@@ -296,7 +296,7 @@ abstürzt und die Nachricht anzeigt.
 
 [ok]: https://doc.rust-lang.org/std/result/enum.Result.html#method.ok
 [expect]: https://doc.rust-lang.org/std/option/enum.Option.html#method.expect
-[panic]: book/Fehlerbehandlung.md
+[panic]: Fehlerbehandlung.md
 
 Falls wir diese beiden Methodenaufrufe weglassen wird unser Programm zwar
 kompilieren, aber wir werden eine Warnung bekommen:
@@ -520,7 +520,7 @@ sogenannten `Traits` definiert werden und, damit diese Methoden funktionieren,
 müssen sie im aktuellen Scope sein. Für weitere Details lies den
 [Traits][traits] Abschnitt.
 
-[traits]: book/Traits.md
+[traits]: Traits.md
 
 Es gibt zwei weitere Zeilen, die wir in der Mitte hinzugefügt haben:
 
@@ -633,8 +633,8 @@ enum Foo {
 }
 ```
 
-[match]: book/Match.md
-[enum]: book/Enums.md
+[match]: Match.md
+[enum]: Enums.md
 
 Mit dieser Definition ist der mögliche Wert des Typs `Foo`
 entweder `Foo::Bar` oder `Foo::Baz`. Wir benutzen die `::` um den Namensraum
@@ -771,7 +771,7 @@ aber wir haben `u32` gewählt.
 Es ist eine gute Standardwahl für eine kleine positive Zahl.
 
 [parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse
-[number]: book/Primitive_Typen#numerische-typen
+[number]: Primitive_Typen#numerische-typen
 
 Genauso wie `read_line()`, kann unser Aufruf von `parse()` einen Fehler
 verursachen. Was ist, wenn unser String `A❤%` enthielte? Es gibt keine
