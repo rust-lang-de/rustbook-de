@@ -9,7 +9,7 @@
 > Edsger W. Dijkstra, "The Humble Programmer" (1972)
 
 
-# Das `test` Attribut
+## Das `test` Attribut
 
 In Rust ist ein Test ganz einfach eine Funktion die mit `test` annotiert ist.
 Beginnen wir also ein kleines Cargo Projekt namens `adder`:
@@ -233,7 +233,7 @@ fn it_works() {
 
 Das ist ein klassischer Fall für `assert_eq!`: Wir rufen eine Funktion auf und vergleichen ihren Rückgabewert.
 
-# Das `ignore` Attribut
+## Das `ignore` Attribut
 
 In Manchen Situationen wollen wir bestimmte Tests nicht immer mit ausführen, besonders, wenn sie teuer sind.
 Diese kann man dann mit `ignore` ausschalten:
@@ -293,7 +293,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
 Wichtig: `--ignored` ist ein Argument, das von dem Testbinary interpretiert wird, nicht von Cargo selbst.
 Das wird mit den extra `--` vermittelt.
 
-# Das `tests` Modul
+## Das `tests` Modul
 
 Was ist allerdings, wenn wir noch Hilfsfunktionen für unsere Tests brauchen,
 die selbst keine Tests sind, die wir aber auch nicht mit ausliefern wollen?
@@ -366,7 +366,7 @@ Die momentane Konvention ist, dass das `tests` Modul deine "unit-style" tests en
 Alles was nur kleine Funktionalitätstests umfasst.
 Integrationstest jedoch, verdienen etwas mehr platz, dafür haben wir das `tests` Verzeichnis.
 
-# Das `tests` Verzeichnis
+## Das `tests` Verzeichnis
 
 Um einen Integrationstest zu schreiben erzeugen wir erst einmal unser `tests` Verzeichnis und legen darin eine `.rs` Datei an: `tests/lib.rs`:
 
@@ -417,7 +417,7 @@ Das `tests` Modul brauchen wir hier nicht, da alles mit Tests zu tun hat.
 
 Kommen wir nun zum dritten Teil: Dokumentation.
 
-# Dokumentationstests
+## Dokumentationstests
 
 Nichts ist besser als Dokumentation mit Beispielen.
 Nichts ist blöder als wenn die Beispiele in der Dokumentation nicht funktionieren, zum Beispiel, weil sich die API verändert hat, seitdem die Dokumentation geschrieben wurde.

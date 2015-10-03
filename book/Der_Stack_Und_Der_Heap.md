@@ -9,7 +9,7 @@ Wenn dir Speicherallokation in C-artigen Sprachen bereits vertraut ist,
 dann sieh dieses Kapitel als Auffrischung.
 Wenn nicht, dann lernst du hier Grundlagen, aus der Sicht von Rust.
 
-# Speicher Verwaltung
+## Speicher Verwaltung
 
 Die beiden Begriffe Stack und Heap beschreiben unterschiedliche Bereiche im Arbeitsspeicher und helfen uns dabei zu unterscheiden wann Speicher alloziert und dealloziert wird.
 
@@ -20,7 +20,7 @@ Der Speicher im Stack ist allerdings nur lokal innerhalb einer Funktion verfügb
 Der Heap, auf der anderen Seite, ist langsamer, wird explizit für von deinem Programm alloziert aber ist dafür global erreichbar und hat prinzipiell keine Größenbeschränkung.
 
 
-# Der Stack
+## Der Stack
 
 *(engl. stack = **"Der Stapel"** )*
 
@@ -179,7 +179,7 @@ Kriegst du ein Gefühl für die Tellerstapel?
 Wir legen einen drauf und nehmen einen wieder runter,
 wir nehmen nie was aus der Mitte raus.
 
-# Der Heap
+## Der Heap
 
 *(engl. heap = **"Der Haufen"** )*
 
@@ -278,7 +278,7 @@ Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap fre
 
 Sobald der Stackframe verschwindet, wird der gesamte verwendete Speicher freigegeben.
 
-# Argumente und Ausleihen
+## Argumente und Ausleihen
 
 Wir hatten bereits ein paar Grundlegende Beispiele für Stack und Heap,
 aber was ist mit Funktionsargumenten und Ausleihen?
@@ -325,7 +325,7 @@ In diesem Fall also brauchen wir sowohl `i`, das Argument und `z`, die lokale Va
 Das ist der Grund dafür dass man ausgeliehenen Speicher nicht deallozieren kann. Wenn man wir nun `x` freigeben würde, würden `y` und `i` auf ungültigen Speicher zeigen.
 Das ist in Sprachen wie C möglich, aber nicht in Rust.
 
-# Ein komplexes Beispiel
+## Ein komplexes Beispiel
 
 Gehen wir das hier mal Schritt für Schritt durch:
 
@@ -513,7 +513,7 @@ Und endlich auch `main()`.
 Hiernach wir der Rest aufgeräumt.
 Sobald `i` ge`Drop`pt wird, wird auch der Rest vom Heap geleert.
 
-# Was machen andere Sprachen?
+## Was machen andere Sprachen?
 
 Viele Sprachen verwenden heutzutage einen GarbageCollector.
 Das hat einige Vorteile, die Beschreibung welcher allerdings den Rahmen dieses Tutorials übersteigt.
@@ -523,7 +523,7 @@ Stattdessen liegt fast alles auf dem Heap und der GarbageCollector hält regelm�
 Bei Sprachen wie C/C++ kann man zwischen Stack und Heap unterscheiden, muss allerdings manuell seinen Speicher aufräumen.
 Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc, Konzepte wie "Besitz" und "Ausleihen" sind allerdings noch kein Kernfeature der Sprache.
 
-# Was soll ich benutzen?
+## Was soll ich benutzen?
 
 Der Stack ist schneller und einfacher zu handhaben, wofür also den Heal=p?
 Ein wichtiger Grund ist dass Stack-allozieren alleine nur LIFO[^2] Verhalten bietet.
