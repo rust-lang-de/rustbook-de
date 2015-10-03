@@ -2,3 +2,5 @@ _book/
 node_modules/
 *.swp
 *.swo
+src/_book
+.directory

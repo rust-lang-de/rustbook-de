@@ -425,7 +425,7 @@ Rust macht damit Schluss, indem es automatisch den Code in der Dokumentation mit
 *Allerdings nur bei Bibliothek-Crates, nicht Binary-Crates.*
 Hier nochmal `src/lib.rs` mit Beispielen:
 
-<pre><code class="lang-rust">
+```rust
 //! The `adder` crate provides functions that add numbers to other numbers.
 //!
 //! # Examples
@@ -456,7 +456,7 @@ mod tests {
         assert_eq!(4, add_two(2));
     }
 }
-</code></pre>
+```
 
 
 Wichtig hier: Moduldokumentation beginnt mit `//!` und Funktionsdokumentation mit `///`.
