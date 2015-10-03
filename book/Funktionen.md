@@ -130,7 +130,7 @@ Die Anweisung `x + 1;` gibt keinen Wert zurück.
 Es gibt zwei Arten von Anweisungen in Rust:
 `Deklarations-Anweisungen` und `Ausdrucks-Anweisungen`.
 Alles andere ist ein Ausdruck.
-Lass uns zuerst über Deklarations-Anweisungen sprechen.
+Lass uns zuerst über *Deklarations-Anweisungen* sprechen.
 
 In manchen Sprachen können Variablenbindungen auch als Ausdruck geschrieben
 werden. Wie z.B. in Ruby:
@@ -154,7 +154,7 @@ trotzdem ein Ausdruck ist, auch wenn dieser nicht besonders nützlich ist.
 Anders als in anderen Sprachen, wo der zugewiesene Wert zurückgegeben
 werden würde, wird in Rust stattdessen das leere Tupel `()` zurückgegeben.
 Der Grund dafür ist, dass der zugewiesene Wert [nur einen Besitzer][ownership]
-haben kann. Einen anderen Wert zurückzugeben wäre zu überraschend:
+haben kann und einen anderen Wert zurückzugeben wäre zu überraschend:
 
 ```rust
 let mut y = 5;
@@ -162,4 +162,157 @@ let mut y = 5;
 let x = (y = 6);  // x has the value `()`, not `6`
 ```
 
-[ownershipBesitz.md
+[ownership]: Besitz.md
+
+Die zweite Art von Anweisung in Rust ist die *Ausdrucks-Anweisung*.
+Ihr Zweck ist es jeden Ausdruck in eine Anweisung zu verwandeln.
+In praktischer Hinsicht erwartet Rusts Grammatik, dass Anweisungen
+aufeinander folgen. Das bedeutet, dass man Semikolons nutzt um
+Ausdrücke voneinander zu trennen. Das bedeutet auch,
+dass Rust anderen Sprachen, welche auch ein Semikolon am ende einer Zeile
+haben, sehr ähnlich sieht und man in Rust fast an jedem Ende einer Zeile ein
+Semikolon sieht.
+
+Wegen welcher Ausnahme sagen wir "fast"?.
+Du hast sie bereits gesehen und zwar in diesem Code:
+
+```rust
+fn add_one(x: i32) -> i32 {
+    x + 1
+}
+```
+
+Unsere Funktion gibt an ein `i32` zurückzugeben, aber mit einem Semikolon
+würden wir stattdessen `()` zurückgeben.
+Rust versteht, dass wir das wahrscheinlich nicht wollten und schlägt uns in
+der Fehlermeldung, die wir sahen, vor das Semikolon zu entfernen.
+
+## Frühzeitige Rückgabe
+
+Was ist mit frühzeitiger Rückgabe [early returns]?
+Rust hat dafür ein Schlpsselwort namens `return`:
+
+```rust
+fn foo(x: i32) -> i32 {
+    return x;
+
+    // we never run this code!
+    x + 1
+}
+```
+
+`return` in der letzten Zeile einer Funktion zu verwenden funktioniert zwar,
+aber wird als schlechten Stil angesehen:
+
+```rust
+fn foo(x: i32) -> i32 {
+    return x + 1;
+}
+```
+
+Die vorherige Definition ohne `return` sieht vielleicht etwas komisch für dich
+aus, falls du noch nicht mit Ausdrucksorientierten Sprachen gearbeitet hast,
+aber du wirst dich mit der Zeit daran gewöhnen.
+
+## Divergierende Funktionde
+
+Rust hat eine spzielle Syntax für sogennannte ‘divergierende Funktionen’
+[diverging functions], also Funktionen, die niemals zurückkehren:
+
+```rust
+fn diverges() -> ! {
+    panic!("This function never returns!");
+}
+```
+
+`panic!()` ist ein Makro, ähnlich wie `println!()`, was wir bereits kennen.
+Anders jedoch als `println!()` sorgt `panic!()` dafür, dass der aktuelle
+Thread mit einer Fehlermeldung abstürzt. Weil diese Funktion einen Crash hervorruft, kehrt sie niemals zurück, deswegen hat sie den Typ ‘`!`’,
+was man als ‘divergiert’ liest.
+
+Wenn du zu einer main Funktion einen `diverges()` Aufruf hinzufügst
+und das Programm ausführst, dann sieht die Ausgabe in etwa so aus:
+
+```text
+thread ‘<main>’ panicked at ‘This function never returns!’, hello.rs:2
+```
+
+Wenn du mehr Informationen haben willst, dann kannst du einen Backtrace durch
+Setzen der `RUST_BACKTRACE` Umgebungsvariable erhalten:
+
+```text
+$ RUST_BACKTRACE=1 ./diverges
+thread '<main>' panicked at 'This function never returns!', hello.rs:2
+stack backtrace:
+   1:     0x7f402773a829 - sys::backtrace::write::h0942de78b6c02817K8r
+   2:     0x7f402773d7fc - panicking::on_panic::h3f23f9d0b5f4c91bu9w
+   3:     0x7f402773960e - rt::unwind::begin_unwind_inner::h2844b8c5e81e79558Bw
+   4:     0x7f4027738893 - rt::unwind::begin_unwind::h4375279447423903650
+   5:     0x7f4027738809 - diverges::h2266b4c4b850236beaa
+   6:     0x7f40277389e5 - main::h19bb1149c2f00ecfBaa
+   7:     0x7f402773f514 - rt::unwind::try::try_fn::h13186883479104382231
+   8:     0x7f402773d1d8 - __rust_try
+   9:     0x7f402773f201 - rt::lang_start::ha172a3ce74bb453aK5w
+  10:     0x7f4027738a19 - main
+  11:     0x7f402694ab44 - __libc_start_main
+  12:     0x7f40277386c8 - <unknown>
+  13:                0x0 - <unknown>
+```
+
+`RUST_BACKTRACE` funktioniert auch mit Cargos `run` Befehl:
+
+```text
+$ RUST_BACKTRACE=1 cargo run
+     Running `target/debug/diverges`
+thread '<main>' panicked at 'This function never returns!', hello.rs:2
+stack backtrace:
+   1:     0x7f402773a829 - sys::backtrace::write::h0942de78b6c02817K8r
+   2:     0x7f402773d7fc - panicking::on_panic::h3f23f9d0b5f4c91bu9w
+   3:     0x7f402773960e - rt::unwind::begin_unwind_inner::h2844b8c5e81e79558Bw
+   4:     0x7f4027738893 - rt::unwind::begin_unwind::h4375279447423903650
+   5:     0x7f4027738809 - diverges::h2266b4c4b850236beaa
+   6:     0x7f40277389e5 - main::h19bb1149c2f00ecfBaa
+   7:     0x7f402773f514 - rt::unwind::try::try_fn::h13186883479104382231
+   8:     0x7f402773d1d8 - __rust_try
+   9:     0x7f402773f201 - rt::lang_start::ha172a3ce74bb453aK5w
+  10:     0x7f4027738a19 - main
+  11:     0x7f402694ab44 - __libc_start_main
+  12:     0x7f40277386c8 - <unknown>
+  13:                0x0 - <unknown>
+```
+
+Divergierende Funktionen passen mit jedem Typen zusammen:
+
+```rust
+let x: i32 = diverges();
+let x: String = diverges();
+```
+
+## Funktionszeiger
+
+Wir können auch eine Variablenbindung erzeugen, die auf eine Funktion zeigt:
+
+```rust
+let f: fn(i32) -> i32;
+```
+
+`f` ist eine Variable, die auf eine Funktion zeigt, welche ein `i32` als
+Argument entgegennimmt und ein `i32` zurückgibt. Zum Beispiel:
+
+```rust
+fn plus_one(i: i32) -> i32 {
+    i + 1
+}
+
+// without type inference
+let f: fn(i32) -> i32 = plus_one;
+
+// with type inference
+let f = plus_one;
+```
+
+Wir können dann `f` benutzen um die Funktion aufzurufen:
+
+```rust
+let six = f(5);
+```
