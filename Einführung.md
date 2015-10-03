@@ -32,7 +32,7 @@ Diese Einführung ist der Erste. Danach folgen:
 [es]: book/Erste_Schritte.md
 [lr]: book/Lerne_Rust.md
 [er]: book/Effektives_Rust.md
-[ss]: book/Syntax_und_Semantik.md
+[ss]: book/Syntax_Und_Semantik.md
 [nr]: book/Nightly_Rust.md
 [gl]: book/Glossar.md
 [bi]: book/Bibliografie.md
