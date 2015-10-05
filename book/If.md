@@ -1,8 +1,8 @@
 # if
 
-Rusts `if` ist nicht besonders kompliziert, aber es ist viel mehr wie so ein
-`if`, welches du in einer dynamisch typisierten Sprache finden wirst,
-als eines, welches du in eher traditionellen Sprachen finden wirst.
+Rusts `if` ist nicht besonders kompliziert, aber es ähnelt viel mehr dem
+`if` einer dynamisch typisierten Sprache, als dem einer
+eher traditionellen Sprachen.
 
 Lass uns also darüber sprechen, um sicherzustellen, dass du die feinheiten
 verstehst.
