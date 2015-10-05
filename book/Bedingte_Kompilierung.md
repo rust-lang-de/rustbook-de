@@ -88,6 +88,6 @@ if cfg!(target_os = "macos") || cfg!(target_os = "ios") {
 }
 ```
 
-Das wird beim Kompilieren durch `true` oder `false` ersetzt,
+Das wird zur beim Kompilieren durch `true` oder `false` ersetzt,
 je nach Konfiguration.
 
