@@ -1,18 +1,17 @@
 # Die Programmiersprache Rust
 
-Willkommen!
-Dieses Buch wird dir die [Programmiersprache Rust][rust] beibringen.
+Willkommen! Dieses Buch wird dir die [Programmiersprache Rust][rust] beibrigen.
 Rust ist eine Systemprogrammiersprache mit dem Fokus auf drei Ziele:
 Sicherheit, Geschwindigkeit und Nebenläufigkeit (Safety, Speed, Concurrency).
 Sie hält diese Ziele ohne Garbage Collector aufrecht,
 was sie zu einer nützlichen Sprache für eine Reihe von Anwendungsfällen macht
 in denen andere Sprachen nicht so gut sind: Einbettung in anderen Sprachen,
-Programme mit besonderen Anforderungen an Platz oder Zeit, low-level code schreiben,
+Programme mit besonderen Anforderungen an Platz oder Zeit und low-level code schreiben,
 wie zum Beispiel Gerätetreiber und Betriebssysteme.
 Sie übertrifft derzeitige Sprachen, die auf diesen Bereich abzielen, indem sie
 eine Reihe von Checks zur Kompilierzeit durchführt – ohne Kosten zur Laufzeit –,
 währenddessen sie alle *data races* vermeidet.
-Rust ziehlt auch darauf ab "kostenfreihe Abstraktionen" zu realisieren obwohl
+Rust zielt auch darauf ab "kostenfreihe Abstraktionen" zu realisieren obwohl
 einige dieser Abstraktionen sich anfühlen wie die einer Hochsprache.
 Selbst dann erlaubt Rust eine genaue Kontrolle wie es eine low-level
 Sprache würde.
@@ -20,13 +19,13 @@ Sprache würde.
 [rust]: https://www.rust-lang.org
 
 “Die Programmiersprache Rust” ist in acht Abschnitte unterteilt.
-Diese Einführung ist der erste. Danach folgen:
+Diese Einführung ist der Erste. Danach folgen:
 
 * [Erste Schritte][es] - Richte deinen Computer für die Entwicklung mit Rust ein.
 * [Lerne Rust][lr] - Lerne Rust Programmierung durch kleine Projekte.
-* [Effektives Rust][er] - Fortgeschrittene Konzepte um ausgezeichneten Rust code zu schreiben.
+* [Effektives Rust][er] - Fortgeschrittene Konzepte um ausgezeichneten Rust Code zu schreiben.
 * [Syntax und Semantik][ss] - Jedes Stück Rust auf kleine Stücke heruntergebrochen.
-* [Nightly Rust][nr] - *Cutting-edge features* die noch nicht in stabilen builds sind.
+* [Nightly Rust][nr] - *Cutting-edge features* die noch nicht im stabilen Compiler verfügbar sind.
 * [Glossar][gl] - Erklärungen von Begriffen die in diesem Buch verwendet werden.
 * [Akademische Forschung][bi] - Literatur die Rust beeinflusst hat.
 
@@ -42,7 +41,7 @@ Nach dem Lesen dieser Einführung möchtest du wahrscheinlich, je nach Vorliebe,
 entweder ‘[Lerne Rust][lr]’ oder ‘[Syntax and Semantics][ss]’ lesen:
 ‘[Lerne Rust][lr]’ wenn du mit einem Projekt anfangen möchtest,
 oder ‘[Syntax and Semantics][ss]’ wenn du lieber klein anfangen und jeweils ein
-einziges Konzept ausführlich lernen möchtest bevor du mit dem nächsten weiter machst.
+einziges Konzept ausführlich lernen möchtest bevor du mit dem Nächsten weiter machst.
 Reichliche Querverweise verbinden diese beiden Teile miteinander.
 
 ### Mithelfen
@@ -60,7 +59,7 @@ Ist Rust eine Sprache in der du interessiert sein könntest? Lass uns ein paar
 Code Beispiele anschauen um ein Paar ihrer Stärken zu demonstrieren.
 
 Das Hauptkonzept, welches Rust einmalig macht, wird
-‘*ownership*’ [engl.: Besitztum] genannt. Betrachte dieses kleine Beispiel:
+‘*ownership*’ [engl.: Eigentum] genannt. Betrachte dieses kleine Beispiel:
 
 ```rust
 fn main() {
@@ -80,14 +79,14 @@ Wir haben `mut` benutzt um `x` *mutable* [engl.: veränderbar] zu machen:
 Bindungen sind standardmäßig *immutable* [engl.: unveränderbar].
 Wir werden den Vektor noch später in diesem Beispiel verändern.
 
-Es ist ebenfalls beachtenswert, dass wir hier keine Typangaben brauchten: 
-Obwohl Rust statisch typisiert ist brauchten wir den Typ nicht ausdrücklich 
+Es ist ebenfalls beachtenswert, dass hier keine Typangaben notwendig waren: 
+Obwohl Rust statisch typisiert ist mussten wir den Typ nicht ausdrücklich 
 angeben. Rust hat *type inference* [engl.: Typinferenz, Typableitung] um 
 die Stärke statischer Typen und der Ausführlichkeit des Angeben von Typen 
 auszubalancieren.
 
-Rust bevorzugt Stack-Allokation vor Heap-Allokation: `x` wird direkt
-auf dem Stack platziert. Der `Vec<T>` Typ jedoch alloziert Speicher für die
+Rust alloziert Daten bevorzugt auf dem Stack als auf dem Heap: `x` wird direkt
+auf dem Stack platziert. Der `Vec<T>` Typ jedoch reserviert Speicher für die
 Elemente des Vektors auf dem Heap. Falls du nicht mit dieser Unterscheidung
 vertraut bist, dann kannst du sie fürs erste ignorieren oder einen Blick in
 [‘Der Stack und der Heap’][heap] werfen. Als eine Systemprogrammiersprache
@@ -122,8 +121,8 @@ Wir haben eine weitere Variablenbindung `y` hinzugefügt. In diesem Fall ist
 `y` eine ‘Referenz’ auf das erste Element des Vektors. Rusts Referenzen sind
 ähnlich wie Zeiger in anderen Sprachen, aber mit zusätzlichen Überprüfungen zur
 Kompilierzeit. Referenzen interagieren mit dem *ownership* System durch das
-[‘Ausleihen’][borrowing] (borrowing) dessen worauf sie zeigen anstatt es zu
-besitzen. Der Unterschied ist, dass, wenn die Referenz den Scope verlässt,
+[‘Ausleihen’][borrowing] (borrowing) dessen worauf sie zeigen.
+Der Unterschied ist, dass, wenn die Referenz den Scope verlässt,
 sie nicht den zugrunde liegenden Speicher freigibt. Falls sie das täte,
 dann würden wir zweimal freigeben, was schlecht ist!
 
@@ -162,7 +161,7 @@ fn main() {
 ```
 Uff! Der Rust compiler erzeugt manchmal recht detailierte Fehler und dies ist
 ein solches mal. Wie der Fehler erklärt ist zwar unsere Variablenbindung veränderbar,
-aber wir können immernoch nicht `push` aufrufen. Das ist so weil wir bereits
+aber wir können immernoch nicht `push` aufrufen. Das ist so, weil wir bereits
 eine Referenz auf ein Element des Vektors, nämlich `y`, haben. Etwas zu verändern
 wärend eine weitere Referenz darauf existiert ist gefährlich, weil wir die
 Referenz ungültig machen könnten. In diesem konkreten Fall könnte es sein, dass
@@ -170,7 +169,7 @@ wir beim erstellen des Vektors nur Platz für zwei Elemente reserviert haben.
 Ein drittes hinzuzufügen würde dazu führen einen neuen Speicherbereich für all
 diese Elemente zu allozieren, hinüber zu kopieren und den internen Zeiger auf
 diesen Speicher zu setzen. Das alles funktioniert problemlos. Das Problem ist,
-das `y` nicht aktualisiert werden würde und wir somit einen ‘hängenden Zeiger’
+das `y` nicht aktualisiert werden würde und wir somit einen ‘baumelnden Zeiger’
 (dangling pointer) hätten. Das ist schlecht. Jegliche Benutzung von `y` wäre ein
 Fehler in diesem Fall und somit hat der Compiler diesen für uns abgefangen.
 
