@@ -4,6 +4,23 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust Buches](http
 
 ## [> Hier lesen <](https://panicbit.github.io/rustbook-de)
 
+# Building
+
+## mit gitbook
+
+```bash
+cd src
+gitbook build
+```
+
+## mit mdbook
+
+```bash
+
+mdbook build
+
+```
+
 ## Mithelfen
 Vorschläge und Korrekturen oder gar Übersetzungen sind
 natürlich gerne gewünscht.
