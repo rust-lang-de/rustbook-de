@@ -1,4 +1,4 @@
-% Iteratoren
+# Iteratoren
 
 Redern wir doch mal über Schleifen.
 
@@ -106,7 +106,7 @@ Ein *Konsument* "konsumiert" einen Iterator, das heißt, dass er daraus eine fes
 Der gebräuchlichste Konsument ist `collect()`.
 Dieser Code hier kompiliert nicht, zeigt aber die Verwendung von `collect()`:
 
-```rust,ignore
+```rust
 let one_to_one_hundred = (1..101).collect();
 ```
 
