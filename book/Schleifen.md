@@ -79,7 +79,7 @@ for x in 0..10 {
 }
 ```
 
-In etwas Abstrakteren Begriffen:
+In etwas abstrakteren Begriffen:
 
 ```
 for var in expression {
