@@ -8,7 +8,7 @@ die Speichersicherheit.
 Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
 
 * [ownership][ownership], das Schlüsselkonzept
-* [Ausleihen][borrowing], das was du gerade liest.
+* Ausleihen, das was du gerade liest.
 * [Lebzeiten][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
 
 Diese drei Kapitel sind verwandt und deswegen in dieser Reihenfolge zu lesen.
