@@ -7,7 +7,7 @@ Durch Ownership [engl.: Besitz] erreicht Rust sein größtes Ziel,
 die Speichersicherheit.
 Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
 
-* [ownership][ownership], das Schlüsselkonzept.
+* [Besitz][ownership], das Schlüsselkonzept.
 * Ausleihen, das was du gerade liest.
 * [Lebzeiten][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
 
