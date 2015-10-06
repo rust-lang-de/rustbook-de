@@ -9,13 +9,13 @@ Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
 
 * [Besitz][ownership], das Schlüsselkonzept.
 * Ausleihen, das was du gerade liest.
-* [Lebzeiten][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
+* [Lebensdauer][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
 
 Diese drei Kapitel sind verwandt und deswegen in dieser Reihenfolge zu lesen.
 Du wirst alle drei benötigen um das Ownership-System vollständig zu verstehen.
 
 [ownership]: Besitz.md
-[lifetimes]: Lebzeiten.md
+[lifetimes]: Lebensdauer.md
 
 # Meta
 

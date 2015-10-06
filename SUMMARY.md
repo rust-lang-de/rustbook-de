@@ -30,7 +30,7 @@
     * [Schleifen](book/Schleifen.md)
     * [Besitz](book/Besitz.md)
     * [Referenzen und Ausleihen](book/Referenzen_Und_Ausleihen.md)
-    * [Lebzeiten](book/Lebzeiten.md)
+    * [Lebensdauer](book/Lebensdauer.md)
     * [Veränderbarkeit](book/Veränderbarkeit.md)
     * [Structs](book/Structs.md)
     * [Enums](book/Enums.md)

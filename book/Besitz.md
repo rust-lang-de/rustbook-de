@@ -9,13 +9,13 @@ Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
 
 * Besitz, das was du gerade liest.
 * [Ausleihen][borrowing], und das assozierte Feature ‘Referenzen’
-* [Lebzeiten][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
+* [Lebensdauer][lifetimes], ein fortgeschrittenes Konzept des Ausleihens.
 
 Diese drei Kapitel sind verwandt und deswegen in dieser Reihenfolge zu lesen.
 Du wirst alle drei benötigen um das Ownership-System vollständig zu verstehen.
 
 [borrowing]: Referenzen_Und_Ausleihen.md
-[lifetimes]: Lebzeiten.md
+[lifetimes]: Lebensdauer.md
 
 # Meta
 
