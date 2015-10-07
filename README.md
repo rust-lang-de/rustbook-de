@@ -4,7 +4,7 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust Buches](http
 
 ## [> Hier lesen <](https://panicbit.github.io/rustbook-de)
 
-# Building
+## Building
 
 ```bash
 gitbook build
