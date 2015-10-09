@@ -4,7 +4,7 @@ Nebenläufigkeit und Parallelismus sind heutzutage unglaublich wichtige Themen i
 Prozessoren haben mehr und mehr Kerne und dennoch sind Programmierer nicht gut darauf vorbereitet die vielen Kerne voll auszunutzen.
 
 Rusts Speichersicherheit hat einen großen Einfluß auf dessen Verhalten bei Nebenläufigkeit.
-Das Typsystem garantiert bereits zur Kompilezeit dass keine Speicherveletzungen oder Raceconditions auftreten können.
+Das Typsystem garantiert bereits zur Kompilierzeit dass keine Speicherveletzungen oder Raceconditions auftreten können.
 
 Bevor wir auf Nebenläufigkeit genauer eingehen ist eine Sache erwähnenswert:
 Rust ist systemnah genug, dass ein Großteil der hier genannten Funktionalität von der Standardbibliothek zur Verfügung gestellt werden kann, nicht von der Sprache selbst.
@@ -61,7 +61,7 @@ fn main() {
 Die Methode `thread::spawn()` nimmt eine [Closure](Closures.html) an,
 die dann im neuen Thread ausgeführt wird.
 Der Handle den sie zurück gibt,
-kann benutzt werden um zu warten bis der Kind-Thread fertig ist und desser Ergebnis zu erhalten:
+kann benutzt werden um zu warten bis der Kind-Thread fertig ist und dessen Ergebnis zu erhalten:
 
 ```rust
 use std::thread;
@@ -199,7 +199,7 @@ Beachte außerdem, dass [`lock`](http://doc.rust-lang.org/stable/std/sync/struct
 fn lock(&self) -> LockResult<MutexGuard<T>>
 ```
 
-und weil `Send` für `MutexGuard<T>` nicht implementiert ist kann der Guard keine Threadgrenze überschreiten, wodurch Locks nur threadlokal aquiriert und freigegeben werden können.
+und weil `Send` für `MutexGuard<T>` nicht implementiert ist kann der Guard keine Threadgrenze überschreiten, wodurch Locks nur threadlokal akquiriert und freigegeben werden können.
 
 Schauen wir uns das doch mal genauer an:
 
