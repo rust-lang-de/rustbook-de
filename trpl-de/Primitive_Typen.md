@@ -1,4 +1,4 @@
-# Primitive Typen
+% Primitive Typen
 
 Die Rust Programmiersprache hat eine Reihe von Typen die als "primitiv"
 angesehen werden. Das bedeutet, dass sie in die Sprache eingebaut sind.

@@ -1,4 +1,4 @@
-# Effektives Rust
+% Effektives Rust
 
 <!--vim:set spelllang=de:-->
 

@@ -1,4 +1,4 @@
-# Der Stack und der Heap
+% Der Stack und der Heap
 
 Rust operiert auf einer sehr niedrigen Ebene im System.
 Wenn du bereits Erfahrung mit Programmiersprachen hast,

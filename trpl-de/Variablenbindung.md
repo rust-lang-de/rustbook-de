@@ -1,4 +1,4 @@
-# Variablenbindung
+% Variablenbindung
 
 Fast jedes nicht-triviale Rust Programm verwendet *Variablenbindungen*.
 Sie sehen so aus:

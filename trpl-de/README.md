@@ -1,4 +1,4 @@
-# Die Programmiersprache Rust
+% Die Programmiersprache Rust
 
 Willkommen! Dieses Buch wird dir die [Programmiersprache Rust][rust] beibrigen.
 Rust ist eine Systemprogrammiersprache mit dem Fokus auf drei Ziele:

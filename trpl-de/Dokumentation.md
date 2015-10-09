@@ -1,4 +1,4 @@
-# Dokumentation
+% Dokumentation
 
 Dokumentation ist ein wichtiger Teil eines jeden Software Projekts.
 In Rust ist sie ein Sprachbestandteil.
