@@ -33,7 +33,7 @@ keine Extrakosten zur Laufzeit.
 Jedoch hat dieses System einen gewissen Preis: Die Lernkurve.
 Viele neue Rust Nutzer erleben etwas,
 was wir "mit dem *borrow checker* kämpfen" nennen,
-wobei dann Rust verweigert ein Programm zu kompilieren,
+wobei dann Rust verweigert ein Programm zu kompilieren
 bei dem der Author denkt, dass es korrekt ist.
 Das passiert häufig, da das mentale Modell des Programmierers von Ownership
 nicht den eigentlichen Regeln entspricht, die Rust implementiert.
