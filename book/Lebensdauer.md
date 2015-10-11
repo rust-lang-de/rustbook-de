@@ -9,7 +9,7 @@ Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
 
 * [Besitz][ownership], das Schlüsselkonzept.
 * [Ausleihen][borrowing], und das assozierte Feature ‘Referenzen’
-* [Lebensdauer][lifetimes], das was du gerade liest.
+* Lebensdauer, das was du gerade liest.
 
 Diese drei Kapitel sind verwandt und deswegen in dieser Reihenfolge zu lesen.
 Du wirst alle drei benötigen um das Ownership-System vollständig zu verstehen.
