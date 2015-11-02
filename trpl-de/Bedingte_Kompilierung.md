@@ -1,4 +1,4 @@
-# Bedingte Kompilierung
+% Bedingte Kompilierung
 
 Rust hat ein spezielles Attribut, `#[cfg]`,
 welches es uns erlaubt Code nur dann kompilieren zu lassen wenn ein bestimmtes Flag an den Compiler übergeben wird. Davon gibt es zwei Formen:

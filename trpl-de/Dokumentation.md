@@ -1,4 +1,4 @@
-# Dokumentation
+% Dokumentation
 
 Dokumentation ist ein wichtiger Teil eines jeden Software Projekts.
 In Rust ist sie ein Sprachbestandteil.
@@ -17,7 +17,7 @@ Dokumentation kann auf zwei arten erzeugt werden: aus dem Quelltext und aus Mark
 Die primäre Methode ein Rust Projekt zu dokumentieren ist den Quelltext zu annotieren.
 Dafür gibt es eine eigene Art von Kommentaren:
 
-<pre><code class="lang-rust">
+```rust,ignore
 /// Constructs a new `Rc<T>`.
 ///
 /// # Examples
@@ -30,7 +30,7 @@ Dafür gibt es eine eigene Art von Kommentaren:
 pub fn new(value: T) -> Rc<T> {
     // hier die implementation
 }
-</code></pre>
+```
 
 Dieser Code generiert Dokumentation die [wie diese aussieht](https://doc.rust-lang.org/nightly/std/rc/struct.Rc.html#method.new).
 Nur halt ohne die Implementierung.
@@ -128,7 +128,7 @@ Das ist nicht ganz so wichtig wie eine Panik, da Failures Teil des Typsystems si
 Wenn die Funktion `unsafe` verwendet, dann sollte ebenfalls explizit darauf hingewiesen werden, da hier eventuell Probleme auftreten können vor denen Rust anderweitig gefeit ist.
 
 
-<pre><code class="lang-rust">
+```rust
 /// # Examples
 ///
 /// ```
@@ -136,7 +136,7 @@ Wenn die Funktion `unsafe` verwendet, dann sollte ebenfalls explizit darauf hing
 ///
 /// let five = Rc::new(5);
 /// ```
-</code></pre>
+```
 
 
 Viertens, `Examples`.
@@ -144,7 +144,7 @@ Wenn du nur ein bis zwei Beispiele zu deiner Dokumentation hinzufügst erleichte
 Dokumentation kann noch so detailiert sein, bevor man wissen möchte wie etwas funktioniert möchte man wissen wie man es benutzt.
 Bevor du dich fragst wie das Mahlwerk deiner neue Kaffeemaschine funktioniert, interessiert dich doch eher, wie du damit Kaffee kochst oder?
 
-<pre><code class="lang-rust">
+```rust
 /// # Examples
 ///
 /// Einfache `&str` Patterns:
@@ -160,7 +160,7 @@ Bevor du dich fragst wie das Mahlwerk deiner neue Kaffeemaschine funktioniert, i
 /// let v: Vec<&str> = "abc1def2ghi".split(|c: char| c.is_numeric()).collect();
 /// assert_eq!(v, vec!["abc", "def", "ghi"]);
 /// ```
-</code></pre>
+```
 
 Reden wir einmal etwas detailierter über Codeblöcke.
 
@@ -168,23 +168,23 @@ Reden wir einmal etwas detailierter über Codeblöcke.
 
 Um Quelltext in Kommentaren zu schreiben benutzt man in Markdown drei Accent Graves.
 
-<pre><code class="lang-rust">
+```rust
 /// ```
 /// println!("Hello, world");
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Dabei wir wird in der ersten Zeile normalerweise die Programmiersprache für den Highlighter angegeben.
 Bei uns ist Rust Standard, wenn du etwas anderes angeben willst dann sieht das zum Beispiel so aus:
 
 
-<pre><code class="lang-rust">
+```rust
 /// ```c
 /// printf("Hello, world\n");
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Wenn du Plaintext ausgeben willst nimm ` ```text `
 
@@ -198,26 +198,26 @@ Wenn du allerdings C Code nicht mit ` ```c ` annotierst, denkt `rustdoc` es muss
 Reden wir einmal über unsere Beispiele:
 
 
-<pre><code class="lang-rust">
+```rust
 /// ```
 /// println!("Hello, world");
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Dir ist vielleicht aufgefallen, dass du kein `fn main()` gebraucht hast.
 `rustdoc` generiert hier automatisch einen Wrapper dafür.
 Zum Beispiel:
 
 
-<pre><code class="lang-rust">
+```rust
 /// ```
 /// use std::rc::Rc;
 ///
 /// let five = Rc::new(5);
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Das testet dann eigentlich diesen Code:
 
@@ -323,7 +323,7 @@ Hier das ganze nochmal als Plaintext:
 
 Hier ist ein Beispiel eines Dokumentierten `macro`s:
 
-<pre><code class="lang-rust">
+```rust
 /// Panic with a given message unless an expression evaluates to true.
 ///
 /// # Examples
@@ -346,7 +346,7 @@ macro_rules! panic_unless {
     ($condition:expr, $($rest:expr),+) => ({ if ! $condition { panic!($($rest),+); } });
 }
 # fn main() {}
-</code></pre>
+```
 
 
 Hier fallen dir sicherlich drei Dinge auf:
@@ -371,36 +371,36 @@ $ cargo test
 
 Annotationen die auch beim [Testen](Testen.md) funktionieren, sind auch bei `rustdoc` manchmal nützlich, zum Beispiel:
 
-<pre><code class="lang-rust">
+```rust
 /// ```ignore
 /// fn foo() {
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 `ignore` bittet Rust dieses Beispiel bitte nicht mitzutesten,
 wenn man weiß dass der Test scheitern würde.
 
-<pre><code class="lang-rust">
+```rust
 /// ```should_panic
 /// assert!(false);
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Das ist allerdings die allgemeinste Lösung, meisten ist eine der folgenden Möglichkeiten passender.
 Oder man will lieber `text` verwenden, wenn es kein gar Rustcode ist oder Zeilen mit `#` ausblenden um ein Beispiel zu konstruieren welches trotzdem funktioniert.
 
 `should_panic` sagt `rustdoc` dass der code korrekt compiliert, aber der Test fehlschlagen soll.
 
-<pre><code class="lang-rust">
+```rust
 /// ```no_run
 /// loop {
 ///     println!("Hello, world");
 /// }
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 Und `no_run` führt dazu, dass dein Code kompiliert, aber nicht nicht ausgeführt  wird. Dann zählt der Test als bestanden, sobald er korrekt kompiliert hat.
 
@@ -445,7 +445,7 @@ kannst du auch gleich `.md` Dateien verwenden.
 
 Wenn du Dokumentation in Markdowndateien schreibst, brauchst du die Prefixe nicht mehr. Zum Beispiel:
 
-<pre><code class="lang-rust">
+```rust
 /// # Examples
 ///
 /// ```
@@ -454,19 +454,17 @@ Wenn du Dokumentation in Markdowndateien schreibst, brauchst du die Prefixe nich
 /// let five = Rc::new(5);
 /// ```
 # fn foo() {}
-</code></pre>
+```
 
 ist einfach
 
-<pre><code class="lang-markdown">
-# Examples
-
+~~~markdown # Examples
 ```
 use std::rc::Rc;
 
 let five = Rc::new(5);
 ```
-</code></pre>
+~~~
 
 in einer Markdown Datei. Wichtig ist hier nur, dass diese Dokumente immer einen Titel brauchen:
 

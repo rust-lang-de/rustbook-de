@@ -1,4 +1,4 @@
-# Funktionen
+% Funktionen
 
 Jedes Rust Programm hat mindestens eine Funktion,
 die `main`:
@@ -67,7 +67,6 @@ Das hier funktioniert nicht:
 fn print_sum(x, y) {
     println!("sum is: {}", x + y);
 }
-```
 ```
 
 Man bekommt diesen Fehler:

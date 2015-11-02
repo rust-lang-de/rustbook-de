@@ -1,4 +1,4 @@
-# Ratespiel
+% Ratespiel
 
 Für unser erstes Projekt wollen wir eine
 klassische Anfängeraufgabe implementieren: das Ratespiel.

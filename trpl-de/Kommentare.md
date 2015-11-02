@@ -1,4 +1,4 @@
-# Kommentare
+% Kommentare
 
 Nun, da wir Funktionen kennen, ist es ein guter Zeitpunkt über Kommentare
 zu lernen. Kommentare sind Notizen, die man anderen Programmierern hinterlässt

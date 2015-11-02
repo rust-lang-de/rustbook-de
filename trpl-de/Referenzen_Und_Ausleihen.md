@@ -1,4 +1,4 @@
-# Referenzen und Ausleihen
+% Referenzen und Ausleihen
 
 Dieser Guide ist einer von dreien, der Rusts Ownership-System.
 präsentiert. Dies ist eines von Rusts einzigartigen und verlockenden

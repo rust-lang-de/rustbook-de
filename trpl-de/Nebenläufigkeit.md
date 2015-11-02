@@ -1,4 +1,4 @@
-# Nebenläufigkeit
+% Nebenläufigkeit
 
 Nebenläufigkeit und Parallelismus sind heutzutage unglaublich wichtige Themen in der Informatik genauso wie in der Industrie.
 Prozessoren haben mehr und mehr Kerne und dennoch sind Programmierer nicht gut darauf vorbereitet die vielen Kerne voll auszunutzen.

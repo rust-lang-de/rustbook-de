@@ -1,4 +1,4 @@
-# Rust installieren
+% Rust installieren
 
 Der erste Schritt um Rust zu nutzen ist es zu installieren. Es gibt eine Reihe
 von Möglichkeiten Rust zu installieren, aber die einfachste ist das `rustup`

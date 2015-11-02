@@ -1,4 +1,4 @@
-# Syntax und Semantik
+% Syntax und Semantik
 
 Dieser Abschnitt zerbricht Rust in kleine Stückchen,
 eines für jedes Konzept.

@@ -1,4 +1,4 @@
-# if
+% if
 
 Rusts `if` ist nicht besonders kompliziert, aber es ähnelt viel mehr dem
 `if` einer dynamisch typisierten Sprache, als dem einer

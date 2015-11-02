@@ -1,4 +1,4 @@
-# Lerne Rust
+% Lerne Rust
 
 Willkommen! Dieser Abschnitt enthält ein paar Tutorials, welche dir Rust, durch
 aufbauen eines Projektes, beibringen. Du wirst zuerst eine umfassende Übersicht

@@ -1,4 +1,4 @@
-# Schleifen
+% Schleifen
 
 Rust bietet drei verschiedene Herangehensweisen eine iterative
 Tätigkeit auszuführen. Es gibt: `loop`, `while` und `for`.

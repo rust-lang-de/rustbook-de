@@ -6,8 +6,10 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust Buches](http
 
 ## Building
 
+use rustbook from https://github.com/rust-lang/rust/tree/master/src/rustbook or https://github.com/steveklabnik/rustbook
+
 ```bash
-gitbook build
+rustbook build trpl-de
 ```
 
 ## Mithelfen

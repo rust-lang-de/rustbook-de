@@ -1,4 +1,4 @@
-# Hallo Cargo!
+% Hallo Cargo!
 
 [Cargo][cratesio] ist ein Werkzeug, welches Rustler benutzen um ihre Rust
 Projekte zu verwalten. Cargo ist derzeit in einem pre-1.0 Zustand und ist somit
