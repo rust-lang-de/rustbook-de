@@ -9,7 +9,7 @@ Wenn dir Speicherallokation in C-artigen Sprachen bereits vertraut ist,
 dann sieh dieses Kapitel als Auffrischung.
 Wenn nicht, dann lernst du hier Grundlagen, aus der Sicht von Rust.
 
-## Speicher Verwaltung
+## Speicherverwaltung
 
 Die beiden Begriffe Stack und Heap beschreiben unterschiedliche Bereiche im Arbeitsspeicher und helfen uns dabei zu unterscheiden wann Speicher alloziert und dealloziert wird.
 
@@ -22,7 +22,7 @@ Der Heap, auf der anderen Seite, ist langsamer, wird explizit für von deinem Pr
 
 ## Der Stack
 
-*(engl. stack = **"Der Stapel"** )*
+*(engl. stack = **„Der Stapel“** )*
 
 Nehmen wir mal ein Beispiel:
 
@@ -34,11 +34,11 @@ fn main() {
 
 Dieses Programm besteht nur aus einer Variablenzuweisung, `x`.
 Der Speicher für `x` muss irgendwo alloziert werden.
-Rust ‘Stack-Alloziert‘ standardmäßig, das heißt Werte landen auf dem Stack.
+Rust ‚Stack-Alloziert‘ standardmäßig, das heißt Werte landen auf dem Stack.
 Was heißt das?
 
-Wenn eine Funktion aufgerufen wird, dann wird für jede ihrer lokalen Variablen, und etwas extra Information, Speicher auf ihrem Stack, dem Stackframe,  reserviert.
-Für diese Tutorial ignorieren wir die extra Informationen erstmal.
+Wenn eine Funktion aufgerufen wird, dann wird für jede ihrer lokalen Variablen, und etwas Zusatzinformation, Speicher auf ihrem Stack, dem Stackframe, reserviert.
+Für diese Tutorial ignorieren wir die Zusatzinformationen erst einmal.
 Wenn `main()` also ausgeführt wird, dann allozieren wir einen einzelnen 32-bit Integer auf dem Stackframe, das passiert hier ganz automatisch.
 Wenn die Funktion terminiert wird der Stackframe freigegeben.
 Auch vollautomatisch.
@@ -82,9 +82,9 @@ Hier eine Darstellung des Stackframes:
 
 Wir haben `x` auf Adresse `0`, mit dem Wert `42`.
 
-Wenn nun `foo()` aufgerufen wird, wird ein weiter Stackframe alloziert:
+Wenn nun `foo()` aufgerufen wird, wird ein weiterer Stackframe alloziert:
 
-Daher auch der Begriff "Stack" = "Stapel",
+Daher auch der Begriff „Stack“ = „Stapel“,
 es wird immer etwas oben drauf gelegt und auch ausschließlich von oben wieder herunter genommen.
 Wie bei einem Stapel Teller.
 Solange `foo()` läuft, ist auch `main()` noch nicht beendet und der Speicher beider Funktionen ist noch vergeben.
@@ -100,9 +100,9 @@ Jedoch kann `foo()` auch nicht direkt auf den Speicher von `main()` zugreifen.
 Da `0` bereits im erst Stackframe vergeben war, verwendet `foo()` nun Adressen `1` und `2`. Der Stapel wächst sprichwörtlich nach oben mit jedem Funktionsaufruf.
 
 Die Adressen `0` bis `2` sind allerdings rein zur Illustration gewählt,
-im tatsächlichen Speicher hätten diese Adressen andere werte und wären auch nicht direkt aufeinander folgend.
+im tatsächlichen Speicher hätten diese Adressen andere Werte und wären auch nicht direkt aufeinanderfolgend.
 
-Nachdem `foo()` beendet ist wird sein frame wieder vom Stapel genommen und wird sind wieder zurück bei:
+Nachdem `foo()` beendet ist wird sein Frame wieder vom Stapel genommen und wir sind wieder zurück bei:
 
 | Adresse | Name | Wert  |
 |---------|------|-------|
@@ -181,9 +181,9 @@ wir nehmen nie was aus der Mitte raus.
 
 ## Der Heap
 
-*(engl. heap = **"Der Haufen"** )*
+*(engl. heap = **„Der Haufen“** )*
 
-Wie bereits erwähnt können Funktionen nicht auf die lokalen variablen von anderen Funktionen Zugreifen.
+Wie bereits erwähnt können Funktionen nicht auf die lokalen variablen von anderen Funktionen zugreifen.
 Manchmal möchte man jedoch etwas von einer Funktion an eine andere übergeben oder länger als für die Laufzeit einer Funktion im Speicher behalten.
 Dafür haben wir den Heap.
 
@@ -226,16 +226,14 @@ Der Speicher sieht also eigentlich etwa so aus:
 Wir haben (2<sup>30</sup>) - 1 Adressen in unserem imaginären 1GB RAM.
 Da der Stack von 0 nach oben wächst ist es am einfachsten die Adressen von Oben nach unten für den Heap zu verwenden.
 Der erste Wert steht also an der höchsten Stelle im Speicher.
-Das `struct` auf `x` hat einen [raw Zeiger](Raw_Zeiger.md) auf die Stelle an der wir den Speicher auf dem Heap alloziert haben,
-
-also den Wert (2<sup>30</sup>) - 1.
+Das `struct` auf `x` hat einen [raw Zeiger](Raw_Zeiger.md) auf die Stelle an der wir den Speicher auf dem Heap alloziert haben, also den Wert (2<sup>30</sup>) - 1.
 
 Wir habe noch nicht wirklich viel darüber gesprochen, was es eigentlich bedeutet in diesen Kontexten Speicher zu allozieren und zu deallozieren.
 Das zu vertiefen würde den Rahmen dieses Tutorials sprengen,
 aber was wichtig ist mitzunehmen, ist dass der Heap nicht einfach nur ein von oben nach unten wachsender Stack ist.
 Im Gegensatz um Stack muss der Heap nicht in einer festen Reihenfolge alloziert und freigegeben werden kann.
 Dadurch kann er allerdings Löcher haben.
-Dazu wird es später ein Beispiel.
+Dazu wird es später ein Beispiel geben.
 Hier erst mal ein kleines Diagramm des Speicherlayouts eines Programms das schon ein Weilchen lief:
 
 | Adresse              | Name | Wert                   |
@@ -261,11 +259,11 @@ Rust Programme verwenden [jemalloc][jemalloc].
 [jemalloc]: http://www.canonware.com/jemalloc/
 
 Zurück zu unserem Beispiel.
-Da sich diese Werte auf dem Heap befinden, können sich länger existieren als die Funktion die die Box erzeugt hat.
+Da sich diese Werte auf dem Heap befinden, können sie länger existieren als die Funktion die die Box erzeugt hat.
 In diesem Fall jedoch nicht.[^1]
 Wenn eine Funktion endet wird ihr Stackframe freigegeben.
 `Box<T>` hat einen Trick: [Drop][drop].
-Es implementiert `Drop` und gibt sobald die ihr Wert auf dem Stack freigegeben wird ebenfalls den Speicher auf dem Heap frei.
+Es implementiert `Drop` und gibt sobald ihr Wert auf dem Stack freigegeben wird ebenfalls den Speicher auf dem Heap frei.
 Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap frei:
 
 | Adresse | Name | Wert   |
@@ -280,7 +278,7 @@ Sobald der Stackframe verschwindet, wird der gesamte verwendete Speicher freigeg
 
 ## Argumente und Ausleihen
 
-Wir hatten bereits ein paar Grundlegende Beispiele für Stack und Heap,
+Wir hatten bereits ein paar grundlegende Beispiele für Stack und Heap,
 aber was ist mit Funktionsargumenten und Ausleihen?
 
 ```rust
@@ -297,9 +295,7 @@ fn main() {
 ```
 
 
-
-
-Wenn ihr `main()` betreten sieht der Speicher so aus:
+Wenn wir `main()` betreten sieht der Speicher so aus:
 
 | Adresse | Name | Wert   |
 |---------|------|--------|
@@ -318,11 +314,11 @@ Was passiert wenn wir nun `foo()` aufrufen und `y` übergeben?
 | 1       | y    | → 0    |
 | 0       | x    | 5      |
 
-Stackframes sind nicht nur für Lokale Zuweisungen, sie sind auch für Argumente gedacht.
+Stackframes sind nicht nur für lokale Zuweisungen, sie sind auch für Argumente gedacht.
 In diesem Fall also brauchen wir sowohl `i`, das Argument und `z`, die lokale Variable.
 `i` ist die Kopie des Arguments `y`, also auch `0`.
 
-Das ist der Grund dafür dass man ausgeliehenen Speicher nicht deallozieren kann. Wenn man wir nun `x` freigeben würde, würden `y` und `i` auf ungültigen Speicher zeigen.
+Das ist der Grund dafür, dass man ausgeliehenen Speicher nicht deallozieren kann. Wenn wir nun `x` freigeben würden, würden `y` und `i` auf ungültigen Speicher zeigen.
 Das ist in Sprachen wie C möglich, aber nicht in Rust.
 
 ## Ein komplexes Beispiel
@@ -373,7 +369,7 @@ Als erstes rufen wir `main()` auf:
 Wir allozieren Speicher für `j`, `i` und `h`.
 `i` liegt auf dem Heap, beinhaltet also einen Adresswert dort hin.
 
-Als nächstes wird am ende von `main()` `foo()` aufgerufen:
+Als nächstes wird am Ende von `main()` `foo()` aufgerufen:
 
 
 | Adresse              | Name | Wert                   |
@@ -442,7 +438,7 @@ Wir allozieren also einen weiteren Wert auf dem Heap und müssen eins von (2<sup
 Das ist einfacher das zu schreiben als `1,073,741,822` ☺.
 Jedenfalls, hier die Variablen wie gewohnt.
 
-Am ende von `bar()` wird wieder `baz()` aufgerufen:
+Am Ende von `bar()` wird wieder `baz()` aufgerufen:
 
 | Adresse              | Name | Wert                   |
 |----------------------|------|------------------------|
@@ -466,7 +462,7 @@ Am ende von `bar()` wird wieder `baz()` aufgerufen:
 So, jetzt haben wir den tiefsten Punkt in unserer Schachtelung erreicht,
 Glückwunsch, du bist bist jetzt noch dran geblieben.
 
-Nachdem `baz()` nun zu ende ist können wir `f` und `g` wegwerfen:
+Nachdem `baz()` nun zu Ende ist können wir `f` und `g` wegwerfen:
 
 | Adresse              | Name | Wert                   |
 |----------------------|------|------------------------|
@@ -515,22 +511,21 @@ Sobald `i` ge`Drop`pt wird, wird auch der Rest vom Heap geleert.
 
 ## Was machen andere Sprachen?
 
-Viele Sprachen verwenden heutzutage einen GarbageCollector.
-Das hat einige Vorteile, die Beschreibung welcher allerdings den Rahmen dieses Tutorials übersteigt.
-Dort hat meinen keinen manuellen Einfluß darauf, ob Speicher auf dem Heap oder Stack verwendet wird.
-Stattdessen liegt fast alles auf dem Heap und der GarbageCollector hält regelmäßig das Programm kurz an und räumt auf.
+Viele Sprachen verwenden heutzutage einen Garbage Collector.
+Das hat einige Vorteile, die Beschreibung würde allerdings den Rahmen dieses Tutorials sprengen.
+Dort hat man keinen manuellen Einfluss darauf, ob Speicher auf dem Heap oder Stack verwendet wird.
+Stattdessen liegt fast alles auf dem Heap und der Garbage Collector hält regelmäßig das Programm kurz an und räumt auf.
 
 Bei Sprachen wie C/C++ kann man zwischen Stack und Heap unterscheiden, muss allerdings manuell seinen Speicher aufräumen.
-Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc, Konzepte wie "Besitz" und "Ausleihen" sind allerdings noch kein Kernfeature der Sprache.
+Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc, Konzepte wie „Besitz“ und „Ausleihen“ sind allerdings noch kein Kernfeature der Sprache.
 
 ## Was soll ich benutzen?
 
-Der Stack ist schneller und einfacher zu handhaben, wofür also den Heal=p?
-Ein wichtiger Grund ist dass Stack-allozieren alleine nur LIFO[^2] Verhalten bietet.
+Der Stack ist schneller und einfacher zu handhaben, wofür also den Heap?
+Ein wichtiger Grund ist, dass Stack-allozieren alleine nur LIFO[^2]-Verhalten bietet.
 Heapallokation ist vielseitiger und erlaubt schnelles Übergeben von großen Werten ohne Kopieren.
 
-
-Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmässig den Stack, das ist grundlegend einfacher und meistens effizienter.
+Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmäßig den Stack nutz, das ist grundlegend einfacher und meistens effizienter.
 
 ## Laufzeiteffizienz
 
@@ -539,7 +534,7 @@ Die Maschine inkrementiert und dekrementiert einfach den sogenannten *Stack-Poin
 Speicher auf dem Heap verwalten ist nicht trivial:
 Speicher auf dem Heap kann beliebig freigegeben werden und jeder Block auf dem Heap kann eine beliebige Größe haben, es ist allgemein schwerer wiederverwendbare Bereiche zu identifizieren.
 
-Um hier noch tiefer einzusteigen kannst du [diese Paper][wilson](englisch) lesen oder Grundstudiums-"Betriebssysteme"-Vorlesungen der Uni deiner Wahl besuchen :D
+Um hier noch tiefer einzusteigen kannst du [diese Paper][wilson] (englisch) lesen oder Grundstudiums-Vorlesungen „Betriebssysteme“ der Uni deiner Wahl besuchen :D
 
 [wilson]: http://citeseerx.ist.psu.edu/viewdoc/summary?doi=10.1.1.143.4688
 
@@ -549,12 +544,12 @@ Stackallokation beeinflusst nicht nur Rust selbst, sondern auch das mentale Mode
 LIFO-Semantik definiert Rusts automatische Speicherverwaltung.
 Selbst die Freigabe von Heap-allozierten Boxen mit einem einzelnen Besitzer wird von der LIFO-Semantik des Stacks bestimmt, wie bereits oben demonstriert.
 Nicht-LIFO-Semantik würde zwar mehr Flexibilität bieten,
-jedoch könnte ein nicht automatisch zur Compilezeit abgeleiten werden,
+jedoch könnte dann nicht automatisch zur Compile-Zeit abgeleitet werden,
 wann Speicher freigegeben werden kann.
 Ein Compiler müsste sich auf dynamische Protokolle, potentiell außerhalb der Sprache selbst, verlassen (zum Beispiel *reference counting* wie in `Rc<T>` und `Arc<T>`).
 
-Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heapallokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen GarbageCollector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
+Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heapallokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen Garbage Collector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
 
-[^1]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen das heißt manchmal ‘moving out of the box’. Komplexere Beispiele folgen später.
+[^1]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen das heißt manchmal ‚moving out of the box‘. Komplexere Beispiele folgen später.
 
 [^2]: Last in first out.
