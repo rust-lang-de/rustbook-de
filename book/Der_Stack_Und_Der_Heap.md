@@ -525,7 +525,7 @@ Der Stack ist schneller und einfacher zu handhaben, wofür also den Heap?
 Ein wichtiger Grund ist, dass Stack-allozieren alleine nur LIFO[^2]-Verhalten bietet.
 Heapallokation ist vielseitiger und erlaubt schnelles Übergeben von großen Werten ohne Kopieren.
 
-Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmäßig den Stack nutz, das ist grundlegend einfacher und meistens effizienter.
+Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmäßig den Stack nutzt, das ist grundlegend einfacher und meistens effizienter.
 
 ## Laufzeiteffizienz
 
