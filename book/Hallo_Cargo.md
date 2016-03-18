@@ -8,14 +8,14 @@ an einsetzen.
 
 [cratesio]: http://doc.crates.io
 
-Cargo verwaltet drei Sachen: Das bauen des Codes, das herunterladen der
+Cargo verwaltet drei Sachen: Das bauen des Codes, das Herunterladen der
 Abhängigkeiten, welche dein Projekt benötigt und
-das bauen dieser Abhängigkeiten. Zu Anfang hat dein Programm keine
-Abhängigkeiten, also werden wir nur den ersten Teil an Funktionalität nutzen.
-Schlussendlich werden wir mehr nutzen. Da wir Cargo von Anfang an nutzen
-wird es leicht sein sie hinterher hinzuzufügen.
+das Bauen dieser Abhängigkeiten. Zu Anfang hat dein Programm keine
+Abhängigkeiten. Also wirst du nur den ersten Teil an Funktionalität nutzen.
+Später wirst du komplexere Programme mit einigen Abhängigkeiten erstellen
+und dann macht es sich bezahlt, dass du Cargo von Anfang an genutzt hast.
 
-Wenn du Rust mit dem offiziellen Installer installiert haben, dann wirst du
+Wenn du Rust mit dem offiziellen Installer installiert hast, dann wirst du
 auch Cargo haben. Wenn du allerdings Rust auf eine andere Art und Weise
 installiert hast, dann möchtest du möglicherweise einen Blick in die
 [Cargo README][cargoreadme] werfen um herauszufinden, wie man Cargo installiert.
@@ -24,7 +24,7 @@ installiert hast, dann möchtest du möglicherweise einen Blick in die
 
 ## Nach Cargo umwandeln
 
-Lass uns unser 'Hallo Welt' nach Cargo umwandeln.
+Lass uns unser 'Hallo Welt'-Projekt nach Cargo umwandeln.
 
 Um ein Projekt zu "Cargoifizieren" benötigen wir drei Dinge:
 Erstelle eine `Cargo.toml` Konfigurationsdatei, lege die Quelltexte an den
@@ -37,26 +37,27 @@ $ mv main.rs src/main.rs
 $ rm main  # oder main.exe unter Windows
 ```
 
-Beachte, da wir eine ausführbare Datei erstellen, dass wir `main.rs` als
-Dateiname beibehalten. Wenn wir stattdessen eine Bibliothek machen wollten,
-sollten wir `lib.rs` verwenden. Diese Konvention wird von Cargo benutzt um
-unsere Projekte erfolgreich zu kompilieren, aber sie kann auch außer Kraft gesetzt werden, wenn wir das wollen.
+Da wir eine ausführbare Datei erstellen behalten wir `main.rs` als
+Dateiname bei. Wenn wir stattdessen eine Bibliothek erstellen wollten,
+müssten wir `lib.rs` verwenden. Diese Konvention wird von Cargo benutzt um
+unsere Projekte erfolgreich zu kompilieren. Wenn wir wollen, dann können
+wir diese Konvention auch außer Kraft setzen.
 
 [crates-custom]: http://doc.crates.io/manifest.html#configuring-a-target
 
-Cargo erwartet, dass deine Quelltexte in einem `src` Verzeichnis liegen.
-Das lässt das oberste Verzeichnis für andere Sachen, wie READMEs,
+Cargo erwartet, dass deine Quelltexte in einem `src`-Verzeichnis liegen.
+Das lässt das oberste Verzeichnis für andere Sachen wie READMEs,
 Lizenzinformationen und anderen Dingen, die nichts mit deinem
 Code zu tun haben, frei. 
 <!-- A place for everything, and everything in its place. -->
 
-Als Nächstes unsere Konfigurationsdatei:
+Als nächstes unsere Konfigurationsdatei:
 
 ```bash
 $ editor Cargo.toml
 ```
 
-Stelle sicher, dass der Name correct ist: Das große `C` ist notwendig!
+Stelle sicher, dass der Name korrekt ist: Das große `C` ist notwendig!
 
 Schreib das hier hinein:
 
@@ -68,8 +69,8 @@ version = "0.0.1"
 authors = [ "Dein Name <du@example.com>" ]
 ```
 
-Diese Datei ist im [TOML][toml] Format. TOML ist ähnlich wie INI, aber hat ein
-paar tolle extra Funktionen. Der TOML Dokumentation zufolge
+Diese Datei ist im [TOML][toml]-Format. TOML ist ähnlich wie INI, aber hat ein
+paar tolle Extra-Funktionen. Der TOML-Dokumentation zufolge
 
 > Zielt TOML darauf ab ein minimales Konfigurationsformat zu sein, welches
 > aufgrund seiner offensichtlichen Semantik, leicht zu lesen ist. TOML ist
@@ -99,8 +100,8 @@ Hallo Welt!
 ```
 
 Beachte, dass dieses mal das Projekt nicht neu kompiliert wurde. Cargo hat
-selber herausgefunden, dass wir den Quelltext nicht verändert haben, also
-hat es einfach nur die Binärdatei ausgeführt. Hätten wor eine Veränderung
+selber herausgefunden, dass wir den Quelltext nicht verändert haben und hat
+einfach nur die Binärdatei ausgeführt. Hätten wor eine Veränderung
 vorgenommen, dann hätten wir beides gesehen:
 
 ```bash
@@ -110,9 +111,9 @@ $ cargo run
 Hallo Welt!
 ```
 
-Dies hat uns nicht viel mehr eingebracht als einfach nur `rustc` zu benutzen,
-aber denk an Zukunft: Wenn unser Projekt komplexer wird, dann müssen wir
-mehr machen um alle Teile zusammen ordentlich zum kompilieren zu bringen.
+Dies hat uns nicht viel mehr eingebracht als einfach nur `rustc` zu benutzen.
+Aber denk an Zukunft: Wenn unser Projekt komplexer wird, dann müssen wir
+mehr machen um alle Teile zusammen ordentlich zum Kompilieren zu bringen.
 Mit Cargo können wir, während unser Projekt wächst, einfach `cargo build`
 aufrufen und unser Projekt wird sofort auf die richtige Art und Weise gebaut.
 
@@ -120,8 +121,7 @@ Wenn unser Projekt dann endlich fertig zum Release ist, kannst du einfach
 `cargo build --release` benutzen um dein Projekt mit Optimierungen zu
 kompilieren.
 
-Do wirst auch feststellen,
-dass Cargo eine neue Datei erzeugt hat: `Cargo.lock`.
+Do wirst auch feststellen, dass Cargo eine neue Datei erzeugt hat: `Cargo.lock`.
 
 ```toml
 [root]
@@ -129,15 +129,15 @@ name = "hello_world"
 version = "0.0.1"
 ```
 
-Die `Cargo.lock` Datei wird von Cargo benutzt um deine Abhängigkeit zu
-verfolgen. Im Moment haben wir keine keine, also ist sie etwas dürftig.
-Du wirst diese Datei niemals selber anfassen müssen, lass einfach Cargo
+Die `Cargo.lock`-Datei wird von Cargo benutzt, um deine Abhängigkeit zu
+verfolgen. Im Moment haben wir keine, also ist sie etwas dürftig.
+Du wirst diese Datei niemals selber anfassen müssen. Lass einfach Cargo
 die Sache regeln.
 
 Das wars! Wir haben `hallo_welt` erfolgreich mit Cargo gebaut. Obwohl das
 Programm simpel ist, benutzt es viele der Werkzeuge die du für den Rest
-deiner Rust Karriere brauchst. <!-- klingt etwas merkwürdig -->
-Du kannst erwarten, dass du mit nahezu allen Rust Projekten so
+deiner Rust-Karriere brauchst. <!-- klingt etwas merkwürdig -->
+Du kannst erwarten, dass du mit nahezu allen Rust-Projekten so
 loslegen kannst:
 
 ```bash
@@ -152,7 +152,7 @@ Du brauchst nicht jedes mal durch alle diese Schritte gehen, wenn du ein neues
 Projekt anfängst! Cargo hat die Fähigkeit ein Gerüst-Projekt zu erzeugen, mit
 dem du sofort anfangen kannst zu entwickeln.
 
-Um eine neues Projekt mit Cargo anzufangen, benutze `cargo new`:
+Um eine neues Projekt mit Cargo anzufangen benutze `cargo new`:
 
 ```bash
 $ cargo new hallo_welt --bin
@@ -163,7 +163,7 @@ anstatt einer Bibliothek, zu erzeugen. Ausführbare Dateien werden oft
 ‘binaries’ genannt.
 (So wie in `/usr/bin`, falls du auf einem Unix System bist).
 
-Lass uns mal sehen wlche Dateien Cargo für uns erzeugt hat:
+Lass uns mal sehen welche Dateien Cargo für uns erzeugt hat:
 
 ```bash
 $ cd hallo_welt
@@ -176,12 +176,11 @@ $ tree .
 1 directory, 2 files
 ```
 
-Falls du den `tree` Befehl nicht hast, dann kannst du ihn dir wahrscheinlich
+Falls du den `tree`-Befehl nicht hast, dann kannst du ihn dir wahrscheinlich
 mithilfe der Paketverwaltung deiner Distribution besogen. Der Befehl ist nicht
 notwendig, aber sicherlich nützlich.
 
-Das ist alles was wir brauchen um loszulegen.
-Lass uns zuerst die `Cargo.toml` betrachten.
+Das ist alles was wir brauchen um loszulegen. Lass uns zuerst die `Cargo.toml` betrachten.
 
 ```toml
 [package]
@@ -191,10 +190,10 @@ version = "0.1.0"
 authors = ["Dein Name <du@example.com>"]
 ```
 
-Cargo hat diese Datei mit angemessenen Vorgaben, basierend auf den von dir
-übergebenen Argumenten und deiner globalen `git` Konfiguration, gefüllt.
-Du wirst vielleicht bemerken, dass Cargo das `hallo_welt` Verzeichnis auch
-als `git` Repositorium initialisiert hat.
+Cargo hat diese Datei mit einigen Vorgaben, basierend auf den von dir
+übergebenen Argumenten und deiner globalen `git`-Konfiguration, gefüllt.
+Du wirst vielleicht bemerken, dass Cargo das `hallo_welt`-Verzeichnis auch
+als `git`-Repository initialisiert hat.
 
 Das hier steht in der `src/main.rs`:
 
@@ -204,14 +203,14 @@ fn main() {
 }
 ```
 
-Cargo hat ein "Hallo Welt!" für und erzeugt und du kannst sofort mit dem Coden
+Cargo hat ein "Hallo Welt!" für uns erzeugt und du kannst sofort mit dem Coden
 loslegen!
 Cargo hat seinen eigenen [Guide][guide], welcher die Features von Cargo in
 größerem Detail behandelt.
 
 [guide]: http://doc.crates.io/guide.html
 
-Nun, da du mit den Werkzeugen vertraut bist, lass uns tatsächlich mehr über
+Da du nun mit den Werkzeugen vertraut bist, lass uns tatsächlich mehr über
 die Sprache Rust selbst lernen. Dies sind die Grundlagen, welche dir den Rest
 deiner Zeit mit Rust sehr dienlich sein werden.
 
