@@ -102,7 +102,7 @@ wenn `x` den Scope [engl.: Geltungsbereich] verlässt, der Speicher des Vektors
 freigegeben wird. Dieser Vorgang wird deterministisch vom Rust-Compiler
 vorgenommen, anstatt durch einen Mechanismus wie einen Garbage Collector.
 Das bedeutet, dass man in Rust selber keine Funktionen wie `malloc` und
-`free` aufruft: Der Compiler bestimmt statisch wann du Speicher allozieren oder
+`free` aufruft: Der Compiler bestimmt statisch, wann du Speicher allozieren oder
 freigeben musst und fügt diese Aufrufe selber ein. Irren ist Menschlich, aber
 Compiler vergessen nie.
 
