@@ -1,14 +1,14 @@
 # Hallo Welt!
 
-Nun, da du Rust installiert hast, lass uns dein erstes Rust Programm schreiben.
-Es ist traditionell sein erstes Programm in einer neuen Sprache den Text
-"Hallo Welt!" auf dem Bildschirm ausgeben zu lassen. Die tolle Sache an so
+Nun, da du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
+Es ist traditionell so, dass man mit dem ersten Programm in einer neuen Sprache
+den Text "Hallo Welt!" auf dem Bildschirm ausgeben läßt. Die tolle Sache an so
 einem einfachen Programm ist, dass du überprüfen kannst, dass dein Compiler
 nicht einfach nur installiert ist, sondern auch ordnungsgemäß funktioniert.
 Und Informationen auf dem Bildschirm auszugeben ist eine ziemlich häufige Sache.
 
-Das erste, was wir tun müssen, ist eine Datei erstellen, in der wir den Code
-packen. Ich mag es ein `projekte` Verzeichnis in meinem Heimverzeichnis zu
+Im ersten Schritt müssen wir eine Datei erstellen, in die wir unseren Code packen.
+Ich mag es ein `projekte`-Verzeichnis in meinem Heimverzeichnis zu
 erstellen und alle meine Projekte dort aufzubewahren. Rust ist es egal wo dein
 Code liegt.
 
@@ -19,7 +19,7 @@ Editierwerkzeuge oder wo dein Code liegt. Falls du eine IDE der Kommandozeile
 vorziehst, dann möchtest du vielleicht [SolidOak][solidoak] oder Plugins für
 deine bevorzugte IDE ausprobieren. Es existieren eine Reihe von Erweiterungen
 von unterschiedlicher Qualität, welche von der Community entwickelt werden.
-Das Rust Team liefert auch [Plugins für verschiedene Editoren][plugins].
+Das Rust-Team liefert auch [Plugins für verschiedene Editoren][plugins].
 Deine IDE einzurichten sprengt den Rahmen dieses Tutorials, also schau in die
 Dokumentation für dein spezielles Setup.
 
@@ -40,11 +40,11 @@ Wenn Windows und nicht die Powershell benuzt, dann wird `~` wohl nicht
 funktionieren. Für mehr Details, schaue in die Dokumentation für deine Shell.
 
 Lass uns als nächstes eine neue Quelltextdatei anlegen. Wir werden unsere Datei
-`main.rs` nennen. Rust Dateien haben immer eine `.rs` Endung. Wenn du mehr
+`main.rs` nennen. Rust Dateien haben immer die Endung `.rs`. Wenn du mehr
 als ein Wort in deinem Dateinamen verwendest, dann benutze einen Unterstrich:
 `hallo_welt.rs` anstatt `hallowelt.rs`.
 
-Nun, da wir unsere Datei offen haben, tippen wir folgendes ein:
+Nun, da wir unsere Datei offen haben, tippen wir folgenden Quelltext ein:
 
 ```rust
 fn main() {
@@ -60,7 +60,7 @@ $ ./main # oder main.exe unter Windows
 Hallo Welt!
 ```
 
-Erfolg! Lass uns im Detail durchgehen was gerade passiert ist.
+Erfolg! Lass uns im Detail durchgehen und sehen, was gerade passiert ist.
 
 ```rust
 fn main() {
@@ -68,11 +68,11 @@ fn main() {
 }
 ```
 
-Diese Zeilen definieren eine *Funktion* in Rust. Die `main` Funktion ist
-besonders: Sie ist der Anfang eines jeden Rust Programmes. Die erste Zeile sagt
+Diese Zeilen definieren eine *Funktion* in Rust. Die `main`-Funktion ist
+besonders: Sie ist der Anfang eines jeden Rust-Programmes. Die erste Zeile sagt
 "Ich deklariere eine Funktion namens `main`, welche keine Argumente entgegen
 nimmt und nichts zurückgibt". Falls es Argumente gäbe, dann würden sie zwischen
-den Klammern (`(` und `)`) stehen, und, weil wir nichts von dieser Funktion
+den Klammern (`(` und `)`) stehen und weil wir nichts von dieser Funktion
 zurückgeben, können wir den Rückgabetyp koomplett weglassen. Darauf gehen
 wir später ein.
 
@@ -96,38 +96,38 @@ an.
 
 [configs]: https://github.com/rust-lang/rust/tree/master/src/etc/CONFIGS.md
 
-Der Zweite Punkt ist der `println!()` Teil. Dieser ruft ein Rust
-[Makro][macro] (so wird Metaprogramierung in Rust gemacht) auf. Wenn es eine
+Der Zweite Punkt ist der `println!()-`Teil. Dieser ruft ein Rust-[Makro][macro]
+(so wird Metaprogramierung in Rust gemacht) auf. Wenn es eine
 Funktion wäre, dann wüde es so aussehen: `println()`. Für unsere Zwecke
 brauchen wir uns nicht um diesen Unterschied kümmern. Merk dir einfach, dass du
-manchmal ein `!` sehen wirst und es bedeutet, dass du ein Makro, anstatt eine
-normalen Funktion, aufrufst. Rust implementiert aus einem guten Grund
-`println!` als Makro anstatt als normale Funktion, aber das ist ein
-fortgeschrittenes Thema. Eine letzte Sache noch: Rusts Makros sind bedeutend
-anders als C Makros, falls du die mal benutzt hast. Hab keine Angst Makros zu
-benutzen. Wir werden die Details später noch behandeln, aber für den Moment
+manchmal ein `!` sehen wirst und es bedeutet, dass du ein Makro anstatt eine
+normalen Funktion aufrufst. Rust implementiert aus einem guten Grund
+`println!` als Makro anstatt als normale Funktion. Aber das ist ein
+fortgeschrittenes Thema. Eine letzte Sache noch: Rusts-Makros sind bedeutend
+anders als C-Makros, falls du die mal benutzt hast. Hab keine Angst Makros zu
+benutzen. Wir werden die Details später noch behandeln. Aber für den Moment
 musst du uns vertrauen.
 
 [macro]: Makros.md
 
 Weiter gehts. "Hallo World" ist ein ‘String’. Strings sind ein überraschend
-kompliziertes Thema in einer Systemprogrammiersprache, und dies ist ein
+kompliziertes Thema in einer Systemprogrammiersprache. Und dies ist ein
 ‘statisch allokierter’ String. Falls du mehr über Allokierung lesen möchtest,
-dann schau dir [der Stack und der Heap][allocation], aber du musst es nicht
-unbedingt wenn du nicht möchtest. Wir übergeben den String als Argument an
+dann schau dir [der Stack und der Heap][allocation] an. Aber du musst es nicht
+unbedingt, wenn du nicht möchtest. Wir übergeben den String als Argument an
 `println!`, was dann den String auf dem Bildschirm ausgibt. Leicht genug!
 
 [allocation]: Der_Stack_Und_Der_Heap.md
 
 Weiterhin endet die Zeile mit einem Semikolon (`;`). Rust ist eine
-[‘Ausdrucksorientierte’ Sprache][expression-oriented language], was bedeuted,
+[‘ausdrucksorientierte’ Sprache][expression-oriented language]. Das bedeuted,
 dass die meisten Dinge Ausdrücke anstatt Anweisungen sind. Das `;` wird
 benutzt um anzuzeigen, dass der Ausdruck zuende ist und der nächste beginnen
-kann. Die meisten Zeilen in Rust Code enden mit einem `;`.
+kann. Die meisten Zeilen in Rust-Code enden mit einem `;`.
 
 [expression-oriented language]: Glossar.md#ausdrucksorientierte-sprache
 
-Und zum Schluss natürlich kompilieren wir unser Programm und lassen es laufen.
+Zum Schluss kompilieren wir unser Programm und lassen es laufen.
 Wir können mit unserem Compiler `rustc` kompilieren, indem wir den Namen
 unserer Quelltextdatei angeben:
 
@@ -158,7 +158,7 @@ ausführbare Datei (`main.exe` unter Window, `main` überall sonst).
 $ ./main  # or main.exe on Windows
 ```
 
-Dies gibt nun unseren `Hallo Welt!` text in unserer Kommandozeile aus.
+Dies gibt nun unseren `Hallo Welt!`-Text in unserer Kommandozeile aus.
 
 Falls du von dynamischen Sprachen wie Ruby, Python oder JavaScript kommst, dann
 bist du vielleicht nicht daran gewöhnt, dass diese zwei Schritte getrennt sind.
@@ -166,16 +166,16 @@ Rust ist eine ‘ahead-of-time compiled language’, was bedeutet, dass man ein
 Programm kompilieren und dann jemand anderem geben kann ohne, dass diese
 Person Rust zur Ausführung benötigt. Wenn man jemandem eine `.rb`, `.py` oder
 `.js` gibt, dann benötigt dieser Jemand eine installierte
-Ruby/Python/JavaScript Implementierung, aber man braucht nur einen Befehl um
+Ruby-/Python-/JavaScript-Implementierung. Aber man braucht nur einen Befehl um
 zu kompilieren und auszuführen. Im Sprachendesign ist alles ein Kompromiss und
 Rust hat seine Entscheidung getroffen.
 
-Gratuliere! Du hast nun offiziell ein Rust Programm geschrieben. Das macht dich
-nun zu einem Rust Programmier! Willkommen.
+Gratuliere! Du hast nun offiziell ein Rust-Programm geschrieben. Das macht dich
+nun zu einem Rust-Programmier! Willkommen.
 
 Als nächstes würde ich dich gerne mit einem anderen Werkzeug bekanntmachen, 
-nämlich mit Cargo, welches benutzt wird um realitätsnahe Programme zu
-schreiben. Nur `rustc` zu benutzen ist nett für simple Sachen, aber während 
+nämlich mit Cargo. Dieses wird benutzt, um realitätsnahe Programme zu
+schreiben. Nur `rustc` zu benutzen ist nett für einfache Sachen. Aber während 
 dein Projekt wächst wirst du etwas haben wollen, was dir hilft alle
 Möglichkeiten die dir `rustc` bietet, zu managen und es dir leicht macht
-code mit anderen Leuten und Projekten zu teilen.
+Code mit anderen Leuten und Projekten zu teilen.
