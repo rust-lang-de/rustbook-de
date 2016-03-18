@@ -74,12 +74,12 @@ Mache Dinge klar. Makros können bedeutend mehr komplizierte Dinge tun als
 Funktionsaufrufe und damit sind sie optisch eindeutig. Das `!` hilft auch beim 
 Parsen, was es erleichtert Werkzeuge zu schreiben und ebenfalls wichtig ist.
 
-Wir haben `mut` benutzt um `x` *mutable* [engl.: veränderbar] zu machen:
+Wir haben `mut` benutzt, um `x` *mutable* [engl.: veränderbar] zu machen:
 Bindungen sind standardmäßig *immutable* [engl.: unveränderbar].
 Wir werden den Vektor noch später in diesem Beispiel verändern.
 
 Es ist ebenfalls beachtenswert, dass hier keine Typangaben notwendig waren: 
-Obwohl Rust statisch typisiert ist mussten wir den Typ nicht ausdrücklich 
+Obwohl Rust statisch typisiert ist, mussten wir den Typ nicht ausdrücklich 
 angeben. Rust hat *type inference* [engl.: Typinferenz, Typableitung] um 
 die Stärke statischer Typen und der Ausführlichkeit des Angebens von Typen 
 auszubalancieren.
@@ -89,7 +89,7 @@ auf dem Stack platziert. Der `Vec<T>` Typ jedoch reserviert Speicher für die
 Elemente des Vektors auf dem Heap. Falls du nicht mit dieser Unterscheidung
 vertraut bist, dann kannst du sie fürs Erste ignorieren oder einen Blick in
 [‚Der Stack und der Heap‘][heap] werfen. Als eine Systemprogrammiersprache
-gibt Rust dir die Möglichkeit zu bestimmen wie dein Speicher alloziert wird,
+gibt Rust dir die Möglichkeit zu bestimmen, wie dein Speicher alloziert wird,
 aber wenn du gerade erst beginnst ist das keine so große Sache.
 
 [var]: book/Variablenbindung.md
@@ -103,7 +103,7 @@ freigegeben wird. Dieser Vorgang wird deterministisch vom Rust-Compiler
 vorgenommen, anstatt durch einen Mechanismus wie einen Garbage Collector.
 Das bedeutet, dass man in Rust selber keine Funktionen wie `malloc` und
 `free` aufruft: Der Compiler bestimmt statisch, wann du Speicher allozieren oder
-freigeben musst und fügt diese Aufrufe selber ein. Irren ist Menschlich, aber
+freigeben musst und fügt diese Aufrufe selber ein. Irren ist menschlich, aber
 Compiler vergessen nie.
 
 Lass uns eine weitere Zeile unserem Beispiel hinzufügen:
@@ -158,14 +158,14 @@ fn main() {
 }
 ^
 ```
-Uff! Der Rust compiler erzeugt manchmal recht detailierte Fehlermeldungen und dies ist
+Uff! Der Rust-Compiler erzeugt manchmal recht detailierte Fehlermeldungen und dies ist
 ein solches Mal. Wie der Fehler erklärt, ist zwar unsere Variablenbindung veränderbar,
 aber wir können immernoch nicht `push` aufrufen. Das ist so, weil wir bereits
 eine Referenz auf ein Element des Vektors, nämlich `y`, haben. Etwas zu verändern
 wärend eine weitere Referenz darauf existiert ist gefährlich, weil wir die
 Referenz ungültig machen könnten. In diesem konkreten Fall könnte es sein, dass
 wir beim erstellen des Vektors nur Platz für zwei Elemente reserviert haben.
-Ein drittes hinzuzufügen würde dazu führen einen neuen Speicherbereich für all
+Ein drittes hinzuzufügen würde dazu führen, einen neuen Speicherbereich für all
 diese Elemente zu allozieren, hinüber zu kopieren und den internen Zeiger auf
 diesen Speicher zu setzen. Das alles funktioniert problemlos. Das Problem ist,
 das `y` nicht aktualisiert werden würde und wir somit einen ‚hängenden Zeiger‘
@@ -188,7 +188,7 @@ fn main() {
 Rust hat standardmäßig [Move Semantics][move], daher rufen wir die `clone()`
 Methode auf, wenn wir eine Kopie von irgendwelchen Daten machen wollen.
 In diesem Beispiel ist `y` nicht länger eine Referenz auf den Vektor, der in `x`
-gespeichert ist, sondern eine Kopie des ersten Elements, `"Hallo"`. Nun, da wir
+gespeichert ist, sondern eine Kopie des ersten Elements `"Hallo"`. Nun, da wir
 keine Referenz haben, funktioniert unser `push()` einwandfrei.
 
 [move]: Besitz#move-semantics
