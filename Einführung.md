@@ -50,7 +50,7 @@ Die Quelldateien dieser Übersetzung befinden sich auf Github:
 [github.com/rust-lang-de/rustbook-de](https://github.com/rust-lang-de/rustbook-de)
 
 Die Quelldateien des englischen Originals befinden sich ebenfalls auf Github:
-[github.com/rust-lang/rust/tree/master/src/doc/trpl](https://github.com/rust-lang/rust/tree/master/src/doc/trpl)
+[github.com/rust-lang/rust/tree/master/src/doc/book](https://github.com/rust-lang/rust/tree/master/src/doc/book)
 
 ## Eine kurze Einführung in Rust
 
