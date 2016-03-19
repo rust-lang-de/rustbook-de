@@ -4,7 +4,7 @@ Für unser erstes Projekt wollen wir eine
 klassische Anfängeraufgabe implementieren: das Ratespiel.
 So funktioniert es: Unser Programm wird eine zufällige
 ganze Zahl zwischen eins und hundert erzeugen.
-Es wird uns dann fragen sie zu erraten.
+Es wird uns dann auffordern, sie zu erraten.
 Bei einem Rateversuch wird es uns sagen, ob wir zu niedrig oder zu hoch liegen.
 Sobald wir richtig raten, wird es uns gratulieren. Klingt das gut?
 
@@ -95,14 +95,14 @@ fn main() {
 }
 ```
 
-Das ist 'ne Menge! Lass es uns Stück für Stück durchgehen.
+Das ist eine Menge! Lass es uns Schritt für Schritt durchgehen.
 
 ```rust
 use std::io;
 ```
 
-Wir werden Benutzereingaben entgegennehmen und dann das Ergebnis ausgeben
-können. Dazu werden wir das `io` Modul aus der Standardbibliothek. Rust
+Wir werden Benutzereingaben entgegennehmen und dann das Ergebnis ausgeben.
+Dazu verwenden wir das `io`-Modul aus der Standardbibliothek. Rust
 importiert standardmäßig ein paar Dinge in jedes Programm,
 das [das ‘Prelude’][prelude]. Wenn etwas nicht im Prelude ist, dann musst
 du es mittels `use` importieren.
@@ -113,8 +113,8 @@ du es mittels `use` importieren.
 fn main() {
 ```
 
-Wie du zuvor schon gesehen hast, ist die `main()` Funktion der Startpunkt
-in deinem Programm. Die `fn` Syntax deklariert eine neue Funktion, die `()`
+Wie du zuvor schon gesehen hast, ist die `main()`-Funktion der Startpunkt
+in deinem Programm. Die `fn`-Syntax deklariert eine neue Funktion, die `()`
 zeigen an, dass es keine Argumente gibt und `{` beginnt den
 Körper der Funktion. Weil wir keinen Rückgabewert angegeben haben, wird
 automatisch angenommn, dass dieser `()`, ein leeres [Tupel][tuples] ist.
@@ -138,9 +138,8 @@ einen [String][strings] auf dem Bildschirm ausgibt.
 ```
 
 Nun wird es interessant! In dieser kleinen Zeile ist eine Menge los.
-Das erste, was man bemerken sollte, ist eine [let Anweisung][let],
-welche verwendet wird um ‘Variablenbindungen’ zu erzeugen.
-Sie nehmen diese Form an:
+Das erste ist eine [let-Anweisung][let]. Diese wird verwendet,
+um ‘Variablenbindungen’ zu erzeugen. Sie nehmen diese Form an:
 
 ```rust
 let foo = bar;
