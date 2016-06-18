@@ -218,9 +218,9 @@ Du hast Zwei Möglichkeiten:
 Entweder stürzt du dich in ein Projekt mit ‘[Lerne Rust][learnrust]’,
 oder du arbeitest dir deinen Weg von unten nach oben mit
 ‘[Syntax und Semantik][syntax]’.
-Erfahrenere Systemprogrammierer werden ‘Lerne Rust’ vorziehen, wärend Leute
-mit Hintergrund in dynamischen Sprachen beides vevorzugen könnten.
-Verschiedene Leute lernen verschieden! Wähle was dir am besten liegt.
+Erfahrene Systemprogrammierer werden ‘Lerne Rust’ mit sicherheit vorziehen, während Leute
+mit Hintergrund in dynamischen Sprachen beides bevorzugen könnten.
+Verschiedene Leute lernen verschieden! Wähle was Dir am besten liegt.
 
 [learnrust]: Lerne_Rust.md
 [syntax]: Syntax_Und_Semantik.md
