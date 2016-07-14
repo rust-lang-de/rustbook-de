@@ -1,6 +1,6 @@
 # Die Programmiersprache Rust
 
-Willkommen! Dieses Buch wird dir die [Programmiersprache Rust][rust] beibrigen.
+Willkommen! Dieses Buch wird dir die [Programmiersprache Rust][rust] beibringen.
 Rust ist eine Systemprogrammiersprache mit dem Fokus auf drei Ziele:
 Sicherheit, Geschwindigkeit und Nebenläufigkeit (Safety, Speed, Concurrency).
 Sie erreicht diese Ziele ohne Garbage Collector, was sie zu einer nützlichen Sprache
