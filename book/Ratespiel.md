@@ -104,7 +104,7 @@ use std::io;
 Wir werden Benutzereingaben entgegennehmen und dann das Ergebnis ausgeben.
 Dazu verwenden wir das `io`-Modul aus der Standardbibliothek. Rust
 importiert standardmäßig ein paar Dinge in jedes Programm,
-das [das ‘Prelude’][prelude]. Wenn etwas nicht im Prelude ist, dann musst
+[das ‘Prelude’][prelude]. Wenn etwas nicht im Prelude ist, dann musst
 du es mittels `use` importieren.
 
 [prelude]: https://doc.rust-lang.org/std/prelude/index.html
@@ -235,8 +235,8 @@ es *mutable* ist. Jedoch nimmt `read_line` keinen `String` als Argument: Es
 nimmt einen `&mut String`. Rust hat ein Feature namens
 ‘[Referenzen][references]’, welches einem erlaubt mehrere Referenzen auf ein
 Stück Daten zu haben, was kopieren reduzieren kann. Referenzen sind ein
-komplexes Feature, da eines von Rusts haupt Verkaufsargumenten ist wie sicher
-und einfach es ist Referenzen zu benutzen. Wir müssen jedoch nicht viele dieser
+komplexes Feature, da eines von Rusts Hauptverwendungsargumenten ist, wie sicher
+und einfach es ist, Referenzen zu benutzen. Wir müssen jedoch nicht viele dieser
 Details wissen um unser Programm im Moment zu vollenden.
 Fürs Erste ist alles was wir kennen müssen, dass, ähnlich wie `let`
 Bindungen, Referenzen standardmäßig *immutable* sind. Daher müssen wir
@@ -287,10 +287,10 @@ schmeißen wir einfach die Fehlerinformation weg. Warum sie wegwerfen? Nun,
 für ein einfaches Programm wollen wir einfach einen allgemeinen Fehler
 ausgeben, da im Grunde jeder Fehler bedeutet, dass wir nicht
 fortfahren können. Die [`ok()` Methode][ok] gibt einen Wert zurück, welcher
-eine weitere Methode besitzt: `expect()`. Die [`expect()` Methode][expect]
+eine weitere Methode besitzt: `expect()`. Die [`expect()`-Methode][expect]
 nimmt einen Wert auf dem sie aufgerufen wird und, falls dieser kein
 erfolgreicher ist, wird eine [`panic`][panic] mit der Nachricht, die man
-Übergeben hat, erzeugt. Eine `panic` wie diese sorgt dafür, dass unser Programm
+übergeben hat, erzeugt. Eine `panic` wie diese sorgt dafür, dass unser Programm
 abstürzt und die Nachricht anzeigt.
 
 [ok]: https://doc.rust-lang.org/std/result/enum.Result.html#method.ok
@@ -384,7 +384,7 @@ beginnt. Cargo benutzt den *dependencies* Abschnitt um zu wissen, welche
 Abhängigkeiten an externen Crates du hast und welche Version du benötigst.
 In diesem Fall haben wir Version `0.3.0` spezifiziert, was Cargo als ein
 Release versteht, der mit dieser spezifischen Version kompatibel ist.
-Cargo versteht [Semantische Versionierung][semver], was ein Standard ist
+Cargo versteht [Semantische Versionierung][semver], was ein Standard ist,
 um Versionsnummern zu schreiben. Falls wir nur exakt `0.3.0` verwenden wollten,
 dann könnten wir `=0.3.0` schreiben. Falls wir die neueste Version verwenden
 wollten, dann könnten wir `*` verwenden; wir könnten eine Bereich von
@@ -410,7 +410,7 @@ $ cargo build
 Das ist eine Menge an neuer Ausgabe! Nun da wir eine externe Abhängigkeit
 haben holt Cargo die aktuellste Version von allem aus der Registry, was
 eine Kopie der Daten auf [Crates.io][cratesio] ist. Crates.io ist der Ort,
-wo Leute im Rust Ökosystem ihre Open-Source Projekte veröffentlichen
+wo Leute im Rust Ökosystem ihre Open-Source Projekte veröffentlichen,
 um sie für andere zur Verfügung zu stellen.
 
 [cratesio]: https://crates.io
@@ -517,7 +517,7 @@ Wir werden gleich eine Methode verwenden, welche erfordert, dass `Rng`
 im Scope ist. Die grundlegende Idee ist folgende: Methoden können auf
 sogenannten `Traits` definiert werden und, damit diese Methoden funktionieren,
 müssen sie im aktuellen Scope sein. Für weitere Details lies den
-[Traits][traits] Abschnitt.
+Abschnitt [Traits][traits].
 
 [traits]: Traits.md
 
@@ -529,9 +529,9 @@ Es gibt zwei weitere Zeilen, die wir in der Mitte hinzugefügt haben:
     println!("Die geheime Zahl ist: {}", geheime_zahl);
 ```
 
-Wir benutzen die `rand__thread_rng()` Funktion eine Kopie des
+Wir benutzen die `rand::thread_rng()`-Funktion, um eine Kopie des
 Zufallszahlengenerators zu erhalten, welcher dem aktuellen 
-[Thread][concurrency] in dem wir sind, angehört.
+[Thread][concurrency], in dem wir sind, angehört.
 Weil wir oben `use rand::Rng` verwendet haben, hat dieser Generator eine
 `gen_range()` Methode zur Verfügung. Diese Methode nimmt zwei Argumente und
 generiert eine Zahl, die zwischen diesen beiden liegt.
@@ -620,7 +620,7 @@ Dann benutzen wir ihn ein paar Zeilen später:
 
 Die `cmp()` Methode kann auf allem aufgerufen werden,
 was verglichen werden kann und nimmt eine Referenz auf die Sache, mit der wir
-vergleichen es wollen. Es gibt den Typ `Ordering` zurück, den wir zuvor
+es vergleichen wollen. Es gibt den Typ `Ordering` zurück, den wir zuvor
 mit `use` importiert haben. Wir benutzen eine [`Match`][match] Anweisung um
 festzustellen welche `Ordering` genau vorliegt. `Ordering` ist ein
 [`Enum`][enum], kurz für ‘enumeration’ [engl.: Aufzählung], was so aussieht:
