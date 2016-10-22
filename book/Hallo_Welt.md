@@ -97,8 +97,8 @@ an.
 [configs]: https://github.com/rust-lang/rust/tree/master/src/etc/CONFIGS.md
 
 Der Zweite Punkt ist der `println!()-`Teil. Dieser ruft ein Rust-[Makro][macro]
-(so wird Metaprogramierung in Rust gemacht) auf. Wenn es eine
-Funktion wäre, dann wüde es so aussehen: `println()`. Für unsere Zwecke
+(so wird Metaprogrammierung in Rust gemacht) auf. Wenn es eine
+Funktion wäre, dann würde es so aussehen: `println()`. Für unsere Zwecke
 brauchen wir uns nicht um diesen Unterschied kümmern. Merk dir einfach, dass du
 manchmal ein `!` sehen wirst und es bedeutet, dass du ein Makro anstatt eine
 normalen Funktion aufrufst. Rust implementiert aus einem guten Grund
