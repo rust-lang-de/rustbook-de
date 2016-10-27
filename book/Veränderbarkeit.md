@@ -14,7 +14,7 @@ x = 6; // Fehler!
 ```
 
 <!-- We can introduce mutability with the `mut` keyword: -->
-Wir können Veränderbarkeit mit dem Schlüsselwort `mut` einführen:
+Wir können Veränderbarkeit mit dem Schlüsselwort `mut`, die Kurzform für "mutable" (englisch: veränderbar), einführen:
 
 ```rust
 let mut x = 5;
