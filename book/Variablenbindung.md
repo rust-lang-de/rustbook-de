@@ -16,7 +16,7 @@ stelle sicher, dass du deinen Code in einer `main()` Methode schreibst
 
 In vielen Sprachen wird das eine *Variable* genannt, aber Rusts
 Variablenbindungen haben ein paar Tricks im Ärmel.
-Zum Beispiel ist die linke Seite des `let` Anweisung ein ‘[Muster][pattern]’
+Zum Beispiel ist die linke Seite der `let` Anweisung ein ‘[Muster][pattern]’
 und nicht einfach nur ein Variablenname. Das bedeutet,
 dass wir solche Sachen tun können:
 
@@ -24,16 +24,16 @@ dass wir solche Sachen tun können:
 let (x, y) = (1, 2);
 ```
 
-Nach dem ausführen dieser Anweisung ist `x` `1` und `y` wird `2` sein.
+Nach dem Ausführen dieser Anweisung ist `x` `1` und `y` wird `2` sein.
 Muster sind wirklich mächtig und haben [ihren eigenen Abschnitt][pattern]
-im Buch. Wir brauchen diese Features fürs erste nicht, also behalten wir
+im Buch. Wir brauchen diese Features fürs Erste nicht, also behalten wir
 uns das hier erstmal im Hinterkopf während wir weiter machen.
 
 [pattern]: Muster.md
 
 Rust ist eine statisch typisierte Sprache, was bedeutet, dass wir unsere
 Typen im Voraus angeben müssen und diese zur Kompilierzeit überprüft werden.
-Aber warum kompiliert dann unser erstes Beispiel? Nun, kann etwas namens
+Aber warum kompiliert dann unser erstes Beispiel? Nun, Rust kann etwas namens
 ‘Typinferenz’. Wenn Rust den Typ alleine herausfinden kann, dann müssen
 wir den Typ nicht unbedingt angeben.
 
@@ -44,15 +44,11 @@ Ein Typ kommt nach einem Doppelpunkt (`:`):
 let x: i32 = 5;
 ```
 
-<!--
-Fehlende Übersetzung:
-"If I asked you to read this out loud to the rest of the class, you’d say “`x`
-is a binding with the type `i32` and the value `five`.”"
-
-Ich weis nicht genau wie das zu formulieren ist. ~~~ panicbit 02.10.15
--->
-
 In diesem Fall stellt `x` eine vorzeichenbehaftete 32-bit Ganzzahl dar.
+Wenn ich dich fragen würde diese Zeile laut auszusprechen,
+ würdest du sagen:
+ "`x` ist eine Bindung mit dem Typ `i32` und dem Wert `fünf`."
+
 Rust hat viele verschiedene primitive Ganzzahl Typen.
 Sie beginnen mit `i` für vorzeichenbehaftete Ganzzahlen und
 mit `u` für vorzeichenlose Ganzzahlen. Die möglichen Ganzzahlgrößen sind
@@ -72,8 +68,8 @@ die man mit `let` verwendet. Diese Art von Kommentar ist kein
 idiomatisches Rust, aber wir werden sie dennoch gelegentlich verwenden
 um klar zu machen, welche Typen Rust ableitet.
 
-Standardmäßig sind Bindungen *immutable* [engl.: Unveränderbar].
-Dieser code wird nicht kompilieren:
+Standardmäßig sind Bindungen *immutable* [engl.: unveränderbar].
+Dieser Code wird nicht kompilieren:
 
 ```rust
 let x = 5;
@@ -96,24 +92,24 @@ let mut x = 5; // mut x: i32
 x = 10;
 ```
 
-Es gibt verschiedene Gründ, dass Bindungen standardmäßig unveränderbar sind,
+Es gibt verschiedene Gründe, dass Bindungen standardmäßig unveränderbar sind,
 aber betrachten wir es einfach mal aus Sicht eines der Hauptziele von Rust:
 Sicherheit. Wenn du vergisst `mut` zu schreiben, dann wird der Compiler
 das abfangen und dich wissen lassen, dass du etwas veränderst,
 was du vielleicht garnicht verändern willst.
 Wären Bindungen standardmäßig veränderbar, dann könnte dir
-der Compiler das nicht miteilen.
+der Compiler das nicht mitteilen.
 Wenn die Veränderung doch beabsichtigt ist,
-dann ist die Lösung ziemlich einfach: Füge `mut` hinzu.
+dann ist die Lösung ziemlich einfach: füge `mut` hinzu.
 
 Es gibt noch weitere gute Gründe veränderbaren Zustand so viel wie möglich
-zu vermeiden, aber das sprengt den Ramen dieses Guides.
-Im Allgemeinen kann man häufig ausdrückliche Veränderungen vermeiden,
-somit ist diese in Rust bevorzugt. Dennoch benötigt man manchmal
+zu vermeiden, aber das sprengt den Rahmen dieses Guides. <!-- mmh, Ramen -->
+Im Allgemeinen kann man häufig ausdrückliche Veränderungen vermeiden.
+Somit ist diese in Rust bevorzugt. Dennoch benötigt man manchmal
 Veränderungen, also ist sie nicht verboten.
 
 Also zurück zu Bindungen. Rusts Variablenbindungen haben noch einen weiteren
-Aspekt der von anderen Sprachen abweicht:
+Aspekt, der von anderen Sprachen abweicht:
 Bindungen müssen initialisiert werden, bevor man sie benutzen kann.
 
 Lass uns das ausprobieren.
@@ -127,7 +123,7 @@ fn main() {
 }
 ```
 
-Du kannst `cargo build` in der Kommandozeile verwenden um es zu kompilieren.
+Du kannst `cargo build` in der Kommandozeile verwenden, um es zu kompilieren.
 Du wirst zwar eine Warnung bekommen, aber das Programm wird trotzdem
 "Hallo Welt!" ausgeben:
 
@@ -169,16 +165,16 @@ Could not compile `hallo_welt`.
 ```
 
 Rust lässt uns keinen uninitialisierten Wert verwenden.
-Lass uns als nächstes über die Sachen reden die wir in `println!`
+Lass uns als nächstes über die Sachen reden, die wir in `println!`
 verwendet haben.
 
 Wenn du die zwei geschweiften Klammern (`{}`, manche nennen sie Schnurrbärte..)
 in deinem auszugebenden String einfügst, dann interpretiert Rust sie als
 Anweisung an dieser Stelle irgendeinen Wert einzufügen.
-Wir fügen ein Komma und dann `x` hinzu um anzuzeigen, dass wir den Wert von
-`x` an dieser Stelle stehen haben wollen. Das Komma wird benutzt um
-mehrere Funktions- oder Makroargumente voneinander zu trenen, falls es mehr
-als eines gibt.
+Wir fügen ein Komma und dann `x` hinzu, um anzuzeigen, dass wir den Wert von
+`x` an dieser Stelle stehen haben wollen. Das Komma wird benutzt, um
+mehrere Funktions- oder Makroargumente voneinander zu trennen, falls es mehr
+als ein Argument gibt.
 
 Wenn du einfach nur die geschweiften Klammern verwendest, dann versucht
 Rust den Wert, basierend auf dessen Typ, auf eine sinnvolle
