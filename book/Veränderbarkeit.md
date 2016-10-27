@@ -205,7 +205,7 @@ This means that, for example, you cannot have a [`struct`][struct] with
 some fields mutable and some immutable: -->
 Veränderbarkeit ist eine Eigenschaft einer Ausleihe (`&mut`)
  oder einer Variablenbindung (`let mut`).
-Das bedeutet zum Beispiel, dass du keine [Struct][struct]
+Das bedeutet zum Beispiel, dass du kein [Struct][struct]
  mit einigen veränderbaren und einigen unveränderbaren Feldern haben kannst:
 
 ```rust,ignore
@@ -216,7 +216,7 @@ struct Point {
 ```
 
 <!-- The mutability of a struct is in its binding: -->
-Die Veränderbarkeit einer Struct ist in ihrer Bindung:
+Die Veränderbarkeit eines Struct ist in ihrer Bindung:
 
 ```rust,ignore
 struct Point {
