@@ -44,15 +44,11 @@ Ein Typ kommt nach einem Doppelpunkt (`:`):
 let x: i32 = 5;
 ```
 
-<!--
-Fehlende Übersetzung:
-"If I asked you to read this out loud to the rest of the class, you’d say “`x`
-is a binding with the type `i32` and the value `five`.”"
-
-Ich weis nicht genau wie das zu formulieren ist. ~~~ panicbit 02.10.15
--->
-
 In diesem Fall stellt `x` eine vorzeichenbehaftete 32-bit Ganzzahl dar.
+Wenn ich dich fragen würde diese Zeile laut auszusprechen,
+ würdest du sagen:
+ "`x` ist eine Bindung mit dem Typ `i32` und dem Wert `fünf`."
+
 Rust hat viele verschiedene primitive Ganzzahl Typen.
 Sie beginnen mit `i` für vorzeichenbehaftete Ganzzahlen und
 mit `u` für vorzeichenlose Ganzzahlen. Die möglichen Ganzzahlgrößen sind
