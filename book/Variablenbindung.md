@@ -102,11 +102,11 @@ der Compiler das nicht mitteilen.
 Wenn die Veränderung doch beabsichtigt ist,
 dann ist die Lösung ziemlich einfach: füge `mut` hinzu.
 
-Es gibt noch weitere gute Gründe veränderbaren Zustand so viel wie möglich
+Es gibt noch weitere gute Gründe einen veränderbaren Zustand so häufig wie möglich
 zu vermeiden, aber das sprengt den Rahmen dieses Guides. <!-- mmh, Ramen -->
 Im Allgemeinen kann man häufig ausdrückliche Veränderungen vermeiden.
-Somit ist diese in Rust bevorzugt. Dennoch benötigt man manchmal
-Veränderungen, also ist sie nicht verboten.
+Somit sind diese in Rust bevorzugt. Dennoch benötigt man manchmal
+Veränderungen, also sind sie nicht verboten.
 
 Also zurück zu Bindungen. Rusts Variablenbindungen haben noch einen weiteren
 Aspekt, der von anderen Sprachen abweicht:
@@ -135,7 +135,7 @@ src/main.rs:2     let x: i32;
                       ^
 ```
 
-Rust warnt uns jedes mal, wenn eine Bindung nicht verwendet wird, ist
+Rust warnt uns jedes Mal, wenn eine Bindung nicht verwendet wird, ist
 aber ansonsten kein Fehler an sich.
 Die Sache ändert sich jedoch, wenn wir versuchen dieses `x` zu verwenden.
 Lass uns das mal ausprobieren. Ändere dein Programm wie folgt:
@@ -165,7 +165,7 @@ Could not compile `hallo_welt`.
 ```
 
 Rust lässt uns keinen uninitialisierten Wert verwenden.
-Lass uns als nächstes über die Sachen reden, die wir in `println!`
+Lass uns als Nächstes über die Sachen reden, die wir in `println!`
 verwendet haben.
 
 Wenn du die zwei geschweiften Klammern (`{}`, manche nennen sie Schnurrbärte..)
@@ -181,5 +181,5 @@ Rust den Wert, basierend auf dessen Typ, auf eine sinnvolle
 Art und Weise darzustellen.
 Wenn du das Format etwas genauer spezifizieren willst, stehen dir eine
 [breite Palette an Optionen zur Verfügung][format].
-Fürs erste bleiben wir beim Standard:
+Fürs Erste bleiben wir beim Standard:
 Es ist ja nicht so kompliziert eine Ganzzahl auszugeben.

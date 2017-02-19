@@ -1,7 +1,7 @@
 # Funktionen
 
 Jedes Rust Programm hat mindestens eine Funktion,
-die `main`:
+die `main` Funktion:
 
 ```rust
 fn main() {
@@ -11,7 +11,7 @@ fn main() {
 Das ist die simpelste Funktionsdeklaration. Wie wir zuvor schon erwähnt haben,
 leitet `fn` eine Funktion ein. Darauf folgt der Name und
 ein leeres paar Klammern, da diese Funktion keine Argumente hat,
-und ein Paar geschweifte Klammern, die den Funktionskörper repräsentieren.
+und ein paar geschweifte Klammern, die den Funktionskörper repräsentieren.
 Hier ist eine Funktion namens `foo`:
 
 ```rust
@@ -78,7 +78,7 @@ fn print_number(x, y) {
 ```
 
 Das ist eine bewusste Designentscheidung.
-Obwohl das herleiten der Typen eines kompletten Programmes möglich ist,
+Obwohl das Herleiten der Typen eines kompletten Programmes möglich ist,
 wie zum Beispiel in Sprachen wie Haskell, wird dennoch häufig dazu geraten
 die Typen ausdrücklich zu dokumentieren.
 Wir stimmen zu, dass ausdrückliche Typvermerke in Funktionssignaturen
@@ -98,7 +98,7 @@ Rust Funktionen geben genau einen Wert zurück. Diesen gibt man nach einem
 "Pfeil" an, welcher aus einem Bindestrich (`-`), gefolgt von einem
 Größer-Gleich Zeichen (`>`) besteht.
 Die letzte Zeile der Funktion ist automatisch der Rückgabewert der Funktion.
-Du wirst das hier das Semikolon fehlt. Wenn wir es hinzufügen:
+Du wirst sehen, dass hier das Semikolon fehlt. Wenn wir es hinzufügen:
 
 ```rust
 fn add_one(x: i32) -> i32 {
@@ -169,7 +169,7 @@ Ihr Zweck ist es jeden Ausdruck in eine Anweisung zu verwandeln.
 In praktischer Hinsicht erwartet Rusts Grammatik, dass Anweisungen
 aufeinander folgen. Das bedeutet, dass man Semikolons nutzt um
 Ausdrücke voneinander zu trennen. Das bedeutet auch,
-dass Rust anderen Sprachen, welche auch ein Semikolon am ende einer Zeile
+dass Rust anderen Sprachen, welche auch ein Semikolon am Ende einer Zeile
 haben, sehr ähnlich sieht und man in Rust fast an jedem Ende einer Zeile ein
 Semikolon sieht.
 
@@ -202,7 +202,7 @@ fn foo(x: i32) -> i32 {
 ```
 
 `return` in der letzten Zeile einer Funktion zu verwenden funktioniert zwar,
-aber wird als schlechten Stil angesehen:
+aber wird als schlechter Stil angesehen:
 
 ```rust
 fn foo(x: i32) -> i32 {
@@ -211,12 +211,12 @@ fn foo(x: i32) -> i32 {
 ```
 
 Die vorherige Definition ohne `return` sieht vielleicht etwas komisch für dich
-aus, falls du noch nicht mit Ausdrucksorientierten Sprachen gearbeitet hast,
+aus, falls du noch nicht mit ausdrucksorientierten Sprachen gearbeitet hast,
 aber du wirst dich mit der Zeit daran gewöhnen.
 
 ## Divergierende Funktionde
 
-Rust hat eine spzielle Syntax für sogennannte ‘divergierende Funktionen’
+Rust hat eine spezielle Syntax für sogennannte ‘divergierende Funktionen’
 [diverging functions], also Funktionen, die niemals zurückkehren:
 
 ```rust
