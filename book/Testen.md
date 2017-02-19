@@ -362,9 +362,9 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
 
 Schön!
 
-Die momentane Konvention ist, dass das `tests` Modul deine "unit-style" tests enthält.
+Die momentane Konvention ist, dass das `tests` Modul deine "unit-style" Tests enthält.
 Alles was nur kleine Funktionalitätstests umfasst.
-Integrationstest jedoch, verdienen etwas mehr platz, dafür haben wir das `tests` Verzeichnis.
+Integrationstest jedoch, verdienen etwas mehr Platz, dafür haben wir das `tests` Verzeichnis.
 
 ## Das `tests` Verzeichnis
 
