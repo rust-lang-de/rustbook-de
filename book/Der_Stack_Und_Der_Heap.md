@@ -231,7 +231,7 @@ Das `struct` auf `x` hat einen [raw Zeiger](Raw_Zeiger.md) auf die Stelle an der
 Wir habe noch nicht wirklich viel darüber gesprochen, was es eigentlich bedeutet in diesen Kontexten Speicher zu allozieren und zu deallozieren.
 Das zu vertiefen würde den Rahmen dieses Tutorials sprengen,
 aber was wichtig ist mitzunehmen, ist dass der Heap nicht einfach nur ein von oben nach unten wachsender Stack ist.
-Im Gegensatz um Stack muss der Heap nicht in einer festen Reihenfolge alloziert und freigegeben werden kann.
+Im Gegensatz zum Stack muss der Heap nicht in einer festen Reihenfolge alloziert und freigegeben werden.
 Dadurch kann er allerdings Löcher haben.
 Dazu wird es später ein Beispiel geben.
 Hier erst mal ein kleines Diagramm des Speicherlayouts eines Programms das schon ein Weilchen lief:
