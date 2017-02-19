@@ -2,14 +2,14 @@
 
 Dokumentation ist ein wichtiger Teil eines jeden Software Projekts.
 In Rust ist sie ein Sprachbestandteil.
-Reden wir doch mal über die Tools die uns Rust zur Verfügung stellt um unser Projekt zu Dokumentieren.
+Reden wir doch mal über die Tools die uns Rust zur Verfügung stellt um unser Projekt zu dokumentieren.
 
 ## Über `rustdoc`
 
 Das Rust Paket beinhaltet ein Tool namens `rustdoc`, welches Dokumentation generiert.
 `rustdoc` wird von Cargo für `cargo doc` verwendet.
 
-Dokumentation kann auf zwei arten erzeugt werden: aus dem Quelltext und aus Markdown Dateien.
+Dokumentation kann auf zwei Arten erzeugt werden: aus dem Quelltext und aus Markdown Dateien.
 
 
 ## Dokumentation von Quelltext
@@ -321,7 +321,7 @@ Hier das ganze nochmal als Plaintext:
 
 ### Macros kommentieren
 
-Hier ist ein Beispiel eines Dokumentierten `macro`s:
+Hier ist ein Beispiel eines dokumentierten `macro`s:
 
 <pre><code class="lang-rust">
 /// Panic with a given message unless an expression evaluates to true.
@@ -432,7 +432,7 @@ Dateien werden häufig also Module eingebunden: `./foo.rs` durch `mod foo`.
 
 Oder einfach am Anfang deiner `lib.rs`.
 
-### Dokumentations Stil
+### Dokumentationsstil
 
 [RFC 505](https://github.com/rust-lang/rfcs/blob/master/text/0505-api-comment-conventions.md) (englisch) ist die vollständige Quelle für alle Konventionen bezüglich Dokumentation in Rust.
 
