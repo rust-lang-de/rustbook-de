@@ -136,7 +136,7 @@ $ rustc main.rs
 ```
 
 Dies ist ähnlich wie bei `gcc` oder `clang`, falls du einen C oder C++
-Hintegrund hast. Rust wird binäre ausführbare Datei ausgeben.
+Hintegrund hast. Rust wird eine binäre ausführbare Datei ausgeben.
 Du kannst sie mittels `ls` sehen:
 
 ```bash
