@@ -110,7 +110,7 @@ musst du uns vertrauen.
 
 [macro]: Makros.md
 
-Weiter gehts. "Hallo World" ist ein ‘String’. Strings sind ein überraschend
+Weiter gehts. "Hallo Welt" ist ein ‘String’. Strings sind ein überraschend
 kompliziertes Thema in einer Systemprogrammiersprache. Und dies ist ein
 ‘statisch allokierter’ String. Falls du mehr über Allokierung lesen möchtest,
 dann schau dir [der Stack und der Heap][allocation] an. Aber du musst es nicht
@@ -136,7 +136,7 @@ $ rustc main.rs
 ```
 
 Dies ist ähnlich wie bei `gcc` oder `clang`, falls du einen C oder C++
-Hintegrund hast. Rust wird binäre ausführbare Datei ausgeben.
+Hintegrund hast. Rust wird eine binäre ausführbare Datei ausgeben.
 Du kannst sie mittels `ls` sehen:
 
 ```bash
