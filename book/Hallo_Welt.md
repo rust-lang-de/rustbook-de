@@ -110,7 +110,7 @@ musst du uns vertrauen.
 
 [macro]: Makros.md
 
-Weiter gehts. "Hallo World" ist ein ‘String’. Strings sind ein überraschend
+Weiter gehts. "Hallo Welt" ist ein ‘String’. Strings sind ein überraschend
 kompliziertes Thema in einer Systemprogrammiersprache. Und dies ist ein
 ‘statisch allokierter’ String. Falls du mehr über Allokierung lesen möchtest,
 dann schau dir [der Stack und der Heap][allocation] an. Aber du musst es nicht
