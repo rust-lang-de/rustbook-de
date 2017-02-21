@@ -4,7 +4,7 @@ Rusts `if` ist nicht besonders kompliziert, aber es ähnelt viel mehr dem
 `if` einer dynamisch typisierten Sprache, als dem einer
 eher traditionellen Sprachen.
 
-Lass uns also darüber sprechen, um sicherzustellen, dass du die feinheiten
+Lass uns also darüber sprechen, um sicherzustellen, dass du die Feinheiten
 verstehst.
 
 `if` ist eine spezielle Form eines allgemeineren Konzeptes, dem Zweig [branch].
