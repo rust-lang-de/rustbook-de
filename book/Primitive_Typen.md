@@ -4,7 +4,7 @@ Die Rust Programmiersprache hat eine Reihe von Typen die als "primitiv"
 angesehen werden. Das bedeutet, dass sie in die Sprache eingebaut sind.
 Rust ist so strukturiert, dass die Standardbibliothek auch eine Menge
 nützlicher Typen zur Verfügung stellt,
-auch welche die auf primitiven Typen aufbauen, aber diese hier sind am
+die auch auf primitiven Typen aufbauen, aber diese hier sind am
 "primitivsten".
 
 # Booleans
@@ -45,7 +45,7 @@ Du findest mehr Dokumentation zu `char`s
 
 [char]: https://doc.rust-lang.org/std/primitive.char.html
 
-# Numerische Type
+# Numerische Typen
 
 Rust hat eine Vielzahl an numerischen Typen in ein paar Kategorien:
 Vorzeichenbehaftet und Vorzeichenlos, feste und variable Größe,
@@ -53,9 +53,9 @@ Fließkomma- und Ganzzahl.
 
 Diese Typen bestehen aus zwei Teilen: Der Kategorie und ihrer Größe.
 Zum Beispiel ist `u16` ein vorzeichenloser Typ, der 16 bit groß ist.
-Mehr bits erlauben größere Zahlen.
+Mehr Bits erlauben größere Zahlen.
 
-Wenn ein Zahlenliteral keinen Typ durch etwas zugewiesen bekommt, dann
+Wenn ein Zahlenliteral keinen Typ explizit zugewiesen bekommt, dann
 sind das hier die Standards:
 
 ```rust
@@ -101,7 +101,7 @@ Also ist `u8` eine vorzeichenlose 8-bit Ganzzahl und
 ## Typen fester Größe
 
 Typen fester Größe enthalten eine speziefische Anzahl an Bits in
-ihrer Darstellung. Gültige Bitgrößen sind `8`, `16`, `32 und `64`.
+ihrer Darstellung. Gültige Bitgrößen sind `8`, `16`, `32` und `64`.
 Also ist `u32` eine vorzeichenlose Ganzzahl mit 32 Bits und
 `i64` eine vorzeichenbehaftete Ganzzahl mit 64 Bits.
 
@@ -124,7 +124,7 @@ let mut m = [1, 2, 3]; // m: [i32; 3]
 ```
 
 Arrays haben den Typ `[T; N]`. Wir werden über diese `T` Notation
-[im Generics Abschnitt][generics] rede. Das `N` ist eine Konstante zur
+[im Generics Abschnitt][generics] reden. Das `N` ist eine Konstante zur
 Kompilierzeit um die Länge des Arrays anzuzeigen.
 
 Es gibt eine abkürzende Schreibweise um jedes Element des Arrays mit dem
@@ -219,8 +219,8 @@ Wie du sehen kannst sehen kannst, sieht der Typ eins Tupels genaus aus wie
 das jeweilige Tupel, aber mit den jeweiligen Typen anstatt Werten.
 Aufmerksame Leser werden auch feststellen, dass Tupel heterogen sind:
 Wir haben ein `i32` und ein `&str` in diesem Tupel.
-(In Systemprogrammiersprachen sind Strings ein wenig Komplexer als in anderen
-Sprachen. Fürs erste lies `&str` als ein *string slice*.
+(In Systemprogrammiersprachen sind Strings ein wenig komplexer als in anderen
+Sprachen. Fürs Erste lies `&str` als ein *string slice*.
 Wir werden bald noch mehr darüber lernen.)
 
 Tupel können einander zugewiesen werden, wenn die enthaltenen Typen und
@@ -247,7 +247,7 @@ println!("x ist {}", x);
 
 Erinnerst du dich an [zuvor][let], als wir sagten, dass die linke Seite
 etwas mächtiger ist als einfach nur eine Variablenbindung zuzuweisen?
-Dabei sind wir nun. Wir können auf der linken Seite des `let` ein Muster
+Das ist ein Beispiel dafür. Wir können auf der linken Seite des `let` ein Muster
 verwenden und, wenn es zu der rechten Seite passt, mehrere Variablenbindungen
 gleichzeitig zuweisen. In diesem Fall "destrukturiert" `let` das Tupel bzw.
 "nimmt es auseinander" und bindet die Teilstücke an Variablen.

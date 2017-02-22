@@ -40,7 +40,7 @@ while !done {
 wie häufig etwas wiederholt werden muss.
 
 Wenn du eine Endlosschleife benötigst,
-dann bist du vielleicht versucht das hier zu schreiben:
+dann bist du vielleicht dazu verleitet das hier zu schreiben:
 
 ```rust
 while true {
@@ -53,8 +53,8 @@ loop {
 ```
 
 Rusts Kontrollflussanalyse behandelt diese Konstrukt anders als `while true`,
-da es weis, dass die Schleife endlos ist. Allgemein gilt, dass, je mehr
-Informationen wir dem Compiler geben könenn, umso bessere Sicherheit und
+da es weiß, dass die Schleife endlos ist. Allgemein gilt, je mehr
+Informationen wir dem Compiler geben können, umso bessere Sicherheit und
 Code-Erzeugung erhalten wir. Deswegen solltest du immer `loop` vorziehen,
 falls du planst endlos zu iterieren.
 
@@ -103,7 +103,7 @@ Das obere Ende ist jedoch exklusiv, also gibt unsere Schleife nur
 
 Rust hat bewusst keine "C-Style" `for` Schleifen.
 Jedes Element der Schleife manuell zu kontrollieren ist kompliziert und
-Fehleranfällig, sogar für erfahrene C-Entwickler.
+fehleranfällig, sogar für erfahrene C-Entwickler.
 
 ### Enumerate
 
@@ -192,7 +192,7 @@ loop {
 ```
 
 Wir iterieren nun endlos und benutzen `break` um frühzeitig aus der Schleife
-auszubrechen. Eine explizitee `return` Anweisung würde die Schleife ebenso
+auszubrechen. Eine explizite `return` Anweisung würde die Schleife ebenso
 frühzeitig beenden.
 
 `continue` ist ähnlich, aber anstatt die Schleife zu beenden,

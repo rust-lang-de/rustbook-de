@@ -43,9 +43,9 @@ fn add_one(x: i32) -> i32 {
 </code></pre>
 
 Es gibt noch eine weitere Kommentarform, nämlich `//!`,
-um Dinge zu Dokumentieren in denen diese Kommentare enthalten sind
-(z.B. in Crates, Modulen oder Funktionen) ansttat das zu kommentieren,
-was auf ihnen folgt.
+um Dinge zu dokumentieren in denen diese Kommentare enthalten sind
+(z.B. in Crates, Modulen oder Funktionen) anstatt das zu kommentieren,
+was nach ihnen folgt.
 Üblicherweise wird diese Form von Kommentar am Anfang einer
 Crate (lib.rs) oder eines Moduls (mod.rs) verwendet:
 
