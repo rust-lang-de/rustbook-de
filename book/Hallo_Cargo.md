@@ -2,7 +2,7 @@
 
 [Cargo][cratesio] ist ein Werkzeug, welches Rustler benutzen um ihre Rust
 Projekte zu verwalten. Cargo ist derzeit in einem pre-1.0 Zustand und ist somit
-immernoch in Arbeit. Jedoch ist es bereits gut genug es für viele Rust Projekte
+immer noch in Arbeit. Jedoch ist es bereits gut genug es für viele Rust Projekte
 einzusetzen und somit wird vorausgesetzt, dass Rust Projekte Cargo von Anfang
 an einsetzen.
 
@@ -48,7 +48,7 @@ wir diese Konvention auch außer Kraft setzen.
 Cargo erwartet, dass deine Quelltexte in einem `src`-Verzeichnis liegen.
 Das lässt das oberste Verzeichnis für andere Sachen wie READMEs,
 Lizenzinformationen und anderen Dingen, die nichts mit deinem
-Code zu tun haben, frei. 
+Code zu tun haben, frei.
 <!-- A place for everything, and everything in its place. -->
 
 Als nächstes unsere Konfigurationsdatei:
@@ -101,7 +101,7 @@ Hallo Welt!
 
 Beachte, dass dieses mal das Projekt nicht neu kompiliert wurde. Cargo hat
 selber herausgefunden, dass wir den Quelltext nicht verändert haben und hat
-einfach nur die Binärdatei ausgeführt. Hätten wor eine Veränderung
+einfach nur die Binärdatei ausgeführt. Hätten wir eine Veränderung
 vorgenommen, dann hätten wir beides gesehen:
 
 ```bash
@@ -121,7 +121,7 @@ Wenn unser Projekt dann endlich fertig zum Release ist, kannst du einfach
 `cargo build --release` benutzen um dein Projekt mit Optimierungen zu
 kompilieren.
 
-Do wirst auch feststellen, dass Cargo eine neue Datei erzeugt hat: `Cargo.lock`.
+Du wirst auch feststellen, dass Cargo eine neue Datei erzeugt hat: `Cargo.lock`.
 
 ```toml
 [root]
@@ -159,7 +159,7 @@ $ cargo new hallo_welt --bin
 ```
 
 Wir übergeben `--bin`, da es unser Ziel ist eine ausführbare Anwendung,
-anstatt einer Bibliothek, zu erzeugen. Ausführbare Dateien werden oft 
+anstatt einer Bibliothek, zu erzeugen. Ausführbare Dateien werden oft
 ‘binaries’ genannt.
 (So wie in `/usr/bin`, falls du auf einem Unix System bist).
 
@@ -177,7 +177,7 @@ $ tree .
 ```
 
 Falls du den `tree`-Befehl nicht hast, dann kannst du ihn dir wahrscheinlich
-mithilfe der Paketverwaltung deiner Distribution besogen. Der Befehl ist nicht
+mit hilfe der Paketverwaltung deiner Distribution besorgen. Der Befehl ist nicht
 notwendig, aber sicherlich nützlich.
 
 Das ist alles was wir brauchen um loszulegen. Lass uns zuerst die `Cargo.toml` betrachten.
