@@ -6,8 +6,20 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust-Buchs](https
 
 ## Building
 
+Zum bauen des Buches wird [mdbook](https://github.com/azerupi/mdBook) benötigt.
+
+`mdbook` erlaubt eine live Vorschau des Buches mit dem folgenden Befehl:
+
 ```bash
-gitbook build
+mdbook serve
+```
+
+Änderungen am Buch werden dabei sofort aufgenommen und im Browser nachgeladen.
+
+Wenn man das Buch lediglich bauen möchte reicht:
+
+```bash
+mdbook build
 ```
 
 ## Mithelfen
