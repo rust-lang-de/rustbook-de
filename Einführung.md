@@ -11,7 +11,7 @@ Betriebssysteme.
 Sie übertrifft derzeitige Sprachen, die auf diesen Bereich abzielen, indem sie eine
 Reihe von Sicherheitsprüfungen zur Kompilierzeit durchführt – ohne Kosten zur Laufzeit,
 indem alle *data races* vermieden werden.
-Rust zielt auch darauf ab „kostenfreihe Abstraktionen“ zu realisieren, obwohl
+Rust zielt auch darauf ab „kostenfreie Abstraktionen“ zu realisieren, obwohl
 einige dieser Abstraktionen sich anfühlen wie die einer Hochsprache.
 Selbst dann erlaubt Rust eine genaue Kontrolle, wie es eine Low-Level-Sprache tun würde.
 
