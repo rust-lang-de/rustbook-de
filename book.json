@@ -1,7 +1,0 @@
-{
-    "language": "de",
-    "structure": {
-        "readme": "Einführung.md"
-    },
-    "plugins": ["anchors"]
-}

@@ -1,0 +1,1 @@
+# Assoziierte Konstanten
