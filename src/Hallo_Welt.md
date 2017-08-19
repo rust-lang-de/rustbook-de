@@ -73,7 +73,7 @@ besonders: Sie ist der Anfang eines jeden Rust-Programmes. Die erste Zeile sagt
 "Ich deklariere eine Funktion namens `main`, welche keine Argumente entgegen
 nimmt und nichts zurückgibt". Falls es Argumente gäbe, dann würden sie zwischen
 den Klammern (`(` und `)`) stehen und weil wir nichts von dieser Funktion
-zurückgeben, können wir den Rückgabetyp koomplett weglassen. Darauf gehen
+zurückgeben, können wir den Rückgabetyp komplett weglassen. Darauf gehen
 wir später ein.
 
 Du wirst auch feststellen, dass die Funktion von geschweiften Klammern (`{` und
