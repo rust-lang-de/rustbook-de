@@ -11,8 +11,8 @@ Sobald wir richtig raten, wird es uns gratulieren. Klingt das gut?
 # Anlegen
 
 Lass uns ein neues Projekt anlegen. Gehe in dein Projekteverzeichnis.
-Erinnerst du dich wie wir die Verzeichnisstruktur und eine `Cargo.toml` für
-`hallo_welt` anlegen mussten? Cargo hat ein Befehl dafür, welcher das für uns
+Erinnerst du dich, wie wir die Verzeichnisstruktur und eine `Cargo.toml` für
+`hallo_welt` anlegen mussten? Cargo hat einen Befehl dafür, welcher das für uns
 erledigt. Lass uns den ausprobieren:
 
 ```bash
@@ -68,13 +68,13 @@ Hello, world!
 ```
 
 Prima! Der `run` Befehl ist sehr praktisch, wenn man sein Projekt häufig
-widerholt ausprobieren möchte. Unser Spiel ist ein solches Projekt und wir
+wiederholt ausprobieren möchte. Unser Spiel ist ein solches Projekt, und wir
 müssen jeden Schritt zügig testen können bevor wir mit dem Nächsten fortfahren.
 
 # Einen Rateversuch verarbeiten
 
-Also lass uns anfangen! Das erste, was für unser Ratespiel tun müssen, ist dem
-unserem Spieler zu erlauben eine Vermutung einzugeben. Schreib das hier
+Also lass uns anfangen! Das erste, was wir für unser Ratespiel tun müssen, ist dem
+Spieler zu erlauben eine Vermutung einzugeben. Schreib das hier
 in deine `src/main.rs`:
 
 ```rust
@@ -175,7 +175,7 @@ So, nun wissen wissen wir, dass `let mut vermutung` eine neue Variablenbindung
 namens `vermutung` einführt, aber wir müssen noch auf die andere Seite des `=`
 schauen woran sie gebunden ist: `String::new()`.
 
-`String` ist ein String typ, welcher von der Standardbibliothek zur Verfügung
+`String` ist ein String Typ, welcher von der Standardbibliothek zur Verfügung
 gestellt wird. Ein [`String`][string] ist ein UTF-8 kodierter Text,
 der wachsen kann.
 
@@ -186,9 +186,9 @@ bestimmten Typs ist. Sprich, es ist mit `String` selbst assoziiert,
 anstatt mit einer Instanz von `String`. Manche Sprachen nennen das eine
 ‘statische Methode’.
 
-Diese Funktion heißt `new()`, da sie einen neuen, leeren `String`.
+Diese Funktion heißt `new()`, da sie einen neuen, leeren `String` erstellt.
 Du wirst bei vielen Typen eine `new()` Funktion finden, da es ein typischer
-Name ist um irgendeine Art von neuen Wert zu erzeugen.
+Name ist, um irgendeine Art von neuen Wert zu erzeugen.
 
 Lass uns weiter machen:
 
@@ -205,7 +205,7 @@ Die erste Zeile besteht aus zwei Teilen. Hier ist der erste:
 io::stdin()
 ```
 
-Erinnerst du dich wie wir `use` in der ersten Zeile des Programmes benutzt
+Erinnerst du dich, wie wir `use` in der ersten Zeile des Programmes benutzt
 haben um `std::io` zu importieren? Wir rufen nun eine Assozierte Funktion davon
 auf. Wenn wir `use std::io` nicht verwendet hätten, dann hätten wir diese
 Zeile als als `std::io::stdin()` schreiben können.
@@ -222,28 +222,27 @@ zu gelangen:
 .read_line(&mut vermutung)
 ```
 
-Here rufen wir die [`read_line()`][read_line] Methode unseres Handle auf.
-[Methoden][method] sind wie assoziierte Funktionen, aber sind nur für eine
+Hier rufen wir die [`read_line()`][read_line] Methode unseres Handle auf.
+[Methoden][method] sind wie assoziierte Funktionen, aber sie sind nur für eine
 jeweilige Instanz eines Types verfügbar, anstatt für den Typ selbst. Wir
 übergeben außerdem ein Argument an `read_line()`: `&mut vermutung`.
 
 [read_line]: https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line
 [method]: Methodensyntax.html
 
-Erinnerst du dich wir oben `vermutung` gebunden haben? Wir hatten gesagt, dass
+Erinnerst du dich, wie wir oben `vermutung` gebunden haben? Wir hatten gesagt, dass
 es *mutable* ist. Jedoch nimmt `read_line` keinen `String` als Argument: Es
 nimmt einen `&mut String`. Rust hat ein Feature namens
 ‘[Referenzen][references]’, welches einem erlaubt mehrere Referenzen auf ein
-Stück Daten zu haben, was kopieren reduzieren kann. Referenzen sind ein
-komplexes Feature, da eines von Rusts Hauptverwendungsargumenten ist, wie sicher
-und einfach es ist, Referenzen zu benutzen. Wir müssen jedoch nicht viele dieser
-Details wissen um unser Programm im Moment zu vollenden.
+Stück Daten zu haben, was kopieren reduzieren kann. Referenzen sind ein komplexes Feature, 
+und einer der großen Vorteile von Rust, weil sie in Rust sicher und einfach zu verwenden sind. 
+Wir müssen jedoch nicht viele dieser Details wissen um unser Programm im Moment zu vollenden.
 Fürs Erste ist alles was wir kennen müssen, dass, ähnlich wie `let`
 Bindungen, Referenzen standardmäßig *immutable* sind. Daher müssen wir
 `&mut vermutung` schreiben anstatt `&vermutung`.
 
 Warum nimmt `read_line()` eine *mutable* Referenz eines String? Der Job dieser
-Funktion ist es die Eingaben des Benutzers auf der Standardeingabe zu nehmen
+Funktion ist es, die Eingaben des Benutzers von der Standardeingabe zu nehmen
 und in einem String zu platzieren. Also nimmt sie einen String als
 Argument, und um die Eingabe hinzuzufügen muss dieser *mutable* sein.
 
@@ -274,14 +273,14 @@ den wir ihr übergeben. Aber sie gibt auch einen Wert zurück:
 In diesem Fall ein [`io::Result`][ioresult]. Rust hat eine Reihe von Typen
 namens `Result` in seiner Standardbibliothek:
 Einen allgemeines [`Result`][result] und spezifische Versionen für
-unter-bibliotheken, wie z.B. `io::Result`.
+Unter-Bibliotheken, wie z.B. `io::Result`.
 
 [ioresult]: https://doc.rust-lang.org/std/io/type.Result.html
 [result]: https://doc.rust-lang.org/std/result/enum.Result.html
 
 Der Zweck dieser `Result` Typen ist Informationen zur Fehlerbehandung bereit
 zu stellen. Werte des `Result` Typ besitzen, wie jeder Typ, Methoden.
-In diesem Fall hat `io::Result` eine `ok()` Methode, welche sagt
+In diesem Fall hat `io::Result` eine `ok()` Methode, welche sagt: 
 "wir möchten annehmen, dass dieser Wert ein erfolgreicher ist". Falls nicht,
 schmeißen wir einfach die Fehlerinformation weg. Warum sie wegwerfen? Nun,
 für ein einfaches Programm wollen wir einfach einen allgemeinen Fehler
