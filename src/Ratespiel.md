@@ -324,8 +324,8 @@ Es gibt nurnoch eine übrige Zeile dieses ersten Beispiels:
     println!("Deine Vermutung: {}", vermutung);
 ```
 
-Dies gibt den, in dem wir unsere Eingabe gespeichert haben, aus.
-Die `{}` sind Platzhalter, und somit übergeben wir `vermutung` daran.
+Diese gibt den String, in dem wir unsere Eingabe gespeichert haben, aus.
+Die `{}` sind Platzhalter für den in `vermutung` übergebenen Wert.
 Hätten wir mehrere `{}`, dann würde wir mehrere Argumente übergeben:
 
 ```rust
@@ -406,7 +406,7 @@ $ cargo build
 
 (Du könntest natürlich andere Versionen sehen.)
 
-Das ist eine Menge an neuer Ausgabe! Nun da wir eine externe Abhängigkeit
+Das ist eine Menge an neuen Ausgaben! Nun da wir eine externe Abhängigkeit
 haben holt Cargo die aktuellste Version von allem aus der Registry, was
 eine Kopie der Daten auf [Crates.io][cratesio] ist. Crates.io ist der Ort,
 wo Leute im Rust Ökosystem ihre Open-Source Projekte veröffentlichen,
@@ -418,7 +418,7 @@ Nach dem aktualisieren der Registry prüft Cargo unsere `[dependencies]` und
 lädt alle, die wir noch nicht haben, herunter. In diesem Fall laden wir uns
 auch eine Kopie der `libc` Crate, obwohl wir gesagt haben, dass wir nur von
 der `rand` Crate abhängen wollen. Das ist so weil `rand` von `libc` abhängt
-um zu funktionieren. Nach dem herunterladen kompiliert Cargo diese und danach
+um zu funktionieren. Nach dem Herunterladen kompiliert Cargo diese und danach
 unser Projekt.
 
 Falls wir `cargo build` nochmal ausführen,
@@ -505,8 +505,8 @@ fn main() {
 ```
 
 Das erste was wir gemacht haben ist die erste Zeile zu ändern. Dort steht nun
-`extern crate rand`. Weil wir `rand` in unseren `[dependencies]` deklariert
-deklariert haben, können wir `extern crate` benutzen um Rust wissen zu lassen,
+`extern crate rand`. Weil wir `rand` in unseren `[dependencies]` deklariert haben, 
+können wir `extern crate` benutzen um Rust wissen zu lassen,
 dass wir sie benutzen. Dies ist außerdem das äquivalent zu einem `use rand;`,
 sodass wir alles in der `rand` Crate erreichen können, indem wir es mit
 `rand::` einleiten.
@@ -687,7 +687,7 @@ Soweit war das nicht wichtig, weswegen Rust standardmäßig `i32` gewählt hat.
 Jedoch weis Rust hier nicht wie es `vermutung` und die `geheime_zahl`
 vergleichen soll. Sie müssen vom selben Typ sein. Letztlich wollen wir für
 den Vergleich den `String`, den wir von der Eingabe lesen,
-in eine richtigen Zahlentyp umwandeln. Wir können das mit drei weiteren Zeilen
+in einen richtigen Zahlentyp umwandeln. Wir können das mit drei weiteren Zeilen
 erledigen. Hier ist unser neues Programm:
 
 ```rust
@@ -774,7 +774,7 @@ Es ist eine gute Standardwahl für eine kleine positive Zahl.
 Genauso wie `read_line()`, kann unser Aufruf von `parse()` einen Fehler
 verursachen. Was ist, wenn unser String `A❤%` enthielte? Es gibt keine
 Möglichkeit das in eine Zahl umzuwandeln. Deswegen werden wir dasselbe
-wie mit `read_line()` gemachen: Wir benutzen die `ok()` und `expect()`
+wie mit `read_line()` machen: Wir benutzen die `ok()` und `expect()`
 Methoden um unser Programm bei einem Fehler zu crashen.
 
 Lass uns unser Programm ausprobieren!
@@ -984,7 +984,7 @@ aber in diesem Fall enthält jede Variante ein paar Daten:
 `Ok` ist ein Erfolg und `Err` ist ein Fehlschlag. Jeder davon enthält
 ein paar Daten:  Die erfolgreich geparste Zahl oder einen Fehlertyp.
 In diesem Fall, "matchen" wir `Ok(zahl)`, was den inneeren Wert von `Ok`
-an den Name `num` bindet und danach diesen Wert auf der rechten Seite
+an den Name `zahl` bindet und danach diesen Wert auf der rechten Seite
 zurückgibt. Im `Err` Fall interessieren wir uns nicht für die Art des
 Fehlers, also benutzen wir einfach `_` anstatt einen Namen.
 Dies ignoriert den Fehler und `continue` sorgt dafür, dass wir mit der
