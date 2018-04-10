@@ -40,7 +40,7 @@ Was heißt das?
 Wenn eine Funktion aufgerufen wird, dann wird für jede ihrer lokalen Variablen, und etwas Zusatzinformation, Speicher auf ihrem Stack, dem Stackframe, reserviert.
 Für diese Tutorial ignorieren wir die Zusatzinformationen erst einmal.
 Wenn `main()` also ausgeführt wird, dann allozieren wir einen einzelnen 32-bit Integer auf dem Stackframe, das passiert hier ganz automatisch.
-Wenn die Funktion terminiert wird der Stackframe freigegeben.
+Wenn die Funktion terminiert, wird der Stackframe freigegeben.
 Auch vollautomatisch.
 
 Das ist alles, für diese kleine Beispiel.
@@ -102,13 +102,13 @@ Da `0` bereits im erst Stackframe vergeben war, verwendet `foo()` nun Adressen `
 Die Adressen `0` bis `2` sind allerdings rein zur Illustration gewählt,
 im tatsächlichen Speicher hätten diese Adressen andere Werte und wären auch nicht direkt aufeinanderfolgend.
 
-Nachdem `foo()` beendet ist wird sein Frame wieder vom Stapel genommen und wir sind wieder zurück bei:
+Nachdem `foo()` beendet ist, wird sein Frame wieder vom Stapel genommen, und wir sind wieder zurück bei:
 
 | Adresse | Name | Wert  |
 |---------|------|-------|
 | 0       | x    | 42    |
 
-Und dann, nachdem `main()` ebenfalls fertig ist wird auch diese Adresse wieder freigegeben. Ganz einfach!
+Und dann, nachdem `main()` ebenfalls fertig ist, wird auch diese Adresse wieder freigegeben. Ganz einfach!
 
 Ein drittes Beispiel:
 
@@ -159,7 +159,7 @@ Dann ruft `foo()` `bar()` auf:
 
 Puh! Unser Stapel wächst in die Höhe.
 
-Nach dem `bar()` fertig ist, wird sein Stackframe dealloziert und es bleiben nur der von `foo()` und `main()`:
+Nach dem `bar()` fertig ist, wird sein Stackframe dealloziert, und es bleiben nur der von `foo()` und `main()`:
 
 | Adresse | Name | Wert  |
 |---------|------|-------|
@@ -168,7 +168,7 @@ Nach dem `bar()` fertig ist, wird sein Stackframe dealloziert und es bleiben nur
 | 1       | a    | 5     |
 | 0       | x    | 42    |
 
-Und dann wird `foo()` auch noch fertig und wir haben nur noch `main()`:
+Und dann wird `foo()` auch noch fertig, und wir haben nur noch `main()`:
 
 | Adresse | Name | Wert  |
 |---------|------|-------|
@@ -261,9 +261,9 @@ Rust Programme verwenden [jemalloc][jemalloc].
 Zurück zu unserem Beispiel.
 Da sich diese Werte auf dem Heap befinden, können sie länger existieren als die Funktion die die Box erzeugt hat.
 In diesem Fall jedoch nicht.[^1]
-Wenn eine Funktion endet wird ihr Stackframe freigegeben.
+Wenn eine Funktion endet, wird ihr Stackframe freigegeben.
 `Box<T>` hat einen Trick: [Drop][drop].
-Es implementiert `Drop` und gibt sobald ihr Wert auf dem Stack freigegeben wird ebenfalls den Speicher auf dem Heap frei.
+Es implementiert `Drop` und gibt, sobald ihr Wert auf dem Stack freigegeben wird, ebenfalls den Speicher auf dem Heap frei.
 Geil! Wenn also `x` verschwindet gibt es vorher seinen Speicher auf dem Heap frei:
 
 | Adresse | Name | Wert   |
@@ -384,7 +384,7 @@ Als nächstes wird am Ende von `main()` `foo()` aufgerufen:
 | 0                    | h    | 3                      |
 
 Speicher wird für `x`, `y` und `z` belegt.
-Das Argument `x` hat den gleichen Wert wie `j`, da wird das ja übergeben haben, ein Zeiger auf die Adresse `0`, da `j` auf `h` zeigt.
+Das Argument `x` hat den gleichen Wert wie `j`, da wir das ja übergeben haben, ein Zeiger auf die Adresse `0`, da `j` auf `h` zeigt.
 
 Danach ruft `foo()` `baz()` auf und übergibt `z`:
 
@@ -402,7 +402,7 @@ Danach ruft `foo()` `baz()` auf und übergibt `z`:
 | 0                    | h    | 3                      |
 
 Wir haben Speicher für `f` und `g` alloziert.
-`baz()` ist sehr kurz und wenn es vorbei ist wird sein Stackframe freigegeben:
+`baz()` ist sehr kurz und wenn es vorbei ist, wird sein Stackframe freigegeben:
 
 | Adresse              | Name | Wert                   |
 |----------------------|------|------------------------|
