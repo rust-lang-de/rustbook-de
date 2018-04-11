@@ -2,7 +2,7 @@
 
 Dieser Guide ist einer von dreien, der Rusts Ownership-System.
 präsentiert. Dies ist eines von Rusts einzigartigen und verlockenden
-Features mit denen Rust Entwickler vertraut sein sollten.
+Features mit denen Rust-Entwickler vertraut sein sollten.
 Durch Ownership [engl.: Besitz] erreicht Rust sein größtes Ziel,
 die Speichersicherheit.
 Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
