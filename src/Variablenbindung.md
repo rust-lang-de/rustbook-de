@@ -1,6 +1,6 @@
 # Variablenbindung
 
-Fast jedes nicht-triviale Rust Programm verwendet *Variablenbindungen*.
+Fast jedes nicht-triviale Rust-Programm verwendet *Variablenbindungen*.
 Sie sehen so aus:
 
 ```rust
@@ -49,7 +49,7 @@ Wenn ich dich fragen würde diese Zeile laut auszusprechen,
  würdest du sagen:
  "`x` ist eine Bindung mit dem Typ `i32` und dem Wert `fünf`."
 
-Rust hat viele verschiedene primitive Ganzzahl Typen.
+Rust hat viele verschiedene primitive Ganzzahltypen.
 Sie beginnen mit `i` für vorzeichenbehaftete Ganzzahlen und
 mit `u` für vorzeichenlose Ganzzahlen. Die möglichen Ganzzahlgrößen sind
 8, 16, 32 und 64 Bits.
