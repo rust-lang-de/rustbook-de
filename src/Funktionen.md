@@ -1,6 +1,6 @@
 # Funktionen
 
-Jedes Rust Programm hat mindestens eine Funktion,
+Jedes Rust-Programm hat mindestens eine Funktion,
 die `main` Funktion:
 
 ```rust
@@ -68,7 +68,6 @@ fn print_sum(x, y) {
     println!("sum is: {}", x + y);
 }
 ```
-```
 
 Man bekommt diesen Fehler:
 
@@ -96,7 +95,7 @@ fn add_one(x: i32) -> i32 {
 
 Rust Funktionen geben genau einen Wert zurück. Diesen gibt man nach einem
 "Pfeil" an, welcher aus einem Bindestrich (`-`), gefolgt von einem
-Größer-Gleich Zeichen (`>`) besteht.
+Größer-Gleich-Zeichen (`>`) besteht.
 Die letzte Zeile der Funktion ist automatisch der Rückgabewert der Funktion.
 Du wirst sehen, dass hier das Semikolon fehlt. Wenn wir es hinzufügen:
 
@@ -125,7 +124,7 @@ Es gibt nur zwei Arten von Anweisungen, alles andere ist ein Ausdruck.
 
 Also worin liegt der Unterschied? Ausdrücke geben einen Wert zurück,
 Anweisungen nicht. Deswegen bekommen wir hier eine
-‘not all control paths return a value’ Meldung:
+‘not all control paths return a value’-Meldung:
 Die Anweisung `x + 1;` gibt keinen Wert zurück.
 Es gibt zwei Arten von Anweisungen in Rust:
 `Deklarations-Anweisungen` und `Ausdrucks-Anweisungen`.
@@ -133,7 +132,7 @@ Alles andere ist ein Ausdruck.
 Lass uns zuerst über *Deklarations-Anweisungen* sprechen.
 
 In manchen Sprachen können Variablenbindungen auch als Ausdruck geschrieben
-werden. Wie z.B. in Ruby:
+werden. Wie z. B. in Ruby:
 
 ```ruby
 x = y = 5
@@ -149,7 +148,7 @@ let x = (let y = 5); // expected identifier, found keyword `let`
 Der Compiler sagt uns hier, dass er den Beginn eines Ausdrucks erwartet hat,
 denn ein `let` kann nur eine Anweisung einleiten, aber keinen Ausdruck.
 
-Beachte, dass eine Zuweisung an eine bereits gebundene Variable (z.B. `y = 5`)
+Beachte, dass eine Zuweisung an eine bereits gebundene Variable (z. B. `y = 5`)
 trotzdem ein Ausdruck ist, auch wenn dieser nicht besonders nützlich ist.
 Anders als in anderen Sprachen, wo der zugewiesene Wert zurückgegeben
 werden würde, wird in Rust stattdessen das leere Tupel `()` zurückgegeben.
