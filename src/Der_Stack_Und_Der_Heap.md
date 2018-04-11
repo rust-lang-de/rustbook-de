@@ -517,7 +517,7 @@ Dort hat man keinen manuellen Einfluss darauf, ob Speicher auf dem Heap oder Sta
 Stattdessen liegt fast alles auf dem Heap und der Garbage Collector hält regelmäßig das Programm kurz an und räumt auf.
 
 Bei Sprachen wie C/C++ kann man zwischen Stack und Heap unterscheiden, muss allerdings manuell seinen Speicher aufräumen.
-Hier gibt es bereits moderne Mechanismen, u.a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc, Konzepte wie „Besitz“ und „Ausleihen“ sind allerdings noch kein Kernfeature der Sprache.
+Hier gibt es bereits moderne Mechanismen, u. a. SmartPointer, die ähnliche Charakteristika haben wie Rust `Box<T>` etc., Konzepte wie „Besitz“ und „Ausleihen“ sind allerdings noch kein Kernfeature der Sprache.
 
 ## Was soll ich benutzen?
 
