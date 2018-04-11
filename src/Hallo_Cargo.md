@@ -1,14 +1,13 @@
 # Hallo Cargo!
 
-[Cargo][cratesio] ist ein Werkzeug, welches Rustler benutzen um ihre Rust
-Projekte zu verwalten. Cargo ist derzeit in einem pre-1.0 Zustand und ist somit
+[Cargo][cratesio] ist ein Werkzeug, welches Rustler benutzen um ihre Rust-Projekte zu verwalten. Cargo ist derzeit in einem pre-1.0 Zustand und ist somit
 immer noch in Arbeit. Jedoch ist es bereits gut genug es für viele Rust Projekte
-einzusetzen und somit wird vorausgesetzt, dass Rust Projekte Cargo von Anfang
+einzusetzen und somit wird vorausgesetzt, dass Rust-Projekte Cargo von Anfang
 an einsetzen.
 
 [cratesio]: http://doc.crates.io
 
-Cargo verwaltet drei Sachen: Das bauen des Codes, das Herunterladen der
+Cargo verwaltet drei Sachen: Das Bauen des Codes, das Herunterladen der
 Abhängigkeiten, welche dein Projekt benötigt und
 das Bauen dieser Abhängigkeiten. Zu Anfang hat dein Programm keine
 Abhängigkeiten. Also wirst du nur den ersten Teil an Funktionalität nutzen.
@@ -112,7 +111,7 @@ Hallo Welt!
 ```
 
 Dies hat uns nicht viel mehr eingebracht als einfach nur `rustc` zu benutzen.
-Aber denk an Zukunft: Wenn unser Projekt komplexer wird, dann müssen wir
+Aber denk an die Zukunft: Wenn unser Projekt komplexer wird, dann müssen wir
 mehr machen um alle Teile zusammen ordentlich zum Kompilieren zu bringen.
 Mit Cargo können wir, während unser Projekt wächst, einfach `cargo build`
 aufrufen und unser Projekt wird sofort auf die richtige Art und Weise gebaut.
@@ -135,7 +134,7 @@ Du wirst diese Datei niemals selber anfassen müssen. Lass einfach Cargo
 die Sache regeln.
 
 Das wars! Wir haben `hallo_welt` erfolgreich mit Cargo gebaut. Obwohl das
-Programm simpel ist, benutzt es viele der Werkzeuge die du für den Rest
+Programm simpel ist, benutzt es viele der Werkzeuge, die du für den Rest
 deiner Rust-Karriere brauchst. <!-- klingt etwas merkwürdig -->
 Du kannst erwarten, dass du mit nahezu allen Rust-Projekten so
 loslegen kannst:
@@ -161,7 +160,7 @@ $ cargo new hallo_welt --bin
 Wir übergeben `--bin`, da es unser Ziel ist eine ausführbare Anwendung,
 anstatt einer Bibliothek, zu erzeugen. Ausführbare Dateien werden oft
 ‘binaries’ genannt.
-(So wie in `/usr/bin`, falls du auf einem Unix System bist).
+(So wie in `/usr/bin`, falls du auf einem Unix-System bist).
 
 Lass uns mal sehen welche Dateien Cargo für uns erzeugt hat:
 
@@ -177,7 +176,7 @@ $ tree .
 ```
 
 Falls du den `tree`-Befehl nicht hast, dann kannst du ihn dir wahrscheinlich
-mit hilfe der Paketverwaltung deiner Distribution besorgen. Der Befehl ist nicht
+mit Hilfe der Paketverwaltung deiner Distribution besorgen. Der Befehl ist nicht
 notwendig, aber sicherlich nützlich.
 
 Das ist alles was wir brauchen um loszulegen. Lass uns zuerst die `Cargo.toml` betrachten.
@@ -218,9 +217,9 @@ Du hast Zwei Möglichkeiten:
 Entweder stürzt du dich in ein Projekt mit ‘[Lerne Rust][learnrust]’,
 oder du arbeitest dir deinen Weg von unten nach oben mit
 ‘[Syntax und Semantik][syntax]’.
-Erfahrene Systemprogrammierer werden ‘Lerne Rust’ mit sicherheit vorziehen, während Leute
+Erfahrene Systemprogrammierer werden ‘Lerne Rust’ mit Sicherheit vorziehen, während Leute
 mit Hintergrund in dynamischen Sprachen beides bevorzugen könnten.
-Verschiedene Leute lernen verschieden! Wähle was Dir am besten liegt.
+Verschiedene Leute lernen verschieden! Wähle was dir am besten liegt.
 
 [learnrust]: Lerne_Rust.html
 [syntax]: Syntax_Und_Semantik.html
