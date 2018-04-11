@@ -191,7 +191,7 @@ In diesem Beispiel ist `y` nicht länger eine Referenz auf den Vektor, der in `x
 gespeichert ist, sondern eine Kopie des ersten Elements `"Hallo"`. Nun, da wir
 keine Referenz haben, funktioniert unser `push()` einwandfrei.
 
-[move]: Besitz#move-semantics
+[move]: Besitz#move-semantik
 
 Wenn wir wirklich eine Referenz haben wollen, dann brauchen wir die andere
 Option: Sicherstellen, dass unsere Referenzen den Scope verlässt, bevor wir die
