@@ -6,7 +6,7 @@ Sicherheit, Geschwindigkeit und Nebenläufigkeit (Safety, Speed, Concurrency).
 Sie erreicht diese Ziele ohne Garbage Collector, was sie zu einer nützlichen Sprache
 für eine Reihe von Anwendungsfällen macht, in denen andere Sprachen nicht so gut sind:
 Einbettung in andere Sprachen, Programme mit besonderen Anforderungen an Speicher-
-oder Zeitbedarf und Schreiben von Low-Level-Code, wie z.B. Gerätetreiber und
+oder Zeitbedarf und Schreiben von Low-Level-Code, wie z. B. Gerätetreiber und
 Betriebssysteme.
 Sie übertrifft derzeitige Sprachen, die auf diesen Bereich abzielen, indem sie eine
 Reihe von Sicherheitsprüfungen zur Kompilierzeit durchführt – ohne Kosten zur Laufzeit,
@@ -214,5 +214,5 @@ erzeugt. `y` wird den Scope verlassen, bevor wir `push()` aufrufen, und damit
 ist alles in Ordnung.
 
 Dieses Konzept des Besitzes ist nicht nur dazu gut ‚hängende Zeiger‘ zu verhindern,
-sondern auch eine ganze Reihe verwandter Probleme zu lösen, wie z.B.
+sondern auch eine ganze Reihe verwandter Probleme zu lösen, wie z. B.
 *iterator invalidation*, Nebenläufigkeit und mehr.
