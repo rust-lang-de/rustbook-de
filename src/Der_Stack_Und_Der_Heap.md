@@ -532,7 +532,7 @@ Allgemein ist Stackallokation zu bevorzugen, weshalb Rust standardmäßig den St
 Speicher auf dem Stack verwalten ist trivial:
 Die Maschine inkrementiert und dekrementiert einfach den sogenannten *Stack-Pointer*.
 Speicher auf dem Heap verwalten ist nicht trivial:
-Speicher auf dem Heap kann beliebig freigegeben werden und jeder Block auf dem Heap kann eine beliebige Größe haben, es ist allgemein schwerer wiederverwendbare Bereiche zu identifizieren.
+Speicher auf dem Heap kann beliebig freigegeben werden und jeder Block auf dem Heap kann eine beliebige Größe haben. Es ist allgemein schwerer, wiederverwendbare Bereiche zu identifizieren.
 
 Um hier noch tiefer einzusteigen kannst du [diese Paper][wilson] (englisch) lesen oder Grundstudiums-Vorlesungen „Betriebssysteme“ der Uni deiner Wahl besuchen :D
 
@@ -548,7 +548,7 @@ jedoch könnte dann nicht automatisch zur Compile-Zeit abgeleitet werden,
 wann Speicher freigegeben werden kann.
 Ein Compiler müsste sich auf dynamische Protokolle, potentiell außerhalb der Sprache selbst, verlassen (zum Beispiel *reference counting* wie in `Rc<T>` und `Arc<T>`).
 
-Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heapallokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z.B. durch einen Garbage Collector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
+Wenn man es übertreibt kann man sagen, dass die erhöhte Freiheit durch Heapallokation mit signifikanten Kosten verbunden ist, entweder in Form von Laufzeit-Performance (z. B. durch einen Garbage Collector) oder durch erhöhten Aufwand für den Entwickler in Form von expliziten Mechanismen zur Speicherverwaltung (`new`, `delete`), welche Rust nicht vorsieht.
 
 [^1]: Wir können den Speicher länger leben lassen indem wir den Besitz übertragen das heißt manchmal ‚moving out of the box‘. Komplexere Beispiele folgen später.
 
