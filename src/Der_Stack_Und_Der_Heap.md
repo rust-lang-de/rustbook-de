@@ -256,7 +256,7 @@ Verschiedene Programme können unterschiedliche Speicherallokatoren verwenden,
 also Bibliotheken, die einem das abnehmen.
 Rust Programme verwenden [jemalloc][jemalloc].
 
-[jemalloc]: http://www.canonware.com/jemalloc/
+[jemalloc]: http://jemalloc.net
 
 Zurück zu unserem Beispiel.
 Da sich diese Werte auf dem Heap befinden, können sie länger existieren als die Funktion die die Box erzeugt hat.
