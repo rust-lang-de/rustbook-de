@@ -155,7 +155,7 @@ Es existieren nun zwei Dateien: Unser Quellcode mit der `.rs` Endung und eine
 ausführbare Datei (`main.exe` unter Window, `main` überall sonst).
 
 ```bash
-$ ./main  # or main.exe on Windows
+$ ./main  # oder main.exe unter Windows
 ```
 
 Dies gibt nun unseren `Hallo Welt!`-Text in unserer Kommandozeile aus.
