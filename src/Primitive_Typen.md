@@ -1,6 +1,6 @@
 # Primitive Typen
 
-Die Rust Programmiersprache hat eine Reihe von Typen die als "primitiv"
+Die Programmiersprache Rust hat eine Reihe von Typen die als "primitiv"
 angesehen werden. Das bedeutet, dass sie in die Sprache eingebaut sind.
 Rust ist so strukturiert, dass die Standardbibliothek auch eine Menge
 nützlicher Typen zur Verfügung stellt,
@@ -22,14 +22,14 @@ Eine übliche Nutzung ist in [`if` Bedingungen][if].
 
 [if]: If.html
 
-Du findest mehr Dokumentation zu `bool`s
+Mehr Dokumentation zu `bool`s findest du
 [in der Dokumentation der Standardbibliothek][bool].
 
 [bool]: https://doc.rust-lang.org/std/primitive.bool.html
 
 # `char`
 
-Der `char` Typ stellt einen einzelnen Unicode Skalarwert dar.
+Der `char` Typ stellt einen einzelnen Unicode-Skalarwert dar.
 Du kannst `char`s mit einzelnen Anführungsszeichen erzeugen: (`'`)
 
 ```rust
@@ -40,7 +40,7 @@ let smiley = '😀';
 Anders als in manch anderen Spachen bedeutet das, dass `char`s
 kein einzelnes byte, sondern vier bytes sind.
 
-Du findest mehr Dokumentation zu `char`s
+Mehr Dokumentation zu `char`s findest du
 [in der Dokumentation der Standardbibliothk][char].
 
 [char]: https://doc.rust-lang.org/std/primitive.char.html
@@ -48,7 +48,7 @@ Du findest mehr Dokumentation zu `char`s
 # Numerische Typen
 
 Rust hat eine Vielzahl an numerischen Typen in ein paar Kategorien:
-Vorzeichenbehaftet und Vorzeichenlos, feste und variable Größe,
+vorzeichenbehaftet und vorzeichenlos, feste und variable Größe,
 Fließkomma- und Ganzzahl.
 
 Diese Typen bestehen aus zwei Teilen: Der Kategorie und ihrer Größe.
@@ -85,18 +85,18 @@ Lass sie uns nach Kategorie durchgehen:
 ## Vorzeichenbehaftet und Vorzeichenlos
 
 Ganzzahlige Typen kommen in zwei Ausführungen daher:
-Vorzeichenbehaftet und Vorzeichenlos. Lass uns eine 4-bit Zahl betrachten
-um den Unterschied zu verstehen. Eine Vorzeichenbehaftete 4-bit Zahl würde
+vorzeichenbehaftet und vorzeichenlos. Lass uns eine 4-bit-Zahl betrachten
+um den Unterschied zu verstehen. Eine vorzeichenbehaftete 4-bit-Zahl würde
 dir erlauben Zahlen von `-8` bis `+7` zu speichern. Vorzeichenbehaftete Zahlen
-verwenden die Zweierkomplementdarstellung. Eine vorzeichenlose 4-bit Zahl
+verwenden die Zweierkomplementdarstellung. Eine vorzeichenlose 4-bit-Zahl
 braucht keine negativen Zahlen speichern und kann deswegen Werte von
 `0` bis `+15` annehmen.
 
 Vorzeichenlose Typen nutzen ein `u` für ihre Kategorie,
 und vorzeichenbehaftete Typen nutzen ein `i`.
 Das `i` steht für "integer" (Ganzzahl).
-Also ist `u8` eine vorzeichenlose 8-bit Ganzzahl und
-`i8` ist eine vorzeichenbehaftete 8-bit Ganzzahl.
+Also ist `u8` eine vorzeichenlose 8-bit-Ganzzahl und
+`i8` ist eine vorzeichenbehaftete 8-bit-Ganzzahl.
 
 ## Typen fester Größe
 
@@ -108,7 +108,7 @@ Also ist `u32` eine vorzeichenlose Ganzzahl mit 32 Bits und
 ## Fließkommatypen
 
 Rust besitzt auch zwei Fließkommatypen: `f32` und `f64`.
-Diese entsprechen dem IEEE-754 Standard für Fließkommazahlen
+Diese entsprechen dem IEEE-754-Standard für Fließkommazahlen
 einfacher und doppelter Genauigkeit.
 
 # Arrays
@@ -123,7 +123,7 @@ let a = [1, 2, 3]; // a: [i32; 3]
 let mut m = [1, 2, 3]; // m: [i32; 3]
 ```
 
-Arrays haben den Typ `[T; N]`. Wir werden über diese `T` Notation
+Arrays haben den Typ `[T; N]`. Wir werden über diese `T`-Notation
 [im Generics Abschnitt][generics] reden. Das `N` ist eine Konstante zur
 Kompilierzeit um die Länge des Arrays anzuzeigen.
 
@@ -152,7 +152,7 @@ let namen = ["Graydon", "Brian", "Niko"]; // namen: [&str; 3]
 println!("Der zweite Name ist: {}", namen[1]);
 ```
 
-Die Indizes beginnen bei 0, wie in den meisten Programmiersprachen.
+Wie in den meisten Programmiersprachen beginnen die Indizes bei 0.
 Somit ist der erste Name `namen[0]` und der zweite Name `namen[1]`.
 Das vorherige Beispiel gibt `Der zweite Name ist: Brian` aus.
 Wenn du versucht einen Index zu verwenden, der nicht im Array liegt,
@@ -160,7 +160,7 @@ dann wirst du einen Fehler bekommen: Arrayzugriffe werden zur Laufzeit
 auf Gültigkeit geprüft. Solch ein fehlerhafter Zugriff ist die Quelle
 vieler Bugs in anderen Systemsprachen.
 
-Du findest mehr Dokumentation über `Arrays`s
+Mehr Dokumentation über `Arrays`s findest du
 [in der Dokumentation der Standardbibliothek][array].
 
 [array]: https://doc.rust-lang.org/std/primitive.array.html
@@ -187,14 +187,14 @@ Slices haben den Typ `&[T]`. Wir werden über dieses `T` sprechen, wenn wir
 
 [generics]: Generics.html
 
-Du findest mehr Dokumentation über `Slice`s
+Mehr Dokumentation über `Slice`s findest du
 [in der Dokumentation der Standardbibliothek][slice].
 
 [slice]: https://doc.rust-lang.org/std/primitive.slice.html
 
 # `str`
 
-Rusts `str` Typ ist der primitivste String Typ.
+Rusts `str`*Typ ist der primitivste String Typ.
 Als ein [größenloser Typ][dst] ist er alleine nicht sehr nützlich,
 aber er wird sehr nützlich in Kombination mit einer Referenz, wie
 zum Beispiel [`&str`][strings]. Von daher belassen wir es dabei.
@@ -202,7 +202,7 @@ zum Beispiel [`&str`][strings]. Von daher belassen wir es dabei.
 [dst]: Größenlose_Typen.html
 [strings]: Strings.html
 
-Du findest mehr Dokumentation über `str`s
+Mehr Dokumentation über `str`s findest du
 [in der Dokumentation der Standardbibliothek][str].
 
 [str]: https://doc.rust-lang.org/std/primitive.str.html
@@ -215,7 +215,7 @@ Ein Tupel ist eine geordnete Liste fester Größe. Zum Beispiel:
 let x = (1, "hallo");
 ```
 
-Wie du sehen kannst sehen kannst, sieht der Typ eins Tupels genaus aus wie
+Wie du sehen kannst, sieht der Typ eins Tupels genaus aus wie
 das jeweilige Tupel, aber mit den jeweiligen Typen anstatt Werten.
 Aufmerksame Leser werden auch feststellen, dass Tupel heterogen sind:
 Wir haben ein `i32` und ein `&str` in diesem Tupel.
@@ -279,10 +279,10 @@ let z = tupel.2;
 println!("x ist {}", x);
 ```
 
-Wie auch bei der Array Indizierung wird bei 0 begonnen, aber anders als
+Wie auch bei der Array-Indizierung wird bei 0 begonnen, aber anders als
 bei der Array Indizierung verwendet man ein `.` anstatt `[]`.
 
-Du findest mehr Dokumentation über Tupel
+Mehr Dokumentation über Tupel findest du
 [in der Dokumentation der Standardbibliothek][tuple].
 
 [tuple]: https://doc.rust-lang.org/std/primitive.tuple.html
