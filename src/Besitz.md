@@ -1,8 +1,8 @@
 # Besitz
 
-Dieser Guide ist einer von dreien, der Rusts Ownership-System.
+Dieser Guide ist einer von dreien, der Rusts Ownership-System
 präsentiert. Dies ist eines von Rusts einzigartigen und verlockenden
-Features mit denen Rust Entwickler vertraut sein sollten.
+Features mit denen Rust-Entwickler vertraut sein sollten.
 Durch Ownership [engl.: Besitz] erreicht Rust sein größtes Ziel,
 die Speichersicherheit.
 Es gibt ein paar verschiedene Konzepte, jedes mit seinem eigenen Kapitel:
@@ -39,7 +39,7 @@ Das passiert häufig, da das mentale Modell des Programmierers von Ownership
 nicht den eigentlichen Regeln entspricht, die Rust implementiert.
 Du wirst wahrscheinlich zuerst etwas ähnliches erleben.
 Die guten Nachricht ist aber:
-Erfahrenere Rust Entwickler berichten, dass, sobald sie eine Zeit
+Erfahrenere Rust-Entwickler berichten, dass, sobald sie eine Zeit
 mit den Regeln des Ownership-Systems gearbeitet haben, sie immer weniger
 mit dem *borrow checker* kämpfen müssen. 
 
@@ -154,7 +154,7 @@ Also ist ein `move` nicht so ineffizient wie er zuerst scheint.
 Wir haben etabliert, dass, wenn Besitz an eine andere Bindung übertragen wird,
 man die Originalbindung nicht mehr verwenden lassen. Es gibt jedoch ein
 [Trait][traits] namens `Copy` der dieses Verhalten ändert.
-Wir haben über Traits noch nicht diskutiert, aber fürs erste kannst du sie
+Wir haben über Traits noch nicht gesprochen, aber fürs erste kannst du sie
 dir als eine Art Annotation eines bestimmten Types vorstellen,
 welche zusätzliches Verhalten hinzufügt. Zum Beispiel:
 
@@ -167,17 +167,17 @@ let v2 = v;
 println!("v is: {}", v);
 ```
 
-In diesem Fall ist `v` ein `i32`, welcher den `Copy` Trait implementiert.
+In diesem Fall ist `v` ein `i32`, welcher den `Copy`-Trait implementiert.
 Das bedeutet, dass genau wie bei einem *move* eine Kopie der Daten gemacht
 wird, wenn wir `v` nach `v2` zuweisen. Aber anders als bei einem *move*,
 können wir `v` danach trotzdem verwenden. Das ist so, weil ein `i32`
 keine Zeiger auf irgendwelche Daten woanders hat und somit eine
 vollständige Kopie ist.
 
-Alle primitiven Typen implementieren den `Copy` Trait und ihr Besitz
+Alle primitiven Typen implementieren den `Copy`-Trait und ihr Besitz
 wird deswegen nicht bewegt wie man vermuten könnte, gemäß den
 ´Ownership Regeln´. Zum Beispiel kompilieren die folgenden beiden
-Codeschnipsel nur, weil `i32` und `bool` den `Copy` Trait implementieren.
+Codeschnipsel nur, weil `i32` und `bool` den `Copy`-Trait implementieren.
 
 ```rust
 fn main() {
@@ -205,7 +205,7 @@ fn change_truth(x: bool) -> bool {
 }
 ```
 
-Wenn wir Typen verwendet hätten, die nicht den `Copy` Trait implementieren,
+Wenn wir Typen verwendet hätten, die nicht den `Copy`-Trait implementieren,
 dann würden wir einen Kompilierfehler bekommen, da wir versucht hätten
 einen *bewegten Wert* [moved value] zu verwenden.
 
@@ -215,7 +215,7 @@ println!("{}", a);
                ^
 ```
 
-Wir werden im [Traits][traits] Abschnitt diskutieren wie
+Wir werden im [Traits][traits]-Abschnitt besprechen wie
 man mit seinen eigenen Typen `Copy` implementiert.
 
 [traits]: Traits.html
