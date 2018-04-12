@@ -1,6 +1,6 @@
 # Referenzen und Ausleihen
 
-Dieser Guide ist einer von dreien, der Rusts Ownership-System.
+Dieser Guide ist einer von dreien, der Rusts Ownership-System
 präsentiert. Dies ist eines von Rusts einzigartigen und verlockenden
 Features mit denen Rust-Entwickler vertraut sein sollten.
 Durch Ownership [engl.: Besitz] erreicht Rust sein größtes Ziel,
@@ -31,13 +31,13 @@ _zur Kompilierzeit_ ausgeführt. Du zahlst für diese Features
 keine Extrakosten zur Laufzeit.
 
 Jedoch hat dieses System einen gewissen Preis: Die Lernkurve.
-Viele neue Rust Nutzer erleben etwas,
+Viele neue Rust-Nutzer erleben etwas,
 was wir "mit dem *borrow checker* kämpfen" nennen,
 wobei dann Rust verweigert ein Programm zu kompilieren,
-bei dem der Author denkt, dass es korrekt ist.
+bei dem der Autor denkt, dass es korrekt ist.
 Das passiert häufig, da das mentale Modell des Programmierers von Ownership
 nicht den eigentlichen Regeln entspricht, die Rust implementiert.
-Du wirst wahrscheinlich zuerst etwas ähnliches erleben.
+Du wirst wahrscheinlich zuerst etwas Ähnliches erleben.
 Die guten Nachricht ist aber:
 Erfahrenere Rust Entwickler berichten, dass, sobald sie eine Zeit
 mit den Regeln des Ownership-Systems gearbeitet haben, sie immer weniger
@@ -47,7 +47,7 @@ Mit diesem Wissen, lass uns über Ausleihen lernen.
 
 # Ausleihen
 
-Am ende des [Besitz][ownership] Abschnittes hatten wir eine üble Funktion,
+Am Ende des [Besitz][ownership]-Abschnittes hatten wir eine üble Funktion,
 die so aussah:
 
 ```rust
@@ -113,7 +113,7 @@ v.push(5);
 ^
 ```
 
-Eine neue Variable am ende des Vektors anzufügen verändert den Vektor,
+Eine neue Variable am Ende des Vektors anzufügen verändert den Vektor,
 also dürfen wir das nicht machen.
 
 # &mut Referenzen
@@ -171,13 +171,13 @@ Wie es sich herausstellt gibt es Regeln.
 Hier sind die Regeln die beim Ausleihen in Rust gelten:
 
 Erstens darf etwas nicht länger ausgeliehen werden als das ausgeliehene
-existiert. Zweitens du darfst entweder die eine oder die andere Art von
+existiert. Zweitens darfst du entweder die eine oder die andere Art von
 Referenz haben, aber nicht beide zur gleichen Zeit:
 
 * eine oder mehr Referenzen (`&T`) auf eine Ressource,
 * genau eine veränderbare Referenz (`&mut T`).
 
-Du wirs feststellen, das dies sehr ähnlich (wenn auch nicht ganz exakt)
+Du wirst feststellen, das dies sehr ähnlich (wenn auch nicht ganz exakt)
 der Definition eines *data race* entspricht:
 
 > There is a ‘data race’ when two or more pointers access the same memory
