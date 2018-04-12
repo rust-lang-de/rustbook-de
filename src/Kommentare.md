@@ -8,7 +8,7 @@ Der Compiler ignoriert sie größtenteils.
 Rust hat zwei wesentliche Arten von Kommentaren:
 *Zeilenkommentare* [*line comments*] und *Doku-Kommentare* [*doc comments*].
 
-Hier ein Beispiel mit 4 Zeilenkommentaren:
+Hier ein Beispiel mit vier Zeilenkommentaren:
 
 ```rust
 // Line comments are anything after ‘//’ and extend to the end of the line.
@@ -44,7 +44,7 @@ fn add_one(x: i32) -> i32 {
 
 Es gibt noch eine weitere Kommentarform, nämlich `//!`,
 um Dinge zu dokumentieren in denen diese Kommentare enthalten sind
-(z.B. in Crates, Modulen oder Funktionen) anstatt das zu kommentieren,
+(z. B. in Crates, Modulen oder Funktionen) anstatt das zu kommentieren,
 was nach ihnen folgt.
 Üblicherweise wird diese Form von Kommentar am Anfang einer
 Crate (lib.rs) oder eines Moduls (mod.rs) verwendet:
@@ -64,8 +64,8 @@ gleich sind. Das ist sehr hilfreich in der Dokumentation.
 Es gibt ein weiteres Makro, nämlich `assert!`, welches `panic!`t,
 wenn der übergebene Wert `false` ist.
 
-Du kannst das [`rustdoc`][documentation] Tool verwenden um eine HTML
-Dokumentation aus diesen Doku-Kommentaren zu erstellen und außerdem
+Du kannst das [`rustdoc`][documentation]-Tool verwenden um eine HTML-Dokumentation
+aus diesen Doku-Kommentaren zu erstellen und außerdem
 den Beispielcode als Tests laufen lassen!
 
 [documentation]: Dokumentation.html
