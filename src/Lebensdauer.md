@@ -31,17 +31,17 @@ _zur Kompilierzeit_ ausgeführt. Du zahlst für diese Features
 keine Extrakosten zur Laufzeit.
 
 Jedoch hat dieses System einen gewissen Preis: Die Lernkurve.
-Viele neue Rust Nutzer erleben etwas,
+Viele neue Rust-Nutzer erleben etwas,
 was wir "mit dem *borrow checker* kämpfen" nennen,
-wobei dann Rust verweigert ein Programm zu kompilieren
-bei dem der Author denkt, dass es korrekt ist.
+wobei dann Rust verweigert ein Programm zu kompilieren,
+bei dem der Autor denkt, dass es korrekt ist.
 Das passiert häufig, da das mentale Modell des Programmierers von Ownership
 nicht den eigentlichen Regeln entspricht, die Rust implementiert.
-Du wirst wahrscheinlich zuerst etwas ähnliches erleben.
+Du wirst wahrscheinlich zuerst etwas Ähnliches erleben.
 Die guten Nachricht ist aber:
-Erfahrenere Rust Entwickler berichten, dass, sobald sie eine Zeit
+Erfahrenere Rust-Entwickler berichten, dass, sobald sie eine Zeit
 mit den Regeln des Ownership-Systems gearbeitet haben, sie immer weniger
-mit dem *borrow checker* kämpfen müssen. 
+mit dem *borrow checker* kämpfen müssen.
 
 Mit diesem Wissen, lass uns über Lebensdauer lernen.
 
@@ -60,8 +60,8 @@ Vorgängen vor:
 Oh-oh! Deine Referenz zeigt auf eine ungültige Ressource.
 Dies wird "baumelnder Zeiger" oder "use after free" genannt.
 
-Um das zu beheben müssen wir sicherstellen, dass Schritt Drei nie nach
-Schritt Vier passiert. Das Ownership-System in Rust macht dies durch ein
+Um das zu beheben müssen wir sicherstellen, dass Schritt drei nie nach
+Schritt vier passiert. Das Ownership-System in Rust macht dies durch ein
 Konzept namens Lebensdauer [lifetimes], welches den Scope beschreibt
 für den eine Referenz gültig ist.
 
@@ -78,7 +78,7 @@ fn bar<'a>(x: &'a i32) {
 }
 ```
 
-Das `'a` wird als "die Lebenszeit a" gelesen. Technisch gesehen hat jedee
+Das `'a` wird als "die Lebenszeit a" gelesen. Technisch gesehen hat jede
 Referenz eine zugehörige Lebenszeit, aber der Compiler erlaubt es diese in
 üblichen Fällen wegzulassen.
 Bevor wir jedoch darauf eingehen gehen wir noch das explizite Beispiel durch:
@@ -94,7 +94,7 @@ namens `'a` hat. Hätten wir zwei Referenz, dann würde das so aussehen:
 fn bar<'a, 'b>(...)
 ```
 
-I unserer Parameterlist benutzen wir dann die benannten Lebenszeiten:
+In unserer Parameterlist benutzen wir dann die benannten Lebenszeiten:
 
 ```rust
 ...(x: &'a i32)
