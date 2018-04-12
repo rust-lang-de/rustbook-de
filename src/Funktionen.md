@@ -172,7 +172,7 @@ dass Rust anderen Sprachen, welche auch ein Semikolon am Ende einer Zeile
 haben, sehr ähnlich sieht und man in Rust fast an jedem Ende einer Zeile ein
 Semikolon sieht.
 
-Wegen welcher Ausnahme sagen wir "fast"?.
+Wegen welcher Ausnahme sagen wir "fast"?
 Du hast sie bereits gesehen und zwar in diesem Code:
 
 ```rust
@@ -189,7 +189,7 @@ der Fehlermeldung, die wir sahen, vor das Semikolon zu entfernen.
 ## Frühzeitige Rückgabe
 
 Was ist mit frühzeitiger Rückgabe [early returns]?
-Rust hat dafür ein Schlpsselwort namens `return`:
+Rust hat dafür ein Schlüsselwort namens `return`:
 
 ```rust
 fn foo(x: i32) -> i32 {
@@ -201,7 +201,7 @@ fn foo(x: i32) -> i32 {
 ```
 
 `return` in der letzten Zeile einer Funktion zu verwenden funktioniert zwar,
-aber wird als schlechter Stil angesehen:
+wird aber als schlechter Stil angesehen:
 
 ```rust
 fn foo(x: i32) -> i32 {
@@ -213,7 +213,7 @@ Die vorherige Definition ohne `return` sieht vielleicht etwas komisch für dich
 aus, falls du noch nicht mit ausdrucksorientierten Sprachen gearbeitet hast,
 aber du wirst dich mit der Zeit daran gewöhnen.
 
-## Divergierende Funktionde
+## Divergierende Funktionen
 
 Rust hat eine spezielle Syntax für sogennannte ‘divergierende Funktionen’
 [diverging functions], also Funktionen, die niemals zurückkehren:
@@ -229,7 +229,7 @@ Anders jedoch als `println!()` sorgt `panic!()` dafür, dass der aktuelle
 Thread mit einer Fehlermeldung abstürzt. Weil diese Funktion einen Crash hervorruft, kehrt sie niemals zurück, deswegen hat sie den Typ ‘`!`’,
 was man als ‘divergiert’ liest.
 
-Wenn du zu einer main Funktion einen `diverges()` Aufruf hinzufügst
+Wenn du zu einer `main`-Funktion einen `diverges()`-Aufruf hinzufügst
 und das Programm ausführst, dann sieht die Ausgabe in etwa so aus:
 
 ```text
@@ -237,7 +237,7 @@ thread ‘<main>’ panicked at ‘This function never returns!’, hello.rs:2
 ```
 
 Wenn du mehr Informationen haben willst, dann kannst du einen Backtrace durch
-Setzen der `RUST_BACKTRACE` Umgebungsvariable erhalten:
+Setzen der `RUST_BACKTRACE`-Umgebungsvariable erhalten:
 
 ```text
 $ RUST_BACKTRACE=1 ./diverges
