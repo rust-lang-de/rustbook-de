@@ -31,15 +31,15 @@ _zur Kompilierzeit_ ausgeführt. Du zahlst für diese Features
 keine Extrakosten zur Laufzeit.
 
 Jedoch hat dieses System einen gewissen Preis: Die Lernkurve.
-Viele neue Rust Nutzer erleben etwas,
+Viele neue Rust-Nutzer erleben etwas,
 was wir "mit dem *borrow checker* kämpfen" nennen,
 wobei dann Rust verweigert ein Programm zu kompilieren,
-bei dem der Author denkt, dass es korrekt ist.
+bei dem der Autor denkt, dass es korrekt ist.
 Das passiert häufig, da das mentale Modell des Programmierers von Ownership
 nicht den eigentlichen Regeln entspricht, die Rust implementiert.
-Du wirst wahrscheinlich zuerst etwas ähnliches erleben.
+Du wirst wahrscheinlich zuerst etwas Ähnliches erleben.
 Die guten Nachricht ist aber:
-Erfahrenere Rust Entwickler berichten, dass, sobald sie eine Zeit
+Erfahrenere Rust-Entwickler berichten, dass, sobald sie eine Zeit
 mit den Regeln des Ownership-Systems gearbeitet haben, sie immer weniger
 mit dem *borrow checker* kämpfen müssen. 
 
