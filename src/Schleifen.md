@@ -6,8 +6,8 @@ Jede dieser Herangehensweisen hat seine eigenen Anwendungsfälle.
 
 ## loop
 
-Die Endlosschleife `loop` ist die simpelste Schleifenform, die es in Rust gibt.
-Mithilfe des `loop` Schlüsselwortes bietet uns Rust einen Weg an für eine
+Die Endlosschleife `loop` ist die einfachste Schleifenform, die es in Rust gibt.
+Mithilfe des `loop`-Schlüsselwortes bietet uns Rust einen Weg an für eine
 unbestimmte Zeit zu iterieren, bis wir irgendwann eine terminierende Anweisung
 erreichen.
 
@@ -19,7 +19,7 @@ loop {
 
 ## while
 
-Rust hat auch eine `while` Schleife. Sie sieht zum Beispiel so aus:
+Rust hat auch eine `while`-Schleife. Sie sieht zum Beispiel so aus:
 
 ```rust
 let mut x = 5; // mut x: i32
@@ -36,7 +36,7 @@ while !done {
 }
 ```
 
-`while` Schleifen sind die richtige Wahl, wenn du nicht sicher bist,
+`while`-Schleifen sind die richtige Wahl, wenn du nicht sicher bist,
 wie häufig etwas wiederholt werden muss.
 
 Wenn du eine Endlosschleife benötigst,
@@ -60,10 +60,10 @@ falls du planst endlos zu iterieren.
 
 ## for
 
-Die `for` Schleife wird benutzt um eine bestimmte Anzahl von Iterationen
-auszuführen. Rusts `for` Schleifen arbeiten jedoch ein wenig anders als in
-anderen Systemsprachen. Rusts `for` Schleifen sehen *nicht* aus wie "C-Style"
-`for` Schleifen:
+Die `for`-Schleife wird benutzt um eine bestimmte Anzahl von Iterationen
+auszuführen. Rusts `for`-Schleifen arbeiten jedoch ein wenig anders als in
+anderen Systemsprachen. Rusts `for`-Schleifen sehen *nicht* aus wie "C-Style"
+`for`-Schleifen:
 
 ```c
 for (x = 0; x < 10; x++) {
@@ -92,7 +92,7 @@ Elementen zurück. Jedes Element ist eine Iteration der Schleife. Dieses Element
 wird an den Namen `var` gebunden, welcher für den Schleifenkörper gültig ist.
 Sobald der Körper beendet ist, wird der nächste Wert aus dem Iterator geholt
 und der Schleifenkörper damit erneut ausgefürt. Wenn es keine weiteren
-Werte mehr gibt, dann ist die `for` Schleife vorbei.
+Werte mehr gibt, dann ist die `for`-Schleife vorbei.
 
 [iterator]: Iteratoren.html
 
@@ -101,14 +101,14 @@ Endposition hat und einen Iterator über diese Werte zurückgibt.
 Das obere Ende ist jedoch exklusiv, also gibt unsere Schleife nur
 `0` bis `9`, jedoch nicht `10` aus.
 
-Rust hat bewusst keine "C-Style" `for` Schleifen.
+Rust hat bewusst keine "C-Style"-`for`-Schleifen.
 Jedes Element der Schleife manuell zu kontrollieren ist kompliziert und
 fehleranfällig, sogar für erfahrene C-Entwickler.
 
 ### Enumerate
 
 Wenn du gerne wüsstest wie oft du schon iteriert hast, kannst du die
-`.enumerate()` Funktion verwenden.
+`.enumerate()`-Funktion verwenden.
 
 #### Bei `range`s:
 
@@ -128,7 +128,7 @@ i = 3 and j = 8
 i = 4 and j = 9
 ```
 
-Vergiss nicht die Klammern um den `Range`
+Vergiss nicht die Klammern um den `Range`.
 
 #### Bei Iteratoren:
 
@@ -173,7 +173,7 @@ while !done {
 }
 ```
 
-Wir mussten eine boolsche `mut` Variable `done` verwenden um die Schleife
+Wir mussten eine boolsche `mut`-Variable `done` verwenden um die Schleife
 zu beenden. Rust hat zwei Schüsselwörter, die uns helfen eine Iteration zu
 modifizieren: `break` und `continue`.
 
@@ -192,7 +192,7 @@ loop {
 ```
 
 Wir iterieren nun endlos und benutzen `break` um frühzeitig aus der Schleife
-auszubrechen. Eine explizite `return` Anweisung würde die Schleife ebenso
+auszubrechen. Eine explizite `return`-Anweisung würde die Schleife ebenso
 frühzeitig beenden.
 
 `continue` ist ähnlich, aber anstatt die Schleife zu beenden,
