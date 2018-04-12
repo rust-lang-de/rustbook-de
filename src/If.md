@@ -74,6 +74,6 @@ let x = 5;
 let y = if x == 5 { 10 } else { 15 }; // y: i32
 ```
 
-Dies funktioniert, weil `if` ein Ausdruck ist. Der Wert den der `if` Ausdruck
+Dies funktioniert, weil `if` ein Ausdruck ist. Der Wert den der `if`-Ausdruck
 zurückgibt ist der letzte des jeweiligen Zweiges.
 Ein `if` ohne `else` gibt immer ein `()` zurück.
