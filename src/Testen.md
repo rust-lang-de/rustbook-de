@@ -31,7 +31,7 @@ fn it_works() {
 Achte auf `#[test]`.
 Das ist ein Attribut und es markiert die Funktion `it_works()` als Test.
 Sie ist erst mal leer.
-Dann kann sie auch auch nicht fehlschlagen.
+Dann kann sie auch nicht fehlschlagen.
 Wir können sie ganz einfach mit `cargo test` ausführen:
 
 
@@ -204,7 +204,7 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured
 ```
 
-`should_panic` ist immer mit etwas Vorsicht zu genießen, denn es schwer sicher zu sein, ob der Test nicht auf Grund anderer Probleme ge`panic`t hat.
+`should_panic` ist immer mit etwas Vorsicht zu genießen, denn es ist schwer sicher zu sein, ob der Test nicht auf Grund anderer Probleme ge`panic`t hat.
 Wir können aber Bedingungen für bestimmte Fehler hinzufügen:
 
 ```rust
@@ -321,7 +321,7 @@ Dieses gesamte Modul wird nicht in unser crate kompiliert, wenn wir es nicht exp
 Das spart nicht nur Kompilierzeit, sondern auch noch Platz.
 
 Eine weitere Änderung ist die `use` Deklaration.
-Weil wir uns hier in einem Untermodul und damit einem anderen Namespace befinden müssen, müssen wir die zu testende Funktion quasi importieren.
+Weil wir uns hier in einem Untermodul und damit einem anderen Namespace befinden, müssen wir die zu testende Funktion quasi importieren.
 Das kann nerven, wenn wir irgendwann größere Projekte haben, also vereinfachen wir das doch einfach mit `*`
 
 ```rust,ignore
@@ -461,7 +461,7 @@ mod tests {
 
 Wichtig hier: Moduldokumentation beginnt mit `//!` und Funktionsdokumentation mit `///`.
 Kommentare die mit `//` beginnen landen nicht in der Dokumentation.
-Rusts Dokumentationswerkzeug unterstützt Markdown, daher markieren drei Accent grave Zeichen *(backticks "\`")*
+Rusts Dokumentationswerkzeug unterstützt Markdown, und darin markieren drei Accent grave Zeichen *(backticks "\`")* Code-Blöcke.
 Es ist Konvention eine Überschrift `# Examples` *(bitte Englisch)* zu haben, dem dann die Beispiele folgen.
 
 Noch ein Testlauf:
@@ -494,7 +494,7 @@ test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured
 
 Jetzt haben wir alle drei Arten von Tests getestet.
 Hier heißt der Dokumentationstest `_0` und der Funktionstest `add_two_0`.
-Die Zahl wir inkrementiert je mehr Tests dazukommen.
+Die Zahl wird inkrementiert je mehr Tests dazukommen.
 
 Wir haben noch nicht alles wichtige zu Dokumentationstests hier erwähnt.
 Für mehr schau in das [Dokumentationskapitel](documentation).
