@@ -499,4 +499,33 @@ Die Zahl wird inkrementiert je mehr Tests dazukommen.
 Wir haben noch nicht alles wichtige zu Dokumentationstests hier erwähnt.
 Für mehr schau in das [Dokumentationskapitel](documentation).
 
+## Tests und Nebenläufigkeit
 
+Es ist wichtig zu wissen, dass Tests parallel in Threads ausgeführt werden. Aus diesem Grund
+sollte man sicherstellen, dass Tests voneinander unabhängig sind und sich keine Ressourcen teilen (Shared state).
+Das Teilen von Ressourcen beinhaltet auch die Umgebung wie das Arbeitsverzeichnis oder Umgebungsvariablen.
+
+Wenn die Nebenläufigkeit Probleme macht, kann man sie entweder durch das Setzen einer Umgebungsvariable oder durch die Angabe eines Arguments kontrollieren.
+
+```bash
+$ RUST_TEST_THREADS=1 cargo test   # einen Test nach dem Anderen ausführen
+...
+$ cargo test -- --test-threads=1   # das Gleiche wie oben
+...
+```
+
+## Testausgabe
+
+Standardmäßig fängt und verwirft Rust's Testbibliothek Ausgaben in den Standardausgabekanal sowie den Standardfehlerkanal, wie z. B. Ausgaben von `println!()`.
+Das kann auch mit einer Umgebungsvariable oder einem Argument kontrolliert werden:
+
+```bash
+$ RUST_TEST_NOCAPTURE=1 cargo test   # stdout/stderr beim Testen verwenden
+...
+$ cargo test -- --nocapture          # das Gleiche wie oben
+...
+```
+
+Eine bessere Methode etwas auszugeben ist Logging. Rust hat eine [Standard Logging API](https://crates.io/crates/log), 
+die ein Frontend für verschiedene Implementierungen bereitstellt. Das kann zusammen mit dem [env_logger](https://crates.io/crates/env_logger) 
+für Debugausgaben auf eine Art genutzt werden, die zur Laufzeit kontrolliert werden kann.
