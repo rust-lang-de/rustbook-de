@@ -507,7 +507,7 @@ fn main() {
 Das erste was wir gemacht haben ist die erste Zeile zu ändern. Dort steht nun
 `extern crate rand`. Weil wir `rand` in unseren `[dependencies]` deklariert haben, 
 können wir `extern crate` benutzen um Rust wissen zu lassen,
-dass wir sie benutzen. Dies ist außerdem das äquivalent zu einem `use rand;`,
+dass wir sie benutzen. Dies ist außerdem das Äquivalent zu einem `use rand;`,
 sodass wir alles in der `rand` Crate erreichen können, indem wir es mit
 `rand::` einleiten.
 
@@ -983,7 +983,7 @@ zurückgegeben wird, ist tatsächlich ein `enum`, genau wie `Ordering`,
 aber in diesem Fall enthält jede Variante ein paar Daten:
 `Ok` ist ein Erfolg und `Err` ist ein Fehlschlag. Jeder davon enthält
 ein paar Daten:  Die erfolgreich geparste Zahl oder einen Fehlertyp.
-In diesem Fall, "matchen" wir `Ok(zahl)`, was den inneeren Wert von `Ok`
+In diesem Fall, "matchen" wir `Ok(zahl)`, was den inneren Wert von `Ok`
 an den Name `zahl` bindet und danach diesen Wert auf der rechten Seite
 zurückgibt. Im `Err` Fall interessieren wir uns nicht für die Art des
 Fehlers, also benutzen wir einfach `_` anstatt einen Namen.
