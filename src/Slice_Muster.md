@@ -1,1 +1,0 @@
-# Slice Muster
