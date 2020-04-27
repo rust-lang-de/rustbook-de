@@ -1,1 +1,0 @@
-# Box Syntax und Muster
