@@ -4,7 +4,7 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust-Buchs](https
 
 ## [> Hier lesen <](https://rust-lang-de.github.io/rustbook-de)
 
-## Building
+## Bauen und Anschauen
 
 Schritte zum Bauen und Anschauen des Buchs:
 
@@ -29,3 +29,5 @@ Welche Seiten bereits übersetzt sind bzw. gerade übersetzt werden, findest du 
 [Statusseite im Wiki](https://github.com/rust-lang-de/rustbook-de/wiki/Status) heraus.
 
 Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).
+
+Als Übersetzungsvorlagen können die [Übersetzungen von Version 1.3.0](https://github.com/rust-lang-de/rustbook-de/tree/snapshot-2019/src) des Rust-Buchs herangezogen werden.
