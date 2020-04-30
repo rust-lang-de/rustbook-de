@@ -14,19 +14,19 @@
 - [Ein Ratespiel programmieren](ch02-00-guessing-game-tutorial.md)
 
 - [Allgemeine Programmierkonzepte](ch03-00-common-programming-concepts.md)
-    - [Variablen und Veränderbarkeit](ch03-01-variables-and-mutability.md)
+    - [Variablen und Veränderlichkeit](ch03-01-variables-and-mutability.md)
     - [Datentypen](ch03-02-data-types.md)
     - [Funktionen](ch03-03-how-functions-work.md)
     - [Kommentare](ch03-04-comments.md)
     - [Kontrollfluss](ch03-05-control-flow.md)
 
-- [Besitz (ownership) verstehen](ch04-00-understanding-ownership.md)
-    - [Was ist Besitz (ownership)?](ch04-01-what-is-ownership.md)
+- [Eigentümerschaft (ownership) verstehen](ch04-00-understanding-ownership.md)
+    - [Was ist Eigentümerschaft (ownership)?](ch04-01-what-is-ownership.md)
     - [Referenzen und Ausleihen (borrowing)](ch04-02-references-and-borrowing.md)
     - [Der Anteilstyp (slice)](ch04-03-slices.md)
 
-- [Zusammengehörende Daten strukturieren (struct)](ch05-00-structs.md)
-    - [Strukturen (structs) definieren und instantiieren](ch05-01-defining-structs.md)
+- [Strukturen (structs) für zusammenhängende Daten verwenden](ch05-00-structs.md)
+    - [Strukturen (structs) definieren und instanziieren](ch05-01-defining-structs.md)
     - [Beispielprogramm mit Strukturen (structs)](ch05-02-example-structs.md)
     - [Methodensyntax](ch05-03-method-syntax.md)
 
@@ -41,12 +41,12 @@
     - [Pakete (packages) und Kisten (crates)](ch07-01-packages-and-crates.md)
     - [Mit Modulen den Kontrollumfang und Datenschutz steuern](ch07-02-defining-modules-to-control-scope-and-privacy.md)
     - [Mit Pfaden auf ein Element im Modulbaum verweisen](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
-    - [Pfade in den Geltungsbereich bringen mit dem Schlüsselwort `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
+    - [Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
     - [Module in verschiedene Dateien aufteilen](ch07-05-separating-modules-into-different-files.md)
 
 - [Allgemeine Kollektionen](ch08-00-common-collections.md)
     - [Wertlisten in Vektoren (vectors) ablegen](ch08-01-vectors.md)
-    - [UTF-8-kodierter Text in Zeichenketten (strings)](ch08-02-strings.md)
+    - [UTF-8-kodierten Text in Zeichenketten (strings) ablegen](ch08-02-strings.md)
     - [Schlüssel mit zugehörigen Werten in Hashtabellen ablegen](ch08-03-hash-maps.md)
 
 - [Fehlerbehandlung](ch09-00-error-handling.md)
@@ -59,9 +59,9 @@
     - [Merkmale (traits): Gemeinsames Verhalten definieren](ch10-02-traits.md)
     - [Referenzen validieren mit Lebensdauern](ch10-03-lifetime-syntax.md)
 
-- [Automatisierte Teste schreiben](ch11-00-testing.md)
-    - [Teste schreiben](ch11-01-writing-tests.md)
-    - [Steuern wie Teste ausgeführt werden](ch11-02-running-tests.md)
+- [Automatisierte Tests schreiben](ch11-00-testing.md)
+    - [Tests schreiben](ch11-01-writing-tests.md)
+    - [Steuern wie Tests ausgeführt werden](ch11-02-running-tests.md)
     - [Testverwaltung](ch11-03-test-organization.md)
 
 - [Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen](ch12-00-an-io-project.md)
@@ -84,7 +84,7 @@
     - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)
     - [Kisten (crate) auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
     - [Cargo-Arbeitsbereiche](ch14-03-cargo-workspaces.md)
-    - [Binärdaten von crates.io installieren mit `cargo install`](ch14-04-installing-binaries.md)
+    - [Kommandozeilenwerkzeuge von crates.io installieren mit `cargo install`](ch14-04-installing-binaries.md)
     - [Cargo um benutzerdefinierte Befehle erweitern](ch14-05-extending-cargo.md)
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
@@ -92,7 +92,7 @@
     - [Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`](ch15-02-deref.md)
     - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
     - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)
-    - [`RefCell<T>` und das innere Veränderbarkeitsmuster](ch15-05-interior-mutability.md)
+    - [`RefCell<T>` und das innere Veränderlichkeitsmuster](ch15-05-interior-mutability.md)
     - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
 
 - [Furchtlose Nebenläufigkeit](ch16-00-concurrency.md)
@@ -110,7 +110,7 @@
 
 - [Muster (patterns) und Abgleich (matching)](ch18-00-patterns.md)
     - [Alle Stellen an denen Muster (patterns) verwendet werden können](ch18-01-all-the-places-for-patterns.md)
-    - [Widerlegbarkeit: Ob ein Muster (pattern) möglicherweise nicht passt](ch18-02-refutability.md)
+    - [Widerlegbarkeit: Falls ein Muster (pattern) mal nicht passt](ch18-02-refutability.md)
     - [Mustersyntax](ch18-03-pattern-syntax.md)
 
 - [Fortgeschrittene Sprachelemente](ch19-00-advanced-features.md)
@@ -120,9 +120,9 @@
     - [Erweiterte Funktionen und Funktionsabschlüsse (closures)](ch19-05-advanced-functions-and-closures.md)
     - [Makros](ch19-06-macros.md)
 
-- [Abschlussprojekt: Einen nebenläufigen Webservers erstellen](ch20-00-final-project-a-web-server.md)
-    - [Einen einfachen Webserver erstellen](ch20-01-single-threaded.md)
-    - [Unseren einfachen Webserver in einen nebenläufigen Webserver verwandeln](ch20-02-multithreaded.md)
+- [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch20-00-final-project-a-web-server.md)
+    - [Einen einsträngigen (single-threaded) Webserver erstellen](ch20-01-single-threaded.md)
+    - [Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln](ch20-02-multithreaded.md)
     - [Kontrolliertes Beenden und Aufräumen](ch20-03-graceful-shutdown-and-cleanup.md)
 
 - [Anhang](appendix-00.md)
