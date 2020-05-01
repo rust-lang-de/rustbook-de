@@ -4,15 +4,13 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust-Buchs](https
 
 ## [> Hier lesen <](https://rust-lang-de.github.io/rustbook-de)
 
-## Building
+## Bauen und Anschauen
 
-Zum bauen des Buches wird [mdbook](https://github.com/azerupi/mdBook) benötigt.
+Schritte zum Bauen und Anschauen des Buchs:
 
-`mdbook` erlaubt eine live Vorschau des Buches mit dem folgenden Befehl:
-
-```bash
-mdbook serve
-```
+1. mdBook installieren: `cargo install mdbook --vers 0.3.0`
+2. Live-Vorschau-Server starten: `mdbook serve`
+3. http://localhost:3000/ im Browser öffnen
 
 Änderungen am Buch werden dabei sofort aufgenommen und im Browser nachgeladen.
 
@@ -23,7 +21,13 @@ mdbook build
 ```
 
 ## Mithelfen
+
 Vorschläge und Korrekturen oder gar Übersetzungen sind natürlich gerne gewünscht.
 Falls du helfen möchtest, dann am besten via Pull Request oder Issue.
+
 Welche Seiten bereits übersetzt sind bzw. gerade übersetzt werden, findest du auf der
 [Statusseite im Wiki](https://github.com/rust-lang-de/rustbook-de/wiki/Status) heraus.
+
+Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).
+
+Als Übersetzungsvorlagen können die [Übersetzungen von Version 1.3.0](https://github.com/rust-lang-de/rustbook-de/tree/snapshot-2019/src) des Rust-Buchs herangezogen werden.
