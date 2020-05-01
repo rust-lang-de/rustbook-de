@@ -16,7 +16,7 @@ angreifbar ist, abstürzt oder fehlerhaft ist.
 Rust baut diese Barrieren ab, indem es die alten Fallstricke beseitigt und ein
 freundliches, ausgefeiltes Instrumentarium zur Verfügung stellt, das dich auf
 deinem Weg unterstützt. Programmierer, die in die systemnahen Kontrollebenen
-"eintauchen" müssen, können dies mit Rust tun, ohne das übliche Risiko von
+„eintauchen“ müssen, können dies mit Rust tun, ohne das übliche Risiko von
 Abstürzen oder Sicherheitslücken einzugehen und ohne die Finessen einer
 wankelmütigen Werkzeugkette erlernen zu müssen. Besser noch, die Sprache ist so
 konzipiert, dass sie dich auf natürliche Weise zu zuverlässigem Code führt, der
