@@ -27,14 +27,14 @@ einfacher zu lernen machen. Diese Fassung des Buchs enthält eine Reihe von
   den Abschnitt „Makros“ in Kapitel 19 verschoben.
 - Anhang A „Schlüsselwörter“ erläutert auch die neue Funktionalität der rohen
   Bezeichner, die es ermöglicht, dass in Ausgabe 2015 und in Ausgabe 2018
-  geschriebener Programmkode zusammen verwendet werden kann.
+  geschriebener Programmcode zusammen verwendet werden kann.
 - Anhang D trägt jetzt den Titel „Nützliche Entwicklungswerkzeuge“ und umfasst
-  kürzlich veröffentlichte Werkzeuge, die dir beim Schreiben von Rust-Kode
+  kürzlich veröffentlichte Werkzeuge, die dir beim Schreiben von Rust-Code
   helfen.
 - Wir haben im gesamten Buch etliche kleine Fehler und unpräzise Formulierungen
   korrigiert. Vielen Dank an die Leser, die sie gemeldet haben!
 
-Beachte, dass jeder kompilierbare Programmkode aus früheren Fassungen des Buchs
+Beachte, dass jeder kompilierbare Programmcode aus früheren Fassungen des Buchs
 weiterhin kompiliert, wenn `edition="2018"` nicht in *Cargo.toml* des Projekts
 nicht angegeben wird, selbst wenn du die verwendete Rust-Kompilierer-Version
 aktualisierst. Das ist die Rückwärtskompatibilitätsgarantie von Rust!
