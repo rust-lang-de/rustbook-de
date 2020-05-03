@@ -38,12 +38,21 @@ Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.
 
 ```rust
-let user1 = User {
-    email: String::from("jemand@example.com"),
-    username: String::from("einbenutzername123"),
-    active: true,
-    sign_in_count: 1,
-};
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
+# fn main() {
+    let user1 = User {
+        email: String::from("jemand@example.com"),
+        username: String::from("benutzername123"),
+        active: true,
+        sign_in_count: 1,
+    };
+# }
 ```
 
 <span class="caption">Codeblock 5-2: Eine Instanz der Struktur `User`
@@ -57,14 +66,23 @@ mittels Punktnotation verändern. Codeblock 5-3 gezeigt, wie der Wert im
 Feld `email` einer veränderlichen `User`-Instanz geändert werden kann.
 
 ```rust
-let mut user1 = User {
-    email: String::from("jemand@example.com"),
-    username: String::from("einbenutzername123"),
-    active: true,
-    sign_in_count: 1,
-};
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
+# fn main() {
+    let mut user1 = User {
+        email: String::from("jemand@example.com"),
+        username: String::from("benutzername123"),
+        active: true,
+        sign_in_count: 1,
+    };
 
-user1.email = String::from("eineandereemail@example.com");
+    user1.email = String::from("andere-email@example.com");
+# }
 ```
 
 <span class="caption">Codeblock 5-3: Wert im Feld `email` einer `User`-Instanz ändern</span>
@@ -79,6 +97,13 @@ angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld `active` erhält
 den Wert `true` und das Feld `sign_in_count` den Wert `1`.
 
 ```rust
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
 fn build_user(email: String, username: String) -> User {
     User {
         email: email,
@@ -87,6 +112,13 @@ fn build_user(email: String, username: String) -> User {
         sign_in_count: 1,
     }
 }
+#
+# fn main() {
+#     let user1 = build_user(
+#         String::from("jemand@example.com"),
+#         String::from("benutzername123"),
+#     );
+# }
 ```
 
 <span class="caption">Codeblock 5-4: Funktion `build_user`, die eine E-Mail und
@@ -107,6 +139,13 @@ dass sie sich unverändert gleich verhält, ohne `email` und `username` zu
 wiederholen, siehe Codeblock 5-5.
 
 ```rust
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
 fn build_user(email: String, username: String) -> User {
     User {
         email,
@@ -115,6 +154,13 @@ fn build_user(email: String, username: String) -> User {
         sign_in_count: 1,
     }
 }
+#
+# fn main() {
+#     let user1 = build_user(
+#         String::from("jemand@example.com"),
+#         String::from("benutzername123"),
+#     );
+# }
 ```
 
 <span class="caption">Codeblock 5-5: Funktion `build_user` mit Kurznotation der
@@ -140,12 +186,28 @@ Aktualisierungssyntax erstellen. Wir setzen neue Werte für `email` und
 Codeblock 5-2 erstellt haben.
 
 ```rust
-let user2 = User {
-    email: String::from("another@example.com"),
-    username: String::from("anotherusername567"),
-    active: user1.active,
-    sign_in_count: user1.sign_in_count,
-};
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
+# fn main() {
+#     let user1 = User {
+#         email: String::from("jemand@example.com"),
+#         username: String::from("benutzername123"),
+#         active: true,
+#         sign_in_count: 1,
+#     };
+#
+    let user2 = User {
+        email: String::from("andere@example.com"),
+        username: String::from("andererbenutzername567"),
+        active: user1.active,
+        sign_in_count: user1.sign_in_count,
+    };
+# }
 ```
 
 <span class="caption">Codeblock 5-6: Erstellen einer neuen `User`-Instanz unter
@@ -157,11 +219,27 @@ dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.
 
 ```rust
-let user2 = User {
-    email: String::from("another@example.com"),
-    username: String::from("anotherusername567"),
-    ..user1
-};
+# struct User {
+#     username: String,
+#     email: String,
+#     sign_in_count: u64,
+#     active: bool,
+# }
+#
+# fn main() {
+#     let user1 = User {
+#         email: String::from("jemand@example.com"),
+#         username: String::from("benutzername123"),
+#         active: true,
+#         sign_in_count: 1,
+#     };
+#
+    let user2 = User {
+        email: String::from("andere@example.com"),
+        username: String::from("andererbenutzername567"),
+        ..user1
+    };
+# }
 ```
 
 <span class="caption">Codeblock 5-7: Verwenden der
@@ -241,7 +319,7 @@ Kapitel 10 besprechen.
 > fn main() {
 >     let user1 = User {
 >         email: "jemand@example.com",
->         username: "einbenutzername123",
+>         username: "benutzername123",
 >         active: true,
 >         sign_in_count: 1,
 >     };

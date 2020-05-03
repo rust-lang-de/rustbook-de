@@ -1,6 +1,6 @@
 # Die Programmiersprache Rust
 
-Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust-Buchs](https://doc.rust-lang.org/book/).
+Dies ist eine deutsche Gemeinschafts-Übersetzung des [offiziellen Rust-Buchs](https://doc.rust-lang.org/book/).
 
 ## [> Hier lesen <](https://rust-lang-de.github.io/rustbook-de)
 
@@ -8,7 +8,7 @@ Dies ist eine deutsche Community-Übersetzung des [offiziellen Rust-Buchs](https
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers 0.3.0`
+1. mdBook installieren: `cargo install mdbook --vers "^0.3"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
