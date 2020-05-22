@@ -110,8 +110,8 @@ Kollektion.
 > Debug-Modus kompilierst, fügt Rust eine Prüfungen auf Ganzzahlüberläufe ein,
 > was dazu führt, dass dein Programm zur Laufzeit *panisch* wird, falls dieses
 > Verhalten auftritt. Rust verwendet den Begriff panisch, wenn ein Programm durch
-> einen Fehler beendet wird; wir werden panisch im Abschnitt [“Unrecoverable
-> Errors with `panic!`”][unrecoverable-errors-with-panic]<!-- ignore --> in
+> einen Fehler beendet wird; wir werden panisch im Abschnitt [“Unbehebbare
+> Fehler mit `panic!`”][unrecoverable-errors-with-panic]<!-- ignore --> in
 > Kapitel 9 näher betrachten.
 >
 > Wenn du mit dem `--release`-Flag im Release-Modus kompilierst, fügt Rust
@@ -177,7 +177,7 @@ Byte groß. In Rust wird der Boolesche Typ mit `bool` spezifiziert. Zum Beispiel
 
 Hauptsächlich werden boolesche Werte in Bedingungen verwendet, wie z.B. im
 `if`-Ausdruck. Wie `if`-Ausdrücke in Rust funktionieren werden wir im Abschnitt
-[“Control Flow”][control-flow]<!-- ignore --> erläutern.
+[“Kontrollfluss”][control-flow]<!-- ignore --> erläutern.
 
 #### Der Zeichen-Typ
 
@@ -201,8 +201,8 @@ Unicode-Skalarwerte reichen von `U+0000` bis `U+D7FF` und `U+E000` bis
 einschließlich `U+10FFFF`. Ein “Zeichen” ist jedoch nicht wirklich ein Konzept
 in Unicode, deine menschliche Intuition dafür, was ein “Zeichen” ist stimmt
 möglicherweise nicht mit dem überein, was in Rust ein `Zeichen` ist. Wir werden
-dieses Thema in [“Storing UTF-8 Encoded Text with Strings”][strings]<!--
-ignorieren --> in Kapitel 8 im Detail diskutieren.
+dieses Thema in [“UTF-8-kodierten Text in Zeichenketten (strings)
+ablegen”][strings]<!-- ignorieren --> in Kapitel 8 im Detail diskutieren.
 
 
 ### Verbund-Typen
