@@ -45,7 +45,7 @@
     - [Module in verschiedene Dateien aufteilen](ch07-05-separating-modules-into-different-files.md)
 
 - [Allgemeine Kollektionen](ch08-00-common-collections.md)
-    - [Wertlisten in Vektoren (vectors) ablegen](ch08-01-vectors.md)
+    - [Wertlisten in Vektoren ablegen](ch08-01-vectors.md)
     - [UTF-8-kodierten Text in Zeichenketten (strings) ablegen](ch08-02-strings.md)
     - [Schlüssel mit zugehörigen Werten in Hashtabellen ablegen](ch08-03-hash-maps.md)
 
