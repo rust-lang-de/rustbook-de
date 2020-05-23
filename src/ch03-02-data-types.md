@@ -1,18 +1,18 @@
 ## Datentypen
 
-Jeder Wert in Rust ist von einem bestimmten Datentyp, der Rust mitteilt, welche
+Jeder Wert in Rust ist von einem bestimmten *Datentyp*, der Rust mitteilt, welche
 Art von Daten angegeben wird, damit es weiß, wie es mit diesen Daten arbeiten
-soll. Wir werden uns zwei Datentyp-Untermengen ansehen: skalare und
-zusammengesetzte.
+soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar und
+Verbund.
 
 Denk daran, dass Rust eine *statisch typisierte* Sprache ist, was bedeutet, dass
 sie die Typen von allen Variablen zur Kompilierzeit kennen muss. Der Compiler
 kann normalerweise auf der Grundlage des Wertes und wie wir ihn verwenden
 ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen möglich sind, wie
-zum Beispiel als wir im Abschnitt [“Comparing the Guess to the Secret
-Number”][comparing-the-guess-to-the-secret-number]<!-- ignore --> einen `String`
-mittels `parse` zu einem numerischen Typ umwandelten, müssen wir den
-Typ-Anmerkung hinzufügen, wie hier:
+zum Beispiel als wir im Abschnitt [“Vergleich der Vermutung mit der
+Geheimzahl”][comparing-the-guess-to-the-secret-number]<!-- ignore --> eine
+`Zeichenkette` (`String`) mittels `parse` zu einem numerischen Typ umwandelten,
+müssen wir den Typ-Anmerkung hinzufügen, wie hier:
 
 ```rust
 let guess: u32 = "42".parse().expect("Keine Zahl!");
@@ -95,11 +95,11 @@ z.B. `1_000`.
 | Byte (nur `u8`)  | `b'A'`        |
 
 Woher weist du also, welche Art von Ganzzahl zu verwenden ist? Wenn du dir
-unsicher bist, sind Rusts Standards im Allgemeinen eine gute Wahl, und
+unsicher bist, sind Rusts Standards im Allgemeinen eine gute Wahl und
 ganzzahlige Typen sind standardmäßig `i32`: dieser Typ ist im Allgemeinen am
 schnellsten, selbst auf 64-Bit Systemen. Die primäre Situation in der du `isize`
 oder `usize` benutzen würdest, ist die Indizierung irgendeiner Art von
-Kollektion.
+Kollektion (collection).
 
 > ##### Ganzzahlüberlauf
 >
@@ -108,19 +108,19 @@ Kollektion.
 > dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf. Rust
 > hat einige Interessante Regeln, die dieses Verhalten betreffen. Wenn du im
 > Debug-Modus kompilierst, fügt Rust eine Prüfungen auf Ganzzahlüberläufe ein,
-> was dazu führt, dass dein Programm zur Laufzeit *panisch* wird, falls dieses
-> Verhalten auftritt. Rust verwendet den Begriff panisch, wenn ein Programm durch
-> einen Fehler beendet wird; wir werden panisch im Abschnitt [“Unbehebbare
+> was dazu führt, dass dein Programm zur Laufzeit abbricht (*panic*), falls dieses
+> Verhalten auftritt. Rust verwendet den Begriff panic, wenn ein Programm durch
+> einen Fehler beendet wird; wir werden panic im Abschnitt [“Unbehebbare
 > Fehler mit `panic!`”][unrecoverable-errors-with-panic]<!-- ignore --> in
 > Kapitel 9 näher betrachten.
 >
 > Wenn du mit dem `--release`-Flag im Release-Modus kompilierst, fügt Rust
-> *keine* Prüfungen auf Ganzzahlüberläufe, die eine Panik verursachen, ein.
+> *keine* Prüfungen auf Ganzzahlüberläufe, die das Programm abbricht, ein.
 > Stattdessen, wenn ein Überlauf auftritt, führt Rust einen
 > *Zweier-Komplement-Umbruch* durch. Kurz gesagt, Werte die größer als der
 > Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum kleinsten
 > Wert den der Typ enthalten kann. Im Falle eines `u8`, 256 wird 0, 257 wird 1,
-> und so weiter. Das Programm wird nicht panisch, aber die Variable wird
+> und so weiter. Das Programm wird nicht abbrechen, aber die Variable wird
 > wahrscheinlich einen anderen Wert annehmen, als du erwartest. Sich auf das
 > Verhalten von Ganzzahlüberläufen zu verlassen wird als Fehler angesehen. Wenn
 > du explizit umbrechen willst, kannst du den Typ [`Wrapping`][wrapping] aus der
@@ -143,7 +143,7 @@ Hier ist ein Beispiel, das Fließkommazahlen in Aktion zeigt:
 ```
 
 Fließkommazahlen werden nach dem IEEE-754-Standard dargestellt. Der Typ `f32`
-ist eine Fließkommazahl mit einfacher Genauigkeit, und `f64` hat doppelte Genauigkeit.
+ist eine Fließkommazahl mit einfacher Genauigkeit und `f64` hat doppelte Genauigkeit.
 
 #### Numerische Operationen
 
@@ -182,10 +182,11 @@ Hauptsächlich werden boolesche Werte in Bedingungen verwendet, wie z.B. im
 #### Der Zeichen-Typ
 
 Bislang haben wir nur mit Zahlen gearbeitet, aber Rust unterstützt auch
-Buchstaben. Rusts `Zeichentyp` ist der primitivste Alphabettyp der Sprache, der
-folgende Code zeigt eine Möglichkeit, ihn zu verwenden. (Beachten Sie, dass
-`Zeichen`-Literale mit einfachen Anführungszeichen angegeben werden, im
-Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden).
+Buchstaben. Rusts `Zeichentyp` (`char`) ist der primitivste Alphabettyp der
+Sprache, der folgende Code zeigt eine Möglichkeit, ihn zu verwenden. (Beachten
+Sie, dass `Zeichen`-Literale mit einfachen Anführungszeichen angegeben werden,
+im Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen
+verwenden).
 
 <span class="filename">Filename: src/main.rs</span>
 
@@ -208,7 +209,7 @@ ablegen”][strings]<!-- ignorieren --> in Kapitel 8 im Detail diskutieren.
 ### Verbund-Typen
 
 *Verbund-Typen* können mehrere Werte zu einem Typ gruppieren. Rust hat zwei
-primitive Verbund-Typen: Tupel und Arrays.
+primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).
 
 #### Der Tupel-Type
 
@@ -241,9 +242,9 @@ zu destrukturieren, etwa so
 
 Dieses Programm erzeugt zunächst ein Tupel und bindet es an die Variable `tup`.
 Dann benutzt es ein Muster mit `let`, um `tup` zu nehmen und es in drei separate
-Variablen, `x`, `y` und `z`, umzuwandeln. Dies nennt man *destrukturieren*,
-weil es das einzelne Tupel in drei Teile zerlegt. Schließlich gibt das Programm
-den Wert von `y` aus, der `6.4` ist.
+Variablen, `x`, `y` und `z`, umzuwandeln. Dies nennt man *destrukturieren*
+(*destructuring*), weil es das einzelne Tupel in drei Teile zerlegt. Schließlich
+gibt das Programm den Wert von `y` aus, der `6.4` ist.
 
 Zusätzlich zur Destrukturierung durch Musterabgleiche können wir direkt auf ein
 Tupelelement zugreifen, indem wir einen Punkt (`.`) gefolgt von dem Index des
