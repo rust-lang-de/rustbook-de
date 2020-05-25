@@ -31,22 +31,22 @@ gespeichert und sind daher Zeichenkettenanteilstypen.
 
 Der Typ `String`, der von Rusts Standardbibliothek zur Verfügung gestellt wird
 und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,
-veränderlicher, eigener, UTF-8-kodierter Zeichenkettentyp. Wenn Rust-Entwickler
-von Zeichenketten in Rust sprechen, meinen sie normalerweise den Typ `String`
-sowie den Zeichenkettenanteilstyp `&str`, nicht nur einen dieser Typen. Obwohl
-es in diesem Abschnitt weitgehend um `String` geht, werden beide Typen in Rusts
-Standardbibliothek stark verwendet, und sowohl `String` als auch
-Zeichenkettenanteilstypen sind UTF-8-kodiert.
+veränderlicher, aneigenbarer, UTF-8-kodierter Zeichenkettentyp. Wenn
+Rust-Entwickler von Zeichenketten in Rust sprechen, meinen sie normalerweise
+den Typ `String` sowie den Zeichenkettenanteilstyp `&str`, nicht nur einen
+dieser Typen. Obwohl es in diesem Abschnitt weitgehend um `String` geht, werden
+beide Typen in Rusts Standardbibliothek stark verwendet, und sowohl `String`
+als auch Zeichenkettenanteilstypen sind UTF-8-kodiert.
 
 Die Standardbibliothek von Rust enthält auch eine Reihe anderer
 Zeichenkettentypen wie `OsString`, `OsStr`, `CString` und `CStr`.
 Bibliothekskisten (library crates) können noch weitere Möglichkeiten zum
 Speichern von Zeichenkettendaten bieten. Fällt dir auf, dass diese Namen alle
-auf `String` oder `Str` enden? Sie beziehen sich auf eigene und ausgeliehene
-Varianten, genau wie die Typen `String` und `str`, die du zuvor gesehen hast.
-Diese Zeichenkettentypen können z.B. Text in verschiedenen Kodierungen
-speichern oder unterschiedliche Speicherdarstellungen haben. Diese anderen
-Zeichenkettentypen werden in diesem Kapitel nicht besprochen; in ihrer
+auf `String` oder `Str` enden? Sie beziehen sich auf aneigenbare und
+ausgeliehene Varianten, genau wie die Typen `String` und `str`, die du zuvor
+gesehen hast. Diese Zeichenkettentypen können z.B. Text in verschiedenen
+Kodierungen speichern oder unterschiedliche Speicherdarstellungen haben. Diese
+anderen Zeichenkettentypen werden in diesem Kapitel nicht besprochen; in ihrer
 API-Dokumentation erfährst du mehr darüber, wie sie zu verwenden sind und wozu
 jeder einzelne geeignet ist.
 
