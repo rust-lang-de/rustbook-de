@@ -65,7 +65,7 @@ wenn du zur Programmiersprache Rust beiträgst.
 
 ### Menschen, die Geschwindigkeit und Stabilität schätzen
 
-Rost ist für Menschen, die sich nach Schnelligkeit und Stabilität einer Sprache
+Rust ist für Menschen, die sich nach Schnelligkeit und Stabilität einer Sprache
 sehnen. Unter Geschwindigkeit verstehen wir die Geschwindigkeit der Programme,
 die du mit Rust schreiben kannst, und die Geschwindigkeit, mit der dich Rust
 diese Programme schreiben lässt. Die Prüfungen des Rust-Kompilierers
