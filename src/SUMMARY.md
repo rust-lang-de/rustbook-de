@@ -50,7 +50,7 @@
     - [Schlüssel mit zugehörigen Werten in Hashtabellen ablegen](ch08-03-hash-maps.md)
 
 - [Fehlerbehandlung](ch09-00-error-handling.md)
-    - [Unbehebbare Fehler mit `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
+    - [Nicht behebbare Fehler mit `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
     - [Behebbare Fehler mit `Result`](ch09-02-recoverable-errors-with-result.md)
     - [Wann `panic!` verwenden und wann nicht?](ch09-03-to-panic-or-not-to-panic.md)
 
