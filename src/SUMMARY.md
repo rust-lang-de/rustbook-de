@@ -52,7 +52,7 @@
 - [Fehlerbehandlung](ch09-00-error-handling.md)
     - [Nicht behebbare Fehler mit `panic!`](ch09-01-unrecoverable-errors-with-panic.md)
     - [Behebbare Fehler mit `Result`](ch09-02-recoverable-errors-with-result.md)
-    - [Wann `panic!` verwenden und wann nicht?](ch09-03-to-panic-or-not-to-panic.md)
+    - [Wann `panic!` aufrufen und wann nicht?](ch09-03-to-panic-or-not-to-panic.md)
 
 - [Generische Typen, Merkmale (traits) und Lebensdauer](ch10-00-generics.md)
     - [Generische Datentypen](ch10-01-syntax.md)
