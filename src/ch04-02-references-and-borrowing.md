@@ -401,7 +401,7 @@ Die Lösung ist, den `String` direkt zurückzugeben:
 # }
 #
 fn no_dangle() -> String {
-    let s = String::from("Hello");
+    let s = String::from("Hallo");
 
     s
 }
