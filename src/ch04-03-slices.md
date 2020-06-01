@@ -413,18 +413,18 @@ fn first_word(s: &str) -> &str {
 # }
 #
 # fn main() {
-#     let my_string = String::from("hello world");
+#     let my_string = String::from("Hallo Welt");
 #
-#     // first_word works on slices of `String`s
+#     // first_word funktioniert mit Anteilstypen von `String`
 #     let word = first_word(&my_string[..]);
 #
-#     let my_string_literal = "hello world";
+#     let my_string_literal = "Hallo Welt";
 #
-#     // first_word works on slices of string literals
+#     // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
 #     let word = first_word(&my_string_literal[..]);
 #
-#     // Because string literals *are* string slices already,
-#     // this works too, without the slice syntax!
+#     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
+#     // funktioniert dies auch ohne die Anteilstypensyntax!
 #     let word = first_word(my_string_literal);
 # }
 ```

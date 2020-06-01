@@ -577,7 +577,7 @@ fn main() {
 fn gives_ownership() -> String {        // gives_ownership verschiebt seinen
                                         // Rückgabewert in die aufrufende Funktion
 
-    let some_string = String::from("hello"); // some_string kommt in den
+    let some_string = String::from("Hallo"); // some_string kommt in den
                                              // Gültigkeitsbereich
 
     some_string                         // some_string wird zurückgegeben und
