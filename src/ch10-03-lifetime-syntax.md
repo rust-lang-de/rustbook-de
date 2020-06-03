@@ -60,7 +60,7 @@ den Wert in `r` auszugeben. Dieser Code lässt sich nicht kompilieren, weil der
 Wert, auf den sich `r` bezieht, den Gültigkeitsbereich verlassen hat, bevor wir
 versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0597]: `x` does not live long enough
@@ -219,7 +219,7 @@ noch nicht kompiliert</span>
 
 Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0106]: missing lifetime specifier
@@ -433,7 +433,7 @@ nachdem `string2` den Gültigkeitsbereich verlassen hat</span>
 
 Wenn wir versuchen, diesen Code zu kompilieren, erhalten wir folgenden Fehler:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0597]: `string2` does not live long enough
@@ -535,7 +535,7 @@ angegeben haben, wird diese Implementierung nicht kompilieren, weil die
 Lebensdauer des Rückgabewerts überhaupt nicht mit der Lebensdauer der Parameter
 zusammenhängt. Hier ist die Fehlermeldung, die wir erhalten:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0515]: cannot return value referencing local variable `result`

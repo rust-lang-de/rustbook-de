@@ -102,7 +102,7 @@ ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 fn main() {
     let s = String::from("Hallo");
 
@@ -119,7 +119,7 @@ verändern</span>
 
 Hier ist die Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` reference
@@ -171,7 +171,7 @@ Gültigkeitsbereich haben. Dieser Code wird fehlschlagen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let mut s = String::from("Hallo");
 
 let r1 = &mut s;
@@ -182,7 +182,7 @@ println!("{}, {}", r1, r2);
 
 Hier ist die Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0499]: cannot borrow `s` as mutable more than once at a time
@@ -241,7 +241,7 @@ let r2 = &mut s;
 Eine ähnliche Regel gibt es für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let mut s = String::from("Hallo");
 
 let r1 = &s;     // kein Problem
@@ -253,7 +253,7 @@ println!("{}, {} und {}", r1, r2, r3);
 
 Hier ist die Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
@@ -327,7 +327,7 @@ Kompilierfehler verhindern wird:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 fn main() {
     let reference_to_nothing = dangle();
 }
@@ -341,7 +341,7 @@ fn dangle() -> &String {
 
 Hier ist die Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0106]: missing lifetime specifier
@@ -373,7 +373,7 @@ Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 # fn main() {
 #     let reference_to_nothing = dangle();
 # }

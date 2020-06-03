@@ -39,7 +39,7 @@ fn main() {
 
 Wenn du das Programm ausführst, wirst du in etwa das hier sehen:
 
-```text
+```console
 $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished dev [unoptimized + debuginfo] target(s) in 0.25s
@@ -103,7 +103,7 @@ Versuch, ein Element an einem Index zu lesen, der nicht existiert, die
 Ausführung stoppen und die Fortsetzung verweigern. Versuchen wir es und sehen,
 was passiert:
 
-```text
+```console
 $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished dev [unoptimized + debuginfo] target(s) in 0.27s
@@ -132,7 +132,7 @@ uns versuchen, eine Aufrufhistorie zu erhalten, indem wir die Umgebungsvariable
 `RUST_BACKTRACE` auf einen beliebigen Wert außer 0 setzen. Codeblock 9-2 zeigt
 eine Ausgabe, wie du sie in etwa sehen wirst.
 
-```text
+```console
 $ RUST_BACKTRACE=1 cargo run
 thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806:10
 stack backtrace:

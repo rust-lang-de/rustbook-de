@@ -171,7 +171,7 @@ haben kannst. Diese Regel trifft in Codeblock 8-7 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen, was nicht funktionieren wird.
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];
 
 let first = &v[0];
@@ -186,7 +186,7 @@ hinzuzufügen, während eine Referenz auf ein Element gehalten wird</span>
 
 Das Kompilieren dieses Codes führt zu folgendem Fehler:
 
-```text
+```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
 error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immutable

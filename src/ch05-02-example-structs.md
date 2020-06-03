@@ -35,7 +35,7 @@ durch separate Breiten- und Höhenvariablen beschrieben wird</span>
 
 Nun führe dieses Programm mit `cargo run` aus:
 
-```text
+```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished dev [unoptimized + debuginfo] target(s) in 0.42s
@@ -50,7 +50,7 @@ Rechteck.
 
 Das Problem dieses Codes wird bei der Signatur von `area` deutlich:
 
-```rust,ignore
+```rust
 # fn main() {
 #     let width1 = 30;
 #     let height1 = 50;
@@ -176,7 +176,7 @@ Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 struct Rectangle {
     width: u32,
     height: u32,
@@ -271,7 +271,7 @@ fn main() {
 Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
 folgende Ausgabe sehen:
 
-```text
+```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s
@@ -285,7 +285,7 @@ Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
 ist. In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
 `println!`-Meldung verwenden. Die Ausgabe sieht dann wie folgt aus:
 
-```text
+```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s

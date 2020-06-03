@@ -308,7 +308,7 @@ Kapitel 10 besprechen.
 >
 > <span class="filename">Dateiname: src/main.rs</span>
 >
-> ```rust,ignore,does_not_compile
+> ```rust,does_not_compile
 > struct User {
 >     username: &str,
 >     email: &str,
@@ -328,7 +328,7 @@ Kapitel 10 besprechen.
 >
 > Der Compiler wird sich beschweren, dass die Lebensdauer nicht angegeben ist:
 >
-> ```text
+> ```console
 > $ cargo run
 >    Compiling structs v0.1.0 (file:///projects/structs)
 > error[E0106]: missing lifetime specifier

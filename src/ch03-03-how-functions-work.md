@@ -40,7 +40,7 @@ Lass uns ein neues Binärprojekt namens „functions“ anfangen, um Funktionen
 weiter zu erforschen. Platziere das Beispiel `another_function` in
 *src/main.rs* und lass es laufen. Du solltest die folgende Ausgabe sehen:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 0.28s
@@ -82,7 +82,7 @@ fn another_function(x: i32) {
 Versuche, dieses Programm auszuführen; du solltest die folgende Ausgabe
 erhalten:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 1.21s
@@ -125,7 +125,7 @@ Lass uns versuchen, diesen Code auszuführen. Ersetze das Programm, das sich
 derzeit in der Datei *src/main.rs* deines „functions“-Projekts befindet, durch
 das vorhergehende Beispiel und führe es mit `cargo run` aus:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
@@ -178,7 +178,7 @@ einen Fehler erhalten:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 fn main() {
     let x = (let y = 6);
 }
@@ -187,7 +187,7 @@ fn main() {
 
 Wenn du dieses Programm ausführst, wirst du in etwa folgenden Fehler erhalten:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
 error: expected expression, found statement (`let`)
@@ -229,7 +229,7 @@ fn main() {
 }
 ```
 
-Der Ausdruck:
+Der Ausdruck
 
 ```rust,ignore
 {
@@ -276,7 +276,7 @@ gültige Funktion in Rust. Beachte, dass der Rückgabetyp der Funktion ebenfalls
 angegeben ist, mit `-> i32`. Versuche diesen Code auszuführen; die Ausgabe
 sollte wie folgt aussehen:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 0.30s
@@ -320,7 +320,7 @@ Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 fn main() {
     let x = plus_one(5);
 
@@ -334,7 +334,7 @@ fn plus_one(x: i32) -> i32 {
 
 Das Kompilieren dieses Codes führt zum folgenden Fehler:
 
-```text
+```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
 error[E0308]: mismatched types
