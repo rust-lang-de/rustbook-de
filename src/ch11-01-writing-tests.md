@@ -345,8 +345,8 @@ Pfaden auf ein Element im Modulbaum
 verweisen“][paths-for-referring-to-an-item-in-the-module-tree] behandelt haben.
 Da das Modul `tests` ein inneres Modul ist, müssen wir den Code, der im äußeren
 Modul getestet wird, in den Gültigkeitsbereich des inneren Moduls bringen. Wir
-verwenden hier einen globalen Import (glob), sodass alles, was wir im äußeren
-Modul definieren, auch in diesem Modul `tests` zur Verfügung steht.
+verwenden hier einen Stern (glob), sodass alles, was wir im äußeren Modul
+definieren, auch in diesem Modul `tests` zur Verfügung steht.
 
 Wir haben unseren Test `larger_can_hold_smaller` genannt und wir haben die
 beiden `Rectangle`-Instanzen erzeugt, die wir benötigen. Dann haben wir das
