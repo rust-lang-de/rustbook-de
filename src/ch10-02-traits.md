@@ -561,7 +561,7 @@ zurück, um die Definition der Funktion `largest`, die einen generischen
 Typparameter verwendet, zu korrigieren! Als wir das letzte Mal versuchten,
 den Code auszuführen, erhielten wir diesen Fehler:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0369]: binary operation `>` cannot be applied to type `T`
@@ -618,7 +618,7 @@ fn largest<T: PartialOrd>(list: &[T]) -> T {
 
 Wenn wir den Code kompilieren, erhalten wir nun andere Fehlermeldungen:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0508]: cannot move out of type `[T]`, a non-copy slice

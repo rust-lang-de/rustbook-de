@@ -377,7 +377,7 @@ nichts freigeben, wenn `s1` den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, `s1` zu benutzen, nachdem `s2` erstellt wurde; es
 wird nicht funktionieren:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let s1 = String::from("Hallo");
 let s2 = s1;
 
@@ -387,7 +387,7 @@ println!("{} Welt!", s1);
 Du erhältst eine Fehlermeldung wie diese, wodurch Rust dich daran hindert, die
 ungültige Referenz zu verwenden:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0382]: borrow of moved value: `s1`

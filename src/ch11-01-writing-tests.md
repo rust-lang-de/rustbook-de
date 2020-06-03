@@ -38,7 +38,7 @@ ist.
            
 Lass uns ein neues Bibliotheksprojekt namens `adder` erstellen:
 
-```text
+```console
 $ cargo new adder --lib
      Created library `adder` project
 $ cd adder
@@ -81,7 +81,7 @@ erfolgreich ist.
 Das Kommando `cargo test` führt alle Tests in unserem Projekt aus, wie in
 Codeblock 11-2 zu sehen ist.
 
-```text
+```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.57s
@@ -154,7 +154,7 @@ mod tests {
 Dann führe `cargo test` erneut aus. Die Ausgabe zeigt nun `exploration`
 anstelle von `it_works`:
 
-```text
+```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.59s
@@ -207,7 +207,7 @@ Führe die Tests erneut mit `cargo test` aus. Die Ausgabe sollte wie in
 Codeblock 11-4 aussehen, was zeigt, dass unser Test `exploration` bestanden und
 `another` fehlgeschlagen ist.
 
-```text
+```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.72s
@@ -354,7 +354,7 @@ Makro `assert!` aufgerufen und ihm das Aufrufergebnis von
 `larger.can_hold(&smaller)` übergeben. Dieser Ausdruck soll `true` zurückgeben,
 also sollte unser Test erfolgreich sein. Lass es uns herausfinden!
 
-```text
+```console
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
@@ -432,7 +432,7 @@ müssen wir dieses Ergebnis negieren, bevor wir es an das Makro `assert!`
 übergeben. Als Ergebnis wird unser Test bestehen, wenn `can_hold` den
 Rückgabewert `false` hat:
 
-```text
+```console
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
@@ -509,7 +509,7 @@ impl Rectangle {
 
 Das Ausführen der Tests ergibt nun Folgendes:
 
-```text
+```console
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
@@ -582,7 +582,7 @@ Makro `assert_eq!`</span>
 
 Lass uns prüfen, ob sie den Test besteht!
 
-```text
+```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
@@ -629,7 +629,7 @@ pub fn add_two(a: i32) -> i32 {
 
 Führe die Tests erneut aus:
 
-```text
+```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
@@ -769,7 +769,7 @@ pub fn greeting(name: &str) -> String {
 
 Das Ausführen dieses Tests führt zu folgender Ausgabe:
 
-```text
+```console
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
@@ -824,7 +824,7 @@ der Funktion `greeting` erhalten haben:
 Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
 Fehlermeldung:
 
-```text
+```console
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.93s
@@ -908,7 +908,7 @@ Wir setzen das Attribut `#[should_panic]` hinter das Attribut `#[test]` und vor
 die Testfunktion, auf die sie sich bezieht. Schauen wir uns das Ergebnis an,
 wenn dieser Test bestanden ist:
 
-```text
+```console
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
@@ -962,7 +962,7 @@ impl Guess {
 
 Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:
 
-```text
+```console
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
@@ -1085,7 +1085,7 @@ vertauschen:
 
 Wenn wir diesmal den `should_panic`-Test ausführen, wird er fehlschlagen:
 
-```text
+```console
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s

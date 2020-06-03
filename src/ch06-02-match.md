@@ -263,7 +263,7 @@ Es gibt noch einen weiteren Aspekt von `match`, den wir diskutieren müssen.
 Betrachte folgende Version unserer Funktion `plus_one`, die einen Fehler hat
 und sich nicht kompilieren lässt:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 fn plus_one(x: Option<i32>) -> Option<i32> {
     match x {
         Some(i) => Some(i + 1),
@@ -280,7 +280,7 @@ verursachen. Glücklicherweise ist es ein Fehler, von dem Rust weiß, wie er
 zu lösen ist. Wenn wir versuchen, diesen Code zu kompilieren, werden wir
 diese Fehlermeldung bekommen:
 
-```text
+```console
 $ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
 error[E0004]: non-exhaustive patterns: `None` not covered

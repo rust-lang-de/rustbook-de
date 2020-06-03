@@ -22,7 +22,7 @@ Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler
 an, was bedeutet, dass der Kompilierer mehr Informationen von uns benötigt, um
 zu wissen welchen Typ wir verwenden wollen:
 
-```text
+```console
 $ cargo build
    Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
 error[E0282]: type annotations needed
@@ -422,7 +422,7 @@ fn main() {
 
 Die Ausführung dieses Codes mit `cargo run` ergibt folgendes Ergebnis:
 
-```text
+```console
 $ cargo run
    Compiling arrays v0.1.0 (file:///projects/arrays)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s

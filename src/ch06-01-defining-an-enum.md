@@ -395,7 +395,7 @@ verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
 dieser Code nicht kompilieren, weil er versucht, ein `i8` mit einem
 `Option<i8>` zu addieren:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let x: i8 = 5;
 let y: Option<i8> = Some(5);
 
@@ -404,7 +404,7 @@ let sum = x + y;
 
 Wenn wir diesen Code ausführen, erhalten wir eine Fehlermeldung wie diese:
 
-```text
+```console
 $ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
 error[E0277]: cannot add `std::option::Option<i8>` to `i8`

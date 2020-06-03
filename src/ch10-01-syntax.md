@@ -136,7 +136,7 @@ die generische Typparameter verwendet, aber noch nicht kompiliert</span>
 
 Wenn wir diesen Code kompilieren, erhalten wir diesen Fehler:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0369]: binary operation `>` cannot be applied to type `T`
@@ -228,7 +228,7 @@ Kompilierer wissen, dass der generische Typ `T` für diese Instanz von
 definiert haben, dass es den gleichen Typ wie `x` hat, erhalten wir einen
 Typfehler wie diesen:
 
-```text
+```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0308]: mismatched types
