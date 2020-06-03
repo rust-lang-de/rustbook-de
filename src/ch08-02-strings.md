@@ -275,7 +275,7 @@ jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
 Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
 ungültigen Code in Codeblock 8-19.
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let s1 = String::from("Hallo");
 let h = s1[0];
 
@@ -287,7 +287,7 @@ Zeichenkette zu verwenden</span>
 
 Dieser Code führt zu folgendem Fehler:
 
-```text
+```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
 error[E0277]: the type `std::string::String` cannot be indexed by `{integer}`
@@ -337,7 +337,7 @@ Zeichenkette 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes
 der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
 Um das zu erläutern, betrachte diesen ungültigen Rust-Code:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 let hello = "Здравствуйте";
 let answer = &hello[0];
 
@@ -427,7 +427,7 @@ was bedeutet, dass `s` gleich `Зд` ist. Was würde passieren, wenn wir
 Laufzeit abbrechen, genauso als wenn mit einem ungültigen Index auf einen
 Vektor zugegriffen würde:
 
-```text
+```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s

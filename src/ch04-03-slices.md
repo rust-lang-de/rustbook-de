@@ -48,7 +48,7 @@ Da wir den `String` Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren `String` mit der Methode
 `as_bytes` in ein Byte-Array um:
 
-```rust,ignore
+```rust
 # fn first_word(s: &String) -> usize {
     let bytes = s.as_bytes();
 #
@@ -67,7 +67,7 @@ Wert ein Leerzeichen ist, wandeln wir unseren `String` mit der Methode
 Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
 Methode `iter` verwenden:
 
-```rust,ignore
+```rust
 # fn first_word(s: &String) -> usize {
 #     let bytes = s.as_bytes();
 #
@@ -102,7 +102,7 @@ Innerhalb der `for`-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
 Länge der Zeichenkette zurück, indem wir `s.len()` verwenden:
 
-```rust,ignore
+```rust
 # fn first_word(s: &String) -> usize {
 #     let bytes = s.as_bytes();
 #
@@ -313,7 +313,7 @@ Kompilierfehler:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 # fn first_word(s: &String) -> &str {
 #     let bytes = s.as_bytes();
 #
@@ -339,7 +339,7 @@ fn main() {
 
 Hier ist der Kompilierfehler:
 
-```text
+```console
 $ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
@@ -399,7 +399,7 @@ Ein erfahrenerer Rust-Entwickler würde stattdessen die in Codeblock 4-9
 gezeigte Signatur schreiben, da sie es uns erlaubt, dieselbe Funktion sowohl
 auf `&String`-Werte als auch auf `&str`-Werte anzuwenden.
 
-```rust,ignore
+```rust
 fn first_word(s: &str) -> &str {
 #     let bytes = s.as_bytes();
 #

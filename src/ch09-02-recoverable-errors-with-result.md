@@ -58,7 +58,7 @@ folgt ändern:
 
 [std-library-doc]: https://doc.rust-lang.org/std/index.html
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 # use std::fs::File;
 #
 # fn main() {
@@ -71,7 +71,7 @@ folgt ändern:
 
 Der Versuch, zu kompilieren, liefert uns nun folgende Ausgabe:
 
-```text
+```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0308]: mismatched types
@@ -152,7 +152,7 @@ Makro `panic!` aufzurufen. Wenn es keine Datei namens *hallo.txt* in unserem
 aktuellen Verzeichnis gibt und wir diesen Code ausführen, sehen wir die
 folgende Ausgabe des Makros `panic!`:
 
-```text
+```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
@@ -532,7 +532,7 @@ Der Teil von `match`, der den Rückgabetyp `Result` erfordert, ist
 Schauen wir uns an, was passiert, wenn wir den `?`-Operator in der Funktion
 `main` verwenden, die, wie du dich erinnern wirst, den Rückgabetyp `()` hat:
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 use std::fs::File;
 
 fn main() {
@@ -542,7 +542,7 @@ fn main() {
 
 Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 
-```text
+```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `std::ops::Try`)
