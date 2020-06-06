@@ -145,6 +145,6 @@ schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
 geschrieben wurde und eine Funktion `try` hat, musst du die
 Roh-Bezeichner-Syntax verwenden, in diesem Fall `r#try`, um diese Funktion von
 deinem Code der Ausgabe 2018 aus aufzurufen. Siehe [Anhang E][appendix-e] für
-weitere Informationen über Editionen.
+weitere Informationen zu Ausgaben.
 
 [appendix-e]: appendix-05-editions.html

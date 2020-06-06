@@ -132,4 +132,4 @@
     - [D - Nützliche Entwicklungswerkzeuge](appendix-04-useful-development-tools.md)
     - [E - Ausgaben](appendix-05-editions.md)
     - [F - Übersetzungen des Buchs](appendix-06-translation.md)
-    - [G - Wie Rust erstellt wird und “nächtliches Rust”](appendix-07-nightly-rust.md)
+    - [G - Wie Rust erstellt wird und „nächtliches Rust“](appendix-07-nightly-rust.md)
