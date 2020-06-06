@@ -169,7 +169,7 @@ Schließlich enthalten einige Anhänge nützliche Informationen über die Sprach
 in einem eher referenzartigen Format. Anhang A enthält die Schlüsselwörter von
 Rust, Anhang B die Operatoren und Symbole von Rust, Anhang C ableitbare
 Merkmalen, die von der Standardbibliothek mitgebracht werden, Anhang D
-nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Editionen.
+nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn
