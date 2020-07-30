@@ -18,7 +18,7 @@ Im Einzelnen wird Folgendes behandelt:
     Variable gespeichert werden kann.
 * *Iteratoren*, eine Möglichkeit, eine Reihe von Elementen abzuarbeiten.
 * Wie wir diese zwei Möglichkeiten benutzen können um unser E/A-Projekt vom
-    Kapitel 12 verbessern können.
+    Kapitel 12 verbessern zu können.
 * Die Leistung dieser beiden Funktionalitäten (Spoiler-Alarm: Sie sind
     schneller, als du vielleicht denken magst!)
 
