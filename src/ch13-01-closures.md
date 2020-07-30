@@ -178,7 +178,7 @@ Leider rufen wir nun die Funktion auf und warten in jeden Fall auf das Ergebnis,
 sogar im inneren `if`-Block der den Ergebniswert überhaupt nicht verwendet.
 
 Wir wollen den Code an einer Stelle in unserem Programm definieren, aber
-ausschließlich dort auszuführen, wo wir das Ergebnis tatsächlich brauchen.
+ausschließlich dort ausführen, wo wir das Ergebnis tatsächlich brauchen.
 
 #### Umformen mit Funktionsabschlüssen um Programmcode zu speichern
 
