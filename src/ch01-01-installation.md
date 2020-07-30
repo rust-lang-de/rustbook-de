@@ -6,16 +6,16 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.
 
 > Anmerkung: Falls du `rustup` aus irgendeinem Grund nicht verwenden möchtest,
-> schaue bitte auf der 
+> schaue bitte auf der
 > [Webseite für die Rust-Installation](https://www.rust-lang.org/tools/install) 
 > nach anderen Möglichkeiten.
 
-Die folgenden Schritte installieren die neueste stabile Version des 
+Die folgenden Schritte installieren die neueste stabile Version des
 Rust-Kompilierers. Rust garantiert Stabilität und stellt somit sicher,
 dass alle kompilierbaren Beispiele in diesem Buch auch mit neueren
 Rust-Versionen kompilierbar bleiben werden. Die Konsolenausgabe
 der Beispiele kann sich zwischen Versionen leicht unterscheiden,
-weil Rust oft Fehlermeldungen und Warnungen verbessert. 
+weil Rust oft Fehlermeldungen und Warnungen verbessert.
 Anders ausgedrückt, jede neuere stabile Version von Rust, die du
 mithilfe dieser Schritte installierst, sollte wie erwartet mit dem
 Inhalt dieses Buches funktionieren.
@@ -51,8 +51,8 @@ Rust is installed now. Great!
 Zusätzlich wirst du einen Programmbinder (linker) benötigen. Wahrscheinlich
 ist bereits einer installiert, aber falls du versuchst, ein Rust-Programm
 zu kompilieren und du dabei eine Fehlermeldung erhältst, dass ein
-Programmbinder nicht ausgeführt werden konnte, dann bedeutet dass, das
-ein Programmbinder nicht auf deinem Rechner installiert ist und das 
+Programmbinder nicht ausgeführt werden konnte, dann bedeutet das, dass
+kein Programmbinder auf deinem Rechner installiert ist und du das
 nachholen musst. C-Kompilierer haben normalerweise den passenden Programmbinder
 dabei. Schau in der Dokumentation deines Betriebssystems nach, wie du einen
 C-Kompilierer installieren kannst. Auch bestehen einige verbreitete Rust-Pakete
@@ -62,12 +62,12 @@ bereits jetzt einen zu installieren.
 ### Die Installation von `rustup` in Windows
 
 Rufe [https://www.rust-lang.org/tools/install][install] auf und folge
-den Anweisungen, um Rust in Windows zu installieren. Während der Installation 
-wirst du eine Meldung erhalten mit der Aufforderung, ebenfalls die 
+den Anweisungen, um Rust in Windows zu installieren. Während der Installation
+wirst du eine Meldung erhalten mit der Aufforderung, ebenfalls die
 C++-Bauwerkzeuge für Visual Studio 2013 oder neuer zu installieren.
 Der leichteste Weg, um an die Bauwerkzeuge zu gelangen, ist die Installation
 der [Bauwerkzeuge für Visual Studio 2019][visualstudio]. Sobald du gefragt
-wirst, welche Komponenten installiert werden sollen, wähle die "C++ build tools"
+wirst, welche Komponenten installiert werden sollen, wähle die „C++ build tools“
 und zusätzlich das Windows 10 SDK und das englische Sprachpaket aus.
 
 [install]: https://www.rust-lang.org/tools/install
