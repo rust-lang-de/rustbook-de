@@ -384,16 +384,34 @@ würde wie die Definition in Codeblock 13-7 aussehen.
 #use std::time::Duration;
 #
 #fn generate_workout(intensity: u32, random_number: u32) {
-let expensive_closure = |num: u32| -> u32 {
+#    
+    let expensive_closure = |num: u32| -> u32 {
         println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
-#fn main() {
-#let simulated_user_specified_value = 10;
-#let simulated_random_number = 7;
+#  
 #
-#generate_workout(simulated_user_specified_value, simulated_random_number);
+#    if intensity < 25 {
+#        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+#        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
+#    } else {
+#        if random_number == 3 {
+#            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
+#        } else {
+#            println!(
+#                "Heute, {} Minuten Lauftrainig!",
+#                expensive_closure(intensity)
+#            );
+#        }
+#    }
+#}
+#
+#fn main() {
+#   let simulated_user_specified_value = 10;
+#   let simulated_random_number = 7;
+#
+#   generate_workout(simulated_user_specified_value, simulated_random_number);
 #}
 ```
 
