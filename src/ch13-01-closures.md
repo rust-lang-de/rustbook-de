@@ -28,7 +28,7 @@ nur einmal aufrufen, und zwar, dann wenn es notwendig ist.
 
 Den Aufruf des hypothetischen Algorithmus werden wir mit der Funktion
 `simulated_expensive_calculation` die im Codeblock 13-1 gezeigt wird und
-`calculating slowly...`, ausgibt, zwei Sekunden lang wartet und dann die Nummer
+`rechnet langsam...`, ausgibt, zwei Sekunden lang wartet und dann die Nummer
 zurückgibt die wir übergeben haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -38,10 +38,12 @@ use std::thread;
 use std::time::Duration;
 
 fn simulated_expensive_calculation(intensity: u32) -> u32 {
-    println!("calculating slowly...");
+    println!("rechnet langsam...");
     thread::sleep(Duration::from_secs(2));
     intensity
 }
+
+#fn main() {}
 ```
 <span class="caption">Codeblock 13-1: Eine Funktion die für eine hypothetische
 Berechnung steht, die etwa 2 Sekunden Laufzeit benötigt.</span>
@@ -66,13 +68,22 @@ Hauptfunktion die wir benutzen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
+#fn simulated_expensive_calculation(intensity: u32) -> u32 {
+#    println!("rechnet langsam...");
+#    thread::sleep(Duration::from_secs(2));
+#    intensity
+#}
+#
+#fn generate_workout(intensity: u32, random_number: u32) {}
 fn main() {
     let simulated_user_specified_value = 10;
     let simulated_random_number = 7;
 
     generate_workout(simulated_user_specified_value, simulated_random_number);
 }
-
 ```
 <span class="caption">Codeblock 13-2: Eine Hauptfunktion `main` mit fest
 einprogrammierten Werten die Eingaben simulieren und Zufallszahlen-Erzeugung</span>
@@ -93,27 +104,44 @@ Veränderungen werden diese Funktion betreffen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
+#fn simulated_expensive_calculation(intensity: u32) -> u32 {
+#    println!("rechnet langsam...");
+#    thread::sleep(Duration::from_secs(2));
+#    intensity
+#}
+#
 fn generate_workout(intensity: u32, random_number: u32) {
     if intensity < 25 {
         println!(
-            "Today, do {} pushups!",
+            "Mach heute {} Liegestütze!",
             simulated_expensive_calculation(intensity)
         );
         println!(
-            "Next, do {} situps!",
+            "Als nächstes {} Sit-ups!",
             simulated_expensive_calculation(intensity)
         );
     } else {
         if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
+            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
         } else {
             println!(
-                "Today, run for {} minutes!",
+                "Heute, {} Minuten Lauftrainig!",
                 simulated_expensive_calculation(intensity)
             );
         }
     }
 }
+#
+#fn main() {
+#    let simulated_user_specified_value = 10;
+#    let simulated_random_number = 7;
+#
+#    generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
+#
 ```
 <span class="caption">Codeblock 13-3: Die Anwendungslogik, die Trainingspläne anhand
 der Eingaben und durch Aufrufe der `simulated_expensive_calculation`-Funktion
@@ -153,20 +181,36 @@ in eine Variable zu extrahieren, wie es im Codeblock 13-4 gezeigt wird.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
+#fn simulated_expensive_calculation(intensity: u32) -> u32 {
+#    println!("rechnet langsam...");
+#    thread::sleep(Duration::from_secs(2));
+#    intensity
+#}
+#
 fn generate_workout(intensity: u32, random_number: u32) {
     let expensive_result = simulated_expensive_calculation(intensity);
 
     if intensity < 25 {
-        println!("Today, do {} pushups!", expensive_result);
-        println!("Next, do {} situps!", expensive_result);
+        println!("Mach heute {} Liegestütze!", expensive_result);
+        println!("Als nächstes {} Sit-ups!", expensive_result);
     } else {
         if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
+            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
         } else {
-            println!("Today, run for {} minutes!", expensive_result);
+            println!("Heute, {} Minuten Lauftrainig!", expensive_result);
         }
     }
 }
+#
+#fn main() {
+#    let simulated_user_specified_value = 10;
+#    let simulated_random_number = 7;
+#
+#    generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
 ```
 
 <span class="caption">Codeblock 13-4: Extraktion der `simulated_expensive_calculation`
@@ -178,7 +222,7 @@ Leider rufen wir nun die Funktion auf und warten in jeden Fall auf das Ergebnis,
 sogar im inneren `if`-Block der den Ergebniswert überhaupt nicht verwendet.
 
 Wir wollen den Code an einer Stelle in unserem Programm definieren, aber
-ausschließlich dort auszuführen, wo wir das Ergebnis tatsächlich brauchen.
+ausschließlich dort ausführen, wo wir das Ergebnis tatsächlich brauchen.
 
 #### Umformen mit Funktionsabschlüssen um Programmcode zu speichern
 
@@ -191,11 +235,36 @@ Codeblock 13-5 gezeigt wird. Eigentlich können wir den gesamten Rumpf von
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
+#fn generate_workout(intensity: u32, random_number: u32) {
 let expensive_closure = |num| {
-        println!("calculating slowly...");
+        println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
+#    if intensity < 25 {
+#        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+#        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
+#    } else {
+#        if random_number == 3 {
+#            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
+#        } else {
+#            println!(
+#                "Heute, {} Minuten Lauftrainig!",
+#                expensive_closure(intensity)
+#            );
+#        }
+#    }
+#}
+#
+#fn main() {
+#    let simulated_user_specified_value = 10;
+#    let simulated_random_number = 7;
+#
+#    generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
 ```
 
 <span class="caption">Codeblock 13-5: Definition eines Funktionsabschlusses 
@@ -234,27 +303,37 @@ Argumente die wir verwenden wollen, angehängt. Siehe Codeblock 13-6
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
 fn generate_workout(intensity: u32, random_number: u32) {
     let expensive_closure = |num| {
-        println!("calculating slowly...");
+        println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
 
     if intensity < 25 {
-        println!("Today, do {} pushups!", expensive_closure(intensity));
-        println!("Next, do {} situps!", expensive_closure(intensity));
+        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
     } else {
         if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
+            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
         } else {
             println!(
-                "Today, run for {} minutes!",
+                "Heute, {} Minuten Lauftrainig!",
                 expensive_closure(intensity)
             );
         }
     }
 }
+#
+#fn main() {
+#    let simulated_user_specified_value = 10;
+#    let simulated_random_number = 7;
+#
+#    generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
 ```
 
 <span class="caption">Codeblock 13-6: Aufruf des neu definierten
@@ -301,11 +380,39 @@ würde wie die Definition in Codeblock 13-7 aussehen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-let expensive_closure = |num: u32| -> u32 {
-        println!("calculating slowly...");
+#use std::thread;
+#use std::time::Duration;
+#
+#fn generate_workout(intensity: u32, random_number: u32) {
+#    
+    let expensive_closure = |num: u32| -> u32 {
+        println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
+#  
+#
+#    if intensity < 25 {
+#        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+#        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
+#    } else {
+#        if random_number == 3 {
+#            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
+#        } else {
+#            println!(
+#                "Heute, {} Minuten Lauftrainig!",
+#                expensive_closure(intensity)
+#            );
+#        }
+#    }
+#}
+#
+#fn main() {
+#   let simulated_user_specified_value = 10;
+#   let simulated_random_number = 7;
+#
+#   generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
 ```
 
 <span class="caption">Codeblock 13-7: Hinzufügen optionaler Typanmerkungen
@@ -349,10 +456,12 @@ erhalten wir eine Fehlermeldung.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
+#fn main() {
  let example_closure = |x| x;
 
     let s = example_closure(String::from("hello"));
     let n = example_closure(5);
+#}
 ```
 
 <span class="caption">Codeblock 13-8: Versuchter Aufruf eines Funktionsabschluss
@@ -436,6 +545,8 @@ where
     calculation: T,
     value: Option<u32>,
 }
+#
+#fn main() {}
 ```
 
 <span class="caption">Codeblock 13-9: Definition einer `Cacher`-Struktur, die einen
@@ -467,6 +578,14 @@ definiert.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#struct Cacher<T>
+#where
+#    T: Fn(u32) -> u32,
+#{
+#    calculation: T,
+#    value: Option<u32>,
+#}
+#
 impl<T> Cacher<T>
 where
     T: Fn(u32) -> u32,
@@ -489,6 +608,8 @@ where
         }
     }
 }
+#
+#fn main() {}
 ```
 
 <span class="caption">Codeblock 13-10: Die Zwischenspeicherungs-Logik von `Cacher`</span>
@@ -520,27 +641,68 @@ Codeblock 13-11 zeigt wie wir die `Cacher`-Struktur in der
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#use std::thread;
+#use std::time::Duration;
+#
+#struct Cacher<T>
+#where
+#    T: Fn(u32) -> u32,
+#{
+#    calculation: T,
+#    value: Option<u32>,
+#}
+#
+#impl<T> Cacher<T>
+#where
+#    T: Fn(u32) -> u32,
+#{
+#    fn new(calculation: T) -> Cacher<T> {
+#        Cacher {
+#            calculation,
+#            value: None,
+#        }
+#    }
+#
+#    fn value(&mut self, arg: u32) -> u32 {
+#        match self.value {
+#            Some(v) => v,
+#            None => {
+#                let v = (self.calculation)(arg);
+#                self.value = Some(v);
+#                v
+#            }
+#        }
+#    }
+#}
+#
 fn generate_workout(intensity: u32, random_number: u32) {
     let mut expensive_result = Cacher::new(|num| {
-        println!("calculating slowly...");
+        println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     });
 
     if intensity < 25 {
-        println!("Today, do {} pushups!", expensive_result.value(intensity));
-        println!("Next, do {} situps!", expensive_result.value(intensity));
+        println!("Mach heute {} Liegestütze!", expensive_result.value(intensity));
+        println!("Als nächstes {} Sit-ups!", expensive_result.value(intensity));
     } else {
         if random_number == 3 {
-            println!("Take a break today! Remember to stay hydrated!");
+            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
         } else {
             println!(
-                "Today, run for {} minutes!",
+                "Heute, {} Minuten Lauftrainig!",
                 expensive_result.value(intensity)
             );
         }
     }
 }
+#
+#fn main() {
+#    let simulated_user_specified_value = 10;
+#    let simulated_random_number = 7;
+#
+#    generate_workout(simulated_user_specified_value, simulated_random_number);
+#}
 ```
 
 <span class="caption">Codeblock 13-11: Die Verwendung von `Cacher` in der
@@ -566,6 +728,41 @@ den gleichen Wert für den `arg`-Parameter zur `value`-Methode bekommt. Das
 bedeutet, dass dieser Test fehlschlagen wird:
 
 ```rust,ignore,panics
+#struct Cacher<T>
+#where
+#    T: Fn(u32) -> u32,
+#{
+#    calculation: T,
+#    value: Option<u32>,
+#}
+#
+#impl<T> Cacher<T>
+#where
+#    T: Fn(u32) -> u32,
+#{
+#    fn new(calculation: T) -> Cacher<T> {
+#        Cacher {
+#            calculation,
+#            value: None,
+#        }
+#    }
+#
+#    fn value(&mut self, arg: u32) -> u32 {
+#        match self.value {
+#            Some(v) => v,
+#            None => {
+#                let v = (self.calculation)(arg);
+#                self.value = Some(v);
+#                v
+#            }
+#        }
+#    }
+#}
+#
+##[cfg(test)]
+#mod tests {
+#    use super::*;
+#
  #[test]
     fn call_with_different_values() {
         let mut c = Cacher::new(|a| a);
@@ -575,6 +772,7 @@ bedeutet, dass dieser Test fehlschlagen wird:
 
         assert_eq!(v2, 2);
     }
+#}    
 ```
 
 Dieser Test erzeugt eine neue `Cacher`-Instanz mit einem Funktionsabschluss, der
@@ -759,7 +957,7 @@ fn main() {
 
     let equal_to_x = move |z| z == x;
 
-    println!("can't use x here: {:?}", x);
+    println!("kann x hier nicht verwenden: {:?}", x);
 
     let y = vec![1, 2, 3];
 
@@ -783,7 +981,7 @@ error[E0382]: borrow of moved value: `x`
   |                      |
   |                      value moved into closure here
 5 | 
-6 |     println!("can't use x here: {:?}", x);
+6 |     println!("kann x hier nicht verwenden: {:?}", x);
   |                                        ^ value borrowed here after move
 
 error: aborting due to previous error
