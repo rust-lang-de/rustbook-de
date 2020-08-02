@@ -124,7 +124,7 @@ behandeln musst.
 
 Deine Rust-Programme können nun Konzepte in deiner Domäne mit Hilfe von
 Strukturen und Aufzählungen ausdrücken. Das Erstellen benutzerdefinierter Typen
-zur Verwendung in deiner API gewährleistet Typsicherheit: Der Kompilierer wird
+zur Verwendung in deiner API gewährleistet Typsicherheit: Der Compiler wird
 sicherstellen, dass deine Funktionen nur Werte jenes Typs erhalten, den die
 Funktion erwartet.
 

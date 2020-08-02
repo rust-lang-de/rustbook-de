@@ -31,7 +31,7 @@ muss, zu begrenzen.
 Ein verwandtes Konzept ist der Gültigkeitsbereich (scope): Der verschachtelte
 Kontext, in dem Code geschrieben wird, hat eine Reihe von Namen, die als „im
 Gültigkeitsbereich“ (in scope) definiert sind. Beim Lesen, Schreiben und
-Kompilieren von Code müssen Programmierer und Kompilierer wissen, ob sich ein
+Kompilieren von Code müssen Programmierer und Compiler wissen, ob sich ein
 bestimmter Name an einer bestimmten Stelle auf eine Variable, Funktion,
 Struktur (struct), Aufzählung (enum), Modul, Konstante oder ein anderes Element
 bezieht und was dieses Element bedeutet. Du kannst Gültigkeitsbereiche

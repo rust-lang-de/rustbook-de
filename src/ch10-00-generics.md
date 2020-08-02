@@ -31,9 +31,9 @@ kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.
 
 Schließlich werden wir die *Lebensdauer* (lifetimes) besprechen, eine Spielart
-generischer Typen, die dem Kompilierer Informationen darüber gibt, wie
+generischer Typen, die dem Compiler Informationen darüber gibt, wie
 Referenzen zueinander in Beziehung stehen. Die Lebensdauer erlaubt es uns, in
-vielen Situationen Werte auszuleihen und gleichzeitig dem Kompilierer die
+vielen Situationen Werte auszuleihen und gleichzeitig dem Compiler die
 Möglichkeit zu geben, die Gültigkeit der Referenzen zu überprüfen.
 
 ## Duplikate entfernen durch Extrahieren einer Funktion

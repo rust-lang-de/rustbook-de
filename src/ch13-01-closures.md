@@ -367,12 +367,12 @@ zugänglich zu machen.
 
 Funktionsabschlüsse sind für gewöhnlich kurz und eher in einem begrenzten Kontext
 relevant, als in einem beliebigen Szenario. Innerhalb dieses beschränkten
-Einsatzbereichs ist der Kompilierer verlässlich in der Lage, Typen, Parameter und
+Einsatzbereichs ist der Compiler verlässlich in der Lage, Typen, Parameter und
 Rückgabewerte zu inferieren, ähnlich wie er meistens bei Variablen die Typen
 herleiten kann.
 
 Den Programmierer die Typen in diesen kurzen, anonymen Funktionen anmerken zu
-lassen wäre nur störend und überflüssig, da der Kompilierer bereits über die
+lassen wäre nur störend und überflüssig, da der Compiler bereits über die
 dafür notwendigen Informationen verfügt.
 
 Wir können wie bei Variablen Typanmerkungen angeben, wenn wir die Klarheit
@@ -467,7 +467,7 @@ let n = example_closure(5);
 <span class="caption">Codeblock 13-8: Versuchter Aufruf eines Funktionsabschluss
 den zwei unterschiedliche Typen zugewiesen wurden</span>
 
-Der Kompilierer gibt diesen Fehler aus:
+Der Compiler gibt diesen Fehler aus:
 
 ```console
 $ cargo run
@@ -897,7 +897,7 @@ error[E0434]: can't capture dynamic environment in a fn item
   |
   = help: use the `|| { ... }` closure form instead
 ```
-Der Kompilierer erinnert uns sogar daran, dass dies nur mit Funktionsabschlüssen
+Der Compiler erinnert uns sogar daran, dass dies nur mit Funktionsabschlüssen
 funktioniert!
 
 Wenn ein Funktionsabschluss einen Wert aus seiner Umgebung erfasst, benutzt er
@@ -1002,7 +1002,7 @@ im `println!`-Statement benutzen. Durch Entfernen von `println!` wird dieser
 Fehler behoben.
 
 Wenn du eine `Fn`-Merkmalsabgrenzung spezifizierst, reicht es zumeist wenn du
-mit `Fn` beginnst. Der Kompilierer wird dir mitteilen, wenn es notwendig ist
+mit `Fn` beginnst. Der Compiler wird dir mitteilen, wenn es notwendig ist
 `FnMut` oder `FnOnce` anzugeben, basierend auf dem was im
 Funktionsabschluss-Rumpf passiert. 
 

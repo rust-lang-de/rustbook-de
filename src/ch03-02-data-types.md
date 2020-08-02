@@ -7,7 +7,7 @@ Verbund.
 
 Denk daran, dass Rust eine *statisch typisierte* Sprache ist, was bedeutet,
 dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
-Kompilierer kann normalerweise auf der Grundlage des Wertes und wie wir ihn
+Compiler kann normalerweise auf der Grundlage des Wertes und wie wir ihn
 verwenden ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen
 möglich sind, wie zum Beispiel als wir im Abschnitt [„Vergleich der Vermutung
 mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] eine
@@ -19,7 +19,7 @@ let guess: u32 = "42".parse().expect("Keine Zahl!");
 ```
 
 Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler
-an, was bedeutet, dass der Kompilierer mehr Informationen von uns benötigt, um
+an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
 zu wissen welchen Typ wir verwenden wollen:
 
 ```console

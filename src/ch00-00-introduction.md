@@ -21,9 +21,9 @@ Entwicklerteams mit unterschiedlichem Kenntnisstand in der
 Systemprogrammierung. Systemnaher Code ist anfällig für eine Vielzahl subtiler
 Fehler, die in den meisten anderen Sprachen nur durch ausgiebige Tests und
 sorgfältige Überprüfung des Codes durch erfahrene Entwickler erkannt werden
-können. In Rust spielt der Kompilierer eine Art Pförtnerrolle, indem er Code
+können. In Rust spielt der Compiler eine Art Pförtnerrolle, indem er Code
 mit diesen schwer fassbaren Fehlern verweigert zu kompilieren, darunter auch
-Nebenläufigkeitsfehler. Mit der Arbeit an der Seite des Kompilierers kann sich
+Nebenläufigkeitsfehler. Mit der Arbeit an der Seite des Compilers kann sich
 das Team auf die Programmlogik konzentrieren anstatt Fehler zu suchen.
 
 Rust bringt auch zeitgemäße Entwicklerwerkzeuge in die Welt der
@@ -68,7 +68,7 @@ wenn du zur Programmiersprache Rust beiträgst.
 Rust ist für Menschen, die sich nach Schnelligkeit und Stabilität einer Sprache
 sehnen. Unter Geschwindigkeit verstehen wir die Geschwindigkeit der Programme,
 die du mit Rust schreiben kannst, und die Geschwindigkeit, mit der dich Rust
-diese Programme schreiben lässt. Die Prüfungen des Rust-Kompilierers
+diese Programme schreiben lässt. Die Prüfungen des Rust-Compilers
 gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
 diese Prüfungen, die Entwickler oft scheuen modifizieren zu müssen. Durch das
@@ -178,9 +178,9 @@ du irritiert bist. Aber tue was immer für dich passt.
 <span id="ferris"></span>
 
 Ein wichtiger Teil beim Lernen von Rust ist das Verstehen der Fehlermeldungen,
-die der Kompilierer anzeigt: Diese leiten dich zum funktionierenden Code. Daher
+die der Compiler anzeigt: Diese leiten dich zum funktionierenden Code. Daher
 werden wir viele Beispiele bringen, die nicht kompilieren, zusammen mit der
-jeweiligen Fehlermeldung des Kompilierers. Wenn du also ein zufälliges Beispiel
+jeweiligen Fehlermeldung des Compilers. Wenn du also ein zufälliges Beispiel
 eingibst und ausführen willst, lässt es sich möglicherweise nicht kompilieren!
 Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
 Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt

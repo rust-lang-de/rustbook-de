@@ -31,7 +31,7 @@ das die Formatierung für Endbenutzer übernimmt. Du solltest immer eine
 geeignete Art und Weise in Betracht ziehen, einen Typ für einen Endbenutzer
 anzuzeigen. Welche Teile des Typs sollte ein Endbenutzer sehen dürfen? Welche
 Teile würden sie für relevant halten? Welches Datenformat wäre für sie am
-relevantesten? Der Rust-Kompilierer verfügt nicht über dieses Wissen, sodass er
+relevantesten? Der Rust-Compiler verfügt nicht über dieses Wissen, sodass er
 kein angemessenes Standardverhalten für dich bereitstellen kann.
 
 Die Liste der ableitbaren Merkmale in diesem Anhang ist nicht vollständig:

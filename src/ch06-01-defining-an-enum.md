@@ -310,7 +310,7 @@ Fallstudie zu `Option`, einer weiteren Aufzählung, die von der
 Standardbibliothek definiert wird. Der Typ `Option` wird an vielen Stellen
 verwendet, weil er das sehr häufige Szenario abbildet, in dem ein Wert etwas
 oder nichts sein könnte. Im Sinne des Typsystems bedeutet das, dass der
-Kompilierer überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt
+Compiler überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt
 sollst. Diese Funktionalität kann Fehler vermeiden, die in anderen
 Programmiersprachen extrem häufig auftreten.
 
@@ -328,7 +328,7 @@ Tony Hoare, der Erfinder von null, folgendes gesagt:
 > erste umfangreiche Typsystem für Referenzen in einer objektorientierten
 > Sprache. Mein Ziel war es, sicherzustellen, dass jede Verwendung von
 > Referenzen absolut sicher sein sollte, wobei die Überprüfung automatisch
-> durch den Kompilierer durchgeführt wird. Aber ich konnte der Versuchung nicht
+> durch den Compiler durchgeführt wird. Aber ich konnte der Versuchung nicht
 > widerstehen, eine Nullreferenz einzuführen, nur weil sie so einfach
 > umzusetzen war. Dies hat zu unzähligen Fehlern, Schwachstellen und
 > Systemabstürzen geführt, die in den letzten vierzig Jahren wahrscheinlich
@@ -390,7 +390,7 @@ bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen
 Wert. Warum ist nun besser `Option<T>` anstelle von Null zu verwenden?
 
 Kurz gesagt, weil `Option<T>` und `T` (wobei `T` ein beliebiger Typ sein kann)
-unterschiedliche Typen sind, erlaubt es der Kompilierer nicht `Option<T>` so zu
+unterschiedliche Typen sind, erlaubt es der Compiler nicht `Option<T>` so zu
 verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
 dieser Code nicht kompilieren, weil er versucht, ein `i8` mit einem
 `Option<i8>` zu addieren:
@@ -426,11 +426,11 @@ To learn more, run the command again with --verbose.
 Stark! Tatsächlich bedeutet diese Fehlermeldung, dass Rust nicht versteht, wie
 man ein `i8` und eine `Option<i8>` addiert, da es sich um unterschiedliche Typen
 handelt. Wenn wir einen Wert eines Typs wie `i8` in Rust haben, stellt der
-Kompilierer sicher, dass wir immer einen gültigen Wert haben. Wir können mit
+Compiler sicher, dass wir immer einen gültigen Wert haben. Wir können mit
 Zuversicht vorgehen, ohne vor der Verwendung dieses Wertes auf Null prüfen zu
 müssen. Nur wenn wir eine `Option<i8>` (oder einen anderen Werttyp) haben,
 müssen wir befürchten, dass wir möglicherweise keinen Wert haben, und der
-Kompilierer wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
+Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
 Wert verwenden.
 
 Mit anderen Worten musst du eine `Option<T>` in ein `T` konvertieren, bevor du

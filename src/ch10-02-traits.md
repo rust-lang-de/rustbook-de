@@ -1,6 +1,6 @@
 ## Merkmale (traits): Gemeinsames Verhalten definieren
 
-Ein *Merkmal* (trait) teilt dem Rust-Kompilierer mit, welche Funktionalität ein
+Ein *Merkmal* (trait) teilt dem Rust-Compiler mit, welche Funktionalität ein
 bestimmter Typ hat und mit anderen Typen teilen kann. Wir können Merkmale
 verwenden, um gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir
 können Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
@@ -53,7 +53,7 @@ der Typen beschreiben, die dieses Merkmal implementieren, was in diesem Fall
 Nach der Methodensignatur verwenden wir statt einer Implementierung in
 geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Merkmal
 implementiert, muss sein eigenes benutzerdefiniertes Verhalten für den
-Methodenrumpf bereitstellen. Der Kompilierer wird sicherstellen, dass jeder
+Methodenrumpf bereitstellen. Der Compiler wird sicherstellen, dass jeder
 Typ, der das Merkmal `Summary` hat, die Methode `summarize` mit genau dieser
 Signatur hat.
 
@@ -478,7 +478,7 @@ aufruft, weiß das nicht.
 Die Fähigkeit, einen Typ zurückzugeben, der nur durch das Merkmal spezifiziert
 ist, das er implementiert, ist besonders nützlich im Zusammenhang mit
 Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
-Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Kompilierer
+Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
 kennt oder deren Spezifikation sehr lang ist. Mit der Syntax `impl Trait`
 kannst du prägnant angeben, dass eine Funktion einen Typ zurückgibt, der das
 Merkmal `Iterator` implementiert, ohne dass du einen sehr langen Typ schreiben
@@ -548,7 +548,7 @@ fn returns_summarizable(switch: bool) -> impl Summary {
 
 Die Rückgabe entweder eines `NewsArticle` oder eines `Tweet` ist aufgrund von
 Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
-Kompilierer nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
+Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
 wird im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“][using-trait-objects-that-allow-for-values-of-different-types]
 in Kapitel 17 behandelt.
@@ -787,8 +787,8 @@ Abschnitt „Implementierer“ (implementors).
 
 Mithilfe von Merkmalen und Merkmalsabgrenzungen können wir Code schreiben, der
 generische Typparameter verwendet, um Duplikationen zu reduzieren, aber auch
-dem Kompilierer gegenüber angeben, dass der generische Typ ein bestimmtes
-Verhalten haben soll. Der Kompilierer kann dann die Merkmalsabgrenzungen
+dem Compiler gegenüber angeben, dass der generische Typ ein bestimmtes
+Verhalten haben soll. Der Compiler kann dann die Merkmalsabgrenzungen
 verwenden, um zu überprüfen, ob alle konkreten Typen, die von unserem Code
 verwendet werden, das richtige Verhalten aufweisen. In dynamisch typisierten
 Sprachen würden wir einen Laufzeitfehler erhalten, wenn wir eine Methode bei

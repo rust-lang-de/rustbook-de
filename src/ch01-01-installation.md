@@ -11,7 +11,7 @@ benötigen.
 > nach anderen Möglichkeiten.
 
 Die folgenden Schritte installieren die neueste stabile Version des
-Rust-Kompilierers. Rust garantiert Stabilität und stellt somit sicher,
+Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
 dass alle kompilierbaren Beispiele in diesem Buch auch mit neueren
 Rust-Versionen kompilierbar bleiben werden. Die Konsolenausgabe
 der Beispiele kann sich zwischen Versionen leicht unterscheiden,
@@ -53,10 +53,10 @@ ist bereits einer installiert, aber falls du versuchst, ein Rust-Programm
 zu kompilieren und du dabei eine Fehlermeldung erhältst, dass ein
 Programmbinder nicht ausgeführt werden konnte, dann bedeutet das, dass
 kein Programmbinder auf deinem Rechner installiert ist und du das
-nachholen musst. C-Kompilierer haben normalerweise den passenden Programmbinder
+nachholen musst. C-Compiler haben normalerweise den passenden Programmbinder
 dabei. Schau in der Dokumentation deines Betriebssystems nach, wie du einen
-C-Kompilierer installieren kannst. Auch bestehen einige verbreitete Rust-Pakete
-aus C-Code und benötigen einen C-Kompilierer. Deshalb kann es sinnvoll sein,
+C-Compiler installieren kannst. Auch bestehen einige verbreitete Rust-Pakete
+aus C-Code und benötigen einen C-Compiler. Deshalb kann es sinnvoll sein,
 bereits jetzt einen zu installieren.
 
 ### Die Installation von `rustup` in Windows
