@@ -80,7 +80,7 @@ Rusts Typbezeichnungskonvention verwendet Binnenmajuskel (CamelCase). Als
 Abkürzung für „Typ“ ist `T` die Standardwahl der meisten Rust-Programmierer.
 
 Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
-Parameternamen in der Signatur deklarieren, damit der Kompilierer weiß, was
+Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
 dieser Name bedeutet. In ähnlicher Weise müssen wir den Typ-Parameternamen
 deklarieren, bevor wir ihn in einer Funktionssignatur verwenden können. Um die
 generische Funktion `largest` zu definieren, platzieren wir die
@@ -223,7 +223,7 @@ fn main() {
 gleichen Typ sein, da beide den gleichen generischen Datentyp `T` haben.</span>
 
 Wenn wir in diesem Beispiel `x` den Integer-Wert 5 zuweisen, lassen wir den
-Kompilierer wissen, dass der generische Typ `T` für diese Instanz von
+Compiler wissen, dass der generische Typ `T` für diese Instanz von
 `Point<T>` ein Integer sein wird. Wenn wir dann 4.0 für `y` angeben, das wir so
 definiert haben, dass es den gleichen Typ wie `x` hat, erhalten wir einen
 Typfehler wie diesen:
@@ -472,9 +472,9 @@ generische Datentypen verwendet. *Codeduplizierung* (monomorphization) ist der
 Vorgang der Umwandlung von generischem Code in spezifischen Code durch
 Ausfüllen der konkreten Typen, die bei der Kompilierung verwendet werden.
 
-Bei diesem Prozess führt der Kompilierer das Gegenteil der Schritte aus, die
+Bei diesem Prozess führt der Compiler das Gegenteil der Schritte aus, die
 wir beim Erstellen der generischen Funktion in Codeblock 10-5 angewendet haben: 
-Der Kompilierer schaut sich alle Stellen an, an denen generischer Code
+Der Compiler schaut sich alle Stellen an, an denen generischer Code
 aufgerufen wird, und generiert Code für die konkreten Typen, mit denen der
 generische Code aufgerufen wird.
 
@@ -487,14 +487,14 @@ let float = Some(5.0);
 ```
 
 Wenn Rust diesen Code kompiliert, führt es eine Codeduplizierung durch. Während
-dieses Vorgangs liest der Kompilierer die Werte ein, die in
+dieses Vorgangs liest der Compiler die Werte ein, die in
 `Option<T>`-Instanzen verwendet wurden, und identifiziert zwei Arten von
 `Option<T>`: Eine verwendet den Typ `i32` und die andere `f64`. Daraufhin
 erweitert es die generische Definition von `Option<T>` zu `Option_i32` und
 `Option_f64` und ersetzt damit die generische Definition durch die spezifische.
 
 Die duplizierte Codeversion sieht wie folgt aus. Die generische `Option<T>`
-wird durch die vom Kompilierer erstellten spezifischen Definitionen ersetzt:
+wird durch die vom Compiler erstellten spezifischen Definitionen ersetzt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

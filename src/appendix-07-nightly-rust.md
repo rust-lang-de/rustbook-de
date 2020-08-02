@@ -204,7 +204,7 @@ Jeder kann RFCs zur Verbesserung von Rust schreiben und die Vorschläge werden
 vom Rust-Team, das aus vielen thematischen Unterteams besteht, geprüft und
 diskutiert. Es gibt eine vollständige Liste der Teams auf der
 [Rust-Website][rust-website], in der die Teams für jeden Projektbereich
-aufgeführt sind: Sprachdesign, Kompilierer-Implementierung, Infrastruktur,
+aufgeführt sind: Sprachdesign, Compiler-Implementierung, Infrastruktur,
 Dokumentation und weitere. Das zuständige Team liest den Vorschlag und die
 Kommentare, schreibt einige eigene Kommentare und schließlich gibt es einen
 Konsens, die Funktionalität anzunehmen oder abzulehnen.

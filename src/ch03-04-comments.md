@@ -2,7 +2,7 @@
 
 Alle Programmierer bemühen sich, ihren Code leicht verständlich zu machen, aber
 manchmal sind zusätzliche Erklärungen angebracht. In solchen Fällen versehen
-Entwickler den Quellcode mit *Kommentaren*, welche der Kompilierer ignoriert
+Entwickler den Quellcode mit *Kommentaren*, welche der Compiler ignoriert
 und für andere Entwickler nützlich sein können.
 
 Dies ist ein einfacher Kommentar:

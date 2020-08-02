@@ -37,8 +37,8 @@ Dokumentation][rustfmt].
 ### Korrigiere deinen Code mit `rustfix`
 
 Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-einige Kompilierer-Warnungen beheben. Wenn du Code in Rust geschrieben hast,
-hast du wahrscheinlich Kompilierer-Warnungen gesehen. Betrachte zum Beispiel
+einige Compiler-Warnungen beheben. Wenn du Code in Rust geschrieben hast,
+hast du wahrscheinlich Compiler-Warnungen gesehen. Betrachte zum Beispiel
 diesen Code:
 
 <span class="filename">Dateiname: src/main.rs</span>

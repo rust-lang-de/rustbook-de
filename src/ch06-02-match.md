@@ -6,7 +6,7 @@ abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
 Dingen zusammensetzen. Kapitel 18 befasst sich mit all den verschiedenen
 Musterarten und wie sie funktionieren. Die Mächtigkeit von `match` kommt von
-der Ausdruckskraft der Muster und der Tatsache, dass der Kompilierer
+der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
 sicherstellt, dass alle möglichen Fälle behandelt werden.
 
 Stelle dir einen `match`-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen

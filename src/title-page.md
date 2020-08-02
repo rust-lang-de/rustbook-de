@@ -21,7 +21,7 @@ einfacher zu lernen machen. Diese Fassung des Buchs enthält eine Reihe von
 - Kapitel 11 hat einen neuen Abschnitt „Verwenden von `Result<T, E>` in Tests“,
   der zeigt, wie man Tests schreibt, die den Operator `?` verwenden.
 - Der Abschnitt „Fortgeschrittene Lebensdauern“ in Kapitel 19 wurde entfernt,
-  weil die verwendeten Konstrukte durch Kompilierer-Verbesserungen noch
+  weil die verwendeten Konstrukte durch Compiler-Verbesserungen noch
   seltener geworden sind.
 - Der frühere Anhang D „Makros“ wurde um prozedurale Makros erweitert und in
   den Abschnitt „Makros“ in Kapitel 19 verschoben.
@@ -36,7 +36,7 @@ einfacher zu lernen machen. Diese Fassung des Buchs enthält eine Reihe von
 
 Beachte, dass jeder kompilierbare Programmcode aus früheren Fassungen des Buchs
 weiterhin kompiliert, wenn `edition="2018"` nicht in *Cargo.toml* des Projekts
-nicht angegeben wird, selbst wenn du die verwendete Rust-Kompilierer-Version
+nicht angegeben wird, selbst wenn du die verwendete Rust-Compiler-Version
 aktualisierst. Das ist die Rückwärtskompatibilitätsgarantie von Rust!
 
 Die HTML-Version ist online verfügbar unter

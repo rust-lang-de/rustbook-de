@@ -306,7 +306,7 @@ veränderliche Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig.
 
 Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
-daran, dass es der Rust-Kompilierer ist, der frühzeitig (zur Kompilierzeit und
+daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
 das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so
 sind, wie du dachtest.
@@ -317,9 +317,9 @@ In Sprachen mit Zeigern ist es leicht, fälschlicherweise einen *hängenden
 Zeiger* (dangling pointer) zu erzeugen, also einen Zeiger, der auf eine Stelle
 im Speicher verweist, die vielleicht an jemand anderem vergeben wurde, weil der
 Speicher freigegeben wurde, während noch ein Zeiger auf diesen Speicher
-bestehen bleibt. In Rust hingegen garantiert der Kompilierer, dass Referenzen
+bestehen bleibt. In Rust hingegen garantiert der Compiler, dass Referenzen
 niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
-stellt der Kompilierer sicher, dass die Daten nicht den Gültigkeitsbereich
+stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.
 
 Versuchen wir, eine hängende Referenz zu erstellen, was Rust mit einem

@@ -3,7 +3,7 @@
 Die ersten Bestandteile des Modulsystems, die wir behandeln werden, sind Pakete
 (packages) und Kisten (crates). Eine Kiste ist eine Binärdatei oder eine
 Bibliothek. Die *Kistenwurzel* (crate root) ist eine Quelldatei, bei der der
-Rust-Kompilierer anfängt und die das Wurzelmodul deiner Kiste darstellt (Module
+Rust-Compiler anfängt und die das Wurzelmodul deiner Kiste darstellt (Module
 werden im Abschnitt [„Mit Modulen den Kontrollumfang und Datenschutz
 steuern“][modules] ausführlich erklärt). Ein *Paket* besteht aus einer oder
 mehreren Kisten, die eine Reihe von Funktionalitäten bereitstellen. Ein Paket
@@ -59,7 +59,7 @@ Zum Beispiel bietet die Kiste `rand` ein Merkmal (trait) namens `Rng`. Wir
 können auch eine Struktur (struct) mit dem Namen `Rng` in unserer eigenen Kiste
 definieren. Da die Funktionalität einer Kiste im Namensraum des eigenen
 Gültigkeitsbereichs ist, können wir `rand` als Abhängigkeit hinzufügen, ohne
-dadurch den Kompilierer durcheinanderzubringen, worauf sich der Name `Rng`
+dadurch den Compiler durcheinanderzubringen, worauf sich der Name `Rng`
 bezieht. In unserer Kiste bezieht er sich auf `struct Rng`, die wir definiert
 haben. Wir würden auf das Merkmal `Rng` aus der Kiste `rand` mit `rand::Rng`
 zugreifen.

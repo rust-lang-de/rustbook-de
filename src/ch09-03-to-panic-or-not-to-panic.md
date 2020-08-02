@@ -18,7 +18,7 @@ fehlschlagen könnte.
 In seltenen Situationen ist es besser, Code zu schreiben, der das Programm
 abbricht, anstatt ein `Result` zurückzugeben. Lass uns untersuchen, warum es
 bei Beispielen, Code-Prototypen und Tests angebracht ist, das Programm
-abzubrechen. Dann werden wir Situationen besprechen, in denen der Kompilierer
+abzubrechen. Dann werden wir Situationen besprechen, in denen der Compiler
 nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch aber
 schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
 Entscheidung, ob in Bibliothekscode ein Programm abgebrochen werden soll.
@@ -42,11 +42,11 @@ gesamte Test fehlschlägt, auch wenn diese Methode nicht die zu testende
 Funktionalität ist. Da ein Test mit `panic!` als fehlgeschlagen markiert wird,
 ist der Aufruf von `unwrap` und `expect` genau das, was passieren sollte.
 
-### Fälle, in denen du mehr Informationen als der Kompilierer hast
+### Fälle, in denen du mehr Informationen als der Compiler hast
 
 Es wäre auch angemessen, `unwrap` aufzurufen, wenn du eine andere Logik hast,
 die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik kann vom
-Kompilierer nicht verstanden werden. Du wirst immer noch ein `Result` haben,
+Compiler nicht verstanden werden. Du wirst immer noch ein `Result` haben,
 mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es besteht
 immer noch die Möglichkeit, dass sie im Allgemeinen scheitert, auch wenn es in
 deiner speziellen Situation logischerweise unmöglich ist. Wenn du durch
@@ -64,9 +64,9 @@ Wir erstellen eine `IpAddr`-Instanz, indem wir eine hartkodierte Zeichenkette
 parsen. Wir können sehen, dass `127.0.0.1` eine gültige IP-Adresse ist, sodass
 es akzeptabel ist, hier `unwrap` zu verwenden. Eine hartkodierte, gültige
 Zeichenkette ändert jedoch nicht den Rückgabetyp der `parse`-Methode: Wir
-erhalten immer noch einen `Result`-Wert und der Kompilierer wird von uns
+erhalten immer noch einen `Result`-Wert und der Compiler wird von uns
 verlangen, `Result` so zu behandeln, als ob die `Err`-Variante möglich wäre,
-weil der Kompilierer nicht klug genug ist, um zu erkennen, dass diese
+weil der Compiler nicht klug genug ist, um zu erkennen, dass diese
 Zeichenkette stets eine gültige IP-Adresse ist. Wenn die
 IP-Adressen-Zeichenkette von einem Benutzer kam, anstatt fest im Programm
 kodiert zu sein, und daher möglicherweise fehlschlagen könnte, würden wir
@@ -122,9 +122,9 @@ insbesondere wenn deren Verletzung zu einem Programmabbruch führt.
 
 Zahlreiche Fehlerprüfungen in deinen Funktionen wären jedoch langatmig und
 störend. Glücklicherweise kannst du das Typsystem von Rust (und damit die
-Typprüfung durch den Kompilierer) verwenden, um viele Prüfungen für dich zu
+Typprüfung durch den Compiler) verwenden, um viele Prüfungen für dich zu
 übernehmen. Wenn deine Funktion einen besonderen Typ als Parameter hat, kannst
-du mit der Logik deines Codes fortfahren, da du weißt, dass der Kompilierer
+du mit der Logik deines Codes fortfahren, da du weißt, dass der Compiler
 bereits sichergestellt hat, dass du einen gültigen Wert hast. Wenn du zum
 Beispiel einen Typ anstatt einer `Option` hast, erwartet dein Programm *etwas*
 statt *nichts*. Dein Code muss dann nicht zwei Fälle für die Varianten `Some`

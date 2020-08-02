@@ -25,7 +25,7 @@ fn another_function() {
 ```
 
 Funktionsdefinitionen in Rust beginnen mit `fn` und haben einen Satz Klammern
-nach dem Funktionsnamen. Die geschweiften Klammern teilen dem Kompilierer mit,
+nach dem Funktionsnamen. Die geschweiften Klammern teilen dem Compiler mit,
 wo der Funktionsrumpf beginnt und endet.
 
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
@@ -97,7 +97,7 @@ Klammern in der Formatierungszeichenkette befand.
 
 In Funktionssignaturen *musst* du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
-Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Kompilierer sie
+Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, was du meinst.
 
 Wenn eine Funktion mehrere Parameter haben soll, trenne die

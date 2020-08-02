@@ -10,7 +10,7 @@ Speicherbereinigung, die während der Programmausführung ständig nach nicht me
 genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
 den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
 Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
-von Regeln verwaltet, die der Kompilierer zur Kompilierzeit überprüft. Keine
+von Regeln verwaltet, die der Compiler zur Kompilierzeit überprüft. Keine
 der Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
 läuft.
 

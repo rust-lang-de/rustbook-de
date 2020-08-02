@@ -300,7 +300,7 @@ fn second_word(s: &String) -> &str {
 ```
 
 Wir haben jetzt eine einfache API, die viel schwieriger durcheinanderzubringen
-ist, weil der Kompilierer sicherstellt, dass die Referenzen auf den `String`
+ist, weil der Compiler sicherstellt, dass die Referenzen auf den `String`
 gültig bleiben. Erinnere dich an den Fehler im Programm in Codeblock 4-8, als
 wir den Index bis zum Ende des ersten Wortes erhielten, dann aber die
 Zeichenkette löschten, sodass unser Index ungültig wurde. Dieser Code war
