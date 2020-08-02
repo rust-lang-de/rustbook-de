@@ -94,7 +94,7 @@ checker).
 
 ### Der Ausleihenprüfer
 
-Der Rust-Kompilierer verfügt über einen *Ausleihenprüfer* (borrow checker), der
+Der Rust-Compiler verfügt über einen *Ausleihenprüfer* (borrow checker), der
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
 sind. Codeblock 10-18 zeigt den gleichen Code wie Codeblock 10-17, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
@@ -463,7 +463,7 @@ Als Menschen können wir uns diesen Code ansehen und erkennen, dass `string1`
 länger als `string2` ist und deshalb wird `result` eine Referenz auf `string1`
 enthalten. Da `string1` den Gültigkeitsbereich noch nicht verlassen hat, wird
 eine Referenz auf `string1` in der `println!`-Anweisung noch gültig sein. Der
-Kompilierer kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig
+Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig
 ist. Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der
 Funktion `longest` zurückgegeben wird, die gleiche ist wie die kürzere der
 Lebensdauern der entgegengenommenen Referenzen. Daher lehnt der Ausleihenprüfer
@@ -670,25 +670,25 @@ Nachdem jede Menge Rust-Code geschrieben wurde, stellte das Rust-Team fest,
 dass die Rust-Programmierer in bestimmten Situationen immer wieder die gleichen
 Lebensdauer-Annotationen angaben. Diese Situationen waren vorhersehbar und
 folgten einigen wenigen deterministischen Mustern. Die Entwickler
-programmierten diese Muster in den Code des Kompilierers, sodass der
+programmierten diese Muster in den Code des Compilers, sodass der
 Ausleihenprüfer in diesen Situationen auf die Lebensdauer schließen konnte und
 keine expliziten Annotationen benötigte.
 
 Dieses Stück Rust-Geschichte ist relevant, weil es möglich ist, dass weitere
-deterministische Muster auftauchen und dem Kompilierer hinzugefügt werden. In
+deterministische Muster auftauchen und dem Compiler hinzugefügt werden. In
 Zukunft könnten noch weniger Lebensdauer-Annotationen erforderlich sein.
 
 Die Muster, die in Rusts Referenzanalyse programmiert sind, werden die
 *Lebensdauer-Elisionsregeln* (lifetime elision rules) genannt. Dies sind keine
 Regeln, die Programmierer befolgen müssen; es handelt sich um eine Reihe
-besonderer Fälle, die der Kompilierer berücksichtigt, und wenn dein Code zu
+besonderer Fälle, die der Compiler berücksichtigt, und wenn dein Code zu
 einem dieser Fälle passt, brauchst du die Lebensdauer nicht explizit anzugeben.
 
 Die Elisionsregeln bieten keine vollständige Schlussfolgerung. Wenn Rust die
 Regeln deterministisch anwendet, aber immer noch Unklarheit darüber besteht,
-welche Lebensdauer die Referenzen haben, wird der Kompilierer nicht erraten,
+welche Lebensdauer die Referenzen haben, wird der Compiler nicht erraten,
 wie lang die Lebensdauer der verbleibenden Referenzen sein sollte. In diesem
-Fall gibt dir der Kompilierer statt einer Vermutung einen Fehler an, den du
+Fall gibt dir der Compiler statt einer Vermutung einen Fehler an, den du
 beheben kannst, indem du die Lebensdauer-Annotationen angibst, die festlegen,
 wie sich die Referenzen zueinander verhalten.
 
@@ -696,12 +696,12 @@ Die Lebensdauern der Funktions- oder Methodenparameter werden als
 *Eingangslebensdauern* (input lifetimes) bezeichnet, und die Lebensdauern der
 Rückgabewerte als *Ausgangslebensdauern* (output lifetimes) bezeichnet.
 
-Der Kompilierer verwendet drei Regeln, um herauszufinden, welche Lebensdauer
+Der Compiler verwendet drei Regeln, um herauszufinden, welche Lebensdauer
 Referenzen haben, wenn keine expliziten Annotationen vorhanden sind. Die erste
 Regel gilt für Eingangslebensdauern und die zweite und dritte Regel gelten für
-Ausgangslebensdauern. Wenn der Kompilierer das Ende der drei Regeln erreicht
+Ausgangslebensdauern. Wenn der Compiler das Ende der drei Regeln erreicht
 und es immer noch Referenzen gibt, für die er keine Lebensdauern ermitteln
-kann, bricht der Kompilierer mit einem Fehler ab. Diese Regeln gelten sowohl
+kann, bricht der Compiler mit einem Fehler ab. Diese Regeln gelten sowohl
 für `fn`-Definitionen als auch für `impl`-Blöcke.
 
 Die erste Regel ist, dass jeder Parameter, der eine Referenz ist, seinen
@@ -720,7 +720,7 @@ die Lebensdauer von `self` allen Ausgangslebensdauer-Parametern zugewiesen.
 Diese dritte Regel macht Methoden viel angenehmer zu lesen und zu schreiben,
 weil weniger Symbole erforderlich sind.
 
-Tun wir so, als wären wir der Kompilierer. Wir werden diese Regeln anwenden, um
+Tun wir so, als wären wir der Compiler. Wir werden diese Regeln anwenden, um
 herauszufinden, wie lang die Lebensdauer der Referenzen in der Signatur der
 Funktion `first_word` in Codeblock 10-26 ist. Die Signatur beginnt ohne
 Lebensdauern:
@@ -729,7 +729,7 @@ Lebensdauern:
 fn first_word(s: &str) -> &str {
 ```
 
-Dann wendet der Kompilierer die erste Regel an, die festlegt, dass jeder
+Dann wendet der Compiler die erste Regel an, die festlegt, dass jeder
 Parameter seine eigene Lebensdauer erhält. Wir nennen sie wie üblich `'a`, also
 sieht die Signatur jetzt so aus:
 
@@ -747,7 +747,7 @@ fn first_word<'a>(s: &'a str) -> &'a str {
 ```
 
 Jetzt haben alle Referenzen in dieser Funktionssignatur eine Lebensdauer und
-der Kompilierer kann seine Analyse fortsetzen, ohne dass der Programmierer die
+der Compiler kann seine Analyse fortsetzen, ohne dass der Programmierer die
 Lebensdauer in dieser Funktionssignatur annotieren muss.
 
 Schauen wir uns ein anderes Beispiel an, diesmal mit der Funktion `longest`,
@@ -772,7 +772,7 @@ eine Funktion ist, keine Methode, sodass keiner der Parameter `self` ist.
 Nachdem wir alle drei Regeln durchgearbeitet haben, haben wir immer noch nicht
 herausgefunden, wie lang die Lebensdauer des Rückgabetyps ist. Aus diesem Grund
 haben wir beim Versuch, den Code in Codeblock 10-21 zu kompilieren, einen
-Fehler erhalten: Der Kompilierer arbeitete die Lebensdauer-Elisionsregeln
+Fehler erhalten: Der Compiler arbeitete die Lebensdauer-Elisionsregeln
 durch, konnte aber immer noch nicht alle Lebensdauern der Referenzen in der
 Signatur ermitteln.
 

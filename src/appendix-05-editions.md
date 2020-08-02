@@ -4,7 +4,7 @@ In Kapitel 1 hast du gesehen, dass `cargo new` Metadaten zur Ausgabe (edition)
 in deiner Datei *Cargo.toml* hinzufügt. Dieser Anhang erläutert, was das
 bedeutet!
 
-Die Sprache Rust und der Kompilierer haben einen sechswöchigen
+Die Sprache Rust und der Compiler haben einen sechswöchigen
 Veröffentlichungs-Zyklus, was bedeutet, dass die Nutzer einen konstanten Strom
 neuer Funktionen erhalten. Andere Programmiersprachen geben weniger oft größere
 Änderungen heraus; Rust gibt häufiger kleinere Aktualisierungen heraus. Nach
@@ -33,7 +33,7 @@ Zum Verfassungszeitpunkt dieses Artikels sind zwei Rust-Ausgaben verfügbar:
 Rust 2015 und Rust 2018. Dieses Buch wurde unter Verwendung der Rust-Ausgabe
 2018 geschrieben.
 
-Der Schlüssel `edition` in *Cargo.toml* gibt an, welche Ausgabe der Kompilierer
+Der Schlüssel `edition` in *Cargo.toml* gibt an, welche Ausgabe der Compiler
 für deinen Code verwenden soll. Wenn der Schlüssel nicht existiert, verwendet
 Rust aus Gründen der Abwärtskompatibilität die Edition `2015`.
 
@@ -42,12 +42,12 @@ Jedes Projekt kann sich für eine Ausgabe abweichend von der Standardausgabe
 Aufnahme eines neuen Schlüsselworts, das mit Bezeichnern im Code in Konflikt
 steht. Selbst wenn du dich nicht für diese Änderungen entscheidest, wird dein
 Code weiterhin kompilieren, auch wenn du die verwendete
-Rust-Kompilierer-Version aktualisierst.
+Rust-Compiler-Version aktualisierst.
 
-Alle Rust-Kompilierer-Versionen unterstützen jede Ausgabe, die vor der
-Veröffentlichung dieses Kompilierers existierte, und es können Kisten (crates)
+Alle Rust-Compiler-Versionen unterstützen jede Ausgabe, die vor der
+Veröffentlichung dieses Compilers existierte, und es können Kisten (crates)
 aller unterstützten Ausgaben miteinander verknüpft werden. Ausgabenänderungen
-wirken sich nur auf die Art und Weise aus, wie der Kompilierer anfangs den Code
+wirken sich nur auf die Art und Weise aus, wie der Compiler anfangs den Code
 analysiert. Wenn du also Rust 2015 verwendest und eine deiner Abhängigkeiten
 Rust 2018 verwendet, wird dein Projekt diese Abhängigkeit kompilieren und
 nutzen können. Die umgekehrte Situation, in der dein Projekt Rust 2018

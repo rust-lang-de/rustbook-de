@@ -50,7 +50,7 @@ Woher wissen wir, dass `File::open` ein `Result` zurückgibt? Wir könnten uns
 die [Standard-Bibliotheks-API-Dokumentation][std-library-doc] ansehen oder wir
 könnten den Compiler fragen! Wenn wir `f` eine Typ-Annotation geben, von der
 wir wissen, dass sie *nicht* der Rückgabetyp der Funktion ist, und dann
-versuchen, den Code zu kompilieren, wird der Kompilierer uns sagen, dass die
+versuchen, den Code zu kompilieren, wird der Compiler uns sagen, dass die
 Typen nicht übereinstimmen. Die Fehlermeldung sagt uns dann, welchen Typ `f`
 tatsächlich hat. Versuchen wir es! Wir wissen, dass der Rückgabetyp von
 `File::open` nicht vom Typ `u32` ist, also lass uns die Anweisung `let f` wie

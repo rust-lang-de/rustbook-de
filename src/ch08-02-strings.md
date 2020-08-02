@@ -221,7 +221,7 @@ warte &ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im zweiten
 Parameter von `add` spezifiziert. Warum kompiliert also Codeblock 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
-Kompilierer das Argument `&String` in einen `&str` umwandeln (coerce) kann.
+Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
 Wenn wir die Methode `add` aufrufen, benutzt Rust eine *automatische
 Umwandlung* (deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die
 automatische Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add`
