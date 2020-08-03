@@ -82,7 +82,7 @@ Programmcode für jede Iteration der Schleife generiert.
 
 Alle Koeffizienten werden in Registern gespeichert, das bedeutet, dass der
 Zugriff auf die Werte sehr schnell ist. Es gibt keine Begrenzungsprüfungen (bounds
-checks) f den Zugriff auf Arrays zur Laufzeit. Durch diese Optimierungen, die
+checks) für den Zugriff auf Arrays zur Laufzeit. Durch diese Optimierungen, die
 Rust anwenden kann, ist der resultierende Programmcode äußerst effizient. Nun,
 da du das weißt, kannst du, ohne Angst zu haben, Funktionsabschlüsse und
 Iteratoren verwenden! Sie lassen den Code abstrakter erscheinen, verursachen
