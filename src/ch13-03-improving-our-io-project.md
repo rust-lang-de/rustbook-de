@@ -3,7 +3,7 @@
 Mit diesem Wissen über Iteratoren können wir unser E/A-Projekt vom Kapitel 12
 verbessern. Wir werden Bereiche im Code klarer und prägnanter gestalten. Lass
 uns herausfinden wie Iteratoren unsere Implementierung der
-`Config::new`-Funktion und der `search`-Funktion optimieren können.
+Funktion `Config::new` und der Funktion `search` optimieren können.
 
 ### Ein `clone` durch Verwendung eines Iterators entfernen
 
