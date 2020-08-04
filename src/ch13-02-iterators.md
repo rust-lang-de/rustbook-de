@@ -7,20 +7,16 @@ Durch die Verwendung von Iteratoren ist es nicht notwendig, diese Logik selbst
 neu zu implementieren.
 
 Die Iteratoren in Rust sind *faul* (lazy), das bedeutet, dass sie erst durch
-Methoden verbraucht werden müssen, um einen Effekt zu haben. Der Programmcode im
-Codeblock 13-13, zum Beispiel erstellt einen Iterator über die Elemente im
+Methodenaufrufe verbraucht werden müssen, um einen Effekt zu haben. Der Programmcode in
+Codeblock 13-13 erstellt beispielsweise einen Iterator über die Elemente im
 Vektor `v1` indem die in `Vec<T>` definierte Methode `iter` aufgerufen wird.
 Dieser Programmcode macht nichts Sinnvolles.
 
 
 ```rust
-#fn main() {
-#
-    let v1 = vec![1, 2, 3];
+let v1 = vec![1, 2, 3];
 
-    let v1_iter = v1.iter();
-#  
-#}
+let v1_iter = v1.iter();
 ```
 
 <span class="caption">Codeblock 13-13: Einen Iterator erstellen</span>
@@ -30,28 +26,24 @@ Codeblock 3-5 in Kapitel 3 haben wir Iteratoren mit `for`-Schleifen verwendet,
 um Programmcode für jedes Element auszuführen, wenngleich wir dadurch nur den
 Aufruf von `iter` schöngefärbt haben.
 
-Im Codeblock 13-14 wird die Erstellung des Iterators von dessen Verwendung in
+In Codeblock 13-14 wird die Erstellung des Iterators von dessen Verwendung in
 der `for`-Schleife getrennt. Der Iterator wird in der Variable `v1_iter`
-gespeichert, und es findet noch keine Iteration statt. Erst wenn die
+gespeichert und es findet noch keine Iteration statt. Erst wenn die
 `for`-Schleife mit dem Iterator in `v1_iter` aufgerufen wird, wird jedes
 Element von `v1_iter` in einer Iteration der Schleife verwendet, die den
 jeweiligen Wert ausgibt.
 
 ```rust
-#fn main() {
-#    
-    let v1 = vec![1, 2, 3];
+let v1 = vec![1, 2, 3];
 
-    let v1_iter = v1.iter();
+let v1_iter = v1.iter();
 
-    for val in v1_iter {
-        println!("Erhielt: {}", val);
-#   }
-#   
-#}
+for val in v1_iter {
+    println!("Erhielt: {}", val);
+}
 ```
-<span class="caption">Codeblock 13-14: Verwendung eines Iterators in einer `for`
-Schleife</span>
+<span class="caption">Codeblock 13-14: Verwendung eines Iterators in einer
+`for`-Schleife</span>
 
 In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
 man diese Funktionalität bereitstellen, indem man eine Variable bei Index 0
@@ -61,13 +53,14 @@ Elemente im Vektor erreicht ist.
 
 Iteratoren übernehmen derartige Logik für dich und reduzieren dadurch sich
 wiederholenden Code, der zusätzliche Fehlerquellen beinhalten kann. Iteratoren
-erhöhen die Flexibilität um dieselbe Logik auf unterschiedliche, sequenzielle
-Art darzustellen und einen nicht bloß auf das Indexieren von Datenstrukturen, wie
-Vektoren, beschränkt. Lass uns herausfinden, wie Iteratoren das bewerkstelligen.
+geben dir mehr Flexibilität bei der Verwendung derselben Logik für viele
+verschiedene Arten von Sequenzen, nicht nur für Datenstrukturen, die du wie
+Vektoren indizieren kannst. Lass uns herausfinden, wie Iteratoren das
+bewerkstelligen.
 
-### Das `Iterator`-Merkmal (-Trait) und die `next`-Methode
+### Das Merkmal (trait) `Iterator` und die Methode `next`
 
-Alle Iteratoren implementieren ein Merkmal, namens `Iterator` das in der
+Alle Iteratoren implementieren ein Merkmal namens `Iterator` das in der
 Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
 aus:
 
@@ -99,9 +92,9 @@ Vektor erstellten Iterator zurückgegeben werden:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-##[cfg(test)]
-#mod tests {
-#   
+# #[cfg(test)]
+# mod tests {
+#
     #[test]
     fn iterator_demonstration() {
         let v1 = vec![1, 2, 3];
@@ -112,17 +105,17 @@ Vektor erstellten Iterator zurückgegeben werden:
         assert_eq!(v1_iter.next(), Some(&2));
         assert_eq!(v1_iter.next(), Some(&3));
         assert_eq!(v1_iter.next(), None);
-#    }
-#   
-#}
+    }
 #
-#fn main() {}
+# }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-15: Iterator mit der `next`-Methode aufrufen</span>
 
 Beachte, dass wir `v1_iter` veränderlich (mutable) machen mussten: Beim Aufrufen
-der `next`-Methode auf einen Iterator wird, dessen interner Status geändert, der
+der `next`-Methode auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten *verbraucht* dieser Programmcode den Iterator. Jeder Aufruf
 von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
@@ -130,19 +123,19 @@ benutzten, mussten wir `v1_iter` nicht veränderlich machen, da dies schon hinte
 den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
 `v1_iter` übernahm.
 
-Merke auch, dass die Werte, die wir von den Aufrufen von `next` erhalten
+Merke auch, dass die Werte, die wir von den Aufrufen von `next` erhalten,
 unveränderliche Referenzen (immutable references) auf die Werte im Vektor sind.
 Die `iter`-Methode erzeugt einen Iterator über unveränderliche Referenzen. Wenn
 wir einen Iterator erzeugen möchten der die Eigentümerschaft von `v1` übernimmt
 und angeeignete Werte (owned values) zurückgibt, können wir die
-`into_iter`-Methode anstelle von `iter` benutzen und wenn wir über veränderliche
+`into_iter`-Methode anstelle von `iter` benutzen, und wenn wir über veränderliche
 Referenzen iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
 ### Methoden die den Iterator verbrauchen
 
 Das `Iterator`-Merkmal verfügt über eine Vielzahl von Methoden, die in der
 Standardbibliothek bereitgestellt werden. Du kannst dich über diese Methoden
-informieren, indem du in der Standardbibliothek API Dokumentation (standard
+informieren, indem du in der Standardbibliothek-API-Dokumentation (standard
 library API documentation) nach dem `Iterator`-Merkmal suchst. Einige dieser
 Methoden rufen in ihrer Definition die `next`-Methode auf, daher musst du die
 `next`-Methode bei der Implementierung des `Iterator`-Merkmals einbauen.
@@ -158,9 +151,9 @@ ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-##[cfg(test)]
-#mod tests {
-#   
+# #[cfg(test)]
+# mod tests {
+#
     #[test]
     fn iterator_sum() {
         let v1 = vec![1, 2, 3];
@@ -171,10 +164,10 @@ ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
 
         assert_eq!(total, 6);
     }
-#   
-#}
 #
-#fn main() {}
+# }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-16: Aufruf der `sum`-Methode um den Wert der
@@ -188,9 +181,9 @@ Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.
 Andere Methoden die im `Iterator`-Merkmal definiert sind werden als
 *Iteratoradapter* (iterator adaptors) bezeichnet, sie ermöglichen dir Iteratoren
 in andere Arten von Iteratoren zu ändern. Man kann mehrere Aufrufe von
-Iteratorenadapter verketten und dadurch komplexe Handlungen auf lesbare Art
+Iteratoradaptern verketten und dadurch komplexe Handlungen auf lesbare Art
 ausführen. Da alle Iteratoren jedoch faul sind, ist es notwendig, eine der
-konsumierenden Adapter Methoden aufzurufen, um Ergebnisse zu erhalten.
+konsumierenden Adapter-Methoden aufzurufen, um Ergebnisse zu erhalten.
 
 Codeblock 13-17 zeigt ein Beispiel von einen Aufruf der `map`-Methode, die einen
 Funktionsabschluss auf jedes Element anwendet, um einen neuen Iterator zu
@@ -200,16 +193,12 @@ Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,not_desired_behavior
-#fn main() {
-#   
     let v1: Vec<i32> = vec![1, 2, 3];
 
     v1.iter().map(|x| x + 1);
-#   
-#}
 ```
 
-<span class="caption">Codeblock 13-17: Aufruf des `map`-Iteratorenadapter um
+<span class="caption">Codeblock 13-17: Aufruf des Iteratoradapters `map` um
 einen neuen Iterator zu erzeugen</span>
 
 Wir erhalten folgende Warnung:
@@ -230,35 +219,31 @@ warning: unused `std::iter::Map` that must be used
      Running `target/debug/iterators`
 ```
 
-Der Programmcode im Codeblock 13-17, hat keine Wirkung, der Funktionsabschluss
-wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratorenadapter faul
-sind und das wir den Iterator verwenden müssen, um etwas zu bewirken.
+Der Programmcode in Codeblock 13-17 hat keine Wirkung, der Funktionsabschluss
+wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
+sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
 Um das zu beheben, werden wir die `collect`-Methode verwenden, die wir im Kapitel
 12 mit `env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
-Im Codeblock 13-18 sammeln wir die Resultate der Iterationen über den Iterator,
+In Codeblock 13-18 sammeln wir die Resultate der Iterationen über den Iterator,
 der vom Aufruf der `map`-Methode zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-#fn main() {
-#   
     let v1: Vec<i32> = vec![1, 2, 3];
 
     let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
 
-#    assert_eq!(v2, vec![2, 3, 4]);
-#  
-#}
+    assert_eq!(v2, vec![2, 3, 4]);
 ```
 
 <span class="caption">Codeblock 13-18: Aufruf der `map`-Methode um einen
-Iterator zu erzeugen und anschließend die `collect`-Methode aufzurufen um den
+Iterator zu erzeugen und anschließend der `collect`-Methode um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 
 Da `map` einen Funktionsabschluss als Parameter annimmt, können wir eine
@@ -270,17 +255,17 @@ Iterationsverhalten wiederverwendet wird.
 ### Verwendung von Funktionsabschlüssen die ihre Umgebung erfassen
 
 Nun, da wir uns ein wenig mit Iteratoren befasst haben, werden wir anhand
-des `filter`-Iteratorenadapters eine häufige Verwendung von Funktionsabschlüssen
-die ihre Umgebung erfassen zeigen. Wird die `filter`-Methode auf einen
-Iterator angewendet nimmt sie einen Funktionsabschluss als Argument, der für
-jedes Element übernommen wird und einen booleschen Wert (boolean) zurückgibt.
-Wenn der Abschluss `true` zurückgibt, wird der Wert in den von `filter`
-erzeugten Iterator aufgenommen, wird `false` zurückgegeben, wird der Wert dem
-resultierenden Iterator nicht hinzugefügt.
+des `filter`-Iteratoradapters eine häufige Verwendung von Funktionsabschlüssen
+die ihre Umgebung erfassen zeigen. Die `filter`-Methode eines Iterators nimmt
+einen Funktionsabschluss als Argument, der für jedes Element des Iterators
+einen booleschen Wert zurückgibt. Wenn der Funktionsabschluss `true`
+zurückgibt, wird der Wert in den von `filter` erzeugten Iterator aufgenommen,
+wird `false` zurückgegeben, ist der Wert im resultierenden Iterator nicht
+enthalten.
 
 Im Codeblock 13-19 benutzen wir `filter` mit einem Funktionsabschluss, der die
 Variable `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
-`shoe`-Struktur (struct) Instanzen zu iterieren. Es wird nur Schuhe (shoes) einer
+`shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -334,8 +319,8 @@ mod tests {
         );
     }
 }
-
-fn main() {}
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-19: Die `filter`-Methode mit einen
@@ -361,10 +346,10 @@ der spezifizierten Größe zurück.
 
 ### Mit dem `Iterator`-Merkmal eigene Iteratoren erstellen
 
-Wir haben bereits gezeigt, wie man mit `iter` und `into_iter` oder `iter_mut` für
-einen Vektor aufgerufen einen Iterator erstellen können. Sie können Iteratoren
+Wir haben bereits gezeigt, wie man mit `iter`, `into_iter` und `iter_mut` einen
+Iterator zu einem Vektor erstellen kann. Du kannst Iteratoren
 auch aus anderen Kollektion-Typen der Standardbibliothek wie zum Beispiel einer 
-Hashtabelle (hash map) herstellen. Sie können auch beliebige Iteratoren
+Hashtabelle (hash map) herstellen. Du kannst auch beliebige Iteratoren
 durch Implementierung des `Iterator`-Merkmals auf eigene Typen erstellen. 
 Wie bereits erwähnt ist die einzige Methode, für die du eine Definition angeben
 musst, die `next`-Methode. Sobald man das getan hat, kann man alle anderen
@@ -391,8 +376,8 @@ impl Counter {
         Counter { count: 0 }
     }
 }
-
-fn main() {}
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-20: Definition einer `Counter`-Struktur und einer
@@ -406,7 +391,7 @@ einem Wert 0 im `count`-Feld beginnen.
 
 Als Nächstes werden wir das `Iterator`-Merkmal für unseren `Counter`-Typ
 implementieren, indem wir den Rumpf der `next`-Methode so definieren, das er
-beinhaltet was wir geschehen lassen möchten, wenn der Iterator benützt wird.
+beinhaltet was wir geschehen lassen möchten, wenn der Iterator benutzt wird.
 Siehe Codeblock 12-21:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -436,7 +421,6 @@ impl Iterator for Counter {
     }
 }
 #
-#
 #fn main() {}
 ```
 
@@ -444,11 +428,11 @@ impl Iterator for Counter {
 die `Counter`-Struktur</span>
 
 Wir setzen den zugehörigen Typ unseres Iterators auf `u32`, was bedeutet, dass 
-der Iterator `u32`-Werte zurückgibt. Nochmals, kümmer dich derzeit nicht um 
-zugehörige Typen, wir werden sie im Kapitel 19 behandeln.
+der Iterator `u32`-Werte zurückgibt. Nochmals, kümmere dich derzeit nicht um 
+zugehörige Typen, wir werden sie in Kapitel 19 behandeln.
 
 Wir möchten, dass unser Iterator 1 zum aktuellen Wert hinzufügt, daher haben wir 
-`count` auf 0 initialisiert, damit er zuerst 1 zurückgibt, wenn der Wert von
+`count` mit 0 initialisiert. Damit er zuerst 1 zurückgibt, wenn der Wert von
 `count` kleiner als 5 ist, erhöht `next` `count` und gibt den aktuellen Wert
 zurück, der in `Some` eingeschlossen ist. Wenn `count` gleich 5 ist, stoppt
 unser Iterator das Inkrementieren und gibt immer `None` zurück.
@@ -464,34 +448,33 @@ Vektor erzeugten Iterator im Codeblock 13-15 gemacht haben.
 <span class="filename">Codeblock: src/lib.rs</span>
 
 ```rust
-#struct Counter {
-#    count: u32,
-#}
+# struct Counter {
+#     count: u32,
+# }
 #
-#impl Counter {
-#    fn new() -> Counter {
-#        Counter { count: 0 }
-#    }
-#}
+# impl Counter {
+#     fn new() -> Counter {
+#         Counter { count: 0 }
+#     }
+# }
 #
-#impl Iterator for Counter {
-#    type Item = u32;
+# impl Iterator for Counter {
+#     type Item = u32;
 #
-#    fn next(&mut self) -> Option<Self::Item> {
-#        if self.count < 5 {
-#            self.count += 1;
-#            Some(self.count)
-#        } else {
-#            None
-#        }
-#    }
-#}
+#     fn next(&mut self) -> Option<Self::Item> {
+#         if self.count < 5 {
+#             self.count += 1;
+#             Some(self.count)
+#         } else {
+#             None
+#         }
+#     }
+# }
 #
-##[cfg(test)]
-#mod tests {
-#    use super::*;
+# #[cfg(test)]
+# mod tests {
+#     use super::*;
 #
-#    
     #[test]
     fn calling_next_directly() {
         let mut counter = Counter::new();
@@ -503,10 +486,9 @@ Vektor erzeugten Iterator im Codeblock 13-15 gemacht haben.
         assert_eq!(counter.next(), Some(5));
         assert_eq!(counter.next(), None);
     }
+# }
 #
-#}
-#
-#fn main() {}
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-22: Testen der Funktionalität der
@@ -517,75 +499,75 @@ und ruft dann wiederholt `next` auf, um zu überprüfen, ob wir das Verhalten
 entsprechend implementiert haben und der Iterator die Werte von 1 bis 5
 zurückgibt.
 
-#### Verwendung anderer `Iterator`-Merkmal Methoden
+#### Verwendung anderer `Iterator`-Merkmalsmethoden
 
 Da wir das `Iterator`-Merkmal durch implementieren der `next`-Methode
 eingerichtet haben, können wir nun beliebige Methoden der
 Standardimplementierung des `Iterator`-Merkmals benutzen, da sie alle die
 Funktionalität der `next`-Methode verwenden.
 
-Wenn wir beispielsweise, die Werte übernehmen  und sie mit den Werten
+Wenn wir beispielsweise die Werte übernehmen  und sie mit den Werten
 einer anderen `Counter`-Instanz koppeln wollen und nach dem Überspringen des
 ersten Wertes der anderen Instanz jedes Zahlenpaar miteinander multiplizieren
-dabei allerdings nur die Werte behalten, die durch 3 teilbar sind und diese dann
+dabei allerdings nur die Werte behalten, die durch 3 teilbar sind, und diese dann
 summieren möchten, können wir das wie im Codeblock 13-23 beschrieben erreichen:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-#struct Counter {
-#    count: u32,
-#}
+# struct Counter {
+#     count: u32,
+# }
 #
-#impl Counter {
-#    fn new() -> Counter {
-#        Counter { count: 0 }
-#    }
-#}
+# impl Counter {
+#     fn new() -> Counter {
+#         Counter { count: 0 }
+#     }
+# }
 #
-#impl Iterator for Counter {
-#    type Item = u32;
+# impl Iterator for Counter {
+#     type Item = u32;
 #
-#    fn next(&mut self) -> Option<Self::Item> {
-#        if self.count < 5 {
-#            self.count += 1;
-#            Some(self.count)
-#        } else {
-#            None
-#        }
-#    }
-#}
+#     fn next(&mut self) -> Option<Self::Item> {
+#         if self.count < 5 {
+#             self.count += 1;
+#             Some(self.count)
+#         } else {
+#             None
+#         }
+#     }
+# }
 #
-##[cfg(test)]
-#mod tests {
-#    use super::*;
+# #[cfg(test)]
+# mod tests {
+#     use super::*;
 #
-#    #[test]
-#    fn calling_next_directly() {
-#        let mut counter = Counter::new();
+#     #[test]
+#     fn calling_next_directly() {
+#         let mut counter = Counter::new();
 #
-#        assert_eq!(counter.next(), Some(1));
-#        assert_eq!(counter.next(), Some(2));
-#        assert_eq!(counter.next(), Some(3));
-#        assert_eq!(counter.next(), Some(4));
-#        assert_eq!(counter.next(), Some(5));
-#        assert_eq!(counter.next(), None);
-#    }
+#         assert_eq!(counter.next(), Some(1));
+#         assert_eq!(counter.next(), Some(2));
+#         assert_eq!(counter.next(), Some(3));
+#         assert_eq!(counter.next(), Some(4));
+#         assert_eq!(counter.next(), Some(5));
+#         assert_eq!(counter.next(), None);
+#     }
 #
-#   
     #[test]
     fn using_other_iterator_trait_methods() {
         let sum: u32 = Counter::new()
             .zip(Counter::new().skip(1))
             .map(|(a, b)| a * b)
             .filter(|x| x % 3 == 0)
-            .sum();        assert_eq!(18, sum);
+            .sum();
+        assert_eq!(18, sum);
     }
-#    
-#}
+# }
 #
-#fn main() {}
+# fn main() {}
 ```
+
 <span class="caption">Codeblock 13-23: Benutzung einer Auswahl von `Iterator`-Merkmal
 Methoden auf unseren `Counter`-Iterator</span>
 
