@@ -13,19 +13,31 @@ hat gute Standardeinstellungen für Releasebuilds. [^1]
 
 Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind:
 
-<!-- manual-regeneration
-anywhere, run:
-cargo build
-//cargo build --release
-and ensure output below is accurate
--->
-
 ```console
 $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
 $ cargo build --release
     Finished release [optimized] target(s) in 0.0s
+```
 
+Die Angaben `dev` und `release` zeigen an, dass der Compiler
+unterschiedliche Profile verwendet.
+
+Cargo hat Standardeinstellungen für jedes der Profile, die verwendet werden,
+wenn es keine Abschnitte `[profile.*]` in der Datei *Cargo.toml* des Projekts
+gibt. Durch Hinzufügen eines Abschnitts `[profile.*]` für Profile, die du
+anpassen möchtest, kannst du Teile der Standardeinstellungen überschreiben.
+Hier sind zum Beispiel die Standardwerte für die Einstellung `opt-level` der
+Profile `dev` und `release`:
+
+<span class="filename">Dateiname: Cargo.toml</span>
+
+```toml
+[profile.dev]
+opt-level = 0
+
+[profile.release]
+opt-level = 3
 ```
 
 Die Einstellung `opt-level` steuert die Anzahl der Optimierungen, die Rust auf
@@ -52,6 +64,7 @@ Datei *Cargo.toml* unseres Projekts hinzufügen:
 [profile.dev]
 opt-level = 1
 ```
+
 Dieser Code überschreibt die Standardeinstellung von `0`. Wenn wir nun `cargo
 build` ausführen, verwendet Cargo die Standardeinstellung für das Profil `dev`
 sowie unsere Anpassung `1` für `opt-level`. Cargo wird mehr Optimierungen
@@ -59,6 +72,7 @@ vornehmen als mit Standardeinstellungen, aber weniger als bei einem
 Releasebuild.
 
 Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
-jedes Profil, findest du in [Cargos Dokumentation](https://doc.rust-lang.org/cargo/reference/profiles.html).
+jedes Profil findest du in [Cargos
+Dokumentation](https://doc.rust-lang.org/cargo/reference/profiles.html).
 
 [^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
