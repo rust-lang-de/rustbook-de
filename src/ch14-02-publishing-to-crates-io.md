@@ -53,7 +53,7 @@ pub fn add_one(x: i32) -> i32 {
 <span class="caption">Codeblock 14-1: Ein Dokumentationskommentar für eine Funktion</span> 
 
 Hier geben wir eine Beschreibung der Funktionsweise der Funktion `add_one`,
-beginnen einen Abschnitt mit der Überschrift `Beispiele` gefolgt vom
+beginnen einen Abschnitt mit der Überschrift `Examples` gefolgt vom
 Programmcode, der die Verwendung der Funktion `add_one` demonstriert. Wir können
 die HTML-Dokumentation aus diesem Dokumentationskommentar generieren, indem wir
 `cargo doc` ausführen. Dieser Befehl führt das mit Rust verbreitete Werkzeug
@@ -73,8 +73,8 @@ in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1:
 
 #### Häufig verwendete Abschnitte
 
-Wir haben die Markdown-Überschrift `# Beispiele` in Codeblock 14-1 verwendet um
-einen Abschnitt im HTML-Code mit dem Titel `Beispiele` zu erstellen. Hier sind
+Wir haben die Markdown-Überschrift `# Examples` in Codeblock 14-1 verwendet um
+einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
 einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
 verwenden:
 
