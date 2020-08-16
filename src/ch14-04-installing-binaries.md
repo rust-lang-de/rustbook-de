@@ -13,8 +13,8 @@ Bibliothek enthält oder beides.
 
 Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis *bin* 
 des Wurzelverzeichnisses der Installation gespeichert. Wenn du die Installation
-mit *rustup.rs* durchgeführt hast und keine benutzerdefinierten Konfigurationen
-haben, lautet dieses Verzeichnis *$HOME/.cargo/bin*. Stelle sicher, dass sich
+mit *rustup.rs* durchgeführt, und keine benutzerdefinierte Konfiguration
+hast, lautet dieses Verzeichnis *$HOME/.cargo/bin*. Stelle sicher, dass sich
 dieses Verzeichnis in deinem `$PATH` befindet, damit du Programme ausführen
 kannst, die du mit `cargo install` installiert hast.
 
