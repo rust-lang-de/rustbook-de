@@ -2,7 +2,7 @@
 
 In Kapitel 12 haben wir ein Paket erstellt, das eine binäre Kiste und eine
 Bibliothekskiste enthält. Während dein Projekt entwickelt wird, wirst du
-möglicherweise feststellen, dass die Bibliothekskiste immer grösser wird und du
+möglicherweise feststellen, dass die Bibliothekskiste immer größer wird und du
 dein Paket weiter in mehrere Bibliothekskisten aufteilen möchtest. In dieser
 Situation bietet Cargo eine Funktion namens *Arbeitsbereiche* (workspaces), mit
 denen mehrere verwandte Pakete verwaltet werden können, die gemeinsam entwickelt
@@ -10,7 +10,8 @@ werden.
 
 ### Einen Arbeitsbereich erstellen
 
-Ein *Arbeitsbereich* ist eine Reihe von Paketen, die dasselbe Ausgabeverzeichnis
+Ein *Arbeitsbereich* ist eine Reihe von Paketen, die dieselbe Datei
+*Cargo.lock* sowie dasselbe Ausgabeverzeichnis
 (output directory) verwenden. Lass uns mithilfe eines Arbeitsbereiches ein
 Projekt erstellen. Wir verwenden einfachen Programmcode, damit wir uns an die
 Struktur des Arbeitsbereiches konzentrieren können. Es gibt verschiedene
@@ -30,9 +31,9 @@ $ cd add
 Als Nächstes erstellen wir im Verzeichnis *add* die Datei *Cargo.toml*, mit der
 der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält weder einen
 Abschnitt `[package]` noch die Metadaten, die wir in den anderen
-*Cargo.toml*-Dateien gesehen haben. Stattdessen beginnt es mit einem Abschnitt
+*Cargo.toml*-Dateien gesehen haben. Stattdessen beginnt sie mit einem Abschnitt
 `[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können, indem
-wir den Pfad zum Paket mit unserer Binãrkiste angeben. In diesem Fall lautet
+wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall lautet
 dieser Pfad *adder*:
 
 <span class="filename">Dateiname: Cargo.toml</span>
@@ -44,15 +45,17 @@ members = [
     "adder",
 ]
 ```
-Als nächstes erstellen wir die Binãrkiste `adder`, indem wir `cargo new` im
+
+Als nächstes erstellen wir die Binärkiste `adder`, indem wir `cargo new` im
 Verzeichnis *add* ausführen:
 
 ```console
 $ cargo new adder
      Created binary (application) `adder` package
 ```
+
 An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir `cargo build`
-ausführen. Die Dateien in Ihrem *add*-Verzeichnis sollten folgendermaßen
+ausführen. Die Dateien in deinem *add*-Verzeichnis sollten folgendermaßen
 aussehen: 
 
 ```text
@@ -64,8 +67,9 @@ aussehen:
 │       └── main.rs
 └── target
 ```
+
 Das Arbeitsbereich verfügt auf der obersten Ebene über ein *Zielverzeichnis* 
-(target), in das die kompilierten Artefakte eingefügt werden sollen. Das Paket
+(target), in das die kompilierten Artefakte abgelegt werden sollen. Das Paket
 `adder` hat kein eigenes *Zielverzeichnis*. Selbst wenn wir `cargo build` aus
 dem Verzeichnis *adder* heraus ausführen würden, landen die kompilierten
 Artefakte noch immer in *add/target* und nicht in *add/adder/target*. Cargo
@@ -124,24 +128,20 @@ pub fn add_one(x: i32) -> i32 {
     x + 1
 }
 ```
+
 Nun, da wir ein zusätzliches Paket im Arbeitsbereich haben, können wir das
-`adder`-Paket von unserem `add-one` Paket, das unsere Bibliothek enthält,
+`adder`-Paket von unserem `add-one`-Paket, das unsere Bibliothek enthält,
 abhängig machen. Zuerst müssen wir *adder/Cargo.toml* einen Pfad zur
 Abhängigkeit von `add-one` hinzufügen.
 
 <span class="filename">Dateiname: adder/Cargo.toml</span>
 
 ```toml
-[package]
-name = "adder"
-version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
-edition = "2018"
-
 [dependencies]
 
 add-one = { path = "../add-one" }
 ```
+
 Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.
 
@@ -149,7 +149,7 @@ Als nächstes verwenden wir die Funktion `add_one` aus der `add_one`-Kiste der
 `adder`-Kiste. Öffne die Datei *adder/src/main.rs* und füge oben eine Zeile `use`
 hinzu, um die neue Bibliothekskiste `add-one` in den Gültigkeitsbereich (scope)
 zu bringen. Ändere dann die Funktion `main`, um die Funktion `add_one`
-aufzurufen, Siehe Codeblock 14-7.
+aufzurufen, siehe Codeblock 14-7.
 
 <span class="filename">Dateiname: adder/src/main.rs</span>
 
@@ -166,11 +166,11 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 14-7: Die `add-one` Bibliothekskiste aus der 
- `adder`-Kiste verwenden</span>
+<span class="caption">Codeblock 14-7: Die `add-one`-Bibliothekskiste aus der 
+`adder`-Kiste verwenden</span>
 
- Erstellen wir den Arbeitsbereich, indem wir `cargo build` im obersten
- Verzeichnis *add* ausführen!
+Erstellen wir den Arbeitsbereich, indem wir `cargo build` im obersten
+Verzeichnis *add* ausführen!
 
  ```console
 $ cargo build
@@ -200,9 +200,9 @@ Ebene des Arbeitsbereichs enthält, anstatt einer in jeder Kiste. Dies stellt
 sicher, dass alle Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn
 wir das Paket `rand` zu den Dateien *adder/Cargo.toml* und *add-one/Cargo.toml*
 hinzufügen, löst Cargo beide dieser Versionen zu einer auf und fügt diese in der
-Cargo.lock-Datei hinzu. Wenn alle Kisten im Arbeitsbereich dieselben
+*Cargo.lock*-Datei hinzu. Wenn alle Kisten im Arbeitsbereich dieselben
 Abhängigkeiten verwenden, sind die Kisten im Arbeitsbereich immer miteinander
-kompatibel. Lass uns die Rand-Kiste in der Datei *add-one/Cargo.toml* 
+kompatibel. Lass uns die `rand`-Kiste in der Datei *add-one/Cargo.toml* 
 zum Abschnitt `[dependencies]` hinzufügen, um die Kiste `rand` in der `add-one`-Kiste
 verwenden zu können:
 
@@ -215,7 +215,7 @@ rand = "0.5.5"
 ```
 
 Wir können nun `use rand;` zur Datei *add-one/src/lib.rs* hinzufügen, und wenn
-du den gesamten Arbeitsbereich durch Ausführen von `load build` im Verzeichnis
+du den gesamten Arbeitsbereich durch Ausführen von `cargo build` im Verzeichnis
 *add* erstellst, wird die `rand`-Kiste eingefügt und kompiliert:
 
 ```console
@@ -230,7 +230,7 @@ $ cargo build
 ```
 
 Die *Cargo.lock*-Datei der obersten Ebene enthält nun Informationen über die
-Abhängigkeit `add-one`s von `rand`. Obwohl `rand` irgendwo im Arbeitsbereich
+Abhängigkeit von `add-one` von `rand`. Obwohl `rand` irgendwo im Arbeitsbereich
 verwendet wird, können wir es nicht in anderen Kisten im Arbeitsbereich
 verwenden, es sei denn, wir fügen `rand` zu ihren *Cargo.toml*-Dateien hinzu.
 Wenn wir beispielsweise `use rand;` zur Datei *adder/src/main.rs* für das Paket
@@ -252,15 +252,15 @@ Um dies zu beheben, bearbeiten wir die Datei *Cargo.toml* für das Paket `adder`
 und geben an, dass `rand` auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets `adder` wird `rand` zur Liste der Abhängigkeiten für `adder` in
 *Cargo.lock* hinzugefügt, es werden jedoch keine zusätzlichen Kopien von `rand`
-heruntergeladen. Cargo hat sichergestellt, dass jede Kiste in jeden Paket im
-Arbeitsbereich, die das `rand`-Paket verwendet dieselbe Version benutzt.
+heruntergeladen. Cargo hat sichergestellt, dass jede Kiste in jedem Paket im
+Arbeitsbereich, die das `rand`-Paket verwendet, dieselbe Version benutzt.
 Verwenden der gleichen Version von `rand` im gesamten Arbeitsbereich spart
 Platz, da wir nicht mehrere Kopien haben und sicherstellen, dass die Kisten im
 Arbeitsbereich miteinander kompatibel sind.
 
 #### Hinzufügen eines Tests zu einem Arbeitsbereich
 
-Füge für eine weitere Verbesserung innerhalb der `add_one` Kiste einen Test der
+Füge für eine weitere Verbesserung innerhalb der `add_one`-Kiste einen Test der
 Funktion `add_one::add_one` hinzu:
 
 <span class="filename">Dateiname: add-one/src/lib.rs</span>
@@ -338,9 +338,15 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
 Die Ausgabe zeigt, dass `cargo test` nur die Tests für die Kiste `add-one` aber
-nicht die `adder` Tests ausgeführt hat.
+nicht die `adder`-Tests ausgeführt hat.
 
-Als zusätzliche Übung, füge, ähnlich der Kiste `add-one` diesem Arbeitsbereich
+Wenn du die Kisten im Arbeitsbereich unter [crates.io](https://crates.io/)
+veröffentlichst, muss jede Kiste im Arbeitsbereich separat veröffentlicht
+werden. Der Befehl `cargo publish` hat kein Flag `--all` oder `-p`, daher musst
+du in das Verzeichnis jeder Kiste wechseln und `cargo publish` auf jeder Kiste
+im Arbeitsbereich ausführen, um die Kisten zu veröffentlichen.
+
+Als zusätzliche Übung, füge ähnlich der Kiste `add-one` diesem Arbeitsbereich
 eine `add-two`-Kiste hinzu!
 
 Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden, es ist

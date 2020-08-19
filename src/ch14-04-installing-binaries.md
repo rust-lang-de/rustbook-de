@@ -1,9 +1,9 @@
-## Kommandozeilenwerkzeuge von crates.io installieren mit cargo install
+## Kommandozeilenwerkzeuge von crates.io installieren mit `cargo install`
 
 Mit dem Befehl `cargo install` kannst du Binärkisten installieren und verwenden.
 Dies soll keine Systempakete ersetzen, sondern soll Rust-Entwicklern eine
 bequeme Möglichkeit bieten, Tools zu installieren, die andere auf
-[crates.io](https://crates.io/)<!-- ignore --> veröffentlicht haben. Beachte,
+[crates.io](https://crates.io/) veröffentlicht haben. Beachte,
 dass du nur binäre Pakete installieren kannst, das heißt in der Kiste muss eine
 Datei *src/main.rs* oder eine andere als binär spezifizierte Datei vorhanden
 sein, und nicht nur eine Bibliothek, die alleine nicht ausführbar ist sondern zur 
@@ -13,15 +13,15 @@ Bibliothek enthält oder beides.
 
 Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis *bin* 
 des Wurzelverzeichnisses der Installation gespeichert. Wenn du die Installation
-mit *rustup.rs* durchgeführt, und keine benutzerdefinierte Konfiguration
+mit *rustup.rs* durchgeführt und keine benutzerdefinierte Konfiguration
 hast, lautet dieses Verzeichnis *$HOME/.cargo/bin*. Stelle sicher, dass sich
 dieses Verzeichnis in deinem `$PATH` befindet, damit du Programme ausführen
 kannst, die du mit `cargo install` installiert hast.
 
 In Kapitel 12 haben wir beispielsweise erwähnt, dass es eine
-Rust-Implementierung des Werkzeugs zum Durchsuchen von Dateien `grep` 
-namens `ripgrep` gibt. Wenn wir `ripgrep` installieren möchten, können wir
-Folgendes ausführen:
+Rust-Implementierung namens `ripgrep` des Werkzeugs `grep` zum Durchsuchen von
+Dateien gibt. Wenn wir `ripgrep` installieren möchten, können wir Folgendes
+ausführen:
 
 ```console
 $ cargo install ripgrep
