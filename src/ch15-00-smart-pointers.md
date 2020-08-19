@@ -1,7 +1,7 @@
 # Intelligente Zeiger
 
 Im Allgemeinen ist ein *Zeiger* ein Konzept für eine Variable die eine
-Speicheradresse enthält. Diese Adresse bezieht sich, oder "zeigt", auf andere
+Speicheradresse enthält. Diese Adresse bezieht sich, oder „zeigt“, auf andere
 Daten. Die häufigste Art von Zeigern in Rust ist eine Referenz, die wir bereits
 in Kapitel 4 kennengelernt haben. Referenzen werden durch das Symbol `&`
 gekennzeichnet und leihen (borrow) den Wert auf den sie zeigen aus. Sie haben,
@@ -21,11 +21,19 @@ Kapitel untersuchen werden, ist der intelligente Zeiger-Typ *Referenzzählung*
 von Daten haben, indem man die Anzahl der Eigentümer verfolgt und die Daten
 bereinigt sobald keine Eigentümer mehr vorhanden sind.
 
-Da Rust das Konzept von Eigentümerschaft (ownership) und Ausleihen
+Da Rust das Konzept der Eigentümerschaft (ownership) und Ausleihen
 (borrowing) verwendet, besteht ein zusätzlicher Unterschied zwischen Referenzen
 und intelligenten Zeigern darin, dass Referenzen Zeiger sind, die Daten nur
 ausleihen. Im Gegensatz dazu *besitzen* intelligente Zeiger in vielen Fällen die
 Eigentümerschaft von Daten, auf die sie zeigen.
+
+Wir sind in diesem Buch bereits auf einige intelligente Zeiger gestoßen, z.B.
+`String` und `Vec<T>` in Kapitel 8, obwohl wir sie damals noch nicht als
+intelligente Zeiger bezeichnet haben. Diese beiden Typen zählen zu den
+intelligenten Zeigern, da sie einen gewissen Speicher besitzen und es dir
+ermöglichen, diesen zu manipulieren. Sie verfügen auch über Metadaten (z.B.
+ihre Kapazität) und zusätzliche Fähigkeiten oder Garantien (z.B. mit `String`,
+der sicherstellt, dass seine Daten immer gültiges UTF-8 enthalten).
 
 Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
 Das Merkmal, das einen intelligenten Zeiger von einer gewöhnlichen Struktur
@@ -49,11 +57,11 @@ behandeln:
 * `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
     ermöglicht
 * `Ref<T>` und `RefMut<T>`, Zugriff über `RefCell<T>`, ein Typ, der das
-    einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierungszeit
+    Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierungszeit
     erzwingt.
 
-Darüber hinaus wird das *innere Veränderlichkeitsmuster* (interior mutability)
-behandelt, bei dem ein unveränderlicher Typ eine API zum verändern eines inneren
+Darüber hinaus wird das *innere Veränderlichkeitsmuster* (interior mutability pattern)
+behandelt, bei dem ein unveränderlicher Typ eine API zum Verändern eines inneren
 Werts verfügbar macht. Wir werden auch *Referenzzyklen* diskutieren, wie diese
 Speicherverlust verursachen können und wie das verhindert werden kann.
 
