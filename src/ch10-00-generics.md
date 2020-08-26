@@ -134,10 +134,10 @@ die größte Zahl in zwei verschiedenen Listen finden.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-fn largest(list: &[i32]) -> i32 {
-    let mut largest = list[0];
+fn largest(list: &[i32]) -> &i32 {
+    let mut largest = &list[0];
 
-    for &item in list {
+    for item in list {
         if item > largest {
             largest = item;
         }
@@ -151,13 +151,13 @@ fn main() {
 
     let result = largest(&number_list);
     println!("Die größte Zahl ist {}", result);
-#     assert_eq!(result, 100);
+#     assert_eq!(result, &100);
 
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
     let result = largest(&number_list);
     println!("Die größte Zahl ist {}", result);
-#     assert_eq!(result, 6000);
+#     assert_eq!(result, &6000);
 }
 ```
 
