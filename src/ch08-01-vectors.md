@@ -169,7 +169,8 @@ Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
 veränderlichen und unveränderlichen Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-7 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
-versuchen, am Ende ein Element hinzuzufügen, was nicht funktionieren wird.
+versuchen, am Ende ein Element hinzuzufügen, was nicht funktionieren wird, wenn
+wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.
 
 ```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];
@@ -312,12 +313,13 @@ nicht. Stattdessen kannst du ein Merkmalsobjekt (trait object) verwenden, das
 wir in Kapitel 17 behandeln werden.
 
 Nachdem wir nun einige der gängigsten Methoden zur Verwendung von Vektoren
-besprochen haben, solltest du dir unbedingt die API-Dokumentation zu den vielen
-nützlichen Methoden ansehen, die die Standardbibliothek für `Vec<T>` mitbringt. 
-Zum Beispiel gibt es zusätzlich zu `push` die Methode `pop`, die das letzte
-Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
- übergehen: `String`
+besprochen haben, solltest du dir unbedingt die [API-Dokumentation][vec-api] zu
+den vielen nützlichen Methoden ansehen, die die Standardbibliothek für `Vec<T>`
+mitbringt. Zum Beispiel gibt es zusätzlich zu `push` die Methode `pop`, die das
+letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
+übergehen: `String`
 
 [data-types]: ch03-02-data-types.html#data-types
 [nomicon]: https://doc.rust-lang.org/nomicon/vec.html
+[vec-api]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [deref]: ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator
