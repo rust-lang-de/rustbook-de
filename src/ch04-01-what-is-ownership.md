@@ -54,14 +54,15 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > die sich ändern könnte, müssen stattdessen im dynamischen Speicher
 > gespeichert werden. Der dynamische Speicher ist weniger organisiert: Wenn du
 > Daten in den dynamischen Speicher legst, forderst du eine bestimmte Menge an
-> Speicherplatz an. Das Betriebssystem sucht eine leere Stelle im dynamischen
-> Speicher, die groß genug ist, markiert sie als in Benutzung und gibt einen
-> *Zeiger* (pointer) zurück, der die Adresse dieser Stelle ist. Dieser Vorgang
-> wird als *Allokieren im dynamischen Speicher* bezeichnet und manchmal mit
-> *Allokieren* abgekürzt. Das Legen von Werten auf den Stapelspeicher gilt
-> nicht als Allokieren. Da es sich beim Zeiger um eine bekannte, feste Größe
-> handelt, kannst du den Zeiger auf den Stapelspeicher legen, aber wenn du die
-> eigentlichen Daten benötigst, musst du dem Zeiger folgen.
+> Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
+> Stelle im dynamischen Speicher, die groß genug ist, markiert sie als in
+> Benutzung und gibt einen *Zeiger* (pointer) zurück, der die Adresse dieser
+> Stelle ist. Dieser Vorgang wird als *Allokieren im dynamischen Speicher*
+> bezeichnet und manchmal mit *Allokieren* abgekürzt. Das Legen von Werten auf
+> den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
+> bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
+> legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
+> folgen.
 >
 > Stell dir vor, du sitzst in einem Restaurant. Wenn du hineingehst, gibst du
 > die Anzahl der Personen deiner Gruppe an, und das Personal findet einen
@@ -70,11 +71,11 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > euch zu finden.
 >
 > Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
-> dynamischen Speicher, da das Betriebssystem nie nach Platz zum Speichern
+> dynamischen Speicher, da der Speicher-Allokator nie nach Platz zum Speichern
 > neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
 > Vergleich dazu erfordert das Allokieren von Speicherplatz im dynamischen
-> Speicher mehr Arbeit, da das Betriebssystem zunächst einen ausreichend großen
-> Platz für die Daten finden und dann Buch führen muss, um die nächste
+> Speicher mehr Arbeit, da der Speicher-Allokator zunächst einen ausreichend
+> großen Platz für die Daten finden und dann Buch führen muss, um die nächste
 > Allokation vorzubereiten.
 >
 > Der Zugriff auf Daten im dynamischen Speicher ist langsamer als der Zugriff
@@ -232,8 +233,8 @@ Um mit dem Typ `String` einen veränderlichen, größenänderbaren Textabschnitt
 unterstützen, müssen wir Speicher im dynamischen Speicher allokieren, dessen
 Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:
 
-* Der Speicher muss zur Laufzeit vom Betriebssystem angefordert werden.
-* Wir brauchen eine Möglichkeit, diesen Speicher an das Betriebssystem
+* Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.
+* Wir brauchen eine Möglichkeit, diesen Speicher an den Speicher-Allokator
   zurückzugeben, wenn wir mit unserem `String` fertig sind.
 
 Der erste Teil wird von uns erledigt: Wenn wir `String::from` aufrufen, fordert
@@ -266,7 +267,7 @@ ein `String` anstelle eines Zeichenkettenliterals verwendet wird:
 ```
 
 Es gibt eine natürliche Stelle, an der wir den Speicher, den unser `String`
-benötigt, an das Betriebssystem zurückgeben können: Wenn `s` den
+benötigt, an den Speicher-Allokator zurückgeben können: Wenn `s` den
 Gültigkeitsbereich verlässt. Wenn eine Variable den Gültigkeitsbereich
 verlässt, ruft Rust für uns eine spezielle Funktion auf: Diese Funktion heißt
 `drop` und an dieser Stelle kann der Autor von `String` Code einfügen, um den
@@ -331,9 +332,9 @@ Wert „Hallo“, gebunden an `s1`</span>
 
 Die Länge gibt an, wie viel Speicherplatz in Bytes der Inhalt der Zeichenkette
 derzeit belegt. Die Kapazität ist die Gesamtmenge des Speichers in Bytes, die
-der `String` vom Betriebssystem erhalten hat. Der Unterschied zwischen Länge
-und Kapazität ist von Bedeutung, aber nicht in diesem Zusammenhang, deshalb ist
-es im Moment in Ordnung, die Kapazität zu ignorieren.
+der `String` vom Speicher-Allokator erhalten hat. Der Unterschied zwischen
+Länge und Kapazität ist von Bedeutung, aber nicht in diesem Zusammenhang,
+deshalb ist es im Moment in Ordnung, die Kapazität zu ignorieren.
 
 Wenn wir `s1` an `s2` zuweisen, werden die `String`-Daten kopiert, d.h. wir
 kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
