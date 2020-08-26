@@ -70,17 +70,17 @@ um den Typ eines ganzzahligen Wertes zu deklarieren.
 | arch    | `isize`             | `usize`       |
 
 Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
-eine explizite Größe. *Vorzeichenbehaftet* und *vorzeichenlos* bezieht sich
-darauf, ob es möglich ist, dass die Zahl negativ oder positiv ist &ndash; in
-anderen Worten, ob die Zahl ein Vorzeichen haben muss (vorzeichenbehaftet) oder
-ob sie immer nur positiv sein wird und daher ohne Vorzeichen dargestellt werden
-kann (vorzeichenlos). Es ist wie das Schreiben von Zahlen auf Papier: Wenn das
-Vorzeichen eine Rolle spielt, wird die Zahl mit einem Plus- oder Minuszeichen
-geschrieben; wenn man jedoch davon ausgehen kann, dass die Zahl positiv ist,
-wird sie ohne Vorzeichen geschrieben. Vorzeichenbehaftete Zahlen werden unter
-Verwendung der
+eine explizite Größe. *Vorzeichenbehaftet* (signed) und *vorzeichenlos*
+(unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
+&ndash; in anderen Worten, ob die Zahl ein Vorzeichen haben muss
+(vorzeichenbehaftet) oder ob sie immer nur positiv sein wird und daher ohne
+Vorzeichen dargestellt werden kann (vorzeichenlos). Es ist wie das Schreiben
+von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
+einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
+dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
+Vorzeichenbehaftete Zahlen werden unter Verwendung der
 [Zweierkomplementdarstellung](https://de.wikipedia.org/wiki/Zweierkomplement)
-gespeichert
+gespeichert.
 
 Jede vorzeichenbehaftete Variante kann Zahlen von -(2<sup>n - 1</sup>) bis
 einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei *n* die Anzahl an Bits
