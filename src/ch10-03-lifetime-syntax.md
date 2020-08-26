@@ -180,15 +180,10 @@ bestimmen</span>
 
 Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
 die Referenzen sind, weil wir nicht wollen, dass die Funktion `longest` die
-Eigentümerschaft ihrer Parameter übernimmt. Wir wollen der Funktion
-ermöglichen, sowohl Zeichenkettenanteilstypen (der Typ der Variable `string1`)
-als auch Zeichenkettenliterale (was die Variable `string2` enthält)
-entgegenzunehmen.
-
-Lies den Abschnitt [„Zeichenkettenanteilstypen als
-Parameter“][string-slices-as-parameters] in Kapitel 4, um mehr darüber zu
-erfahren, warum die Parameter, die wir in Codeblock 10-20 verwenden, die von
-uns gewünschten sind.
+Eigentümerschaft ihrer Parameter übernimmt. Lies den Abschnitt
+[„Zeichenkettenanteilstypen als Parameter“][string-slices-as-parameters] in
+Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
+Codeblock 10-20 verwenden, die von uns gewünschten sind.
 
 Wenn wir versuchen, die Funktion `longest`, wie in Codeblock 10-21 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.
@@ -958,11 +953,13 @@ Kompilierzeit statt, was die Laufzeitperformanz nicht beeinträchtigt!
 Ob du es glaubst oder nicht, es gibt zu den Themen, die wir in diesem Kapitel
 besprochen haben, noch viel mehr zu sagen: In Kapitel 17 werden Merkmalsobjekte
 erörtert, die eine weitere Möglichkeit zur Verwendung von Merkmalen darstellen.
-Kapitel 19 behandelt komplexere Szenarien mit Lebensdauer-Annotationen sowie
-einige fortgeschrittene Typsystem-Funktionalitäten. Aber als Nächstes wirst du
-lernen, wie man Tests in Rust schreibt, damit du sicherstellen kannst, dass
-dein Code so funktioniert, wie er sollte.
+Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
+sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
+[Rust-Referenz][reference] lesen. Aber als Nächstes wirst du lernen, wie man
+Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
+funktioniert, wie er sollte.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
 [string-slices-as-parameters]:
 ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter
+[reference]: https://doc.rust-lang.org/reference/index.html
