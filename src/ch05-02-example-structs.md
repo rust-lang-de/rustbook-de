@@ -70,7 +70,7 @@ Die Funktion `area` soll die Fläche eines Rechtecks berechnen, aber die von uns
 geschriebene Funktion hat zwei Parameter. Dass die Parameter zusammenhängen,
 wird aber nirgendwo in unserem Programm ausgedrückt. Es wäre besser lesbar und
 überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu haben
-wir bereits im Abschnitt [„Der Tupeltyp“][the-tuple-type] in Kapitel 3
+wir bereits im Abschnitt [„Der Tupel-Typ“][the-tuple-type] in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.
 
 ### Refaktorierung mit Tupeln
@@ -309,4 +309,4 @@ Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
 *Methode* `area` unseres Typs `Rectangle` verwandeln können.
 
-[the-tuple-type]: ch03-02-data-types.html#the-tuple-type
+[the-tuple-type]: ch03-02-data-types.html#der-tupel-typ

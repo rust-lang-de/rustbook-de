@@ -9,7 +9,7 @@ Denk daran, dass Rust eine *statisch typisierte* Sprache ist, was bedeutet,
 dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
 Compiler kann normalerweise auf der Grundlage des Wertes und wie wir ihn
 verwenden ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen
-möglich sind, wie zum Beispiel als wir im Abschnitt [„Vergleich der Vermutung
+möglich sind, wie zum Beispiel als wir im Abschnitt [„Vergleichen der Schätzung
 mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] eine
 Zeichenkette (`String`) mittels `parse` zu einem numerischen Typ umwandelten,
 müssen wir eine Typ-Annotation ergänzen, wie hier:
@@ -124,7 +124,7 @@ benutzen würdest, ist die Indizierung einer Kollektionsart (collection).
 > Ganzzahlüberläufe ein, was dazu führt, dass dein Programm zur Laufzeit
 > *abbricht* (panic), falls dieses Verhalten auftritt. Rust verwendet den
 > Begriff „panic“, wenn ein Programm durch einen Fehler abgebrochen wird; wir
-> werden Programmabbrüche im Abschnitt [„Unbehebbare Fehler mit
+> werden Programmabbrüche im Abschnitt [„Nicht behebbare Fehler mit
 > `panic!`“][unrecoverable-errors-with-panic] in Kapitel 9 näher betrachten.
 >
 > Wenn du mit dem Schalter `--release` im Freigabemodus (release mode)
@@ -446,8 +446,8 @@ und fortzusetzen. In Kapitel 9 wird mehr über die Fehlerbehandlung von Rust
 gesprochen.
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
-[control-flow]: ch03-05-control-flow.html#control-flow
-[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
+[control-flow]: ch03-05-control-flow.html
+[strings]: ch08-02-strings.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
 [wrapping]: https://doc.rust-lang.org/std/num/struct.Wrapping.html

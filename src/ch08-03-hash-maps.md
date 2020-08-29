@@ -327,4 +327,4 @@ einzugehen. Das werden wir als nächstes tun!
 
 [iterators]: ch13-02-iterators.html
 [validating-references-with-lifetimes]:
-ch10-03-lifetime-syntax.html#validating-references-with-lifetimes
+ch10-03-lifetime-syntax.html

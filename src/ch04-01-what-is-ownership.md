@@ -168,7 +168,7 @@ auf diesem Verständnis aufbauen, indem wir den Typ `String` einführen.
 ### Der Typ `String`
 
 Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
-komplexer ist als die, die wir im Abschnitt ["Datentypen"][data-types] in
+komplexer ist als die, die wir im Abschnitt [„Datentypen“][data-types] in
 Kapitel 3 behandelt haben. Die zuvor behandelten Typen werden alle auf den
 Stapelspeicher gelegt und vom Stapelspeicher entfernt, wenn ihr
 Gültigkeitsbereich beendet ist, aber wir wollen uns Daten ansehen, die im
@@ -637,7 +637,7 @@ Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
 gebräuchlich sein sollte. Zum Glück hat Rust für uns eine Funktionalität zu
 diesem Konzept, das *Referenzen* (references) genannt wird.
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html
 [derivable-traits]: appendix-03-derivable-traits.html
-[method-syntax]: ch05-03-method-syntax.html#method-syntax
+[method-syntax]: ch05-03-method-syntax.html
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html

@@ -7,11 +7,9 @@ beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
 fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
 den Vorgang zu beenden.
 
-Erinnere dich an [„Potentielles Fehlverhalten mit dem Typ `Result`
-behandeln“][handle_failure] in Kapitel 2, das die Aufzählung `Result` mit zwei
+Erinnere dich an [„Behandeln potentieller Fehler mit dem Typ
+`Result`“][handle_failure] in Kapitel 2, das die Aufzählung `Result` mit zwei
 Varianten `Ok` und `Err` definiert, wie nachfolgend zu sehen ist:
-
-[handle_failure]: ch02-00-guessing-game-tutorial.html#handling-potential-failure-with-the-result-type
 
 ```rust
 enum Result<T, E> {
@@ -602,4 +600,5 @@ Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir
 entscheiden können, was in welchen Fällen angemessen ist.
 
-[trait-objects]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
+[handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result
+[trait-objects]: ch17-02-trait-objects.html

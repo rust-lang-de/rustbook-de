@@ -521,4 +521,4 @@ Datentypen. Wenn der Code läuft, verhält er sich genauso, wie wenn wir jede
 Definition von Hand dupliziert hätten. Der Vorgang der Codeduplizierung macht
 Rusts generische Datentypen zur Laufzeit äußerst effizient.
 
-[traits-as-parameters]: ch10-02-traits.html#traits-as-parameters
+[traits-as-parameters]: ch10-02-traits.html#merkmale-als-parameter

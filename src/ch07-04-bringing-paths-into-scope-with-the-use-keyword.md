@@ -271,8 +271,8 @@ herunterzuladen und `rand` für unser Projekt verfügbar zu machen.
 Um dann Definitionen von `rand` in den Gültigkeitsbereich unseres Pakets
 aufzunehmen, fügten wir eine Zeile mit `use` hinzu, die mit dem Kistennamen
 `rand` begann, und listeten die Elemente auf, die wir in den Gültigkeitsbereich
-aufnehmen wollten. Erinnere dich, dass wir im Abschnitt [„Generierung einer
-Zufallszahl“][rand] in Kapitel 2 das Merkmal `Rng` in den Gültigkeitsbereich
+aufnehmen wollten. Erinnere dich, dass wir im Abschnitt [„Generieren einer
+Geheimzahl“][rand] in Kapitel 2 das Merkmal `Rng` in den Gültigkeitsbereich
 gebracht und die Funktion `rand::thread_rng` aufgerufen haben:
 
 ```rust
@@ -408,6 +408,6 @@ manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
 [Standardbibliotheksdokumentation][std-lib-preludes] für weitere Informationen
 zu diesem Muster.
 
-[rand]: ch02-00-guessing-game-tutorial.html#generating-a-random-number
+[rand]: ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl
 [std-lib-preludes]: https://doc.rust-lang.org/std/prelude/index.html#other-preludes
 [writing-tests]: ch11-01-writing-tests.html

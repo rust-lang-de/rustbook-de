@@ -1161,5 +1161,5 @@ verschiedenen Optionen untersuchen, die wir mit `cargo test` verwenden können.
 ch08-02-strings.html#aneinanderhängen-mit-dem-operator--und-dem-makro-format
 [controlling-how-tests-are-run]: ch11-02-running-tests.html
 [derivable-traits]: appendix-03-derivable-traits.html
-[doc-comments]: ch14-02-publishing-to-crates-io.html#documentation-comments-as-tests
+[doc-comments]: ch14-02-publishing-to-crates-io.html#dokumentationskommentare-als-tests
 [paths-for-referring-to-an-item-in-the-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
