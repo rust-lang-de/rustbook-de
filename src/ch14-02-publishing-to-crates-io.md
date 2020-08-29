@@ -493,14 +493,15 @@ das zur Veröffentlichung bereit ist, folgendermaßen aussehen:
 [package]
 name = "guessing_game"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
+authors = ["Dein Name <du@example.com>"]
 edition = "2018"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"
 
 [dependencies]
 ```
-[Cargo’s documentation](https://doc.rust-lang.org/cargo/) beschreibt andere 
+
+[Cargos documentation](https://doc.rust-lang.org/cargo/) beschreibt andere 
 Metadaten, die du angeben kannst, um sicherzustellen, dass andere deine Kiste
 leichter entdecken und verwenden können.
 

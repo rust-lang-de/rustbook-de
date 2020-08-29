@@ -70,7 +70,7 @@ Code in Codeblock 1-2 aussehen.
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Your Name <you@example.com>"]
+authors = ["Dein Name <du@example.com>"]
 edition = "2018"
 
 [dependencies]
