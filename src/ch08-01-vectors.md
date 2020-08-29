@@ -319,7 +319,7 @@ mitbringt. Zum Beispiel gibt es zusätzlich zu `push` die Methode `pop`, die das
 letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
 übergehen: `String`
 
-[data-types]: ch03-02-data-types.html#data-types
+[data-types]: ch03-02-data-types.html
 [nomicon]: https://doc.rust-lang.org/nomicon/vec.html
 [vec-api]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [deref]: ch15-02-deref.html#following-the-pointer-to-the-value-with-the-dereference-operator

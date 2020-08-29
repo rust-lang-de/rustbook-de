@@ -809,4 +809,4 @@ Lebensdauern das tun.
 [stack-only-data-copy]:
 ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [using-trait-objects-that-allow-for-values-of-different-types]:
-ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
+ch17-02-trait-objects.html

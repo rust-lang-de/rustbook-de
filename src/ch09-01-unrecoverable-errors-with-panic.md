@@ -216,5 +216,4 @@ einmal auf `panic!` zurück und wann wir `panic!` verwenden sollten und wann
 nicht, um Fehlerfälle zu behandeln. Als Nächstes schauen wir uns an, wie man
 sich mit `Result` von einem Fehler erholt.
 
-[to-panic-or-not-to-panic]:
-ch09-03-to-panic-or-not-to-panic.html#to-panic-or-not-to-panic
+[to-panic-or-not-to-panic]: ch09-03-to-panic-or-not-to-panic.html

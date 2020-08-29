@@ -256,8 +256,8 @@ let slice = &s[..];
 > wird dein Programm mit einem Fehler abbrechen. Bei der Einführung von
 > Zeichenkettenanteilstypen in diesem Abschnitt gehen wir nur von ASCII aus;
 > eine eingehendere Diskussion der UTF-8-Behandlung findet sich im Abschnitt
-> [„Speichern von UTF-8-kodiertem Text mit Zeichenketten“][strings] in Kapitel
-> 8.
+> [„UTF-8-kodierten Text in Zeichenketten (strings) ablegen“][strings] in
+> Kapitel 8.
 
 Mit all diesen Informationen im Hinterkopf schreiben wir `first_word` so um,
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
@@ -511,4 +511,4 @@ Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 
-[strings]: ch08-02-strings.html#storing-utf-8-encoded-text-with-strings
+[strings]: ch08-02-strings.html

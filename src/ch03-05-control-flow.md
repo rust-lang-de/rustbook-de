@@ -38,7 +38,7 @@ kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen, wenn die
 Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte Klammern
 gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken verbunden sind,
 werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie die Zweige in
-`match`-Ausdrücken, die wir im Abschnitt [„Vergleichen des Schätzwertes mit der
+`match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der Schätzung mit der
 Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 diskutiert
 haben.
 
@@ -532,6 +532,6 @@ sprechen, das es in anderen Programmiersprachen üblicherweise *nicht* gibt:
 Eigentümerschaft (ownership).
 
 [comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#comparing-the-guess-to-the-secret-number
+ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [quitting-after-a-correct-guess]:
-ch02-00-guessing-game-tutorial.html#quitting-after-a-correct-guess
+ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-schätzung
