@@ -124,7 +124,7 @@ Sortierreihenfolge der Werte speichert.
 
 Das Merkmal `Clone` erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
 erstellen, und der Vervielfältigungsprozess könnte die Ausführung von
-beliebigem Code und das Kopieren von Daten im dynamischen Speicher beinhalten.
+beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten.
 Siehe den Abschnitt [„Wege, wie Variablen und Daten interagieren: Klonen
 (clone)“][ways-variables-and-data-interact-clone] in Kapitel 4 für weitere
 Informationen zu `Clone`.

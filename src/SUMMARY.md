@@ -88,7 +88,7 @@
     - [Cargo um benutzerdefinierte Befehle erweitern](ch14-05-extending-cargo.md)
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
-    - [Mit `Box<T>` auf Daten im dynamischen Speicher zeigen](ch15-01-box.md)
+    - [Mit `Box<T>` auf Daten im Haldenspeicher zeigen](ch15-01-box.md)
     - [Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`](ch15-02-deref.md)
     - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
     - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)

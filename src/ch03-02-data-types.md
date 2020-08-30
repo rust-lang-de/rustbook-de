@@ -333,8 +333,8 @@ fn main() {
 ```
 
 Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
-dynamischen Speicher abgelegt haben möchtest (auf den Stapelspeicher und den
-dynamischen Speicher gehen wir in Kapitel 4 näher ein) oder wenn du
+Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
+Haldenspeicher gehen wir in Kapitel 4 näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
 Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
