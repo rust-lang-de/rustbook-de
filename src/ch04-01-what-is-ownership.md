@@ -64,7 +64,7 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
 > folgen.
 >
-> Stell dir vor, du sitzst in einem Restaurant. Wenn du hineingehst, gibst du
+> Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst, gibst du
 > die Anzahl der Personen deiner Gruppe an, und das Personal findet einen
 > leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand aus
 > deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um
@@ -99,13 +99,13 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > die Funktion beendet ist, werden diese Werte vom Stapelspeicher genommen.
 >
 > Das Nachverfolgen, welche Codeteile welche Daten im Haldenspeicher
-> verwenden, das Minimieren der Menge an doppelten Daten im dynamischen
-> Speicher und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
+> verwenden, das Minimieren der Menge an doppelten Daten im Haldenspeicher
+> und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
 > dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
 > Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
-> hast, brauchst du nicht mehr so oft über Stapelspeicher und dynamischen
-> Speicher nachzudenken. Aber zu wissen, dass die Verwaltung von dynamischen
-> Speicherdaten der Grund für Eigentümerschaft ist, kann helfen zu erklären,
+> hast, brauchst du nicht mehr so oft über Stapelspeicher und Haldenspeicher 
+> nachzudenken. Aber zu wissen, dass die Verwaltung von Haldenspeicher-Daten
+> der Grund für Eigentümerschaft ist, kann helfen zu erklären,
 > warum es so funktioniert, wie es funktioniert.
 
 ### Eigentumsregeln
