@@ -297,7 +297,7 @@ let row = vec![
 verschiedener Typen in einem Vektor zu speichern</span>
 
 Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
-werden, damit es genau weiß, wie viel Speicherplatz im dynamischen Speicher
+werden, damit es genau weiß, wie viel Speicherplatz im Haldenspeicher
 benötigt wird, um alle Elemente zu speichern. Ein zweiter Vorteil ist, dass wir
 explizit festlegen können, welche Typen in diesem Vektor erlaubt sind. Wenn
 Rust einen Vektor mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass

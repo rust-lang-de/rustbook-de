@@ -26,18 +26,18 @@ lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest,
 die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 (strings).
 
-> ### Stapelspeicher (stack) und dynamischer Speicher (heap)
+> ### Stapelspeicher (stack) und Haldenspeicher (heap)
 >
 > In vielen Programmiersprachen musst du nicht sehr oft über Stapelspeicher und
-> dynamischen Speicher nachdenken. Aber in einer Systemprogrammiersprache wie
-> Rust hat die Frage, ob ein Wert auf dem Stapelspeicher oder im dynamischen
-> Speicher liegt, einen größeren Einfluss darauf, wie sich die Sprache verhält
+> Haldenspeicher nachdenken. Aber in einer Systemprogrammiersprache wie
+> Rust hat die Frage, ob ein Wert auf dem Stapelspeicher oder im Haldenspeicher
+> liegt, einen größeren Einfluss darauf, wie sich die Sprache verhält
 > und warum du bestimmte Entscheidungen treffen musst. Teile der
 > Eigentümerschaft werden später in diesem Kapitel in Bezug auf den
-> Stapelspeicher und den dynamischen Speicher beschrieben, daher hier eine
+> Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
 > kurze Erklärung zur Vorbereitung.
 >
-> Sowohl Stapelspeicher als auch dynamischer Speicher sind Teile des
+> Sowohl Stapelspeicher als auch Haldenspeicher sind Teile des
 > Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
 > sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
 > Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
@@ -51,13 +51,13 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 >
 > Alle im Stapelspeicher gespeicherten Daten müssen eine bekannte, feste Größe
 > haben. Daten mit einer zur Kompilierzeit unbekannten Größe oder einer Größe,
-> die sich ändern könnte, müssen stattdessen im dynamischen Speicher
-> gespeichert werden. Der dynamische Speicher ist weniger organisiert: Wenn du
-> Daten in den dynamischen Speicher legst, forderst du eine bestimmte Menge an
+> die sich ändern könnte, müssen stattdessen im Haldenspeicher
+> gespeichert werden. Der Haldenspeicher ist weniger organisiert: Wenn du
+> Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
 > Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
-> Stelle im dynamischen Speicher, die groß genug ist, markiert sie als in
+> Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
 > Benutzung und gibt einen *Zeiger* (pointer) zurück, der die Adresse dieser
-> Stelle ist. Dieser Vorgang wird als *Allokieren im dynamischen Speicher*
+> Stelle ist. Dieser Vorgang wird als *Allokieren im Haldenspeicher*
 > bezeichnet und manchmal mit *Allokieren* abgekürzt. Das Legen von Werten auf
 > den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
 > bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
@@ -71,14 +71,14 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > euch zu finden.
 >
 > Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
-> dynamischen Speicher, da der Speicher-Allokator nie nach Platz zum Speichern
+> Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
 > neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
 > Vergleich dazu erfordert das Allokieren von Speicherplatz im dynamischen
 > Speicher mehr Arbeit, da der Speicher-Allokator zunächst einen ausreichend
 > großen Platz für die Daten finden und dann Buch führen muss, um die nächste
 > Allokation vorzubereiten.
 >
-> Der Zugriff auf Daten im dynamischen Speicher ist langsamer als der Zugriff
+> Der Zugriff auf Daten im Haldenspeicher ist langsamer als der Zugriff
 > auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um dorthin
 > zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im Speicher
 > herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner in einem
@@ -89,18 +89,18 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > wäre ein viel langsamerer Vorgang. Umgekehrt kann ein Prozessor seine Arbeit
 > besser erledigen, wenn er mit Daten arbeitet, die nahe beieinander liegen
 > (wie sie auf dem Stapelspeicher liegen) und nicht weiter voneinander entfernt
-> (wie sie im dynamischen Speicher liegen können). Das Allokieren einer großen
-> Menge an Platz im dynamischen Speicher kann ebenfalls Zeit in Anspruch
+> (wie sie im Haldenspeicher liegen können). Das Allokieren einer großen
+> Menge an Platz im Haldenspeicher kann ebenfalls Zeit in Anspruch
 > nehmen.
 >
 > Wenn dein Code eine Funktion aufruft, werden die an die Funktion übergebenen
-> Werte (einschließlich potentieller Zeiger auf Daten im dynamischen Speicher)
+> Werte (einschließlich potentieller Zeiger auf Daten im Haldenspeicher)
 > und die lokalen Variablen der Funktion auf den Stapelspeicher gelegt. Wenn
 > die Funktion beendet ist, werden diese Werte vom Stapelspeicher genommen.
 >
-> Das Nachverfolgen, welche Codeteile welche Daten im dynamischen Speicher
+> Das Nachverfolgen, welche Codeteile welche Daten im Haldenspeicher
 > verwenden, das Minimieren der Menge an doppelten Daten im dynamischen
-> Speicher und das Aufräumen ungenutzter Daten im dynamischen Speicher, damit
+> Speicher und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
 > dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
 > Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
 > hast, brauchst du nicht mehr so oft über Stapelspeicher und dynamischen
@@ -172,7 +172,7 @@ komplexer ist als die, die wir im Abschnitt [„Datentypen“][data-types] in
 Kapitel 3 behandelt haben. Die zuvor behandelten Typen werden alle auf den
 Stapelspeicher gelegt und vom Stapelspeicher entfernt, wenn ihr
 Gültigkeitsbereich beendet ist, aber wir wollen uns Daten ansehen, die im
-dynamischen Speicher gespeichert sind, und untersuchen, woher Rust weiß, wann
+Haldenspeicher gespeichert sind, und untersuchen, woher Rust weiß, wann
 es diese Daten aufräumen muss.
 
 Wir werden hier `String` als Beispiel nehmen und uns auf die Teile von `String`
@@ -188,7 +188,7 @@ verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: `String`. Dieser Typ wird im dynamischen Speicher
+zweiten Zeichenkettentyp: `String`. Dieser Typ wird im Haldenspeicher
 allokiert und kann so eine Textmenge speichern, die uns zur Kompilierzeit
 unbekannt ist. Du kannst einen `String` aus einem Zeichenkettenliteral
 erzeugen, indem du die Funktion `from` wie folgt verwendest:
@@ -230,7 +230,7 @@ dessen Größe sich während der Ausführung des Programms ändern könnte, eine
 Speicherblock in die Binärdatei packen.
 
 Um mit dem Typ `String` einen veränderlichen, größenänderbaren Textabschnitt zu
-unterstützen, müssen wir Speicher im dynamischen Speicher allokieren, dessen
+unterstützen, müssen wir Speicher im Haldenspeicher allokieren, dessen
 Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:
 
 * Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.
@@ -323,7 +323,7 @@ geschieht. Ein `String` besteht aus drei Teilen, die auf der linken Seite
 dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
 Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
 dem Stapelspeicher gespeichert. Auf der rechten Seite ist der Speicherbereich
-im dynamischen Speicher, der den Inhalt enthält.
+im Haldenspeicher, der den Inhalt enthält.
 
 <img alt="String im Arbeitsspeicher" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
@@ -338,7 +338,7 @@ deshalb ist es im Moment in Ordnung, die Kapazität zu ignorieren.
 
 Wenn wir `s1` an `s2` zuweisen, werden die `String`-Daten kopiert, d.h. wir
 kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
-Stapelspeicher befinden. Wir kopieren nicht die Daten im dynamischen Speicher,
+Stapelspeicher befinden. Wir kopieren nicht die Daten im Haldenspeicher,
 auf die sich der Zeiger bezieht. Die Speicherdarstellung sieht also wie in
 Abbildung 4-2 aus.
 
@@ -348,19 +348,19 @@ Abbildung 4-2 aus.
 eine Kopie des Zeigers, der Länge und der Kapazität von `s1` hat</span>
 
 Die Darstellung sieht *nicht* wie Abbildung 4-3 aus, so wie der Speicher
-aussehen würde, wenn Rust stattdessen auch die Daten im dynamischen Speicher
+aussehen würde, wenn Rust stattdessen auch die Daten im Haldenspeicher
 kopieren würde. Würde Rust dies tun, könnte die Operation `s2 = s1` bei großen
-Datenmengen im dynamischen Speicher sehr teuer hinsichtlich der
+Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
 Laufzeitperformanz werden.
 
 <img alt="s1 und s2 als vollständige Kopien" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
-`s2 = s1` tun könnte, falls Rust auch die Daten im dynamischen Speicher
+`s2 = s1` tun könnte, falls Rust auch die Daten im Haldenspeicher
 kopieren würde</span>
 
 Vorhin sagten wir, dass Rust automatisch die Funktion `drop` aufruft und den
-dynamischen Speicher für diese Variable säubert, wenn eine Variable den
+Haldenspeicher für diese Variable säubert, wenn eine Variable den
 Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
 auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn `s2` und `s1` den
 Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
@@ -436,7 +436,7 @@ Laufzeitperformanz kostengünstig ist.
 
 #### Wege, wie Variablen und Daten interagieren: Klonen (clone)
 
-Wenn wir die Daten von `String` im dynamischen Speicher *tief* kopieren wollen,
+Wenn wir die Daten von `String` im Haldenspeicher *tief* kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
 `clone` verwenden. Wir werden die Methodensyntax in Kapitel 5 besprechen, aber
 da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
@@ -452,7 +452,7 @@ println!("s1 = {}, s2 = {}", s1, s2);
 ```
 
 Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
-Verhalten, bei dem die Daten im dynamischen Speicher *kopiert* werden.
+Verhalten, bei dem die Daten im Haldenspeicher *kopiert* werden.
 
 Wenn du einen Aufruf von `clone` siehst, weißt du, dass irgendein beliebiger
 Code ausgeführt wird und dass dieser Code teuer sein könnte. Es ist ein
@@ -598,7 +598,7 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
 
 Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
 Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
-Variable, die Daten im dynamischen Speicher enthält, den Gültigkeitsbereich
+Variable, die Daten im Haldenspeicher enthält, den Gültigkeitsbereich
 verlässt, wird der Wert durch `drop` aufgeräumt, es sei denn, die Daten wurden
 in das Eigentum einer anderen Variable verschoben.
 

@@ -705,9 +705,9 @@ Merkmal `Copy` implementieren, könnten wir angeben, dass `T` die
 Merkmalsabgrenzung `Clone` anstelle von `Copy` verwendet. Dann könnten wir
 jeden Wert des Anteilstyps klonen, wenn wir wollen, dass die Funktion `largest`
 die Eigentümerschaft übernimmt. Das Verwenden der Funktion `clone` bedeutet,
-dass wir potenziell mehr Allokationen im dynamischen Speicher im Falle von
-Typen vornehmen, die dynamische Speicherdaten wie `String` besitzen. Und
-Allokationen im dynamischen Speicher können langsam sein, wenn wir mit großen
+dass wir potenziell mehr Allokationen im Haldenspeicher im Falle von
+Typen vornehmen, die Haldenspeicherdaten wie `String` besitzen. Und
+Allokationen im Haldenspeicher können langsam sein, wenn wir mit großen
 Datenmengen arbeiten.
 
 Eine andere Möglichkeit, wie wir `largest` implementieren könnten, besteht
@@ -715,7 +715,7 @@ darin, dass die Funktion eine Referenz auf einen `T`-Wert im Anteilstyp
 zurückgibt. Wenn wir den Rückgabetyp in `&T` anstelle von `T` ändern und
 dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
 wir die Merkmalsabgrenzungen `Clone` oder `Copy` nicht und könnten Allokationen
-im dynamischen Speicher vermeiden. Versuche, diese alternativen Lösungen selbst
+im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
 zu implementieren!
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
