@@ -309,7 +309,7 @@ jetzt aussieht.
 <span class="caption">Codeblock 15-2: Ein `List`-Typ der keine unendliche Größe 
 hat da `Cons` eine `Box` enthält</span>
 
-Boxen bieten nur die Dereferenzierung und Zuordnung am Stapelspeicher, haben
+Boxen bieten nur die Dereferenzierung und Zuordnung am Haldenspeicher, haben
 aber sonst keine speziellen Funktionalitäten, wie wir sie bei anderen
 intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
 Leistungs-Mehraufwand, der mit diesen zusätzlichen Funktionalitäten verbunden
