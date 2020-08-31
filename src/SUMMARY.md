@@ -102,7 +102,7 @@
     - [Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Sync` und `Send`](ch16-04-extensible-concurrency-sync-and-send.md)
 
 - [Objektorientierte Sprachelemente von Rust](ch17-00-oop.md)
-    - [Charakteristika objektorientierter Sprachen](ch17-01-what-is-oo.md)
+    - [Charakteristiken objektorientierter Sprachen](ch17-01-what-is-oo.md)
     - [Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben](ch17-02-trait-objects.md)
     - [Ein objektorientiertes Entwurfsmuster implementieren](ch17-03-oo-design-patterns.md)
 
