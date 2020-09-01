@@ -6,7 +6,7 @@ speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die Daten im
 Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
 zwischen dem Stapelspeicher und dem Haldenspeicher.
 
-Boxen haben keinen Leistungs-Mehraufwand (overhead), außer dass die Daten auf
+Boxen haben keinen Performanz-Overhead, außer dass die Daten auf
 den Haldenspeicher anstatt auf dem Stapelspeicher gespeichert werden, aber
 sie haben auch nicht viele zusätzliche Funktionalitäten. Sie werden am
 häufigsten in folgenden Situationen verwendet:
@@ -21,17 +21,18 @@ häufigsten in folgenden Situationen verwendet:
     um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
     Typ zu spezifizieren.
 
-Wir werden die erste Situation im Abschnitt
-[“Aktivieren rekursiver Typen mit Boxen”](#aktivieren-rekursiver-typen-mit-boxen)
-zeigen. Im zweiten Fall kann die Übertragung der Eigentümerschaft einer grossen
-Datenmenge lange dauern, da die Daten auf dem Stapelspeicher kopiert werden. Um
-die Performanz in dieser Situation zu verbessern, können wir die grosse
-Datenmenge auf dem Haldenspeicher in einer Box speichern. Dann wird nur die kleine Menge
-von Zeigerdaten auf dem Stapelspeicher kopiert, während die Daten, auf die
-verwiesen wird, im Haldenspeicher an einer Stelle verbleiben. Der dritte
-Fall ist als *Merkmalsobjekt* (trait object) bekannt, und Kapitel 17 widmet
-einen ganzen Abschnitt [“Using Trait Objects That Allow for Values of Different Types,”][trait-objects] diesem Thema. Was du hier lernst, wirst du im
-Kapitel 17 erneut anwenden!
+Wir werden die erste Situation im Abschnitt [„Ermöglichen rekursiver Typen mit
+Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
+die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
+die Daten auf dem Stapelspeicher kopiert werden. Um die Performanz in dieser
+Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeicher
+in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
+Stapelspeicher kopiert, während die Daten, auf die verwiesen wird, im
+Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
+*Merkmalsobjekt* (trait object) bekannt, und Kapitel 17 widmet einen ganzen
+Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+erlauben“][trait-objects] diesem Thema. Was du hier lernst, wirst du im Kapitel
+17 erneut anwenden!
 
 ### `Box<T> verwenden um Daten im Haldenspeicher zu speichern`
 
@@ -58,19 +59,19 @@ Wir definieren die Variable `b` so, dass sie den den Wert einer `Box` hat die
 auf den Wert `5` zeigt, der auf dem Haldenspeicher alloziert ist.
 Dieses Programm gibt `b = 5` aus, in diesem Fall können wir auf die Daten in der
 Box zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden.
-Genau wie bei jeden Wert mit Eigentümerschaft wird auch eine Box freigegeben
+Genau wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben
 wenn sie den Gültigkeitsbereich verlässt, wie dies bei `b` am Ende von `main`
 der Fall ist. Die Freigabe erfolgt für die Box (gespeichert im Stapelspeicher)
 und die Daten, auf die sie verweist (gespeichert im Haldenspeicher).
 
-Es ist nicht sehr nützlich, einen einzelnen Wert in den Haldenspeicher
-einzufügen, daher verwendet man Boxen selten alleine. Meistens ist es besser,
+Es ist nicht sehr nützlich, einen einzelnen Wert im Haldenspeicher zu
+speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
 Werte wie eine `i32` auf dem Stapelspeicher zu haben, wo sie standardmäßig
 gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
 ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
 gäbe.
 
-### Aktivieren rekursiver Typen mit Boxen
+### Ermöglichen rekursiver Typen mit Boxen
 
 Zum Zeitpunkt der Kompilierung muss Rust wissen, wie viel Speicherplatz ein Typ einnimmt.
 Ein Typ, dessen Größe zum Zeitpunkt des Kompilierung nicht bekannt sein kann,
@@ -84,36 +85,36 @@ rekursive Typen verwenden.
 Lass uns die *Cons-Liste*, einen Datentyp, der in funktionalen
 Programmiersprachen üblich ist, als Beispiel für einen rekursiven Typ
 untersuchen. Der von uns definierte cons-Listentyp ist abgesehen von der
-Rekursion unkompliziert. Daher sind die Konzepte in diesem Beispiel, immer dann
-nützlich wenn man in komplexeren Situationen mit rekursiven Typen arbeitet.
+Rekursion unkompliziert. Daher sind die Konzepte in diesem Beispiel immer dann
+nützlich, wenn man in komplexeren Situationen mit rekursiven Typen arbeitet.
 
 #### Weitere Informationen zur Cons-Liste
 
 Eine *Cons-Liste* ist eine Datenstruktur, die aus der Programmiersprache Lisp
 und ihren Dialekten stammt. In Lisp erstellt die Konstruktionsfunktion `cons`
-(Kurzform von "construct function") aus ihren beiden Argumenten, die
+(Kurzform von „construct function“) aus ihren beiden Argumenten, die
 normalerweise aus einem einzelnen Wert und einem anderen Paar bestehen, ein
 neues Paar. Diese Paare die wiederum Paare enthalten, bilden eine Liste.
 
 Das Konzept der Cons-Liste hat seinen Weg in den allgemeineren Jargon für
-funktionale Programmierung gefunden: "to cons *x* onto *y*" bedeutet informell,
-eine neue Containerinstanz zu erstellen, indem das Element *x* am Anfang dieses
+funktionale Programmierung gefunden: „to cons *x* onto *y*“ bedeutet informell,
+eine neue Containerinstanz zu erstellen, indem das Element *x* an den Anfang dieses
 neuen Containers gestellt wird gefolgt vom Container *y*.
 
-Jedes Element in einer Cons-Liste enthält zwei Elemente: den Wert des aktuellen
+Jedes Element in einer Cons-Liste enthält zwei Elemente: Den Wert des aktuellen
 Elements und das nächste Element. Das letzte Element in der Liste enthält nur
 ein Element namens `Nil` ohne ein nächstes Element. Eine Cons-Liste wird durch
 rekursives Aufrufen der Funktion `cons` erstellt. Der kanonische Name für den
 Basisfall der Rekursion lautet `Nil`. Beachte, dass dies nicht mit dem Konzept
-"null" oder "nil" in Kapitel 6 identisch ist, das einen fehlenden oder
+„null“ oder „nil“ in Kapitel 6 identisch ist, das einen fehlenden oder
 ungültigen Wert darstellt.
 
 Obwohl funktionale Programmiersprachen häufig Cons-Listen verwenden, ist sie in
-Rust keine häufig vorkommende Datenstruktur. Wenn man in Rust, eine Liste von
+Rust keine häufig vorkommende Datenstruktur. Wenn man in Rust eine Liste von
 Elementen hat, ist `Vec<T>` die bessere Wahl. Andere, komplexere rekursive
 Datentypen sind in verschiedenen Situationen nützlich. Wenn wir jedoch mit der
 Cons-Liste beginnen, können wir untersuchen, wie Boxen es uns ermöglichen, ohne
-grosse Ablenkung, einen rekursiven Datentyp zu definieren.
+grosse Ablenkung einen rekursiven Datentyp zu definieren.
 
 Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste. Beachte,
 dass dieser Code nicht kompiliert werden kann, da der Typ `List` keine bekannte
@@ -121,7 +122,7 @@ Grösse hat, was wir zeigen werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 enum List {
     Cons(i32, List),
     Nil,
@@ -143,7 +144,7 @@ Siehe Codeblock 15-3:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 #enum List {
 #    Cons(i32, List),
 #    Nil,
@@ -203,7 +204,7 @@ To learn more, run the command again with --verbose.
 <span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span>
 
-Der Fehler zeigt, dass dieser Typ "unendlich gross" ist. Der Grund dafür ist,
+Der Fehler zeigt, dass dieser Typ „unendlich groß“ ist. Der Grund dafür ist,
 dass wir `List` mit einer rekursiven Variante definiert haben, sie enthält
 direkt einen anderen Wert von sich selbst, daher kann Rust nicht herausfinden,
 wie viel Speicherplatz zum Speichern eines Listenwerts erforderlich ist. Lass
@@ -211,7 +212,7 @@ uns kurz zusammenfassen, warum wir diesen Fehler bekommen. Schauen wir uns
 zunächst an, wie Rust entscheidet, wie viel Speicherplatz zum Speichern des
 Werts eines nicht rekursiven Typs benötigt wird.
 
-#### Die Größe eines nicht rekursiven Typs berechnen
+#### Die Größe eines nicht-rekursiven Typs berechnen
 
 Erinnere dich an die in Codeblock 6-2 definierte `Message`-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:
@@ -228,8 +229,8 @@ enum Message {
 ```
 Um zu bestimmen, wie viel Speicherplatz für einen `Message`-Wert zugewiesen
 werden soll, durchläuft Rust jede der Varianten, um festzustellen, welche
-Variante den meisten Speicherplatz benötigt. Rust sieht das `Message::Quit`
-keinen Speicherplatz benötigt und `Message::Quit` genügend Speicherplatz
+Variante den meisten Speicherplatz benötigt. Rust sieht, dass `Message::Quit`
+keinen Speicherplatz benötigt, und `Message::Move` genügend Speicherplatz braucht
 um zwei `i32`-Werte zu speichern, und so weiter. Da nur eine Variante verwendet
 wird, ist der größte Speicherplatz, den ein `Message`-Wert benötigt, gleich
 den, der zum Speichern der größten Variante benötigt wird.
@@ -247,7 +248,7 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 15-1: Ein unendlicher `List`-Typ der aus unendlichen 
-`Cons` Varianten besteht</span>
+`Cons`-Varianten besteht</span>
 
 #### Verwenden von `Box<T>`, um einen rekursiven Typ mit einer bekannten Größe zu erhalten
 
@@ -259,12 +260,12 @@ Typen reserviert werden muss. Daher gibt der Compiler den Fehler in Codeblock
   = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to make `List` representable
 ```
 
-In diesem Hinweis bedeutet "indirection" (Dereferenzierung), dass anstelle eines
-direkten Speicherns des Wertes, die Datenstruktur geändert wird, um den Wert
+In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle eines
+direkten Speicherns des Wertes die Datenstruktur geändert wird, um den Wert
 indirekt zu speichern, indem stattdessen ein Zeiger zum Wert gespeichert wird.
 
-Da eine `Box<T>` ein Zeiger ist, weiss Rust immer, wie viel Platz eine `Box<T>`
-benötigt: Die Grösse eines Zeigers ändert sich nicht basierend auf der
+Da eine `Box<T>` ein Zeiger ist, weiß Rust immer, wie viel Platz eine `Box<T>`
+benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
 Datenmenge, auf die er zeigt. Dies bedeutet, dass wir anstelle eines anderen
 `List`-Wertes direkt eine `Box<T>` in die `Cons`-Variante einfügen können. Die
 `Box<T>` zeigt auf den nächsten `List`-Wert, der sich auf dem Haldenspeicher
@@ -275,7 +276,7 @@ ineinander.
 
 Wir können die Definition der Liste `List` in Codeblock 15-2 und die Verwendung
 von `List` in Codeblock 15-3 in den Programmcode von Codeblock 15-5 ändern, der
-kompiliert wird:
+kompilieren wird:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -299,20 +300,20 @@ Die `Cons`-Variante benötigt die Größe eines `i32` plus Platz zum Speichern d
 Zeigerdaten der Box. Die `Nil`-Variante speichert keine Werte und benötigt daher
 weniger Speicher als die `Cons`-Variante. Wir wissen nun, dass jeder `List`-Wert 
 die Größe eines `i32` plus die Größe der Zeigerdaten einer Box annimmt. Durch
-verwenden einer Box haben wir die unendliche, rekursive Kette unterbrochen,
+Verwenden einer Box haben wir die unendliche, rekursive Kette unterbrochen,
 sodass der Compiler die Größe ermitteln kann, die zum Speichern eines
 Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante `Cons`
 jetzt aussieht.
 
 <img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" />
 
-<span class="caption">Codeblock 15-2: Ein `List`-Typ der keine unendliche Größe 
+<span class="caption">Abbildung 15-2: Ein `List`-Typ der keine unendliche Größe 
 hat da `Cons` eine `Box` enthält</span>
 
 Boxen bieten nur die Dereferenzierung und Zuordnung am Haldenspeicher, haben
 aber sonst keine speziellen Funktionalitäten, wie wir sie bei anderen
 intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
-Leistungs-Mehraufwand, der mit diesen zusätzlichen Funktionalitäten verbunden
+Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
 ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
 Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
 Anwendungsfälle für Boxen werden wir uns in Kapitel 17 ansehen.
@@ -325,4 +326,4 @@ Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
 untersuchen. Diese beiden Merkmale sind für die Funktionalität der anderen
 intelligenten Zeigertypen, die wir im restlichen Kapitel erläutern, noch wichtiger.
 
-[trait-objects]: ch17-02-trait-objects.html#using-trait-objects-that-allow-for-values-of-different-types
+[trait-objects]: ch17-02-trait-objects.html
