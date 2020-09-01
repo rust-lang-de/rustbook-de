@@ -4,7 +4,7 @@ rust:
   - stable
 
 script:
-  - cargo install mdbook --vers "^0.3" --no-default-features --features output
+  - cargo install mdbook --vers "^0.4" --no-default-features --features output
   - mdbook build
 
 deploy:
