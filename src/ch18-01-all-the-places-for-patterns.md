@@ -308,9 +308,9 @@ lists) auf die gleiche Weise wie in Funktionsparameterlisten verwenden, da
 Funktionsabschlüsse ähnlich wie Funktionen sind, wie in Kapitel 13 besprochen.
 
 An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
-gesehen, aber Muster funktionieren nicht an allen Orten, an denen wir sie
-verwenden können, gleich. An manchen Orten müssen die Muster unwiderlegbar
-(irrefutable) sein, unter anderen Umständen können sie widerlegbar (refutable)
+gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie
+verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
+(irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
 sein. Wir werden diese beiden Konzepte als Nächstes diskutieren.
 
 [ignoring-values-in-a-pattern]:
