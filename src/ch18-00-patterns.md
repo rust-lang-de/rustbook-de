@@ -25,7 +25,7 @@ Muster verbundene Code nicht ausgeführt.
 
 Dieses Kapitel ist eine Referenz zu allen Dingen, die mit Mustern zu tun haben.
 Wir behandeln die gültigen Stellen, an denen Muster verwendet werden können,
-den Unterschied zwischen widerlegbaren (refutable) und unwiderlegbaren
+den Unterschied zwischen abweisbaren (refutable) und unabweisbaren
 (irrefutable) Mustern und die verschiedenen Arten der Mustersyntax, die du
 sehen kannst. Am Ende des Kapitels wirst du wissen, wie du Muster verwenden
 kannst, um viele Konzepte auf klare Weise auszudrücken.

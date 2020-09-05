@@ -110,7 +110,7 @@
 
 - [Muster (patterns) und Abgleich (matching)](ch18-00-patterns.md)
     - [Alle Stellen an denen Muster (patterns) verwendet werden können](ch18-01-all-the-places-for-patterns.md)
-    - [Widerlegbarkeit: Falls ein Muster (pattern) mal nicht passt](ch18-02-refutability.md)
+    - [Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt](ch18-02-refutability.md)
     - [Mustersyntax](ch18-03-pattern-syntax.md)
 
 - [Fortgeschrittene Sprachelemente](ch19-00-advanced-features.md)
