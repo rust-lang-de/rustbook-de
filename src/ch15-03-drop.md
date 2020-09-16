@@ -1,12 +1,12 @@
-## Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop
+## Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`
 
 Das zweite wichtige Merkmal für intelligente Zeiger ist `Drop`, mit dem man
 anpassen kann, was passiert, wenn ein Wert den Gültigkeitsbereich verlässt. Man
 kann eine Implementierung für das Merkmal (trait) `Drop` für jeden Typ bereitstellen,
 und der angegebene Programmcode kann zum Freigeben von Ressourcen wie Dateien
 oder Netzwerkverbindungen verwendet werden. Wir führen `Drop` im Kontext von
-intelligenten Zeigern ein, da sie Funktionalität des Merkmals `Drop` fast immer
-bei der Implementierung eines intelligenten Zeigers verwendet verwendet wird.
+intelligenten Zeigern ein, da die Funktionalität des Merkmals `Drop` fast immer
+bei der Implementierung eines intelligenten Zeigers verwendet wird.
 Wenn beispielsweise eine `Box<T>` gelöscht wird, wird der Speicherplatz auf dem
 Haldenspeicher freigegeben, auf den die Box zeigt.
 
@@ -21,12 +21,12 @@ mit dem eine Instanz eines bestimmten Typs fertig ist, man wird dennoch keine
 Ressourcen verlieren!
 
 Der Programmcode der ausgeführt wird, wenn ein Wert den Gültigkeitsbereich
-verlässt, wird durch implementieren des Merkmals `Drop` angegeben. Für das
+verlässt, wird durch Implementieren des Merkmals `Drop` angegeben. Für das
 Merkmal `Drop` muss man eine Methode `drop` implementieren, die eine 
 veränderliche Referenz auf `self` enthält. Um zu sehen, wann Rust `drop`
 aufruft, implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 
-Codeblock 15-14 zeigt eine `CustomSmartPointer` Struktur (struct), deren einzige 
+Codeblock 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige 
 benutzerdefinierte Funktionalität darin besteht, dass `Lösche
 CustomSmartPointer!` ausgegeben wird, wenn die Instanz den Gültigkeitsbereich
 verlässt. Dieses Beispiel zeigt, wann Rust die `drop`-Funktion ausführt.
@@ -54,22 +54,22 @@ fn main() {
     println!("CustomSmartPointers erzeugt.");
 }
 ```
-<span class="caption">Codeblock 15-14: Eine `CustomSmartPointer` Struktur die
-das `Drop`-Merkmal dort implementiert wo wir unseren Programmcode für das
+<span class="caption">Codeblock 15-14: Eine Struktur `CustomSmartPointer` die
+das `Drop`-Merkmal implementiert wo wir unseren Programmcode für das
 Aufräumen platzieren würden</span>
 
-Das Merkmal `Drop` ist im Vorspiel enthalten, daher müssen wir es nicht in den
+Das Merkmal `Drop` ist im Präludium (prelude) enthalten, daher müssen wir es nicht in den
 Gültigkeitsbereich bringen. Wir implementieren das Merkmal `Drop` in
 `CustomSmartPointer` und stellen eine Implementierung für die Methode `drop`
 bereit, die `println!` aufruft. Im Hauptteil der `drop`-Funktion kannst du jede
-Logik platzieren, die du ausführen möchtest, wenn deine Instanz deines Typs
+Logik platzieren, die du ausführen möchtest, wenn eine Instanz deines Typs
 ihren Gültigkeitsbereich verlässt. Wir geben hier einen Text aus, um zu zeigen,
 wann Rust `drop` aufruft.
 
 In `main` erstellen wir zwei Instanzen von `CustomSmartPointer` und geben dann 
 `CustomSmartPointers erzeugt` aus. Am Ende von `main` werden unsere Instanzen
 von `CustomSmartPointer` nicht mehr gültig sein, und Rust ruft den Programmcode
-auf, den wir in die `drop`-Methode eingegeben haben, und gibt unsere endgültige
+auf, den wir in der `drop`-Methode angegeben haben, und gibt unsere endgültige
 Nachricht aus. Beachte, dass wir die `drop`-Methode nicht explizit aufrufen
 mussten.
 
@@ -94,35 +94,34 @@ an, den dein Typ ausführen muss, anstatt einen Text auszugeben.
 ### Einen Wert mit `std::mem::drop` frühzeitig löschen
 
 Unglücklicherweise ist es nicht einfach, die automatische `drop`-Funktionalität
-zu deaktivieren, für gewöhnlich ist es auch nicht erforderlich. Der wesentliche
+zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des `Drop`-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
 möchte man jedoch möglicherweise einen Wert frühzeitig bereinigen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
-möchtest du die `drop`-Methode erzwingen, mit der die Sperre freigegeben wird,
-damit andere Programmcodes im Gültigkeitsbereich die Sperre erhalten können. Mit
+möchtest du die `drop`-Methode dazu zwingen, die Sperre freizugegeben,
+damit anderer Programmcode im selben Gültigkeitsbereich die Sperre erhalten kann. Mit
 Rust kann man die `drop`-Methode des `Drop`-Merkmals nicht manuell aufrufen.
 Stattdessen muss man die von der Standardbibliothek bereitgestellte Funktion
 `std::mem::drop` aufrufen, wenn man das Löschen eines Werts vor dem Ende seines
 Gültigkeitsbereich erzwingen möchte.
 
-Wenn wir versuchen die `drop`-Methode des `drop`-Merkmals manuell aufzurufen,
+Wenn wir versuchen die `drop`-Methode des `Drop`-Merkmals manuell aufzurufen,
 indem wir die `main`-Funktion aus Codeblock 15-14 ändern, wie im Codeblock 15-15,
 gezeigt, erhalten wir folgenden Fehler beim Kompilieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 # struct CustomSmartPointer {
 #     data: String,
 # }
-# 
+#
 # impl Drop for CustomSmartPointer {
 #     fn drop(&mut self) {
 #         println!("Lösche CustomSmartPointer und Daten `{}`!", self.data);
 #     }
 # }
-# 
-#  
+#
 fn main() {
     let c = CustomSmartPointer {
         data: String::from("Daten"),
@@ -134,8 +133,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 15-15: Der Versuch, die `drop`-Methode 
-manuell aus dem `Drop`-Merkmal aufzurufen um den Programmcode frühzeitig zu
-bereinigen</span>
+des `Drop`-Merkmals manuell aufzurufen, um frühzeitig zu bereinigen</span>
 
 Wenn wir versuchen, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung ausgegeben:
@@ -163,13 +161,13 @@ Programmierbegriff für eine Funktion ist, die eine Instanz bereinigt. Ein
 erstellt. Die `drop`-Funktion in Rust ist ein bestimmter *Destruktor*.
 
 Rust lässt uns `drop` nicht explizit aufrufen, da Rust immer noch automatisch
-für den Wert am Ende von `main` `drop` aufruft. Dies wäre ein *double free*
-Fehler, da Rust versuchen würde, den gleichen Wert zweimal aufzuräumen.
+für den Wert am Ende von `main` `drop` aufruft. Dies wäre ein *double
+free*-Fehler, da Rust versuchen würde, den gleichen Wert zweimal aufzuräumen.
 
 Die `std::mem::drop`-Funktion unterscheidet sich von der Methode `drop` im
-Merkmal `Drop`. Wir rufen es auf, indem wir den Wert dessen vorzeitige Löschung
+Merkmal `Drop`. Wir rufen sie auf, indem wir den Wert, dessen vorzeitige Löschung
 wir erzwingen möchten, der Funktion als Argument mitgeben. Die Funktion befindet
-sich im Vorspiel, daher können wir `main` in Codeblock 15-15 ändern, um die
+sich im Präludium, daher können wir `main` in Codeblock 15-15 ändern, um die
 `drop`-Funktion wie in Codeblock 15-16 gezeigt aufzurufen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -211,20 +209,20 @@ Lösche CustomSmartPointer und Daten `Daten`!
 CustomSmartPointer vor dem Ende von main gelöscht.
 ```
 
-Der Text ```Lösche CustomSmartPointer und Daten `Daten`!```  Wird zwischen dem 
+Der Text ```Lösche CustomSmartPointer und Daten `Daten`!``` wird zwischen 
 `CustomSmartPointer erzeugt` und `CustomSmartPointer vor dem Ende von main gelöscht.`
 ausgegeben und zeigt, dass der `drop`-Methodencode aufgerufen wird um `c` an
 diesem Punkt zu löschen.
 
-Sie können den Programmcode, der in einer Implementierung des `Drop`-Merkmals
+Du kannst den Programmcode, der in einer Implementierung des `Drop`-Merkmals
 angegeben ist, auf viele Arten verwenden, um die Bereinigung bequem und sicher
 zu gestalten, du kannst ihn beispielsweise dazu verwnden, um deinen eigenen
-Speicherzuweiser (memory allocator) zu erstellen! Mit dem Merkmal `Drop` und dem 
-Besitzsystem von Rust musst du nicht daran denken den Programmcode zu
+Speicher-Allokator (memory allocator) zu erstellen! Mit dem Merkmal `Drop` und dem 
+Eigentümerschaftssystem von Rust musst du nicht daran denken den Programmcode zu
 bereinigen, da Rust dies automatisch tut.
 
 Man muss sich auch keine Sorgen über Probleme machen, die sich aus der
-versehentlicher Bereinigung noch verwendeter Werte ergeben: Das Besitzersystem,
+versehentlichen Bereinigung noch verwendeter Werte ergeben: Das Eigentümerschaftssystem,
 das sicherstellt, das Referenzen immer gültig sind, stellt auch sicher, dass
 `drop` nur einmal aufgerufen wird, wenn der Wert nicht mehr verwendet wird.
 
