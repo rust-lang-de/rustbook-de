@@ -264,7 +264,7 @@ gelernt, wie es geht:
 * Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
 
 Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um
-sich an das Lesen und Schreiben von Rost-Code zu gewöhnen. In Kapitel 2 werden
+sich an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden
 wir also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen
 möchtest, zu lernen, wie gängige Programmierkonzepte in Rust funktionieren,
 lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.
