@@ -401,7 +401,7 @@ aufrufen wollen</span>
 Das Angeben des Merkmalsnamens vor dem Methodennamen verdeutlicht Rust, welche
 Implementierung von `fly` wir aufrufen wollen. Wir könnten auch
 `Human::fly(&person)` schreiben, was äquivalent zu `person.fly()` ist, das wir
-in Listing 19-18 verwendet haben, aber das ist etwas länger zu schreiben, wenn
+in Codeblock 19-18 verwendet haben, aber das ist etwas länger zu schreiben, wenn
 wir nicht vereindeutigen müssen.
 
 Beim Ausführen dieses Codes wird Folgendes ausgegeben:

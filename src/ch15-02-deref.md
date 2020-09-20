@@ -101,7 +101,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 15-7: Using the dereference operator on a
+<span class="caption">Codeblock 15-7: Using the dereference operator on a
 `Box<i32>`</span>
 
 Der einzige Unterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir 

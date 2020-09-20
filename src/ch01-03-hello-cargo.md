@@ -111,7 +111,7 @@ fn main() {
 ```
 
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
-wir in Listing 1-1 geschrieben haben! Die Unterschiede zwischen unserem
+wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
 vorherigen Projekt und dem Projekt, das Cargo generiert, bestehen bisher darin,
 dass Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben eine
 Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.

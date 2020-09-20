@@ -160,7 +160,7 @@ am Anfang der Datei *src/lib.rs* Dokumentationskommentare hinzufügen die mit
 #}
 ```
 
-<span class="caption">Listing 14-2: Dokumentation für die gesamte
+<span class="caption">Codeblock 14-2: Dokumentation für die gesamte
 `my_crate`-Kiste</span>
 
 Beachte, dass nach der letzten Zeile, die mit `//!` beginnt, kein Programmcode
