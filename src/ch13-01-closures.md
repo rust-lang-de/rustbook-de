@@ -868,7 +868,7 @@ Gültigkeitsbereich definiert wurde wie `equal_to_x`.
 Mit Funktionen können wir dasselbe nicht machen. Wenn wir es wie im folgenden
 Beispiel versuchen wird der Programmcode nicht kompilieren:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,does_not_compile
 fn main() {
