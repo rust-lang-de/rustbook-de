@@ -306,7 +306,7 @@ Programmcode der `art`-Kiste ändern, um `pub use`-Anweisungen hinzuzufügen, um
 die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
 gezeigt:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore
 //! # Art

@@ -38,7 +38,7 @@ nicht im kompilierten Ergebnis enthalten sein sollen.
 Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
 #[cfg(test)]
@@ -70,7 +70,7 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion `internal_adder`.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
 pub fn add_two(a: i32) -> i32 {
@@ -127,7 +127,7 @@ Lass uns einen Integrationstest erstellen. Wenn sich der Code in Codeblock
 *tests* und eine neue Datei mit dem Namen *tests/integration_test.rs* und gib
 den Code aus Codeblock 11-13 ein.
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
 use adder;
@@ -239,7 +239,7 @@ erstellen und eine Funktion namens `setup` darin platzieren, können wir `setup`
 etwas Code hinzufügen, den wir von mehreren Testfunktionen in mehreren
 Testdateien aufrufen wollen:
 
-<span class="filename">Filename: tests/common.rs</span>
+<span class="filename">Dateiname: tests/common.rs</span>
 
 ```rust
 pub fn setup() {
@@ -302,7 +302,7 @@ Integrationstestdateien als Modul verwenden. Hier ist ein Beispiel für den
 Aufruf der Funktion `setup` aus dem Test `it_adds_two` in
 *tests/integration_test.rs*:
 
-<span class="filename">Filename: tests/integration_test.rs</span>
+<span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
 use adder;

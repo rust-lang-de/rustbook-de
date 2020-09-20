@@ -32,7 +32,7 @@ eine neue Bibliothek namens `restaurant`, indem du `cargo new --lib restaurant`
 ausführst; dann schreibe den Code aus Codeblock 7-1 in *src/lib.rs*, um einige
 Module und Funktionssignaturen zu definieren.
 
-<span class="filename">Filename: src/lib.rs</span>
+<span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
 mod front_of_house {
