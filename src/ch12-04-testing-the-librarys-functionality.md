@@ -322,7 +322,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 
 Die Methode `lines` gibt einen Iterator zurück. Wir werden in [Kapitel
 13][ch13-iterators] ausführlich über Iteratoren sprechen, aber erinnere dich
-daran, dass du diese Art der Verwendung eines Iterators in [Listing
+daran, dass du diese Art der Verwendung eines Iterators in [Codeblock
 3-5][ch3-iter] gesehen hast, wo wir eine `for`-Schleife mit einem Iterator
 benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.
 
