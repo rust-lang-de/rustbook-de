@@ -1,6 +1,6 @@
 ## Unsicheres (unsafe) Rust
 
-Bei allem Code, den wir bisher diskutiert haben, wurden Rusts
+Bei allem Code, den wir bisher besprochen haben, wurden Rusts
 Speichersicherheitsgarantien zur Kompilierzeit erzwungen. Allerdings ist in
 Rust eine zweite Sprache versteckt, die diese Speichersicherheitsgarantien
 nicht erzwingt: Sie heißt *unsicheres Rust* (unsafe Rust) und funktioniert
@@ -531,7 +531,7 @@ unveränderlichen, statischen Variablen</span>
 
 Statische Variablen ähneln Konstanten, die wir im Abschnitt [„Unterschiede
 zwischen Variablen und Konstanten“][differences-between-variables-and-constants]
-in Kapitel 3 diskutiert haben. Die Namen von statischen Variablen stehen per
+in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
 Konvention in `SCHREIENDER_SCHLANGENSCHRIFT` und wir *müssen* den Typ der
 Variablen annotieren, der in diesem Beispiel `&'static str` ist. Statische
 Variablen können nur Referenzen mit der Lebensdauer `'static` speichern, was

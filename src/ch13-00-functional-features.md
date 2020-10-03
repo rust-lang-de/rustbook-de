@@ -9,7 +9,7 @@ und so weiter.
                  
 Gegenstand dieses Kapitels ist es nicht, zu erörtern, was funktionale
 Programmierung ist oder nicht, stattdessen werden wir einige Funktionalitäten von
-Rust diskutieren, die denen vieler anderer Sprachen ähneln und häufig als
+Rust besprechen, die denen vieler anderer Sprachen ähneln und häufig als
 funktional bezeichnet werden. 
 
 Im Einzelnen wird Folgendes behandelt:

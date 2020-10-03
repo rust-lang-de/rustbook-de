@@ -137,7 +137,7 @@ Element von unserem Stapel zu holen.
 
 In Kapitel 3 haben wir erwähnt, dass die `for`-Schleife die häufigste
 Schleifenkonstruktion in Rust-Code ist, aber wir haben das Muster, das `for`
-annimmt, noch nicht diskutiert. In einer `for`-Schleife ist das Muster der
+annimmt, noch nicht besprochen. In einer `for`-Schleife ist das Muster der
 Wert, der direkt auf das Schlüsselwort `for` folgt, sodass in `for x in y` das
 `x` das Muster ist.
 
@@ -177,7 +177,7 @@ Wenn dieser Wert zum Muster `(index, value)` passt, ist `index` gleich `0` und
 ### `let`-Anweisungen
 
 Vor diesem Kapitel hatten wir das Verwenden von Mustern nur explizit mit
-`match` und `if let` diskutiert, aber tatsächlich haben wir Muster auch an
+`match` und `if let` besprochen, aber tatsächlich haben wir Muster auch an
 anderen Stellen verwendet, auch in `let`-Anweisungen. Betrachte zum Beispiel
 diese einfache Variablenzuweisung mit `let`:
 
@@ -311,7 +311,7 @@ An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
 gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie
 verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
 (irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
-sein. Wir werden diese beiden Konzepte als Nächstes diskutieren.
+sein. Wir werden diese beiden Konzepte als Nächstes besprechen.
 
 [ignoring-values-in-a-pattern]:
 ch18-03-pattern-syntax.html#ignoring-values-in-a-pattern

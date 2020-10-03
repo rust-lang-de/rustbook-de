@@ -4,7 +4,7 @@ Dieses Kapitel behandelt Konzepte, die in fast jeder Programmiersprache
 vorkommen, und wie sie in Rust funktionieren. Viele Programmiersprachen haben
 in ihrem Kern viel gemeinsam. Keines der in diesem Kapitel vorgestellten
 Konzepte ist einzigartig für Rust, aber wir werden sie im Kontext von Rust
-diskutieren und die Konventionen beim Verwenden dieser Konzepte erklären.
+besprechen und die Konventionen beim Verwenden dieser Konzepte erklären.
 
 Insbesondere lernst du etwas über Variablen, Basistypen (basic types),
 Funktionen, Kommentare und Kontrollfluss (control flow). Diese Grundlagen

@@ -409,7 +409,7 @@ haben jedoch auch irrelevante Informationen, die wir unseren Benutzern nicht
 geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-10 verwendet
 haben, hier nicht die beste: Das Aufrufen von `panic!` ist für ein
 Programmierproblem besser geeignet als für ein Nutzungsproblem, [wie in Kapitel
-9 diskutiert][ch9-error-guidelines]. Stattdessen können wir die andere Technik
+9 besprochen][ch9-error-guidelines]. Stattdessen können wir die andere Technik
 verwenden, über die du in Kapitel 9 gelernt hast &ndash; [Rückgabe eines
 `Result`][ch9-result] um entweder Erfolg oder einen Fehler anzuzeigen.
 
