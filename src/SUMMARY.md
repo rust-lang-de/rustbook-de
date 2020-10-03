@@ -96,8 +96,8 @@
     - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
 
 - [Furchtlose Nebenläufigkeit](ch16-00-concurrency.md)
-    - [Mit Prozessen (threads) Programmcode gleichzeitig ausführen](ch16-01-threads.md)
-    - [Nachrichtenaustausch zwischen Prozessen (threads)](ch16-02-message-passing.md)
+    - [Mit Strängen (threads) Programmcode gleichzeitig ausführen](ch16-01-threads.md)
+    - [Nachrichtenaustausch zwischen Strängen (threads)](ch16-02-message-passing.md)
     - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
     - [Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Sync` und `Send`](ch16-04-extensible-concurrency-sync-and-send.md)
 
