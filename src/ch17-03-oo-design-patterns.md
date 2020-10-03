@@ -684,7 +684,7 @@ müssen. Die Struktur `Published` überschreibt die Methode `content` und gibt
 den Wert in `post.content` zurück.
 
 Beachte, dass wir Lebensdauer-Annotationen bei dieser Methode benötigen, wie
-wir in Kapitel 10 diskutiert haben. Wir nehmen eine Referenz auf ein `post` als
+wir in Kapitel 10 besprochen haben. Wir nehmen eine Referenz auf ein `post` als
 Argument und geben eine Referenz auf einen Teil dieses `post` zurück, sodass
 die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des
 `post`-Arguments zusammenhängt.

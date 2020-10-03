@@ -259,7 +259,7 @@ Sprachen zu haben. Es ist durchweg ein Benutzerfavorit.
 
 ### Abgleiche sind vollständig
 
-Es gibt noch einen weiteren Aspekt von `match`, den wir diskutieren müssen.
+Es gibt noch einen weiteren Aspekt von `match`, den wir besprechen müssen.
 Betrachte folgende Version unserer Funktion `plus_one`, die einen Fehler hat
 und sich nicht kompilieren lässt:
 
@@ -304,7 +304,7 @@ sogar, welches Muster wir vergessen haben! Abgleiche in Rust sind
 *vollständig*: Wir müssen jede letzte Möglichkeit ausschöpfen, damit der Code
 gültig ist! Speziell im Fall `Option<T>` schützt uns Rust davor, den Fall
 `None` zu übersehen, und davon auszugehen, dass wir einen Wert haben, obwohl
-vielleicht null vorliegt, und macht so den zuvor diskutierten Milliardenfehler
+vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
 unmöglich.
 
 ### Der Platzhalter `_`

@@ -59,7 +59,7 @@ einem Vektor und Ausgeben dieser Werte</span>
 Zuerst bringen wir das Modul `std::env` mit einer `use`-Anweisung in den
 Gültigkeitsbereich, damit wir seine `args`-Funktion verwenden können. Beachte,
 dass die Funktion `std::env::args` in zwei Modulebenen verschachtelt ist. Wie
-wir in [Kapitel 7][ch7-idiomatic-use] diskutiert haben, ist es in Fällen, in
+wir in [Kapitel 7][ch7-idiomatic-use] besprochen haben, ist es in Fällen, in
 denen die gewünschte Funktion in mehr als einem Modul verschachtelt ist,
 üblich, das übergeordnete Modul in den Gültigkeitsbereich zu bringen, anstatt
 nur die Funktion. Auf diese Weise können wir leicht andere Funktionen aus

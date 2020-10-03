@@ -308,7 +308,7 @@ ausführlicher erklärt.)
 ### Behandeln potentieller Fehler mit dem Typ `Result`
 
 Wir arbeiten noch immer an dieser Codezeile. Obwohl wir jetzt eine dritte
-Textzeile diskutieren, ist sie immer noch Teil einer einzigen logischen
+Textzeile besprechen, ist sie immer noch Teil einer einzigen logischen
 Codezeile. Der nächste Teil ist diese Methode:
 
 ```rust,ignore
@@ -338,7 +338,7 @@ io::stdin().read_line(&mut guess).expect("Fehler beim Lesen der Zeile");
 ```
 
 Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
-aufzuteilen. Lass uns nun diskutieren, was diese Zeile bewirkt. 
+aufzuteilen. Lass uns nun besprechen, was diese Zeile bewirkt. 
 
 Wie bereits erwähnt, schreibt `read_line` das, was der Benutzer eingibt, in die
 Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen Wert zurück
@@ -400,7 +400,7 @@ Kapitel 9 erfährst du, wie man sich von Fehlern erholt.
 ### Ausgeben von Werten mit `println!`-Platzhaltern
 
 Abgesehen von der schließenden geschweiften Klammer gibt es in dem bisher
-hinzugefügten Code nur noch eine weitere Zeile zu diskutieren, nämlich die
+hinzugefügten Code nur noch eine weitere Zeile zu besprechen, nämlich die
 folgende: 
 
 ```rust,ignore

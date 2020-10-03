@@ -44,7 +44,7 @@ Programmcode schreiben kannst, der entweder mit Referenzen oder intelligenten
 Zeigern funktioniert. Mit dem Merkmal `Drop` kannst du den Programmcode
 anpassen, der ausgeführt wird, wenn eine Instanz des intelligenten Zeigers den
 Gültigkeitsbereich (scope) verlässt. In diesem Kapitel werden wir beide Merkmale
-diskutieren und zeigen, warum sie für intelligente Zeiger wichtig sind.
+besprechen und zeigen, warum sie für intelligente Zeiger wichtig sind.
 
 Da das Muster des intelligenten Zeigers ein allgemeines Entwurfsmuster ist, das
 in Rust häufig verwendet wird, werden in diesem Kapitel nicht alle vorhandenen
@@ -62,7 +62,7 @@ behandeln:
 
 Darüber hinaus wird das *innere Veränderlichkeitsmuster* (interior mutability pattern)
 behandelt, bei dem ein unveränderlicher Typ eine API zum Verändern eines inneren
-Werts verfügbar macht. Wir werden auch *Referenzzyklen* diskutieren, wie diese
+Werts verfügbar macht. Wir werden auch *Referenzzyklen* besprechen, wie diese
 Speicherverlust verursachen können und wie das verhindert werden kann.
 
 Lass uns in die Materie eintauchen!

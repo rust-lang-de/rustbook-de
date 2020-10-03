@@ -39,7 +39,7 @@ Verhalten direkt zu ändern. Dies ermöglicht es dem Programmierer, die Interna
 eines Objekts zu ändern und umzugestalten, ohne Code ändern zu müssen, der das
 Objekt verwendet.
 
-Wie man die Kapselung steuert, haben wir in Kapitel 7 diskutiert: Wir können
+Wie man die Kapselung steuert, haben wir in Kapitel 7 besprochen: Wir können
 das Schlüsselwort `pub` benutzen, um zu entscheiden, welche Module, Typen,
 Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere
 ist standardmäßig privat. Zum Beispiel können wir eine Struktur

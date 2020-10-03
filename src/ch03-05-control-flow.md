@@ -39,7 +39,7 @@ Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte Klammern
 gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken verbunden sind,
 werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie die Zweige in
 `match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der Schätzung mit der
-Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 diskutiert
+Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
 haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht

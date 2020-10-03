@@ -243,7 +243,7 @@ einschließlich `U+10FFFF`. Ein „Zeichen“ ist jedoch nicht wirklich ein Konz
 in Unicode, deine menschliche Intuition dafür, was ein „Zeichen“ ist, stimmt
 möglicherweise nicht mit dem überein, was ein `char` in Rust ist. Wir werden
 dieses Thema in [„UTF-8-kodierten Text in Zeichenketten (strings)
-ablegen“][strings] in Kapitel 8 im Detail diskutieren.
+ablegen“][strings] in Kapitel 8 im Detail besprechen.
 
 ### Verbund-Typen
 

@@ -8,7 +8,7 @@ Datenstruktur, als viele Programmierer ihnen zugestehen, und UTF-8. Diese
 Faktoren kombinieren sich in einer Weise, die schwierig erscheinen kann, wenn
 man von anderen Programmiersprachen kommt.
 
-Es ist hilfreich, Zeichenketten im Kontext von Kollektionen zu diskutieren, da
+Es ist hilfreich, Zeichenketten im Kontext von Kollektionen zu besprechen, da
 Zeichenketten als Byte-Kollektion implementiert sind, sowie einige Methoden,
 die nützliche Funktionalitäten bieten, wenn diese Bytes als Text interpretiert
 werden. In diesem Abschnitt werden wir über `String`-Operationen sprechen, die
