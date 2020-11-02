@@ -314,4 +314,4 @@ verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
 sein. Wir werden diese beiden Konzepte als Nächstes besprechen.
 
 [ignoring-values-in-a-pattern]:
-ch18-03-pattern-syntax.html#ignoring-values-in-a-pattern
+ch18-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster
