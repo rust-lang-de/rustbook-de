@@ -23,7 +23,7 @@ intelligenten Zeigern arbeiten können.
 > `Deref`, daher ist es weniger wichtig, wo die Daten tatsächlich gespeichert sind
 > als das zeigerähnliche Verhalten.
 
-### Dem Zeiger zu den Wert mit dem Dereferenzierungsoperator folgen
+### Dem Zeiger zum Wert folgen mit dem Dereferenzierungsoperator
 
 Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
 Zeiger vorzustellen, ein Pfeil der auf einen Wert zeigt der an einer anderen

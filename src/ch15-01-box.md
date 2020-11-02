@@ -305,7 +305,7 @@ sodass der Compiler die Größe ermitteln kann, die zum Speichern eines
 Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante `Cons`
 jetzt aussieht.
 
-<img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" />
+<img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" style="width: 30%;" />
 
 <span class="caption">Abbildung 15-2: Ein `List`-Typ der keine unendliche Größe 
 hat da `Cons` eine `Box` enthält</span>

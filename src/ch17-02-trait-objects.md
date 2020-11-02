@@ -505,7 +505,7 @@ Merkmalsobjekt verwenden kannst. Wenn du an weiteren Details zur
 Objektsicherheit interessiert sind, lies [Rust RFC 255][rfc-255].
 
 [dynamically-sized]:
-ch19-04-advanced-types.html#dynamically-sized-types-and-the-sized-trait
+ch19-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
 [performance-of-code-using-generics]:
 ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen
 [rfc-255]:

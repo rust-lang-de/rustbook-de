@@ -153,7 +153,7 @@ Speicher wird bei einem Zählerwert von 1 einfach bestehen bleiben, für immer.
 Zur Veranschaulichung dieses Referenzzyklus haben wir in Abbildung 15-4 ein
 Diagramm erstellt.
 
-<img alt="Reference cycle of lists" src="img/trpl15-04.svg" class="center" />
+<img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 30%;" />
 
 <span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen `a` und `b`,
 die aufeinander zeigen</span>
