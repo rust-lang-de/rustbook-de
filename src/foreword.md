@@ -1,7 +1,7 @@
 # Vorwort
 
 Es war nicht immer so klar, aber bei der Programmiersprache Rust geht es im
-Grunde um *Befähigung*: Egal, welche Art von Kode du jetzt schreibst, Rust
+Grunde um *Befähigung*: Egal, welche Art von Code du jetzt schreibst, Rust
 befähigt dich dazu, weiter zu gehen, mit Vertrauen in einer größeren Vielfalt
 von Bereichen zu programmieren, als du es zuvor getan hast.
 
@@ -10,7 +10,7 @@ Speicherverwaltung, Datenrepräsentation und Nebenläufigkeit wichtig sind.
 Traditionellerweise gilt dieser Bereich der Programmierung als geheimnisvoll
 und nur wenigen Auserwählten zugänglich, die die erforderliche Erfahrung
 gesammelt haben, um berüchtigte Fallstricke vermeiden zu können. Und selbst
-diejenigen, die damit arbeiten, tun dies mit Sorgfalt, damit ihr Kode nicht
+diejenigen, die damit arbeiten, tun dies mit Sorgfalt, damit ihr Code nicht
 angreifbar ist, abstürzt oder fehlerhaft ist.
 
 Rust baut diese Barrieren ab, indem es die alten Fallstricke beseitigt und ein
@@ -26,12 +26,12 @@ Programmierer, die bereits mit systemnahem Code arbeiten, können Rust nutzen,
 um ihre Ambitionen zu steigern. Beispielsweise ist die Einführung von
 Parallelität in Rust ein relativ risikoarmes Unterfangen: Der Compiler fängt
 die klassischen Fehler für dich ab. Und du kannst aggressivere Optimierungen in
-deinem Kode wagen mit der Gewissheit, keine versehentlichen Abstürze oder
+deinem Code wagen mit der Gewissheit, keine versehentlichen Abstürze oder
 Verwundbarkeiten einzuführen.
 
 Aber Rust ist nicht auf systemnahe Programmierung beschränkt. Es ist
 ausdrucksstark und ergonomisch genug, um das Schreiben von
-Kommandozeilen-Anwendungen, Webservern und vielen anderen Arten an Kode recht
+Kommandozeilen-Anwendungen, Webservern und vielen anderen Arten an Code recht
 angenehm zu machen &ndash; du wirst später in diesem Buch einfache Beispiele
 dazu finden. Die Arbeit mit Rust ermöglicht es dir, Fähigkeiten zu entwickeln,
 die von einer Domäne auf eine andere übertragen werden können; du kannst Rust
