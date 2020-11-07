@@ -27,7 +27,7 @@ um ihre Ambitionen zu steigern. Beispielsweise ist die Einführung von
 Parallelität in Rust ein relativ risikoarmes Unterfangen: Der Compiler fängt
 die klassischen Fehler für dich ab. Und du kannst aggressivere Optimierungen in
 deinem Kode wagen mit der Gewissheit, keine versehentlichen Abstürze oder
-Verwundbarkeiten einführen.
+Verwundbarkeiten einzuführen.
 
 Aber Rust ist nicht auf systemnahe Programmierung beschränkt. Es ist
 ausdrucksstark und ergonomisch genug, um das Schreiben von
