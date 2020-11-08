@@ -70,6 +70,8 @@ einen Test, der fehlschlägt.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,panics
+# fn main() {}
+#
 fn prints_and_returns_10(a: i32) -> i32 {
     println!("Ich habe den Wert {} erhalten.", a);
     10
