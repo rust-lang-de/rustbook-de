@@ -524,7 +524,7 @@ Der `?`-Operator kann in Funktionen verwendet werden, die den Rückgabetyp
 `Result` haben, weil er so definiert ist, dass er auf die gleiche Weise
 arbeitet wie der `match`-Ausdruck, den wir in Codeblock 9-6 definiert haben. 
 Der Teil von `match`, der den Rückgabetyp `Result` erfordert, ist
-`return Err(e)`, daher kann der Rückgabetyp der Funktion `Result` sein, um mit
+`return Err(e)`, daher muss der Rückgabetyp der Funktion `Result` sein, um mit
 `return` kompatibel zu sein.
 
 Schauen wir uns an, was passiert, wenn wir den `?`-Operator in der Funktion
