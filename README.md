@@ -1,6 +1,7 @@
 # Die Programmiersprache Rust
 
-Dies ist eine deutsche Gemeinschafts-Übersetzung des [offiziellen Rust-Buchs](https://doc.rust-lang.org/book/).
+Dies ist eine deutsche Gemeinschafts-Übersetzung des [offiziellen
+Rust-Buchs](https://doc.rust-lang.org/book/).
 
 ## [> Hier lesen <](https://rust-lang-de.github.io/rustbook-de)
 
@@ -8,7 +9,7 @@ Dies ist eine deutsche Gemeinschafts-Übersetzung des [offiziellen Rust-Buchs](h
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.3"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
@@ -25,7 +26,7 @@ mdbook build
 Vorschläge und Korrekturen oder gar Übersetzungen sind natürlich gerne gewünscht.
 Falls du helfen möchtest, dann am besten via Pull Request oder Issue.
 
-Welche Seiten bereits übersetzt sind bzw. gerade übersetzt werden, findest du auf der
-[Statusseite im Wiki](https://github.com/rust-lang-de/rustbook-de/wiki/Status) heraus.
+Das Buch wurde mittlerweile komplett übersetzt und enthält alle Änderungen des
+englischen Originals bis einschließlich zum **20.10.2020**.
 
 Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).
