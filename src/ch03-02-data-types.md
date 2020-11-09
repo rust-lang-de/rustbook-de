@@ -193,7 +193,8 @@ fn main() {
 
 Jeder Ausdruck in diesen Anweisungen verwendet einen mathematischen Operator
 und wird zu einem einzelnen Wert ausgewertet, der dann an eine Variable
-gebunden wird. Anhang B enthält eine Liste aller Operatoren, die Rust anbietet.
+gebunden wird. [Anhang B][appendix_b] enthält eine Liste aller Operatoren, die
+Rust anbietet.
 
 #### Der boolesche Typ
 
@@ -445,6 +446,7 @@ indem es das Programm sofort beendet, anstatt den Speicherzugriff zuzulassen
 und fortzusetzen. In Kapitel 9 wird mehr über die Fehlerbehandlung von Rust
 gesprochen.
 
+[appendix_b]: appendix-02-operators.md
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [control-flow]: ch03-05-control-flow.html

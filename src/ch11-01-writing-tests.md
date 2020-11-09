@@ -378,7 +378,7 @@ Zusicherung, dass ein kleineres Rechteck nicht in ein größeres Rechteck passt:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-#[derive(Debug)]
+# #[derive(Debug)]
 # struct Rectangle {
 #     width: u32,
 #     height: u32,
@@ -805,7 +805,7 @@ der Funktion `greeting` erhalten haben:
 #     String::from("Hallo!")
 # }
 #
-#[cfg(test)]
+# #[cfg(test)]
 # mod tests {
 #     use super::*;
 #
@@ -819,6 +819,8 @@ der Funktion `greeting` erhalten haben:
         );
     }
 # }
+#
+# fn main() {}
 ```
 
 Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
@@ -1031,7 +1033,7 @@ mod tests {
     }
 }
 #
-#fn main() {}
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-9: Testet, ob ein Zustand einen
@@ -1064,7 +1066,8 @@ vertauschen:
             panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.",
                    value);
         } else if value > 100 {
-            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.", value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.",
+                   value);
         }
 #
 #         Guess { value }
@@ -1081,6 +1084,8 @@ vertauschen:
 #         Guess::new(200);
 #     }
 # }
+#
+# fn main() {}
 ```
 
 Wenn wir diesmal den `should_panic`-Test ausführen, wird er fehlschlagen:
@@ -1126,6 +1131,9 @@ Hier ist der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>`
 verwendet und `Err` zurückgibt, anstatt das Programm abzubrechen:
 
 ```rust
+# #![allow(unused_variables)]
+# fn main() {}
+#
 #[cfg(test)]
 mod tests {
     #[test]
