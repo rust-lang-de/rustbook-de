@@ -689,7 +689,7 @@ bedeutet, dass die zu vergleichenden Werte die Merkmale `PartialEq` und
 Standardbibliothekstypen implementieren diese Merkmale. Für Strukturen und
 Aufzählungen, die du definierst, musst du `PartialEq` implementieren, um
 prüfen zu können, dass Werte dieser Typen gleich oder ungleich sind. Du musst
-`Debug` implementieren, um die Werte zu auszugeben, wenn die Zusicherung
+`Debug` implementieren, um die Werte auszugeben, wenn die Zusicherung
 fehlschlägt. Da es sich bei beiden Merkmalen um ableitbare Merkmale handelt,
 wie in Codeblock 5-12 in Kapitel 5 erwähnt, genügt normalerweise das Ergänzen
 der Annotation `#[derive(PartialEq, Debug)]` bei deiner Struktur- und
