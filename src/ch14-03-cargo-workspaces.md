@@ -19,7 +19,7 @@ Möglichkeiten, einen Arbeitsbereich zu strukturieren. Wir werden einen einen
 üblichen Weg zeigen. Wir haben einen Arbeitsbereich mit einer Binärdatei und
 zwei Bibliotheken. Die Binärdatei stellt die Hauptfunktion bereit und hängt von
 den beiden Bibliotheken ab. Eine Bibliothek stellt die Funktion `add_one` und
-die andere `add-two` zur Verfügung. Diese drei Kisten werden Teil desselben
+die andere `add_two` zur Verfügung. Diese drei Kisten werden Teil desselben
 Arbeitsbereichs sein. Zunächst erstellen wir ein neues Verzeichnis für den
 Arbeitsbereich:
 
@@ -68,7 +68,7 @@ aussehen:
 └── target
 ```
 
-Das Arbeitsbereich verfügt auf der obersten Ebene über ein *Zielverzeichnis* 
+Der Arbeitsbereich verfügt auf der obersten Ebene über ein *Zielverzeichnis* 
 (target), in das die kompilierten Artefakte abgelegt werden sollen. Das Paket
 `adder` hat kein eigenes *Zielverzeichnis*. Selbst wenn wir `cargo build` aus
 dem Verzeichnis *adder* heraus ausführen würden, landen die kompilierten
@@ -83,7 +83,7 @@ Verzeichnisses können die Kisten unnötig wiederholte Erstellung vermeiden.
 ### Erstellen des zweiten Pakets im Arbeitsbereich
 
 Als Nächstes erstellen wir ein weiteres, dem Arbeitsbereich zugehöriges Paket
-und nennen es `add_one`. Ändere die auf der obersten Ebene befindliche Datei
+und nennen es `add-one`. Ändere die auf der obersten Ebene befindliche Datei
 *Cargo.toml* um den *add-one*-Pfad in der Mitgliederliste anzugeben:
 
 <span class="filename">Dateiname: Cargo.toml</span>
@@ -119,7 +119,7 @@ Dein *add*-Verzeichnis sollte nun so aussehen:
 └── target
 ```
 
-Lass uns in der Datei *add_one/src/lib.rs*, eine Funktion `add_one` hinzufügen.
+Lass uns in der Datei *add-one/src/lib.rs*, eine Funktion `add_one` hinzufügen.
 
 <span class="filename">Dateiname: add-one/src/lib.rs</span>
 
@@ -145,7 +145,7 @@ add-one = { path = "../add-one" }
 Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.
 
-Als nächstes verwenden wir die Funktion `add_one` aus der `add_one`-Kiste der
+Als nächstes verwenden wir die Funktion `add_one` aus der `add-one`-Kiste der
 `adder`-Kiste. Öffne die Datei *adder/src/main.rs* und füge oben eine Zeile `use`
 hinzu, um die neue Bibliothekskiste `add-one` in den Gültigkeitsbereich (scope)
 zu bringen. Ändere dann die Funktion `main`, um die Funktion `add_one`
@@ -260,7 +260,7 @@ Arbeitsbereich miteinander kompatibel sind.
 
 #### Hinzufügen eines Tests zu einem Arbeitsbereich
 
-Füge für eine weitere Verbesserung innerhalb der `add_one`-Kiste einen Test der
+Füge für eine weitere Verbesserung innerhalb der `add-one`-Kiste einen Test der
 Funktion `add_one::add_one` hinzu:
 
 <span class="filename">Dateiname: add-one/src/lib.rs</span>
@@ -312,7 +312,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 Der erste Abschnitt der Ausgabe zeigt, dass der Test `it_works` in der
 `add-one`-Kiste bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
 `adder` keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in der
-Kiste `add_one` keine Dokumentationstests gefunden wurden. Wenn du in einem auf
+Kiste `add-one` keine Dokumentationstests gefunden wurden. Wenn du in einem auf
 diese Weise strukturierten Arbeitsbereich `cargo test` ausführst, werden die
 Tests für alle Kisten im Arbeitsbereich ausgeführt.
 
