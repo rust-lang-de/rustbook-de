@@ -13,7 +13,7 @@ werden.
 Ein *Arbeitsbereich* ist eine Reihe von Paketen, die dieselbe Datei
 *Cargo.lock* sowie dasselbe Ausgabeverzeichnis
 (output directory) verwenden. Lass uns mithilfe eines Arbeitsbereiches ein
-Projekt erstellen. Wir verwenden einfachen Programmcode, damit wir uns an die
+Projekt erstellen. Wir verwenden einfachen Programmcode, damit wir uns auf die
 Struktur des Arbeitsbereiches konzentrieren können. Es gibt verschiedene
 Möglichkeiten, einen Arbeitsbereich zu strukturieren. Wir werden einen einen
 üblichen Weg zeigen. Wir haben einen Arbeitsbereich mit einer Binärdatei und
