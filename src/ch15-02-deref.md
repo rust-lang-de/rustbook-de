@@ -119,7 +119,7 @@ Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
 bereitgestellten Typ `Box<T>` ähnelt, um zu erfahren, wie sich intelligente
 Zeiger standardmäßig anders als Referenzen verhalten. Anschließend sehen wir
 uns an, wie man die Möglichkeit zur Verwendung des Dereferenzierungsoperators
-hinzufügen können.
+hinzufügen kann.
 
 Der Typ `Box<T>` wird letztendlich als Tupel-Struktur (tuple struct) mit einem
 Element definiert, sodass Codeblock 15-8 einen Typ `MyBox<T>` auf die gleiche
