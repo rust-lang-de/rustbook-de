@@ -45,11 +45,11 @@ die Benutzer sie um neue Typen erweitern können.
 
 ### Definieren eines Merkmals (trait) für allgemeines Verhalten
 
-Um das Verhalten zu implementieren, das wir `gui` haben wollen, werden wir ein
-Merkmal namens `Draw` definieren, die eine Methode namens `draw` haben wird.
+Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir ein
+Merkmal namens `Draw` definieren, das eine Methode namens `draw` haben wird.
 Dann können wir einen Vektor definieren, der ein *Merkmalsobjekt* (trait
 object) annimmt. Ein Merkmalsobjekt verweist sowohl auf eine Instanz eines
-Typs, der die von uns spezifizierte Merkmal implementiert, als auch auf eine
+Typs, der das von uns spezifizierte Merkmal implementiert, als auch auf eine
 Tabelle, in der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden
 können. Wir erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben,
 z.B. eine Referenz `&` oder einen intelligenten Zeiger `Box<T>`, dann das

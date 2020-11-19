@@ -131,7 +131,7 @@ Zum Beispiel könnten wir ein `HashSet<i32>` anstelle eines `Vec<i32>` für das
 verwendet, nicht geändert werden müssen. Wenn wir stattdessen `list` öffentlich
 machen würden, wäre dies nicht unbedingt der Fall: `HashSet<i32>` und
 `Vec<i32>` haben unterschiedliche Methoden zum Hinzufügen und Entfernen von
-Elementen, sodass der externer Code wahrscheinlich geändert müsste, wenn er
+Elementen, sodass externer Code wahrscheinlich geändert werden müsste, wenn er
 `list` direkt modifizieren würde.
 
 Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
