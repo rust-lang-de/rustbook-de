@@ -172,7 +172,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.read(&mut buffer).unwrap();
 
-    println!("Anfrage: {}", String::from_utf8_lossy(&buffer[..]));
+    println!("Request: {}", String::from_utf8_lossy(&buffer[..]));
 }
 ```
 
