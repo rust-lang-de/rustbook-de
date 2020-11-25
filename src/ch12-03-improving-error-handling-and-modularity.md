@@ -256,7 +256,7 @@ Da nun der Zweck der `parse_config`-Funktion darin besteht, eine
 Funktion in eine Funktion namens `new` ändern, die mit der `Config`-Struktur
 assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
 Instanzen von Typen in der Standardbibliothek erstellen, wie bei `String`,
-indem wir `String::new` aufrufen. In ähnlicher Weise können wir durch ändern
+indem wir `String::new` aufrufen. In ähnlicher Weise können wir durch Ändern
 von `parse_config` in eine Funktion `new`, die mit `Config` assoziiert ist,
 Instanzen von `Config` durch Aufrufen von `Config::new` erzeugen. Codeblock
 12-7 zeigt die Änderungen, die wir vornehmen müssen.
