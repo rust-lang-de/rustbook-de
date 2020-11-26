@@ -483,7 +483,7 @@ Anfrage den Funktionsabschluss dieser Anfrage nur einmal ausführt, was zu
 
 Der Parameter vom Typ `F` hat auch die Merkmalsabgrenzung `Send` und die
 Lebensdauer `'static`, die in unserer Situation nützlich sind: Wir brauchen
-`Send`, um den Merkmalsabgrenzung von einem Strang zu einem anderen zu
+`Send`, um die Merkmalsabgrenzung von einem Strang zu einem anderen zu
 übertragen und `'static`, weil wir nicht wissen, wie lange die Ausführung des
 Strangs dauern wird. Lass uns eine Methode `execute` auf `ThreadPool`
 erstellen, die einen generischen Parameter vom Typ `F` mit diesen Abgrenzungen
@@ -541,7 +541,7 @@ Funktionsabschluss, den wir an `execute` übergeben, noch nicht wirklich auf!
 
 #### Validieren der Anzahl der Stränge in `new`
 
-Wir tun nichts mit den Parametern `new` und `execute`. Lass uns die Rümpfe
+Wir tun nichts mit den Parametern von `new` und `execute`. Lass uns die Rümpfe
 dieser Funktionen mit dem Verhalten implementieren, das wir wollen. Lass uns
 zunächst über `new` nachdenken. Früher wählten wir einen vorzeichenlosen Typ
 für den Parameter `size`, weil ein Vorrat mit einer negativen Anzahl von
@@ -828,8 +828,8 @@ werden soll, wenn wir jeden `Worker` während der Erstellung des `ThreadPool`
 erstellen.
 
 Wir möchten, dass die Struktur `Worker`, die wir gerade erstellt haben, um Code
-aus einer Warteschlange im `ThreadPool` zu holen und diesen Code zur Ausführung
-an seinen Strang zu senden.
+aus einer Warteschlange im `ThreadPool` zu holen, diesen Code zur Ausführung
+an seinen Strang sendet.
 
 In Kapitel 16 hast du etwas über *Kanäle* (channels) gelernt &ndash; eine
 einfache Art der Kommunikation zwischen zwei Strängen &ndash;, die für diesen

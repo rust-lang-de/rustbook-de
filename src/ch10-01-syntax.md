@@ -359,7 +359,7 @@ Hier haben wir eine Methode `x` auf `Point<T>` definiert, die eine Referenz auf
 den Wert im Feld `x` zurückgibt.
 
 Beachte, dass wir `T` direkt nach `impl` deklarieren müssen, damit wir Methoden
-zum Typ `Punkt<T>` implementieren können. Durch das Deklarieren von `T` als
+zum Typ `Point<T>` implementieren können. Durch das Deklarieren von `T` als
 generischen Typ hinter `impl` kann Rust erkennen, dass der Typ in spitzen
 Klammern in `Point` ein generischer und kein konkreter Typ ist.
 

@@ -52,7 +52,7 @@ Da eine Analyse nicht möglich ist, lehnt der Rust-Compiler möglicherweise ein
 ein korrektes Programm ab, wenn er nicht sicher sein kann, dass der Programmcode
 den Eigentümerschaftsregeln entspricht. Auf diese Art ist Rust konservativ. Wenn
 es ein falsches Programm akzeptiert, können Benutzer den Garantien von Rust
-nicht vertrauen. Wenn Rust jedoch ein ein korrektes Programm ablehnt, wird der
+nicht vertrauen. Wenn Rust jedoch ein korrektes Programm ablehnt, wird der
 Programmierer belästigt, obwohl nichts negatives passieren kann. Der Typ
 `RefCell<T>` ist nützlich, wenn man sicher ist, dass der Programmcode den
 Ausleihregeln entspricht, der Compiler dies jedoch nicht verstehen und
@@ -117,7 +117,7 @@ error: could not compile `borrowing`.
 To learn more, run the command again with --verbose.
 ```
 Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
-seinen Methoden selbst veränderlich ist, aber für einen anderen Programmode 
+seinen Methoden selbst veränderlich ist, aber für einen anderen Programmcode 
 unveränderlich erscheint. Programmcode außerhalb der Methoden des Werts kann
 diesen nicht verändern. Die Verwendung von `RefCell<T>` ist eine Möglichkeit,
 die Fähigkeit zur inneren Veränderlichkeit zu erhalten, allerdings
@@ -196,7 +196,7 @@ where
                 .send("Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!");
         } else if percentage_of_max >= 0.75 {
             self.messenger
-                .send("Warnung: Du hast über 50% deines Kontingents verbraucht!");
+                .send("Warnung: Du hast über 75% deines Kontingents verbraucht!");
         }
     }
 }
@@ -315,7 +315,7 @@ die mit einer leeren Liste von Nachrichten beginnen. Wir implementieren dann das
 Merkmal `Messenger` für `MockMessenger` damit wir einem `LimitTracker` einen
 `MockMessenger` übergeben können. Bei der Definition der Methode `send` nehmen wir
 die übergebene Nachricht als Parameter und speichern sie in der Liste
-`MockMessenger` von `sent_messages`.
+`sent_messages` von `MockMessenger`.
 
 Im Test testen wir, was passiert, wenn dem `LimitTracker` gesagt wird, er solle
 `value` auf etwas setzen, das mehr als 75 Prozent des `max`-Wertes beträgt.
@@ -452,7 +452,7 @@ Für die Implementierung der `send`-Methode ist der erste Parameter immer noch
 eine unveränderliche Ausleihe von `self`, die der Merkmalsdefinition entspricht.
 Wir rufen `borrow_mut` auf der `RefCell<Vec<String>>` in `self.sent_messages` auf,
 um eine veränderliche Referenz auf den Wert in der `RefCell<Vec<String>>` zu
-erhalten, der der Vektor ist. Dann können `push` auf der veränderlichen
+erhalten, der der Vektor ist. Dann können wir `push` auf der veränderlichen
 Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten zu
 verfolgen.
 
@@ -575,7 +575,7 @@ selben Gültigkeitsbereich, um zu sehen, dass `RefCell<T>` abstürzt</span>
 
 Wir erstellen eine Variable `one_borrow` für den intelligenten Zeiger 
 `RefMut<T>`, der von `borrow_mut` zurückgegeben wird. Dann erstellen wir auf die
-gleiche Weise eine weitere veränderlichen Ausleihe in der Variable `two_borrow`.
+gleiche Weise eine weitere veränderliche Ausleihe in der Variable `two_borrow`.
 Dadurch werden zwei veränderbare Referenzen im selben Bereich erstellt, was
 nicht zulässig ist. Wenn wir die Tests für unsere Bibliothek ausführen, wird der
 Programmcode in Codeblock 15-23 fehlerfrei kompiliert, aber der Test schlägt
@@ -622,13 +622,13 @@ erhalten, als reguläre Referenzen bieten.
 
 Eine übliche Methode zur Verwendung von `RefCell<T>` ist die Kombination mit
 `Rc<T>`. Erinnere dich, dass man mit `Rc<T>` mehrere Eigentümer einiger Daten
-haben können, aber nur unveränderlichen Zugriff auf diese Daten erhalten. Wenn
+haben kann, aber nur unveränderlichen Zugriff auf diese Daten erhält. Wenn
 man eine `Rc<T>` hat, das eine `RefCell<T>` enthält, kann man einen Wert
 erhalten, der mehrere Eigentümer hat *und* veränderlich ist!
 
 Erinnern wir uns beispielsweise an das Beispiel für die Cons-Liste in Codeblock
 15-18, in dem wir `Rc<T>` verwendet haben, um mehrere Listen die gemeinsame
-Nutzung einer anderen Liste ermöglichen. Da `Rc<T>` nur unveränderliche Werte
+Nutzung einer anderen Liste zu ermöglichen. Da `Rc<T>` nur unveränderliche Werte
 enthält, können wir keinen der Werte in der Liste ändern, sobald wir sie
 erstellt haben. Fügen wir `RefCell<T>` hinzu, um die Werte in den Listen ändern
 zu können. Codeblock 15-24 zeigt, dass wir durch Verwendung einer `RefCell<T>`
@@ -709,8 +709,8 @@ einzutauschen.
 
 Die Standardbibliothek verfügt über andere Typen, die eine innere
 Veränderlichkeit bieten, z.B. `Cell<T>`, die ähnlich ist, mit der Ausnahme, dass
-der Wert nicht auf den inneren Wert referenziert, sondern in die `Cell<T>` und aus
-diese herauskopiert wird. Es gibt auch `Mutex<T>`, das eine innere
+der Wert nicht auf den inneren Wert referenziert, sondern in die `Cell<T>` hinein 
+und aus dieser herauskopiert wird. Es gibt auch `Mutex<T>`, das eine innere
 Veränderlichkeit bietet, die sicher über Stränge (threads) hinweg verwendet
 werden kann. Wir werden die Verwendung in Kapitel 16 erläutern. Weitere
 Informationen zu den Unterschieden zwischen diesen Typen findest du in den

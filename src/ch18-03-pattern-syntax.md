@@ -258,7 +258,7 @@ können.
 In ähnlicher Weise passt der zweite Zweig zu jedem Punkt auf der y-Achse, indem
 er angibt, dass der Wert des `x`-Feldes 0 ist, und eine Variable `y`  für den
 Wert des `y` -Feldes erzeugt. Der dritte Zweig spezifiziert keine Literale,
-sodass er zu jedem anderen `Punkt` passt und Variablen für die Felder `x` und
+sodass er zu jedem anderen `Point` passt und Variablen für die Felder `x` und
 `y` erzeugt.
 
 In diesem Beispiel passt der Wert `p` zum zweiten Zweig, da `x` eine 0 enthält,

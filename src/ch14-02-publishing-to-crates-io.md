@@ -292,10 +292,10 @@ fn main() {
 `art`-Kiste mit ihrer internen Struktur exportiert</span>
 
 Der Autor des Programmcodes in Codeblock 14-4, der die Kiste `art` verwendet,
-musste herausfinden, dass sich `PrimaryColor` im Modul `art` und `mix` im Modul
+musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im Modul
 `utils` befindet. Die Modulstruktur der `art`-Kiste ist für Entwickler, die an
 der `art`-Kiste arbeiten, relevanter als für Entwickler die die `art`-Kiste
-verwenden. Die interne Struktur, die Teile der Kiste in das Modul `art` und das
+verwenden. Die interne Struktur, die Teile der Kiste in das Modul `kinds` und das
 Modul `utils` unterteilt, enthält keine nützlichen Informationen für jemanden,
 der die `art`-Kiste benutzen möchte, sondern sorgt für Verwirrung, da Entwickler
 herausfinden müssen wo sie suchen müssen und die Struktur ist unpraktisch, da

@@ -213,7 +213,7 @@ Werte 0 beträgt.
 
 Da der Wert, auf den `Weak<T>` referenziert, möglicherweise aufgeräumt wurde, musst
 du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
-tun, auf dem ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für eine
+tun, auf den ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für eine
 `Weak<T>`-Instanz auf, die eine `Option<Rc<T>>`zurückgibt, erhält man ein `Some`
 als Ergebnis, wenn der Wert `Rc<T>` noch nicht aufgeräumt wurde, und das Ergebnis
 `None`, wenn der `Rc<T>`-Wert gelöscht wurde. Da `upgrade` eine
@@ -418,7 +418,7 @@ im Feld `parent`, da `branch` keinen Eltern-Knoten hat. Wir haben
 noch immer `leaf` als Kind-Element von `branch`. Sobald
 wir die `Node`-Instanz in `branch` haben, können wir `leaf` ändern, um ihm eine
 `Weak<Node>`-Referenz auf sein Eltern-Element zu geben. Wir verwenden
-die `bor_mut`-Methode für `RefCell<Weak<Node>>` im `parent`-Feld von `leaf` und
+die `borrow_mut`-Methode für `RefCell<Weak<Node>>` im `parent`-Feld von `leaf` und
 verwenden dann die Funktion `Rc::downgrade`, um eine `Weak<Node>`-Referenz auf
 `branch` aus dem `Rc<Node>` in `branch` zu erzeugen.
 

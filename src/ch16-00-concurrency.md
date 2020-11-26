@@ -25,7 +25,7 @@ du deinen Code reparieren, während du daran arbeitest, und nicht möglicherweis
 erst, nachdem er in Produktion ausgeliefert wurde. Wir haben diesem Aspekt von
 Rust den Spitznamen *furchtlose Nebenläufigkeit* (fearless concurrency)
 gegeben. Die furchtlose Nebenläufigkeit ermöglicht es dir, Code zu schreiben,
-der frei von subtilen Fehlern ist und leicht zu refaktorieren ist, ohne neue
+der frei von subtilen Fehlern und leicht zu refaktorieren ist, ohne neue
 Fehler zu erzeugen.
 
 > Anmerkung: Der Einfachheit halber werden wir viele der Probleme als
