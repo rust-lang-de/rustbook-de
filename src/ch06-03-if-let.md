@@ -7,7 +7,7 @@ auf einen `Option<u8>`-Wert passt, aber nur dann Code ausführen soll, wenn der
 Wert 3 ist.
 
 ```rust
-# let some_u8_value = Some(0u8);
+let some_u8_value = Some(0u8);
 match some_u8_value {
     Some(3) => println!("drei"),
     _ => (),
@@ -27,9 +27,9 @@ verwenden. Der folgende Code verhält sich genauso wie der `match`-Ausdruck in
 Codeblock 6-6:
 
 ```rust
-# let some_u8_value = Some(0u8);
+let some_u8_value = Some(0u8);
 if let Some(3) = some_u8_value {
-    println!("three");
+    println!("drei");
 }
 ```
 

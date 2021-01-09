@@ -270,9 +270,9 @@ Es gibt eine natürliche Stelle, an der wir den Speicher, den unser `String`
 benötigt, an den Speicher-Allokator zurückgeben können: Wenn `s` den
 Gültigkeitsbereich verlässt. Wenn eine Variable den Gültigkeitsbereich
 verlässt, ruft Rust für uns eine spezielle Funktion auf: Diese Funktion heißt
-`drop` und an dieser Stelle kann der Autor von `String` Code einfügen, um den
-Speicher zurückzugeben. Rust ruft `drop` automatisch an der schließenden
-geschweiften Klammer auf.
+[`drop`][drop-doc] und an dieser Stelle kann der Autor von `String` Code
+einfügen, um den Speicher zurückzugeben. Rust ruft `drop` automatisch an der
+schließenden geschweiften Klammer auf.
 
 > Hinweis: In C++ wird dieses Muster der Freigabe von Ressourcen am Ende der
 > Lebensdauer eines Elements manchmal als *Ressourcenbelegung ist
@@ -395,7 +395,7 @@ error[E0382]: borrow of moved value: `s1`
  --> src/main.rs:5:28
   |
 2 |     let s1 = String::from("Hallo");
-  |         -- move occurs because `s1` has type `std::string::String`, which does not implement the `Copy` trait
+  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
 3 |     let s2 = s1;
   |              -- value moved here
 4 | 
@@ -405,7 +405,7 @@ error[E0382]: borrow of moved value: `s1`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```
@@ -497,10 +497,13 @@ hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits]
 Anhang C.
 
 Welche Typen unterstützen also `Copy`? Du kannst die Dokumentation für einen
-gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt,
-dass jede Gruppierung von einfachen skalaren Werten `Copy` unterstützt, und
-nichts, was eine Allokation erfordert oder irgendeine Form von Ressource ist,
-`Copy` erlaubt. Hier sind einige Typen, die `Copy` unterstützen:
+gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:
+
+1. Jede Gruppierung von einfachen skalaren Werten unterstützt `Copy`.
+2. Nichts, was eine Allokation erfordert oder irgendeine Form von Ressource
+   ist, erlaubt `Copy`. 
+
+Hier sind einige Typen, die `Copy` unterstützen:
 
 * Alle ganzzahligen Typen, z.B. `u32`.
 * Der boolesche Typ `bool` mit den Werten `true` und `false`.
@@ -639,5 +642,6 @@ diesem Konzept, das *Referenzen* (references) genannt wird.
 
 [data-types]: ch03-02-data-types.html
 [derivable-traits]: appendix-03-derivable-traits.html
+[drop-doc]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
 [method-syntax]: ch05-03-method-syntax.html
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html

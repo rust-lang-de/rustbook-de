@@ -50,7 +50,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0384`.
-error: could not compile `variables`.
+error: could not compile `variables`
 
 To learn more, run the command again with --verbose.
 ```
@@ -262,7 +262,7 @@ error[E0308]: mismatched types
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `variables`.
+error: could not compile `variables`
 
 To learn more, run the command again with --verbose.
 ```

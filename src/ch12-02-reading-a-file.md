@@ -7,15 +7,15 @@ können, um sicherzustellen, dass `minigrep` funktioniert, ist eine Datei mit
 einer kleinen Menge Text über mehrere Zeilen mit einigen sich wiederholenden
 Wörtern. In Codeblock 12-3 ist ein Gedicht von Emily Dickinson, das gut
 funktionieren wird! Erstelle eine Datei namens *poem.txt* im Hauptverzeichnis
-deines Projekts und gib das Gedicht „I’m Nobody! Who are you?“ ein.
+deines Projekts und gib das Gedicht „I'm Nobody! Who are you?“ ein.
 
 <span class="filename">Dateiname: poem.txt</span>
 
 ```text
-I’m nobody! Who are you?
+I'm nobody! Who are you?
 Are you nobody, too?
-Then there’s a pair of us - don’t tell!
-They’d banish us, you know.
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
 
 How dreary to be somebody!
 How public, like a frog
@@ -79,10 +79,10 @@ $ cargo run the poem.txt
 Suche nach the
 In Datei poem.txt
 Mit text:
-I’m nobody! Who are you?
+I'm nobody! Who are you?
 Are you nobody, too?
-Then there’s a pair of us - don’t tell!
-They’d banish us, you know.
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
 
 How dreary to be somebody!
 How public, like a frog

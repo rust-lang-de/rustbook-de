@@ -112,7 +112,7 @@ error[E0596]: cannot borrow `x` as mutable, as it is not declared as mutable
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `borrowing`.
+error: could not compile `borrowing`
 
 To learn more, run the command again with --verbose.
 ```
@@ -343,7 +343,7 @@ error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `limit-tracker`.
+error: could not compile `limit-tracker`
 
 To learn more, run the command again with --verbose.
 ```
@@ -362,7 +362,7 @@ gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub trait Messenger {
 #     fn send(&self, msg: &str);
 # }
@@ -437,8 +437,6 @@ mod tests {
         assert_eq!(mock_messenger.sent_messages.borrow().len(), 1);
     }
 }
-# 
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-22: `RefCell<T>` verwenden, um einen inneren
@@ -594,7 +592,7 @@ failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
 thread 'main' panicked at 'already borrowed: BorrowMutError', src/libcore/result.rs:1188:5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:

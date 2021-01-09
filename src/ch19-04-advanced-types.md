@@ -157,7 +157,7 @@ pub trait Write {
 `Result<..., Error>` wird oft wiederholt. Daher hat `std::io` diese Art von
 Alias-Deklaration:
 
-```rust
+```rust,noplayground
 # use std::fmt;
 #
 type Result<T> = std::result::Result<T, std::io::Error>;
@@ -169,8 +169,6 @@ type Result<T> = std::result::Result<T, std::io::Error>;
 #     fn write_all(&mut self, buf: &[u8]) -> Result<()>;
 #     fn write_fmt(&mut self, fmt: fmt::Arguments) -> Result<()>;
 # }
-#
-# fn main() {}
 ```
 
 Da sich diese Deklaration im Modul `std::io` befindet, können wir den
@@ -178,7 +176,7 @@ vollständig qualifizierten Alias `std::io::Result<T>` verwenden &ndash; das ist
 ein `Result<T, E>` mit `E` als `std::io::Error`. Die Funktionssignaturen des
 Merkmals `Write` sehen am Ende so aus:
 
-```rust
+```rust,noplayground
 # use std::fmt;
 #
 # type Result<T> = std::result::Result<T, std::io::Error>;
@@ -190,8 +188,6 @@ pub trait Write {
     fn write_all(&mut self, buf: &[u8]) -> Result<()>;
     fn write_fmt(&mut self, fmt: fmt::Arguments) -> Result<()>;
 }
-#
-# fn main() {}
 ```
 
 Der Typ-Alias hilft in zweierlei Hinsicht: Er macht es einfacher, Code zu
@@ -208,13 +204,11 @@ vor, ihn den *Niemals-Typ* (never type) zu nennen, weil er an der Stelle des
 Rückgabetyps steht, wenn eine Funktion niemals zurückkehrt. Hier ist ein
 Beispiel:
 
-```rust
+```rust,noplayground
 fn bar() -> ! {
     // --abschneiden--
 #     panic!();
 }
-#
-# fn main() {}
 ```
 
 Dieser Code wird als „die Funktion `bar` kehrt niemals zurück“ gelesen.
@@ -324,8 +318,6 @@ impl<T> Option<T> {
         }
     }
 }
-#
-# fn main() {}
 ```
 
 In diesem Code geschieht dasselbe wie bei `match` in Codeblock 19-26: Rust

@@ -196,7 +196,7 @@ Codeblock 17-7 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub trait Draw {
 #     fn draw(&self);
 # }
@@ -224,8 +224,6 @@ impl Draw for Button {
         // Code zum tatsächlichen Zeichnen einer Schaltfläche
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-7: Eine Struktur `Button`, die das Merkmal
@@ -264,8 +262,6 @@ impl Draw for SelectBox {
         // Code zum tatsächlichen Zeichnen eines Auswahlfeldes
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-8: Eine weitere Kiste, die `gui` verwendet
@@ -377,18 +373,18 @@ implementiert:
 ```console
 $ cargo run
    Compiling gui v0.1.0 (file:///projects/gui)
-error[E0277]: the trait bound `std::string::String: gui::Draw` is not satisfied
+error[E0277]: the trait bound `String: Draw` is not satisfied
  --> src/main.rs:5:26
   |
 5 |         components: vec![Box::new(String::from("Hallo"))],
-  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `gui::Draw` is not implemented for `std::string::String`
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
-  = note: required for the cast to the object type `dyn gui::Draw`
+  = note: required for the cast to the object type `dyn Draw`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `gui`.
+error: could not compile `gui`
 
 To learn more, run the command again with --verbose.
 ```
@@ -484,18 +480,18 @@ Wir würden diesen Fehler bekommen:
 ```console
 $ cargo build
    Compiling gui v0.1.0 (file:///projects/gui)
-error[E0038]: the trait `std::clone::Clone` cannot be made into an object
- --> src/lib.rs:2:5
+error[E0038]: the trait `Clone` cannot be made into an object
+ --> src/lib.rs:2:21
   |
 2 |     pub components: Vec<Box<dyn Clone>>,
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `std::clone::Clone` cannot be made into an object
+  |                     ^^^^^^^^^^^^^^^^^^^ the trait `Clone` cannot be made into an object
   |
-  = note: the trait cannot require that `Self : Sized`
+  = note: the trait cannot be made into an object because it requires `Self: Sized`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0038`.
-error: could not compile `gui`.
+error: could not compile `gui`
 
 To learn more, run the command again with --verbose.
 ```

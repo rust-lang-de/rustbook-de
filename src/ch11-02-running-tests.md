@@ -69,7 +69,7 @@ einen Test, der fehlschlägt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,panics
+```rust,panics,noplayground
 # fn main() {}
 #
 fn prints_and_returns_10(a: i32) -> i32 {
@@ -118,7 +118,7 @@ Ich habe den Wert 8 erhalten.
 thread 'main' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::this_test_will_fail
@@ -170,7 +170,7 @@ Ich habe den Wert 8 erhalten.
 thread 'main' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::this_test_will_fail
@@ -307,7 +307,7 @@ aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[test]
 fn it_works() {
     assert_eq!(2 + 2, 4);
@@ -318,8 +318,6 @@ fn it_works() {
 fn expensive_test() {
     // Code, dessen Ausführung eine Stunde dauert
 }
-#
-# fn main() {}
 ```
 
 Unterhalb `#[test]` fügen wir die Zeile `#[ignore]` beim Test ein, den wir

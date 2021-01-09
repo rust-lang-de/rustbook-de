@@ -289,16 +289,16 @@ voranzutreiben. Hier ist der erste Fehler, den wir erhalten:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-error[E0433]: failed to resolve: use of undeclared type or module `ThreadPool`
+error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
   --> src/main.rs:10:16
    |
 10 |     let pool = ThreadPool::new(4);
-   |                ^^^^^^^^^^ use of undeclared type or module `ThreadPool`
+   |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0433`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -318,7 +318,7 @@ Definition einer `ThreadPool`-Struktur ist, die wir im Moment haben können:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub struct ThreadPool;
 ```
 
@@ -386,16 +386,16 @@ Dieser Code wird immer noch nicht funktionieren, aber lass uns ihn noch einmal
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no function or associated item named `new` found for type `hello::ThreadPool` in the current scope
+error[E0599]: no function or associated item named `new` found for struct `ThreadPool` in the current scope
   --> src/bin/main.rs:11:28
    |
 11 |     let pool = ThreadPool::new(4);
-   |                            ^^^ function or associated item not found in `hello::ThreadPool`
+   |                            ^^^ function or associated item not found in `ThreadPool`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -408,7 +408,7 @@ implementieren, die diese Eigenschaften haben wird:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub struct ThreadPool;
 
 impl ThreadPool {
@@ -416,8 +416,6 @@ impl ThreadPool {
         ThreadPool
     }
 }
-#
-# fn main() {}
 ```
 
 Wir haben `usize` als Typ des Parameters `size` gewählt, weil wir wissen, dass
@@ -431,7 +429,7 @@ Lass uns den Code noch einmal überprüfen:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no method named `execute` found for type `hello::ThreadPool` in the current scope
+error[E0599]: no method named `execute` found for struct `ThreadPool` in the current scope
   --> src/bin/main.rs:16:14
    |
 16 |         pool.execute(|| {
@@ -440,7 +438,7 @@ error[E0599]: no method named `execute` found for type `hello::ThreadPool` in th
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -506,8 +504,6 @@ impl ThreadPool {
     {
     }
 }
-#
-# fn main() {}
 ```
 
 Wir verwenden immer noch `()` nach `FnOnce`, weil dieses `FnOnce` einen
@@ -554,7 +550,7 @@ eine Null erhält, indem wir das Makro `assert!` verwenden, wie in Codeblock
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -579,8 +575,6 @@ impl ThreadPool {
 #     {
 #     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-13: Implementierung von `ThreadPool::new`
@@ -744,7 +738,7 @@ Bereit? Hier ist Codeblock 20-15 mit einer Möglichkeit, die vorhergehenden
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 use std::thread;
 
 pub struct ThreadPool {
@@ -792,8 +786,6 @@ impl Worker {
         Worker { id, thread }
     }
 }
-# 
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-15: Modifizieren von `ThreadPool`, um
@@ -854,7 +846,7 @@ Element sein, die wir in den Kanal senden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # use std::thread;
 // --abschneiden--
 use std::sync::mpsc;
@@ -909,8 +901,6 @@ impl ThreadPool {
 #         Worker { id, thread }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-16: Ändern von `ThreadPool`, um das sendende
@@ -1012,7 +1002,7 @@ error[E0382]: use of moved value: `receiver`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -1042,7 +1032,7 @@ Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt die
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # use std::sync::mpsc;
 # use std::thread;
 use std::sync::Arc;
@@ -1107,8 +1097,6 @@ impl Worker {
 #         Worker { id, thread }
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-18: Das empfangende Ende des Kanals unter
@@ -1132,7 +1120,7 @@ Typ-Aliase, lange Typen kürzer zu machen. Siehe Codeblock 20-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # use std::sync::mpsc;
 # use std::sync::Arc;
 # use std::sync::Mutex;
@@ -1198,8 +1186,6 @@ impl ThreadPool {
 #         Worker { id, thread }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-19: Erstellen eines Alias vom Typ `Job` für
@@ -1345,6 +1331,8 @@ warning: field is never read: `thread`
 49 |     thread: thread::JoinHandle<()>,
    |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
 
+warning: 3 warnings emitted
+
     Finished dev [unoptimized + debuginfo] target(s) in 1.40s
      Running `target/debug/main`
 Worker 0 hat einen Auftrag erhalten; führe ihn aus.
@@ -1459,17 +1447,16 @@ durchsetzen, dass auf eine von einem `Mutex` bewachte Ressource nicht
 zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
 Implementierung kann aber auch dazu führen, dass die Sperre länger als
 beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
-`MutexGuard<T>` nachdenken. Da die Werte im `while let`-Ausdruck für die Dauer
-der Sperre im Gültigkeitsbereich bleiben, bleibt die Sperre für die Dauer des
-Aufrufs von `job()` bestehen, was bedeutet, dass andere `Worker` keine Aufträge
-erhalten können.
+`MutexGuard<T>` nachdenken. 
 
-Wenn du stattdessen `loop` verwendest und die Sperre erwirbst, ohne sie einer
-Variablen zuzuweisen, wird der temporäre `MutexGuard`, der von der Methode
-`lock` zurückgegeben wird, verworfen, sobald die Anweisung `let job` endet.
-Dies stellt sicher, dass die Sperre während des Aufrufs von `recv` gehalten
-wird, aber sie wird vor dem Aufruf von `job()` freigegeben, sodass mehrere
-Anfragen gleichzeitig bedient werden können.
+Der Code in Codeblock 20-20, der `let job =
+receiver.lock().unwrap().recv().unwrap();` verwendet, funktioniert, weil mit
+`let` alle temporären Werte, die in dem Ausdruck auf der rechten Seite des
+Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die
+`let`-Anweisung endet. Allerdings gibt `while let` (und `if let` und `match`)
+temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 20-21
+bleibt die Sperre für die Dauer des Aufrufs von `job()` erhalten, was bedeutet,
+dass andere `Worker` keine Aufträge erhalten können.
 
 [type-synonyms]:
 ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias

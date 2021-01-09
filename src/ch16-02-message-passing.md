@@ -214,7 +214,7 @@ error[E0382]: borrow of moved value: `val`
   --> src/main.rs:10:31
    |
 8  |         let val = String::from("hallo");
-   |             --- move occurs because `val` has type `std::string::String`, which does not implement the `Copy` trait
+   |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
 9  |         tx.send(val).unwrap();
    |                 --- value moved here
 10 |         println!("val ist {}", val);
@@ -223,7 +223,7 @@ error[E0382]: borrow of moved value: `val`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `message-passing`.
+error: could not compile `message-passing`
 
 To learn more, run the command again with --verbose.
 ```
@@ -319,7 +319,7 @@ klonen, wie in Codeblock 16-11 gezeigt:
 
     let (tx, rx) = mpsc::channel();
 
-    let tx1 = mpsc::Sender::clone(&tx);
+    let tx1 = tx.clone();
     thread::spawn(move || {
         let vals = vec![
             String::from("hallo"),

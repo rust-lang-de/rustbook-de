@@ -231,7 +231,7 @@ Kompiliere den Code mit dieser Änderung. Verflixt! Wir erhalten immer noch
 einen Fehler:
 
 ```text
-error[E0277]: `Rectangle` doesn't implement `std::fmt::Debug`
+error[E0277]: `Rectangle` doesn't implement `Debug`
 ```
 
 Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:

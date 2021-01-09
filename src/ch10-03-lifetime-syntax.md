@@ -77,7 +77,7 @@ error[E0597]: `x` does not live long enough
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```
@@ -216,19 +216,24 @@ Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:
 
 ```console
 $ cargo run
+$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0106]: missing lifetime specifier
  --> src/main.rs:9:33
   |
 9 | fn longest(x: &str, y: &str) -> &str {
-  |                                 ^ expected lifetime parameter
+  |               ----     ----     ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `x` or `y`
+help: consider introducing a named lifetime parameter
+  |
+9 | fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
+  |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```
@@ -444,7 +449,7 @@ error[E0597]: `string2` does not live long enough
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```
@@ -545,7 +550,7 @@ error[E0515]: cannot return value referencing local variable `result`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0515`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```

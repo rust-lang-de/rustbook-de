@@ -15,7 +15,7 @@ müssen, um die Funktion `add_to_waitlist` in `eat_at_restaurant` aufzurufen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
@@ -29,8 +29,6 @@ pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
     hosting::add_to_waitlist();
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-11: Ein Modul mit `use` in den
@@ -51,7 +49,7 @@ erzielen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
@@ -65,8 +63,6 @@ pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
     hosting::add_to_waitlist();
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-12: Ein Modul mit `use` und einem relativen
@@ -82,7 +78,7 @@ Codeblock 7-13.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
@@ -96,8 +92,6 @@ pub fn eat_at_restaurant() {
     add_to_waitlist();
     add_to_waitlist();
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-13: Die Funktion `add_to_waitlist` mit `use`
@@ -215,7 +209,7 @@ Codeblock 7-17 zeigt den Code in Codeblock 7-11, wobei `use` im Wurzelmodul in
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
@@ -229,8 +223,6 @@ pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
     hosting::add_to_waitlist();
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen

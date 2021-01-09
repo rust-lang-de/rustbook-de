@@ -37,8 +37,6 @@ fn first_word(s: &String) -> usize {
 
     s.len()
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 4-7: Die Funktion `first_word`, die einen
@@ -60,8 +58,6 @@ Wert ein Leerzeichen ist, wandeln wir unseren `String` mit der Methode
 #
 #     s.len()
 # }
-#
-# fn main() {}
 ```
 
 Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
@@ -79,8 +75,6 @@ Methode `iter` verwenden:
 #
 #     s.len()
 # }
-#
-# fn main() {}
 ```
 
 Auf Iteratoren werden wir in Kapitel 13 näher eingehen. Fürs Erste solltest du
@@ -114,8 +108,6 @@ Länge der Zeichenkette zurück, indem wir `s.len()` verwenden:
 
     s.len()
 # }
-#
-# fn main() {}
 ```
 
 Wir haben jetzt eine Möglichkeit, den Index des ersten Wortendes in der
@@ -277,8 +269,6 @@ fn first_word(s: &String) -> &str {
 
     &s[..]
 }
-#
-# fn main() {}
 ```
 
 Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Codeblock
@@ -357,7 +347,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```

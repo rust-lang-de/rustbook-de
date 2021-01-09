@@ -22,7 +22,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # use std::error::Error;
 # use std::fs;
 #
@@ -32,7 +32,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -97,8 +97,6 @@ Trust me.";
         );
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-20: Hinzufügen eines neuen fehlschlagenden
@@ -136,7 +134,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # use std::error::Error;
 # use std::fs;
 #
@@ -146,7 +144,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -227,8 +225,6 @@ pub fn search_case_insensitive<'a>(
 #         );
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-21: Definieren der Funktion
@@ -308,7 +304,7 @@ pub struct Config {
 }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -395,8 +391,6 @@ pub struct Config {
 #         );
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Beachte, dass wir das Feld `case_sensitive` hinzugefügt haben, das ein Boolean
@@ -419,7 +413,7 @@ werden kann.
 # }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -506,8 +500,6 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #         );
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-22: Aufruf von entweder `search` oder
@@ -524,7 +516,7 @@ gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 use std::env;
 // --abschneiden--
 
@@ -538,7 +530,7 @@ use std::env;
 # }
 #
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn new(args: &[String]) -> Result<Config, &str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -631,8 +623,6 @@ impl Config {
 #         );
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-23: Prüfen auf eine Umgebungsvariable namens

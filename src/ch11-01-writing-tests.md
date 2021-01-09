@@ -38,7 +38,7 @@ ist.
            
 Lass uns ein neues Bibliotheksprojekt namens `adder` erstellen:
 
-```console
+```console,noplayground
 $ cargo new adder --lib
      Created library `adder` project
 $ cd adder
@@ -57,8 +57,6 @@ mod tests {
         assert_eq!(2 + 2, 4);
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
@@ -139,7 +137,7 @@ z.B. `exploration`, etwa so:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[cfg(test)]
 mod tests {
     #[test]
@@ -147,8 +145,6 @@ mod tests {
         assert_eq!(2 + 2, 4);
     }
 }
-#
-# fn main() {}
 ```
 
 Dann führe `cargo test` erneut aus. Die Ausgabe zeigt nun `exploration`
@@ -183,7 +179,7 @@ Makros `panic!`. Erstelle einen neuen Test `another`, sodass deine Datei
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,panics
+```rust,panics,noplayground
 #[cfg(test)]
 mod tests {
     #[test]
@@ -196,8 +192,6 @@ mod tests {
         panic!("Lasse diesen Test fehlschlagen");
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-3: Hinzufügen eines zweiten Tests, der
@@ -221,7 +215,7 @@ failures:
 
 ---- tests::another stdout ----
 thread 'main' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::another
@@ -272,7 +266,7 @@ mit dem Makro `assert!` schreiben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[derive(Debug)]
 struct Rectangle {
     width: u32,
@@ -284,8 +278,6 @@ impl Rectangle {
         self.width > other.width && self.height > other.height
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-5: Verwenden der Struktur `Rectangle` und
@@ -300,7 +292,7 @@ und einer Höhe von 1 enthalten kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[derive(Debug)]
 # struct Rectangle {
 #     width: u32,
@@ -331,8 +323,6 @@ mod tests {
         assert!(larger.can_hold(&smaller));
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-6: Ein Test für `can_hold`, der prüft, ob in
@@ -377,7 +367,7 @@ Zusicherung, dass ein kleineres Rechteck nicht in ein größeres Rechteck passt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # #[derive(Debug)]
 # struct Rectangle {
 #     width: u32,
@@ -423,8 +413,6 @@ mod tests {
         assert!(!smaller.can_hold(&larger));
     }
 }
-#
-# fn main() {}
 ```
 
 Da das korrekte Ergebnis der Funktion `can_hold` in diesem Fall `false` ist,
@@ -457,7 +445,7 @@ Lass uns die Implementierung der Methode `can_hold` ändern, indem wir das
 größer-als-Zeichen durch ein kleiner-als-Zeichen ersetzen, wenn sie die Breiten
 vergleicht:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,noplayground
 # #[derive(Debug)]
 # struct Rectangle {
 #     width: u32,
@@ -503,8 +491,6 @@ impl Rectangle {
 #         assert!(!smaller.can_hold(&larger));
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Das Ausführen der Tests ergibt nun Folgendes:
@@ -523,7 +509,7 @@ failures:
 
 ---- tests::larger_can_hold_smaller stdout ----
 thread 'main' panicked at 'assertion failed: larger.can_hold(&smaller)', src/lib.rs:28:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
@@ -559,7 +545,7 @@ Funktion mit dem Makro `assert_eq!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub fn add_two(a: i32) -> i32 {
     a + 2
 }
@@ -573,8 +559,6 @@ mod tests {
         assert_eq!(4, add_two(2));
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-7: Testen der Funktion `add_two` mit dem
@@ -609,7 +593,7 @@ Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie es aussieht,
 wenn ein Test, der `assert_eq!` verwendet, fehlschlägt. Ändern wir die
 Implementierung der Funktion `add_two`, sodass sie stattdessen `3` addiert:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,noplayground
 pub fn add_two(a: i32) -> i32 {
     a + 3
 }
@@ -623,8 +607,6 @@ pub fn add_two(a: i32) -> i32 {
 #         assert_eq!(4, add_two(2));
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Führe die Tests erneut aus:
@@ -644,7 +626,7 @@ failures:
 thread 'main' panicked at 'assertion failed: `(left == right)`
   left: `4`,
  right: `5`', src/lib.rs:11:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::it_adds_two
@@ -718,7 +700,7 @@ in der Ausgabe auftaucht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub fn greeting(name: &str) -> String {
     format!("Hallo {}!", name)
 }
@@ -733,8 +715,6 @@ mod tests {
         assert!(result.contains("Carol"));
     }
 }
-#
-# fn main() {}
 ```
 
 Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
@@ -748,7 +728,7 @@ Lass uns einen Fehler in diesen Code einbringen, indem wir `greeting` so
 ändern, dass `name` nicht enthalten ist, um zu sehen, wie dieses Testversagen
 aussieht:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,noplayground
 pub fn greeting(name: &str) -> String {
     String::from("Hallo!")
 }
@@ -763,8 +743,6 @@ pub fn greeting(name: &str) -> String {
 #         assert!(result.contains("Carol"));
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Das Ausführen dieses Tests führt zu folgender Ausgabe:
@@ -782,7 +760,7 @@ failures:
 
 ---- tests::greeting_contains_name stdout ----
 thread 'main' panicked at 'assertion failed: result.contains("Carol")', src/lib.rs:12:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::greeting_contains_name
@@ -819,8 +797,6 @@ der Funktion `greeting` erhalten haben:
         );
     }
 # }
-#
-# fn main() {}
 ```
 
 Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
@@ -839,7 +815,7 @@ failures:
 
 ---- tests::greeting_contains_name stdout ----
 thread 'main' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::greeting_contains_name
@@ -874,7 +850,7 @@ Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub struct Guess {
     value: i32,
 }
@@ -899,8 +875,6 @@ mod tests {
         Guess::new(200);
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-8: Testet, dass eine Bedingung zum
@@ -932,7 +906,7 @@ Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion `new` das Programm abbricht, wenn
 der Wert größer als 100 ist:
 
-```rust,not_desired_behavior
+```rust,not_desired_behavior,noplayground
 # pub struct Guess {
 #     value: i32,
 # }
@@ -958,8 +932,6 @@ impl Guess {
 #         Guess::new(200);
 #     }
 # }
-# 
-# fn main() {}
 ```
 
 Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:
@@ -1004,7 +976,7 @@ nachdem, ob der Wert zu klein oder zu groß ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1032,8 +1004,6 @@ mod tests {
         Guess::new(200);
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-9: Testet, ob ein Zustand einen
@@ -1084,8 +1054,6 @@ vertauschen:
 #         Guess::new(200);
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Wenn wir diesmal den `should_panic`-Test ausführen, wird er fehlschlagen:
@@ -1103,7 +1071,7 @@ failures:
 
 ---- tests::greater_than_100 stdout ----
 thread 'main' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
       panic message: `"Schätzwert muss größer oder gleich 1 sein, ist 200."`,
  expected substring: `"Schätzwert muss kleiner oder gleich 100 sein"`
@@ -1130,7 +1098,7 @@ fehlschlagen. Wir können auch Tests schreiben, die `Result<T, E>` verwenden!
 Hier ist der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>`
 verwendet und `Err` zurückgibt, anstatt das Programm abzubrechen:
 
-```rust
+```rust,noplayground
 # #![allow(unused_variables)]
 # fn main() {}
 #

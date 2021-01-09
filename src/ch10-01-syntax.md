@@ -139,20 +139,23 @@ Wenn wir diesen Code kompilieren, erhalten wir diesen Fehler:
 ```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0369]: binary operation `>` cannot be applied to type `T`
+error[E0369]: binary operation `>` cannot be applied to type `&T`
  --> src/main.rs:5:17
   |
 5 |         if item > largest {
-  |            ---- ^ ------- T
+  |            ---- ^ ------- &T
   |            |
-  |            T
+  |            &T
   |
-  = note: `T` might need a bound for `std::cmp::PartialOrd`
+help: consider restricting type parameter `T`
+  |
+1 | fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
+  |             ^^^^^^^^^^^^^^^^^^^^^^
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```
@@ -240,7 +243,7 @@ error[E0308]: mismatched types
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```

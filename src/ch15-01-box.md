@@ -127,8 +127,6 @@ enum List {
     Cons(i32, List),
     Nil,
 }
-#
-#fn main() {}
 ```
 
 <span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
@@ -181,22 +179,25 @@ error[E0072]: recursive type `List` has infinite size
 2 |     Cons(i32, List),
   |               ---- recursive without indirection
   |
-  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
+  |
+2 |     Cons(i32, Box<List>),
+  |               ^^^^    ^
 
-error[E0391]: cycle detected when processing `List`
+error[E0391]: cycle detected when computing drop-check constraints for `List`
  --> src/main.rs:1:1
   |
 1 | enum List {
   | ^^^^^^^^^
   |
-  = note: ...which again requires processing `List`, completing the cycle
-  = note: cycle used when computing dropck types for `Canonical { max_universe: U0, variables: [], value: ParamEnvAnd { param_env: ParamEnv { caller_bounds: [], reveal: UserFacing, def_id: None }, value: List } }`
+  = note: ...which again requires computing drop-check constraints for `List`, completing the cycle
+  = note: cycle used when computing dropck types for `Canonical { max_universe: U0, variables: [], value: ParamEnvAnd { param_env: ParamEnv { caller_bounds: [], reveal: UserFacing }, value: List } }`
 
 error: aborting due to 2 previous errors
 
 Some errors have detailed explanations: E0072, E0391.
 For more information about an error, try `rustc --explain E0072`.
-error: could not compile `cons-list`.
+error: could not compile `cons-list`
 
 To learn more, run the command again with --verbose.
 ```
@@ -224,8 +225,6 @@ enum Message {
     Write(String),
     ChangeColor(i32, i32, i32),
 }
-#
-#fn main() {}
 ```
 Um zu bestimmen, wie viel Speicherplatz für einen `Message`-Wert zugewiesen
 werden soll, durchläuft Rust jede der Varianten, um festzustellen, welche
@@ -257,7 +256,10 @@ Typen reserviert werden muss. Daher gibt der Compiler den Fehler in Codeblock
 15-4 aus. Der Fehler enthält jedoch diesen hilfreichen Hinweis:
 
 ```text
-  = help: insert indirection (e.g., a `Box`, `Rc`, or `&`) at some point to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
+  |
+2 |     Cons(i32, Box<List>),
+  |               ^^^^    ^
 ```
 
 In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle eines

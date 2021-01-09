@@ -290,18 +290,18 @@ Dieser Code führt zu folgendem Fehler:
 ```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
-error[E0277]: the type `std::string::String` cannot be indexed by `{integer}`
+error[E0277]: the type `String` cannot be indexed by `{integer}`
  --> src/main.rs:3:13
   |
 3 |     let h = s1[0];
-  |             ^^^^^ `std::string::String` cannot be indexed by `{integer}`
+  |             ^^^^^ `String` cannot be indexed by `{integer}`
   |
-  = help: the trait `std::ops::Index<{integer}>` is not implemented for `std::string::String`
+  = help: the trait `Index<{integer}>` is not implemented for `String`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `collections`.
+error: could not compile `collections`
 
 To learn more, run the command again with --verbose.
 ```
@@ -433,7 +433,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
 thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/libcore/str/mod.rs:2069:5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen

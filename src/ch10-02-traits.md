@@ -577,7 +577,7 @@ error[E0369]: binary operation `>` cannot be applied to type `T`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```
@@ -645,7 +645,7 @@ error: aborting due to 2 previous errors
 
 Some errors have detailed explanations: E0507, E0508.
 For more information about an error, try `rustc --explain E0507`.
-error: could not compile `chapter10`.
+error: could not compile `chapter10`
 
 To learn more, run the command again with --verbose.
 ```

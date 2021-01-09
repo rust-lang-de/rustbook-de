@@ -40,7 +40,7 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[cfg(test)]
 mod tests {
     #[test]
@@ -48,8 +48,6 @@ mod tests {
         assert_eq!(2 + 2, 4);
     }
 }
-#
-# fn main() {}
 ```
 
 Dieser Code ist das automatisch generierte Testmodul. Das Attribut `cfg` steht
@@ -72,7 +70,7 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 pub fn add_two(a: i32) -> i32 {
     internal_adder(a, 2)
 }
@@ -90,8 +88,6 @@ mod tests {
         assert_eq!(4, internal_adder(2, 2));
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span>

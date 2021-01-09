@@ -93,18 +93,30 @@ error[E0603]: module `hosting` is private
  --> src/lib.rs:9:28
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                            ^^^^^^^
+  |                            ^^^^^^^ private module
+  |
+note: the module `hosting` is defined here
+ --> src/lib.rs:2:5
+  |
+2 |     mod hosting {
+  |     ^^^^^^^^^^^
 
 error[E0603]: module `hosting` is private
   --> src/lib.rs:12:21
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                     ^^^^^^^
+   |                     ^^^^^^^ private module
+   |
+note: the module `hosting` is defined here
+  --> src/lib.rs:2:5
+   |
+2  |     mod hosting {
+   |     ^^^^^^^^^^^
 
 error: aborting due to 2 previous errors
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant`.
+error: could not compile `restaurant`
 
 To learn more, run the command again with --verbose.
 ```
@@ -182,18 +194,30 @@ error[E0603]: function `add_to_waitlist` is private
  --> src/lib.rs:9:37
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                                     ^^^^^^^^^^^^^^^
+  |                                     ^^^^^^^^^^^^^^^ private function
+  |
+note: the function `add_to_waitlist` is defined here
+ --> src/lib.rs:3:9
+  |
+3 |         fn add_to_waitlist() {}
+  |         ^^^^^^^^^^^^^^^^^^^^
 
 error[E0603]: function `add_to_waitlist` is private
   --> src/lib.rs:12:30
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                              ^^^^^^^^^^^^^^^
+   |                              ^^^^^^^^^^^^^^^ private function
+   |
+note: the function `add_to_waitlist` is defined here
+  --> src/lib.rs:3:9
+   |
+3  |         fn add_to_waitlist() {}
+   |         ^^^^^^^^^^^^^^^^^^^^
 
 error: aborting due to 2 previous errors
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant`.
+error: could not compile `restaurant`
 
 To learn more, run the command again with --verbose.
 ```
@@ -217,7 +241,7 @@ Schlüsselwort `pub` vor seiner Definition hinzufügen, wie in Codeblock 7-7.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
@@ -231,8 +255,6 @@ pub fn eat_at_restaurant() {
     // relativer Path
     front_of_house::hosting::add_to_waitlist();
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts `pub` zu
@@ -288,8 +310,6 @@ mod back_of_house {
 
     fn cook_order() {}
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-8: Aufrufen einer Funktion unter Verwendung

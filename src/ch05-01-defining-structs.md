@@ -330,23 +330,36 @@ Kapitel 10 besprechen.
 >
 > ```console
 > $ cargo run
->    Compiling structs v0.1.0 (file:///projects/structs)
+>    Compiling playground v0.0.1 (/playground)
 > error[E0106]: missing lifetime specifier
 >  --> src/main.rs:2:15
 >   |
 > 2 |     username: &str,
->   |               ^ expected lifetime parameter
+>   |               ^ expected named lifetime parameter
+>   |
+> help: consider introducing a named lifetime parameter
+>   |
+> 1 | struct User<'a> {
+> 2 |     username: &'a str,
+>   |
 >
 > error[E0106]: missing lifetime specifier
 >  --> src/main.rs:3:12
 >   |
 > 3 |     email: &str,
->   |            ^ expected lifetime parameter
+>   |            ^ expected named lifetime parameter
+>   |
+> help: consider introducing a named lifetime parameter
+>   |
+> 1 | struct User<'a> {
+> 2 |     username: &str,
+> 3 |     email: &'a str,
+>   |
 >
 > error: aborting due to 2 previous errors
->
+> 
 > For more information about this error, try `rustc --explain E0106`.
-> error: could not compile `structs`.
+> error: could not compile `playground`
 >
 > To learn more, run the command again with --verbose.
 > ```

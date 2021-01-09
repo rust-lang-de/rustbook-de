@@ -81,12 +81,12 @@ error[E0308]: mismatched types
   |            expected due to this
   |
   = note: expected type `u32`
-             found enum `std::result::Result<std::fs::File, std::io::Error>`
+             found enum `std::result::Result<File, std::io::Error>`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `error-handling`.
+error: could not compile `error-handling`
 
 To learn more, run the command again with --verbose.
 ```
@@ -156,7 +156,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
 thread 'main' panicked at 'Problem opening the file: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.
@@ -543,7 +543,7 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 ```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
-error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `std::ops::Try`)
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `Try`)
  --> src/main.rs:4:13
   |
 3 | / fn main() {
@@ -552,13 +552,13 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
 5 | | }
   | |_- this function should return `Result` or `Option` to accept `?`
   |
-  = help: the trait `std::ops::Try` is not implemented for `()`
-  = note: required by `std::ops::Try::from_error`
+  = help: the trait `Try` is not implemented for `()`
+  = note: required by `from_error`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling`.
+error: could not compile `error-handling`
 
 To learn more, run the command again with --verbose.
 ```

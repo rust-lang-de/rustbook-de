@@ -91,7 +91,7 @@ Vektor erstellten Iterator zurückgegeben werden:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # #[cfg(test)]
 # mod tests {
 #
@@ -108,8 +108,6 @@ Vektor erstellten Iterator zurückgegeben werden:
     }
 #
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-15: Iterator mit der `next`-Methode aufrufen</span>
@@ -150,7 +148,7 @@ ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # #[cfg(test)]
 # mod tests {
 #
@@ -166,8 +164,6 @@ ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
     }
 #
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-16: Aufruf der `sum`-Methode um den Wert der
@@ -206,7 +202,7 @@ Wir erhalten folgende Warnung:
 ```console
 $ cargo run
    Compiling iterators v0.1.0 (file:///projects/iterators)
-warning: unused `std::iter::Map` that must be used
+warning: unused `Map` that must be used
  --> src/main.rs:4:5
   |
 4 |     v1.iter().map(|x| x + 1);
@@ -214,6 +210,8 @@ warning: unused `std::iter::Map` that must be used
   |
   = note: `#[warn(unused_must_use)]` on by default
   = note: iterators are lazy and do nothing unless consumed
+
+warning: 1 warning emitted
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s
      Running `target/debug/iterators`
@@ -270,7 +268,7 @@ bestimmten Größe zurückgeben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #[derive(PartialEq, Debug)]
 struct Shoe {
     size: u32,
@@ -319,8 +317,6 @@ mod tests {
         );
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-19: Die `filter`-Methode mit einen
@@ -366,7 +362,7 @@ zugehörige `new`-Funktion zur Erstellung von Instanzen von `Counter`:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 struct Counter {
     count: u32,
 }
@@ -376,8 +372,6 @@ impl Counter {
         Counter { count: 0 }
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-20: Definition einer `Counter`-Struktur und einer
@@ -396,7 +390,7 @@ Siehe Codeblock 12-21:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 #struct Counter {
 #    count: u32,
 #}
@@ -420,8 +414,6 @@ impl Iterator for Counter {
         }
     }
 }
-#
-#fn main() {}
 ```
 
 <span class="caption">Codeblock 13-21: Implementierung des `Iterator`-Merkmals für
@@ -447,7 +439,7 @@ Vektor erzeugten Iterator im Codeblock 13-15 gemacht haben.
 
 <span class="filename">Codeblock: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # struct Counter {
 #     count: u32,
 # }
@@ -487,8 +479,6 @@ Vektor erzeugten Iterator im Codeblock 13-15 gemacht haben.
         assert_eq!(counter.next(), None);
     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-22: Testen der Funktionalität der
@@ -514,7 +504,7 @@ summieren möchten, können wir das wie im Codeblock 13-23 beschrieben erreichen
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # struct Counter {
 #     count: u32,
 # }
@@ -564,8 +554,6 @@ summieren möchten, können wir das wie im Codeblock 13-23 beschrieben erreichen
         assert_eq!(18, sum);
     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 13-23: Benutzung einer Auswahl von `Iterator`-Merkmal

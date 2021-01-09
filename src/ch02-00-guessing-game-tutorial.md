@@ -385,6 +385,8 @@ warning: unused `std::result::Result` that must be used
    = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
 
+warning: 1 warning emitted
+
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
@@ -495,8 +497,9 @@ Fall spezifizieren wir die Kiste `rand` mit dem semantischen
 Versionsspezifikator `0.5.5`. Cargo versteht [semantische
 Versionierung][semver] (manchmal auch *SemVer* genannt), was ein Standard zum
 Schreiben von Versionsnummern ist. Die Zahl `0.5.5` ist eigentlich die
-Abkürzung für `^0.5.5`, was bedeutet „jede Version, die eine öffentliche API
-hat, die mit Version 0.5.5 kompatibel ist“. 
+Abkürzung für `^0.5.5`, was für alle Versionen ab `0.5.5` und kleiner als
+`0.6.0` steht. Cargo geht davon aus dass die öffentliche API dieser Versionen
+kompatibel zur Version 0.5.5 ist.
 
 Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Codeblock 2-2
 gezeigt.
@@ -809,15 +812,15 @@ error[E0308]: mismatched types
   --> src/main.rs:22:21
    |
 22 |     match guess.cmp(&secret_number) {
-   |                     ^^^^^^^^^^^^^^ expected struct `std::string::String`, found integer
+   |                     ^^^^^^^^^^^^^^ expected struct `String`, found integer
    |
-   = note: expected reference `&std::string::String`
+   = note: expected reference `&String`
               found reference `&{integer}`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `guessing_game`.
+error: could not compile `guessing_game`
 
 To learn more, run the command again with --verbose.
 ```
@@ -1039,7 +1042,7 @@ Du hast gewonnen!
 Bitte gib deine Schätzung ein.
 quit
 thread 'main' panicked at 'Bitte gib eine Zahl ein!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:999:5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Mit der Eingabe von `quit` wird das Spiel tatsächlich beendet, aber das gilt
