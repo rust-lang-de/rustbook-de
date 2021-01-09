@@ -41,8 +41,6 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
     thread::sleep(Duration::from_secs(2));
     intensity
 }
-#
-#fn main() {}
 ```
 <span class="caption">Codeblock 13-1: Eine Funktion die für eine hypothetische
 Berechnung steht, die etwa 2 Sekunden Laufzeit benötigt.</span>
@@ -478,13 +476,13 @@ error[E0308]: mismatched types
 5 |     let n = example_closure(5);
   |                             ^
   |                             |
-  |                             expected struct `std::string::String`, found integer
+  |                             expected struct `String`, found integer
   |                             help: try using a conversion method: `5.to_string()`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `closure-example`.
+error: could not compile `closure-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -546,8 +544,6 @@ where
     calculation: T,
     value: Option<u32>,
 }
-#
-#fn main() {}
 ```
 
 <span class="caption">Codeblock 13-9: Definition einer Struktur `Cacher`, die
@@ -609,8 +605,6 @@ where
         }
     }
 }
-#
-#fn main() {}
 ```
 
 <span class="caption">Codeblock 13-10: Die Zwischenspeicherungs-Logik von `Cacher`</span>
@@ -800,7 +794,7 @@ failures:
 thread 'main' panicked at 'assertion failed: `(left == right)`
   left: `1`,
  right: `2`', src/lib.rs:43:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
@@ -916,7 +910,7 @@ Diese sind wie folgt, in den drei `Fn`-Merkmalen codiert:
 
 * `FnOnce` verbraucht die Variablen, die vom umgebenden Gültigkeitsbereich
     erfasst werden, dieser Bereich wird als Funktionsabschluss-Umgebung
-    (closure’s *enviroment*) bezeichnet. Um die erfassten Variablen verbrauchen
+    (closure's *enviroment*) bezeichnet. Um die erfassten Variablen verbrauchen
     zu können, muss der Funktionsabschluss die Eigentümerschaft dieser Variablen
     übernehmen und sie bei dessen Definition, in den Funktionsabschluss verschieben
     (move). Der Namensteil `Once` repräsentiert die Tatsache, dass der
@@ -943,6 +937,12 @@ vor der Parameterliste das Schlüsselwort `move` verwenden. Diese Technik ist vo
 allem dann nützlich, wenn ein Funktionsabschluss an einen neuen Strang (thread) 
 übergeben wird, um die Daten so zu verschieben, dass sie dem neuen Strang
 gehören.
+
+> Hinweis: `move`-Funktionsabschlüsse können immer noch `Fn` oder `FnMut`
+> implementieren, auch wenn sie Variablen verschieben. Das liegt daran, dass
+> die von einem Funktionsabschluss-Typ implementierten Merkmale dadurch
+> bestimmt werden, was der Funktionsabschluss mit den erfassten Werten macht,
+> nicht wie es sie erfasst. Das Schlüsselwort `move` legt nur Letzteres fest.
 
 Weitere Beispiele für `move` bei Funktionsabschlüssen folgen in Kapitel 16, wenn
 wir über Parallelität sprechen. Einstweilen ist hier der Programmcode von
@@ -976,7 +976,7 @@ error[E0382]: borrow of moved value: `x`
  --> src/main.rs:6:40
   |
 2 |     let x = vec![1, 2, 3];
-  |         - move occurs because `x` has type `std::vec::Vec<i32>`, which does not implement the `Copy` trait
+  |         - move occurs because `x` has type `Vec<i32>`, which does not implement the `Copy` trait
 3 | 
 4 |     let equal_to_x = move |z| z == x;
   |                      --------      - variable moved due to use in closure
@@ -989,7 +989,7 @@ error[E0382]: borrow of moved value: `x`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `equal-to-x`.
+error: could not compile `equal-to-x`
 
 To learn more, run the command again with --verbose.
 

@@ -235,7 +235,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function or 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0133`.
-error: could not compile `unsafe-example`.
+error: could not compile `unsafe-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -334,7 +334,7 @@ error[E0499]: cannot borrow `*slice` as mutable more than once at a time
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `unsafe-example`.
+error: could not compile `unsafe-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -590,12 +590,12 @@ prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.
 
 ### Implementieren eines unsicheren Merkmals
 
-Die letzte Aktion, die nur bei `unsafe` funktioniert, ist das Implementieren
-eines unsicheren Merkmals (unsafe trait). Ein Merkmal ist unsicher, wenn
-mindestens eine ihrer Methoden eine Invariante hat, die der Compiler nicht
-verifizieren kann. Wir können erklären, dass ein Merkmal `unsafe` ist, indem
-wir das Schlüsselwort `unsafe` vor `trait` einfügen und die Implementierung des
-Merkmals ebenfalls mit `unsafe` markieren, wie in Codeblock 19-11 gezeigt.
+Ein anderer Anwendungsfall für `unsafe` ist das Implementieren eines unsicheren
+Merkmals (unsafe trait). Ein Merkmal ist unsicher, wenn mindestens eine ihrer
+Methoden eine Invariante hat, die der Compiler nicht verifizieren kann. Wir
+können erklären, dass ein Merkmal `unsafe` ist, indem wir das Schlüsselwort
+`unsafe` vor `trait` einfügen und die Implementierung des Merkmals ebenfalls
+mit `unsafe` markieren, wie in Codeblock 19-11 gezeigt.
 
 ```rust,unsafe
 unsafe trait Foo {
@@ -605,8 +605,6 @@ unsafe trait Foo {
 unsafe impl Foo for i32 {
     // Methoden-Implementierungen kommen hierhin
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 19-11: Definition und Implementierung eines
@@ -629,12 +627,14 @@ manuell durchführen und als solche mit `unsafe` kennzeichnen.
 
 ### Zugreifen auf Felder einer Vereinigung (union)
 
-Eine `union` ist ähnlich wie eine `struct`, aber es wird jeweils nur ein
-deklariertes Feld in einer bestimmten Instanz verwendet. Vereinigung werden
-hauptsächlich als Schnittstelle zu Vereinigung im C-Code verwendet. Der Zugriff
-auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die derzeit in
-der Vereinigungsinstanz gespeichert sind, nicht garantieren kann. Weitere
-Informationen über Vereinigung findest du in [der Referenz][union-reference].
+Die letzte Aktion, die nur mit `unsafe` funktioniert, ist der Zugriff auf
+Felder einer `union`, die ähnlich zu einer `struct` ist, bei der aber immer nur
+ein deklariertes Feld in einer bestimmten Instanz verwendet wird. Vereinigungen
+werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
+Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
+derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
+Weitere Informationen über Vereinigung findest du in [der
+Referenz][union-reference].
 
 ### Wann unsicheren Code verwenden?
 

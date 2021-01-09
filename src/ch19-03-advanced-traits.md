@@ -83,8 +83,6 @@ impl Iterator for Counter {
 #         }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
@@ -296,8 +294,6 @@ impl Human {
         println!("*Wütend mit den Armen wedeln*");
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
@@ -534,12 +530,12 @@ error[E0283]: type annotations needed
 20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
    |                                                ^^^^^^^^^^^^^^^^^ cannot infer type
    |
-   = note: cannot resolve `_: Animal`
+   = note: cannot satisfy `_: Animal`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0283`.
-error: could not compile `traits-example`.
+error: could not compile `traits-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -656,8 +652,6 @@ trait OutlinePrint: fmt::Display {
         println!("{}", "*".repeat(len + 4));
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 19-22: Implementieren des Merkmals
@@ -714,6 +708,9 @@ $ cargo run
 error[E0277]: `Point` doesn't implement `std::fmt::Display`
   --> src/main.rs:20:6
    |
+3  | trait OutlinePrint: fmt::Display {
+   |                     ------------ required by this bound in `OutlinePrint`
+...
 20 | impl OutlinePrint for Point {}
    |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
    |
@@ -723,7 +720,7 @@ error[E0277]: `Point` doesn't implement `std::fmt::Display`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `traits-example`.
+error: could not compile `traits-example`
 
 To learn more, run the command again with --verbose.
 ```

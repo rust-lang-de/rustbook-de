@@ -229,8 +229,6 @@ enum Message {
     Write(String),
     ChangeColor(i32, i32, i32),
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 6-2: Eine Aufzählung `Message`, deren Varianten
@@ -257,8 +255,6 @@ struct MoveMessage {
 }
 struct WriteMessage(String); // Tupelstruktur
 struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
-#
-# fn main() {}
 ```
 
 Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
@@ -407,18 +403,18 @@ Wenn wir diesen Code ausführen, erhalten wir eine Fehlermeldung wie diese:
 ```console
 $ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
-error[E0277]: cannot add `std::option::Option<i8>` to `i8`
+error[E0277]: cannot add `Option<i8>` to `i8`
  --> src/main.rs:5:17
   |
 5 |     let sum = x + y;
-  |                 ^ no implementation for `i8 + std::option::Option<i8>`
+  |                 ^ no implementation for `i8 + Option<i8>`
   |
-  = help: the trait `std::ops::Add<std::option::Option<i8>>` is not implemented for `i8`
+  = help: the trait `Add<Option<i8>>` is not implemented for `i8`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `enums`.
+error: could not compile `enums`
 
 To learn more, run the command again with --verbose.
 ```

@@ -153,7 +153,7 @@ hinzufügen:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -178,8 +178,6 @@ impl Post {
 # struct Draft {}
 #
 # impl State for Draft {}
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-13: Implementierung der Methode `add_text`
@@ -209,7 +207,7 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -238,8 +236,6 @@ impl Post {
 # struct Draft {}
 #
 # impl State for Draft {}
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-14: Hinzufügen einer
@@ -257,7 +253,7 @@ eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -306,8 +302,6 @@ impl State for PendingReview {
         self
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-15: Implementierung der Methoden

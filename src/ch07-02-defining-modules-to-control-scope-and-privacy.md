@@ -34,7 +34,7 @@ Module und Funktionssignaturen zu definieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 mod front_of_house {
     mod hosting {
         fn add_to_waitlist() {}
@@ -50,8 +50,6 @@ mod front_of_house {
         fn take_payment() {}
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 7-1: Ein Modul `front_of_house`, das andere

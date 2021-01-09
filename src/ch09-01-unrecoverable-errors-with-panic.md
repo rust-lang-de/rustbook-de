@@ -45,7 +45,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.25s
      Running `target/debug/panic`
 thread 'main' panicked at 'abstürzen und verbrennen', src/main.rs:2:5
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Der Aufruf von `panic!` verursacht die in den letzten beiden Zeilen enthaltene
@@ -109,7 +109,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/panic`
 thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806:10
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Dieser Fehler weist auf eine Datei hin, die wir nicht geschrieben haben:

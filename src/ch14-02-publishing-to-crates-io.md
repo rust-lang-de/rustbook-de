@@ -219,7 +219,7 @@ namens `mix` beinhaltet. Siehe Codeblock 14-3:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground,test_harness
 //! # Art
 //!
 //! A library for modeling artistic concepts.
@@ -250,8 +250,6 @@ pub mod utils {
 #        SecondaryColor::Orange
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 14-3: Eine Bibliothek `art` mit Elementen die in
@@ -457,7 +455,7 @@ aufnehmen.
 Füge eine Beschreibung hinzu, die nur ein oder zwei Sätze umfasst, da sie
 zusammen mit deiner Kiste in den Suchergebnissen angezeigt wird. Für das Feld
 `license` musst du einen *Lizenzkennungswert* (licence identifier value) angeben.
-In [Linux Foundation’s Software Package Data Exchange (SPDX)][spdx]
+In [Linux Foundation's Software Package Data Exchange (SPDX)][spdx]
 sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden können. Um
 beispielsweise anzugeben, dass du deine Kiste mit der MIT-Lizenz lizenziert
 hast, füge die `MIT`-Identifikation hinzu:

@@ -75,7 +75,7 @@ einem Port zum Lauschen als „Binden (binding) an einen Port“ bezeichnet wird
 Die Funktion `bind` gibt ein `Result<T, E>` zurück, was anzeigt, dass das
 Binden fehlschlagen könnte. Zum Beispiel erfordert das Binden an Port 80
 Administrator-Rechte (Nicht-Administratoren können nur auf Ports größer als
-1024 lauschen). Wenn wir also versuchen würden, an Port 80 zu lauschen, ohne
+1023 lauschen). Wenn wir also versuchen würden, an Port 80 zu lauschen, ohne
 Administrator zu sein, würde das Binden nicht funktionieren. Ein weiteres
 Beispiel: Binden ist nicht möglich, wenn wir zwei Instanzen unseres Programms
 laufen lassen und somit zwei Programme auf dem gleichen Port lauschen würden.

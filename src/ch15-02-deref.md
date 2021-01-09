@@ -66,13 +66,13 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
 6 |     assert_eq!(5, y);
   |     ^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &{integer}`
   |
-  = help: the trait `std::cmp::PartialEq<&{integer}>` is not implemented for `{integer}`
+  = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
   = note: this error originates in a macro outside of the current crate (in Nightly builds, run with -Z external-macro-backtrace for more info)
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `deref-example`.
+error: could not compile `deref-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -136,8 +136,6 @@ impl<T> MyBox<T> {
         MyBox(x)
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-8: Einen `MyBox<T>`-Typ definieren</span>
@@ -190,7 +188,7 @@ error[E0614]: type `MyBox<{integer}>` cannot be dereferenced
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0614`.
-error: could not compile `deref-example`.
+error: could not compile `deref-example`
 
 To learn more, run the command again with --verbose.
 ```
@@ -314,8 +312,6 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:
 fn hello(name: &str) {
     println!("Hallo {}!", name);
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-11: Eine `hello`-Funktion mit dem Parameter

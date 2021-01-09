@@ -245,7 +245,7 @@ error[E0432]: unresolved import `rand`
  --> adder/src/main.rs:2:5
   |
 2 | use rand;
-  |     ^^^^ no `rand` external crate
+  |     ^^^^ no external crate `rand`
 ```
 
 Um dies zu beheben, bearbeiten wir die Datei *Cargo.toml* für das Paket `adder`

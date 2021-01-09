@@ -52,7 +52,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -85,8 +85,6 @@ Nimm drei.";
         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
@@ -118,7 +116,7 @@ die Zeile `"sicher, schnell, produktiv."` enthält.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -155,8 +153,6 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 12-16: Definiere gerade genug von der Funktion
@@ -189,14 +185,18 @@ error[E0106]: missing lifetime specifier
   --> src/lib.rs:28:51
    |
 28 | pub fn search(query: &str, contents: &str) -> Vec<&str> {
-   |                                                   ^ expected lifetime parameter
+   |                      ----            ----         ^ expected named lifetime parameter
    |
    = help: this function's return type contains a borrowed value, but the signature does not say whether it is borrowed from `query` or `contents`
+help: consider introducing a named lifetime parameter
+   |
+28 | pub fn search<'a>(query: &'a str, contents: &'a str) -> Vec<&'a str> {
+   |              ^^^^        ^^^^^^^            ^^^^^^^         ^^^
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `minigrep`.
+error: could not compile `minigrep`
 
 To learn more, run the command again with --verbose.
 ```
@@ -230,7 +230,7 @@ failures:
 thread 'main' panicked at 'assertion failed: `(left == right)`
   left: `["safe, fast, productive."]`,
  right: `[]`', src/lib.rs:44:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 failures:
     tests::one_result
@@ -276,7 +276,7 @@ Beachte, dass dies noch nicht kompiliert.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -346,7 +346,7 @@ dies noch nicht kompiliert werden kann.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -412,7 +412,7 @@ in Codeblock 12-19 gezeigt.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -518,7 +518,7 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -591,7 +591,7 @@ $ cargo run body poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep body poem.txt`
-I’m nobody! Who are you?
+I'm nobody! Who are you?
 Are you nobody, too?
 How dreary to be somebody!
 ```

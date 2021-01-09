@@ -293,7 +293,7 @@ nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
 Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.
 
-[^siphash]: [https://www.131002.net/siphash/siphash.pdf](https://www.131002.net/siphash/siphash.pdf)
+[^siphash]: <https://en.wikipedia.org/wiki/SipHash>
 
 ## Zusammenfassung
 

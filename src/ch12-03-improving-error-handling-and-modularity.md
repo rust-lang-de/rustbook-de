@@ -323,7 +323,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', src/main.rs:27:21
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Die Zeile `index out of bounds: the len is 1 but the index is 1` ist eine für
@@ -401,7 +401,7 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at 'Nicht genügend Argumente', src/main.rs:26:13
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
@@ -454,7 +454,7 @@ wir im nächsten Codeblock tun werden.
 # }
 #
 impl Config {
-    fn new(args: &[String]) -> Result<Config, &'static str> {
+    fn new(args: &[String]) -> Result<Config, &str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -471,10 +471,7 @@ impl Config {
 `Config::new`</span>
 
 Unsere Funktion `new` liefert jetzt ein `Result` mit einer `Config`-Instanz im
-Erfolgsfall und ein `&'static str` im Fehlerfall. Aus dem Abschnitt [„Statische
-Lebensdauer“][the-static-lifetime] in Kapitel 10 ist zu entnehmen, dass
-`&'static str` der Typ der Zeichenkettenliterale ist, der vorerst unser
-Fehlermeldungs-Typ ist.
+Erfolgsfall und ein `&str` im Fehlerfall.
 
 Wir haben zwei Änderungen im Rumpf der Funktion `new` vorgenommen: Anstatt
 `panic!` aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben
@@ -529,7 +526,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -635,7 +632,7 @@ fn run(config: Config) {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -704,7 +701,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -763,15 +760,17 @@ warning: unused `std::result::Result` that must be used
    = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
 
+warning: 1 warning emitted
+
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
 Mit text:
-I’m nobody! Who are you?
+I'm nobody! Who are you?
 Are you nobody, too?
-Then there’s a pair of us - don’t tell!
-They’d banish us, you know.
+Then there's a pair of us - don't tell!
+They'd banish us, you know.
 
 How dreary to be somebody!
 How public, like a frog
@@ -833,7 +832,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn new(args: &[String]) -> Result<Config, &str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -889,7 +888,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn new(args: &[String]) -> Result<Config, &str> {
         // --abschneiden--
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
@@ -970,7 +969,6 @@ Lass uns diese neu gewonnene Modularität nutzen, indem wir etwas tun, was mit
 dem alten Code schwierig gewesen wäre, mit dem neuen Code aber einfach ist: Wir
 schreiben ein paar Tests!
 
-[the-static-lifetime]: ch10-03-lifetime-syntax.html#statische-lebensdauer
 [ch13]: ch13-00-functional-features.html
 [ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung

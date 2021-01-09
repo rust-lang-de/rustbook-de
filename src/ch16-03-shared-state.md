@@ -178,7 +178,7 @@ error[E0382]: use of moved value: `counter`
   --> src/main.rs:9:36
    |
 5  |     let counter = Mutex::new(0);
-   |         ------- move occurs because `counter` has type `std::sync::Mutex<i32>`, which does not implement the `Copy` trait
+   |         ------- move occurs because `counter` has type `Mutex<i32>`, which does not implement the `Copy` trait
 ...
 9  |         let handle = thread::spawn(move || {
    |                                    ^^^^^^^ value moved into closure here, in previous iteration of loop
@@ -188,7 +188,7 @@ error[E0382]: use of moved value: `counter`
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state`.
+error: could not compile `shared-state`
 
 To learn more, run the command again with --verbose.
 ```
@@ -205,9 +205,7 @@ In Kapitel 15 gaben wir einen Wert mit mehreren Eigentümern an, indem wir den
 intelligenten Zeiger `Rc<T>` verwendeten, um einen Referenzzählwert zu
 erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
 den `Mutex<T>` in `Rc<T>` in Codeblock 16-14 ein und klonen den `Rc<T>`, bevor
-wir die Eigentümerschaft an den Strang übertragen. Da wir die Fehler nun
-gesehen haben, werden wir auch wieder die `for`-Schleife verwenden und das
-Schlüsselwort `move` mit dem Funktionsabschluss beibehalten.
+wir die Eigentümerschaft an den Strang übertragen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -247,19 +245,26 @@ lehrt uns eine Menge.
 ```console
 $ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0277]: `std::rc::Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
+error[E0277]: `Rc<Mutex<i32>>` cannot be sent between threads safely
    --> src/main.rs:11:22
     |
-11  |         let handle = thread::spawn(move || {
-    |                      ^^^^^^^^^^^^^ `std::rc::Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
+11  |           let handle = thread::spawn(move || {
+    |  ______________________^^^^^^^^^^^^^_-
+    | |                      |
+    | |                      `Rc<Mutex<i32>>` cannot be sent between threads safely
+12  | |             let mut num = counter.lock().unwrap();
+13  | |
+14  | |             *num += 1;
+15  | |         });
+    | |_________- within this `[closure@src/main.rs:11:36: 15:10]`
     |
-    = help: within `[closure@src/main.rs:11:36: 15:10 counter:std::rc::Rc<std::sync::Mutex<i32>>]`, the trait `std::marker::Send` is not implemented for `std::rc::Rc<std::sync::Mutex<i32>>`
-    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10 counter:std::rc::Rc<std::sync::Mutex<i32>>]`
+    = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc<Mutex<i32>>`
+    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state`.
+error: could not compile `shared-state`
 
 To learn more, run the command again with --verbose.
 ```

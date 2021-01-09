@@ -114,7 +114,7 @@ error[E0308]: mismatched types
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches`.
+error: could not compile `branches`
 
 To learn more, run the command again with --verbose.
 ```
@@ -246,7 +246,7 @@ genau an, wo das Problem im Programm zu finden ist:
 ```console
 $ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
-error[E0308]: if and else have incompatible types
+error[E0308]: `if` and `else` have incompatible types
  --> src/main.rs:4:44
   |
 4 |     let number = if condition { 5 } else { "sechs" };
@@ -257,7 +257,7 @@ error[E0308]: if and else have incompatible types
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches`.
+error: could not compile `branches`
 
 To learn more, run the command again with --verbose.
 ```

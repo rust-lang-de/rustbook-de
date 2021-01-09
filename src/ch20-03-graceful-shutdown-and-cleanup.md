@@ -102,8 +102,6 @@ impl Drop for ThreadPool {
 #         Worker { id, thread }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-22: Warten auf das Ende der einzelnen
@@ -125,12 +123,12 @@ error[E0507]: cannot move out of `worker.thread` which is behind a mutable refer
   --> src/lib.rs:52:13
    |
 52 |             worker.thread.join().unwrap();
-   |             ^^^^^^^^^^^^^ move occurs because `worker.thread` has type `std::thread::JoinHandle<()>`, which does not implement the `Copy` trait
+   |             ^^^^^^^^^^^^^ move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -226,8 +224,6 @@ struct Worker {
 #         Worker { id, thread }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Nun wollen wir uns auf den Compiler stützen, um die anderen Stellen zu finden,
@@ -237,11 +233,11 @@ Fehler:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no method named `join` found for type `std::option::Option<std::thread::JoinHandle<()>>` in the current scope
+error[E0599]: no method named `join` found for enum `Option<JoinHandle<()>>` in the current scope
   --> src/lib.rs:52:27
    |
 52 |             worker.thread.join().unwrap();
-   |                           ^^^^ method not found in `std::option::Option<std::thread::JoinHandle<()>>`
+   |                           ^^^^ method not found in `Option<JoinHandle<()>>`
 
 error[E0308]: mismatched types
   --> src/lib.rs:72:22
@@ -249,17 +245,17 @@ error[E0308]: mismatched types
 72 |         Worker { id, thread }
    |                      ^^^^^^
    |                      |
-   |                      expected enum `std::option::Option`, found struct `std::thread::JoinHandle`
+   |                      expected enum `Option`, found struct `JoinHandle`
    |                      help: try using a variant of the expected enum: `Some(thread)`
    |
-   = note: expected enum `std::option::Option<std::thread::JoinHandle<()>>`
-            found struct `std::thread::JoinHandle<_>`
+   = note: expected enum `Option<JoinHandle<()>>`
+            found struct `JoinHandle<_>`
 
 error: aborting due to 2 previous errors
 
 Some errors have detailed explanations: E0308, E0599.
 For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello`.
+error: could not compile `hello`
 
 To learn more, run the command again with --verbose.
 ```
@@ -351,8 +347,6 @@ impl Worker {
         }
     }
 }
-#
-# fn main() {}
 ```
 
 Der erste Fehler liegt in unserer `Drop`-Implementierung. Wir haben bereits
@@ -442,8 +436,6 @@ impl Drop for ThreadPool {
 #         }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Wie in Kapitel 17 besprochen, nimmt die Methode `take` auf `Option` die
@@ -558,8 +550,6 @@ enum Message {
 #         }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 Diese Aufzählung `Message` wird entweder eine `NewJob`-Variante sein, die den
@@ -672,8 +662,6 @@ impl Worker {
         }
     }
 }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-23: Senden und Empfangen von
@@ -798,8 +786,6 @@ impl Drop for ThreadPool {
 #         }
 #     }
 # }
-#
-# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-24: Senden von `Message::Terminate` an die
@@ -837,7 +823,7 @@ wird, wie in Codeblock 20-25 gezeigt.
 
 <span class="filename">Dateiname: src/bin/main.rs</span>
 
-```rust,ignore
+```rust,noplayground
 # use hello::ThreadPool;
 # use std::fs;
 # use std::io::prelude::*;
@@ -850,7 +836,7 @@ fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let pool = ThreadPool::new(4);
 
-    for stream in listener.incoming().take(2) {
+    for stream in listener.incoming() {
         let stream = stream.unwrap();
 
         pool.execute(|| {
@@ -1104,8 +1090,6 @@ impl Worker {
         }
     }
 }
-#
-# fn main() {}
 ```
 
 Wir könnten hier mehr tun! Wenn du dieses Projekt weiter verbessern willst,

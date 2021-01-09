@@ -113,13 +113,12 @@ ist. Rust erfordert diese um alle Funktionsrümpfe. Es ist guter Stil, die
 öffnende geschweifte Klammer in dieselbe Zeile wie die Funktionsdeklaration zu
 platzieren und dazwischen ein Leerzeichen einzufügen.
 
-Zum Zeitpunkt der Erstellung dieses Artikels ist ein automatisches
-Formatierungswerkzeug namens `rustfmt` in Entwicklung. Wenn du dich an einen
-Standardstil in allen Rust-Projekten halten willst, wird `rustfmt` deinen Code
-in einem bestimmten Stil formatieren. Das Rust-Team plant, dieses Tool
-schließlich in den Standard-Rust-Vertrieb wie `rustc` aufzunehmen. Je nachdem,
-wann du dieses Buch liest, könnte es also bereits auf deinem Computer
-installiert sein! Weitere Einzelheiten findest du in der Online-Dokumentation.
+Wenn du dich in allen Rust-Projekten an einen Standardstil halten willst,
+kannst du ein Tool zur automatischen Formatierung namens `rustfmt` verwenden,
+um deinen Code in einem bestimmten Stil zu formatieren. Das Rust-Team hat
+dieses Tool wie `rustc` in die Standard-Rust-Distribution aufgenommen, es
+sollte also bereits auf deinem Computer installiert sein! Schaue in die
+Online-Dokumentation für weitere Details.
 
 Innerhalb der Funktion `main` befindet sich der folgende Code:
 

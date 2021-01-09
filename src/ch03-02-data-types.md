@@ -34,7 +34,7 @@ error[E0282]: type annotations needed
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations`.
+error: could not compile `no_type_annotations`
 
 To learn more, run the command again with --verbose.
 ```
@@ -136,8 +136,19 @@ benutzen würdest, ist die Indizierung einer Kollektionsart (collection).
 > 257 zu 1 und so weiter. Das Programm wird nicht abbrechen, aber die Variable
 > wird wahrscheinlich einen anderen Wert annehmen, als du erwartest. Sich auf
 > das Verhalten von Ganzzahlüberläufen zu verlassen wird als Fehler angesehen.
-> Wenn du explizit umbrechen willst, kannst du den Typ [`Wrapping`][wrapping]
-> aus der Standardbibliothek verwenden.
+> 
+> Um die Möglichkeit eines Überlaufs explizit zu behandeln, kannst du diese
+> Methodenfamilien verwenden, die die Standardbibliothek für primitive
+> numerische Typen bereitstellt:
+> 
+> - Verpacken (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
+>  `wrapping_add`
+> - Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
+>   `checked_*`-Methode gibt.
+> - Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
+>   Überlauf mit einer `overflowing_*`-Methode stattgefunden hat.
+> - Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
+>  `saturating_*`-Methoden.
 
 #### Fließkomma-Typen
 
@@ -410,7 +421,7 @@ abbricht, wenn er ausgeführt wird:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,panics
+```rust,panics
 fn main() {
     let a = [1, 2, 3, 4, 5];
     let index = 10;
@@ -426,10 +437,19 @@ Die Ausführung dieses Codes mit `cargo run` ergibt folgendes Ergebnis:
 ```console
 $ cargo run
    Compiling arrays v0.1.0 (file:///projects/arrays)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
-     Running `target/debug/arrays`
-thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:5:19
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace.
+error: this operation will panic at runtime
+ --> src/main.rs:5:19
+  |
+5 |     let element = a[index];
+  |                   ^^^^^^^^ index out of bounds: the length is 5 but the index is 10
+  |
+  = note: `#[deny(unconditional_panic)]` on by default
+
+error: aborting due to previous error
+
+error: could not compile `arrays`
+
+To learn more, run the command again with --verbose.
 ```
 
 Das Kompilieren ergab keinen Fehler, aber das Programm führte zu einem

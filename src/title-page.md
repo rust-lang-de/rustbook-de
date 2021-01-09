@@ -2,7 +2,7 @@
 
 *von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft*
 
-Diese Version des Textes geht davon aus, dass du Rust 1.41.0 oder später mit
+Diese Version des Textes geht davon aus, dass du Rust 1.48 oder später mit
 `edition="2018"` in *Cargo.toml* in allen Projekten verwendest, um Rust 2018
 Idiome zu verwenden. Siehe [Abschnitt „Installation“][install] zum Installieren
 und Aktualisieren von Rust sowie [Anhang E][editions] zu Informationen zu den
@@ -40,8 +40,8 @@ nicht angegeben wird, selbst wenn du die verwendete Rust-Compiler-Version
 aktualisierst. Das ist die Rückwärtskompatibilitätsgarantie von Rust!
 
 Die HTML-Version ist online verfügbar unter
-https://doc.rust-lang.org/stable/book/ (englisches Original) und
-https://rust-lang-de.github.io/rustbook-de/ (deutsche Übersetzung).
+<https://doc.rust-lang.org/stable/book/> (englisches Original) und
+<https://rust-lang-de.github.io/rustbook-de/> (deutsche Übersetzung).
 Wenn die Rust-Installation mit `rustup` erfolgt ist, kann das Buch offline mit
 `rustup docs --book` geöffnet werden (nur in Englisch).
 

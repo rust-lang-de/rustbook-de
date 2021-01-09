@@ -126,14 +126,14 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` ref
  --> src/main.rs:8:5
   |
 7 | fn change(some_string: &String) {
-  |                        ------- help: consider changing this to be a mutable reference: `&mut std::string::String`
+  |                        ------- help: consider changing this to be a mutable reference: `&mut String`
 8 |     some_string.push_str(" Welt");
   |     ^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```
@@ -199,7 +199,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```
@@ -271,7 +271,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```
@@ -348,14 +348,18 @@ error[E0106]: missing lifetime specifier
  --> src/main.rs:5:16
   |
 5 | fn dangle() -> &String {
-  |                ^ help: consider giving it a 'static lifetime: `&'static`
+  |                ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
+help: consider using the `'static` lifetime
+  |
+5 | fn dangle() -> &'static String {
+  |                ^^^^^^^^
 
 error: aborting due to previous error
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership`.
+error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 ```
