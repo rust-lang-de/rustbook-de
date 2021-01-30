@@ -416,47 +416,58 @@ wird den Wert `2` vom Index `[1]` im Array erhalten.
 
 Was passiert, wenn du versuchst, auf ein Element eines Arrays zuzugreifen, das
 sich hinter dem Ende des Arrays befindet? Angenommen, du änderst das Beispiel
-in den folgenden Code, der sich kompilieren lässt, aber mit einem Fehler
-abbricht, wenn er ausgeführt wird:
+wie folgt, das Code ähnlich dem Ratespiel in Kapitel 2 verwendet, um einen
+Array-Index vom Benutzer zu erhalten:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,panics
+```rust
+use std::io;
+
 fn main() {
     let a = [1, 2, 3, 4, 5];
-    let index = 10;
+
+    println!("Bitte gib einen Array-Index ein.");
+
+    let mut index = String::new();
+
+    io::stdin()
+        .read_line(&mut index)
+        .expect("Fehler beim Lesen der Zeile");
+
+    let index: usize = index
+        .trim()
+        .parse()
+        .expect("Eingegebener Index war keine Zahl");
 
     let element = a[index];
 
-    println!("Der Wert von element ist: {}", element);
+    println!(
+        "Der Wert von element beim Index {} ist: {}",
+        index, element
+    );
 }
 ```
 
-Die Ausführung dieses Codes mit `cargo run` ergibt folgendes Ergebnis:
+Dieser Code kompiliert erfolgreich. Wenn du diesen Code mit `cargo run`
+ausführst und 0, 1, 2, 3 oder 4 eingibst, wird das Programm den entsprechenden
+Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine Zahl hinter
+dem Ende des Arrays eingibst, z.B. 10, erhältst du eine Ausgabe wie diese:
 
-```console
-$ cargo run
-   Compiling arrays v0.1.0 (file:///projects/arrays)
-error: this operation will panic at runtime
- --> src/main.rs:5:19
-  |
-5 |     let element = a[index];
-  |                   ^^^^^^^^ index out of bounds: the length is 5 but the index is 10
-  |
-  = note: `#[deny(unconditional_panic)]` on by default
-
-error: aborting due to previous error
-
-error: could not compile `arrays`
-
-To learn more, run the command again with --verbose.
+```text
+thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Das Kompilieren ergab keinen Fehler, aber das Programm führte zu einem
-*Laufzeitfehler* und wurde nicht erfolgreich beendet. Wenn du versuchst, auf
-ein Element über die Indizierung zuzugreifen, wird Rust prüfen, ob der von dir
-angegebene Index kleiner als die Array-Länge ist. Wenn der Index größer oder
-gleich der Array-Länge ist, wird Rust das Programm abbrechen.
+Das Programm führte zu einem *Laufzeitfehler* an der Stelle, an der ein
+ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde an
+dieser Stelle mit einer Fehlermeldung beendet und hat das abschließende
+`println!` nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf
+ein Element zuzugreifen, prüft Rust, ob der angegebene Index kleiner als die
+Array-Länge ist. Wenn der Index größer oder gleich der Array-Länge ist, wird
+Rust das Programm abbrechen. Diese Prüfung muss zur Laufzeit erfolgen,
+insbesondere in diesem Fall, weil der Compiler unmöglich wissen kann, welchen
+Wert ein Benutzer, der den Code ausführt, später eingeben wird.
 
 Dies ist das erste Beispiel für die Umsetzung der Sicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
