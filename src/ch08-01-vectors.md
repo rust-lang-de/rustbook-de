@@ -2,7 +2,7 @@
 
 Der erste Kollektionstyp, den wir betrachten werden, ist `Vec<T>`, auch bekannt
 als *Vektor*. Vektoren ermöglichen es dir, mehr als einen Wert in einer
-einzigen Datenstruktur zu speichern and alle Werte nebeneinander im Speicher
+einzigen Datenstruktur zu speichern und alle Werte nebeneinander im Speicher
 abzulegen. Vektoren können nur Werte desselben Typs speichern. Sie sind nützlich,
 wenn du eine Liste von Einträgen hast, z.B. die Textzeilen einer Datei oder die
 Preise der Artikel in einem Einkaufswagen.
