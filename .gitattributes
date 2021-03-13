@@ -1,1 +1,1 @@
-*.md linguist-language=Markdown liguist-detectable
+*.md linguist-language=Markdown liguist-detectable -linguist-documentation
