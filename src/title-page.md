@@ -2,7 +2,7 @@
 
 *von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft*
 
-Diese Version des Textes geht davon aus, dass du Rust 1.49 oder später mit
+Diese Version des Textes geht davon aus, dass du Rust 1.50 oder später mit
 `edition="2018"` in *Cargo.toml* in allen Projekten verwendest, um Rust 2018
 Idiome zu verwenden. Siehe [Abschnitt „Installation“][install] zum Installieren
 und Aktualisieren von Rust sowie [Anhang E][editions] zu Informationen zu den

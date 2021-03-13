@@ -437,7 +437,7 @@ und wiederholt bis er den letzten Index im Array erreicht (d.h. wenn
 `index < 5` nicht mehr wahr ist). Wenn du diesen Code ausführst, wird jedes
 Element im Array ausgegeben:
 
-```text
+```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.32s

@@ -208,16 +208,16 @@ bestimmten Schwellwerten liegt</span>
 
 Ein wichtiger Teil dieses Programmcodes ist, dass das Merkmal `Messenger` eine
 Methode namens `send` hat, die eine unveränderliche Referenz auf `self` und den
-Text der Nachricht enthält. Dies ist die Schnittstelle, die unser Mock-Objekt
-haben muss. Der andere wichtige Teil ist, dass wir das Verhalten der Methode
-`set_value` auf dem `LimitTracker` testen möchten. Wir können ändern, was wir
-für den Parameter `value` übergeben, aber `set_value` auf dem `LimitTracker`
-testen möchten. Wir können ändern, was wir für den Parameter `value` übergeben,
-aber `set_value` gibt nichts zurück, worüber wir Aussagen machen können. Wir
-möchten sagen können, dass, wenn wir einen `LimitTracker` mit etwas das das
-Merkmal `Messenger` implementiert erstellen und einen bestimmten Wert für `max`,
-wenn wir unterschiedliche Zahlen für `value` übergeben, der Messenger angewiesen
-wird entsprechende Nachrichten zu senden.
+Text der Nachricht enthält. Dieses Merkmal ist die Schnittstelle, die unser
+Mock-Objekt implementieren muss, damit das Mock-Objekt auf die gleiche Weise
+wie ein reales Objekt verwendet werden kann. Der andere wichtige Teil ist, dass
+wir das Verhalten der Methode `set_value` von `LimitTracker` testen wollen. Wir
+können ändern, was wir für den Parameter `value` übergeben, aber `set_value`
+gibt nichts zurück, auf das wir Zusicherungen machen können. Wir wollen in der
+Lage sein zu sagen, dass, wenn wir einen `LimitTracker` mit etwas erstellen,
+das das Merkmal `Messenger` und einen bestimmten Wert für `max` implementiert,
+wenn wir verschiedene Zahlen für `value` übergeben, der Messenger angewiesen
+wird, die entsprechenden Nachrichten zu senden.
 
 Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von `send` nur die Nachrichten verfolgt, die
@@ -329,7 +329,7 @@ enthalten sollte.
 
 Es gibt jedoch ein Problem mit diesem Test, wie hier gezeigt:
 
-```text
+```console
 $ cargo test
    Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
 error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `&` reference
@@ -346,6 +346,8 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker`
 
 To learn more, run the command again with --verbose.
+warning: build failed, waiting for other jobs to finish...
+error: build failed
 ```
 
 Wir können den `MockMessenger` nicht ändern, um die Nachrichten zu verfolgen, da
@@ -357,7 +359,7 @@ schau dir die Fehlermeldung an, die dabei ausgegeben wird).
 
 Dies ist eine Situation, in der innere Veränderlichkeit helfen kann! Wir
 speichern die `send_messages` in einer `RefCell<T>` und dann kann die
-`send`-Nachricht `sent_messages` ändern, um Nachrichten zu speichern, die wir
+`send`-Methode `sent_messages` ändern, um Nachrichten zu speichern, die wir
 gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:
 
 <span class="filename">Dateiname: src/lib.rs</span>

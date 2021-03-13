@@ -221,8 +221,10 @@ löst das Problem mit deren unnötigen doppelten Aufruf im ersten `if`-Block.
 Leider rufen wir nun die Funktion auf und warten in jeden Fall auf das Ergebnis,
 sogar im inneren `if`-Block der den Ergebniswert überhaupt nicht verwendet.
 
-Wir wollen den Code an einer Stelle in unserem Programm definieren, aber
-ausschließlich dort ausführen, wo wir das Ergebnis tatsächlich brauchen.
+Wir wollen in `generate_workout` nur ein Mal auf
+`simulated_expensive_calculation` referenzieren, aber die teure Berechnung nur
+dort durchführen, wo wir das Ergebnis tatsächlich benötigen. Dies ist ein
+Anwendungsfall für Funktionsabschlüsse!
 
 #### Umformen mit Funktionsabschlüssen um Programmcode zu speichern
 
@@ -339,8 +341,8 @@ fn generate_workout(intensity: u32, random_number: u32) {
 <span class="caption">Codeblock 13-6: Aufruf der neu definierten
 `expensive_closure`</span>
 
-Nun wird die langsame Berechnung nur noch an einer Stelle aufgerufen und wir
-führen sie nur durch, wenn wir das Ergebnis benötigten.
+Nun wird die langsame Berechnung an einer Stelle definiert und nur noch dort
+ausgeführt, wo wir das Ergebnis benötigen.
 
 Wir haben jedoch eines der Probleme von Codeblock 13-3 wieder eingeführt.
 Im ersten `if`-Block rufen wir den Funktionsabschluss mehrfach auf und lassen

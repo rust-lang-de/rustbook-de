@@ -168,7 +168,7 @@ sehen, indem du den Befehl `ls` in deiner Konsole eingibst. Unter Linux und
 MacOS siehst du zwei Dateien. Mit PowerShell unter Windows siehst du die
 gleichen drei Dateien, die du mit CMD sehen würdest.
 
-```text
+```console
 $ ls
 main  main.rs
 ```

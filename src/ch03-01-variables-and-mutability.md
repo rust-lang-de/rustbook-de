@@ -177,12 +177,11 @@ aktualisiert werden müsste.
 Wie du in der Anleitung zum Ratespiel im Abschnitt [„Vergleichen der Schätzung
 mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2
 gesehen hast, kannst du eine neue Variable mit dem gleichen Namen wie eine
-vorherige Variable deklarieren, und die neue Variable beschattet die vorherige
-Variable. Die Rust-Entwickler sagen, dass die erste Variable von der zweiten
-*beschattet* (shadowed) wird, was bedeutet, dass der Wert der zweiten Variable
-das ist, was erscheint, wenn die Variable verwendet wird. Wir können eine
-Variable beschatten, indem wir denselben Variablenamen verwenden und das
-Schlüsselwort `let` wie folgt wiederholen:
+vorherige Variable deklarieren. Die Rust-Entwickler sagen, dass die erste
+Variable von der zweiten *beschattet* (shadowed) wird, was bedeutet, dass der
+Wert der zweiten Variable das ist, was erscheint, wenn die Variable verwendet
+wird. Wir können eine Variable beschatten, indem wir denselben Variablenamen
+verwenden und das Schlüsselwort `let` wie folgt wiederholen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

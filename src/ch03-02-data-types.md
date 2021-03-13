@@ -421,7 +421,7 @@ Array-Index vom Benutzer zu erhalten:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,panics
 use std::io;
 
 fn main() {
@@ -460,14 +460,14 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Das Programm führte zu einem *Laufzeitfehler* an der Stelle, an der ein
-ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde an
-dieser Stelle mit einer Fehlermeldung beendet und hat das abschließende
-`println!` nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf
-ein Element zuzugreifen, prüft Rust, ob der angegebene Index kleiner als die
-Array-Länge ist. Wenn der Index größer oder gleich der Array-Länge ist, wird
-Rust das Programm abbrechen. Diese Prüfung muss zur Laufzeit erfolgen,
-insbesondere in diesem Fall, weil der Compiler unmöglich wissen kann, welchen
-Wert ein Benutzer, der den Code ausführt, später eingeben wird.
+ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
+einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung
+nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
+zuzugreifen, prüft Rust, ob der angegebene Index kleiner als die Array-Länge
+ist. Wenn der Index größer oder gleich der Länge ist, wird Rust das Programm
+abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
+Fall, weil der Compiler unmöglich wissen kann, welchen Wert ein Benutzer später
+eingeben wird, wenn er den Code ausführt.
 
 Dies ist das erste Beispiel für die Umsetzung der Sicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht

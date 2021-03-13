@@ -64,8 +64,8 @@ TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
 eine IP-Adresse, die deinen Computer repräsentiert (dies ist auf jedem Computer
 gleich und gilt nicht nur speziell für den Computer der Autoren), und `7878`
 ist der Port. Wir haben diesen Port aus zwei Gründen gewählt: HTTP wird
-normalerweise auf diesem Port akzeptiert und 7878 ist *rust* auf einem Telefon
-getippt.
+normalerweise auf diesem Port nicht akzeptiert und 7878 ist *rust* auf einem
+Telefon getippt.
 
 Die Funktion `bind` in diesem Szenario arbeitet wie die Funktion `new`, indem
 sie eine neue `TcpListener`-Instanz zurückgibt. Der Grund dafür, dass die
@@ -579,10 +579,15 @@ anzuzeigen.
 #         stream.flush().unwrap();
     // --abschneiden--
     } else {
-        let status_line = "HTTP/1.1 404 NOT FOUND\r\n\r\n";
+        let status_line = "HTTP/1.1 404 NOT FOUND";
         let contents = fs::read_to_string("404.html").unwrap();
 
-        let response = format!("{}{}", status_line, contents);
+        let response = format!(
+            "{}\r\nContent-Length: {}\r\n\r\n{}",
+            status_line,
+            contents.len(),
+            contents
+        );
 
         stream.write(response.as_bytes()).unwrap();
         stream.flush().unwrap();
@@ -594,11 +599,10 @@ anzuzeigen.
 Fehlerseite, wenn etwas anderes als `/` angefragt wurde</span>
 
 Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
-Begründungsphrase `NOT FOUND` (nicht gefunden). Wir geben immer noch keine
-Kopfzeilen zurück und der Rumpf der Antwort wird das HTML in der Datei
-*404.html* sein. Du musst neben *hallo.html* eine Datei *404.html* für die
-Fehlerseite erstellen; auch hier kannst du jedes beliebige HTML verwenden oder
-das Beispiel-HTML in Codeblock 20-8.
+Begründungsphrase `NOT FOUND` (nicht gefunden). Der Rumpf der Antwort wird das
+HTML in der Datei *404.html* sein. Du musst neben *hallo.html* eine Datei
+*404.html* für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
+HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.
 
 <span class="filename">Dateiname: 404.html</span>
 
@@ -665,12 +669,17 @@ fn handle_connection(mut stream: TcpStream) {
 #     let get = b"GET / HTTP/1.1\r\n";
 #
     let (status_line, filename) = if buffer.starts_with(get) {
-        ("HTTP/1.1 200 OK\r\n\r\n", "hello.html")
+        ("HTTP/1.1 200 OK", "hello.html")
     } else {
-        ("HTTP/1.1 404 NOT FOUND\r\n\r\n", "404.html")
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
 
-    let contents = fs::read_to_string(filename).unwrap();
+    let response = format!(
+        "{}\r\nContent-Length: {}\r\n\r\n{}",
+        status_line,
+        contents.len(),
+        contents
+    );
 
     let response = format!("{}{}", status_line, contents);
 

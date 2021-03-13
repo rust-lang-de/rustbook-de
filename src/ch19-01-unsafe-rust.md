@@ -9,13 +9,13 @@ genau wie das normale Rust, gibt uns aber zusätzliche Superkräfte.
 Unsicheres Rust existiert, weil die statische Analyse von Natur aus konservativ
 ist. Wenn der Compiler versucht festzustellen, ob der Code die Garantien
 einhält oder nicht, ist es besser für ihn, einige gültige Programme
-zurückzuweisen, als einige ungültige Programme zu akzeptieren. Der Code mag
-zwar in Ordnung sein, aber soweit Rust es beurteilen kann, ist er es nicht! In
-diesen Fällen kannst du unsicheren Code verwenden, um dem Compiler zu sagen:
-„Vertraue mir, ich weiß, was ich tue.“ Der Nachteil ist, dass du ihn auf
-eigenes Risiko verwendest: Wenn du unsicheren Code falsch verwendest, können
-Probleme aufgrund von Speicherunsicherheiten, z.B. Dereferenzierung von
-Null-Zeigern, auftreten.
+zurückzuweisen, als einige ungültige Programme zu akzeptieren. Obwohl der Code
+*möglicherweise* in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
+er nicht genügend Informationen hat, um sicher zu sein. In diesen Fällen kannst
+du unsicheren Code verwenden, um dem Compiler zu sagen: „Vertraue mir, ich
+weiß, was ich tue.“ Der Nachteil ist, dass du ihn auf eigenes Risiko
+verwendest: Wenn du unsicheren Code falsch verwendest, können Probleme aufgrund
+von Speicherunsicherheiten, z.B. Dereferenzierung von Null-Zeigern, auftreten.
 
 Ein weiterer Grund, warum Rust ein unsicheres zweites Ich hat, ist, dass die
 zugrunde liegende Computer-Hardware von Natur aus unsicher ist. Wenn Rust dich

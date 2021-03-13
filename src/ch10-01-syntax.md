@@ -22,10 +22,10 @@ Funktionen, die beide den größten Wert in einem Anteilstyp finden.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-fn largest_i32(list: &[i32]) -> &i32 {
-    let mut largest = &list[0];
+fn largest_i32(list: &[i32]) -> i32 {
+    let mut largest = list[0];
 
-    for item in list {
+    for &item in list {
         if item > largest {
             largest = item;
         }
@@ -34,10 +34,10 @@ fn largest_i32(list: &[i32]) -> &i32 {
     largest
 }
 
-fn largest_char(list: &[char]) -> &char {
-    let mut largest = &list[0];
+fn largest_char(list: &[char]) -> char {
+    let mut largest = list[0];
 
-    for item in list {
+    for &item in list {
         if item > largest {
             largest = item;
         }
@@ -51,13 +51,13 @@ fn main() {
 
     let result = largest_i32(&number_list);
     println!("Die größte Zahl ist {}", result);
-#     assert_eq!(result, &100);
+#     assert_eq!(result, 100);
 
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest_char(&char_list);
     println!("Das größte Zeichen ist {}", result);
-#     assert_eq!(result, &'y');
+#     assert_eq!(result, 'y');
 }
 ```
 
@@ -88,13 +88,13 @@ Typnamen-Deklarationen innerhalb spitzer Klammern `<>`, zwischen dem
 Funktionsnamen und der Parameterliste, so wie hier:
 
 ```rust,ignore
-fn largest<T>(list: &[T]) -> &T {
+fn largest<T>(list: &[T]) -> T {
 ```
 
 Wir lesen diese Definition wie folgt: Die Funktion `largest` ist generisch über
 einen Typ `T`. Sie hat einen Parameter namens `list`, der ein Anteilstyp von
-Werten des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf einen
-Wert des gleichen Typs `T` zurück.
+Werten des Typs `T` ist. Die Funktion `largest` gibt einen Wert des gleichen
+Typs `T` zurück.
 
 Codeblock 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
 generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
@@ -106,10 +106,10 @@ beheben.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,does_not_compile
-fn largest<T>(list: &[T]) -> &T {
-    let mut largest = &list[0];
+fn largest<T>(list: &[T]) -> T {
+    let mut largest = list[0];
 
-    for item in list {
+    for &item in list {
         if item > largest {
             largest = item;
         }

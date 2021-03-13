@@ -275,7 +275,7 @@ struct Shoe {
     style: String,
 }
 
-fn shoes_in_my_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
+fn shoes_in_size(shoes: Vec<Shoe>, shoe_size: u32) -> Vec<Shoe> {
     shoes.into_iter().filter(|s| s.size == shoe_size).collect()
 }
 
@@ -300,7 +300,7 @@ mod tests {
             },
         ];
 
-        let in_my_size = shoes_in_my_size(shoes, 10);
+        let in_my_size = shoes_in_size(shoes, 10);
 
         assert_eq!(
             in_my_size,
@@ -322,11 +322,11 @@ mod tests {
 <span class="caption">Codeblock 13-19: Die `filter`-Methode mit einen
 Funktionsabschluss benutzen der `shoe_size` erfasst</span>
 
-Die `shoes_in_my_size`-Funktion übernimmt die Eigentümerschaft über einen Vektor
+Die `shoes_in_size`-Funktion übernimmt die Eigentümerschaft über einen Vektor
 aus Schuhen mit der Schuhgröße als Parameter und gibt einen Vektor zurück, der
 nur Schuhe einer bestimmten Größe enthält.
 
-Im Funktionsrumpf von `shoes_in_my_size` rufen wir `into_iter` auf, um einen
+Im Funktionsrumpf von `shoes_in_size` rufen wir `into_iter` auf, um einen
 Iterator zu erzeugen, der die Eigentümerschaft vom Vektor übernimmt. Im Anschluss
 rufen wir den `filter`-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
 Elemente enthält, für die der Funktionsabschluss `true` zurückgibt.
@@ -337,7 +337,7 @@ gewählten Größe. Zuletzt sammelt der Aufruf der `collect`-Methode die
 zurückgegeben Werte des angeschlossenen Adapters in den Vektor, der von der
 Funktion zurückgegeben wird.
 
-Der Test zeigt, wenn wir `shoes_in_my_size` aufrufen, bekommen wir nur Schuhe
+Der Test zeigt, wenn wir `shoes_in_size` aufrufen, bekommen wir nur Schuhe
 der spezifizierten Größe zurück.
 
 ### Mit dem `Iterator`-Merkmal eigene Iteratoren erstellen

@@ -105,7 +105,7 @@ später aufgeführten Varianten betrachtet.
 
 Das Merkmal `PartialOrd` ist z.B. für die Methode `gen_range` aus der Kiste
 `rand` erforderlich, die einen Zufallswert aus einem Wertebereich erzeugt, der
-durch einen niedrigen und einen hohen Wert festgelegt wird.
+durch einen Bereichsausdruck festgelegt wird.
 
 Das Merkmal `Ord` erlaubt dir zu wissen, dass für zwei beliebige Werte des
 annotierten Typs eine gültige Reihenfolge existiert. Das Merkmal `Ord`
