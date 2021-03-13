@@ -1,1 +1,1 @@
-*.md linguist-language=Markdown linguist-vendored=false
+*.md linguist-language=Markdown liguist-detectable=true
