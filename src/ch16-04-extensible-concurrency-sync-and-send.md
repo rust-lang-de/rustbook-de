@@ -14,14 +14,14 @@ In der Sprache sind jedoch zwei Nebenläufigkeitskonzepte eingebettet: Die
 ### Erlauben der Eigentümerschaftübertragung zwischen Strängen mit `Send`
 
 Das Markierungsmerkmal (marker trait) `Send` zeigt an, dass die
-Eigentümerschaft am Typ, der `Send` implementiert, zwischen Strängen (threads)
-übertragen werden kann. Fast jeder Rust-Typ ist `Send`, aber es gibt einige
-Ausnahmen, einschließlich `Rc<T>`: Dieser kann nicht `Send` sein, denn wenn du
-einen `Rc<T>` Wert geklont hast und versucht hast, die Eigentümerschaft am Klon
-auf einen anderen Strang zu übertragen, könnten beide Stränge gleichzeitig die
-Referenzzahl aktualisieren. Aus diesem Grund ist `Rc<T>` für die Verwendung in
-einsträngigen Situationen implementiert, in denen du nicht die Strang-sichere
-Performanzeinbuße zahlen willst.
+Eigentümerschaft an Werten des Typs, der `Send` implementiert, zwischen
+Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ ist `Send`, aber
+es gibt einige Ausnahmen, einschließlich `Rc<T>`: Dieser kann nicht `Send`
+sein, denn wenn du einen `Rc<T>` Wert geklont hast und versucht hast, die
+Eigentümerschaft am Klon auf einen anderen Strang zu übertragen, könnten beide
+Stränge gleichzeitig die Referenzzahl aktualisieren. Aus diesem Grund ist
+`Rc<T>` für die Verwendung in einsträngigen Situationen implementiert, in denen
+du nicht die Strang-sichere Performanzeinbuße zahlen willst.
 
 Daher stellen das Typsystem und die Merkmalsabgrenzungen (trait bounds) von
 Rust sicher, dass du niemals versehentlich einen `Rc<T>`-Wert über Stränge

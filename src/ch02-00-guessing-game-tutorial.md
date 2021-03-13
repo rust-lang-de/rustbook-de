@@ -289,10 +289,10 @@ Benutzer zu erhalten. Wir übergeben auch ein Argument an `read_line`:
 `&mut guess`.
 
 Die Aufgabe von `read_line` ist es, alles, was der Benutzer in die
-Standardeingabe eingibt, in eine Zeichenkette zu übernehmen, daher nimmt es
-diese Zeichenkette als Argument. Das Zeichenketten-Argument muss veränderlich
-sein, damit die Methode den Inhalt der Zeichenkette durch Hinzufügen der
-Benutzereingabe ändern kann.
+Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt zu
+überschreiben), daher nimmt es diese Zeichenkette als Argument. Das
+Zeichenketten-Argument muss veränderlich sein, damit die Methode den Inhalt der
+Zeichenkette durch Hinzufügen der Benutzereingabe ändern kann.
 
 Das `&` zeigt an, dass es sich bei diesem Argument um eine *Referenz* handelt,
 die dir eine Möglichkeit bietet, mehrere Teile deines Codes auf einen Datenteil
@@ -480,13 +480,14 @@ wir Code schreiben können, der `rand` benutzt, müssen wir die Datei
 *Cargo.toml* so modifizieren, dass die Kiste `rand` als Abhängigkeit
 eingebunden wird. Öffne jetzt diese Datei und füge die folgende Zeile unten
 unter der Überschrift des Abschnitts `[dependencies]` hinzu, den Cargo für dich
-erstellt hat:
+erstellt hat. Stelle sicher, dass du Version `0.8.3` verwendest, andernfalls
+werden die Codebeispiele in dieser Anleitung nicht funktionieren.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
 ```toml
 [dependencies]
-rand = "0.5.5"
+rand = "0.8.3"
 ```
 
 In der Datei *Cargo.toml* ist alles, was nach einer Überschrift folgt, Teil
@@ -494,12 +495,15 @@ eines Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste `rand` mit dem semantischen
-Versionsspezifikator `0.5.5`. Cargo versteht [semantische
+Versionsspezifikator `0.8.3`. Cargo versteht [semantische
 Versionierung][semver] (manchmal auch *SemVer* genannt), was ein Standard zum
-Schreiben von Versionsnummern ist. Die Zahl `0.5.5` ist eigentlich die
-Abkürzung für `^0.5.5`, was für alle Versionen ab `0.5.5` und kleiner als
-`0.6.0` steht. Cargo geht davon aus dass die öffentliche API dieser Versionen
-kompatibel zur Version 0.5.5 ist.
+Schreiben von Versionsnummern ist. Die Zahl `0.8.3` ist eigentlich die
+Abkürzung für `^0.8.3`, was für alle Versionen ab `0.8.3` und kleiner als
+`0.9.0` steht. Cargo geht davon aus dass die öffentliche API dieser Versionen
+kompatibel zur Version 0.8.3 ist und diese Angabe stellt sicher, dass du die
+neueste Patch-Version erhälten, die noch mit dem Code in diesem Kapitel
+kompiliert werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API
+mit der in den folgenden Beispielen verwendeten übereinstimmt.
 
 Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Codeblock 2-2
 gezeigt.
@@ -507,7 +511,7 @@ gezeigt.
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.5.5
+  Downloaded rand v0.8.3
   Downloaded libc v0.2.62
   Downloaded rand_core v0.2.2
   Downloaded rand_core v0.3.1
@@ -516,7 +520,7 @@ $ cargo build
    Compiling libc v0.2.62
    Compiling rand_core v0.3.1
    Compiling rand_core v0.2.2
-   Compiling rand v0.5.5
+   Compiling rand v0.8.3
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 ```
@@ -535,10 +539,10 @@ Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur Nutzung
 bereitstellen.
 
 Nach dem Aktualisieren der Registry überprüft Cargo den Abschnitt
-`[dependencies]` und lädt alle Kisten herunter, die du noch nicht hast. In
-diesem Fall, obwohl wir nur `rand` als Abhängigkeit aufgelistet haben, hat
-Cargo auch `libc` und `rand_core` geschnappt, weil `rand` von diesen abhängig
-ist, um zu funktionieren. Nachdem die Kisten heruntergeladen wurden, kompiliert
+`[dependencies]` und lädt alle Kisten herunter, die du noch nicht hast. Obwohl
+wir nur `rand` als Abhängigkeit aufgelistet haben, hat sich Cargo in diesem
+Fall auch andere Kisten geschnappt, von denen `rand` abhängig ist, um zu
+funktionieren. Nachdem die Kisten heruntergeladen wurden, kompiliert
 Rust sie und kompiliert dann das Projekt mit den verfügbaren Abhängigkeiten.
 
 Wenn du gleich wieder `cargo build` ausführst, ohne irgendwelche Änderungen
@@ -568,7 +572,7 @@ Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wen
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
 verwenden, bis du etwas anderes angibst. Was passiert z.B., wenn nächste Woche
-Version 0.5.6 der Kiste `rand` herauskommt und eine wichtige Fehlerbehebung
+Version 0.8.4 der Kiste `rand` herauskommt und eine wichtige Fehlerbehebung
 enthält, aber auch eine Regression, die deinen Code bricht?
 
 Die Antwort auf dieses Problem ist die Datei *Cargo.lock*, die beim ersten
@@ -580,7 +584,7 @@ Projekt in der Zukunft baust, wird Cargo sehen, dass die Datei *Cargo.lock*
 existiert und die dort angegebenen Versionen verwenden, anstatt die ganze
 Arbeit der Versionsfindung erneut zu machen. Auf diese Weise erhältst du
 automatisch einen reproduzierbaren Build. Mit anderen Worten, dein Projekt
-bleibt dank der Datei *Cargo.lock* auf `0.5.5`, bis du explizit die
+bleibt dank der Datei *Cargo.lock* auf `0.8.3`, bis du explizit die
 Versionsnummer erhöhst.
 
 #### Aktualisieren einer Kiste, um eine neue Version zu erhalten
@@ -590,28 +594,28 @@ Wenn du eine Kiste aktualisieren *willst*, bietet Cargo einen weiteren Befehl
 die deinen Spezifikationen entsprechen, in *Cargo.toml* herausfindet. Wenn das
 funktioniert, wird Cargo diese Versionen in die Datei *Cargo.lock* schreiben.
 
-Standardmäßig sucht Cargo jedoch nur nach Versionen, die größer als `0.5.5` und
-kleiner als `0.6.0` sind. Wenn die Kiste `rand` zwei neue Versionen `0.5.6` und
-`0.6.0` veröffentlicht hat, würdest du folgendes sehen, wenn du `cargo update`
+Standardmäßig sucht Cargo jedoch nur nach Versionen, die größer als `0.8.3` und
+kleiner als `0.9.0` sind. Wenn die Kiste `rand` zwei neue Versionen `0.8.4` und
+`0.9.0` veröffentlicht hat, würdest du folgendes sehen, wenn du `cargo update`
 ausführst:
 
 ```console
 $ cargo update
     Updating crates.io index
-    Updating rand v0.5.5 -> v0.5.6
+    Updating rand v0.8.3 -> v0.8.4
 ```
 
 An diesem Punkt würdest du auch eine Änderung in deiner Datei *Cargo.lock*
 bemerken, die feststellt, dass die Version der Kiste `rand`, die du jetzt
-benutzt, `0.5.6` ist.
+benutzt, `0.8.4` ist.
 
-Wenn du die `rand`-Version `0.6.0` oder irgendeine Version aus der
-`0.6.x`-Serie verwenden wolltest, müsstest du stattdessen die Datei
+Wenn du die `rand`-Version `0.9.0` oder irgendeine Version aus der
+`0.9.x`-Serie verwenden wolltest, müsstest du stattdessen die Datei
 *Cargo.toml* anpassen, damit sie wie folgt aussieht:
 
 ```toml
 [dependencies]
-rand = "0.6.0"
+rand = "0.9.0"
 ```
 
 Wenn du das nächste Mal `cargo build` ausführst, wird Cargo die Registry der
@@ -640,7 +644,7 @@ use rand::Rng;
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
 
     println!("Die Geheimzahl ist: {}", secret_number);
 
@@ -670,10 +674,12 @@ verwenden werden: Einen, der lokal zum aktuellen Ausführungsstrang (thread) ist
 und vom Betriebssystem initialisiert (seeded) wird. Dann rufen wir die Methode
 `gen_range` des Zufallszahlengenerators auf. Diese Methode wird durch das
 Merkmal `Rng` definiert, das wir mit der Anweisung `use rand::Rng` in den
-Gültigkeitsbereich gebracht haben. Die Methode `gen_range` nimmt zwei Zahlen
-als Argumente und generiert eine Zufallszahl zwischen ihnen. Sie ist inklusiv
-an der unteren Grenze, aber exklusiv an der oberen Grenze, also müssen wir `1`
-und `101` angeben, um eine Zahl zwischen 1 und 100 anzufordern.
+Gültigkeitsbereich gebracht haben. Die Methode `gen_range` nimmt einen
+Bereichsausdruck als Argument und generiert eine Zufallszahl in diesem Bereich.
+Ein Bereichsausdruck hat die Form `start..end`. Er beinhaltet die
+Untergrenze, nicht jedoch die Obergrenze, sodass wir `1..101` angeben müssen,
+um eine Zahl zwischen 1 und 100 zu erhalten. Alternativ könnten wir den Bereich
+`1..=100` angeben, was äquivalent ist.
 
 > Hinweis: Du wirst nicht immer wissen, welche Merkmale du verwenden sollst und
 > welche Methoden und Funktionen einer Kiste du aufrufen musst. Anleitungen zur
@@ -733,7 +739,7 @@ fn main() {
     // --abschneiden--
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::thread_rng().gen_range(1..101);
 #
 #     println!("Die Geheimzahl ist: {}", secret_number);
 #
@@ -853,7 +859,7 @@ vergleichen können. Das können wir tun, indem wir eine weitere Zeile zum
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::thread_rng().gen_range(1..101);
 #
 #     println!("Die Geheimzahl ist: {}", secret_number);
 #
@@ -975,7 +981,7 @@ hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::thread_rng().gen_range(1..101);
 #
     // --abschneiden--
 
@@ -1065,7 +1071,7 @@ gewinnt, indem wir eine `break`-Anweisung hinzufügen:
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::thread_rng().gen_range(1..101);
 #
 #     println!("Die Geheimzahl ist: {}", secret_number);
 #
@@ -1119,7 +1125,7 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#     let secret_number = rand::thread_rng().gen_range(1..101);
 #
 #     println!("Die Geheimzahl ist: {}", secret_number);
 #
@@ -1224,7 +1230,7 @@ use std::io;
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1, 101);
+    let secret_number = rand::thread_rng().gen_range(1..101);
 
     loop {
         println!("Bitte gib deine Schätzung ein.");

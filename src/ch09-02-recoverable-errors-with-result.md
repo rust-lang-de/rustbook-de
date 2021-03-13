@@ -276,7 +276,7 @@ fn main() {
 Wenn wir diesen Code ohne eine Datei *hallo.txt* ausführen, werden wir die
 Fehlermeldung des `panic!`-Aufrufs sehen, den die Methode `unwrap` macht:
 
-```text
+```console
 thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error {
 repr: Os { code: 2, message: "No such file or directory" } }',
 src/libcore/result.rs:906:4

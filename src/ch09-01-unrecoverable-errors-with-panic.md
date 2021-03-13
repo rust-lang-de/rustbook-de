@@ -112,25 +112,21 @@ thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Dieser Fehler weist auf eine Datei hin, die wir nicht geschrieben haben:
-*libcore/slice/mod.rs*. Das ist die Implementierung von `slice` im
-Rust-Quellcode. Der Code, der ausgeführt wird, wenn wir `[]` auf unserem Vektor
-`v` anwenden, befindet sich in *libcore/slice/mod.rs*, und das ist der Ort, an
-dem `panic!` tatsächlich aufgerufen wird.
-
-Die nächste Hinweiszeile sagt uns, dass wir die Umgebungsvariable
-`RUST_BACKTRACE` setzen können, um eine Aufrufhistorie zur Fehlerursache zu
-erhalten. Eine *Aufrufhistorie* ist eine Liste aller Funktionen, die aufgerufen
-wurden, um an diesen Punkt zu gelangen. Aufrufhistorien in Rust funktionieren
-wie in anderen Sprachen: Der Schlüssel zum Lesen der Aufrufhistorie liegt
-darin, diese von oben beginnend zu lesen, bis du von dir geschriebene Dateien
-siehst. Das ist die Stelle, an der das Problem entstanden ist. Die Zeilen
-darüber sind Code, den dein Code aufgerufen hat; die Zeilen darunter sind Code,
-der deinen Code aufgerufen hat. Diese Zeilen können Kern-Rust-Code,
-Standard-Bibliothekscode oder Kisten (crates), die du verwendest, sein. Lass
-uns versuchen, eine Aufrufhistorie zu erhalten, indem wir die Umgebungsvariable
+Dieser Fehler weist auf Zeile 4 in unserer `main.rs` hin, wo wir versuchen, auf
+den Index 99 zuzugreifen. Die nächste Hinweiszeile sagt uns, dass wir die
+Umgebungsvariable `RUST_BACKTRACE` setzen können, um einen Backtrace zu
+erhalten, was genau passiert ist, das den Fehler verursacht hat. Ein
+*Backtrace* ist eine Liste aller Funktionen, die aufgerufen wurden, um an
+diesen Punkt zu gelangen. Backtraces in Rust funktionieren wie in anderen
+Sprachen: Der Schlüssel zum Lesen des Backtraces ist, von oben zu beginnen und
+zu lesen, bis du Dateien siehst, die du geschrieben hast. Das ist die Stelle,
+an der das Problem entstanden ist. Die Zeilen oberhalb der Zeilen, die deine
+Dateien erwähnen, sind Code, den dein Code aufgerufen hat; die Zeilen darunter
+sind Code, der deinen Code aufgerufen hat. Diese Zeilen können Core-Rust-Code,
+Code der Standardbibliothek oder Kisten enthalten, die du verwendest. Versuchen
+wir, einen Backtrace zu erhalten, indem wir die Umgebungsvariable
 `RUST_BACKTRACE` auf einen beliebigen Wert außer 0 setzen. Codeblock 9-2 zeigt
-eine Ausgabe, wie du sie in etwa sehen wirst.
+eine ähnliche Ausgabe wie die, die du sehen wirst.
 
 ```console
 $ RUST_BACKTRACE=1 cargo run

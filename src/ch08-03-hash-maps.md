@@ -279,9 +279,9 @@ diese Änderungen sicher sind und von den Ausleihregeln erlaubt werden.
 
 ### Hash-Funktionen
 
-Standardmäßig verwendet `HashMap` eine „kryptographisch starke“[^siphash]
-Hash-Funktion, die gegen Denial-of-Service (DoS)-Attacken robust ist. Dies ist
-nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
+Standardmäßig verwendet `HashMap` eine Hash-Funktion namens SipHash, die robust
+gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist. Dies
+ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
 zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
 Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer

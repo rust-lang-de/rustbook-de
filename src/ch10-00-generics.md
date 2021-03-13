@@ -134,10 +134,10 @@ die größte Zahl in zwei verschiedenen Listen finden.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-fn largest(list: &[i32]) -> &i32 {
-    let mut largest = &list[0];
+fn largest(list: &[i32]) -> i32 {
+    let mut largest = list[0];
 
-    for item in list {
+    for &item in list {
         if item > largest {
             largest = item;
         }
@@ -151,13 +151,13 @@ fn main() {
 
     let result = largest(&number_list);
     println!("Die größte Zahl ist {}", result);
-#     assert_eq!(result, &100);
+#     assert_eq!(result, 100);
 
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
     let result = largest(&number_list);
     println!("Die größte Zahl ist {}", result);
-#     assert_eq!(result, &6000);
+#     assert_eq!(result, 6000);
 }
 ```
 
@@ -167,7 +167,12 @@ zwei Listen zu finden</span>
 Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen
 Anteilstyp von `i32`-Werten repräsentiert, die wir an die Funktion übergeben
 könnten. Wenn wir die Funktion aufrufen, läuft der Code also auf den
-spezifischen Werten, die wir übergeben.
+spezifischen Werten, die wir übergeben. Mach dir vorerst keine Gedanken über
+die Syntax der `for`-Schleife. Wir verweisen hier nicht auf eine Referenz auf
+ein `i32`; wir machen einen Musterabgleich und destrukturieren jedes `&i32`,
+das die `for`-Schleife erhält, sodass `item` innerhalb des Schleifenrumpfs ein
+`i32` ist. Wir werden den Musterabgleich im Detail in [Kapitel 18][ch18]
+behandeln.
 
 Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
 Codeblock 10-2 in Codeblock 10-3 zu überführen:
@@ -187,3 +192,5 @@ Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
 Element in einem Anteilstyp mit `i32`-Werten findet, und eine, die das größte
 Element in einem Anteilstyp mit `char`-Werten findet. Wie würden wir diese
 Duplizierung beseitigen? Lass es uns herausfinden!
+
+[ch18]: ch18-00-patterns.html

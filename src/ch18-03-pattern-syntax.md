@@ -528,7 +528,7 @@ verwenden wirst, z.B. wenn du einen Prototyp erstellst oder gerade ein Projekt
 beginnst. In dieser Situation kannst du Rust anweisen, dich nicht vor der
 unbenutzten Variablen zu warnen, indem du den Namen der Variablen mit einem
 Unterstrich beginnst. In Codeblock 18-20 erstellen wir zwei unbenutzte
-Variablen, aber wenn wir diesen Code ausführen, sollten wir nur vor einer von
+Variablen, aber wenn wir diesen Code kompilieren, sollten wir nur vor einer von
 ihnen eine Warnung erhalten.
 
 <span class="filename">Dateiname: src/main.rs</span>

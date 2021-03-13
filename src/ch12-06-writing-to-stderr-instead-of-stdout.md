@@ -93,7 +93,7 @@ Nachdem wir `println!` in `eprintln!` geändert haben, lassen wir das Programm
 auf die gleiche Art und Weise erneut laufen, ohne Argumente und mit Umleitung
 der Standardausgabe mit `>`:
 
-```text
+```console
 $ cargo run > output.txt
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
 ```

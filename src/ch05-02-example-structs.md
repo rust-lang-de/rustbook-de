@@ -299,9 +299,9 @@ rect1 ist Rectangle {
 Rust stellt uns eine Reihe von Merkmalen zur Verfügung, die wir mit der
 Annotation `derive` verwenden können, um damit unseren benutzerdefinierten
 Typen nützliches Verhalten zu verleihen. Diese Merkmale und ihr Verhalten sind
-in Anhang C aufgeführt. In Kapitel 10 werden wir behandeln, wie man diese
-Merkmale mit benutzerdefiniertem Verhalten implementiert und wie man eigene
-Merkmale erstellt.
+in [Anhang C][app-c] aufgeführt. In Kapitel 10 werden wir behandeln, wie man
+diese Merkmale mit benutzerdefiniertem Verhalten implementiert und wie man
+eigene Merkmale erstellt.
 
 Unsere Funktion `area` ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
@@ -309,4 +309,5 @@ Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
 *Methode* `area` unseres Typs `Rectangle` verwandeln können.
 
+[app-c]: appendix-03-derivable-traits.md
 [the-tuple-type]: ch03-02-data-types.html#der-tupel-typ
