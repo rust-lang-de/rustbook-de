@@ -71,7 +71,7 @@ die du mit Rust schreiben kannst, und die Geschwindigkeit, mit der dich Rust
 diese Programme schreiben lässt. Die Prüfungen des Rust-Compilers
 gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
-diese Prüfungen, die Entwickler oft scheuen modifizieren zu müssen. Durch das
+diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das
 Streben nach kostenneutralen Abstraktionen, also Funktionalität auf höherer
 Ebene, die zu genauso schnellem Code wie manuell geschriebener Code auf
 niedrigerer Ebene kompiliert, bemüht sich Rust, sicheren Code auch zu schnellem
