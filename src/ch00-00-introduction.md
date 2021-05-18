@@ -24,7 +24,7 @@ sorgfältige Überprüfung des Codes durch erfahrene Entwickler erkannt werden
 können. In Rust spielt der Compiler eine Art Pförtnerrolle, indem er Code
 mit diesen schwer fassbaren Fehlern verweigert zu kompilieren, darunter auch
 Nebenläufigkeitsfehler. Mit der Arbeit an der Seite des Compilers kann sich
-das Team auf die Programmlogik konzentrieren anstatt Fehler zu suchen.
+das Team auf die Programmlogik konzentrieren, anstatt Fehler zu suchen.
 
 Rust bringt auch zeitgemäße Entwicklerwerkzeuge in die Welt der
 Systemprogrammierung:
@@ -97,8 +97,8 @@ speziell zur Einführung in die Programmierung liest.
 ## Wie man dieses Buch verwendet
 
 Im Allgemeinen geht dieses Buch davon aus, dass du es der Reihe nach von vorne
-nach hinten lesen. Spätere Kapitel bauen auf den Konzepten früherer Kapitel
-auf. Frühere Kapitel gehen möglicherweise nicht in die Einzelheiten eines
+nach hinten liest. Spätere Kapitel bauen auf den Konzepten früherer Kapitel
+auf. Frühere Kapitel gehen möglicherweise nicht auf die Einzelheiten eines
 Themas ein, denn in der Regel werden wir es in einem späteren Kapitel erneut
 aufgreifen.
 
@@ -173,7 +173,7 @@ nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn
-du irritiert bist. Aber tue was immer für dich passt.
+du irritiert bist. Aber tue, was immer für dich passt.
 
 <span id="ferris"></span>
 
