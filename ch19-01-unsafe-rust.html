@@ -1,0 +1,774 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Unsicheres (unsafe) Rust - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html" class="active"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="unsicheres-unsafe-rust"><a class="header" href="#unsicheres-unsafe-rust">Unsicheres (unsafe) Rust</a></h2>
+<p>Bei allem Code, den wir bisher besprochen haben, wurden Rusts
+Speichersicherheitsgarantien zur Kompilierzeit erzwungen. Allerdings ist in
+Rust eine zweite Sprache versteckt, die diese Speichersicherheitsgarantien
+nicht erzwingt: Sie heißt <em>unsicheres Rust</em> (unsafe Rust) und funktioniert
+genau wie das normale Rust, gibt uns aber zusätzliche Superkräfte.</p>
+<p>Unsicheres Rust existiert, weil die statische Analyse von Natur aus konservativ
+ist. Wenn der Compiler versucht festzustellen, ob der Code die Garantien
+einhält oder nicht, ist es besser für ihn, einige gültige Programme
+zurückzuweisen, als einige ungültige Programme zu akzeptieren. Obwohl der Code
+<em>möglicherweise</em> in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
+er nicht genügend Informationen hat, um sicher zu sein. In diesen Fällen kannst
+du unsicheren Code verwenden, um dem Compiler zu sagen: „Vertraue mir, ich
+weiß, was ich tue.“ Der Nachteil ist, dass du ihn auf eigenes Risiko
+verwendest: Wenn du unsicheren Code falsch verwendest, können Probleme aufgrund
+von Speicherunsicherheiten, z.B. Dereferenzierung von Null-Zeigern, auftreten.</p>
+<p>Ein weiterer Grund, warum Rust ein unsicheres zweites Ich hat, ist, dass die
+zugrunde liegende Computer-Hardware von Natur aus unsicher ist. Wenn Rust dich
+keine unsicheren Operationen durchführen ließe, könntest du bestimmte Aufgaben
+nicht ausführen. Rust muss es dir ermöglichen, Low-Level-Systemprogrammierung
+zu machen, z.B. direkt mit dem Betriebssystem zu interagieren oder sogar dein
+eigenes Betriebssystem zu schreiben. Arbeiten mit
+Low-Level-Systemprogrammierung ist eines der Ziele der Sprache. Lass uns
+untersuchen, was wir mit unsicherem Rust tun können und wie wir es tun können.</p>
+<h3 id="unsichere-superkräfte"><a class="header" href="#unsichere-superkräfte">Unsichere Superkräfte</a></h3>
+<p>Um auf unsicheres Rust umzuschalten, verwendest du das Schlüsselwort <code>unsafe</code>
+und startest dann einen neuen Block, der den unsicheren Code enthält. Du kannst
+in unsicherem Rust fünf Aktionen durchführen, die als <em>unsichere Superkräfte</em>
+bezeichnet werden und in sicherem Rust nicht möglich sind. Diese Superkräfte
+beinhalten folgende Möglichkeiten:</p>
+<ul>
+<li>Dereferenzieren eines Rohzeigers</li>
+<li>Aufrufen einer unsicheren Funktion oder Methode</li>
+<li>Zugreifen auf oder Ändern einer veränderlichen statischen Variablen</li>
+<li>Implementieren eines unsicheren Merkmals (trait)</li>
+<li>Zugreifen auf Feldern in <code>union</code></li>
+</ul>
+<p>Es ist wichtig zu verstehen, dass <code>unsafe</code> weder den Ausleihenprüfer (borrow
+checker) abschaltet noch andere Sicherheitsprüfungen von Rust deaktiviert: Wenn
+du eine Referenz in einem unsicheren Code verwendest, wird diese trotzdem
+geprüft. Das Schlüsselwort <code>unsafe</code> gibt dir nur Zugriff auf diese fünf
+Funktionalitäten, die dann vom Compiler nicht auf Speichersicherheit geprüft
+werden. In einem unsicheren Block erhältst du immer noch ein gewisses Maß an
+Sicherheit.</p>
+<p>Darüber hinaus bedeutet <code>unsafe</code> nicht, dass der Code innerhalb des Blocks
+notwendigerweise gefährlich ist oder dass er definitiv
+Speichersicherheitsprobleme haben wird: Das Ziel ist, dass du als Programmierer
+sicherstellst, dass der Code innerhalb eines <code>unsafe</code>-Blocks auf gültige Weise
+auf den Speicher zugreifen wird.</p>
+<p>Menschen sind fehlbar und Fehler werden passieren, aber wenn du verlangst, dass
+diese fünf unsicheren Operationen innerhalb von Blöcken mit dem Vermerk
+<code>unsafe</code> durchgeführt werden müssen, weißt du, dass alle Fehler im Zusammenhang
+mit der Speichersicherheit innerhalb eines <code>unsafe</code>-Blocks liegen müssen. Halte
+<code>unsafe</code>-Blöcke klein; du wirst später dankbar sein, wenn du Speicherfehler
+untersuchst.</p>
+<p>Um unsicheren Code so weit wie möglich zu isolieren, ist es am besten,
+unsicheren Code in eine sichere Abstraktion einzupacken und eine sichere API
+bereitzustellen, auf die wir später im Kapitel eingehen werden, wenn wir
+unsichere Funktionen und Methoden untersuchen. Teile der Standardbibliothek
+sind als sichere Abstraktionen über unsicheren, geprüften Code implementiert.
+Das Einpacken von unsicherem Code in eine sichere Abstraktion verhindert, dass
+sich die Verwendung von <code>unsafe</code> auf alle Stellen auswirkt, an denen du oder
+deine Benutzer die mit <code>unsafe</code>-Code implementierte Funktionalität verwenden
+möchtest, da das Verwenden einer sicheren Abstraktion sicher ist.</p>
+<p>Betrachten wir der Reihe nach jede der fünf unsicheren Superkräfte. Wir werden
+uns auch einige Abstraktionen ansehen, die eine sichere Schnittstelle zu
+unsicheren Codes bieten.</p>
+<h3 id="dereferenzieren-eines-rohzeigers"><a class="header" href="#dereferenzieren-eines-rohzeigers">Dereferenzieren eines Rohzeigers</a></h3>
+<p>In Kapitel 4 haben wir im Abschnitt <a href="ch04-02-references-and-borrowing.html#h%C3%A4ngende-referenzen">„Hängende
+Referenzen“</a> erwähnt, dass der Compiler sicherstellt,
+dass Referenzen immer gültig sind. Unsicheres Rust hat zwei neue Typen namens
+<em>Rohzeiger</em> (raw pointers), die ähnlich wie Referenzen sind. Wie bei Referenzen
+können Rohzeiger unveränderlich oder veränderlich sein und werden als <code>*const T</code> bzw. <code>*mut T</code> geschrieben. Das Sternchen ist nicht der
+Dereferenzierungsoperator (dereference operator); es ist Teil des Typnamens. Im
+Zusammenhang mit Rohzeigern bedeutet <em>unveränderlich</em> (immutable), dass der
+Zeiger nach der Dereferenzierung nicht direkt zugewiesen werden kann.</p>
+<p>Rohzeiger sind anders als Referenzen und intelligente Zeiger:</p>
+<ul>
+<li>Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderliche als
+auch veränderliche Zeiger oder mehrere veränderliche Zeiger auf die gleiche
+Stelle haben.</li>
+<li>Sie zeigen nicht garantiert auf gültigen Speicher.</li>
+<li>Sie dürfen null sein.</li>
+<li>Sie implementieren keine automatische Bereinigung.</li>
+</ul>
+<p>Wenn du dich dagegen entscheidest, diese Garantien von Rust erzwingen zu
+lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine
+höhere Performanz oder die Möglichkeit der Interaktion mit einer anderen
+Sprache oder Hardware erhalten, für die die Rust-Garantien nicht gelten.</p>
+<p>Codeblock 19-1 zeigt, wie man aus Referenzen einen unveränderlichen und einen
+veränderlichen Rohzeiger erzeugt.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut num = 5;
+
+    let r1 = &amp;num as *const i32;
+    let r2 = &amp;mut num as *mut i32;
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-1: Erstellen von Rohzeigern aus
+Referenzen</span></p>
+<p>Beachte, dass wir das Schlüsselwort <code>unsafe</code> in diesem Code nicht verwenden.
+Wir können Rohzeiger in sicherem Code erzeugen; wir können nur keine Rohzeiger
+außerhalb eines unsicheren Blocks dereferenzieren, wie du gleich sehen wirst.</p>
+<p>Wir haben Rohzeiger erstellt, indem wir <code>as</code> angegeben haben, um eine
+unveränderliche und eine veränderliche Referenz in die entsprechenden
+Rohzeigertypen umzuwandeln (cast). Da wir sie direkt aus Referenzen erstellt
+haben, deren Gültigkeit garantiert ist, wissen wir, dass diese speziellen
+Rohzeiger gültig sind, aber wir können diese Annahme nicht für jeden beliebigen
+Rohzeiger treffen.</p>
+<p>Als Nächstes werden wir einen Rohzeiger erstellen, bei dem wir uns nicht sicher
+sein können, das er gültig ist. Codeblock 19-2 zeigt, wie man einen Rohzeiger
+auf eine willkürliche Stelle im Speicher erstellt. Der Versuch, willkürlichen
+Speicher zu verwenden, ist undefiniert: Es könnten Daten an dieser Adresse
+vorhanden sein oder auch nicht, der Compiler könnte den Code so optimieren,
+dass es keinen Speicherzugriff gibt, oder das Programm könnte eine
+Schutzverletzung (segmentation fault) verursachen. Normalerweise gibt es keinen
+guten Grund, Code wie diesen zu schreiben, aber es ist möglich.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let address = 0x012345usize;
+    let r = address as *const i32;
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-2: Erzeugen eines Rohzeigers auf eine
+willkürliche Speicheradresse</span></p>
+<p>Erinnere dich, dass wir Rohzeiger in sicherem Code erstellen können, aber wir
+können keine Rohzeiger <em>dereferenzieren</em> und die Daten lesen, auf die gezeigt
+wird. In Codeblock 19-3 wenden wir den Dereferenzierungsoperator <code>*</code> auf einen
+Rohzeiger an, was einen <code>unsafe</code>-Block erfordert.</p>
+<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+</span>    let mut num = 5;
+
+    let r1 = &amp;num as *const i32;
+    let r2 = &amp;mut num as *mut i32;
+
+    unsafe {
+        println!(&quot;r1 ist: {}&quot;, *r1);
+        println!(&quot;r2 ist: {}&quot;, *r2);
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-3: Dereferenzieren von Rohzeigern innerhalb
+eines <code>unsafe</code>-Blocks</span></p>
+<p>Das Erstellen eines Zeigers schadet nicht; erst wenn wir versuchen, auf den
+Wert zuzugreifen, auf den er zeigt, könnten wir es am Ende mit einem ungültigen
+Wert zu tun haben.</p>
+<p>Beachte auch, dass wir in Codeblock 19-1 und 19-3 die Rohzeiger <code>*const i32</code>
+und <code>*mut i32</code> erstellt haben, die beide auf die gleiche Speicherstelle
+zeigten, in der <code>num</code> gespeichert ist. Wenn wir stattdessen versucht hätten,
+eine unveränderliche und einen veränderliche Referenz auf <code>num</code> zu erstellen,
+hätte sich der Code nicht kompilieren lassen, weil die Eigentümerschaftsregeln
+von Rust eine veränderliche Referenz nicht gleichzeitig mit unveränderlichen
+Referenzen zulassen. Mit Rohzeigern können wir einen veränderlichen und
+einen unveränderlichen Zeiger auf denselben Ort erstellen und Daten über den
+veränderlichen Zeiger ändern, wodurch möglicherweise eine
+Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!</p>
+<p>Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
+Hauptanwendungsfall ist die Kopplung mit C-Code, wie du im nächsten Abschnitt
+<a href="#aufrufen-einer-unsicheren-funktion-oder-methode">„Aufrufen einer unsicheren Funktion oder
+Methode“</a> sehen wirst. Ein
+anderer Fall ist der Aufbau von sicheren Abstraktionen, die der Ausleihenprüfer
+nicht versteht. Wir stellen unsichere Funktionen vor und betrachten dann ein
+Beispiel für eine sichere Abstraktion, die unsicheren Code verwendet.</p>
+<h3 id="aufrufen-einer-unsicheren-funktion-oder-methode"><a class="header" href="#aufrufen-einer-unsicheren-funktion-oder-methode">Aufrufen einer unsicheren Funktion oder Methode</a></h3>
+<p>Die zweite Art von Operationen, die einen unsicheren Block erfordern, sind
+Aufrufe von unsicheren Funktionen. Unsichere Funktionen und Methoden sehen
+genau wie reguläre Funktionen und Methoden aus, aber sie haben ein zusätzliches
+<code>unsafe</code> vor dem Rest der Definition. Das Schlüsselwort <code>unsafe</code> weist in
+diesem Zusammenhang darauf hin, dass die Funktion Anforderungen hat, die wir
+einhalten müssen, wenn wir diese Funktion aufrufen, denn Rust kann nicht
+garantieren, dass wir diese Anforderungen erfüllt haben. Indem wir eine
+unsichere Funktion innerhalb eines <code>unsafe</code>-Blocks aufrufen, sagen wir, dass
+wir die Dokumentation dieser Funktion gelesen haben und die Verantwortung für
+die Einhaltung der Verträge der Funktion übernehmen.</p>
+<p>Hier ist eine unsichere Funktion namens <code>dangerous</code>, die in ihrem Rumpf nichts
+tut:</p>
+<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+</span>    unsafe fn dangerous() {}
+
+    unsafe {
+        dangerous();
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Wir müssen die Funktion <code>dangerous</code> innerhalb eines separaten <code>unsafe</code>-Blocks
+aufrufen. Wenn wir versuchen, <code>dangerous</code> ohne den <code>unsafe</code>-Block aufzurufen,
+erhalten wir einen Fehler:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0133]: call to unsafe function is unsafe and requires unsafe function or block
+ --&gt; src/main.rs:4:5
+  |
+4 |     dangerous();
+  |     ^^^^^^^^^^^ call to unsafe function
+  |
+  = note: consult the function's documentation for information on how to avoid undefined behavior
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0133`.
+error: could not compile `unsafe-example`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Indem wir den <code>unsafe</code>-Block um unseren Aufruf von <code>dangerous</code> legen,
+versichern wir Rust, dass wir die Dokumentation der Funktion gelesen haben,
+dass wir verstehen, wie sie richtig zu benutzen ist, und dass wir überprüft
+haben, dass wir den Vertrag der Funktion erfüllen.</p>
+<p>Rümpfe von unsicheren Funktionen sind effektiv <code>unsafe</code>-Blöcke, d.h. wir können
+andere unsichere Operationen innerhalb einer unsicheren Funktion ausführen,
+ohne einen weiteren <code>unsafe</code>-Block hinfügen zu müssen.</p>
+<h4 id="erstellen-einer-sicheren-abstraktion-von-unsicherem-code"><a class="header" href="#erstellen-einer-sicheren-abstraktion-von-unsicherem-code">Erstellen einer sicheren Abstraktion von unsicherem Code</a></h4>
+<p>Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir
+die gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das
+Einpacken von unsicherem Codes in eine sichere Funktion eine gängige
+Abstraktion. Als Beispiel betrachten wir die Funktion <code>split_at_mut</code> aus der
+Standardbibliothek, die unsicheren Code verwendet, und untersuchen, wie wir sie
+implementieren könnten. Diese sichere Methode ist auf veränderlichen
+Anteilstypen definiert: Sie nimmt einen Anteilstyp und macht zwei daraus, indem
+sie den Anteilstyp an dem als Argument angegebenen Index teilt. Codeblock 19-4
+zeigt, wie man <code>split_at_mut</code> verwendet.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut v = vec![1, 2, 3, 4, 5, 6];
+
+    let r = &amp;mut v[..];
+
+    let (a, b) = r.split_at_mut(3);
+
+    assert_eq!(a, &amp;mut [1, 2, 3]);
+    assert_eq!(b, &amp;mut [4, 5, 6]);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-4: Verwenden der sicheren Funktion
+<code>split_at_mut</code></span></p>
+<p>Wir können diese Funktion nicht nur mit sicherem Rust implementieren. Ein
+Versuch könnte in etwa wie in Codeblock 19-5 aussehen, der sich nicht
+kompilieren lässt. Der Einfachheit halber implementieren wir <code>split_at_mut</code> als
+Funktion und nicht als Methode und nur für Anteilstypen von <code>i32</code>-Werten, nicht
+für einen generischen Typ <code>T</code>.</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = slice.len();
+
+    assert!(mid &lt;= len);
+
+    (&amp;mut slice[..mid], &amp;mut slice[mid..])
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let mut vector = vec![1, 2, 3, 4, 5, 6];
+</span><span class="boring">    let (left, right) = split_at_mut(&amp;mut vector, 3);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-5: Versuch einer Implementierung von
+<code>split_at_mut</code> unter ausschließlicher Verwendung von sicherem Rust</span></p>
+<p>Diese Funktion ermittelt zunächst die Gesamtlänge des Anteilstypen. Dann stellt
+sie fest, dass der als Parameter angegebene Index innerhalb des Anteilstypen
+liegt, indem sie prüft, ob er kleiner oder gleich der Länge ist. Die
+Zusicherung (assertion) bedeutet, dass die Funktion abstürzt, wenn wir einen
+Index übergeben, der größer als die Länge ist, bei der der Anteilstyp geteilt
+werden soll, bevor sie versucht, diesen Index zu verwenden.</p>
+<p>Dann geben wir zwei veränderliche Anteilstypen in einem Tupel zurück: Einen vom
+Anfang des ursprünglichen Anteilstyps bis zum Index <code>mid</code> und einen weiteren
+von <code>mid</code> bis zum Ende des Anteilstyps.</p>
+<p>Wenn wir versuchen, den Code in Codeblock 19-5 zu kompilieren, erhalten wir
+einen Fehler.</p>
+<pre><code class="language-console">$ cargo run
+   Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
+error[E0499]: cannot borrow `*slice` as mutable more than once at a time
+ --&gt; src/main.rs:6:30
+  |
+1 | fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+  |                        - let's call the lifetime of this reference `'1`
+...
+6 |     (&amp;mut slice[..mid], &amp;mut slice[mid..])
+  |     -------------------------^^^^^--------
+  |     |     |                  |
+  |     |     |                  second mutable borrow occurs here
+  |     |     first mutable borrow occurs here
+  |     returning this value requires that `*slice` is borrowed for `'1`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0499`.
+error: could not compile `unsafe-example`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Der Ausleihenprüfer von Rust kann nicht verstehen, dass wir verschiedene Teile
+des Anteilstyps ausleihen; er weiß nur, dass wir zweimal vom selben Anteilstyp
+ausleihen. Das Ausleihen verschiedener Teile eines Anteilstyps ist
+grundsätzlich in Ordnung, weil sich die beiden Anteilstypen nicht überlappen,
+aber Rust ist nicht schlau genug, um das zu wissen. Wenn wir wissen, dass der
+Code in Ordnung ist, Rust aber nicht, ist es an der Zeit, unsicheren Code zu
+verwenden.</p>
+<p>Codeblock 19-6 zeigt, wie man einen <code>unsafe</code>-Block, einen Rohzeiger und einige
+Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
+<code>split_at_mut</code> zum Funktionieren zu bringen.</p>
+<pre><pre class="playground"><code class="language-rust unsafe">use std::slice;
+
+fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = slice.len();
+    let ptr = slice.as_mut_ptr();
+
+    assert!(mid &lt;= len);
+
+    unsafe {
+        (
+            slice::from_raw_parts_mut(ptr, mid),
+            slice::from_raw_parts_mut(ptr.add(mid), len - mid),
+        )
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let mut vector = vec![1, 2, 3, 4, 5, 6];
+</span><span class="boring">    let (left, right) = split_at_mut(&amp;mut vector, 3);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-6: Verwenden von unsicherem Codes bei der
+Implementierung der Funktion <code>split_at_mut</code></span></p>
+<p>Erinnere dich an Abschnitt <a href="ch04-03-slices.html">„Der Anteilstyp (slice)“</a> in
+Kapitel 4, dass Anteilstypen Zeiger auf Daten und die Länge des Anteilstyps
+sind. Wir verwenden die Methode <code>len</code>, um die Länge eines Anteilstyps zu
+erhalten, und die Methode <code>as_mut_ptr</code>, um auf den Rohzeiger eines Anteilstyps
+zuzugreifen. Da wir in diesem Fall einen veränderlichen Anteilstyp von
+<code>i32</code>-Werten haben, gibt <code>as_mut_ptr</code> einen Rohzeiger vom Typ <code>*mut i32</code>
+zurück, den wir in der Variable <code>ptr</code> gespeichert haben.</p>
+<p>Wir halten an der Zusicherung fest, dass der Index <code>mid</code> innerhalb des
+Anteilstyps liegt. Dann kommen wir zum unsicheren Code: Die Funktion
+<code>slice::from_raw_parts_mut</code> nimmt einen Rohzeiger und eine Länge und erzeugt
+einen Anteilstyp. Wir verwenden diese Funktion, um einen Anteilstyp zu
+erstellen, der mit <code>ptr</code> beginnt und <code>mid</code> Elemente lang ist. Dann rufen wir
+die Methode <code>add</code> auf <code>ptr</code> mit <code>mid</code> als Argument auf, um einen Rohzeiger
+zu erhalten, der bei <code>mid</code> beginnt, und wir erzeugen einen Anteilstyp mit
+diesem Zeiger und der verbleibenden Anzahl von Elementen nach <code>mid</code>.</p>
+<p>Die Funktion <code>slice::from_raw_parts_mut</code> ist unsicher, weil sie einen Rohzeiger
+nimmt und darauf vertrauen muss, dass dieser Zeiger gültig ist. Die Methode
+<code>add</code> auf dem Rohzeiger ist ebenfalls unsicher, weil sie darauf vertrauen muss,
+dass die Offset-Position ebenfalls ein gültiger Zeiger ist. Deshalb mussten wir
+einen <code>unsafe</code>-Block um unsere Aufrufe von <code>slice::from_raw_parts_mut</code> und
+<code>add</code> legen, damit wir sie aufrufen konnten. Wenn wir uns den Code ansehen und
+die Zusicherung hinzufügen, dass <code>mid</code> kleiner oder gleich <code>len</code> sein muss,
+können wir sagen, dass alle Rohzeiger innerhalb des <code>unsafe</code>-Blocks gültige
+Zeiger auf Daten innerhalb des Anteilstyps sind. Dies ist eine akzeptable und
+angemessene Verwendung von <code>unsafe</code>.</p>
+<p>Beachte, dass wir die resultierende Funktion <code>split_at_mut</code> nicht als <code>unsafe</code>
+markieren müssen, und wir können diese Funktion aus dem sicheren Rust aufrufen.
+Wir haben eine sichere Abstraktion des unsicheren Codes mit einer
+Implementierung der Funktion geschaffen, die <code>unsafe</code> Code auf sichere Weise
+verwendet, weil sie nur gültige Zeiger aus den Daten erzeugt, auf die diese
+Funktion Zugriff hat.</p>
+<p>Im Gegensatz dazu würde die Verwendung von <code>slice::from_raw_parts_mut</code> in
+Codeblock 19-7 wahrscheinlich abstürzen, wenn der Anteilstyp verwendet wird.
+Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
+mit einer Länge von 10.000 Elementen.</p>
+<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+</span>    use std::slice;
+
+    let address = 0x01234usize;
+    let r = address as *mut i32;
+
+    let slice: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-7: Erstellen eines Anteilstyps aus einer
+beliebigen Speicherstelle</span></p>
+<p>Wir besitzen den Speicher an dieser beliebigen Stelle nicht und es gibt keine
+Garantie, dass der von diesem Code erzeugte Anteilstyp gültige <code>i32</code>-Werte
+enthält. Der Versuch, <code>slice</code> so zu benutzen, als ob er ein gültiger Anteilstyp
+ist, führt zu undefiniertem Verhalten.</p>
+<h4 id="verwenden-von-extern-funktionen-um-externen-code-aufzurufen"><a class="header" href="#verwenden-von-extern-funktionen-um-externen-code-aufzurufen">Verwenden von <code>extern</code>-Funktionen um externen Code aufzurufen</a></h4>
+<p>Manchmal muss dein Rust-Code möglicherweise mit Code interagieren, der in einer
+anderen Sprache geschrieben wurde. Hierfür hat Rust das Schlüsselwort <code>extern</code>,
+das das Erstellen und Verwenden einer <em>Fremdfunktionsschnittstelle</em> (Foreign
+Function Interface, kurz FFI) erleichtert. Eine FFI ist eine Möglichkeit für
+eine Programmiersprache, Funktionen zu definieren und es einer anderen
+(fremden) Programmiersprache zu ermöglichen, diese Funktionen aufzurufen.</p>
+<p>In Codeblock 19-8 wird gezeigt, wie eine Integration der Funktion <code>abs</code> aus der
+C-Standardbibliothek erfolgt. Funktionen, die in <code>extern</code>-Blöcken deklariert
+sind, sind immer unsicher, wenn sie aus Rust Code aufgerufen werden. Der Grund
+dafür ist, dass andere Sprachen die Regeln und Garantien von Rust nicht
+erzwingen und Rust sie nicht überprüfen kann, sodass die Verantwortung für die
+Sicherheit beim Programmierer liegt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust unsafe">extern &quot;C&quot; {
+    fn abs(input: i32) -&gt; i32;
+}
+
+fn main() {
+    unsafe {
+        println!(&quot;Absolutwert von -3 gemäß C: {}&quot;, abs(-3));
+    }
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 19-8: Deklarieren und Aufrufen einer
+<code>extern</code>-Funktion, die in einer anderen Sprache definiert wurde</span></p>
+<p>Innerhalb des Blocks <code>extern &quot;C&quot;</code> listen wir die Namen und Signaturen von
+externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen. Der
+Teil <code>&quot;C&quot;</code> definiert, welche <em>Binärschnittstelle</em> (application binary
+interface, kurz ABI) die externe Funktion benutzt: Die ABI definiert, wie die
+Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
+<code>&quot;C&quot;</code> ist die gebräuchlichste und folgt der ABI der Programmiersprache C.</p>
+<blockquote>
+<h4 id="aufrufen-von-rust-funktionen-aus-anderen-sprachen"><a class="header" href="#aufrufen-von-rust-funktionen-aus-anderen-sprachen">Aufrufen von Rust-Funktionen aus anderen Sprachen</a></h4>
+<p>Wir können auch <code>extern</code> verwenden, um eine Schnittstelle zu schaffen, die es
+anderen Sprachen erlaubt, Rust-Funktionen aufzurufen. Anstelle eines
+<code>extern</code>-Blocks fügen wir das Schlüsselwort <code>extern</code> hinzu und geben die zu
+verwendende ABI unmittelbar vor dem Schlüsselwort <code>fn</code> an. Wir müssen auch
+eine Annotation <code>#[no_mangle]</code> hinzufügen, um dem Rust-Compiler mitzuteilen,
+dass er den Namen dieser Funktion nicht verändern soll. <em>Mangling</em> bedeutet,
+dass ein Compiler den Namen, den wir einer Funktion gegeben haben, in einen
+anderen Namen ändert, der mehr Informationen für andere Teile des
+Kompiliervorgangs enthält, aber weniger menschenlesbar ist. Jeder
+Programmiersprachen-Compiler verändert Namen etwas anders. Damit eine
+Rust-Funktion von anderen Sprachen aufgerufen werden kann, müssen wir also
+die Namensveränderung des Rust-Compilers deaktivieren.</p>
+<p>Im folgenden Beispiel machen wir die Funktion <code>call_from_c</code> von C-Code aus
+zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
+gelinkt wurde:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[no_mangle]
+pub extern &quot;C&quot; fn call_from_c() {
+    println!(&quot;Rust-Funktion von C aufgerufen!&quot;);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Diese Verwendung von <code>extern</code> erfordert kein <code>unsafe</code>.</p>
+</blockquote>
+<h3 id="zugreifen-oder-Ändern-einer-veränderlichen-statischen-variable"><a class="header" href="#zugreifen-oder-Ändern-einer-veränderlichen-statischen-variable">Zugreifen oder Ändern einer veränderlichen, statischen Variable</a></h3>
+<p>Bis jetzt haben wir noch nicht über <em>globale Variablen</em> gesprochen, die Rust
+zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
+problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
+veränderliche, globale Variable zugreifen, kann dies zu einer
+Daten-Wettlaufsituation (data race) führen.</p>
+<p>In Rust werden globale Variablen als <em>statische</em> Variablen bezeichnet.
+Codeblock 19-9 zeigt ein Beispiel für die Deklaration und Verwendung einer
+statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = &quot;Hallo Welt!&quot;;
+
+fn main() {
+    println!(&quot;Name ist: {}&quot;, HELLO_WORLD);
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 19-9: Definieren und Verwenden einer
+unveränderlichen, statischen Variablen</span></p>
+<p>Statische Variablen ähneln Konstanten, die wir im Abschnitt <a href="ch03-01-variables-and-mutability.html#unterschiede-zwischen-variablen-und-konstanten">„Unterschiede
+zwischen Variablen und Konstanten“</a>
+in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
+Konvention in <code>SCHREIENDER_SCHLANGENSCHRIFT</code> und wir <em>müssen</em> den Typ der
+Variablen annotieren, der in diesem Beispiel <code>&amp;'static str</code> ist. Statische
+Variablen können nur Referenzen mit der Lebensdauer <code>'static</code> speichern, was
+bedeutet, dass der Rust-Compiler die Lebensdauer herausfinden kann; wir
+brauchen sie nicht explizit anzugeben. Der Zugriff auf eine unveränderliche,
+statische Variable ist sicher.</p>
+<p>Konstanten und unveränderliche, statische Variablen mögen ähnlich aussehen,
+aber ein subtiler Unterschied besteht darin, dass Werte in einer statischen
+Variable eine feste Adresse im Speicher haben. Beim Verwenden des Wertes wird
+immer auf die gleichen Daten zugegriffen. Konstanten hingegen dürfen ihre Daten
+duplizieren, wann immer sie verwendet werden.</p>
+<p>Ein weiterer Unterschied zwischen Konstanten und statischen Variablen besteht
+darin, dass statische Variablen veränderlich sein können. Der Zugriff auf und
+die Änderung von veränderlichen, statischen Variablen ist <em>unsicher</em>. Codeblock
+19-10 zeigt, wie man eine veränderliche, statische Variable namens <code>COUNTER</code>
+deklariert, auf sie zugreift und sie modifiziert.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust unsafe">static mut COUNTER: u32 = 0;
+
+fn add_to_count(inc: u32) {
+    unsafe {
+        COUNTER += inc;
+    }
+}
+
+fn main() {
+    add_to_count(3);
+
+    unsafe {
+        println!(&quot;COUNTER: {}&quot;, COUNTER);
+    }
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 19-10: Lesen von und Schreiben in eine
+veränderliche, statische Variable ist unsicher</span></p>
+<p>Wie bei regulären Variablen spezifizieren wir die Veränderlichkeit mit dem
+Schlüsselwort <code>mut</code>. Jeder Code, der <code>COUNTER</code> liest oder schreibt, muss
+innerhalb eines <code>unsafe</code>-Blocks liegen. Dieser Code kompiliert und gibt
+<code>COUNTER: 3</code> so, wie wir es erwarten würden, weil er nur einen einzigen Strang
+hat. Wenn mehrere Stränge auf <code>COUNTER</code> zugreifen, würde dies wahrscheinlich zu
+einer Daten-Wettlaufsituation führen.</p>
+<p>Bei veränderlichen Daten, die global zugänglich sind, ist es schwierig,
+sicherzustellen, dass es keine Daten-Wettlaufsituationen gibt, weshalb Rust
+veränderliche, statische Variablen als unsicher betrachtet. Wann immer möglich,
+ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken
+und Strang-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler
+prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.</p>
+<h3 id="implementieren-eines-unsicheren-merkmals"><a class="header" href="#implementieren-eines-unsicheren-merkmals">Implementieren eines unsicheren Merkmals</a></h3>
+<p>Ein anderer Anwendungsfall für <code>unsafe</code> ist das Implementieren eines unsicheren
+Merkmals (unsafe trait). Ein Merkmal ist unsicher, wenn mindestens eine ihrer
+Methoden eine Invariante hat, die der Compiler nicht verifizieren kann. Wir
+können erklären, dass ein Merkmal <code>unsafe</code> ist, indem wir das Schlüsselwort
+<code>unsafe</code> vor <code>trait</code> einfügen und die Implementierung des Merkmals ebenfalls
+mit <code>unsafe</code> markieren, wie in Codeblock 19-11 gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust unsafe">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>unsafe trait Foo {
+    // Methoden kommen hierhin
+}
+
+unsafe impl Foo for i32 {
+    // Methoden-Implementierungen kommen hierhin
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-11: Definition und Implementierung eines
+unsicheren Merkmals</span></p>
+<p>Indem wir <code>unsafe impl</code> verwenden, versprechen wir, dass wir die Invarianten
+aufrechterhalten, die der Compiler nicht verifizieren kann.</p>
+<p>Erinnere dich als Beispiel an die Marker-Merkmale <code>Sync</code> und <code>Send</code>, die wir im
+Abschnitt <a href="ch16-04-extensible-concurrency-sync-and-send.html">„Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) <code>Sync</code> und
+<code>Send</code>“</a> in Kapitel 16
+besprochen haben: Der Compiler implementiert diese Merkmale automatisch, wenn
+unsere Typen vollständig aus <code>Send</code>- und <code>Sync</code>-Typen zusammengesetzt sind.
+Wenn wir einen Typ implementieren, der einen Typ enthält, der nicht <code>Send</code> oder
+<code>Sync</code> ist, z.B. Rohzeiger, und wir diesen Typ als <code>Send</code> oder <code>Sync</code> markieren
+wollen, müssen wir <code>unsafe</code> verwenden. Rust kann nicht überprüfen, ob unser Typ
+die Garantien aufrechterhält, dass er sicher über Stränge gesendet oder von
+mehreren Strängen aus zugegriffen werden kann; daher müssen wir diese Prüfungen
+manuell durchführen und als solche mit <code>unsafe</code> kennzeichnen.</p>
+<h3 id="zugreifen-auf-felder-einer-vereinigung-union"><a class="header" href="#zugreifen-auf-felder-einer-vereinigung-union">Zugreifen auf Felder einer Vereinigung (union)</a></h3>
+<p>Die letzte Aktion, die nur mit <code>unsafe</code> funktioniert, ist der Zugriff auf
+Felder einer <code>union</code>, die ähnlich zu einer <code>struct</code> ist, bei der aber immer nur
+ein deklariertes Feld in einer bestimmten Instanz verwendet wird. Vereinigungen
+werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
+Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
+derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
+Weitere Informationen über Vereinigung findest du in <a href="https://doc.rust-lang.org/reference/items/unions.html">der
+Referenz</a>.</p>
+<h3 id="wann-unsicheren-code-verwenden"><a class="header" href="#wann-unsicheren-code-verwenden">Wann unsicheren Code verwenden?</a></h3>
+<p>Es ist nicht falsch oder gar verpönt, eine der fünf soeben besprochenen
+Aktionen (Superkräfte) mit <code>unsafe</code> zu verwenden. Aber es ist kniffliger,
+<code>unsafe</code> Code korrekt zu schreiben, weil der Compiler nicht helfen kann, die
+Speichersicherheit aufrechtzuerhalten. Wenn du einen Grund hast, <code>unsafe</code> Code
+zu verwenden, kannst du dies tun, und die explizite <code>unsafe</code>-Annotation macht
+es einfacher, die Quelle von Problemen aufzuspüren, wenn sie auftreten.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch19-00-advanced-features.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch19-03-advanced-traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch19-00-advanced-features.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch19-03-advanced-traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

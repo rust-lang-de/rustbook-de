@@ -1,0 +1,992 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Mustersyntax - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html" class="active"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="mustersyntax"><a class="header" href="#mustersyntax">Mustersyntax</a></h2>
+<p>Im ganzen Buch hast du Beispiele für viele Arten von Mustern gesehen. In diesem
+Abschnitt stellen wir die gesamte Syntax gültiger Muster zusammen und erörtern,
+wann du jedes einzelne Muster verwenden solltest.</p>
+<h3 id="passende-literale"><a class="header" href="#passende-literale">Passende Literale</a></h3>
+<p>Wie du in Kapitel 6 gesehen hast, kannst du Muster direkt mit Literalen
+abgleichen. Der folgende Code enthält einige Beispiele:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = 1;
+
+    match x {
+        1 =&gt; println!(&quot;eins&quot;),
+        2 =&gt; println!(&quot;zwei&quot;),
+        3 =&gt; println!(&quot;drei&quot;),
+        _ =&gt; println!(&quot;sonstige&quot;),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieser Code gibt <code>eins</code> aus, weil der Wert in <code>x</code> 1 ist. Diese Syntax ist
+nützlich, wenn du willst, dass dein Code eine Aktion ausführt, wenn er einen
+bestimmten konkreten Wert erhält.</p>
+<h3 id="benannte-variablen-abgleichen"><a class="header" href="#benannte-variablen-abgleichen">Benannte Variablen abgleichen</a></h3>
+<p>Benannte Variablen (named variables) sind unabweisbare Muster, die zu jedem
+Wert passen, und wir haben sie in diesem Buch schon oft verwendet. Es gibt
+jedoch eine Komplikation, wenn du benannte Variablen in <code>match</code>-Ausdrücken
+verwendest. Da <code>match</code> einen neuen Gültigkeitsbereich beginnt, werden
+Variablen, die als Teil eines Musters innerhalb des <code>match</code>-Ausdrucks
+deklariert sind, diejenigen mit dem gleichen Namen außerhalb des
+<code>match</code>-Konstrukts beschatten (shadow), wie es bei allen Variablen der Fall
+ist. In Codeblock 18-11 deklarieren wir eine Variable mit dem Namen <code>x</code> mit dem
+Wert <code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10</code>. Dann erzeugen wir einen
+<code>match</code>-Ausdruck für den Wert <code>x</code>. Sieh dir die Muster in den <code>match</code>-Zweigen
+und <code>println!</code> am Ende an und versuche herauszufinden, was der Code ausgeben
+wird, bevor du diesen Code ausführst oder weiterliest.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!(&quot;Habe 50 erhalten&quot;),
+        Some(y) =&gt; println!(&quot;Passt, y = {:?}&quot;, y),
+        _ =&gt; println!(&quot;Standardfall, x = {:?}&quot;, x),
+    }
+
+    println!(&quot;Am Ende: x = {:?}, y = {:?}&quot;, x, y);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-11: Ein <code>match</code>-Ausdruck mit einem Zweig,
+der eine beschattete Variable <code>y</code> einführt</span></p>
+<p>Lass uns durchgehen, was passiert, wenn der <code>match</code>-Ausdruck ausgeführt wird.
+Das Muster im ersten Zweig passt nicht zum definierten Wert von <code>x</code>, also setzt
+der Code fort.</p>
+<p>Das Muster im zweiten Zweig führt eine neue Variable namens <code>y</code> ein, die zu
+jedem Wert innerhalb eines <code>Some</code>-Wertes passt. Da wir uns in einem neuen
+Gültigkeitsbereich innerhalb des <code>match</code>-Ausdrucks befinden, ist dies eine neue
+Variable <code>y</code>, nicht das <code>y</code>, das wir am Anfang mit dem Wert 10 deklariert
+haben. Diese neue <code>y</code>-Bindung wird mit jedem Wert innerhalb eines <code>Some</code>
+übereinstimmen, das ist das, was wir in <code>x</code> haben. Daher bindet dieses neue <code>y</code>
+an den inneren Wert des <code>Some</code> in <code>x</code>. Dieser Wert ist <code>5</code>, sodass der Ausdruck
+für diesen Zweig ausgeführt und <code>Passt, y = 5</code> ausgegeben wird.</p>
+<p>Wäre <code>x</code> ein <code>None</code>-Wert anstelle von <code>Some(5)</code> gewesen, hätten die Muster in
+den ersten beiden Zweigen nicht gepasst, sodass der Wert zum Unterstrich
+gepasst hätte. Wir haben die Variable <code>x</code> nicht im Muster des
+Unterstrich-Zweigs verwendet, sodass <code>x</code> im Ausdruck immer noch das äußere <code>x</code>
+ist, das nicht beschattet wurde. In diesem hypothetischen Fall würde <code>match</code>
+den Text <code>Standardfall, x = None</code> ausgeben.</p>
+<p>Wenn der <code>match</code>-Ausdruck zu Ende ist, endet sein Gültigkeitsbereich und damit
+auch der Gültigkeitsbereich des inneren <code>y</code>. Das letzte <code>println!</code> gibt <code>Am Ende: x = Some(5), y = 10</code> aus.</p>
+<p>Um einen <code>match</code>-Ausdruck zu erstellen, der die Werte der äußeren <code>x</code> und <code>y</code>
+abgleicht anstatt eine beschattete Variable einzuführen, müssten wir
+stattdessen eine Abgleichsbedingung (match guard conditional) verwenden. Wir
+werden über Abgleichsbedingungen später im Abschnitt <a href="#extra-bedingungen-mit-abgleichsbedingungen">„Extra-Bedingungen mit
+Abgleichsbedingungen“</a> sprechen.</p>
+<h3 id="mehrfache-muster"><a class="header" href="#mehrfache-muster">Mehrfache Muster</a></h3>
+<p>In <code>match</code>-Ausdrücken kannst du mehrere Muster mit der Syntax <code>|</code> abgleichen,
+die <em>oder</em> bedeutet. Zum Beispiel gleicht der folgende Code den Wert von <code>x</code>
+mit den <code>match</code>-Zweigen ab, wobei der erste davon eine <em>oder</em>-Option hat, was
+bedeutet, wenn der Wert von <code>x</code> zu einem der Werte in diesem Zweig passt, wird
+der Code dieses Zweigs ausgeführt:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = 1;
+
+    match x {
+        1 | 2 =&gt; println!(&quot;eins oder zwei&quot;),
+        3 =&gt; println!(&quot;drei&quot;),
+        _ =&gt; println!(&quot;sonstige&quot;),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieser Code gibt <code>eins oder zwei</code> aus.</p>
+<h3 id="abgleichen-von-wertebereichen-mit-"><a class="header" href="#abgleichen-von-wertebereichen-mit-">Abgleichen von Wertebereichen mit <code>..=</code></a></h3>
+<p>Die Syntax <code>..=</code> erlaubt es uns, einen inklusiven Wertebereich abzugleichen.
+Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des Bereichs
+passt, wird dieser Zweig ausgeführt:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = 5;
+
+    match x {
+        1..=5 =&gt; println!(&quot;eins bis fünf&quot;),
+        _ =&gt; println!(&quot;etwas anderes&quot;),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Wenn <code>x</code> 1, 2, 3, 4 oder 5 ist, passt der erste Zweig. Diese Syntax ist
+bequemer als das Verwenden des <code>|</code>-Operators, um die gleiche Idee auszudrücken;
+statt <code>1..=5</code> müssten wir <code>1 | 2 | 3 | 4 | 5</code> angeben, wenn wir <code>|</code> verwenden
+würden. Die Angabe eines Bereichs ist viel kürzer, besonders wenn wir
+beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben wollen!</p>
+<p>Bereiche sind nur mit numerischen Werten oder <code>char</code>-Werten erlaubt, da der
+Compiler zur Kompilierzeit prüft, dass der Bereich nicht leer ist. Die einzigen
+Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder nicht, sind
+<code>char</code> und numerische Werte.</p>
+<p>Hier ist ein Beispiel mit Bereichen von <code>char</code>-Werten:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = 'c';
+
+    match x {
+        'a'..='j' =&gt; println!(&quot;früher ASCII-Buchstabe&quot;),
+        'k'..='z' =&gt; println!(&quot;später ASCII-Buchstabe&quot;),
+        _ =&gt; println!(&quot;etwas anderes&quot;),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p>Rust kann erkennen, dass <code>c</code> innerhalb des Bereichs des ersten Musters liegt
+und gibt <code>früher ASCII-Buchstabe</code> aus.</p>
+<h3 id="destrukturieren-um-werte-aufzuteilen"><a class="header" href="#destrukturieren-um-werte-aufzuteilen">Destrukturieren, um Werte aufzuteilen</a></h3>
+<p>Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen
+(enums), Tupel und Referenzen zu destrukturieren, um verschiedene Teile dieser
+Werte zu verwenden. Lass uns jeden Wert durchgehen.</p>
+<h4 id="destrukturieren-von-strukturen"><a class="header" href="#destrukturieren-von-strukturen">Destrukturieren von Strukturen</a></h4>
+<p>Codeblock 18-12 zeigt eine Struktur <code>Point</code> mit zwei Feldern, <code>x</code> und <code>y</code>, die
+wir mit einem Muster in einer <code>let</code>-Anweisung aufteilen können.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x: a, y: b } = p;
+    assert_eq!(0, a);
+    assert_eq!(7, b);
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-12: Destrukturieren der Felder einer
+Struktur in separate Variablen</span></p>
+<p>Dieser Code erzeugt die Variablen <code>a</code> und <code>b</code>, die den Werten der Felder <code>x</code>
+und <code>y</code> der Struktur <code>p</code> entsprechen. Dieses Beispiel zeigt, dass die Namen der
+Variablen im Muster nicht mit den Feldnamen der Struktur übereinstimmen müssen.
+Aber es ist üblich, dass die Variablennamen mit den Feldnamen übereinstimmen,
+damit man sich leichter merken kann, welche Variablen aus welchen Feldern
+stammen.</p>
+<p>Weil es üblich ist, dass die Variablennamen mit den Feldnamen übereinstimmen,
+und weil das Schreiben von <code>let Point { x: x, y: y } = p;</code> viel Duplikation
+enthält, gibt es eine Kurzform für Muster, die mit Struktur-Feldern
+übereinstimmen: Du musst nur die Namen des Struktur-Felder auflisten, und die
+Variablen, die aus dem Muster erzeugt werden, haben die gleichen Namen.
+Codeblock 18-13 zeigt Code, der sich gleich verhält wie der Code in Codeblock
+18-12, aber die Variablen, die im Muster <code>let</code> erzeugt werden, sind <code>x</code> und <code>y</code>
+anstelle von <code>a</code> und <code>b</code>.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">struct Point {
+    x: i32,
+    y: i32,
+}
+
+fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    let Point { x, y } = p;
+    assert_eq!(0, x);
+    assert_eq!(7, y);
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-13: Destrukturieren von Strukturfeldern mit
+Hilfe der Strukturfeldkurznotation (struct field shorthand)</span></p>
+<p>Dieser Code erzeugt die Variablen <code>x</code> und <code>y</code>, die mit den Feldern <code>x</code> und <code>y</code>
+der Variablen <code>p</code> übereinstimmen. Das Ergebnis ist, dass die Variablen <code>x</code> und
+<code>y</code> die Werte aus der Struktur <code>p</code> enthalten.</p>
+<p>Wir können auch mit literalen Werten als Teil des Strukturmusters
+destrukturieren, anstatt Variablen für alle Felder zu erstellen. Auf diese
+Weise können wir einige der Felder auf bestimmte Werte testen, während wir
+Variablen zum Destrukturieren der anderen Felder erstellen.</p>
+<p>Codeblock 18-14 zeigt einen <code>match</code>-Ausdruck, der <code>Point</code>-Werte in drei Fälle
+unterscheidet: Punkte, die direkt auf der <code>x</code>-Achse liegen (was zutrifft, wenn
+<code>y = 0</code>), auf der <code>y</code>-Achse liegen (<code>x = 0</code>) oder keines von beiden.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">struct Point {
+</span><span class="boring">    x: i32,
+</span><span class="boring">    y: i32,
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let p = Point { x: 0, y: 7 };
+
+    match p {
+        Point { x, y: 0 } =&gt; println!(&quot;Auf der x-Achse bei {}&quot;, x),
+        Point { x: 0, y } =&gt; println!(&quot;Auf der y-Achse bei {}&quot;, y),
+        Point { x, y } =&gt; println!(&quot;Auf keiner Achse: ({}, {})&quot;, x, y),
+    }
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-14: Destrukturieren und Abgleichen literaler
+Werte in einem Muster</span></p>
+<p>Der erste Zweig passt zu jedem Punkt, der auf der <code>x</code>-Achse liegt, indem er
+angibt, dass der Wert des <code>y</code>-Felds zum Literal <code>0</code> passt. Das Muster erzeugt
+immer noch eine Variable <code>x</code>, die wir im Code für diesen Zweig verwenden
+können.</p>
+<p>In ähnlicher Weise passt der zweite Zweig zu jedem Punkt auf der y-Achse, indem
+er angibt, dass der Wert des <code>x</code>-Feldes 0 ist, und eine Variable <code>y</code>  für den
+Wert des <code>y</code> -Feldes erzeugt. Der dritte Zweig spezifiziert keine Literale,
+sodass er zu jedem anderen <code>Point</code> passt und Variablen für die Felder <code>x</code> und
+<code>y</code> erzeugt.</p>
+<p>In diesem Beispiel passt der Wert <code>p</code> zum zweiten Zweig, da <code>x</code> eine 0 enthält,
+sodass dieser Code <code>Auf der y-Achse bei 7</code> ausgeben wird.</p>
+<h4 id="destrukturieren-von-auszählungen"><a class="header" href="#destrukturieren-von-auszählungen">Destrukturieren von Auszählungen</a></h4>
+<p>Wir haben früher Aufzählungen in diesem Buch destrukturiert, zum Beispiel, als
+wir <code>Option&lt;i32&gt;</code> in Codeblock 6-5 in Kapitel 6 destrukturiert haben. Ein
+Detail, das wir nicht explizit erwähnt haben, ist, dass das Muster zum
+Destrukturieren einer Aufzählung mit der Art und Weise übereinstimmen sollte,
+wie die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
+verwenden wir in Codeblock 18-15 die Aufzählung <code>Message</code> aus Codeblock 6-2 und
+schreiben ein <code>match</code> mit Mustern, das jeden inneren Wert destrukturiert.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(i32, i32, i32),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(0, 160, 255);
+
+    match msg {
+        Message::Quit =&gt; {
+            println!(&quot;Die Quit-Variante hat keine Daten zu destrukturieren.&quot;)
+        }
+        Message::Move { x, y } =&gt; {
+            println!(
+                &quot;Bewege in x-Richtung {} und in y-Richtung {}&quot;,
+                x, y
+            );
+        }
+        Message::Write(text) =&gt; println!(&quot;Textnachricht: {}&quot;, text),
+        Message::ChangeColor(r, g, b) =&gt; println!(
+            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
+            r, g, b
+        ),
+    }
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-15: Destrukturieren von
+Aufzählungsvarianten, die verschiedene Arten von Werten enthalten</span></p>
+<p>Dieser Code gibt <code>Ändere die Farbe in rot 0, grün 160 und blau 255</code> aus.
+Versuche, den Wert von <code>msg</code> zu ändern, um den Code der anderen Zweige laufen
+zu sehen.</p>
+<p>Bei Aufzählungs-Varianten ohne Daten, wie <code>Message::Quit</code>, können wir den Wert
+nicht weiter destrukturieren. Wir können nur mit dem Literalwert
+<code>Message::Quit</code> abgleichen und es gibt keine Variablen in diesem Muster.</p>
+<p>Für strukturähnliche Aufzählungsvarianten, z.B. <code>Message::Move</code>, können wir ein
+Muster verwenden, das dem von uns angegebenen Muster ähnlich ist, um Strukturen
+abzugleichen. Nach dem Variantennamen setzen wir geschweifte Klammern und
+listen dann die Felder mit Variablen auf, sodass wir die Teile aufteilen, die
+im Code für diesen Zweig verwendet werden sollen. Hier verwenden wir die
+Kurznotation, wie wir es in Codeblock 18-13 getan haben.</p>
+<p>Bei tupelähnlichen Aufzählungsvarianten wie <code>Message::Write</code>, die ein Tupel mit
+einem Element enthält, und <code>Message::ChangeColor</code>, die ein Tupel mit drei
+Elementen enthält, ähnelt das Muster dem Muster, das wir für den Abgleich von
+Tupeln angeben. Die Anzahl der Variablen im Muster muss mit der Anzahl der
+Elemente in der Variante, die wir abgleichen, übereinstimmen.</p>
+<h4 id="destrukturieren-verschachtelter-strukturen-und-aufzählungen"><a class="header" href="#destrukturieren-verschachtelter-strukturen-und-aufzählungen">Destrukturieren verschachtelter Strukturen und Aufzählungen</a></h4>
+<p>Bis jetzt haben all unsere Beispiele zu Strukturen oder Aufzählungen gepasst,
+die eine Ebene tief waren. Der Abgleich kann auch auf verschachtelte Elemente
+angewendet werden!</p>
+<p>Beispielsweise können wir den Code in Codeblock 18-15 so umformulieren, dass
+RGB- und HSV-Farben in der <code>ChangeColor</code>-Nachricht unterstützt werden, wie in
+Codeblock 18-16 gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust">enum Color {
+    Rgb(i32, i32, i32),
+    Hsv(i32, i32, i32),
+}
+
+enum Message {
+    Quit,
+    Move { x: i32, y: i32 },
+    Write(String),
+    ChangeColor(Color),
+}
+
+fn main() {
+    let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
+
+    match msg {
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; println!(
+            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
+            r, g, b
+        ),
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
+            &quot;Ändere die Farbe in Farbwert {}, Sättigung {} und Hellwert {}&quot;,
+            h, s, v
+        ),
+        _ =&gt; (),
+    }
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-16: Abgleich bei verschachtelten
+Aufzählungen</span></p>
+<p>Das Muster des ersten Zweigs im <code>match</code>-Ausdruck passt zu einer
+<code>Message::ChangeColor</code>-Aufzählungsvariante, die eine <code>Color::Rgb</code>-Variante
+enthält; dann bindet das Muster an die drei inneren <code>i32</code>-Werte. Das Muster des
+zweiten Zweigs passt ebenfalls mit einer
+<code>Message::ChangeColor</code>-Aufzählungsvariante, aber die innere Aufzählung passt
+stattdessen zur <code>Color::Hsv</code>-Variante. Wir können diese komplexen Bedingungen
+in einem einzigen <code>match</code>-Ausdruck angeben, auch wenn es sich um zwei
+Aufzählungen handelt.</p>
+<h4 id="destrukturieren-von-strukturen-und-tupeln"><a class="header" href="#destrukturieren-von-strukturen-und-tupeln">Destrukturieren von Strukturen und Tupeln</a></h4>
+<p>Wir können das Abgleichen und Destrukturieren verschachtelter Muster auf noch
+komplexere Weise mischen. Das folgende Beispiel zeigt eine komplizierte
+Destrukturierung, bei der wir Strukturen und Tupel innerhalb eines Tupels
+verschachteln und alle primitiven Werte herausdestrukturieren:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span><span class="boring">    struct Point {
+</span><span class="boring">        x: i32,
+</span><span class="boring">        y: i32,
+</span><span class="boring">    }
+</span><span class="boring">
+</span>    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieser Code ermöglicht es uns, komplexe Typen in ihre Bestandteile zu zerlegen,
+sodass wir die Werte, an denen wir interessiert sind, separat verwenden können.</p>
+<p>Das Destrukturieren mit Mustern ist eine bequeme Möglichkeit, Wertteile, z.B.
+Werte aus den Feldern in einer Struktur, getrennt voneinander zu verwenden.</p>
+<h3 id="ignorieren-von-werten-in-einem-muster"><a class="header" href="#ignorieren-von-werten-in-einem-muster">Ignorieren von Werten in einem Muster</a></h3>
+<p>Du hast gesehen, dass es manchmal nützlich ist, Werte in einem Muster zu
+ignorieren, z.B. im letzten Zweig eines <code>match</code>, um einen Sammelzweig zu
+erhalten, der eigentlich nichts tut, aber alle verbleibenden möglichen Werte
+berücksichtigt. Es gibt ein paar Möglichkeiten, ganze Werte oder Teile von
+Werten in einem Muster zu ignorieren: Verwenden des Musters <code>_</code> (das du gesehen
+hast), Verwenden des Musters <code>_</code> innerhalb eines anderen Musters, Verwenden
+eines Namens, der mit einem Unterstrich beginnt, oder Verwenden von <code>..</code>, um
+verbleibende Teile eines Wertes zu ignorieren. Lass uns untersuchen, wie und
+wann jedes dieser Muster zu verwenden ist.</p>
+<h4 id="ignorieren-eines-gesamtwertes-mit-_"><a class="header" href="#ignorieren-eines-gesamtwertes-mit-_">Ignorieren eines Gesamtwertes mit <code>_</code></a></h4>
+<p>Wir haben den Unterstrich (<code>_</code>) als Platzhalter verwendet, der zu jedem Wert
+passt, aber nicht an den Wert gebunden ist. Obwohl das Unterstrichmuster <code>_</code>
+besonders nützlich als letzter Zweig in einem <code>match</code>-Ausdruck ist, können wir
+es in jedem Muster verwenden, einschließlich Funktionsparameter, wie in
+Codeblock 18-17 gezeigt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn foo(_: i32, y: i32) {
+    println!(&quot;Dieser Code verwendet nur den Parameter y: {}&quot;, y);
+}
+
+fn main() {
+    foo(3, 4);
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-17: Verwenden von <code>_</code> in einer
+Funktionssignatur</span></p>
+<p>Dieser Code ignoriert den als erstes Argument übergebenen Wert <code>3</code> vollständig
+und gibt <code>Dieser Code verwendet nur den Parameter y: 4</code> aus.</p>
+<p>In den meisten Fällen, wenn du einen bestimmten Funktionsparameter nicht mehr
+benötigst, würdest du die Signatur so ändern, dass sie den unbenutzten
+Parameter nicht mehr enthält. Das Ignorieren eines Funktionsparameters kann in
+einigen Fällen besonders nützlich sein, z.B. bei der Implementierung eines
+Merkmals (trait), wenn du eine bestimmte Typsignatur benötigst, der
+Funktionsrumpf in deiner Implementierung jedoch keinen der Parameter benötigt.
+Der Compiler wird dann nicht vor unbenutzten Funktionsparametern warnen, wie es
+der Fall wäre, wenn du stattdessen einen Namen verwenden würdest.</p>
+<h4 id="ignorieren-von-teilen-eines-wertes-mit-einem-verschachtelten-_"><a class="header" href="#ignorieren-von-teilen-eines-wertes-mit-einem-verschachtelten-_">Ignorieren von Teilen eines Wertes mit einem verschachtelten <code>_</code></a></h4>
+<p>Wir können <code>_</code> auch innerhalb eines anderen Musters verwenden, um nur einen
+Teil eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes
+testen wollen, aber keine Verwendung für die anderen Teile in dem
+entsprechenden Code haben, den wir ausführen wollen. Der Codeblock 18-18 zeigt
+den Code, der für die Verwaltung des Wertes einer Einrichtung verantwortlich
+ist. Die Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht
+erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
+überschreiben, sondern dass er die Einstellung rückgängig machen kann und ihr
+einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let mut setting_value = Some(5);
+    let new_setting_value = Some(10);
+
+    match (setting_value, new_setting_value) {
+        (Some(_), Some(_)) =&gt; {
+            println!(&quot;Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.&quot;);
+        }
+        _ =&gt; {
+            setting_value = new_setting_value;
+        }
+    }
+
+    println!(&quot;Einstellung ist {:?}&quot;, setting_value);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-18: Das Verwenden eines Unterstrichs
+innerhalb von Mustern, die zu <code>Some</code>-Varianten passen, wenn wir den Wert
+innerhalb <code>Some</code> nicht benötigen</span></p>
+<p>Dieser Code gibt <code>Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.</code> aus und dann <code>Einstellung ist Some(5)</code>. Im ersten
+<code>match</code>-Zweig müssen wir nicht die Werte innerhalb der beiden <code>Some</code>-Varianten
+abgleichen oder diese verwenden, aber wir müssen den Fall prüfen, dass
+<code>setting_value</code> und <code>new_setting_value</code> jeweils <code>Some</code>-Varianten sind. In
+diesem Fall geben wir aus, warum wir <code>setting_value</code> nicht ändern, und es wird
+nicht geändert.</p>
+<p>In allen anderen Fällen (wenn entweder <code>setting_value</code> oder <code>new_setting_value</code>
+den Wert <code>None</code> hat), die durch das Muster <code>_</code> im zweiten Zweig ausgedrückt
+werden, wollen wir erlauben, dass <code>setting_value</code> den Wert von
+<code>new_setting_value</code> erhält.</p>
+<p>Wir können Unterstriche auch an mehreren Stellen innerhalb eines Musters
+verwenden, um bestimmte Werte zu ignorieren. Codeblock 18-19 zeigt ein Beispiel
+für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
+Elementen.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, _, third, _, fifth) =&gt; {
+            println!(&quot;Einige Zahlen: {}, {}, {}&quot;, first, third, fifth)
+        }
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-19: Ignorieren mehrerer Teile eines
+Tupels</span></p>
+<p>Dieser Code gibt <code>Einige Zahlen: 2, 8, 32</code> aus und die Werte 4 und 16 werden
+ignoriert.</p>
+<h4 id="ignorieren-einer-unbenutzten-variable-indem-ihr-name-mit-_-beginnt"><a class="header" href="#ignorieren-einer-unbenutzten-variable-indem-ihr-name-mit-_-beginnt">Ignorieren einer unbenutzten Variable, indem ihr Name mit <code>_</code> beginnt</a></h4>
+<p>Wenn du eine Variable erstellst, sie aber nirgendwo verwendest, wird Rust
+normalerweise eine Warnung ausgeben, weil das ein Fehler sein könnte. Aber
+manchmal ist es nützlich, eine Variable zu erstellen, die du noch nicht
+verwenden wirst, z.B. wenn du einen Prototyp erstellst oder gerade ein Projekt
+beginnst. In dieser Situation kannst du Rust anweisen, dich nicht vor der
+unbenutzten Variablen zu warnen, indem du den Namen der Variablen mit einem
+Unterstrich beginnst. In Codeblock 18-20 erstellen wir zwei unbenutzte
+Variablen, aber wenn wir diesen Code kompilieren, sollten wir nur vor einer von
+ihnen eine Warnung erhalten.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let _x = 5;
+    let y = 10;
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 18-20: Beginnen eines Variablennamens mit einem
+Unterstrich, um Warnungen zu unbenutzten Variablen zu vermeiden</span></p>
+<p>Hier erhalten wir eine Warnung zur unbenutzten Variablen <code>y</code>, aber wir erhalten
+keine Warnung zur unbenutzten Variablen mit vorangestelltem Unterstrich.</p>
+<p>Beachte, dass es einen feinen Unterschied gibt zwischen dem Verwenden von <code>_</code>
+und dem Verwenden eines Namens, der mit einem Unterstrich beginnt. Die Syntax
+<code>_x</code> bindet immer noch den Wert an die Variable, während <code>_</code> überhaupt nicht
+bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
+wird uns Codeblock 18-21 einen Fehler liefern.</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let s = Some(String::from(&quot;Hallo!&quot;));
+
+    if let Some(_s) = s {
+        println!(&quot;Zeichenkette gefunden&quot;);
+    }
+
+    println!(&quot;{:?}&quot;, s);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-21: Eine unbenutzte Variable, die mit einem
+Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
+Wertes übernehmen könnte</span></p>
+<p>Wir werden einen Fehler erhalten, weil der Wert <code>s</code> immer noch in <code>_s</code>
+verschoben wird, was uns daran hindert, <code>s</code> wieder zu verwenden. Das Verwenden
+des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 18-22 wird
+ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben wird.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let s = Some(String::from(&quot;Hallo!&quot;));
+
+    if let Some(_) = s {
+        println!(&quot;Zeichenkette gefunden&quot;);
+    }
+
+    println!(&quot;{:?}&quot;, s);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-22: Das Verwenden eines Unterstrichs bindet
+den Wert nicht</span></p>
+<p>Dieser Code funktioniert prima, weil wir <code>s</code> nie an etwas binden; es wird nicht
+verschoben.</p>
+<h4 id="ignorieren-der-verbleibenden-teile-eines-wertes-mit-"><a class="header" href="#ignorieren-der-verbleibenden-teile-eines-wertes-mit-">Ignorieren der verbleibenden Teile eines Wertes mit <code>..</code></a></h4>
+<p>Bei Werten, die viele Teile haben, können wir die Syntax <code>..</code> verwenden, um nur
+einige wenige Teile zu verwenden und den Rest zu ignorieren, sodass es nicht
+notwendig ist, für jeden ignorierten Wert Unterstriche aufzulisten. Das Muster
+<code>..</code> ignoriert alle Teile eines Wertes, die wir im Rest des Musters nicht
+explizit zugeordnet haben. In Codeblock 18-23 haben wir eine Struktur <code>Point</code>,
+die eine Koordinate im dreidimensionalen Raum enthält. Im <code>match</code>-Ausdruck
+wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den Feldern
+<code>y</code> und <code>z</code> ignorieren.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    struct Point {
+        x: i32,
+        y: i32,
+        z: i32,
+    }
+
+    let origin = Point { x: 0, y: 0, z: 0 };
+
+    match origin {
+        Point { x, .. } =&gt; println!(&quot;x ist {}&quot;, x),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-23: Ignorieren aller Felder eines <code>Point</code>
+mit Ausnahme von <code>x</code> durch Verwenden von <code>..</code></span></p>
+<p>Wir listen den Wert <code>x</code> auf und fügen dann einfach das Muster <code>..</code> ein. Das
+geht schneller, als <code>y: _</code> und <code>z: _</code> anzugeben, insbesondere wenn wir mit
+Strukturen arbeiten, die viele Felder haben, in Situationen, in denen nur ein
+oder zwei Felder relevant sind.</p>
+<p>Die Syntax <code>..</code> wird auf so viele Werte wie nötig erweitert. Codeblock 18-24
+zeigt, wie man <code>..</code> mit einem Tupel verwendet.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (first, .., last) =&gt; {
+            println!(&quot;Einige Zahlen: {}, {}&quot;, first, last);
+        }
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-24: Nur den ersten und letzten Wert in einem
+Tupel abgleichen und alle anderen Werte ignorieren</span></p>
+<p>In diesem Code werden der erste und der letzte Wert mit <code>first</code> und <code>last</code>
+abgeglichen. Das <code>..</code> passt zu allem in der Mitte und ignoriert es.</p>
+<p>Das Verwenden von <code>..</code> muss jedoch eindeutig sein. Wenn unklar ist, welche
+Werte zum Abgleich vorgesehen sind und welche ignoriert werden sollten, gibt
+uns Rust einen Fehler. Codeblock 18-25 zeigt ein Beispiel für die mehrdeutige
+Verwendung von <code>..</code>, sodass es sich nicht kompilieren lässt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
+</span>    let numbers = (2, 4, 8, 16, 32);
+
+    match numbers {
+        (.., second, ..) =&gt; {
+            println!(&quot;Einige Zahlen: {}&quot;, second)
+        },
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-25: Ein Versuch, <code>..</code> auf mehrdeutige Weise
+zu verwenden</span></p>
+<p>Wenn wir dieses Beispiel kompilieren, erhalten wir diesen Fehler:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+error: `..` can only be used once per tuple pattern
+ --&gt; src/main.rs:5:22
+  |
+5 |         (.., second, ..) =&gt; {
+  |          --          ^^ can only be used once per tuple pattern
+  |          |
+  |          previously used here
+
+error: aborting due to previous error
+
+error: could not compile `patterns`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Es ist für Rust unmöglich zu bestimmen, wie viele Werte im Tupel zu ignorieren
+sind, bevor ein Wert zu <code>second</code> passt, und wie viele weitere Werte danach zu
+ignorieren sind. Dieser Code könnte bedeuten, dass wir <code>2</code> ignorieren wollen,
+<code>second</code> an <code>4</code> binden und dann <code>8</code>, <code>16</code> und <code>32</code> ignorieren wollen; oder dass
+wir <code>2</code> und <code>4</code> ignorieren wollen, <code>second</code> an <code>8</code> binden und dann <code>16</code> und
+<code>32</code> ignorieren wollen; und so weiter. Der Variablenname <code>second</code> bedeutet für
+Rust nichts Besonderes, sodass wir einen Kompilierfehler erhalten, weil das
+Verwenden von <code>..</code> an zwei Stellen wie dieser mehrdeutig ist.</p>
+<h3 id="extra-bedingungen-mit-abgleichsbedingungen"><a class="header" href="#extra-bedingungen-mit-abgleichsbedingungen">Extra-Bedingungen mit Abgleichsbedingungen</a></h3>
+<p>Eine <em>Abgleichsbedingung</em> (match guard) ist eine zusätzliche <code>if</code>-Bedingung,
+die nach dem Muster in einem <code>match</code>-Zweig angegeben wird und die zusammen mit
+dem Musterabgleich ebenfalls übereinstimmen muss, damit dieser Zweig ausgewählt
+wird. Abgleichsbedingungen sind nützlich, um komplexere Ideen auszudrücken, als
+es ein Muster allein erlaubt.</p>
+<p>Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
+Codeblock 18-26 zeigt ein <code>match</code>, wobei der erste Zweig das Muster <code>Some(x)</code>
+und die Abgleichsbedingung <code>if x &lt; 5</code> hat.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let num = Some(4);
+
+    match num {
+        Some(x) if x &lt; 5 =&gt; println!(&quot;kleiner als fünf: {}&quot;, x),
+        Some(x) =&gt; println!(&quot;{}&quot;, x),
+        None =&gt; (),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-26: Hinzufügen einer Abgleichsbedingung zu
+einem Muster</span></p>
+<p>In diesem Beispiel wird <code>kleiner als fünf: 4</code> ausgegeben. Wenn <code>num</code> mit dem
+Muster im ersten Zweig abgeglichen wird, passt es, weil <code>Some(4)</code> zu <code>Some(x)</code>
+passt. Dann prüft die Abgleichsbedingung, ob der Wert in <code>x</code> kleiner als <code>5</code>
+ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.</p>
+<p>Hätte <code>num</code> stattdessen den Wert <code>Some(10)</code> gehabt, wäre die Abgleichsbedingung
+im ersten Zweig falsch gewesen, denn 10 ist nicht weniger als 5. Rust würde
+dann zum zweiten Zweig gehen, der passen würde, weil der zweite Zweig keine
+Abgleichsbedingung hat und daher zu allen <code>Some</code>-Varianten passt.</p>
+<p>Es gibt keine Möglichkeit, die Bedingung <code>if x &lt; 5</code> innerhalb eines Musters
+auszudrücken, also gibt uns die Abgleichsbedingung die Möglichkeit, diese Logik
+anzugeben.</p>
+<p>In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
+Musterbeschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
+verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
+Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
+<code>match</code> zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
+Wert der äußeren Variable testen konnten. Codeblock 18-27 zeigt, wie wir eine
+Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = Some(5);
+    let y = 10;
+
+    match x {
+        Some(50) =&gt; println!(&quot;Habe 50 erhalten&quot;),
+        Some(n) if n == y =&gt; println!(&quot;Passt, n = {}&quot;, n),
+        _ =&gt; println!(&quot;Standardfall, x = {:?}&quot;, x),
+    }
+
+    println!(&quot;Am Ende: x = {:?}, y = {}&quot;, x, y);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
+Testen der Gleichheit mit einer äußeren Variablen</span></p>
+<p>Dieser Code gibt nun <code>Standardfall, x = Some(5)</code> aus. Das Muster im zweiten
+<code>match</code>-Zweig führt keine neue Variable <code>y</code> ein, die das äußere <code>y</code> beschatten
+würde, was bedeutet, dass wir das äußere <code>y</code> in der Abgleichsbedingung
+verwenden können. Anstatt das Muster mit <code>Some(y)</code> zu spezifizieren, was das
+äußere <code>y</code> beschattet hätte, spezifizieren wir <code>Some(n)</code>. Dies erzeugt eine
+neue Variable <code>n</code>, die nichts beschattet, weil es keine Variable <code>n</code> außerhalb
+von <code>match</code> gibt.</p>
+<p>Die Abgleichsbedingung <code>if n == y</code> ist kein Muster und führt daher keine neuen
+Variablen ein. Dieses <code>y</code> <em>ist</em> das äußere <code>y</code> und nicht ein neues beschattetes
+<code>y</code>, und wir können nach einem Wert suchen, der den gleichen Wert wie das
+äußere <code>y</code> hat, indem wir <code>n</code> mit <code>y</code> vergleichen.</p>
+<p>Du kannst auch den <em>oder</em>-Operator <code>|</code> in einer Abgleichsbedingung verwenden,
+um mehrere Muster anzugeben; die Abgleichsbedingung gilt dann für alle Muster.
+Codeblock 18-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
+einem Muster, das <code>|</code> verwendet. Der wichtige Teil dieses Beispiels ist, dass
+die Abgleichsbedingung <code>if y</code> auf <code>4</code>, <code>5</code> <em>und</em> <code>6</code> zutrifft, auch wenn es so
+aussehen mag, als ob <code>if y</code> nur auf <code>6</code> zutrifft.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    let x = 4;
+    let y = false;
+
+    match x {
+        4 | 5 | 6 if y =&gt; println!(&quot;ja&quot;),
+        _ =&gt; println!(&quot;nein&quot;),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-28: Kombinieren mehrerer Muster mit einer
+Abgleichsbedingung</span></p>
+<p>Die Abgleichsbedingung besagt, dass der Zweig nur dann passt, wenn der Wert von
+<code>x</code> gleich <code>4</code>, <code>5</code> oder <code>6</code> ist <em>und</em> wenn <code>y</code> <code>wahr</code> ist. Wenn dieser Code
+ausgeführt wird, passt das Muster des ersten Zweigs, weil <code>x</code> gleich <code>4</code> ist,
+allerdings ist die Abgleichsbedingung <code>if y</code> falsch, sodass der erste Zweig
+nicht ausgewählt wird. Der Code geht weiter zum zweiten Zweig, der passt, und
+dieses Programm gibt <code>nein</code> aus. Der Grund dafür ist, dass die <code>if</code>-Bedingung
+für das gesamte Muster <code>4 | 5 | 6</code> gilt, nicht nur für den letzten Wert <code>6</code>.
+Mit anderen Worten, der Vorrang einer Abgleichsbedingung in Bezug auf ein
+Muster verhält sich wie folgt:</p>
+<pre><code class="language-text">(4 | 5 | 6) if y =&gt; ...
+</code></pre>
+<p>und nicht so:</p>
+<pre><code class="language-text">4 | 5 | (6 if y) =&gt; ...
+</code></pre>
+<p>Nach dem Ausführen des Codes ist das Vorrangsverhalten offensichtlich: Würde
+die Abgleichsbedingung nur auf den Endwert in der mit dem <code>|</code>-Operator
+angegebenen Werteliste angewendet, hätte der Zweig gepasst und das Programm
+hätte <code>ja</code> ausgegeben.</p>
+<h3 id="-bindungen"><a class="header" href="#-bindungen"><code>@</code>-Bindungen</a></h3>
+<p>Mit dem <em>at</em>-Operator (<code>@</code>) können wir eine Variable erstellen, die einen Wert
+enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
+zu einem Muster passt. Codeblock 18-29 zeigt ein Beispiel, bei dem wir testen
+wollen, dass ein <code>Message::Hello</code>-Feld <code>id</code> innerhalb des Bereichs <code>3..=7</code>
+liegt. Aber wir wollen den Wert auch an die Variable <code>id_variable</code> binden,
+damit wir ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir
+könnten diese Variable <code>id</code> nennen, so wie das Feld, aber für dieses Beispiel
+werden wir einen anderen Namen verwenden.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>    enum Message {
+        Hello { id: i32 },
+    }
+
+    let msg = Message::Hello { id: 5 };
+
+    match msg {
+        Message::Hello {
+            id: id_variable @ 3..=7,
+        } =&gt; println!(&quot;id im Bereich gefunden: {}&quot;, id_variable),
+        Message::Hello { id: 10..=12 } =&gt; {
+            println!(&quot;id in einem anderen Bereich gefunden&quot;)
+        }
+        Message::Hello { id } =&gt; println!(&quot;Eine andere id gefunden: {}&quot;, id),
+    }
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 18-29: Verwenden von <code>@</code>, um an einen Wert in
+einem Muster zu binden und ihn gleichzeitig zu testen</span></p>
+<p>In diesem Beispiel wird <code>id im Bereich gefunden: 5</code> ausgegeben. Durch das
+Angeben von <code>id_variable @</code> vor dem Bereich <code>3..=7</code> erfassen wir den Wert, der
+mit dem Bereich übereinstimmt, und testen gleichzeitig, ob der Wert zum
+Bereichsmuster passt.</p>
+<p>Im zweiten Zweig, wo wir im Muster nur einen Bereich spezifiziert haben, hat
+der zum Zweig gehörende Code keine Variable, die den tatsächlichen Wert des
+<code>id</code>-Feldes enthält. Der Wert des <code>id</code>-Feldes hätte 10, 11 oder 12 sein können,
+aber der Code, der zu diesem Muster gehört, weiß nicht, welcher es ist. Der
+Code des Musters ist nicht in der Lage, den Wert des <code>id</code>-Feldes zu verwenden,
+weil wir den <code>id</code>-Wert nicht in einer Variablen gespeichert haben.</p>
+<p>Im letzten Zweig, in dem wir eine Variable ohne Bereich angegeben haben, haben
+wir den Wert, der im Code des Zweigs verfügbar ist, in einer Variablen namens
+<code>id</code>. Der Grund dafür ist, dass wir die Syntax des Struktur-Feldes in
+Kurznotation verwendet haben. Aber wir haben keinen Test auf den Wert im Feld
+<code>id</code> in diesem Zweig angewandt, wie wir es bei den ersten beiden Zweigen getan
+haben: Jeder Wert würde zu diesem Muster passen.</p>
+<p>Mit <code>@</code> können wir einen Wert testen und ihn in einer Variablen innerhalb eines
+Musters speichern.</p>
+<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
+<p>Die Muster in Rust sind sehr nützlich, da sie helfen, zwischen verschiedenen
+Arten von Daten zu unterscheiden. Wenn sie in <code>match</code>-Ausdrücken verwendet
+werden, stellt Rust sicher, dass deine Muster jeden möglichen Wert abdecken
+oder dein Programm sich nicht kompilieren lässt. Muster in <code>let</code>-Anweisungen
+und Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
+Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen an
+Variablen. Wir können einfache oder komplexe Muster erstellen, die unseren
+Bedürfnissen entsprechen.</p>
+<p>Als nächstes werden wir uns im vorletzten Kapitel des Buches mit einigen
+fortgeschrittenen Aspekten einer Vielzahl von Rusts Funktionalitäten befassen.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch18-02-refutability.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch19-00-advanced-features.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch18-02-refutability.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch19-00-advanced-features.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

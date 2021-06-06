@@ -1,0 +1,696 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Kisten (crate) auf crates.io veröffentlichen - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html" class="active"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="kisten-crate-auf-cratesio-veröffentlichen"><a class="header" href="#kisten-crate-auf-cratesio-veröffentlichen">Kisten (crate) auf crates.io veröffentlichen</a></h2>
+<p>Wir haben Pakete von <a href="https://crates.io/">crates.io</a> als
+Abhängigkeiten (dependencies) unseres Projekts verwendet. Du kannst deinen
+Programmcode jedoch auch für andere Personen freigeben, indem du eigene Pakete
+veröffentlichst. Die Registrierung von Kisten auf <a href="https://crates.io/">crates.io</a>
+verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcode
+gehostet.</p>
+<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr 
+veröffentlichtes Paket zu verwenden und zu finden. Wir werden nun über einige
+dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
+wird.</p>
+<h3 id="sinnvolle-dokumentationskommentare-erstellen"><a class="header" href="#sinnvolle-dokumentationskommentare-erstellen">Sinnvolle Dokumentationskommentare erstellen</a></h3>
+<p>Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen,
+wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
+Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
+Rust-Code mit zwei Schrägstrichen <code>//</code> kommentiert. Rust hat auch eine eigene
+Art von Kommentar für die Dokumentation, die passenderweise als 
+<em>Dokumentationskommentar</em> bezeichnet wird und HTML-Dokumentation generiert.
+Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
+API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
+wie deine Kiste <em>benutzt</em> wird, und nicht, wie deine Kiste <em>implementiert</em>
+ist.</p>
+<p>Dokumentationskommentare verwenden drei Schrägstriche <code>///</code> anstelle von zwei
+und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
+Dokumentationskommentare nur vor dem zu dokumentierenden Element. 
+Codeblock 14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in
+einer Kiste mit dem Namen <code> my_crate</code>:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust ignore">/// Adds one to the number given 
+///
+/// # Examples 
+///
+/// ```
+/// let arg = 5;
+/// let answer = my_crate::add_one(arg);
+///
+/// assert_eq!(6, answer);
+/// ```
+pub fn add_one(x: i32) -&gt; i32 {
+    x + 1
+}
+
+</code></pre>
+<p><span class="caption">Codeblock 14-1: Ein Dokumentationskommentar für eine Funktion</span> </p>
+<p>Hier geben wir eine Beschreibung der Funktionsweise der Funktion <code>add_one</code> an,
+beginnen einen Abschnitt mit der Überschrift <code>Examples</code> gefolgt vom
+Programmcode, der die Verwendung der Funktion <code>add_one</code> demonstriert. Wir können
+die HTML-Dokumentation aus diesem Dokumentationskommentar generieren, indem wir
+<code>cargo doc</code> ausführen. Dieser Befehl führt das mit Rust verbreitete Werkzeug
+<code>rustdoc</code> aus und legt die generierte HTML-Dokumentation im Verzeichnis
+<em>target/doc</em> ab.</p>
+<p>Wenn du <code>cargo doc --open</code> ausführst, wird der HTML-Code für die Dokumentation
+deiner aktuellen Kiste (und auch die Dokumentation aller Abhängigkeiten
+(dependencies) deiner Kiste) erstellt und das Ergebnis in einem Webbrowser
+geöffnet. Wenn du zur Funktion <code>add_one</code> navigierst, wirst du sehen wie der Text
+in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1:</p>
+<img alt="Gerenderte HTML-Dokumentation für die Funktion `add_one` von `my_crate`" src="img/trpl14-01.png" class="center" />
+<p><span class="caption">Abbildung 14-1: HTML-Dokumentation für die Funktion
+<code>add_one</code></span></p>
+<h4 id="häufig-verwendete-abschnitte"><a class="header" href="#häufig-verwendete-abschnitte">Häufig verwendete Abschnitte</a></h4>
+<p>Wir haben die Markdown-Überschrift <code># Examples</code> in Codeblock 14-1 verwendet um
+einen Abschnitt im HTML-Code mit dem Titel <code>Examples</code> zu erstellen. Hier sind
+einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
+verwenden:</p>
+<ul>
+<li><strong>Panics</strong>: Die Szenarien, in denen die dokumentierte Funktion <code>panic</code>
+aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
+<code>panic</code> aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
+Situationen nicht aufrufen.</li>
+<li><strong>Errors</strong>: Wenn die Funktion einen Typ <code>Result</code> zurückgibt, der die Arten von
+Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
+Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
+Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
+unterschiedliche Art behandelt.</li>
+<li><strong>Safety</strong>: Wenn die Funktion aufzurufen unsicher (<code>unsafe</code>) ist (wir
+behandeln die Unsicherheit im Kapitel 19), sollte ein Abschnitt existieren,
+in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
+behandelt werden die die Funktion vom Aufrufenden erwartet.</li>
+</ul>
+<p>Die meisten Dokumentationskommentare benötigen nicht alle Abschnitte, aber dies
+ist eine gute Checkliste um dich an die Aspekte deines Programmcodes erinnern,
+die für andere Personen die ihn aufrufen interessant sein werden.</p>
+<h4 id="dokumentationskommentare-als-tests"><a class="header" href="#dokumentationskommentare-als-tests">Dokumentationskommentare als Tests</a></h4>
+<p>Das Hinzufügen von Beispiel-Codeblöcken in deinen Dokumentationskommentaren kann
+dabei hilfreich sein, die Verwendung deiner Programmbibliothek darzustellen.
+Dies hat einen zusätzlichen Bonus: Das Ausführen von <code>cargo test</code> führt die
+Codeblöcke in deiner Dokumentation als Test aus! Nichts ist besser als eine
+Dokumentation mit Beispielen, aber nichts ist schlimmer als eine Dokumentation
+mit Beispielen die nicht funktionieren, da sich der Code seit dem Schreiben der
+Dokumentation geändert hat. Wenn wir <code>cargo test</code> für die Dokumentation der
+Funktion <code>add_one</code> aus Codeblock 14-1 aufrufen, sehen wir folgenden Abschnitt in
+den Testergebnissen:</p>
+<pre><code class="language-text">   Doc-tests my_crate
+
+running 1 test
+test src/lib.rs - add_one (line 5) ... ok
+
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+</code></pre>
+<p>Wenn wir nun entweder die Funktion oder das Beispiel so ändern, dass <code>assert_eq!</code>
+im Beispiel <code>panic</code> aufruft und erneut <code>cargo test</code> aufrufen, werden wir
+bemerken, das <code>cargo test</code> feststellt, dass das Beispiel und der Code nicht
+synchron miteinander sind!</p>
+<h4 id="enthaltene-elemente-kommentieren"><a class="header" href="#enthaltene-elemente-kommentieren">Enthaltene Elemente kommentieren</a></h4>
+<p>Ein anderer Stil des Dokumentationskommentars <code>//!</code> fügt dem Element, das die
+Kommentare enthält, Dokumentation hinzu, anstatt den Elementen die auf die
+Kommentare folgen Dokumentation hinzuzufügen. Wir verwenden diese
+Dokumentationskommentare üblicherweise in der Wurzeldatei (laut Konvention
+<em>src/lib.rs</em>) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
+dokumentieren.</p>
+<p>Wenn wir beispielsweise eine Dokumentation hinzufügen möchten, die den Zweck
+der <code>my_crate</code>-Kiste beschreibt, die die Funktion <code>add_one</code> enthält, können wir
+am Anfang der Datei <em>src/lib.rs</em> Dokumentationskommentare hinzufügen die mit
+<code>//!</code> beginnen. Siehe Codeblock 14-2: </p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust ignore">//! # My Crate
+//!
+//! `my_crate` is a collection of utilities to make performing certain
+//! calculations more convenient.
+
+/// Adds one to the number given.
+// --snip--
+<span class="boring">///
+</span><span class="boring">/// # Examples
+</span><span class="boring">///
+</span><span class="boring">/// ```
+</span><span class="boring">/// let arg = 5;
+</span><span class="boring">/// let answer = my_crate::add_one(arg);
+</span><span class="boring">///
+</span><span class="boring">/// assert_eq!(6, answer);
+</span><span class="boring">/// ```
+</span><span class="boring">pub fn add_one(x: i32) -&gt; i32 {
+</span><span class="boring">   x + 1
+</span><span class="boring">}
+</span></code></pre>
+<p><span class="caption">Codeblock 14-2: Dokumentation für die gesamte
+<code>my_crate</code>-Kiste</span></p>
+<p>Beachte, dass nach der letzten Zeile, die mit <code>//!</code> beginnt, kein Programmcode
+mehr vorhanden ist. Da wir die Kommentare mit <code>//!</code> anstatt <code>///</code> begonnen
+haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht ein 
+Element, das diesem Kommentar folgt. In diesem Fall ist das Element, das diesen
+Kommentar enthält, die Datei <em>src/lib.rs</em>, dabei handelt es sich um das
+Wurzelverzeichnis der Kiste. Diese Kommentare beschreiben die gesamte Kiste.</p>
+<p>Wenn wir <code>cargo doc --open</code> ausführen, werden diese Kommentare auf der
+Startseite der Dokumentation für <code>my_crate</code> angezeigt, oberhalb der Liste der
+veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2:</p>
+<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
+<p><span class="caption">Abbildung 14-2: Gerenderte Dokumentation für <code>my_crate</code>,
+einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span></p>
+<p>Dokumentationskommentare innerhalb von Elementen sind besonders nützlich, um
+Kisten und Module zu beschreiben. Erkläre anhand dieser Informationen den
+allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Kiste
+besser verstehen können.</p>
+<h3 id="mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren"><a class="header" href="#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren">Mit <code>pub use</code> eine benutzerfreundliche öffentliche API exportieren</a></h3>
+<p>In Kapitel 7 wurde erläutert, wie wir unseren Programmcode mithilfe des
+Schlüsselworts <code>mod</code> in Module organisieren, Elemente mit dem Schlüsselwort 
+<code>pub</code> veröffentlichen und Elemente mit dem Schlüsselwort <code>use</code> in einen
+Gültigkeitsbereich (scope) bringen. Die Struktur, die für dich während der
+Entwicklung einer Kiste sinnvoll ist, ist für ihre Benutzer jedoch möglicherweise
+nicht sehr benutzerfreundlich. Vielleicht möchtest du Strukturen in einer 
+Hierarchie mit mehreren Ebenen organisieren, aber Personen, die einen Typ
+verwenden möchten, den du tief in der Hierarchie definiert hast, haben
+möglicherweise Probleme, herauszufinden, ob dieser Typ vorhanden ist. Sie könnten
+sich auch darüber ärgern, dass sie <code>use</code> <code> my_crate::some_module::another_module::UsefulType;</code>
+eingeben müssen anstatt <code>use</code> <code>my_crate::UsefulType;</code>.</p>
+<p>Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste eine
+wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur weniger
+vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu finden,
+die sie verwenden möchten, wenn deine Kiste eine große Modulhierarchie aufweist.</p>
+<p>Die gute Nachricht ist, dass du die interne Organisation nicht neu anordnen
+musst, wenn sie für andere aus einer anderen Bibliothek <em>nicht</em> geeignet ist.
+Stattdessen kannst du Elemente erneut exportieren, um mit <code>pub use</code> eine
+veränderte öffentliche Struktur von deiner privaten Struktur zu erstellen.
+Beim Re-Exportieren wird ein öffentliches Element an einem Speicherort genommen 
+und an einem anderen Speicherort öffentlich gemacht, als ob es stattdessen am
+anderen Speicherort definiert worden wäre.</p>
+<p>Nehmen wir zum Beispiel an, wir haben eine Bibliothek mit dem Namen <code>art</code>
+erstellt, um künstlerische Konzepte zu modellieren. In dieser Bibliothek sind
+zwei Module enthalten: Ein Modul <code>kinds</code> mit zwei Aufzählungen (enums) namens
+<code>PrimaryColor</code> und <code>SecondaryColor</code> und ein Modul <code>utils</code> das eine Funktion
+namens <code>mix</code> beinhaltet. Siehe Codeblock 14-3:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust noplayground test_harness">//! # Art
+//!
+//! A library for modeling artistic concepts.
+
+pub mod kinds {
+    /// The primary colors according to the RYB color model.
+    pub enum PrimaryColor {
+        Red,
+        Yellow,
+        Blue,
+    }
+
+    /// The secondary colors according to the RYB color model.
+    pub enum SecondaryColor {
+        Orange,
+        Green,
+        Purple,
+    }
+}
+
+pub mod utils {
+    use crate::kinds::*;
+
+    /// Combines two primary colors in equal amounts to create
+    /// a secondary color.
+    pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
+        // --snip--
+<span class="boring">       SecondaryColor::Orange
+</span>    }
+}
+</code></pre>
+<p><span class="caption">Codeblock 14-3: Eine Bibliothek <code>art</code> mit Elementen die in
+Modulen <code>kinds</code> und <code>utils</code> organisiert sind</span></p>
+<p>Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Kiste
+generiert von <code>cargo doc</code> aussehen würde.</p>
+<img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
+<p><span class="caption">Abbildung 14-3: Startseite der Dokumentation für <code>art</code>
+die Module <code>kinds</code> und <code>utils</code> auflistet</span></p>
+<p>Beachte, dass die Typen <code>PrimaryColor</code>, <code>SecondaryColor</code> und die Funktion <code>mix</code>
+nicht auf der Startseite angeführt sind. Wir müssen auf <code>kinds</code> und <code>utils</code>
+klicken um sie zu sehen.</p>
+<p>Eine Kiste, die von dieser Bibliothek abhängt, würde <code>use</code>-Anweisungen
+benötigen, die die Elemente aus <code>art</code> in den Gültigkeitsbereich bringen und die
+derzeit definierte Modulstruktur angeben. Codeblock 14-4 zeigt ein Beispiel für
+eine Kiste, in der die Elemente <code>PrimaryColor</code> und <code>mix</code> aus der <code>art</code>-Kiste
+verwendet werden:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore">use art::kinds::PrimaryColor;
+use art::utils::mix;
+
+fn main() {
+    let red = PrimaryColor::Red;
+    let yellow = PrimaryColor::Yellow;
+    mix(red, yellow);
+}
+</code></pre>
+<p><span class="caption">Codeblock 14-4: Eine Kiste, die die Gegenstände der 
+<code>art</code>-Kiste mit ihrer internen Struktur exportiert</span></p>
+<p>Der Autor des Programmcodes in Codeblock 14-4, der die Kiste <code>art</code> verwendet,
+musste herausfinden, dass sich <code>PrimaryColor</code> im Modul <code>kinds</code> und <code>mix</code> im Modul
+<code>utils</code> befindet. Die Modulstruktur der <code>art</code>-Kiste ist für Entwickler, die an
+der <code>art</code>-Kiste arbeiten, relevanter als für Entwickler die die <code>art</code>-Kiste
+verwenden. Die interne Struktur, die Teile der Kiste in das Modul <code>kinds</code> und das
+Modul <code>utils</code> unterteilt, enthält keine nützlichen Informationen für jemanden,
+der die <code>art</code>-Kiste benutzen möchte, sondern sorgt für Verwirrung, da Entwickler
+herausfinden müssen wo sie suchen müssen und die Struktur ist unpraktisch, da
+Entwickler die Modulnamen in den <code>use</code>-Anweisungen angeben müssen.</p>
+<p>Um die interne Organisation aus der öffentlichen API zu entfernen, können wir den
+Programmcode der <code>art</code>-Kiste ändern, um <code>pub use</code>-Anweisungen hinzuzufügen, um
+die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
+gezeigt:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust ignore">//! # Art
+//!
+//! A library for modeling artistic concepts.
+
+pub use self::kinds::PrimaryColor;
+pub use self::kinds::SecondaryColor;
+pub use self::utils::mix;
+
+pub mod kinds {
+   // --snip--
+<span class="boring">   /// The primary colors according to the RYB color model.
+</span><span class="boring">   pub enum PrimaryColor {
+</span><span class="boring">       Red,
+</span><span class="boring">       Yellow,
+</span><span class="boring">       Blue,
+</span><span class="boring">   }
+</span><span class="boring">
+</span><span class="boring">   /// The secondary colors according to the RYB color model.
+</span><span class="boring">   pub enum SecondaryColor {
+</span><span class="boring">       Orange,
+</span><span class="boring">       Green,
+</span><span class="boring">       Purple,
+</span><span class="boring">   }
+</span>}
+
+pub mod utils {
+    // --snip--
+<span class="boring">   use crate::kinds::*;
+</span><span class="boring">
+</span><span class="boring">   /// Combines two primary colors in equal amounts to create
+</span><span class="boring">   /// a secondary color.
+</span><span class="boring">   pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
+</span><span class="boring">       SecondaryColor::Orange
+</span><span class="boring">   }
+</span>}
+</code></pre>
+<p><span class="caption">Codeblock 14-5: Hinzufügen von <code>pub use</code>-Anmerkungen um
+Elemente erneut zu exportieren</span></p>
+<p>Die Dokumentation der API, die von <code>cargo doc</code> generiert wurde, wird nun
+aufgelistet und die erneut exportierten Links werden auf der Startseite, wie in
+Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen <code>PrimaryColor</code> und
+<code>SecondaryColor</code> leichter zu finden.</p>
+<img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
+<p><span class="caption">Abbildung 14-4: Die Startseite der Dokumentation von
+<code>art</code> mit den aufgelisteten erneuten Exporten</span></p>
+<p>Die Benutzer der <code>art</code>-Kiste können weiterhin die interne Struktur aus Codeblock
+14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde, oder sie
+können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden, wie es im
+Codeblock 14-6 gezeigt wurde:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore">use art::mix;
+use art::PrimaryColor;
+
+fn main() {
+    // --snip--
+<span class="boring">   let red = PrimaryColor::Red;
+</span><span class="boring">   let yellow = PrimaryColor::Yellow;
+</span><span class="boring">   mix(red, yellow);
+</span>}
+</code></pre>
+<p><span class="caption">Codeblock 14-6: Ein Programm, das die erneut exportierten
+Elemente der <code>art</code>-Kiste verwendet</span></p>
+<p>In Fällen, in denen es viele verschachtelte Module gibt, kann das erneute 
+Exportieren der Typen auf der obersten Ebene mit <code>pub use</code> die Erfahrung der
+Benutzer der Kiste signifikant verbessern.</p>
+<p>Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst als
+eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
+Benutzer am besten geeignet ist. Wenn man <code>pub use</code> wählt, erhält man
+Flexibilität bei der internen Strukturierung einer Kiste und entkoppelt diese
+interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir 
+einige der Programmcodes von Kisten an die du installiert hast, um festzustellen,
+ob sie intern strukturiert sind und ob sich ihre interne Struktur von der
+öffentlichen API unterscheidet.</p>
+<h3 id="einrichten-eines-kontos-auf-cratesio"><a class="header" href="#einrichten-eines-kontos-auf-cratesio">Einrichten eines Kontos auf Crates.io</a></h3>
+<p>Bevor man eine Kiste veröffentlichen kann, muss man ein Konto auf 
+<a href="https://crates.io/">crates.io</a> erstellen um ein API-Token zu
+erhalten. Besuche dazu die Homepage auf <a href="https://crates.io/">crates.io</a>
+und melde dich über ein GitHub-Konto an. (Derzeit ist ein GitHub-Konto eine
+Voraussetzung, aber die Seite wird möglicherweise in Zukunft andere Wege einen
+Account zu erstellen ermöglichen.) Sobald du angemeldet bist, gehe zu
+Kontoeinstellungen (account settings) auf 
+<a href="https://crates.io/me/">https://crates.io/me/</a> und erhalte deinen 
+API-Schlüssel. Rufe anschließend das Kommando <code>cargo login</code> mit deinem
+API-Schlüssel auf:</p>
+<pre><code class="language-console">$ cargo login abcdefghijklmnopqrstuvwxyz012345
+</code></pre>
+<h3 id="metadaten-zu-einer-neuen-kiste-hinzufügen"><a class="header" href="#metadaten-zu-einer-neuen-kiste-hinzufügen">Metadaten zu einer neuen Kiste hinzufügen</a></h3>
+<p>Angenommen, du hast ein Konto und eine Kiste, die du veröffentlichen möchtest.
+Vor dem Veröffentlichen musst du deiner Kiste einige Metadaten hinzufügen,
+indem du sie im Abschnitt <code>[package]</code> der Datei <em>Cargo.toml</em> der Kiste
+hinzufügst.</p>
+<p>Deine Kiste benötigt einen eindeutigen Namen. Während du vor Ort an einer Kiste
+arbeitest, kannst du eine Kiste beliebig benennen. Allerdings werden Kistennamen
+auf <a href="https://crates.io/">crates.io</a> nach Verfügbarkeit vergeben.
+Sobald ein Kistenname vergeben ist, kann niemand mehr eine Kiste mit
+diesem Namen veröffentlichen. Suche vor dem Versuch, eine Kiste zu veröffentlichen,
+nach dem Namen, den du auf der Webseite verwenden möchtest. Wenn
+der Name von einer anderen Kiste verwendet wurde, wirst du einen anderen Namen
+suchen müssen und das Feld <code>name</code> in der Datei <em>Cargo.toml</em> im Abschnitt
+<code>[package]</code> bearbeiten, um den neuen Namen für die Veröffentlichung zu
+verwenden:</p>
+<p><span class="filename">Dateiname: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = &quot;guessing_game&quot;
+</code></pre>
+<p>Selbst wenn du einen eindeutigen Namen gewählt hast, wird beim Ausführen von
+<code>cargo publish</code> zum Veröffentlichen der Kiste an dieser Stelle eine Warnung und 
+anschließend ein Fehler angezeigt:</p>
+<pre><code class="language-console">$ cargo publish
+    Updating crates.io index
+warning: manifest has no description, license, license-file, documentation, homepage or repository.
+See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
+--snip--
+error: api errors (status 200 OK): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+</code></pre>
+<p>Der Grund dafür ist, dass einige wichtige Informationen fehlen: Eine
+Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
+deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Um diesen
+Fehler zu beheben, muss man diese Informationen in die Datei <em>Cargo.toml</em>
+aufnehmen.</p>
+<p>Füge eine Beschreibung hinzu, die nur ein oder zwei Sätze umfasst, da sie
+zusammen mit deiner Kiste in den Suchergebnissen angezeigt wird. Für das Feld
+<code>license</code> musst du einen <em>Lizenzkennungswert</em> (licence identifier value) angeben.
+In <a href="http://spdx.org/licenses/">Linux Foundation's Software Package Data Exchange (SPDX)</a>
+sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden können. Um
+beispielsweise anzugeben, dass du deine Kiste mit der MIT-Lizenz lizenziert
+hast, füge die <code>MIT</code>-Identifikation hinzu:</p>
+<p><span class="filename">Dateiname: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = &quot;guessing_game&quot;
+license = &quot;MIT&quot;
+</code></pre>
+<p>Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss man
+den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt aufnehmen
+und dann <code>license-file</code> verwenden um den Namen dieser Lizenz zu spezifizieren 
+anstelle der Verwendung des <code>license</code>-Schlüssels.</p>
+<p>Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den Rahmen
+dieses Buches hinaus. Viele Leute in der Rust Community lizenzieren ihre Projekte
+genauso wie Rust mit einer Doppellizenz von <code>MIT OR Apache-2.0</code>. Diese Übung
+zeigt, dass man durch <code>OR</code> auch mehrere Lizenzkennungen getrennt angeben kann,
+um mehrere Lizenzen für ein Projekt zu haben.</p>
+<p>Mit einem eindeutigen Namen, der Version, den Angaben des Autors, die beim
+Erstellen der Kiste mit <code>cargo new</code> hinzugefügt wurden, deiner Beschreibung und
+einer hinzugefügten Lizenz könnte die Datei <em>Cargo.toml</em> für ein Projekt,
+das zur Veröffentlichung bereit ist, folgendermaßen aussehen:</p>
+<p><span class="filename">Dateiname: Cargo.toml</span></p>
+<pre><code class="language-toml">[package]
+name = &quot;guessing_game&quot;
+version = &quot;0.1.0&quot;
+authors = [&quot;Dein Name &lt;du@example.com&gt;&quot;]
+edition = &quot;2018&quot;
+description = &quot;A fun game where you guess what number the computer has chosen.&quot;
+license = &quot;MIT OR Apache-2.0&quot;
+
+[dependencies]
+</code></pre>
+<p><a href="https://doc.rust-lang.org/cargo/">Cargos documentation</a> beschreibt andere 
+Metadaten, die du angeben kannst, um sicherzustellen, dass andere deine Kiste
+leichter entdecken und verwenden können.</p>
+<h3 id="veröffentlichung-auf-cratesio"><a class="header" href="#veröffentlichung-auf-cratesio">Veröffentlichung auf Crates.io</a></h3>
+<p>Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für seine
+Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
+sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
+Version auf <a href="https://crates.io/">crates.io</a> hochgeladen, damit andere sie
+verwenden können.</p>
+<p>Sei vorsichtig, wenn du eine Kiste veröffentlichst, da eine
+Veröffentlichung <em>permanent</em> ist. Die Version kann niemals überschrieben und
+der Programmcode nicht gelöscht werden. Ein Hauptziel von <a href="https://crates.io/">crates.io</a>
+ist es, als permanentes Archiv von Code zu fungieren, sodass alle Projekte
+die erstellt werden und von Kisten aus <a href="https://crates.io/">crates.io</a> abhängen
+weiter funktionieren werden. Das Zulassen von Versionslöschungen würde das
+Erreichen dieses Ziels unmöglich machen. Die Anzahl der Kistenversionen, die man
+veröffentlichen kann, ist jedoch unbegrenzt.</p>
+<p>Rufe <code>cargo publish</code> erneut auf. Diesmal sollte es funktionieren:</p>
+<pre><code class="language-console">$ cargo publish
+    Updating crates.io index
+   Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
+   Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
+   Compiling guessing_game v0.1.0
+(file:///projects/guessing_game/target/package/guessing_game-0.1.0)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.19s
+   Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
+</code></pre>
+<p>Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die Rust-Community
+freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit für sein Projekt
+hinzufügen.</p>
+<h3 id="veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste"><a class="header" href="#veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste">Veröffentlichen einer neuen Version einer vorhandenen Kiste</a></h3>
+<p>Wenn du Änderungen an deiner Kiste vorgenommen hast und bereit bist, eine neue
+Version zu veröffentlichen, ändere den in der <em>Cargo.toml</em>-Datei
+angegebenen Versionswert und veröffentliche ihn erneut. Verwende die
+<a href="https://semver.org/lang/de/">Regeln für die semantische Versionierung</a>, um auf den von dir 
+vorgenommenen Änderungen basierend welche neue Versionsnummer geeignet ist.
+Führe dann <code>cargo publish</code> aus, um die neue Version hochzuladen.</p>
+<h3 id="mit-cargo-yank-versionen-von-cratesio-entfernen"><a class="header" href="#mit-cargo-yank-versionen-von-cratesio-entfernen">Mit <code>cargo yank</code> Versionen von Crates.io entfernen</a></h3>
+<p>Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
+verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
+ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt
+ist. In solchen Situationen unterstützt Cargo das <em>herausziehen</em> (yanking)
+einer Kistenversion.</p>
+<p>Durch das Herausziehen einer Version wird verhindert, dass neue Projekte von
+dieser Version abhängen, während alle vorhandenen Projekte, die davon abhängen,
+weiterhin heruntergeladen werden können. Im Wesentlichen bedeutet Herausziehen
+(yank), dass alle Projekte mit einem <em>Cargo.lock</em> nicht kaputt gehen und zukünftige
+generierte <em>Cargo.lock</em>-Dateien nicht die herausgezogene Version verwenden.</p>
+<p>Um eine Version einer Kiste herauszuziehen, rufe <code>cargo yank</code> auf und
+spezifiziere welche Version du herausziehen möchtest:</p>
+<pre><code class="language-console">$ cargo yank --vers 1.0.1
+</code></pre>
+<p>Durch Hinzufügen von <code>--undo</code>, kann man das Herausziehen rückgängig machen und
+Projekten wieder erlauben von der Version abzuhängen:</p>
+<pre><code class="language-console">$ cargo yank --vers 1.0.1 --undo
+</code></pre>
+<p>Das Herausziehen löscht <em>keinen</em> Programmcode. Beispielsweise ist die
+Herausziehen-Funktion nicht zum Löschen versehentlich hochgeladener Geheimnisse
+gedacht. Falls das passieren sollte musst du diese Geheimnisse sofort zurücksetzen.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch14-01-release-profiles.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch14-03-cargo-workspaces.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch14-01-release-profiles.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch14-03-cargo-workspaces.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

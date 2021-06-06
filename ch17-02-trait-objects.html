@@ -1,0 +1,678 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html" class="active"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben"><a class="header" href="#merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben">Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></h2>
+<p>In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
+besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
+in Codeblock 8-10 eine Abhilfe geschaffen, indem wir eine
+<code>SpreadsheetCell</code>-Aufzählung (enum) definiert haben, die Varianten zur Aufnahme
+von Ganzzahlen, Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in
+jeder Zelle verschiedene Typen von Daten speichern konnten und trotzdem einen
+Vektor hatten, der eine Reihe von Zellen darstellte. Dies ist eine perfekte
+Lösung, wenn unsere austauschbaren Elemente ein fester Satz von Typen sind, die
+wir kennen, wenn unser Code kompiliert wird.</p>
+<p>Manchmal möchten wir jedoch, dass unsere Bibliotheksbenutzer in der Lage sind,
+die Menge der Typen, die in einer bestimmten Situation erlaubt sind, zu
+erweitern. Um zu zeigen, wie wir dies erreichen können, werden wir ein Beispiel
+für ein GUI-Werkzeug (Graphical User Interface) erstellen, das über eine Liste
+von Elementen iteriert, wobei auf jedem Element eine Methode <code>draw</code> aufgerufen
+wird, um es auf den Bildschirm zu zeichnen – eine übliche Technik für
+GUI-Werkzeuge. Wir werden eine Bibliothekskiste (library crate) namens <code>gui</code>
+erstellen, die die Struktur einer GUI-Bibliothek enthält. Diese Kiste (crate)
+könnte einige Typen enthalten, die Leute benutzen können, z.B. <code>Button</code> und
+<code>TextField</code>. Darüber hinaus werden <code>gui</code>-Benutzer ihre eigenen Typen erstellen
+wollen, die gezeichnet werden können: Zum Beispiel könnte ein Programmierer ein
+<code>Image</code> und ein anderer eine <code>SelectBox</code> hinzufügen.</p>
+<p>Wir werden für dieses Beispiel keine vollwertige GUI-Bibliothek implementieren,
+aber wir werden zeigen, wie die Teile zusammenpassen würden. Zum Zeitpunkt des
+Schreibens der Bibliothek können wir nicht alle Typen kennen und definieren,
+die andere Programmierer vielleicht erstellen möchten. Aber wir wissen, dass
+<code>gui</code> den Überblick über viele Werte unterschiedlicher Typen behalten muss, und
+es muss für jeden dieser unterschiedlich typisierten Werte eine Methode <code>draw</code>
+aufrufen. Es muss nicht genau wissen, was passieren wird, wenn wir die Methode
+<code>draw</code> aufrufen, sondern nur, dass der Wert diese Methode für uns zum Aufruf
+bereithält.</p>
+<p>Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
+<code>Component</code> definieren, die eine Methode namens <code>draw</code> enthält. Die anderen
+Klassen, z.B. <code>Button</code>, <code>Image</code> und <code>SelectBox</code>, würden von <code>Component</code> erben
+und somit die Methode <code>draw</code> erben. Sie könnten jeweils die <code>draw</code>-Methode
+überschreiben, um ihr eigenes Verhalten zu definieren, aber das
+Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
+<code>Component</code>-Instanzen, und <code>draw</code> aufrufen. Aber da Rust keine Vererbung hat,
+brauchen wir einen anderen Weg, die <code>gui</code>-Bibliothek zu strukturieren, damit
+die Benutzer sie um neue Typen erweitern können.</p>
+<h3 id="definieren-eines-merkmals-trait-für-allgemeines-verhalten"><a class="header" href="#definieren-eines-merkmals-trait-für-allgemeines-verhalten">Definieren eines Merkmals (trait) für allgemeines Verhalten</a></h3>
+<p>Um das Verhalten zu implementieren, das wir in <code>gui</code> haben wollen, werden wir ein
+Merkmal namens <code>Draw</code> definieren, das eine Methode namens <code>draw</code> haben wird.
+Dann können wir einen Vektor definieren, der ein <em>Merkmalsobjekt</em> (trait
+object) annimmt. Ein Merkmalsobjekt verweist sowohl auf eine Instanz eines
+Typs, der das von uns spezifizierte Merkmal implementiert, als auch auf eine
+Tabelle, in der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden
+können. Wir erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben,
+z.B. eine Referenz <code>&amp;</code> oder einen intelligenten Zeiger <code>Box&lt;T&gt;</code>, dann das
+Schlüsselwort <code>dyn</code> und dann das relevante Merkmal. (Wir werden über den Grund,
+warum Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 19 im Abschnitt
+<a href="ch19-04-advanced-types.html#dynamisch-gro%C3%9Fe-typen-und-das-merkmal-sized">„Dynamisch große Typen und das Merkmal <code>Sized</code>“</a>) sprechen.
+Wir können Merkmalsobjekte an Stelle eines generischen oder konkreten Typs
+verwenden. Wo immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem
+zur Kompilierzeit sicher, dass jeder in diesem Kontext verwendete Wert das
+Merkmal des Merkmalsobjekts implementiert. Folglich müssen wir zur
+Kompilierzeit nicht alle möglichen Typen kennen.</p>
+<p>Wir haben erwähnt, dass wir in Rust davon absehen, Strukturen (structs) und
+Aufzählungen „Objekte“ zu nennen, um sie von den Objekten anderer Sprachen zu
+unterscheiden. In einer Struktur oder Aufzählung sind die Daten in den
+Struktur-Feldern vom Verhalten in <code>impl</code>-Blöcken getrennt, während in anderen
+Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst
+sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte <em>sind</em> jedoch eher
+wie Objekte in anderen Sprachen in dem Sinne, dass sie Daten und Verhalten
+kombinieren. Aber Merkmalsobjekte unterscheiden sich von traditionellen
+Objekten dadurch, dass wir einem Merkmalsobjekt keine Daten hinzufügen können.
+Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
+Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
+Verhalten zu ermöglichen.</p>
+<p>In Codeblock 17-3 wird gezeigt, wie ein Merkmal namens <code>Draw</code> mit einer Methode
+namens <code>draw</code> definiert werden kann:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Draw {
+    fn draw(&amp;self);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-3: Definition des Merkmals <code>Draw</code></span></p>
+<p>Diese Syntax sollte uns aus unseren Diskussionen über die Definition von
+Merkmalen in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax:
+Codeblock 17-4 definiert eine Struktur namens <code>Screen</code>, die einen Vektor namens
+<code>components</code> enthält. Dieser Vektor ist vom Typ <code>Box&lt;dyn Draw&gt;</code>, der ein
+Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
+<code>Box</code>, der das Merkmal <code>Draw</code> implementiert.</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Screen {
+    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-4: Definition der Struktur <code>Screen</code> mit
+einem Feld <code>components</code>, das einen Vektor von Merkmalsobjekten enthält, die das
+<code>Draw</code>-Merkmal implementieren</span></p>
+<p>Auf der Struktur <code>Screen</code> definieren wir eine Methode namens <code>run</code>, die die
+<code>draw</code>-Methode auf jeder ihrer <code>components</code> aufruft, wie in Codeblock 17-5 gezeigt:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Screen {
+</span><span class="boring">    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Screen {
+    pub fn run(&amp;self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
+<code>draw</code>-Methode jeder Komponente aufruft</span></p>
+<p>Dies funktioniert anders als die Definition einer Struktur, die einen
+generischen Typparameter mit Merkmalsabgrenzungen (trait bounds) verwendet. Ein
+generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
+werden, während Merkmalsobjekte die Möglichkeit bieten, zur Laufzeit mehrere
+konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
+die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
+wie in Codeblock 17-6 definieren können:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Screen&lt;T: Draw&gt; {
+    pub components: Vec&lt;T&gt;,
+}
+
+impl&lt;T&gt; Screen&lt;T&gt;
+where
+    T: Draw,
+{
+    pub fn run(&amp;self) {
+        for component in self.components.iter() {
+            component.draw();
+        }
+    }
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-6: Eine alternative Implementierung der
+Struktur <code>Screen</code> und ihrer <code>run</code>-Methode unter Verwendung generischer Typen
+und Merkmalsabgrenzungen</span></p>
+<p>Dies schränkt uns auf eine <code>Screen</code>-Instanz ein, die eine Liste von Komponenten
+hat, die alle vom Typ <code>Button</code> oder alle vom Typ <code>TextField</code> sind. Wenn du
+immer nur homogene Kollektionen haben wirst, ist das Verwenden von generischen
+Typen und Merkmalsabgrenzungen vorzuziehen, da die Definitionen zur
+Kompilierszeit monomorphisiert werden, um die konkreten Typen zu verwenden.</p>
+<p>Andererseits kann bei der Methode mit Merkmalsobjekten eine <code>Screen</code>-Instanz
+einen <code>Vec&lt;T&gt;</code> enthalten, der sowohl eine <code>Box&lt;Button&gt;</code> als auch eine
+<code>Box&lt;TextField&gt;</code> enthält. Schauen wir uns an, wie dies funktioniert, und dann
+werden wir über die Auswirkungen auf die Laufzeitperformanz sprechen.</p>
+<h3 id="implementieren-des-merkmals"><a class="header" href="#implementieren-des-merkmals">Implementieren des Merkmals</a></h3>
+<p>Nun fügen wir einige Typen hinzu, die das Merkmal <code>Draw</code> implementieren. Wir
+werden den Typ <code>Button</code> zur Verfügung stellen. Auch hier liegt die eigentliche
+Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
+die <code>draw</code>-Methode keine nützliche Implementierung in ihrem Rumpf haben wird.
+Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
+Struktur <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in
+Codeblock 17-7 gezeigt:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust noplayground"><span class="boring">pub trait Draw {
+</span><span class="boring">    fn draw(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Screen {
+</span><span class="boring">    pub components: Vec&lt;Box&lt;dyn Draw&gt;&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Screen {
+</span><span class="boring">    pub fn run(&amp;self) {
+</span><span class="boring">        for component in self.components.iter() {
+</span><span class="boring">            component.draw();
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>pub struct Button {
+    pub width: u32,
+    pub height: u32,
+    pub label: String,
+}
+
+impl Draw for Button {
+    fn draw(&amp;self) {
+        // Code zum tatsächlichen Zeichnen einer Schaltfläche
+    }
+}
+</code></pre>
+<p><span class="caption">Codeblock 17-7: Eine Struktur <code>Button</code>, die das Merkmal
+<code>Draw</code> implementiert</span></p>
+<p>Die Felder <code>width</code>, <code>height</code> und <code>label</code> in <code>Button</code> unterscheiden sich von den
+Feldern anderer Komponenten, z.B. dem Typ <code>TextField</code>, die diese Felder und
+zusätzlich ein <code>placeholder</code> haben könnte. Jeder der Typen, die wir auf dem
+Bildschirm zeichnen wollen, wird das Merkmal <code>Draw</code> implementieren, aber
+unterschiedlichen Code in der <code>draw</code>-Methode verwenden, um zu definieren, wie
+dieser bestimmte Typ gezeichnet werden soll, wie es hier bei <code>Button</code> der Fall
+ist (ohne den eigentlichen GUI-Code, der den Rahmen dieses Kapitels sprengt).
+Der Typ <code>Button</code> könnte zum Beispiel einen zusätzlichen <code>impl</code>-Block haben, der
+Methoden enthält, die sich darauf beziehen, was passiert, wenn ein Benutzer auf
+die Schaltfläche klickt. Diese Art von Methoden trifft nicht auf Typen wie
+<code>TextField</code> zu.</p>
+<p>Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine
+Struktur <code>SelectBox</code> zu implementieren, die die Felder <code>width</code>, <code>height</code> und
+<code>options</code> enthält, implementiert er ebenfalls das Merkmal <code>Draw</code> für den Typ
+<code>SelectBox</code>, wie in Codeblock 17-8 gezeigt:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore">use gui::Draw;
+
+struct SelectBox {
+    width: u32,
+    height: u32,
+    options: Vec&lt;String&gt;,
+}
+
+impl Draw for SelectBox {
+    fn draw(&amp;self) {
+        // Code zum tatsächlichen Zeichnen eines Auswahlfeldes
+    }
+}
+</code></pre>
+<p><span class="caption">Codeblock 17-8: Eine weitere Kiste, die <code>gui</code> verwendet
+und das Merkmal <code>Draw</code> auf einer <code>SelectBox</code>-Struktur implementiert</span></p>
+<p>Der Benutzer unserer Bibliothek kann nun seine Funktion <code>main</code> schreiben, um
+eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz kann er eine
+<code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er jede in eine <code>Box&lt;T&gt;</code>
+setzt, um ein Merkmalsobjekt zu werden. Er kann dann die <code>run</code>-Methode auf der
+<code>Screen</code>-Instanz aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft.
+Der Codeblock 17-9 zeigt diese Umsetzung:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">use gui::Draw;
+</span><span class="boring">
+</span><span class="boring">struct SelectBox {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">    options: Vec&lt;String&gt;,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Draw for SelectBox {
+</span><span class="boring">    fn draw(&amp;self) {
+</span><span class="boring">        // Code zum tatsächlichen Zeichnen eines Auswahlfeldes
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>use gui::{Button, Screen};
+
+fn main() {
+    let screen = Screen {
+        components: vec![
+            Box::new(SelectBox {
+                width: 75,
+                height: 10,
+                options: vec![
+                    String::from(&quot;Ja&quot;),
+                    String::from(&quot;Vielleicht&quot;),
+                    String::from(&quot;Nein&quot;),
+                ],
+            }),
+            Box::new(Button {
+                width: 50,
+                height: 10,
+                label: String::from(&quot;OK&quot;),
+            }),
+        ],
+    };
+
+    screen.run();
+}
+</code></pre>
+<p><span class="caption">Codeblock 17-9: Verwenden von Merkmalsobjekten zum
+Speichern von Werten verschiedener Typen, die das gleiche Merkmal
+implementieren</span></p>
+<p>Als wir die Bibliothek schrieben, wussten wir nicht, dass jemand den Typ
+<code>SelectBox</code> hinzufügen könnte, aber unsere <code>Screen</code>-Implementierung war in der
+Lage, mit dem neuen Typ umzugehen und ihn zu zeichnen, weil <code>SelectBox</code> das
+Merkmal <code>Draw</code> implementiert, was bedeutet, dass sie die <code>draw</code>-Methode
+implementiert.</p>
+<p>Dieses Konzept – sich nur mit den Nachrichten zu befassen, auf die ein
+Wert reagiert, und nicht mit dem konkreten Typ des Wertes – ähnelt dem
+Konzept des <em>Duck-Typing</em> in dynamisch typisierten Sprachen: Wenn es wie eine
+Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
+Implementierung von <code>run</code> auf <code>Screen</code> in Codeblock 17-5 braucht <code>run</code> nicht zu
+wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
+Komponente eine Instanz eines <code>Buttons</code> oder einer <code>SelectBox</code> ist, es ruft nur
+die <code>draw</code>-Methode auf der Komponente auf. Durch die Spezifikation von
+<code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im <code>components</code>-Vektor haben wir <code>Screen</code> so
+definiert, dass wir Werte benötigen, auf denen wir die <code>draw</code>-Methode aufrufen
+können.</p>
+<p>Der Vorteil der Verwendung von Merkmalsobjekten und des Rust-Typsystems zum
+Schreiben von Code, der dem Code mit Duck-Typing ähnelt, besteht darin, dass
+wir nie prüfen müssen, ob ein Wert eine bestimmte Methode zur Laufzeit
+implementiert, oder uns Sorgen machen müssen, Fehler zu bekommen, wenn ein Wert
+eine Methode nicht implementiert, wir sie aber trotzdem aufrufen. Rust wird
+unseren Code nicht kompilieren, wenn die Werte nicht die Merkmale
+implementieren, die die Merkmalsobjekte benötigen.</p>
+<p>Beispielsweise zeigt Codeblock 17-10, was passiert, wenn wir versuchen, einen
+<code>Screen</code> mit einem <code>String</code> als Komponente zu erstellen:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile">use gui::Screen;
+
+fn main() {
+    let screen = Screen {
+        components: vec![Box::new(String::from(&quot;Hallo&quot;))],
+    };
+
+    screen.run();
+}
+</code></pre>
+<p><span class="caption">Codeblock 17-10: Versuch, einen Typ zu verwenden, der das
+Merkmal des Merkmalsobjekts nicht implementiert</span></p>
+<p>Wir werden diesen Fehler erhalten, weil <code>String</code> das Merkmal <code>Draw</code> nicht
+implementiert:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling gui v0.1.0 (file:///projects/gui)
+error[E0277]: the trait bound `String: Draw` is not satisfied
+ --&gt; src/main.rs:5:26
+  |
+5 |         components: vec![Box::new(String::from(&quot;Hallo&quot;))],
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+  |
+  = note: required for the cast to the object type `dyn Draw`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `gui`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Dieser Fehler lässt uns wissen, dass wir entweder etwas an <code>Screen</code> übergeben,
+das wir nicht übergeben wollten und einen anderen Typ übergeben sollten, oder
+wir sollten <code>Draw</code> auf <code>String</code> implementieren, sodass <code>Screen</code> in der Lage
+ist, <code>Draw</code> darauf aufzurufen.</p>
+<h3 id="merkmalsobjekte-führen-dynamischen-aufruf-durch"><a class="header" href="#merkmalsobjekte-führen-dynamischen-aufruf-durch">Merkmalsobjekte führen dynamischen Aufruf durch</a></h3>
+<p>Erinnere dich im Abschnitt <a href="ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen">„Code-Performanz beim Verwenden generischer
+Datentypen“</a> in Kapitel 10 an unsere
+Diskussion über den Monomorphisierungsprozess, den der Compiler durchführt,
+wenn wir bei generischen Typen Merkmalsabgrenzungen verwenden: Der Compiler
+generiert nicht-generische Implementierungen von Funktionen und Methoden für
+jeden konkreten Typ, den wir anstelle eines generischen Typparameters
+verwenden. Der Code, der sich aus der Monomorphisierung ergibt, macht
+<em>statische Aufrufe</em> (static dispatch), d.h. wenn der Compiler weiß, welche
+Methode du zur Kompilierzeit aufrufst. Dies steht im Gegensatz zum <em>dynamischen
+Aufruf</em> (dynamic dispatch), bei dem der Compiler zur Kompilierzeit nicht weiß,
+welche Methode du aufrufst. In Fällen von dynamischem Aufruf erzeugt der
+Compiler Code, der zur Laufzeit herausfindet, welche Methode aufzurufen ist.</p>
+<p>Wenn wir Merkmalsobjekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
+Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
+Merkmalsobjekte verwendet, sodass er nicht weiß, welche Methode auf welchem Typ
+implementiert ist, um sie aufzurufen. Stattdessen verwendet Rust zur Laufzeit
+die Zeiger innerhalb des Merkmalsobjekts, um zu wissen, welche Methode
+aufgerufen werden soll. Durch dieses Nachschlagen entstehen Laufzeitkosten, die
+beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
+dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
+verwenden, was wiederum einige Optimierungen verhindert. Wir haben jedoch
+zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 17-5
+geschrieben haben und in Codeblock 17-9 unterstützen konnten, sodass es sich um
+einen Kompromiss handelt, den es zu berücksichtigen gilt.</p>
+<h3 id="objektsicherheit-ist-für-merkmalsobjekte-erforderlich"><a class="header" href="#objektsicherheit-ist-für-merkmalsobjekte-erforderlich">Objektsicherheit ist für Merkmalsobjekte erforderlich</a></h3>
+<p>Du kannst nur <em>objektsichere</em> (object-safe) Merkmale zu Merkmalsobjekten
+machen. Einige komplexe Regeln bestimmen alle Eigenschaften, die ein
+Merkmalsobjekt sicher machen, aber in der Praxis sind nur zwei Regeln relevant.
+Ein Merkmal ist objektsicher, wenn alle im Merkmal definierten Methoden die
+folgenden Eigenschaften haben:</p>
+<ul>
+<li>Der Rückgabetyp ist nicht <code>Self</code>.</li>
+<li>Es gibt keine generischen Typparameter.</li>
+</ul>
+<p>Das Schlüsselwort <code>Self</code> ist ein Alias für den Typ, auf dem wir das Merkmal
+oder Methoden implementieren. Merkmalsobjekte müssen objektsicher sein, denn
+sobald du ein Merkmalsobjekt verwendet hast, kennt Rust nicht mehr den
+konkreten Typ, der dieses Merkmal implementiert. Wenn eine Merkmalsmethode den
+konkreten <code>Self</code>-Typ zurückgibt, aber ein Merkmalsobjekt den genauen Typ
+vergisst, der <code>Self</code> ist, gibt es keine Möglichkeit, dass die Methode den
+ursprünglichen konkreten Typ verwenden kann. Dasselbe gilt für generische
+Typparameter, die bei der Verwendung des Merkmals mit konkreten Typparametern
+ausgefüllt werden: Die konkreten Typen werden Teil des Typs, der das Merkmal
+implementiert. Wenn der Typ durch das Verwenden eines Merkmalsobjekts vergessen
+wird, gibt es keine Möglichkeit zu wissen, mit welchen Typen die generischen
+Typparameter zu füllen sind.</p>
+<p>Ein Beispiel für ein Merkmal, dessen Methoden nicht objektsicher sind, ist das
+Merkmal <code>Clone</code> der Standardbibliothek. Die Signatur für die Methode <code>clone</code> im
+Merkmal <code>Clone</code> sieht wie folgt aus:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Clone {
+    fn clone(&amp;self) -&gt; Self;
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Der Typ <code>String</code> implementiert das Merkmal <code>Clone</code>, und wenn wir die Methode
+<code>clone</code> auf einer Instanz von <code>String</code> aufrufen, erhalten wir eine Instanz von
+<code>String</code> zurück. In ähnlicher Weise erhalten wir eine Instanz von <code>Vec&lt;T&gt;</code>
+zurück, wenn wir die Methode <code>clone</code> für eine Instanz von <code>Vec&lt;T&gt;</code> aufrufen.
+Die Signatur von <code>clone</code> muss wissen, welcher Typ für <code>Self</code> steht, denn das
+ist der Rückgabetyp.</p>
+<p>Der Compiler zeigt an, wenn du versuchst, etwas zu tun, das gegen die Regeln
+der Objektsicherheit in Bezug auf Merkmalsobjekte verstößt. Nehmen wir zum
+Beispiel an, wir würden versuchen, die Struktur <code>Screen</code> in Codeblock 17-4 zu
+implementieren, um Typen zu halten, die das Merkmal <code>Clone</code> statt dem Merkmal
+<code>Draw</code> implementieren, so wie hier:</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Screen {
+    pub components: Vec&lt;Box&lt;dyn Clone&gt;&gt;,
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Wir würden diesen Fehler bekommen:</p>
+<pre><code class="language-console">$ cargo build
+   Compiling gui v0.1.0 (file:///projects/gui)
+error[E0038]: the trait `Clone` cannot be made into an object
+ --&gt; src/lib.rs:2:21
+  |
+2 |     pub components: Vec&lt;Box&lt;dyn Clone&gt;&gt;,
+  |                     ^^^^^^^^^^^^^^^^^^^ `Clone` cannot be made into an object
+  |
+  = note: the trait cannot be made into an object because it requires `Self: Sized`
+  = note: for a trait to be &quot;object safe&quot; it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit &lt;https://doc.rust-lang.org/reference/items/traits.html#object-safety&gt;
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0038`.
+error: could not compile `gui`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Dieser Fehler bedeutet, dass du dieses Merkmal auf diese Weise nicht als
+Merkmalsobjekt verwenden kannst. Wenn du an weiteren Details zur
+Objektsicherheit interessiert sind, lies <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">Rust RFC 255</a>.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch17-01-what-is-oo.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch17-03-oo-design-patterns.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch17-01-what-is-oo.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch17-03-oo-design-patterns.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

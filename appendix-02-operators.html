@@ -1,0 +1,401 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>B - Operatoren und Symbole - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html" class="active"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="anhang-b-operatoren-und-symbole"><a class="header" href="#anhang-b-operatoren-und-symbole">Anhang B: Operatoren und Symbole</a></h2>
+<p>Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren
+und anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
+Datentypen (generics), Merkmalsabgrenzungen (trait bounds), Makros, Attributen,
+Kommentaren, Tupeln und Klammern auftreten.</p>
+<h3 id="operatoren"><a class="header" href="#operatoren">Operatoren</a></h3>
+<p>Tabelle B-1 enthält die Operatoren in Rust, ein Beispiel, wie der Operator im
+Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überladen
+werden kann. Wenn ein Operator überladen werden kann, wird das relevante
+Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
+<p><span class="caption">Tabelle B-1: Operatoren</span></p>
+<table><thead><tr><th align="left">Operator</th><th align="left">Beispiel</th><th align="left">Erklärung</th><th align="left">Überladbar?</th></tr></thead><tbody>
+<tr><td align="left"><code>!</code></td><td align="left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td align="left">Makro-Expansion</td><td align="left"></td></tr>
+<tr><td align="left"><code>!</code></td><td align="left"><code>!expr</code></td><td align="left">Bitweises oder logisches Komplement</td><td align="left"><code>Not</code></td></tr>
+<tr><td align="left"><code>!=</code></td><td align="left"><code>var != expr</code></td><td align="left">Vergleich auf Ungleichheit</td><td align="left"><code>PartialEq</code></td></tr>
+<tr><td align="left"><code>%</code></td><td align="left"><code>expr % expr</code></td><td align="left">Arithmetischer Restbetrag</td><td align="left"><code>Rem</code></td></tr>
+<tr><td align="left"><code>%=</code></td><td align="left"><code>var %= expr</code></td><td align="left">Arithmetischer Restbetrag und Zuweisung</td><td align="left"><code>RemAssign</code></td></tr>
+<tr><td align="left"><code>&amp;</code></td><td align="left"><code>&amp;expr</code>,<br> <code>&amp;mut expr</code></td><td align="left">Ausleihe</td><td align="left"></td></tr>
+<tr><td align="left"><code>&amp;</code></td><td align="left"><code>&amp;type</code>,<br> <code>&amp;mut type</code>,<br> <code>&amp;'a type</code>,<br> <code>&amp;'a mut type</code></td><td align="left">Ausleih-Referenz-Typ</td><td align="left"></td></tr>
+<tr><td align="left"><code>&amp;</code></td><td align="left"><code>expr &amp; expr</code></td><td align="left">Bitweises UND</td><td align="left"><code>BitAnd</code></td></tr>
+<tr><td align="left"><code>&amp;=</code></td><td align="left"><code>var &amp;= expr</code></td><td align="left">Bitweises UND und Zuweisung</td><td align="left"><code>BitAndAssign</code></td></tr>
+<tr><td align="left"><code>&amp;&amp;</code></td><td align="left"><code>expr &amp;&amp; expr</code></td><td align="left">Logisches UND mit Kurzschlussauswertung</td><td align="left"></td></tr>
+<tr><td align="left"><code>*</code></td><td align="left"><code>expr * expr</code></td><td align="left">Arithmetische Multiplikation</td><td align="left"><code>Mul</code></td></tr>
+<tr><td align="left"><code>*=</code></td><td align="left"><code>var *= expr</code></td><td align="left">Arithmetische Multiplikation und Zuweisung</td><td align="left"><code>MulAssign</code></td></tr>
+<tr><td align="left"><code>*</code></td><td align="left"><code>*expr</code></td><td align="left">Dereferenzierung</td><td align="left"></td></tr>
+<tr><td align="left"><code>*</code></td><td align="left"><code>*const type</code>,<br> <code>*mut type</code></td><td align="left">Roh-Referenz</td><td align="left"></td></tr>
+<tr><td align="left"><code>+</code></td><td align="left"><code>trait + trait</code>,<br> <code>'a + trait</code></td><td align="left">Verbundtypabgrenzung</td><td align="left"></td></tr>
+<tr><td align="left"><code>+</code></td><td align="left"><code>expr + expr</code></td><td align="left">Arithmetische Addition</td><td align="left"><code>Add</code></td></tr>
+<tr><td align="left"><code>+=</code></td><td align="left"><code>var += expr</code></td><td align="left">Arithmetische Addition und Zuweisung</td><td align="left"><code>AddAssign</code></td></tr>
+<tr><td align="left"><code>,</code></td><td align="left"><code>expr, expr</code></td><td align="left">Argument- und Elementseparator</td><td align="left"></td></tr>
+<tr><td align="left"><code>-</code></td><td align="left"><code>- expr</code></td><td align="left">Arithmetische Negation</td><td align="left"><code>Neg</code></td></tr>
+<tr><td align="left"><code>-</code></td><td align="left"><code>expr - expr</code></td><td align="left">Arithmetische Subtraktion</td><td align="left"><code>Sub</code></td></tr>
+<tr><td align="left"><code>-=</code></td><td align="left"><code>var -= expr</code></td><td align="left">Arithmetische Subtraktion und Zuweisung</td><td align="left"><code>SubAssign</code></td></tr>
+<tr><td align="left"><code>-&gt;</code></td><td align="left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td align="left">Funktion und Funktionsabschlussrückgabetyp</td><td align="left"></td></tr>
+<tr><td align="left"><code>.</code></td><td align="left"><code>expr.ident</code></td><td align="left">Elementzugriff</td><td align="left"></td></tr>
+<tr><td align="left"><code>..</code></td><td align="left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td align="left">Rechts-ausschließendes Bereichsliteral</td><td align="left"></td></tr>
+<tr><td align="left"><code>..=</code></td><td align="left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td align="left">Rechts-einschließendes Bereichsliteral</td><td align="left"></td></tr>
+<tr><td align="left"><code>..</code></td><td align="left"><code>..expr</code></td><td align="left">Aktualisierungssyntax für Strukturliterale</td><td align="left"></td></tr>
+<tr><td align="left"><code>..</code></td><td align="left"><code>variant(x, ..)</code>,<br> <code>struct_type { x, .. }</code></td><td align="left">„Und der Rest“-Musterbindung</td><td align="left"></td></tr>
+<tr><td align="left"><code>...</code></td><td align="left"><code>expr...expr</code></td><td align="left">In einem Muster: inklusives Bereichsmuster</td><td align="left"></td></tr>
+<tr><td align="left"><code>/</code></td><td align="left"><code>expr / expr</code></td><td align="left">Arithmetische Division</td><td align="left"><code>Div</code></td></tr>
+<tr><td align="left"><code>/=</code></td><td align="left"><code>var /= expr</code></td><td align="left">Arithmetische Division und Zuweisung</td><td align="left"><code>DivAssign</code></td></tr>
+<tr><td align="left"><code>:</code></td><td align="left"><code>pat: type</code>,<br> <code>ident: type</code></td><td align="left">Typabgrenzung</td><td align="left"></td></tr>
+<tr><td align="left"><code>:</code></td><td align="left"><code>ident: expr</code></td><td align="left">Struktur-Feld-Initialisierer</td><td align="left"></td></tr>
+<tr><td align="left"><code>:</code></td><td align="left"><code>'a: loop {...}</code></td><td align="left">Schleifen-Label</td><td align="left"></td></tr>
+<tr><td align="left"><code>;</code></td><td align="left"><code>expr;</code></td><td align="left">Anweisungs- und Element-Endezeichen</td><td align="left"></td></tr>
+<tr><td align="left"><code>;</code></td><td align="left"><code>[...; len]</code></td><td align="left">Syntaxteil für Array fester Größe</td><td align="left"></td></tr>
+<tr><td align="left"><code>&lt;&lt;</code></td><td align="left"><code>expr &lt;&lt; expr</code></td><td align="left">Bitweise Links-Schiebung</td><td align="left"><code>Shl</code></td></tr>
+<tr><td align="left"><code>&lt;&lt;=</code></td><td align="left"><code>var &lt;&lt;= expr</code></td><td align="left">Bitweise Links-Schiebung und Zuweisung</td><td align="left"><code>ShlAssign</code></td></tr>
+<tr><td align="left"><code>&lt;</code></td><td align="left"><code>expr &lt; expr</code></td><td align="left">Kleiner-als-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
+<tr><td align="left"><code>&lt;=</code></td><td align="left"><code>expr &lt;= expr</code></td><td align="left">Kleiner-gleich-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
+<tr><td align="left"><code>=</code></td><td align="left"><code>var = expr</code>,<br> <code>ident = type</code></td><td align="left">Zuweisung/Äquivalenz</td><td align="left"></td></tr>
+<tr><td align="left"><code>==</code></td><td align="left"><code>expr == expr</code></td><td align="left">Gleichheitsvergleich</td><td align="left"><code>PartialEq</code></td></tr>
+<tr><td align="left"><code>=&gt;</code></td><td align="left"><code>pat =&gt; expr</code></td><td align="left">Teilsyntax im Abgleichs-Zweig (match arm)</td><td align="left"></td></tr>
+<tr><td align="left"><code>&gt;</code></td><td align="left"><code>expr &gt; expr</code></td><td align="left">Größer-als-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
+<tr><td align="left"><code>&gt;=</code></td><td align="left"><code>expr &gt;= expr</code></td><td align="left">Größer-gleich-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
+<tr><td align="left"><code>&gt;&gt;</code></td><td align="left"><code>expr &gt;&gt; expr</code></td><td align="left">Bitweise Rechts-Schiebung</td><td align="left"><code>Shr</code></td></tr>
+<tr><td align="left"><code>&gt;&gt;=</code></td><td align="left"><code>var &gt;&gt;= expr</code></td><td align="left">Bitweise Rechts-Schiebung und Zuweisung</td><td align="left"><code>ShrAssign</code></td></tr>
+<tr><td align="left"><code>@</code></td><td align="left"><code>ident @ pat</code></td><td align="left">Muster-Bindung</td><td align="left"></td></tr>
+<tr><td align="left"><code>^</code></td><td align="left"><code>expr ^ expr</code></td><td align="left">Bitweises exklusives ODER</td><td align="left"><code>BitXor</code></td></tr>
+<tr><td align="left"><code>^=</code></td><td align="left"><code>var ^= expr</code></td><td align="left">Bitweises exklusives ODER und Zuweisung</td><td align="left"><code>BitXorAssign</code></td></tr>
+<tr><td align="left"><code>|</code></td><td align="left"><code>pat | pat</code></td><td align="left">Muster-Alternativen</td><td align="left"></td></tr>
+<tr><td align="left"><code>|</code></td><td align="left"><code>expr | expr</code></td><td align="left">Bitweises ODER</td><td align="left"><code>BitOr</code></td></tr>
+<tr><td align="left"><code>|=</code></td><td align="left"><code>var |= expr</code></td><td align="left">Bitweises ODER und Zuweisung</td><td align="left"><code>BitOrAssign</code></td></tr>
+<tr><td align="left"><code>||</code></td><td align="left"><code>expr || expr</code></td><td align="left">Logisches ODER mit Kurzschlussauswertung</td><td align="left"></td></tr>
+<tr><td align="left"><code>?</code></td><td align="left"><code>expr?</code></td><td align="left">Fehler-Weitergabe</td><td align="left"></td></tr>
+</tbody></table>
+<h3 id="nicht-operator-symbole"><a class="header" href="#nicht-operator-symbole">Nicht-Operator-Symbole</a></h3>
+<p>Die folgende Liste enthält alle nicht-Buchstaben, die nicht als Operatoren
+fungieren, d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.</p>
+<p>Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
+Stellen gültig sind.</p>
+<p><span class="caption">Tabelle B-2: Eigenständige Syntax</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>'ident</code></td><td align="left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
+<tr><td align="left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td align="left">Numerisches Literal eines bestimmten Typs</td></tr>
+<tr><td align="left"><code>&quot;...&quot;</code></td><td align="left">Zeichenketten-Literal</td></tr>
+<tr><td align="left"><code>r&quot;...&quot;</code>,<br> <code>r#&quot;...&quot;#</code>,<br> <code>r##&quot;...&quot;##</code><br> usw.</td><td align="left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
+<tr><td align="left"><code>b&quot;...&quot;</code></td><td align="left">Byte-Zeichenkettenliteral, konstruiert ein <code>[u8]</code> anstelle einer Zeichenkette</td></tr>
+<tr><td align="left"><code>br&quot;...&quot;</code>,<br> <code>br#&quot;...&quot;#</code>,<br> <code>br##&quot;...&quot;##</code><br> usw.</td><td align="left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
+<tr><td align="left"><code>'...'</code></td><td align="left">Zeichen-Literal</td></tr>
+<tr><td align="left"><code>b'...'</code></td><td align="left">ASCII-Byte-Literal</td></tr>
+<tr><td align="left"><code>|...| expr</code></td><td align="left">Funktionsabschluss (closure)</td></tr>
+<tr><td align="left"><code>!</code></td><td align="left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
+<tr><td align="left"><code>_</code></td><td align="left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
+</tbody></table>
+<p>Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die
+Modulhierarchie eines Elements vorkommen.</p>
+<p><span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>ident::ident</code></td><td align="left">Namensraum-Pfad</td></tr>
+<tr><td align="left"><code>::path</code></td><td align="left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
+<tr><td align="left"><code>self::path</code></td><td align="left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
+<tr><td align="left"><code>super::path</code></td><td align="left">Pfad relativ zum Elternmodul</td></tr>
+<tr><td align="left"><code>type::ident</code>,<br> <code>&lt;type as trait&gt;::ident</code></td><td align="left">Zugehörige Konstanten, Funktionen<br> und Typen</td></tr>
+<tr><td align="left"><code>&lt;type&gt;::...</code></td><td align="left">Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. <code>&lt;&amp;T&gt;::...</code>, <code>&lt;[T]&gt;:::...</code> usw.)</td></tr>
+<tr><td align="left"><code>trait::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen</td></tr>
+<tr><td align="left"><code>type::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
+<tr><td align="left"><code>&lt;type as trait&gt;::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
+</tbody></table>
+<p>Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
+auftreten.</p>
+<p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>path&lt;...&gt;</code></td><td align="left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
+<tr><td align="left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td align="left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
+<tr><td align="left"><code>fn ident&lt;...&gt; ...</code></td><td align="left">Generische Funktion definieren</td></tr>
+<tr><td align="left"><code>struct ident&lt;...&gt; ...</code></td><td align="left">Generische Struktur definieren</td></tr>
+<tr><td align="left"><code>enum ident&lt;...&gt; ...</code></td><td align="left">Generische Aufzählung definieren</td></tr>
+<tr><td align="left"><code>impl&lt;...&gt; ...</code></td><td align="left">Generische Implementierung definieren</td></tr>
+<tr><td align="left"><code>for&lt;...&gt; type</code></td><td align="left">Höherstufige Lebensdauerbegrenzungen</td></tr>
+<tr><td align="left"><code>type&lt;ident=type&gt;</code></td><td align="left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
+</tbody></table>
+<p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
+mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
+<p><span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>T: U</code></td><td align="left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
+<tr><td align="left"><code>T: 'a</code></td><td align="left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
+<tr><td align="left"><code>T : 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
+<tr><td align="left"><code>'b: 'a</code></td><td align="left">Generische Lebensdauer <code>'b</code>, muss Lebensdauer <code>'a</code> überdauern</td></tr>
+<tr><td align="left"><code>T: ?Sized</code></td><td align="left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
+<tr><td align="left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td align="left">Zusammengesetzte Typabgrenzung</td></tr>
+</tbody></table>
+<p>Tabelle B-6 zeigt Symbole, die im Zusammenhang mit dem Aufruf oder der
+Definition von Makros und der Angabe von Attributen an einem Element
+vorkommen.</p>
+<p><span class="caption">Tabelle B-6: Makros und Attribute</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>#[meta]</code></td><td align="left">Äußeres Attribut</td></tr>
+<tr><td align="left"><code>#![meta]</code></td><td align="left">Inneres Attribut</td></tr>
+<tr><td align="left"><code>$ident</code></td><td align="left">Makro-Ersetzung</td></tr>
+<tr><td align="left"><code>$ident:kind</code></td><td align="left">Makro-Erfassung</td></tr>
+<tr><td align="left"><code>$(…)…</code></td><td align="left">Makro-Wiederholung</td></tr>
+<tr><td align="left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td align="left">Makro-Aufruf</td></tr>
+</tbody></table>
+<p>Tabelle B-7 zeigt Symbole, die Kommentare erzeugen.</p>
+<p><span class="caption">Tabelle B-7: Kommentare</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>//</code></td><td align="left">Einzeiliger Kommentar</td></tr>
+<tr><td align="left"><code>//!</code></td><td align="left">Einzeiliger Dokumentationskommentar innen</td></tr>
+<tr><td align="left"><code>///</code></td><td align="left">Einzeiliger Dokumentationskommentar außen</td></tr>
+<tr><td align="left"><code>/*...*/</code></td><td align="left">Block-Kommentar</td></tr>
+<tr><td align="left"><code>/*!...*/</code></td><td align="left">Mehrzeiliger Dokumentationskommentar innen</td></tr>
+<tr><td align="left"><code>/**...*/</code></td><td align="left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
+</tbody></table>
+<p>Tabelle B-8 zeigt Symbole, die im Zusammenhang mit der Verwendung von Tupeln
+auftreten.</p>
+<p><span class="caption">Tabelle B-8: Tupel</span></p>
+<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>()</code></td><td align="left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
+<tr><td align="left"><code>(expr)</code></td><td align="left">Eingeklammerter Ausdruck</td></tr>
+<tr><td align="left"><code>(expr,)</code></td><td align="left">Ein-Element-Tupel-Ausdruck</td></tr>
+<tr><td align="left"><code>(type,)</code></td><td align="left">Ein-Element-Tupel-Typ</td></tr>
+<tr><td align="left"><code>(expr, ...)</code></td><td align="left">Tupel-Ausdruck</td></tr>
+<tr><td align="left"><code>(type, ...)</code></td><td align="left">Tupel-Typ</td></tr>
+<tr><td align="left"><code>expr(expr, ...)</code></td><td align="left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
+<tr><td align="left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td align="left">Tupel-Indexierung</td></tr>
+</tbody></table>
+<p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>
+<p><span class="caption">Tabelle B-9: Geschweifte Klammern</span></p>
+<table><thead><tr><th align="left">Context</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>{...}</code></td><td align="left">Block-Ausdruck</td></tr>
+<tr><td align="left"><code>Type {...}</code></td><td align="left"><code>struct</code>-Literal</td></tr>
+</tbody></table>
+<p>Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.</p>
+<p><span class="caption">Tabelle B-10: Eckige Klammern</span></p>
+<table><thead><tr><th align="left">Context</th><th align="left">Erklärung</th></tr></thead><tbody>
+<tr><td align="left"><code>[...]</code></td><td align="left">Array-Literal</td></tr>
+<tr><td align="left"><code>[expr; len]</code></td><td align="left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
+<tr><td align="left"><code>[type; len]</code></td><td align="left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
+<tr><td align="left"><code>expr[expr]</code></td><td align="left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
+<tr><td align="left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td align="left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
+</tbody></table>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="appendix-01-keywords.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="appendix-03-derivable-traits.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="appendix-01-keywords.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="appendix-03-derivable-traits.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

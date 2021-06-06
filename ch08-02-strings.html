@@ -1,0 +1,683 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>UTF-8-kodierten Text in Zeichenketten (strings) ablegen - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html" class="active"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="utf-8-kodierten-text-in-zeichenketten-strings-ablegen"><a class="header" href="#utf-8-kodierten-text-in-zeichenketten-strings-ablegen">UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></h2>
+<p>Wir haben in Kapitel 4 über Zeichenketten (strings) gesprochen, aber wir werden
+uns jetzt eingehender damit befassen. Neue Rust-Entwickler haben gewöhnlich aus
+einer Kombination von drei Gründen Probleme mit Zeichenketten: Rusts Neigung,
+mögliche Fehler aufzudecken, Zeichenketten als eine kompliziertere
+Datenstruktur, als viele Programmierer ihnen zugestehen, und UTF-8. Diese
+Faktoren kombinieren sich in einer Weise, die schwierig erscheinen kann, wenn
+man von anderen Programmiersprachen kommt.</p>
+<p>Es ist hilfreich, Zeichenketten im Kontext von Kollektionen zu besprechen, da
+Zeichenketten als Byte-Kollektion implementiert sind, sowie einige Methoden,
+die nützliche Funktionalitäten bieten, wenn diese Bytes als Text interpretiert
+werden. In diesem Abschnitt werden wir über <code>String</code>-Operationen sprechen, die
+jeder Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir
+werden auch die Art und Weise besprechen, in der sich <code>String</code> von den anderen
+Kollektionen unterscheidet, nämlich warum die Indexierung bei einem <code>String</code>
+kompliziert ist, weil Menschen und Computer <code>String</code>-Daten unterschiedlich
+interpretieren.</p>
+<h3 id="was-ist-eine-zeichenkette"><a class="header" href="#was-ist-eine-zeichenkette">Was ist eine Zeichenkette?</a></h3>
+<p>Zuerst werden wir definieren, was wir mit dem Begriff <em>Zeichenkette</em> (string)
+meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
+nämlich den Zeichenkettenanteilstyp <code>str</code>, der üblicherweise in seiner
+Ausleihenform <code>&amp;str</code> zu sehen ist. In Kapitel 4 sprachen wir über
+<em>Zeichenkettenanteilstypen</em> (string slices), die Referenzen auf einige
+UTF-8-kodierte Zeichenkettendaten sind, die anderswo gespeichert sind.
+Zeichenkettenliterale werden beispielsweise in der Binärdatei des Programms
+gespeichert und sind daher Zeichenkettenanteilstypen.</p>
+<p>Der Typ <code>String</code>, der von Rusts Standardbibliothek zur Verfügung gestellt wird
+und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,
+veränderlicher, aneigenbarer, UTF-8-kodierter Zeichenkettentyp. Wenn
+Rust-Entwickler von Zeichenketten in Rust sprechen, meinen sie normalerweise
+den Typ <code>String</code> sowie den Zeichenkettenanteilstyp <code>&amp;str</code>, nicht nur einen
+dieser Typen. Obwohl es in diesem Abschnitt weitgehend um <code>String</code> geht, werden
+beide Typen in Rusts Standardbibliothek stark verwendet, und sowohl <code>String</code>
+als auch Zeichenkettenanteilstypen sind UTF-8-kodiert.</p>
+<p>Die Standardbibliothek von Rust enthält auch eine Reihe anderer
+Zeichenkettentypen wie <code>OsString</code>, <code>OsStr</code>, <code>CString</code> und <code>CStr</code>.
+Bibliothekskisten (library crates) können noch weitere Möglichkeiten zum
+Speichern von Zeichenkettendaten bieten. Fällt dir auf, dass diese Namen alle
+auf <code>String</code> oder <code>Str</code> enden? Sie beziehen sich auf aneigenbare und
+ausgeliehene Varianten, genau wie die Typen <code>String</code> und <code>str</code>, die du zuvor
+gesehen hast. Diese Zeichenkettentypen können z.B. Text in verschiedenen
+Kodierungen speichern oder unterschiedliche Speicherdarstellungen haben. Diese
+anderen Zeichenkettentypen werden in diesem Kapitel nicht besprochen; in ihrer
+API-Dokumentation erfährst du mehr darüber, wie sie zu verwenden sind und wozu
+jeder einzelne geeignet ist.</p>
+<h3 id="erstellen-einer-neuen-zeichenkette"><a class="header" href="#erstellen-einer-neuen-zeichenkette">Erstellen einer neuen Zeichenkette</a></h3>
+<p>Viele Operationen, die für <code>Vec&lt;T&gt;</code> verfügbar sind, sind auch für <code>String</code>
+vorhanden, beginnend mit der Funktion <code>new</code> zum Erstellen einer Zeichenkette,
+wie in Codeblock 8-11 zu sehen ist.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::new();
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-11: Erstellen einer neuen, leeren
+Zeichenkette</span></p>
+<p>Diese Zeile erzeugt eine neue, leere Zeichenkette namens <code>s</code>, in die wir dann
+Daten aufnehmen können. Oft werden wir einige initiale Daten haben, mit denen
+wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode <code>to_string</code>,
+die für jeden Typ verfügbar ist, der das Merkmal <code>Display</code> implementiert, wie
+es bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei
+Beispiele.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let data = &quot;initialer Inhalt&quot;;
+
+let s = data.to_string();
+
+// die Methode funktioniert auch direkt für ein Literal:
+let s = &quot;initialer Inhalt&quot;.to_string();
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-12: Verwenden der Methode <code>to_string</code> zum
+Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
+<p>Dieser Code erzeugt eine Zeichenkette mit dem Inhalt <code>initialer Inhalt</code>.</p>
+<p>Wir können auch die Funktion <code>String::from</code> verwenden, um einen <code>String</code> aus
+einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
+äquivalent zum Code in Codeblock 8-12, der <code>to_string</code> verwendet.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = String::from(&quot;initialer Inhalt&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-13: Verwenden der Funktion <code>String::from</code> zum
+Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
+<p>Da Zeichenketten für so viele Dinge verwendet werden, können wir viele
+verschiedene generische Programmierschnittstellen (APIs) für Zeichenketten
+verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
+überflüssig erscheinen, aber sie alle haben ihren Platz! In diesem Fall machen
+<code>String::from</code> und <code>to_string</code> dasselbe, also ist die Wahl eine Frage des
+Stils.</p>
+<p>Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
+ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let hello = String::from(&quot;السلام عليكم&quot;);
+let hello = String::from(&quot;Dobrý den&quot;);
+let hello = String::from(&quot;Hallo&quot;);
+let hello = String::from(&quot;Hello&quot;);
+let hello = String::from(&quot;שָׁלוֹם&quot;);
+let hello = String::from(&quot;नमस्ते&quot;);
+let hello = String::from(&quot;こんにちは&quot;);
+let hello = String::from(&quot;안녕하세요&quot;);
+let hello = String::from(&quot;你好&quot;);
+let hello = String::from(&quot;Olá&quot;);
+let hello = String::from(&quot;Здравствуйте&quot;);
+let hello = String::from(&quot;Hola&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-14: Speichern von Begrüßungstexten in
+verschiedenen Sprachen in Zeichenketten</span></p>
+<p>All dies sind gültige <code>String</code>-Werte.</p>
+<h3 id="aktualisieren-einer-zeichenkette"><a class="header" href="#aktualisieren-einer-zeichenkette">Aktualisieren einer Zeichenkette</a></h3>
+<p>Ein <code>String</code> kann an Größe zunehmen und sein Inhalt kann sich ändern, genau wie
+der Inhalt eines <code>Vec&lt;T&gt;</code>, wenn du mehr Daten hineinschiebst. Darüber hinaus
+kannst du bequem den Operator <code>+</code> oder das Makro <code>format!</code> verwenden, um
+<code>String</code>-Werte aneinanderzuhängen.</p>
+<h4 id="anhängen-an-eine-zeichenkette-mit-push_str-und-push"><a class="header" href="#anhängen-an-eine-zeichenkette-mit-push_str-und-push">Anhängen an eine Zeichenkette mit <code>push_str</code> und <code>push</code></a></h4>
+<p>Wir können einen <code>String</code> wachsen lassen, indem wir die Methode <code>push_str</code>
+verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
+zu sehen ist.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::from(&quot;foo&quot;);
+s.push_str(&quot;bar&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-15: Anhängen eines Zeichenkettenanteilstyps
+an einen <code>String</code> mit der Methode <code>push_str</code></span></p>
+<p>Nach diesen beiden Zeilen enthält <code>s</code> den Wert <code>foobar</code>. Die Methode <code>push_str</code>
+nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
+Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel zeigt der Code
+in Codeblock 8-16, dass es bedauerlich wäre, wenn wir nicht in der Lage wären,
+<code>s2</code> zu verwenden, nachdem wir seinen Inhalt an <code>s1</code> angehängt haben.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s1 = String::from(&quot;foo&quot;);
+let s2 = &quot;bar&quot;;
+s1.push_str(s2);
+println!(&quot;s2 ist {}&quot;, s2);
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-16: Verwenden eines Zeichenkettenanteilstyps
+nach dem Anhängen seines Inhalts an eine Zeichenkette</span></p>
+<p>Wenn die Methode <code>push_str</code> die Eigentümerschaft von <code>s2</code> übernehmen würde,
+könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
+funktioniert jedoch wie erwartet!</p>
+<p>Die Methode <code>push</code> nimmt ein einzelnes Zeichen als Parameter und fügt es dem
+<code>String</code> hinzu. Codeblock 8-17 zeigt Code, der den Buchstaben <code>l</code> mit der
+Methode <code>push</code> zu einem <code>String</code> hinzufügt.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::from(&quot;lo&quot;);
+s.push('l');
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
+<code>String</code>-Wert mit <code>push</code></span></p>
+<p>Als Ergebnis dieses Codes wird <code>s</code> den Wert <code>lol</code> enthalten.</p>
+<h4 id="aneinanderhängen-mit-dem-operator--und-dem-makro-format"><a class="header" href="#aneinanderhängen-mit-dem-operator--und-dem-makro-format">Aneinanderhängen mit dem Operator <code>+</code> und dem Makro <code>format!</code></a></h4>
+<p>Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
+ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;Hallo &quot;);
+let s2 = String::from(&quot;Welt!&quot;);
+let s3 = s1 + &amp;s2; // Beachte, s1 wurde hierher verschoben und
+                   // kann nicht mehr verwendet werden
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-18: Verwenden des Operators <code>+</code>, um zwei
+Zeichenketten zu einer neuen zu kombinieren</span></p>
+<p>Die Zeichenkette <code>s3</code> wird als Ergebnis dieses Codes <code>Hallo Welt!</code> enthalten.
+Der Grund, warum <code>s1</code> nach der Addition nicht mehr gültig ist und warum wir
+eine Referenz auf <code>s2</code> verwendet haben, hat mit der Signatur der Methode zu
+tun, die aufgerufen wird, wenn wir den Operator <code>+</code> verwenden. Der Operator <code>+</code>
+benutzt die Methode <code>add</code>, deren Signatur ungefähr so aussieht:</p>
+<pre><code class="language-rust ignore">fn add(self, s: &amp;str) -&gt; String {
+</code></pre>
+<p>Dies ist nicht die exakte Signatur aus der Standardbibliothek: In der
+Standardbibliothek wird <code>add</code> mittels generischer Datentypen definiert. Hier
+sehen wir uns die Signatur von <code>add</code> mit konkreten Typen an, die die
+generischen Typen ersetzen; das passiert, wenn wir diese Methode mit
+<code>String</code>-Werten aufrufen. Wir werden generische Datentypen in Kapitel 10
+besprechen. Diese Signatur gibt uns den entscheidenden Hinweis, um die
+kniffligen Stellen des Operators <code>+</code> zu verstehen.</p>
+<p>Erstens hat <code>s2</code> ein <code>&amp;</code>, was bedeutet, dass wir aufgrund des Parameters <code>s</code> in
+der Funktion <code>add</code> eine <em>Referenz</em> der zweiten Zeichenkette an die erste
+Zeichenkette anhängen: Wir können nur einen <code>&amp;str</code> zu einem <code>String</code>
+hinzufügen; wir können nicht zwei <code>String</code>-Werte miteinander addieren. Aber
+warte – der Typ von <code>&amp;s2</code> ist <code>&amp;String</code>, nicht <code>&amp;str</code>, wie im zweiten
+Parameter von <code>add</code> spezifiziert. Warum kompiliert also Codeblock 8-18?</p>
+<p>Der Grund, warum wir <code>&amp;s2</code> im Aufruf von <code>add</code> verwenden können, ist, dass der
+Compiler das Argument <code>&amp;String</code> in einen <code>&amp;str</code> umwandeln (coerce) kann.
+Wenn wir die Methode <code>add</code> aufrufen, benutzt Rust eine <em>automatische
+Umwandlung</em> (deref coercion), die hier <code>&amp;s2</code> in <code>&amp;s2[...]</code> umwandelt. Auf die
+automatische Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da <code>add</code>
+nicht die Eigentümerschaft des Parameters <code>s</code> übernimmt, ist <code>s2</code> auch nach
+dieser Operation immer noch ein gültiger <code>String</code>.</p>
+<p>Zweitens können wir in der Signatur sehen, dass <code>add</code> die Eigentümerschaft von
+<code>self</code> übernimmt, weil <code>self</code> <em>kein</em> <code>&amp;</code> hat. Das bedeutet, dass <code>s1</code> in
+Codeblock 8-18 in den Aufruf von <code>add</code> verschoben wird und danach nicht mehr
+gültig ist. Obwohl also <code>let s3 = s1 + &amp;s2;</code> so aussieht, als ob beide
+Zeichenketten kopiert und eine neue erzeugt wird, übernimmt diese Anweisung
+tatsächlich die Eigentümerschaft von <code>s1</code>, hängt eine Kopie des Inhalts von
+<code>s2</code> an und gibt dann die Eigentümerschaft des Ergebnisses zurück. In anderen
+Worten sieht es so aus, als würde es viele Kopien erstellen, das ist aber nicht
+so; die Implementierung ist effizienter als Kopieren.</p>
+<p>Wenn wir mehrere Zeichenketten aneinanderhängen wollen, wird das Verhalten des
+Operators <code>+</code> unhandlich:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;tic&quot;);
+let s2 = String::from(&quot;tac&quot;);
+let s3 = String::from(&quot;toe&quot;);
+
+let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
+<span class="boring">}
+</span></code></pre></pre>
+<p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
+und <code>&quot;</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
+String-Kombinationen können wir das Makro <code>format!</code> verwenden:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;tic&quot;);
+let s2 = String::from(&quot;tac&quot;);
+let s3 = String::from(&quot;toe&quot;);
+
+let s = format!(&quot;{}-{}-{}&quot;, s1, s2, s3);
+<span class="boring">}
+</span></code></pre></pre>
+<p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
+arbeitet auf die gleiche Weise wie <code>println!</code>, aber anstatt das Ergebnis auf
+den Bildschirm auszugeben, gibt es einen <code>String</code> mit dem Inhalt zurück. Die
+Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen und übernimmt
+keine Eigentümerschaft seiner Parameter.</p>
+<h3 id="indexierung-von-zeichenketten"><a class="header" href="#indexierung-von-zeichenketten">Indexierung von Zeichenketten</a></h3>
+<p>In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
+einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
+jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
+Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
+ungültigen Code in Codeblock 8-19.</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;Hallo&quot;);
+let h = s1[0];
+
+
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
+Zeichenkette zu verwenden</span></p>
+<p>Dieser Code führt zu folgendem Fehler:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling collections v0.1.0 (file:///projects/collections)
+error[E0277]: the type `String` cannot be indexed by `{integer}`
+ --&gt; src/main.rs:3:13
+  |
+3 |     let h = s1[0];
+  |             ^^^^^ `String` cannot be indexed by `{integer}`
+  |
+  = help: the trait `Index&lt;{integer}&gt;` is not implemented for `String`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `collections`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Die Fehlermeldung und der Hinweis erzählen die Geschichte: Zeichenketten in
+Rust unterstützen keine Indexierung. Aber warum nicht? Um diese Frage zu
+beantworten, müssen wir uns ansehen, wie Rust Zeichenketten im Speicher ablegt.</p>
+<h4 id="interne-darstellung"><a class="header" href="#interne-darstellung">Interne Darstellung</a></h4>
+<p>Ein <code>String</code> ist eine Hülle um einen <code>Vec&lt;u8&gt;</code>. Sehen wir uns einige unserer
+korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
+diese:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let hello = String::from(&quot;Hola&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>In diesem Fall wird <code>hello.len()</code> gleich 4 sein, was bedeutet, dass der Vektor,
+der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
+Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Aber was ist mit der folgenden
+Zeile? (Beachte, dass diese Zeichenkette mit dem kyrillischen Großbuchstaben
+„Ze“ beginnt, nicht mit der arabischen Zahl 3.)</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let hello = String::from(&quot;Здравствуйте&quot;);
+<span class="boring">}
+</span></code></pre></pre>
+<p>Auf die Frage, wie lang die Zeichenkette ist, könnte man sagen: 12. Die Antwort
+von Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
+„Здравствуйте“ in UTF-8 zu kodieren, da jeder Unicode-Skalarwert in dieser
+Zeichenkette 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes
+der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
+Um das zu erläutern, betrachte diesen ungültigen Rust-Code:</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let hello = &quot;Здравствуйте&quot;;
+let answer = &amp;hello[0];
+
+
+<span class="boring">}
+</span></code></pre></pre>
+<p>Was sollte der Wert von<code>answer</code> sein? Sollte es <code>З</code> sein, der erste Buchstabe?
+In der UTF-8-Kodierung von <code>З</code> ist das erste Byte <code>208</code> und das zweite <code>151</code>,
+sodass <code>answer</code> eigentlich <code>208</code> sein müsste, aber <code>208</code> ist kein eigenständig
+gültiges Zeichen. Die Rückgabe von <code>208</code> ist wahrscheinlich nicht das, was ein
+Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
+fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
+Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
+selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
+<code>&amp;&quot;hallo&quot;[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
+zurückgeben, nicht <code>h</code>. Um zu vermeiden, dass ein unerwarteter Wert
+zurückgegeben und Fehler verursacht werden, die nicht sofort entdeckt werden,
+kompiliert Rust diesen Code überhaupt nicht und verhindert Missverständnisse
+schon früh im Entwicklungsprozess.</p>
+<h4 id="bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje">Bytes, skalare Werte und Graphemgruppen (grapheme clusters)! Oje!</a></h4>
+<p>Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
+Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
+Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
+<em>Buchstaben</em> bezeichnen würden).</p>
+<p>Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
+ansehen, wird es als ein Vektor von <code>u8</code>-Werten gespeichert, der wie folgt
+aussieht:</p>
+<pre><code class="language-text">[224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
+224, 165, 135]
+</code></pre>
+<p>Das sind 18 Bytes, so wie ein Computer diese Daten letztendlich speichert. Wenn
+wir sie als Unicode-Skalarwerte betrachten, also als das, was der Typ <code>char</code> in
+Rust ist, sehen diese Bytes wie folgt aus:</p>
+<pre><code class="language-text">['न', 'म', 'स', '्', 'त', 'े']
+</code></pre>
+<p>Es gibt hier sechs <code>char</code>-Werte, aber der vierte und der sechste sind keine
+Buchstaben: Sie sind diakritische Zeichen, die für sich allein genommen keinen
+Sinn ergeben. Wenn wir sie schließlich als Graphemgruppen betrachten, erhalten
+wir das, was eine Person die vier Buchstaben nennen würde, aus denen das
+Hindi-Wort besteht:</p>
+<pre><code class="language-text">[&quot;न&quot;, &quot;म&quot;, &quot;स्&quot;, &quot;ते&quot;]
+</code></pre>
+<p>Rust bietet verschiedene Möglichkeiten zur Interpretation von rohen
+Zeichenkettendaten, die von Computern gespeichert werden, sodass jedes Programm
+die Interpretation wählen kann, die es benötigt, unabhängig davon, in welcher
+menschlichen Sprache die Daten vorliegen. Ein letzter Grund, warum Rust uns
+nicht erlaubt, eine Zeichenkette zu indexieren, um ein Zeichen zu erhalten,
+ist, dass von Indexoperationen erwartet wird, dass sie immer in konstanter Zeit
+(O(1)) erfolgen. Es ist jedoch nicht möglich, diese Zeitgarantie bei einem
+<code>String</code> einzuhalten, da Rust den Inhalt von Anfang an bis zum Index durchgehen
+müsste, um festzustellen, wie viele gültige Zeichen es gibt.</p>
+<h3 id="anteilige-zeichenketten"><a class="header" href="#anteilige-zeichenketten">Anteilige Zeichenketten</a></h3>
+<p>Die Indexierung einer Zeichenkette ist oft eine schlechte Idee, weil nicht klar
+ist, was der Rückgabetyp der Zeichenketten-Indexoperation sein soll: Ein
+Byte-Wert, ein Zeichen, eine Graphemgruppe oder ein Zeichenkettenanteilstyp.
+Daher bittet dich Rust, konkretere Angaben zu machen, wenn du wirklich Indexes
+zum Erstellen von Zeichenkettenanteilstypen verwenden musst. Um bei der
+Indexierung spezifischer zu sein und anzugeben, dass du einen
+Zeichenkettenanteilstyp wünschst, kannst du statt der Indexierung mit <code>[]</code> mit
+einer einzigen Nummer <code>[]</code> mit einem Bereich verwenden, um einen
+Zeichenkettenanteilstyp zu erstellen, der bestimmte Bytes enthält:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let hello = &quot;Здравствуйте&quot;;
+
+let s = &amp;hello[0..4];
+<span class="boring">}
+</span></code></pre></pre>
+<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten 4 Bytes der Zeichenkette enthält.
+Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
+was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist. Was würde passieren, wenn wir
+<code>&amp;hello[0..1]</code> benutzen würden? Die Antwort: Rust würde das Programm zur
+Laufzeit abbrechen, genauso als wenn mit einem ungültigen Index auf einen
+Vektor zugegriffen würde:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling collections v0.1.0 (file:///projects/collections)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/collections`
+thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/libcore/str/mod.rs:2069:5
+note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+</code></pre>
+<p>Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
+ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.</p>
+<h3 id="methoden-zum-iterieren-über-zeichenketten"><a class="header" href="#methoden-zum-iterieren-über-zeichenketten">Methoden zum Iterieren über Zeichenketten</a></h3>
+<p>Glücklicherweise kannst du auf andere Weise auf Elemente in einer Zeichenkette
+zugreifen.</p>
+<p>Wenn du Operationen mit einzelnen Unicode-Skalarwerten durchführen musst,
+verwende am besten die Methode <code>chars</code>. Der Aufruf von <code>chars</code> auf „नमस्ते“
+trennt sechs Werte vom Typ <code>char</code> heraus und gibt sie zurück, und du kannst
+über das Ergebnis iterieren, um auf jedes Element zuzugreifen:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>for c in &quot;नमस्ते&quot;.chars() {
+    println!(&quot;{}&quot;, c);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieser Code wird folgendes ausgeben:</p>
+<pre><code class="language-text">न
+म
+स
+्
+त
+े
+</code></pre>
+<p>Die Methode <code>bytes</code> gibt jedes rohe Byte zurück, das für deinen
+Verwendungszweck benötigt wird:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>for b in &quot;नमस्ते&quot;.bytes() {
+    println!(&quot;{}&quot;, b);
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieser Code gibt die 18 Bytes aus, aus denen diese Zeichenkette besteht:</p>
+<pre><code class="language-text">224
+164
+// --abschneiden--
+165
+135
+</code></pre>
+<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
+können.</p>
+<p>Graphemgruppen aus Zeichenketten auszulesen ist komplex, daher wird diese
+Funktionalität nicht von der Standardbibliothek bereitgestellt. Kisten (crates)
+sind unter <a href="https://crates.io/">crates.io</a> verfügbar, falls du diese
+Funktionalität benötigst.</p>
+<h3 id="zeichenketten-sind-nicht-so-einfach"><a class="header" href="#zeichenketten-sind-nicht-so-einfach">Zeichenketten sind nicht so einfach</a></h3>
+<p>Zusammenfassend kann man sagen, dass Zeichenketten kompliziert sind.
+Verschiedene Programmiersprachen treffen unterschiedliche Entscheidungen
+darüber, wie diese Komplexität dem Programmierer angezeigt wird. Rust hat sich
+dafür entschieden, den korrekten Umgang mit Zeichenkettendaten zum
+Standardverhalten für alle Rust-Programme zu machen, was bedeutet, dass
+Programmierer sich im Vorfeld mehr Gedanken über den Umgang mit UTF-8-Daten
+machen müssen. Dieser Zielkonflikt macht die Komplexität von Zeichenketten
+größer als in anderen Programmiersprachen, aber er verhindert, dass du später
+in deinem Entwicklungslebenszyklus mit Fehlern umgehen musst, wenn
+Nicht-ASCII-Zeichen vorkommen.</p>
+<p>Lass uns zu etwas weniger Kompliziertem übergehen: Hashtabellen!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch08-01-vectors.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch08-03-hash-maps.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch08-01-vectors.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch08-03-hash-maps.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,557 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Nebenläufigkeit mit gemeinsamem Zustand - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html" class="active"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="nebenläufigkeit-mit-gemeinsamem-zustand"><a class="header" href="#nebenläufigkeit-mit-gemeinsamem-zustand">Nebenläufigkeit mit gemeinsamem Zustand</a></h2>
+<p>Die Nachrichtenübermittlung ist eine gute Methode zur Behandlung von
+Nebenläufigkeit, aber sie ist nicht die einzige. Betrachte folgenden Teil des
+Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere nicht, indem
+du Arbeitsspeicher teilst.“</p>
+<p>Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
+Darüber hinaus, warum würden nachrichtenübermittelnde Enthusiasten sie nicht
+nutzen und stattdessen das Gegenteil tun?</p>
+<p>In gewisser Weise ähneln Kanäle in jeder Programmiersprache dem Alleineigentum,
+denn sobald du einen Wert in einen Kanal übertragen hast, solltest du diesen
+Wert nicht mehr verwenden. Nebenläufigkeit mit gemeinsam genutztem
+Arbeitsspeicher ist wie Mehrfacheigentum: Mehrere Stränge können gleichzeitig
+auf denselben Speicherplatz zugreifen. Wie du in Kapitel 15 gesehen hast, wo
+intelligente Zeiger Mehrfacheigentum ermöglichten, kann Mehrfacheigentum zu
+zusätzlicher Komplexität führen, da die verschiedenen Eigentümer verwaltet
+werden müssen. Das Typsystem und die Eigentumsregeln von Rust sind eine große
+Hilfe, um diese Verwaltung korrekt zu gestalten. Betrachten wir als Beispiel
+den Mutex, eines der gebräuchlicheren Nebenläufigkeitsprimitive für gemeinsam
+genutzten Speicher.</p>
+<h3 id="verwenden-von-mutex-um-datenzugriff-von-jeweils-einem-strang-zu-ermöglichen"><a class="header" href="#verwenden-von-mutex-um-datenzugriff-von-jeweils-einem-strang-zu-ermöglichen">Verwenden von Mutex, um Datenzugriff von jeweils einem Strang zu ermöglichen</a></h3>
+<p><em>Mutex</em> ist eine Abkürzung für <em>mutual exclusion</em> (engl. wechselseitiger
+Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
+(thread) den Zugriff auf einige Daten erlaubt. Um auf die Daten in einem Mutex
+zuzugreifen, muss ein Strang zunächst signalisieren, dass er Zugriff wünscht,
+indem er darum bittet, die <em>Sperre</em> (lock) des Mutex zu erwerben. Die Sperre
+ist eine Datenstruktur, die Teil des Mutex ist, der verfolgt, wer derzeit
+exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als <em>Schutz</em> der
+Daten beschrieben, die er über das Schließsystem hält.</p>
+<p>Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
+Regeln merken muss:</p>
+<ul>
+<li>Du musst versuchen, die Sperre zu erwerben, bevor du die Daten verwendest.</li>
+<li>Wenn du mit den Daten, die der Mutex schützt, fertig bist, musst du die Daten
+entsperren, damit andere Stränge die Sperre übernehmen können.</li>
+</ul>
+<p>Als reale Metapher für einen Mutex stelle dir eine Podiumsdiskussion auf einer
+Konferenz mit nur einem Mikrofon vor. Bevor ein Podiumsteilnehmer das Wort
+ergreifen kann, muss er fragen oder signalisieren, dass er das Mikrofon
+benutzen möchte. Wenn er das Mikrofon erhält, kann er so lange sprechen, wie er
+möchte, und das Mikrofon dann dem nächsten Diskussionsteilnehmer übergeben, der
+um das Wort bittet. Wenn ein Diskussionsteilnehmer vergisst, das Mikrofon
+abzugeben, wenn er damit fertig ist, kann kein anderer mehr sprechen. Wenn die
+Verwaltung des gemeinsam genutzten Mikrofons schief geht, funktioniert das
+Podium nicht wie geplant!</p>
+<p>Das Management von Mutexen kann unglaublich schwierig sein, weshalb so viele
+Menschen von Kanälen begeistert sind. Dank des Typsystems und der
+Eigentumsregeln von Rust kann man jedoch beim Sperren und Entsperren nichts
+falsch machen.</p>
+<h4 id="die-api-von-mutext"><a class="header" href="#die-api-von-mutext">Die API von <code>Mutex&lt;T&gt;</code></a></h4>
+<p>Als Beispiel für die Verwendung eines Mutex beginnen wir mit der Verwendung
+eines Mutex in einem einsträngigen (single-threaded) Kontext, wie in Codeblock
+16-12 gezeigt:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">use std::sync::Mutex;
+
+fn main() {
+    let m = Mutex::new(5);
+
+    {
+        let mut num = m.lock().unwrap();
+        *num = 6;
+    }
+
+    println!(&quot;m = {:?}&quot;, m);
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 16-12: Untersuchen der API von <code>Mutex&lt;T&gt;</code> in
+einem einsträngigen Kontext zur Vereinfachung</span></p>
+<p>Wie bei vielen Typen erzeugen wir einen <code>Mutex&lt;T&gt;</code> mit der zugehörigen Funktion
+<code>new</code>. Um auf die Daten innerhalb des Mutex zuzugreifen, verwenden wir die
+Methode <code>lock</code>, um die Sperre zu erhalten. Dieser Aufruf blockiert den
+aktuellen Strang, sodass er keine Arbeit verrichten kann, bis wir an der Reihe
+sind, die Sperre zu haben.</p>
+<p>Der Aufruf von <code>lock</code> würde fehlschlagen, wenn ein anderer Strang, der die
+Sperre hält, abstürzte. In diesem Fall wäre niemand jemals in der Lage, die
+Sperre zu erhalten, also haben wir uns entschieden, <code>unwrap</code> zu benutzen und
+diesen Strang abstürzen zu lassen, wenn wir uns in dieser Situation befinden.</p>
+<p>Nachdem wir die Sperre erworben haben, können wir den Rückgabewert, in diesem
+Fall <code>num</code> genannt, als veränderliche Referenz auf die darin enthaltenen Daten
+verwenden. Das Typsystem stellt sicher, dass wir eine Sperre erwerben, bevor
+wir den Wert in <code>m</code> verwenden: <code>Mutex&lt;i32&gt;</code> ist kein <code>i32</code>, also <em>müssen</em> wir
+die Sperre erwerben, um den <code>i32</code>-Wert verwenden zu können. Wir können das
+nicht vergessen, das Typsystem würde uns sonst keinen Zugriff auf das innere
+<code>i32</code> erlauben.</p>
+<p>Wie du vielleicht vermutest, ist <code>Mutex&lt;T&gt;</code> ein intelligenter Zeiger. Genauer
+gesagt gibt der Aufruf von <code>lock</code> einen intelligenten Zeiger namens
+<code>MutexGuard</code> zurück, der in ein <code>LockResult</code> verpackt ist, das wir mit dem
+Aufruf von <code>unwrap</code> behandelt haben. Der intelligente Zeiger <code>MutexGuard</code>
+implementiert <code>Deref</code>, um auf unsere inneren Daten zu zeigen; der intelligente
+Zeiger hat auch eine <code>Drop</code>-Implementierung, die die Sperre automatisch
+aufhebt, wenn ein <code>MutexGuard</code> den Gültigkeitsbereich verlässt, was am Ende des
+inneren Gültigkeitsbereichs in Codeblock 16-12 geschieht. Dadurch laufen wir
+nicht Gefahr, zu vergessen, die Sperre freizugeben und die Verwendung des Mutex
+durch andere Stränge zu blockieren, da die Freigabe der Sperre automatisch
+erfolgt.</p>
+<p>Nachdem wir die Sperre aufgehoben haben, können wir den Mutex-Wert ausgeben und
+sehen, dass wir den inneren <code>i32</code> in 6 ändern konnten.</p>
+<h4 id="gemeinsames-nutzen-eines-mutext-von-mehreren-strängen"><a class="header" href="#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen">Gemeinsames Nutzen eines <code>Mutex&lt;T&gt;</code> von mehreren Strängen</a></h4>
+<p>Versuchen wir nun, einen Wert zwischen mehreren Strängen mit <code>Mutex&lt;T&gt;</code> zu
+teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das nächste Beispiel in Codeblock
+16-13 wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden,
+um mehr über die Verwendung von <code>Mutex&lt;T&gt;</code> zu erfahren und darüber, wie Rust
+uns hilft, ihn korrekt zu verwenden.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::Mutex;
+use std::thread;
+
+fn main() {
+    let counter = Mutex::new(0);
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 16-13: Zehn Stränge inkrementieren jeweils
+einen Zähler, der durch einen <code>Mutex&lt;T&gt;</code> geschützt ist</span></p>
+<p>Wir erstellen eine Variable <code>counter</code>, um ein <code>i32</code> innerhalb eines <code>Mutex&lt;T&gt;</code>
+zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen
+wir 10 Stränge, indem wir über einen Zahlenbereich iterieren. Wir verwenden
+<code>thread::spawn</code> und geben allen Strängen den gleichen Funktionsabschluss
+(closure), der den Zähler in den Strang verschiebt, eine Sperre auf dem
+<code>Mutex&lt;T&gt;</code> durch Aufrufen der <code>lock</code>-Methode erwirbt und dann 1 zum Wert im
+Mutex addiert. Wenn ein Strang die Ausführung seines Funktionsabschlusses
+beendet hat, verlässt <code>num</code> den Gültigkeitsbereich und gibt die Sperre frei,
+sodass ein anderer Strang sie erwerben kann.</p>
+<p>Im Hauptstrang sammeln wir alle <code>JoinHandle</code>. Dann rufen wir, wie wir es in
+Codeblock 16-2 getan haben, <code>join</code> auf jedem Strang auf, um sicherzustellen,
+dass alle Stränge beendet sind. An diesem Punkt erhält der Hauptstrang die
+Sperre und gibt das Ergebnis dieses Programms aus.</p>
+<p>Wir haben angedeutet, dass sich dieses Beispiel nicht kompilieren lässt. Jetzt
+wollen wir herausfinden, warum!</p>
+<pre><code class="language-console">$ cargo run
+   Compiling shared-state v0.1.0 (file:///projects/shared-state)
+error[E0382]: use of moved value: `counter`
+  --&gt; src/main.rs:9:36
+   |
+5  |     let counter = Mutex::new(0);
+   |         ------- move occurs because `counter` has type `Mutex&lt;i32&gt;`, which does not implement the `Copy` trait
+...
+9  |         let handle = thread::spawn(move || {
+   |                                    ^^^^^^^ value moved into closure here, in previous iteration of loop
+10 |             let mut num = counter.lock().unwrap();
+   |                           ------- use occurs due to use in closure
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `shared-state`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Die Fehlermeldung besagt, dass der Wert <code>counter</code> in der vorherigen Iteration
+der Schleife verschoben wurde. Rust sagt uns also, dass wir die
+Eigentümerschaft der Sperre <code>counter</code> nicht in mehrere Stränge verschieben
+können. Lass uns den Kompilierfehler mit einer Mehrfacheigentums-Methode
+beheben, die wir in Kapitel 15 besprochen haben.</p>
+<h4 id="mehrfacheigentum-mit-mehreren-strängen"><a class="header" href="#mehrfacheigentum-mit-mehreren-strängen">Mehrfacheigentum mit mehreren Strängen</a></h4>
+<p>In Kapitel 15 gaben wir einen Wert mit mehreren Eigentümern an, indem wir den
+intelligenten Zeiger <code>Rc&lt;T&gt;</code> verwendeten, um einen Referenzzählwert zu
+erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
+den <code>Mutex&lt;T&gt;</code> in <code>Rc&lt;T&gt;</code> in Codeblock 16-14 ein und klonen den <code>Rc&lt;T&gt;</code>, bevor
+wir die Eigentümerschaft an den Strang übertragen.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust does_not_compile">use std::rc::Rc;
+use std::sync::Mutex;
+use std::thread;
+
+fn main() {
+    let counter = Rc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Rc::clone(&amp;counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 16-14: Versuch, <code>Rc&lt;T&gt;</code> zu verwenden, um
+mehreren Strängen zu erlauben, den <code>Mutex&lt;T&gt;</code> zu besitzen</span></p>
+<p>Wir kompilieren nochmal und bekommen ... verschiedene Fehler! Der Compiler
+lehrt uns eine Menge.</p>
+<pre><code class="language-console">$ cargo run
+   Compiling shared-state v0.1.0 (file:///projects/shared-state)
+error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+   --&gt; src/main.rs:11:22
+    |
+11  |           let handle = thread::spawn(move || {
+    |  ______________________^^^^^^^^^^^^^_-
+    | |                      |
+    | |                      `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+12  | |             let mut num = counter.lock().unwrap();
+13  | |
+14  | |             *num += 1;
+15  | |         });
+    | |_________- within this `[closure@src/main.rs:11:36: 15:10]`
+    |
+    = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
+
+error: aborting due to previous error
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `shared-state`
+
+To learn more, run the command again with --verbose.
+</code></pre>
+<p>Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
+den wir uns konzentrieren müssen: <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> kann nicht sicher zwischen
+Strängen gesendet werden. Der Compiler teilt uns auch den Grund dafür mit: Das
+Merkmal (trait) <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht implementiert. Wir werden
+im nächsten Abschnitt über <code>Send</code> sprechen: Es ist eines der Merkmale, das
+sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
+Verwendung in nebenläufigen Situationen gedacht sind.</p>
+<p>Leider ist es nicht sicher, <code>Rc&lt;T&gt;</code> über verschiedene Stränge hinweg gemeinsam
+zu nutzen. Wenn <code>Rc&lt;T&gt;</code> den Referenzzähler verwaltet, inkrementiert es den
+Zähler bei jedem Aufruf von <code>clone</code> und dekrementiert den Zähler bei jedem
+Klon, der aufgeräumt wird. Es werden jedoch keine Nebenläufigkeitsprimitive
+verwendet, um sicherzustellen, dass Änderungen am Zähler nicht durch einen
+anderen Strang unterbrochen werden können. Dies könnte zu falschen Zählungen
+führen – subtile Fehler, die wiederum zu Speicherlecks (memory leaks)
+oder zum Aufräumen eines Wertes führen könnten, obwohl wir ihn noch nutzen
+wollen. Was wir brauchen, ist ein Typ genau wie <code>Rc&lt;T&gt;</code>, aber einer, der
+Änderungen am Referenzzähler auf Strang-sichere Weise vornimmt.</p>
+<h4 id="atomare-referenzzählung-mit-arct"><a class="header" href="#atomare-referenzzählung-mit-arct">Atomare Referenzzählung mit <code>Arc&lt;T&gt;</code></a></h4>
+<p>Glücklicherweise ist <code>Arc&lt;T&gt;</code> ein Typ wie <code>Rc&lt;T&gt;</code>, der in nebenläufigen
+Situationen sicher zu verwenden ist. Das <em>a</em> steht für <em>atomar</em>, d.h. es
+handelt sich um einen <em>atomar referenzgezählten</em> (atomically reference
+counted) Typ. Atomare Typen (atomics) sind eine zusätzliche Art von
+Nebenläufigkeitsprimitiven, die wir hier nicht im Detail behandeln werden:
+Weitere Einzelheiten findest du in der Standardbibliotheksdokumentation für
+<a href="https://doc.rust-lang.org/std/sync/atomic/index.html"><code>std::sync::atomic</code></a>. An dieser Stelle musst du nur wissen, dass
+atomare Typen wie primitive Typen funktionieren, aber sicher über Stränge
+hinweg gemeinsam genutzt werden können.</p>
+<p>Du wirst dich dann vielleicht fragen, warum nicht alle primitiven Typen atomar
+sind und warum Standardbibliothekstypen nicht so implementiert sind, dass sie
+standardmäßig <code>Arc&lt;T&gt;</code> verwenden. Der Grund dafür ist, dass Strang-Sicherheit
+mit Performanzeinbußen verbunden ist, die du nur dann zahlen willst, wenn du
+sie wirklich brauchst. Wenn du nur Operationen an Werten innerhalb eines
+einzelnen Strangs durchführst, kann dein Code schneller laufen, wenn er nicht
+die Garantien erzwingen muss, die atomare Typen bieten.</p>
+<p>Kehren wir zu unserem Beispiel zurück: <code>Arc&lt;T&gt;</code> und <code>Rc&lt;T&gt;</code> haben die gleiche
+API, also reparieren wir unser Programm, indem wir die <code>use</code>-Zeile, den Aufruf
+von <code>new</code> und den Aufruf von <code>clone</code> ändern. Der Code in Codeblock 16-15 wird
+schließlich kompilieren und laufen:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
+use std::thread;
+
+fn main() {
+    let counter = Arc::new(Mutex::new(0));
+    let mut handles = vec![];
+
+    for _ in 0..10 {
+        let counter = Arc::clone(&amp;counter);
+        let handle = thread::spawn(move || {
+            let mut num = counter.lock().unwrap();
+
+            *num += 1;
+        });
+        handles.push(handle);
+    }
+
+    for handle in handles {
+        handle.join().unwrap();
+    }
+
+    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 16-15: Verwenden von <code>Arc&lt;T&gt;</code>, um den <code>Mutex&lt;T&gt;</code>
+einzupacken, um die Eigentümerschaft mit mehreren Strängen teilen zu
+können</span></p>
+<p>Dieser Code gibt folgendes aus:</p>
+<pre><code class="language-text">Ergebnis: 10
+</code></pre>
+<p>Wir haben es geschafft! Wir zählten von 0 bis 10, was nicht sehr beeindruckend
+erscheinen mag, aber wir haben viel über <code>Mutex&lt;T&gt;</code> und Strangsicherheit
+gelernt. Du kannst die Struktur dieses Programms auch dazu benutzen,
+kompliziertere Operationen durchzuführen als nur einen Zähler zu
+inkrementieren. Mit dieser Strategie kannst du eine Berechnung in unabhängige
+Teile aufteilen, diese Teile auf Stränge aufteilen und dann <code>Mutex&lt;T&gt;</code>
+verwenden, damit jeder Strang das Endergebnis mit seinem Teil aktualisiert.</p>
+<h3 id="Ähnlichkeiten-zwischen-refcelltrct-und-mutextarct"><a class="header" href="#Ähnlichkeiten-zwischen-refcelltrct-und-mutextarct">Ähnlichkeiten zwischen <code>RefCell&lt;T&gt;</code>/<code>Rc&lt;T&gt;</code> und <code>Mutex&lt;T&gt;</code>/<code>Arc&lt;T&gt;</code></a></h3>
+<p>Du hast vielleicht bemerkt, dass <code>counter</code> unveränderlich (immutable) ist, aber
+wir könnten eine veränderliche (mutable) Referenz auf den Wert in seinem
+Inneren erhalten; das bedeutet, dass <code>Mutex&lt;T&gt;</code> innere Veränderlichkeit
+(interior mutability) bietet, wie es die <code>Cell</code>-Familie tut. Auf die gleiche
+Weise, wie wir <code>RefCell&lt;T&gt;</code> in Kapitel 15 benutzt haben, um uns zu erlauben,
+Inhalte innerhalb eines <code>Rc&lt;T&gt;</code> zu mutieren, benutzen wir <code>Mutex&lt;T&gt;</code>, um
+Inhalte innerhalb eines <code>Arc&lt;T&gt;</code> zu mutieren.</p>
+<p>Ein weiteres zu beachtendes Detail ist, dass Rust dich nicht vor allen Arten
+von Logikfehlern schützen kann, wenn du <code>Mutex&lt;T&gt;</code> verwendest. Erinnere dich in
+Kapitel 15 daran, dass die Verwendung von <code>Rc&lt;T&gt;</code> mit dem Risiko verbunden war,
+Referenzzyklen zu erzeugen, bei denen zwei <code>Rc&lt;T&gt;</code> Werte aufeinander
+referenzieren und dadurch Speicherlecks verursachen. In ähnlicher Weise ist
+<code>Mutex&lt;T&gt;</code> mit dem Risiko verbunden, <em>Deadlocks</em> zu schaffen. Diese treten auf,
+wenn eine Operation zwei Ressourcen sperren muss und zwei Stränge jeweils eine
+der Sperren erworben haben, was dazu führt, dass sie ewig aufeinander warten.
+Wenn du an Deadlocks interessiert bist, versuche, ein Programm in Rust zu
+erstellen, das einen Deadlock hat; dann recherchiere Strategien zur Minderung
+von Deadlocks für Mutexe in einer Sprache und versuche, sie in Rust zu
+implementieren. Die Standardbibliotheks-API-Dokumentation für <code>Mutex&lt;T&gt;</code> und
+<code>MutexGuard</code> bietet nützliche Informationen.</p>
+<p>Wir runden dieses Kapitel ab, indem wir über die Merkmale <code>Send</code> und <code>Sync</code>
+sprechen und wie wir sie mit benutzerdefinierten Typen verwenden können.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch16-02-message-passing.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch16-04-extensible-concurrency-sync-and-send.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch16-02-message-passing.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch16-04-extensible-concurrency-sync-and-send.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>

@@ -1,0 +1,760 @@
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Makros - Die Programmiersprache Rust</title>
+        
+        
+
+
+        <!-- Custom HTML head -->
+        
+
+
+        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        
+        <link rel="icon" href="favicon.svg">
+        
+        
+        <link rel="shortcut icon" href="favicon.png">
+        
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        
+        <link rel="stylesheet" href="css/print.css" media="print">
+        
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        
+        <link rel="stylesheet" href="fonts/fonts.css">
+        
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        
+        <link rel="stylesheet" href="theme/ferris.css">
+        
+        <link rel="stylesheet" href="theme/2018-edition.css">
+        
+
+        
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script type="text/javascript">
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script type="text/javascript">
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script type="text/javascript">
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script type="text/javascript">
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Der Kontrollflussoperator match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Kommandozeilenwerkzeuge von crates.io installieren mit cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html" class="active"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                        
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        
+                        
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+                        
+                        
+
+                    </div>
+                </div>
+
+                
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script type="text/javascript">
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="makros"><a class="header" href="#makros">Makros</a></h2>
+<p>Wir haben in diesem Buch Makros wie <code>println!</code> verwendet, aber wir haben noch
+nicht vollständig erforscht, was ein Makro ist und wie es funktioniert. Der
+Begriff <em>Makro</em> bezieht sich auf eine Familie von Funktionalitäten in Rust:
+<em>Deklarative</em> Makros mit <code>macro_rules!</code> und drei Arten <em>prozeduraler</em> Makros:</p>
+<ul>
+<li>Benutzerdefinierte Makros mit <code>#[derive]</code>, die Code spezifizieren, der mit
+dem Attribut <code>derive</code> hinzugefügt wurde, das bei Strukturen (structs) und
+Aufzählungen (enums) verwendet wird</li>
+<li>Attribut-ähnliche Makros, die benutzerdefinierte Attribute definieren, die
+bei jedem Element verwendet werden können</li>
+<li>Funktions-ähnliche Makros, die wie Funktionsaufrufe aussehen, aber auf den
+als Argument angegebenen Token operieren</li>
+</ul>
+<p>Wir werden der Reihe nach über jedes dieser Themen sprechen, aber zuerst wollen
+wir uns ansehen, warum wir Makros überhaupt brauchen, wenn wir bereits
+Funktionen haben.</p>
+<h3 id="der-unterschied-zwischen-makros-und-funktionen"><a class="header" href="#der-unterschied-zwischen-makros-und-funktionen">Der Unterschied zwischen Makros und Funktionen</a></h3>
+<p>Im Grunde genommen sind Makros eine Möglichkeit, Code zu schreiben, der anderen
+Code schreibt, was als <em>Metaprogrammierung</em> bekannt ist. In Anhang C besprechen
+wir das Attribut <code>derive</code>, das dir eine Implementierung verschiedener Merkmale
+(traits) generiert. Wir haben im ganzen Buch auch die Makros <code>println!</code> und
+<code>vec!</code> verwendet. All diese Makros werden <em>expandiert</em>, um mehr Code zu
+erzeugen als der Code, den du manuell geschrieben hast.</p>
+<p>Metaprogrammierung ist nützlich, um die Menge an Code zu reduzieren, die du
+schreiben und pflegen musst, was auch eine der Aufgaben von Funktionen ist.
+Makros haben jedoch einige zusätzliche Fähigkeiten, die Funktionen nicht haben.</p>
+<p>Eine Funktionssignatur muss die Anzahl und den Typ der Parameter deklarieren,
+die die Funktion hat. Makros hingegen können eine variable Anzahl von
+Parametern entgegennehmen: Wir können <code>println!(&quot;Hallo&quot;)</code> mit einem Argument
+oder <code>println!(&quot;Hallo {}&quot;, name)</code> mit zwei Argumenten aufrufen. Außerdem werden
+Makros expandiert, bevor der Compiler die Bedeutung des Codes interpretiert,
+sodass ein Makro beispielsweise ein Merkmal auf einen bestimmten Typ
+implementieren kann. Eine Funktion kann das nicht, weil sie zur Laufzeit
+aufgerufen wird und ein Merkmal zur Kompilierzeit implementiert werden muss.</p>
+<p>Der Nachteil des Implementierens eines Makros anstelle einer Funktion besteht
+darin, dass Makrodefinitionen komplexer sind als Funktionsdefinitionen, weil du
+Rust-Code schreibst, der Rust-Code schreibt. Aufgrund dieser Indirektion sind
+Makrodefinitionen im Allgemeinen schwieriger zu lesen, zu verstehen und zu
+pflegen als Funktionsdefinitionen.</p>
+<p>Ein weiterer wichtiger Unterschied zwischen Makros und Funktionen besteht
+darin, dass du Makros definieren oder in den Gültigkeitsbereich bringen musst,
+<em>bevor</em> du sie in einer Datei aufrufst, im Gegensatz zu Funktionen, die du
+überall definieren und überall aufrufen kannst.</p>
+<h3 id="deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung"><a class="header" href="#deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung">Deklarative Makros mit <code>macro_rules!</code> für allgemeine Metaprogrammierung</a></h3>
+<p>Die am weitesten verbreitete Form von Makros in Rust sind <em>deklarative Makros</em>.
+Diese werden manchmal auch als „Beispielmakros“ (macros by example),
+„<code>macro_rules!</code>-Makros“ oder einfach nur „Makros“ bezeichnet. In ihrem Kern
+erlauben deklarative Makros etwas Ähnliches wie einen Rust-Ausdruck zu
+schreiben. Wie in Kapitel 6 besprochen, sind <code>match</code>-Ausdrücke
+Kontrollstrukturen, die einen Ausdruck entgegennehmen, den resultierenden Wert
+des Ausdrucks mit Mustern abgleichen und dann den Code ausführen, der mit dem
+passenden Muster assoziiert ist. Makros vergleichen ebenfalls einen Wert mit
+Mustern, die mit einem bestimmten Code assoziiert sind: In dieser Situation ist
+der Wert der literale Rust-Quellcode, der an das Makro übergeben wird; die
+Muster werden mit der Struktur dieses Quellcodes verglichen; und der mit jedem
+Muster assoziierte Code ersetzt, wenn er passt, den an das Makro übergebenen
+Code. Dies alles geschieht während der Kompilierung.</p>
+<p>Um ein Makro zu definieren, verwendest du das Konstrukt <code>macro_rules!</code>. Lass
+uns untersuchen, wie man <code>macro_rules!</code> benutzt, indem wir uns ansehen, wie das
+Makro <code>vec!</code> definiert wird. Kapitel 8 behandelte, wie wir das Makro <code>vec!</code>
+verwenden können, um einen neuen Vektor mit bestimmten Werten zu erzeugen. Zum
+Beispiel erzeugt das folgende Makro einen neuen Vektor, der drei ganze Zahlen
+enthält:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let v: Vec&lt;u32&gt; = vec![1, 2, 3];
+<span class="boring">}
+</span></code></pre></pre>
+<p>Wir könnten auch das Makro <code>vec!</code> verwenden, um einen Vektor aus zwei ganzen
+Zahlen oder einen Vektor aus fünf Zeichenkettenanteilstypen (string slices) zu
+erstellen. Wir wären nicht in der Lage, eine Funktion zu verwenden, um dasselbe
+zu tun, weil wir die Anzahl oder den Typ der Werte nicht im Voraus kennen
+würden.</p>
+<p>Codeblock 19-28 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>#[macro_export]
+macro_rules! vec {
+    ( $( $x:expr ),* ) =&gt; {
+        {
+            let mut temp_vec = Vec::new();
+            $(
+                temp_vec.push($x);
+            )*
+            temp_vec
+        }
+    };
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-28: Eine vereinfachte Version der
+Makrodefinition <code>vec!</code></span></p>
+<blockquote>
+<p>Hinweis: Die eigentliche Definition des Makros <code>vec!</code> in der
+Standardbibliothek enthält Code zum Vorbelegen der korrekten Speichermenge.
+Dieser Code ist eine Optimierung, die wir hier nicht angeben, um das Beispiel
+einfacher zu machen.</p>
+</blockquote>
+<p>Die Annotation <code>#[macro_export]</code> gibt an, dass dieses Makro immer dann zur
+Verfügung gestellt werden soll, wenn die Kiste (crate), in der das Makro
+definiert ist, in den Gültigkeitsbereich gebracht wird. Ohne diese Annotation
+kann das Makro nicht in den Gültigkeitsbereich gebracht werden.</p>
+<p>Dann beginnen wir die Makrodefinition mit <code>macro_rules!</code> und dem Namen des
+Makros, den wir <em>ohne</em> Ausrufezeichen definieren. Der Name, in diesem Fall
+<code>vec</code>, wird von geschweiften Klammern gefolgt, die den Rumpf der
+Makrodefinition kennzeichnen.</p>
+<p>Die Struktur im <code>vec!</code> -Rumpf ähnelt der Struktur eines <code>match</code>-Ausdrucks. Hier
+haben wir einen Zweig mit dem Muster <code>( $( $x:expr ),* )</code>, gefolgt von <code>=&gt;</code> und
+dem mit diesem Muster assoziierten Codeblock. Wenn das Muster passt, wird der
+zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
+ist, gibt es nur einen gültigen Weg der passen kann; jedes andere Muster führt
+zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.</p>
+<p>Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
+Kapitel 18 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
+und nicht mit Werten abgeglichen werden. Lass uns durchgehen, was die
+Musterteile in Listing 19-28 bedeuten; die vollständige Makromustersyntax
+findest du in <a href="https://doc.rust-lang.org/reference/macros-by-example.html">der Referenz</a>.</p>
+<p>Zunächst umfasst eine Reihe von Klammern das gesamte Muster. Als Nächstes folgt
+ein Dollarzeichen (<code>$</code>), gefolgt von einem Satz von Klammern, der Werte
+erfasst, die mit dem Muster innerhalb der Klammern übereinstimmen, um sie im
+Ersatzcode zu verwenden. Innerhalb von <code>$()</code> befindet sich <code>$x:expr</code>, das zu
+jedem beliebigen Rust-Ausdruck passt und dem Ausdruck den Namen <code>$x</code> gibt.</p>
+<p>Das Komma nach <code>$()</code> gibt an, dass ein literales Komma-Trennzeichen optional
+nach dem Code erscheinen könnte, der dem Code in <code>$()</code> entspricht. Der <code>*</code> gibt
+an, dass das Muster keinmal oder mehrmals zu dem passt, was vor dem <code>*</code> steht.</p>
+<p>Wenn wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, passt das Muster <code>$x</code>
+dreimal zu den drei Ausdrücken <code>1</code>, <code>2</code> und <code>3</code>.</p>
+<p>Betrachten wir nun das Muster im Hauptteil des mit diesem Zweig assoziierten
+Codes: <code>temp_vec.push()</code> innerhalb von <code>$()*</code> wird für jeden Teil erzeugt, der
+keinmal oder mehrmals mit <code>$()</code> im Muster übereinstimmt, je nachdem, wie oft
+das Muster passt. Das <code>$x</code> wird durch jeden passenden Ausdruck ersetzt. Wenn
+wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird der generierte Code, der
+diesen Makroaufruf ersetzt, wie folgt aussehen:</p>
+<pre><code class="language-rust ignore">{
+    let mut temp_vec = Vec::new();
+    temp_vec.push(1);
+    temp_vec.push(2);
+    temp_vec.push(3);
+    temp_vec
+}
+</code></pre>
+<p>Wir haben ein Makro definiert, das eine beliebige Anzahl von Argumenten
+beliebigen Typs aufnehmen und Code erzeugen kann, um einen Vektor zu erstellen,
+der die angegebenen Elemente enthält.</p>
+<p>Es gibt einige seltsame Randfälle mit <code>macro_rules!</code>. In Zukunft wird Rust eine
+zweite Art deklarativer Makros haben, die auf ähnliche Weise funktionieren,
+aber einige dieser Randfälle beheben. Nach diesem Update wird <code>macro_rules!</code>
+effektiv veraltet sein. Vor diesem Hintergrund und angesichts der Tatsache,
+dass die meisten Rust-Programmierer Makros eher <em>verwenden</em> als Makros
+<em>schreiben</em> werden, werden wir nicht weiter auf <code>macro_rules!</code> eingehen. Um
+mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
+Online-Dokumentation oder andere Ressourcen, wie zum Beispiel <a href="https://danielkeep.github.io/tlborm/book/index.html">„The Little Book
+of Rust Macros“</a> (engl. „Das kleine Buch der Rust-Makros“).</p>
+<h3 id="prozedurale-makros-zur-code-generierung-aus-attributen"><a class="header" href="#prozedurale-makros-zur-code-generierung-aus-attributen">Prozedurale Makros zur Code-Generierung aus Attributen</a></h3>
+<p>Die zweite Form von Makros sind <em>prozedurale Makros</em>, die sich eher wie
+Funktionen verhalten (und eine Art Prozedur sind). Prozedurale Makros
+akzeptieren etwas Code als Eingabe, operieren mit diesem Code und erzeugen
+etwas Code als Ausgabe, anstatt gegen Muster abzugleichen und den Code durch
+anderen Code zu ersetzen, wie es deklarative Makros tun.</p>
+<p>Die drei Arten von prozeduralen Makros (benutzerdefinierte derive-Makros,
+Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.</p>
+<p>Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
+eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
+komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
+werden. Das Verwenden von prozeduralen Makros sieht aus wie der Code in
+Codeblock 19-29, wobei <code>some_attribute</code> ein Platzhalter für die Verwendung
+eines bestimmten Makros ist.</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><code class="language-rust ignore">use proc_macro;
+
+#[some_attribute]
+pub fn some_name(input: TokenStream) -&gt; TokenStream {
+}
+</code></pre>
+<p><span class="caption">Codeblock 19-29: Beispiel für die Verwendung eines
+prozeduralen Makros</span></p>
+<p>Die Funktion, die ein prozedurales Makro definiert, nimmt einen <code>TokenStream</code>
+als Eingabe und erzeugt einen <code>TokenStream</code> als Ausgabe. Der Typ <code>TokenStream</code>
+wird durch die Kiste <code>proc_macro</code> definiert, die in Rust enthalten ist und eine
+Folge von Token darstellt. Dies ist der Kern des Makros: Der Quellcode, mit dem
+das Makro arbeitet, bildet die Eingabe <code>TokenStream</code>, und der Code, den das
+Makro erzeugt, ist die Ausgabe <code>TokenStream</code>. Die Funktion hat auch ein
+Attribut, das angibt, welche Art prozedurales Makro wir erstellen. Wir können
+mehrere Arten prozeduraler Makros in derselben Kiste haben.</p>
+<p>Schauen wir uns die verschiedenen Arten prozeduraler Makros an. Wir beginnen
+mit einem benutzerdefinierten derive-Makro und erklären dann die kleinen
+Unterschiede, in denen sich die anderen Formen unterscheiden.</p>
+<h3 id="wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt"><a class="header" href="#wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt">Wie man ein benutzerdefiniertes Makro mit <code>derive</code> schreibt</a></h3>
+<p>Lass uns eine Kiste namens <code>hello_macro</code> erstellen, die ein Merkmal namens
+<code>HelloMacro</code> mit einer assoziierten Funktion namens <code>hello_macro</code> definiert.
+Anstatt unsere Kisten-Benutzer dazu zu bringen, das Merkmal <code>HelloMacro</code> für
+jeden ihrer Typen zu implementieren, werden wir ein prozedurales Makro zur
+Verfügung stellen, damit die Benutzer ihren Typ mit <code>#[derive(HelloMacro)]</code>
+annotieren können, um eine Standardimplementierung der Funktion <code>hello_macro</code>
+zu erhalten. Die Standardimplementierung gibt <code>Hallo Makro! Mein Name ist TypeName!</code> aus, wobei <code>TypeName</code> der Name des Typs ist, auf dem dieses Merkmal
+definiert wurde. Mit anderen Worten, wir werden eine Kiste schreiben, die es
+einem anderen Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock
+19-30 zu schreiben.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile">use hello_macro::HelloMacro;
+use hello_macro_derive::HelloMacro;
+
+#[derive(HelloMacro)]
+struct Pancakes;
+
+fn main() {
+    Pancakes::hello_macro();
+}
+</code></pre>
+<p><span class="caption">Codeblock 19-30: Code, den ein Benutzer unserer Kiste
+schreiben kann, wenn er unser prozedurales Makro benutzt</span></p>
+<p>Dieser Code gibt <code>Hallo Makro! Mein Name ist Pancakes!</code> aus, wenn wir fertig
+sind. Der erste Schritt ist das Erstellen einer neuen Bibliothekskiste (library
+crate), etwa so:</p>
+<pre><code class="language-console">$ cargo new hello_macro --lib
+</code></pre>
+<p>Als Nächstes definieren wir das Merkmal <code>HelloMacro</code> und die damit assoziierte
+Funktion:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait HelloMacro {
+    fn hello_macro();
+}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Wir haben ein Merkmal und seine Funktion. An diesem Punkt könnte unser
+Kistenbenutzer das Merkmal so implementieren, dass die gewünschte
+Funktionalität erreicht wird:</p>
+<pre><code class="language-rust ignore">use hello_macro::HelloMacro;
+
+struct Pancakes;
+
+impl HelloMacro for Pancakes {
+    fn hello_macro() {
+        println!(&quot;Hallo Makro! Mein Name ist Pancakes!&quot;);
+    }
+}
+
+fn main() {
+    Pancakes::hello_macro();
+}
+</code></pre>
+<p>Allerdings müssten sie den Implementierungsblock für jeden Typ, den sie mit
+<code>hello_macro</code> verwenden wollten, schreiben; wir wollen ihnen diese Arbeit
+ersparen.</p>
+<p>Außerdem können wir die Funktion <code>hello_macro</code> noch nicht mit einer
+Standardimplementierung versehen, die den Namen des Typs ausgibt, auf dem das
+Merkmal implementiert ist: Rust hat keine Reflektionsfähigkeiten, sodass es den
+Namen des Typs zur Laufzeit nicht nachschlagen kann. Wir benötigen ein Makro,
+um zur Kompilierzeit Code zu generieren.</p>
+<p>Der nächste Schritt ist das Definieren des prozeduralen Makros. Zum Zeitpunkt
+der Abfassung dieses Dokuments müssen sich die prozeduralen Makros in einer
+eigenen Kiste befinden. Irgendwann könnte diese Einschränkung aufgehoben
+werden. Die Konvention für die Strukturierung von Kisten und Makrokisten lautet
+wie folgt: Für eine Kiste mit dem Namen <code>foo</code> wird eine prozedurale Makrokiste
+mit einem benutzerdefinierten derive-Makro als <code>foo_derive</code> bezeichnet.
+Beginnen wir eine neue Kiste mit dem Namen <code>hello_macro_derive</code> innerhalb
+unseres <code>hello_macro</code>-Projekts:</p>
+<pre><code class="language-console">$ cargo new hello_macro_derive --lib
+</code></pre>
+<p>Unsere beiden Kisten sind eng miteinander verwandt, daher erstellen wir die
+prozedurale Makrokiste innerhalb des Verzeichnisses unserer Kiste
+<code>hello_macro</code>. Wenn wir die Merkmalsdefinition in <code>hello_macro</code> ändern, müssen
+wir auch die Implementierung des prozeduralen Makros in <code>hello_macro_derive</code>
+ändern. Die beiden Kisten müssen getrennt veröffentlicht werden und
+Programmierer, die diese Kisten verwenden, müssen beide als Abhängigkeiten
+hinzufügen und beide in den Gültigkeitsbereich bringen. Wir könnten stattdessen
+die Kiste <code>hello_macro</code> als Abhängigkeit <code>hello_macro_derive</code> verwenden lassen
+und den prozeduralen Makrocode erneut exportieren. Wie auch immer, die Art und
+Weise, wie wir das Projekt strukturiert haben, ermöglicht es den
+Programmierern, <code>hello_macro</code>  zu benutzen, selbst wenn sie die
+<code>derive</code>-Funktionalität nicht wollen.</p>
+<p>Wir müssen die Kiste <code>hello_macro_derive</code> als prozedurale Makro-Kiste
+deklarieren. Wie du gleich sehen wirst, benötigen wir auch Funktionalität von
+den Kisten <code>syn</code> und <code>quote</code>, also müssen wir sie als Abhängigkeiten angeben.
+Füge das Folgende zur Datei <em>Cargo.toml</em> für <code>hello_macro_derive</code> hinzu:</p>
+<p><span class="filename">Dateiname: hello_macro_derive/Cargo.toml</span></p>
+<pre><code class="language-toml">[lib]
+proc-macro = true
+
+[dependencies]
+syn = &quot;1.0&quot;
+quote = &quot;1.0&quot;
+</code></pre>
+<p>Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code
+in Codeblock 19-31 in deine Datei <em>src/lib.rs</em> der Kiste <code>hello_macro_derive</code>.
+Beachte, dass dieser Code nicht kompiliert werden kann, bis wir eine Definition
+für die Funktion <code>impl_hello_macro</code> hinzufügen.</p>
+<p><span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span></p>
+<pre><code class="language-rust ignore does_not_compile">extern crate proc_macro;
+
+use proc_macro::TokenStream;
+use quote::quote;
+use syn;
+
+#[proc_macro_derive(HelloMacro)]
+pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
+    // Konstruiere eine Repräsentation des Rust-Codes als Syntaxbaum,
+    // den wir manipulieren können
+    let ast = syn::parse(input).unwrap();
+
+    // Baue die Merkmal-Implementierung
+    impl_hello_macro(&amp;ast)
+}
+</code></pre>
+<p><span class="caption">Codeblock 19-31: Code, den die meisten prozeduralen
+Makrokisten benötigen, um Rust-Code zu verarbeiten</span></p>
+<p>Beachte, dass wir den Code aufgeteilt haben in die Funktion
+<code>hello_macro_derive</code>, die für das Parsen des <code>TokenStream</code> verantwortlich ist,
+und die Funktion <code>impl_hello_macro</code>, die für die Transformation des Syntaxbaums
+verantwortlich ist: Dies macht das Schreiben eines prozeduralen Makros
+bequemer. Der Code in der äußeren Funktion (in diesem Fall
+<code>hello_macro_derive</code>) wird für fast jede prozedurale Makro-Kiste, die du siehst
+oder erstellst, derselbe sein. Der Code, den du im Rumpf der inneren Funktion
+(in diesem Fall <code>impl_hello_macro</code>) angibst, wird je nach Zweck deines
+prozeduralen Makros unterschiedlich sein.</p>
+<p>Wir haben drei neue Kisten eingeführt: <code>proc_macro</code>, <a href="https://crates.io/crates/syn"><code>syn</code></a> und
+<a href="https://crates.io/crates/quote"><code>quote</code></a>. Die Kiste <code>proc_macro</code> kommt mit Rust, sodass wir das
+nicht zu den Abhängigkeiten in <em>Cargo.toml</em> hinzufügen mussten. Die Kiste
+<code>proc_macro</code> ist die API des Compilers, die es uns erlaubt, den Rust-Code aus
+unserem Code zu lesen und zu manipulieren.</p>
+<p>Die Kiste <code>syn</code> parst den Rust-Code von einer Zeichenkette in eine
+Datenstruktur, auf der wir Operationen durchführen können. Die Kiste <code>quote</code>
+wandelt <code>syn</code>-Datenstrukturen wieder in Rust-Code um. Diese Kisten machen es
+viel einfacher, jede Art von Rust-Code zu parsen, den wir vielleicht
+verarbeiten wollen: Einen vollständigen Parser für Rust-Code zu schreiben, ist
+keine einfache Aufgabe.</p>
+<p>Die Funktion <code>hello_macro_derive</code> wird aufgerufen, wenn ein Benutzer unserer
+Bibliothek <code>#[derive(HelloMacro)]</code> an einen Typ spezifiziert. Dies ist möglich,
+weil wir die Funktion <code>hello_macro_derive</code> hier mit <code>proc_macro_derive</code>
+annotiert und den Namen <code>HelloMacro</code> angegeben haben, der unserem Merkmalsnamen
+entspricht; dies ist die Konvention, der die meisten prozeduralen Makros
+folgen.</p>
+<p>Die Funktion <code>hello_macro_derive</code> wandelt zunächst <code>input</code> aus einem
+<code>TokenStream</code> in eine Datenstruktur um, die wir dann interpretieren und
+Operationen darauf ausführen können. Hier kommt <code>syn</code> ins Spiel. Die Funktion
+<code>parse</code> in <code>syn</code> nimmt einen <code>TokenStream</code> und gibt eine <code>DeriveInput</code>-Struktur
+zurück, die den geparsten Rust-Code repräsentiert. Codeblock 19-32 zeigt die
+relevanten Teile der Struktur <code>DeriveInput</code>, die wir vom Parsen der
+Zeichenkette <code>struct Pancakes;</code> erhalten:</p>
+<pre><code class="language-rust ignore">DeriveInput {
+    // --abschneiden--
+
+    ident: Ident {
+        ident: &quot;Pancakes&quot;,
+        span: #0 bytes(95..103)
+    },
+    data: Struct(
+        DataStruct {
+            struct_token: Struct,
+            fields: Unit,
+            semi_token: Some(
+                Semi
+            )
+        }
+    )
+}
+</code></pre>
+<p><span class="caption">Codeblock 19-32: Die <code>DeriveInput</code>-Instanz erhalten wir
+beim Parsen des Codes, den das Attribut des Makros in Codeblock 19-30
+hat</span></p>
+<p>Die Felder dieser Struktur zeigen, dass der Rust-Code, den wir geparst haben,
+eine Einheitsstruktur (unit struct) mit dem <code>ident</code> (identifier, engl.
+Bezeichner, d.h. dem Namen) von <code>Pancakes</code> ist. Es gibt weitere Felder in
+dieser Struktur zur Beschreibung aller Arten von Rust-Code; weitere
+Informationen findest du in der <a href="https://docs.rs/syn/1.0/syn/struct.DeriveInput.html"><code>syn</code>-Dokumentation für
+<code>DeriveInput</code></a>.</p>
+<p>Bald werden wir die Funktion <code>impl_hello_macro</code> definieren, wo wir den neuen
+Rust-Code bauen werden, den wir einbinden wollen. Aber bevor wir das tun,
+beachte, dass die Ausgabe für unser derive-Makro ebenfalls ein <code>TokenStream</code>
+ist. Der zurückgegebene <code>TokenStream</code> wird dem Code hinzugefügt, den unsere
+Kisten-Benutzer schreiben. Wenn sie also ihre Kiste kompilieren, erhalten sie
+die zusätzliche Funktionalität, die wir im modifizierten <code>TokenStream</code> zur
+Verfügung stellen.</p>
+<p>Du hast vielleicht bemerkt, dass wir <code>unwrap</code> aufrufen, um die Funktion
+<code>hello_macro_derive</code> abstürzen zu lassen, wenn der Aufruf der Funktion
+<code>syn::parse</code> hier fehlschlägt. Es ist notwendig, dass unser prozedurales Makro
+bei Fehlern abstürzt, weil <code>proc_macro_derive</code>-Funktionen einen <code>TokenStream</code>
+zurückgeben müssen, kein <code>Result</code>, um mit der prozeduralen Makro-API konform zu
+sein. Wir haben dieses Beispiel vereinfacht, indem wir <code>unwrap</code> verwendet
+haben; in Produktionscode solltest du spezifischere Fehlermeldungen darüber
+angeben, was schief gelaufen ist, indem du <code>panic!</code> oder <code>expect</code> verwendest.</p>
+<p>Da wir nun den Code haben, um den annotierten Rust-Code aus einem <code>TokenStream</code>
+in eine <code>DeriveInput</code>-Instanz zu verwandeln, lass uns den Code generieren, der
+das Merkmal <code>HelloMacro</code> auf dem annotierten Typ implementiert, wie in
+Codeblock 19-33 gezeigt.</p>
+<p><span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span></p>
+<pre><code class="language-rust ignore"><span class="boring">extern crate proc_macro;
+</span><span class="boring">
+</span><span class="boring">use proc_macro::TokenStream;
+</span><span class="boring">use quote::quote;
+</span><span class="boring">use syn;
+</span><span class="boring">
+</span><span class="boring">#[proc_macro_derive(HelloMacro)]
+</span><span class="boring">pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
+</span><span class="boring">    // Konstruiere eine Repräsentation des Rust-Codes als Syntaxbaum,
+</span><span class="boring">    // den wir manipulieren können
+</span><span class="boring">    let ast = syn::parse(input).unwrap();
+</span><span class="boring">
+</span><span class="boring">    // Baue die Merkmal-Implementierung
+</span><span class="boring">    impl_hello_macro(&amp;ast)
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn impl_hello_macro(ast: &amp;syn::DeriveInput) -&gt; TokenStream {
+    let name = &amp;ast.ident;
+    let gen = quote! {
+        impl HelloMacro for #name {
+            fn hello_macro() {
+                println!(&quot;Hallo Makro! Mein Name ist {}!&quot;, stringify!(#name));
+            }
+        }
+    };
+    gen.into()
+}
+</code></pre>
+<p><span class="caption">Codeblock 19-33: Implementierung des Merkmals
+<code>HelloMacro</code> unter Verwendung des geparsten Rust-Codes</span></p>
+<p>Wir erhalten eine <code>Ident</code>-Strukturinstanz, die den Namen (Bezeichner) des
+annotierten Typs enthält, indem wir <code>ast.ident</code> verwenden. Die Struktur in
+Codeblock 19-32 zeigt, dass, wenn wir die Funktion <code>impl_hello_macro</code> auf den
+Code in Codeblock 19-30 anwenden, das erhaltene <code>ident</code> ein Feld <code>ident</code> mit
+dem Wert <code>&quot;Pancakes&quot;</code> enthält. So wird die Variable <code>name</code> in Codeblock 19-33
+eine Instanz der Struktur <code>Ident</code> enthalten, die die Zeichenkette <code>&quot;Pancakes&quot;</code>
+ausgibt, der Name der Struktur in Codeblock 19-30.</p>
+<p>Mit dem Makro <code>quote!</code> können wir den Rust-Code definieren, den wir zurückgeben
+wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
+Ausführung des <code>quote!</code>-Makros, also müssen wir es in einen <code>TokenStream</code>
+konvertieren. Wir tun dies, indem wir die <code>into</code>-Methode aufrufen, die diese
+Zwischendarstellung konsumiert und einen Wert des erforderlichen Typs
+<code>TokenStream</code> zurückgibt.</p>
+<p>Das Makro <code>quote!</code> bietet auch einige sehr coole Vorlage-Mechanismen: Wir
+können <code>#name</code> eingeben und <code>quote!</code> wird es durch den Wert in der Variablen
+<code>name</code> ersetzen. Du kannst sogar einige Wiederholungen machen, ähnlich wie
+normale Makros funktionieren. Schaue dir die <a href="https://docs.rs/quote">Dokumentation der Kiste
+<code>quote!</code></a> für eine gründliche Einführung an.</p>
+<p>Wir wollen, dass unser prozedurales Makro eine Implementierung unseres Merkmals
+<code>HelloMacro</code> für den Typ, den der Benutzer annotiert hat, erzeugt, die wir mit
+<code>#name</code> erhalten können. Die Merkmalssimplementierung hat eine Funktion
+<code>hello_macro</code>, deren Rumpf die Funktionalität enthält, die wir zur Verfügung
+stellen wollen: Ausgeben von <code>Hallo Makro! Mein Name ist</code> und dann der Name des
+annotierten Typs.</p>
+<p>Das hier verwendete Makro <code>stringify!</code> ist in Rust eingebaut. Es nimmt einen
+Rust-Ausdruck, z.B. <code>1 + 2</code>, und verwandelt diesen zur Kompilierzeit in ein
+Zeichenketten-Literal, z.B. <code>&quot;1 + 2&quot;</code>. Dies unterscheidet sich von <code>format!</code>
+oder <code>println!</code>; Makros, die den Ausdruck auswerten und dann das Ergebnis in
+einen <code>String</code> umwandeln. Es besteht die Möglichkeit, dass die Eingabe <code>#Name</code>
+ein Ausdruck ist, der literal auszugeben ist, also verwenden wir <code>stringify!</code>.
+Die Verwendung von <code>stringify!</code> erspart zudem eine Speicherzuweisung, indem
+<code>#name</code> zur Kompilierzeit in ein Zeichenketten-Literal umgewandelt wird.</p>
+<p>An diesem Punkt sollte <code>cargo build</code> sowohl bei <code>hello_macro</code> als auch bei
+<code>hello_macro_derive</code> erfolgreich durchlaufen. Schließen wir diese Kisten an den
+Code in Codeblock 19-30 an, um das prozedurale Makro in Aktion zu sehen!
+Erstelle ein neues Binärprojekt in deinem <em>projects</em>-Verzeichnis durch Aufrufen
+von <code>cargo new pancakes</code>. </p>
+<p>Wir müssen <code>hello_macro</code> und <code>hello_macro_derive</code> als Abhängigkeiten in der
+Datei <em>Cargo.toml</em> der Kiste <code>pancakes</code> hinzufügen. Wenn du deine Versionen von
+<code>hello_macro</code> und <code>hello_macro_derive</code> in <a href="https://crates.io/">crates.io</a>
+veröffentlichst, wären das reguläre Abhängigkeiten; wenn nicht, kannst du sie
+wie folgt als <code>path</code>-Abhängigkeiten angeben:</p>
+<pre><code class="language-toml">[dependencies]
+hello_macro = { path = &quot;../hello_macro&quot; }
+hello_macro_derive = { path = &quot;../hello_macro/hello_macro_derive&quot; }
+</code></pre>
+<p>Gib den Code in Codeblock 19-30 in <em>src/main.rs</em> ein und rufe <code>cargo run</code> auf:
+Es sollte <code>Hallo Makro! Mein Name ist Pancakes!</code> ausgeben. Die Implementierung
+des Merkmals <code>HelloMacro</code> aus dem prozeduralen Makro wurde eingefügt, ohne dass
+die Kiste <code>pancakes</code> es implementieren musste; <code>#[derive(HelloMacro)]</code> fügte
+die Merkmalsimplementierung hinzu.</p>
+<p>Als Nächstes wollen wir untersuchen, inwiefern sich die anderen Arten
+prozeduraler Makros von den benutzerdefinierten derive-Makros unterscheiden.</p>
+<h3 id="attribut-ähnliche-makros"><a class="header" href="#attribut-ähnliche-makros">Attribut-ähnliche Makros</a></h3>
+<p>Attribut-ähnliche Makros ähneln den benutzerdefinierten derive-Makros, aber
+anstatt Code für das <code>derive</code>-Attribut zu generieren, erlauben sie dir, neue
+Attribute zu erstellen. Sie sind auch flexibler: <code>derive</code> funktioniert nur bei
+Strukturen und Aufzählungen; Attribute können auch auf andere Elemente, z.B.
+Funktionen, angewendet werden. Hier ist ein Beispiel für die Verwendung eines
+Attribut-ähnlichen Makros: Nehmen wir an, du hast ein Attribut namens <code>route</code>,
+das Funktionen annotiert, wenn du ein Webapplikations-Framework verwendest:</p>
+<pre><code class="language-rust ignore">#[route(GET, &quot;/&quot;)]
+fn index() {
+</code></pre>
+<p>Dieses Attribut <code>#[route]</code> würde durch das Framework als prozedurales Makro
+definiert werden. Die Signatur der Makrodefinitionsfunktion würde wie folgt
+aussehen:</p>
+<pre><code class="language-rust ignore">#[proc_macro_attribute]
+pub fn route(attr: TokenStream, item: TokenStream) -&gt; TokenStream {
+</code></pre>
+<p>Hier haben wir zwei Parameter vom Typ <code>TokenStream</code>. Der erste ist für die
+Inhalte <code>GET, &quot;/&quot;</code> des Attributs. Der zweite ist für den Rumpf des Elements, an
+den das Attribut angehängt ist: In diesem Fall <code>fn index() {}</code> und der Rest des
+Funktionsrumpfs.</p>
+<p>Abgesehen davon funktionieren Attribut-ähnliche Makros auf die gleiche Weise
+wie benutzerdefinierte derive-Makros: Sie erstellen eine Kiste mit dem
+Kistentyp <code>proc-macro</code> und implementieren eine Funktion, die den gewünschten
+Code generiert!</p>
+<h3 id="funktions-ähnliche-makros"><a class="header" href="#funktions-ähnliche-makros">Funktions-ähnliche Makros</a></h3>
+<p>Funktions-ähnliche Makros definieren Makros, die wie Funktionsaufrufe aussehen.
+Ähnlich wie <code>macro_rules!</code>-Makros sind sie flexibler als Funktionen; sie können
+zum Beispiel eine unbekannte Anzahl von Argumenten aufnehmen. Makros können
+jedoch nur mit der <code>match</code>-ähnlichen Syntax definiert werden, die wir im
+Abschnitt <a href="#deklarative-makros-mit-macro_rules-f%C3%BCr-allgemeine-metaprogrammierung">„Deklarative Makros mit <code>macro_rules!</code> für allgemeine
+Metaprogrammierung“</a> besprochen haben. Funktions-ähnliche Makros nehmen
+einen <code>TokenStream</code>-Parameter und ihre Definition manipuliert diesen
+<code>TokenStream</code> unter Verwendung von Rust-Code, wie es die beiden anderen Arten
+prozeduraler Makros tun. Ein Beispiel für ein Funktions-ähnliches Makro ist ein
+Makro <code>sql!</code>, das auf diese Weise aufgerufen werden könnte:</p>
+<pre><code class="language-rust ignore">let sql = sql!(SELECT * FROM posts WHERE id=1);
+</code></pre>
+<p>Dieses Makro würde die darin enthaltene SQL-Anweisung parsen und prüfen, ob sie
+syntaktisch korrekt ist, was eine viel komplexere Verarbeitung ist, als es ein
+<code>macro_rules!</code>-Makro tun kann. Das Makro <code>sql!</code> würde wie folgt definiert
+werden:</p>
+<pre><code class="language-rust ignore">#[proc_macro]
+pub fn sql(input: TokenStream) -&gt; TokenStream {
+</code></pre>
+<p>Diese Definition ähnelt der Signatur des benutzerdefinierten derive-Makros: Wir
+erhalten die Token, die sich innerhalb der Klammern befinden, und geben den
+Code zurück, den wir generieren wollen.</p>
+<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
+<p>Puh! Jetzt hast du einige Rust-Funktionalitäten in deinem Werkzeugkasten, die
+du nicht oft verwenden wirst, aber du wirst wissen, dass sie unter ganz
+bestimmten Umständen verfügbar sind. Wir haben mehrere komplexe Themen
+eingeführt, sodass du diese Konzepte und Syntax erkennen kannst, wenn du ihnen
+in Vorschlägen für Fehlermeldungen oder im Code anderer Leute begegnest.
+Verwende dieses Kapitel als Referenz, um Lösungen zu finden.</p>
+<p>Als Nächstes werden wir alles, was wir im Laufe des Buches besprochen haben, in
+die Praxis umsetzen und ein weiteres Projekt durchführen!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                        
+                            <a rel="prev" href="ch19-05-advanced-functions-and-closures.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+                        
+
+                        
+                            <a rel="next" href="ch20-00-final-project-a-web-server.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+                        
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                
+                    <a rel="prev" href="ch19-05-advanced-functions-and-closures.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+                
+
+                
+                    <a rel="next" href="ch20-00-final-project-a-web-server.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+                
+            </nav>
+
+        </div>
+
+        
+
+        
+
+        
+
+        
+        <script type="text/javascript">
+            window.playground_copyable = true;
+        </script>
+        
+
+        
+
+        
+
+        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
+        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
+        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+
+        <!-- Custom JS scripts -->
+        
+        <script type="text/javascript" src="theme/ferris.js"></script>
+        
+
+        
+
+    </body>
+</html>
