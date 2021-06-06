@@ -83,7 +83,7 @@ Codeblock 11-2 zu sehen ist.
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.57s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_works ... ok
@@ -154,7 +154,7 @@ anstelle von `it_works`:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.59s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::exploration ... ok
@@ -205,7 +205,7 @@ Codeblock 11-4 aussehen, was zeigt, dass unser Test `exploration` bestanden und
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.72s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::another ... FAILED
@@ -348,7 +348,7 @@ also sollte unser Test erfolgreich sein. Lass es uns herausfinden!
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running target/debug/deps/rectangle-6584c4561e48942e
+     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 1 test
 test tests::larger_can_hold_smaller ... ok
@@ -424,7 +424,7 @@ Rückgabewert `false` hat:
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running target/debug/deps/rectangle-6584c4561e48942e
+     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... ok
@@ -499,7 +499,7 @@ Das Ausführen der Tests ergibt nun Folgendes:
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running target/debug/deps/rectangle-6584c4561e48942e
+     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... FAILED
@@ -537,7 +537,7 @@ Ungleichheit. Sie geben auch die beiden Werte aus, wenn die Zusicherung
 fehlschlägt, was es einfacher macht zu erkennen, *warum* der Test
 fehlgeschlagen ist; umgekehrt zeigt das Makro `assert!` nur an, dass der
 Ausdruck `==` den Wert `false` ergeben hat, nicht die Werte, die zum falschen
-Testergebnis führen.
+Testergebnis geführt haben.
 
 In Codeblock 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
 Parameter `2` addiert und das Ergebnis zurückgibt. Dann testen wir diese
@@ -570,7 +570,7 @@ Lass uns prüfen, ob sie den Test besteht!
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... ok
@@ -615,7 +615,7 @@ Führe die Tests erneut aus:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... FAILED
@@ -751,7 +751,7 @@ Das Ausführen dieses Tests führt zu folgender Ausgabe:
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
-     Running target/debug/deps/greeter-170b942eb5bf5e3a
+     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -806,7 +806,7 @@ Fehlermeldung:
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.93s
-     Running target/debug/deps/greeter-170b942eb5bf5e3a
+     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -888,7 +888,7 @@ wenn dieser Test bestanden ist:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 ... ok
@@ -940,7 +940,7 @@ Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 ... FAILED
@@ -1062,7 +1062,7 @@ Wenn wir diesmal den `should_panic`-Test ausführen, wird er fehlschlagen:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running target/debug/deps/guessing_game-57d70c3acb738f4d
+     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 ... FAILED

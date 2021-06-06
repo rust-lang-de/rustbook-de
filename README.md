@@ -27,6 +27,6 @@ Vorschläge und Korrekturen oder gar Übersetzungen sind natürlich gerne gewün
 Falls du helfen möchtest, dann am besten via Pull Request oder Issue.
 
 Das Buch wurde mittlerweile komplett übersetzt und enthält alle Änderungen des
-englischen Originals bis einschließlich zum **05.03.2021**.
+englischen Originals bis einschließlich zum **09.05.2021**.
 
 Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).

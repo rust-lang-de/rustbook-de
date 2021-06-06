@@ -376,7 +376,7 @@ eine Warnung:
 ```console
 $ cargo build
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-warning: unused `std::result::Result` that must be used
+warning: unused `Result` that must be used
   --> src/main.rs:10:5
    |
 10 |     io::stdin().read_line(&mut guess);
@@ -908,12 +908,14 @@ Zeichen enthalten kann, muss der Benutzer die <span
 class="keystroke">Eingabetaste</span> drücken, um `read_line`
 zufriedenzustellen. Wenn der Benutzer die <span
 class="keystroke">Eingabetaste</span> drückt, wird der Zeichenkette ein
-Zeilenumbruchszeichen hinzugefügt. Wenn der Benutzer z.B. <span
-class="keystroke">5</span> eingibt und die <span
+Zeilenumbruchszeichen (newline character) hinzugefügt. Wenn der Benutzer z.B.
+<span class="keystroke">5</span> eingibt und die <span
 class="keystroke">Eingabetaste</span> drückt, sieht `guess` wie folgt aus:
 `5\n`. Das `\n` steht für „Zeilenumbruch“ (newline), das Ergebnis des Drückens
-der <span class="keystroke">Eingabetaste</span>. Die `trim`-Methode entfernt
-`\n`, was nur `5` ergibt.
+der <span class="keystroke">Eingabetaste</span>. (Unter Windows ergibt das
+Drücken der <span class="keystroke">Eingabetaste</span> einen Wagenrücklauf
+(carriage return) und einen Zeilenumbruch (newline): `\r\n`) Die `trim`-Methode
+entfernt `\n` und `\r\n`, was nur `5` ergibt.
 
 Die [`parse`-Methode für Zeichenketten][parse] zerlegt eine Zeichenkette in
 eine Art Zahl. Da diese Methode eine Vielzahl von Zahlentypen parsen kann,

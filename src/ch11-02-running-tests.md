@@ -105,7 +105,7 @@ sehen:
 $ cargo test
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running target/debug/deps/silly_function-160869f38cff9166
+     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -149,7 +149,7 @@ ausführen, sehen wir folgende Ausgabe:
 $ cargo test -- --show-output
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running target/debug/deps/silly_function-160869f38cff9166
+     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -230,7 +230,7 @@ Tests parallel laufen:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 3 tests
 test tests::add_three_and_two ... ok
@@ -255,7 +255,7 @@ um nur diesen Test auszuführen:
 $ cargo test one_hundred
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.69s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::one_hundred ... ok
@@ -283,7 +283,7 @@ Tests `add` enthalten, können wir diese beiden Tests ausführen, indem wir
 $ cargo test add
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::add_three_and_two ... ok
@@ -328,7 +328,7 @@ aber `expensive_test` nicht:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test expensive_test ... ignored
@@ -351,7 +351,7 @@ angeben:
 $ cargo test -- --ignored
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test expensive_test ... ok
