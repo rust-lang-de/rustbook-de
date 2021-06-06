@@ -151,14 +151,14 @@ Dateien in diesem Verzeichnis nur dann, wenn wir `cargo test` ausführen. Führe
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.73s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::internal ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
-     Running target/debug/deps/integration_test-82e7799c1bc62298
+     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
 
 running 1 test
 test it_adds_two ... ok
@@ -200,7 +200,7 @@ Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden bei
 $ cargo test --test integration_test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.64s
-     Running target/debug/deps/integration_test-82e7799c1bc62298
+     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
 
 running 1 test
 test it_adds_two ... ok
@@ -252,20 +252,20 @@ aufgerufen haben:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.89s
-     Running target/debug/deps/adder-92948b65e88960b4
+     Running unittests (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::internal ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
-     Running target/debug/deps/common-7064e1b6d2e271be
+     Running unittests (target/debug/deps/common-7064e1b6d2e271be)
 
 running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
-     Running target/debug/deps/integration_test-82e7799c1bc62298
+     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
 
 running 1 test
 test it_adds_two ... ok

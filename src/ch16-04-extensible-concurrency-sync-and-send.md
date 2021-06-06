@@ -38,10 +38,11 @@ Roh-Zeigern, die wir in Kapitel 19 besprechen werden.
 
 Das Markierungsmerkmal `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
-jeder Typ `T` ist `Sync`, wenn `&T` (eine Referenz auf `T`) `Send` ist, was
-bedeutet, dass die Referenz sicher an einen anderen Strang gesendet werden
-kann. Ähnlich wie bei `Send` sind primitive Typen `Sync` und Typen, die
-vollständig aus Typen bestehen, die `Sync` sind, sind ebenfalls `Sync`.
+jeder Typ `T` ist `Sync`, wenn `&T` (eine unveränderliche Referenz auf `T`)
+`Send` ist, was bedeutet, dass die Referenz sicher an einen anderen Strang
+gesendet werden kann. Ähnlich wie bei `Send` sind primitive Typen `Sync` und
+Typen, die vollständig aus Typen bestehen, die `Sync` sind, sind ebenfalls
+`Sync`.
 
 Der intelligente Zeiger `Rc<T>` ist nicht `Sync`, aus den gleichen Gründen, aus
 denen er nicht `Send` ist. Der Typ `RefCell<T>` (über den wir in Kapitel 15

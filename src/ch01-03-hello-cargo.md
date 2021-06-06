@@ -245,7 +245,7 @@ folgenden Befehle verwenden, um den Code mit Git auszuchecken, in das
 Verzeichnis dieses Projekts zu wechseln und zu bauen:
 
 ```console
-$ git clone someurl.com/someproject
+$ git clone example.org/someproject
 $ cd someproject
 $ cargo build
 ```

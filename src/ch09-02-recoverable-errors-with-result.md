@@ -76,12 +76,12 @@ error[E0308]: mismatched types
  --> src/main.rs:4:18
   |
 4 |     let f: u32 = File::open("hallo.txt");
-  |            ---   ^^^^^^^^^^^^^^^^^^^^^^^ expected `u32`, found enum `std::result::Result`
+  |            ---   ^^^^^^^^^^^^^^^^^^^^^^^ expected `u32`, found enum `Result`
   |            |
   |            expected due to this
   |
   = note: expected type `u32`
-             found enum `std::result::Result<File, std::io::Error>`
+             found enum `Result<File, std::io::Error>`
 
 error: aborting due to previous error
 
