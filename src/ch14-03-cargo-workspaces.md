@@ -190,7 +190,7 @@ $ cargo run -p adder
 Hello, world! 10 plus one is 11!
 ```
 
-Dadurch wird der Programmcode in *adder/src/mein.rs* ausgeführt, der von der
+Dadurch wird der Programmcode in *adder/src/main.rs* ausgeführt, der von der
 Kiste `add-one` abhängt.
 
 #### Abhängigkeiten zu externen Paketen in einem Arbeitsbereich

@@ -99,7 +99,7 @@ Module *Geschwister* voneinander sind, was bedeutet, dass sie im selben Modul
 definiert sind (`hosting` und `serving` sind innerhalb von `front_of_house`
 definiert). Um die Familienmetapher fortzusetzen: Wenn Modul A innerhalb von
 Modul B enthalten ist, sagen wir, dass Modul A das *Kind* (child) von Modul B
-ist und dass Modul B das *Elter* (parent) von Modul A ist. Beachte, dass der
+ist und dass Modul B der *Elternteil* (parent) von Modul A ist. Beachte, dass der
 gesamte Modulbaum als Wurzel das implizite Modul namens `crate` hat.
 
 Der Modulbaum könnte dich an den Verzeichnisbaum des Dateisystems auf deinem
