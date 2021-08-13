@@ -212,7 +212,7 @@ Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:
 
 Ein zusätzlicher Vorteil der Verwendung von Cargo ist, dass die Befehle
 unabhängig vom Betriebssystem sind, mit dem du arbeitest. Daher werden wir an
-dieser Stelle keine spezifischen Anweisungen für Linux und MacOS gegenüber
+dieser Stelle keine spezifischen Anweisungen für Linux und macOS gegenüber
 Windows mehr geben.
 
 ### Bauen einer Freigabe (release)
@@ -259,7 +259,7 @@ gelernt, wie es geht:
 
 * Installiere die neueste stabile Version von Rust mit `rustup`.
 * Aktualisiere auf eine neuere Rust-Version.
-* Öffne die lokal installiere Dokumentation.
+* Öffne die lokal installierte Dokumentation.
 * Schreibe und führe ein „Hallo Welt!“-Programm aus, direkt mittels `rustc`.
 * Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
 
