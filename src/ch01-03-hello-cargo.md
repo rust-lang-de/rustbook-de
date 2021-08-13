@@ -70,7 +70,6 @@ Code in Codeblock 1-2 aussehen.
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-authors = ["Dein Name <du@example.com>"]
 edition = "2018"
 
 [dependencies]
@@ -88,9 +87,10 @@ Informationen zu dieser Datei hinzufügen, werden wir weitere Abschnitte
 hinzufügen.
 
 Die nächsten vier Zeilen legen die Konfigurationsinformationen fest, die Cargo
-benötigt, um dein Programm zu kompilieren: Den Namen, die Version, wer es
-geschrieben hat und die zu verwendende Rust-Ausgabe. Cargo erhält deinen Namen
-und die E-Mail-Informationen von deiner Umgebung. Wenn diese Informationen
+benötigt, um dein Programm zu kompilieren: Den Namen, die Version und die zu 
+verwendende Rust-Ausgabe. In früheren Versionen wurde zusätzlich noch das
+Feld `[authors]` automatisch hinzugefügt. Das Feld ist seit Version `1.5.3.0` 
+optional und kann von Hand hinzugefügt werden. Wenn diese Informationen
 nicht korrekt sind, korrigiere die Informationen jetzt und speichere dann die
 Datei. Über den Schlüssel `edition` sprechen wir in Anhang E.
 
