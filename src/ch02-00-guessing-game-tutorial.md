@@ -36,7 +36,6 @@ Schaue dir die generierte Datei *Cargo.toml* an:
 [package]
 name = "guessing_game"
 version = "0.1.0"
-authors = ["Dein Name <du@example.com>"]
 edition = "2018"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -44,8 +43,7 @@ edition = "2018"
 [dependencies]
 ```
 
-Wenn die Informationen zum Autor, die Cargo aus deiner Umgebung erhalten hat,
-nicht korrekt sind, korrigiere dies in der Datei und speichere sie erneut.
+Der Inhalt Deiner Datei sollte ungefähr so aussehen wie hier. Falls es nicht ganz übereinstimmt, liegt das wahrscheinlich daran, dass Du schon eine neuere Version von `Cargo` verwendest. Wie im vorherigen Kapitel schon erwähnt, kann man den `author` Tag hinzufügen, muss es aber nicht.
 
 Wie du in Kapitel 1 gesehen hast, generiert `cargo new` ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei *src/main.rs* an:
@@ -236,7 +234,7 @@ let mut bar = 5; // veränderlich
 Kommen wir zurück zum Programm des Ratespiels. Du weißt jetzt, dass `let mut
 guess` eine veränderliche Variable namens `guess` einführt. Auf der anderen
 Seite des Gleichheitszeichens (`=`) steht der Wert, an den `guess` gebunden
-ist, was das Ergebnis des Aufrufs von `String::new` ist, einer Funktion, die
+ist. Dieser Wert ist das Ergebnis des Aufrufs von `String::new`, einer Funktion, die
 eine neue Instanz eines `String` zurückgibt. [`String`][string] ist ein von der
 Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
 wachstumsfähiges, UTF-8-kodiertes Stück Text ist.
