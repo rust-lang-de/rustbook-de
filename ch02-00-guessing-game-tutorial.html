@@ -153,15 +153,13 @@ Projekts.</p>
 <pre><code class="language-toml">[package]
 name = &quot;guessing_game&quot;
 version = &quot;0.1.0&quot;
-authors = [&quot;Dein Name &lt;du@example.com&gt;&quot;]
 edition = &quot;2018&quot;
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 </code></pre>
-<p>Wenn die Informationen zum Autor, die Cargo aus deiner Umgebung erhalten hat,
-nicht korrekt sind, korrigiere dies in der Datei und speichere sie erneut.</p>
+<p>Der Inhalt Deiner Datei sollte ungefähr so aussehen wie hier. Falls es nicht ganz übereinstimmt, liegt das wahrscheinlich daran, dass Du schon eine neuere Version von <code>Cargo</code> verwendest. Wie im vorherigen Kapitel schon erwähnt, kann man den <code>author</code> Tag hinzufügen, muss es aber nicht.</p>
 <p>Wie du in Kapitel 1 gesehen hast, generiert <code>cargo new</code> ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -318,7 +316,7 @@ Kapitel 3 ausführlicher besprochen.</p>
 </blockquote>
 <p>Kommen wir zurück zum Programm des Ratespiels. Du weißt jetzt, dass <code>let mut guess</code> eine veränderliche Variable namens <code>guess</code> einführt. Auf der anderen
 Seite des Gleichheitszeichens (<code>=</code>) steht der Wert, an den <code>guess</code> gebunden
-ist, was das Ergebnis des Aufrufs von <code>String::new</code> ist, einer Funktion, die
+ist. Dieser Wert ist das Ergebnis des Aufrufs von <code>String::new</code>, einer Funktion, die
 eine neue Instanz eines <code>String</code> zurückgibt. <a href="https://doc.rust-lang.org/std/string/struct.String.html"><code>String</code></a> ist ein von der
 Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
 wachstumsfähiges, UTF-8-kodiertes Stück Text ist.</p>
