@@ -6563,8 +6563,8 @@ werden im Abschnitt <a href="ch07-02-defining-modules-to-control-scope-and-priva
 steuern“</a> ausführlich erklärt). Ein <em>Paket</em> besteht aus einer oder
 mehreren Kisten, die eine Reihe von Funktionalitäten bereitstellen. Ein Paket
 enthält eine Datei <em>Cargo.toml</em>, die beschreibt, wie man diese Kisten baut.</p>
-<p>Mehrere Regeln bestimmen, was ein Paket enthalten kann. Ein Paket darf <em>maximal
-eine</em> Bibliothekskiste enthalten, nicht mehr. Sie kann so viele binäre Kisten
+<p>Mehrere Regeln bestimmen, was ein Paket enthalten kann. Ein Paket kann <em>maximal
+eine</em> Bibliothekskiste enthalten. Sie kann so viele binäre Kisten
 enthalten, wie du möchtest, aber sie muss mindestens eine Kiste enthalten
 (egal ob Bibliothek oder binär).</p>
 <p>Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
@@ -13145,11 +13145,15 @@ mod tests {
 }
 </code></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
-<p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist, aber
-da Tests nur Rust-Code sind und das Modul <code>tests</code> nur ein weiteres Modul ist,
-kannst du <code>internal_adder</code> in den Gültigkeitsbereich eines Tests bringen und
-sie aufrufen. Wenn du der Meinung bist, dass private Funktionen nicht getestet
-werden sollten, gibt es in Rust nichts, was dich dazu zwingen würde.</p>
+<p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
+sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
+Wie im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
+beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
+verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
+<code>test</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
+<code>internal_adder</code> aufrufen. Wenn du der Meinung bist, dass private Funktionen
+nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
+würde.</p>
 <h3 id="integrationstests"><a class="header" href="#integrationstests">Integrationstests</a></h3>
 <p>In Rust sind Integrationstests völlig außerhalb deiner Bibliothek angesiedelt.
 Du verwendest deine Bibliothek auf die gleiche Weise wie jeder andere Code,
@@ -15069,7 +15073,7 @@ neue Funktion <code>search_case_insensitive</code> hinzufügen und unseren alten
 <code>one_result</code> in <code>case_sensitive</code> umbenennen, um die Unterschiede zwischen den
 beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -19797,7 +19801,7 @@ verweisen, und dieser Knoten gehört konzeptionell allen Kanten, die darauf
 verweisen. Ein Knoten sollte nur bereinigt werden, wenn keine Kanten darauf zeigen.</p>
 <p>Um Mehrfacheigentum zu ermöglichen, hat Rust einen Typ namens <code>Rc&lt;T&gt;</code>, was eine
 Kurzform für <em>Referenzzählung</em> (reference counting) ist. Der Typ <code>Rc&lt;T&gt;</code>
-beobachtet die Anzahl der Referenzen auf einen Wert, der bestimmt, ob ein Wert
+beobachtet die Anzahl der Referenzen auf einen Wert, der bestimmt, ob der Wert
 noch verwendet wird oder nicht. Wenn auf einen Wert keine Referenz vorhanden
 ist, kann der Wert bereinigt werden, ohne dass Referenzen ungültig werden.</p>
 <p>Stell dir <code>Rc&lt;T&gt;</code> als einen Fernseher im Wohnzimmer vor. Wenn eine Person zum
@@ -22956,7 +22960,8 @@ To learn more, run the command again with --verbose.
 </code></pre>
 <p>Dieser Fehler bedeutet, dass du dieses Merkmal auf diese Weise nicht als
 Merkmalsobjekt verwenden kannst. Wenn du an weiteren Details zur
-Objektsicherheit interessiert sind, lies <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">Rust RFC 255</a>.</p>
+Objektsicherheit interessiert bist, lies <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">Rust RFC 255</a> oder schaue
+dir die <a href="https://doc.rust-lang.org/reference/items/traits.html#object-safety">Objektsicherheits-Referenz</a> an.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ein-objektorientiertes-entwurfsmuster-implementieren"><a class="header" href="#ein-objektorientiertes-entwurfsmuster-implementieren">Ein objektorientiertes Entwurfsmuster implementieren</a></h2>
 <p>Das <em>Zustandsmuster</em> (state pattern) ist ein objektorientiertes Entwurfsmuster.
 Der springende Punkt des Musters ist, dass ein Wert einen internen Zustand hat,
@@ -25534,12 +25539,11 @@ unveränderlichen, statischen Variablen</span></p>
 <p>Statische Variablen ähneln Konstanten, die wir im Abschnitt <a href="ch03-01-variables-and-mutability.html#unterschiede-zwischen-variablen-und-konstanten">„Unterschiede
 zwischen Variablen und Konstanten“</a>
 in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
-Konvention in <code>SCHREIENDER_SCHLANGENSCHRIFT</code> und wir <em>müssen</em> den Typ der
-Variablen annotieren, der in diesem Beispiel <code>&amp;'static str</code> ist. Statische
-Variablen können nur Referenzen mit der Lebensdauer <code>'static</code> speichern, was
-bedeutet, dass der Rust-Compiler die Lebensdauer herausfinden kann; wir
-brauchen sie nicht explizit anzugeben. Der Zugriff auf eine unveränderliche,
-statische Variable ist sicher.</p>
+Konvention in <code>SCHREIENDER_SCHLANGENSCHRIFT</code>. Statische Variablen können nur
+Referenzen mit der Lebensdauer <code>'static</code> speichern, was bedeutet, dass der
+Rust-Compiler die Lebensdauer herausfinden kann; wir brauchen sie nicht
+explizit anzugeben. Der Zugriff auf eine unveränderliche, statische Variable
+ist sicher.</p>
 <p>Konstanten und unveränderliche, statische Variablen mögen ähnlich aussehen,
 aber ein subtiler Unterschied besteht darin, dass Werte in einer statischen
 Variable eine feste Adresse im Speicher haben. Beim Verwenden des Wertes wird
@@ -27095,7 +27099,7 @@ effektiv veraltet sein. Vor diesem Hintergrund und angesichts der Tatsache,
 dass die meisten Rust-Programmierer Makros eher <em>verwenden</em> als Makros
 <em>schreiben</em> werden, werden wir nicht weiter auf <code>macro_rules!</code> eingehen. Um
 mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
-Online-Dokumentation oder andere Ressourcen, wie zum Beispiel <a href="https://danielkeep.github.io/tlborm/book/index.html">„The Little Book
+Online-Dokumentation oder andere Ressourcen, wie zum Beispiel <a href="https://veykril.github.io/tlborm/">„The Little Book
 of Rust Macros“</a> (engl. „Das kleine Buch der Rust-Makros“).</p>
 <h3 id="prozedurale-makros-zur-code-generierung-aus-attributen"><a class="header" href="#prozedurale-makros-zur-code-generierung-aus-attributen">Prozedurale Makros zur Code-Generierung aus Attributen</a></h3>
 <p>Die zweite Form von Makros sind <em>prozedurale Makros</em>, die sich eher wie
@@ -28537,7 +28541,8 @@ werden, sodass wir uns ansehen können, welche Abgrenzungen die Signatur von
 <code>thread::spawn</code> in ihrem Parameter hat. Die Dokumentation zeigt uns Folgendes:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
-        F: FnOnce() -&gt; T + Send + 'static,
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
         T: Send + 'static
 </code></pre>
 <p>Der Parameter vom Typ <code>F</code> ist derjenige, um den es hier geht; der Parameter vom
@@ -28664,7 +28669,8 @@ Struktur <code>ThreadPool</code> speichern, bevor wir sie zurückgeben. Aber wie
 Signatur von <code>Thread::spawn</code>:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
-        F: FnOnce() -&gt; T + Send + 'static,
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
         T: Send + 'static
 </code></pre>
 <p>Die Funktion <code>spawn</code> gibt einen <code>JoinHandle&lt;T&gt;</code> zurück, wobei <code>T</code> der Typ ist,
@@ -30697,7 +30703,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td align="left"><code>..=</code></td><td align="left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td align="left">Rechts-einschließendes Bereichsliteral</td><td align="left"></td></tr>
 <tr><td align="left"><code>..</code></td><td align="left"><code>..expr</code></td><td align="left">Aktualisierungssyntax für Strukturliterale</td><td align="left"></td></tr>
 <tr><td align="left"><code>..</code></td><td align="left"><code>variant(x, ..)</code>,<br> <code>struct_type { x, .. }</code></td><td align="left">„Und der Rest“-Musterbindung</td><td align="left"></td></tr>
-<tr><td align="left"><code>...</code></td><td align="left"><code>expr...expr</code></td><td align="left">In einem Muster: inklusives Bereichsmuster</td><td align="left"></td></tr>
+<tr><td align="left"><code>...</code></td><td align="left"><code>expr...expr</code></td><td align="left">(Veraltet, verwende stattdessen <code>..=</code>) In einem Muster: inklusives Bereichsmuster</td><td align="left"></td></tr>
 <tr><td align="left"><code>/</code></td><td align="left"><code>expr / expr</code></td><td align="left">Arithmetische Division</td><td align="left"><code>Div</code></td></tr>
 <tr><td align="left"><code>/=</code></td><td align="left"><code>var /= expr</code></td><td align="left">Arithmetische Division und Zuweisung</td><td align="left"><code>DivAssign</code></td></tr>
 <tr><td align="left"><code>:</code></td><td align="left"><code>pat: type</code>,<br> <code>ident: type</code></td><td align="left">Typabgrenzung</td><td align="left"></td></tr>

@@ -135,7 +135,7 @@ verweisen, und dieser Knoten gehört konzeptionell allen Kanten, die darauf
 verweisen. Ein Knoten sollte nur bereinigt werden, wenn keine Kanten darauf zeigen.</p>
 <p>Um Mehrfacheigentum zu ermöglichen, hat Rust einen Typ namens <code>Rc&lt;T&gt;</code>, was eine
 Kurzform für <em>Referenzzählung</em> (reference counting) ist. Der Typ <code>Rc&lt;T&gt;</code>
-beobachtet die Anzahl der Referenzen auf einen Wert, der bestimmt, ob ein Wert
+beobachtet die Anzahl der Referenzen auf einen Wert, der bestimmt, ob der Wert
 noch verwendet wird oder nicht. Wenn auf einen Wert keine Referenz vorhanden
 ist, kann der Wert bereinigt werden, ohne dass Referenzen ungültig werden.</p>
 <p>Stell dir <code>Rc&lt;T&gt;</code> als einen Fernseher im Wohnzimmer vor. Wenn eine Person zum

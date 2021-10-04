@@ -553,7 +553,8 @@ werden, sodass wir uns ansehen können, welche Abgrenzungen die Signatur von
 <code>thread::spawn</code> in ihrem Parameter hat. Die Dokumentation zeigt uns Folgendes:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
-        F: FnOnce() -&gt; T + Send + 'static,
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
         T: Send + 'static
 </code></pre>
 <p>Der Parameter vom Typ <code>F</code> ist derjenige, um den es hier geht; der Parameter vom
@@ -680,7 +681,8 @@ Struktur <code>ThreadPool</code> speichern, bevor wir sie zurückgeben. Aber wie
 Signatur von <code>Thread::spawn</code>:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
-        F: FnOnce() -&gt; T + Send + 'static,
+        F: FnOnce() -&gt; T,
+        F: Send + 'static,
         T: Send + 'static
 </code></pre>
 <p>Die Funktion <code>spawn</code> gibt einen <code>JoinHandle&lt;T&gt;</code> zurück, wobei <code>T</code> der Typ ist,
