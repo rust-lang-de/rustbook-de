@@ -92,11 +92,15 @@ mod tests {
 
 <span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span>
 
-Beachte, dass die Funktion `internal_adder` nicht mit `pub` markiert ist, aber
-da Tests nur Rust-Code sind und das Modul `tests` nur ein weiteres Modul ist,
-kannst du `internal_adder` in den Gültigkeitsbereich eines Tests bringen und
-sie aufrufen. Wenn du der Meinung bist, dass private Funktionen nicht getestet
-werden sollten, gibt es in Rust nichts, was dich dazu zwingen würde.
+Beachte, dass die Funktion `internal_adder` nicht mit `pub` markiert ist. Tests
+sind einfach nur Rust-Code, und das Modul `tests` ist nur ein weiteres Modul.
+Wie im Abschnitt [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths]
+beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
+verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
+`test` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
+`internal_adder` aufrufen. Wenn du der Meinung bist, dass private Funktionen
+nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
+würde.
 
 ### Integrationstests
 
@@ -351,5 +355,6 @@ damit zu tun haben, wie sich dein Code voraussichtlich verhalten wird.
 Lass uns das Wissen, das du in diesem und in den vorhergehenden Kapiteln
 gelernt hast, für die Arbeit an einem Projekt einsetzen!
 
+[paths]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [separating-modules-into-files]:
 ch07-05-separating-modules-into-different-files.html

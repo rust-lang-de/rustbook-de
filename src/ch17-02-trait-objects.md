@@ -499,7 +499,8 @@ To learn more, run the command again with --verbose.
 
 Dieser Fehler bedeutet, dass du dieses Merkmal auf diese Weise nicht als
 Merkmalsobjekt verwenden kannst. Wenn du an weiteren Details zur
-Objektsicherheit interessiert sind, lies [Rust RFC 255][rfc-255].
+Objektsicherheit interessiert bist, lies [Rust RFC 255][rfc-255] oder schaue
+dir die [Objektsicherheits-Referenz][object-safety-reference] an.
 
 [dynamically-sized]:
 ch19-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
@@ -507,3 +508,5 @@ ch19-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
 ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen
 [rfc-255]:
 https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md
+[object-safety-reference]:
+https://doc.rust-lang.org/reference/items/traits.html#object-safety

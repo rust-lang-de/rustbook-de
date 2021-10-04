@@ -532,12 +532,11 @@ unveränderlichen, statischen Variablen</span>
 Statische Variablen ähneln Konstanten, die wir im Abschnitt [„Unterschiede
 zwischen Variablen und Konstanten“][differences-between-variables-and-constants]
 in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
-Konvention in `SCHREIENDER_SCHLANGENSCHRIFT` und wir *müssen* den Typ der
-Variablen annotieren, der in diesem Beispiel `&'static str` ist. Statische
-Variablen können nur Referenzen mit der Lebensdauer `'static` speichern, was
-bedeutet, dass der Rust-Compiler die Lebensdauer herausfinden kann; wir
-brauchen sie nicht explizit anzugeben. Der Zugriff auf eine unveränderliche,
-statische Variable ist sicher.
+Konvention in `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur
+Referenzen mit der Lebensdauer `'static` speichern, was bedeutet, dass der
+Rust-Compiler die Lebensdauer herausfinden kann; wir brauchen sie nicht
+explizit anzugeben. Der Zugriff auf eine unveränderliche, statische Variable
+ist sicher.
 
 Konstanten und unveränderliche, statische Variablen mögen ähnlich aussehen,
 aber ein subtiler Unterschied besteht darin, dass Werte in einer statischen
