@@ -485,7 +485,8 @@ werden, sodass wir uns ansehen können, welche Abgrenzungen die Signatur von
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
     where
-        F: FnOnce() -> T + Send + 'static,
+        F: FnOnce() -> T,
+        F: Send + 'static,
         T: Send + 'static
 ```
 
@@ -631,7 +632,8 @@ Signatur von `Thread::spawn`:
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
     where
-        F: FnOnce() -> T + Send + 'static,
+        F: FnOnce() -> T,
+        F: Send + 'static,
         T: Send + 'static
 ```
 

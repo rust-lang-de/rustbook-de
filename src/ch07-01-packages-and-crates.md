@@ -9,8 +9,8 @@ steuern“][modules] ausführlich erklärt). Ein *Paket* besteht aus einer oder
 mehreren Kisten, die eine Reihe von Funktionalitäten bereitstellen. Ein Paket
 enthält eine Datei *Cargo.toml*, die beschreibt, wie man diese Kisten baut.
 
-Mehrere Regeln bestimmen, was ein Paket enthalten kann. Ein Paket darf *maximal
-eine* Bibliothekskiste enthalten, nicht mehr. Sie kann so viele binäre Kisten
+Mehrere Regeln bestimmen, was ein Paket enthalten kann. Ein Paket kann *maximal
+eine* Bibliothekskiste enthalten. Sie kann so viele binäre Kisten
 enthalten, wie du möchtest, aber sie muss mindestens eine Kiste enthalten
 (egal ob Bibliothek oder binär).
 

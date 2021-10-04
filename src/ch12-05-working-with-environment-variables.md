@@ -22,7 +22,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #

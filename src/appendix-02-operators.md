@@ -43,7 +43,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `..=` | `..=expr`,<br> `expr..=expr` | Rechts-einschließendes Bereichsliteral | |
 | `..` | `..expr` | Aktualisierungssyntax für Strukturliterale | |
 | `..` | `variant(x, ..)`,<br> `struct_type { x, .. }` | „Und der Rest“-Musterbindung | |
-| `...` | `expr...expr` | In einem Muster: inklusives Bereichsmuster | |
+| `...` | `expr...expr` | (Veraltet, verwende stattdessen `..=`) In einem Muster: inklusives Bereichsmuster | |
 | `/` | `expr / expr` | Arithmetische Division | `Div` |
 | `/=` | `var /= expr` | Arithmetische Division und Zuweisung | `DivAssign` |
 | `:` | `pat: type`,<br> `ident: type` | Typabgrenzung | |
