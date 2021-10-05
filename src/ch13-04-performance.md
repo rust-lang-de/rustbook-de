@@ -1,8 +1,8 @@
 ## Performanzvergleich: Schleifen vs. Iteratoren
 
-Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest du
-wissen, welche Version unserer Funktion `search` schneller ist, die Version mit einer
-expliziten `for`-Schleife oder die mit Iteratoren.
+Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest
+du wissen, welche Implementierung schneller ist: Die Version der Funktion
+`search` mit einer expliziten `for`-Schleife oder die Version mit Iteratoren.
 
 Wir haben einen Benchmark durchführt, der den gesamten Inhalt von *The
 Adventures of Sherlock Holmes* von Sir Arthur Conan Doyle in eine `Zeichenkette`

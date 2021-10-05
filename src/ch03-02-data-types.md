@@ -108,11 +108,10 @@ einen Typ-Suffix erlauben, z.B. `57u8` und `_` als visuelles Trennzeichen, z.B.
 | Binär            | `0b1111_0000` |
 | Byte (nur `u8`)  | `b'A'`        |
 
-Woher weist du also, welche Ganzzahlart zu verwenden ist? Wenn du dir unsicher
-bist, sind Rusts Standards im Allgemeinen eine gute Wahl und ganzzahlige Typen
-sind standardmäßig `i32`: dieser Typ ist im Allgemeinen am schnellsten, selbst
-auf 64-Bit-Systemen. Die primäre Situation in der du `isize` oder `usize`
-benutzen würdest, ist die Indizierung einer Kollektionsart (collection).
+Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
+bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
+Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
+`usize` verwendest, ist beim Indizieren einer Art Sammlung.
 
 > ##### Ganzzahlüberlauf
 >

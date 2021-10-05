@@ -39,8 +39,8 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `-=` | `var -= expr` | Arithmetische Subtraktion und Zuweisung | `SubAssign` |
 | `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Funktion und Funktionsabschlussrückgabetyp | |
 | `.` | `expr.ident` | Elementzugriff | |
-| `..` | `..`,<br> `expr..`,<br> `..expr`,<br> `expr..expr` | Rechts-ausschließendes Bereichsliteral | |
-| `..=` | `..=expr`,<br> `expr..=expr` | Rechts-einschließendes Bereichsliteral | |
+| `..` | `..`,<br> `expr..`,<br> `..expr`,<br> `expr..expr` | Rechts-ausschließendes Bereichsliteral | `PartialOrd` |
+| `..=` | `..=expr`,<br> `expr..=expr` | Rechts-einschließendes Bereichsliteral | `PartialOrd` |
 | `..` | `..expr` | Aktualisierungssyntax für Strukturliterale | |
 | `..` | `variant(x, ..)`,<br> `struct_type { x, .. }` | „Und der Rest“-Musterbindung | |
 | `...` | `expr...expr` | (Veraltet, verwende stattdessen `..=`) In einem Muster: inklusives Bereichsmuster | |

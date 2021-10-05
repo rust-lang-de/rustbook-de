@@ -196,18 +196,18 @@ Position im Anteilstyp ist und `ending_index` die Position hinter der letzten
 Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
 Startposition und die Länge des Anteilstyps, was `ending_index` minus
 `starting_index` entspricht. Im Fall von `let world = &s[6..10];` wäre `world`
-also ein Anteilstyp, der einen Zeiger auf das 7. Byte (von 1 an gezählt) von
-`s` mit einem Längenwert von 4 enthält.
+also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von `s` mit
+einem Längenwert von 4 enthält.
 
 Abbildung 4-6 zeigt dies.
 
-<img alt="world mit einem Zeiger auf das 6. Byte von String s und einer Länge von 4"
+<img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
 src="img/trpl04-06.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines `String` bezieht</span>
 
-Wenn du mit der Bereichssyntax `..` in Rust beim ersten Index (Null) beginnen
+Wenn du mit der Bereichssyntax `..` in Rust beim Index Null beginnen
 willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
 sind diese gleich:
 
@@ -405,12 +405,17 @@ fn first_word(s: &str) -> &str {
 # fn main() {
 #     let my_string = String::from("Hallo Welt");
 #
-#     // first_word funktioniert mit Anteilstypen von `String`
+#     // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+#     let word = first_word(&my_string[0..6]);
 #     let word = first_word(&my_string[..]);
+#     // `first_word` funktioniert auch bei Referenzen auf `String`, die
+#     // äquivalent zu ganzen Anteilstypen von `String` sind
+#     let word = first_word(&my_string);
 #
 #     let my_string_literal = "Hallo Welt";
 #
-#     // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+#     // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+#     let word = first_word(&my_string_literal[0..6]);
 #     let word = first_word(&my_string_literal[..]);
 #
 #     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
@@ -424,9 +429,13 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters `s`</span>
 
 Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen `String` haben, können wir einen Anteilstyp des
-gesamten `String` übergeben. Das Definieren einer Funktion, die einen
-Zeichenkettenanteilstyp statt einer Referenz auf einen `String` entgegennimmt,
-macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüßen:
+`String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
+nutzt die Vorteile der *automatischen Umwandlung*, eine Funktionalität, die wir
+im Abschnitt [„Implizite automatische Umwandlung mit Funktionen und
+Methoden“][deref-coercions] in Kapitel 15 behandeln. Das Definieren einer
+Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
+`String` entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
+Funktionalität einzubüßen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -446,12 +455,17 @@ macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüß
 fn main() {
     let my_string = String::from("Hallo Welt");
 
-    // first_word funktioniert mit Anteilstypen von `String`
+    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+    let word = first_word(&my_string[0..6]);
     let word = first_word(&my_string[..]);
+    // `first_word` funktioniert auch bei Referenzen auf `String`, die
+    // äquivalent zu ganzen Anteilstypen von `String` sind
+    let word = first_word(&my_string);
 
     let my_string_literal = "Hallo Welt";
 
-    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+    let word = first_word(&my_string_literal[0..6]);
     let word = first_word(&my_string_literal[..]);
 
     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
@@ -503,4 +517,6 @@ Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 
+[deref-coercions]:
+ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
 [strings]: ch08-02-strings.html

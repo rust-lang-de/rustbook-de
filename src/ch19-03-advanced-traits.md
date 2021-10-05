@@ -201,10 +201,13 @@ uns ein Beispiel für die Implementierung des Merkmals `Add` an, bei dem wir den
 Typ `Rhs` anpassen wollen, anstatt den Standardwert zu verwenden.
 
 Wir haben zwei Strukturen `Millimeters` und `Meters`, die Werte in
-verschiedenen Einheiten enthalten. Wir wollen Werte in Millimeter zu Werten in
-Meter addieren und die Implementierung von `Add` die Umrechnung korrekt
-durchführen lassen. Wir können `Add` für `Millimeters` mit `Meters` als `Rhs`
-implementieren, wie in Codeblock 19-15 gezeigt.
+verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
+in einer anderen Struktur ist als *Newtype-Muster* bekannt, das wir im
+Abschnitt [„Verwenden des Newtype-Musters für Typsicherheit und
+Abstraktion“][newtype] ausführlicher beschreiben. Wir wollen Werte in
+Millimeter zu Werten in Meter addieren und die Implementierung von `Add` die
+Umrechnung korrekt durchführen lassen. Wir können `Add` für `Millimeters` mit
+`Meters` als `Rhs` implementieren, wie in Codeblock 19-15 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -840,9 +843,11 @@ Möglichkeiten an, mit Rusts Typsystem zu interagieren.
 
 [implementing-a-trait-on-a-type]:
 ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
+[newtype]:
+ch19-04-advanced-types.html#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion
 [the-iterator-trait-and-the-next-method]:
 ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next
 [traits-defining-shared-behavior]: ch10-02-traits.html
 [smart-pointer-deref]: ch15-02-deref.html
 [tuple-structs]:
- ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
+ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
