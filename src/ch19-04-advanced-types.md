@@ -7,11 +7,11 @@ nützlich sind. Dann gehen wir zu Typ-Alias über, einer Funktionalität, die de
 Newtypes ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den
 Typ `!` und dynamisch große Typen besprechen.
 
+### Verwenden des Newtype-Musters für Typsicherheit und Abstraktion
+
 > Hinweis: Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
 > [„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
 > externen Typen“][using-the-newtype-pattern] gelesen hast.
-
-### Verwenden des Newtype-Musters für Typsicherheit und Abstraktion
 
 Das Newtype-Muster ist nützlich für Aufgaben, die über die bisher besprochenen
 hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
@@ -429,10 +429,10 @@ fn generic<T: ?Sized>(t: &T) {
 }
 ```
 
-Eine Merkmalsabgrenzung durch `?Sized` ist das Gegenteil einer
-Merkmalsabgrenzung durch `Sized`: Wir würden dies lesen als „`T` kann aber muss
-nicht `Sized` sein“. Diese Syntax ist nur für `Sized` verfügbar, nicht für
-andere Merkmale.
+Eine Merkmalsabgrenzung durch `?Sized` bedeutet „`T` kann `Sized` sein oder
+nicht“ und diese Notation hebt die Vorgabe auf, dass generische Typen zur
+Kompilierzeit eine bekannte Größe haben müssen. Die Syntax `?Trait` mit dieser
+Bedeutung ist nur für `Sized` verfügbar, nicht für andere Merkmale.
 
 Beachte auch, dass wir den Typ des Parameters `t` von `T` auf `&T` geändert
 haben. Da der Typ möglicherweise nicht `Sized` ist, müssen wir ihn hinter einer

@@ -136,7 +136,8 @@ Zweitens ruft `println!` ein Rust-Makro auf. Wenn es stattdessen eine Funktion
 aufrufte, würde diese als `println` (ohne `!`) angegeben werden. Wir werden die
 Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines `!` bedeutet, dass du ein Makro anstelle
-einer normalen Funktion aufrufst.
+einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
+folgen wie Funktionen.
 
 Drittens siehst du die Zeichenkette "Hallo Welt!". Wir übergeben diese
 Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem

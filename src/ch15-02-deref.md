@@ -288,7 +288,7 @@ Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur 
 die das Merkmal `Deref` implementieren. Die automatische Umwandlung wandelt einen solchen
 Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung `&String` in `&str` konvertieren, da `String` das Merkmal `Deref`
-implementiert, sodass `str` zurückgegeben wird. Die automatische Umwandlung erfolgt
+implementiert, sodass `&str` zurückgegeben wird. Die automatische Umwandlung erfolgt
 automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
 eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
 oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der

@@ -186,12 +186,12 @@ Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
 Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt
 dir einen Hinweis bei Code, der nicht funktionieren soll:
 
-| Ferris                                                                  | Bedeutung                                           |
-|-------------------------------------------------------------------------|-----------------------------------------------------|
-| <img src="img/ferris/does_not_compile.svg" class="ferris-explain"/>     | Dieser Code lässt sich nicht kompilieren!           |
-| <img src="img/ferris/panics.svg" class="ferris-explain"/>               | Dieser Code bricht ab (panic)!                      |
-| <img src="img/ferris/unsafe.svg" class="ferris-explain"/>               | Dieser Codeblock enthält unsicheren Code.           |
-| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain"/> | Dieser Code liefert nicht das gewünschte Verhalten. |
+| Ferris                                                                                                                          | Bedeutung                                           |
+|---------------------------------------------------------------------------------------------------------------------------------|-----------------------------------------------------|
+| <img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris mit Fragezeichen" />                              | Dieser Code lässt sich nicht kompilieren!           |
+| <img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris reißt die Hände hoch" />                                    | Dieser Code bricht ab (panic)!                      |
+| <img src="img/ferris/unsafe.svg" class="ferris-explain" alt="Ein sehr stacheliger Ferris" />                                    | Dieser Codeblock enthält unsicheren Code.           |
+| <img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris mit einer Kralle nach oben, achselzuckend" /> | Dieser Code liefert nicht das gewünschte Verhalten. |
 
 In den meisten Situationen führen wir dich zu einer funktionierenden
 Codeversion, wenn er sich nicht kompilieren lässt.
