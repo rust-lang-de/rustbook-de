@@ -133,12 +133,12 @@ Diskussion über Newtypes, während wir untersuchen, warum Newtypes als Typen
 nützlich sind. Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den
 Newtypes ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den
 Typ <code>!</code> und dynamisch große Typen besprechen.</p>
+<h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
 <blockquote>
 <p>Hinweis: Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
 <a href="ch19-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
 externen Typen“</a> gelesen hast.</p>
 </blockquote>
-<h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
 <p>Das Newtype-Muster ist nützlich für Aufgaben, die über die bisher besprochenen
 hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
 verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
@@ -527,10 +527,10 @@ spezielle Syntax verwenden, um diese Einschränkung zu lockern:</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Eine Merkmalsabgrenzung durch <code>?Sized</code> ist das Gegenteil einer
-Merkmalsabgrenzung durch <code>Sized</code>: Wir würden dies lesen als „<code>T</code> kann aber muss
-nicht <code>Sized</code> sein“. Diese Syntax ist nur für <code>Sized</code> verfügbar, nicht für
-andere Merkmale.</p>
+<p>Eine Merkmalsabgrenzung durch <code>?Sized</code> bedeutet „<code>T</code> kann <code>Sized</code> sein oder
+nicht“ und diese Notation hebt die Vorgabe auf, dass generische Typen zur
+Kompilierzeit eine bekannte Größe haben müssen. Die Syntax <code>?Trait</code> mit dieser
+Bedeutung ist nur für <code>Sized</code> verfügbar, nicht für andere Merkmale.</p>
 <p>Beachte auch, dass wir den Typ des Parameters <code>t</code> von <code>T</code> auf <code>&amp;T</code> geändert
 haben. Da der Typ möglicherweise nicht <code>Sized</code> ist, müssen wir ihn hinter einer
 Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>

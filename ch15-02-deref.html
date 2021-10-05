@@ -365,7 +365,7 @@ Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur 
 die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung wandelt einen solchen
 Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung <code>&amp;String</code> in <code>&amp;str</code> konvertieren, da <code>String</code> das Merkmal <code>Deref</code>
-implementiert, sodass <code>str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
+implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
 automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
 eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
 oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der

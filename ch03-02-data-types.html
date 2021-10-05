@@ -219,11 +219,10 @@ einen Typ-Suffix erlauben, z.B. <code>57u8</code> und <code>_</code> als visuell
 <tr><td>Binär</td><td><code>0b1111_0000</code></td></tr>
 <tr><td>Byte (nur <code>u8</code>)</td><td><code>b'A'</code></td></tr>
 </tbody></table>
-<p>Woher weist du also, welche Ganzzahlart zu verwenden ist? Wenn du dir unsicher
-bist, sind Rusts Standards im Allgemeinen eine gute Wahl und ganzzahlige Typen
-sind standardmäßig <code>i32</code>: dieser Typ ist im Allgemeinen am schnellsten, selbst
-auf 64-Bit-Systemen. Die primäre Situation in der du <code>isize</code> oder <code>usize</code>
-benutzen würdest, ist die Indizierung einer Kollektionsart (collection).</p>
+<p>Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
+bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
+Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <code>isize</code> oder
+<code>usize</code> verwendest, ist beim Indizieren einer Art Sammlung.</p>
 <blockquote>
 <h5 id="ganzzahlüberlauf"><a class="header" href="#ganzzahlüberlauf">Ganzzahlüberlauf</a></h5>
 <p>Nehmen wir an, du hast eine Variable vom Typ <code>u8</code>, die Werte zwischen 0 und

@@ -309,10 +309,13 @@ implementieren.</p>
 uns ein Beispiel für die Implementierung des Merkmals <code>Add</code> an, bei dem wir den
 Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
 <p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
-verschiedenen Einheiten enthalten. Wir wollen Werte in Millimeter zu Werten in
-Meter addieren und die Implementierung von <code>Add</code> die Umrechnung korrekt
-durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code>
-implementieren, wie in Codeblock 19-15 gezeigt.</p>
+verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
+in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
+Abschnitt <a href="ch19-04-advanced-types.html#verwenden-des-newtype-musters-f%C3%BCr-typsicherheit-und-abstraktion">„Verwenden des Newtype-Musters für Typsicherheit und
+Abstraktion“</a> ausführlicher beschreiben. Wir wollen Werte in
+Millimeter zu Werten in Meter addieren und die Implementierung von <code>Add</code> die
+Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit
+<code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]

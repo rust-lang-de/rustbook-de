@@ -370,8 +370,9 @@ let s = format!(&quot;{}-{}-{}&quot;, s1, s2, s3);
 <p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
 arbeitet auf die gleiche Weise wie <code>println!</code>, aber anstatt das Ergebnis auf
 den Bildschirm auszugeben, gibt es einen <code>String</code> mit dem Inhalt zurück. Die
-Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen und übernimmt
-keine Eigentümerschaft seiner Parameter.</p>
+Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen, und der
+durch das Makro <code>format!</code> erzeugte Code verwendet Referenzen sodass dieser
+Aufruf keine Eigentümerschaft seiner Parameter übernimmt.</p>
 <h3 id="indexierung-von-zeichenketten"><a class="header" href="#indexierung-von-zeichenketten">Indexierung von Zeichenketten</a></h3>
 <p>In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
 einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du

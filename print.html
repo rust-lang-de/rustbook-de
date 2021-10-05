@@ -368,10 +368,10 @@ Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
 Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt
 dir einen Hinweis bei Code, der nicht funktionieren soll:</p>
 <table><thead><tr><th>Ferris</th><th>Bedeutung</th></tr></thead><tbody>
-<tr><td><img src="img/ferris/does_not_compile.svg" class="ferris-explain"/></td><td>Dieser Code lässt sich nicht kompilieren!</td></tr>
-<tr><td><img src="img/ferris/panics.svg" class="ferris-explain"/></td><td>Dieser Code bricht ab (panic)!</td></tr>
-<tr><td><img src="img/ferris/unsafe.svg" class="ferris-explain"/></td><td>Dieser Codeblock enthält unsicheren Code.</td></tr>
-<tr><td><img src="img/ferris/not_desired_behavior.svg" class="ferris-explain"/></td><td>Dieser Code liefert nicht das gewünschte Verhalten.</td></tr>
+<tr><td><img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris mit Fragezeichen" /></td><td>Dieser Code lässt sich nicht kompilieren!</td></tr>
+<tr><td><img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris reißt die Hände hoch" /></td><td>Dieser Code bricht ab (panic)!</td></tr>
+<tr><td><img src="img/ferris/unsafe.svg" class="ferris-explain" alt="Ein sehr stacheliger Ferris" /></td><td>Dieser Codeblock enthält unsicheren Code.</td></tr>
+<tr><td><img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris mit einer Kralle nach oben, achselzuckend" /></td><td>Dieser Code liefert nicht das gewünschte Verhalten.</td></tr>
 </tbody></table>
 <p>In den meisten Situationen führen wir dich zu einer funktionierenden
 Codeversion, wenn er sich nicht kompilieren lässt.</p>
@@ -586,7 +586,8 @@ Tabulator.</p>
 aufrufte, würde diese als <code>println</code> (ohne <code>!</code>) angegeben werden. Wir werden die
 Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
-einer normalen Funktion aufrufst.</p>
+einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
+folgen wie Funktionen.</p>
 <p>Drittens siehst du die Zeichenkette &quot;Hallo Welt!&quot;. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
@@ -2276,11 +2277,10 @@ einen Typ-Suffix erlauben, z.B. <code>57u8</code> und <code>_</code> als visuell
 <tr><td>Binär</td><td><code>0b1111_0000</code></td></tr>
 <tr><td>Byte (nur <code>u8</code>)</td><td><code>b'A'</code></td></tr>
 </tbody></table>
-<p>Woher weist du also, welche Ganzzahlart zu verwenden ist? Wenn du dir unsicher
-bist, sind Rusts Standards im Allgemeinen eine gute Wahl und ganzzahlige Typen
-sind standardmäßig <code>i32</code>: dieser Typ ist im Allgemeinen am schnellsten, selbst
-auf 64-Bit-Systemen. Die primäre Situation in der du <code>isize</code> oder <code>usize</code>
-benutzen würdest, ist die Indizierung einer Kollektionsart (collection).</p>
+<p>Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
+bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
+Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <code>isize</code> oder
+<code>usize</code> verwendest, ist beim Indizieren einer Art Sammlung.</p>
 <blockquote>
 <h5 id="ganzzahlüberlauf"><a class="header" href="#ganzzahlüberlauf">Ganzzahlüberlauf</a></h5>
 <p>Nehmen wir an, du hast eine Variable vom Typ <code>u8</code>, die Werte zwischen 0 und
@@ -4475,14 +4475,14 @@ Position im Anteilstyp ist und <code>ending_index</code> die Position hinter der
 Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
 Startposition und die Länge des Anteilstyps, was <code>ending_index</code> minus
 <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code>
-also ein Anteilstyp, der einen Zeiger auf das 7. Byte (von 1 an gezählt) von
-<code>s</code> mit einem Längenwert von 4 enthält.</p>
+also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von <code>s</code> mit
+einem Längenwert von 4 enthält.</p>
 <p>Abbildung 4-6 zeigt dies.</p>
-<p><img alt="world mit einem Zeiger auf das 6. Byte von String s und einer Länge von 4"
+<p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
-<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim ersten Index (Null) beginnen
+<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index Null beginnen
 willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
 sind diese gleich:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -4664,12 +4664,17 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 </span><span class="boring">fn main() {
 </span><span class="boring">    let my_string = String::from(&quot;Hallo Welt&quot;);
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von `String`
+</span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+</span><span class="boring">    let word = first_word(&amp;my_string[0..6]);
 </span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">    // `first_word` funktioniert auch bei Referenzen auf `String`, die
+</span><span class="boring">    // äquivalent zu ganzen Anteilstypen von `String` sind
+</span><span class="boring">    let word = first_word(&amp;my_string);
 </span><span class="boring">
 </span><span class="boring">    let my_string_literal = &quot;Hallo Welt&quot;;
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+</span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[0..6]);
 </span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
 </span><span class="boring">
 </span><span class="boring">    // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
@@ -4681,9 +4686,13 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</code></span></p>
 <p>Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen <code>String</code> haben, können wir einen Anteilstyp des
-gesamten <code>String</code> übergeben. Das Definieren einer Funktion, die einen
-Zeichenkettenanteilstyp statt einer Referenz auf einen <code>String</code> entgegennimmt,
-macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüßen:</p>
+<code>String</code> oder eine Referenz auf den <code>String</code> übergeben. Diese Flexibilität
+nutzt die Vorteile der <em>automatischen Umwandlung</em>, eine Funktionalität, die wir
+im Abschnitt <a href="ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden">„Implizite automatische Umwandlung mit Funktionen und
+Methoden“</a> in Kapitel 15 behandeln. Das Definieren einer
+Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
+<code>String</code> entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
+Funktionalität einzubüßen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();
@@ -4700,12 +4709,17 @@ macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüß
 </span>fn main() {
     let my_string = String::from(&quot;Hallo Welt&quot;);
 
-    // first_word funktioniert mit Anteilstypen von `String`
+    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+    let word = first_word(&amp;my_string[0..6]);
     let word = first_word(&amp;my_string[..]);
+    // `first_word` funktioniert auch bei Referenzen auf `String`, die
+    // äquivalent zu ganzen Anteilstypen von `String` sind
+    let word = first_word(&amp;my_string);
 
     let my_string_literal = &quot;Hallo Welt&quot;;
 
-    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+    let word = first_word(&amp;my_string_literal[0..6]);
     let word = first_word(&amp;my_string_literal[..]);
 
     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
@@ -8077,8 +8091,9 @@ let s = format!(&quot;{}-{}-{}&quot;, s1, s2, s3);
 <p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
 arbeitet auf die gleiche Weise wie <code>println!</code>, aber anstatt das Ergebnis auf
 den Bildschirm auszugeben, gibt es einen <code>String</code> mit dem Inhalt zurück. Die
-Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen und übernimmt
-keine Eigentümerschaft seiner Parameter.</p>
+Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen, und der
+durch das Makro <code>format!</code> erzeugte Code verwendet Referenzen sodass dieser
+Aufruf keine Eigentümerschaft seiner Parameter übernimmt.</p>
 <h3 id="indexierung-von-zeichenketten"><a class="header" href="#indexierung-von-zeichenketten">Indexierung von Zeichenketten</a></h3>
 <p>In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
 einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
@@ -17898,9 +17913,9 @@ erkennbar.</p>
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über
 Performanz sprechen.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="performanzvergleich-schleifen-vs-iteratoren"><a class="header" href="#performanzvergleich-schleifen-vs-iteratoren">Performanzvergleich: Schleifen vs. Iteratoren</a></h2>
-<p>Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest du
-wissen, welche Version unserer Funktion <code>search</code> schneller ist, die Version mit einer
-expliziten <code>for</code>-Schleife oder die mit Iteratoren.</p>
+<p>Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest
+du wissen, welche Implementierung schneller ist: Die Version der Funktion
+<code>search</code> mit einer expliziten <code>for</code>-Schleife oder die Version mit Iteratoren.</p>
 <p>Wir haben einen Benchmark durchführt, der den gesamten Inhalt von <em>The
 Adventures of Sherlock Holmes</em> von Sir Arthur Conan Doyle in eine <code>Zeichenkette</code>
 (String) lädt und nach dem Wort <em>the</em> im Inhalt sucht. Hier sind die
@@ -18274,7 +18289,7 @@ pub mod utils {
     /// a secondary color.
     pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
         // --snip--
-<span class="boring">       SecondaryColor::Orange
+<span class="boring">       unimplemented!();
 </span>    }
 }
 </code></pre>
@@ -19454,7 +19469,7 @@ Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur 
 die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung wandelt einen solchen
 Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung <code>&amp;String</code> in <code>&amp;str</code> konvertieren, da <code>String</code> das Merkmal <code>Deref</code>
-implementiert, sodass <code>str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
+implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
 automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
 eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
 oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der
@@ -25818,10 +25833,13 @@ implementieren.</p>
 uns ein Beispiel für die Implementierung des Merkmals <code>Add</code> an, bei dem wir den
 Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
 <p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
-verschiedenen Einheiten enthalten. Wir wollen Werte in Millimeter zu Werten in
-Meter addieren und die Implementierung von <code>Add</code> die Umrechnung korrekt
-durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code>
-implementieren, wie in Codeblock 19-15 gezeigt.</p>
+verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
+in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
+Abschnitt <a href="ch19-04-advanced-types.html#verwenden-des-newtype-musters-f%C3%BCr-typsicherheit-und-abstraktion">„Verwenden des Newtype-Musters für Typsicherheit und
+Abstraktion“</a> ausführlicher beschreiben. Wir wollen Werte in
+Millimeter zu Werten in Meter addieren und die Implementierung von <code>Add</code> die
+Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit
+<code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -26381,12 +26399,12 @@ Diskussion über Newtypes, während wir untersuchen, warum Newtypes als Typen
 nützlich sind. Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den
 Newtypes ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den
 Typ <code>!</code> und dynamisch große Typen besprechen.</p>
+<h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
 <blockquote>
 <p>Hinweis: Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
 <a href="ch19-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
 externen Typen“</a> gelesen hast.</p>
 </blockquote>
-<h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
 <p>Das Newtype-Muster ist nützlich für Aufgaben, die über die bisher besprochenen
 hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
 verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
@@ -26775,10 +26793,10 @@ spezielle Syntax verwenden, um diese Einschränkung zu lockern:</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Eine Merkmalsabgrenzung durch <code>?Sized</code> ist das Gegenteil einer
-Merkmalsabgrenzung durch <code>Sized</code>: Wir würden dies lesen als „<code>T</code> kann aber muss
-nicht <code>Sized</code> sein“. Diese Syntax ist nur für <code>Sized</code> verfügbar, nicht für
-andere Merkmale.</p>
+<p>Eine Merkmalsabgrenzung durch <code>?Sized</code> bedeutet „<code>T</code> kann <code>Sized</code> sein oder
+nicht“ und diese Notation hebt die Vorgabe auf, dass generische Typen zur
+Kompilierzeit eine bekannte Größe haben müssen. Die Syntax <code>?Trait</code> mit dieser
+Bedeutung ist nur für <code>Sized</code> verfügbar, nicht für andere Merkmale.</p>
 <p>Beachte auch, dass wir den Typ des Parameters <code>t</code> von <code>T</code> auf <code>&amp;T</code> geändert
 haben. Da der Typ möglicherweise nicht <code>Sized</code> ist, müssen wir ihn hinter einer
 Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
@@ -30699,8 +30717,8 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td align="left"><code>-=</code></td><td align="left"><code>var -= expr</code></td><td align="left">Arithmetische Subtraktion und Zuweisung</td><td align="left"><code>SubAssign</code></td></tr>
 <tr><td align="left"><code>-&gt;</code></td><td align="left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td align="left">Funktion und Funktionsabschlussrückgabetyp</td><td align="left"></td></tr>
 <tr><td align="left"><code>.</code></td><td align="left"><code>expr.ident</code></td><td align="left">Elementzugriff</td><td align="left"></td></tr>
-<tr><td align="left"><code>..</code></td><td align="left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td align="left">Rechts-ausschließendes Bereichsliteral</td><td align="left"></td></tr>
-<tr><td align="left"><code>..=</code></td><td align="left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td align="left">Rechts-einschließendes Bereichsliteral</td><td align="left"></td></tr>
+<tr><td align="left"><code>..</code></td><td align="left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td align="left">Rechts-ausschließendes Bereichsliteral</td><td align="left"><code>PartialOrd</code></td></tr>
+<tr><td align="left"><code>..=</code></td><td align="left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td align="left">Rechts-einschließendes Bereichsliteral</td><td align="left"><code>PartialOrd</code></td></tr>
 <tr><td align="left"><code>..</code></td><td align="left"><code>..expr</code></td><td align="left">Aktualisierungssyntax für Strukturliterale</td><td align="left"></td></tr>
 <tr><td align="left"><code>..</code></td><td align="left"><code>variant(x, ..)</code>,<br> <code>struct_type { x, .. }</code></td><td align="left">„Und der Rest“-Musterbindung</td><td align="left"></td></tr>
 <tr><td align="left"><code>...</code></td><td align="left"><code>expr...expr</code></td><td align="left">(Veraltet, verwende stattdessen <code>..=</code>) In einem Muster: inklusives Bereichsmuster</td><td align="left"></td></tr>

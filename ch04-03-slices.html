@@ -306,14 +306,14 @@ Position im Anteilstyp ist und <code>ending_index</code> die Position hinter der
 Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
 Startposition und die Länge des Anteilstyps, was <code>ending_index</code> minus
 <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code>
-also ein Anteilstyp, der einen Zeiger auf das 7. Byte (von 1 an gezählt) von
-<code>s</code> mit einem Längenwert von 4 enthält.</p>
+also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von <code>s</code> mit
+einem Längenwert von 4 enthält.</p>
 <p>Abbildung 4-6 zeigt dies.</p>
-<p><img alt="world mit einem Zeiger auf das 6. Byte von String s und einer Länge von 4"
+<p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
-<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim ersten Index (Null) beginnen
+<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index Null beginnen
 willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
 sind diese gleich:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -495,12 +495,17 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 </span><span class="boring">fn main() {
 </span><span class="boring">    let my_string = String::from(&quot;Hallo Welt&quot;);
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von `String`
+</span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+</span><span class="boring">    let word = first_word(&amp;my_string[0..6]);
 </span><span class="boring">    let word = first_word(&amp;my_string[..]);
+</span><span class="boring">    // `first_word` funktioniert auch bei Referenzen auf `String`, die
+</span><span class="boring">    // äquivalent zu ganzen Anteilstypen von `String` sind
+</span><span class="boring">    let word = first_word(&amp;my_string);
 </span><span class="boring">
 </span><span class="boring">    let my_string_literal = &quot;Hallo Welt&quot;;
 </span><span class="boring">
-</span><span class="boring">    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+</span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+</span><span class="boring">    let word = first_word(&amp;my_string_literal[0..6]);
 </span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
 </span><span class="boring">
 </span><span class="boring">    // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
@@ -512,9 +517,13 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</code></span></p>
 <p>Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen <code>String</code> haben, können wir einen Anteilstyp des
-gesamten <code>String</code> übergeben. Das Definieren einer Funktion, die einen
-Zeichenkettenanteilstyp statt einer Referenz auf einen <code>String</code> entgegennimmt,
-macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüßen:</p>
+<code>String</code> oder eine Referenz auf den <code>String</code> übergeben. Diese Flexibilität
+nutzt die Vorteile der <em>automatischen Umwandlung</em>, eine Funktionalität, die wir
+im Abschnitt <a href="ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden">„Implizite automatische Umwandlung mit Funktionen und
+Methoden“</a> in Kapitel 15 behandeln. Das Definieren einer
+Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
+<code>String</code> entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
+Funktionalität einzubüßen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();
@@ -531,12 +540,17 @@ macht unsere API allgemeiner und nützlicher, ohne an Funktionalität einzubüß
 </span>fn main() {
     let my_string = String::from(&quot;Hallo Welt&quot;);
 
-    // first_word funktioniert mit Anteilstypen von `String`
+    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
+    let word = first_word(&amp;my_string[0..6]);
     let word = first_word(&amp;my_string[..]);
+    // `first_word` funktioniert auch bei Referenzen auf `String`, die
+    // äquivalent zu ganzen Anteilstypen von `String` sind
+    let word = first_word(&amp;my_string);
 
     let my_string_literal = &quot;Hallo Welt&quot;;
 
-    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
+    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
+    let word = first_word(&amp;my_string_literal[0..6]);
     let word = first_word(&amp;my_string_literal[..]);
 
     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
