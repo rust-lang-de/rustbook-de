@@ -8,10 +8,6 @@ var ferrisTypes = [
     title: 'Dieser Code bricht ab (panics)!'
   },
   {
-    attr: 'unsafe',
-    title: 'Dieser Codeblock enthält unsicheren Code.'
-  },
-  {
     attr: 'not_desired_behavior',
     title: 'Dieser Code erzeugt nicht das gewünschte Verhalten.'
   }

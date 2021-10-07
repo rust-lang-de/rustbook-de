@@ -142,7 +142,7 @@ tun dies, indem wir das Merkmal `Add` auf eine `Point`-Struktur implementieren:
 ```rust
 use std::ops::Add;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 struct Point {
     x: i32,
     y: i32,

@@ -86,13 +86,10 @@ die folgenden Anweisungen ein Paket konfigurieren. Wenn wir weitere
 Informationen zu dieser Datei hinzufügen, werden wir weitere Abschnitte
 hinzufügen.
 
-Die nächsten vier Zeilen legen die Konfigurationsinformationen fest, die Cargo
+Die nächsten drei Zeilen legen die Konfigurationsinformationen fest, die Cargo
 benötigt, um dein Programm zu kompilieren: Den Namen, die Version und die zu 
-verwendende Rust-Ausgabe. In früheren Versionen wurde zusätzlich noch das
-Feld `[authors]` automatisch hinzugefügt. Das Feld ist seit Version `1.5.3.0` 
-optional und kann von Hand hinzugefügt werden. Wenn diese Informationen
-nicht korrekt sind, korrigiere die Informationen jetzt und speichere dann die
-Datei. Über den Schlüssel `edition` sprechen wir in Anhang E.
+verwendende Rust-Ausgabe. Über den Schlüssel `edition` sprechen wir in [Anhang
+E][appendix-e].
 
 Die letzte Zeile `[dependencies]` ist der Anfang eines Abschnitts, in dem du
 alle Abhängigkeiten deines Projekts auflisten kannst. In Rust werden
@@ -269,5 +266,6 @@ wir also ein Ratespielprogramm erstellen. Wenn du lieber damit beginnen
 möchtest, zu lernen, wie gängige Programmierkonzepte in Rust funktionieren,
 lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.
 
+[appendix-e]: appendix-05-editions.html
 [cargo-doc]: https://doc.rust-lang.org/cargo/
 [installation]: ch01-01-installation.html

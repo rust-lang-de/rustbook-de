@@ -237,7 +237,7 @@ jeweils eine unterschiedliche Anzahl an Werttypen speichern</span>
 Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
 
 * `Quit` hat überhaupt keine Daten.
-* `Move` enthält eine anonyme Struktur.
+* `Move` hat benannte Felder wie eine Struktur.
 * `Write` enthält einen einzelnen `String`.
 * `ChangeColor` enthält drei `i32`-Werte.
 
@@ -349,8 +349,8 @@ kann. Diese Aufzählung heißt `Option<T>` und ist
 
 ```rust
 enum Option<T> {
-    Some(T),
     None,
+    Some(T),
 }
 ```
 
