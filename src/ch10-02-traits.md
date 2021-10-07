@@ -716,7 +716,10 @@ zurückgibt. Wenn wir den Rückgabetyp in `&T` anstelle von `T` ändern und
 dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
 wir die Merkmalsabgrenzungen `Clone` oder `Copy` nicht und könnten Allokationen
 im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
-zu implementieren!
+zu implementieren! Wenn du bei Fehlern, die mit Lebensdauern zu tun haben,
+hängen bleibst, lese weiter: Der Abschnitt „Referenzen validieren mit
+Lebensdauern“ wird dies erläutern, aber Lebensdauern sind nicht erforderlich,
+um diese Probleme zu lösen.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 

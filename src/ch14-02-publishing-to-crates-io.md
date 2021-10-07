@@ -480,10 +480,9 @@ genauso wie Rust mit einer Doppellizenz von `MIT OR Apache-2.0`. Diese Übung
 zeigt, dass man durch `OR` auch mehrere Lizenzkennungen getrennt angeben kann,
 um mehrere Lizenzen für ein Projekt zu haben.
 
-Mit einem eindeutigen Namen, der Version, den Angaben des Autors, die beim
-Erstellen der Kiste mit `cargo new` hinzugefügt wurden, deiner Beschreibung und
-einer hinzugefügten Lizenz könnte die Datei *Cargo.toml* für ein Projekt,
-das zur Veröffentlichung bereit ist, folgendermaßen aussehen:
+Mit einem eindeutigen Namen, der Version, deiner Beschreibung und einer
+hinzugefügten Lizenz könnte die Datei *Cargo.toml* für ein Projekt, das zur
+Veröffentlichung bereit ist, folgendermaßen aussehen:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -491,7 +490,6 @@ das zur Veröffentlichung bereit ist, folgendermaßen aussehen:
 [package]
 name = "guessing_game"
 version = "0.1.0"
-authors = ["Dein Name <du@example.com>"]
 edition = "2018"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"

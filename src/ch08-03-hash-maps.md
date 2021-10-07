@@ -59,9 +59,9 @@ verarbeiten mit Iteratoren“][iterators] in Kapitel 13 ausführlicher eingehen.
 Die Methode `collect` sammelt Daten für zahlreiche Kollektionstypen,
 einschließlich `HashMap`. Wenn wir z.B. die Teamnamen und Anfangsspielstände in
 zwei getrennten Vektoren hätten, könnten wir die Methode `zip` verwenden, um
-einen Vektor von Tupeln zu erstellen, in dem „Blau“ mit 10 gepaart ist, und so
-weiter. Dann könnten wir die Methode `collect` verwenden, um diesen Vektor von
-Tupeln in eine Hashtabelle umzuwandeln, wie in Codeblock 8-21 gezeigt wird.
+einen Iterator von Tupeln zu erstellen, in dem „Blau“ mit 10 gepaart ist, und
+so weiter. Dann könnten wir die Methode `collect` verwenden, um diesen Iterator
+von Tupeln in eine Hashtabelle umzuwandeln, wie in Codeblock 8-21 gezeigt wird.
 
 ```rust
 use std::collections::HashMap;

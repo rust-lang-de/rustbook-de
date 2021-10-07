@@ -151,7 +151,7 @@ können keine Rohzeiger *dereferenzieren* und die Daten lesen, auf die gezeigt
 wird. In Codeblock 19-3 wenden wir den Dereferenzierungsoperator `*` auf einen
 Rohzeiger an, was einen `unsafe`-Block erfordert.
 
-```rust,unsafe
+```rust
 # fn main() {
     let mut num = 5;
 
@@ -207,7 +207,7 @@ die Einhaltung der Verträge der Funktion übernehmen.
 Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
 tut:
 
-```rust,unsafe
+```rust
 # fn main() {
     unsafe fn dangerous() {}
 
@@ -351,7 +351,7 @@ Codeblock 19-6 zeigt, wie man einen `unsafe`-Block, einen Rohzeiger und einige
 Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 `split_at_mut` zum Funktionieren zu bringen.
 
-```rust,unsafe
+```rust
 use std::slice;
 
 fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
@@ -417,7 +417,7 @@ Codeblock 19-7 wahrscheinlich abstürzen, wenn der Anteilstyp verwendet wird.
 Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
 mit einer Länge von 10.000 Elementen.
 
-```rust,unsafe
+```rust
 # fn main() {
     use std::slice;
 
@@ -454,7 +454,7 @@ Sicherheit beim Programmierer liegt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,unsafe
+```rust
 extern "C" {
     fn abs(input: i32) -> i32;
 }
@@ -552,7 +552,7 @@ deklariert, auf sie zugreift und sie modifiziert.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,unsafe
+```rust
 static mut COUNTER: u32 = 0;
 
 fn add_to_count(inc: u32) {
@@ -596,7 +596,7 @@ können erklären, dass ein Merkmal `unsafe` ist, indem wir das Schlüsselwort
 `unsafe` vor `trait` einfügen und die Implementierung des Merkmals ebenfalls
 mit `unsafe` markieren, wie in Codeblock 19-11 gezeigt.
 
-```rust,unsafe
+```rust
 unsafe trait Foo {
     // Methoden kommen hierhin
 }

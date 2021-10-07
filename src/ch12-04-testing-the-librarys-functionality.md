@@ -91,9 +91,11 @@ Nimm drei.";
 für die Funktion `search`, die wir uns wünschen</span>
 
 Dieser Test sucht nach der Zeichenkette `"dukt"`. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält. Wir
-verlangen, dass der von der Funktion `search` zurückgegebene Wert nur die Zeile
-enthält, die wir erwarten.
+durchsuchen, besteht aus drei Zeilen, von denen nur eine `"dukt"` enthält.
+(Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
+Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
+setzen.) Wir verlangen, dass der von der Funktion `search` zurückgegebene Wert
+nur die Zeile enthält, die wir erwarten.
 
 Wir sind nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion `search`
