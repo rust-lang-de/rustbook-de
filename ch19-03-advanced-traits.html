@@ -254,7 +254,7 @@ tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Str
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::ops::Add;
 
-#[derive(Debug, PartialEq)]
+#[derive(Debug, Copy, Clone, PartialEq)]
 struct Point {
     x: i32,
     y: i32,

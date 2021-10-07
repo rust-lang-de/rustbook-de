@@ -181,9 +181,9 @@ verarbeiten mit Iteratoren“</a> in Kapitel 13 ausführlicher eingehen.
 Die Methode <code>collect</code> sammelt Daten für zahlreiche Kollektionstypen,
 einschließlich <code>HashMap</code>. Wenn wir z.B. die Teamnamen und Anfangsspielstände in
 zwei getrennten Vektoren hätten, könnten wir die Methode <code>zip</code> verwenden, um
-einen Vektor von Tupeln zu erstellen, in dem „Blau“ mit 10 gepaart ist, und so
-weiter. Dann könnten wir die Methode <code>collect</code> verwenden, um diesen Vektor von
-Tupeln in eine Hashtabelle umzuwandeln, wie in Codeblock 8-21 gezeigt wird.</p>
+einen Iterator von Tupeln zu erstellen, in dem „Blau“ mit 10 gepaart ist, und
+so weiter. Dann könnten wir die Methode <code>collect</code> verwenden, um diesen Iterator
+von Tupeln in eine Hashtabelle umzuwandeln, wie in Codeblock 8-21 gezeigt wird.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

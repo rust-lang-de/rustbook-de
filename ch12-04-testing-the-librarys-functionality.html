@@ -213,9 +213,11 @@ Nimm drei.&quot;;
 <p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
 <p>Dieser Test sucht nach der Zeichenkette <code>&quot;dukt&quot;</code>. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine <code>&quot;dukt&quot;</code> enthält. Wir
-verlangen, dass der von der Funktion <code>search</code> zurückgegebene Wert nur die Zeile
-enthält, die wir erwarten.</p>
+durchsuchen, besteht aus drei Zeilen, von denen nur eine <code>&quot;dukt&quot;</code> enthält.
+(Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
+Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
+setzen.) Wir verlangen, dass der von der Funktion <code>search</code> zurückgegebene Wert
+nur die Zeile enthält, die wir erwarten.</p>
 <p>Wir sind nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion <code>search</code>
 existiert noch nicht! Daher fügen wir jetzt gerade genug Code hinzu, um den

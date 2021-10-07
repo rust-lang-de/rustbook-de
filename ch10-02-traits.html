@@ -765,7 +765,10 @@ zurückgibt. Wenn wir den Rückgabetyp in <code>&amp;T</code> anstelle von <code
 dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
 wir die Merkmalsabgrenzungen <code>Clone</code> oder <code>Copy</code> nicht und könnten Allokationen
 im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
-zu implementieren!</p>
+zu implementieren! Wenn du bei Fehlern, die mit Lebensdauern zu tun haben,
+hängen bleibst, lese weiter: Der Abschnitt „Referenzen validieren mit
+Lebensdauern“ wird dies erläutern, aber Lebensdauern sind nicht erforderlich,
+um diese Probleme zu lösen.</p>
 <h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,

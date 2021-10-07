@@ -521,15 +521,13 @@ dieses Buches hinaus. Viele Leute in der Rust Community lizenzieren ihre Projekt
 genauso wie Rust mit einer Doppellizenz von <code>MIT OR Apache-2.0</code>. Diese Übung
 zeigt, dass man durch <code>OR</code> auch mehrere Lizenzkennungen getrennt angeben kann,
 um mehrere Lizenzen für ein Projekt zu haben.</p>
-<p>Mit einem eindeutigen Namen, der Version, den Angaben des Autors, die beim
-Erstellen der Kiste mit <code>cargo new</code> hinzugefügt wurden, deiner Beschreibung und
-einer hinzugefügten Lizenz könnte die Datei <em>Cargo.toml</em> für ein Projekt,
-das zur Veröffentlichung bereit ist, folgendermaßen aussehen:</p>
+<p>Mit einem eindeutigen Namen, der Version, deiner Beschreibung und einer
+hinzugefügten Lizenz könnte die Datei <em>Cargo.toml</em> für ein Projekt, das zur
+Veröffentlichung bereit ist, folgendermaßen aussehen:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[package]
 name = &quot;guessing_game&quot;
 version = &quot;0.1.0&quot;
-authors = [&quot;Dein Name &lt;du@example.com&gt;&quot;]
 edition = &quot;2018&quot;
 description = &quot;A fun game where you guess what number the computer has chosen.&quot;
 license = &quot;MIT OR Apache-2.0&quot;

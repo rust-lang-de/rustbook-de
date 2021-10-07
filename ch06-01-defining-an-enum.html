@@ -346,7 +346,7 @@ jeweils eine unterschiedliche Anzahl an Werttypen speichern</span></p>
 <p>Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:</p>
 <ul>
 <li><code>Quit</code> hat überhaupt keine Daten.</li>
-<li><code>Move</code> enthält eine anonyme Struktur.</li>
+<li><code>Move</code> hat benannte Felder wie eine Struktur.</li>
 <li><code>Write</code> enthält einen einzelnen <code>String</code>.</li>
 <li><code>ChangeColor</code> enthält drei <code>i32</code>-Werte.</li>
 </ul>
@@ -447,8 +447,8 @@ kann. Diese Aufzählung heißt <code>Option&lt;T&gt;</code> und ist
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Option&lt;T&gt; {
-    Some(T),
     None,
+    Some(T),
 }
 <span class="boring">}
 </span></code></pre></pre>

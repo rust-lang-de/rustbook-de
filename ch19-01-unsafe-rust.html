@@ -254,7 +254,7 @@ willkürliche Speicheradresse</span></p>
 können keine Rohzeiger <em>dereferenzieren</em> und die Daten lesen, auf die gezeigt
 wird. In Codeblock 19-3 wenden wir den Dereferenzierungsoperator <code>*</code> auf einen
 Rohzeiger an, was einen <code>unsafe</code>-Block erfordert.</p>
-<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    let mut num = 5;
 
     let r1 = &amp;num as *const i32;
@@ -301,7 +301,7 @@ wir die Dokumentation dieser Funktion gelesen haben und die Verantwortung für
 die Einhaltung der Verträge der Funktion übernehmen.</p>
 <p>Hier ist eine unsichere Funktion namens <code>dangerous</code>, die in ihrem Rumpf nichts
 tut:</p>
-<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    unsafe fn dangerous() {}
 
     unsafe {
@@ -422,7 +422,7 @@ verwenden.</p>
 <p>Codeblock 19-6 zeigt, wie man einen <code>unsafe</code>-Block, einen Rohzeiger und einige
 Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 <code>split_at_mut</code> zum Funktionieren zu bringen.</p>
-<pre><pre class="playground"><code class="language-rust unsafe">use std::slice;
+<pre><pre class="playground"><code class="language-rust">use std::slice;
 
 fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
     let len = slice.len();
@@ -480,7 +480,7 @@ Funktion Zugriff hat.</p>
 Codeblock 19-7 wahrscheinlich abstürzen, wenn der Anteilstyp verwendet wird.
 Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
 mit einer Länge von 10.000 Elementen.</p>
-<pre><pre class="playground"><code class="language-rust unsafe"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    use std::slice;
 
     let address = 0x01234usize;
@@ -509,7 +509,7 @@ dafür ist, dass andere Sprachen die Regeln und Garantien von Rust nicht
 erzwingen und Rust sie nicht überprüfen kann, sodass die Verantwortung für die
 Sicherheit beim Programmierer liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust unsafe">extern &quot;C&quot; {
+<pre><pre class="playground"><code class="language-rust">extern &quot;C&quot; {
     fn abs(input: i32) -&gt; i32;
 }
 
@@ -592,7 +592,7 @@ die Änderung von veränderlichen, statischen Variablen ist <em>unsicher</em>. C
 19-10 zeigt, wie man eine veränderliche, statische Variable namens <code>COUNTER</code>
 deklariert, auf sie zugreift und sie modifiziert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust unsafe">static mut COUNTER: u32 = 0;
+<pre><pre class="playground"><code class="language-rust">static mut COUNTER: u32 = 0;
 
 fn add_to_count(inc: u32) {
     unsafe {
@@ -629,7 +629,7 @@ Methoden eine Invariante hat, die der Compiler nicht verifizieren kann. Wir
 können erklären, dass ein Merkmal <code>unsafe</code> ist, indem wir das Schlüsselwort
 <code>unsafe</code> vor <code>trait</code> einfügen und die Implementierung des Merkmals ebenfalls
 mit <code>unsafe</code> markieren, wie in Codeblock 19-11 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust unsafe">
+<pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>unsafe trait Foo {
