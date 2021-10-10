@@ -94,9 +94,11 @@ auf dem dein Programm läuft: 64 Bit wenn du dich auf einer 64-Bit-Architektur
 befindest und 32 Bit auf einer 32-Bit-Architektur.
 
 Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
-schreiben. Beachte, dass alle Zahlenliterale mit Ausnahme des Byte-Literals
-einen Typ-Suffix erlauben, z.B. `57u8` und `_` als visuelles Trennzeichen, z.B.
-`1_000`.
+schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
+können, ein Typ-Suffix wie `57u8` zur Bezeichnung des Typs erlauben.
+Zahlenliterale können auch `_` als visuelles Trennzeichen verwenden, um die
+Zahl leichter lesbar zu machen, z.B. `1_000`, das den gleichen Wert hat, wie
+wenn du `1000` angegeben hättest.
 
 <span class="caption">Tabelle 3-2: Ganzzahl-Literale in Rust</span>
 

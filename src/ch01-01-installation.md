@@ -48,16 +48,22 @@ erfolgreich ist, erscheint die folgende Zeile:
 Rust is installed now. Great!
 ```
 
-Zusätzlich wirst du einen Programmbinder (linker) benötigen. Wahrscheinlich
-ist bereits einer installiert, aber falls du versuchst, ein Rust-Programm
-zu kompilieren und du dabei eine Fehlermeldung erhältst, dass ein
-Programmbinder nicht ausgeführt werden konnte, dann bedeutet das, dass
-kein Programmbinder auf deinem Rechner installiert ist und du das
-nachholen musst. C-Compiler haben normalerweise den passenden Programmbinder
-dabei. Schau in der Dokumentation deines Betriebssystems nach, wie du einen
-C-Compiler installieren kannst. Auch bestehen einige verbreitete Rust-Pakete
-aus C-Code und benötigen einen C-Compiler. Deshalb kann es sinnvoll sein,
-bereits jetzt einen zu installieren.
+Außerdem benötigst su einen Programmbinder (linker), ein Programm, das Rust
+verwendet, um die kompilierten Ausgaben in eine Datei zusammenzuführen.
+Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
+du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
+Ein C-Compiler ist auch deshalb nützlich, weil einige gängige Rust-Pakete von
+C-Code abhängen und daher einen C-Compiler benötigen.
+
+Unter macOS erhältst du einen C-Compiler, indem du folgendes ausführst:
+
+```console
+$ xcode-select --install
+```
+
+Linux-Benutzer sollten in der Regel GCC oder Clang installieren, je nach
+Dokumentation ihrer Distribution. Wenn du zum Beispiel Ubuntu verwendest,
+kannst du das Paket `build-essential` installieren.
 
 ### Die Installation von `rustup` in Windows
 

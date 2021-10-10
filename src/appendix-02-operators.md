@@ -28,7 +28,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `&&` | `expr && expr` | Logisches UND mit Kurzschlussauswertung | |
 | `*` | `expr * expr` | Arithmetische Multiplikation | `Mul` |
 | `*=` | `var *= expr` | Arithmetische Multiplikation und Zuweisung | `MulAssign` |
-| `*` | `*expr` | Dereferenzierung | |
+| `*` | `*expr` | Dereferenzierung | `Deref` |
 | `*` | `*const type`,<br> `*mut type` | Roh-Referenz | |
 | `+` | `trait + trait`,<br> `'a + trait` | Verbundtypabgrenzung | |
 | `+` | `expr + expr` | Arithmetische Addition | `Add` |
