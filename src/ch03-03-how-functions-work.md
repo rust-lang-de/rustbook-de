@@ -1,6 +1,6 @@
 ## Funktionen
 
-Funktionen sind im Rust-Code allgegenwärtig. Du hast bereits eine der
+Funktionen sind im Rust-Code weit verbreitet. Du hast bereits eine der
 wichtigsten Funktionen in der Sprache gesehen: Die Funktion `main`, die der
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort `fn`
 gesehen, mit dem du neue Funktionen deklarieren kannst.

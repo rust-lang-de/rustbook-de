@@ -212,19 +212,19 @@ Beachte, dass dies eine `let`-Anweisung ist, die benutzt wird, um eine
 *Variable* zu erzeugen. Hier ist ein weiteres Beispiel:
 
 ```rust,ignore
-let foo = bar;
+let apples = 5;
 ```
 
 Diese Zeile erzeugt eine neue Variable namens `foo` und bindet sie an den Wert
-der Variablen `bar`. In Rust sind Variablen standardmäßig unveränderlich
-(immutable). Wir werden dieses Konzept im Abschnitt [„Variablen und
+5. In Rust sind Variablen standardmäßig unveränderlich (immutable). Wir werden
+dieses Konzept im Abschnitt [„Variablen und
 Veränderlichkeit“][variables-and-mutability] in Kapitel 3 ausführlich
 besprechen. Das folgende Beispiel zeigt, wie man `mut` vor dem Variablennamen
 verwendet, um eine Variable veränderlich zu machen:
 
 ```rust
-let foo = 5; // unveränderlich
-let mut bar = 5; // veränderlich
+let apples = 5; // unveränderlich
+let mut bananas = 5; // veränderlich
 ```
 
 > Anmerkung: Die Syntax `//` beginnt einen Kommentar, der bis zum Ende der
@@ -241,9 +241,7 @@ wachstumsfähiges, UTF-8-kodiertes Stück Text ist.
 
 Die Syntax `::` in der Zeile `::new` zeigt an, dass `new` eine *assoziierte
 Funktion* (associated function) vom Typ `String` ist. Eine assoziierte Funktion
-ist auf einem Typ, in diesem Fall `String`, und nicht auf einer bestimmten
-Instanz eines `String` implementiert. Einige Sprachen nennen dies eine
-*statische Methode*.
+ist auf einem Typ implementiert, in diesem Fall `String`.
 
 Diese Funktion `new` erzeugt eine neue, leere Zeichenkette. Du wirst eine
 Funktion `new` bei vielen Typen finden, weil es ein gebräuchlicher Name für
@@ -327,9 +325,9 @@ Codezeile. Der nächste Teil ist diese Methode:
 # }
 ```
 
-Wenn du eine Methode mit der Syntax `.foo()` aufrufst, ist es oft ratsam, einen
-Zeilenumbruch und weitere Leerzeichen anzugeben, um lange Zeilen aufzuteilen.
-Wir hätten diesen Code auch so schreiben können:
+Wenn du eine Methode mit der Syntax `.method_name()` aufrufst, ist es oft
+ratsam, einen Zeilenumbruch und weitere Leerzeichen anzugeben, um lange Zeilen
+aufzuteilen. Wir hätten diesen Code auch so schreiben können:
 
 ```rust,ignore
 io::stdin().read_line(&mut guess).expect("Fehler beim Lesen der Zeile");
@@ -473,13 +471,14 @@ Projekt, das wir gebaut haben, ist eine *binäre Kiste* (binary crate), die eine
 ausführbare Datei ist. Die Kiste `rand` ist eine *Bibliotheks-Kiste* (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.
 
-Das Verwenden von externen Kisten ist der Bereich, in dem Cargo glänzt. Bevor
-wir Code schreiben können, der `rand` benutzt, müssen wir die Datei
+Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
+Bevor wir Code schreiben können, der `rand` benutzt, müssen wir die Datei
 *Cargo.toml* so modifizieren, dass die Kiste `rand` als Abhängigkeit
 eingebunden wird. Öffne jetzt diese Datei und füge die folgende Zeile unten
 unter der Überschrift des Abschnitts `[dependencies]` hinzu, den Cargo für dich
-erstellt hat. Stelle sicher, dass du Version `0.8.3` verwendest, andernfalls
-werden die Codebeispiele in dieser Anleitung nicht funktionieren.
+erstellt hat. Stelle sicher, dass du `rand` genau so angibst, wie wir es hier
+getan haben, andernfalls funktionieren die Codebeispiele in dieser Anleitung
+möglicherweise nicht.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -1165,12 +1164,12 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 Auffordern zu einer weiteren Schätzung, anstatt das Programm zum Absturz zu
 bringen</span>
 
-Das Umstellen von einem `expect`-Aufruf zu einem `match`-Ausdruck ist der
-allgemeine Übergang vom Absturz bei einem Fehler zur Behandlung des Fehlers.
-Denke daran, dass `parse` einen `Result`-Typ zurückgibt und `Result` eine
-Aufzählung ist, die die Varianten `Ok` und `Err` hat. Wir benutzen hier einen
-`match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der `cmp`-Methode
-getan haben.
+Das Umstellen von einem `expect`-Aufruf zu einem `match`-Ausdruck ist eine
+Möglichkeit für den Übergang vom Absturz bei einem Fehler zur Behandlung des
+Fehlers. Denke daran, dass `parse` einen `Result`-Typ zurückgibt und `Result`
+eine Aufzählung ist, die die Varianten `Ok` und `Err` hat. Wir benutzen hier
+einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der
+`cmp`-Methode getan haben.
 
 Wenn `parse` in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
 umzuwandeln, gibt es einen `Ok`-Wert zurück, der die resultierende Zahl
@@ -1269,15 +1268,14 @@ An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen
 Glückwunsch!
 
 Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
-Rust-Konzepten vertraut zu machen: `let`, `match`, Methoden, assoziierte
-Funktionen, das Verwenden von externen Kisten und mehr. In den nächsten
-Kapiteln erfährst du mehr über diese Konzepte im Detail. Kapitel 3 behandelt
-Konzepte, über die die meisten Programmiersprachen verfügen, z.B. Variablen,
-Datentypen und Funktionen, und zeigt, wie man sie in Rust verwendet. Kapitel 4
-untersucht die Eigentümerschaft, eine Funktionalität, die Rust von anderen
-Sprachen unterscheidet. In Kapitel 5 werden Strukturen (structs) und die
-Methodensyntax besprochen und in Kapitel 6 wird die Funktionsweise von
-Aufzählungen erläutert.
+Rust-Konzepten vertraut zu machen: `let`, `match`, Funktionen, das Verwenden
+von externen Kisten und mehr. In den nächsten Kapiteln erfährst du mehr über
+diese Konzepte. Kapitel 3 behandelt Konzepte, über die die meisten
+Programmiersprachen verfügen, z.B. Variablen, Datentypen und Funktionen, und
+zeigt, wie man sie in Rust verwendet. Kapitel 4 untersucht die
+Eigentümerschaft, eine Funktionalität, die Rust von anderen Sprachen
+unterscheidet. In Kapitel 5 werden Strukturen (structs) und die Methodensyntax
+besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert.
 
 [cratesio]: https://crates.io/
 [doccargo]: http://doc.crates.io
