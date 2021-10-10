@@ -294,19 +294,19 @@ wird, wie hier:</p>
 <p>Jetzt wird das Programm interessant! Es ist viel los in dieser kleinen Zeile.
 Beachte, dass dies eine <code>let</code>-Anweisung ist, die benutzt wird, um eine
 <em>Variable</em> zu erzeugen. Hier ist ein weiteres Beispiel:</p>
-<pre><code class="language-rust ignore">let foo = bar;
+<pre><code class="language-rust ignore">let apples = 5;
 </code></pre>
 <p>Diese Zeile erzeugt eine neue Variable namens <code>foo</code> und bindet sie an den Wert
-der Variablen <code>bar</code>. In Rust sind Variablen standardmäßig unveränderlich
-(immutable). Wir werden dieses Konzept im Abschnitt <a href="ch03-01-variables-and-mutability.html">„Variablen und
+5. In Rust sind Variablen standardmäßig unveränderlich (immutable). Wir werden
+dieses Konzept im Abschnitt <a href="ch03-01-variables-and-mutability.html">„Variablen und
 Veränderlichkeit“</a> in Kapitel 3 ausführlich
 besprechen. Das folgende Beispiel zeigt, wie man <code>mut</code> vor dem Variablennamen
 verwendet, um eine Variable veränderlich zu machen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let foo = 5; // unveränderlich
-let mut bar = 5; // veränderlich
+</span>let apples = 5; // unveränderlich
+let mut bananas = 5; // veränderlich
 <span class="boring">}
 </span></code></pre></pre>
 <blockquote>
@@ -322,9 +322,7 @@ Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
 wachstumsfähiges, UTF-8-kodiertes Stück Text ist.</p>
 <p>Die Syntax <code>::</code> in der Zeile <code>::new</code> zeigt an, dass <code>new</code> eine <em>assoziierte
 Funktion</em> (associated function) vom Typ <code>String</code> ist. Eine assoziierte Funktion
-ist auf einem Typ, in diesem Fall <code>String</code>, und nicht auf einer bestimmten
-Instanz eines <code>String</code> implementiert. Einige Sprachen nennen dies eine
-<em>statische Methode</em>.</p>
+ist auf einem Typ implementiert, in diesem Fall <code>String</code>.</p>
 <p>Diese Funktion <code>new</code> erzeugt eine neue, leere Zeichenkette. Du wirst eine
 Funktion <code>new</code> bei vielen Typen finden, weil es ein gebräuchlicher Name für
 eine Funktion ist, die einen neuen Wert irgendeiner Art erzeugt.</p>
@@ -393,9 +391,9 @@ Codezeile. Der nächste Teil ist diese Methode:</p>
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {}&quot;, guess);
 </span><span class="boring">}
 </span></code></pre>
-<p>Wenn du eine Methode mit der Syntax <code>.foo()</code> aufrufst, ist es oft ratsam, einen
-Zeilenumbruch und weitere Leerzeichen anzugeben, um lange Zeilen aufzuteilen.
-Wir hätten diesen Code auch so schreiben können:</p>
+<p>Wenn du eine Methode mit der Syntax <code>.method_name()</code> aufrufst, ist es oft
+ratsam, einen Zeilenumbruch und weitere Leerzeichen anzugeben, um lange Zeilen
+aufzuteilen. Wir hätten diesen Code auch so schreiben können:</p>
 <pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </code></pre>
 <p>Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
@@ -513,13 +511,14 @@ jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> 
 Projekt, das wir gebaut haben, ist eine <em>binäre Kiste</em> (binary crate), die eine
 ausführbare Datei ist. Die Kiste <code>rand</code> ist eine <em>Bibliotheks-Kiste</em> (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.</p>
-<p>Das Verwenden von externen Kisten ist der Bereich, in dem Cargo glänzt. Bevor
-wir Code schreiben können, der <code>rand</code> benutzt, müssen wir die Datei
+<p>Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
+Bevor wir Code schreiben können, der <code>rand</code> benutzt, müssen wir die Datei
 <em>Cargo.toml</em> so modifizieren, dass die Kiste <code>rand</code> als Abhängigkeit
 eingebunden wird. Öffne jetzt diese Datei und füge die folgende Zeile unten
 unter der Überschrift des Abschnitts <code>[dependencies]</code> hinzu, den Cargo für dich
-erstellt hat. Stelle sicher, dass du Version <code>0.8.3</code> verwendest, andernfalls
-werden die Codebeispiele in dieser Anleitung nicht funktionieren.</p>
+erstellt hat. Stelle sicher, dass du <code>rand</code> genau so angibst, wie wir es hier
+getan haben, andernfalls funktionieren die Codebeispiele in dieser Anleitung
+möglicherweise nicht.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
 rand = &quot;0.8.3&quot;
@@ -1107,12 +1106,12 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 <p><span class="caption">Codeblock 2-5: Ignorieren einer ungültigen Zahl und
 Auffordern zu einer weiteren Schätzung, anstatt das Programm zum Absturz zu
 bringen</span></p>
-<p>Das Umstellen von einem <code>expect</code>-Aufruf zu einem <code>match</code>-Ausdruck ist der
-allgemeine Übergang vom Absturz bei einem Fehler zur Behandlung des Fehlers.
-Denke daran, dass <code>parse</code> einen <code>Result</code>-Typ zurückgibt und <code>Result</code> eine
-Aufzählung ist, die die Varianten <code>Ok</code> und <code>Err</code> hat. Wir benutzen hier einen
-<code>match</code>-Ausdruck, wie wir es mit dem <code>Ordering</code>-Ergebnis der <code>cmp</code>-Methode
-getan haben.</p>
+<p>Das Umstellen von einem <code>expect</code>-Aufruf zu einem <code>match</code>-Ausdruck ist eine
+Möglichkeit für den Übergang vom Absturz bei einem Fehler zur Behandlung des
+Fehlers. Denke daran, dass <code>parse</code> einen <code>Result</code>-Typ zurückgibt und <code>Result</code>
+eine Aufzählung ist, die die Varianten <code>Ok</code> und <code>Err</code> hat. Wir benutzen hier
+einen <code>match</code>-Ausdruck, wie wir es mit dem <code>Ordering</code>-Ergebnis der
+<code>cmp</code>-Methode getan haben.</p>
 <p>Wenn <code>parse</code> in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
 umzuwandeln, gibt es einen <code>Ok</code>-Wert zurück, der die resultierende Zahl
 enthält. Dieser <code>Ok</code>-Wert wird mit dem Muster des ersten Zweigs übereinstimmen
@@ -1198,15 +1197,14 @@ Ratespiels</span></p>
 <p>An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen
 Glückwunsch!</p>
 <p>Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
-Rust-Konzepten vertraut zu machen: <code>let</code>, <code>match</code>, Methoden, assoziierte
-Funktionen, das Verwenden von externen Kisten und mehr. In den nächsten
-Kapiteln erfährst du mehr über diese Konzepte im Detail. Kapitel 3 behandelt
-Konzepte, über die die meisten Programmiersprachen verfügen, z.B. Variablen,
-Datentypen und Funktionen, und zeigt, wie man sie in Rust verwendet. Kapitel 4
-untersucht die Eigentümerschaft, eine Funktionalität, die Rust von anderen
-Sprachen unterscheidet. In Kapitel 5 werden Strukturen (structs) und die
-Methodensyntax besprochen und in Kapitel 6 wird die Funktionsweise von
-Aufzählungen erläutert.</p>
+Rust-Konzepten vertraut zu machen: <code>let</code>, <code>match</code>, Funktionen, das Verwenden
+von externen Kisten und mehr. In den nächsten Kapiteln erfährst du mehr über
+diese Konzepte. Kapitel 3 behandelt Konzepte, über die die meisten
+Programmiersprachen verfügen, z.B. Variablen, Datentypen und Funktionen, und
+zeigt, wie man sie in Rust verwendet. Kapitel 4 untersucht die
+Eigentümerschaft, eine Funktionalität, die Rust von anderen Sprachen
+unterscheidet. In Kapitel 5 werden Strukturen (structs) und die Methodensyntax
+besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert.</p>
 
                     </main>
 

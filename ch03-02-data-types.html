@@ -208,9 +208,11 @@ Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
 auf dem dein Programm läuft: 64 Bit wenn du dich auf einer 64-Bit-Architektur
 befindest und 32 Bit auf einer 32-Bit-Architektur.</p>
 <p>Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
-schreiben. Beachte, dass alle Zahlenliterale mit Ausnahme des Byte-Literals
-einen Typ-Suffix erlauben, z.B. <code>57u8</code> und <code>_</code> als visuelles Trennzeichen, z.B.
-<code>1_000</code>.</p>
+schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
+können, ein Typ-Suffix wie <code>57u8</code> zur Bezeichnung des Typs erlauben.
+Zahlenliterale können auch <code>_</code> als visuelles Trennzeichen verwenden, um die
+Zahl leichter lesbar zu machen, z.B. <code>1_000</code>, das den gleichen Wert hat, wie
+wenn du <code>1000</code> angegeben hättest.</p>
 <p><span class="caption">Tabelle 3-2: Ganzzahl-Literale in Rust</span></p>
 <table><thead><tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr></thead><tbody>
 <tr><td>Dezimal</td><td><code>98_222</code></td></tr>
