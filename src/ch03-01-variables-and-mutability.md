@@ -191,7 +191,10 @@ fn main() {
 
     let x = x + 1;
 
-    let x = x * 2;
+    {
+        let x = x * 2;
+        println!("Der Wert von x im inneren Gültigkeitsbereich ist: {}", x);
+    }
 
     println!("Der Wert von x ist: {}", x);
 }
@@ -199,17 +202,19 @@ fn main() {
 
 Dieses Programm bindet zunächst `x` an den Wert `5`. Dann beschattet es `x`,
 indem es `let x =` wiederholt, den ursprünglichen Wert nimmt und `1` addiert,
-sodass der Wert von `x` dann `6` ist. Die dritte Anweisung `let` beschattet
-ebenfalls `x`, indem sie den vorherigen Wert mit `2` multipliziert, um für `x`
-den Endwert `12` zu erhalten. Wenn wir dieses Programm ausführen, wird es
-folgendes ausgeben:
+sodass der Wert von `x` dann `6` ist. Im inneren Gültigkeitsbereich beschattet
+die dritte `let`-Anweisung auch `x` und multipliziert den vorherigen Wert mit
+`2`, sodass `x` den Wert `12` erhält. Wenn dieser Gültigkeitsbereich zu Ende
+ist, endet die innere Beschattung und `x` wird wieder zu `6`. Wenn wir dieses
+Programm ausführen, wird es folgendes ausgeben:
 
 ```console
 $ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/variables`
-Der Wert von x ist: 12
+Der Wert von x im inneren Gültigkeitsbereich ist: 12
+Der Wert von x ist: 6
 ```
 
 Beschatten unterscheidet sich vom Markieren einer Variable mit `mut`, weil wir

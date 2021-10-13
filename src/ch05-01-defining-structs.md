@@ -1,11 +1,11 @@
 ## Strukturen (structs) definieren und instanziieren
 
-Strukturen (structs) ähneln Tupeln, die in Kapitel 3 besprochen wurden. Wie
-bei Tupeln können die Teile einer Struktur verschiedene Typen haben. Anders als
-bei Tupeln benennst du jedes Teil, damit ist klar, was die Werte bedeuten.
-Durch diese Namen sind Strukturen flexibler als Tupel: Du musst dich nicht auf
-die Reihenfolge der Daten verlassen, um die Werte einer Instanz zu
-spezifizieren oder auf sie zuzugreifen.
+Strukturen (structs) ähneln Tupeln, die im Abschnitt [„Der Tupel-Typ“][tuples]
+besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
+Typen haben. Anders als bei Tupeln benennst du jedes Teil, damit ist klar, was
+die Werte bedeuten. Durch diese Namen sind Strukturen flexibler als Tupel: Du
+musst dich nicht auf die Reihenfolge der Daten verlassen, um die Werte einer
+Instanz zu spezifizieren oder auf sie zuzugreifen.
 
 Um eine Struktur zu definieren, geben wir das Schlüsselwort `struct` an und
 benennen die gesamte Struktur. Der Name einer Struktur sollte die Bedeutung der
@@ -286,10 +286,11 @@ zuzugreifen, und so weiter.
 
 Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 *Einheitstyp* (unit-like structs) genannt, weil sie sich ähnlich zum leeren
-Tupel `()` verhalten. Einheitstypen können in Situationen nützlich sein, in
-denen du ein Merkmal (trait) zu einem Typ implementieren musst, du aber keine
-Daten hast, die im Typ gespeichert werden sollen. Wir werden Merkmale in
-Kapitel 10 besprechen.
+Tupel `()` verhalten, das wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt
+haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
+Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
+die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
+besprechen.
 
 > ### Eigentümerschaft von Strukturdaten
 >
@@ -368,3 +369,5 @@ Kapitel 10 besprechen.
 > in Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
 > vermeiden, indem wir Typen wie `String` anstelle von Referenzen wie `&str`
 > verwenden.
+
+[tuples]: ch03-02-data-types.html#der-tupel-typ
