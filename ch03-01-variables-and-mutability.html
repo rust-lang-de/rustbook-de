@@ -284,22 +284,27 @@ verwenden und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
 
     let x = x + 1;
 
-    let x = x * 2;
+    {
+        let x = x * 2;
+        println!(&quot;Der Wert von x im inneren Gültigkeitsbereich ist: {}&quot;, x);
+    }
 
     println!(&quot;Der Wert von x ist: {}&quot;, x);
 }
 </code></pre></pre>
 <p>Dieses Programm bindet zunächst <code>x</code> an den Wert <code>5</code>. Dann beschattet es <code>x</code>,
 indem es <code>let x =</code> wiederholt, den ursprünglichen Wert nimmt und <code>1</code> addiert,
-sodass der Wert von <code>x</code> dann <code>6</code> ist. Die dritte Anweisung <code>let</code> beschattet
-ebenfalls <code>x</code>, indem sie den vorherigen Wert mit <code>2</code> multipliziert, um für <code>x</code>
-den Endwert <code>12</code> zu erhalten. Wenn wir dieses Programm ausführen, wird es
-folgendes ausgeben:</p>
+sodass der Wert von <code>x</code> dann <code>6</code> ist. Im inneren Gültigkeitsbereich beschattet
+die dritte <code>let</code>-Anweisung auch <code>x</code> und multipliziert den vorherigen Wert mit
+<code>2</code>, sodass <code>x</code> den Wert <code>12</code> erhält. Wenn dieser Gültigkeitsbereich zu Ende
+ist, endet die innere Beschattung und <code>x</code> wird wieder zu <code>6</code>. Wenn wir dieses
+Programm ausführen, wird es folgendes ausgeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/variables`
-Der Wert von x ist: 12
+Der Wert von x im inneren Gültigkeitsbereich ist: 12
+Der Wert von x ist: 6
 </code></pre>
 <p>Beschatten unterscheidet sich vom Markieren einer Variable mit <code>mut</code>, weil wir
 einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese

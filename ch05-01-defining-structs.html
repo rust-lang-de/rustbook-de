@@ -127,12 +127,12 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="strukturen-structs-definieren-und-instanziieren"><a class="header" href="#strukturen-structs-definieren-und-instanziieren">Strukturen (structs) definieren und instanziieren</a></h2>
-<p>Strukturen (structs) ähneln Tupeln, die in Kapitel 3 besprochen wurden. Wie
-bei Tupeln können die Teile einer Struktur verschiedene Typen haben. Anders als
-bei Tupeln benennst du jedes Teil, damit ist klar, was die Werte bedeuten.
-Durch diese Namen sind Strukturen flexibler als Tupel: Du musst dich nicht auf
-die Reihenfolge der Daten verlassen, um die Werte einer Instanz zu
-spezifizieren oder auf sie zuzugreifen.</p>
+<p>Strukturen (structs) ähneln Tupeln, die im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a>
+besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
+Typen haben. Anders als bei Tupeln benennst du jedes Teil, damit ist klar, was
+die Werte bedeuten. Durch diese Namen sind Strukturen flexibler als Tupel: Du
+musst dich nicht auf die Reihenfolge der Daten verlassen, um die Werte einer
+Instanz zu spezifizieren oder auf sie zuzugreifen.</p>
 <p>Um eine Struktur zu definieren, geben wir das Schlüsselwort <code>struct</code> an und
 benennen die gesamte Struktur. Der Name einer Struktur sollte die Bedeutung der
 Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
@@ -378,10 +378,11 @@ zuzugreifen, und so weiter.</p>
 <h3 id="einheitstyp"><a class="header" href="#einheitstyp">Einheitstyp</a></h3>
 <p>Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 <em>Einheitstyp</em> (unit-like structs) genannt, weil sie sich ähnlich zum leeren
-Tupel <code>()</code> verhalten. Einheitstypen können in Situationen nützlich sein, in
-denen du ein Merkmal (trait) zu einem Typ implementieren musst, du aber keine
-Daten hast, die im Typ gespeichert werden sollen. Wir werden Merkmale in
-Kapitel 10 besprechen.</p>
+Tupel <code>()</code> verhalten, das wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt
+haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
+Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
+die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
+besprechen.</p>
 <blockquote>
 <h3 id="eigentümerschaft-von-strukturdaten"><a class="header" href="#eigentümerschaft-von-strukturdaten">Eigentümerschaft von Strukturdaten</a></h3>
 <p>In der Strukturdefinition <code>User</code> in Codeblock 5-1 haben wir den Typ <code>String</code>

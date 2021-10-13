@@ -380,13 +380,63 @@ nochmal!
 class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
 der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
 dem <code>^C</code> das Wort <code>nochmal!</code> oder nicht.</p>
-<p>Glücklicherweise bietet Rust eine weitere, zuverlässigere Möglichkeit, aus
-einer Schleife auszubrechen. Du kannst das Schlüsselwort <code>break</code> innerhalb der
-Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
-Schleife beenden soll. Erinnere dich, dass wir dies im Ratespiel im Abschnitt
-<a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer korrekten Schätzung“</a> in
-Kapitel 2 getan haben, um das Programm zu beenden, wenn der Benutzer das Spiel
-durch Erraten der richtigen Zahl gewonnen hat.</p>
+<p>Glücklicherweise bietet Rust eine Möglichkeit, aus einer Schleife auszubrechen.
+Du kannst das Schlüsselwort <code>break</code> innerhalb der Schleife platzieren, um dem
+Programm mitzuteilen, wann es die Ausführung der Schleife beenden soll.
+Erinnere dich, dass wir dies im Ratespiel im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer
+korrekten Schätzung“</a> in Kapitel 2 getan haben,
+um das Programm zu beenden, wenn der Benutzer das Spiel durch Erraten der
+richtigen Zahl gewonnen hat.</p>
+<p>Wir haben im Ratespiel auch <code>continue</code> verwendet. Das Schlüsselwort <code>continue</code>
+innerhalb einer Schleife weist das Programm an, jeden restlichen Code in dieser
+Iteration der Schleife zu überspringen und mit der nächsten Iteration
+fortzufahren.</p>
+<p>Wenn du Schleifen innerhalb Schleifen hast, beziehen sich <code>break</code> und
+<code>continue</code> auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
+optional einen <em>Schleifennamen</em> (loop label) geben und dann den Namen mit
+<code>break</code> oder <code>continue</code> verwenden, damit sich diese Schlüsselwörter auf die
+bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
+Beispiel mit zwei geschachtelten Schleifen:</p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!(&quot;count = {}&quot;, count);
+        let mut remaining = 10;
+
+        loop {
+            println!(&quot;remaining = {}&quot;, remaining);
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!(&quot;count am Ende = {}&quot;, count);
+}
+</code></pre></pre>
+<p>Die äußere Schleife hat den Namen <code>'counting_up</code> und sie zählt von 0 bis 2
+aufwärts. Die innere Schleife ohne Name zählt von 10 bis 9 herunter. Das erste
+<code>break</code>, das keinen Namen angibt, beendet nur die innere Schleife. Mit der
+Anweisung <code>break 'counting_up;</code> wird die äußere Schleife verlassen. Dieser Code
+gibt folgendes aus:</p>
+<pre><code class="language-console">   Compiling loops v0.1.0 (file:///projects/loops)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/loops`
+count = 0
+remaining = 10
+remaining = 9
+count = 1
+remaining = 10
+remaining = 9
+count = 2
+remaining = 10
+count am Ende = 2
+</code></pre>
 <h4 id="rückgabe-von-werten-aus-schleifen"><a class="header" href="#rückgabe-von-werten-aus-schleifen">Rückgabe von Werten aus Schleifen</a></h4>
 <p>Eine der Verwendungen von <code>loop</code> besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob

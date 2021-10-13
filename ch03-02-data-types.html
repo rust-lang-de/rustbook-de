@@ -242,10 +242,11 @@ kompilierst, fügt Rust <em>keine</em> Prüfungen auf Ganzzahlüberläufe, die d
 Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
 einen <em>Zweier-Komplement-Umbruch</em> durch. Kurz gesagt, Werte die größer als
 der Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum
-kleinsten Wert den der Typ enthalten kann. Im Falle eines <code>u8</code> wird 256 zu 0,
-257 zu 1 und so weiter. Das Programm wird nicht abbrechen, aber die Variable
-wird wahrscheinlich einen anderen Wert annehmen, als du erwartest. Sich auf
-das Verhalten von Ganzzahlüberläufen zu verlassen wird als Fehler angesehen.</p>
+kleinsten Wert den der Typ enthalten kann. Im Falle eines <code>u8</code> wird der Wert
+256 zu 0, der Wert 257 zu 1 und so weiter. Das Programm wird nicht abbrechen,
+aber die Variable wird wahrscheinlich einen anderen Wert annehmen, als du
+erwartest. Sich auf das Verhalten von Ganzzahlüberläufen zu verlassen wird
+als Fehler angesehen.</p>
 <p>Um die Möglichkeit eines Überlaufs explizit zu behandeln, kannst du diese
 Methodenfamilien verwenden, die die Standardbibliothek für primitive
 numerische Typen bereitstellt:</p>
@@ -280,8 +281,9 @@ Genauigkeit.</p>
 <h4 id="numerische-operationen"><a class="header" href="#numerische-operationen">Numerische Operationen</a></h4>
 <p>Rust unterstützt grundlegende mathematische Operationen, die man bei allen
 Zahlentypen erwartet: Addition, Subtraktion, Multiplikation, Division und
-Restberechnung. Der folgende Code zeigt, wie du die einzelnen Typen in einer
-<code>let</code>-Anweisung verwenden würdest:</p>
+Restberechnung. Die Ganzzahldivision rundet auf die nächste Ganzzahl ab. Der
+folgende Code zeigt, wie du die einzelnen Typen in einer <code>let</code>-Anweisung
+verwenden würdest:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     // Addition
@@ -295,6 +297,7 @@ Restberechnung. Der folgende Code zeigt, wie du die einzelnen Typen in einer
 
     // Division
     let quotient = 56.7 / 32.2;
+    let floored = 2 / 3; // Ergibt 0
 
     // Restberechnung
     let remainder = 43 % 5;
@@ -393,6 +396,10 @@ Wertes, auf den wir zugreifen wollen, verwenden. Zum Beispiel:</p>
 <p>Dieses Programm erzeugt ein Tupel <code>x</code> und erstellt dann neue Variablen für
 jedes Element, indem es ihre jeweiligen Indizes verwendet. Wie bei den meisten
 Programmiersprachen ist der erste Index in einem Tupel 0.</p>
+<p>Das Tupel ohne Werte, <code>()</code>, ist ein spezieller Typ, der nur einen Wert hat,
+auch <code>()</code> geschrieben. Der Typ wird als <em>Einheitstyp</em> (unit type) und der Wert
+als der <em>Einheitswert</em> (unit value) bezeichnet. Ausdrücke geben implizit den
+Einheitswert zurück, wenn sie keinen anderen Wert zurückgeben.</p>
 <h4 id="der-array-typ"><a class="header" href="#der-array-typ">Der Array-Typ</a></h4>
 <p>Eine andere Möglichkeit, eine Kollektion mit mehreren Werten zu haben, ist mit
 einem <em>Array</em>. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
