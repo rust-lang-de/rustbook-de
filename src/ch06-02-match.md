@@ -323,11 +323,15 @@ match some_u8_value {
 
 Das Muster `_` passt zu jedem Wert. Wenn wir es unter unsere anderen Zweige
 setzen, wird `_` auf alle möglichen Fälle passen, die davor nicht angegeben
-wurden. `()` ist nur der leere Wert, so dass im Fall `_` nichts passieren wird.
-Damit können wir sagen, dass wir für alle möglichen Werte, die wir nicht vor
-dem Platzhalter `_` auflisten, nichts tun wollen.
+wurden. `()` ist nur der leere Wert (das leere Tupel, das wir im Abschnitt
+[„Der Tupel-Typ“][tuples] erwähnt haben), sodass im Fall `_` nichts passieren
+wird. Damit können wir sagen, dass wir für alle möglichen Werte, die wir nicht
+vor dem Platzhalter `_` auflisten, nichts tun wollen.
 
 Der `match`-Ausdruck kann jedoch etwas wortreich sein, wenn wir uns nur um
 *einen* der Fälle kümmern. Für diesen Fall bietet Rust `if let`.
 
-Mehr über Muster und Abgleich findest du in [Kapitel 18](ch18-00-patterns.html).
+Mehr über Muster und Abgleich findest du in [Kapitel 18][ch18-00-patterns].
+
+[tuples]: ch03-02-data-types.html#der-tupel-typ
+[ch18-00-patterns]: ch18-00-patterns.html

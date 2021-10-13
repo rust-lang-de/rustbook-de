@@ -133,10 +133,11 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
 > einen *Zweier-Komplement-Umbruch* durch. Kurz gesagt, Werte die größer als
 > der Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum
-> kleinsten Wert den der Typ enthalten kann. Im Falle eines `u8` wird 256 zu 0,
-> 257 zu 1 und so weiter. Das Programm wird nicht abbrechen, aber die Variable
-> wird wahrscheinlich einen anderen Wert annehmen, als du erwartest. Sich auf
-> das Verhalten von Ganzzahlüberläufen zu verlassen wird als Fehler angesehen.
+> kleinsten Wert den der Typ enthalten kann. Im Falle eines `u8` wird der Wert
+> 256 zu 0, der Wert 257 zu 1 und so weiter. Das Programm wird nicht abbrechen,
+> aber die Variable wird wahrscheinlich einen anderen Wert annehmen, als du
+> erwartest. Sich auf das Verhalten von Ganzzahlüberläufen zu verlassen wird
+> als Fehler angesehen.
 > 
 > Um die Möglichkeit eines Überlaufs explizit zu behandeln, kannst du diese
 > Methodenfamilien verwenden, die die Standardbibliothek für primitive
@@ -179,8 +180,9 @@ Genauigkeit.
 
 Rust unterstützt grundlegende mathematische Operationen, die man bei allen
 Zahlentypen erwartet: Addition, Subtraktion, Multiplikation, Division und
-Restberechnung. Der folgende Code zeigt, wie du die einzelnen Typen in einer
-`let`-Anweisung verwenden würdest:
+Restberechnung. Die Ganzzahldivision rundet auf die nächste Ganzzahl ab. Der
+folgende Code zeigt, wie du die einzelnen Typen in einer `let`-Anweisung
+verwenden würdest:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -197,6 +199,7 @@ fn main() {
 
     // Division
     let quotient = 56.7 / 32.2;
+    let floored = 2 / 3; // Ergibt 0
 
     // Restberechnung
     let remainder = 43 % 5;
@@ -326,6 +329,11 @@ fn main() {
 Dieses Programm erzeugt ein Tupel `x` und erstellt dann neue Variablen für
 jedes Element, indem es ihre jeweiligen Indizes verwendet. Wie bei den meisten
 Programmiersprachen ist der erste Index in einem Tupel 0.
+
+Das Tupel ohne Werte, `()`, ist ein spezieller Typ, der nur einen Wert hat,
+auch `()` geschrieben. Der Typ wird als *Einheitstyp* (unit type) und der Wert
+als der *Einheitswert* (unit value) bezeichnet. Ausdrücke geben implizit den
+Einheitswert zurück, wenn sie keinen anderen Wert zurückgeben.
 
 #### Der Array-Typ
 

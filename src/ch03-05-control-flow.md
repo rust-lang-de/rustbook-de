@@ -325,13 +325,70 @@ class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
 der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
 dem `^C` das Wort `nochmal!` oder nicht.
 
-Glücklicherweise bietet Rust eine weitere, zuverlässigere Möglichkeit, aus
-einer Schleife auszubrechen. Du kannst das Schlüsselwort `break` innerhalb der
-Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
-Schleife beenden soll. Erinnere dich, dass wir dies im Ratespiel im Abschnitt
-[„Beenden nach einer korrekten Schätzung“][quitting-after-a-correct-guess] in
-Kapitel 2 getan haben, um das Programm zu beenden, wenn der Benutzer das Spiel
-durch Erraten der richtigen Zahl gewonnen hat.
+Glücklicherweise bietet Rust eine Möglichkeit, aus einer Schleife auszubrechen.
+Du kannst das Schlüsselwort `break` innerhalb der Schleife platzieren, um dem
+Programm mitzuteilen, wann es die Ausführung der Schleife beenden soll.
+Erinnere dich, dass wir dies im Ratespiel im Abschnitt [„Beenden nach einer
+korrekten Schätzung“][quitting-after-a-correct-guess] in Kapitel 2 getan haben,
+um das Programm zu beenden, wenn der Benutzer das Spiel durch Erraten der
+richtigen Zahl gewonnen hat.
+
+Wir haben im Ratespiel auch `continue` verwendet. Das Schlüsselwort `continue`
+innerhalb einer Schleife weist das Programm an, jeden restlichen Code in dieser
+Iteration der Schleife zu überspringen und mit der nächsten Iteration
+fortzufahren.
+
+Wenn du Schleifen innerhalb Schleifen hast, beziehen sich `break` und
+`continue` auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
+optional einen *Schleifennamen* (loop label) geben und dann den Namen mit
+`break` oder `continue` verwenden, damit sich diese Schlüsselwörter auf die
+bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
+Beispiel mit zwei geschachtelten Schleifen:
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("count = {}", count);
+        let mut remaining = 10;
+
+        loop {
+            println!("remaining = {}", remaining);
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("count am Ende = {}", count);
+}
+```
+
+Die äußere Schleife hat den Namen `'counting_up` und sie zählt von 0 bis 2
+aufwärts. Die innere Schleife ohne Name zählt von 10 bis 9 herunter. Das erste
+`break`, das keinen Namen angibt, beendet nur die innere Schleife. Mit der
+Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
+gibt folgendes aus:
+
+```console
+   Compiling loops v0.1.0 (file:///projects/loops)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/loops`
+count = 0
+remaining = 10
+remaining = 9
+count = 1
+remaining = 10
+remaining = 9
+count = 2
+remaining = 10
+count am Ende = 2
+```
 
 #### Rückgabe von Werten aus Schleifen
 

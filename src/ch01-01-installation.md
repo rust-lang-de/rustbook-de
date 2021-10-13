@@ -6,9 +6,8 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.
 
 > Anmerkung: Falls du `rustup` aus irgendeinem Grund nicht verwenden möchtest,
-> schaue bitte auf der
-> [Webseite für die Rust-Installation](https://www.rust-lang.org/tools/install) 
-> nach anderen Möglichkeiten.
+> schaue bitte auf der Seite [Andere Rust-Installationsmethoden][install] nach
+> anderen Möglichkeiten.
 
 Die folgenden Schritte installieren die neueste stabile Version des
 Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
@@ -136,3 +135,5 @@ lokale Dokumentation in deinem Browser zu öffnen.
 
 Falls du dir nicht sicher bist, wie du einen Typ oder eine Funktion aus der
 Standardbibliothek verwenden sollst, dann schau in der API-Dokumentation nach!
+
+[install]: https://forge.rust-lang.org/infra/other-installation-methods.html
