@@ -525,7 +525,7 @@ wie der Code in Codeblock 3-5 aus.
 fn main() {
     let a = [10, 20, 30, 40, 50];
 
-    for element in a.iter() {
+    for element in a {
         println!("Der Wert ist: {}", element);
     }
 }

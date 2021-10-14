@@ -42,7 +42,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
   |         -
   |         |
   |         first assignment to `x`
-  |         help: make this binding mutable: `mut x`
+  |         help: consider making this binding mutable: `mut x`
 3 |     println!("Der Wert von x ist: {}", x);
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
