@@ -129,7 +129,7 @@
                     <main>
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.52 oder später mit
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.53 oder später mit
 <code>edition=&quot;2018&quot;</code> in <em>Cargo.toml</em> in allen Projekten verwendest, um Rust 2018
 Idiome zu verwenden. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“</a> zum Installieren
 und Aktualisieren von Rust sowie <a href="appendix-05-editions.html">Anhang E</a> zu Informationen zu den
@@ -1985,7 +1985,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
   |         -
   |         |
   |         first assignment to `x`
-  |         help: make this binding mutable: `mut x`
+  |         help: consider making this binding mutable: `mut x`
 3 |     println!(&quot;Der Wert von x ist: {}&quot;, x);
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
@@ -3358,7 +3358,7 @@ wie der Code in Codeblock 3-5 aus.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [10, 20, 30, 40, 50];
 
-    for element in a.iter() {
+    for element in a {
         println!(&quot;Der Wert ist: {}&quot;, element);
     }
 }
@@ -20614,7 +20614,7 @@ fehl: </p>
 <pre><code class="language-console">$ cargo test
    Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
-     Running target/debug/deps/limit_tracker-d1b2637139dca6ca
+     Running unittests target/debug/deps/limit_tracker-d1b2637139dca6ca
 
 running 1 test
 test tests::it_sends_an_over_75_percent_warning_message ... FAILED
