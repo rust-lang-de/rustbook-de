@@ -1,13 +1,14 @@
 ## Variablen und Veränderlichkeit
 
-Wie in Kapitel 2 erwähnt, sind Variablen standardmäßig unveränderlich. Dies ist
-einer der vielen Stupser, die Rust dir gibt, um deinen Code so zu schreiben,
-dass du die Vorteile von Sicherheit (safety) und einfacher Nebenläufigkeit
-(easy concurrency) nutzt, die Rust bietet. Du hast jedoch immer noch die
-Möglichkeit, deine Variablen veränderlich (mutable) zu machen. Lass uns
-untersuchen, wie und warum Rust dich dazu ermutigt, die Unveränderlichkeit
-(immutability) zu bevorzugen, und warum du manchmal vielleicht aussteigen
-möchtest.
+Wie im Abschnitt [„Speichern von Werten mit
+Variablen“][storing-values-with-variables] erwähnt, sind Variablen
+standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
+gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
+(safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
+bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
+(mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
+ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
+manchmal vielleicht davon abweichen möchtest.
 
 Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
 sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
@@ -147,18 +148,27 @@ globalen Gültigkeitsbereich, was sie für Werte nützlich macht, über die viel
 Teile des Codes Bescheid wissen müssen.
 
 Der letzte Unterschied besteht darin, dass Konstanten nur auf einen konstanten
-Ausdruck gesetzt werden dürfen, nicht auf das Ergebnis eines Funktionsaufrufs
-oder einen anderen Wert, der nur zur Laufzeit berechnet werden könnte.
+Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
+berechnet werden könnte.
 
 Hier ist ein Beispiel für eine Konstantendeklaration, bei der der Name der
-Konstanten `MAX_POINTS` lautet und ihr Wert auf 100.000 gesetzt ist. (Rusts
-Namenskonvention für Konstanten ist, nur Großbuchstaben mit Unterstrichen
-zwischen den Wörtern zu verwenden, und Unterstriche können in numerische
-Literale eingefügt werden, um die Lesbarkeit zu verbessern.)
+Konstanten `THREE_HOURS_IN_SECONDS` lautet und ihr Wert wird auf das Ergebnis
+der Multiplikation von 60 (die Anzahl der Sekunden in einer Minute) mal 60 (die
+Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der Stunden, die wir in
+diesem Programm zählen wollen):
 
 ```rust
-const MAX_POINTS: u32 = 100_000;
+const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 ```
+
+Die Namenskonvention von Rust für Konstanten ist die Verwendung von
+Großbuchstaben mit Unterstrichen zwischen den Wörtern. Der Compiler ist in der
+Lage, eine begrenzte Anzahl von Operationen zur Kompilierzeit auswerten, was
+uns die Möglichkeit gibt, diesen Wert so zu schreiben, dass er leichter zu
+verstehen und zu überprüfen ist, als wenn diese Konstante auf den Wert 10.800
+gesetzt wäre. Siehe die [Rust-Referenz, Abschnitt über die Auswertung von
+Konstanten][const-eval] für weitere Informationen darüber, welche Operationen
+bei der Deklaration von Konstanten verwendet werden können.
 
 Konstanten sind für die gesamte Laufzeit eines Programms in dem
 Gültigkeitsbereich gültig, in dem sie deklariert wurden. Damit sind sie eine
@@ -179,9 +189,9 @@ mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2
 gesehen hast, kannst du eine neue Variable mit dem gleichen Namen wie eine
 vorherige Variable deklarieren. Die Rust-Entwickler sagen, dass die erste
 Variable von der zweiten *beschattet* (shadowed) wird, was bedeutet, dass der
-Wert der zweiten Variable das ist, was erscheint, wenn die Variable verwendet
-wird. Wir können eine Variable beschatten, indem wir denselben Variablenamen
-verwenden und das Schlüsselwort `let` wie folgt wiederholen:
+Wert der zweiten Variable das ist, was das Programm sieht, wenn die Variable
+verwendet wird. Wir können eine Variable beschatten, indem wir denselben
+Variablenamen verwenden und das Schlüsselwort `let` wie folgt wiederholen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -276,4 +286,6 @@ weitere Datentypen ansehen, die sie haben können.
 
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
+[const-eval]: https://doc.rust-lang.org/reference/const_eval.html
 [data-types]: ch03-02-data-types.html
+[storing-values-with-variables]: ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen

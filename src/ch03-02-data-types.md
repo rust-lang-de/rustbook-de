@@ -402,9 +402,9 @@ auf den Wert `3` gesetzt werden. Dies ist dasselbe wie das Schreiben von
 
 ##### Zugriff auf Array-Elemente
 
-Ein Array ist ein einzelnes Stück Speicher, das auf den Stapelspeicher gelegt
-wird. Du kannst auf Elemente eines Arrays mit Hilfe der Indizierung wie folgt
-zugreifen:
+Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
+der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
+Hilfe der Indizierung wie folgt zugreifen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -478,7 +478,7 @@ abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
 Fall, weil der Compiler unmöglich wissen kann, welchen Wert ein Benutzer später
 eingeben wird, wenn er den Code ausführt.
 
-Dies ist das erste Beispiel für die Umsetzung der Sicherheitsprinzipien von
+Dies ist ein Beispiel für die Umsetzung der Speichersicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
 Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,
