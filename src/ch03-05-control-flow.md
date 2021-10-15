@@ -511,9 +511,10 @@ Wert `5` erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.
 
 Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn die Indexlänge falsch ist. Er ist auch langsam, weil der Compiler
-Laufzeitcode erzeugt, der die bedingte Prüfung für jedes Element bei jeder
-Iteration durch die Schleife durchführt.
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
+langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
+der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
+durchführt.
 
 Als prägnantere Alternative kannst du eine `for`-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine `for`-Schleife sieht
