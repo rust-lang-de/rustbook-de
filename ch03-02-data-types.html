@@ -460,9 +460,9 @@ wie hier gezeigt:</p>
 auf den Wert <code>3</code> gesetzt werden. Dies ist dasselbe wie das Schreiben von
 <code>let a = [3, 3, 3, 3, 3];</code>, aber in einer prägnanteren Weise.</p>
 <h5 id="zugriff-auf-array-elemente"><a class="header" href="#zugriff-auf-array-elemente">Zugriff auf Array-Elemente</a></h5>
-<p>Ein Array ist ein einzelnes Stück Speicher, das auf den Stapelspeicher gelegt
-wird. Du kannst auf Elemente eines Arrays mit Hilfe der Indizierung wie folgt
-zugreifen:</p>
+<p>Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
+der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
+Hilfe der Indizierung wie folgt zugreifen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [1, 2, 3, 4, 5];
@@ -522,7 +522,7 @@ ist. Wenn der Index größer oder gleich der Länge ist, wird Rust das Programm
 abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
 Fall, weil der Compiler unmöglich wissen kann, welchen Wert ein Benutzer später
 eingeben wird, wenn er den Code ausführt.</p>
-<p>Dies ist das erste Beispiel für die Umsetzung der Sicherheitsprinzipien von
+<p>Dies ist ein Beispiel für die Umsetzung der Speichersicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
 Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,

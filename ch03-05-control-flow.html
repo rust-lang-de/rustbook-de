@@ -535,9 +535,10 @@ Der Wert ist: 50
 Wert <code>5</code> erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.</p>
 <p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn die Indexlänge falsch ist. Er ist auch langsam, weil der Compiler
-Laufzeitcode erzeugt, der die bedingte Prüfung für jedes Element bei jeder
-Iteration durch die Schleife durchführt.</p>
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
+langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
+der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
+durchführt.</p>
 <p>Als prägnantere Alternative kannst du eine <code>for</code>-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
 wie der Code in Codeblock 3-5 aus.</p>

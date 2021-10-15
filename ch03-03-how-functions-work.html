@@ -204,23 +204,23 @@ Klammern in der Formatierungszeichenkette befand.</p>
 <p>In Funktionssignaturen <em>musst</em> du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
-fast nie an anderer Stelle im Code benötigt, um herauszufinden, was du meinst.</p>
+fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
+meinst.</p>
 <p>Wenn eine Funktion mehrere Parameter haben soll, trenne die
 Parameterdeklarationen mit Kommas, so wie hier:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    another_function(5, 6);
+    print_labeled_measurement(5, 'h');
 }
 
-fn another_function(x: i32, y: i32) {
-    println!(&quot;Der Wert von x ist: {}&quot;, x);
-    println!(&quot;Der Wert von y ist: {}&quot;, y);
+fn print_labeled_measurement(value: i32, unit_label: char) {
+    println!(&quot;Das Maß ist: {}{}&quot;, value, unit_label);
 }
 </code></pre></pre>
-<p>Dieses Beispiel erzeugt eine Funktion mit zwei Parametern, die beide vom Typ
-<code>i32</code> sind. Die Funktion gibt dann die Werte in ihren beiden Parametern aus.
-Beachte, dass nicht alle Funktionsparameter vom gleichen Typ sein müssen, das
-ist in diesem Beispiel nur zufällig so.</p>
+<p>Dieses Beispiel erzeugt eine Funktion namens <code>print_labeled_measurement</code> mit
+zwei Parametern. Der erste Parameter heißt <code>value</code> und ist ein <code>i32</code>. Der
+zweite heißt <code>unit_label</code> und ist vom Typ <code>char</code>. Die Funktion gibt dann einen
+Text aus, der sowohl <code>value</code> als auch <code>unit_label</code> enthält.</p>
 <p>Lass uns versuchen, diesen Code auszuführen. Ersetze das Programm, das sich
 derzeit in der Datei <em>src/main.rs</em> deines „functions“-Projekts befindet, durch
 das vorhergehende Beispiel und führe es mit <code>cargo run</code> aus:</p>
@@ -228,12 +228,10 @@ das vorhergehende Beispiel und führe es mit <code>cargo run</code> aus:</p>
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/functions`
-Der Wert von x ist: 5
-Der Wert von y ist: 6
+Das Maß ist: 5h
 </code></pre>
-<p>Da wir die Funktion mit <code>5</code> als Wert für <code>x</code> aufgerufen haben und <code>6</code> als Wert
-für <code>y</code> übergeben wird, werden die beiden Zeichenketten mit diesen Werten
-ausgegeben.</p>
+<p>Da wir die Funktion mit <code>5</code> als Wert für <code>value</code> und <code>'h'</code> als Wert für
+<code>unit_label</code> aufgerufen haben, enthält die Programmausgabe diese Werte.</p>
 <h4 id="funktionsrümpfe-enthalten-anweisungen-und-ausdrücke"><a class="header" href="#funktionsrümpfe-enthalten-anweisungen-und-ausdrücke">Funktionsrümpfe enthalten Anweisungen und Ausdrücke</a></h4>
 <p>Funktionsrümpfe bestehen aus einer Reihe von Anweisungen, die optional mit
 einem Ausdruck enden können. Bisher haben wir nur Funktionen ohne einen
@@ -308,8 +306,8 @@ woran <code>x</code> gebunden werden kann. Dies unterscheidet sich von dem, was 
 Sprachen wie C und Ruby geschieht, wo die Zuweisung den Wert der Zuweisung
 zurückgibt. In diesen Sprachen kannst du <code>x = y = 6</code> schreiben und sowohl <code>x</code>
 als auch <code>y</code> haben den Wert <code>6</code>; das ist in Rust nicht der Fall.</p>
-<p>Ausdrücke werten zu etwas aus und machen den größten Teil des restlichen Codes
-aus, den du in Rust schreiben wirst. Betrachte eine einfache mathematische
+<p>Ausdrücke werten zu einem Wert aus und machen den größten Teil des restlichen
+Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. <code>5 + 6</code>, die ein Ausdruck ist, der zum Wert <code>11</code> ausgewertet
 wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die <code>6</code>
 in der Anweisung <code>let y = 6;</code> ein Ausdruck, der den Wert <code>6</code> ergibt. Der Aufruf
@@ -434,7 +432,7 @@ To learn more, run the command again with --verbose.
 <p>Die Hauptfehlermeldung „nicht übereinstimmende Typen“ („mismatched types“)
 offenbart das Kernproblem dieses Codes. Die Definition der Funktion <code>plus_one</code>
 besagt, dass sie ein <code>i32</code> zurückgibt, aber Anweisungen werden nicht zu einem
-Wert ausgewertet, was durch das leere Tupel <code>()</code> ausgedrückt wird. Daher wird
+Wert ausgewertet, was durch den Einheitstyp <code>()</code> ausgedrückt wird. Daher wird
 nichts zurückgegeben, was der Funktionsdefinition widerspricht und zu einem
 Fehler führt. In dieser Ausgabe gibt Rust eine Meldung aus, die möglicherweise
 helfen kann, dieses Problem zu beheben: Es wird vorgeschlagen, das Semikolon zu

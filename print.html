@@ -1951,14 +1951,15 @@ zu Rust hinzugefügt werden könnte. Eine Liste der Schlüsselwörter findest du
 in <a href="appendix-01-keywords.html">Anhang A</a>.</p>
 </blockquote>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="variablen-und-veränderlichkeit"><a class="header" href="#variablen-und-veränderlichkeit">Variablen und Veränderlichkeit</a></h2>
-<p>Wie in Kapitel 2 erwähnt, sind Variablen standardmäßig unveränderlich. Dies ist
-einer der vielen Stupser, die Rust dir gibt, um deinen Code so zu schreiben,
-dass du die Vorteile von Sicherheit (safety) und einfacher Nebenläufigkeit
-(easy concurrency) nutzt, die Rust bietet. Du hast jedoch immer noch die
-Möglichkeit, deine Variablen veränderlich (mutable) zu machen. Lass uns
-untersuchen, wie und warum Rust dich dazu ermutigt, die Unveränderlichkeit
-(immutability) zu bevorzugen, und warum du manchmal vielleicht aussteigen
-möchtest.</p>
+<p>Wie im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen">„Speichern von Werten mit
+Variablen“</a> erwähnt, sind Variablen
+standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
+gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
+(safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
+bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
+(mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
+ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
+manchmal vielleicht davon abweichen möchtest.</p>
 <p>Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
 sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
 Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis anlegen, indem wir
@@ -2070,19 +2071,27 @@ dabei, Typen und Typ-Annotationen im nächsten Abschnitt
 globalen Gültigkeitsbereich, was sie für Werte nützlich macht, über die viele
 Teile des Codes Bescheid wissen müssen.</p>
 <p>Der letzte Unterschied besteht darin, dass Konstanten nur auf einen konstanten
-Ausdruck gesetzt werden dürfen, nicht auf das Ergebnis eines Funktionsaufrufs
-oder einen anderen Wert, der nur zur Laufzeit berechnet werden könnte.</p>
+Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
+berechnet werden könnte.</p>
 <p>Hier ist ein Beispiel für eine Konstantendeklaration, bei der der Name der
-Konstanten <code>MAX_POINTS</code> lautet und ihr Wert auf 100.000 gesetzt ist. (Rusts
-Namenskonvention für Konstanten ist, nur Großbuchstaben mit Unterstrichen
-zwischen den Wörtern zu verwenden, und Unterstriche können in numerische
-Literale eingefügt werden, um die Lesbarkeit zu verbessern.)</p>
+Konstanten <code>THREE_HOURS_IN_SECONDS</code> lautet und ihr Wert wird auf das Ergebnis
+der Multiplikation von 60 (die Anzahl der Sekunden in einer Minute) mal 60 (die
+Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der Stunden, die wir in
+diesem Programm zählen wollen):</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>const MAX_POINTS: u32 = 100_000;
+</span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}
 </span></code></pre></pre>
+<p>Die Namenskonvention von Rust für Konstanten ist die Verwendung von
+Großbuchstaben mit Unterstrichen zwischen den Wörtern. Der Compiler ist in der
+Lage, eine begrenzte Anzahl von Operationen zur Kompilierzeit auswerten, was
+uns die Möglichkeit gibt, diesen Wert so zu schreiben, dass er leichter zu
+verstehen und zu überprüfen ist, als wenn diese Konstante auf den Wert 10.800
+gesetzt wäre. Siehe die <a href="https://doc.rust-lang.org/reference/const_eval.html">Rust-Referenz, Abschnitt über die Auswertung von
+Konstanten</a> für weitere Informationen darüber, welche Operationen
+bei der Deklaration von Konstanten verwendet werden können.</p>
 <p>Konstanten sind für die gesamte Laufzeit eines Programms in dem
 Gültigkeitsbereich gültig, in dem sie deklariert wurden. Damit sind sie eine
 nützliche Wahl für Werte in deiner Anwendungsdomäne, über die mehrere Teile des
@@ -2099,9 +2108,9 @@ mit der Geheimzahl“</a> in Kapitel 2
 gesehen hast, kannst du eine neue Variable mit dem gleichen Namen wie eine
 vorherige Variable deklarieren. Die Rust-Entwickler sagen, dass die erste
 Variable von der zweiten <em>beschattet</em> (shadowed) wird, was bedeutet, dass der
-Wert der zweiten Variable das ist, was erscheint, wenn die Variable verwendet
-wird. Wir können eine Variable beschatten, indem wir denselben Variablenamen
-verwenden und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
+Wert der zweiten Variable das ist, was das Programm sieht, wenn die Variable
+verwendet wird. Wir können eine Variable beschatten, indem wir denselben
+Variablenamen verwenden und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 5;
@@ -2518,9 +2527,9 @@ wie hier gezeigt:</p>
 auf den Wert <code>3</code> gesetzt werden. Dies ist dasselbe wie das Schreiben von
 <code>let a = [3, 3, 3, 3, 3];</code>, aber in einer prägnanteren Weise.</p>
 <h5 id="zugriff-auf-array-elemente"><a class="header" href="#zugriff-auf-array-elemente">Zugriff auf Array-Elemente</a></h5>
-<p>Ein Array ist ein einzelnes Stück Speicher, das auf den Stapelspeicher gelegt
-wird. Du kannst auf Elemente eines Arrays mit Hilfe der Indizierung wie folgt
-zugreifen:</p>
+<p>Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
+der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
+Hilfe der Indizierung wie folgt zugreifen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [1, 2, 3, 4, 5];
@@ -2580,7 +2589,7 @@ ist. Wenn der Index größer oder gleich der Länge ist, wird Rust das Programm
 abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
 Fall, weil der Compiler unmöglich wissen kann, welchen Wert ein Benutzer später
 eingeben wird, wenn er den Code ausführt.</p>
-<p>Dies ist das erste Beispiel für die Umsetzung der Sicherheitsprinzipien von
+<p>Dies ist ein Beispiel für die Umsetzung der Speichersicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
 Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,
@@ -2665,23 +2674,23 @@ Klammern in der Formatierungszeichenkette befand.</p>
 <p>In Funktionssignaturen <em>musst</em> du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
-fast nie an anderer Stelle im Code benötigt, um herauszufinden, was du meinst.</p>
+fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
+meinst.</p>
 <p>Wenn eine Funktion mehrere Parameter haben soll, trenne die
 Parameterdeklarationen mit Kommas, so wie hier:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    another_function(5, 6);
+    print_labeled_measurement(5, 'h');
 }
 
-fn another_function(x: i32, y: i32) {
-    println!(&quot;Der Wert von x ist: {}&quot;, x);
-    println!(&quot;Der Wert von y ist: {}&quot;, y);
+fn print_labeled_measurement(value: i32, unit_label: char) {
+    println!(&quot;Das Maß ist: {}{}&quot;, value, unit_label);
 }
 </code></pre></pre>
-<p>Dieses Beispiel erzeugt eine Funktion mit zwei Parametern, die beide vom Typ
-<code>i32</code> sind. Die Funktion gibt dann die Werte in ihren beiden Parametern aus.
-Beachte, dass nicht alle Funktionsparameter vom gleichen Typ sein müssen, das
-ist in diesem Beispiel nur zufällig so.</p>
+<p>Dieses Beispiel erzeugt eine Funktion namens <code>print_labeled_measurement</code> mit
+zwei Parametern. Der erste Parameter heißt <code>value</code> und ist ein <code>i32</code>. Der
+zweite heißt <code>unit_label</code> und ist vom Typ <code>char</code>. Die Funktion gibt dann einen
+Text aus, der sowohl <code>value</code> als auch <code>unit_label</code> enthält.</p>
 <p>Lass uns versuchen, diesen Code auszuführen. Ersetze das Programm, das sich
 derzeit in der Datei <em>src/main.rs</em> deines „functions“-Projekts befindet, durch
 das vorhergehende Beispiel und führe es mit <code>cargo run</code> aus:</p>
@@ -2689,12 +2698,10 @@ das vorhergehende Beispiel und führe es mit <code>cargo run</code> aus:</p>
    Compiling functions v0.1.0 (file:///projects/functions)
     Finished dev [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/functions`
-Der Wert von x ist: 5
-Der Wert von y ist: 6
+Das Maß ist: 5h
 </code></pre>
-<p>Da wir die Funktion mit <code>5</code> als Wert für <code>x</code> aufgerufen haben und <code>6</code> als Wert
-für <code>y</code> übergeben wird, werden die beiden Zeichenketten mit diesen Werten
-ausgegeben.</p>
+<p>Da wir die Funktion mit <code>5</code> als Wert für <code>value</code> und <code>'h'</code> als Wert für
+<code>unit_label</code> aufgerufen haben, enthält die Programmausgabe diese Werte.</p>
 <h4 id="funktionsrümpfe-enthalten-anweisungen-und-ausdrücke"><a class="header" href="#funktionsrümpfe-enthalten-anweisungen-und-ausdrücke">Funktionsrümpfe enthalten Anweisungen und Ausdrücke</a></h4>
 <p>Funktionsrümpfe bestehen aus einer Reihe von Anweisungen, die optional mit
 einem Ausdruck enden können. Bisher haben wir nur Funktionen ohne einen
@@ -2769,8 +2776,8 @@ woran <code>x</code> gebunden werden kann. Dies unterscheidet sich von dem, was 
 Sprachen wie C und Ruby geschieht, wo die Zuweisung den Wert der Zuweisung
 zurückgibt. In diesen Sprachen kannst du <code>x = y = 6</code> schreiben und sowohl <code>x</code>
 als auch <code>y</code> haben den Wert <code>6</code>; das ist in Rust nicht der Fall.</p>
-<p>Ausdrücke werten zu etwas aus und machen den größten Teil des restlichen Codes
-aus, den du in Rust schreiben wirst. Betrachte eine einfache mathematische
+<p>Ausdrücke werten zu einem Wert aus und machen den größten Teil des restlichen
+Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. <code>5 + 6</code>, die ein Ausdruck ist, der zum Wert <code>11</code> ausgewertet
 wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die <code>6</code>
 in der Anweisung <code>let y = 6;</code> ein Ausdruck, der den Wert <code>6</code> ergibt. Der Aufruf
@@ -2895,7 +2902,7 @@ To learn more, run the command again with --verbose.
 <p>Die Hauptfehlermeldung „nicht übereinstimmende Typen“ („mismatched types“)
 offenbart das Kernproblem dieses Codes. Die Definition der Funktion <code>plus_one</code>
 besagt, dass sie ein <code>i32</code> zurückgibt, aber Anweisungen werden nicht zu einem
-Wert ausgewertet, was durch das leere Tupel <code>()</code> ausgedrückt wird. Daher wird
+Wert ausgewertet, was durch den Einheitstyp <code>()</code> ausgedrückt wird. Daher wird
 nichts zurückgegeben, was der Funktionsdefinition widerspricht und zu einem
 Fehler führt. In dieser Ausgabe gibt Rust eine Meldung aus, die möglicherweise
 helfen kann, dieses Problem zu beheben: Es wird vorgeschlagen, das Semikolon zu
@@ -3348,9 +3355,10 @@ Der Wert ist: 50
 Wert <code>5</code> erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.</p>
 <p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn die Indexlänge falsch ist. Er ist auch langsam, weil der Compiler
-Laufzeitcode erzeugt, der die bedingte Prüfung für jedes Element bei jeder
-Iteration durch die Schleife durchführt.</p>
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
+langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
+der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
+durchführt.</p>
 <p>Als prägnantere Alternative kannst du eine <code>for</code>-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
 wie der Code in Codeblock 3-5 aus.</p>
