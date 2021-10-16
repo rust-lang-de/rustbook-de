@@ -67,7 +67,7 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
   |     ^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &{integer}`
   |
   = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
-  = note: this error originates in a macro outside of the current crate (in Nightly builds, run with -Z external-macro-backtrace for more info)
+  = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z external-macro-backtrace for more info)
 
 error: aborting due to previous error
 

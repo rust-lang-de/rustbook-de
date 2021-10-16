@@ -61,9 +61,9 @@ Schauen wir uns den Funktionsaufruf hier genauer an:
 ```
 
 Die Syntax `&s1` erlaubt es uns, eine Referenz zu erstellen, die auf den Wert
-von `s1` *referenziert*, ihn aber nicht besitzt. Da sie diese nicht besitzt,
-verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz den
-Gültigkeitsbereich verlässt.
+von `s1` *referenziert*, ihn aber nicht besitzt. Da sie diesen nicht besitzt,
+verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz nicht mehr
+benutzt wird.
 
 Ebenso verwendet die Signatur der Funktion das Zeichen `&`, um anzuzeigen, dass
 der Typ des Parameters `s` eine Referenz ist. Lass uns einige erklärende
@@ -87,13 +87,12 @@ fn calculate_length(s: &String) -> usize { // s ist eine Referenz
 
 Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
 der Gültigkeitsbereich aller Funktionsparameter, aber wir lassen nicht
-verfallen, worauf die Referenz verweist, wenn sie den Gültigkeitsbereich
-verlässt, weil wir keine Eigentümerschaft haben. Wenn Funktionen statt der
-tatsächlichen Werte Referenzen als Parameter haben, brauchen wir die Werte
-nicht zurückzugeben, um die Eigentümerschaft zurückzugeben, denn wir hatten nie
-die Eigentümerschaft.
+verfallen, worauf die Referenz verweist, wenn `s` nicht mehr benutzt wird, weil
+wir keine Eigentümerschaft haben. Wenn Funktionen statt der tatsächlichen Werte
+Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
+die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
 
-Referenzen als Funktionsparameter bezeichnen wir als *Ausleihen* (borrowing).
+Wir nennen den Vorgang des Erstellens einer Referenz *Ausleihen* (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben.
 
@@ -144,8 +143,8 @@ Referenz haben.
 
 ### Veränderliche Referenzen
 
-Wir können den Fehler im Code von Codeblock 4-6 mit nur einer kleinen Änderung
-beheben:
+Wir können den Fehler im Code von Codeblock 4-6 mit nur wenigen kleinen
+Änderungen beheben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -162,12 +161,13 @@ fn change(some_string: &mut String) {
 ```
 
 Zuerst mussten wir `s` ändern, um `mut` zu sein. Dann mussten wir eine
-veränderliche Referenz mit `&mut s` erstellen und eine veränderliche Referenz
-mit `some_string: &mut String` entgegennehmen.
+veränderliche Referenz mit `&mut s` erstellen, wo wir die Funktion `change`
+aufrufen, und die Funktionssignatur aktualisieren, um eine veränderliche
+Referenz mit `some_string: &mut String` entgegenzunehmen.
 
 Veränderliche Referenzen haben jedoch eine große Einschränkung: Du kannst nur
-eine veränderliche Referenz auf einen bestimmten Datenwert in einem bestimmten
-Gültigkeitsbereich haben. Dieser Code wird fehlschlagen:
+eine veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit
+haben. Dieser Code wird fehlschlagen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -204,9 +204,17 @@ error: could not compile `ownership`
 To learn more, run the command again with --verbose.
 ```
 
-Diese Beschränkung erlaubt das Verändern von Werten, aber auf eine sehr
-kontrollierte Weise. Das ist etwas, womit neue Rust-Entwickler zu kämpfen
-haben, denn in den meisten Sprachen kann man verändern, wann immer man will.
+Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
+als einmal zur gleichen Zeit als veränderlich ausleihen können. Die erste
+veränderliche Ausleihe ist in `r1` und muss beibehalten werden, bis sie in
+`println!` verwendet wird, aber zwischen dem Erstellen dieser veränderlichen
+Referenz und ihrer Verwendung haben wir versucht, eine andere veränderliche
+Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
+
+Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
+kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
+in den meisten Sprachen kann man verändern wann immer man will.
 
 Diese Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
 Kompilierzeit verhindern kann. Eine *Daten-Wettlaufsituation* (data race) ist
@@ -285,8 +293,8 @@ Möglichkeit hat, das Lesen der Daten durch andere zu beeinflussen.
 Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
-unveränderlichen Referenzen vor der Einführung der veränderlichen Referenz
-erfolgt:
+unveränderlichen Referenzen in `println!` vor der Einführung der veränderlichen
+Referenz erfolgt:
 
 ```rust,edition2018
 let mut s = String::from("Hallo");
@@ -303,7 +311,11 @@ println!("{}", r3);
 Die Gültigkeitsbereiche der unveränderlichen Referenzen `r1` und `r2` enden
 nach dem `println!`, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig.
+überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
+Gültigkeitsbereichs nicht mehr verwendet wird, wird als nicht-lexikalische
+Lebensdauer (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
+darüber in [The Edition Guide][nll] lesen.
 
 Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
@@ -424,3 +436,5 @@ Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
 
 Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
 Anteilstypen (slice).
+
+[nll]: https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html

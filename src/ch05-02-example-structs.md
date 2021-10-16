@@ -171,8 +171,8 @@ Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
 Es wäre schön, eine Instanz von `Rectangle` samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das Makro `println!` zu verwenden, das wir in den vorangegangenen
-Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
+versuchen wir das [Makro `println!`][println] zu verwenden, das wir in den
+vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -296,12 +296,73 @@ rect1 ist Rectangle {
 }
 ```
 
-Rust stellt uns eine Reihe von Merkmalen zur Verfügung, die wir mit der
-Annotation `derive` verwenden können, um damit unseren benutzerdefinierten
-Typen nützliches Verhalten zu verleihen. Diese Merkmale und ihr Verhalten sind
-in [Anhang C][app-c] aufgeführt. In Kapitel 10 werden wir behandeln, wie man
-diese Merkmale mit benutzerdefiniertem Verhalten implementiert und wie man
-eigene Merkmale erstellt.
+Eine andere Möglichkeit, einen Wert im `Debug`-Format auszugeben, ist die
+Verwendung des [Makros `dbg!`][dbg]. Das Makro `dbg!` übernimmt die
+Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
+der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
+Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
+des Makros `dbg!` schreibt in den Standard-Fehler-Konsolenstrom (`stderr`), im
+Gegensatz zu `println!`, das in den Standard-Ausgabe-Konsolenstrom (`stdout`)
+schreibt. Wir werden mehr über `stderr` und `stdout` im Abschnitt
+[„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
+schreiben“ in Kapitel 12][err] erfahren. Hier ist ein Beispiel, bei dem wir am
+Wert interessiert sind, der dem Feld `width` zugewiesen wird, als auch am Wert
+der gesamten Struktur in `rect1`:
+
+```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let scale = 2;
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 50,
+    };
+
+    dbg!(&rect1);
+}
+```
+
+Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` die
+Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld `width`
+denselben Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen
+nicht, dass `dbg!` die Eigentümerschaft von `rect1` übernimmt, also übergeben
+wir `dbg!` eine Referenz im nächsten Aufruf. So sieht die Ausgabe dieses
+Beispiels aus:
+
+```console
+$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+     Running `target/debug/rectangles`
+[src/main.rs:10] 30 * scale = 60
+[src/main.rs:14] &rect1 = Rectangle {
+    width: 60,
+    height: 50,
+}
+```
+
+Wir können sehen, dass der erste Teil der Ausgabe von *src/main.rs* Zeile 10
+stammt, wo wir den Ausdruck `30 * scale` debuggen, und der resultierende Wert
+ist 60 (die `Debug`-Formatierung, die für Ganzzahlen implementiert ist, gibt
+nur deren Wert aus). Der `dbg!`-Aufruf in Zeile 14 von *src/main.rs* gibt den
+Wert von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe
+verwendet die hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro
+`dbg!` kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
+Code macht!
+
+Zusätzlich zum Merkmal `Debug` hat Rust eine Reihe von Merkmalen für uns
+bereitgestellt, die wir mit dem Attribut `derive` verwenden können und die
+unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
+Merkmale und ihr Verhalten sind in [Anhang C][app-c] aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Attribute als `derive`; für weitere Informationen, siehe den [Abschnitt
+„Attribute“ in der Rust-Referenz][attributes].
 
 Unsere Funktion `area` ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
@@ -310,4 +371,8 @@ an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
 *Methode* `area` unseres Typs `Rectangle` verwandeln können.
 
 [app-c]: appendix-03-derivable-traits.md
+[attributes]: https://doc.rust-lang.org/reference/attributes.html
+[dbg]: https://doc.rust-lang.org/std/macro.dbg.html
+[err]: ch12-06-writing-to-stderr-instead-of-stdout.html
+[println]: https://doc.rust-lang.org/std/macro.println.html
 [the-tuple-type]: ch03-02-data-types.html#der-tupel-typ
