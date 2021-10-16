@@ -208,10 +208,11 @@ das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das zweit
 ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
 zu berechnen.</p>
 <p>Da die Methode <code>enumerate</code> ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen, so wie überall in Rust. In der <code>for</code>-Schleife
-spezifizieren wir also ein Muster, das <code>i</code> für den Index im Tupel und <code>&amp;item</code>
-für das einzelne Byte im Tupel hat. Da wir eine Referenz auf das Element aus
-<code>.iter().enumerate()</code> erhalten, verwenden wir <code>&amp;</code> im Muster.</p>
+um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+Mustern befassen. In der <code>for</code>-Schleife spezifizieren wir also ein Muster, das
+<code>i</code> für den Index im Tupel und <code>&amp;item</code> für das einzelne Byte im Tupel hat. Da
+wir eine Referenz auf das Element aus <code>.iter().enumerate()</code> erhalten, verwenden
+wir <code>&amp;</code> im Muster.</p>
 <p>Innerhalb der <code>for</code>-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
@@ -453,10 +454,13 @@ To learn more, run the command again with --verbose.
 <p>Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
 unveränderliche Referenz auf etwas haben, nicht noch eine veränderliche
 Referenz anlegen können. Da <code>clear</code> den <code>String</code> abschneiden muss, muss es
-eine veränderliche Referenz erhalten. Rust erlaubt dies nicht und die
-Kompilierung schlägt fehl. Rust hat nicht nur die Benutzung unserer API
-vereinfacht, sondern auch eine ganze Klasse von Fehlern zur Kompilierzeit
-beseitigt!</p>
+eine veränderliche Referenz erhalten. Das <code>println!</code> nach dem Aufruf von
+<code>clear</code> verwendet die Referenz in <code>word</code>, sodass die unveränderliche Referenz
+zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
+veränderliche Referenz in <code>clear</code> und die unveränderliche Referenz in <code>word</code>
+nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
+nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
+von Fehlern zur Kompilierzeit beseitigt!</p>
 <h4 id="zeichenkettenliterale-sind-anteilstypen"><a class="header" href="#zeichenkettenliterale-sind-anteilstypen">Zeichenkettenliterale sind Anteilstypen</a></h4>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,

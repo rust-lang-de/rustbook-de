@@ -382,7 +382,26 @@ Tupel <code>()</code> verhalten, das wir im Abschnitt <a href="ch03-02-data-type
 haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
 Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
-besprechen.</p>
+besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
+Unit-Struktur namens <code>AlwaysEqual</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct AlwaysEqual;
+
+let subject = AlwaysEqual;
+<span class="boring">}
+</span></code></pre></pre>
+<p>Um <code>AlwaysEqual</code> zu definieren, verwenden wir das Schlüsselwort <code>struct</code>, den
+gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
+sind nicht erforderlich! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der
+Variable <code>subject</code> auf ähnliche Weise erhalten: Mit dem Namen, den wir
+definiert haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
+implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
+ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
+für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
+umzusetzen! In Kapitel 10 wirst du sehen, wie man Merkmale definiert und sie
+für jeden Typ implementiert, auch für unit-ähnliche Strukturen.</p>
 <blockquote>
 <h3 id="eigentümerschaft-von-strukturdaten"><a class="header" href="#eigentümerschaft-von-strukturdaten">Eigentümerschaft von Strukturdaten</a></h3>
 <p>In der Strukturdefinition <code>User</code> in Codeblock 5-1 haben wir den Typ <code>String</code>

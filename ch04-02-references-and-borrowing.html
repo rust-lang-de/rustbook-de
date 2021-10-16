@@ -177,9 +177,9 @@ sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.</p>
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>Die Syntax <code>&amp;s1</code> erlaubt es uns, eine Referenz zu erstellen, die auf den Wert
-von <code>s1</code> <em>referenziert</em>, ihn aber nicht besitzt. Da sie diese nicht besitzt,
-verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz den
-Gültigkeitsbereich verlässt.</p>
+von <code>s1</code> <em>referenziert</em>, ihn aber nicht besitzt. Da sie diesen nicht besitzt,
+verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz nicht mehr
+benutzt wird.</p>
 <p>Ebenso verwendet die Signatur der Funktion das Zeichen <code>&amp;</code>, um anzuzeigen, dass
 der Typ des Parameters <code>s</code> eine Referenz ist. Lass uns einige erklärende
 Anmerkungen ergänzen:</p>
@@ -199,12 +199,11 @@ Anmerkungen ergänzen:</p>
 </code></pre></pre>
 <p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie
 der Gültigkeitsbereich aller Funktionsparameter, aber wir lassen nicht
-verfallen, worauf die Referenz verweist, wenn sie den Gültigkeitsbereich
-verlässt, weil wir keine Eigentümerschaft haben. Wenn Funktionen statt der
-tatsächlichen Werte Referenzen als Parameter haben, brauchen wir die Werte
-nicht zurückzugeben, um die Eigentümerschaft zurückzugeben, denn wir hatten nie
-die Eigentümerschaft.</p>
-<p>Referenzen als Funktionsparameter bezeichnen wir als <em>Ausleihen</em> (borrowing).
+verfallen, worauf die Referenz verweist, wenn <code>s</code> nicht mehr benutzt wird, weil
+wir keine Eigentümerschaft haben. Wenn Funktionen statt der tatsächlichen Werte
+Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
+die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.</p>
+<p>Wir nennen den Vorgang des Erstellens einer Referenz <em>Ausleihen</em> (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben.</p>
 <p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
@@ -244,8 +243,8 @@ To learn more, run the command again with --verbose.
 unveränderlich. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
 Referenz haben.</p>
 <h3 id="veränderliche-referenzen"><a class="header" href="#veränderliche-referenzen">Veränderliche Referenzen</a></h3>
-<p>Wir können den Fehler im Code von Codeblock 4-6 mit nur einer kleinen Änderung
-beheben:</p>
+<p>Wir können den Fehler im Code von Codeblock 4-6 mit nur wenigen kleinen
+Änderungen beheben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut s = String::from(&quot;Hallo&quot;);
@@ -258,11 +257,12 @@ fn change(some_string: &amp;mut String) {
 }
 </code></pre></pre>
 <p>Zuerst mussten wir <code>s</code> ändern, um <code>mut</code> zu sein. Dann mussten wir eine
-veränderliche Referenz mit <code>&amp;mut s</code> erstellen und eine veränderliche Referenz
-mit <code>some_string: &amp;mut String</code> entgegennehmen.</p>
+veränderliche Referenz mit <code>&amp;mut s</code> erstellen, wo wir die Funktion <code>change</code>
+aufrufen, und die Funktionssignatur aktualisieren, um eine veränderliche
+Referenz mit <code>some_string: &amp;mut String</code> entgegenzunehmen.</p>
 <p>Veränderliche Referenzen haben jedoch eine große Einschränkung: Du kannst nur
-eine veränderliche Referenz auf einen bestimmten Datenwert in einem bestimmten
-Gültigkeitsbereich haben. Dieser Code wird fehlschlagen:</p>
+eine veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit
+haben. Dieser Code wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -296,9 +296,16 @@ error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 </code></pre>
-<p>Diese Beschränkung erlaubt das Verändern von Werten, aber auf eine sehr
-kontrollierte Weise. Das ist etwas, womit neue Rust-Entwickler zu kämpfen
-haben, denn in den meisten Sprachen kann man verändern, wann immer man will.</p>
+<p>Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir <code>s</code> nicht mehr
+als einmal zur gleichen Zeit als veränderlich ausleihen können. Die erste
+veränderliche Ausleihe ist in <code>r1</code> und muss beibehalten werden, bis sie in
+<code>println!</code> verwendet wird, aber zwischen dem Erstellen dieser veränderlichen
+Referenz und ihrer Verwendung haben wir versucht, eine andere veränderliche
+Referenz in <code>r2</code> zu erstellen, der die gleichen Daten wie <code>r1</code> ausleiht.</p>
+<p>Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
+kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
+in den meisten Sprachen kann man verändern wann immer man will.</p>
 <p>Diese Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
 Kompilierzeit verhindern kann. Eine <em>Daten-Wettlaufsituation</em> (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
@@ -373,8 +380,8 @@ Möglichkeit hat, das Lesen der Daten durch andere zu beeinflussen.</p>
 <p>Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
-unveränderlichen Referenzen vor der Einführung der veränderlichen Referenz
-erfolgt:</p>
+unveränderlichen Referenzen in <code>println!</code> vor der Einführung der veränderlichen
+Referenz erfolgt:</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -392,7 +399,11 @@ println!(&quot;{}&quot;, r3);
 <p>Die Gültigkeitsbereiche der unveränderlichen Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig.</p>
+überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
+Gültigkeitsbereichs nicht mehr verwendet wird, wird als nicht-lexikalische
+Lebensdauer (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
+darüber in <a href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a> lesen.</p>
 <p>Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo

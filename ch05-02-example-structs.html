@@ -265,8 +265,8 @@ Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die 
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
 <p>Es wäre schön, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das Makro <code>println!</code> zu verwenden, das wir in den vorangegangenen
-Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
+versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
+vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct Rectangle {
     width: u32,
@@ -361,12 +361,66 @@ rect1 ist Rectangle {
     height: 50,
 }
 </code></pre>
-<p>Rust stellt uns eine Reihe von Merkmalen zur Verfügung, die wir mit der
-Annotation <code>derive</code> verwenden können, um damit unseren benutzerdefinierten
-Typen nützliches Verhalten zu verleihen. Diese Merkmale und ihr Verhalten sind
-in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10 werden wir behandeln, wie man
-diese Merkmale mit benutzerdefiniertem Verhalten implementiert und wie man
-eigene Merkmale erstellt.</p>
+<p>Eine andere Möglichkeit, einen Wert im <code>Debug</code>-Format auszugeben, ist die
+Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>. Das Makro <code>dbg!</code> übernimmt die
+Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
+der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
+Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
+des Makros <code>dbg!</code> schreibt in den Standard-Fehler-Konsolenstrom (<code>stderr</code>), im
+Gegensatz zu <code>println!</code>, das in den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>)
+schreibt. Wir werden mehr über <code>stderr</code> und <code>stdout</code> im Abschnitt
+<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
+schreiben“ in Kapitel 12</a> erfahren. Hier ist ein Beispiel, bei dem wir am
+Wert interessiert sind, der dem Feld <code>width</code> zugewiesen wird, als auch am Wert
+der gesamten Struktur in <code>rect1</code>:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let scale = 2;
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 50,
+    };
+
+    dbg!(&amp;rect1);
+}
+</code></pre></pre>
+<p>Wir können <code>dbg!</code> um den Ausdruck <code>30 * scale</code> setzen, und da <code>dbg!</code> die
+Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld <code>width</code>
+denselben Wert, als wenn wir den <code>dbg!</code>-Aufruf dort nicht hätten. Wir wollen
+nicht, dass <code>dbg!</code> die Eigentümerschaft von <code>rect1</code> übernimmt, also übergeben
+wir <code>dbg!</code> eine Referenz im nächsten Aufruf. So sieht die Ausgabe dieses
+Beispiels aus:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+     Running `target/debug/rectangles`
+[src/main.rs:10] 30 * scale = 60
+[src/main.rs:14] &amp;rect1 = Rectangle {
+    width: 60,
+    height: 50,
+}
+</code></pre>
+<p>Wir können sehen, dass der erste Teil der Ausgabe von <em>src/main.rs</em> Zeile 10
+stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der resultierende Wert
+ist 60 (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt
+nur deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den
+Wert von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe
+verwendet die hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro
+<code>dbg!</code> kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
+Code macht!</p>
+<p>Zusätzlich zum Merkmal <code>Debug</code> hat Rust eine Reihe von Merkmalen für uns
+bereitgestellt, die wir mit dem Attribut <code>derive</code> verwenden können und die
+unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
+Merkmale und ihr Verhalten sind in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Attribute als <code>derive</code>; für weitere Informationen, siehe den <a href="https://doc.rust-lang.org/reference/attributes.html">Abschnitt
+„Attribute“ in der Rust-Referenz</a>.</p>
 <p>Unsere Funktion <code>area</code> ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 <code>Rectangle</code> zu verbinden, da es zu keinem anderen Typ passt. Schauen wir uns

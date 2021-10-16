@@ -166,19 +166,23 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">Codeblock 5-13: Methode <code>area</code> der Struktur <code>Rectangle</code></span></p>
 <p>Um die Funktion im Kontext von <code>Rectangle</code> zu definieren, beginnen wir mit dem
-Block <code>impl</code> (Implementierung). Dann verschieben wir die Funktion <code>area</code> in die
+Block <code>impl</code> (Implementierung) für <code>Rectangle</code>. Alles in diesem Block wird mit
+dem Typ <code>Rectangle</code> assoziiert. Dann verschieben wir die Funktion <code>area</code> in die
 geschweiften Klammern von <code>impl</code>, ändern den ersten (und in diesem Fall
-einzigen) Parameter zu <code>self</code> und passen den Methodenrumpf entsprechend an. In 
+einzigen) Parameter zu <code>self</code> und passen den Methodenrumpf entsprechend an. In
 <code>main</code>, wo wir die Funktion <code>area</code> aufrufen und <code>rect1</code> als Argument übergeben,
 können wir stattdessen die <em>Methodensyntax</em> verwenden, um die Methode <code>area</code>
 auf unserer <code>Rectangle</code>-Instanz aufzurufen. Die Methodensyntax bezieht sich auf
 eine Instanz: Wir ergänzen einen Punkt, gefolgt vom Methodennamen, Klammern und
 Argumenten.</p>
-<p>In der Signatur von <code>area</code> verwenden wir <code>&amp;self</code> anstelle von
-<code>rectangle: &amp;Rectangle</code>, denn Rust weiß, dass <code>self</code> den Typ <code>Rectangle</code> hat,
-da die Methode innerhalb des Kontextes <code>impl Rectangle</code> liegt. Beachte, dass
-wir immer noch das <code>&amp;</code> vor <code>self</code> verwenden müssen, so wie wir es bei
-<code>&amp;Rectangle</code> getan haben. Methoden können die Eigentümerschaft von <code>self</code>
+<p>In der Signatur von <code>area</code> verwenden wir <code>&amp;self</code> anstelle von <code>rectangle: &amp;Rectangle</code>. Das <code>&amp;self</code> ist eigentlich die Abkürzung für <code>self: &amp;Self</code>.
+Innerhalb eines <code>impl</code>-Blocks ist der Typ <code>Self</code> ein Alias für den Typ, für den
+der <code>impl</code>-Block steht. Methoden müssen einen Parameter mit dem Namen <code>self</code>
+vom Typ <code>Self</code> als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+indem du nur den Namen <code>self</code> an der Stelle des ersten Parameters angibst.
+Beachte, dass wir immer noch das <code>&amp;</code> vor der Abkürzung <code>self</code> verwenden müssen,
+um anzuzeigen, dass diese Methode die Instanz <code>Self</code> ausleiht, genau wie in
+<code>Rechteck: &amp;Rechteck</code>. Methoden können die Eigentümerschaft von <code>self</code>
 übernehmen, <code>self</code> unveränderlich ausleihen, wie wir es hier getan haben, oder
 <code>self</code> veränderlich ausleihen, so wie bei jedem anderen Parameter auch.</p>
 <p>Wir haben hier <code>&amp;self</code> aus dem gleichen Grund gewählt wie <code>&amp;Rectangle</code> in der
@@ -333,18 +337,19 @@ erhalten wir die gewünschte Ausgabe. Methoden können mehrere Parameter haben,
 die wir in der Signatur nach dem Parameter <code>self</code> angeben. Diese Parameter
 funktionieren genau wie Parameter in Funktionen.</p>
 <h3 id="assoziierte-funktionen"><a class="header" href="#assoziierte-funktionen">Assoziierte Funktionen</a></h3>
-<p>Eine weitere nützliche Funktionalität von <code>impl</code>-Blöcken ist, dass wir darin
-auch Funktionen <em>ohne</em> den Parameter <code>self</code> definieren können. Diese werden
-<em>assoziierte Funktionen</em> (associated functions) genannt, weil sie mit der
-Struktur assoziiert sind. Dabei handelt es sich um Funktionen, nicht um
-Methoden, weil sie nicht auf einer Instanz der Struktur arbeiten können. Du
-hast bereits die assoziierte Funktion <code>String::from</code> verwendet.</p>
-<p>Assoziierte Funktionen werden oft als Konstruktoren verwendet, die eine neue
-Instanz der Struktur zurückgeben. Zum Beispiel könnten wir eine assoziierte
-Funktion bereitstellen, die einen eindimensionalen Parameter hat und diesen
-sowohl als Breite als auch als Höhe verwendet, wodurch auf einfache Weise ein
-quadratisches <code>Rectangle</code> erzeugt werden kann, ohne denselben Wert zweimal
-angeben zu müssen:</p>
+<p>Alle Funktionen, die innerhalb eines <code>impl</code>-Blocks definiert sind, werden
+<em>assoziierte Funktionen</em> genannt, weil sie mit dem Typ assoziiert sind, der
+nach dem <code>impl</code> benannt ist. Wir können assoziierte Funktionen definieren, die
+nicht <code>self</code> als ihren ersten Parameter haben (und somit keine Methoden sind),
+weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
+bereits eine solche Funktion verwendet, die Funktion <code>String::from</code>, die für
+den Typ <code>String</code> definiert ist.</p>
+<p>Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
+verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
+wir eine assoziierte Funktion bereitstellen, die einen eindimensionalen
+Parameter hat und diesen sowohl als Breite als auch als Höhe verwendet, wodurch
+auf einfache Weise ein quadratisches <code>Rectangle</code> erzeugt werden kann, ohne
+denselben Wert zweimal angeben zu müssen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
@@ -420,10 +425,10 @@ Typen und Merkmale behandeln.</p>
 <p>Mit Strukturen kannst du benutzerdefinierte Typen erstellen, die in deiner
 Domäne eine Bedeutung haben. Durch die Verwendung von Strukturen kannst du
 zusammengehörige Datenteile miteinander verbunden halten und jedes Teil
-benennen, um deinen Code verständlich zu machen. Mit Methoden kannst du das
-Verhalten von Instanzen deiner Strukturen spezifizieren und mit assoziierten
-Funktionen kannst du Funktionalität zum Namensraum deiner Struktur hinzufügen,
-die ohne Instanz auskommen.</p>
+benennen, um deinen Code verständlich zu machen. In <code>impl</code>-Blöcken kannst du
+Funktionen definieren, die mit deinem Typ assoziiert sind, und Methoden sind
+eine Art assoziierte Funktion, mit der du das Verhalten von Instanzen deiner
+Strukturen festlegen kannst.</p>
 <p>Aber Strukturen sind nicht die einzige Möglichkeit, benutzerdefinierte Typen zu
 definieren: Wenden wir uns der Rust-Funktionalität Aufzählung zu, um ein
 weiteres Werkzeug in deinen Werkzeugkasten zu legen.</p>

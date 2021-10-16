@@ -281,11 +281,13 @@ auf diesem Verständnis aufbauen, indem wir den Typ <code>String</code> einführ
 <h3 id="der-typ-string"><a class="header" href="#der-typ-string">Der Typ <code>String</code></a></h3>
 <p>Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
-Kapitel 3 behandelt haben. Die zuvor behandelten Typen werden alle auf den
-Stapelspeicher gelegt und vom Stapelspeicher entfernt, wenn ihr
-Gültigkeitsbereich beendet ist, aber wir wollen uns Daten ansehen, die im
-Haldenspeicher gespeichert sind, und untersuchen, woher Rust weiß, wann
-es diese Daten aufräumen muss.</p>
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
+werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
+kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
+Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
+muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss.</p>
 <p>Wir werden hier <code>String</code> als Beispiel nehmen und uns auf die Teile von <code>String</code>
 konzentrieren, die sich auf die Eigentümerschaft beziehen. Diese Aspekte gelten
 auch für andere komplexe Datentypen, unabhängig davon, ob sie von der
@@ -298,10 +300,11 @@ verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ wird im Haldenspeicher
-allokiert und kann so eine Textmenge speichern, die uns zur Kompilierzeit
-unbekannt ist. Du kannst einen <code>String</code> aus einem Zeichenkettenliteral
-erzeugen, indem du die Funktion <code>from</code> wie folgt verwendest:</p>
+zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ verwaltet Daten, die auf dem
+Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
+zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
+Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
+verwendest:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -464,9 +467,9 @@ einer der Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das
 zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
 was potenziell zu Sicherheitslücken führen kann.</p>
 <p>Um Speichersicherheit zu gewährleisten, gibt es noch ein weiteres Detail, was
-Rust in dieser Situation macht. Anstatt zu versuchen, den allokierten Speicher
-zu kopieren, sieht Rust <code>s1</code> als nicht mehr gültig an, und deshalb muss Rust
-nichts freigeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
+Rust in dieser Situation macht. Nach <code>let s2 = s1</code> betrachtet Rust <code>s1</code> als
+nicht mehr gültig. Daher braucht Rust nichts freizugeben, wenn <code>s1</code> den
+Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
@@ -642,7 +645,7 @@ Beispiel mit ähnlichen Anmerkungen wie die in Codeblock 4-3.</p>
                                         // und der Rückgabewert wird in s3 verschoben
 
 } // Hier verlässt s3 den Gültigkeitsbereich und wird aufgeräumt.
-  // s2 verlässt den Gültigkeitsbereich, wurde aber verschoben, es passiert also nichts.
+  // s2 wurde verschoben, es passiert also nichts.
   // s1 verlässt den Gültigkeitsbereich und wird aufgeräumt.
 
 fn gives_ownership() -&gt; String {        // gives_ownership verschiebt seinen
@@ -655,7 +658,7 @@ fn gives_ownership() -&gt; String {        // gives_ownership verschiebt seinen
                                         // wird an die aufrufende Funktion verschoben
 }
 
-// takes_and_gives_back nimmt einen String entgegen und gibt einen zurück
+// Diese Funktion nimmt einen String entgegen und gibt einen zurück
 fn takes_and_gives_back(a_string: String) -&gt; String { // a_string kommt in den
                                                       // Gültigkeitsbereich
 

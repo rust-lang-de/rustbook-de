@@ -129,7 +129,7 @@
                     <main>
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.53 oder später mit
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.54 oder später mit
 <code>edition=&quot;2018&quot;</code> in <em>Cargo.toml</em> in allen Projekten verwendest, um Rust 2018
 Idiome zu verwenden. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“</a> zum Installieren
 und Aktualisieren von Rust sowie <a href="appendix-05-editions.html">Anhang E</a> zu Informationen zu den
@@ -3244,7 +3244,8 @@ aufwärts. Die innere Schleife ohne Name zählt von 10 bis 9 herunter. Das erste
 <code>break</code>, das keinen Namen angibt, beendet nur die innere Schleife. Mit der
 Anweisung <code>break 'counting_up;</code> wird die äußere Schleife verlassen. Dieser Code
 gibt folgendes aus:</p>
-<pre><code class="language-console">   Compiling loops v0.1.0 (file:///projects/loops)
+<pre><code class="language-console">$ cargo run
+   Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.58s
      Running `target/debug/loops`
 count = 0
@@ -3580,11 +3581,13 @@ auf diesem Verständnis aufbauen, indem wir den Typ <code>String</code> einführ
 <h3 id="der-typ-string"><a class="header" href="#der-typ-string">Der Typ <code>String</code></a></h3>
 <p>Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
-Kapitel 3 behandelt haben. Die zuvor behandelten Typen werden alle auf den
-Stapelspeicher gelegt und vom Stapelspeicher entfernt, wenn ihr
-Gültigkeitsbereich beendet ist, aber wir wollen uns Daten ansehen, die im
-Haldenspeicher gespeichert sind, und untersuchen, woher Rust weiß, wann
-es diese Daten aufräumen muss.</p>
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
+werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
+kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
+Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
+muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss.</p>
 <p>Wir werden hier <code>String</code> als Beispiel nehmen und uns auf die Teile von <code>String</code>
 konzentrieren, die sich auf die Eigentümerschaft beziehen. Diese Aspekte gelten
 auch für andere komplexe Datentypen, unabhängig davon, ob sie von der
@@ -3597,10 +3600,11 @@ verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ wird im Haldenspeicher
-allokiert und kann so eine Textmenge speichern, die uns zur Kompilierzeit
-unbekannt ist. Du kannst einen <code>String</code> aus einem Zeichenkettenliteral
-erzeugen, indem du die Funktion <code>from</code> wie folgt verwendest:</p>
+zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ verwaltet Daten, die auf dem
+Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
+zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
+Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
+verwendest:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3763,9 +3767,9 @@ einer der Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das
 zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
 was potenziell zu Sicherheitslücken führen kann.</p>
 <p>Um Speichersicherheit zu gewährleisten, gibt es noch ein weiteres Detail, was
-Rust in dieser Situation macht. Anstatt zu versuchen, den allokierten Speicher
-zu kopieren, sieht Rust <code>s1</code> als nicht mehr gültig an, und deshalb muss Rust
-nichts freigeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
+Rust in dieser Situation macht. Nach <code>let s2 = s1</code> betrachtet Rust <code>s1</code> als
+nicht mehr gültig. Daher braucht Rust nichts freizugeben, wenn <code>s1</code> den
+Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
@@ -3941,7 +3945,7 @@ Beispiel mit ähnlichen Anmerkungen wie die in Codeblock 4-3.</p>
                                         // und der Rückgabewert wird in s3 verschoben
 
 } // Hier verlässt s3 den Gültigkeitsbereich und wird aufgeräumt.
-  // s2 verlässt den Gültigkeitsbereich, wurde aber verschoben, es passiert also nichts.
+  // s2 wurde verschoben, es passiert also nichts.
   // s1 verlässt den Gültigkeitsbereich und wird aufgeräumt.
 
 fn gives_ownership() -&gt; String {        // gives_ownership verschiebt seinen
@@ -3954,7 +3958,7 @@ fn gives_ownership() -&gt; String {        // gives_ownership verschiebt seinen
                                         // wird an die aufrufende Funktion verschoben
 }
 
-// takes_and_gives_back nimmt einen String entgegen und gibt einen zurück
+// Diese Funktion nimmt einen String entgegen und gibt einen zurück
 fn takes_and_gives_back(a_string: String) -&gt; String { // a_string kommt in den
                                                       // Gültigkeitsbereich
 
@@ -4047,9 +4051,9 @@ sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.</p>
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>Die Syntax <code>&amp;s1</code> erlaubt es uns, eine Referenz zu erstellen, die auf den Wert
-von <code>s1</code> <em>referenziert</em>, ihn aber nicht besitzt. Da sie diese nicht besitzt,
-verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz den
-Gültigkeitsbereich verlässt.</p>
+von <code>s1</code> <em>referenziert</em>, ihn aber nicht besitzt. Da sie diesen nicht besitzt,
+verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz nicht mehr
+benutzt wird.</p>
 <p>Ebenso verwendet die Signatur der Funktion das Zeichen <code>&amp;</code>, um anzuzeigen, dass
 der Typ des Parameters <code>s</code> eine Referenz ist. Lass uns einige erklärende
 Anmerkungen ergänzen:</p>
@@ -4069,12 +4073,11 @@ Anmerkungen ergänzen:</p>
 </code></pre></pre>
 <p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie
 der Gültigkeitsbereich aller Funktionsparameter, aber wir lassen nicht
-verfallen, worauf die Referenz verweist, wenn sie den Gültigkeitsbereich
-verlässt, weil wir keine Eigentümerschaft haben. Wenn Funktionen statt der
-tatsächlichen Werte Referenzen als Parameter haben, brauchen wir die Werte
-nicht zurückzugeben, um die Eigentümerschaft zurückzugeben, denn wir hatten nie
-die Eigentümerschaft.</p>
-<p>Referenzen als Funktionsparameter bezeichnen wir als <em>Ausleihen</em> (borrowing).
+verfallen, worauf die Referenz verweist, wenn <code>s</code> nicht mehr benutzt wird, weil
+wir keine Eigentümerschaft haben. Wenn Funktionen statt der tatsächlichen Werte
+Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
+die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.</p>
+<p>Wir nennen den Vorgang des Erstellens einer Referenz <em>Ausleihen</em> (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben.</p>
 <p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
@@ -4114,8 +4117,8 @@ To learn more, run the command again with --verbose.
 unveränderlich. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
 Referenz haben.</p>
 <h3 id="veränderliche-referenzen"><a class="header" href="#veränderliche-referenzen">Veränderliche Referenzen</a></h3>
-<p>Wir können den Fehler im Code von Codeblock 4-6 mit nur einer kleinen Änderung
-beheben:</p>
+<p>Wir können den Fehler im Code von Codeblock 4-6 mit nur wenigen kleinen
+Änderungen beheben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut s = String::from(&quot;Hallo&quot;);
@@ -4128,11 +4131,12 @@ fn change(some_string: &amp;mut String) {
 }
 </code></pre></pre>
 <p>Zuerst mussten wir <code>s</code> ändern, um <code>mut</code> zu sein. Dann mussten wir eine
-veränderliche Referenz mit <code>&amp;mut s</code> erstellen und eine veränderliche Referenz
-mit <code>some_string: &amp;mut String</code> entgegennehmen.</p>
+veränderliche Referenz mit <code>&amp;mut s</code> erstellen, wo wir die Funktion <code>change</code>
+aufrufen, und die Funktionssignatur aktualisieren, um eine veränderliche
+Referenz mit <code>some_string: &amp;mut String</code> entgegenzunehmen.</p>
 <p>Veränderliche Referenzen haben jedoch eine große Einschränkung: Du kannst nur
-eine veränderliche Referenz auf einen bestimmten Datenwert in einem bestimmten
-Gültigkeitsbereich haben. Dieser Code wird fehlschlagen:</p>
+eine veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit
+haben. Dieser Code wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -4166,9 +4170,16 @@ error: could not compile `ownership`
 
 To learn more, run the command again with --verbose.
 </code></pre>
-<p>Diese Beschränkung erlaubt das Verändern von Werten, aber auf eine sehr
-kontrollierte Weise. Das ist etwas, womit neue Rust-Entwickler zu kämpfen
-haben, denn in den meisten Sprachen kann man verändern, wann immer man will.</p>
+<p>Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir <code>s</code> nicht mehr
+als einmal zur gleichen Zeit als veränderlich ausleihen können. Die erste
+veränderliche Ausleihe ist in <code>r1</code> und muss beibehalten werden, bis sie in
+<code>println!</code> verwendet wird, aber zwischen dem Erstellen dieser veränderlichen
+Referenz und ihrer Verwendung haben wir versucht, eine andere veränderliche
+Referenz in <code>r2</code> zu erstellen, der die gleichen Daten wie <code>r1</code> ausleiht.</p>
+<p>Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
+gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
+kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
+in den meisten Sprachen kann man verändern wann immer man will.</p>
 <p>Diese Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
 Kompilierzeit verhindern kann. Eine <em>Daten-Wettlaufsituation</em> (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
@@ -4243,8 +4254,8 @@ Möglichkeit hat, das Lesen der Daten durch andere zu beeinflussen.</p>
 <p>Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
-unveränderlichen Referenzen vor der Einführung der veränderlichen Referenz
-erfolgt:</p>
+unveränderlichen Referenzen in <code>println!</code> vor der Einführung der veränderlichen
+Referenz erfolgt:</p>
 <pre><pre class="playground"><code class="language-rust edition2018">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -4262,7 +4273,11 @@ println!(&quot;{}&quot;, r3);
 <p>Die Gültigkeitsbereiche der unveränderlichen Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig.</p>
+überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
+Gültigkeitsbereichs nicht mehr verwendet wird, wird als nicht-lexikalische
+Lebensdauer (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
+darüber in <a href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a> lesen.</p>
 <p>Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
@@ -4444,10 +4459,11 @@ das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das zweit
 ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
 zu berechnen.</p>
 <p>Da die Methode <code>enumerate</code> ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen, so wie überall in Rust. In der <code>for</code>-Schleife
-spezifizieren wir also ein Muster, das <code>i</code> für den Index im Tupel und <code>&amp;item</code>
-für das einzelne Byte im Tupel hat. Da wir eine Referenz auf das Element aus
-<code>.iter().enumerate()</code> erhalten, verwenden wir <code>&amp;</code> im Muster.</p>
+um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+Mustern befassen. In der <code>for</code>-Schleife spezifizieren wir also ein Muster, das
+<code>i</code> für den Index im Tupel und <code>&amp;item</code> für das einzelne Byte im Tupel hat. Da
+wir eine Referenz auf das Element aus <code>.iter().enumerate()</code> erhalten, verwenden
+wir <code>&amp;</code> im Muster.</p>
 <p>Innerhalb der <code>for</code>-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
@@ -4689,10 +4705,13 @@ To learn more, run the command again with --verbose.
 <p>Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
 unveränderliche Referenz auf etwas haben, nicht noch eine veränderliche
 Referenz anlegen können. Da <code>clear</code> den <code>String</code> abschneiden muss, muss es
-eine veränderliche Referenz erhalten. Rust erlaubt dies nicht und die
-Kompilierung schlägt fehl. Rust hat nicht nur die Benutzung unserer API
-vereinfacht, sondern auch eine ganze Klasse von Fehlern zur Kompilierzeit
-beseitigt!</p>
+eine veränderliche Referenz erhalten. Das <code>println!</code> nach dem Aufruf von
+<code>clear</code> verwendet die Referenz in <code>word</code>, sodass die unveränderliche Referenz
+zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
+veränderliche Referenz in <code>clear</code> und die unveränderliche Referenz in <code>word</code>
+nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
+nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
+von Fehlern zur Kompilierzeit beseitigt!</p>
 <h4 id="zeichenkettenliterale-sind-anteilstypen"><a class="header" href="#zeichenkettenliterale-sind-anteilstypen">Zeichenkettenliterale sind Anteilstypen</a></h4>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
@@ -4839,13 +4858,14 @@ Datenteilen zu einer <code>struct</code> ansehen.</p>
 mehrere zusammenhängende Werte, die eine sinnvolle Gruppe bilden,
 zusammenpacken und benennen kann. Wenn du mit einer objektorientierten Sprache
 vertraut bist, ist eine <em>Struktur</em> analog zu den Datenattributen eines Objekts.
-In diesem Kapitel vergleichen wir Tupel mit Strukturen, stellen die
-Unterschiede dar, zeigen die Verwendung von Strukturen und erörtern, wie
-Methoden und zugehörige Funktionen definiert werden, um das mit den Daten einer
-Struktur verbundene Verhalten zu spezifizieren. Strukturen und Aufzählungen
-(enums) (siehe Kapitel 6) sind die Bausteine zum Erstellen neuer Typen in der
-Domäne deines Programms, mit denen du die Vorteile der Kompilierzeit-Typprüfung
-von Rust voll auszuschöpfen kannst.</p>
+In diesem Kapitel vergleichen wir Tupel mit Strukturen. Wir werden zeigen, wie
+man Strukturen definiert und instanziiert. Wir werden besprechen, wie man
+assoziierte Funktionen definiert, insbesondere die Art assoziierter Funktionen,
+die <em>Methoden</em> genannt werden, um das Verhalten eines Strukturtyps zu
+spezifizieren. Strukturen und Aufzählungen (enums) (siehe Kapitel 6) sind die
+Bausteine zum Erstellen neuer Typen in der Domäne deines Programms, mit denen
+du die Vorteile der Kompilierzeit-Typprüfung von Rust voll auszuschöpfen
+kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="strukturen-structs-definieren-und-instanziieren"><a class="header" href="#strukturen-structs-definieren-und-instanziieren">Strukturen (structs) definieren und instanziieren</a></h2>
 <p>Strukturen (structs) ähneln Tupeln, die im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a>
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
@@ -5102,7 +5122,26 @@ Tupel <code>()</code> verhalten, das wir im Abschnitt <a href="ch03-02-data-type
 haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
 Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
-besprechen.</p>
+besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
+Unit-Struktur namens <code>AlwaysEqual</code>:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>struct AlwaysEqual;
+
+let subject = AlwaysEqual;
+<span class="boring">}
+</span></code></pre></pre>
+<p>Um <code>AlwaysEqual</code> zu definieren, verwenden wir das Schlüsselwort <code>struct</code>, den
+gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
+sind nicht erforderlich! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der
+Variable <code>subject</code> auf ähnliche Weise erhalten: Mit dem Namen, den wir
+definiert haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
+implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
+ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
+für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
+umzusetzen! In Kapitel 10 wirst du sehen, wie man Merkmale definiert und sie
+für jeden Typ implementiert, auch für unit-ähnliche Strukturen.</p>
 <blockquote>
 <h3 id="eigentümerschaft-von-strukturdaten"><a class="header" href="#eigentümerschaft-von-strukturdaten">Eigentümerschaft von Strukturdaten</a></h3>
 <p>In der Strukturdefinition <code>User</code> in Codeblock 5-1 haben wir den Typ <code>String</code>
@@ -5312,8 +5351,8 @@ Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die 
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
 <p>Es wäre schön, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das Makro <code>println!</code> zu verwenden, das wir in den vorangegangenen
-Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
+versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
+vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct Rectangle {
     width: u32,
@@ -5408,12 +5447,66 @@ rect1 ist Rectangle {
     height: 50,
 }
 </code></pre>
-<p>Rust stellt uns eine Reihe von Merkmalen zur Verfügung, die wir mit der
-Annotation <code>derive</code> verwenden können, um damit unseren benutzerdefinierten
-Typen nützliches Verhalten zu verleihen. Diese Merkmale und ihr Verhalten sind
-in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10 werden wir behandeln, wie man
-diese Merkmale mit benutzerdefiniertem Verhalten implementiert und wie man
-eigene Merkmale erstellt.</p>
+<p>Eine andere Möglichkeit, einen Wert im <code>Debug</code>-Format auszugeben, ist die
+Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>. Das Makro <code>dbg!</code> übernimmt die
+Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
+der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
+Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
+des Makros <code>dbg!</code> schreibt in den Standard-Fehler-Konsolenstrom (<code>stderr</code>), im
+Gegensatz zu <code>println!</code>, das in den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>)
+schreibt. Wir werden mehr über <code>stderr</code> und <code>stdout</code> im Abschnitt
+<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
+schreiben“ in Kapitel 12</a> erfahren. Hier ist ein Beispiel, bei dem wir am
+Wert interessiert sind, der dem Feld <code>width</code> zugewiesen wird, als auch am Wert
+der gesamten Struktur in <code>rect1</code>:</p>
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let scale = 2;
+    let rect1 = Rectangle {
+        width: dbg!(30 * scale),
+        height: 50,
+    };
+
+    dbg!(&amp;rect1);
+}
+</code></pre></pre>
+<p>Wir können <code>dbg!</code> um den Ausdruck <code>30 * scale</code> setzen, und da <code>dbg!</code> die
+Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld <code>width</code>
+denselben Wert, als wenn wir den <code>dbg!</code>-Aufruf dort nicht hätten. Wir wollen
+nicht, dass <code>dbg!</code> die Eigentümerschaft von <code>rect1</code> übernimmt, also übergeben
+wir <code>dbg!</code> eine Referenz im nächsten Aufruf. So sieht die Ausgabe dieses
+Beispiels aus:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+     Running `target/debug/rectangles`
+[src/main.rs:10] 30 * scale = 60
+[src/main.rs:14] &amp;rect1 = Rectangle {
+    width: 60,
+    height: 50,
+}
+</code></pre>
+<p>Wir können sehen, dass der erste Teil der Ausgabe von <em>src/main.rs</em> Zeile 10
+stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der resultierende Wert
+ist 60 (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt
+nur deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den
+Wert von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe
+verwendet die hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro
+<code>dbg!</code> kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
+Code macht!</p>
+<p>Zusätzlich zum Merkmal <code>Debug</code> hat Rust eine Reihe von Merkmalen für uns
+bereitgestellt, die wir mit dem Attribut <code>derive</code> verwenden können und die
+unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
+Merkmale und ihr Verhalten sind in <a href="appendix-03-derivable-traits.html">Anhang C</a> aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Attribute als <code>derive</code>; für weitere Informationen, siehe den <a href="https://doc.rust-lang.org/reference/attributes.html">Abschnitt
+„Attribute“ in der Rust-Referenz</a>.</p>
 <p>Unsere Funktion <code>area</code> ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 <code>Rectangle</code> zu verbinden, da es zu keinem anderen Typ passt. Schauen wir uns
@@ -5459,19 +5552,23 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">Codeblock 5-13: Methode <code>area</code> der Struktur <code>Rectangle</code></span></p>
 <p>Um die Funktion im Kontext von <code>Rectangle</code> zu definieren, beginnen wir mit dem
-Block <code>impl</code> (Implementierung). Dann verschieben wir die Funktion <code>area</code> in die
+Block <code>impl</code> (Implementierung) für <code>Rectangle</code>. Alles in diesem Block wird mit
+dem Typ <code>Rectangle</code> assoziiert. Dann verschieben wir die Funktion <code>area</code> in die
 geschweiften Klammern von <code>impl</code>, ändern den ersten (und in diesem Fall
-einzigen) Parameter zu <code>self</code> und passen den Methodenrumpf entsprechend an. In 
+einzigen) Parameter zu <code>self</code> und passen den Methodenrumpf entsprechend an. In
 <code>main</code>, wo wir die Funktion <code>area</code> aufrufen und <code>rect1</code> als Argument übergeben,
 können wir stattdessen die <em>Methodensyntax</em> verwenden, um die Methode <code>area</code>
 auf unserer <code>Rectangle</code>-Instanz aufzurufen. Die Methodensyntax bezieht sich auf
 eine Instanz: Wir ergänzen einen Punkt, gefolgt vom Methodennamen, Klammern und
 Argumenten.</p>
-<p>In der Signatur von <code>area</code> verwenden wir <code>&amp;self</code> anstelle von
-<code>rectangle: &amp;Rectangle</code>, denn Rust weiß, dass <code>self</code> den Typ <code>Rectangle</code> hat,
-da die Methode innerhalb des Kontextes <code>impl Rectangle</code> liegt. Beachte, dass
-wir immer noch das <code>&amp;</code> vor <code>self</code> verwenden müssen, so wie wir es bei
-<code>&amp;Rectangle</code> getan haben. Methoden können die Eigentümerschaft von <code>self</code>
+<p>In der Signatur von <code>area</code> verwenden wir <code>&amp;self</code> anstelle von <code>rectangle: &amp;Rectangle</code>. Das <code>&amp;self</code> ist eigentlich die Abkürzung für <code>self: &amp;Self</code>.
+Innerhalb eines <code>impl</code>-Blocks ist der Typ <code>Self</code> ein Alias für den Typ, für den
+der <code>impl</code>-Block steht. Methoden müssen einen Parameter mit dem Namen <code>self</code>
+vom Typ <code>Self</code> als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+indem du nur den Namen <code>self</code> an der Stelle des ersten Parameters angibst.
+Beachte, dass wir immer noch das <code>&amp;</code> vor der Abkürzung <code>self</code> verwenden müssen,
+um anzuzeigen, dass diese Methode die Instanz <code>Self</code> ausleiht, genau wie in
+<code>Rechteck: &amp;Rechteck</code>. Methoden können die Eigentümerschaft von <code>self</code>
 übernehmen, <code>self</code> unveränderlich ausleihen, wie wir es hier getan haben, oder
 <code>self</code> veränderlich ausleihen, so wie bei jedem anderen Parameter auch.</p>
 <p>Wir haben hier <code>&amp;self</code> aus dem gleichen Grund gewählt wie <code>&amp;Rectangle</code> in der
@@ -5626,18 +5723,19 @@ erhalten wir die gewünschte Ausgabe. Methoden können mehrere Parameter haben,
 die wir in der Signatur nach dem Parameter <code>self</code> angeben. Diese Parameter
 funktionieren genau wie Parameter in Funktionen.</p>
 <h3 id="assoziierte-funktionen"><a class="header" href="#assoziierte-funktionen">Assoziierte Funktionen</a></h3>
-<p>Eine weitere nützliche Funktionalität von <code>impl</code>-Blöcken ist, dass wir darin
-auch Funktionen <em>ohne</em> den Parameter <code>self</code> definieren können. Diese werden
-<em>assoziierte Funktionen</em> (associated functions) genannt, weil sie mit der
-Struktur assoziiert sind. Dabei handelt es sich um Funktionen, nicht um
-Methoden, weil sie nicht auf einer Instanz der Struktur arbeiten können. Du
-hast bereits die assoziierte Funktion <code>String::from</code> verwendet.</p>
-<p>Assoziierte Funktionen werden oft als Konstruktoren verwendet, die eine neue
-Instanz der Struktur zurückgeben. Zum Beispiel könnten wir eine assoziierte
-Funktion bereitstellen, die einen eindimensionalen Parameter hat und diesen
-sowohl als Breite als auch als Höhe verwendet, wodurch auf einfache Weise ein
-quadratisches <code>Rectangle</code> erzeugt werden kann, ohne denselben Wert zweimal
-angeben zu müssen:</p>
+<p>Alle Funktionen, die innerhalb eines <code>impl</code>-Blocks definiert sind, werden
+<em>assoziierte Funktionen</em> genannt, weil sie mit dem Typ assoziiert sind, der
+nach dem <code>impl</code> benannt ist. Wir können assoziierte Funktionen definieren, die
+nicht <code>self</code> als ihren ersten Parameter haben (und somit keine Methoden sind),
+weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
+bereits eine solche Funktion verwendet, die Funktion <code>String::from</code>, die für
+den Typ <code>String</code> definiert ist.</p>
+<p>Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
+verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
+wir eine assoziierte Funktion bereitstellen, die einen eindimensionalen
+Parameter hat und diesen sowohl als Breite als auch als Höhe verwendet, wodurch
+auf einfache Weise ein quadratisches <code>Rectangle</code> erzeugt werden kann, ohne
+denselben Wert zweimal angeben zu müssen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
@@ -5713,10 +5811,10 @@ Typen und Merkmale behandeln.</p>
 <p>Mit Strukturen kannst du benutzerdefinierte Typen erstellen, die in deiner
 Domäne eine Bedeutung haben. Durch die Verwendung von Strukturen kannst du
 zusammengehörige Datenteile miteinander verbunden halten und jedes Teil
-benennen, um deinen Code verständlich zu machen. Mit Methoden kannst du das
-Verhalten von Instanzen deiner Strukturen spezifizieren und mit assoziierten
-Funktionen kannst du Funktionalität zum Namensraum deiner Struktur hinzufügen,
-die ohne Instanz auskommen.</p>
+benennen, um deinen Code verständlich zu machen. In <code>impl</code>-Blöcken kannst du
+Funktionen definieren, die mit deinem Typ assoziiert sind, und Methoden sind
+eine Art assoziierte Funktion, mit der du das Verhalten von Instanzen deiner
+Strukturen festlegen kannst.</p>
 <p>Aber Strukturen sind nicht die einzige Möglichkeit, benutzerdefinierte Typen zu
 definieren: Wenden wir uns der Rust-Funktionalität Aufzählung zu, um ein
 weiteres Werkzeug in deinen Werkzeugkasten zu legen.</p>
@@ -9344,7 +9442,7 @@ fn main() {
 <p>Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
-error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `Try`)
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --&gt; src/main.rs:4:13
   |
 3 | / fn main() {
@@ -9353,8 +9451,8 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
 5 | | }
   | |_- this function should return `Result` or `Option` to accept `?`
   |
-  = help: the trait `Try` is not implemented for `()`
-  = note: required by `from_error`
+  = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
+  = note: required by `from_residual`
 
 error: aborting due to previous error
 
@@ -12625,7 +12723,7 @@ wenn dieser Test bestanden ist:</p>
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... ok
+test tests::greater_than_100 - should panic ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
@@ -12671,7 +12769,7 @@ impl Guess {
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... FAILED
+test tests::greater_than_100 - should panic ... FAILED
 
 failures:
 
@@ -12783,7 +12881,7 @@ vertauschen:</p>
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... FAILED
+test tests::greater_than_100 - should panic ... FAILED
 
 failures:
 
@@ -19360,7 +19458,7 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
   |     ^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
-  = note: this error originates in a macro outside of the current crate (in Nightly builds, run with -Z external-macro-backtrace for more info)
+  = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z external-macro-backtrace for more info)
 
 error: aborting due to previous error
 
@@ -20388,8 +20486,9 @@ enthalten sollte.</p>
 error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `&amp;` reference
   --&gt; src/lib.rs:58:13
    |
-57 |         fn send(&amp;self, message: &amp;str) {
-   |                 ----- help: consider changing this to be a mutable reference: `&amp;mut self`
+2  |     fn send(&amp;self, msg: &amp;str);
+   |             ----- help: consider changing that to be a mutable reference: `&amp;mut self`
+...
 58 |             self.sent_messages.push(String::from(message));
    |             ^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
 
