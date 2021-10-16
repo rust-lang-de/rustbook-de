@@ -543,7 +543,7 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 ```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
-error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `Try`)
+error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --> src/main.rs:4:13
   |
 3 | / fn main() {
@@ -552,8 +552,8 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
 5 | | }
   | |_- this function should return `Result` or `Option` to accept `?`
   |
-  = help: the trait `Try` is not implemented for `()`
-  = note: required by `from_error`
+  = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
+  = note: required by `from_residual`
 
 error: aborting due to previous error
 

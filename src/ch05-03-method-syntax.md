@@ -46,20 +46,25 @@ fn main() {
 <span class="caption">Codeblock 5-13: Methode `area` der Struktur `Rectangle`</span>
 
 Um die Funktion im Kontext von `Rectangle` zu definieren, beginnen wir mit dem
-Block `impl` (Implementierung). Dann verschieben wir die Funktion `area` in die
+Block `impl` (Implementierung) für `Rectangle`. Alles in diesem Block wird mit
+dem Typ `Rectangle` assoziiert. Dann verschieben wir die Funktion `area` in die
 geschweiften Klammern von `impl`, ändern den ersten (und in diesem Fall
-einzigen) Parameter zu `self` und passen den Methodenrumpf entsprechend an. In 
+einzigen) Parameter zu `self` und passen den Methodenrumpf entsprechend an. In
 `main`, wo wir die Funktion `area` aufrufen und `rect1` als Argument übergeben,
 können wir stattdessen die *Methodensyntax* verwenden, um die Methode `area`
 auf unserer `Rectangle`-Instanz aufzurufen. Die Methodensyntax bezieht sich auf
 eine Instanz: Wir ergänzen einen Punkt, gefolgt vom Methodennamen, Klammern und
 Argumenten.
 
-In der Signatur von `area` verwenden wir `&self` anstelle von
-`rectangle: &Rectangle`, denn Rust weiß, dass `self` den Typ `Rectangle` hat,
-da die Methode innerhalb des Kontextes `impl Rectangle` liegt. Beachte, dass
-wir immer noch das `&` vor `self` verwenden müssen, so wie wir es bei
-`&Rectangle` getan haben. Methoden können die Eigentümerschaft von `self`
+In der Signatur von `area` verwenden wir `&self` anstelle von `rectangle:
+&Rectangle`. Das `&self` ist eigentlich die Abkürzung für `self: &Self`.
+Innerhalb eines `impl`-Blocks ist der Typ `Self` ein Alias für den Typ, für den
+der `impl`-Block steht. Methoden müssen einen Parameter mit dem Namen `self`
+vom Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen,
+indem du nur den Namen `self` an der Stelle des ersten Parameters angibst.
+Beachte, dass wir immer noch das `&` vor der Abkürzung `self` verwenden müssen,
+um anzuzeigen, dass diese Methode die Instanz `Self` ausleiht, genau wie in
+`Rechteck: &Rechteck`. Methoden können die Eigentümerschaft von `self`
 übernehmen, `self` unveränderlich ausleihen, wie wir es hier getan haben, oder
 `self` veränderlich ausleihen, so wie bei jedem anderen Parameter auch.
 
@@ -234,19 +239,20 @@ funktionieren genau wie Parameter in Funktionen.
 
 ### Assoziierte Funktionen
 
-Eine weitere nützliche Funktionalität von `impl`-Blöcken ist, dass wir darin
-auch Funktionen *ohne* den Parameter `self` definieren können. Diese werden
-*assoziierte Funktionen* (associated functions) genannt, weil sie mit der
-Struktur assoziiert sind. Dabei handelt es sich um Funktionen, nicht um
-Methoden, weil sie nicht auf einer Instanz der Struktur arbeiten können. Du
-hast bereits die assoziierte Funktion `String::from` verwendet.
+Alle Funktionen, die innerhalb eines `impl`-Blocks definiert sind, werden
+*assoziierte Funktionen* genannt, weil sie mit dem Typ assoziiert sind, der
+nach dem `impl` benannt ist. Wir können assoziierte Funktionen definieren, die
+nicht `self` als ihren ersten Parameter haben (und somit keine Methoden sind),
+weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
+bereits eine solche Funktion verwendet, die Funktion `String::from`, die für
+den Typ `String` definiert ist.
 
-Assoziierte Funktionen werden oft als Konstruktoren verwendet, die eine neue
-Instanz der Struktur zurückgeben. Zum Beispiel könnten wir eine assoziierte
-Funktion bereitstellen, die einen eindimensionalen Parameter hat und diesen
-sowohl als Breite als auch als Höhe verwendet, wodurch auf einfache Weise ein
-quadratisches `Rectangle` erzeugt werden kann, ohne denselben Wert zweimal
-angeben zu müssen:
+Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
+verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
+wir eine assoziierte Funktion bereitstellen, die einen eindimensionalen
+Parameter hat und diesen sowohl als Breite als auch als Höhe verwendet, wodurch
+auf einfache Weise ein quadratisches `Rectangle` erzeugt werden kann, ohne
+denselben Wert zweimal angeben zu müssen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -334,10 +340,10 @@ Typen und Merkmale behandeln.
 Mit Strukturen kannst du benutzerdefinierte Typen erstellen, die in deiner
 Domäne eine Bedeutung haben. Durch die Verwendung von Strukturen kannst du
 zusammengehörige Datenteile miteinander verbunden halten und jedes Teil
-benennen, um deinen Code verständlich zu machen. Mit Methoden kannst du das
-Verhalten von Instanzen deiner Strukturen spezifizieren und mit assoziierten
-Funktionen kannst du Funktionalität zum Namensraum deiner Struktur hinzufügen,
-die ohne Instanz auskommen.
+benennen, um deinen Code verständlich zu machen. In `impl`-Blöcken kannst du
+Funktionen definieren, die mit deinem Typ assoziiert sind, und Methoden sind
+eine Art assoziierte Funktion, mit der du das Verhalten von Instanzen deiner
+Strukturen festlegen kannst.
 
 Aber Strukturen sind nicht die einzige Möglichkeit, benutzerdefinierte Typen zu
 definieren: Wenden wir uns der Rust-Funktionalität Aufzählung zu, um ein

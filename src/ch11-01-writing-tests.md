@@ -891,7 +891,7 @@ $ cargo test
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... ok
+test tests::greater_than_100 - should panic ... ok
 
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
@@ -943,7 +943,7 @@ $ cargo test
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... FAILED
+test tests::greater_than_100 - should panic ... FAILED
 
 failures:
 
@@ -1065,7 +1065,7 @@ $ cargo test
      Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
-test tests::greater_than_100 ... FAILED
+test tests::greater_than_100 - should panic ... FAILED
 
 failures:
 

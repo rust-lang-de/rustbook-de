@@ -86,10 +86,11 @@ ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
 zu berechnen.
 
 Da die Methode `enumerate` ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen, so wie überall in Rust. In der `for`-Schleife
-spezifizieren wir also ein Muster, das `i` für den Index im Tupel und `&item`
-für das einzelne Byte im Tupel hat. Da wir eine Referenz auf das Element aus
-`.iter().enumerate()` erhalten, verwenden wir `&` im Muster.
+um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+Mustern befassen. In der `for`-Schleife spezifizieren wir also ein Muster, das
+`i` für den Index im Tupel und `&item` für das einzelne Byte im Tupel hat. Da
+wir eine Referenz auf das Element aus `.iter().enumerate()` erhalten, verwenden
+wir `&` im Muster.
 
 Innerhalb der `for`-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 `b' '` nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
@@ -355,10 +356,13 @@ To learn more, run the command again with --verbose.
 Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
 unveränderliche Referenz auf etwas haben, nicht noch eine veränderliche
 Referenz anlegen können. Da `clear` den `String` abschneiden muss, muss es
-eine veränderliche Referenz erhalten. Rust erlaubt dies nicht und die
-Kompilierung schlägt fehl. Rust hat nicht nur die Benutzung unserer API
-vereinfacht, sondern auch eine ganze Klasse von Fehlern zur Kompilierzeit
-beseitigt!
+eine veränderliche Referenz erhalten. Das `println!` nach dem Aufruf von
+`clear` verwendet die Referenz in `word`, sodass die unveränderliche Referenz
+zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
+veränderliche Referenz in `clear` und die unveränderliche Referenz in `word`
+nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
+nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
+von Fehlern zur Kompilierzeit beseitigt!
 
 #### Zeichenkettenliterale sind Anteilstypen
 

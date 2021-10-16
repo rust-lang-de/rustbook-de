@@ -290,7 +290,25 @@ Tupel `()` verhalten, das wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähn
 haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
 Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
-besprechen.
+besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
+Unit-Struktur namens `AlwaysEqual`:
+
+```rust
+struct AlwaysEqual;
+
+let subject = AlwaysEqual;
+```
+
+Um `AlwaysEqual` zu definieren, verwenden wir das Schlüsselwort `struct`, den
+gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
+sind nicht erforderlich! Dann können wir eine Instanz von `AlwaysEqual` in der
+Variable `subject` auf ähnliche Weise erhalten: Mit dem Namen, den wir
+definiert haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
+implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
+ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
+für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
+umzusetzen! In Kapitel 10 wirst du sehen, wie man Merkmale definiert und sie
+für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 
 > ### Eigentümerschaft von Strukturdaten
 >

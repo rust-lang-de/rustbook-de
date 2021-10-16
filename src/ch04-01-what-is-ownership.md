@@ -169,11 +169,13 @@ auf diesem Verständnis aufbauen, indem wir den Typ `String` einführen.
 
 Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt [„Datentypen“][data-types] in
-Kapitel 3 behandelt haben. Die zuvor behandelten Typen werden alle auf den
-Stapelspeicher gelegt und vom Stapelspeicher entfernt, wenn ihr
-Gültigkeitsbereich beendet ist, aber wir wollen uns Daten ansehen, die im
-Haldenspeicher gespeichert sind, und untersuchen, woher Rust weiß, wann
-es diese Daten aufräumen muss.
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
+werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
+kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
+Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
+muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss.
 
 Wir werden hier `String` als Beispiel nehmen und uns auf die Teile von `String`
 konzentrieren, die sich auf die Eigentümerschaft beziehen. Diese Aspekte gelten
@@ -188,10 +190,11 @@ verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: `String`. Dieser Typ wird im Haldenspeicher
-allokiert und kann so eine Textmenge speichern, die uns zur Kompilierzeit
-unbekannt ist. Du kannst einen `String` aus einem Zeichenkettenliteral
-erzeugen, indem du die Funktion `from` wie folgt verwendest:
+zweiten Zeichenkettentyp: `String`. Dieser Typ verwaltet Daten, die auf dem
+Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
+zur Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem
+Zeichenkettenliteral erzeugen, indem du die Funktion `from` wie folgt
+verwendest:
 
 ```rust
 let s = String::from("Hallo");
@@ -372,9 +375,9 @@ zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
 was potenziell zu Sicherheitslücken führen kann.
 
 Um Speichersicherheit zu gewährleisten, gibt es noch ein weiteres Detail, was
-Rust in dieser Situation macht. Anstatt zu versuchen, den allokierten Speicher
-zu kopieren, sieht Rust `s1` als nicht mehr gültig an, und deshalb muss Rust
-nichts freigeben, wenn `s1` den Gültigkeitsbereich verlässt. Schau dir an, was
+Rust in dieser Situation macht. Nach `let s2 = s1` betrachtet Rust `s1` als
+nicht mehr gültig. Daher braucht Rust nichts freizugeben, wenn `s1` den
+Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, `s1` zu benutzen, nachdem `s2` erstellt wurde; es
 wird nicht funktionieren:
 
@@ -575,7 +578,7 @@ fn main() {
                                         // und der Rückgabewert wird in s3 verschoben
 
 } // Hier verlässt s3 den Gültigkeitsbereich und wird aufgeräumt.
-  // s2 verlässt den Gültigkeitsbereich, wurde aber verschoben, es passiert also nichts.
+  // s2 wurde verschoben, es passiert also nichts.
   // s1 verlässt den Gültigkeitsbereich und wird aufgeräumt.
 
 fn gives_ownership() -> String {        // gives_ownership verschiebt seinen
@@ -588,7 +591,7 @@ fn gives_ownership() -> String {        // gives_ownership verschiebt seinen
                                         // wird an die aufrufende Funktion verschoben
 }
 
-// takes_and_gives_back nimmt einen String entgegen und gibt einen zurück
+// Diese Funktion nimmt einen String entgegen und gibt einen zurück
 fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
                                                       // Gültigkeitsbereich
 
