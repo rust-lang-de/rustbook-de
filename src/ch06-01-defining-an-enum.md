@@ -161,7 +161,13 @@ let loopback = IpAddr::V6(String::from("::1"));
 ```
 
 Wir hängen die Daten direkt an jede Variante der Aufzählung an, so dass keine
-zusätzliche Struktur erforderlich ist.
+zusätzliche Struktur erforderlich ist. Hier ist es auch einfacher, ein weiteres
+Detail der Funktionsweise von Aufzählungen zu betrachten: Der Name jeder
+Aufzählungs-Variante, die wir definieren, wird auch zu einer Funktion, die eine
+Instanz der Aufzählung konstruiert. Das heißt, `IpAddr::V4()` ist ein
+Funktionsaufruf der ein `String`-Argument entgegennimmt und eine Instanz des
+Typs `IpAddr` zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
+als Ergebnis der Definition der Aufzählung.
 
 Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
@@ -365,9 +371,10 @@ Die Syntax `<T>` ist eine Funktionalität von Rust, über die wir noch nicht
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
 wir in Kapitel 10 näher eingehen werden. Für den Moment musst du nur wissen,
 dass `<T>` bedeutet, dass die Variante `Some` der Aufzählung `Option` einen
-Wert eines beliebigen Typs enthalten kann. Hier sind einige Beispiele für die
-Verwendung von `Option`-Werten zur Aufnahme von Zahlentypen und
-Zeichenkettentypen:
+Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
+anstelle von `T` verwendet wird, den Gesamttyp `Option<T>` zu einem anderen Typ
+macht. Hier sind einige Beispiele für die Verwendung von `Option`-Werten zur
+Aufnahme von Zahlentypen und Zeichenkettentypen:
 
 ```rust
 let some_number = Some(5);
@@ -376,9 +383,13 @@ let some_string = Some("eine Zeichenkette");
 let absent_number: Option<i32> = None;
 ```
 
-Wenn wir `None` anstelle von `Some` verwenden, müssen wir Rust sagen, welchen
-Typ von `Option<T>` wir haben, weil der Compiler nicht auf den Typ schließen
-kann, den die Variante `Some` haben soll, wenn er nur einen Wert `None` sieht.
+Der Typ von `some_number` ist `Option<i32>`. Der Typ von `some_string` ist
+`Option<&str>`, was ein anderer Typ ist. Rust kann diese Typen ableiten, weil
+wir einen Wert innerhalb der `Some`-Variante angegeben haben. Für
+`absent_number` verlangt Rust den gesamten Typ `Option` zu annotieren: Der
+Compiler kann den Typ, den die entsprechende `Some`-Variante haben wird, nicht
+ableiten, wenn sie nur einen `None`-Wert enthält. Hier sagen wir Rust, dass
+`absent_number` vom Typ `Option<i32>` sein soll.
 
 Wenn wir einen Wert `Some` haben, wissen wir, dass ein Wert vorhanden ist und
 der Wert innerhalb von `Some` gehalten wird. Wenn wir einen Wert `None` haben,

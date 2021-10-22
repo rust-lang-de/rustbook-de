@@ -85,6 +85,55 @@ Instanz eines Typs tun können, in einen einzigen `impl` Block gepackt.
 Zukünftige Nutzer unseres Codes müssen so nicht an verschiedenen Stellen in der
 von uns bereitgestellten Bibliothek nach Fähigkeiten von `Rectangle` suchen.
 
+Beachte, dass wir einer Methode denselben Namen geben können wie einem der
+Felder der Struktur. Zum Beispiel können wir eine Methode auf `Rectangle`
+definieren, die ebenfalls `width` heißt:
+
+<span class="filename">Dateiname: src/main.rs</span>
+
+```rust
+# #[derive(Debug)]
+# struct Rectangle {
+#     width: u32,
+#     height: u32,
+# }
+#
+impl Rectangle {
+    fn width(&self) -> bool {
+        self.width > 0
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    if rect1.width() {
+        println!("Das Rechteck hat eine Breite ungleich Null; sie ist {}", rect1.width);
+    }
+}
+```
+
+Hier entscheiden wir uns dafür, dass das Verhalten der Methode `width` so
+aussieht, dass sie `true` zurückgibt, wenn der Wert im Feld `width` der Instanz
+größer als 0 ist, und `false`, wenn der Wert 0 ist: Wir können ein Feld
+innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
+`main` nach `rect1.width` Klammern setzen, weiß Rust, dass wir die Methode
+`width` meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
+`width` meinen.
+
+Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
+definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
+Methoden wie diese werden *getters* genannt, und Rust implementiert sie nicht
+automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
+nützlich, weil man das Feld als privat, die Methode aber als öffentlich
+kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
+öffentlichen API des Typs erhält. Was öffentlich und privat bedeuten und wie
+man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
+wir in Kapitel 7 behandeln.
+
 > ### Wo ist der Operator `->`?
 >
 > In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
