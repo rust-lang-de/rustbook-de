@@ -143,10 +143,10 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct User {
+    active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
-    active: bool,
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -163,10 +163,10 @@ füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -187,10 +187,10 @@ verwenden wollen. Wenn die Instanz veränderlich ist, können wir einen Wert
 mittels Punktnotation verändern. Codeblock 5-3 gezeigt, wie der Wert im
 Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geändert werden kann.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -213,10 +213,10 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
@@ -249,10 +249,10 @@ shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschr
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
 wiederholen, siehe Codeblock 5-5.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
@@ -285,14 +285,14 @@ meisten Werte einer alten Instanz verwendet und nur einige davon verändert. Du
 kannst dazu die <em>Strukturaktualisierungssyntax</em> (struct update syntax)
 verwenden.</p>
 <p>Zunächst zeigt Codeblock 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> ohne
-Aktualisierungssyntax erstellen. Wir setzen neue Werte für <code>email</code> und
-<code>username</code>, verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in
-Codeblock 5-2 erstellt haben.</p>
+Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</code>,
+verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
+5-2 erstellt haben.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -304,24 +304,24 @@ Codeblock 5-2 erstellt haben.</p>
 </span><span class="boring">    };
 </span><span class="boring">
 </span>    let user2 = User {
-        email: String::from(&quot;andere@example.com&quot;),
-        username: String::from(&quot;andererbenutzername567&quot;),
         active: user1.active,
+        username: user1.username,
+        email: String::from(&quot;andere@example.com&quot;),
         sign_in_count: user1.sign_in_count,
     };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
-Verwendung einiger der Werte von <code>user1</code>.</span></p>
+Verwendung eines Werts von <code>user1</code>.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -334,18 +334,33 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">
 </span>    let user2 = User {
         email: String::from(&quot;andere@example.com&quot;),
-        username: String::from(&quot;andererbenutzername567&quot;),
         ..user1
     };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 5-7: Verwenden der
-Strukturaktualisierungssyntax, um neue Werte für <code>email</code> und <code>username</code> in der
-<code>User</code>-Instanz zu setzen und die restlichen Werte aus den Feldern der Instanz
-<code>user1</code> zu übernehmen</span></p>
-<p>Der Code in Codeblock 5-7 erzeugt auch eine Instanz <code>user2</code>, die andere Werte
-für <code>email</code> und <code>username</code> hat, aber die gleichen Werte der Felder <code>active</code> und
-<code>sign_in_count</code> wie <code>user1</code>.</p>
+Strukturaktualisierungssyntax, um einen neuen Wert für <code>email</code> in der
+<code>User</code>-Instanz zu setzen und die restlichen Werte aus der Instanz <code>user1</code> zu
+übernehmen</span></p>
+<p>Der Code in Codeblock 5-7 erzeugt auch eine Instanz <code>user2</code>, die einen anderen
+Wert für <code>email</code> hat, aber die gleichen Werte der Felder <code>username</code>, <code>active</code>
+und <code>sign_in_count</code> wie <code>user1</code>. Das <code>..user1</code> muss an letzter Stelle stehen um
+festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
+Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so viele Felder
+in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
+der Strukturdefinition.</p>
+<p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
+da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move">„Wege, wie Variablen und
+Daten interagieren: Verschieben (move)“</a> gesehen haben. In diesem
+Beispiel können wir <code>user1</code> nicht mehr verwenden, nachdem wir <code>user2</code> erzeugt
+haben, weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben
+wurde. Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und
+<code>username</code> gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von
+<code>user1</code> verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch
+gültig. Die Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal
+<code>Copy</code> implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
+Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
+würde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
 <p>Du kannst auch Strukturen definieren, die wie Tupel aussehen, sogenannte
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen sind Strukturen, die
@@ -417,10 +432,10 @@ Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne
 eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct User {
+    active: bool,
     username: &amp;str,
     email: &amp;str,
     sign_in_count: u64,
-    active: bool,
 }
 
 fn main() {

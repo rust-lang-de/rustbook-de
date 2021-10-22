@@ -272,7 +272,13 @@ let loopback = IpAddr::V6(String::from(&quot;::1&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Wir hängen die Daten direkt an jede Variante der Aufzählung an, so dass keine
-zusätzliche Struktur erforderlich ist.</p>
+zusätzliche Struktur erforderlich ist. Hier ist es auch einfacher, ein weiteres
+Detail der Funktionsweise von Aufzählungen zu betrachten: Der Name jeder
+Aufzählungs-Variante, die wir definieren, wird auch zu einer Funktion, die eine
+Instanz der Aufzählung konstruiert. Das heißt, <code>IpAddr::V4()</code> ist ein
+Funktionsaufruf der ein <code>String</code>-Argument entgegennimmt und eine Instanz des
+Typs <code>IpAddr</code> zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
+als Ergebnis der Definition der Aufzählung.</p>
 <p>Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
 zugehöriger Daten haben. IP-Adressen der Version vier haben stets vier
@@ -462,9 +468,10 @@ normale Aufzählung, und <code>Some(T)</code> und <code>None</code> sind nur Var
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
 wir in Kapitel 10 näher eingehen werden. Für den Moment musst du nur wissen,
 dass <code>&lt;T&gt;</code> bedeutet, dass die Variante <code>Some</code> der Aufzählung <code>Option</code> einen
-Wert eines beliebigen Typs enthalten kann. Hier sind einige Beispiele für die
-Verwendung von <code>Option</code>-Werten zur Aufnahme von Zahlentypen und
-Zeichenkettentypen:</p>
+Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
+anstelle von <code>T</code> verwendet wird, den Gesamttyp <code>Option&lt;T&gt;</code> zu einem anderen Typ
+macht. Hier sind einige Beispiele für die Verwendung von <code>Option</code>-Werten zur
+Aufnahme von Zahlentypen und Zeichenkettentypen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -474,9 +481,13 @@ let some_string = Some(&quot;eine Zeichenkette&quot;);
 let absent_number: Option&lt;i32&gt; = None;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Wenn wir <code>None</code> anstelle von <code>Some</code> verwenden, müssen wir Rust sagen, welchen
-Typ von <code>Option&lt;T&gt;</code> wir haben, weil der Compiler nicht auf den Typ schließen
-kann, den die Variante <code>Some</code> haben soll, wenn er nur einen Wert <code>None</code> sieht.</p>
+<p>Der Typ von <code>some_number</code> ist <code>Option&lt;i32&gt;</code>. Der Typ von <code>some_string</code> ist
+<code>Option&lt;&amp;str&gt;</code>, was ein anderer Typ ist. Rust kann diese Typen ableiten, weil
+wir einen Wert innerhalb der <code>Some</code>-Variante angegeben haben. Für
+<code>absent_number</code> verlangt Rust den gesamten Typ <code>Option</code> zu annotieren: Der
+Compiler kann den Typ, den die entsprechende <code>Some</code>-Variante haben wird, nicht
+ableiten, wenn sie nur einen <code>None</code>-Wert enthält. Hier sagen wir Rust, dass
+<code>absent_number</code> vom Typ <code>Option&lt;i32&gt;</code> sein soll.</p>
 <p>Wenn wir einen Wert <code>Some</code> haben, wissen wir, dass ein Wert vorhanden ist und
 der Wert innerhalb von <code>Some</code> gehalten wird. Wenn wir einen Wert <code>None</code> haben,
 bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen

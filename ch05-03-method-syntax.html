@@ -200,6 +200,49 @@ werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
 Instanz eines Typs tun können, in einen einzigen <code>impl</code> Block gepackt.
 Zukünftige Nutzer unseres Codes müssen so nicht an verschiedenen Stellen in der
 von uns bereitgestellten Bibliothek nach Fähigkeiten von <code>Rectangle</code> suchen.</p>
+<p>Beachte, dass wir einer Methode denselben Namen geben können wie einem der
+Felder der Struktur. Zum Beispiel können wir eine Methode auf <code>Rectangle</code>
+definieren, die ebenfalls <code>width</code> heißt:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Rectangle {
+    fn width(&amp;self) -&gt; bool {
+        self.width &gt; 0
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    if rect1.width() {
+        println!(&quot;Das Rechteck hat eine Breite ungleich Null; sie ist {}&quot;, rect1.width);
+    }
+}
+</code></pre></pre>
+<p>Hier entscheiden wir uns dafür, dass das Verhalten der Methode <code>width</code> so
+aussieht, dass sie <code>true</code> zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz
+größer als 0 ist, und <code>false</code>, wenn der Wert 0 ist: Wir können ein Feld
+innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
+<code>main</code> nach <code>rect1.width</code> Klammern setzen, weiß Rust, dass wir die Methode
+<code>width</code> meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
+<code>width</code> meinen.</p>
+<p>Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
+definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
+Methoden wie diese werden <em>getters</em> genannt, und Rust implementiert sie nicht
+automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
+nützlich, weil man das Feld als privat, die Methode aber als öffentlich
+kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
+öffentlichen API des Typs erhält. Was öffentlich und privat bedeuten und wie
+man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
+wir in Kapitel 7 behandeln.</p>
 <blockquote>
 <h3 id="wo-ist-der-operator--"><a class="header" href="#wo-ist-der-operator--">Wo ist der Operator <code>-&gt;</code>?</a></h3>
 <p>In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden

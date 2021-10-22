@@ -130,39 +130,44 @@
 <p>Mit der Syntax <code>if let</code> kannst du <code>if</code> und <code>let</code> in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
-auf einen <code>Option&lt;u8&gt;</code>-Wert passt, aber nur dann Code ausführen soll, wenn der
-Wert 3 ist.</p>
+auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
+Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = Some(0u8);
-match some_u8_value {
-    Some(3) =&gt; println!(&quot;drei&quot;),
+</span>let config_max = Some(3u8);
+match config_max {
+    Some(max) =&gt; println!(&quot;Das Maximum ist mit {} konfiguriert&quot;, max),
     _ =&gt; (),
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 6-6: Eine <code>match</code>-Ausdruck, der nur dann Code
-ausführt, wenn der Wert <code>Some(3)</code> ist</span></p>
-<p>Wir wollen etwas bei <code>Some(3)</code> machen, aber nichts mit allen anderen
-<code>Some&lt;u8&gt;</code>-Werten oder dem Wert <code>None</code>. Um den <code>match</code>-Ausdruck zu
-vervollständigen, müssen wir <code>_ =&gt; ()</code> ergänzen. Nachdem wir nur eine Variante
-verarbeiten, bedeutet das relativ viel Code, den wir schreiben müssen.</p>
+ausführt, wenn der Wert <code>Some</code> ist</span></p>
+<p>Wenn der Wert <code>Some</code> ist, wollen wir den Wert in der Variante <code>Some</code> ausgeben,
+wofür wir den Wert an die Variable <code>max</code> im Muster binden. Wir wollen nichts
+mit dem Wert <code>None</code> machen. Um den Ausdruck <code>match</code> zu erfüllen, müssen wir
+nach der Verarbeitung nur einer Variante <code>_ =&gt; ()</code> hinzufügen, was lästiger
+Codeballast ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
 Codeblock 6-6:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = Some(0u8);
-if let Some(3) = some_u8_value {
-    println!(&quot;drei&quot;);
+</span>let config_max = Some(3u8);
+if let Some(max) = config_max {
+    println!(&quot;Das Maximum ist mit {} konfiguriert&quot;, max);
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Die Syntax <code>if let</code> nimmt ein Muster und einen Ausdruck, getrennt durch ein
 Gleichheitszeichen. Sie funktioniert auf gleiche Weise wie bei <code>match</code>, wo der
-Ausdruck hinter <code>match</code> angegeben wird und das Muster der erste Zweig ist.</p>
+Ausdruck hinter <code>match</code> angegeben wird und das Muster der erste Zweig ist. In
+diesem Fall ist das Muster <code>Some(max)</code> und das <code>max</code> ist an den Wert innerhalb
+von <code>Some</code> gebunden. Wir können dann <code>max</code> im Rumpf des <code>if let</code>-Blocks auf die
+gleiche Weise verwenden, wie <code>max</code> im entsprechenden <code>match</code>-Zweig. Der Code im
+<code>if let</code>-Block wird nicht ausgeführt, wenn der Wert nicht zum Muster passt.</p>
 <p>Die Verwendung von <code>if let</code> bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die
 <code>match</code> erzwingt. Die Wahl zwischen <code>match</code> und <code>if let</code> hängt davon ab, was

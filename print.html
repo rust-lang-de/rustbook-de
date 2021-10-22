@@ -2786,8 +2786,6 @@ Block <code>{}</code>, den wir zum Erstellen neuer Gültigkeitsbereiche verwende
 Ausdruck, zum Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let x = 5;
-
     let y = {
         let x = 3;
         x + 1
@@ -4883,10 +4881,10 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct User {
+    active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
-    active: bool,
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -4903,10 +4901,10 @@ füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -4927,10 +4925,10 @@ verwenden wollen. Wenn die Instanz veränderlich ist, können wir einen Wert
 mittels Punktnotation verändern. Codeblock 5-3 gezeigt, wie der Wert im
 Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geändert werden kann.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -4953,10 +4951,10 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
@@ -4989,10 +4987,10 @@ shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschr
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
 wiederholen, siehe Codeblock 5-5.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
@@ -5025,14 +5023,14 @@ meisten Werte einer alten Instanz verwendet und nur einige davon verändert. Du
 kannst dazu die <em>Strukturaktualisierungssyntax</em> (struct update syntax)
 verwenden.</p>
 <p>Zunächst zeigt Codeblock 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> ohne
-Aktualisierungssyntax erstellen. Wir setzen neue Werte für <code>email</code> und
-<code>username</code>, verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in
-Codeblock 5-2 erstellt haben.</p>
+Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</code>,
+verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
+5-2 erstellt haben.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -5044,24 +5042,24 @@ Codeblock 5-2 erstellt haben.</p>
 </span><span class="boring">    };
 </span><span class="boring">
 </span>    let user2 = User {
-        email: String::from(&quot;andere@example.com&quot;),
-        username: String::from(&quot;andererbenutzername567&quot;),
         active: user1.active,
+        username: user1.username,
+        email: String::from(&quot;andere@example.com&quot;),
         sign_in_count: user1.sign_in_count,
     };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
-Verwendung einiger der Werte von <code>user1</code>.</span></p>
+Verwendung eines Werts von <code>user1</code>.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+</span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
 </span><span class="boring">    sign_in_count: u64,
-</span><span class="boring">    active: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -5074,18 +5072,33 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">
 </span>    let user2 = User {
         email: String::from(&quot;andere@example.com&quot;),
-        username: String::from(&quot;andererbenutzername567&quot;),
         ..user1
     };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 5-7: Verwenden der
-Strukturaktualisierungssyntax, um neue Werte für <code>email</code> und <code>username</code> in der
-<code>User</code>-Instanz zu setzen und die restlichen Werte aus den Feldern der Instanz
-<code>user1</code> zu übernehmen</span></p>
-<p>Der Code in Codeblock 5-7 erzeugt auch eine Instanz <code>user2</code>, die andere Werte
-für <code>email</code> und <code>username</code> hat, aber die gleichen Werte der Felder <code>active</code> und
-<code>sign_in_count</code> wie <code>user1</code>.</p>
+Strukturaktualisierungssyntax, um einen neuen Wert für <code>email</code> in der
+<code>User</code>-Instanz zu setzen und die restlichen Werte aus der Instanz <code>user1</code> zu
+übernehmen</span></p>
+<p>Der Code in Codeblock 5-7 erzeugt auch eine Instanz <code>user2</code>, die einen anderen
+Wert für <code>email</code> hat, aber die gleichen Werte der Felder <code>username</code>, <code>active</code>
+und <code>sign_in_count</code> wie <code>user1</code>. Das <code>..user1</code> muss an letzter Stelle stehen um
+festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
+Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so viele Felder
+in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
+der Strukturdefinition.</p>
+<p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
+da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move">„Wege, wie Variablen und
+Daten interagieren: Verschieben (move)“</a> gesehen haben. In diesem
+Beispiel können wir <code>user1</code> nicht mehr verwenden, nachdem wir <code>user2</code> erzeugt
+haben, weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben
+wurde. Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und
+<code>username</code> gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von
+<code>user1</code> verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch
+gültig. Die Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal
+<code>Copy</code> implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
+Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
+würde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
 <p>Du kannst auch Strukturen definieren, die wie Tupel aussehen, sogenannte
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen sind Strukturen, die
@@ -5157,10 +5170,10 @@ Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne
 eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct User {
+    active: bool,
     username: &amp;str,
     email: &amp;str,
     sign_in_count: u64,
-    active: bool,
 }
 
 fn main() {
@@ -5405,8 +5418,8 @@ einen Fehler:</p>
 </code></pre>
 <p>Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
-die Annotation <code>#[derive(Debug)]</code> unmittelbar vor der Strukturdefinition ein,
-wie in Codeblock 5-12 gezeigt.</p>
+das äußere Attribut <code>#[derive(Debug)]</code> unmittelbar vor der Strukturdefinition
+ein, wie in Codeblock 5-12 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct Rectangle {
@@ -5423,7 +5436,7 @@ fn main() {
     println!(&quot;rect1 ist {:?}&quot;, rect1);
 }
 </code></pre></pre>
-<p><span class="caption">Codeblock 5-12: Annotation zum Verwenden des Merkmals
+<p><span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
 <code>Debug</code> und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>
 <p>Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
 folgende Ausgabe sehen:</p>
@@ -5586,6 +5599,49 @@ werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
 Instanz eines Typs tun können, in einen einzigen <code>impl</code> Block gepackt.
 Zukünftige Nutzer unseres Codes müssen so nicht an verschiedenen Stellen in der
 von uns bereitgestellten Bibliothek nach Fähigkeiten von <code>Rectangle</code> suchen.</p>
+<p>Beachte, dass wir einer Methode denselben Namen geben können wie einem der
+Felder der Struktur. Zum Beispiel können wir eine Methode auf <code>Rectangle</code>
+definieren, die ebenfalls <code>width</code> heißt:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+</span><span class="boring">struct Rectangle {
+</span><span class="boring">    width: u32,
+</span><span class="boring">    height: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Rectangle {
+    fn width(&amp;self) -&gt; bool {
+        self.width &gt; 0
+    }
+}
+
+fn main() {
+    let rect1 = Rectangle {
+        width: 30,
+        height: 50,
+    };
+
+    if rect1.width() {
+        println!(&quot;Das Rechteck hat eine Breite ungleich Null; sie ist {}&quot;, rect1.width);
+    }
+}
+</code></pre></pre>
+<p>Hier entscheiden wir uns dafür, dass das Verhalten der Methode <code>width</code> so
+aussieht, dass sie <code>true</code> zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz
+größer als 0 ist, und <code>false</code>, wenn der Wert 0 ist: Wir können ein Feld
+innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
+<code>main</code> nach <code>rect1.width</code> Klammern setzen, weiß Rust, dass wir die Methode
+<code>width</code> meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
+<code>width</code> meinen.</p>
+<p>Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
+definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
+Methoden wie diese werden <em>getters</em> genannt, und Rust implementiert sie nicht
+automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
+nützlich, weil man das Feld als privat, die Methode aber als öffentlich
+kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
+öffentlichen API des Typs erhält. Was öffentlich und privat bedeuten und wie
+man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
+wir in Kapitel 7 behandeln.</p>
 <blockquote>
 <h3 id="wo-ist-der-operator--"><a class="header" href="#wo-ist-der-operator--">Wo ist der Operator <code>-&gt;</code>?</a></h3>
 <p>In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
@@ -5981,7 +6037,13 @@ let loopback = IpAddr::V6(String::from(&quot;::1&quot;));
 <span class="boring">}
 </span></code></pre></pre>
 <p>Wir hängen die Daten direkt an jede Variante der Aufzählung an, so dass keine
-zusätzliche Struktur erforderlich ist.</p>
+zusätzliche Struktur erforderlich ist. Hier ist es auch einfacher, ein weiteres
+Detail der Funktionsweise von Aufzählungen zu betrachten: Der Name jeder
+Aufzählungs-Variante, die wir definieren, wird auch zu einer Funktion, die eine
+Instanz der Aufzählung konstruiert. Das heißt, <code>IpAddr::V4()</code> ist ein
+Funktionsaufruf der ein <code>String</code>-Argument entgegennimmt und eine Instanz des
+Typs <code>IpAddr</code> zurückgibt. Diese Konstruktorfunktion wird automatisch definiert
+als Ergebnis der Definition der Aufzählung.</p>
 <p>Es gibt noch einen weiteren Vorteil, eine Aufzählung statt einer Struktur zu
 verwenden: Jede Variante kann verschiedene Typen und verschieden viele
 zugehöriger Daten haben. IP-Adressen der Version vier haben stets vier
@@ -6171,9 +6233,10 @@ normale Aufzählung, und <code>Some(T)</code> und <code>None</code> sind nur Var
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
 wir in Kapitel 10 näher eingehen werden. Für den Moment musst du nur wissen,
 dass <code>&lt;T&gt;</code> bedeutet, dass die Variante <code>Some</code> der Aufzählung <code>Option</code> einen
-Wert eines beliebigen Typs enthalten kann. Hier sind einige Beispiele für die
-Verwendung von <code>Option</code>-Werten zur Aufnahme von Zahlentypen und
-Zeichenkettentypen:</p>
+Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
+anstelle von <code>T</code> verwendet wird, den Gesamttyp <code>Option&lt;T&gt;</code> zu einem anderen Typ
+macht. Hier sind einige Beispiele für die Verwendung von <code>Option</code>-Werten zur
+Aufnahme von Zahlentypen und Zeichenkettentypen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6183,9 +6246,13 @@ let some_string = Some(&quot;eine Zeichenkette&quot;);
 let absent_number: Option&lt;i32&gt; = None;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Wenn wir <code>None</code> anstelle von <code>Some</code> verwenden, müssen wir Rust sagen, welchen
-Typ von <code>Option&lt;T&gt;</code> wir haben, weil der Compiler nicht auf den Typ schließen
-kann, den die Variante <code>Some</code> haben soll, wenn er nur einen Wert <code>None</code> sieht.</p>
+<p>Der Typ von <code>some_number</code> ist <code>Option&lt;i32&gt;</code>. Der Typ von <code>some_string</code> ist
+<code>Option&lt;&amp;str&gt;</code>, was ein anderer Typ ist. Rust kann diese Typen ableiten, weil
+wir einen Wert innerhalb der <code>Some</code>-Variante angegeben haben. Für
+<code>absent_number</code> verlangt Rust den gesamten Typ <code>Option</code> zu annotieren: Der
+Compiler kann den Typ, den die entsprechende <code>Some</code>-Variante haben wird, nicht
+ableiten, wenn sie nur einen <code>None</code>-Wert enthält. Hier sagen wir Rust, dass
+<code>absent_number</code> vom Typ <code>Option&lt;i32&gt;</code> sein soll.</p>
 <p>Wenn wir einen Wert <code>Some</code> haben, wissen wir, dass ein Wert vorhanden ist und
 der Wert innerhalb von <code>Some</code> gehalten wird. Wenn wir einen Wert <code>None</code> haben,
 bedeutet das in gewisser Weise dasselbe wie Null: Wir haben keinen gültigen
@@ -6531,71 +6598,139 @@ gültig ist! Speziell im Fall <code>Option&lt;T&gt;</code> schützt uns Rust dav
 <code>None</code> zu übersehen, und davon auszugehen, dass wir einen Wert haben, obwohl
 vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
 unmöglich.</p>
-<h3 id="der-platzhalter-_"><a class="header" href="#der-platzhalter-_">Der Platzhalter <code>_</code></a></h3>
-<p>Rust hat auch ein Muster, das wir verwenden können, wenn wir nicht alle möglichen
-Werte auflisten wollen. Zum Beispiel kann ein <code>u8</code> gültige Werte von 0 bis 255
-haben. Wenn wir uns nur um die Werte 1, 3, 5 und 7 kümmern, wollen wir nicht 0,
-2, 4, 6, 8, 9 bis hin zu 255 aufzählen müssen. Zum Glück müssen wir das nicht:
-Wir können stattdessen das spezielle Muster <code>_</code> verwenden:</p>
+<h3 id="auffangmuster-und-der-platzhalter-_"><a class="header" href="#auffangmuster-und-der-platzhalter-_">Auffangmuster und der Platzhalter <code>_</code></a></h3>
+<p>Betrachten wir ein Beispiel, bei dem wir für einige wenige Werte spezielle
+Aktionen durchführen wollen, aber für alle anderen Werte eine Standardaktion.
+Stell dir vor, wir implementieren ein Spiel, bei dem ein Spieler bei einem
+Würfelwurf von 3 einen schicken Hut bekommt anstatt sich zu bewegen. Wenn du
+eine 7 würfelst, verliert dein Spieler einen schicken Hut. Bei allen anderen
+Werten zieht der Spieler die entsprechende Anzahl an Feldern auf dem Spielfeld.
+Hier ist ein <code>match</code>, das diese Logik implementiert, wobei das Ergebnis des
+Würfelwurfs anstelle eines Zufallswerts fest kodiert ist, und alle weiter Logik
+wird durch Funktionen ohne Rumpf dargestellt, da die tatsächliche
+Implementierung für dieses Beispiel den Rahmen sprengen würde:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = 0u8;
-match some_u8_value {
-    1 =&gt; println!(&quot;eins&quot;),
-    3 =&gt; println!(&quot;drei&quot;),
-    5 =&gt; println!(&quot;fünf&quot;),
-    7 =&gt; println!(&quot;sieben&quot;),
-    _ =&gt; (),
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    other =&gt; move_player(other),
 }
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>Das Muster <code>_</code> passt zu jedem Wert. Wenn wir es unter unsere anderen Zweige
-setzen, wird <code>_</code> auf alle möglichen Fälle passen, die davor nicht angegeben
-wurden. <code>()</code> ist nur der leere Wert (das leere Tupel, das wir im Abschnitt
-<a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben), sodass im Fall <code>_</code> nichts passieren
-wird. Damit können wir sagen, dass wir für alle möglichen Werte, die wir nicht
-vor dem Platzhalter <code>_</code> auflisten, nichts tun wollen.</p>
-<p>Der <code>match</code>-Ausdruck kann jedoch etwas wortreich sein, wenn wir uns nur um
-<em>einen</em> der Fälle kümmern. Für diesen Fall bietet Rust <code>if let</code>.</p>
-<p>Mehr über Muster und Abgleich findest du in <a href="ch18-00-patterns.html">Kapitel 18</a>.</p>
+<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
+letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+<code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
+<code>move_player</code> übergibt.</p>
+<p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte
+aufgelistet haben, die ein <code>u8</code> haben kann, weil das letzte Muster zu allen
+nicht explizit aufgeführten Werte passt. Dieses Auffangmuster (catch-all
+pattern) erfüllt die Anforderung, dass <code>match</code> vollständig sein muss. Beachte,
+dass wir den Auffangzweig an letzter Stelle angeben müssen, da die Muster der
+Reihe nach ausgewertet werden. Rust warnt uns, wenn wir nach einem Auffangzweig
+weitere Zweige angeben, da diese niemals zutreffen würden!</p>
+<p>Rust hat auch ein Muster, das wir verwenden können, wenn wir den Wert nicht im
+Auffangmuster verwenden wollen: <code>_</code>, das ein spezielles Muster ist, das zu
+jedem beliebigen Wert passt und nicht an diesen Wert gebunden ist. Dies sagt
+Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht vor einer
+unbenutzten Variable warnt.</p>
+<p>Ändern wir die Spielregeln dahingehend, dass wir erneut würfeln müssen, wenn
+wir etwas anderes als eine 3 oder eine 7 würfeln. Wir brauchen den Wert in
+diesem Fall nicht zu verwenden, also können wir unseren Code so ändern, dass
+wir <code>_</code> anstelle der Variable <code>other</code> verwenden:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; reroll(),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn reroll() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
+ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
+vergessen.</p>
+<p>Wenn wir die Spielregeln noch einmal ändern, sodass bei deinem Zug nichts
+anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst, können
+wir das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den wir
+im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
+angeben:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; (),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Hier teilen wir Rust explizit mit, dass wir keinen anderen Wert verwenden
+werden, der nicht mit einem Muster in einem früheren Zweig übereinstimmt, und
+dass wir in diesem Fall keinen Code ausführen wollen.</p>
+<p>Weitere Informationen zu Mustern und Abgleich findest du in <a href="ch18-00-patterns.html">Kapitel
+18</a>. Für den Moment machen wir mit der <code>if let</code>-Syntax
+weiter, die in Situationen nützlich sein kann, in denen der <code>match</code>-Ausdruck
+etwas wortreich ist.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="prägnanter-kontrollfluss-mit-if-let"><a class="header" href="#prägnanter-kontrollfluss-mit-if-let">Prägnanter Kontrollfluss mit <code>if let</code></a></h2>
 <p>Mit der Syntax <code>if let</code> kannst du <code>if</code> und <code>let</code> in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
-auf einen <code>Option&lt;u8&gt;</code>-Wert passt, aber nur dann Code ausführen soll, wenn der
-Wert 3 ist.</p>
+auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
+Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = Some(0u8);
-match some_u8_value {
-    Some(3) =&gt; println!(&quot;drei&quot;),
+</span>let config_max = Some(3u8);
+match config_max {
+    Some(max) =&gt; println!(&quot;Das Maximum ist mit {} konfiguriert&quot;, max),
     _ =&gt; (),
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 6-6: Eine <code>match</code>-Ausdruck, der nur dann Code
-ausführt, wenn der Wert <code>Some(3)</code> ist</span></p>
-<p>Wir wollen etwas bei <code>Some(3)</code> machen, aber nichts mit allen anderen
-<code>Some&lt;u8&gt;</code>-Werten oder dem Wert <code>None</code>. Um den <code>match</code>-Ausdruck zu
-vervollständigen, müssen wir <code>_ =&gt; ()</code> ergänzen. Nachdem wir nur eine Variante
-verarbeiten, bedeutet das relativ viel Code, den wir schreiben müssen.</p>
+ausführt, wenn der Wert <code>Some</code> ist</span></p>
+<p>Wenn der Wert <code>Some</code> ist, wollen wir den Wert in der Variante <code>Some</code> ausgeben,
+wofür wir den Wert an die Variable <code>max</code> im Muster binden. Wir wollen nichts
+mit dem Wert <code>None</code> machen. Um den Ausdruck <code>match</code> zu erfüllen, müssen wir
+nach der Verarbeitung nur einer Variante <code>_ =&gt; ()</code> hinzufügen, was lästiger
+Codeballast ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
 Codeblock 6-6:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = Some(0u8);
-if let Some(3) = some_u8_value {
-    println!(&quot;drei&quot;);
+</span>let config_max = Some(3u8);
+if let Some(max) = config_max {
+    println!(&quot;Das Maximum ist mit {} konfiguriert&quot;, max);
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p>Die Syntax <code>if let</code> nimmt ein Muster und einen Ausdruck, getrennt durch ein
 Gleichheitszeichen. Sie funktioniert auf gleiche Weise wie bei <code>match</code>, wo der
-Ausdruck hinter <code>match</code> angegeben wird und das Muster der erste Zweig ist.</p>
+Ausdruck hinter <code>match</code> angegeben wird und das Muster der erste Zweig ist. In
+diesem Fall ist das Muster <code>Some(max)</code> und das <code>max</code> ist an den Wert innerhalb
+von <code>Some</code> gebunden. Wir können dann <code>max</code> im Rumpf des <code>if let</code>-Blocks auf die
+gleiche Weise verwenden, wie <code>max</code> im entsprechenden <code>match</code>-Zweig. Der Code im
+<code>if let</code>-Block wird nicht ausgeführt, wenn der Wert nicht zum Muster passt.</p>
 <p>Die Verwendung von <code>if let</code> bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die
 <code>match</code> erzwingt. Die Wahl zwischen <code>match</code> und <code>if let</code> hängt davon ab, was
@@ -9255,8 +9390,7 @@ aufgerufen hat.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let f = File::open(&quot;hallo.txt&quot;);
@@ -9332,8 +9466,7 @@ verwendet den <code>?</code>-Operator.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let mut f = File::open(&quot;hallo.txt&quot;)?;
@@ -9378,8 +9511,7 @@ verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let mut s = String::new();
@@ -30972,7 +31104,7 @@ mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
 <tr><td align="left"><code>T: U</code></td><td align="left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
 <tr><td align="left"><code>T: 'a</code></td><td align="left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
-<tr><td align="left"><code>T : 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
+<tr><td align="left"><code>T: 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
 <tr><td align="left"><code>'b: 'a</code></td><td align="left">Generische Lebensdauer <code>'b</code>, muss Lebensdauer <code>'a</code> überdauern</td></tr>
 <tr><td align="left"><code>T: ?Sized</code></td><td align="left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
 <tr><td align="left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td align="left">Zusammengesetzte Typabgrenzung</td></tr>

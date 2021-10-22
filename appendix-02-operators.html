@@ -245,7 +245,7 @@ mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
 <tr><td align="left"><code>T: U</code></td><td align="left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
 <tr><td align="left"><code>T: 'a</code></td><td align="left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
-<tr><td align="left"><code>T : 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
+<tr><td align="left"><code>T: 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
 <tr><td align="left"><code>'b: 'a</code></td><td align="left">Generische Lebensdauer <code>'b</code>, muss Lebensdauer <code>'a</code> überdauern</td></tr>
 <tr><td align="left"><code>T: ?Sized</code></td><td align="left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
 <tr><td align="left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td align="left">Zusammengesetzte Typabgrenzung</td></tr>

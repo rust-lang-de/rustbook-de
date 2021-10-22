@@ -403,8 +403,7 @@ aufgerufen hat.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let f = File::open(&quot;hallo.txt&quot;);
@@ -480,8 +479,7 @@ verwendet den <code>?</code>-Operator.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let mut f = File::open(&quot;hallo.txt&quot;)?;
@@ -526,8 +524,7 @@ verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let mut s = String::new();

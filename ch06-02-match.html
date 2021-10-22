@@ -399,34 +399,97 @@ gültig ist! Speziell im Fall <code>Option&lt;T&gt;</code> schützt uns Rust dav
 <code>None</code> zu übersehen, und davon auszugehen, dass wir einen Wert haben, obwohl
 vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
 unmöglich.</p>
-<h3 id="der-platzhalter-_"><a class="header" href="#der-platzhalter-_">Der Platzhalter <code>_</code></a></h3>
-<p>Rust hat auch ein Muster, das wir verwenden können, wenn wir nicht alle möglichen
-Werte auflisten wollen. Zum Beispiel kann ein <code>u8</code> gültige Werte von 0 bis 255
-haben. Wenn wir uns nur um die Werte 1, 3, 5 und 7 kümmern, wollen wir nicht 0,
-2, 4, 6, 8, 9 bis hin zu 255 aufzählen müssen. Zum Glück müssen wir das nicht:
-Wir können stattdessen das spezielle Muster <code>_</code> verwenden:</p>
+<h3 id="auffangmuster-und-der-platzhalter-_"><a class="header" href="#auffangmuster-und-der-platzhalter-_">Auffangmuster und der Platzhalter <code>_</code></a></h3>
+<p>Betrachten wir ein Beispiel, bei dem wir für einige wenige Werte spezielle
+Aktionen durchführen wollen, aber für alle anderen Werte eine Standardaktion.
+Stell dir vor, wir implementieren ein Spiel, bei dem ein Spieler bei einem
+Würfelwurf von 3 einen schicken Hut bekommt anstatt sich zu bewegen. Wenn du
+eine 7 würfelst, verliert dein Spieler einen schicken Hut. Bei allen anderen
+Werten zieht der Spieler die entsprechende Anzahl an Feldern auf dem Spielfeld.
+Hier ist ein <code>match</code>, das diese Logik implementiert, wobei das Ergebnis des
+Würfelwurfs anstelle eines Zufallswerts fest kodiert ist, und alle weiter Logik
+wird durch Funktionen ohne Rumpf dargestellt, da die tatsächliche
+Implementierung für dieses Beispiel den Rahmen sprengen würde:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let some_u8_value = 0u8;
-match some_u8_value {
-    1 =&gt; println!(&quot;eins&quot;),
-    3 =&gt; println!(&quot;drei&quot;),
-    5 =&gt; println!(&quot;fünf&quot;),
-    7 =&gt; println!(&quot;sieben&quot;),
-    _ =&gt; (),
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    other =&gt; move_player(other),
 }
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>Das Muster <code>_</code> passt zu jedem Wert. Wenn wir es unter unsere anderen Zweige
-setzen, wird <code>_</code> auf alle möglichen Fälle passen, die davor nicht angegeben
-wurden. <code>()</code> ist nur der leere Wert (das leere Tupel, das wir im Abschnitt
-<a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben), sodass im Fall <code>_</code> nichts passieren
-wird. Damit können wir sagen, dass wir für alle möglichen Werte, die wir nicht
-vor dem Platzhalter <code>_</code> auflisten, nichts tun wollen.</p>
-<p>Der <code>match</code>-Ausdruck kann jedoch etwas wortreich sein, wenn wir uns nur um
-<em>einen</em> der Fälle kümmern. Für diesen Fall bietet Rust <code>if let</code>.</p>
-<p>Mehr über Muster und Abgleich findest du in <a href="ch18-00-patterns.html">Kapitel 18</a>.</p>
+<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
+letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+<code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
+<code>move_player</code> übergibt.</p>
+<p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte
+aufgelistet haben, die ein <code>u8</code> haben kann, weil das letzte Muster zu allen
+nicht explizit aufgeführten Werte passt. Dieses Auffangmuster (catch-all
+pattern) erfüllt die Anforderung, dass <code>match</code> vollständig sein muss. Beachte,
+dass wir den Auffangzweig an letzter Stelle angeben müssen, da die Muster der
+Reihe nach ausgewertet werden. Rust warnt uns, wenn wir nach einem Auffangzweig
+weitere Zweige angeben, da diese niemals zutreffen würden!</p>
+<p>Rust hat auch ein Muster, das wir verwenden können, wenn wir den Wert nicht im
+Auffangmuster verwenden wollen: <code>_</code>, das ein spezielles Muster ist, das zu
+jedem beliebigen Wert passt und nicht an diesen Wert gebunden ist. Dies sagt
+Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht vor einer
+unbenutzten Variable warnt.</p>
+<p>Ändern wir die Spielregeln dahingehend, dass wir erneut würfeln müssen, wenn
+wir etwas anderes als eine 3 oder eine 7 würfeln. Wir brauchen den Wert in
+diesem Fall nicht zu verwenden, also können wir unseren Code so ändern, dass
+wir <code>_</code> anstelle der Variable <code>other</code> verwenden:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; reroll(),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn reroll() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
+ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
+vergessen.</p>
+<p>Wenn wir die Spielregeln noch einmal ändern, sodass bei deinem Zug nichts
+anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst, können
+wir das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den wir
+im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
+angeben:</p>
+<pre><pre class="playground"><code class="language-rust">
+<span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; (),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+<span class="boring">}
+</span></code></pre></pre>
+<p>Hier teilen wir Rust explizit mit, dass wir keinen anderen Wert verwenden
+werden, der nicht mit einem Muster in einem früheren Zweig übereinstimmt, und
+dass wir in diesem Fall keinen Code ausführen wollen.</p>
+<p>Weitere Informationen zu Mustern und Abgleich findest du in <a href="ch18-00-patterns.html">Kapitel
+18</a>. Für den Moment machen wir mit der <code>if let</code>-Syntax
+weiter, die in Situationen nützlich sein kann, in denen der <code>match</code>-Ausdruck
+etwas wortreich ist.</p>
 
                     </main>
 
