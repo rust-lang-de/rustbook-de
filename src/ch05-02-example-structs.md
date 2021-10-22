@@ -243,8 +243,8 @@ Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:
 
 Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
-die Annotation `#[derive(Debug)]` unmittelbar vor der Strukturdefinition ein,
-wie in Codeblock 5-12 gezeigt.
+das äußere Attribut `#[derive(Debug)]` unmittelbar vor der Strukturdefinition
+ein, wie in Codeblock 5-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -265,7 +265,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-12: Annotation zum Verwenden des Merkmals
+<span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
 `Debug` und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
 
 Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und

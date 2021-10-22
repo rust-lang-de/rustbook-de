@@ -16,10 +16,10 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 
 ```rust
 struct User {
+    active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
-    active: bool,
 }
 ```
 
@@ -39,10 +39,10 @@ Codeblock 5-2 zu sehen ist.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 # fn main() {
@@ -67,10 +67,10 @@ Feld `email` einer veränderlichen `User`-Instanz geändert werden kann.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 # fn main() {
@@ -98,10 +98,10 @@ den Wert `true` und das Feld `sign_in_count` den Wert `1`.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 fn build_user(email: String, username: String) -> User {
@@ -140,10 +140,10 @@ wiederholen, siehe Codeblock 5-5.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 fn build_user(email: String, username: String) -> User {
@@ -181,16 +181,16 @@ kannst dazu die *Strukturaktualisierungssyntax* (struct update syntax)
 verwenden.
 
 Zunächst zeigt Codeblock 5-6, wie wir eine neue `User`-Instanz `user2` ohne
-Aktualisierungssyntax erstellen. Wir setzen neue Werte für `email` und
-`username`, verwenden aber ansonsten die gleichen Werte von `user1`, die wir in
-Codeblock 5-2 erstellt haben.
+Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für `email`,
+verwenden aber ansonsten die gleichen Werte von `user1`, die wir in Codeblock
+5-2 erstellt haben.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 # fn main() {
@@ -202,16 +202,16 @@ Codeblock 5-2 erstellt haben.
 #     };
 #
     let user2 = User {
-        email: String::from("andere@example.com"),
-        username: String::from("andererbenutzername567"),
         active: user1.active,
+        username: user1.username,
+        email: String::from("andere@example.com"),
         sign_in_count: user1.sign_in_count,
     };
 # }
 ```
 
 <span class="caption">Codeblock 5-6: Erstellen einer neuen `User`-Instanz unter
-Verwendung einiger der Werte von `user1`.</span>
+Verwendung eines Werts von `user1`.</span>
 
 Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax `..` gibt an,
@@ -220,10 +220,10 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.
 
 ```rust
 # struct User {
+#     active: bool,
 #     username: String,
 #     email: String,
 #     sign_in_count: u64,
-#     active: bool,
 # }
 #
 # fn main() {
@@ -236,20 +236,36 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.
 #
     let user2 = User {
         email: String::from("andere@example.com"),
-        username: String::from("andererbenutzername567"),
         ..user1
     };
 # }
 ```
 
 <span class="caption">Codeblock 5-7: Verwenden der
-Strukturaktualisierungssyntax, um neue Werte für `email` und `username` in der
-`User`-Instanz zu setzen und die restlichen Werte aus den Feldern der Instanz
-`user1` zu übernehmen</span>
+Strukturaktualisierungssyntax, um einen neuen Wert für `email` in der
+`User`-Instanz zu setzen und die restlichen Werte aus der Instanz `user1` zu
+übernehmen</span>
 
-Der Code in Codeblock 5-7 erzeugt auch eine Instanz `user2`, die andere Werte
-für `email` und `username` hat, aber die gleichen Werte der Felder `active` und
-`sign_in_count` wie `user1`.
+Der Code in Codeblock 5-7 erzeugt auch eine Instanz `user2`, die einen anderen
+Wert für `email` hat, aber die gleichen Werte der Felder `username`, `active`
+und `sign_in_count` wie `user1`. Das `..user1` muss an letzter Stelle stehen um
+festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
+Feldern in `user1` beziehen sollen, aber wir können Werte für so viele Felder
+in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
+der Strukturdefinition.
+
+Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit `=` ist,
+da sie die Daten verschiebt, wie wir im Abschnitt [„Wege, wie Variablen und
+Daten interagieren: Verschieben (move)“][move] gesehen haben. In diesem
+Beispiel können wir `user1` nicht mehr verwenden, nachdem wir `user2` erzeugt
+haben, weil der `String` im Feld `username` von `user1` in `user2` verschoben
+wurde. Hätten wir `user2` neue `String`-Werte für beide Felder `email` und
+`username` gegeben und somit nur die Werte `active` und `sign_in_count` von
+`user1` verwendet, wäre `user1` auch nach dem Erstellen von `user2` noch
+gültig. Die Typen `active` und `sign_in_count` sind Typen, die das Merkmal
+`Copy` implementieren, sodass das Verhalten, das wir im Abschnitt [„Nur
+Stapelspeicher-Daten: Kopieren (copy)“][copy] besprochen haben, zutreffen
+würde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
@@ -329,10 +345,10 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 >
 > ```rust,does_not_compile
 > struct User {
+>     active: bool,
 >     username: &str,
 >     email: &str,
 >     sign_in_count: u64,
->     active: bool,
 > }
 >
 > fn main() {
@@ -388,4 +404,6 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 > vermeiden, indem wir Typen wie `String` anstelle von Referenzen wie `&str`
 > verwenden.
 
+[copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
+[move]: ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move
 [tuples]: ch03-02-data-types.html#der-tupel-typ

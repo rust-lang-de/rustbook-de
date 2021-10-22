@@ -137,7 +137,7 @@ mit Merkmalsabgrenzung (trait bounds) auftreten.
 |:-------|:----------|
 | `T: U` | Generischer Parameter `T`, beschränkt auf Typen,<br> die `U` implementieren |
 | `T: 'a` | Generischer Typ `T`, der die Lebensdauer `'a` überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als `'a` enthalten) |
-| `T : 'static` | Generischer Typ `T` mit Lebensdauer `'static` |
+| `T: 'static` | Generischer Typ `T` mit Lebensdauer `'static` |
 | `'b: 'a` | Generische Lebensdauer `'b`, muss Lebensdauer `'a` überdauern |
 | `T: ?Sized` | Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist |
 | `'a + trait`,<br> `trait + trait` | Zusammengesetzte Typabgrenzung |
