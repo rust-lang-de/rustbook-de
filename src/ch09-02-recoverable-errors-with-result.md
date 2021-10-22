@@ -335,8 +335,7 @@ aufgerufen hat.
 
 ```rust
 use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -> Result<String, io::Error> {
     let f = File::open("hallo.txt");
@@ -418,8 +417,7 @@ verwendet den `?`-Operator.
 
 ```rust
 use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -> Result<String, io::Error> {
     let mut f = File::open("hallo.txt")?;
@@ -468,8 +466,7 @@ verketten, wie in Codeblock 9-8 zu sehen ist.
 
 ```rust
 use std::fs::File;
-use std::io;
-use std::io::Read;
+use std::io::{self, Read};
 
 fn read_username_from_file() -> Result<String, io::Error> {
     let mut s = String::new();

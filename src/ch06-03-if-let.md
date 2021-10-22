@@ -3,39 +3,44 @@
 Mit der Syntax `if let` kannst du `if` und `let` in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
-auf einen `Option<u8>`-Wert passt, aber nur dann Code ausführen soll, wenn der
-Wert 3 ist.
+auf einen `Option<u8>`-Wert in der Variable `config_max` passt, aber nur dann
+Code ausführen soll, wenn der Wert die `Some`-Variante ist.
 
 ```rust
-let some_u8_value = Some(0u8);
-match some_u8_value {
-    Some(3) => println!("drei"),
+let config_max = Some(3u8);
+match config_max {
+    Some(max) => println!("Das Maximum ist mit {} konfiguriert", max),
     _ => (),
 }
 ```
 
 <span class="caption">Codeblock 6-6: Eine `match`-Ausdruck, der nur dann Code
-ausführt, wenn der Wert `Some(3)` ist</span>
+ausführt, wenn der Wert `Some` ist</span>
 
-Wir wollen etwas bei `Some(3)` machen, aber nichts mit allen anderen
-`Some<u8>`-Werten oder dem Wert `None`. Um den `match`-Ausdruck zu
-vervollständigen, müssen wir `_ => ()` ergänzen. Nachdem wir nur eine Variante
-verarbeiten, bedeutet das relativ viel Code, den wir schreiben müssen.
+Wenn der Wert `Some` ist, wollen wir den Wert in der Variante `Some` ausgeben,
+wofür wir den Wert an die Variable `max` im Muster binden. Wir wollen nichts
+mit dem Wert `None` machen. Um den Ausdruck `match` zu erfüllen, müssen wir
+nach der Verarbeitung nur einer Variante `_ => ()` hinzufügen, was lästiger
+Codeballast ist.
 
 Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir `if let`
 verwenden. Der folgende Code verhält sich genauso wie der `match`-Ausdruck in
 Codeblock 6-6:
 
 ```rust
-let some_u8_value = Some(0u8);
-if let Some(3) = some_u8_value {
-    println!("drei");
+let config_max = Some(3u8);
+if let Some(max) = config_max {
+    println!("Das Maximum ist mit {} konfiguriert", max);
 }
 ```
 
 Die Syntax `if let` nimmt ein Muster und einen Ausdruck, getrennt durch ein
 Gleichheitszeichen. Sie funktioniert auf gleiche Weise wie bei `match`, wo der
-Ausdruck hinter `match` angegeben wird und das Muster der erste Zweig ist.
+Ausdruck hinter `match` angegeben wird und das Muster der erste Zweig ist. In
+diesem Fall ist das Muster `Some(max)` und das `max` ist an den Wert innerhalb
+von `Some` gebunden. Wir können dann `max` im Rumpf des `if let`-Blocks auf die
+gleiche Weise verwenden, wie `max` im entsprechenden `match`-Zweig. Der Code im
+`if let`-Block wird nicht ausgeführt, wenn der Wert nicht zum Muster passt.
 
 Die Verwendung von `if let` bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die

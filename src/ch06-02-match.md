@@ -302,36 +302,100 @@ gültig ist! Speziell im Fall `Option<T>` schützt uns Rust davor, den Fall
 vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
 unmöglich.
 
-### Der Platzhalter `_`
+### Auffangmuster und der Platzhalter `_`
 
-Rust hat auch ein Muster, das wir verwenden können, wenn wir nicht alle möglichen
-Werte auflisten wollen. Zum Beispiel kann ein `u8` gültige Werte von 0 bis 255
-haben. Wenn wir uns nur um die Werte 1, 3, 5 und 7 kümmern, wollen wir nicht 0,
-2, 4, 6, 8, 9 bis hin zu 255 aufzählen müssen. Zum Glück müssen wir das nicht:
-Wir können stattdessen das spezielle Muster `_` verwenden:
+Betrachten wir ein Beispiel, bei dem wir für einige wenige Werte spezielle
+Aktionen durchführen wollen, aber für alle anderen Werte eine Standardaktion.
+Stell dir vor, wir implementieren ein Spiel, bei dem ein Spieler bei einem
+Würfelwurf von 3 einen schicken Hut bekommt anstatt sich zu bewegen. Wenn du
+eine 7 würfelst, verliert dein Spieler einen schicken Hut. Bei allen anderen
+Werten zieht der Spieler die entsprechende Anzahl an Feldern auf dem Spielfeld.
+Hier ist ein `match`, das diese Logik implementiert, wobei das Ergebnis des
+Würfelwurfs anstelle eines Zufallswerts fest kodiert ist, und alle weiter Logik
+wird durch Funktionen ohne Rumpf dargestellt, da die tatsächliche
+Implementierung für dieses Beispiel den Rahmen sprengen würde:
 
 ```rust
-let some_u8_value = 0u8;
-match some_u8_value {
-    1 => println!("eins"),
-    3 => println!("drei"),
-    5 => println!("fünf"),
-    7 => println!("sieben"),
-    _ => (),
+let dice_roll = 9;
+match dice_roll {
+    3 => add_fancy_hat(),
+    7 => remove_fancy_hat(),
+    other => move_player(other),
 }
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
 ```
 
-Das Muster `_` passt zu jedem Wert. Wenn wir es unter unsere anderen Zweige
-setzen, wird `_` auf alle möglichen Fälle passen, die davor nicht angegeben
-wurden. `()` ist nur der leere Wert (das leere Tupel, das wir im Abschnitt
-[„Der Tupel-Typ“][tuples] erwähnt haben), sodass im Fall `_` nichts passieren
-wird. Damit können wir sagen, dass wir für alle möglichen Werte, die wir nicht
-vor dem Platzhalter `_` auflisten, nichts tun wollen.
+Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
+letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable die wir als `other` bezeichnet haben. Der Code, der für den
+`other`-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
+`move_player` übergibt.
 
-Der `match`-Ausdruck kann jedoch etwas wortreich sein, wenn wir uns nur um
-*einen* der Fälle kümmern. Für diesen Fall bietet Rust `if let`.
+Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte
+aufgelistet haben, die ein `u8` haben kann, weil das letzte Muster zu allen
+nicht explizit aufgeführten Werte passt. Dieses Auffangmuster (catch-all
+pattern) erfüllt die Anforderung, dass `match` vollständig sein muss. Beachte,
+dass wir den Auffangzweig an letzter Stelle angeben müssen, da die Muster der
+Reihe nach ausgewertet werden. Rust warnt uns, wenn wir nach einem Auffangzweig
+weitere Zweige angeben, da diese niemals zutreffen würden!
 
-Mehr über Muster und Abgleich findest du in [Kapitel 18][ch18-00-patterns].
+Rust hat auch ein Muster, das wir verwenden können, wenn wir den Wert nicht im
+Auffangmuster verwenden wollen: `_`, das ein spezielles Muster ist, das zu
+jedem beliebigen Wert passt und nicht an diesen Wert gebunden ist. Dies sagt
+Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht vor einer
+unbenutzten Variable warnt.
 
-[tuples]: ch03-02-data-types.html#der-tupel-typ
+Ändern wir die Spielregeln dahingehend, dass wir erneut würfeln müssen, wenn
+wir etwas anderes als eine 3 oder eine 7 würfeln. Wir brauchen den Wert in
+diesem Fall nicht zu verwenden, also können wir unseren Code so ändern, dass
+wir `_` anstelle der Variable `other` verwenden:
+
+```rust
+let dice_roll = 9;
+match dice_roll {
+    3 => add_fancy_hat(),
+    7 => remove_fancy_hat(),
+    _ => reroll(),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn reroll() {}
+```
+
+Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
+ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
+vergessen.
+
+Wenn wir die Spielregeln noch einmal ändern, sodass bei deinem Zug nichts
+anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst, können
+wir das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den wir
+im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt haben) als Code im `_`-Zweig
+angeben:
+
+```rust
+let dice_roll = 9;
+match dice_roll {
+    3 => add_fancy_hat(),
+    7 => remove_fancy_hat(),
+    _ => (),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+```
+
+Hier teilen wir Rust explizit mit, dass wir keinen anderen Wert verwenden
+werden, der nicht mit einem Muster in einem früheren Zweig übereinstimmt, und
+dass wir in diesem Fall keinen Code ausführen wollen.
+
+Weitere Informationen zu Mustern und Abgleich findest du in [Kapitel
+18][ch18-00-patterns]. Für den Moment machen wir mit der `if let`-Syntax
+weiter, die in Situationen nützlich sein kann, in denen der `match`-Ausdruck
+etwas wortreich ist.
+
 [ch18-00-patterns]: ch18-00-patterns.html
+[tuples]: ch03-02-data-types.html#der-tupel-typ

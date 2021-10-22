@@ -9,7 +9,7 @@ Rust-Buchs](https://doc.rust-lang.org/book/).
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.4.5"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4.12"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
@@ -27,6 +27,6 @@ Vorschläge und Korrekturen oder gar Übersetzungen sind natürlich gerne gewün
 Falls du helfen möchtest, dann am besten via Pull Request oder Issue.
 
 Das Buch wurde mittlerweile komplett übersetzt und enthält alle Änderungen des
-englischen Originals bis einschließlich zum **10.08.2021**.
+englischen Originals bis einschließlich zum **16.09.2021**.
 
 Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).
