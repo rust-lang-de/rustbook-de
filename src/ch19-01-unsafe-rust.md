@@ -232,12 +232,8 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function or 
   |
   = note: consult the function's documentation for information on how to avoid undefined behavior
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0133`.
-error: could not compile `unsafe-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `unsafe-example` due to previous error
 ```
 
 Indem wir den `unsafe`-Block um unseren Aufruf von `dangerous` legen,
@@ -331,12 +327,8 @@ error[E0499]: cannot borrow `*slice` as mutable more than once at a time
   |     |     first mutable borrow occurs here
   |     returning this value requires that `*slice` is borrowed for `'1`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `unsafe-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `unsafe-example` due to previous error
 ```
 
 Der Ausleihenprüfer von Rust kann nicht verstehen, dass wir verschiedene Teile

@@ -111,12 +111,8 @@ error[E0308]: mismatched types
 4 |     if number {
   |        ^^^^^^ expected `bool`, found integer
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches`
-
-To learn more, run the command again with --verbose.
+error: could not compile `branches` due to previous error
 ```
 
 Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl
@@ -254,12 +250,8 @@ error[E0308]: `if` and `else` have incompatible types
   |                                 |
   |                                 expected because of this
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches`
-
-To learn more, run the command again with --verbose.
+error: could not compile `branches` due to previous error
 ```
 
 Der Ausdruck im `if`-Block wird zu einer ganzen Zahl und der Ausdruck im

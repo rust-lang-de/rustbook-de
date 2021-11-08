@@ -481,12 +481,8 @@ error[E0308]: mismatched types
   |                             expected struct `String`, found integer
   |                             help: try using a conversion method: `5.to_string()`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `closure-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `closure-example` due to previous error
 ```
 Beim ersten Aufruf von `example_closure` wird dem Typ von `x` und dem
 Rückgabewert des Funktionsabschlusses der Typ `String` zugewiesen. Diese Typen
@@ -988,12 +984,8 @@ error[E0382]: borrow of moved value: `x`
 6 |     println!("kann x hier nicht verwenden: {:?}", x);
   |                                                   ^ value borrowed here after move
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `equal-to-x`
-
-To learn more, run the command again with --verbose.
+error: could not compile `equal-to-x` due to previous error
 
 ```
 

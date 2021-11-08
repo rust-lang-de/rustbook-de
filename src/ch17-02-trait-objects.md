@@ -381,12 +381,8 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
   |
   = note: required for the cast to the object type `dyn Draw`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `gui`
-
-To learn more, run the command again with --verbose.
+error: could not compile `gui` due to previous error
 ```
 
 Dieser Fehler lässt uns wissen, dass wir entweder etwas an `Screen` übergeben,
@@ -481,20 +477,16 @@ Wir würden diesen Fehler bekommen:
 $ cargo build
    Compiling gui v0.1.0 (file:///projects/gui)
 error[E0038]: the trait `Clone` cannot be made into an object
- --> src/lib.rs:2:21
+ --> src/lib.rs:2:29
   |
 2 |     pub components: Vec<Box<dyn Clone>>,
-  |                     ^^^^^^^^^^^^^^^^^^^ `Clone` cannot be made into an object
+  |                             ^^^^^^^^^ `Clone` cannot be made into an object
   |
   = note: the trait cannot be made into an object because it requires `Self: Sized`
   = note: for a trait to be "object safe" it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit <https://doc.rust-lang.org/reference/items/traits.html#object-safety>
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0038`.
-error: could not compile `gui`
-
-To learn more, run the command again with --verbose.
+error: could not compile `gui` due to previous error
 ```
 
 Dieser Fehler bedeutet, dass du dieses Merkmal auf diese Weise nicht als

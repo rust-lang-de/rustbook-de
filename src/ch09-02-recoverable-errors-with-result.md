@@ -83,12 +83,8 @@ error[E0308]: mismatched types
   = note: expected type `u32`
              found enum `Result<File, std::io::Error>`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `error-handling`
-
-To learn more, run the command again with --verbose.
+error: could not compile `error-handling` due to previous error
 ```
 
 Dies sagt uns, dass die Funktion `File::open` den Rückgabetyp `Result<T, E>`
@@ -541,23 +537,19 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
- --> src/main.rs:4:13
-  |
-3 | / fn main() {
-4 | |     let f = File::open("hallo.txt")?;
-  | |             ^^^^^^^^^^^^^^^^^^^^^^^^ cannot use the `?` operator in a function that returns `()`
-5 | | }
-  | |_- this function should return `Result` or `Option` to accept `?`
-  |
-  = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
-  = note: required by `from_residual`
-
-error: aborting due to previous error
+   --> src/main.rs:4:13
+    |
+3   | / fn main() {
+4   | |     let f = File::open("hallo.txt")?;
+    | |                                    ^ cannot use the `?` operator in a function that returns `()`
+5   | | }
+    | |_- this function should return `Result` or `Option` to accept `?`
+    |
+    = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
+    = note: required by `from_residual`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling`
-
-To learn more, run the command again with --verbose.
+error: could not compile `error-handling` due to previous error
 ```
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion

@@ -676,11 +676,7 @@ error: `..` can only be used once per tuple pattern
   |          |
   |          previously used here
 
-error: aborting due to previous error
-
-error: could not compile `patterns`
-
-To learn more, run the command again with --verbose.
+error: could not compile `patterns` due to previous error
 ```
 
 Es ist für Rust unmöglich zu bestimmen, wie viele Werte im Tupel zu ignorieren

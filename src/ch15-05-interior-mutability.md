@@ -109,12 +109,8 @@ error[E0596]: cannot borrow `x` as mutable, as it is not declared as mutable
 3 |     let y = &mut x;
   |             ^^^^^^ cannot borrow as mutable
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `borrowing`
-
-To learn more, run the command again with --verbose.
+error: could not compile `borrowing` due to previous error
 ```
 Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
 seinen Methoden selbst veränderlich ist, aber für einen anderen Programmcode 
@@ -341,12 +337,9 @@ error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `
 58 |             self.sent_messages.push(String::from(message));
    |             ^^^^^^^^^^^^^^^^^^ `self` is a `&` reference, so the data it refers to cannot be borrowed as mutable
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `limit-tracker`
+error: could not compile `limit-tracker` due to previous error
 
-To learn more, run the command again with --verbose.
 warning: build failed, waiting for other jobs to finish...
 error: build failed
 ```

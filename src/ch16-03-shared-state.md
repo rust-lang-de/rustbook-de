@@ -185,12 +185,8 @@ error[E0382]: use of moved value: `counter`
 10 |             let mut num = counter.lock().unwrap();
    |                           ------- use occurs due to use in closure
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state`
-
-To learn more, run the command again with --verbose.
+error: could not compile `shared-state` due to previous error
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
@@ -261,12 +257,8 @@ error[E0277]: `Rc<Mutex<i32>>` cannot be sent between threads safely
     = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc<Mutex<i32>>`
     = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state`
-
-To learn more, run the command again with --verbose.
+error: could not compile `shared-state` due to previous error
 ```
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf

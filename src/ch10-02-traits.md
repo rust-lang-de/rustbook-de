@@ -574,12 +574,8 @@ error[E0369]: binary operation `>` cannot be applied to type `T`
   |
   = note: `T` might need a bound for `std::cmp::PartialOrd`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Im Rumpf von `largest` wollten wir zwei Werte vom Typ `T` mit dem Operator
@@ -641,13 +637,9 @@ error[E0507]: cannot move out of a shared reference
   |         |move occurs because `item` has type `T`, which does not implement the `Copy` trait
   |         help: consider removing the `&`: `item`
 
-error: aborting due to 2 previous errors
-
 Some errors have detailed explanations: E0507, E0508.
 For more information about an error, try `rustc --explain E0507`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Die Schlüsselzeile bei diesem Fehler ist `cannot move out of type [T], a

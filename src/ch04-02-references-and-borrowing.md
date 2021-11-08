@@ -129,12 +129,8 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` ref
 8 |     some_string.push_str(" Welt");
   |     ^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `ownership`
-
-To learn more, run the command again with --verbose.
+error: could not compile `ownership` due to previous error
 ```
 
 So wie Variablen standardmäßig unveränderlich sind, so sind auch Referenzen
@@ -196,12 +192,8 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
 7 |     println!("{}, {}", r1, r2);
   |                        -- first borrow later used here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership`
-
-To learn more, run the command again with --verbose.
+error: could not compile `ownership` due to previous error
 ```
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
@@ -276,12 +268,8 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 8 |     println!("{}, {} und {}", r1, r2, r3);
   |                               -- immutable borrow later used here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership`
-
-To learn more, run the command again with --verbose.
+error: could not compile `ownership` due to previous error
 ```
 
 Puh! Wir können auch keine veränderlichen Referenzen haben, solange wir eine
@@ -368,12 +356,8 @@ help: consider using the `'static` lifetime
 5 | fn dangle() -> &'static String {
   |                ^^^^^^^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership`
-
-To learn more, run the command again with --verbose.
+error: could not compile `ownership` due to previous error
 ```
 
 Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht
