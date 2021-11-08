@@ -65,12 +65,8 @@ help: you might want to use `if let` to ignore the variant that isn't matched
 3   |     if let Some(x) = some_option_value { /* */ }
     |
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0005`.
-error: could not compile `patterns`
-
-To learn more, run the command again with --verbose.
+error: could not compile `patterns` due to previous error
 ```
 
 Da wir nicht jeden gültigen Wert mit dem Muster `Some(x)` abgedeckt haben (und
@@ -129,7 +125,7 @@ warning: irrefutable `if let` pattern
   = note: this pattern will always match, so the `if let` is useless
   = help: consider replacing the `if let` with a `let`
 
-warning: 1 warning emitted
+warning: `patterns` (bin "patterns") generated 1 warning
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.39s
      Running `target/debug/patterns`

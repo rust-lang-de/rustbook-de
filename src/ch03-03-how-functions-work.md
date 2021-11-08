@@ -367,12 +367,9 @@ error[E0308]: mismatched types
 8 |     x + 1;
   |          - help: consider removing this semicolon
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `functions`
-
-To learn more, run the command again with --verbose.
+warning: `functions` (bin "functions") generated 1 warning
+error: could not compile `functions` due to 2 previous errors; 1 warning emitted
 ```
 
 Die Hauptfehlermeldung „nicht übereinstimmende Typen“ („mismatched types“)

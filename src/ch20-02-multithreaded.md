@@ -310,12 +310,8 @@ error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
 10 |     let pool = ThreadPool::new(4);
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0433`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
@@ -412,12 +408,8 @@ error[E0599]: no function or associated item named `new` found for struct `Threa
 11 |     let pool = ThreadPool::new(4);
    |                            ^^^ function or associated item not found in `ThreadPool`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Dieser Fehler deutet darauf hin, dass wir als Nächstes eine zugehörige Funktion
@@ -455,12 +447,8 @@ error[E0599]: no method named `execute` found for struct `ThreadPool` in the cur
 16 |         pool.execute(|| {
    |              ^^^^^^^ method not found in `hello::ThreadPool`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Der Fehler tritt jetzt auf, weil wir keine Methode `execute` auf `ThreadPool`
@@ -1021,12 +1009,8 @@ error[E0382]: use of moved value: `receiver`
 27 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Der Code versucht, `receiver` an mehrere `Worker`-Instanzen weiterzugeben. Das

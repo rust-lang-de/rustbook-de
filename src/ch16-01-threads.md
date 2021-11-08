@@ -325,12 +325,8 @@ help: to force the closure to take ownership of `v` (and any other referenced va
 6 |     let handle = thread::spawn(move || {
   |                                ^^^^^^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0373`.
-error: could not compile `threads`
-
-To learn more, run the command again with --verbose.
+error: could not compile `threads` due to previous error
 ```
 
 Rust *folgert*, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
@@ -433,12 +429,8 @@ error[E0382]: use of moved value: `v`
 10 |     drop(v); // Oh nein!
    |          ^ value used here after move
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `threads`
-
-To learn more, run the command again with --verbose.
+error: could not compile `threads` due to previous error
 ```
 
 Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen

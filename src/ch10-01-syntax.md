@@ -152,12 +152,8 @@ help: consider restricting type parameter `T`
 1 | fn largest<T: std::cmp::PartialOrd>(list: &[T]) -> &T {
   |             ^^^^^^^^^^^^^^^^^^^^^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Der Hinweis erwähnt `std::cmp::PartialOrd`, was ein *Merkmal* (trait) ist. Wir
@@ -240,12 +236,8 @@ error[E0308]: mismatched types
 7 |     let wont_work = Point { x: 5, y: 4.0 };
   |                                      ^^^ expected integer, found floating-point number
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Um eine Struktur `Point` zu definieren, bei der `x` und `y` generische, aber

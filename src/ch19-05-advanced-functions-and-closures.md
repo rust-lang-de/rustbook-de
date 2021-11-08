@@ -150,12 +150,8 @@ help: use `impl Fn(i32) -> i32` as the return type, as all return paths are of t
 1 | fn returns_closure() -> impl Fn(i32) -> i32 {
   |                         ^^^^^^^^^^^^^^^^^^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0746`.
-error: could not compile `functions-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `functions-example` due to previous error
 ```
 
 Der Fehler bezieht sich wieder auf das Merkmal `Sized`! Rust weiß nicht, wie

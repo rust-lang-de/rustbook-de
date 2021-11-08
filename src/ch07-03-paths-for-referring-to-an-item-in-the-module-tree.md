@@ -113,12 +113,8 @@ note: the module `hosting` is defined here
 2  |     mod hosting {
    |     ^^^^^^^^^^^
 
-error: aborting due to 2 previous errors
-
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant`
-
-To learn more, run the command again with --verbose.
+error: could not compile `restaurant` due to 2 previous errors
 ```
 
 <span class="caption">Codeblock 7-4: Kompilierfehler im Code in Codeblock
@@ -214,12 +210,8 @@ note: the function `add_to_waitlist` is defined here
 3  |         fn add_to_waitlist() {}
    |         ^^^^^^^^^^^^^^^^^^^^
 
-error: aborting due to 2 previous errors
-
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant`
-
-To learn more, run the command again with --verbose.
+error: could not compile `restaurant` due to 2 previous errors
 ```
 
 <span class="caption">Codeblock 7-6: Kompilierfehler im Code in Codeblock

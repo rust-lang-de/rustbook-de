@@ -69,12 +69,8 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
   = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z external-macro-backtrace for more info)
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `deref-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `deref-example` due to previous error
 ```
 
 Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
@@ -185,12 +181,8 @@ error[E0614]: type `MyBox<{integer}>` cannot be dereferenced
 14 |     assert_eq!(5, *y);
    |                   ^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0614`.
-error: could not compile `deref-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `deref-example` due to previous error
 ```
 
 Unser Typ `MyBox<T>` kann nicht dereferenziert werden, da wir diese

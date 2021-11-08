@@ -527,20 +527,18 @@ $ cargo run
 error[E0283]: type annotations needed
   --> src/main.rs:20:43
    |
-2  |     fn baby_name() -> String;
-   |     ------------------------- required by `Animal::baby_name`
-...
 20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
    |                                                ^^^^^^^^^^^^^^^^^ cannot infer type
    |
    = note: cannot satisfy `_: Animal`
-
-error: aborting due to previous error
+note: required by `Animal::baby_name`
+  --> src/main.rs:2:5
+   |
+2  |     fn baby_name() -> String;
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0283`.
-error: could not compile `traits-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `traits-example` due to previous error
 ```
 
 Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
@@ -720,12 +718,8 @@ error[E0277]: `Point` doesn't implement `std::fmt::Display`
    = help: the trait `std::fmt::Display` is not implemented for `Point`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `traits-example`
-
-To learn more, run the command again with --verbose.
+error: could not compile `traits-example` due to previous error
 ```
 
 Um dies zu beheben, implementieren wir `Display` auf `Point` und erfüllen die

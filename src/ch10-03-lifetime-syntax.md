@@ -74,12 +74,8 @@ error[E0597]: `x` does not live long enough
 10 |         println!("r: {}", r);
    |                           - borrow later used here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Die Variable `x` lebt nicht „lange genug“. Der Grund dafür ist, dass `x` den
@@ -230,12 +226,8 @@ help: consider introducing a named lifetime parameter
 9 | fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
   |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Aus dem Hilfetext geht hervor, dass der Rückgabetyp einen generischen
@@ -446,12 +438,8 @@ error[E0597]: `string2` does not live long enough
 8 |     println!("Die längere Zeichenkette ist {}", result);
   |                                                 ------ borrow later used here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Der Fehler zeigt, dass `string2` bis zum Ende des äußeren Gültigkeitsbereichs
@@ -547,12 +535,8 @@ error[E0515]: cannot return value referencing local variable `result`
    |     returns a value referencing data owned by the current function
    |     `result` is borrowed here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0515`.
-error: could not compile `chapter10`
-
-To learn more, run the command again with --verbose.
+error: could not compile `chapter10` due to previous error
 ```
 
 Das Problem ist, dass `result` den Gültigkeitsbereich verlässt und am Ende der

@@ -345,12 +345,8 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 20 |     println!("Das erste Wort ist: {}", word);
    |                                        ---- immutable borrow later used here
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership`
-
-To learn more, run the command again with --verbose.
+error: could not compile `ownership` due to previous error
 ```
 
 Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine

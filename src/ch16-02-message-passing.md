@@ -220,12 +220,8 @@ error[E0382]: borrow of moved value: `val`
 10 |         println!("val ist {}", val);
    |                                ^^^ value borrowed here after move
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `message-passing`
-
-To learn more, run the command again with --verbose.
+error: could not compile `message-passing` due to previous error
 ```
 
 Unser Nebenläufigkeitsfehler hat einen Kompilierzeitfehler verursacht. Die

@@ -381,7 +381,7 @@ warning: unused `Result` that must be used
    = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
 
-warning: 1 warning emitted
+warning: `guessing_game` (bin "guessing_game") generated 1 warning
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 ```
@@ -820,12 +820,8 @@ error[E0308]: mismatched types
    = note: expected reference `&String`
               found reference `&{integer}`
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `guessing_game`
-
-To learn more, run the command again with --verbose.
+error: could not compile `guessing_game` due to previous error
 ```
 
 Der Kernbotschaft besagt, dass es *nicht übereinstimmende Typen* (mismatched

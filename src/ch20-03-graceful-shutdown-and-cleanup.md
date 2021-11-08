@@ -125,12 +125,8 @@ error[E0507]: cannot move out of `worker.thread` which is behind a mutable refer
 52 |             worker.thread.join().unwrap();
    |             ^^^^^^^^^^^^^ move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
@@ -251,13 +247,9 @@ error[E0308]: mismatched types
    = note: expected enum `Option<JoinHandle<()>>`
             found struct `JoinHandle<_>`
 
-error: aborting due to 2 previous errors
-
 Some errors have detailed explanations: E0308, E0599.
 For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello`
-
-To learn more, run the command again with --verbose.
+error: could not compile `hello` due to previous error
 ```
 
 Lass uns den zweiten Fehler beheben, der auf den Code am Ende von `Worker::new`

@@ -31,12 +31,8 @@ error[E0282]: type annotations needed
 2 |     let guess = "42".parse().expect("Keine Zahl!");
   |         ^^^^^ consider giving `guess` a type
 
-error: aborting due to previous error
-
 For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations`
-
-To learn more, run the command again with --verbose.
+error: could not compile `no_type_annotations` due to previous error
 ```
 
 Für andere Datentypen wirst du andere Typ-Annotationen sehen.
