@@ -212,7 +212,7 @@ Beachte, dass dies eine `let`-Anweisung ist, die benutzt wird, um eine
 *Variable* zu erzeugen. Hier ist ein weiteres Beispiel:
 
 ```rust,ignore
-let apples = 5;
+let foo = 5;
 ```
 
 Diese Zeile erzeugt eine neue Variable namens `foo` und bindet sie an den Wert
