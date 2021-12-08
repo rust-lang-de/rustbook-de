@@ -215,7 +215,7 @@ Beachte, dass dies eine `let`-Anweisung ist, die benutzt wird, um eine
 let apples = 5;
 ```
 
-Diese Zeile erzeugt eine neue Variable namens `foo` und bindet sie an den Wert
+Diese Zeile erzeugt eine neue Variable namens `apples` und bindet sie an den Wert
 5. In Rust sind Variablen standardmäßig unveränderlich (immutable). Wir werden
 dieses Konzept im Abschnitt [„Variablen und
 Veränderlichkeit“][variables-and-mutability] in Kapitel 3 ausführlich
