@@ -406,7 +406,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
 haben jedoch auch irrelevante Informationen, die wir unseren Benutzern nicht
-geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-10 verwendet
+geben wollen. Vielleicht ist die Technik, die wir in Codeblock 9-13 verwendet
 haben, hier nicht die beste: Das Aufrufen von `panic!` ist für ein
 Programmierproblem besser geeignet als für ein Nutzungsproblem, [wie in Kapitel
 9 besprochen][ch9-error-guidelines]. Stattdessen können wir die andere Technik

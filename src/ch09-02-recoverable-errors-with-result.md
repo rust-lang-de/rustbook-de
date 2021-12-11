@@ -54,16 +54,11 @@ tatsächlich hat. Versuchen wir es! Wir wissen, dass der Rückgabetyp von
 `File::open` nicht vom Typ `u32` ist, also lass uns die Anweisung `let f` wie
 folgt ändern:
 
-[std-library-doc]: https://doc.rust-lang.org/std/index.html
-
 ```rust,does_not_compile
 # use std::fs::File;
 #
 # fn main() {
-    let f: u32 = File::open("hello.txt");
-
-
-
+    let f: u32 = File::open("hallo.txt");
 # }
 ```
 
@@ -372,24 +367,27 @@ fehlschlagen könnten: Die Funktion `File::open` und die Methode
 
 Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`. Dann
 behandeln wir den `Result`-Wert, der von `match` zurückgegeben wird, auf
-ähnliche Weise wie bei `match` in Codeblock 9-4, allerdings anstatt `panic!` im
-`Err`-Fall aufzurufen, beenden wir die Funktion vorzeitig und übergeben den
-Fehlerwert von `File::open` als Fehlerwert dieser Funktion an den aufrufenden
-Code. Wenn `File::open` erfolgreich ist, speichern wir die Dateiressource in
-der Variable `f` und fahren fort.
+ähnliche Weise wie bei `match` in Codeblock 9-4. Wenn `File::open` erfolgreich
+ist, erhält die Dateiressource in der Mustervariablen `file` den Wert in der
+veränderlichen Variablen `f` und die Funktion wird fortgesetzt. Im Fall von
+`Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!` aufzurufen, um
+die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von `File::open` in
+der Mustervariablen `e` als Fehlerwert dieser Funktion an den aufrufenden Code
+zurückzugeben.
 
-Dann erstellen wir einen neuen `String` in der Variable `s` und rufen die
-Methode `read_to_string` auf der Dateiressource in `f` auf, um den Inhalt der
-Datei in `s` einzulesen. Die Methode `read_to_string` gibt ebenfalls ein
-`Result` zurück, weil sie fehlschlagen könnte, obwohl `File::open` erfolgreich
-war. Wir brauchen also ein weiteres `match`, um dieses `Result` zu verarbeiten:
-Wenn `read_to_string` erfolgreich ist, dann war unsere Funktion erfolgreich und
-wir geben den Benutzernamen aus der Datei zurück, die jetzt in `s` innerhalb
-`Ok` enthalten ist. Wenn `read_to_string` fehlschlägt, geben wir den Fehlerwert
-auf die gleiche Weise zurück, wie wir den Fehlerwert in `match` zurückgegeben
-haben, das den Rückgabewert von `File::open` behandelt hat. Wir brauchen jedoch
-nicht ausdrücklich `return` anzugeben, weil dies der letzte Ausdruck in der
-Funktion ist.
+Wenn wir also eine Dateiressource in `f` haben, erzeugt die Funktion einen
+neuen `String` in der Variablen `s` und ruft die Methode `read_to_string` für
+die Dateiressource in `f` auf, um den Inhalt der Datei in die Variable `s` zu
+lesen. Die Methode `read_to_string` gibt ebenfalls ein `Result` zurück, weil
+sie fehlschlagen könnte, obwohl `File::open` erfolgreich war. Wir brauchen also
+ein weiteres `match`, um dieses `Result` zu verarbeiten: Wenn `read_to_string`
+erfolgreich ist, dann war unsere Funktion erfolgreich und wir geben den
+Benutzernamen aus der Datei zurück, die jetzt in `s` innerhalb `Ok` enthalten
+ist. Wenn `read_to_string` fehlschlägt, geben wir den Fehlerwert auf die
+gleiche Weise zurück, wie wir den Fehlerwert in `match` zurückgegeben haben,
+das den Rückgabewert von `File::open` behandelt hat. Wir brauchen jedoch nicht
+ausdrücklich `return` anzugeben, weil dies der letzte Ausdruck in der Funktion
+ist.
 
 Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
 einen `Ok`-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
@@ -442,10 +440,10 @@ Funktion `from` aufruft, wird der empfangene Fehlertyp in den Fehlertyp
 umgewandelt, der als Rückgabetyp der aktuellen Funktion definiert ist. Das ist
 hilfreich, wenn eine Funktion einen einzigen Fehlertyp zurückgibt, um alle
 möglichen Fehlerarten einer Funktion darzustellen, auch wenn Teile aus vielen
-verschiedenen Gründen versagen könnten. Solange jeder Fehlertyp die Funktion
-`from` implementiert, um festzulegen, wie er sich selbst in den
-zurückzugebenden Fehlertyp konvertieren soll, kümmert sich der `?`-Operator
-automatisch um die Konvertierung.
+verschiedenen Gründen versagen könnten. Solange es ein `impl From<OtherError>
+für ReturnedError` gibt, um die Konvertierung in der `from`-Funktion des
+Merkmals zu definieren, kümmert sich der `?`-Operator automatisch um den Aufruf
+der `from`-Funktion.
 
 Im Zusammenhang mit Codeblock 9-7 gibt das `?` am Ende des Aufrufs von
 `File::open` den Wert innerhalb eines `Ok` an die Variable `f` zurück. Wenn ein
@@ -496,7 +494,7 @@ use std::fs;
 use std::io;
 
 fn read_username_from_file() -> Result<String, io::Error> {
-    fs::read_to_string("hello.txt")
+    fs::read_to_string("hallo.txt")
 }
 ```
 
@@ -511,7 +509,7 @@ zurückgibt. Natürlich gibt uns die Verwendung von `fs::read_to_string` nicht
 die Möglichkeit, die ganze Fehlerbehandlung zu erklären, also haben wir es
 zuerst auf dem längeren Weg gemacht.
 
-#### Der `?`-Operator kann in Funktionen verwendet werden, die `Result` zurückgeben
+#### Wo der Operator `?` verwendet werden kann
 
 Der `?`-Operator kann in Funktionen verwendet werden, die den Rückgabetyp
 `Result` haben, weil er so definiert ist, dass er auf die gleiche Weise
@@ -520,8 +518,9 @@ Der Teil von `match`, der den Rückgabetyp `Result` erfordert, ist
 `return Err(e)`, daher muss der Rückgabetyp der Funktion `Result` sein, um mit
 `return` kompatibel zu sein.
 
-Schauen wir uns an, was passiert, wenn wir den `?`-Operator in der Funktion
-`main` verwenden, die, wie du dich erinnern wirst, den Rückgabetyp `()` hat:
+Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den `?`-Operator
+in der Funktion `main` verwenden, die, wie du dich erinnern wirst, den
+Rückgabetyp `()` hat:
 
 ```rust,does_not_compile
 use std::fs::File;
@@ -531,7 +530,14 @@ fn main() {
 }
 ```
 
-Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
+<span class="caption">Codeblock 9-10: Der Versuch, das `?` in der
+`main`-Funktion zu verwenden, die `()` zurückgibt, lässt sich nicht
+kompilieren</span>
+
+Dieser Code öffnet eine Datei, was fehlschlagen kann. Der `?`-Operator folgt
+dem `Result`-Wert, der von `File::open` zurückgegeben wird, aber diese
+`main`-Funktion hat den Rückgabetyp `()`, nicht `Result`. Wenn wir diesen Code
+kompilieren, erhalten wir folgende Fehlermeldung:
 
 ```console
 $ cargo run
@@ -554,20 +560,94 @@ error: could not compile `error-handling` due to previous error
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion
 verwenden dürfen, die `Result` oder `Option` oder einen anderen Typ, der
-`std::ops::Try` implementiert, zurückgibt. Wenn du Code in einer Funktion
-schreibst, die keinen dieser Typen zurückgibt, und du `?` verwenden willst,
-wenn du andere Funktionen mit dem Rückgabetyp `Result<T, E>` aufrufst, hast du
-zwei Möglichkeiten, dieses Problem zu lösen. Eine Technik besteht darin, den
-Rückgabetyp deiner Funktion in `Result<T, E>` zu ändern, wenn dem nichts
-entgegensteht. Die andere Technik besteht darin, `match` oder eine der Methoden
-von `Result<T, E>` zu verwenden, um das `Result<T, E>` in geeigneter Weise zu
-behandeln.
+`FromResidual` implementiert, zurückgibt. Um diesen Fehler zu beheben, hast du
+zwei Möglichkeiten. Eine Technik besteht darin, den Rückgabetyp deiner Funktion
+in `Result<T, E>` zu ändern, wenn dem nichts entgegensteht. Die andere Technik
+besteht darin, `match` oder eine der Methoden von `Result<T, E>` zu verwenden,
+um das `Result<T, E>` in geeigneter Weise zu behandeln.
 
-Die Funktion `main` ist etwas Besonderes und es gibt Einschränkungen
-hinsichtlich ihres Rückgabetyps. Ein gültiger Rückgabetyp für main ist `()` und
-bequemerweise auch `Result<T, E>`, wie hier zu sehen ist:
+Die Fehlermeldung hat auch erwähnt, dass `?` ebenso mit `Option<T>`-Werten
+verwendet werden kann. Wie bei der Verwendung von `?` für `Result`, kannst du
+`?` für `Option` nur in einer Funktion verwenden, die eine `Option` zurückgibt.
+Das Verhalten des `?`-Operators beim Aufruf auf eine `Option<T>` ist ähnlich
+dem Verhalten, wenn er auf ein `Result<T, E>` aufgerufen wird: Wenn der Wert
+`None` ist, wird `None` zu diesem Zeitpunkt von der Funktion zurückgegeben.
+Wenn der Wert `Some` ist, ist der Wert innerhalb von `Some` der resultierende
+Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
+Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
+gegebenen Text findet:
 
-```rust,should_panic
+```rust
+fn last_char_of_first_line(text: &str) -> Option<char> {
+    text.lines().next()?.chars().last()
+}
+#
+# fn main() {
+#     assert_eq!(
+#         last_char_of_first_line("Hallo Welt\nWie geht es dir heute?"),
+#         Some('t')
+#     );
+#
+#     assert_eq!(last_char_of_first_line(""), None);
+#     assert_eq!(last_char_of_first_line("\nhi"), None);
+# }
+```
+
+<span class="caption">Codeblock 9-11: Verwenden des `?`-Operators auf einem
+`Option<T>`-Wert</span>
+
+Diese Funktion gibt `Option<char>` zurück, weil sie an dieser Position ein
+Zeichen finden könnte, oder es könnte dort kein Zeichen sein. Dieser Code nimmt
+das Zeichenkettenanteilstyp-Argument `text` und ruft die Methode `lines` darauf
+auf, die einen Iterator über die Zeilen der Zeichenkette zurückgibt. Da diese
+Funktion die erste Zeile untersuchen will, ruft sie `next` auf dem Iterator
+auf, um den ersten Wert vom Iterator zu erhalten. Wenn `text` die leere
+Zeichenkette ist, gibt dieser Aufruf von `next` `None` zurück, und hier können
+wir `?` benutzen, um zu stoppen und `None` von `last_char_of_first_line`
+zurückgeben, wenn dies der Fall ist. Wenn `text` nicht die leere Zeichenkette
+ist, gibt `next` einen `Some`-Wert zurück, der einen Zeichenkettenanteilstyp
+der ersten Zeile in `text` enthält.
+
+Das `?` extrahiert den Zeichenkettenanteilstyp, und wir können `chars` auf
+diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für die Zeichen in
+diesem Zeichenkettenanteilstyp zu erhalten. Wir sind am letzten Zeichen in
+dieser ersten Zeile interessiert, also rufen wir `last` auf, um das letzte
+Element im Iterator über die Zeichen zurückzugeben. Dies ist eine `Option`,
+weil die erste Zeile die leere Zeichenkette sein kann, wenn `text` mit einer
+Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in `"\nhi"`.
+Wenn es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es in der
+Variante `Some` zurückgegeben. Der `?`-Operator in der Mitte gibt uns eine
+prägnante Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in
+einer Zeile implementiert werden. Wenn wir den `?`-Operator nicht auf `Option`
+verwenden könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder
+einem Ausdruck implementieren.
+
+Beachte, dass du den `?`-Operator auf ein `Result` in einer Funktion anwenden
+kannst, die `Result` zurückgibt, und du kannst den `?`-Operator auf eine
+`Option` in einer Funktion anwenden, die `Option` zurückgibt, aber du kannst
+nicht beides mischen. Der Operator `?` konvertiert nicht automatisch ein
+`Result` in eine `Option` oder umgekehrt; in diesen Fällen gibt es Methoden wie
+die `ok`-Methode für `Result` oder die `ok_or`-Methode für `Option`, die die
+Umwandlung explizit vornehmen.
+
+Bis jetzt haben alle `main`-Funktionen, die wir benutzt haben, `()`
+zurückgegeben. Die Funktion `main` ist etwas Besonderes, weil sie der Ein- und
+Ausstiegspunkt von ausführbaren Programmen ist, und es gibt Einschränkungen
+hinsichtlich ihres Rückgabetyps, damit sich die Programme wie erwartet
+verhalten. In C geschriebene Programme geben beim Beenden ganze Zahlen zurück,
+und auch Rust-Programme folgen dieser Konvention: Programme, die erfolgreich
+beendet werden, geben die Zahl `0` zurück, und Programme, die einen Fehler
+machen, geben eine andere Zahl als `0` zurück. Wenn `main` `()` zurückgibt,
+geben Rust-Programme `0` zurück, wenn sich `main` normal beendet, und einen
+Wert ungleich Null, wenn das Programm abbricht, bevor es das Ende von `main`
+erreicht.
+
+Ein weiterer Rückgabetyp, den `main` haben kann, ist `Result<(), E>`. Codeblock
+9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
+`main` in `Result<(), Box<dyn Error>>` geändert und am Ende einen Rückgabewert
+`Ok(())` hinzugefügt. Dieser Code wird nun kompilieren:
+
+```rust,ignore
 use std::error::Error;
 use std::fs::File;
 
@@ -578,16 +658,32 @@ fn main() -> Result<(), Box<dyn Error>> {
 }
 ```
 
+<span class="caption">Codeblock 9-12: Die Änderung von `main` zur Rückgabe von
+`Result<(), E>` erlaubt die Verwendung des `?`-Operators für
+`Result`-Werte</span>
+
 Der Typ `Box<dyn Error>` wird als Markmalsobjekt (trait object) bezeichnet,
 über das wir im Abschnitt [„Merkmalsobjekte (trait objects) die Werte
 unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 17 sprechen
 werden. Vorerst kannst du `Box<dyn Fehler>` als „eine beliebige Fehlerart“
 ansehen. Das Verwenden von `?` in einer `main`-Funktion mit diesem Rückgabetyp
-ist erlaubt.
+ist erlaubt, weil jetzt ein `Err`-Wert vorzeitig zurückgegeben werden kann.
+Wenn eine Funktion `main` ein `Result<(), E>` zurückgibt, beendet sich die
+ausführbare Datei mit einem Wert von `0`, wenn `main` `Ok(())` zurückgibt, und
+mit einem Wert ungleich Null, wenn `main` einen `Err`-Wert zurückgibt.
+
+Die Typen, die `main` zurückgeben kann, sind diejenigen, die [das Merkmal
+`std::process::Termination`][termination] implementieren. Zum jetzigen
+Zeitpunkt ist das Merkmal `Termination` ein instabiles Feature, das nur in
+Nightly Rust verfügbar ist, sodass du es noch nicht für deine eigenen Typen in
+Stable Rust implementieren kannst, aber vielleicht kannst du das ja eines
+Tages!
 
 Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir
 entscheiden können, was in welchen Fällen angemessen ist.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result
+[std-library-doc]: https://doc.rust-lang.org/std/index.html
+[termination]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [trait-objects]: ch17-02-trait-objects.html
