@@ -185,10 +185,7 @@ folgt ändern:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">use std::fs::File;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span>    let f: u32 = File::open(&quot;hello.txt&quot;);
-
-
-
+</span>    let f: u32 = File::open(&quot;hallo.txt&quot;);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Der Versuch, zu kompilieren, liefert uns nun folgende Ausgabe:</p>
@@ -446,23 +443,26 @@ fehlschlagen könnten: Die Funktion <code>File::open</code> und die Methode
 <code>read_to_string</code>.</p>
 <p>Der Funktionsrumpf beginnt mit dem Aufruf der Funktion <code>File::open</code>. Dann
 behandeln wir den <code>Result</code>-Wert, der von <code>match</code> zurückgegeben wird, auf
-ähnliche Weise wie bei <code>match</code> in Codeblock 9-4, allerdings anstatt <code>panic!</code> im
-<code>Err</code>-Fall aufzurufen, beenden wir die Funktion vorzeitig und übergeben den
-Fehlerwert von <code>File::open</code> als Fehlerwert dieser Funktion an den aufrufenden
-Code. Wenn <code>File::open</code> erfolgreich ist, speichern wir die Dateiressource in
-der Variable <code>f</code> und fahren fort.</p>
-<p>Dann erstellen wir einen neuen <code>String</code> in der Variable <code>s</code> und rufen die
-Methode <code>read_to_string</code> auf der Dateiressource in <code>f</code> auf, um den Inhalt der
-Datei in <code>s</code> einzulesen. Die Methode <code>read_to_string</code> gibt ebenfalls ein
-<code>Result</code> zurück, weil sie fehlschlagen könnte, obwohl <code>File::open</code> erfolgreich
-war. Wir brauchen also ein weiteres <code>match</code>, um dieses <code>Result</code> zu verarbeiten:
-Wenn <code>read_to_string</code> erfolgreich ist, dann war unsere Funktion erfolgreich und
-wir geben den Benutzernamen aus der Datei zurück, die jetzt in <code>s</code> innerhalb
-<code>Ok</code> enthalten ist. Wenn <code>read_to_string</code> fehlschlägt, geben wir den Fehlerwert
-auf die gleiche Weise zurück, wie wir den Fehlerwert in <code>match</code> zurückgegeben
-haben, das den Rückgabewert von <code>File::open</code> behandelt hat. Wir brauchen jedoch
-nicht ausdrücklich <code>return</code> anzugeben, weil dies der letzte Ausdruck in der
-Funktion ist.</p>
+ähnliche Weise wie bei <code>match</code> in Codeblock 9-4. Wenn <code>File::open</code> erfolgreich
+ist, erhält die Dateiressource in der Mustervariablen <code>file</code> den Wert in der
+veränderlichen Variablen <code>f</code> und die Funktion wird fortgesetzt. Im Fall von
+<code>Err</code> verwenden wir das Schlüsselwort <code>return</code>, anstatt <code>panic!</code> aufzurufen, um
+die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von <code>File::open</code> in
+der Mustervariablen <code>e</code> als Fehlerwert dieser Funktion an den aufrufenden Code
+zurückzugeben.</p>
+<p>Wenn wir also eine Dateiressource in <code>f</code> haben, erzeugt die Funktion einen
+neuen <code>String</code> in der Variablen <code>s</code> und ruft die Methode <code>read_to_string</code> für
+die Dateiressource in <code>f</code> auf, um den Inhalt der Datei in die Variable <code>s</code> zu
+lesen. Die Methode <code>read_to_string</code> gibt ebenfalls ein <code>Result</code> zurück, weil
+sie fehlschlagen könnte, obwohl <code>File::open</code> erfolgreich war. Wir brauchen also
+ein weiteres <code>match</code>, um dieses <code>Result</code> zu verarbeiten: Wenn <code>read_to_string</code>
+erfolgreich ist, dann war unsere Funktion erfolgreich und wir geben den
+Benutzernamen aus der Datei zurück, die jetzt in <code>s</code> innerhalb <code>Ok</code> enthalten
+ist. Wenn <code>read_to_string</code> fehlschlägt, geben wir den Fehlerwert auf die
+gleiche Weise zurück, wie wir den Fehlerwert in <code>match</code> zurückgegeben haben,
+das den Rückgabewert von <code>File::open</code> behandelt hat. Wir brauchen jedoch nicht
+ausdrücklich <code>return</code> anzugeben, weil dies der letzte Ausdruck in der Funktion
+ist.</p>
 <p>Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
 einen <code>Ok</code>-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
 <code>Err</code>-Wert, der einen <code>io::Error</code> enthält. Wir wissen nicht, was der Aufrufcode
@@ -510,10 +510,9 @@ Funktion <code>from</code> aufruft, wird der empfangene Fehlertyp in den Fehlert
 umgewandelt, der als Rückgabetyp der aktuellen Funktion definiert ist. Das ist
 hilfreich, wenn eine Funktion einen einzigen Fehlertyp zurückgibt, um alle
 möglichen Fehlerarten einer Funktion darzustellen, auch wenn Teile aus vielen
-verschiedenen Gründen versagen könnten. Solange jeder Fehlertyp die Funktion
-<code>from</code> implementiert, um festzulegen, wie er sich selbst in den
-zurückzugebenden Fehlertyp konvertieren soll, kümmert sich der <code>?</code>-Operator
-automatisch um die Konvertierung.</p>
+verschiedenen Gründen versagen könnten. Solange es ein <code>impl From&lt;OtherError&gt; für ReturnedError</code> gibt, um die Konvertierung in der <code>from</code>-Funktion des
+Merkmals zu definieren, kümmert sich der <code>?</code>-Operator automatisch um den Aufruf
+der <code>from</code>-Funktion.</p>
 <p>Im Zusammenhang mit Codeblock 9-7 gibt das <code>?</code> am Ende des Aufrufs von
 <code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>f</code> zurück. Wenn ein
 Fehler auftritt, beendet der Operator vorzeitig die gesamte Funktion und gibt
@@ -560,7 +559,7 @@ Codeblock 9-9, dass es einen Weg gibt, diese Funktion noch kürzer zu machen.</p
 use std::io;
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    fs::read_to_string(&quot;hello.txt&quot;)
+    fs::read_to_string(&quot;hallo.txt&quot;)
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -573,22 +572,29 @@ den Inhalt der Datei einliest, den Inhalt in den <code>String</code> einfügt un
 zurückgibt. Natürlich gibt uns die Verwendung von <code>fs::read_to_string</code> nicht
 die Möglichkeit, die ganze Fehlerbehandlung zu erklären, also haben wir es
 zuerst auf dem längeren Weg gemacht.</p>
-<h4 id="der--operator-kann-in-funktionen-verwendet-werden-die-result-zurückgeben"><a class="header" href="#der--operator-kann-in-funktionen-verwendet-werden-die-result-zurückgeben">Der <code>?</code>-Operator kann in Funktionen verwendet werden, die <code>Result</code> zurückgeben</a></h4>
+<h4 id="wo-der-operator--verwendet-werden-kann"><a class="header" href="#wo-der-operator--verwendet-werden-kann">Wo der Operator <code>?</code> verwendet werden kann</a></h4>
 <p>Der <code>?</code>-Operator kann in Funktionen verwendet werden, die den Rückgabetyp
 <code>Result</code> haben, weil er so definiert ist, dass er auf die gleiche Weise
 arbeitet wie der <code>match</code>-Ausdruck, den wir in Codeblock 9-6 definiert haben. 
 Der Teil von <code>match</code>, der den Rückgabetyp <code>Result</code> erfordert, ist
 <code>return Err(e)</code>, daher muss der Rückgabetyp der Funktion <code>Result</code> sein, um mit
 <code>return</code> kompatibel zu sein.</p>
-<p>Schauen wir uns an, was passiert, wenn wir den <code>?</code>-Operator in der Funktion
-<code>main</code> verwenden, die, wie du dich erinnern wirst, den Rückgabetyp <code>()</code> hat:</p>
+<p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
+in der Funktion <code>main</code> verwenden, die, wie du dich erinnern wirst, den
+Rückgabetyp <code>()</code> hat:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
 fn main() {
     let f = File::open(&quot;hallo.txt&quot;)?;
 }
 </code></pre></pre>
-<p>Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:</p>
+<p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
+<code>main</code>-Funktion zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht
+kompilieren</span></p>
+<p>Dieser Code öffnet eine Datei, was fehlschlagen kann. Der <code>?</code>-Operator folgt
+dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese
+<code>main</code>-Funktion hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
+kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
@@ -608,18 +614,84 @@ error: could not compile `error-handling` due to previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der
-<code>std::ops::Try</code> implementiert, zurückgibt. Wenn du Code in einer Funktion
-schreibst, die keinen dieser Typen zurückgibt, und du <code>?</code> verwenden willst,
-wenn du andere Funktionen mit dem Rückgabetyp <code>Result&lt;T, E&gt;</code> aufrufst, hast du
-zwei Möglichkeiten, dieses Problem zu lösen. Eine Technik besteht darin, den
-Rückgabetyp deiner Funktion in <code>Result&lt;T, E&gt;</code> zu ändern, wenn dem nichts
-entgegensteht. Die andere Technik besteht darin, <code>match</code> oder eine der Methoden
-von <code>Result&lt;T, E&gt;</code> zu verwenden, um das <code>Result&lt;T, E&gt;</code> in geeigneter Weise zu
-behandeln.</p>
-<p>Die Funktion <code>main</code> ist etwas Besonderes und es gibt Einschränkungen
-hinsichtlich ihres Rückgabetyps. Ein gültiger Rückgabetyp für main ist <code>()</code> und
-bequemerweise auch <code>Result&lt;T, E&gt;</code>, wie hier zu sehen ist:</p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::error::Error;
+<code>FromResidual</code> implementiert, zurückgibt. Um diesen Fehler zu beheben, hast du
+zwei Möglichkeiten. Eine Technik besteht darin, den Rückgabetyp deiner Funktion
+in <code>Result&lt;T, E&gt;</code> zu ändern, wenn dem nichts entgegensteht. Die andere Technik
+besteht darin, <code>match</code> oder eine der Methoden von <code>Result&lt;T, E&gt;</code> zu verwenden,
+um das <code>Result&lt;T, E&gt;</code> in geeigneter Weise zu behandeln.</p>
+<p>Die Fehlermeldung hat auch erwähnt, dass <code>?</code> ebenso mit <code>Option&lt;T&gt;</code>-Werten
+verwendet werden kann. Wie bei der Verwendung von <code>?</code> für <code>Result</code>, kannst du
+<code>?</code> für <code>Option</code> nur in einer Funktion verwenden, die eine <code>Option</code> zurückgibt.
+Das Verhalten des <code>?</code>-Operators beim Aufruf auf eine <code>Option&lt;T&gt;</code> ist ähnlich
+dem Verhalten, wenn er auf ein <code>Result&lt;T, E&gt;</code> aufgerufen wird: Wenn der Wert
+<code>None</code> ist, wird <code>None</code> zu diesem Zeitpunkt von der Funktion zurückgegeben.
+Wenn der Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code> der resultierende
+Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
+Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
+gegebenen Text findet:</p>
+<pre><pre class="playground"><code class="language-rust">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
+    text.lines().next()?.chars().last()
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    assert_eq!(
+</span><span class="boring">        last_char_of_first_line(&quot;Hallo Welt\nWie geht es dir heute?&quot;),
+</span><span class="boring">        Some('t')
+</span><span class="boring">    );
+</span><span class="boring">
+</span><span class="boring">    assert_eq!(last_char_of_first_line(&quot;&quot;), None);
+</span><span class="boring">    assert_eq!(last_char_of_first_line(&quot;\nhi&quot;), None);
+</span><span class="boring">}
+</span></code></pre></pre>
+<p><span class="caption">Codeblock 9-11: Verwenden des <code>?</code>-Operators auf einem
+<code>Option&lt;T&gt;</code>-Wert</span></p>
+<p>Diese Funktion gibt <code>Option&lt;char&gt;</code> zurück, weil sie an dieser Position ein
+Zeichen finden könnte, oder es könnte dort kein Zeichen sein. Dieser Code nimmt
+das Zeichenkettenanteilstyp-Argument <code>text</code> und ruft die Methode <code>lines</code> darauf
+auf, die einen Iterator über die Zeilen der Zeichenkette zurückgibt. Da diese
+Funktion die erste Zeile untersuchen will, ruft sie <code>next</code> auf dem Iterator
+auf, um den ersten Wert vom Iterator zu erhalten. Wenn <code>text</code> die leere
+Zeichenkette ist, gibt dieser Aufruf von <code>next</code> <code>None</code> zurück, und hier können
+wir <code>?</code> benutzen, um zu stoppen und <code>None</code> von <code>last_char_of_first_line</code>
+zurückgeben, wenn dies der Fall ist. Wenn <code>text</code> nicht die leere Zeichenkette
+ist, gibt <code>next</code> einen <code>Some</code>-Wert zurück, der einen Zeichenkettenanteilstyp
+der ersten Zeile in <code>text</code> enthält.</p>
+<p>Das <code>?</code> extrahiert den Zeichenkettenanteilstyp, und wir können <code>chars</code> auf
+diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für die Zeichen in
+diesem Zeichenkettenanteilstyp zu erhalten. Wir sind am letzten Zeichen in
+dieser ersten Zeile interessiert, also rufen wir <code>last</code> auf, um das letzte
+Element im Iterator über die Zeichen zurückzugeben. Dies ist eine <code>Option</code>,
+weil die erste Zeile die leere Zeichenkette sein kann, wenn <code>text</code> mit einer
+Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in <code>&quot;\nhi&quot;</code>.
+Wenn es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es in der
+Variante <code>Some</code> zurückgegeben. Der <code>?</code>-Operator in der Mitte gibt uns eine
+prägnante Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in
+einer Zeile implementiert werden. Wenn wir den <code>?</code>-Operator nicht auf <code>Option</code>
+verwenden könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder
+einem Ausdruck implementieren.</p>
+<p>Beachte, dass du den <code>?</code>-Operator auf ein <code>Result</code> in einer Funktion anwenden
+kannst, die <code>Result</code> zurückgibt, und du kannst den <code>?</code>-Operator auf eine
+<code>Option</code> in einer Funktion anwenden, die <code>Option</code> zurückgibt, aber du kannst
+nicht beides mischen. Der Operator <code>?</code> konvertiert nicht automatisch ein
+<code>Result</code> in eine <code>Option</code> oder umgekehrt; in diesen Fällen gibt es Methoden wie
+die <code>ok</code>-Methode für <code>Result</code> oder die <code>ok_or</code>-Methode für <code>Option</code>, die die
+Umwandlung explizit vornehmen.</p>
+<p>Bis jetzt haben alle <code>main</code>-Funktionen, die wir benutzt haben, <code>()</code>
+zurückgegeben. Die Funktion <code>main</code> ist etwas Besonderes, weil sie der Ein- und
+Ausstiegspunkt von ausführbaren Programmen ist, und es gibt Einschränkungen
+hinsichtlich ihres Rückgabetyps, damit sich die Programme wie erwartet
+verhalten. In C geschriebene Programme geben beim Beenden ganze Zahlen zurück,
+und auch Rust-Programme folgen dieser Konvention: Programme, die erfolgreich
+beendet werden, geben die Zahl <code>0</code> zurück, und Programme, die einen Fehler
+machen, geben eine andere Zahl als <code>0</code> zurück. Wenn <code>main</code> <code>()</code> zurückgibt,
+geben Rust-Programme <code>0</code> zurück, wenn sich <code>main</code> normal beendet, und einen
+Wert ungleich Null, wenn das Programm abbricht, bevor es das Ende von <code>main</code>
+erreicht.</p>
+<p>Ein weiterer Rückgabetyp, den <code>main</code> haben kann, ist <code>Result&lt;(), E&gt;</code>. Codeblock
+9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
+<code>main</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert und am Ende einen Rückgabewert
+<code>Ok(())</code> hinzugefügt. Dieser Code wird nun kompilieren:</p>
+<pre><code class="language-rust ignore">use std::error::Error;
 use std::fs::File;
 
 fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
@@ -627,13 +699,25 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 
     Ok(())
 }
-</code></pre></pre>
+</code></pre>
+<p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
+<code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
+<code>Result</code>-Werte</span></p>
 <p>Der Typ <code>Box&lt;dyn Error&gt;</code> wird als Markmalsobjekt (trait object) bezeichnet,
 über das wir im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte
 unterschiedlicher Typen erlauben“</a> in Kapitel 17 sprechen
 werden. Vorerst kannst du <code>Box&lt;dyn Fehler&gt;</code> als „eine beliebige Fehlerart“
 ansehen. Das Verwenden von <code>?</code> in einer <code>main</code>-Funktion mit diesem Rückgabetyp
-ist erlaubt.</p>
+ist erlaubt, weil jetzt ein <code>Err</code>-Wert vorzeitig zurückgegeben werden kann.
+Wenn eine Funktion <code>main</code> ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
+ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> <code>Ok(())</code> zurückgibt, und
+mit einem Wert ungleich Null, wenn <code>main</code> einen <code>Err</code>-Wert zurückgibt.</p>
+<p>Die Typen, die <code>main</code> zurückgeben kann, sind diejenigen, die <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">das Merkmal
+<code>std::process::Termination</code></a> implementieren. Zum jetzigen
+Zeitpunkt ist das Merkmal <code>Termination</code> ein instabiles Feature, das nur in
+Nightly Rust verfügbar ist, sodass du es noch nicht für deine eigenen Typen in
+Stable Rust implementieren kannst, aber vielleicht kannst du das ja eines
+Tages!</p>
 <p>Nachdem wir nun die Einzelheiten des Aufrufs von <code>panic!</code> und der Rückgabe von
 <code>Result</code> besprochen haben, wollen wir zum Thema zurückkehren, wie wir
 entscheiden können, was in welchen Fällen angemessen ist.</p>

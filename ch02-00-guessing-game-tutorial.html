@@ -139,8 +139,8 @@
 durcharbeiten! Dieses Kapitel führt dich in einige gängige Rust-Konzepte ein,
 indem es dir zeigt, wie du diese in einem realen Programm verwenden kannst. Du
 lernst <code>let</code>, <code>match</code>, Methoden, assoziierte Funktionen, das Verwenden externer
-Kisten (crates) und mehr kennen! In den folgenden Kapiteln werden diese Ideen
-ausführlicher behandelt. In diesem Kapitel wirst du die Grundlagen üben.</p>
+Kisten (crates) und mehr kennen! In den folgenden Kapiteln werden wir diese
+Ideen ausführlicher behandeln. In diesem Kapitel wirst du die Grundlagen üben.</p>
 <p>Wir werden ein klassisches Programmierproblem für Anfänger implementieren: Ein
 Ratespiel. Und so funktioniert es: Das Programm erzeugt eine zufällige ganze
 Zahl zwischen 1 und 100. Dann wird es den Spieler auffordern, eine Schätzung
@@ -216,7 +216,7 @@ erhält und ausgibt</span></p>
 Zeile durch. Um eine Benutzereingabe zu erhalten und das Ergebnis dann als
 Ausgabe auszugeben, müssen wir die Bibliothek <code>io</code> (input/output) in den
 Gültigkeitsbereich bringen. Die <code>io</code>-Bibliothek stammt aus der
-Standardbibliothek (die als <code>std</code> bekannt ist):</p>
+Standardbibliothek, bekannt als <code>std</code>:</p>
 <pre><code class="language-rust ignore">use std::io;
 <span class="boring">
 </span><span class="boring">fn main() {
@@ -233,12 +233,15 @@ Standardbibliothek (die als <code>std</code> bekannt ist):</p>
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {}&quot;, guess);
 </span><span class="boring">}
 </span></code></pre>
-<p>Standardmäßig bringt Rust im <a href="https://doc.rust-lang.org/std/prelude/index.html"><em>Präludium</em></a> nur einige wenige Typen in
-den Gültigkeitsbereich jedes Programms. Wenn ein Typ, den du verwenden willst,
-nicht im Präludium ist, musst du diesen Typ explizit mit einer <code>use</code>-Anweisung
-in den Gültigkeitsbereich bringen. Das Verwenden der Bibliothek <code>std::io</code>
-bietet dir eine Reihe von nützlichen Funktionalitäten, einschließlich der
-Möglichkeit, Benutzereingaben entgegenzunehmen.</p>
+<p>Standardmäßig hat Rust ein paar Elemente in der Standardbibliothek definiert,
+die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
+<em>Präludium</em> genannt, und du kannst deren Inhalt <a href="https://doc.rust-lang.org/std/prelude/index.html">in der Dokumentation der
+Standardbibliothek</a> sehen.</p>
+<p>Wenn ein Typ, den du verwenden willst, nicht im Präludium enthalten ist, musst
+du diesen Typ explizit mit einer <code>use</code>-Anweisung in den Gültigkeitsbereich
+bringen. Das Verwenden der Bibliothek <code>std::io</code> bietet dir eine Reihe von
+nützlichen Funktionalitäten, einschließlich der Möglichkeit, Benutzereingaben
+entgegenzunehmen.</p>
 <p>Wie du in Kapitel 1 gesehen hast, ist die Funktion <code>main</code> der Einstiegspunkt in
 das Programm:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
@@ -281,8 +284,8 @@ Zeichenkette auf dem Bildschirm ausgibt:</p>
 <p>Dieser Code gibt eine Eingabeaufforderung aus, die angibt, um was für ein Spiel
 es sich handelt, und den Benutzer zur Eingabe auffordert.</p>
 <h3 id="speichern-von-werten-mit-variablen"><a class="header" href="#speichern-von-werten-mit-variablen">Speichern von Werten mit Variablen</a></h3>
-<p>Als Nächstes erstellen wir einen Ort, an dem die Benutzereingabe gespeichert
-wird, wie hier:</p>
+<p>Als Nächstes erstellen wir eine <em>Variable</em>, um die Benutzereingabe zu
+speichern, wie hier:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -300,16 +303,16 @@ wird, wie hier:</p>
 </span><span class="boring">}
 </span></code></pre>
 <p>Jetzt wird das Programm interessant! Es ist viel los in dieser kleinen Zeile.
-Beachte, dass dies eine <code>let</code>-Anweisung ist, die benutzt wird, um eine
-<em>Variable</em> zu erzeugen. Hier ist ein weiteres Beispiel:</p>
+Wir verwenden eine <code>let</code>-Anweisung, um eine Variable zu erzeugen. Hier ist ein
+weiteres Beispiel:</p>
 <pre><code class="language-rust ignore">let apples = 5;
 </code></pre>
 <p>Diese Zeile erzeugt eine neue Variable namens <code>apples</code> und bindet sie an den Wert
 5. In Rust sind Variablen standardmäßig unveränderlich (immutable). Wir werden
 dieses Konzept im Abschnitt <a href="ch03-01-variables-and-mutability.html">„Variablen und
 Veränderlichkeit“</a> in Kapitel 3 ausführlich
-besprechen. Das folgende Beispiel zeigt, wie man <code>mut</code> vor dem Variablennamen
-verwendet, um eine Variable veränderlich zu machen:</p>
+besprechen. Um eine Variable veränderlich zu machen, ergänzen wir <code>mut</code> vor dem
+Variablennamen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -322,23 +325,28 @@ let mut bananas = 5; // veränderlich
 Zeile weitergeht. Rust ignoriert alles in Kommentaren. Diese werden in
 Kapitel 3 ausführlicher besprochen.</p>
 </blockquote>
-<p>Kommen wir zurück zum Programm des Ratespiels. Du weißt jetzt, dass <code>let mut guess</code> eine veränderliche Variable namens <code>guess</code> einführt. Auf der anderen
-Seite des Gleichheitszeichens (<code>=</code>) steht der Wert, an den <code>guess</code> gebunden
-ist. Dieser Wert ist das Ergebnis des Aufrufs von <code>String::new</code>, einer Funktion, die
-eine neue Instanz eines <code>String</code> zurückgibt. <a href="https://doc.rust-lang.org/std/string/struct.String.html"><code>String</code></a> ist ein von der
-Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
+<p>Zurück zum Programm des Ratespiels. Du weißt jetzt, dass <code>let mut guess</code> eine veränderliche Variable namens <code>guess</code> einführt. Das
+Gleichheitszeichen (<code>=</code>) sagt Rust, dass wir jetzt etwas an die Variable binden
+wollen. Auf der rechten Seite des Gleichheitszeichens steht der Wert, an den
+<code>guess</code> gebunden ist, was das Ergebnis des Aufrufs von <code>String::new</code> ist, einer
+Funktion, die eine neue Instanz eines <code>String</code> zurückgibt. <a href="https://doc.rust-lang.org/std/string/struct.String.html"><code>String</code></a>
+ist ein von der Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
 wachstumsfähiges, UTF-8-kodiertes Stück Text ist.</p>
-<p>Die Syntax <code>::</code> in der Zeile <code>::new</code> zeigt an, dass <code>new</code> eine <em>assoziierte
-Funktion</em> (associated function) vom Typ <code>String</code> ist. Eine assoziierte Funktion
-ist auf einem Typ implementiert, in diesem Fall <code>String</code>.</p>
-<p>Diese Funktion <code>new</code> erzeugt eine neue, leere Zeichenkette. Du wirst eine
-Funktion <code>new</code> bei vielen Typen finden, weil es ein gebräuchlicher Name für
-eine Funktion ist, die einen neuen Wert irgendeiner Art erzeugt.</p>
-<p>Zusammenfassend lässt sich sagen, dass die Zeile <code>let mut guess = String::new();</code> eine veränderlich Variable erzeugt hat, die derzeit an eine
-neue, leere Instanz eines <code>String</code> gebunden ist. Uff!</p>
+<p>Die Syntax <code>::</code> in der Zeile <code>::new</code> zeigt an, dass <code>new</code> eine assoziierte
+Funktion (associated function) vom Typ <code>String</code> ist. Eine <em>assoziierte
+Funktion</em> ist eine Funktion, die auf einem Typ, in diesem Fall <code>String</code>,
+implementiert ist. Diese Funktion <code>new</code> erzeugt eine neue, leere Zeichenkette.
+Du wirst eine Funktion <code>new</code> bei vielen Typen finden, weil es ein
+gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
+erzeugt.</p>
+<p>Insgesamt hat die Zeile <code>let mut guess = String::new();</code> eine veränderliche
+Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines <code>String</code>
+gebunden ist. Uff!</p>
+<h3 id="empfangen-von-benutzereingaben"><a class="header" href="#empfangen-von-benutzereingaben">Empfangen von Benutzereingaben</a></h3>
 <p>Erinnere dich, dass wir die Ein-/Ausgabefunktionalität aus der
 Standardbibliothek mit <code>use std::io;</code> in der ersten Zeile des Programms
-eingebunden haben. Jetzt rufen wir die Funktion <code>stdin</code> aus dem Modul <code>io</code> auf:</p>
+eingebunden haben. Jetzt rufen wir die Funktion <code>stdin</code> aus dem Modul <code>io</code> auf,
+die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -355,20 +363,21 @@ eingebunden haben. Jetzt rufen wir die Funktion <code>stdin</code> aus dem Modul
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {}&quot;, guess);
 </span><span class="boring">}
 </span></code></pre>
-<p>Hätten wir nicht die Zeile <code>use std::io</code> an den Anfang des Programms gestellt,
-hätten wir diesen Funktionsaufruf als <code>std::io::stdin</code> schreiben können. Die
-Funktion <code>stdin</code> gibt eine Instanz von <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was
-ein Typ ist, der eine Standardeingaberessource (handle to the standard input)
-für dein Terminal darstellt.</p>
-<p>Der nächste Teil des Codes <code>.read_line(&amp;mut guess)</code> ruft die Methode
+<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms importiert,
+könnten wir die Funktion trotzdem verwenden, indem wir den Funktionsaufruf als
+<code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine Instanz von
+<a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
+Standardeingaberessource (handle to the standard input) für dein Terminal
+darstellt.</p>
+<p>Die nächste Zeile <code>.read_line(&amp;mut guess)</code> ruft die Methode
 <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a> der Standardeingaberessource auf, um eine Eingabe vom
-Benutzer zu erhalten. Wir übergeben auch ein Argument an <code>read_line</code>:
-<code>&amp;mut guess</code>.</p>
-<p>Die Aufgabe von <code>read_line</code> ist es, alles, was der Benutzer in die
-Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt zu
-überschreiben), daher nimmt es diese Zeichenkette als Argument. Das
+Benutzer zu erhalten. Wir übergeben auch das Argument <code>&amp;mut guess</code> an
+<code>read_line</code>, um ihm mitzuteilen, in welche Zeichenfolge es die Benutzereingabe
+speichern soll. Die Aufgabe von <code>read_line</code> ist es, alles, was der Benutzer in
+die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
+zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
 Zeichenketten-Argument muss veränderlich sein, damit die Methode den Inhalt der
-Zeichenkette durch Hinzufügen der Benutzereingabe ändern kann.</p>
+Zeichenkette ändern kann.</p>
 <p>Das <code>&amp;</code> zeigt an, dass es sich bei diesem Argument um eine <em>Referenz</em> handelt,
 die dir eine Möglichkeit bietet, mehrere Teile deines Codes auf einen Datenteil
 zugreifen zu lassen, ohne dass du diese Daten mehrfach in den Speicher kopieren
@@ -399,34 +408,37 @@ Codezeile. Der nächste Teil ist diese Methode:</p>
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {}&quot;, guess);
 </span><span class="boring">}
 </span></code></pre>
-<p>Wenn du eine Methode mit der Syntax <code>.method_name()</code> aufrufst, ist es oft
-ratsam, einen Zeilenumbruch und weitere Leerzeichen anzugeben, um lange Zeilen
-aufzuteilen. Wir hätten diesen Code auch so schreiben können:</p>
+<p>Wir hätten diesen Code auch so schreiben können:</p>
 <pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </code></pre>
 <p>Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
-aufzuteilen. Lass uns nun besprechen, was diese Zeile bewirkt. </p>
+aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
+einzufügen, um lange Zeilen aufzubrechen Zeilen, wenn du eine Methode mit der
+Syntax <code>.method_name()</code> aufrufst. Lass uns nun besprechen, was diese Zeile
+bewirkt. </p>
 <p>Wie bereits erwähnt, schreibt <code>read_line</code> das, was der Benutzer eingibt, in die
 Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen Wert zurück
 – in diesem Fall ein <a href="https://doc.rust-lang.org/std/io/type.Result.html"><code>io::Result</code></a>. Rust hat eine Reihe von
 Typen namens <code>Result</code> in seiner Standardbibliothek: Ein generisches
 <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> sowie spezifische Versionen für Untermodule, z.B.
-<code>io::Result</code>.</p>
-<p>Die <code>Result</code>-Typen sind <a href="ch06-00-enums.html"><em>Aufzählungen</em></a> (enumerations), die oft als
-<em>enums</em> bezeichnet werden. Eine Aufzählung ist ein Typ, der einen festen Satz
-von Werten haben kann, und diese Werte werden die <em>Varianten</em> (variants) der
-Aufzählung genannt. In Kapitel 6 werden Aufzählungen ausführlicher behandelt.</p>
+<code>io::Result</code>. Die <code>Result</code>-Typen sind <a href="ch06-00-enums.html"><em>Aufzählungen</em></a> (enumerations),
+die oft als <em>enums</em> bezeichnet werden, die einen festen Satz von Werten haben
+können, bekannt als <em>Varianten</em> (variants). Aufzählungen werden oft mit <code>match</code>
+verwendet, einer Bedingung, die es ermöglicht, unterschiedlichen Code
+auszuführen, je nachdem, welche Variante ein Aufzählungswert ist, wenn die
+Bedingung ausgewertet wird.</p>
+<p>In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
+<code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
 <p>Für <code>Result</code> sind die Varianten <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
 die Operation erfolgreich war, und innerhalb von <code>Ok</code> steht der erfolgreich
 generierte Wert. Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
 ist, und <code>Err</code> enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.</p>
-<p>Der Zweck dieser <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu
-kodieren. Für Werte vom Typ <code>Result</code> sind, wie für Werte jedes Typs, Methoden
-definiert. Eine Instanz von <code>io::Result</code> hat eine <a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.expect">Methode <code>expect</code></a>,
-die du aufrufen kannst. Wenn diese <code>io::Result</code>-Instanz ein <code>Err</code>-Wert ist,
-wird <code>expect</code> das Programm zum Absturz bringen und die Meldung anzeigen, die du
-als Argument an <code>expect</code> übergeben hast. Wenn die Methode <code>read_line</code> ein <code>Err</code>
+<p>Für Werte vom Typ <code>Result</code> sind, wie für Werte jedes Typs, Methoden definiert.
+Eine Instanz von <code>io::Result</code> hat eine <a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.expect">Methode <code>expect</code></a>, die du
+aufrufen kannst. Wenn diese <code>io::Result</code>-Instanz ein <code>Err</code>-Wert ist, wird
+<code>expect</code> das Programm zum Absturz bringen und die Meldung anzeigen, die du als
+Argument an <code>expect</code> übergeben hast. Wenn die Methode <code>read_line</code> ein <code>Err</code>
 zurückgibt, ist dies wahrscheinlich das Ergebnis eines Fehlers, der vom
 zugrundeliegenden Betriebssystem herrührt. Wenn diese <code>io::Result</code>-Instanz ein
 <code>Ok</code>-Wert ist, wird <code>expect</code> den Wert, den <code>Ok</code> hält, als Rückgabewert
@@ -452,14 +464,13 @@ warning: `guessing_game` (bin &quot;guessing_game&quot;) generated 1 warning
 <p>Rust warnt, dass du den von <code>read_line</code> zurückgegebenen <code>Result</code>-Wert nicht
 verwendet hast, was darauf hinweist, dass das Programm einen möglichen Fehler
 nicht behandelt hat.</p>
-<p>Der richtige Weg, die Warnung zu unterdrücken, ist, tatsächlich eine
-Fehlerbehandlung zu schreiben, aber da du dieses Programm einfach nur abstürzen
-lassen willst, wenn ein Problem auftritt, kannst du <code>expect</code> verwenden. In
-Kapitel 9 erfährst du, wie man sich von Fehlern erholt.</p>
+<p>Der richtige Weg, die Warnung zu unterdrücken, ist eine Fehlerbehandlung zu
+schreiben, aber da wir dieses Programm einfach nur abstürzen lassen wollen,
+wenn ein Problem auftritt, können wir <code>expect</code> verwenden. In <a href="ch09-02-recoverable-errors-with-result.html">Kapitel
+9</a> erfährst du, wie man sich von Fehlern erholt.</p>
 <h3 id="ausgeben-von-werten-mit-println-platzhaltern"><a class="header" href="#ausgeben-von-werten-mit-println-platzhaltern">Ausgeben von Werten mit <code>println!</code>-Platzhaltern</a></h3>
 <p>Abgesehen von der schließenden geschweiften Klammer gibt es in dem bisher
-hinzugefügten Code nur noch eine weitere Zeile zu besprechen, nämlich die
-folgende: </p>
+hinzugefügten Code nur noch eine weitere Zeile zu besprechen: </p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -476,8 +487,8 @@ folgende: </p>
 </span>    println!(&quot;Du hast geschätzt: {}&quot;, guess);
 <span class="boring">}
 </span></code></pre>
-<p>Diese Zeile gibt die Zeichenkette aus, in der wir die Eingabe des Benutzers
-gespeichert haben. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
+<p>Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
+enthält. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
 Stelle dir <code>{}</code> wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
 halten. Mit geschweiften Klammern kannst du mehr als einen Wert ausgeben: Der
 erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
@@ -510,10 +521,11 @@ eine Eingabe über die Tastatur und geben sie dann aus.</p>
 <h2 id="generieren-einer-geheimzahl"><a class="header" href="#generieren-einer-geheimzahl">Generieren einer Geheimzahl</a></h2>
 <p>Als nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
 versucht. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
-einmal Spaß macht. Lass uns eine Zufallszahl zwischen 1 und 100 verwenden,
+einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
-jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> zur Verfügung.</p>
+jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> mit besagter Funktionalität zur
+Verfügung.</p>
 <h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste um mehr Funktionalität zu erhalten</a></h3>
 <p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Das
 Projekt, das wir gebaut haben, ist eine <em>binäre Kiste</em> (binary crate), die eine
@@ -532,7 +544,7 @@ möglicherweise nicht.</p>
 rand = &quot;0.8.3&quot;
 </code></pre>
 <p>In der Datei <em>Cargo.toml</em> ist alles, was nach einer Überschrift folgt, Teil
-eines Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
+dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt <code>[dependencies]</code> teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste <code>rand</code> mit dem semantischen
@@ -566,17 +578,18 @@ gezeigt.</p>
 <p>Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
 sind sie alle mit dem Code kompatibel!), unterschiedliche Zeilen (je nach
 Betriebssystem) und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
-<p>Jetzt, wo wir eine externe Abhängigkeit haben, holt Cargo die neuesten
-Versionen von allem aus der <em>Registry</em>, das eine Kopie der Daten von
-<a href="https://crates.io/">Crates.io</a> ist. Crates.io ist der Ort, an dem die Menschen im
-Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur Nutzung
-bereitstellen.</p>
+<p>Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
+Versionen von allem was die Abhängigkeit aus der <em>Registry</em> benötigt, was eine
+Kopie der Daten von <a href="https://crates.io/">Crates.io</a> ist. Crates.io ist der Ort, an dem
+die Menschen im Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur
+Nutzung bereitstellen.</p>
 <p>Nach dem Aktualisieren der Registry überprüft Cargo den Abschnitt
-<code>[dependencies]</code> und lädt alle Kisten herunter, die du noch nicht hast. Obwohl
-wir nur <code>rand</code> als Abhängigkeit aufgelistet haben, hat sich Cargo in diesem
-Fall auch andere Kisten geschnappt, von denen <code>rand</code> abhängig ist, um zu
-funktionieren. Nachdem die Kisten heruntergeladen wurden, kompiliert
-Rust sie und kompiliert dann das Projekt mit den verfügbaren Abhängigkeiten.</p>
+<code>[dependencies]</code> und lädt alle aufgelisteten Kisten herunter, die noch nicht
+heruntergeladen wurden. Obwohl wir nur <code>rand</code> als Abhängigkeit aufgelistet
+haben, hat sich Cargo in diesem Fall auch andere Kisten geschnappt, von denen
+<code>rand</code> abhängig ist, um zu funktionieren. Nachdem die Kisten heruntergeladen
+wurden, kompiliert Rust sie und kompiliert dann das Projekt mit den verfügbaren
+Abhängigkeiten.</p>
 <p>Wenn du gleich wieder <code>cargo build</code> ausführst, ohne irgendwelche Änderungen
 vorzunehmen, erhältst du keine Ausgabe außer der Zeile <code>Finished</code>. Cargo weiß,
 dass es die Abhängigkeiten bereits heruntergeladen und kompiliert hat, und du
@@ -592,44 +605,42 @@ sie dann speicherst und neu baust, siehst du nur zwei Zeilen Ausgabe:</p>
 <p>Diese Zeilen zeigen, dass Cargo nur den Build mit deiner winzigen Änderung an
 der Datei <em>src/main.rs</em> aktualisiert. Deine Abhängigkeiten haben sich nicht
 geändert, sodass Cargo weiß, dass es wiederverwenden kann, was es bereits
-heruntergeladen und kompiliert hat. Es baut nur deinen Teil des Codes neu.</p>
+heruntergeladen und kompiliert hat.</p>
 <h4 id="sicherstellen-reproduzierbarer-builds-mit-der-datei-cargolock"><a class="header" href="#sicherstellen-reproduzierbarer-builds-mit-der-datei-cargolock">Sicherstellen reproduzierbarer Builds mit der Datei <em>Cargo.lock</em></a></h4>
 <p>Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wenn
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
-verwenden, bis du etwas anderes angibst. Was passiert z.B., wenn nächste Woche
-Version 0.8.4 der Kiste <code>rand</code> herauskommt und eine wichtige Fehlerbehebung
-enthält, aber auch eine Regression, die deinen Code bricht?</p>
-<p>Die Antwort auf dieses Problem ist die Datei <em>Cargo.lock</em>, die beim ersten
-Ausführen von <code>cargo build</code> erstellt wurde und sich jetzt in deinem
-<em>guessing_game</em>-Verzeichnis befindet. Wenn du ein Projekt zum ersten Mal baust,
-ermittelt Cargo alle Versionen der Abhängigkeiten, die den Kriterien
-entsprechen, und schreibt sie dann in die Datei <em>Cargo.lock</em>. Wenn du dein
-Projekt in der Zukunft baust, wird Cargo sehen, dass die Datei <em>Cargo.lock</em>
-existiert und die dort angegebenen Versionen verwenden, anstatt die ganze
-Arbeit der Versionsfindung erneut zu machen. Auf diese Weise erhältst du
-automatisch einen reproduzierbaren Build. Mit anderen Worten, dein Projekt
-bleibt dank der Datei <em>Cargo.lock</em> auf <code>0.8.3</code>, bis du explizit die
-Versionsnummer erhöhst.</p>
+verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
+nächste Woche Version 0.8.4 der Kiste <code>rand</code> herauskommt und eine wichtige
+Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
+dies zu handhaben, erstellt Rust die Datei <em>Cargo.lock</em> beim ersten Mal, wenn
+du <code>cargo build</code> ausführst, die nun im <em>guessing_game</em>-Verzeichnis liegt.</p>
+<p>Wenn du ein Projekt zum ersten Mal baust, ermittelt Cargo alle Versionen der
+Abhängigkeiten, die den Kriterien entsprechen, und schreibt sie dann in die
+Datei <em>Cargo.lock</em>. Wenn du dein Projekt in der Zukunft baust, wird Cargo
+sehen, dass die Datei <em>Cargo.lock</em> existiert und die dort angegebenen Versionen
+verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
+diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
+Worten, dein Projekt bleibt dank der Datei <em>Cargo.lock</em> auf <code>0.8.3</code>, bis du
+explizit die Versionsnummer erhöhst.</p>
 <h4 id="aktualisieren-einer-kiste-um-eine-neue-version-zu-erhalten"><a class="header" href="#aktualisieren-einer-kiste-um-eine-neue-version-zu-erhalten">Aktualisieren einer Kiste, um eine neue Version zu erhalten</a></h4>
-<p>Wenn du eine Kiste aktualisieren <em>willst</em>, bietet Cargo einen weiteren Befehl
-<code>update</code> an, der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen,
-die deinen Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Wenn das
-funktioniert, wird Cargo diese Versionen in die Datei <em>Cargo.lock</em> schreiben.</p>
-<p>Standardmäßig sucht Cargo jedoch nur nach Versionen, die größer als <code>0.8.3</code> und
-kleiner als <code>0.9.0</code> sind. Wenn die Kiste <code>rand</code> zwei neue Versionen <code>0.8.4</code> und
-<code>0.9.0</code> veröffentlicht hat, würdest du folgendes sehen, wenn du <code>cargo update</code>
-ausführst:</p>
+<p>Wenn du eine Kiste aktualisieren <em>willst</em>, bietet Cargo den Befehl <code>update</code> an,
+der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen, die deinen
+Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Cargo schreibt diese
+Versionen dann in die Datei <em>Cargo.lock</em>. Andernfalls wird Cargo standardmäßig
+nur nach Versionen größer als <code>0.8.3</code> und kleiner als <code>0.9.0</code> suchen. Wenn die
+Kiste <code>rand</code> zwei neue Versionen <code>0.8.4</code> und <code>0.9.0</code> veröffentlicht hat,
+würdest du folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
     Updating rand v0.8.3 -&gt; v0.8.4
 </code></pre>
-<p>An diesem Punkt würdest du auch eine Änderung in deiner Datei <em>Cargo.lock</em>
-bemerken, die feststellt, dass die Version der Kiste <code>rand</code>, die du jetzt
-benutzt, <code>0.8.4</code> ist.</p>
-<p>Wenn du die <code>rand</code>-Version <code>0.9.0</code> oder irgendeine Version aus der
-<code>0.9.x</code>-Serie verwenden wolltest, müsstest du stattdessen die Datei
-<em>Cargo.toml</em> anpassen, damit sie wie folgt aussieht:</p>
+<p>Cargo ignoriert die Version <code>0.9.0</code>. An diesem Punkt würdest du auch eine
+Änderung in deiner Datei <em>Cargo.lock</em> bemerken, die feststellt, dass die
+Version der Kiste <code>rand</code>, die du jetzt benutzt, <code>0.8.4</code> ist. Um die
+<code>rand</code>-Version <code>0.9.0</code> oder irgendeine Version aus der <code>0.9.x</code>-Serie zu
+verwenden, müsstest du stattdessen die Datei <em>Cargo.toml</em> anpassen, damit sie
+wie folgt aussieht:</p>
 <pre><code class="language-toml">[dependencies]
 rand = &quot;0.9.0&quot;
 </code></pre>
@@ -643,9 +654,8 @@ Bibliotheken wiederzuverwenden, sodass die Rust-Entwickler in der Lage sind,
 kleinere Projekte zu schreiben, die aus einer Reihe von Paketen
 zusammengestellt werden.</p>
 <h3 id="generieren-einer-zufallszahl"><a class="header" href="#generieren-einer-zufallszahl">Generieren einer Zufallszahl</a></h3>
-<p>Nun, da du die Kiste <code>rand</code> zu <em>Cargo.toml</em> hinzugefügt hast, lass uns mit
-<code>rand</code> beginnen. Der nächste Schritt ist <em>src/main.rs</em> zu ändern, wie in
-Codeblock 2-3 gezeigt.</p>
+<p>Beginnen wir mit <code>rand</code>, um eine Zahl zum Raten zu erzeugen. Der nächste
+Schritt ist <em>src/main.rs</em> zu ändern, wie in Codeblock 2-3 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use std::io;
 use rand::Rng;
@@ -670,36 +680,38 @@ fn main() {
 </code></pre>
 <p><span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span></p>
-<p>Zuerst fügen wir eine Zeile <code>use</code> hinzu: <code>use rand::Rng</code>. Das Merkmal (trait)
+<p>Zuerst fügen wir die Zeile <code>use rand::Rng</code> hinzu. Das Merkmal (trait)
 <code>Rng</code> definiert Methoden, die Zufallszahlengeneratoren implementieren, und
 dieses Merkmal muss im Gültigkeitsbereich sein, damit wir diese Methoden
 verwenden können. In Kapitel 10 werden Merkmale im Detail behandelt.</p>
-<p>Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. Die Funktion
-<code>rand::thread_rng</code> gibt uns den speziellen Zufallszahlengenerator, den wir
-verwenden werden: Einen, der lokal zum aktuellen Ausführungsstrang (thread) ist
-und vom Betriebssystem initialisiert (seeded) wird. Dann rufen wir die Methode
-<code>gen_range</code> des Zufallszahlengenerators auf. Diese Methode wird durch das
-Merkmal <code>Rng</code> definiert, das wir mit der Anweisung <code>use rand::Rng</code> in den
-Gültigkeitsbereich gebracht haben. Die Methode <code>gen_range</code> nimmt einen
-Bereichsausdruck als Argument und generiert eine Zufallszahl in diesem Bereich.
-Ein Bereichsausdruck hat die Form <code>start..end</code>. Er beinhaltet die
-Untergrenze, nicht jedoch die Obergrenze, sodass wir <code>1..101</code> angeben müssen,
-um eine Zahl zwischen 1 und 100 zu erhalten. Alternativ könnten wir den Bereich
-<code>1..=100</code> angeben, was äquivalent ist.</p>
+<p>Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile
+rufen wir die Funktion <code>rand::thread_rng</code> auf, die uns den speziellen
+Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
+zum aktuellen Ausführungsstrang (thread) ist und vom Betriebssystem
+initialisiert (seeded) wird. Dann rufen wir die Methode <code>gen_range</code> des
+Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal <code>Rng</code>
+definiert, das wir mit der Anweisung <code>use rand::Rng</code> in den Gültigkeitsbereich
+gebracht haben. Die Methode <code>gen_range</code> nimmt einen Bereichsausdruck als
+Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
+hat die Form <code>start..end</code>. Er beinhaltet die Untergrenze, nicht jedoch die
+Obergrenze, sodass wir <code>1..101</code> angeben müssen, um eine Zahl zwischen 1 und 100
+zu erhalten. Alternativ könnten wir den Bereich <code>1..=100</code> angeben, was
+äquivalent ist.</p>
 <blockquote>
 <p>Hinweis: Du wirst nicht immer wissen, welche Merkmale du verwenden sollst und
-welche Methoden und Funktionen einer Kiste du aufrufen musst. Anleitungen zur
-Verwendung einer Kiste findest du in der Dokumentation jeder Kiste. Eine
-weitere nette Funktionalität von Cargo ist, dass du das Kommando <code>cargo doc --open</code> ausführen kannst, das die von all deinen Abhängigkeiten
-bereitgestellte Dokumentation lokal bereitstellt und in deinem Browser
+welche Methoden und Funktionen einer Kiste du aufrufen musst, daher hat jede
+Kiste eine Dokumentation mit einer Anleitungen zur Verwendung der Kiste.
+Eine weitere nette Funktionalität von Cargo ist, dass das Ausführen des
+Kommandos <code>cargo doc --open</code> die von all deinen Abhängigkeiten
+bereitgestellte Dokumentation lokal zusammenstellt und in deinem Browser
 öffnet. Wenn du an anderen Funktionen der Kiste <code>rand</code> interessiert bist,
 führe zum Beispiel <code>cargo doc --open</code> aus und klicke auf <code>rand</code> in der
 Seitenleiste links.</p>
 </blockquote>
-<p>Die zweite Zeile, die wir in der Mitte des Codes hinzugefügt haben, gibt die
-Geheimzahl aus. Das ist hilfreich während wir das Programm entwickeln, um es
-testen zu können, aber wir werden es aus der finalen Version entfernen. Es ist
-kein echtes Spiel, wenn das Programm die Antwort ausgibt, sobald es startet!</p>
+<p>Die zweite neue Zeile gibt die Geheimzahl aus. Das ist hilfreich während wir
+das Programm entwickeln, um es testen zu können, aber wir werden es aus der
+finalen Version entfernen. Es ist kein echtes Spiel, wenn das Programm die
+Antwort ausgibt, sobald es startet!</p>
 <p>Versuche, das Programm einige Male auszuführen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
@@ -758,11 +770,11 @@ fn main() {
 </code></pre>
 <p><span class="caption">Codeblock 2-4: Behandeln der möglichen Rückgabewerte beim
 Vergleich zweier Zahlen</span></p>
-<p>Das erste neue Element hier ist eine weitere <code>use</code>-Anweisung, die einen Typ
-namens <code>std::cmp::Ordering</code> aus der Standardbibliothek in den
-Gültigkeitsbereich bringt. Wie <code>Result</code> ist <code>Ordering</code> eine weitere Aufzählung,
-aber die Varianten für <code>Ordering</code> sind <code>Less</code>, <code>Greater</code> und <code>Equal</code>. Dies sind
-die drei Ergebnisse, die möglich sind, wenn man zwei Werte vergleicht.</p>
+<p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, die einen Typ namens
+<code>std::cmp::Ordering</code> aus der Standardbibliothek in den Gültigkeitsbereich
+bringt. Der Typ <code>Ordering</code> ist eine weitere Aufzählung und hat die Varianten
+<code>Less</code>, <code>Greater</code> und <code>Equal</code>. Dies sind die drei Ergebnisse, die möglich sind,
+wenn man zwei Werte vergleicht.</p>
 <p>Dann fügen wir unten fünf neue Zeilen hinzu, die den Typ <code>Ordering</code> verwenden.
 Die <code>cmp</code>-Methode vergleicht zwei Werte und kann auf alles, was verglichen
 werden kann, angewendet werden. Sie braucht eine Referenz auf das, was du
@@ -821,15 +833,15 @@ Rust daraus schließen, dass <code>guess</code> ein <code>String</code> sein sol
 nicht, den Typ anzugeben. Die <code>secret_number</code> hingegen ist ein Zahlentyp.
 Einige Zahlentypen können einen Wert zwischen 1 und 100 haben: <code>i32</code>, eine
 32-Bit-Zahl; <code>u32</code>, eine 32-Bit-Zahl ohne Vorzeichen; <code>i64</code>, eine 64-Bit-Zahl;
-sowie andere. Rust verwendet standardmäßig <code>i32</code>, was der Typ von
-<code>secret_number</code> ist, es sei denn, du fügst an anderer Stelle Typinformationen
-hinzu, die Rust veranlassen würden, auf einen anderen numerischen Typ zu
-schließen. Der Grund für den Fehler liegt darin, dass Rust eine Zeichenkette
-und einen Zahlentyp nicht vergleichen kann.</p>
+sowie andere. Solange nicht anders angegeben, verwendet Rust standardmäßig
+<code>i32</code>, was der Typ von <code>secret_number</code> ist, es sei denn, du fügst an anderer
+Stelle Typinformationen hinzu, die Rust veranlassen würden, auf einen anderen
+numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass Rust
+eine Zeichenkette und einen Zahlentyp nicht vergleichen kann.</p>
 <p>Letztendlich wollen wir den <code>String</code>, den das Programm als Eingabe liest, in
 einen echten Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
-vergleichen können. Das können wir tun, indem wir eine weitere Zeile zum
-<code>main</code>-Funktionsrumpf hinzufügen:</p>
+vergleichen können. Das tun wir, indem wir folgendes zum <code>main</code>-Funktionsrumpf
+hinzufügen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
 </span><span class="boring">use std::cmp::Ordering;
@@ -901,7 +913,8 @@ Annotation <code>u32</code> in diesem Beispielprogramm und der Vergleich mit
 <code>secret_number</code>, dass Rust daraus ableiten wird, dass <code>secret_number</code> ebenfalls
 ein <code>u32</code> sein sollte. Nun wird also der Vergleich zwischen zwei Werten
 desselben Typs durchgeführt!</p>
-<p>Der Aufruf von <code>parse</code> könnte leicht einen Fehler verursachen. Wenn die
+<p>Die Methode <code>parse</code> funktioniert nur bei Zeichen, die logisch in Zahlen
+umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel <code>A👍%</code> enthielte, gäbe es keine Möglichkeit, dies in
 eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die <code>parse</code>-Methode
 einen <code>Result</code>-Typ zurück, ähnlich wie die <code>read_line</code>-Methode (weiter oben in
@@ -934,8 +947,8 @@ und schätze eine zu kleine Zahl.</p>
 <p>Der Großteil des Spiels funktioniert jetzt, aber der Benutzer kann nur <em>eine</em>
 Schätzung anstellen. Ändern wir das, indem wir eine Schleife hinzufügen!</p>
 <h2 id="zulassen-mehrerer-schätzungen-mittels-schleife"><a class="header" href="#zulassen-mehrerer-schätzungen-mittels-schleife">Zulassen mehrerer Schätzungen mittels Schleife</a></h2>
-<p>Das Schlüsselwort <code>loop</code> erzeugt eine Endlosschleife. Wir fügen diese jetzt
-hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
+<p>Das Schlüsselwort <code>loop</code> erzeugt eine Endlosschleife. Wir fügen jetzt eine
+Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
 </span><span class="boring">use std::cmp::Ordering;
@@ -984,8 +997,9 @@ class="keystroke">Strg+c</span> unterbrechen. Aber es gibt noch eine andere
 Möglichkeit, diesem unersättlichen Monster zu entkommen, wie in der
 <code>parse</code>-Diskussion in <a href="#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
 Geheimzahl“</a> erwähnt: Wenn der
-Benutzer eine Antwort ohne Zahl eingibt, stürzt das Programm ab. Der Benutzer
-kann das ausnutzen, um das Programm zu beenden, wie hier gezeigt:</p>
+Benutzer eine Antwort ohne Zahl eingibt, stürzt das Programm ab. Wir können das
+ausnutzen, um dem Benutzer zu erlauben das Programm zu beenden, wie hier
+gezeigt:</p>
 <pre><code class="language-console">$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 1.50s
@@ -1009,7 +1023,7 @@ quit
 thread 'main' panicked at 'Bitte gib eine Zahl ein!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:999:5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
-<p>Mit der Eingabe von <code>quit</code> wird das Spiel tatsächlich beendet, aber das gilt
+<p>Mit der Eingabe von <code>quit</code> wird das Spiel beendet, aber das gilt
 auch für alle anderen Eingaben, die keine Zahlen sind. Dies ist jedoch, gelinde
 gesagt, suboptimal. Wir wollen, dass das Spiel automatisch beendet wird, wenn
 die richtige Zahl erraten wird.</p>

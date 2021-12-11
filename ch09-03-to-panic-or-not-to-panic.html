@@ -208,11 +208,16 @@ Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
 werden – sowie eine oder mehrere der folgenden Punkte zutreffen:</p>
 <ul>
-<li>Es wird nicht davon ausgegangen, dass ein schlechter Zustand vorkommt kann.</li>
+<li>Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
+wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
+falschen Format durch einen Benutzer.</li>
 <li>Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
-in keinem schlechten Zustand befindet.</li>
+in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
+Problem zu prüfen</li>
 <li>Es gibt keine gute Möglichkeit, diese Informationen in den von dir
-verwendeten Typen zu kodieren.</li>
+verwendeten Typen zu kodieren. Wir werden im Abschnitt <a href="ch17-03-oo-design-patterns.html#kodieren-von-zust%C3%A4nden-und-verhalten-als-typen">„Kodieren von
+Zuständen und Verhalten als Typen“</a> in Kapitel 17 ein Beispiel
+dafür durcharbeiten.</li>
 </ul>
 <p>Wenn jemand deinen Code aufruft und Werte eingibt, die keinen Sinn ergeben, ist
 es vielleicht die beste Wahl, <code>panic!</code> anzurufen und die Person, die deine
@@ -275,27 +280,27 @@ z.B. Buchstaben eingibt.</p>
 <p>Eine Möglichkeit, dies zu tun, wäre, die Eingabe als <code>i32</code> statt nur als <code>u32</code>
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
-<pre><code class="language-rust ignore">use rand::Rng;
-use std::cmp::Ordering;
-use std::io;
-
-fn main() {
-    println!(&quot;Rate eine Zahl!&quot;);
-
-    let secret_number = rand::thread_rng().gen_range(1, 101);
-
-    loop {
+<pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
+</span><span class="boring">use std::cmp::Ordering;
+</span><span class="boring">use std::io;
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    println!(&quot;Rate eine Zahl!&quot;);
+</span><span class="boring">
+</span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
+</span><span class="boring">
+</span>    loop {
         // --abschneiden--
 
-        println!(&quot;Bitte gib deine Vermutung ein.&quot;);
-
-        let mut guess = String::new();
-
-        io::stdin()
-            .read_line(&amp;mut guess)
-            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
-
-        let guess: i32 = match guess.trim().parse() {
+<span class="boring">        println!(&quot;Bitte gib deine Vermutung ein.&quot;);
+</span><span class="boring">
+</span><span class="boring">        let mut guess = String::new();
+</span><span class="boring">
+</span><span class="boring">        io::stdin()
+</span><span class="boring">            .read_line(&amp;mut guess)
+</span><span class="boring">            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">
+</span>        let guess: i32 = match guess.trim().parse() {
             Ok(num) =&gt; num,
             Err(_) =&gt; continue,
         };
@@ -306,17 +311,17 @@ fn main() {
         }
 
         match guess.cmp(&amp;secret_number) {
-            // --snip--
-            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
-            Ordering::Equal =&gt; {
-                println!(&quot;Du hast gewonnen!&quot;);
-                break;
-            }
-        }
-    }
-}
-</code></pre>
+            // --abschneiden--
+<span class="boring">            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
+</span><span class="boring">            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+</span><span class="boring">            Ordering::Equal =&gt; {
+</span><span class="boring">                println!(&quot;Du hast gewonnen!&quot;);
+</span><span class="boring">                break;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span>    }
+<span class="boring">}
+</span></code></pre>
 <p>Der <code>if</code>-Ausdruck prüft, ob unser Wert außerhalb des Bereichs liegt, informiert
 den Benutzer über das Problem und ruft <code>continue</code> auf, um die nächste Iteration
 der Schleife zu starten und um eine weitere Schätzung zu bitten. Nach dem
@@ -330,7 +335,7 @@ mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühs
 Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
 überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
 neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-vertrauensvoll zu nutzen. Codeblock 9-10 zeigt eine Möglichkeit, einen Typ
+vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
 Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -356,7 +361,7 @@ impl Guess {
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><span class="caption">Codeblock 9-10: Ein Typ <code>Guess</code>, der nur bei Werten
+<p><span class="caption">Codeblock 9-13: Ein Typ <code>Guess</code>, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span></p>
 <p>Zuerst definieren wir eine Struktur <code>Guess</code>, die ein Feld <code>value</code> hat, das
 einen <code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
