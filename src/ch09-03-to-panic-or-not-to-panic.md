@@ -81,11 +81,16 @@ Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
 werden &ndash; sowie eine oder mehrere der folgenden Punkte zutreffen:
 
-* Es wird nicht davon ausgegangen, dass ein schlechter Zustand vorkommt kann.
+* Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
+  wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
+  falschen Format durch einen Benutzer.
 * Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
-  in keinem schlechten Zustand befindet.
+  in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
+  Problem zu prüfen
 * Es gibt keine gute Möglichkeit, diese Informationen in den von dir
-  verwendeten Typen zu kodieren.
+  verwendeten Typen zu kodieren. Wir werden im Abschnitt [„Kodieren von
+  Zuständen und Verhalten als Typen“][encoding] in Kapitel 17 ein Beispiel
+  dafür durcharbeiten.
 
 Wenn jemand deinen Code aufruft und Werte eingibt, die keinen Sinn ergeben, ist
 es vielleicht die beste Wahl, `panic!` anzurufen und die Person, die deine
@@ -156,26 +161,26 @@ zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:
 
 ```rust,ignore
-use rand::Rng;
-use std::cmp::Ordering;
-use std::io;
-
-fn main() {
-    println!("Rate eine Zahl!");
-
-    let secret_number = rand::thread_rng().gen_range(1, 101);
-
+# use rand::Rng;
+# use std::cmp::Ordering;
+# use std::io;
+#
+# fn main() {
+#     println!("Rate eine Zahl!");
+#
+#     let secret_number = rand::thread_rng().gen_range(1, 101);
+#
     loop {
         // --abschneiden--
 
-        println!("Bitte gib deine Vermutung ein.");
-
-        let mut guess = String::new();
-
-        io::stdin()
-            .read_line(&mut guess)
-            .expect("Fehler beim Lesen der Zeile");
-
+#         println!("Bitte gib deine Vermutung ein.");
+#
+#         let mut guess = String::new();
+#
+#         io::stdin()
+#             .read_line(&mut guess)
+#             .expect("Fehler beim Lesen der Zeile");
+#
         let guess: i32 = match guess.trim().parse() {
             Ok(num) => num,
             Err(_) => continue,
@@ -187,16 +192,16 @@ fn main() {
         }
 
         match guess.cmp(&secret_number) {
-            // --snip--
-            Ordering::Less => println!("Zu klein!"),
-            Ordering::Greater => println!("Zu groß!"),
-            Ordering::Equal => {
-                println!("Du hast gewonnen!");
-                break;
-            }
-        }
+            // --abschneiden--
+#             Ordering::Less => println!("Zu klein!"),
+#             Ordering::Greater => println!("Zu groß!"),
+#             Ordering::Equal => {
+#                 println!("Du hast gewonnen!");
+#                 break;
+#             }
+#         }
     }
-}
+# }
 ```
 
 Der `if`-Ausdruck prüft, ob unser Wert außerhalb des Bereichs liegt, informiert
@@ -214,7 +219,7 @@ Stattdessen können wir einen neuen Typ erstellen und die Validierungen in eine
 Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
 überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
 neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-vertrauensvoll zu nutzen. Codeblock 9-10 zeigt eine Möglichkeit, einen Typ
+vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt, wenn die
 Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
@@ -239,7 +244,7 @@ impl Guess {
 }
 ```
 
-<span class="caption">Codeblock 9-10: Ein Typ `Guess`, der nur bei Werten
+<span class="caption">Codeblock 9-13: Ein Typ `Guess`, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span>
 
 Zuerst definieren wir eine Struktur `Guess`, die ein Feld `value` hat, das
@@ -296,3 +301,5 @@ Nachdem du nun nützliche Möglichkeiten gesehen hast, wie die Standardbibliothe
 generische Datentypen mit den Enums `Option` und `Result` verwendet, werden wir
 darüber sprechen, wie generische Datentypen funktionieren und wie du sie in
 deinem Code verwenden kannst.
+
+[encoding]: ch17-03-oo-design-patterns.html#kodieren-von-zuständen-und-verhalten-als-typen

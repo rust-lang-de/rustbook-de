@@ -834,7 +834,7 @@ was wir erwartet hatten.
 Neben der Prüfung, ob unser Code die von uns erwarteten korrekten Werte
 zurückgibt, ist es auch wichtig zu prüfen, ob unser Code Fehlerbedingungen so
 behandelt, wie wir es erwarten. Denke zum Beispiel an den Typ `Guess`, den wir
-in Kapitel 9 in Codeblock 9-10 erstellt haben. Anderer Code, der `Guess`
+in Kapitel 9 in Codeblock 9-13 erstellt haben. Anderer Code, der `Guess`
 verwendet, hängt von der Garantie ab, dass `Guess`-Instanzen nur Werte zwischen
 1 und 100 enthalten. Wir können einen Test schreiben, der sicherstellt, dass
 der Versuch, eine `Guess`-Instanz mit einem Wert außerhalb dieses Bereichs zu
