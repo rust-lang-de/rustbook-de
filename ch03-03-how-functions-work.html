@@ -140,8 +140,8 @@ wichtigsten Funktionen in der Sprache gesehen: Die Funktion <code>main</code>, d
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort <code>fn</code>
 gesehen, mit dem du neue Funktionen deklarieren kannst.</p>
 <p>Rust-Code verwendet die <em>Schlangenschrift</em>-Stil-Konvention (snake case) für
-Funktions- und Variablennamen. In Schlangenschrift sind alle Buchstaben klein
-geschrieben und Unterstriche separieren Wörter. Hier ist ein Programm, das eine
+Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
+und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -154,9 +154,9 @@ fn another_function() {
     println!(&quot;Eine andere Funktion.&quot;);
 }
 </code></pre></pre>
-<p>Funktionsdefinitionen in Rust beginnen mit <code>fn</code> und haben einen Satz Klammern
-nach dem Funktionsnamen. Die geschweiften Klammern teilen dem Compiler mit,
-wo der Funktionsrumpf beginnt und endet.</p>
+<p>Wir definieren eine Funktion in Rust durch die Eingabe von <code>fn</code>, gefolgt von
+einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+dem Compiler mit, wo der Funktionsrumpf beginnt und endet.</p>
 <p>Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da <code>another_function</code> im
 Programm definiert ist, kann sie von innerhalb der <code>main</code>-Funktion aufgerufen
@@ -177,8 +177,8 @@ Eine andere Funktion.
 <p>Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der
 <code>main</code>-Funktion erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben
 und dann wird <code>another_function</code> aufgerufen und ihre Nachricht ausgegeben.</p>
-<h3 id="funktionsparameter"><a class="header" href="#funktionsparameter">Funktionsparameter</a></h3>
-<p>Funktionen können auch so definiert werden, dass sie <em>Parameter</em> haben, das
+<h3 id="parameter"><a class="header" href="#parameter">Parameter</a></h3>
+<p>Wir können Funktionen auch so definiert werden, dass sie <em>Parameter</em> haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
 Funktion Parameter hat, kannst du sie mit konkreten Werten für diese Parameter
 versehen. Technisch gesehen werden die konkreten Werte <em>Argumente</em> genannt,
@@ -186,8 +186,7 @@ aber in lockeren Gesprächen neigen Leute dazu, die Worte <em>Parameter</em> und
 <em>Argument</em> entweder für die Variablen in der Definition einer Funktion oder für
 die konkreten Werte, die beim Aufruf einer Funktion übergeben werden,
 synonym zu verwenden.</p>
-<p>Die folgende umgeschriebene Version von <code>another_function</code> zeigt, wie Parameter
-in Rust aussehen:</p>
+<p>In dieser Version von <code>another_function</code> fügen wir einen Parameter hinzu:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     another_function(5);
@@ -206,7 +205,7 @@ erhalten:</p>
 Der Wert von x ist: 5
 </code></pre>
 <p>Die Deklaration <code>another_function</code> hat einen Parameter namens <code>x</code>. Der Typ von
-<code>x</code> wird als <code>i32</code> angegeben. Wenn <code>5</code> an <code>another_function</code> übergeben wird,
+<code>x</code> wird als <code>i32</code> angegeben. Wenn wir <code>5</code> an <code>another_function</code> übergeben,
 setzt das Makro <code>println!</code> <code>5</code> an die Stelle, an der sich das Paar geschweifter
 Klammern in der Formatierungszeichenkette befand.</p>
 <p>In Funktionssignaturen <em>musst</em> du den Typ jedes Parameters deklarieren. Dies
@@ -214,8 +213,8 @@ ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
 meinst.</p>
-<p>Wenn eine Funktion mehrere Parameter haben soll, trenne die
-Parameterdeklarationen mit Kommas, so wie hier:</p>
+<p>Wenn wir mehrere Parameter definieren, trennen wir die Parameterdeklarationen
+mit Kommas, so wie hier:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     print_labeled_measurement(5, 'h');
@@ -240,7 +239,7 @@ Das Maß ist: 5h
 </code></pre>
 <p>Da wir die Funktion mit <code>5</code> als Wert für <code>value</code> und <code>'h'</code> als Wert für
 <code>unit_label</code> aufgerufen haben, enthält die Programmausgabe diese Werte.</p>
-<h4 id="funktionsrümpfe-enthalten-anweisungen-und-ausdrücke"><a class="header" href="#funktionsrümpfe-enthalten-anweisungen-und-ausdrücke">Funktionsrümpfe enthalten Anweisungen und Ausdrücke</a></h4>
+<h4 id="anweisungen-und-ausdrücke"><a class="header" href="#anweisungen-und-ausdrücke">Anweisungen und Ausdrücke</a></h4>
 <p>Funktionsrümpfe bestehen aus einer Reihe von Anweisungen, die optional mit
 einem Ausdruck enden können. Bisher haben wir nur Funktionen ohne einen
 endenden Ausdruck behandelt, aber du hast einen Ausdruck als Teil einer
@@ -319,9 +318,9 @@ Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. <code>5 + 6</code>, die ein Ausdruck ist, der zum Wert <code>11</code> ausgewertet
 wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die <code>6</code>
 in der Anweisung <code>let y = 6;</code> ein Ausdruck, der den Wert <code>6</code> ergibt. Der Aufruf
-einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Der
-Block <code>{}</code>, den wir zum Erstellen neuer Gültigkeitsbereiche verwenden, ist ein
-Ausdruck, zum Beispiel:</p>
+einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
+neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,
+ist ein Ausdruck, zum Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let y = {
@@ -339,12 +338,12 @@ Ausdruck, zum Beispiel:</p>
 }
 </code></pre>
 <p>ist ein Block, der in diesem Fall zu <code>4</code> ausgewertet wird. Dieser Wert wird als
-Teil der <code>let</code>-Anweisung an <code>y</code> gebunden. Beachte die Zeile <code>x + 1</code> ohne
-Semikolon am Ende, was sich von den meisten Zeilen, die du bisher gesehen hast,
-unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn du ein
-Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine Anweisung,
-die dann keinen Wert zurückgibt.  Behalte dies im Hinterkopf, wenn du als
-nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.</p>
+Teil der <code>let</code>-Anweisung an <code>y</code> gebunden. Beachte, dass die Zeile <code>x + 1</code> am
+Ende kein Semikolon hat, was sich von den meisten Zeilen, die du bisher gesehen
+hast, unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn
+du ein Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine
+Anweisung, und sie gibt keinen Wert zurück.  Behalte dies im Hinterkopf, wenn
+du als nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.</p>
 <h3 id="funktionen-mit-rückgabewerten"><a class="header" href="#funktionen-mit-rückgabewerten">Funktionen mit Rückgabewerten</a></h3>
 <p>Funktionen können Werte an den Code zurückgeben, der sie aufruft. Wir benennen
 keine Rückgabewerte, aber wir deklarieren ihren Typ nach einem Pfeil (<code>-&gt;</code>). In

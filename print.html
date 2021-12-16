@@ -1972,7 +1972,7 @@ in <a href="appendix-01-keywords.html">Anhang A</a>.</p>
 <p>Wie im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen">„Speichern von Werten mit
 Variablen“</a> erwähnt, sind Variablen
 standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
-gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
+gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheitvariables
 (safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
 bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
 (mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
@@ -1983,8 +1983,8 @@ sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
 Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis anlegen, indem wir
 <code>cargo new variables</code> aufrufen.</p>
 <p>Öffne dann in deinem neuen <em>variables</em>-Verzeichnis die Datei <em>src/main.rs</em> und
-ersetze dessen Code durch folgenden Code, der sich noch nicht kompilieren
-lässt:</p>
+ersetze dessen Code durch folgenden Code. Dieser Code lässt sich noch nicht
+kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = 5;
@@ -2013,30 +2013,29 @@ For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` due to previous error
 </code></pre>
 <p>Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
-zu finden. Auch wenn Kompilierfehler frustrierend sein können, bedeuten sie
-nur, dass dein Programm noch nicht sicher das tut, was du willst; sie bedeuten
-<em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene Rust-Entwickler
-bekommen ebenfalls noch Kompilierfehler.</p>
+zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
+sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
+bedeuten <em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene
+Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.</p>
 <p>Die Fehlermeldung <code>cannot assign twice to immutable variable x</code> weist darauf
 hin, dass du versucht hast, der unveränderlichen Variablen <code>x</code> einen zweiten
 Wert zuzuweisen.</p>
-<p>Es ist wichtig, dass wir Fehler zur Kompilierzeit erhalten, wenn wir versuchen,
-einen Wert zu ändern, den wir zuvor als unveränderlich bezeichnet haben, weil
-genau diese Situation zu Fehlern führen kann. Wenn ein Teil unseres Codes von
-der Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer
-Teil unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des
-Codes nicht das tut, wozu er entwickelt wurde. Die Ursache für diese Art von
-Fehler kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite
-Stück Code den Wert nur <em>gelegentlich</em> ändert.</p>
-<p>In Rust garantiert der Compiler, dass sich ein Wert tatsächlich nicht ändert,
-wenn du angibst, dass er sich nicht ändern darf. Das bedeutet, dass du beim
-Lesen und Schreiben von Code nicht darauf achten musst, wie und wo sich ein
-Wert ändern könnte. Dein Code ist somit leichter zu durchdenken.</p>
-<p>Aber Veränderlichkeit kann sehr nützlich sein. Variablen sind nur standardmäßig
-unveränderlich; wie du es in Kapitel 2 gemacht hast, kannst du sie veränderlich
-machen, indem du vor den Variablennamen <code>mut</code> angibst. Zusätzlich zur
-Möglichkeit, diesen Wert zu ändern, vermittelt <code>mut</code> den zukünftigen Lesern des
-Codes die Absicht, indem es anzeigt, dass andere Teile des Codes den Wert
+<p>Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
+einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
+diese Situation kann zu Fehlern führen. Wenn ein Teil unseres Codes von der
+Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer Teil
+unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des Codes
+nicht das tut, wozu er entwickelt wurde. Die Ursache für diese Art von Fehler
+kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite Stück
+Code den Wert nur <em>gelegentlich</em> ändert. In Rust garantiert der Compiler, dass
+sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
+ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
+leichter zu durchdenken.</p>
+<p>Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
+erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
+Kapitel 2 gemacht hast, kannst du sie veränderlich machen, indem du vor den
+Variablennamen <code>mut</code> angibst. Das Hinzufügen von <code>mut</code> vermittelt den
+zukünftigen Lesern des Codes die Absicht, dass andere Teile des Codes den Wert
 dieser Variablen ändern werden.</p>
 <p>Lass uns zum Beispiel <em>src/main.rs</em> wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -2056,29 +2055,23 @@ Der Wert von x ist: 5
 Der Wert von x ist: 6
 </code></pre>
 <p>Wir dürfen den Wert, an den sich <code>x</code> bindet, von <code>5</code> auf <code>6</code> ändern, wenn <code>mut</code>
-verwendet wird. In einigen Fällen wirst du eine Variable veränderlich machen
-wollen, weil es den Code bequemer zu schreiben macht, als wenn er nur
-unveränderliche Variablen hätte.</p>
-<p>Es gibt mehrere Kompromisse, die zusätzlich zur Vermeidung von Fehlern in
-Betracht gezogen werden müssen. In Fällen, in denen du beispielsweise große
-Datenstrukturen verwendest, kann es schneller sein, eine vorhandene Instanz zu
-mutieren, als neu zugewiesene Instanzen zu kopieren und zurückzugeben. Bei
-kleineren Datenstrukturen kann es einfacher sein, neue Instanzen zu erstellen
-und in einem funktionelleren Programmierstil zu schreiben, sodass eine
-geringere Performanz ein lohnender Nachteil sein kann, um diese Klarheit zu
-erlangen.</p>
-<h3 id="unterschiede-zwischen-variablen-und-konstanten"><a class="header" href="#unterschiede-zwischen-variablen-und-konstanten">Unterschiede zwischen Variablen und Konstanten</a></h3>
-<p>Den Wert einer Variable nicht ändern zu können, könnte dich an ein anderes
-Programmierkonzept erinnert haben, das die meisten anderen Sprachen haben:
-<em>Konstanten</em>. Wie unveränderliche Variablen sind Konstanten Werte, die an einen
-Namen gebunden sind und sich nicht ändern dürfen, aber es gibt einige
-Unterschiede zwischen Konstanten und Variablen.</p>
+verwendet wird. Es gibt mehrere Kompromisse, die zusätzlich zur Vermeidung von
+Fehlern in Betracht gezogen werden müssen. In Fällen, in denen du
+beispielsweise große Datenstrukturen verwendest, kann es schneller sein, eine
+vorhandene Instanz zu mutieren, als neu zugewiesene Instanzen zu kopieren und
+zurückzugeben. Bei kleineren Datenstrukturen kann es einfacher sein, neue
+Instanzen zu erstellen und in einem funktionelleren Programmierstil zu
+schreiben, sodass eine geringere Performanz ein lohnender Nachteil sein kann,
+um diese Klarheit zu erlangen.</p>
+<h3 id="konstanten"><a class="header" href="#konstanten">Konstanten</a></h3>
+<p>Wie unveränderliche Variablen sind <em>Konstanten</em> Werte, die an einen Namen
+gebunden sind und sich nicht ändern dürfen, aber es gibt einige Unterschiede
+zwischen Konstanten und Variablen.</p>
 <p>Erstens ist es dir nicht erlaubt, <code>mut</code> mit Konstanten zu verwenden. Konstanten
 sind nicht nur von vornherein unveränderlich – sie sind immer
-unveränderlich.</p>
-<p>Du deklarierst Konstanten mit dem Schlüsselwort <code>const</code> anstelle des
-Schlüsselworts <code>let</code> und der Typ des Wertes <em>muss</em> annotiert werden. Wir sind
-dabei, Typen und Typ-Annotationen im nächsten Abschnitt
+unveränderlich. Du deklarierst Konstanten mit dem Schlüsselwort <code>const</code>
+anstelle des Schlüsselworts <code>let</code> und der Typ des Wertes <em>muss</em> annotiert
+werden. Wir sind dabei, Typen und Typ-Annotationen im nächsten Abschnitt
 <a href="ch03-02-data-types.html">„Datentypen“</a> zu behandeln, also mach dir jetzt keine Gedanken
 über die Details. Du musst nur wissen, dass du den Typ immer annotieren musst.</p>
 <p>Konstanten können in jedem Gültigkeitsbereich deklariert werden, auch im
@@ -2087,25 +2080,25 @@ Teile des Codes Bescheid wissen müssen.</p>
 <p>Der letzte Unterschied besteht darin, dass Konstanten nur auf einen konstanten
 Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
 berechnet werden könnte.</p>
-<p>Hier ist ein Beispiel für eine Konstantendeklaration, bei der der Name der
-Konstanten <code>THREE_HOURS_IN_SECONDS</code> lautet und ihr Wert wird auf das Ergebnis
-der Multiplikation von 60 (die Anzahl der Sekunden in einer Minute) mal 60 (die
-Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der Stunden, die wir in
-diesem Programm zählen wollen):</p>
+<p>Hier ist ein Beispiel für eine Konstantendeklaration:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Die Namenskonvention von Rust für Konstanten ist die Verwendung von
-Großbuchstaben mit Unterstrichen zwischen den Wörtern. Der Compiler ist in der
-Lage, eine begrenzte Anzahl von Operationen zur Kompilierzeit auswerten, was
-uns die Möglichkeit gibt, diesen Wert so zu schreiben, dass er leichter zu
-verstehen und zu überprüfen ist, als wenn diese Konstante auf den Wert 10.800
-gesetzt wäre. Siehe die <a href="https://doc.rust-lang.org/reference/const_eval.html">Rust-Referenz, Abschnitt über die Auswertung von
-Konstanten</a> für weitere Informationen darüber, welche Operationen
-bei der Deklaration von Konstanten verwendet werden können.</p>
+<p>Der Name der Konstante lautet <code>THREE_HOURS_IN_SECONDS</code> und ihr Wert wird auf
+das Ergebnis der Multiplikation von 60 (die Anzahl der Sekunden in einer
+Minute) mal 60 (die Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der
+Stunden, die wir in diesem Programm zählen wollen). Die Namenskonvention von
+Rust für Konstanten ist die Verwendung von Großbuchstaben mit Unterstrichen
+zwischen den Wörtern. Der Compiler ist in der Lage, eine begrenzte Anzahl von
+Operationen zur Kompilierzeit auswerten, was uns die Möglichkeit gibt, diesen
+Wert so zu schreiben, dass er leichter zu verstehen und zu überprüfen ist, als
+wenn diese Konstante auf den Wert 10.800 gesetzt wäre. Siehe die
+<a href="https://doc.rust-lang.org/reference/const_eval.html">Rust-Referenz, Abschnitt über die Auswertung von Konstanten</a> für
+weitere Informationen darüber, welche Operationen bei der Deklaration von
+Konstanten verwendet werden können.</p>
 <p>Konstanten sind für die gesamte Laufzeit eines Programms in dem
 Gültigkeitsbereich gültig, in dem sie deklariert wurden. Damit sind sie eine
 nützliche Wahl für Werte in deiner Anwendungsdomäne, über die mehrere Teile des
@@ -2117,14 +2110,14 @@ Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
 Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
 aktualisiert werden müsste.</p>
 <h3 id="beschatten-shadowing"><a class="header" href="#beschatten-shadowing">Beschatten (shadowing)</a></h3>
-<p>Wie du in der Anleitung zum Ratespiel im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung
-mit der Geheimzahl“</a> in Kapitel 2
-gesehen hast, kannst du eine neue Variable mit dem gleichen Namen wie eine
-vorherige Variable deklarieren. Die Rust-Entwickler sagen, dass die erste
-Variable von der zweiten <em>beschattet</em> (shadowed) wird, was bedeutet, dass der
-Wert der zweiten Variable das ist, was das Programm sieht, wenn die Variable
-verwendet wird. Wir können eine Variable beschatten, indem wir denselben
-Variablenamen verwenden und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
+<p>Wie du in der Anleitung zum Ratespiel in <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">Kapitel
+2</a> gesehen hast, kannst du eine neue
+Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
+Rust-Entwickler sagen, dass die erste Variable von der zweiten <em>beschattet</em>
+(shadowed) wird, was bedeutet, dass der Wert der zweiten Variable das ist, was
+das Programm sieht, wenn die Variable verwendet wird. Wir können eine Variable
+beschatten, indem wir denselben Variablenamen verwenden und das Schlüsselwort
+<code>let</code> wie folgt wiederholen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 5;
@@ -2164,8 +2157,8 @@ weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
 <code>let</code> erneut verwenden, den Typ des Wertes ändern können, aber denselben Namen
 wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
 Benutzer, durch Eingeben von Leerzeichen zu zeigen, wie viele Leerzeichen er
-zwischen irgendeinem Text haben möchte, aber wir möchten diese Eingabe in
-Wirklichkeit als Zahl speichern:</p>
+zwischen irgendeinem Text haben möchte, und wir möchten diese Eingabe als Zahl
+speichern:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2173,13 +2166,11 @@ Wirklichkeit als Zahl speichern:</p>
 let spaces = spaces.len();
 <span class="boring">}
 </span></code></pre></pre>
-<p>Dieses Konstrukt ist erlaubt, weil die erste Variable <code>spaces</code> ein String-Typ
-ist und die zweite Variable <code>spaces</code>, die eine brandneue Variable ist, die
-zufällig den gleichen Namen wie die erste hat, ein Zahlentyp ist. Das
-Beschatten erspart es uns also, uns verschiedene Namen auszudenken, z.B.
-<code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir den einfacheren Namen
-<code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen, dafür <code>mut</code> zu verwenden,
-wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
+<p>Die erste Variable <code>spaces</code> ist ein String-Typ und die zweite Variable <code>spaces</code>
+ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
+Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
+den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
+dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2247,9 +2238,8 @@ uns darüber sprechen, wie sie in Rust funktionieren.</p>
 ganze Zahl in Kapitel 2, den Typ <code>u32</code>. Diese Typdeklaration gibt an, dass der
 Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 (vorzeichenbehaftete Ganzzahl-Typen beginnen mit <code>i</code> anstatt <code>u</code>). Tabelle 3-1
-zeigt die in Rust eingebauten Ganzzahl-Typen. Jede Variante in den Spalten
-Vorzeichenbehaftet und Vorzeichenlos (zum Beispiel <code>i16</code>) kann benutzt werden,
-um den Typ eines ganzzahligen Wertes zu deklarieren.</p>
+zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
+verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <p><span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span></p>
 <table><thead><tr><th align="right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
 <tr><td align="right">8 Bit</td><td><code>i8</code></td><td><code>u8</code></td></tr>
@@ -2277,9 +2267,10 @@ ist, die diese Variante benutzt. Ein <code>i8</code> kann also Zahlen von -(2<su
 bis 2<sup>7</sup> - 1 speichern, was -128 bis 127 entspricht. Vorzeichenlose
 Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
 <code>u8</code> Zahlen von 0 bis 2<sup>8</sup> - 1 speichern, was 0 bis 255 entspricht.</p>
-<p>Zusätzlich hängen die Typen <code>isize</code> und <code>usize</code> von der Art des Computers ab,
-auf dem dein Programm läuft: 64 Bit wenn du dich auf einer 64-Bit-Architektur
-befindest und 32 Bit auf einer 32-Bit-Architektur.</p>
+<p>Zusätzlich hängen die Typen <code>isize</code> und <code>usize</code> von der Architektur des
+Computers ab, auf dem dein Programm läuft, die in der Tabelle als „arch“
+bezeichnet wird: 64 Bit wenn du dich auf einer 64-Bit-Architektur befindest und
+32 Bit auf einer 32-Bit-Architektur.</p>
 <p>Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
 schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
 können, ein Typ-Suffix wie <code>57u8</code> zur Bezeichnung des Typs erlauben.
@@ -2302,14 +2293,14 @@ Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <
 <h5 id="ganzzahlüberlauf"><a class="header" href="#ganzzahlüberlauf">Ganzzahlüberlauf</a></h5>
 <p>Nehmen wir an, du hast eine Variable vom Typ <code>u8</code>, die Werte zwischen 0 und
 255 annehmen kann. Wenn du versuchst, die Variable auf einen Wert außerhalb
-dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf.
-Rust hat einige interessante Regeln, die dieses Verhalten betreffen. Wenn du
-im Fehlersuchmodus (debug mode) kompilierst, fügt Rust Prüfungen auf
-Ganzzahlüberläufe ein, was dazu führt, dass dein Programm zur Laufzeit
-<em>abbricht</em> (panic), falls dieses Verhalten auftritt. Rust verwendet den
-Begriff „panic“, wenn ein Programm durch einen Fehler abgebrochen wird; wir
-werden Programmabbrüche im Abschnitt <a href="ch09-01-unrecoverable-errors-with-panic.html">„Nicht behebbare Fehler mit
-<code>panic!</code>“</a> in Kapitel 9 näher betrachten.</p>
+dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf, was
+zu einem von zwei Verhaltensweisen führen kann. Wenn du im Fehlersuchmodus
+(debug mode) kompilierst, fügt Rust Prüfungen auf Ganzzahlüberläufe ein, was
+dazu führt, dass dein Programm zur Laufzeit <em>abbricht</em> (panic), falls dieses
+Verhalten auftritt. Rust verwendet den Begriff „panic“, wenn ein Programm
+durch einen Fehler abgebrochen wird; wir werden Programmabbrüche im Abschnitt
+<a href="ch09-01-unrecoverable-errors-with-panic.html">„Nicht behebbare Fehler mit <code>panic!</code>“</a> in
+Kapitel 9 näher betrachten.</p>
 <p>Wenn du mit dem Schalter <code>--release</code> im Freigabemodus (release mode)
 kompilierst, fügt Rust <em>keine</em> Prüfungen auf Ganzzahlüberläufe, die das
 Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
@@ -2339,7 +2330,7 @@ numerische Typen bereitstellt:</p>
 Dezimalkomma. Die Fließkomma-Typen in Rust sind <code>f32</code> und <code>f64</code>, die 32 Bit
 bzw. 64 Bit groß sind. Der Standardtyp ist <code>f64</code>, da er auf modernen CPUs
 ungefähr die gleiche Geschwindigkeit wie <code>f32</code> hat, aber eine höhere Präzision
-ermöglicht.</p>
+ermöglicht. Alle Fließkomma-Typen sind vorzeichenbehaftet.</p>
 <p>Hier ist ein Beispiel, das Fließkommazahlen in Aktion zeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -2396,11 +2387,8 @@ Beispiel:</p>
 <code>if</code>-Ausdruck. Wie <code>if</code>-Ausdrücke in Rust funktionieren werden wir im Abschnitt
 <a href="ch03-05-control-flow.html">„Kontrollfluss“</a> erläutern.</p>
 <h4 id="der-zeichen-typ"><a class="header" href="#der-zeichen-typ">Der Zeichen-Typ</a></h4>
-<p>Bislang haben wir nur mit Zahlen gearbeitet, aber Rust unterstützt auch
-Buchstaben. Rusts Typ <code>char</code> ist der primitivste alphabetische Typ der Sprache,
-der folgende Code zeigt eine Möglichkeit, ihn zu verwenden. (Beachte, dass
-<code>char</code>-Literale mit einfachen Anführungszeichen angegeben werden, im Gegensatz
-zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.)</p>
+<p>Rusts Typ <code>char</code> ist der primitivste alphabetische Typ der Sprache. Hier sind
+einige Beispiele für die Deklaration von <code>char</code>-Werten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let c = 'z';
@@ -2408,7 +2396,9 @@ zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.)</p>
     let heart_eyed_cat = '😻';
 }
 </code></pre></pre>
-<p>Der Typ <code>char</code> von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert
+<p>Beachte, dass wir <code>char</code>-Literale mit einfachen Anführungszeichen angeben, im
+Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.
+Der Typ <code>char</code> von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert
 dar, was bedeutet, dass er viel mehr als nur ASCII darstellen kann.
 Akzentuierte Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji
 und Leerzeichen mit Null-Breite sind gültige <code>char</code>-Werte in Rust.
@@ -2452,9 +2442,9 @@ Dann benutzt es ein Muster mit <code>let</code>, um <code>tup</code> zu nehmen u
 Variablen <code>x</code>, <code>y</code> und <code>z</code> umzuwandeln. Dies nennt man <em>destrukturieren</em>
 (destructuring), weil es das einzelne Tupel in drei Teile zerlegt. Schließlich
 gibt das Programm den Wert von <code>y</code> aus, der <code>6.4</code> ist.</p>
-<p>Zusätzlich zum Destrukturieren durch Musterabgleich können wir direkt auf ein
-Tupelelement zugreifen, indem wir einen Punkt (<code>.</code>) gefolgt vom Index des
-Wertes, auf den wir zugreifen wollen, verwenden. Zum Beispiel:</p>
+<p>Wir können direkt auf ein Tupelelement zugreifen, indem wir einen Punkt (<code>.</code>)
+gefolgt vom Index des Wertes, auf den wir zugreifen wollen, verwenden. Zum
+Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x: (i32, f64, u8) = (500, 6.4, 1);
@@ -2466,7 +2456,7 @@ Wertes, auf den wir zugreifen wollen, verwenden. Zum Beispiel:</p>
     let one = x.2;
 }
 </code></pre></pre>
-<p>Dieses Programm erzeugt ein Tupel <code>x</code> und erstellt dann neue Variablen für
+<p>Dieses Programm erzeugt das Tupel <code>x</code> und erstellt dann neue Variablen für
 jedes Element, indem es ihre jeweiligen Indizes verwendet. Wie bei den meisten
 Programmiersprachen ist der erste Index in einem Tupel 0.</p>
 <p>Das Tupel ohne Werte, <code>()</code>, ist ein spezieller Typ, der nur einen Wert hat,
@@ -2476,10 +2466,10 @@ Einheitswert zurück, wenn sie keinen anderen Wert zurückgeben.</p>
 <h4 id="der-array-typ"><a class="header" href="#der-array-typ">Der Array-Typ</a></h4>
 <p>Eine andere Möglichkeit, eine Kollektion mit mehreren Werten zu haben, ist mit
 einem <em>Array</em>. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
-gleichen Typ haben. Arrays in Rust unterscheiden sich von Arrays in einigen
-anderen Sprachen, weil Arrays in Rust eine feste Länge haben, wie Tupel.</p>
-<p>In Rust werden die in ein Array eingehenden Werte als kommagetrennte Liste in
-eckige Klammern geschrieben:</p>
+gleichen Typ haben. Anders als Arrays in einigen anderen Sprachen haben Arrays
+in Rust eine feste Länge.</p>
+<p>Wir schreiben die Werte in einem Array als kommagetrennte Liste in eckigen
+Klammern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [1, 2, 3, 4, 5];
@@ -2487,19 +2477,18 @@ eckige Klammern geschrieben:</p>
 </code></pre></pre>
 <p>Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
 Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
-Haldenspeicher gehen wir in Kapitel 4 näher ein) oder wenn du
+Haldenspeicher gehen wir in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
 Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
 wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
-sicher bist, ob du ein Array oder einen Vektor verwenden sollst, solltest du
-wahrscheinlich einen Vektor verwenden. In Kapitel 8 werden Vektoren
-ausführlicher besprochen.</p>
-<p>Ein Beispiel dafür, wann du ein Array statt eines Vektors verwenden möchtest,
-ist in einem Programm, das die Namen der Monate des Jahres kennen muss. Es ist
-sehr unwahrscheinlich, dass ein solches Programm Monate hinzufügen oder
-entfernen muss, sodass du ein Array verwenden kannst, weil du weißt, dass es
-immer 12 Elemente enthalten wird:</p>
+sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
+wahrscheinlich, dass du einen Vektor verwenden solltest. In <a href="ch08-01-vectors.html">Kapitel
+8</a> werden Vektoren ausführlicher besprochen.</p>
+<p>Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
+Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
+verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
+verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2507,9 +2496,9 @@ immer 12 Elemente enthalten wird:</p>
               &quot;August&quot;, &quot;September&quot;, &quot;Oktober&quot;, &quot;November&quot;, &quot;Dezember&quot;];
 <span class="boring">}
 </span></code></pre></pre>
-<p>Du würdest den Typ eines Arrays mit eckigen Klammern schreiben und innerhalb
-der Klammern den Typ jedes Elements, ein Semikolon und dann die Anzahl der
-Elemente im Array angeben, etwa so:</p>
+<p>Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
+Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
+etwa so:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2518,11 +2507,9 @@ Elemente im Array angeben, etwa so:</p>
 </span></code></pre></pre>
 <p>Hier ist <code>i32</code> der Typ aller Elemente. Nach dem Semikolon gibt die Zahl <code>5</code> an,
 dass das Array fünf Elemente enthält.</p>
-<p>Das Angeben eines Array-Typs auf diese Weise ähnelt einer alternativen Syntax
-für die Initialisierung eines Arrays: Wenn du ein Array erstellen möchtest, das
-für jedes Element den gleichen Wert enthält, kannst du den Anfangswert, gefolgt
-von einem Semikolon und dann die Länge des Arrays in eckigen Klammern angeben,
-wie hier gezeigt:</p>
+<p>Du kannst ein Array auch so initialisieren, dass es für jedes Element denselben
+Wert enthält, indem du den Anfangswert, gefolgt von einem Semikolon, und dann
+die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -2548,9 +2535,9 @@ Hilfe der Indizierung wie folgt zugreifen:</p>
 das der Wert am Index <code>[0]</code> im Array ist. Die Variable mit dem Namen <code>second</code>
 wird den Wert <code>2</code> vom Index <code>[1]</code> im Array erhalten.</p>
 <h5 id="ungültiger-array-element-zugriff"><a class="header" href="#ungültiger-array-element-zugriff">Ungültiger Array-Element-Zugriff</a></h5>
-<p>Was passiert, wenn du versuchst, auf ein Element eines Arrays zuzugreifen, das
-sich hinter dem Ende des Arrays befindet? Angenommen, du änderst das Beispiel
-wie folgt, das Code ähnlich dem Ratespiel in Kapitel 2 verwendet, um einen
+<p>Sehen wir uns an was passiert, wenn du versuchst, auf ein Element eines Arrays
+zuzugreifen, das sich hinter dem Ende des Arrays befindet. Angenommen, du
+führst diesen Code aus, ähnlich zum Ratespiel in Kapitel 2, um einen
 Array-Index vom Benutzer zu erhalten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust panics">use std::io;
@@ -2608,8 +2595,8 @@ wichtigsten Funktionen in der Sprache gesehen: Die Funktion <code>main</code>, d
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort <code>fn</code>
 gesehen, mit dem du neue Funktionen deklarieren kannst.</p>
 <p>Rust-Code verwendet die <em>Schlangenschrift</em>-Stil-Konvention (snake case) für
-Funktions- und Variablennamen. In Schlangenschrift sind alle Buchstaben klein
-geschrieben und Unterstriche separieren Wörter. Hier ist ein Programm, das eine
+Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
+und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -2622,9 +2609,9 @@ fn another_function() {
     println!(&quot;Eine andere Funktion.&quot;);
 }
 </code></pre></pre>
-<p>Funktionsdefinitionen in Rust beginnen mit <code>fn</code> und haben einen Satz Klammern
-nach dem Funktionsnamen. Die geschweiften Klammern teilen dem Compiler mit,
-wo der Funktionsrumpf beginnt und endet.</p>
+<p>Wir definieren eine Funktion in Rust durch die Eingabe von <code>fn</code>, gefolgt von
+einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+dem Compiler mit, wo der Funktionsrumpf beginnt und endet.</p>
 <p>Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da <code>another_function</code> im
 Programm definiert ist, kann sie von innerhalb der <code>main</code>-Funktion aufgerufen
@@ -2645,8 +2632,8 @@ Eine andere Funktion.
 <p>Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der
 <code>main</code>-Funktion erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben
 und dann wird <code>another_function</code> aufgerufen und ihre Nachricht ausgegeben.</p>
-<h3 id="funktionsparameter"><a class="header" href="#funktionsparameter">Funktionsparameter</a></h3>
-<p>Funktionen können auch so definiert werden, dass sie <em>Parameter</em> haben, das
+<h3 id="parameter"><a class="header" href="#parameter">Parameter</a></h3>
+<p>Wir können Funktionen auch so definiert werden, dass sie <em>Parameter</em> haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
 Funktion Parameter hat, kannst du sie mit konkreten Werten für diese Parameter
 versehen. Technisch gesehen werden die konkreten Werte <em>Argumente</em> genannt,
@@ -2654,8 +2641,7 @@ aber in lockeren Gesprächen neigen Leute dazu, die Worte <em>Parameter</em> und
 <em>Argument</em> entweder für die Variablen in der Definition einer Funktion oder für
 die konkreten Werte, die beim Aufruf einer Funktion übergeben werden,
 synonym zu verwenden.</p>
-<p>Die folgende umgeschriebene Version von <code>another_function</code> zeigt, wie Parameter
-in Rust aussehen:</p>
+<p>In dieser Version von <code>another_function</code> fügen wir einen Parameter hinzu:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     another_function(5);
@@ -2674,7 +2660,7 @@ erhalten:</p>
 Der Wert von x ist: 5
 </code></pre>
 <p>Die Deklaration <code>another_function</code> hat einen Parameter namens <code>x</code>. Der Typ von
-<code>x</code> wird als <code>i32</code> angegeben. Wenn <code>5</code> an <code>another_function</code> übergeben wird,
+<code>x</code> wird als <code>i32</code> angegeben. Wenn wir <code>5</code> an <code>another_function</code> übergeben,
 setzt das Makro <code>println!</code> <code>5</code> an die Stelle, an der sich das Paar geschweifter
 Klammern in der Formatierungszeichenkette befand.</p>
 <p>In Funktionssignaturen <em>musst</em> du den Typ jedes Parameters deklarieren. Dies
@@ -2682,8 +2668,8 @@ ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
 meinst.</p>
-<p>Wenn eine Funktion mehrere Parameter haben soll, trenne die
-Parameterdeklarationen mit Kommas, so wie hier:</p>
+<p>Wenn wir mehrere Parameter definieren, trennen wir die Parameterdeklarationen
+mit Kommas, so wie hier:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     print_labeled_measurement(5, 'h');
@@ -2708,7 +2694,7 @@ Das Maß ist: 5h
 </code></pre>
 <p>Da wir die Funktion mit <code>5</code> als Wert für <code>value</code> und <code>'h'</code> als Wert für
 <code>unit_label</code> aufgerufen haben, enthält die Programmausgabe diese Werte.</p>
-<h4 id="funktionsrümpfe-enthalten-anweisungen-und-ausdrücke"><a class="header" href="#funktionsrümpfe-enthalten-anweisungen-und-ausdrücke">Funktionsrümpfe enthalten Anweisungen und Ausdrücke</a></h4>
+<h4 id="anweisungen-und-ausdrücke"><a class="header" href="#anweisungen-und-ausdrücke">Anweisungen und Ausdrücke</a></h4>
 <p>Funktionsrümpfe bestehen aus einer Reihe von Anweisungen, die optional mit
 einem Ausdruck enden können. Bisher haben wir nur Funktionen ohne einen
 endenden Ausdruck behandelt, aber du hast einen Ausdruck als Teil einer
@@ -2787,9 +2773,9 @@ Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. <code>5 + 6</code>, die ein Ausdruck ist, der zum Wert <code>11</code> ausgewertet
 wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die <code>6</code>
 in der Anweisung <code>let y = 6;</code> ein Ausdruck, der den Wert <code>6</code> ergibt. Der Aufruf
-einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Der
-Block <code>{}</code>, den wir zum Erstellen neuer Gültigkeitsbereiche verwenden, ist ein
-Ausdruck, zum Beispiel:</p>
+einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
+neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,
+ist ein Ausdruck, zum Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let y = {
@@ -2807,12 +2793,12 @@ Ausdruck, zum Beispiel:</p>
 }
 </code></pre>
 <p>ist ein Block, der in diesem Fall zu <code>4</code> ausgewertet wird. Dieser Wert wird als
-Teil der <code>let</code>-Anweisung an <code>y</code> gebunden. Beachte die Zeile <code>x + 1</code> ohne
-Semikolon am Ende, was sich von den meisten Zeilen, die du bisher gesehen hast,
-unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn du ein
-Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine Anweisung,
-die dann keinen Wert zurückgibt.  Behalte dies im Hinterkopf, wenn du als
-nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.</p>
+Teil der <code>let</code>-Anweisung an <code>y</code> gebunden. Beachte, dass die Zeile <code>x + 1</code> am
+Ende kein Semikolon hat, was sich von den meisten Zeilen, die du bisher gesehen
+hast, unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn
+du ein Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine
+Anweisung, und sie gibt keinen Wert zurück.  Behalte dies im Hinterkopf, wenn
+du als nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.</p>
 <h3 id="funktionen-mit-rückgabewerten"><a class="header" href="#funktionen-mit-rückgabewerten">Funktionen mit Rückgabewerten</a></h3>
 <p>Funktionen können Werte an den Code zurückgeben, der sie aufruft. Wir benennen
 keine Rückgabewerte, aber wir deklarieren ihren Typ nach einem Pfeil (<code>-&gt;</code>). In
@@ -2948,12 +2934,11 @@ er beschreibt:</p>
 <p>Rust hat auch Dokumentations-Kommentare, welche im Bereich „Kisten (crate) auf
 crates.io veröffentlichen“ in Kapitel 14 erklärt werden.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
-<p>Die Entscheidung, ob ein Code ausgeführt werden soll oder nicht, je nachdem, ob
-eine Bedingung erfüllt ist, und die Entscheidung, einen Code wiederholt
-auszuführen, solange eine Bedingung erfüllt ist, sind grundlegende Bausteine in
-den meisten Programmiersprachen. Die gebräuchlichsten Konstrukte, mit denen du
-den Kontrollfluss von Rust-Code kontrollieren kannst, sind <code>if</code>-Ausdrücke und
-Schleifen.</p>
+<p>Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
+erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
+erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen.  Die
+gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
+kontrollieren kannst, sind <code>if</code>-Ausdrücke und Schleifen.</p>
 <h3 id="if-ausdrücke"><a class="header" href="#if-ausdrücke"><code>if</code>-Ausdrücke</a></h3>
 <p>Ein <code>if</code>-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
@@ -2973,15 +2958,15 @@ ein:</p>
     }
 }
 </code></pre></pre>
-<p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, auf das eine Bedingung
-folgt. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen Wert
-kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen, wenn die
-Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte Klammern
-gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken verbunden sind,
-werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie die Zweige in
-<code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
-Geheimzahl“</a> in Kapitel 2 besprochen
-haben.</p>
+<p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
+Bedingung. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen
+Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
+wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
+Klammern gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken
+verbunden sind, werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie
+die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der
+Schätzung mit der eheimzahl“</a> in
+Kapitel 2 besprochen haben.</p>
 <p>Optional können wir auch einen <code>else</code>-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
 falls die Bedingung als falsch ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
@@ -3092,7 +3077,8 @@ deinen Code vielleicht überarbeiten. Kapitel 6 beschreibt ein leistungsfähiges
 Rust-Verzweigungskonstrukt namens <code>match</code> für solche Fälle.</p>
 <h4 id="verwenden-von-if-in-einer-let-anweisung"><a class="header" href="#verwenden-von-if-in-einer-let-anweisung">Verwenden von <code>if</code> in einer <code>let</code>-Anweisung</a></h4>
 <p>Weil <code>if</code> ein Ausdruck ist, können wir ihn auf der rechten Seite einer
-<code>let</code>-Anweisung verwenden, wie in Codeblock 3-2.</p>
+<code>let</code>-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
+Codeblock 3-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let condition = true;
@@ -3155,10 +3141,10 @@ Garantien über den Code geben, wenn er mehrere hypothetische Typen für jede
 Variable verfolgen müsste.</p>
 <h3 id="wiederholung-mit-schleifen"><a class="header" href="#wiederholung-mit-schleifen">Wiederholung mit Schleifen</a></h3>
 <p>Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
-Aufgabe stellt Rust mehrere <em>Schleifen</em> (loops) zur Verfügung. Eine Schleife
-durchläuft den Code innerhalb des Schleifenrumpfs bis zum Ende und beginnt dann
-sofort wieder am Anfang. Um mit Schleifen zu experimentieren, machen wir ein
-neues Projekt namens <em>loops</em>.</p>
+Aufgabe stellt Rust mehrere <em>Schleifen</em> (loops) zur Verfügung, die den Code
+innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
+Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
+Projekt namens <em>loops</em>.</p>
 <p>Rust hat drei Arten von Schleifen: <code>loop</code>, <code>while</code> und <code>for</code>. Probieren wir
 jede einzelne aus.</p>
 <h4 id="wiederholen-von-code-mit-loop"><a class="header" href="#wiederholen-von-code-mit-loop">Wiederholen von Code mit <code>loop</code></a></h4>
@@ -3193,22 +3179,21 @@ nochmal!
 class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
 der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
 dem <code>^C</code> das Wort <code>nochmal!</code> oder nicht.</p>
-<p>Glücklicherweise bietet Rust eine Möglichkeit, aus einer Schleife auszubrechen.
-Du kannst das Schlüsselwort <code>break</code> innerhalb der Schleife platzieren, um dem
-Programm mitzuteilen, wann es die Ausführung der Schleife beenden soll.
-Erinnere dich, dass wir dies im Ratespiel im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer
-korrekten Schätzung“</a> in Kapitel 2 getan haben,
-um das Programm zu beenden, wenn der Benutzer das Spiel durch Erraten der
-richtigen Zahl gewonnen hat.</p>
-<p>Wir haben im Ratespiel auch <code>continue</code> verwendet. Das Schlüsselwort <code>continue</code>
-innerhalb einer Schleife weist das Programm an, jeden restlichen Code in dieser
-Iteration der Schleife zu überspringen und mit der nächsten Iteration
-fortzufahren.</p>
+<p>Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
+mittels Code auszubrechen. Du kannst das Schlüsselwort <code>break</code> innerhalb der
+Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
+Schleife beenden soll. Erinnere dich, dass wir dies im Ratespiel im Abschnitt
+<a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer korrekten Schätzung“</a> in
+Kapitel 2 getan haben, um das Programm zu beenden, wenn der Benutzer das Spiel
+durch Erraten der richtigen Zahl gewonnen hat.</p>
+<p>Wir haben im Ratespiel auch <code>continue</code> verwendet, das innerhalb einer Schleife
+das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
+überspringen und mit der nächsten Iteration fortzufahren.</p>
 <p>Wenn du Schleifen innerhalb Schleifen hast, beziehen sich <code>break</code> und
 <code>continue</code> auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
-optional einen <em>Schleifennamen</em> (loop label) geben und dann den Namen mit
-<code>break</code> oder <code>continue</code> verwenden, damit sich diese Schlüsselwörter auf die
-bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
+optional einen <em>Schleifennamen</em> (loop label) geben, die wir mit <code>break</code> oder
+<code>continue</code> verwenden, um zu spezifizieren, dass sich diese Schlüsselwörter auf
+die bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
 Beispiel mit zwei geschachtelten Schleifen:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut count = 0;
@@ -3255,10 +3240,11 @@ count am Ende = 2
 <p>Eine der Verwendungen von <code>loop</code> besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
 ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation an den Rest deines Codes weitergeben. Dazu
-kannst du den Wert, der zurückgegeben werden soll, hinter dem <code>break</code>-Ausdruck
-angeben, den du zum Beenden der Schleife verwendest; dieser Wert wird aus der
-Schleife zurückgegeben, sodass du ihn verwenden kannst, wie hier gezeigt:</p>
+jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
+Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
+hinter dem <code>break</code>-Ausdruck angeben, den du zum Beenden der Schleife
+verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
+verwenden kannst, wie hier gezeigt:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut counter = 0;
 
@@ -3283,17 +3269,16 @@ Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
 <h4 id="bedingte-schleifen-mit-while"><a class="header" href="#bedingte-schleifen-mit-while">Bedingte Schleifen mit <code>while</code></a></h4>
-<p>Oft ist es für ein Programm nützlich, eine Bedingung innerhalb einer Schleife
-auszuwerten. Solange die Bedingung wahr ist, wird die Schleife durchlaufen.
-Wenn die Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und
-stoppt die Schleife. Dieser Schleifentyp könnte durch eine Kombination von
-<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> implementiert werden; du kannst das jetzt in
-einem Programm versuchen, wenn du möchtest.</p>
-<p>Dieses Muster ist jedoch so weit verbreitet, dass Rust ein eingebautes
-Sprachkonstrukt dafür hat, die sogenannte <code>while</code>-Schleife. In Codeblock 3-3
-wird <code>while</code> verwendet: Das Programm durchläuft dreimal eine Schleife, in der
-es jedes Mal abwärts zählt, und dann nach dem Ende der Schleife eine weitere
-Nachricht ausgibt und sich beendet.</p>
+<p>Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
+haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
+Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und stoppt die
+Schleife. Es ist möglich, derartiges Verhalten mittels diner Kombination von
+<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
+einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
+verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
+<code>while</code>-Schleife. In Codeblock 3-3 wird <code>while</code> verwendet: Das Programm
+durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
+nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut number = 3;
@@ -3315,8 +3300,8 @@ klarer. Solange eine Bedingung wahr ist, läuft der Code ab; andernfalls wird
 die Schleife verlassen.</p>
 <h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Sehen wir uns zum Beispiel
-Codeblock 3-4 an.</p>
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [10, 20, 30, 40, 50];
@@ -3349,10 +3334,12 @@ Der Wert ist: 50
 Wert <code>5</code> erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.</p>
 <p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
-langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
-der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
-durchführt.</p>
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
+Beispiel die Definition des Arrays <code>a</code> so ändest, dass es vier Elemente hat,
+aber vergisst, die Bedingung <code>while index &lt; 4</code> zu aktualisieren, würde der Code
+abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
+die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
+Schleifeniteration durchführt.</p>
 <p>Als prägnantere Alternative kannst du eine <code>for</code>-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
 wie der Code in Codeblock 3-5 aus.</p>
@@ -3372,19 +3359,17 @@ Kollektion unter Verwendung einer <code>for</code>-Schleife</span></p>
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
 gehen und einige Elemente übersehen.</p>
-<p>Wenn du beispielsweise im Code in Codeblock 3-4 die Definition des Arrays <code>a</code>
-so geändert hast, dass es vier Elemente hat, aber vergessen hast, die Bedingung
-auf <code>while index &lt; 4</code> zu aktualisieren, würde der Code abstürzen. Wenn du die
-<code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken, irgendeinen
-anderen Code zu ändern, wenn du die Anzahl der Werte im Array änderst.</p>
+<p>Wenn du die <code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken,
+irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
+änderst, wie bei der Methode in Codeblock 3-4 verwendet.</p>
 <p>Die Sicherheit und Prägnanz der <code>for</code>-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
 Codeblock 3-3 eine <code>while</code>-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine <code>for</code>-Schleife verwenden. Der Weg, dies zu erreichen, wäre
-das Verwenden eines <code>Range</code>, ein von der Standardbibliothek zur Verfügung
-gestellter Typ, der alle Zahlen in Folge generiert, beginnend mit einer Zahl
-und endend vor einer anderen Zahl.</p>
+das Verwenden eines <code>Range</code>, der von der Standardbibliothek zur Verfügung
+gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und
+endend vor einer anderen Zahl.</p>
 <p>So würde der Countdown aussehen, wenn man eine <code>for</code>-Schleife und die Methode
 <code>rev</code>, über die wir noch nicht gesprochen haben und die den <code>Range</code> umkehrt,
 verwenden würde:</p>
@@ -3400,8 +3385,8 @@ verwenden würde:</p>
 <h2 id="zusammenfassung-2"><a class="header" href="#zusammenfassung-2">Zusammenfassung</a></h2>
 <p>Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
 Variablen, skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
-<code>if</code>-Ausdrücke und Schleifen! Wenn du mit den in diesem Kapitel besprochenen
-Konzepten üben willst, versuche, Programme zu bauen, um Folgendes zu tun:</p>
+<code>if</code>-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
+Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:</p>
 <ul>
 <li>Temperaturen zwischen Fahrenheit und Celsius umrechnen.</li>
 <li>Die n-te Fibonacci-Zahl berechnen.</li>
@@ -24381,7 +24366,7 @@ Muster“</a> sehen wirst. Wenn das Problem darin
 besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
 die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
 Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.</p>
-<h3 id="funktionsparameter-1"><a class="header" href="#funktionsparameter-1">Funktionsparameter</a></h3>
+<h3 id="funktionsparameter"><a class="header" href="#funktionsparameter">Funktionsparameter</a></h3>
 <p>Funktionsparameter können auch Muster sein. Der Code in Codeblock 18-6, der
 eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <code>x</code> vom Typ
 <code>i32</code> benötigt, sollte inzwischen bekannt aussehen.</p>
@@ -25763,7 +25748,7 @@ fn main() {
 </code></pre></pre>
 <p><span class="caption">Codeblock 19-9: Definieren und Verwenden einer
 unveränderlichen, statischen Variablen</span></p>
-<p>Statische Variablen ähneln Konstanten, die wir im Abschnitt <a href="ch03-01-variables-and-mutability.html#unterschiede-zwischen-variablen-und-konstanten">„Unterschiede
+<p>Statische Variablen ähneln Konstanten, die wir im Abschnitt <a href="ch03-01-variables-and-mutability.html#konstanten">„Unterschiede
 zwischen Variablen und Konstanten“</a>
 in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
 Konvention in <code>SCHREIENDER_SCHLANGENSCHRIFT</code>. Statische Variablen können nur

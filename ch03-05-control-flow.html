@@ -135,12 +135,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
-<p>Die Entscheidung, ob ein Code ausgeführt werden soll oder nicht, je nachdem, ob
-eine Bedingung erfüllt ist, und die Entscheidung, einen Code wiederholt
-auszuführen, solange eine Bedingung erfüllt ist, sind grundlegende Bausteine in
-den meisten Programmiersprachen. Die gebräuchlichsten Konstrukte, mit denen du
-den Kontrollfluss von Rust-Code kontrollieren kannst, sind <code>if</code>-Ausdrücke und
-Schleifen.</p>
+<p>Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
+erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
+erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen.  Die
+gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
+kontrollieren kannst, sind <code>if</code>-Ausdrücke und Schleifen.</p>
 <h3 id="if-ausdrücke"><a class="header" href="#if-ausdrücke"><code>if</code>-Ausdrücke</a></h3>
 <p>Ein <code>if</code>-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
@@ -160,15 +159,15 @@ ein:</p>
     }
 }
 </code></pre></pre>
-<p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, auf das eine Bedingung
-folgt. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen Wert
-kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen, wenn die
-Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte Klammern
-gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken verbunden sind,
-werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie die Zweige in
-<code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
-Geheimzahl“</a> in Kapitel 2 besprochen
-haben.</p>
+<p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
+Bedingung. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen
+Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
+wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
+Klammern gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken
+verbunden sind, werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie
+die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der
+Schätzung mit der eheimzahl“</a> in
+Kapitel 2 besprochen haben.</p>
 <p>Optional können wir auch einen <code>else</code>-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
 falls die Bedingung als falsch ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
@@ -279,7 +278,8 @@ deinen Code vielleicht überarbeiten. Kapitel 6 beschreibt ein leistungsfähiges
 Rust-Verzweigungskonstrukt namens <code>match</code> für solche Fälle.</p>
 <h4 id="verwenden-von-if-in-einer-let-anweisung"><a class="header" href="#verwenden-von-if-in-einer-let-anweisung">Verwenden von <code>if</code> in einer <code>let</code>-Anweisung</a></h4>
 <p>Weil <code>if</code> ein Ausdruck ist, können wir ihn auf der rechten Seite einer
-<code>let</code>-Anweisung verwenden, wie in Codeblock 3-2.</p>
+<code>let</code>-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
+Codeblock 3-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let condition = true;
@@ -342,10 +342,10 @@ Garantien über den Code geben, wenn er mehrere hypothetische Typen für jede
 Variable verfolgen müsste.</p>
 <h3 id="wiederholung-mit-schleifen"><a class="header" href="#wiederholung-mit-schleifen">Wiederholung mit Schleifen</a></h3>
 <p>Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
-Aufgabe stellt Rust mehrere <em>Schleifen</em> (loops) zur Verfügung. Eine Schleife
-durchläuft den Code innerhalb des Schleifenrumpfs bis zum Ende und beginnt dann
-sofort wieder am Anfang. Um mit Schleifen zu experimentieren, machen wir ein
-neues Projekt namens <em>loops</em>.</p>
+Aufgabe stellt Rust mehrere <em>Schleifen</em> (loops) zur Verfügung, die den Code
+innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
+Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
+Projekt namens <em>loops</em>.</p>
 <p>Rust hat drei Arten von Schleifen: <code>loop</code>, <code>while</code> und <code>for</code>. Probieren wir
 jede einzelne aus.</p>
 <h4 id="wiederholen-von-code-mit-loop"><a class="header" href="#wiederholen-von-code-mit-loop">Wiederholen von Code mit <code>loop</code></a></h4>
@@ -380,22 +380,21 @@ nochmal!
 class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
 der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
 dem <code>^C</code> das Wort <code>nochmal!</code> oder nicht.</p>
-<p>Glücklicherweise bietet Rust eine Möglichkeit, aus einer Schleife auszubrechen.
-Du kannst das Schlüsselwort <code>break</code> innerhalb der Schleife platzieren, um dem
-Programm mitzuteilen, wann es die Ausführung der Schleife beenden soll.
-Erinnere dich, dass wir dies im Ratespiel im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer
-korrekten Schätzung“</a> in Kapitel 2 getan haben,
-um das Programm zu beenden, wenn der Benutzer das Spiel durch Erraten der
-richtigen Zahl gewonnen hat.</p>
-<p>Wir haben im Ratespiel auch <code>continue</code> verwendet. Das Schlüsselwort <code>continue</code>
-innerhalb einer Schleife weist das Programm an, jeden restlichen Code in dieser
-Iteration der Schleife zu überspringen und mit der nächsten Iteration
-fortzufahren.</p>
+<p>Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
+mittels Code auszubrechen. Du kannst das Schlüsselwort <code>break</code> innerhalb der
+Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
+Schleife beenden soll. Erinnere dich, dass wir dies im Ratespiel im Abschnitt
+<a href="ch02-00-guessing-game-tutorial.html#beenden-nach-einer-korrekten-sch%C3%A4tzung">„Beenden nach einer korrekten Schätzung“</a> in
+Kapitel 2 getan haben, um das Programm zu beenden, wenn der Benutzer das Spiel
+durch Erraten der richtigen Zahl gewonnen hat.</p>
+<p>Wir haben im Ratespiel auch <code>continue</code> verwendet, das innerhalb einer Schleife
+das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
+überspringen und mit der nächsten Iteration fortzufahren.</p>
 <p>Wenn du Schleifen innerhalb Schleifen hast, beziehen sich <code>break</code> und
 <code>continue</code> auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
-optional einen <em>Schleifennamen</em> (loop label) geben und dann den Namen mit
-<code>break</code> oder <code>continue</code> verwenden, damit sich diese Schlüsselwörter auf die
-bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
+optional einen <em>Schleifennamen</em> (loop label) geben, die wir mit <code>break</code> oder
+<code>continue</code> verwenden, um zu spezifizieren, dass sich diese Schlüsselwörter auf
+die bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
 Beispiel mit zwei geschachtelten Schleifen:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut count = 0;
@@ -442,10 +441,11 @@ count am Ende = 2
 <p>Eine der Verwendungen von <code>loop</code> besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
 ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation an den Rest deines Codes weitergeben. Dazu
-kannst du den Wert, der zurückgegeben werden soll, hinter dem <code>break</code>-Ausdruck
-angeben, den du zum Beenden der Schleife verwendest; dieser Wert wird aus der
-Schleife zurückgegeben, sodass du ihn verwenden kannst, wie hier gezeigt:</p>
+jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
+Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
+hinter dem <code>break</code>-Ausdruck angeben, den du zum Beenden der Schleife
+verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
+verwenden kannst, wie hier gezeigt:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut counter = 0;
 
@@ -470,17 +470,16 @@ Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
 <h4 id="bedingte-schleifen-mit-while"><a class="header" href="#bedingte-schleifen-mit-while">Bedingte Schleifen mit <code>while</code></a></h4>
-<p>Oft ist es für ein Programm nützlich, eine Bedingung innerhalb einer Schleife
-auszuwerten. Solange die Bedingung wahr ist, wird die Schleife durchlaufen.
-Wenn die Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und
-stoppt die Schleife. Dieser Schleifentyp könnte durch eine Kombination von
-<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> implementiert werden; du kannst das jetzt in
-einem Programm versuchen, wenn du möchtest.</p>
-<p>Dieses Muster ist jedoch so weit verbreitet, dass Rust ein eingebautes
-Sprachkonstrukt dafür hat, die sogenannte <code>while</code>-Schleife. In Codeblock 3-3
-wird <code>while</code> verwendet: Das Programm durchläuft dreimal eine Schleife, in der
-es jedes Mal abwärts zählt, und dann nach dem Ende der Schleife eine weitere
-Nachricht ausgibt und sich beendet.</p>
+<p>Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
+haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
+Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und stoppt die
+Schleife. Es ist möglich, derartiges Verhalten mittels diner Kombination von
+<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
+einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
+verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
+<code>while</code>-Schleife. In Codeblock 3-3 wird <code>while</code> verwendet: Das Programm
+durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
+nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut number = 3;
@@ -502,8 +501,8 @@ klarer. Solange eine Bedingung wahr ist, läuft der Code ab; andernfalls wird
 die Schleife verlassen.</p>
 <h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Sehen wir uns zum Beispiel
-Codeblock 3-4 an.</p>
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let a = [10, 20, 30, 40, 50];
@@ -536,10 +535,12 @@ Der Wert ist: 50
 Wert <code>5</code> erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.</p>
 <p>Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
-langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
-der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
-durchführt.</p>
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
+Beispiel die Definition des Arrays <code>a</code> so ändest, dass es vier Elemente hat,
+aber vergisst, die Bedingung <code>while index &lt; 4</code> zu aktualisieren, würde der Code
+abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
+die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
+Schleifeniteration durchführt.</p>
 <p>Als prägnantere Alternative kannst du eine <code>for</code>-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
 wie der Code in Codeblock 3-5 aus.</p>
@@ -559,19 +560,17 @@ Kollektion unter Verwendung einer <code>for</code>-Schleife</span></p>
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
 gehen und einige Elemente übersehen.</p>
-<p>Wenn du beispielsweise im Code in Codeblock 3-4 die Definition des Arrays <code>a</code>
-so geändert hast, dass es vier Elemente hat, aber vergessen hast, die Bedingung
-auf <code>while index &lt; 4</code> zu aktualisieren, würde der Code abstürzen. Wenn du die
-<code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken, irgendeinen
-anderen Code zu ändern, wenn du die Anzahl der Werte im Array änderst.</p>
+<p>Wenn du die <code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken,
+irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
+änderst, wie bei der Methode in Codeblock 3-4 verwendet.</p>
 <p>Die Sicherheit und Prägnanz der <code>for</code>-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
 Codeblock 3-3 eine <code>while</code>-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine <code>for</code>-Schleife verwenden. Der Weg, dies zu erreichen, wäre
-das Verwenden eines <code>Range</code>, ein von der Standardbibliothek zur Verfügung
-gestellter Typ, der alle Zahlen in Folge generiert, beginnend mit einer Zahl
-und endend vor einer anderen Zahl.</p>
+das Verwenden eines <code>Range</code>, der von der Standardbibliothek zur Verfügung
+gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und
+endend vor einer anderen Zahl.</p>
 <p>So würde der Countdown aussehen, wenn man eine <code>for</code>-Schleife und die Methode
 <code>rev</code>, über die wir noch nicht gesprochen haben und die den <code>Range</code> umkehrt,
 verwenden würde:</p>
@@ -587,8 +586,8 @@ verwenden würde:</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
 Variablen, skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
-<code>if</code>-Ausdrücke und Schleifen! Wenn du mit den in diesem Kapitel besprochenen
-Konzepten üben willst, versuche, Programme zu bauen, um Folgendes zu tun:</p>
+<code>if</code>-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
+Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:</p>
 <ul>
 <li>Temperaturen zwischen Fahrenheit und Celsius umrechnen.</li>
 <li>Die n-te Fibonacci-Zahl berechnen.</li>

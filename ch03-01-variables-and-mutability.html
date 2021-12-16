@@ -138,7 +138,7 @@
 <p>Wie im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen">„Speichern von Werten mit
 Variablen“</a> erwähnt, sind Variablen
 standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
-gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
+gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheitvariables
 (safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
 bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
 (mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
@@ -149,8 +149,8 @@ sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
 Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis anlegen, indem wir
 <code>cargo new variables</code> aufrufen.</p>
 <p>Öffne dann in deinem neuen <em>variables</em>-Verzeichnis die Datei <em>src/main.rs</em> und
-ersetze dessen Code durch folgenden Code, der sich noch nicht kompilieren
-lässt:</p>
+ersetze dessen Code durch folgenden Code. Dieser Code lässt sich noch nicht
+kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = 5;
@@ -179,30 +179,29 @@ For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` due to previous error
 </code></pre>
 <p>Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
-zu finden. Auch wenn Kompilierfehler frustrierend sein können, bedeuten sie
-nur, dass dein Programm noch nicht sicher das tut, was du willst; sie bedeuten
-<em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene Rust-Entwickler
-bekommen ebenfalls noch Kompilierfehler.</p>
+zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
+sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
+bedeuten <em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene
+Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.</p>
 <p>Die Fehlermeldung <code>cannot assign twice to immutable variable x</code> weist darauf
 hin, dass du versucht hast, der unveränderlichen Variablen <code>x</code> einen zweiten
 Wert zuzuweisen.</p>
-<p>Es ist wichtig, dass wir Fehler zur Kompilierzeit erhalten, wenn wir versuchen,
-einen Wert zu ändern, den wir zuvor als unveränderlich bezeichnet haben, weil
-genau diese Situation zu Fehlern führen kann. Wenn ein Teil unseres Codes von
-der Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer
-Teil unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des
-Codes nicht das tut, wozu er entwickelt wurde. Die Ursache für diese Art von
-Fehler kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite
-Stück Code den Wert nur <em>gelegentlich</em> ändert.</p>
-<p>In Rust garantiert der Compiler, dass sich ein Wert tatsächlich nicht ändert,
-wenn du angibst, dass er sich nicht ändern darf. Das bedeutet, dass du beim
-Lesen und Schreiben von Code nicht darauf achten musst, wie und wo sich ein
-Wert ändern könnte. Dein Code ist somit leichter zu durchdenken.</p>
-<p>Aber Veränderlichkeit kann sehr nützlich sein. Variablen sind nur standardmäßig
-unveränderlich; wie du es in Kapitel 2 gemacht hast, kannst du sie veränderlich
-machen, indem du vor den Variablennamen <code>mut</code> angibst. Zusätzlich zur
-Möglichkeit, diesen Wert zu ändern, vermittelt <code>mut</code> den zukünftigen Lesern des
-Codes die Absicht, indem es anzeigt, dass andere Teile des Codes den Wert
+<p>Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
+einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
+diese Situation kann zu Fehlern führen. Wenn ein Teil unseres Codes von der
+Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer Teil
+unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des Codes
+nicht das tut, wozu er entwickelt wurde. Die Ursache für diese Art von Fehler
+kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite Stück
+Code den Wert nur <em>gelegentlich</em> ändert. In Rust garantiert der Compiler, dass
+sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
+ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
+leichter zu durchdenken.</p>
+<p>Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
+erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
+Kapitel 2 gemacht hast, kannst du sie veränderlich machen, indem du vor den
+Variablennamen <code>mut</code> angibst. Das Hinzufügen von <code>mut</code> vermittelt den
+zukünftigen Lesern des Codes die Absicht, dass andere Teile des Codes den Wert
 dieser Variablen ändern werden.</p>
 <p>Lass uns zum Beispiel <em>src/main.rs</em> wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -222,29 +221,23 @@ Der Wert von x ist: 5
 Der Wert von x ist: 6
 </code></pre>
 <p>Wir dürfen den Wert, an den sich <code>x</code> bindet, von <code>5</code> auf <code>6</code> ändern, wenn <code>mut</code>
-verwendet wird. In einigen Fällen wirst du eine Variable veränderlich machen
-wollen, weil es den Code bequemer zu schreiben macht, als wenn er nur
-unveränderliche Variablen hätte.</p>
-<p>Es gibt mehrere Kompromisse, die zusätzlich zur Vermeidung von Fehlern in
-Betracht gezogen werden müssen. In Fällen, in denen du beispielsweise große
-Datenstrukturen verwendest, kann es schneller sein, eine vorhandene Instanz zu
-mutieren, als neu zugewiesene Instanzen zu kopieren und zurückzugeben. Bei
-kleineren Datenstrukturen kann es einfacher sein, neue Instanzen zu erstellen
-und in einem funktionelleren Programmierstil zu schreiben, sodass eine
-geringere Performanz ein lohnender Nachteil sein kann, um diese Klarheit zu
-erlangen.</p>
-<h3 id="unterschiede-zwischen-variablen-und-konstanten"><a class="header" href="#unterschiede-zwischen-variablen-und-konstanten">Unterschiede zwischen Variablen und Konstanten</a></h3>
-<p>Den Wert einer Variable nicht ändern zu können, könnte dich an ein anderes
-Programmierkonzept erinnert haben, das die meisten anderen Sprachen haben:
-<em>Konstanten</em>. Wie unveränderliche Variablen sind Konstanten Werte, die an einen
-Namen gebunden sind und sich nicht ändern dürfen, aber es gibt einige
-Unterschiede zwischen Konstanten und Variablen.</p>
+verwendet wird. Es gibt mehrere Kompromisse, die zusätzlich zur Vermeidung von
+Fehlern in Betracht gezogen werden müssen. In Fällen, in denen du
+beispielsweise große Datenstrukturen verwendest, kann es schneller sein, eine
+vorhandene Instanz zu mutieren, als neu zugewiesene Instanzen zu kopieren und
+zurückzugeben. Bei kleineren Datenstrukturen kann es einfacher sein, neue
+Instanzen zu erstellen und in einem funktionelleren Programmierstil zu
+schreiben, sodass eine geringere Performanz ein lohnender Nachteil sein kann,
+um diese Klarheit zu erlangen.</p>
+<h3 id="konstanten"><a class="header" href="#konstanten">Konstanten</a></h3>
+<p>Wie unveränderliche Variablen sind <em>Konstanten</em> Werte, die an einen Namen
+gebunden sind und sich nicht ändern dürfen, aber es gibt einige Unterschiede
+zwischen Konstanten und Variablen.</p>
 <p>Erstens ist es dir nicht erlaubt, <code>mut</code> mit Konstanten zu verwenden. Konstanten
 sind nicht nur von vornherein unveränderlich – sie sind immer
-unveränderlich.</p>
-<p>Du deklarierst Konstanten mit dem Schlüsselwort <code>const</code> anstelle des
-Schlüsselworts <code>let</code> und der Typ des Wertes <em>muss</em> annotiert werden. Wir sind
-dabei, Typen und Typ-Annotationen im nächsten Abschnitt
+unveränderlich. Du deklarierst Konstanten mit dem Schlüsselwort <code>const</code>
+anstelle des Schlüsselworts <code>let</code> und der Typ des Wertes <em>muss</em> annotiert
+werden. Wir sind dabei, Typen und Typ-Annotationen im nächsten Abschnitt
 <a href="ch03-02-data-types.html">„Datentypen“</a> zu behandeln, also mach dir jetzt keine Gedanken
 über die Details. Du musst nur wissen, dass du den Typ immer annotieren musst.</p>
 <p>Konstanten können in jedem Gültigkeitsbereich deklariert werden, auch im
@@ -253,25 +246,25 @@ Teile des Codes Bescheid wissen müssen.</p>
 <p>Der letzte Unterschied besteht darin, dass Konstanten nur auf einen konstanten
 Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
 berechnet werden könnte.</p>
-<p>Hier ist ein Beispiel für eine Konstantendeklaration, bei der der Name der
-Konstanten <code>THREE_HOURS_IN_SECONDS</code> lautet und ihr Wert wird auf das Ergebnis
-der Multiplikation von 60 (die Anzahl der Sekunden in einer Minute) mal 60 (die
-Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der Stunden, die wir in
-diesem Programm zählen wollen):</p>
+<p>Hier ist ein Beispiel für eine Konstantendeklaration:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Die Namenskonvention von Rust für Konstanten ist die Verwendung von
-Großbuchstaben mit Unterstrichen zwischen den Wörtern. Der Compiler ist in der
-Lage, eine begrenzte Anzahl von Operationen zur Kompilierzeit auswerten, was
-uns die Möglichkeit gibt, diesen Wert so zu schreiben, dass er leichter zu
-verstehen und zu überprüfen ist, als wenn diese Konstante auf den Wert 10.800
-gesetzt wäre. Siehe die <a href="https://doc.rust-lang.org/reference/const_eval.html">Rust-Referenz, Abschnitt über die Auswertung von
-Konstanten</a> für weitere Informationen darüber, welche Operationen
-bei der Deklaration von Konstanten verwendet werden können.</p>
+<p>Der Name der Konstante lautet <code>THREE_HOURS_IN_SECONDS</code> und ihr Wert wird auf
+das Ergebnis der Multiplikation von 60 (die Anzahl der Sekunden in einer
+Minute) mal 60 (die Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der
+Stunden, die wir in diesem Programm zählen wollen). Die Namenskonvention von
+Rust für Konstanten ist die Verwendung von Großbuchstaben mit Unterstrichen
+zwischen den Wörtern. Der Compiler ist in der Lage, eine begrenzte Anzahl von
+Operationen zur Kompilierzeit auswerten, was uns die Möglichkeit gibt, diesen
+Wert so zu schreiben, dass er leichter zu verstehen und zu überprüfen ist, als
+wenn diese Konstante auf den Wert 10.800 gesetzt wäre. Siehe die
+<a href="https://doc.rust-lang.org/reference/const_eval.html">Rust-Referenz, Abschnitt über die Auswertung von Konstanten</a> für
+weitere Informationen darüber, welche Operationen bei der Deklaration von
+Konstanten verwendet werden können.</p>
 <p>Konstanten sind für die gesamte Laufzeit eines Programms in dem
 Gültigkeitsbereich gültig, in dem sie deklariert wurden. Damit sind sie eine
 nützliche Wahl für Werte in deiner Anwendungsdomäne, über die mehrere Teile des
@@ -283,14 +276,14 @@ Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
 Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
 aktualisiert werden müsste.</p>
 <h3 id="beschatten-shadowing"><a class="header" href="#beschatten-shadowing">Beschatten (shadowing)</a></h3>
-<p>Wie du in der Anleitung zum Ratespiel im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung
-mit der Geheimzahl“</a> in Kapitel 2
-gesehen hast, kannst du eine neue Variable mit dem gleichen Namen wie eine
-vorherige Variable deklarieren. Die Rust-Entwickler sagen, dass die erste
-Variable von der zweiten <em>beschattet</em> (shadowed) wird, was bedeutet, dass der
-Wert der zweiten Variable das ist, was das Programm sieht, wenn die Variable
-verwendet wird. Wir können eine Variable beschatten, indem wir denselben
-Variablenamen verwenden und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
+<p>Wie du in der Anleitung zum Ratespiel in <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">Kapitel
+2</a> gesehen hast, kannst du eine neue
+Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
+Rust-Entwickler sagen, dass die erste Variable von der zweiten <em>beschattet</em>
+(shadowed) wird, was bedeutet, dass der Wert der zweiten Variable das ist, was
+das Programm sieht, wenn die Variable verwendet wird. Wir können eine Variable
+beschatten, indem wir denselben Variablenamen verwenden und das Schlüsselwort
+<code>let</code> wie folgt wiederholen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 5;
@@ -330,8 +323,8 @@ weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
 <code>let</code> erneut verwenden, den Typ des Wertes ändern können, aber denselben Namen
 wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
 Benutzer, durch Eingeben von Leerzeichen zu zeigen, wie viele Leerzeichen er
-zwischen irgendeinem Text haben möchte, aber wir möchten diese Eingabe in
-Wirklichkeit als Zahl speichern:</p>
+zwischen irgendeinem Text haben möchte, und wir möchten diese Eingabe als Zahl
+speichern:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -339,13 +332,11 @@ Wirklichkeit als Zahl speichern:</p>
 let spaces = spaces.len();
 <span class="boring">}
 </span></code></pre></pre>
-<p>Dieses Konstrukt ist erlaubt, weil die erste Variable <code>spaces</code> ein String-Typ
-ist und die zweite Variable <code>spaces</code>, die eine brandneue Variable ist, die
-zufällig den gleichen Namen wie die erste hat, ein Zahlentyp ist. Das
-Beschatten erspart es uns also, uns verschiedene Namen auszudenken, z.B.
-<code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir den einfacheren Namen
-<code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen, dafür <code>mut</code> zu verwenden,
-wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
+<p>Die erste Variable <code>spaces</code> ist ein String-Typ und die zweite Variable <code>spaces</code>
+ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
+Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
+den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
+dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
