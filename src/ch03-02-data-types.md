@@ -50,9 +50,8 @@ Eine *ganze Zahl* ist eine Zahl ohne Bruchteilkomponente. Wir verwendeten eine
 ganze Zahl in Kapitel 2, den Typ `u32`. Diese Typdeklaration gibt an, dass der
 Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 (vorzeichenbehaftete Ganzzahl-Typen beginnen mit `i` anstatt `u`). Tabelle 3-1
-zeigt die in Rust eingebauten Ganzzahl-Typen. Jede Variante in den Spalten
-Vorzeichenbehaftet und Vorzeichenlos (zum Beispiel `i16`) kann benutzt werden,
-um den Typ eines ganzzahligen Wertes zu deklarieren.
+zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
+verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.
 
 <span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span>
 
@@ -85,9 +84,10 @@ bis 2<sup>7</sup> - 1 speichern, was -128 bis 127 entspricht. Vorzeichenlose
 Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
 `u8` Zahlen von 0 bis 2<sup>8</sup> - 1 speichern, was 0 bis 255 entspricht.
 
-Zusätzlich hängen die Typen `isize` und `usize` von der Art des Computers ab,
-auf dem dein Programm läuft: 64 Bit wenn du dich auf einer 64-Bit-Architektur
-befindest und 32 Bit auf einer 32-Bit-Architektur.
+Zusätzlich hängen die Typen `isize` und `usize` von der Architektur des
+Computers ab, auf dem dein Programm läuft, die in der Tabelle als „arch“
+bezeichnet wird: 64 Bit wenn du dich auf einer 64-Bit-Architektur befindest und
+32 Bit auf einer 32-Bit-Architektur.
 
 Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
 schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
@@ -115,14 +115,14 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 >
 > Nehmen wir an, du hast eine Variable vom Typ `u8`, die Werte zwischen 0 und
 > 255 annehmen kann. Wenn du versuchst, die Variable auf einen Wert außerhalb
-> dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf.
-> Rust hat einige interessante Regeln, die dieses Verhalten betreffen. Wenn du
-> im Fehlersuchmodus (debug mode) kompilierst, fügt Rust Prüfungen auf
-> Ganzzahlüberläufe ein, was dazu führt, dass dein Programm zur Laufzeit
-> *abbricht* (panic), falls dieses Verhalten auftritt. Rust verwendet den
-> Begriff „panic“, wenn ein Programm durch einen Fehler abgebrochen wird; wir
-> werden Programmabbrüche im Abschnitt [„Nicht behebbare Fehler mit
-> `panic!`“][unrecoverable-errors-with-panic] in Kapitel 9 näher betrachten.
+> dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf, was
+> zu einem von zwei Verhaltensweisen führen kann. Wenn du im Fehlersuchmodus
+> (debug mode) kompilierst, fügt Rust Prüfungen auf Ganzzahlüberläufe ein, was
+> dazu führt, dass dein Programm zur Laufzeit *abbricht* (panic), falls dieses
+> Verhalten auftritt. Rust verwendet den Begriff „panic“, wenn ein Programm
+> durch einen Fehler abgebrochen wird; wir werden Programmabbrüche im Abschnitt
+> [„Nicht behebbare Fehler mit `panic!`“][unrecoverable-errors-with-panic] in
+> Kapitel 9 näher betrachten.
 >
 > Wenn du mit dem Schalter `--release` im Freigabemodus (release mode)
 > kompilierst, fügt Rust *keine* Prüfungen auf Ganzzahlüberläufe, die das
@@ -154,7 +154,7 @@ Rust hat auch zwei primitive Typen für *Fließkommazahlen*, das sind Zahlen mit
 Dezimalkomma. Die Fließkomma-Typen in Rust sind `f32` und `f64`, die 32 Bit
 bzw. 64 Bit groß sind. Der Standardtyp ist `f64`, da er auf modernen CPUs
 ungefähr die gleiche Geschwindigkeit wie `f32` hat, aber eine höhere Präzision
-ermöglicht.
+ermöglicht. Alle Fließkomma-Typen sind vorzeichenbehaftet.
 
 Hier ist ein Beispiel, das Fließkommazahlen in Aktion zeigt:
 
@@ -230,11 +230,8 @@ Hauptsächlich werden boolesche Werte in Bedingungen verwendet, z.B. im
 
 #### Der Zeichen-Typ
 
-Bislang haben wir nur mit Zahlen gearbeitet, aber Rust unterstützt auch
-Buchstaben. Rusts Typ `char` ist der primitivste alphabetische Typ der Sprache,
-der folgende Code zeigt eine Möglichkeit, ihn zu verwenden. (Beachte, dass
-`char`-Literale mit einfachen Anführungszeichen angegeben werden, im Gegensatz
-zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.)
+Rusts Typ `char` ist der primitivste alphabetische Typ der Sprache. Hier sind
+einige Beispiele für die Deklaration von `char`-Werten:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -246,6 +243,8 @@ fn main() {
 }
 ```
 
+Beachte, dass wir `char`-Literale mit einfachen Anführungszeichen angeben, im
+Gegensatz zu Zeichenketten-Literalen, die doppelte Anführungszeichen verwenden.
 Der Typ `char` von Rust ist vier Bytes groß und stellt einen Unicode-Skalarwert
 dar, was bedeutet, dass er viel mehr als nur ASCII darstellen kann.
 Akzentuierte Buchstaben, chinesische, japanische und koreanische Zeichen, Emoji
@@ -304,9 +303,9 @@ Variablen `x`, `y` und `z` umzuwandeln. Dies nennt man *destrukturieren*
 (destructuring), weil es das einzelne Tupel in drei Teile zerlegt. Schließlich
 gibt das Programm den Wert von `y` aus, der `6.4` ist.
 
-Zusätzlich zum Destrukturieren durch Musterabgleich können wir direkt auf ein
-Tupelelement zugreifen, indem wir einen Punkt (`.`) gefolgt vom Index des
-Wertes, auf den wir zugreifen wollen, verwenden. Zum Beispiel:
+Wir können direkt auf ein Tupelelement zugreifen, indem wir einen Punkt (`.`)
+gefolgt vom Index des Wertes, auf den wir zugreifen wollen, verwenden. Zum
+Beispiel:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -322,7 +321,7 @@ fn main() {
 }
 ```
 
-Dieses Programm erzeugt ein Tupel `x` und erstellt dann neue Variablen für
+Dieses Programm erzeugt das Tupel `x` und erstellt dann neue Variablen für
 jedes Element, indem es ihre jeweiligen Indizes verwendet. Wie bei den meisten
 Programmiersprachen ist der erste Index in einem Tupel 0.
 
@@ -335,11 +334,11 @@ Einheitswert zurück, wenn sie keinen anderen Wert zurückgeben.
 
 Eine andere Möglichkeit, eine Kollektion mit mehreren Werten zu haben, ist mit
 einem *Array*. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
-gleichen Typ haben. Arrays in Rust unterscheiden sich von Arrays in einigen
-anderen Sprachen, weil Arrays in Rust eine feste Länge haben, wie Tupel.
+gleichen Typ haben. Anders als Arrays in einigen anderen Sprachen haben Arrays
+in Rust eine feste Länge.
 
-In Rust werden die in ein Array eingehenden Werte als kommagetrennte Liste in
-eckige Klammern geschrieben:
+Wir schreiben die Werte in einem Array als kommagetrennte Liste in eckigen
+Klammern:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -351,29 +350,28 @@ fn main() {
 
 Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
 Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
-Haldenspeicher gehen wir in Kapitel 4 näher ein) oder wenn du
+Haldenspeicher gehen wir in [Kapitel 4][stack-and-heap] näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
 Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
 wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
-sicher bist, ob du ein Array oder einen Vektor verwenden sollst, solltest du
-wahrscheinlich einen Vektor verwenden. In Kapitel 8 werden Vektoren
-ausführlicher besprochen.
+sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
+wahrscheinlich, dass du einen Vektor verwenden solltest. In [Kapitel
+8][vectors] werden Vektoren ausführlicher besprochen.
 
-Ein Beispiel dafür, wann du ein Array statt eines Vektors verwenden möchtest,
-ist in einem Programm, das die Namen der Monate des Jahres kennen muss. Es ist
-sehr unwahrscheinlich, dass ein solches Programm Monate hinzufügen oder
-entfernen muss, sodass du ein Array verwenden kannst, weil du weißt, dass es
-immer 12 Elemente enthalten wird:
+Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
+Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
+verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
+verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:
 
 ```rust
 let months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
               "August", "September", "Oktober", "November", "Dezember"];
 ```
 
-Du würdest den Typ eines Arrays mit eckigen Klammern schreiben und innerhalb
-der Klammern den Typ jedes Elements, ein Semikolon und dann die Anzahl der
-Elemente im Array angeben, etwa so:
+Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
+Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
+etwa so:
 
 ```rust
 let a: [i32; 5] = [1, 2, 3, 4, 5];
@@ -382,11 +380,9 @@ let a: [i32; 5] = [1, 2, 3, 4, 5];
 Hier ist `i32` der Typ aller Elemente. Nach dem Semikolon gibt die Zahl `5` an,
 dass das Array fünf Elemente enthält.
 
-Das Angeben eines Array-Typs auf diese Weise ähnelt einer alternativen Syntax
-für die Initialisierung eines Arrays: Wenn du ein Array erstellen möchtest, das
-für jedes Element den gleichen Wert enthält, kannst du den Anfangswert, gefolgt
-von einem Semikolon und dann die Länge des Arrays in eckigen Klammern angeben,
-wie hier gezeigt:
+Du kannst ein Array auch so initialisieren, dass es für jedes Element denselben
+Wert enthält, indem du den Anfangswert, gefolgt von einem Semikolon, und dann
+die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:
 
 ```rust
 let a = [3; 5];
@@ -419,9 +415,9 @@ wird den Wert `2` vom Index `[1]` im Array erhalten.
 
 ##### Ungültiger Array-Element-Zugriff
 
-Was passiert, wenn du versuchst, auf ein Element eines Arrays zuzugreifen, das
-sich hinter dem Ende des Arrays befindet? Angenommen, du änderst das Beispiel
-wie folgt, das Code ähnlich dem Ratespiel in Kapitel 2 verwendet, um einen
+Sehen wir uns an was passiert, wenn du versuchst, auf ein Element eines Arrays
+zuzugreifen, das sich hinter dem Ende des Arrays befindet. Angenommen, du
+führst diesen Code aus, ähnlich zum Ratespiel in Kapitel 2, um einen
 Array-Index vom Benutzer zu erhalten:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -486,6 +482,8 @@ gesprochen.
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [control-flow]: ch03-05-control-flow.html
+[stack-and-heap]: ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap
 [strings]: ch08-02-strings.html
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
+[vectors]: ch08-01-vectors.html
 [wrapping]: https://doc.rust-lang.org/std/num/struct.Wrapping.html

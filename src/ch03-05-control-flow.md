@@ -1,11 +1,10 @@
 ## Kontrollfluss
 
-Die Entscheidung, ob ein Code ausgeführt werden soll oder nicht, je nachdem, ob
-eine Bedingung erfüllt ist, und die Entscheidung, einen Code wiederholt
-auszuführen, solange eine Bedingung erfüllt ist, sind grundlegende Bausteine in
-den meisten Programmiersprachen. Die gebräuchlichsten Konstrukte, mit denen du
-den Kontrollfluss von Rust-Code kontrollieren kannst, sind `if`-Ausdrücke und
-Schleifen.
+Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
+erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
+erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen.  Die
+gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
+kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
 
 ### `if`-Ausdrücke
 
@@ -32,15 +31,15 @@ fn main() {
 }
 ```
 
-Alle `if`-Ausdrücke beginnen mit dem Schlüsselwort `if`, auf das eine Bedingung
-folgt. In diesem Fall prüft die Bedingung, ob die Variable `number` einen Wert
-kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen, wenn die
-Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte Klammern
-gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken verbunden sind,
-werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie die Zweige in
-`match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der Schätzung mit der
-Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
-haben.
+Alle `if`-Ausdrücke beginnen mit dem Schlüsselwort `if`, gefolgt von einer
+Bedingung. In diesem Fall prüft die Bedingung, ob die Variable `number` einen
+Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
+wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
+Klammern gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken
+verbunden sind, werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie
+die Zweige in `match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der
+Schätzung mit der eheimzahl“][comparing-the-guess-to-the-secret-number] in
+Kapitel 2 besprochen haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
@@ -187,7 +186,8 @@ Rust-Verzweigungskonstrukt namens `match` für solche Fälle.
 #### Verwenden von `if` in einer `let`-Anweisung
 
 Weil `if` ein Ausdruck ist, können wir ihn auf der rechten Seite einer
-`let`-Anweisung verwenden, wie in Codeblock 3-2.
+`let`-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
+Codeblock 3-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -267,10 +267,10 @@ Variable verfolgen müsste.
 ### Wiederholung mit Schleifen
 
 Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
-Aufgabe stellt Rust mehrere *Schleifen* (loops) zur Verfügung. Eine Schleife
-durchläuft den Code innerhalb des Schleifenrumpfs bis zum Ende und beginnt dann
-sofort wieder am Anfang. Um mit Schleifen zu experimentieren, machen wir ein
-neues Projekt namens *loops*.
+Aufgabe stellt Rust mehrere *Schleifen* (loops) zur Verfügung, die den Code
+innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
+Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
+Projekt namens *loops*.
 
 Rust hat drei Arten von Schleifen: `loop`, `while` und `for`. Probieren wir
 jede einzelne aus.
@@ -317,24 +317,23 @@ class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
 der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
 dem `^C` das Wort `nochmal!` oder nicht.
 
-Glücklicherweise bietet Rust eine Möglichkeit, aus einer Schleife auszubrechen.
-Du kannst das Schlüsselwort `break` innerhalb der Schleife platzieren, um dem
-Programm mitzuteilen, wann es die Ausführung der Schleife beenden soll.
-Erinnere dich, dass wir dies im Ratespiel im Abschnitt [„Beenden nach einer
-korrekten Schätzung“][quitting-after-a-correct-guess] in Kapitel 2 getan haben,
-um das Programm zu beenden, wenn der Benutzer das Spiel durch Erraten der
-richtigen Zahl gewonnen hat.
+Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
+mittels Code auszubrechen. Du kannst das Schlüsselwort `break` innerhalb der
+Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
+Schleife beenden soll. Erinnere dich, dass wir dies im Ratespiel im Abschnitt
+[„Beenden nach einer korrekten Schätzung“][quitting-after-a-correct-guess] in
+Kapitel 2 getan haben, um das Programm zu beenden, wenn der Benutzer das Spiel
+durch Erraten der richtigen Zahl gewonnen hat.
 
-Wir haben im Ratespiel auch `continue` verwendet. Das Schlüsselwort `continue`
-innerhalb einer Schleife weist das Programm an, jeden restlichen Code in dieser
-Iteration der Schleife zu überspringen und mit der nächsten Iteration
-fortzufahren.
+Wir haben im Ratespiel auch `continue` verwendet, das innerhalb einer Schleife
+das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
+überspringen und mit der nächsten Iteration fortzufahren.
 
 Wenn du Schleifen innerhalb Schleifen hast, beziehen sich `break` und
 `continue` auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
-optional einen *Schleifennamen* (loop label) geben und dann den Namen mit
-`break` oder `continue` verwenden, damit sich diese Schlüsselwörter auf die
-bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
+optional einen *Schleifennamen* (loop label) geben, die wir mit `break` oder
+`continue` verwenden, um zu spezifizieren, dass sich diese Schlüsselwörter auf
+die bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
 Beispiel mit zwei geschachtelten Schleifen:
 
 ```rust
@@ -388,10 +387,11 @@ count am Ende = 2
 Eine der Verwendungen von `loop` besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
 ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation an den Rest deines Codes weitergeben. Dazu
-kannst du den Wert, der zurückgegeben werden soll, hinter dem `break`-Ausdruck
-angeben, den du zum Beenden der Schleife verwendest; dieser Wert wird aus der
-Schleife zurückgegeben, sodass du ihn verwenden kannst, wie hier gezeigt:
+jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
+Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
+hinter dem `break`-Ausdruck angeben, den du zum Beenden der Schleife
+verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
+verwenden kannst, wie hier gezeigt:
 
 ```rust
 fn main() {
@@ -421,18 +421,16 @@ beträgt.
 
 #### Bedingte Schleifen mit `while`
 
-Oft ist es für ein Programm nützlich, eine Bedingung innerhalb einer Schleife
-auszuwerten. Solange die Bedingung wahr ist, wird die Schleife durchlaufen.
-Wenn die Bedingung nicht mehr wahr ist, ruft das Programm `break` auf und
-stoppt die Schleife. Dieser Schleifentyp könnte durch eine Kombination von
-`loop`, `if`, `else` und `break` implementiert werden; du kannst das jetzt in
-einem Programm versuchen, wenn du möchtest.
-
-Dieses Muster ist jedoch so weit verbreitet, dass Rust ein eingebautes
-Sprachkonstrukt dafür hat, die sogenannte `while`-Schleife. In Codeblock 3-3
-wird `while` verwendet: Das Programm durchläuft dreimal eine Schleife, in der
-es jedes Mal abwärts zählt, und dann nach dem Ende der Schleife eine weitere
-Nachricht ausgibt und sich beendet.
+Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
+haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
+Bedingung nicht mehr wahr ist, ruft das Programm `break` auf und stoppt die
+Schleife. Es ist möglich, derartiges Verhalten mittels diner Kombination von
+`loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
+einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
+verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
+`while`-Schleife. In Codeblock 3-3 wird `while` verwendet: Das Programm
+durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
+nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -461,8 +459,8 @@ die Schleife verlassen.
 #### Wiederholen anhand einer Kollektion mit `for`
 
 Du kannst das `while`-Konstrukt verwenden, um die Elemente einer Kollektion,
-z.B. ein Array, in einer Schleife zu durchlaufen. Sehen wir uns zum Beispiel
-Codeblock 3-4 an.
+z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
+gibt zum Beispiel jedes Element im Array `a` aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -504,10 +502,12 @@ Wert `5` erreicht hat, stoppt die Schleife ihre Ausführung, bevor sie versucht,
 einen sechsten Wert aus dem Array zu holen.
 
 Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
-bringen, wenn der Indexwert oder die Testbedingung falsch ist. Er ist zudem
-langsam, weil der Compiler Laufzeitcode erzeugt, der die Bedingungsprüfung, ob
-der Index innerhalb der Arraygrenzen liegt, bei jeder Schleifeniteration
-durchführt.
+bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
+Beispiel die Definition des Arrays `a` so ändest, dass es vier Elemente hat,
+aber vergisst, die Bedingung `while index < 4` zu aktualisieren, würde der Code
+abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
+die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
+Schleifeniteration durchführt.
 
 Als prägnantere Alternative kannst du eine `for`-Schleife verwenden und für
 jedes Element einer Kollektion etwas Code ausführen. Eine `for`-Schleife sieht
@@ -534,20 +534,18 @@ und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
 gehen und einige Elemente übersehen.
 
-Wenn du beispielsweise im Code in Codeblock 3-4 die Definition des Arrays `a`
-so geändert hast, dass es vier Elemente hat, aber vergessen hast, die Bedingung
-auf `while index < 4` zu aktualisieren, würde der Code abstürzen. Wenn du die
-`for`-Schleife verwendest, brauchst du nicht daran zu denken, irgendeinen
-anderen Code zu ändern, wenn du die Anzahl der Werte im Array änderst.
+Wenn du die `for`-Schleife verwendest, brauchst du nicht daran zu denken,
+irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
+änderst, wie bei der Methode in Codeblock 3-4 verwendet.
 
 Die Sicherheit und Prägnanz der `for`-Schleifen machen sie zum am häufigsten
 verwendeten Schleifenkonstrukt in Rust. Sogar in Situationen, in denen du einen
 Code bestimmt oft laufen lassen willst, wie im Countdown-Beispiel, das in
 Codeblock 3-3 eine `while`-Schleife verwendet hat, würden die meisten
 Rust-Entwickler eine `for`-Schleife verwenden. Der Weg, dies zu erreichen, wäre
-das Verwenden eines `Range`, ein von der Standardbibliothek zur Verfügung
-gestellter Typ, der alle Zahlen in Folge generiert, beginnend mit einer Zahl
-und endend vor einer anderen Zahl.
+das Verwenden eines `Range`, der von der Standardbibliothek zur Verfügung
+gestellt wird und alle Zahlen in Folge generiert, beginnend mit einer Zahl und
+endend vor einer anderen Zahl.
 
 So würde der Countdown aussehen, wenn man eine `for`-Schleife und die Methode
 `rev`, über die wir noch nicht gesprochen haben und die den `Range` umkehrt,
@@ -570,8 +568,8 @@ Dieser Code ist ein bisschen schöner, nicht wahr?
 
 Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
 Variablen, skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
-`if`-Ausdrücke und Schleifen! Wenn du mit den in diesem Kapitel besprochenen
-Konzepten üben willst, versuche, Programme zu bauen, um Folgendes zu tun:
+`if`-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
+Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:
 
 * Temperaturen zwischen Fahrenheit und Celsius umrechnen.
 * Die n-te Fibonacci-Zahl berechnen.

@@ -6,8 +6,8 @@ Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort `fn`
 gesehen, mit dem du neue Funktionen deklarieren kannst.
 
 Rust-Code verwendet die *Schlangenschrift*-Stil-Konvention (snake case) für
-Funktions- und Variablennamen. In Schlangenschrift sind alle Buchstaben klein
-geschrieben und Unterstriche separieren Wörter. Hier ist ein Programm, das eine
+Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
+und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -24,9 +24,9 @@ fn another_function() {
 }
 ```
 
-Funktionsdefinitionen in Rust beginnen mit `fn` und haben einen Satz Klammern
-nach dem Funktionsnamen. Die geschweiften Klammern teilen dem Compiler mit,
-wo der Funktionsrumpf beginnt und endet.
+Wir definieren eine Funktion in Rust durch die Eingabe von `fn`, gefolgt von
+einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
+dem Compiler mit, wo der Funktionsrumpf beginnt und endet.
 
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da `another_function` im
@@ -53,9 +53,9 @@ Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der
 `main`-Funktion erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben
 und dann wird `another_function` aufgerufen und ihre Nachricht ausgegeben.
 
-### Funktionsparameter
+### Parameter
 
-Funktionen können auch so definiert werden, dass sie *Parameter* haben, das
+Wir können Funktionen auch so definiert werden, dass sie *Parameter* haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
 Funktion Parameter hat, kannst du sie mit konkreten Werten für diese Parameter
 versehen. Technisch gesehen werden die konkreten Werte *Argumente* genannt,
@@ -64,8 +64,7 @@ aber in lockeren Gesprächen neigen Leute dazu, die Worte *Parameter* und
 die konkreten Werte, die beim Aufruf einer Funktion übergeben werden,
 synonym zu verwenden.
 
-Die folgende umgeschriebene Version von `another_function` zeigt, wie Parameter
-in Rust aussehen:
+In dieser Version von `another_function` fügen wir einen Parameter hinzu:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -91,7 +90,7 @@ Der Wert von x ist: 5
 ```
 
 Die Deklaration `another_function` hat einen Parameter namens `x`. Der Typ von
-`x` wird als `i32` angegeben. Wenn `5` an `another_function` übergeben wird,
+`x` wird als `i32` angegeben. Wenn wir `5` an `another_function` übergeben,
 setzt das Makro `println!` `5` an die Stelle, an der sich das Paar geschweifter
 Klammern in der Formatierungszeichenkette befand.
 
@@ -101,8 +100,8 @@ Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
 meinst.
 
-Wenn eine Funktion mehrere Parameter haben soll, trenne die
-Parameterdeklarationen mit Kommas, so wie hier:
+Wenn wir mehrere Parameter definieren, trennen wir die Parameterdeklarationen
+mit Kommas, so wie hier:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -136,7 +135,7 @@ Das Maß ist: 5h
 Da wir die Funktion mit `5` als Wert für `value` und `'h'` als Wert für
 `unit_label` aufgerufen haben, enthält die Programmausgabe diese Werte.
 
-#### Funktionsrümpfe enthalten Anweisungen und Ausdrücke
+#### Anweisungen und Ausdrücke
 
 Funktionsrümpfe bestehen aus einer Reihe von Anweisungen, die optional mit
 einem Ausdruck enden können. Bisher haben wir nur Funktionen ohne einen
@@ -232,9 +231,9 @@ Codes aus, den du in Rust schreiben wirst. Betrachte eine mathematische
 Operation, z.B. `5 + 6`, die ein Ausdruck ist, der zum Wert `11` ausgewertet
 wird. Ausdrücke können Teil von Anweisungen sein: In Codeblock 3-1 ist die `6`
 in der Anweisung `let y = 6;` ein Ausdruck, der den Wert `6` ergibt. Der Aufruf
-einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Der
-Block `{}`, den wir zum Erstellen neuer Gültigkeitsbereiche verwenden, ist ein
-Ausdruck, zum Beispiel:
+einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
+neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,
+ist ein Ausdruck, zum Beispiel:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -259,12 +258,12 @@ Der Ausdruck
 ```
 
 ist ein Block, der in diesem Fall zu `4` ausgewertet wird. Dieser Wert wird als
-Teil der `let`-Anweisung an `y` gebunden. Beachte die Zeile `x + 1` ohne
-Semikolon am Ende, was sich von den meisten Zeilen, die du bisher gesehen hast,
-unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn du ein
-Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine Anweisung,
-die dann keinen Wert zurückgibt.  Behalte dies im Hinterkopf, wenn du als
-nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.
+Teil der `let`-Anweisung an `y` gebunden. Beachte, dass die Zeile `x + 1` am
+Ende kein Semikolon hat, was sich von den meisten Zeilen, die du bisher gesehen
+hast, unterscheidet. Ausdrücke enthalten keine abschließenden Semikolons. Wenn
+du ein Semikolon an das Ende eines Ausdrucks anfügst, machst du daraus eine
+Anweisung, und sie gibt keinen Wert zurück.  Behalte dies im Hinterkopf, wenn
+du als nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.
 
 ### Funktionen mit Rückgabewerten
 
