@@ -639,7 +639,7 @@ es einfacher, die Quelle von Problemen aufzuspüren, wenn sie auftreten.
 [dangling-references]:
 ch04-02-references-and-borrowing.html#hängende-referenzen
 [differences-between-variables-and-constants]:
-ch03-01-variables-and-mutability.html#unterschiede-zwischen-variablen-und-konstanten
+ch03-01-variables-and-mutability.html#konstanten
 [extensible-concurrency-with-the-sync-and-send-traits]:
 ch16-04-extensible-concurrency-sync-and-send.html
 [the-slice-type]: ch04-03-slices.html
