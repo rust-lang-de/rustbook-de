@@ -182,7 +182,7 @@ sollte.
 
 Manchmal ist es nützlich, ein Standardverhalten für einige oder alle Methoden
 eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
-Typ zu verlangen. Wenn wir dann das Merkmal für einem bestimmten Typ
+Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
 implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 überschreiben.
 
