@@ -6,7 +6,7 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.
 
 > Anmerkung: Falls du `rustup` aus irgendeinem Grund nicht verwenden möchtest,
-> schaue bitte auf der Seite [Andere Rust-Installationsmethoden][install] nach
+> schaue bitte auf der Seite [Andere Rust-Installationsmethoden][otherinstall] nach
 > anderen Möglichkeiten.
 
 Die folgenden Schritte installieren die neueste stabile Version des
@@ -75,9 +75,6 @@ der [Bauwerkzeuge für Visual Studio 2019][visualstudio]. Sobald du gefragt
 wirst, welche Komponenten installiert werden sollen, wähle die „C++ build tools“
 und zusätzlich das Windows 10 SDK und das englische Sprachpaket aus.
 
-[install]: https://www.rust-lang.org/tools/install
-[visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/
-
 Der Rest dieses Buchs verwendet Befehle, die sowohl in *cmd.exe* als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.
@@ -123,10 +120,6 @@ Dort kannst du mit anderen Rustaceans (ein alberner Spitzname, den wir uns selbs
 gegeben haben) chatten, die dir gerne weiterhelfen. Andere hilfreiche Quellen
 sind [das Benutzerforum][users] and [Stack Overflow][stackoverflow].
 
-[discord]: https://discord.gg/rust-lang
-[users]: https://users.rust-lang.org/
-[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
-
 ### Lokale Dokumentation
 
 Die Rust-Installation enthält auch eine lokale Kopie der Dokumentation, sodass
@@ -136,4 +129,9 @@ lokale Dokumentation in deinem Browser zu öffnen.
 Falls du dir nicht sicher bist, wie du einen Typ oder eine Funktion aus der
 Standardbibliothek verwenden sollst, dann schau in der API-Dokumentation nach!
 
-[install]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[discord]: https://discord.gg/rust-lang
+[install]: https://www.rust-lang.org/tools/install
+[otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[stackoverflow]: https://stackoverflow.com/questions/tagged/rust
+[users]: https://users.rust-lang.org/
+[visualstudio]: https://visualstudio.microsoft.com/visual-cpp-build-tools/

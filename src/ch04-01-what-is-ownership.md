@@ -1,8 +1,7 @@
 ## Was ist Eigentümerschaft (ownership)?
 
-Die zentrale Funktionalität von Rust ist *Eigentümerschaft* (ownership). Obwohl
-diese Funktionalität einfach zu erklären ist, hat sie weitgehende Auswirkungen
-auf den Rest der Sprache.
+*Eigentümerschaft* ist eine Reihe von Regeln, die bestimmen, wie ein
+Rust-Programm den Speicher verwaltet.
 
 Alle Programme müssen den Arbeitsspeicher eines Rechners verwalten, während sie
 ausgeführt werden. Einige Sprachen verfügen über eine automatische
@@ -10,15 +9,16 @@ Speicherbereinigung, die während der Programmausführung ständig nach nicht me
 genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
 den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
 Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
-von Regeln verwaltet, die der Compiler zur Kompilierzeit überprüft. Keine
-der Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
+von Regeln verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt
+wird, lässt sich das Programm nicht kompilieren. Keine der
+Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
 läuft.
 
 Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
 Erfahrung du mit Rust und den Regeln der Eigentümerschaft gesammelt hast, desto
-mehr kannst du auf natürliche Weise Code entwickeln, der sicher und effizient
-ist. Bleib dran!
+einfacher findest du es auf natürliche Weise Code entwickeln, der sicher und
+effizient ist. Bleib dran!
 
 Wenn du Eigentümerschaft verstehst, hast du eine solide Grundlage, um die
 Funktionalitäten zu verstehen, die Rust einzigartig machen. In diesem Kapitel
@@ -28,13 +28,13 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 
 > ### Stapelspeicher (stack) und Haldenspeicher (heap)
 >
-> In vielen Programmiersprachen musst du nicht sehr oft über Stapelspeicher und
-> Haldenspeicher nachdenken. Aber in einer Systemprogrammiersprache wie
-> Rust hat die Frage, ob ein Wert auf dem Stapelspeicher oder im Haldenspeicher
-> liegt, einen größeren Einfluss darauf, wie sich die Sprache verhält
-> und warum du bestimmte Entscheidungen treffen musst. Teile der
-> Eigentümerschaft werden später in diesem Kapitel in Bezug auf den
-> Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
+> Viele Programmiersprachen erfordern nicht, dass du sehr oft über
+> Stapelspeicher und Haldenspeicher nachdenken musst. Aber in einer
+> Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
+> Stapelspeicher oder im Haldenspeicher liegt, einen größeren Einfluss darauf,
+> wie sich die Sprache verhält und warum du bestimmte Entscheidungen treffen
+> musst. Teile der Eigentümerschaft werden später in diesem Kapitel in Bezug
+> auf den Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
 > kurze Erklärung zur Vorbereitung.
 >
 > Sowohl Stapelspeicher als auch Haldenspeicher sind Teile des
@@ -47,12 +47,12 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
 > Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
 > Daten nennt man *auf den Stapel legen*, und das Entfernen von Daten nennt man
-> *vom Stapel nehmen*.
+> *vom Stapel nehmen*. Alle im Stapelspeicher gespeicherten Daten müssen eine
+> bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
+> Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
+> Haldenspeicher gespeichert werden.
 >
-> Alle im Stapelspeicher gespeicherten Daten müssen eine bekannte, feste Größe
-> haben. Daten mit einer zur Kompilierzeit unbekannten Größe oder einer Größe,
-> die sich ändern könnte, müssen stattdessen im Haldenspeicher
-> gespeichert werden. Der Haldenspeicher ist weniger organisiert: Wenn du
+> Der Haldenspeicher ist weniger organisiert: Wenn du
 > Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
 > Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
 > Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
@@ -62,13 +62,11 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
 > bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
 > legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
-> folgen.
->
-> Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst, gibst du
-> die Anzahl der Personen deiner Gruppe an, und das Personal findet einen
-> leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand aus
-> deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um
-> euch zu finden.
+> folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
+> gibst du die Anzahl der Personen deiner Gruppe an, und das Personal findet
+> einen leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand
+> aus deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt,
+> um euch zu finden.
 >
 > Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
 > Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
@@ -104,9 +102,9 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
 > Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
 > hast, brauchst du nicht mehr so oft über Stapelspeicher und Haldenspeicher 
-> nachzudenken. Aber zu wissen, dass die Verwaltung von Haldenspeicher-Daten
-> der Grund für Eigentümerschaft ist, kann helfen zu erklären,
-> warum es so funktioniert, wie es funktioniert.
+> nachzudenken. Aber zu wissen, dass der Hauptzweck der Eigentümerschaft die
+> Verwaltung der Haldenspeicher-Daten ist, kann helfen zu erklären, warum es so
+> funktioniert, wie es funktioniert.
 
 ### Eigentumsregeln
 
@@ -121,7 +119,6 @@ durcharbeiten:
 
 ### Gültigkeitsbereich (scope) einer Variable
 
-Wir sind bereits in Kapitel 2 ein Beispiel für ein Rust-Programm durchgegangen.
 Da wir nun über die grundlegende Syntax hinausgehen, werden wir nicht mehr den
 gesamten `fn main() {`-Code in die Beispiele aufnehmen. Wenn du also
 weitermachst, musst du die folgenden Beispiele manuell in eine Funktion `main`
@@ -131,8 +128,8 @@ herum betrachten zu müssen.
 
 Als erstes Beispiel zu Eigentümerschaft werden wir uns den *Gültigkeitsbereich*
 (scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
-innerhalb eines Programms, in dem ein Element gültig ist. Nehmen wir an, wir
-haben eine Variable, die so aussieht:
+innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
+Variable an:
 
 ```rust
 let s = "Hallo";
@@ -141,8 +138,8 @@ let s = "Hallo";
 Die Variable `s` bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-*Gültigkeitsbereichs* gültig. Codeblock 4-1 enthält Kommentare mit Anmerkungen,
-wo die Variable `s` gültig ist.
+*Gültigkeitsbereichs* gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+die zeigen wo die Variable `s` gültig ist.
 
 ```rust
 {                      // s ist hier nicht gültig, es wurde noch nicht deklariert
@@ -175,13 +172,14 @@ werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivia
 kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
 Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
 muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
-sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss.
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss, und
+der Typ `String` ist ein gutes Beispiel dafür.
 
-Wir werden hier `String` als Beispiel nehmen und uns auf die Teile von `String`
-konzentrieren, die sich auf die Eigentümerschaft beziehen. Diese Aspekte gelten
-auch für andere komplexe Datentypen, unabhängig davon, ob sie von der
-Standardbibliothek bereitgestellt oder von dir erstellt wurden. Wir werden
-`String` in Kapitel 8 eingehender behandeln.
+Wir werden uns auf die Teile von `String` konzentrieren, die sich auf die
+Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
+Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
+oder von dir erstellt wurden. Wir werden `String` in [Kapitel 8][ch8]
+eingehender behandeln.
 
 Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
 Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
@@ -200,11 +198,11 @@ verwendest:
 let s = String::from("Hallo");
 ```
 
-Der doppelte Doppelpunkt (`::`) ist ein Operator, der es uns erlaubt, diese
-spezielle Funktion `from` mit dem Namensraum des `String`-Typs zu benennen,
-anstatt einen Namen wie `string_from` zu verwenden. Wir werden diese Syntax im
-Abschnitt [„Methodensyntax“][method-syntax] in Kapitel 5 näher betrachten, und
-wenn wir in Kapitel 7 unter [„Mit Pfaden auf ein Element im Modulbaum
+Der doppelte Doppelpunkt (`::`) Operator erlaubt uns, diese spezielle Funktion
+`from` mit dem Namensraum des `String`-Typs zu benennen, anstatt einen Namen
+wie `string_from` zu verwenden. Wir werden diese Syntax im Abschnitt
+[„Methodensyntax“][method-syntax] in Kapitel 5 näher betrachten, und wenn wir
+in Kapitel 7 unter [„Mit Pfaden auf ein Element im Modulbaum
 verweisen“][paths-module-tree] über den Namensraum mit Modulen sprechen. 
 
 Diese Art von Zeichenkette kann *verändert* werden:
@@ -316,10 +314,10 @@ let s1 = String::from("Hallo");
 let s2 = s1;
 ```
 
-Dieser sieht dem vorherigen Code sehr ähnlich, sodass wir annehmen könnten,
-dass die Funktionsweise die gleiche wäre: Das heißt, die zweite Zeile würde
-eine Kopie des Wertes in `s1` erstellen und sie an `s2` binden. Aber das ist
-nicht ganz das, was passiert.
+Dies sieht sehr ähnlich aus, sodass wir annehmen könnten, dass die
+Funktionsweise die gleiche wäre: Das heißt, die zweite Zeile würde eine Kopie
+des Wertes in `s1` erstellen und sie an `s2` binden. Aber das ist nicht ganz
+das, was passiert.
 
 Betrachte Abbildung 4-1, um zu sehen, was mit dem `String` unter der Haube
 geschieht. Ein `String` besteht aus drei Teilen, die auf der linken Seite
@@ -374,10 +372,9 @@ einer der Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das
 zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
 was potenziell zu Sicherheitslücken führen kann.
 
-Um Speichersicherheit zu gewährleisten, gibt es noch ein weiteres Detail, was
-Rust in dieser Situation macht. Nach `let s2 = s1` betrachtet Rust `s1` als
-nicht mehr gültig. Daher braucht Rust nichts freizugeben, wenn `s1` den
-Gültigkeitsbereich verlässt. Schau dir an, was
+Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile `let s2
+= s1` die Variable `s1` als nicht mehr gültig. Daher braucht Rust nichts
+freizugeben, wenn `s1` den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, `s1` zu benutzen, nachdem `s2` erstellt wurde; es
 wird nicht funktionieren:
 
@@ -483,17 +480,17 @@ keinen Unterschied zwischen tiefen und flachen Kopien, also würde der Aufruf
 `clone` nichts anderes tun als das übliche flache Kopieren, und wir können es
 weglassen.
 
-Rust hat eine spezielle Annotation, das Merkmal `Copy`, die wir an Typen wie
-ganze Zahlen hängen können, die auf dem Stapelspeicher gespeichert sind (wir
+Rust hat eine spezielle Annotation, das Merkmal `Copy`, die wir an Typen hängen
+können, die auf dem Stapelspeicher wie ganze Zahlen gespeichert sind (wir
 werden in Kapitel 10 mehr über Merkmale sprechen). Wenn ein Typ das Merkmal
-`Copy` hat, ist eine ältere Variable nach der Zuweisung noch verwendbar. Rust
-lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren, wenn der Typ oder
-einer seiner Teile das Merkmal `Drop` implementiert. Wenn der Typ eine
-Sonderbehandlung braucht, wenn der Wert den Gültigkeitsbereich verlässt und wir
-die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir einen
-Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem Typ
-hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits] in
-Anhang C.
+`Copy` hat, ist eine Variable nach der Zuweisung an eine andere Variable noch
+verwendbar. Rust lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren,
+wenn der Typ oder einer seiner Teile das Merkmal `Drop` implementiert. Wenn der
+Typ eine Sonderbehandlung braucht, wenn der Wert den Gültigkeitsbereich
+verlässt und wir die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir
+einen Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem
+Typ hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits]
+in Anhang C.
 
 Welche Typen unterstützen also `Copy`? Du kannst die Dokumentation für einen
 gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:
@@ -559,7 +556,8 @@ kannst und wo die Eigentumsregeln dich daran hindern.
 ### Rückgabewerte und Gültigkeitsbereich
 
 Rückgabewerte können auch Eigentümerschaft übertragen. Codeblock 4-4 ist ein
-Beispiel mit ähnlichen Anmerkungen wie die in Codeblock 4-3.
+Beispiel für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie
+die in Codeblock 4-3.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -601,18 +599,19 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
 Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
 Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
 Variable, die Daten im Haldenspeicher enthält, den Gültigkeitsbereich
-verlässt, wird der Wert durch `drop` aufgeräumt, es sei denn, die Daten wurden
-in das Eigentum einer anderen Variable verschoben.
+verlässt, wird der Wert durch `drop` aufgeräumt, es sei denn, die
+Eigentümerschaft wurde auf eine andere Variable verschoben.
 
-Es ist etwas mühsam, das Eigentum zu übernehmen und es dann mit jeder Funktion
-zurückzugeben. Was ist, wenn wir eine Funktion einen Wert nutzen lassen wollen,
-aber nicht die Eigentümerschaft übergeben wollen? Es ist ziemlich lästig, dass
-alles, was wir übergeben, auch wieder zurückgegeben werden muss, wenn wir es
-wieder verwenden wollen, zusätzlich zu den Daten, die sich aus dem
-Funktionsrumpf ergeben, die wir vielleicht auch zurückgeben wollen.
+Dies funktioniert zwar, allerdings ist es etwas mühsam, die Eigentümerschaft zu
+übernehmen und in jeder Funktion zurückzugeben. Was ist, wenn wir eine Funktion
+einen Wert nutzen lassen wollen, aber nicht die Eigentümerschaft übergeben
+wollen? Es ist ziemlich lästig, dass alles, was wir übergeben, auch wieder
+zurückgegeben werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu
+den Daten, die sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch
+zurückgeben wollen.
 
-Es ist möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben, wie in
-Codeblock 4-5 gezeigt.
+Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
+wie in Codeblock 4-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -636,9 +635,11 @@ fn calculate_length(s: String) -> (String, usize) {
 Parametern</span>
 
 Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
-gebräuchlich sein sollte. Zum Glück hat Rust für uns eine Funktionalität zu
-diesem Konzept, das *Referenzen* (references) genannt wird.
+gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
+einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
+*Referenzen* (references).
 
+[ch8]: ch08-02-strings.html
 [data-types]: ch03-02-data-types.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [drop-doc]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop

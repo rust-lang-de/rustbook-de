@@ -1,9 +1,8 @@
 ## Der Anteilstyp (slice)
 
-Ein weiterer Datentyp, für den keine Eigentümerschaft besteht, ist der
-*Anteilstyp* (slice). Mit Anteilstypen kannst du auf eine zusammenhängende
-Folge von Elementen in einer Kollektion verweisen, anstatt auf die gesamte
-Kollektion.
+Mit *Anteilstypen* kannst du auf eine zusammenhängende Folge von Elementen in
+einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
+Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette entgegennimmt und das erste Wort zurückgibt, das sie in dieser
@@ -11,13 +10,15 @@ Zeichenkette findet. Wenn die Funktion kein Leerzeichen in der Zeichenkette
 findet, muss die gesamte Zeichenkette ein Wort sein, also sollte die gesamte
 Zeichenkette zurückgegeben werden.
 
-Lass uns über die Signatur dieser Funktion nachdenken:
+Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
+von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
+Anteilstypen gelöst wird:
 
 ```rust,ignore
 fn first_word(s: &String) -> ?
 ```
 
-Diese Funktion `first_word` hat einen `&String` als Parameter. Wir wollen keine
+Die Funktion `first_word` hat einen `&String` als Parameter. Wir wollen keine
 Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
 haben nicht wirklich eine Möglichkeit, über *einen Teil* einer Zeichenkette zu
 sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
@@ -77,16 +78,16 @@ Methode `iter` verwenden:
 # }
 ```
 
-Auf Iteratoren werden wir in Kapitel 13 näher eingehen. Fürs Erste solltest du
-wissen, dass `iter` eine Methode ist, die jedes Element in einer Kollektion
-zurückgibt und dass `enumerate` das Ergebnis von `iter` umhüllt und stattdessen
-jedes Element als Teil eines Tupels zurückgibt. Das erste Element des Tupels,
-das von `enumerate` zurückgegeben wird, ist der Index, und das zweite Element
-ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
-zu berechnen.
+Auf Iteratoren werden wir in [Kapitel 13][ch13] näher eingehen. Fürs Erste
+solltest du wissen, dass `iter` eine Methode ist, die jedes Element in einer
+Kollektion zurückgibt und dass `enumerate` das Ergebnis von `iter` umhüllt und
+stattdessen jedes Element als Teil eines Tupels zurückgibt. Das erste Element
+des Tupels, das von `enumerate` zurückgegeben wird, ist der Index, und das
+zweite Element ist eine Referenz auf das Element. Das ist etwas bequemer, als
+den Index selbst zu berechnen.
 
 Da die Methode `enumerate` ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+um dieses Tupel zu zerlegen. Wir werden uns in [Kapitel 6][ch6] eingehender mit
 Mustern befassen. In der `for`-Schleife spezifizieren wir also ein Muster, das
 `i` für den Index im Tupel und `&item` für das einzelne Byte im Tupel hat. Da
 wir eine Referenz auf das Element aus `.iter().enumerate()` erhalten, verwenden
@@ -169,8 +170,8 @@ fn second_word(s: &String) -> (usize, usize) {
 
 Jetzt verfolgen wir einen Anfangs- *und* einen Endindex, und wir haben noch
 mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
-überhaupt nicht an diesen Zustand gebunden sind. Wir haben jetzt drei
-unverbundene Variablen, die synchron gehalten werden müssen.
+überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
+Variablen, die synchron gehalten werden müssen.
 
 Glücklicherweise hat Rust eine Lösung für dieses Problem:
 Zeichenkettenanteilstypen
@@ -187,18 +188,16 @@ let hello = &s[0..5];
 let world = &s[6..10];
 ```
 
-Dies ist ähnlich zu einem Verweis auf den gesamten `String`, aber mit
-zusätzlichem `[0..5]`. Es handelt sich nicht um eine Referenz auf den gesamten
-`String`, sondern auf einen Teil des `String`.
-
-Wir können Anteilstypen mit einem Bereich innerhalb Klammern erstellen, indem
-wir `[starting_index..ending_index]` angeben, wobei `starting_index` die erste
-Position im Anteilstyp ist und `ending_index` die Position hinter der letzten
-Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
-Startposition und die Länge des Anteilstyps, was `ending_index` minus
-`starting_index` entspricht. Im Fall von `let world = &s[6..10];` wäre `world`
-also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von `s` mit
-einem Längenwert von 4 enthält.
+Anstelle einer Referenz auf den gesamten `String` ist `hello` eine Referenz auf
+einen Teil des `String`, der mit dem zusätzlichen `[0..5]` spezifiziert ist.
+Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
+indem wir `[starting_index..ending_index]` angeben, wobei `starting_index` die
+erste Position im Anteilstyp und `ending_index` eine Position mehr als die
+letzte Position im Anteilstyp ist. Intern speichert die
+Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
+was `ending_index` minus `starting_index` entspricht. Im Fall von `let world =
+&s[6..10];` wäre `world` also ein Anteilstyp, der einen Zeiger auf das Byte bei
+Index 6 von `s` mit einem Längenwert von 4 enthält.
 
 Abbildung 4-6 zeigt dies.
 
@@ -517,6 +516,8 @@ Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 
+[ch13]: ch13-02-iterators.html
+[ch6]: ch06-02-match.html#muster-die-werte-binden
 [deref-coercions]:
 ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
 [strings]: ch08-02-strings.html

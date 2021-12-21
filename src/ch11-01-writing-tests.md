@@ -1126,8 +1126,9 @@ sein kann, Tests zu schreiben, die fehlschlagen sollten, wenn irgendeine
 Operation darin eine `Err`-Variante zurückgibt.
 
 Du kannst die Annotation `#[should_panic]` nicht für Tests verwenden, die
-`Result<T, E>` verwenden. Stattdessen solltest du direkt einen `Err`-Wert
-zurückgeben, wenn der Test fehlschlagen soll.
+`Result<T, E>` verwenden. Um sicherzustellen, dass eine Operation eine
+`Err`-Variante zurückgibt, verwende *nicht* den Fragezeichen-Operator auf den
+`Result<T, E>`-Wert. Verwende stattdessen `assert!(value.is_err())`.
 
 Da du nun verschiedene Möglichkeiten kennst, Tests zu schreiben, lass uns einen
 Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
