@@ -1119,8 +1119,9 @@ den Fragezeichen-Operator im Testrumpf verwenden, was eine bequeme Möglichkeit
 sein kann, Tests zu schreiben, die fehlschlagen sollten, wenn irgendeine
 Operation darin eine <code>Err</code>-Variante zurückgibt.</p>
 <p>Du kannst die Annotation <code>#[should_panic]</code> nicht für Tests verwenden, die
-<code>Result&lt;T, E&gt;</code> verwenden. Stattdessen solltest du direkt einen <code>Err</code>-Wert
-zurückgeben, wenn der Test fehlschlagen soll.</p>
+<code>Result&lt;T, E&gt;</code> verwenden. Um sicherzustellen, dass eine Operation eine
+<code>Err</code>-Variante zurückgibt, verwende <em>nicht</em> den Fragezeichen-Operator auf den
+<code>Result&lt;T, E&gt;</code>-Wert. Verwende stattdessen <code>assert!(value.is_err())</code>.</p>
 <p>Da du nun verschiedene Möglichkeiten kennst, Tests zu schreiben, lass uns einen
 Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
 verschiedenen Optionen untersuchen, die wir mit <code>cargo test</code> verwenden können.</p>

@@ -137,7 +137,7 @@
                     <main>
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.55 oder später mit
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.57 oder später mit
 <code>edition=&quot;2018&quot;</code> in <em>Cargo.toml</em> in allen Projekten verwendest, um Rust 2018
 Idiome zu verwenden. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“</a> zum Installieren
 und Aktualisieren von Rust sowie <a href="appendix-05-editions.html">Anhang E</a> zu Informationen zu den
@@ -400,7 +400,7 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.</p>
 <blockquote>
 <p>Anmerkung: Falls du <code>rustup</code> aus irgendeinem Grund nicht verwenden möchtest,
-schaue bitte auf der Seite <a href="https://www.rust-lang.org/tools/install">Andere Rust-Installationsmethoden</a> nach
+schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">Andere Rust-Installationsmethoden</a> nach
 anderen Möglichkeiten.</p>
 </blockquote>
 <p>Die folgenden Schritte installieren die neueste stabile Version des
@@ -3398,30 +3398,31 @@ sprechen, das es in anderen Programmiersprachen üblicherweise <em>nicht</em> gi
 Eigentümerschaft (ownership).</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="eigentümerschaft-ownership-verstehen"><a class="header" href="#eigentümerschaft-ownership-verstehen">Eigentümerschaft (ownership) verstehen</a></h1>
 <p>Eigentümerschaft (ownership) ist das wichtigste Alleinstellungsmerkmal von
-Rust, und sie ermöglicht es Rust, Speichersicherheitsgarantien ohne Einsatz
-einer automatischen Speicherbereinigung (garbage collector) zu geben. Deshalb
+Rust und hat tiefgreifende Auswirkungen auf den Rest der Sprache. Sie
+ermöglicht es Rust, Speichersicherheitsgarantien ohne Einsatz
+einer automatischen Speicherbereinigung (garbage collector) zu geben, deshalb
 ist es wichtig zu verstehen, wie Eigentümerschaft in Rust funktioniert. In
 diesem Kapitel werden wir uns neben der Eigentümerschaft weitere diesbezügliche
 Funktionalitäten ansehen: Ausleihen (borrowing), Anteilstypen (slices) und wie
 Rust Daten im Speicher anordnet.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="was-ist-eigentümerschaft-ownership"><a class="header" href="#was-ist-eigentümerschaft-ownership">Was ist Eigentümerschaft (ownership)?</a></h2>
-<p>Die zentrale Funktionalität von Rust ist <em>Eigentümerschaft</em> (ownership). Obwohl
-diese Funktionalität einfach zu erklären ist, hat sie weitgehende Auswirkungen
-auf den Rest der Sprache.</p>
+<p><em>Eigentümerschaft</em> ist eine Reihe von Regeln, die bestimmen, wie ein
+Rust-Programm den Speicher verwaltet.</p>
 <p>Alle Programme müssen den Arbeitsspeicher eines Rechners verwalten, während sie
 ausgeführt werden. Einige Sprachen verfügen über eine automatische
 Speicherbereinigung, die während der Programmausführung ständig nach nicht mehr
 genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
 den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
 Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
-von Regeln verwaltet, die der Compiler zur Kompilierzeit überprüft. Keine
-der Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
+von Regeln verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt
+wird, lässt sich das Programm nicht kompilieren. Keine der
+Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
 läuft.</p>
 <p>Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
 Erfahrung du mit Rust und den Regeln der Eigentümerschaft gesammelt hast, desto
-mehr kannst du auf natürliche Weise Code entwickeln, der sicher und effizient
-ist. Bleib dran!</p>
+einfacher findest du es auf natürliche Weise Code entwickeln, der sicher und
+effizient ist. Bleib dran!</p>
 <p>Wenn du Eigentümerschaft verstehst, hast du eine solide Grundlage, um die
 Funktionalitäten zu verstehen, die Rust einzigartig machen. In diesem Kapitel
 lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest,
@@ -3429,13 +3430,13 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 (strings).</p>
 <blockquote>
 <h3 id="stapelspeicher-stack-und-haldenspeicher-heap"><a class="header" href="#stapelspeicher-stack-und-haldenspeicher-heap">Stapelspeicher (stack) und Haldenspeicher (heap)</a></h3>
-<p>In vielen Programmiersprachen musst du nicht sehr oft über Stapelspeicher und
-Haldenspeicher nachdenken. Aber in einer Systemprogrammiersprache wie
-Rust hat die Frage, ob ein Wert auf dem Stapelspeicher oder im Haldenspeicher
-liegt, einen größeren Einfluss darauf, wie sich die Sprache verhält
-und warum du bestimmte Entscheidungen treffen musst. Teile der
-Eigentümerschaft werden später in diesem Kapitel in Bezug auf den
-Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
+<p>Viele Programmiersprachen erfordern nicht, dass du sehr oft über
+Stapelspeicher und Haldenspeicher nachdenken musst. Aber in einer
+Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
+Stapelspeicher oder im Haldenspeicher liegt, einen größeren Einfluss darauf,
+wie sich die Sprache verhält und warum du bestimmte Entscheidungen treffen
+musst. Teile der Eigentümerschaft werden später in diesem Kapitel in Bezug
+auf den Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
 kurze Erklärung zur Vorbereitung.</p>
 <p>Sowohl Stapelspeicher als auch Haldenspeicher sind Teile des
 Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
@@ -3447,11 +3448,11 @@ hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
 nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
 Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
 Daten nennt man <em>auf den Stapel legen</em>, und das Entfernen von Daten nennt man
-<em>vom Stapel nehmen</em>.</p>
-<p>Alle im Stapelspeicher gespeicherten Daten müssen eine bekannte, feste Größe
-haben. Daten mit einer zur Kompilierzeit unbekannten Größe oder einer Größe,
-die sich ändern könnte, müssen stattdessen im Haldenspeicher
-gespeichert werden. Der Haldenspeicher ist weniger organisiert: Wenn du
+<em>vom Stapel nehmen</em>. Alle im Stapelspeicher gespeicherten Daten müssen eine
+bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
+Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
+Haldenspeicher gespeichert werden.</p>
+<p>Der Haldenspeicher ist weniger organisiert: Wenn du
 Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
 Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
 Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
@@ -3461,12 +3462,11 @@ bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt. Das Legen von Werten
 den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
 bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
 legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
-folgen.</p>
-<p>Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst, gibst du
-die Anzahl der Personen deiner Gruppe an, und das Personal findet einen
-leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand aus
-deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um
-euch zu finden.</p>
+folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
+gibst du die Anzahl der Personen deiner Gruppe an, und das Personal findet
+einen leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand
+aus deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt,
+um euch zu finden.</p>
 <p>Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
 Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
 neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
@@ -3498,9 +3498,9 @@ und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
 dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
 Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
 hast, brauchst du nicht mehr so oft über Stapelspeicher und Haldenspeicher 
-nachzudenken. Aber zu wissen, dass die Verwaltung von Haldenspeicher-Daten
-der Grund für Eigentümerschaft ist, kann helfen zu erklären,
-warum es so funktioniert, wie es funktioniert.</p>
+nachzudenken. Aber zu wissen, dass der Hauptzweck der Eigentümerschaft die
+Verwaltung der Haldenspeicher-Daten ist, kann helfen zu erklären, warum es so
+funktioniert, wie es funktioniert.</p>
 </blockquote>
 <h3 id="eigentumsregeln"><a class="header" href="#eigentumsregeln">Eigentumsregeln</a></h3>
 <p>Lass uns zunächst einen Blick auf die Eigentumsregeln (ownership rules) werfen.
@@ -3513,8 +3513,7 @@ wird.</li>
 <li>Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert gelöscht.</li>
 </ul>
 <h3 id="gültigkeitsbereich-scope-einer-variable"><a class="header" href="#gültigkeitsbereich-scope-einer-variable">Gültigkeitsbereich (scope) einer Variable</a></h3>
-<p>Wir sind bereits in Kapitel 2 ein Beispiel für ein Rust-Programm durchgegangen.
-Da wir nun über die grundlegende Syntax hinausgehen, werden wir nicht mehr den
+<p>Da wir nun über die grundlegende Syntax hinausgehen, werden wir nicht mehr den
 gesamten <code>fn main() {</code>-Code in die Beispiele aufnehmen. Wenn du also
 weitermachst, musst du die folgenden Beispiele manuell in eine Funktion <code>main</code>
 einfügen. Folglich werden unsere Beispiele etwas prägnanter sein, damit wir uns
@@ -3522,8 +3521,8 @@ auf die eigentlichen Details konzentrieren können, anstatt auch den Code darum
 herum betrachten zu müssen.</p>
 <p>Als erstes Beispiel zu Eigentümerschaft werden wir uns den <em>Gültigkeitsbereich</em>
 (scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
-innerhalb eines Programms, in dem ein Element gültig ist. Nehmen wir an, wir
-haben eine Variable, die so aussieht:</p>
+innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
+Variable an:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3533,8 +3532,8 @@ haben eine Variable, die so aussieht:</p>
 <p>Die Variable <code>s</code> bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-<em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 enthält Kommentare mit Anmerkungen,
-wo die Variable <code>s</code> gültig ist.</p>
+<em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+die zeigen wo die Variable <code>s</code> gültig ist.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -3565,12 +3564,13 @@ werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivia
 kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
 Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
 muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
-sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss.</p>
-<p>Wir werden hier <code>String</code> als Beispiel nehmen und uns auf die Teile von <code>String</code>
-konzentrieren, die sich auf die Eigentümerschaft beziehen. Diese Aspekte gelten
-auch für andere komplexe Datentypen, unabhängig davon, ob sie von der
-Standardbibliothek bereitgestellt oder von dir erstellt wurden. Wir werden
-<code>String</code> in Kapitel 8 eingehender behandeln.</p>
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss, und
+der Typ <code>String</code> ist ein gutes Beispiel dafür.</p>
+<p>Wir werden uns auf die Teile von <code>String</code> konzentrieren, die sich auf die
+Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
+Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
+oder von dir erstellt wurden. Wir werden <code>String</code> in <a href="ch08-02-strings.html">Kapitel 8</a>
+eingehender behandeln.</p>
 <p>Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
 Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
 sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
@@ -3589,11 +3589,11 @@ verwendest:</p>
 </span>let s = String::from(&quot;Hallo&quot;);
 <span class="boring">}
 </span></code></pre></pre>
-<p>Der doppelte Doppelpunkt (<code>::</code>) ist ein Operator, der es uns erlaubt, diese
-spezielle Funktion <code>from</code> mit dem Namensraum des <code>String</code>-Typs zu benennen,
-anstatt einen Namen wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im
-Abschnitt <a href="ch05-03-method-syntax.html">„Methodensyntax“</a> in Kapitel 5 näher betrachten, und
-wenn wir in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
+<p>Der doppelte Doppelpunkt (<code>::</code>) Operator erlaubt uns, diese spezielle Funktion
+<code>from</code> mit dem Namensraum des <code>String</code>-Typs zu benennen, anstatt einen Namen
+wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im Abschnitt
+<a href="ch05-03-method-syntax.html">„Methodensyntax“</a> in Kapitel 5 näher betrachten, und wenn wir
+in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
 verweisen“</a> über den Namensraum mit Modulen sprechen. </p>
 <p>Diese Art von Zeichenkette kann <em>verändert</em> werden:</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -3699,10 +3699,10 @@ Größe, und diese beiden Werte <code>5</code> werden auf den Stapelspeicher gel
 let s2 = s1;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Dieser sieht dem vorherigen Code sehr ähnlich, sodass wir annehmen könnten,
-dass die Funktionsweise die gleiche wäre: Das heißt, die zweite Zeile würde
-eine Kopie des Wertes in <code>s1</code> erstellen und sie an <code>s2</code> binden. Aber das ist
-nicht ganz das, was passiert.</p>
+<p>Dies sieht sehr ähnlich aus, sodass wir annehmen könnten, dass die
+Funktionsweise die gleiche wäre: Das heißt, die zweite Zeile würde eine Kopie
+des Wertes in <code>s1</code> erstellen und sie an <code>s2</code> binden. Aber das ist nicht ganz
+das, was passiert.</p>
 <p>Betrachte Abbildung 4-1, um zu sehen, was mit dem <code>String</code> unter der Haube
 geschieht. Ein <code>String</code> besteht aus drei Teilen, die auf der linken Seite
 dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
@@ -3744,10 +3744,8 @@ freizugeben.</p>
 einer der Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das
 zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
 was potenziell zu Sicherheitslücken führen kann.</p>
-<p>Um Speichersicherheit zu gewährleisten, gibt es noch ein weiteres Detail, was
-Rust in dieser Situation macht. Nach <code>let s2 = s1</code> betrachtet Rust <code>s1</code> als
-nicht mehr gültig. Daher braucht Rust nichts freizugeben, wenn <code>s1</code> den
-Gültigkeitsbereich verlässt. Schau dir an, was
+<p>Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile <code>let s2 = s1</code> die Variable <code>s1</code> als nicht mehr gültig. Daher braucht Rust nichts
+freizugeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
@@ -3840,17 +3838,17 @@ nachdem wir die Variable <code>y</code> erstellt haben. Mit anderen Worten, es g
 keinen Unterschied zwischen tiefen und flachen Kopien, also würde der Aufruf
 <code>clone</code> nichts anderes tun als das übliche flache Kopieren, und wir können es
 weglassen.</p>
-<p>Rust hat eine spezielle Annotation, das Merkmal <code>Copy</code>, die wir an Typen wie
-ganze Zahlen hängen können, die auf dem Stapelspeicher gespeichert sind (wir
+<p>Rust hat eine spezielle Annotation, das Merkmal <code>Copy</code>, die wir an Typen hängen
+können, die auf dem Stapelspeicher wie ganze Zahlen gespeichert sind (wir
 werden in Kapitel 10 mehr über Merkmale sprechen). Wenn ein Typ das Merkmal
-<code>Copy</code> hat, ist eine ältere Variable nach der Zuweisung noch verwendbar. Rust
-lässt uns einen Typ nicht mit dem Merkmal <code>Copy</code> annotieren, wenn der Typ oder
-einer seiner Teile das Merkmal <code>Drop</code> implementiert. Wenn der Typ eine
-Sonderbehandlung braucht, wenn der Wert den Gültigkeitsbereich verlässt und wir
-die Annotation <code>Copy</code> zu diesem Typ hinzufügen, erhalten wir einen
-Kompilierfehler. Um zu erfahren, wie du die <code>Copy</code>-Annotation zu deinem Typ
-hinzufügen kannst, siehe <a href="appendix-03-derivable-traits.html">„Ableitbare Merkmale (traits)“</a> in
-Anhang C.</p>
+<code>Copy</code> hat, ist eine Variable nach der Zuweisung an eine andere Variable noch
+verwendbar. Rust lässt uns einen Typ nicht mit dem Merkmal <code>Copy</code> annotieren,
+wenn der Typ oder einer seiner Teile das Merkmal <code>Drop</code> implementiert. Wenn der
+Typ eine Sonderbehandlung braucht, wenn der Wert den Gültigkeitsbereich
+verlässt und wir die Annotation <code>Copy</code> zu diesem Typ hinzufügen, erhalten wir
+einen Kompilierfehler. Um zu erfahren, wie du die <code>Copy</code>-Annotation zu deinem
+Typ hinzufügen kannst, siehe <a href="appendix-03-derivable-traits.html">„Ableitbare Merkmale (traits)“</a>
+in Anhang C.</p>
 <p>Welche Typen unterstützen also <code>Copy</code>? Du kannst die Dokumentation für einen
 gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:</p>
 <ol>
@@ -3907,7 +3905,8 @@ hinzuzufügen, der <code>s</code> und <code>x</code> verwendet, um zu sehen, wo 
 kannst und wo die Eigentumsregeln dich daran hindern.</p>
 <h3 id="rückgabewerte-und-gültigkeitsbereich"><a class="header" href="#rückgabewerte-und-gültigkeitsbereich">Rückgabewerte und Gültigkeitsbereich</a></h3>
 <p>Rückgabewerte können auch Eigentümerschaft übertragen. Codeblock 4-4 ist ein
-Beispiel mit ähnlichen Anmerkungen wie die in Codeblock 4-3.</p>
+Beispiel für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie
+die in Codeblock 4-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let s1 = gives_ownership();         // gives_ownership verschiebt seinen
@@ -3944,16 +3943,17 @@ fn takes_and_gives_back(a_string: String) -&gt; String { // a_string kommt in de
 <p>Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
 Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
 Variable, die Daten im Haldenspeicher enthält, den Gültigkeitsbereich
-verlässt, wird der Wert durch <code>drop</code> aufgeräumt, es sei denn, die Daten wurden
-in das Eigentum einer anderen Variable verschoben.</p>
-<p>Es ist etwas mühsam, das Eigentum zu übernehmen und es dann mit jeder Funktion
-zurückzugeben. Was ist, wenn wir eine Funktion einen Wert nutzen lassen wollen,
-aber nicht die Eigentümerschaft übergeben wollen? Es ist ziemlich lästig, dass
-alles, was wir übergeben, auch wieder zurückgegeben werden muss, wenn wir es
-wieder verwenden wollen, zusätzlich zu den Daten, die sich aus dem
-Funktionsrumpf ergeben, die wir vielleicht auch zurückgeben wollen.</p>
-<p>Es ist möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben, wie in
-Codeblock 4-5 gezeigt.</p>
+verlässt, wird der Wert durch <code>drop</code> aufgeräumt, es sei denn, die
+Eigentümerschaft wurde auf eine andere Variable verschoben.</p>
+<p>Dies funktioniert zwar, allerdings ist es etwas mühsam, die Eigentümerschaft zu
+übernehmen und in jeder Funktion zurückzugeben. Was ist, wenn wir eine Funktion
+einen Wert nutzen lassen wollen, aber nicht die Eigentümerschaft übergeben
+wollen? Es ist ziemlich lästig, dass alles, was wir übergeben, auch wieder
+zurückgegeben werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu
+den Daten, die sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch
+zurückgeben wollen.</p>
+<p>Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
+wie in Codeblock 4-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let s1 = String::from(&quot;Hallo&quot;);
@@ -3972,16 +3972,22 @@ fn calculate_length(s: String) -&gt; (String, usize) {
 <p><span class="caption">Codeblock 4-5: Rückgeben der Eigentümerschaft an
 Parametern</span></p>
 <p>Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
-gebräuchlich sein sollte. Zum Glück hat Rust für uns eine Funktionalität zu
-diesem Konzept, das <em>Referenzen</em> (references) genannt wird.</p>
+gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
+einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
+<em>Referenzen</em> (references).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="referenzen-und-ausleihen-borrowing"><a class="header" href="#referenzen-und-ausleihen-borrowing">Referenzen und Ausleihen (borrowing)</a></h2>
 <p>Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
 Funktion den <code>String</code> zurückgeben müssen, damit wir den <code>String</code> nach dem
 Aufruf von <code>calculate_length</code> weiter verwenden können, weil der <code>String</code> in
-<code>calculate_length</code> verschoben wurde.</p>
-<p>Im Folgenden siehst du, wie du eine Funktion <code>calculate_length</code> definieren und
-verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
-die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
+<code>calculate_length</code> verschoben wurde. Stattdessen können wir eine Referenz auf
+den <code>String</code>-Wert angeben. Eine <em>Referenz</em> ist wie ein Zeiger, d.h. eine
+Adresse, der wir folgen können, um auf Daten zugreifen können, die an dieser
+Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
+einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
+Wert eines bestimmten Typs zeigt. Im Folgenden siehst du, wie du eine Funktion
+<code>calculate_length</code> definieren und verwenden kannst, die eine Referenz auf ein
+Objekt als Parameter hat, anstatt die Eigentümerschaft (ownership) des Wertes
+zu übernehmen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let s1 = String::from(&quot;Hallo&quot;);
@@ -3998,10 +4004,9 @@ fn calculate_length(s: &amp;String) -&gt; usize {
 <p>Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>&amp;s1</code> an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
-<code>String</code> steht.</p>
-<p>Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht es dir, sich auf
-einen Wert zu beziehen, ohne dessen Eigentümerschaft zu übernehmen. Abbildung
-4-5 zeigt die Speicherdarstellung.</p>
+<code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht
+es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
+übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.</p>
 <img alt="&String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
 <p><span class="caption">Abbildung 4-5: Eine Grafik mit <code>&amp;String s</code>, das auf
 <code>String s1</code> zeigt</span></p>
@@ -4046,14 +4051,14 @@ Anmerkungen ergänzen:</p>
   // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
 </code></pre></pre>
 <p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie
-der Gültigkeitsbereich aller Funktionsparameter, aber wir lassen nicht
-verfallen, worauf die Referenz verweist, wenn <code>s</code> nicht mehr benutzt wird, weil
-wir keine Eigentümerschaft haben. Wenn Funktionen statt der tatsächlichen Werte
+der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
+Referenz zeigt, wird nicht gelöscht, wenn <code>s</code> nicht mehr verwendet wird, weil
+<code>s</code> keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.</p>
 <p>Wir nennen den Vorgang des Erstellens einer Referenz <em>Ausleihen</em> (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
-ausleihen. Wenn du fertig bist, musst du es zurückgeben.</p>
+ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.</p>
 <p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
 ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -4087,8 +4092,9 @@ error: could not compile `ownership` due to previous error
 unveränderlich. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
 Referenz haben.</p>
 <h3 id="veränderliche-referenzen"><a class="header" href="#veränderliche-referenzen">Veränderliche Referenzen</a></h3>
-<p>Wir können den Fehler im Code von Codeblock 4-6 mit nur wenigen kleinen
-Änderungen beheben:</p>
+<p>Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
+mit ein paar kleinen Änderungen ändern können, die stattdessen eine
+<em>veränderliche Referenz</em> verwenden:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut s = String::from(&quot;Hallo&quot;);
@@ -4100,13 +4106,15 @@ fn change(some_string: &amp;mut String) {
     some_string.push_str(&quot; Welt&quot;);
 }
 </code></pre></pre>
-<p>Zuerst mussten wir <code>s</code> ändern, um <code>mut</code> zu sein. Dann mussten wir eine
-veränderliche Referenz mit <code>&amp;mut s</code> erstellen, wo wir die Funktion <code>change</code>
-aufrufen, und die Funktionssignatur aktualisieren, um eine veränderliche
-Referenz mit <code>some_string: &amp;mut String</code> entgegenzunehmen.</p>
-<p>Veränderliche Referenzen haben jedoch eine große Einschränkung: Du kannst nur
-eine veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit
-haben. Dieser Code wird fehlschlagen:</p>
+<p>Zuerst ändern wir <code>s</code>, um <code>mut</code> zu sein. Dann erstellen wir eine
+veränderliche Referenz mit <code>&amp;mut s</code>, wo wir die Funktion <code>change</code>
+aufrufen, und aktualisieren die Funktionssignatur, um eine veränderliche
+Referenz mit <code>some_string: &amp;mut String</code> entgegenzunehmen. Dies macht deutlich,
+dass die Funktion <code>change</code> den Wert, den sie ausleiht, verändert.</p>
+<p>Veränderliche Referenzen haben eine große Einschränkung: Du kannst nur eine
+veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit haben.
+Dieser Code versucht, zwei veränderliche Referenzen auf <code>s</code> zu erstellen, und
+wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -4145,8 +4153,8 @@ Referenz in <code>r2</code> zu erstellen, der die gleichen Daten wie <code>r1</c
 <p>Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
 gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
 kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
-in den meisten Sprachen kann man verändern wann immer man will.</p>
-<p>Diese Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
+in den meisten Sprachen kann man verändern wann immer man will. Diese
+Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
 Kompilierzeit verhindern kann. Eine <em>Daten-Wettlaufsituation</em> (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
 Verhaltensweisen auftreten:</p>
@@ -4176,7 +4184,7 @@ nicht <em>gleichzeitige</em>:</p>
 let r2 = &amp;mut s;
 <span class="boring">}
 </span></code></pre></pre>
-<p>Eine ähnliche Regel gibt es für die Kombination von veränderlichen und
+<p>Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -4209,10 +4217,11 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` due to previous error
 </code></pre>
 <p>Puh! Wir können auch keine veränderlichen Referenzen haben, solange wir eine
-unveränderliche haben. Nutzer einer unveränderlichen Referenz erwarten nicht,
-dass sich die Werte dahinter plötzlich ändern! Mehrere unveränderliche
-Referenzen sind jedoch in Ordnung, da niemand, der die Daten nur liest, die
-Möglichkeit hat, das Lesen der Daten durch andere zu beeinflussen.</p>
+unveränderliche haben auf denselben Wert haben. Nutzer einer unveränderlichen
+Referenz erwarten nicht, dass sich die Werte dahinter plötzlich ändern! Mehrere
+unveränderliche Referenzen sind jedoch in Ordnung, da niemand, der die Daten
+nur liest, die Möglichkeit hat, das Lesen der Daten durch andere zu
+beeinflussen.</p>
 <p>Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
@@ -4237,8 +4246,8 @@ nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
 Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
-Gültigkeitsbereichs nicht mehr verwendet wird, wird als nicht-lexikalische
-Lebensdauer (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
+Gültigkeitsbereichs nicht mehr verwendet wird, wird als <em>nicht-lexikalische
+Lebensdauer</em> (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
 darüber in <a href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a> lesen.</p>
 <p>Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
@@ -4254,8 +4263,8 @@ bestehen bleibt. In Rust hingegen garantiert der Compiler, dass Referenzen
 niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
 stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.</p>
-<p>Versuchen wir, eine hängende Referenz zu erstellen, was Rust mit einem
-Kompilierfehler verhindern wird:</p>
+<p>Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
+mit einem Kompilierfehler verhindert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let reference_to_nothing = dangle();
@@ -4280,7 +4289,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -&gt; &amp;'static String {
-  |                ^^^^^^^^
+  |                ~~~~~~~~
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error
@@ -4289,10 +4298,9 @@ error: could not compile `ownership` due to previous error
 behandelt haben: Die Lebensdauer. Wir werden die Lebensdauer in Kapitel 10 im
 Detail besprechen. Abgesehen von den Hinweisen zur Lebensdauer enthält die
 Meldung den entscheidenden Hinweis, warum dieser Code nicht funktioniert:</p>
-<blockquote>
-<p>Hilfe: Der Rückgabetyp dieser Funktion enthält einen ausgeliehenen Wert, aber
-es gibt keinen Wert der ausgeliehen werden kann.</p>
-</blockquote>
+<pre><code class="language-text">this function's return type contains a borrowed value, but there is no value
+for it to be borrowed from
+</code></pre>
 <p>Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 <code>dangle</code>-Codes geschieht:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -4336,19 +4344,20 @@ Referenz <em>oder</em> eine beliebige Anzahl unveränderlicher Referenzen haben.
 <p>Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
 Anteilstypen (slice).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="der-anteilstyp-slice"><a class="header" href="#der-anteilstyp-slice">Der Anteilstyp (slice)</a></h2>
-<p>Ein weiterer Datentyp, für den keine Eigentümerschaft besteht, ist der
-<em>Anteilstyp</em> (slice). Mit Anteilstypen kannst du auf eine zusammenhängende
-Folge von Elementen in einer Kollektion verweisen, anstatt auf die gesamte
-Kollektion.</p>
+<p>Mit <em>Anteilstypen</em> kannst du auf eine zusammenhängende Folge von Elementen in
+einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
+Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.</p>
 <p>Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette entgegennimmt und das erste Wort zurückgibt, das sie in dieser
 Zeichenkette findet. Wenn die Funktion kein Leerzeichen in der Zeichenkette
 findet, muss die gesamte Zeichenkette ein Wort sein, also sollte die gesamte
 Zeichenkette zurückgegeben werden.</p>
-<p>Lass uns über die Signatur dieser Funktion nachdenken:</p>
+<p>Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
+von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
+Anteilstypen gelöst wird:</p>
 <pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?
 </code></pre>
-<p>Diese Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
+<p>Die Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
 Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
 haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenkette zu
 sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
@@ -4409,15 +4418,15 @@ Methode <code>iter</code> verwenden:</p>
 </span><span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>Auf Iteratoren werden wir in Kapitel 13 näher eingehen. Fürs Erste solltest du
-wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer Kollektion
-zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und stattdessen
-jedes Element als Teil eines Tupels zurückgibt. Das erste Element des Tupels,
-das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das zweite Element
-ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
-zu berechnen.</p>
+<p>Auf Iteratoren werden wir in <a href="ch13-02-iterators.html">Kapitel 13</a> näher eingehen. Fürs Erste
+solltest du wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer
+Kollektion zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und
+stattdessen jedes Element als Teil eines Tupels zurückgibt. Das erste Element
+des Tupels, das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das
+zweite Element ist eine Referenz auf das Element. Das ist etwas bequemer, als
+den Index selbst zu berechnen.</p>
 <p>Da die Methode <code>enumerate</code> ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+um dieses Tupel zu zerlegen. Wir werden uns in <a href="ch06-02-match.html#muster-die-werte-binden">Kapitel 6</a> eingehender mit
 Mustern befassen. In der <code>for</code>-Schleife spezifizieren wir also ein Muster, das
 <code>i</code> für den Index im Tupel und <code>&amp;item</code> für das einzelne Byte im Tupel hat. Da
 wir eine Referenz auf das Element aus <code>.iter().enumerate()</code> erhalten, verwenden
@@ -4491,8 +4500,8 @@ Signatur müsste dann so aussehen:</p>
 </code></pre>
 <p>Jetzt verfolgen wir einen Anfangs- <em>und</em> einen Endindex, und wir haben noch
 mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
-überhaupt nicht an diesen Zustand gebunden sind. Wir haben jetzt drei
-unverbundene Variablen, die synchron gehalten werden müssen.</p>
+überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
+Variablen, die synchron gehalten werden müssen.</p>
 <p>Glücklicherweise hat Rust eine Lösung für dieses Problem:
 Zeichenkettenanteilstypen</p>
 <h3 id="zeichenkettenanteilstypen-string-slices"><a class="header" href="#zeichenkettenanteilstypen-string-slices">Zeichenkettenanteilstypen (string slices)</a></h3>
@@ -4507,17 +4516,15 @@ let hello = &amp;s[0..5];
 let world = &amp;s[6..10];
 <span class="boring">}
 </span></code></pre></pre>
-<p>Dies ist ähnlich zu einem Verweis auf den gesamten <code>String</code>, aber mit
-zusätzlichem <code>[0..5]</code>. Es handelt sich nicht um eine Referenz auf den gesamten
-<code>String</code>, sondern auf einen Teil des <code>String</code>.</p>
-<p>Wir können Anteilstypen mit einem Bereich innerhalb Klammern erstellen, indem
-wir <code>[starting_index..ending_index]</code> angeben, wobei <code>starting_index</code> die erste
-Position im Anteilstyp ist und <code>ending_index</code> die Position hinter der letzten
-Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
-Startposition und die Länge des Anteilstyps, was <code>ending_index</code> minus
-<code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code>
-also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von <code>s</code> mit
-einem Längenwert von 4 enthält.</p>
+<p>Anstelle einer Referenz auf den gesamten <code>String</code> ist <code>hello</code> eine Referenz auf
+einen Teil des <code>String</code>, der mit dem zusätzlichen <code>[0..5]</code> spezifiziert ist.
+Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
+indem wir <code>[starting_index..ending_index]</code> angeben, wobei <code>starting_index</code> die
+erste Position im Anteilstyp und <code>ending_index</code> eine Position mehr als die
+letzte Position im Anteilstyp ist. Intern speichert die
+Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
+was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
+Index 6 von <code>s</code> mit einem Längenwert von 4 enthält.</p>
 <p>Abbildung 4-6 zeigt dies.</p>
 <p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
@@ -10379,11 +10386,20 @@ den Wert im Feld <code>x</code> zurückgibt.</p>
 <p>Beachte, dass wir <code>T</code> direkt nach <code>impl</code> deklarieren müssen, damit wir Methoden
 zum Typ <code>Point&lt;T&gt;</code> implementieren können. Durch das Deklarieren von <code>T</code> als
 generischen Typ hinter <code>impl</code> kann Rust erkennen, dass der Typ in spitzen
-Klammern in <code>Point</code> ein generischer und kein konkreter Typ ist.</p>
-<p>Wir könnten zum Beispiel Methoden nur für <code>Point&lt;f32&gt;</code>-Instanzen
-implementieren, anstatt für <code>Point&lt;T&gt;</code>-Instanzen mit einem generischen Typ. In
-Codeblock 10-10 verwenden wir den konkreten Typ <code>f32</code>, d.h. wir deklarieren
-keinen Typ hinter <code>impl</code>.</p>
+Klammern in <code>Point</code> ein generischer und kein konkreter Typ ist. Da es sich hier
+um eine erneute Deklaration des generischen Typs handelt, hätten wir einen
+anderen Namen für den generischen Parameter wählen können als den in der
+Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
+desselben Namens ist üblich. Methoden, die innerhalb eines <code>impl</code> geschrieben
+werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
+definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
+ersetzt.</p>
+<p>Die andere Möglichkeit, die wir haben, ist die Definition von Methoden auf dem
+Typ mit einer gewissen Einschränkung auf den generischen Typ. Wir könnten zum
+Beispiel Methoden nur auf <code>Point&lt;f32&gt;</code>-Instanzen implementieren und nicht auf
+<code>Point&lt;T&gt;</code>-Instanzen mit einem beliebigen generischen Typ. In Codeblock 10-10
+verwenden wir den konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter
+<code>impl</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct Point&lt;T&gt; {
 </span><span class="boring">    x: T,
@@ -10419,19 +10435,19 @@ verwendet mathematische Operationen, die nur für Fließkomma-Typen zur Verfügu
 stehen.</p>
 <p>Generische Typparameter in einer Strukturdefinition sind nicht immer die
 gleichen wie die, die du in den Methodensignaturen für diese Struktur
-verwendest. Zum Beispiel definiert Codeblock 10-11 die Methode <code>mixup</code> auf der
-Struktur <code>Point&lt;T, U&gt;</code> aus Codeblock 10-8. Die Methode nimmt einen weiteren
-<code>Point</code> als Parameter, der andere Typen haben kann als die bei <code>self</code>. Die
-Methode erzeugt eine neue <code>Point</code>-Instanz mit dem Wert <code>x</code> aus <code>self</code> (vom Typ
-<code>T</code>) und dem Wert <code>y</code> aus dem übergebenen <code>Point</code> (vom Typ <code>W</code>).</p>
+verwendest. In Codeblock 10-11 werden die generischen Typen <code>X1</code> und <code>Y1</code> für
+die Struktur <code>Point</code> und <code>X2</code> und <code>Y2</code> für die Signatur der Methode <code>mixup</code>
+verwendet, um das Beispiel zu verdeutlichen. Die Methode erzeugt eine neue
+<code>Point</code>-Instanz mit dem Wert <code>x</code> aus <code>self</code> (vom Typ <code>X1</code>) und dem Wert <code>y</code> aus
+dem übergebenen <code>Point</code> (vom Typ <code>Y2</code>).</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct Point&lt;T, U&gt; {
-    x: T,
-    y: U,
+<pre><pre class="playground"><code class="language-rust">struct Point&lt;X1, Y1&gt; {
+    x: X1,
+    y: Y1,
 }
 
-impl&lt;T, U&gt; Point&lt;T, U&gt; {
-    fn mixup&lt;V, W&gt;(self, other: Point&lt;V, W&gt;) -&gt; Point&lt;T, W&gt; {
+impl&lt;X1, Y1&gt; Point&lt;X1, Y1&gt; {
+    fn mixup&lt;X2, Y2&gt;(self, other: Point&lt;X2, Y2&gt;) -&gt; Point&lt;X1, Y2&gt; {
         Point {
             x: self.x,
             y: other.y,
@@ -10460,9 +10476,9 @@ auf <code>p1</code> mit dem Argument <code>p2</code> aufrufen, erhalten wir <cod
 <code>p3.x = 5, p3.y = c</code> aus.</p>
 <p>Der Zweck dieses Beispiels ist es, eine Situation zu demonstrieren, in der
 einige generische Parameter mit <code>impl</code> und einige mit der Methodendefinition
-deklariert werden. Hier werden die generischen Parameter <code>T</code> und <code>U</code> nach
+deklariert werden. Hier werden die generischen Parameter <code>X1</code> und <code>Y1</code> nach
 <code>impl</code> deklariert, weil sie zur Strukturdefinition gehören. Die generischen
-Parameter <code>V</code> und <code>W</code> werden nach <code>fn mixup</code> deklariert, da sie nur für die
+Parameter <code>X2</code> und <code>Y2</code> werden nach <code>fn mixup</code> deklariert, da sie nur für die
 Methode relevant sind.</p>
 <h3 id="code-performanz-beim-verwenden-generischer-datentypen"><a class="header" href="#code-performanz-beim-verwenden-generischer-datentypen">Code-Performanz beim Verwenden generischer Datentypen</a></h3>
 <p>Du fragst dich vielleicht, ob beim Verwenden generischer Typparameter
@@ -10540,12 +10556,13 @@ die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
 <code>Tweet</code>, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die angeben,
 ob es sich um eine neue Kurznachricht, eine Wiederholung oder eine Antwort auf
 eine andere Kurznachricht handelt.</p>
-<p>Wir wollen eine Medienaggregator-Bibliothek erstellen, die Zusammenfassungen
-von Daten anzeigen kann, die in einer <code>NewsArticle</code>- oder <code>Tweet</code>-Instanz
-gespeichert sind. Dazu benötigen wir eine Zusammenfassung für jeden Typ und wir
-wollen diese Zusammenfassung anfordern, indem wir eine Methode <code>summarize</code> der
-Instanz aufrufen. Codeblock 10-12 zeigt die Definition eines Merkmals
-<code>Summary</code>, das dieses Verhalten zum Ausdruck bringt.</p>
+<p>Wir wollen eine Medienaggregator-Bibliothekskiste namens <code>aggregator</code>
+erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
+<code>NewsArticle</code>- oder <code>Tweet</code>-Instanz gespeichert sein könnten. Dazu brauchen wir
+eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
+anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufrufen.
+Codeblock 10-12 zeigt die Definition eines öffentlichen <code>Summary</code>-Merkmals, das
+dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10558,10 +10575,12 @@ Instanz aufrufen. Codeblock 10-12 zeigt die Definition eines Merkmals
 <p><span class="caption">Codeblock 10-12: Ein Merkmal <code>Summary</code>, dessen Verhalten
 aus der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Merkmal mit dem Schlüsselwort <code>trait</code> und dann den
-Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Innerhalb der
-geschweiften Klammern deklarieren wir die Methodensignaturen, die das Verhalten
-der Typen beschreiben, die dieses Merkmal implementieren, was in diesem Fall
-<code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
+Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir haben das Merkmal
+auch als <code>pub</code> deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
+Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
+das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
+diesem Fall <code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
 <p>Nach der Methodensignatur verwenden wir statt einer Implementierung in
 geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Merkmal
 implementiert, muss sein eigenes benutzerdefiniertes Verhalten für den
@@ -10571,14 +10590,14 @@ Signatur hat.</p>
 <p>Ein Merkmal kann mehrere Methoden umfassen: Die Methodensignaturen werden
 zeilenweise aufgelistet und jede Zeile endet mit einem Semikolon.</p>
 <h3 id="ein-merkmal-für-einen-typ-implementieren"><a class="header" href="#ein-merkmal-für-einen-typ-implementieren">Ein Merkmal für einen Typ implementieren</a></h3>
-<p>Da wir nun das gewünschte Verhalten mithilfe des Merkmals <code>Summary</code> definiert
-haben, können wir es für die Typen unseres Medienaggregators implementieren. 
-Codeblock 10-13 zeigt eine Implementierung des Merkmals <code>Summary</code> für die
-Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und den Ort verwendet,
-um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die Struktur <code>Tweet</code>
-definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom gesamten Text der
-Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der Kurznachricht
-bereits auf 280 Zeichen begrenzt ist.</p>
+<p>Nachdem wir nun die gewünschten Signaturen der Methoden des Merkmals <code>Summary</code>
+definiert haben, können wir sie für die Typen in unserem Medienaggregator
+implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
+<code>Summary</code> für die Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und
+den Ort verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
+Struktur <code>Tweet</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom
+gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
+Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -10625,9 +10644,13 @@ Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
 Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
 den jeweiligen Typ haben sollen.</p>
-<p>Nachdem wir das Merkmal implementiert haben, können wir die Methoden der
-<code>NewsArticle</code>- und <code>Tweet</code>-Instanzen auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen, etwa so:</p>
+<p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>Tweet</code>
+implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
+Instanzen von <code>NewsArticle</code> und <code>Tweet</code> auf die gleiche Weise aufrufen, wie wir
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
+Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
+wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
 <pre><code class="language-rust ignore"><span class="boring">use chapter10::{self, Summary, Tweet};
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -10644,24 +10667,13 @@ reguläre Methoden aufrufen, etwa so:</p>
 <span class="boring">}
 </span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
-<p>Beachte, dass wir in Codeblock 10-13 das Merkmal <code>Summary</code> und die Typen
-<code>NewsArticle</code> und <code>Tweet</code> in der gleichen Datei <em>lib.rs</em> definiert haben,
-sodass sie alle im gleichen Gültigkeitsbereich liegen. Nehmen wir an, diese
-Datei <em>lib.rs</em> ist für eine Kiste (crate), die wir <code>aggregator</code> genannt haben,
-und jemand anderes möchte die Funktionalität unserer Kiste nutzen, um das
-Merkmal <code>Summary</code> für eine Struktur innerhalb des Gültigkeitsbereichs seiner
-Bibliothek zu implementieren. Dann muss er das Merkmal erst in seinen
-Gültigkeitsbereich bringen. Er würde dies durch Angeben von
-<code>use aggregator::Summary;</code> tun, was es ihm dann ermöglichen würde,<code>Summary</code> für
-seinen Typ zu implementieren. Das Merkmal <code>Summary</code> müsste auch ein
-öffentliches Merkmal für eine andere Kiste sein, um sie zu implementieren, was
-auch der Fall ist, weil wir in Codeblock 10-12 das Schlüsselwort <code>pub</code> vor das
-Merkmal <code>trait</code> gestellt haben.</p>
-<p>Eine Einschränkung, die bei der Implementierung von Merkmalen zu beachten ist,
-ist, dass wir ein Merkmal für einen Typ nur dann implementieren können, wenn
-entweder das Merkmal oder der Typ lokal in unserer Kiste vorhanden ist. Zum
-Beispiel können wir Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem
-benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
+<p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
+<code>Summary</code> in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
+Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
+implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
+Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
+<code>Display</code> auf einem benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
 <code>aggregator</code>-Kistenfunktionalität implementieren, weil der Typ <code>Tweet</code> lokal zu
 unserer <code>aggregator</code>-Kiste gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in
 unserer <code>aggregator</code>-Kiste implementieren, weil das Merkmal <code>Summary</code> lokal zu
@@ -11155,10 +11167,13 @@ um diese Probleme zu lösen.</p>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
-<code>Pair&lt;T&gt;</code> in Codeblock 10-16 immer die Funktion <code>new</code>. Aber <code>Pair&lt;T&gt;</code>
-implementiert die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die
-Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw.
-eine Ausgabe ermöglichen.</p>
+<code>Pair&lt;T&gt;</code> in Codeblock 10-16 immer die Funktion <code>new</code>, um eine neue Instanz von
+<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an den Abschnitt <a href="ch05-03-method-syntax.html#definieren-von-methoden">„Definieren von
+Methoden“</a> in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des
+<code>impl</code>-Blocks ist, der in diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten
+<code>impl</code>-Block implementiert <code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr
+innerer Typ <code>T</code> die Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die
+den Vergleich bzw. eine Ausgabe ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -11245,12 +11260,11 @@ miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.</p>
-<p>Das Konzept der Lebensdauer unterscheidet sich etwas von Werkzeugen in anderen
-Programmiersprachen, was die Lebensdauer wohl zur charakteristischsten
-Funktionalität von Rust macht. Auch wenn wir in diesem Kapitel die Lebensdauern
-nicht in ihrer Gesamtheit behandeln werden, so werden wir doch allgemeine
-Möglichkeiten erörtern, mit denen du dich mit der Syntax der Lebensdauer und
-den Konzepten vertraut machen kannst.</p>
+<p>Das Kommentieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
+wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
+werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
+mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.</p>
 <h3 id="verhindern-hängender-referenzen-mit-lebensdauern"><a class="header" href="#verhindern-hängender-referenzen-mit-lebensdauern">Verhindern hängender Referenzen mit Lebensdauern</a></h3>
 <p>Das Hauptziel der Lebensdauer ist es, hängende Referenzen zu verhindern, die
 dazu führen, dass ein Programm auf andere Daten referenziert als die, auf die
@@ -11475,11 +11489,12 @@ leben müssen wie diese generische Lebensdauer.</p>
 <p>Lass uns nun Lebensdauer-Annotationen im Kontext der Funktion <code>longest</code>
 untersuchen. Wie bei generischen Typparametern müssen wir generische
 Lebensdauerparameter innerhalb spitzer Klammern zwischen dem Funktionsnamen und
-der Parameterliste deklarieren. Die Beschränkung, die wir mit dieser Signatur
-zum Ausdruck bringen wollen, besteht darin, dass alle Referenzen in den
-Parametern und dem Rückgabewert die gleiche Lebensdauer haben müssen. Wir
-nennen die Lebensdauer <code>'a</code> und fügen sie dann jeder Referenz hinzu, wie in
-Codeblock 10-22 gezeigt.</p>
+der Parameterliste deklarieren. Die Beschränkung, die wir in dieser Signatur
+ausdrücken wollen, besteht darin, dass die Lebensdauer der beiden Parameter und
+die Lebensdauer der zurückgegebenen Referenz so aufeinander bezogen sind, dass
+die zurückgegebene Referenz so lange gültig ist, wie es die beiden Parameter
+sind. Wir nennen die Lebensdauer <code>'a</code> und fügen sie dann jeder Referenz hinzu,
+wie in Codeblock 10-22 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
@@ -11500,6 +11515,8 @@ Codeblock 10-22 gezeigt.</p>
 <p><span class="caption">Codeblock 10-22: Die Funktionsdefinition <code>longest</code> gibt
 an, dass alle Referenzen in der Signatur die gleiche Lebensdauer <code>'a</code> haben
 müssen</span></p>
+<p>Dieser Code sollte kompilierbar sein und das gewünschte Ergebnis liefern, wenn
+wir ihn mit der Funktion <code>main</code> in Codeblock 10-20 verwenden.</p>
 <p>Die Funktionssignatur sagt Rust, dass die Funktion für eine gewisse Lebensdauer
 <code>'a</code> zwei Parameter benötigt, die beide den Zeichenkettenanteilstyp haben und
 mindestens so lange leben wie die Lebensdauer <code>'a</code>. Die Funktionssignatur sagt
@@ -11507,8 +11524,9 @@ Rust auch, dass der von der Funktion zurückgegebene Zeichenkettenanteilstyp
 mindestens so lange leben wird wie die Lebensdauer <code>'a</code>. In der Praxis bedeutet
 dies, dass die Lebensdauer der von der Funktion <code>longest</code> zurückgegebenen
 Referenz identisch mit der kürzeren der Lebensdauern der entgegengenommenen
-Referenzen ist. Diese Bedingung wollen wir durch Rust sicherstellen lassen.
-Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
+Referenzen ist. Diese Beziehungen sollen von Rust verwendet werden, wenn es
+diesen Code analysiert.</p>
+<p>Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
 angeben, ändern wir nicht die Lebensdauer der übergebenen oder zurückgegebenen
 Werte. Vielmehr legen wir fest, dass der Ausleihenprüfer alle Werte ablehnen
 soll, die sich nicht an diese Bedingung halten. Beachte, dass die Funktion
@@ -11516,12 +11534,16 @@ soll, die sich nicht an diese Bedingung halten. Beachte, dass die Funktion
 ein gewisser Gültigkeitsbereich für <code>'a</code> eingesetzt werden kann, der dieser
 Signatur genügt.</p>
 <p>Wenn Funktionen mit Lebensdauern annotiert werden, gehören die Annotationen zur
-Funktionssignatur, nicht zum Funktionsrumpf. Rust kann den Code innerhalb der
-Funktion ohne jede Hilfe analysieren. Wenn eine Funktion jedoch Referenzen auf
-oder von Code außerhalb dieser Funktion hat, wird es für Rust fast unmöglich,
-die Lebensdauer der Parameter oder Rückgabewerte allein herauszufinden. Die
-Lebensdauer kann bei jedem Aufruf der Funktion unterschiedlich sein. Aus diesem
-Grund müssen wir die Lebensdauern manuell angeben.</p>
+Funktionssignatur, nicht zum Funktionsrumpf. Die Lebensdauer-Annotationen werden
+Teil des Funktionsvertrags, ähnlich wie die Typen in der Signatur. Wenn
+Funktionssignaturen den Lebensdauervertrag enthalten, kann die Analyse des
+Rust-Compilers einfacher sein. Wenn es ein Problem mit der Art und Weise gibt,
+wie eine Funktion annotiert ist oder wie sie aufgerufen wird, können die
+Compilerfehler auf den Teil unseres Codes und die Beschränkungen genauer
+hinweisen. Wenn der Rust-Compiler stattdessen mehr Rückschlüsse auf die von uns
+beabsichtigten Beziehungen der Lebensdauern ziehen würde, könnte der Compiler
+nur auf eine Verwendung unseres Codes hinweisen, die viele Schritte von der
+Ursache des Problems entfernt ist.</p>
 <p>Wenn wir der Funktion <code>longest</code> konkrete Referenzen übergeben, ist die konkrete
 Lebensdauer, die an die Stelle von <code>'a</code> tritt, der Teil des Gültigkeitsbereichs
 von <code>x</code>, der sich mit dem Gültigkeitsbereich von <code>y</code> überschneidet. Mit anderen
@@ -12002,12 +12024,11 @@ where
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens <code>ann</code> vom generischen Typ <code>T</code>, der jeder beliebige Typ sein
 kann, der das Merkmal <code>Display</code> implementiert, wie in der <code>where</code>-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird ausgegeben, bevor die
-Funktion die Längen der Zeichenkettenanteilstypen vergleicht, weshalb die
-Merkmalsabgrenzung <code>Display</code> notwendig ist. Da die Lebensdauer ein generischer
-Typ ist, stehen die Deklarationen des Lebensdauer-Parameters <code>'a</code> und des
-generischen Typ-Parameters <code>T</code> in der gleichen Liste innerhalb spitzer Klammern
-hinter dem Funktionsnamen.</p>
+spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von <code>{}</code>
+ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist. Da die
+Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
+Lebensdauer-Parameters <code>'a</code> und des generischen Typ-Parameters <code>T</code> in der
+gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.</p>
 <h2 id="zusammenfassung-9"><a class="header" href="#zusammenfassung-9">Zusammenfassung</a></h2>
 <p>Wir haben in diesem Kapitel viel behandelt! Jetzt, da du über generische
 Typparameter, Merkmale und Merkmalsabgrenzungen sowie generische
@@ -13046,8 +13067,9 @@ den Fragezeichen-Operator im Testrumpf verwenden, was eine bequeme Möglichkeit
 sein kann, Tests zu schreiben, die fehlschlagen sollten, wenn irgendeine
 Operation darin eine <code>Err</code>-Variante zurückgibt.</p>
 <p>Du kannst die Annotation <code>#[should_panic]</code> nicht für Tests verwenden, die
-<code>Result&lt;T, E&gt;</code> verwenden. Stattdessen solltest du direkt einen <code>Err</code>-Wert
-zurückgeben, wenn der Test fehlschlagen soll.</p>
+<code>Result&lt;T, E&gt;</code> verwenden. Um sicherzustellen, dass eine Operation eine
+<code>Err</code>-Variante zurückgibt, verwende <em>nicht</em> den Fragezeichen-Operator auf den
+<code>Result&lt;T, E&gt;</code>-Wert. Verwende stattdessen <code>assert!(value.is_err())</code>.</p>
 <p>Da du nun verschiedene Möglichkeiten kennst, Tests zu schreiben, lass uns einen
 Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
 verschiedenen Optionen untersuchen, die wir mit <code>cargo test</code> verwenden können.</p>

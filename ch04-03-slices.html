@@ -135,19 +135,20 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="der-anteilstyp-slice"><a class="header" href="#der-anteilstyp-slice">Der Anteilstyp (slice)</a></h2>
-<p>Ein weiterer Datentyp, für den keine Eigentümerschaft besteht, ist der
-<em>Anteilstyp</em> (slice). Mit Anteilstypen kannst du auf eine zusammenhängende
-Folge von Elementen in einer Kollektion verweisen, anstatt auf die gesamte
-Kollektion.</p>
+<p>Mit <em>Anteilstypen</em> kannst du auf eine zusammenhängende Folge von Elementen in
+einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
+Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.</p>
 <p>Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette entgegennimmt und das erste Wort zurückgibt, das sie in dieser
 Zeichenkette findet. Wenn die Funktion kein Leerzeichen in der Zeichenkette
 findet, muss die gesamte Zeichenkette ein Wort sein, also sollte die gesamte
 Zeichenkette zurückgegeben werden.</p>
-<p>Lass uns über die Signatur dieser Funktion nachdenken:</p>
+<p>Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
+von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
+Anteilstypen gelöst wird:</p>
 <pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?
 </code></pre>
-<p>Diese Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
+<p>Die Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
 Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
 haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenkette zu
 sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
@@ -208,15 +209,15 @@ Methode <code>iter</code> verwenden:</p>
 </span><span class="boring">}
 </span><span class="boring">}
 </span></code></pre></pre>
-<p>Auf Iteratoren werden wir in Kapitel 13 näher eingehen. Fürs Erste solltest du
-wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer Kollektion
-zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und stattdessen
-jedes Element als Teil eines Tupels zurückgibt. Das erste Element des Tupels,
-das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das zweite Element
-ist eine Referenz auf das Element. Das ist etwas bequemer, als den Index selbst
-zu berechnen.</p>
+<p>Auf Iteratoren werden wir in <a href="ch13-02-iterators.html">Kapitel 13</a> näher eingehen. Fürs Erste
+solltest du wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer
+Kollektion zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und
+stattdessen jedes Element als Teil eines Tupels zurückgibt. Das erste Element
+des Tupels, das von <code>enumerate</code> zurückgegeben wird, ist der Index, und das
+zweite Element ist eine Referenz auf das Element. Das ist etwas bequemer, als
+den Index selbst zu berechnen.</p>
 <p>Da die Methode <code>enumerate</code> ein Tupel zurückgibt, können wir Muster verwenden,
-um dieses Tupel zu zerlegen. Wir werden uns in Kapitel 6 eingehender mit
+um dieses Tupel zu zerlegen. Wir werden uns in <a href="ch06-02-match.html#muster-die-werte-binden">Kapitel 6</a> eingehender mit
 Mustern befassen. In der <code>for</code>-Schleife spezifizieren wir also ein Muster, das
 <code>i</code> für den Index im Tupel und <code>&amp;item</code> für das einzelne Byte im Tupel hat. Da
 wir eine Referenz auf das Element aus <code>.iter().enumerate()</code> erhalten, verwenden
@@ -290,8 +291,8 @@ Signatur müsste dann so aussehen:</p>
 </code></pre>
 <p>Jetzt verfolgen wir einen Anfangs- <em>und</em> einen Endindex, und wir haben noch
 mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
-überhaupt nicht an diesen Zustand gebunden sind. Wir haben jetzt drei
-unverbundene Variablen, die synchron gehalten werden müssen.</p>
+überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
+Variablen, die synchron gehalten werden müssen.</p>
 <p>Glücklicherweise hat Rust eine Lösung für dieses Problem:
 Zeichenkettenanteilstypen</p>
 <h3 id="zeichenkettenanteilstypen-string-slices"><a class="header" href="#zeichenkettenanteilstypen-string-slices">Zeichenkettenanteilstypen (string slices)</a></h3>
@@ -306,17 +307,15 @@ let hello = &amp;s[0..5];
 let world = &amp;s[6..10];
 <span class="boring">}
 </span></code></pre></pre>
-<p>Dies ist ähnlich zu einem Verweis auf den gesamten <code>String</code>, aber mit
-zusätzlichem <code>[0..5]</code>. Es handelt sich nicht um eine Referenz auf den gesamten
-<code>String</code>, sondern auf einen Teil des <code>String</code>.</p>
-<p>Wir können Anteilstypen mit einem Bereich innerhalb Klammern erstellen, indem
-wir <code>[starting_index..ending_index]</code> angeben, wobei <code>starting_index</code> die erste
-Position im Anteilstyp ist und <code>ending_index</code> die Position hinter der letzten
-Position im Anteilstyp. Intern speichert die Anteilstyp-Datenstruktur die
-Startposition und die Länge des Anteilstyps, was <code>ending_index</code> minus
-<code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code>
-also ein Anteilstyp, der einen Zeiger auf das Byte bei Index 6 von <code>s</code> mit
-einem Längenwert von 4 enthält.</p>
+<p>Anstelle einer Referenz auf den gesamten <code>String</code> ist <code>hello</code> eine Referenz auf
+einen Teil des <code>String</code>, der mit dem zusätzlichen <code>[0..5]</code> spezifiziert ist.
+Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
+indem wir <code>[starting_index..ending_index]</code> angeben, wobei <code>starting_index</code> die
+erste Position im Anteilstyp und <code>ending_index</code> eine Position mehr als die
+letzte Position im Anteilstyp ist. Intern speichert die
+Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
+was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
+Index 6 von <code>s</code> mit einem Längenwert von 4 enthält.</p>
 <p>Abbildung 4-6 zeigt dies.</p>
 <p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>

@@ -158,12 +158,13 @@ die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
 <code>Tweet</code>, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die angeben,
 ob es sich um eine neue Kurznachricht, eine Wiederholung oder eine Antwort auf
 eine andere Kurznachricht handelt.</p>
-<p>Wir wollen eine Medienaggregator-Bibliothek erstellen, die Zusammenfassungen
-von Daten anzeigen kann, die in einer <code>NewsArticle</code>- oder <code>Tweet</code>-Instanz
-gespeichert sind. Dazu benötigen wir eine Zusammenfassung für jeden Typ und wir
-wollen diese Zusammenfassung anfordern, indem wir eine Methode <code>summarize</code> der
-Instanz aufrufen. Codeblock 10-12 zeigt die Definition eines Merkmals
-<code>Summary</code>, das dieses Verhalten zum Ausdruck bringt.</p>
+<p>Wir wollen eine Medienaggregator-Bibliothekskiste namens <code>aggregator</code>
+erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
+<code>NewsArticle</code>- oder <code>Tweet</code>-Instanz gespeichert sein könnten. Dazu brauchen wir
+eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
+anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufrufen.
+Codeblock 10-12 zeigt die Definition eines öffentlichen <code>Summary</code>-Merkmals, das
+dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -176,10 +177,12 @@ Instanz aufrufen. Codeblock 10-12 zeigt die Definition eines Merkmals
 <p><span class="caption">Codeblock 10-12: Ein Merkmal <code>Summary</code>, dessen Verhalten
 aus der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Merkmal mit dem Schlüsselwort <code>trait</code> und dann den
-Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Innerhalb der
-geschweiften Klammern deklarieren wir die Methodensignaturen, die das Verhalten
-der Typen beschreiben, die dieses Merkmal implementieren, was in diesem Fall
-<code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
+Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir haben das Merkmal
+auch als <code>pub</code> deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
+Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
+das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
+diesem Fall <code>fn summarize(&amp;self) -&gt; String</code> ist.</p>
 <p>Nach der Methodensignatur verwenden wir statt einer Implementierung in
 geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Merkmal
 implementiert, muss sein eigenes benutzerdefiniertes Verhalten für den
@@ -189,14 +192,14 @@ Signatur hat.</p>
 <p>Ein Merkmal kann mehrere Methoden umfassen: Die Methodensignaturen werden
 zeilenweise aufgelistet und jede Zeile endet mit einem Semikolon.</p>
 <h3 id="ein-merkmal-für-einen-typ-implementieren"><a class="header" href="#ein-merkmal-für-einen-typ-implementieren">Ein Merkmal für einen Typ implementieren</a></h3>
-<p>Da wir nun das gewünschte Verhalten mithilfe des Merkmals <code>Summary</code> definiert
-haben, können wir es für die Typen unseres Medienaggregators implementieren. 
-Codeblock 10-13 zeigt eine Implementierung des Merkmals <code>Summary</code> für die
-Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und den Ort verwendet,
-um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die Struktur <code>Tweet</code>
-definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom gesamten Text der
-Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der Kurznachricht
-bereits auf 280 Zeichen begrenzt ist.</p>
+<p>Nachdem wir nun die gewünschten Signaturen der Methoden des Merkmals <code>Summary</code>
+definiert haben, können wir sie für die Typen in unserem Medienaggregator
+implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
+<code>Summary</code> für die Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und
+den Ort verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
+Struktur <code>Tweet</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom
+gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
+Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -243,9 +246,13 @@ Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
 Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
 den jeweiligen Typ haben sollen.</p>
-<p>Nachdem wir das Merkmal implementiert haben, können wir die Methoden der
-<code>NewsArticle</code>- und <code>Tweet</code>-Instanzen auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen, etwa so:</p>
+<p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>Tweet</code>
+implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
+Instanzen von <code>NewsArticle</code> und <code>Tweet</code> auf die gleiche Weise aufrufen, wie wir
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
+Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
+wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
 <pre><code class="language-rust ignore"><span class="boring">use chapter10::{self, Summary, Tweet};
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -262,24 +269,13 @@ reguläre Methoden aufrufen, etwa so:</p>
 <span class="boring">}
 </span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
-<p>Beachte, dass wir in Codeblock 10-13 das Merkmal <code>Summary</code> und die Typen
-<code>NewsArticle</code> und <code>Tweet</code> in der gleichen Datei <em>lib.rs</em> definiert haben,
-sodass sie alle im gleichen Gültigkeitsbereich liegen. Nehmen wir an, diese
-Datei <em>lib.rs</em> ist für eine Kiste (crate), die wir <code>aggregator</code> genannt haben,
-und jemand anderes möchte die Funktionalität unserer Kiste nutzen, um das
-Merkmal <code>Summary</code> für eine Struktur innerhalb des Gültigkeitsbereichs seiner
-Bibliothek zu implementieren. Dann muss er das Merkmal erst in seinen
-Gültigkeitsbereich bringen. Er würde dies durch Angeben von
-<code>use aggregator::Summary;</code> tun, was es ihm dann ermöglichen würde,<code>Summary</code> für
-seinen Typ zu implementieren. Das Merkmal <code>Summary</code> müsste auch ein
-öffentliches Merkmal für eine andere Kiste sein, um sie zu implementieren, was
-auch der Fall ist, weil wir in Codeblock 10-12 das Schlüsselwort <code>pub</code> vor das
-Merkmal <code>trait</code> gestellt haben.</p>
-<p>Eine Einschränkung, die bei der Implementierung von Merkmalen zu beachten ist,
-ist, dass wir ein Merkmal für einen Typ nur dann implementieren können, wenn
-entweder das Merkmal oder der Typ lokal in unserer Kiste vorhanden ist. Zum
-Beispiel können wir Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem
-benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
+<p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
+<code>Summary</code> in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
+Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
+implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
+Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
+<code>Display</code> auf einem benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
 <code>aggregator</code>-Kistenfunktionalität implementieren, weil der Typ <code>Tweet</code> lokal zu
 unserer <code>aggregator</code>-Kiste gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in
 unserer <code>aggregator</code>-Kiste implementieren, weil das Merkmal <code>Summary</code> lokal zu
@@ -773,10 +769,13 @@ um diese Probleme zu lösen.</p>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
-<code>Pair&lt;T&gt;</code> in Codeblock 10-16 immer die Funktion <code>new</code>. Aber <code>Pair&lt;T&gt;</code>
-implementiert die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die
-Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw.
-eine Ausgabe ermöglichen.</p>
+<code>Pair&lt;T&gt;</code> in Codeblock 10-16 immer die Funktion <code>new</code>, um eine neue Instanz von
+<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an den Abschnitt <a href="ch05-03-method-syntax.html#definieren-von-methoden">„Definieren von
+Methoden“</a> in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des
+<code>impl</code>-Blocks ist, der in diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten
+<code>impl</code>-Block implementiert <code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr
+innerer Typ <code>T</code> die Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die
+den Vergleich bzw. eine Ausgabe ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
