@@ -3,11 +3,15 @@
 Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
-`calculate_length` verschoben wurde.
-
-Im Folgenden siehst du, wie du eine Funktion `calculate_length` definieren und
-verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
-die Eigentümerschaft (ownership) des Wertes zu übernehmen:
+`calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
+den `String`-Wert angeben. Eine *Referenz* ist wie ein Zeiger, d.h. eine
+Adresse, der wir folgen können, um auf Daten zugreifen können, die an dieser
+Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
+einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
+Wert eines bestimmten Typs zeigt. Im Folgenden siehst du, wie du eine Funktion
+`calculate_length` definieren und verwenden kannst, die eine Referenz auf ein
+Objekt als Parameter hat, anstatt die Eigentümerschaft (ownership) des Wertes
+zu übernehmen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -28,11 +32,9 @@ fn calculate_length(s: &String) -> usize {
 Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 `&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
-`String` steht.
-
-Das `&`-Zeichen steht für eine *Referenz*, und sie ermöglicht es dir, sich auf
-einen Wert zu beziehen, ohne dessen Eigentümerschaft zu übernehmen. Abbildung
-4-5 zeigt die Speicherdarstellung.
+`String` steht. Das `&`-Zeichen steht für eine *Referenz*, und sie ermöglicht
+es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
+übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.
 
 <img alt="&String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
 
@@ -86,15 +88,15 @@ fn calculate_length(s: &String) -> usize { // s ist eine Referenz
 ```
 
 Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
-der Gültigkeitsbereich aller Funktionsparameter, aber wir lassen nicht
-verfallen, worauf die Referenz verweist, wenn `s` nicht mehr benutzt wird, weil
-wir keine Eigentümerschaft haben. Wenn Funktionen statt der tatsächlichen Werte
+der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
+Referenz zeigt, wird nicht gelöscht, wenn `s` nicht mehr verwendet wird, weil
+`s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
 
 Wir nennen den Vorgang des Erstellens einer Referenz *Ausleihen* (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
-ausleihen. Wenn du fertig bist, musst du es zurückgeben.
+ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.
 
 Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
 ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
@@ -139,8 +141,9 @@ Referenz haben.
 
 ### Veränderliche Referenzen
 
-Wir können den Fehler im Code von Codeblock 4-6 mit nur wenigen kleinen
-Änderungen beheben:
+Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
+mit ein paar kleinen Änderungen ändern können, die stattdessen eine
+*veränderliche Referenz* verwenden:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -156,14 +159,16 @@ fn change(some_string: &mut String) {
 }
 ```
 
-Zuerst mussten wir `s` ändern, um `mut` zu sein. Dann mussten wir eine
-veränderliche Referenz mit `&mut s` erstellen, wo wir die Funktion `change`
-aufrufen, und die Funktionssignatur aktualisieren, um eine veränderliche
-Referenz mit `some_string: &mut String` entgegenzunehmen.
+Zuerst ändern wir `s`, um `mut` zu sein. Dann erstellen wir eine
+veränderliche Referenz mit `&mut s`, wo wir die Funktion `change`
+aufrufen, und aktualisieren die Funktionssignatur, um eine veränderliche
+Referenz mit `some_string: &mut String` entgegenzunehmen. Dies macht deutlich,
+dass die Funktion `change` den Wert, den sie ausleiht, verändert.
 
-Veränderliche Referenzen haben jedoch eine große Einschränkung: Du kannst nur
-eine veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit
-haben. Dieser Code wird fehlschlagen:
+Veränderliche Referenzen haben eine große Einschränkung: Du kannst nur eine
+veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit haben.
+Dieser Code versucht, zwei veränderliche Referenzen auf `s` zu erstellen, und
+wird fehlschlagen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -206,9 +211,8 @@ Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
 Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
 gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
 kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
-in den meisten Sprachen kann man verändern wann immer man will.
-
-Diese Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
+in den meisten Sprachen kann man verändern wann immer man will. Diese
+Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
 Kompilierzeit verhindern kann. Eine *Daten-Wettlaufsituation* (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
 Verhaltensweisen auftreten:
@@ -238,7 +242,7 @@ let mut s = String::from("Hallo");
 let r2 = &mut s;
 ```
 
-Eine ähnliche Regel gibt es für die Kombination von veränderlichen und
+Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:
 
 ```rust,does_not_compile
@@ -273,10 +277,11 @@ error: could not compile `ownership` due to previous error
 ```
 
 Puh! Wir können auch keine veränderlichen Referenzen haben, solange wir eine
-unveränderliche haben. Nutzer einer unveränderlichen Referenz erwarten nicht,
-dass sich die Werte dahinter plötzlich ändern! Mehrere unveränderliche
-Referenzen sind jedoch in Ordnung, da niemand, der die Daten nur liest, die
-Möglichkeit hat, das Lesen der Daten durch andere zu beeinflussen.
+unveränderliche haben auf denselben Wert haben. Nutzer einer unveränderlichen
+Referenz erwarten nicht, dass sich die Werte dahinter plötzlich ändern! Mehrere
+unveränderliche Referenzen sind jedoch in Ordnung, da niemand, der die Daten
+nur liest, die Möglichkeit hat, das Lesen der Daten durch andere zu
+beeinflussen.
 
 Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
@@ -301,8 +306,8 @@ nach dem `println!`, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
 Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
-Gültigkeitsbereichs nicht mehr verwendet wird, wird als nicht-lexikalische
-Lebensdauer (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
+Gültigkeitsbereichs nicht mehr verwendet wird, wird als *nicht-lexikalische
+Lebensdauer* (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
 darüber in [The Edition Guide][nll] lesen.
 
 Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
@@ -322,8 +327,8 @@ niemals hängende Referenzen sein können: Wenn du eine Referenz auf Daten hast,
 stellt der Compiler sicher, dass die Daten nicht den Gültigkeitsbereich
 verlassen, bevor die Referenz auf die Daten dies tut.
 
-Versuchen wir, eine hängende Referenz zu erstellen, was Rust mit einem
-Kompilierfehler verhindern wird:
+Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
+mit einem Kompilierfehler verhindert:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -354,7 +359,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -> &'static String {
-  |                ^^^^^^^^
+  |                ~~~~~~~~
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error
@@ -365,8 +370,10 @@ behandelt haben: Die Lebensdauer. Wir werden die Lebensdauer in Kapitel 10 im
 Detail besprechen. Abgesehen von den Hinweisen zur Lebensdauer enthält die
 Meldung den entscheidenden Hinweis, warum dieser Code nicht funktioniert:
 
-> Hilfe: Der Rückgabetyp dieser Funktion enthält einen ausgeliehenen Wert, aber
-> es gibt keinen Wert der ausgeliehen werden kann.
+```text
+this function's return type contains a borrowed value, but there is no value
+for it to be borrowed from
+```
 
 Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 `dangle`-Codes geschieht:

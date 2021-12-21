@@ -356,12 +356,21 @@ den Wert im Feld `x` zurückgibt.
 Beachte, dass wir `T` direkt nach `impl` deklarieren müssen, damit wir Methoden
 zum Typ `Point<T>` implementieren können. Durch das Deklarieren von `T` als
 generischen Typ hinter `impl` kann Rust erkennen, dass der Typ in spitzen
-Klammern in `Point` ein generischer und kein konkreter Typ ist.
+Klammern in `Point` ein generischer und kein konkreter Typ ist. Da es sich hier
+um eine erneute Deklaration des generischen Typs handelt, hätten wir einen
+anderen Namen für den generischen Parameter wählen können als den in der
+Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
+desselben Namens ist üblich. Methoden, die innerhalb eines `impl` geschrieben
+werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
+definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
+ersetzt.
 
-Wir könnten zum Beispiel Methoden nur für `Point<f32>`-Instanzen
-implementieren, anstatt für `Point<T>`-Instanzen mit einem generischen Typ. In
-Codeblock 10-10 verwenden wir den konkreten Typ `f32`, d.h. wir deklarieren
-keinen Typ hinter `impl`.
+Die andere Möglichkeit, die wir haben, ist die Definition von Methoden auf dem
+Typ mit einer gewissen Einschränkung auf den generischen Typ. Wir könnten zum
+Beispiel Methoden nur auf `Point<f32>`-Instanzen implementieren und nicht auf
+`Point<T>`-Instanzen mit einem beliebigen generischen Typ. In Codeblock 10-10
+verwenden wir den konkreten Typ `f32`, d.h. wir deklarieren keinen Typ hinter
+`impl`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -403,22 +412,22 @@ stehen.
 
 Generische Typparameter in einer Strukturdefinition sind nicht immer die
 gleichen wie die, die du in den Methodensignaturen für diese Struktur
-verwendest. Zum Beispiel definiert Codeblock 10-11 die Methode `mixup` auf der
-Struktur `Point<T, U>` aus Codeblock 10-8. Die Methode nimmt einen weiteren
-`Point` als Parameter, der andere Typen haben kann als die bei `self`. Die
-Methode erzeugt eine neue `Point`-Instanz mit dem Wert `x` aus `self` (vom Typ
-`T`) und dem Wert `y` aus dem übergebenen `Point` (vom Typ `W`).
+verwendest. In Codeblock 10-11 werden die generischen Typen `X1` und `Y1` für
+die Struktur `Point` und `X2` und `Y2` für die Signatur der Methode `mixup`
+verwendet, um das Beispiel zu verdeutlichen. Die Methode erzeugt eine neue
+`Point`-Instanz mit dem Wert `x` aus `self` (vom Typ `X1`) und dem Wert `y` aus
+dem übergebenen `Point` (vom Typ `Y2`).
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-struct Point<T, U> {
-    x: T,
-    y: U,
+struct Point<X1, Y1> {
+    x: X1,
+    y: Y1,
 }
 
-impl<T, U> Point<T, U> {
-    fn mixup<V, W>(self, other: Point<V, W>) -> Point<T, W> {
+impl<X1, Y1> Point<X1, Y1> {
+    fn mixup<X2, Y2>(self, other: Point<X2, Y2>) -> Point<X1, Y2> {
         Point {
             x: self.x,
             y: other.y,
@@ -450,9 +459,9 @@ auf `p1` mit dem Argument `p2` aufrufen, erhalten wir `p3`, das ein `i32` für
 
 Der Zweck dieses Beispiels ist es, eine Situation zu demonstrieren, in der
 einige generische Parameter mit `impl` und einige mit der Methodendefinition
-deklariert werden. Hier werden die generischen Parameter `T` und `U` nach
+deklariert werden. Hier werden die generischen Parameter `X1` und `Y1` nach
 `impl` deklariert, weil sie zur Strukturdefinition gehören. Die generischen
-Parameter `V` und `W` werden nach `fn mixup` deklariert, da sie nur für die
+Parameter `X2` und `Y2` werden nach `fn mixup` deklariert, da sie nur für die
 Methode relevant sind.
 
 ### Code-Performanz beim Verwenden generischer Datentypen

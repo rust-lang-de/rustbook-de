@@ -13,12 +13,11 @@ Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.
 
-Das Konzept der Lebensdauer unterscheidet sich etwas von Werkzeugen in anderen
-Programmiersprachen, was die Lebensdauer wohl zur charakteristischsten
-Funktionalität von Rust macht. Auch wenn wir in diesem Kapitel die Lebensdauern
-nicht in ihrer Gesamtheit behandeln werden, so werden wir doch allgemeine
-Möglichkeiten erörtern, mit denen du dich mit der Syntax der Lebensdauer und
-den Konzepten vertraut machen kannst.
+Das Kommentieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
+wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
+werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
+mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.
 
 ### Verhindern hängender Referenzen mit Lebensdauern
 
@@ -290,11 +289,12 @@ leben müssen wie diese generische Lebensdauer.
 Lass uns nun Lebensdauer-Annotationen im Kontext der Funktion `longest`
 untersuchen. Wie bei generischen Typparametern müssen wir generische
 Lebensdauerparameter innerhalb spitzer Klammern zwischen dem Funktionsnamen und
-der Parameterliste deklarieren. Die Beschränkung, die wir mit dieser Signatur
-zum Ausdruck bringen wollen, besteht darin, dass alle Referenzen in den
-Parametern und dem Rückgabewert die gleiche Lebensdauer haben müssen. Wir
-nennen die Lebensdauer `'a` und fügen sie dann jeder Referenz hinzu, wie in
-Codeblock 10-22 gezeigt.
+der Parameterliste deklarieren. Die Beschränkung, die wir in dieser Signatur
+ausdrücken wollen, besteht darin, dass die Lebensdauer der beiden Parameter und
+die Lebensdauer der zurückgegebenen Referenz so aufeinander bezogen sind, dass
+die zurückgegebene Referenz so lange gültig ist, wie es die beiden Parameter
+sind. Wir nennen die Lebensdauer `'a` und fügen sie dann jeder Referenz hinzu,
+wie in Codeblock 10-22 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -320,6 +320,9 @@ fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
 an, dass alle Referenzen in der Signatur die gleiche Lebensdauer `'a` haben
 müssen</span>
 
+Dieser Code sollte kompilierbar sein und das gewünschte Ergebnis liefern, wenn
+wir ihn mit der Funktion `main` in Codeblock 10-20 verwenden.
+
 Die Funktionssignatur sagt Rust, dass die Funktion für eine gewisse Lebensdauer
 `'a` zwei Parameter benötigt, die beide den Zeichenkettenanteilstyp haben und
 mindestens so lange leben wie die Lebensdauer `'a`. Die Funktionssignatur sagt
@@ -327,7 +330,9 @@ Rust auch, dass der von der Funktion zurückgegebene Zeichenkettenanteilstyp
 mindestens so lange leben wird wie die Lebensdauer `'a`. In der Praxis bedeutet
 dies, dass die Lebensdauer der von der Funktion `longest` zurückgegebenen
 Referenz identisch mit der kürzeren der Lebensdauern der entgegengenommenen
-Referenzen ist. Diese Bedingung wollen wir durch Rust sicherstellen lassen.
+Referenzen ist. Diese Beziehungen sollen von Rust verwendet werden, wenn es
+diesen Code analysiert.
+
 Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
 angeben, ändern wir nicht die Lebensdauer der übergebenen oder zurückgegebenen
 Werte. Vielmehr legen wir fest, dass der Ausleihenprüfer alle Werte ablehnen
@@ -337,12 +342,16 @@ ein gewisser Gültigkeitsbereich für `'a` eingesetzt werden kann, der dieser
 Signatur genügt.
 
 Wenn Funktionen mit Lebensdauern annotiert werden, gehören die Annotationen zur
-Funktionssignatur, nicht zum Funktionsrumpf. Rust kann den Code innerhalb der
-Funktion ohne jede Hilfe analysieren. Wenn eine Funktion jedoch Referenzen auf
-oder von Code außerhalb dieser Funktion hat, wird es für Rust fast unmöglich,
-die Lebensdauer der Parameter oder Rückgabewerte allein herauszufinden. Die
-Lebensdauer kann bei jedem Aufruf der Funktion unterschiedlich sein. Aus diesem
-Grund müssen wir die Lebensdauern manuell angeben.
+Funktionssignatur, nicht zum Funktionsrumpf. Die Lebensdauer-Annotationen werden
+Teil des Funktionsvertrags, ähnlich wie die Typen in der Signatur. Wenn
+Funktionssignaturen den Lebensdauervertrag enthalten, kann die Analyse des
+Rust-Compilers einfacher sein. Wenn es ein Problem mit der Art und Weise gibt,
+wie eine Funktion annotiert ist oder wie sie aufgerufen wird, können die
+Compilerfehler auf den Teil unseres Codes und die Beschränkungen genauer
+hinweisen. Wenn der Rust-Compiler stattdessen mehr Rückschlüsse auf die von uns
+beabsichtigten Beziehungen der Lebensdauern ziehen würde, könnte der Compiler
+nur auf eine Verwendung unseres Codes hinweisen, die viele Schritte von der
+Ursache des Problems entfernt ist.
 
 Wenn wir der Funktion `longest` konkrete Referenzen übergeben, ist die konkrete
 Lebensdauer, die an die Stelle von `'a` tritt, der Teil des Gültigkeitsbereichs
@@ -920,12 +929,11 @@ Dies ist die Funktion `longest` aus Codeblock 10-22, die die längere von zwei
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens `ann` vom generischen Typ `T`, der jeder beliebige Typ sein
 kann, der das Merkmal `Display` implementiert, wie in der `where`-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird ausgegeben, bevor die
-Funktion die Längen der Zeichenkettenanteilstypen vergleicht, weshalb die
-Merkmalsabgrenzung `Display` notwendig ist. Da die Lebensdauer ein generischer
-Typ ist, stehen die Deklarationen des Lebensdauer-Parameters `'a` und des
-generischen Typ-Parameters `T` in der gleichen Liste innerhalb spitzer Klammern
-hinter dem Funktionsnamen.
+spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von `{}`
+ausgegeben, weshalb die Merkmalsabgrenzung `Display` erforderlich ist. Da die
+Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
+Lebensdauer-Parameters `'a` und des generischen Typ-Parameters `T` in der
+gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.
 
 ## Zusammenfassung
 

@@ -26,12 +26,13 @@ die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
 ob es sich um eine neue Kurznachricht, eine Wiederholung oder eine Antwort auf
 eine andere Kurznachricht handelt.
 
-Wir wollen eine Medienaggregator-Bibliothek erstellen, die Zusammenfassungen
-von Daten anzeigen kann, die in einer `NewsArticle`- oder `Tweet`-Instanz
-gespeichert sind. Dazu benötigen wir eine Zusammenfassung für jeden Typ und wir
-wollen diese Zusammenfassung anfordern, indem wir eine Methode `summarize` der
-Instanz aufrufen. Codeblock 10-12 zeigt die Definition eines Merkmals
-`Summary`, das dieses Verhalten zum Ausdruck bringt.
+Wir wollen eine Medienaggregator-Bibliothekskiste namens `aggregator`
+erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
+`NewsArticle`- oder `Tweet`-Instanz gespeichert sein könnten. Dazu brauchen wir
+eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
+anfordern, indem wir eine Methode `summarize` auf einer Instanz aufrufen.
+Codeblock 10-12 zeigt die Definition eines öffentlichen `Summary`-Merkmals, das
+dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -45,10 +46,12 @@ pub trait Summary {
 aus der Methode `summarize` besteht</span>
 
 Hier deklarieren wir ein Merkmal mit dem Schlüsselwort `trait` und dann den
-Namen des Merkmals, der in diesem Fall `Summary` lautet. Innerhalb der
-geschweiften Klammern deklarieren wir die Methodensignaturen, die das Verhalten
-der Typen beschreiben, die dieses Merkmal implementieren, was in diesem Fall
-`fn summarize(&self) -> String` ist.
+Namen des Merkmals, der in diesem Fall `Summary` lautet. Wir haben das Merkmal
+auch als `pub` deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
+Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
+das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
+diesem Fall `fn summarize(&self) -> String` ist.
 
 Nach der Methodensignatur verwenden wir statt einer Implementierung in
 geschweiften Klammern ein Semikolon. Jeder Typ, der dieses Merkmal
@@ -62,14 +65,14 @@ zeilenweise aufgelistet und jede Zeile endet mit einem Semikolon.
 
 ### Ein Merkmal für einen Typ implementieren
 
-Da wir nun das gewünschte Verhalten mithilfe des Merkmals `Summary` definiert
-haben, können wir es für die Typen unseres Medienaggregators implementieren. 
-Codeblock 10-13 zeigt eine Implementierung des Merkmals `Summary` für die
-Struktur `NewsArticle`, die die Überschrift, den Autor und den Ort verwendet,
-um den Rückgabewert von `summarize` zu erzeugen. Für die Struktur `Tweet`
-definieren wir `summarize` als den Benutzernamen, gefolgt vom gesamten Text der
-Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der Kurznachricht
-bereits auf 280 Zeichen begrenzt ist.
+Nachdem wir nun die gewünschten Signaturen der Methoden des Merkmals `Summary`
+definiert haben, können wir sie für die Typen in unserem Medienaggregator
+implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
+`Summary` für die Struktur `NewsArticle`, die die Überschrift, den Autor und
+den Ort verwendet, um den Rückgabewert von `summarize` zu erzeugen. Für die
+Struktur `Tweet` definieren wir `summarize` als den Benutzernamen, gefolgt vom
+gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
+Kurznachricht bereits auf 280 Zeichen begrenzt ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -118,9 +121,13 @@ Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
 Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
 den jeweiligen Typ haben sollen.
 
-Nachdem wir das Merkmal implementiert haben, können wir die Methoden der
-`NewsArticle`- und `Tweet`-Instanzen auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen, etwa so:
+Da die Bibliothek nun das Merkmal `Summary` auf `NewsArticle` und `Tweet`
+implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
+Instanzen von `NewsArticle` und `Tweet` auf die gleiche Weise aufrufen, wie wir
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
+Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
+wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
 
 ```rust,ignore
 # use chapter10::{self, Summary, Tweet};
@@ -142,25 +149,13 @@ reguläre Methoden aufrufen, etwa so:
 Dieser Code gibt `1 neue Kurznachricht: horse_ebooks: natürlich, wie du
 wahrscheinlich schon weißt` aus.
 
-Beachte, dass wir in Codeblock 10-13 das Merkmal `Summary` und die Typen
-`NewsArticle` und `Tweet` in der gleichen Datei *lib.rs* definiert haben,
-sodass sie alle im gleichen Gültigkeitsbereich liegen. Nehmen wir an, diese
-Datei *lib.rs* ist für eine Kiste (crate), die wir `aggregator` genannt haben,
-und jemand anderes möchte die Funktionalität unserer Kiste nutzen, um das
-Merkmal `Summary` für eine Struktur innerhalb des Gültigkeitsbereichs seiner
-Bibliothek zu implementieren. Dann muss er das Merkmal erst in seinen
-Gültigkeitsbereich bringen. Er würde dies durch Angeben von
-`use aggregator::Summary;` tun, was es ihm dann ermöglichen würde,`Summary` für
-seinen Typ zu implementieren. Das Merkmal `Summary` müsste auch ein
-öffentliches Merkmal für eine andere Kiste sein, um sie zu implementieren, was
-auch der Fall ist, weil wir in Codeblock 10-12 das Schlüsselwort `pub` vor das
-Merkmal `trait` gestellt haben.
-
-Eine Einschränkung, die bei der Implementierung von Merkmalen zu beachten ist,
-ist, dass wir ein Merkmal für einen Typ nur dann implementieren können, wenn
-entweder das Merkmal oder der Typ lokal in unserer Kiste vorhanden ist. Zum
-Beispiel können wir Standard-Bibliotheksmerkmale wie `Display` auf einem
-benutzerdefinierten Typ wie `Tweet` als Teil unserer
+Andere Kisten, die von der `aggregator`-Kiste abhängen, können auch das Merkmal
+`Summary` in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
+Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
+implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
+Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
+`Display` auf einem benutzerdefinierten Typ wie `Tweet` als Teil unserer
 `aggregator`-Kistenfunktionalität implementieren, weil der Typ `Tweet` lokal zu
 unserer `aggregator`-Kiste gehört. Wir können auch `Summary` auf `Vec<T>` in
 unserer `aggregator`-Kiste implementieren, weil das Merkmal `Summary` lokal zu
@@ -718,10 +713,13 @@ um diese Probleme zu lösen.
 Durch Verwenden einer Merkmalsabgrenzung mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
-`Pair<T>` in Codeblock 10-16 immer die Funktion `new`. Aber `Pair<T>`
-implementiert die Methode `cmp_display` nur, wenn ihr innerer Typ `T` die
-Merkmale `PartialOrd` *und* `Display` implementiert, die den Vergleich bzw.
-eine Ausgabe ermöglichen.
+`Pair<T>` in Codeblock 10-16 immer die Funktion `new`, um eine neue Instanz von
+`Pair<T>` zurückzugeben (erinnere dich an den Abschnitt [„Definieren von
+Methoden“][methods] in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des
+`impl`-Blocks ist, der in diesem Fall `Pair<T>` ist). Aber im nächsten
+`impl`-Block implementiert `Pair<T>` die Methode `cmp_display` nur, wenn ihr
+innerer Typ `T` die Merkmale `PartialOrd` *und* `Display` implementiert, die
+den Vergleich bzw. eine Ausgabe ermöglichen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -801,6 +799,7 @@ gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
 Referenzen so lange gültig sind, wie wir sie brauchen. Schauen wir uns an, wie
 Lebensdauern das tun.
 
+[methods]: ch05-03-method-syntax.html#definieren-von-methoden
 [stack-only-data-copy]:
 ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [using-trait-objects-that-allow-for-values-of-different-types]:
