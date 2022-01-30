@@ -26,7 +26,7 @@ werden:
 Informationen über weitere Kollektionsarten, die von der Standardbibliothek
 bereitgestellt werden, findest du in [der Dokumentation][collections].
 
-[collections]: https://doc.rust-lang.org/std/collections/index.html
-
 Wir werden erörtern, wie Vektoren, Zeichenketten und Hashtabellen erstellt und
 aktualisiert werden und was jede einzelne besonders macht.
+
+[collections]: https://doc.rust-lang.org/std/collections/index.html

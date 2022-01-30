@@ -9,8 +9,8 @@ Preise der Artikel in einem Einkaufswagen.
 
 ### Erstellen eines neuen Vektors
 
-Um einen neuen, leeren Vektor zu erstellen, können wir die Funktion `Vec::new`
-aufrufen, wie in Codeblock 8-1 gezeigt.
+Um einen neuen, leeren Vektor zu erstellen, rufen wir die Funktion `Vec::new`
+auf, wie in Codeblock 8-1 gezeigt.
 
 ```rust
 let v: Vec<i32> = Vec::new();
@@ -25,19 +25,18 @@ zu speichern beabsichtigen. Dies ist ein wichtiger Punkt. Vektoren werden mit
 Hilfe generischer Typen implementiert; wie du eigene generische Typen verwenden
 kannst, wird in Kapitel 10 behandelt. Für den Moment sollst du wissen, dass der
 von der Standardbibliothek bereitgestellte Typ `Vec<T>` jeden Typ enthalten
-kann, und wenn ein bestimmter Vektor einen bestimmten Typ enthält, wird der Typ
+kann. Wenn wir einen Vektor zu einem bestimmten Typ erstellen, wird der Typ
 in spitzen Klammern angegeben. In Codeblock 8-1 haben wir Rust gesagt, dass der
 Vektor `Vec<T>` in `v` Elemente des Typs `i32` enthalten wird.
 
-In realistischerem Code kann Rust oft auf den Typ des Wertes schließen, den du
-nach dem Einfügen von Werten speichern möchtest, sodass du diese Art der
-Annotation nur selten verwenden musst. Häufiger kommt es vor, einen `Vec<T>` zu
-erstellen, der Anfangswerte hat, und Rust stellt der Einfachheit halber das
-Makro `vec!` zur Verfügung. Das Makro erstellt einen neuen Vektor, der die von
-dir angegebenen Werte enthält. Codeblock 8-2 erzeugt einen neuen `Vec<i32>`,
-der die Werte `1`, `2` und `3` enthält. Als Integer-Typ wird `i32` verwendet,
-weil das der Standard-Integer-Typ ist, wie wir im Abschnitt
-[„Datentypen“][data-types] in Kapitel 3 besprochen haben.
+Meistens wird man ein `Vec<T>` mit Anfangswerten erstellen und Rust wird den
+Typ des Wertes, den man speichern will, ableiten, sodass man diese
+Typ-Annotation nur selten benötigt. Rust bietet praktischerweise das Makro
+`vec!`, das einen neuen Vektor erzeugt, der die von dir angegebenen Werte
+enthält. Codeblock 8-2 erzeugt einen neuen `Vec<i32>`, der die Werte `1`, `2`
+und `3` enthält. Als Integer-Typ wird `i32` verwendet, weil das der
+Standard-Integer-Typ ist, wie wir im Abschnitt [„Datentypen“][data-types] in
+Kapitel 3 besprochen haben.
 
 ```rust
 let v = vec![1, 2, 3];
@@ -91,17 +90,14 @@ aufgeräumt werden</span>
 
 Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt,
 d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Dies mag recht
-einfach erscheinen, kann aber etwas komplizierter werden, wenn du anfängst,
-Referenzen auf Elemente des Vektors einzuführen. Lass uns das als Nächstes
-angehen!
+einfach erscheinen, kann aber kompliziert werden, wenn du anfängst, Referenzen
+auf Elemente des Vektors einzuführen. Lass uns das als Nächstes angehen!
 
 ### Elemente aus Vektoren lesen
 
-Da du jetzt weißt, wie man Vektoren erstellt, aktualisiert und aufräumt, ist es
-ein guter nächster Schritt zu wissen, wie man ihre Inhalte ausliest. Es gibt
-zwei Möglichkeiten, einen in einem Vektor gespeicherten Wert zu referenzieren. 
-In den Beispielen haben wir zur besseren Lesbarkeit die Werttypen, die von den
-Funktionen zurückgegeben werden, mit angegeben.
+Es gibt zwei Möglichkeiten, einen in einem Vektor gespeicherten Wert zu
+referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
+Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.
 
 Codeblock 8-5 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
 mittels Indexierungssyntax und die Methode `get`.
@@ -122,18 +118,18 @@ match v.get(2) {
 Methode `get` für den Zugriff auf ein Element in einem Vektor</span>
 
 Beachte hier zwei Details. Erstens verwenden wir den Indexwert `2`, um das
-dritte Element zu erhalten: Vektoren werden mit Zahlen indiziert, beginnend bei
-null. Zweitens gibt es zwei Möglichkeiten, das dritte Element zu erhalten:
+dritte Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
+werden. Zweitens gibt es zwei Möglichkeiten, das dritte Element zu erhalten:
 Entweder durch Verwendung von `&` und `[]`, was eine Referenz ergibt, oder
 durch die Methode `get` mit dem Index als Argument, was eine `Option<&T>`
 ergibt.
 
-Rust hat zwei Möglichkeiten, ein Element zu referenzieren, sodass du bestimmen
-kannst, wie sich das Programm verhalten soll, wenn du versuchst, einen
-Indexwert zu verwenden, für den der Vektor kein Element enthält. Als Beispiel
-wollen wir sehen, was ein Programm tut, wenn wir bei einem Vektor mit fünf
-Elementen versuchen, auf ein Element mit Index 100 zuzugreifen, wie in
-Codeblock 8-6 zu sehen ist.
+Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
+referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
+verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
+vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
+Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
+Element mit Index 100 zuzugreifen, wie in Codeblock 8-6 zu sehen ist.
 
 ```rust,should_panic,panics
 let v = vec![1, 2, 3, 4, 5];
@@ -169,7 +165,7 @@ Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
 veränderlichen und unveränderlichen Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-7 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
-versuchen, am Ende ein Element hinzuzufügen, was nicht funktionieren wird, wenn
+versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
 wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.
 
 ```rust,does_not_compile
@@ -209,22 +205,22 @@ error: could not compile `collections` due to previous error
 Der Code in Codeblock 8-7 sieht so aus, als könnte er funktionieren: Warum
 sollte sich eine Referenz auf das erste Element darum kümmern, was sich am
 Ende des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
-begründet: Das Hinzufügen eines neuen Elements am Ende des Vektors könnte die
-Allokation neuen Speichers und das Kopieren der alten Elemente an die neue
-Stelle erfordern, wenn nicht genügend Platz vorhanden ist, um alle Elemente
-nebeneinander an der aktuellen Stelle des Vektors zu platzieren. In diesem Fall
-würde die Referenz auf das erste Element auf einen freigegebenen Speicherplatz
-verweisen. Die Ausleihregeln verhindern, dass Programme in diese Situation
-geraten.
+begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte
+das Hinzufügen eines neuen Elements am Ende des Vektors die Allokation neuen
+Speichers und das Kopieren der alten Elemente an die neue Stelle erfordern,
+wenn nicht genügend Platz vorhanden ist, um alle Elemente nebeneinander an der
+aktuellen Stelle des Vektors zu platzieren. In diesem Fall würde die Referenz
+auf das erste Element auf einen freigegebenen Speicherplatz verweisen. Die
+Ausleihregeln verhindern, dass Programme in diese Situation geraten.
 
 > Anmerkung: Weitere Einzelheiten zu den Implementierungsdetails des Typs
 > `Vec<T>` findest du in [„Das Rustonomicon“][nomicon].
 
 ### Iterieren über die Werte in einem Vektor
 
-Wenn wir auf die Elemente eines Vektors der Reihe nach zugreifen wollen, können
-wir über alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils
-ein Element zur gleichen Zeit zuzugreifen. Codeblock 8-8 zeigt, wie man eine
+Um auf die Elemente eines Vektors der Reihe nach zuzugreifen, können wir über
+alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
+Element zur gleichen Zeit zuzugreifen. Codeblock 8-8 zeigt, wie man eine
 `for`-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
 Vektors von `i32`-Werten zu erhalten und diese auszugeben.
 
@@ -260,20 +256,20 @@ Dereferenzierungsoperator“][deref] in Kapitel 15 sprechen.
 
 ### Verwenden einer Aufzählung zum Speichern mehrerer Typen
 
-Zu Beginn dieses Kapitels haben wir gesagt, dass Vektoren nur Werte desselben
-Typs speichern können. Das kann unbequem sein; es gibt definitiv
-Anwendungsfälle, in denen es notwendig ist, eine Liste von Einträgen
-unterschiedlicher Typen zu speichern. Glücklicherweise werden die Varianten
-einer Aufzählung unter dem gleichen Aufzählungstyp definiert. Wenn wir also
-Elemente eines anderen Typs in einem Vektor speichern wollen, können wir eine
-Aufzählung definieren und verwenden! Angenommen, wir möchten Werte aus einer
-Zeile einer Tabellenkalkulationstabelle erhalten, in der einige Spalten der
-Zeile ganze Zahlen, Fließkommazahlen und Zeichenketten enthalten.  Wir können
-eine Aufzählung definieren, deren Varianten die verschiedenen Werttypen
-enthalten, und dann werden alle Aufzählungsvarianten als derselbe Typ
-angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor erstellen, der
-diese Aufzählung und damit letztlich verschiedene Typen enthält. Wir haben dies
-in Codeblock 8-10 demonstriert.
+Vektoren können nur Werte desselben Typs speichern. Das kann unbequem sein; es
+gibt definitiv Anwendungsfälle, in denen es notwendig ist, eine Liste von
+Einträgen unterschiedlicher Typen zu speichern. Glücklicherweise werden die
+Varianten einer Aufzählung unter dem gleichen Aufzählungstyp definiert. Wenn
+wir also Elemente eines anderen Typs in einem Vektor speichern wollen, können
+wir eine Aufzählung definieren und verwenden!
+
+Angenommen, wir möchten Werte aus einer Zeile einer Tabellenkalkulationstabelle
+erhalten, in der einige Spalten der Zeile ganze Zahlen, Fließkommazahlen und
+Zeichenketten enthalten. Wir können eine Aufzählung definieren, deren Varianten
+die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
+derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
+erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
+Wir haben dies in Codeblock 8-10 demonstriert.
 
 ```rust
 enum SpreadsheetCell {
@@ -294,19 +290,18 @@ verschiedener Typen in einem Vektor zu speichern</span>
 
 Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
 werden, damit es genau weiß, wie viel Speicherplatz im Haldenspeicher
-benötigt wird, um alle Elemente zu speichern. Ein zweiter Vorteil ist, dass wir
-explizit festlegen können, welche Typen in diesem Vektor erlaubt sind. Wenn
-Rust einen Vektor mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass
-einer oder mehrere Typen Fehler bei den an den Elementen des Vektors
-durchgeführten Operationen verursachen würden. Das Verwenden einer Aufzählung
-zusammen mit einem `match`-Ausdruck bedeutet, dass Rust zur Kompilierzeit
-sicherstellt, dass jeder mögliche Fall behandelt wird, wie in Kapitel 6
-besprochen.
+benötigt wird, um alle Elemente zu speichern. Wir müssen auch eindeutig
+festlegen, welche Typen in diesem Vektor zulässig sind. Wenn Rust einen Vektor
+mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass einer oder mehrere
+Typen Fehler bei den an den Elementen des Vektors durchgeführten Operationen
+verursachen würden. Das Verwenden einer Aufzählung zusammen mit einem
+`match`-Ausdruck bedeutet, dass Rust zur Kompilierzeit sicherstellt, dass jeder
+mögliche Fall behandelt wird, wie in Kapitel 6 besprochen.
 
-Wenn du ein Programm schreibst und nicht weißt, welche Typen das Programm zur
-Laufzeit in einen Vektor speichern wird, funktioniert der Aufzählungsansatz
-nicht. Stattdessen kannst du ein Merkmalsobjekt (trait object) verwenden, das
-wir in Kapitel 17 behandeln werden.
+Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
+speichern kann, funktioniert die Aufzählungsansatz nicht. Stattdessen kannst du
+ein Merkmalsobjekt (trait object) verwenden, das wir in Kapitel 17 behandeln
+werden.
 
 Nachdem wir nun einige der gängigsten Methoden zur Verwendung von Vektoren
 besprochen haben, solltest du dir unbedingt die [API-Dokumentation][vec-api] zu
