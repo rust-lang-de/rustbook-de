@@ -3,13 +3,12 @@
 Die Speichersicherheitsgarantien von Rust machen es schwierig, aber nicht
 unmöglich, versehentlich Speicher zu erstellen, der niemals bereinigt wird
 (bekannt als *Speicherleck* (memory leak)). Das vollständige Verhindern von
-Speicherlecks ist keine der Garantien von Rust, ebenso wie das Nichtzulassen von
-Daten-Wettlaufsituationen (data races) zur Kompilierzeit. Dies bedeutet, dass
-Speicherlecks in Rust speichersicher sind. Wir können sehen, dass Rust
-Speicherlecks mithilfe von `Rc<T>` und `RefCell<T>` zulässt: Es ist möglich,
-Referenzen zu erstellen, bei denen Elemente in einem Zyklus aufeinander
-referenzieren. Dies führt zu Speicherlecks, da der Referenzzähler jedes Elements im
-Zyklus niemals 0 erreicht und die Werte niemals gelöscht werden.
+Speicherlecks gehört nicht zu den Garantien von Rust, d.h. Speicherlecks sind
+in Rust speichersicher. Wir können sehen, dass Rust Speicherlecks mithilfe von
+`Rc<T>` und `RefCell<T>` zulässt: Es ist möglich, Referenzen zu erstellen, bei
+denen Elemente in einem Zyklus aufeinander referenzieren. Dies führt zu
+Speicherlecks, da der Referenzzähler jedes Elements im Zyklus niemals 0
+erreicht und die Werte niemals gelöscht werden.
 
 ### Einen Referenzzyklus erstellen
 

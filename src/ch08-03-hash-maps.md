@@ -2,14 +2,14 @@
 
 Die letzte unserer allgemeinen Kollektionen ist die *Hashtabelle* (hash map).
 Der Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
-Werten vom Typ `V`. Er tut dies über eine *Hashfunktion* (hash function), die
-bestimmt, wie er diese Schlüssel und Werte im Speicher ablegt. Viele
-Programmiersprachen unterstützen diese Art Datenstruktur, aber sie verwenden
-oft einen anderen Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash
-table), Wörterbuch (dictionary) oder assoziatives Array (associative array), um
-nur einige zu nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei
-Vektoren über einen Index nachschlagen willst, sondern über einen Schlüssel,
-der ein beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
+Werten vom Typ `V` mittels einer *Hashfunktion* (hash function), die bestimmt,
+wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
+(dictionary) oder assoziatives Array (associative array), um nur einige zu
+nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über
+einen Index nachschlagen willst, sondern über einen Schlüssel, der ein
+beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
 Spielstand jedes Teams in einer Hashtabelle vermerken, in der die Schlüssel den
 Teamnamen und die Werte den Spielstand des jeweiligen Teams darstellen. Wenn du
 den Namen eines Teams angibst, kannst du seine Punktzahl abrufen.
@@ -22,10 +22,10 @@ Standardbibliotheksdokumentation.
 
 ### Erstellen einer neuen Hashtabelle
 
-Du kannst eine leere Hashtabelle mit `new` erstellen und Elemente mit `insert`
-hinzufügen. In Codeblock 8-20 verfolgen wir die Ergebnisse zweier Mannschaften
-mit den Namen Blau und Gelb. Das Team Blau startet mit 10 Punkten, das Team
-Gelb mit 50 Punkten.
+Ein Weg um eine leere Hashtabelle zu erzeugen ist mit `new` und um Elemente
+hinzuzufügen mit `insert`. In Codeblock 8-20 verfolgen wir die Ergebnisse
+zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+Punkten, das Team Gelb mit 50 Punkten.
 
 ```rust
 use std::collections::HashMap;
@@ -82,7 +82,7 @@ welche du willst, es sei denn, du gibst sie an. Für die Typparameter der
 Schlüssel- und Werttypen geben wir jedoch Unterstriche an, Rust kann anhand der
 Datentypen in den Vektoren auf die Typen schließen, die die Hashtabelle
 enthält. In Codeblock 8-21 wird der Schlüsseltyp `String` und der Werttyp `i32`
-sein, genau wie die Typen in Codeblock 8-20.
+sein, genau wie in Codeblock 8-20.
 
 ### Hashtabellen und Eigentümerschaft
 
@@ -166,7 +166,7 @@ Blau: 10
 
 ### Aktualisieren einer Hashtabelle
 
-Obwohl die Anzahl der Schlüssel und Werte wachsen kann, kann jedem Schlüssel
+Obwohl die Anzahl der Schlüssel-Werte-Paare wachsen kann, kann jedem Schlüssel
 jeweils nur ein Wert zugeordnet werden. Wenn du die Daten in einer Hashtabelle
 ändern willst, musst du entscheiden, wie der Fall zu behandeln ist, wenn einem
 Schlüssel bereits ein Wert zugewiesen wurde. Du kannst den alten Wert durch den
@@ -279,14 +279,14 @@ diese Änderungen sicher sind und von den Ausleihregeln erlaubt werden.
 
 ### Hash-Funktionen
 
-Standardmäßig verwendet `HashMap` eine Hash-Funktion namens SipHash, die robust
+Standardmäßig verwendet `HashMap` eine Hash-Funktion namens *SipHash*, die robust
 gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist. Dies
 ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
 zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
 Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-Hash-Funktion ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
+*Hash-Funktion* ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
 werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
 nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
 [crates.io](https://crates.io/) verfügt über Bibliotheken, die von anderen

@@ -275,17 +275,18 @@ wir ein `*` in unserem Programmcode verwenden. Da die Ersetzung des
 
 ### Implizite automatische Umwandlung mit Funktionen und Methoden
 
-*Automatische Umwandlung* (deref coercion) ist eine bequeme Funktionalität die Rust bei Argumenten für
-Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur bei Typen,
-die das Merkmal `Deref` implementieren. Die automatische Umwandlung wandelt einen solchen
-Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
+*Automatische Umwandlung* (deref coercion) ist eine bequeme Funktionalität die
+Rust bei Argumenten für Funktionen und Methoden ausführt. Die automatische
+Umwandlung funktioniert nur bei Typen, die das Merkmal `Deref` implementieren.
+Die automatische Umwandlung wandelt eine Referenz auf einen solchen Typ in eine
+Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung `&String` in `&str` konvertieren, da `String` das Merkmal `Deref`
-implementiert, sodass `&str` zurückgegeben wird. Die automatische Umwandlung erfolgt
-automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
-eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
-oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der
-`deref`-Methode konvertiert den von uns angegebenen Typ in den Typ, den der
-Parameter benötigt.
+implementiert, sodass `&str` zurückgegeben wird. Die automatische Umwandlung
+erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
+als Argument an eine Funktion oder Methode übergeben, die nicht dem
+Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
+von Aufrufen der `deref`-Methode konvertiert den von uns angegebenen Typ in den
+Typ, den der Parameter benötigt.
 
 Rust wurde um die automatische Umwandlung erweitert, damit Programmierer, die Funktions- und
 Methodenaufrufe schreiben, nicht so viele explizite Referenzierungen und Dereferenzierungen

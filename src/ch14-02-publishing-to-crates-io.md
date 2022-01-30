@@ -7,7 +7,7 @@ veröffentlichst. Die Registrierung von Kisten auf [crates.io](https://crates.io
 verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcode
 gehostet.
 
-Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr 
+Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr
 veröffentlichtes Paket zu verwenden und zu finden. Wir werden nun über einige
 dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
 wird.
@@ -18,7 +18,7 @@ Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen,
 wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
 Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
 Rust-Code mit zwei Schrägstrichen `//` kommentiert. Rust hat auch eine eigene
-Art von Kommentar für die Dokumentation, die passenderweise als 
+Art von Kommentar für die Dokumentation, die passenderweise als
 *Dokumentationskommentar* bezeichnet wird und HTML-Dokumentation generiert.
 Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
 API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
@@ -27,9 +27,9 @@ ist.
 
 Dokumentationskommentare verwenden drei Schrägstriche `///` anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
-Dokumentationskommentare nur vor dem zu dokumentierenden Element. 
-Codeblock 14-1 zeigt Dokumentationskommentare für eine Funktion `add_one` in
-einer Kiste mit dem Namen ` my_crate`:
+Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
+14-1 zeigt Dokumentationskommentare für eine Funktion `add_one` in einer Kiste
+mit dem Namen `my_crate`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -443,7 +443,10 @@ $ cargo publish
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
 --snip--
-error: api errors (status 200 OK): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+error: failed to publish to registry at https://crates.io
+
+Caused by:
+  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 ```
 
 Der Grund dafür ist, dass einige wichtige Informationen fehlen: Eine

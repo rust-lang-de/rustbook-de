@@ -8,15 +8,14 @@ Datenstruktur, als viele Programmierer ihnen zugestehen, und UTF-8. Diese
 Faktoren kombinieren sich in einer Weise, die schwierig erscheinen kann, wenn
 man von anderen Programmiersprachen kommt.
 
-Es ist hilfreich, Zeichenketten im Kontext von Kollektionen zu besprechen, da
-Zeichenketten als Byte-Kollektion implementiert sind, sowie einige Methoden,
-die nützliche Funktionalitäten bieten, wenn diese Bytes als Text interpretiert
-werden. In diesem Abschnitt werden wir über `String`-Operationen sprechen, die
-jeder Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir
-werden auch die Art und Weise besprechen, in der sich `String` von den anderen
-Kollektionen unterscheidet, nämlich warum die Indexierung bei einem `String`
-kompliziert ist, weil Menschen und Computer `String`-Daten unterschiedlich
-interpretieren.
+Wir besprechen Zeichenketten im Kontext von Kollektionen, da Zeichenketten als
+Byte-Kollektion implementiert sind, sowie einige Methoden, die nützliche
+Funktionalitäten bieten, wenn diese Bytes als Text interpretiert werden. In
+diesem Abschnitt werden wir über `String`-Operationen sprechen, die jeder
+Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir werden auch
+die Art und Weise besprechen, in der sich `String` von den anderen Kollektionen
+unterscheidet, nämlich warum die Indexierung bei einem `String` kompliziert
+ist, weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
 
 ### Was ist eine Zeichenkette?
 
@@ -100,7 +99,7 @@ verschiedene generische Programmierschnittstellen (APIs) für Zeichenketten
 verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
 überflüssig erscheinen, aber sie alle haben ihren Platz! In diesem Fall machen
 `String::from` und `to_string` dasselbe, also ist die Wahl eine Frage des
-Stils.
+Stils und der Lesbarkeit.
 
 Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
 ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.
@@ -148,9 +147,9 @@ an einen `String` mit der Methode `push_str`</span>
 
 Nach diesen beiden Zeilen enthält `s` den Wert `foobar`. Die Methode `push_str`
 nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
-Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel zeigt der Code
-in Codeblock 8-16, dass es bedauerlich wäre, wenn wir nicht in der Lage wären,
-`s2` zu verwenden, nachdem wir seinen Inhalt an `s1` angehängt haben.
+Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
+Code in Codeblock 8-16 in der Lage sein, `s2` zu verwenden, nachdem wir seinen
+Inhalt an `s1` angehängt haben.
 
 ```rust
 let mut s1 = String::from("foo");
@@ -167,8 +166,8 @@ könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
 funktioniert jedoch wie erwartet!
 
 Die Methode `push` nimmt ein einzelnes Zeichen als Parameter und fügt es dem
-`String` hinzu. Codeblock 8-17 zeigt Code, der den Buchstaben `l` mit der
-Methode `push` zu einem `String` hinzufügt.
+`String` hinzu. Codeblock 8-17 fügt den Buchstaben `l` mit der Methode `push`
+zu einem `String` hinzu.
 
 ```rust
 let mut s = String::from("lo");
@@ -178,12 +177,12 @@ s.push('l');
 <span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
 `String`-Wert mit `push`</span>
 
-Als Ergebnis dieses Codes wird `s` den Wert `lol` enthalten.
+Als Ergebnis wird `s` den Wert `lol` enthalten.
 
 #### Aneinanderhängen mit dem Operator `+` und dem Makro `format!`
 
 Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
-ist, den Operator `+` zu verwenden, wie in Codeblock 8-18 gezeigt.
+das zu tun ist, den Operator `+` zu verwenden, wie in Codeblock 8-18 gezeigt.
 
 ```rust
 let s1 = String::from("Hallo ");
@@ -195,30 +194,29 @@ let s3 = s1 + &s2; // Beachte, s1 wurde hierher verschoben und
 <span class="caption">Codeblock 8-18: Verwenden des Operators `+`, um zwei
 Zeichenketten zu einer neuen zu kombinieren</span>
 
-Die Zeichenkette `s3` wird als Ergebnis dieses Codes `Hallo Welt!` enthalten.
-Der Grund, warum `s1` nach der Addition nicht mehr gültig ist und warum wir
-eine Referenz auf `s2` verwendet haben, hat mit der Signatur der Methode zu
-tun, die aufgerufen wird, wenn wir den Operator `+` verwenden. Der Operator `+`
-benutzt die Methode `add`, deren Signatur ungefähr so aussieht:
+Die Zeichenkette `s3` wird `Hallo Welt!` enthalten. Der Grund, warum `s1` nach
+der Addition nicht mehr gültig ist und warum wir eine Referenz auf `s2`
+verwendet haben, hat mit der Signatur der Methode zu tun, die aufgerufen wird,
+wenn wir den Operator `+` verwenden. Der Operator `+` benutzt die Methode
+`add`, deren Signatur ungefähr so aussieht:
 
 ```rust,ignore
 fn add(self, s: &str) -> String {
 ```
 
-Dies ist nicht die exakte Signatur aus der Standardbibliothek: In der
-Standardbibliothek wird `add` mittels generischer Datentypen definiert. Hier
-sehen wir uns die Signatur von `add` mit konkreten Typen an, die die
+In der Standardbibliothek wird `add` mittels generischer Datentypen definiert.
+Hier sehen wir uns die Signatur von `add` mit konkreten Typen an, die die
 generischen Typen ersetzen; das passiert, wenn wir diese Methode mit
 `String`-Werten aufrufen. Wir werden generische Datentypen in Kapitel 10
 besprechen. Diese Signatur gibt uns den entscheidenden Hinweis, um die
 kniffligen Stellen des Operators `+` zu verstehen.
 
-Erstens hat `s2` ein `&`, was bedeutet, dass wir aufgrund des Parameters `s` in
-der Funktion `add` eine *Referenz* der zweiten Zeichenkette an die erste
-Zeichenkette anhängen: Wir können nur einen `&str` zu einem `String`
-hinzufügen; wir können nicht zwei `String`-Werte miteinander addieren. Aber
-warte &ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im zweiten
-Parameter von `add` spezifiziert. Warum kompiliert also Codeblock 8-18?
+Erstens hat `s2` ein `&`, was bedeutet, dass wir eine *Referenz* der zweiten
+Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
+Parameter `s` in der Funktion `add`: Wir können nur einen `&str` zu einem
+`String` hinzufügen; wir können nicht zwei `String`-Werte aneinanderhängen.
+Aber warte &ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im
+zweiten Parameter von `add` spezifiziert. Warum kompiliert also Codeblock 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
 Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
@@ -251,7 +249,7 @@ let s = s1 + "-" + &s2 + "-" + &s3;
 
 An diesem Punkt wird `s` den Wert `tic-tac-toe` haben. Bei all den Zeichen `+`
 und `"` ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
-String-Kombinationen können wir das Makro `format!` verwenden:
+String-Kombinationen können wir stattdessen das Makro `format!` verwenden:
 
 ```rust
 let s1 = String::from("tic");
@@ -262,11 +260,11 @@ let s = format!("{}-{}-{}", s1, s2, s3);
 ```
 
 Auch bei diesem Code wird `s` den Wert `tic-tac-toe` haben. Das Makro `format!`
-arbeitet auf die gleiche Weise wie `println!`, aber anstatt das Ergebnis auf
-den Bildschirm auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die
-Codevariante, die `format!` verwendet, ist viel leichter zu lesen, und der
-durch das Makro `format!` erzeugte Code verwendet Referenzen sodass dieser
-Aufruf keine Eigentümerschaft seiner Parameter übernimmt.
+funktioniert wie `println!`, aber anstatt das Ergebnis auf den Bildschirm
+auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die Codevariante, die
+`format!` verwendet, ist viel leichter zu lesen, und der durch das Makro
+`format!` erzeugte Code verwendet Referenzen sodass dieser Aufruf keine
+Eigentümerschaft seiner Parameter übernimmt.
 
 ### Indexierung von Zeichenketten
 
@@ -319,9 +317,9 @@ let hello = String::from("Hola");
 
 In diesem Fall wird `hello.len()` gleich 4 sein, was bedeutet, dass der Vektor,
 der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
-Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Aber was ist mit der folgenden
-Zeile? (Beachte, dass diese Zeichenkette mit dem kyrillischen Großbuchstaben
-„Ze“ beginnt, nicht mit der arabischen Zahl 3.)
+Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
+jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
+Großbuchstaben „Ze“ beginnt, nicht mit der arabischen Zahl 3.)
 
 ```rust
 let hello = String::from("Здравствуйте");
@@ -341,8 +339,8 @@ let answer = &hello[0];
 
 ```
 
-Was sollte der Wert von`answer` sein? Sollte es `З` sein, der erste Buchstabe?
-In der UTF-8-Kodierung von `З` ist das erste Byte `208` und das zweite `151`,
+Du weißt bereits, dass `answer` nicht `З`, der erste Buchstabe, sein wird. In
+der UTF-8-Kodierung von `З` ist das erste Byte `208` und das zweite `151`,
 sodass `answer` eigentlich `208` sein müsste, aber `208` ist kein eigenständig
 gültiges Zeichen. Die Rückgabe von `208` ist wahrscheinlich nicht das, was ein
 Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
@@ -350,10 +348,12 @@ fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
 Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
 selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
 `&"hallo"[0]` gültiger Code wäre, der den Byte-Wert zurückgibt, würde er `104`
-zurückgeben, nicht `h`. Um zu vermeiden, dass ein unerwarteter Wert
-zurückgegeben und Fehler verursacht werden, die nicht sofort entdeckt werden,
-kompiliert Rust diesen Code überhaupt nicht und verhindert Missverständnisse
-schon früh im Entwicklungsprozess.
+zurückgeben, nicht `h`.
+
+Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
+Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
+Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
+frühen Stadium des Entwicklungsprozesses.
 
 #### Bytes, skalare Werte und Graphemgruppen (grapheme clusters)! Oje!
 
@@ -404,12 +404,12 @@ müsste, um festzustellen, wie viele gültige Zeichen es gibt.
 Die Indexierung einer Zeichenkette ist oft eine schlechte Idee, weil nicht klar
 ist, was der Rückgabetyp der Zeichenketten-Indexoperation sein soll: Ein
 Byte-Wert, ein Zeichen, eine Graphemgruppe oder ein Zeichenkettenanteilstyp.
-Daher bittet dich Rust, konkretere Angaben zu machen, wenn du wirklich Indexes
-zum Erstellen von Zeichenkettenanteilstypen verwenden musst. Um bei der
-Indexierung spezifischer zu sein und anzugeben, dass du einen
-Zeichenkettenanteilstyp wünschst, kannst du statt der Indexierung mit `[]` mit
-einer einzigen Nummer `[]` mit einem Bereich verwenden, um einen
-Zeichenkettenanteilstyp zu erstellen, der bestimmte Bytes enthält:
+Wenn du wirklich Indizes verwenden musst, um Zeichenkettenanteilstypen zu
+erstellen, bittet Rust dich daher, genauer zu sein.
+
+Anstatt `[]` mit einer einzelnen Zahl zu indizieren, kannst du `[]` mit einem
+Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
+Bytes enthält:
 
 ```rust
 let hello = "Здравствуйте";
@@ -419,10 +419,12 @@ let s = &hello[0..4];
 
 Hier wird `s` ein `&str` sein, das die ersten 4 Bytes der Zeichenkette enthält.
 Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
-was bedeutet, dass `s` gleich `Зд` ist. Was würde passieren, wenn wir
-`&hello[0..1]` benutzen würden? Die Antwort: Rust würde das Programm zur
-Laufzeit abbrechen, genauso als wenn mit einem ungültigen Index auf einen
-Vektor zugegriffen würde:
+was bedeutet, dass `s` gleich `Зд` ist.
+
+Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
+wie `&hello[0..1]` zu zerschneiden, würde Rust das Programm zur Laufzeit
+abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
+zugegriffen würde:
 
 ```console
 $ cargo run
@@ -438,13 +440,12 @@ ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.
 
 ### Methoden zum Iterieren über Zeichenketten
 
-Glücklicherweise kannst du auf andere Weise auf Elemente in einer Zeichenkette
-zugreifen.
-
-Wenn du Operationen mit einzelnen Unicode-Skalarwerten durchführen musst,
-verwende am besten die Methode `chars`. Der Aufruf von `chars` auf „नमस्ते“
-trennt sechs Werte vom Typ `char` heraus und gibt sie zurück, und du kannst
-über das Ergebnis iterieren, um auf jedes Element zuzugreifen:
+Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
+explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
+Unicode-Skalarwerte ist die Methode `chars` zu verwenden. Der Aufruf von
+`chars` auf „नमस्ते“ trennt sechs Werte vom Typ `char` heraus und gibt sie
+zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
+zuzugreifen:
 
 ```rust
 for c in "नमस्ते".chars() {
