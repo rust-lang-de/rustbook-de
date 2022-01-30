@@ -19,7 +19,7 @@ jobs:
         uses: actions-rs/cargo@v1
         with:
           command: install
-          args: mdbook --vers "^0.4.12" --no-default-features
+          args: mdbook --vers "^0.4.14" --no-default-features
 
       - name: Build Book
         run: mdbook build

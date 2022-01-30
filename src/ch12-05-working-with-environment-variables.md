@@ -32,7 +32,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -144,7 +144,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -304,7 +304,7 @@ pub struct Config {
 }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -413,7 +413,7 @@ werden kann.
 # }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -530,7 +530,7 @@ use std::env;
 # }
 #
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
+    pub fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }

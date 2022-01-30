@@ -268,7 +268,7 @@ an den Code aus Codeblock 2-5; wir haben einen Teil davon hier in Codeblock
 `continue` endet</span>
 
 Damals haben wir einige Details in diesem Code übersprungen. In Kapitel 6 des
-Abschnitts [„Der Kontrollflussoperator `match`“][match-operator] haben wir
+Abschnitts [„Das Kontrollflusskonstrukt `match`“][match-operator] haben wir
 erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktioniert
 zum Beispiel der folgende Code nicht:
 

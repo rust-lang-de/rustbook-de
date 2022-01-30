@@ -289,7 +289,7 @@ Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
 unveränderlichen Referenzen in `println!` vor der Einführung der veränderlichen
 Referenz erfolgt:
 
-```rust,edition2018
+```rust,edition2021
 let mut s = String::from("Hallo");
 
 let r1 = &s; // kein Problem

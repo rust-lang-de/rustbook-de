@@ -43,9 +43,9 @@ $ cargo new hello_cargo
 $ cd hello_cargo
 ```
 
-Der erste Befehl erstellt ein neues Verzeichnis namens *hello_cargo*. Wir haben
-unser Projekt *hello_cargo* genannt und Cargo erstellt seine Dateien in einem
-Verzeichnis mit demselben Namen.
+Der erste Befehl hat ein neues Verzeichnis namens *hello_cargo* erstellt. Wir
+haben unser Projekt *hello_cargo* genannt und Cargo erstellt seine Dateien in
+einem Verzeichnis mit demselben Namen.
 
 Gehe in das Verzeichnis *hello_cargo* und liste die Dateien auf. Du wirst
 sehen, dass Cargo zwei Dateien und ein Verzeichnis für uns generiert hat: Eine
@@ -70,7 +70,7 @@ Code in Codeblock 1-2 aussehen.
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 [dependencies]
 ```
@@ -109,9 +109,9 @@ fn main() {
 
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
-vorherigen Projekt und dem Projekt, das Cargo generiert, bestehen bisher darin,
-dass Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben eine
-Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.
+vorherigen Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher
+darin, dass Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben
+eine Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.
 
 Cargo erwartet, dass deine Quelldateien innerhalb des *src*-Verzeichnisses
 liegen. Das Projektverzeichnis der obersten Ebene ist nur für README-Dateien,

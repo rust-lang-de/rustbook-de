@@ -1,6 +1,6 @@
-## Der Kontrollflussoperator `match`
+## Das Kontrollflusskonstrukt `match`
 
-Rust verfügt über einen extrem leistungsfähigen Kontrollflussoperator namens
+Rust verfügt über einen extrem leistungsfähiges Kontrollflusskonstrukt namens
 `match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
@@ -14,13 +14,11 @@ rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
 durchlaufen die Werte die Muster in einem `match`-Ausdruck und beim ersten
 „passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
-werden soll.
-
-Da wir eben Münzen erwähnt haben, nehmen wir sie als Beispiel für die
-Verwendung von `match`! Wir können eine Funktion schreiben, die eine unbekannte
-Münze der Vereinigten Staaten nimmt und, ähnlich wie die Zählmaschine,
-bestimmt, um welche Münze es sich handelt und ihren Wert in Cent zurückgibt,
-wie hier in Codeblock 6-3 gezeigt.
+werden soll. Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von
+`match`! Wir können eine Funktion schreiben, die eine unbekannte Münze der
+Vereinigten Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um
+welche Münze es sich handelt und ihren Wert in Cent zurückgibt, wie hier in
+Codeblock 6-3 gezeigt.
 
 ```rust
 enum Coin {
@@ -47,9 +45,9 @@ Lass uns den `match`-Ausdruck in der Funktion `value_in_cents` aufschlüsseln.
 Zuerst geben wir das Schlüsselwort `match` an, gefolgt von einem Ausdruck, der
 in diesem Fall der Wert `coin` ist. Dies scheint einem Ausdruck sehr ähnlich zu
 sein, der bei `if` verwendet wird, aber es gibt einen großen Unterschied: Bei
-`if` muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann es
-sich um einen beliebigen Typ handeln. Der Typ von `coin` ist in diesem Beispiel
-die Aufzählung `Coin`, die wir in Zeile 1 definiert haben.
+`if` muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann ein
+beliebiger Typ zurückgegeben werden. Der Typ von `coin` ist in diesem Beispiel
+die Aufzählung `Coin`, die wir in der ersten Zeile definiert haben.
 
 Als nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert `Coin::Penny`, dann den
@@ -69,12 +67,12 @@ Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der resultierende Wert
 des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 `match`-Ausdruck zurückgegeben wird. 
 
-Geschweifte Klammern werden in der Regel nicht verwendet, wenn der Zweig-Code
+Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
-Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, kannst du
-geschweifte Klammern verwenden. Zum Beispiel würde der folgende Code jedes Mal
-"Glückspfennig!" ausgeben, wenn die Methode mit `Coin::Penny` aufgerufen wird,
-aber immer noch als letzten Wert des Blocks `1` zurückgeben:
+Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
+geschweifte Klammern verwenden. Zum Beispiel gibt der folgende Code jedes Mal
+"Glückspfennig!" aus, wenn die Methode mit `Coin::Penny` aufgerufen wird, er
+gibt aber immer noch den letzten Wert `1` des Blocks zurück:
 
 ```rust
 # enum Coin {
@@ -129,7 +127,7 @@ enum Coin {
 <span class="caption">Codeblock 6-4: Aufzählung `Coin`, bei der die Variante
 `Quarter` zusätzlich einen `UsState`-Wert enthält</span>
 
-Stellen wir uns vor, dass ein Freund von uns versucht, 25-Cent-Münzen aller 50
+Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
 Staaten zu sammeln. Während wir unser Kleingeld nach Münzsorten sortieren,
 geben wir auch den Namen des Staates der 25-Cent-Münze aus, sodass es unser
 Freund in seine Sammlung aufnehmen kann, falls er es nicht hat. Im
@@ -300,16 +298,16 @@ unmöglich.
 
 ### Auffangmuster und der Platzhalter `_`
 
-Betrachten wir ein Beispiel, bei dem wir für einige wenige Werte spezielle
-Aktionen durchführen wollen, aber für alle anderen Werte eine Standardaktion.
-Stell dir vor, wir implementieren ein Spiel, bei dem ein Spieler bei einem
-Würfelwurf von 3 einen schicken Hut bekommt anstatt sich zu bewegen. Wenn du
-eine 7 würfelst, verliert dein Spieler einen schicken Hut. Bei allen anderen
-Werten zieht der Spieler die entsprechende Anzahl an Feldern auf dem Spielfeld.
-Hier ist ein `match`, das diese Logik implementiert, wobei das Ergebnis des
-Würfelwurfs anstelle eines Zufallswerts fest kodiert ist, und alle weiter Logik
-wird durch Funktionen ohne Rumpf dargestellt, da die tatsächliche
-Implementierung für dieses Beispiel den Rahmen sprengen würde:
+Mit Aufzählungen können wir auch spezielle Aktionen für ausgewählte Werte
+durchführen und für alle anderen Werte eine Standardaktion. Stell dir vor, wir
+implementieren ein Spiel, bei dem ein Spieler bei einem Würfelwurf von 3 einen
+schicken Hut bekommt anstatt sich zu bewegen. Wenn du eine 7 würfelst, verliert
+dein Spieler einen schicken Hut. Bei allen anderen Werten zieht der Spieler die
+entsprechende Anzahl an Feldern auf dem Spielfeld. Hier ist ein `match`, das
+diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
+Zufallswerts fest kodiert ist, und alle weiter Logik wird durch Funktionen ohne
+Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
+Rahmen sprengen würde:
 
 ```rust
 let dice_roll = 9;

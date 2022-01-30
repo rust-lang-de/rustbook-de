@@ -83,7 +83,7 @@ aufteilen, sodass du auf in einem Modul definierte Elemente aus einem anderen
 Modul verweisen kannst. Du kannst dies tun, indem du absolute oder relative
 Pfade angibst. Diese Pfade können mit einer `use`-Anweisung in den
 Gültigkeitsbereich gebracht werden, sodass du einen kürzeren Pfad für mehrere
-Verwendungen des Elements in diesem Geltungsbereich angeben kannst. Der
+Verwendungen des Elements in diesem Gültigkeitsbereich angeben kannst. Der
 Modulcode ist standardmäßig privat, aber du kannst Definitionen öffentlich
 machen, indem du das Schlüsselwort `pub` angibst.
 

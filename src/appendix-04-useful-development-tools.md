@@ -166,29 +166,26 @@ Für weitere Informationen über Clippy siehe [seine Dokumentation][clippy].
 
 [clippy]: https://github.com/rust-lang/rust-clippy
 
-### IDE-Integration mittels Rust-Sprach-Server
+### IDE-Integration mittels `rust-analyzer`
 
-Um die IDE-Integration zu erleichtern, verteilt das Rust-Projekt den
-*Rust-Sprach-Server* (Rust Language Server, `rls`).
+Um die IDE-Integration zu erleichtern, empfiehlt die Rust-Gemeinschaft die
+Verwendung des [`rust-analyzer`][rust-analyzer]. Bei diesem Werkzeug handelt es
+sich um eine Reihe von Compiler-zentrierten Hilfsprogrammen, die das
+[Sprach-Server-Protokoll (Language Server Protocol)][lsp] beherrschen, eine
+Spezifikation für IDEs und Programmiersprachen zur Kommunikation untereinander.
+Verschiedene Clients können `rust-analyzer` verwenden, wie zum Beispiel [das
+Rust-Plugin für Visual Studio Code][vscode].
 
-Dieses Werkzeug spricht das [Sprach-Server-Protokoll (Language Server
-Protocol)][lsp], das eine Spezifikation für IDEs und Programmiersprachen zur
-Kommunikation untereinander ist. Verschiedene Clients können den `rls`
-verwenden, z.B. [das Rust-Plugin für Visual Studio Code][vscode].
+Besuche die [Homepage][rust-analyzer] des Projekts `rust-analyzer`, um
+Installationsanweisungen zu erhalten, und installiere dann die
+Sprachserver-Unterstützung in deiner speziellen IDE. Deine IDE wird
+Fähigkeiten wie Autovervollständigung, Sprung zur Definition und im Code
+eingeblendete Fehlermeldungen erhalten.
+
+Für weitere Informationen zum `rust-analyzer` siehe [seine
+Dokumentation][rust-analyzer-manual].
 
 [lsp]: http://langserver.org/
-[vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust
-
-Um den `rls` zu installieren, gib folgendes ein:
-
-```console
-$ rustup component add rls
-```
-
-Installiere dann die Sprachserver-Unterstützung in deiner speziellen IDE; du
-bekommst Fähigkeiten wie Autovervollständigung, Sprung zur Definition und im
-Code eingeblendete Fehlermeldungen.
-
-Für weitere Informationen über den `rls` siehe [seine Dokumentation][rls].
-
-[rls]: https://github.com/rust-lang/rls
+[rust-analyzer]: https://rust-analyzer.github.io
+[rust-analyzer-manual]: https://rust-analyzer.github.io/manual.html
+[vscode]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer

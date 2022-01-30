@@ -28,7 +28,7 @@ wie sie im Codeblock 12-23 aussah:
 # }
 #
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
+    pub fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("nicht genügend Argumente");
         }
@@ -341,17 +341,6 @@ der Funktion `Config::New` aktualisiert, damit der Parameter `args` den Typ
 Schlüsselwort `mut` in die Spezifikation des Parameters `args` eintragen, um
 ihn veränderlich (mutable) zu machen.
 
-Wir mussten auch spezifizieren, dass der Zeichenkettenanteilstyp-Fehlertyp nur
-noch die Lebensdauer `'static` haben kann. Da wir immer nur
-Zeichenketten-Literale zurückgeben, war dies schon vorher der Fall. Wenn wir
-jedoch eine Referenz in den Parametern hätten, bestünde die Möglichkeit, dass
-die Referenz im Rückgabetyp die gleiche Lebensdauer wie die Referenz in den
-Parametern hat. Es gelten die Regeln, die wir im Abschnitt
-[„Lebensdauer-Elision“][lifetime-elision] in Kapitel 10 besprochen haben, und
-wir waren nicht gezwungen, die Lebensdauer von `&str` zu annotieren. Mit 
-dem Wechsel zu `args` gelten die Regeln der Lebensdauer-Elision nicht mehr und
-wir müssen die Lebensdauer `'static` angeben.
-
 #### Verwenden von `Iterator`-Merkmalen anstelle von Indizierung
 
 Als Nächstes werden wir den Rumpf von `Config::new` in Ordnung bringen. In der
@@ -505,7 +494,7 @@ Codeblock 12-19:
 #}
 #
 #impl Config {
-#    pub fn new(args: &[String]) -> Result<Config, &str> {
+#    pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #        if args.len() < 3 {
 #            return Err("nicht genügend Argumente");
 #        }
@@ -698,5 +687,3 @@ erkennbar.
 Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über
 Performanz sprechen.
-
-[lifetime-elision]: ch10-03-lifetime-syntax.html#lebensdauer-elision

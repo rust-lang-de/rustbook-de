@@ -29,9 +29,9 @@ Ausgaben dienen unterschiedlichen Zwecken für verschiedene Menschen:
 * Für diejenigen, die Rust entwickeln, stellt eine neue Ausgabe einen
   Treffpunkt für das gesamte Projekt dar.
 
-Zum Verfassungszeitpunkt dieses Artikels sind zwei Rust-Ausgaben verfügbar:
-Rust 2015 und Rust 2018. Dieses Buch wurde unter Verwendung der Rust-Ausgabe
-2018 geschrieben.
+Zum Verfassungszeitpunkt dieses Artikels sind drei Rust-Ausgaben verfügbar:
+Rust 2015, Rust 2018 und Rust 2021. Dieses Buch wurde unter Verwendung der
+Rust-Ausgabe 2021 geschrieben.
 
 Der Schlüssel `edition` in *Cargo.toml* gibt an, welche Ausgabe der Compiler
 für deinen Code verwenden soll. Wenn der Schlüssel nicht existiert, verwendet

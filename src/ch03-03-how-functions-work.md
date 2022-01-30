@@ -268,12 +268,13 @@ du als nächstes die Rückgabewerte von Funktionen und Ausdrücken untersuchst.
 ### Funktionen mit Rückgabewerten
 
 Funktionen können Werte an den Code zurückgeben, der sie aufruft. Wir benennen
-keine Rückgabewerte, aber wir deklarieren ihren Typ nach einem Pfeil (`->`). In
-Rust ist der Rückgabewert der Funktion gleichbedeutend mit dem Wert des letzten
-Ausdrucks im Block des Funktionsrumpfs. Du kannst frühzeitig von einer Funktion
-zurückkehren, indem du das Schlüsselwort `return` verwendest und einen Wert
-angibst, aber die meisten Funktionen geben den letzten Ausdruck implizit
-zurück. Hier ist ein Beispiel für eine Funktion, die einen Wert zurückgibt:
+keine Rückgabewerte, aber wir müssen ihren Typ nach einem Pfeil (`->`)
+deklarieren. In Rust ist der Rückgabewert der Funktion gleichbedeutend mit dem
+Wert des letzten Ausdrucks im Block des Funktionsrumpfs. Du kannst frühzeitig
+von einer Funktion zurückkehren, indem du das Schlüsselwort `return` verwendest
+und einen Wert angibst, aber die meisten Funktionen geben den letzten Ausdruck
+implizit zurück. Hier ist ein Beispiel für eine Funktion, die einen Wert
+zurückgibt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
