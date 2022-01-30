@@ -45,14 +45,14 @@ Codeblock 5-2 zu sehen ist.
 #     sign_in_count: u64,
 # }
 #
-# fn main() {
+fn main() {
     let user1 = User {
         email: String::from("jemand@example.com"),
         username: String::from("benutzername123"),
         active: true,
         sign_in_count: 1,
     };
-# }
+}
 ```
 
 <span class="caption">Codeblock 5-2: Eine Instanz der Struktur `User`
@@ -73,7 +73,7 @@ Feld `email` einer veränderlichen `User`-Instanz geändert werden kann.
 #     sign_in_count: u64,
 # }
 #
-# fn main() {
+fn main() {
     let mut user1 = User {
         email: String::from("jemand@example.com"),
         username: String::from("benutzername123"),
@@ -82,7 +82,7 @@ Feld `email` einer veränderlichen `User`-Instanz geändert werden kann.
     };
 
     user1.email = String::from("andere-email@example.com");
-# }
+}
 ```
 
 <span class="caption">Codeblock 5-3: Wert im Feld `email` einer `User`-Instanz ändern</span>
@@ -193,21 +193,22 @@ verwenden aber ansonsten die gleichen Werte von `user1`, die wir in Codeblock
 #     sign_in_count: u64,
 # }
 #
-# fn main() {
+fn main() {
+    // --abschneiden--
 #     let user1 = User {
 #         email: String::from("jemand@example.com"),
 #         username: String::from("benutzername123"),
 #         active: true,
 #         sign_in_count: 1,
 #     };
-#
+
     let user2 = User {
         active: user1.active,
         username: user1.username,
         email: String::from("andere@example.com"),
         sign_in_count: user1.sign_in_count,
     };
-# }
+}
 ```
 
 <span class="caption">Codeblock 5-6: Erstellen einer neuen `User`-Instanz unter
@@ -226,19 +227,20 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.
 #     sign_in_count: u64,
 # }
 #
-# fn main() {
+fn main() {
+    // --abschneiden--
 #     let user1 = User {
 #         email: String::from("jemand@example.com"),
 #         username: String::from("benutzername123"),
 #         active: true,
 #         sign_in_count: 1,
 #     };
-#
+
     let user2 = User {
         email: String::from("andere@example.com"),
         ..user1
     };
-# }
+}
 ```
 
 <span class="caption">Codeblock 5-7: Verwenden der
@@ -284,8 +286,10 @@ Definition und Verwendung zweier Tupel-Strukturen `Color` und `Point`:
 struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
-let black = Color(0, 0, 0);
-let origin = Point(0, 0, 0);
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
 ```
 
 Beachte, dass die Werte `black` und `origin` unterschiedliche Typen haben, weil
@@ -312,7 +316,9 @@ Unit-Struktur namens `AlwaysEqual`:
 ```rust
 struct AlwaysEqual;
 
-let subject = AlwaysEqual;
+fn main() {
+    let subject = AlwaysEqual;
+}
 ```
 
 Um `AlwaysEqual` zu definieren, verwenden wir das Schlüsselwort `struct`, den

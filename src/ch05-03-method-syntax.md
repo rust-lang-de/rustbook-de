@@ -78,7 +78,7 @@ dann verwendet, wenn die Methode `self` in etwas anderes transformiert und man
 verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
 Instanz verwendet.
 
-Der Hauptvorteil von Methoden gegenüber Funktionen liegt abgesehen davon, dass
+Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von `self` nicht ständig wiederholt
 werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
 Instanz eines Typs tun können, in einen einzigen `impl` Block gepackt.
@@ -116,13 +116,12 @@ fn main() {
 }
 ```
 
-Hier entscheiden wir uns dafür, dass das Verhalten der Methode `width` so
-aussieht, dass sie `true` zurückgibt, wenn der Wert im Feld `width` der Instanz
-größer als 0 ist, und `false`, wenn der Wert 0 ist: Wir können ein Feld
-innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
-`main` nach `rect1.width` Klammern setzen, weiß Rust, dass wir die Methode
-`width` meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
-`width` meinen.
+Hier entscheiden wir uns dafür, dass die Methode `width` den Wert `true`
+zurückgibt, wenn der Wert im Feld `width` der Instanz größer als 0 ist, und
+`false`, wenn der Wert 0 ist: Wir können ein Feld innerhalb einer gleichnamigen
+Methode für jeden Zweck verwenden. Wenn wir in `main` nach `rect1.width` eine
+Klammer setzen, weiß Rust, dass wir die Methode `width` meinen. Wenn wir keine
+Klammern verwenden, weiß Rust, dass wir das Feld `width` meinen.
 
 Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
@@ -187,10 +186,10 @@ wir in Kapitel 7 behandeln.
 Lass uns den Umgang mit Methoden üben, indem wir eine zweite Methode zur
 Struktur `Rectangle` implementieren. Diesmal soll eine zweite Instanz von
 `Rectangle` entgegengenommen und `true` zurückgeben werden, wenn das zweite
-`Rectangle` vollständig in `self` hineinpasst; andernfalls soll `false`
-zurückgegeben werden. Das heißt, wir wollen in der Lage sein, das in Codeblock
-5-14 gezeigte Programm zu schreiben, sobald wir die Methode `can_hold`
-definiert haben.
+`Rectangle` vollständig in `self` (dem ersten `Rectangle`) hineinpasst;
+andernfalls soll `false` zurückgegeben werden. Das heißt, sobald wir die
+Methode `can_hold` definiert haben, wollen wir in der Lage sein, das in
+Codeblock 5-14 gezeigte Programm zu schreiben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -293,7 +292,7 @@ Alle Funktionen, die innerhalb eines `impl`-Blocks definiert sind, werden
 nach dem `impl` benannt ist. Wir können assoziierte Funktionen definieren, die
 nicht `self` als ihren ersten Parameter haben (und somit keine Methoden sind),
 weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
-bereits eine solche Funktion verwendet, die Funktion `String::from`, die für
+bereits eine solche Funktion verwendet: Die Funktion `String::from`, die für
 den Typ `String` definiert ist.
 
 Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
