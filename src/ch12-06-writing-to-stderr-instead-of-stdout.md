@@ -1,8 +1,8 @@
 ## Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben
 
 Im Moment schreiben wir unsere gesamte Ausgabe mit dem Makro `println!` auf das
-Terminal. Die meisten Terminals bieten zwei Arten der Ausgabe:
-*Standardausgabe* (`stdout`) für allgemeine Informationen und
+Terminal. In den meisten Terminals gibt es zwei Arten von Ausgaben:
+Die *Standardausgabe* (`stdout`) für allgemeine Informationen und die
 *Standardfehlerausgabe* (`stderr`) für Fehlermeldungen. Diese Unterscheidung
 ermöglicht es dem Benutzer, die erfolgreiche Ausgabe eines Programms in eine
 Datei zu leiten, aber dennoch Fehlermeldungen auf dem Bildschirm auszugeben.

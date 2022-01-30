@@ -334,7 +334,7 @@ Wir können `dbg!` um den Ausdruck `30 * scale` setzen, und da `dbg!` die
 Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld `width`
 denselben Wert, als wenn wir den `dbg!`-Aufruf dort nicht hätten. Wir wollen
 nicht, dass `dbg!` die Eigentümerschaft von `rect1` übernimmt, also übergeben
-wir `dbg!` eine Referenz im nächsten Aufruf. So sieht die Ausgabe dieses
+wir eine Referenz auf `rect1` im nächsten Aufruf. So sieht die Ausgabe dieses
 Beispiels aus:
 
 ```console

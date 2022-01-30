@@ -36,7 +36,7 @@ Schaue dir die generierte Datei *Cargo.toml* an:
 [package]
 name = "guessing_game"
 version = "0.1.0"
-edition = "2018"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

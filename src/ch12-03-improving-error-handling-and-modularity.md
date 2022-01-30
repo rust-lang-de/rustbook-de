@@ -150,10 +150,6 @@ Strukturfelder einen aussagekräftigen Namen geben. Auf diese Weise wird es
 künftigen Betreuern dieses Codes leichter fallen, zu verstehen, wie die
 verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.
                                                    
-> Hinweis: Das Verwenden primitiver Werte, wenn ein komplexer Typ angemessener
-> wäre, ist ein Anti-Muster, das als *primitive Besessenheit* (primitive
-> obsession) bekannt ist.
-
 Codeblock 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -454,7 +450,7 @@ wir im nächsten Codeblock tun werden.
 # }
 #
 impl Config {
-    fn new(args: &[String]) -> Result<Config, &str> {
+    fn new(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -526,7 +522,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &str> {
+#     fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -632,7 +628,7 @@ fn run(config: Config) {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &str> {
+#     fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -701,7 +697,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &str> {
+#     fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -832,7 +828,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &str> {
+#     fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -888,7 +884,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &str> {
+    pub fn new(args: &[String]) -> Result<Config, &'static str> {
         // --abschneiden--
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");

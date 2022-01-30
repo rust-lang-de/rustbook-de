@@ -1,20 +1,22 @@
 ## Eine Aufzählung (enum) definieren
 
-Schauen wir uns eine Situation an, die wir mit Code ausdrücken wollen, bei der
-Aufzählungen (enums) nützlich und geeigneter sind als Strukturen (structs).
-Angenommen, wir müssen mit IP-Adressen arbeiten. Aktuell werden zwei
-Hauptstandards für IP-Adressen verwendet: Version vier und Version sechs. Das
-sind die einzigen Möglichkeiten einer IP-Adresse, mit denen unser Programm zu
-tun haben wird: Wir können alle möglichen Varianten *aufzählen*, daher auch der
-Name der Aufzählung.
+Aufzählungen (enums) sind eine Möglichkeit, benutzerdefinierte Datentypen auf
+eine andere Art und Weise als mit Strukturen (structs) zu definieren. Schauen
+wir uns eine Situation an, die wir vielleicht in Code ausdrücken wollen, und
+sehen wir, warum Aufzählungen in diesem Fall nützlich und besser geeignet sind
+als Strukturen. Angenommen, wir müssen mit IP-Adressen arbeiten. Aktuell werden
+zwei Hauptstandards für IP-Adressen verwendet: Version vier und Version sechs.
+Da dies die einzigen Möglichkeiten für eine IP-Adresse sind, auf die unser
+Programm stößt, können wir alle möglichen Varianten *aufzählen*, woher die
+Aufzählung ihren Namen hat.
 
 Jede IP-Adresse kann entweder eine Adresse der Version vier oder der Version
 sechs sein, aber nicht beides gleichzeitig. Diese Eigenschaft der IP-Adressen
-passt zur Aufzählungs-Datenstruktur, da Aufzählungswerte nur eine ihrer
-Varianten sein können. Sowohl die Adressen der Version vier als auch der
-Version sechs sind grundsätzlich immer noch IP-Adressen, so dass sie als der
-gleiche Typ behandelt werden sollten, wenn der Code mit Situationen zu tun hat,
-die für beide IP-Adressenarten gelten.
+passt zur Aufzählungs-Datenstruktur, da ein Aufzählungswert nur einen seiner
+Varianten sein kann. Sowohl die Adressen der Version vier als auch der Version
+sechs sind grundsätzlich immer noch IP-Adressen, sodass sie als der gleiche Typ
+behandelt werden sollten, wenn der Code mit Situationen zu tun hat, die für
+beide IP-Adressenarten gelten.
 
 Wir können dieses Konzept im Code ausdrücken, indem wir eine Aufzählung
 `IpAddrKind` definieren und die möglichen Varianten auflisten, die eine
@@ -107,7 +109,8 @@ Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
 IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den *Wert* der
 tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche *Variante* es
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könntest du dieses Problem wie in Codeblock 6-1 dargestellt angehen.
+hast, könnten du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
+Codeblock 6-1.
 
 ```rust
 enum IpAddrKind {
@@ -137,17 +140,17 @@ let loopback = IpAddr {
 Hier haben wir eine Struktur `IpAddr` definiert, die zwei Felder hat:  Ein Feld
 `kind` vom Typ `IpAddrKind` (die zuvor definierte Aufzählung) und ein Feld
 `address` vom Typ `String`. Wir haben zwei Instanzen dieser Struktur erzeugt.
-Die erste, `home`, hat die Variante `IpAddrKind::V4` und die zugehörige Adresse
-`127.0.0.1`. Die zweite Instanz, `loopback`, hat die Variante `V6` von
-`IpAddrKind` als ihren Wert für `kind` und die zugehörige Adresse `::1`. Wir
-haben eine Struktur verwendet, um die Werte `kind` und `address` zu bündeln, so
-dass jetzt die Variante mit dem Wert verbunden ist.
+Die erste ist `home` und hat die Variante `IpAddrKind::V4` und die zugehörige
+Adresse `127.0.0.1`. Die zweite Instanz ist `loopback` und hat die Variante
+`V6` von `IpAddrKind` als ihren Wert für `kind` und die zugehörige Adresse
+`::1`. Wir haben eine Struktur verwendet, um die Werte `kind` und `address` zu
+bündeln, sodass jetzt die Variante mit dem Wert verbunden ist.
 
-Wir können dasselbe Konzept prägnanter darstellen, indem wir nur eine
-Aufzählung, anstelle einer Aufzählung innerhalb einer Struktur, verwenden,
-indem wir Daten direkt in jede Aufzählungsvariante einfügen. Diese neue
-Definition der Aufzählung `IpAddr` legt fest, dass sowohl die Variante `V4` als
-auch `V6` zugehörige `String`-Werte haben:
+Allerdings ist die Darstellung desselben Konzepts mit einer Aufzählung
+prägnanter: Anstelle einer Aufzählung innerhalb einer Struktur können wir die
+Daten direkt in jede Aufzählungsvariante einfügen. Diese neue Definition der
+Aufzählung `IpAddr` legt fest, dass sowohl die Variante `V4` als auch `V6`
+zugehörige `String`-Werte haben:
 
 ```rust
 enum IpAddr {
@@ -197,8 +200,6 @@ wie die Standardbibliothek `IpAddr` definiert: Es hat genau die Aufzählung und
 die Varianten, die wir definiert und verwendet haben, aber es bettet die
 Adressdaten innerhalb der Varianten in Form von zwei verschiedenen Strukturen
 ein, die für jede Variante unterschiedlich definiert sind:
-
-[IpAddr]: https://doc.rust-lang.org/std/net/enum.IpAddr.html
 
 ```rust
 struct Ipv4Addr {
@@ -305,16 +306,12 @@ verbreitet und hilfreich ist: `Option`
 
 ### Die Aufzählung `Option` und ihre Vorteile gegenüber Nullwerten
 
-Im vorigen Abschnitt haben wir uns angesehen, wie es die Aufzählung `IpAddr`
-ermöglicht, Rusts Typsystem zu verwenden, um mehr Informationen als nur die
-Daten in unserem Programm zu kodieren. Dieser Abschnitt befasst sich mit einer
-Fallstudie zu `Option`, einer weiteren Aufzählung, die von der
-Standardbibliothek definiert wird. Der Typ `Option` wird an vielen Stellen
-verwendet, weil er das sehr häufige Szenario abbildet, in dem ein Wert etwas
-oder nichts sein könnte. Im Sinne des Typsystems bedeutet das, dass der
-Compiler überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt
-sollst. Diese Funktionalität kann Fehler vermeiden, die in anderen
-Programmiersprachen extrem häufig auftreten.
+Dieser Abschnitt befasst sich mit einer Fallstudie zu `Option`, einer weiteren
+Aufzählung, die von der Standardbibliothek definiert wird. Der Typ `Option`
+kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
+Im Sinne des Typsystems bedeutet das, dass der Compiler überprüfen kann, ob du
+alle Fälle behandelt hast, die du behandelt sollst. Diese Funktionalität kann
+Fehler vermeiden, die in anderen Programmiersprachen extrem häufig auftreten.
 
 Bei der Entwicklung von Programmiersprachen wird oft überlegt, welche
 Funktionalität aufgenommen werden soll, aber auch die auszuschließende
@@ -351,8 +348,6 @@ das Konzept des Vorhandenseins oder Nichtvorhandenseins eines Wertes abbilden
 kann. Diese Aufzählung heißt `Option<T>` und ist
 [in der Standardbibliothek][Option] wie folgt definiert:
 
-[option]: https://doc.rust-lang.org/std/option/enum.Option.html
-
 ```rust
 enum Option<T> {
     None,
@@ -361,11 +356,11 @@ enum Option<T> {
 ```
 
 Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Präludium
-enthalten ist; du musst sie nicht explizit in den Anwendungsbereich aufnehmen.
-Dasselbe gilt für ihre Varianten: Du kannst `Some` und `None` direkt ohne
-Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist dennoch nur eine
-normale Aufzählung, und `Some(T)` und `None` sind nur Varianten des Typs
-`Option<T>`.
+enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
+Seine Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
+`None` direkt ohne Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist
+dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur
+Varianten des Typs `Option<T>`.
 
 Die Syntax `<T>` ist eine Funktionalität von Rust, über die wir noch nicht
 gesprochen haben. Es handelt sich um einen generischen Typparameter, auf den
@@ -441,23 +436,20 @@ Mit anderen Worten musst du eine `Option<T>` in ein `T` konvertieren, bevor du
 häufigsten Probleme mit Null abzufangen: Anzunehmen, dass etwas nicht null ist,
 obwohl es tatsächlich null ist.
 
-Wenn du dir keine Sorgen machen musst, dass fälschlicherweise ein
-Nicht-Null-Wert angenommen wird, hilft dir das mehr Vertrauen in deinen Code zu
-haben. Um einen Wert zu haben, der möglicherweise null sein kann, musst du dich
-explizit dafür entscheiden, indem du als Typ `Option<T>` verwendest. Wenn du
-dann diesen Wert verwendest, musst du den Fall null explizit behandeln. Überall
-dort, wo ein Wert nicht den Typ `Option<T>` hat, kannst du *sicher* sein, dass
-der Wert nicht null ist. Dies war eine bewusste Konstruktionsentscheidung bei 
-Rust, um die Verbreitung von Null einzuschränken und die Sicherheit von
-Rust-Code zu erhöhen.
+Durch Vermeiden des Risikos, fälschlicherweise einen Nicht-Null-Wert
+anzunehmen, gewinnst du mehr Vertrauen in deinen Code. Um einen Wert zu haben,
+der möglicherweise null sein kann, musst du dich explizit dafür entscheiden,
+indem du als Typ `Option<T>` verwendest. Wenn du dann diesen Wert verwendest,
+musst du den Fall null explizit behandeln. Überall dort, wo ein Wert nicht den
+Typ `Option<T>` hat, kannst du *sicher* sein, dass der Wert nicht null ist.
+Dies war eine bewusste Konstruktionsentscheidung bei Rust, um die Verbreitung
+von Null einzuschränken und die Sicherheit von Rust-Code zu erhöhen.
 
 Wie erhältst du nun den `T`-Wert aus einer Variante `Some`, wenn du einen Wert
 vom Typ `Option<T>` hast? Die Aufzählung `Option<T>` enthält eine große Anzahl
 von Methoden, die in einer Vielzahl von Situationen nützlich sind; mehr dazu
 findest du in [der Dokumentation][docs]. Sich mit den Methoden von `Option<T>`
 vertraut zu machen, wird dir auf deiner Reise mit Rust äußerst nützlich sein.
-
-[docs]: https://doc.rust-lang.org/std/option/enum.Option.html
 
 Um einen `Option<T>`-Wert zu verwenden, benötigst du im Allgemeinen Code, der
 jede Variante behandelt. Du möchtest einen Code, der nur läuft, wenn du einen
@@ -468,3 +460,7 @@ Kontrollflusskonstrukt, das genau dies tut, wenn es mit Aufzählungen verwendet
 wird: Es führt unterschiedlichen Code aus, je nachdem, welche Variante der
 Aufzählung es hat, und dieser Code kann die Daten innerhalb des passenden
 Wertes verwenden.
+
+[docs]: https://doc.rust-lang.org/std/option/enum.Option.html
+[IpAddr]: https://doc.rust-lang.org/std/net/enum.IpAddr.html
+[option]: https://doc.rust-lang.org/std/option/enum.Option.html

@@ -17,11 +17,11 @@ match config_max {
 <span class="caption">Codeblock 6-6: Eine `match`-Ausdruck, der nur dann Code
 ausführt, wenn der Wert `Some` ist</span>
 
-Wenn der Wert `Some` ist, wollen wir den Wert in der Variante `Some` ausgeben,
-wofür wir den Wert an die Variable `max` im Muster binden. Wir wollen nichts
-mit dem Wert `None` machen. Um den Ausdruck `match` zu erfüllen, müssen wir
-nach der Verarbeitung nur einer Variante `_ => ()` hinzufügen, was lästiger
-Codeballast ist.
+Wenn der Wert `Some` ist, geben wir den Wert in der Variante `Some` aus, indem
+wir den Wert an die Variable `max` im Muster binden. Wir wollen nichts mit dem
+Wert `None` machen. Um den Ausdruck `match` zu erfüllen, müssen wir nach der
+Verarbeitung nur einer Variante `_ => ()` hinzufügen, was lästiger Codeballast
+ist.
 
 Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir `if let`
 verwenden. Der folgende Code verhält sich genauso wie der `match`-Ausdruck in

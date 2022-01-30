@@ -10,8 +10,8 @@ ein Wert entweder etwas oder nichts sein kann. Dann sehen wir uns an, wie man
 mit dem Musterabgleich (pattern matching) im Ausdruck `match` auf einfache
 Weise unterschiedlichen Code für verschiedene Werte einer Aufzählung
 auszuführen kann. Schließlich werden wir uns mit dem Konstrukt `if let`
-befassen, einem weiteren bequemen und prägnanten Idiom, das dir zur Verfügung
-steht, um mit Aufzählungen in deinem Code umzugehen.
+befassen, einem weiteren bequemen und prägnanten Idiom, um mit Aufzählungen in
+deinem Code umzugehen.
 
 Aufzählungen sind eine Funktionalität in vielen Sprachen, aber deren
 Möglichkeiten unterscheiden sich in jeder Sprache. Rusts Aufzählungen sind den

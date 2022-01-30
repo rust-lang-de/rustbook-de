@@ -5,8 +5,7 @@ Argumentkollektion und Fehlerbehandlung in *src/main.rs* belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
 Wir können Funktionen direkt mit verschiedenen Argumenten aufrufen und
 Rückgabewerte überprüfen, ohne unsere Binärdatei von der Kommandozeile aus
-aufrufen zu müssen. Fühle dich frei, einige Tests für die Funktionalität in den
-Funktionen `Config::new` und `run` selbst zu schreiben.
+aufrufen zu müssen.
 
 In diesem Abschnitt fügen wir dem `minigrep`-Programm die Suchlogik hinzu,
 indem wir die Methode der testgetriebenen Entwicklung (TDD) verwenden. Diese
@@ -52,7 +51,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -118,7 +117,7 @@ die Zeile `"sicher, schnell, produktiv."` enthält.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -274,7 +273,7 @@ Beachte, dass dies noch nicht kompiliert.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -344,7 +343,7 @@ dies noch nicht kompiliert werden kann.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -410,7 +409,7 @@ in Codeblock 12-19 gezeigt.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -516,7 +515,7 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &str> {
+#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }

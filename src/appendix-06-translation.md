@@ -17,6 +17,7 @@ eine neue Übersetzung zu informieren!
 - [Español](https://github.com/thecodix/book) 
 - [Español](https://github.com/ManRR/rust-book-es)
   &ndash; [HTML-Version](https://doc.rust-lang.ru/book/)
+- [Italiano](https://github.com/Ciro-Fusco/book_it)
 - [Русский](https://github.com/rust-lang-ru/book)
   &ndash; [HTML-Version](https://doc.rust-lang.ru/book/)
 - [한국어](https://github.com/rinthel/rust-lang-book-ko)

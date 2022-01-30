@@ -39,8 +39,8 @@ zu bauen.
 
 Hier haben wir ein Paket, das nur *src/main.rs* enthält, was bedeutet, dass es
 nur eine binäre Kiste namens `my-project` enthält. Wenn ein Paket
-*src/main.rs* und *src/lib.rs* enthält, hat es zwei Kisten: Eine Bibliothek und
-eine Binärdatei, beide mit dem gleichen Namen wie das Paket. Ein Paket kann
+*src/main.rs* und *src/lib.rs* enthält, hat es zwei Kisten: Eine Binärdatei und
+eine Bibliothek, beide mit dem gleichen Namen wie das Paket. Ein Paket kann
 mehrere Binär-Kisten haben, indem Dateien im Verzeichnis *src/bin* abgelegt
 werden: Jede Datei wird eine separate Binär-Kiste sein. Eine Kiste fasst
 verwandte Funktionalitäten in einen Gültigkeitsbereich zusammen, sodass die
