@@ -8,7 +8,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -92,7 +92,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -2241,13 +2241,13 @@ Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
 verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <p><span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span></p>
-<table><thead><tr><th align="right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
-<tr><td align="right">8 Bit</td><td><code>i8</code></td><td><code>u8</code></td></tr>
-<tr><td align="right">16 Bit</td><td><code>i16</code></td><td><code>u16</code></td></tr>
-<tr><td align="right">32 Bit</td><td><code>i32</code></td><td><code>u32</code></td></tr>
-<tr><td align="right">64 Bit</td><td><code>i64</code></td><td><code>u64</code></td></tr>
-<tr><td align="right">128 Bit</td><td><code>i128</code></td><td><code>u128</code></td></tr>
-<tr><td align="right">arch</td><td><code>isize</code></td><td><code>usize</code></td></tr>
+<table><thead><tr><th style="text-align: right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
+<tr><td style="text-align: right">8 Bit</td><td><code>i8</code></td><td><code>u8</code></td></tr>
+<tr><td style="text-align: right">16 Bit</td><td><code>i16</code></td><td><code>u16</code></td></tr>
+<tr><td style="text-align: right">32 Bit</td><td><code>i32</code></td><td><code>u32</code></td></tr>
+<tr><td style="text-align: right">64 Bit</td><td><code>i64</code></td><td><code>u64</code></td></tr>
+<tr><td style="text-align: right">128 Bit</td><td><code>i128</code></td><td><code>u128</code></td></tr>
+<tr><td style="text-align: right">arch</td><td><code>isize</code></td><td><code>usize</code></td></tr>
 </tbody></table>
 <p>Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. <em>Vorzeichenbehaftet</em> (signed) und <em>vorzeichenlos</em>
@@ -4819,14 +4819,16 @@ Datenteilen zu einer <code>struct</code> ansehen.</p>
 mehrere zusammenhängende Werte, die eine sinnvolle Gruppe bilden,
 zusammenpacken und benennen kann. Wenn du mit einer objektorientierten Sprache
 vertraut bist, ist eine <em>Struktur</em> analog zu den Datenattributen eines Objekts.
-In diesem Kapitel vergleichen wir Tupel mit Strukturen. Wir werden zeigen, wie
-man Strukturen definiert und instanziiert. Wir werden besprechen, wie man
-assoziierte Funktionen definiert, insbesondere die Art assoziierter Funktionen,
-die <em>Methoden</em> genannt werden, um das Verhalten eines Strukturtyps zu
-spezifizieren. Strukturen und Aufzählungen (enums) (siehe Kapitel 6) sind die
-Bausteine zum Erstellen neuer Typen in der Domäne deines Programms, mit denen
-du die Vorteile der Kompilierzeit-Typprüfung von Rust voll auszuschöpfen
-kannst.</p>
+In diesem Kapitel werden wir Tupel mit Strukturen vergleichen und
+gegenüberstellen, um auf den bereits vorhandenen Kenntnissen aufzubauen und zu
+zeigen, wann Strukturen eine bessere Möglichkeit zur Gruppierung von Daten
+sind. Wir werden zeigen, wie man Strukturen definiert und instanziiert. Wir
+werden besprechen, wie man assoziierte Funktionen definiert, insbesondere die
+Art assoziierter Funktionen, die <em>Methoden</em> genannt werden, um das Verhalten
+eines Strukturtyps zu spezifizieren. Strukturen und Aufzählungen (enums) (siehe
+Kapitel 6) sind die Bausteine zum Erstellen neuer Typen in der Domäne deines
+Programms, mit denen du die Vorteile der Kompilierzeit-Typprüfung von Rust voll
+auszuschöpfen kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="strukturen-structs-definieren-und-instanziieren"><a class="header" href="#strukturen-structs-definieren-und-instanziieren">Strukturen (structs) definieren und instanziieren</a></h2>
 <p>Strukturen (structs) ähneln Tupeln, die im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a>
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
@@ -4870,15 +4872,15 @@ Codeblock 5-2 zu sehen ist.</p>
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let user1 = User {
+</span>fn main() {
+    let user1 = User {
         email: String::from(&quot;jemand@example.com&quot;),
         username: String::from(&quot;benutzername123&quot;),
         active: true,
         sign_in_count: 1,
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-2: Eine Instanz der Struktur <code>User</code>
 erzeugen</span></p>
 <p>Um auf einen bestimmten Wert in einer Struktur zuzugreifen, können wir die
@@ -4894,8 +4896,8 @@ Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geänder
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let mut user1 = User {
+</span>fn main() {
+    let mut user1 = User {
         email: String::from(&quot;jemand@example.com&quot;),
         username: String::from(&quot;benutzername123&quot;),
         active: true,
@@ -4903,8 +4905,8 @@ Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geänder
     };
 
     user1.email = String::from(&quot;andere-email@example.com&quot;);
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-3: Wert im Feld <code>email</code> einer <code>User</code>-Instanz ändern</span></p>
 <p>Beachte, dass die gesamte Instanz veränderlich sein muss. Rust erlaubt es
 nicht, nur einzelne Felder als veränderlich zu markieren. Wie mit jedem
@@ -4996,22 +4998,23 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    let user1 = User {
+</span>fn main() {
+    // --abschneiden--
+<span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
 </span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
-</span><span class="boring">
-</span>    let user2 = User {
+</span>
+    let user2 = User {
         active: user1.active,
         username: user1.username,
         email: String::from(&quot;andere@example.com&quot;),
         sign_in_count: user1.sign_in_count,
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
 Verwendung eines Werts von <code>user1</code>.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
@@ -5025,20 +5028,21 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    let user1 = User {
+</span>fn main() {
+    // --abschneiden--
+<span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
 </span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
-</span><span class="boring">
-</span>    let user2 = User {
+</span>
+    let user2 = User {
         email: String::from(&quot;andere@example.com&quot;),
         ..user1
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-7: Verwenden der
 Strukturaktualisierungssyntax, um einen neuen Wert für <code>email</code> in der
 <code>User</code>-Instanz zu setzen und die restlichen Werte aus der Instanz <code>user1</code> zu
@@ -5072,16 +5076,14 @@ einer regulären Struktur langatmig oder unnötig wären.</p>
 <p>Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort <code>struct</code>,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct Color(i32, i32, i32);
+<pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
-let black = Color(0, 0, 0);
-let origin = Point(0, 0, 0);
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+</code></pre></pre>
 <p>Beachte, dass die Werte <code>black</code> und <code>origin</code> unterschiedliche Typen haben, weil
 sie Instanzen unterschiedlicher Tupel-Strukturen sind. Jede von dir definierte
 Struktur ist ein eigenständiger Typ, auch wenn die Felder innerhalb der
@@ -5100,14 +5102,12 @@ Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens <code>AlwaysEqual</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct AlwaysEqual;
+<pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
 
-let subject = AlwaysEqual;
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let subject = AlwaysEqual;
+}
+</code></pre></pre>
 <p>Um <code>AlwaysEqual</code> zu definieren, verwenden wir das Schlüsselwort <code>struct</code>, den
 gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
 sind nicht erforderlich! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der
@@ -5222,10 +5222,9 @@ durch separate Breiten- und Höhenvariablen beschrieben wird</span></p>
      Running `target/debug/structs`
 Die Fläche des Rechtecks ist 1500 Quadratpixel.
 </code></pre>
-<p>Auch wenn Codeblock 5-8 funktioniert und die Fläche des Rechtecks durch
-Aufrufen der Funktion <code>area</code> mit jeder Dimension herausfindet, können wir es
-besser machen. Breite und Höhe hängen zusammen, sie beschreiben zusammen ein
-Rechteck.</p>
+<p>Mit diesem Code gelingt es, die Fläche des Rechtecks zu ermitteln, indem die
+Funktion <code>area</code> mit jeder Dimension aufgerufen wird, aber wir können noch mehr
+tun, um diesen Code klar und lesbar zu machen.</p>
 <p>Das Problem dieses Codes wird bei der Signatur von <code>area</code> deutlich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let width1 = 30;
@@ -5242,10 +5241,10 @@ Rechteck.</p>
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>Die Funktion <code>area</code> soll die Fläche eines Rechtecks berechnen, aber die von uns
-geschriebene Funktion hat zwei Parameter. Dass die Parameter zusammenhängen,
-wird aber nirgendwo in unserem Programm ausgedrückt. Es wäre besser lesbar und
-überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu haben
-wir bereits im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
+geschriebene Funktion hat zwei Parameter und es geht in unserem Programm
+nirgendwo klar hervor, dass die Parameter zusammenhängen. Es wäre besser lesbar
+und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
+haben wir bereits im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.</p>
 <h3 id="refaktorierung-mit-tupeln"><a class="header" href="#refaktorierung-mit-tupeln">Refaktorierung mit Tupeln</a></h3>
 <p>Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
@@ -5268,20 +5267,19 @@ fn area(dimensions: (u32, u32)) -&gt; u32 {
 einem Tupel beschrieben</span></p>
 <p>In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
 hinein und wir geben jetzt nur noch ein Argument weiter. Andererseits ist
-dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, so dass
-unsere Berechnung noch unübersichtlicher geworden ist, weil wir die Teile des
-Tupels indizieren müssen.</p>
-<p>Es spielt zwar keine Rolle, wenn wir bei der Flächenberechnung Breite und Höhe
-verwechseln, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollten,
-würde es eine Rolle spielen! Wir müssten berücksichtigen, dass <code>width</code> den
-Tupelindex <code>0</code> und <code>height</code> den Tupelindex <code>1</code> hat. Wenn eine andere Person an
-diesem Code arbeiten würde, müsste er das herausfinden und sich das ebenfalls
-merken. Es wäre leicht, diese Werte zu vergessen oder zu verwechseln und Fehler
-zu verursachen, weil wir die Bedeutung unserer Daten in unserem Code nicht
-hinterlegt haben.</p>
+dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, sodass wir
+die Teile des Tupels indizieren müssen, was unsere Berechnung weniger klar
+macht.</p>
+<p>Die Verwechslung von Breite und Höhe ist für die Flächenberechnung nicht von
+Bedeutung, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollen, wäre
+es wichtig! Wir müssen uns merken, dass <code>width</code> der Tupelindex <code>0</code> und <code>height</code>
+der Tupelindex <code>1</code> ist. Für andere wäre es noch schwieriger, dies
+herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
+Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
+es jetzt einfacher, Fehler zu machen.</p>
 <h3 id="refaktorierung-mit-strukturen-mehr-semantik"><a class="header" href="#refaktorierung-mit-strukturen-mehr-semantik">Refaktorierung mit Strukturen: Mehr Semantik</a></h3>
 <p>Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
-anzugeben. Wir können das verwendete Tupel in einen Datentyp mit einem Namen
+anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
 5-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -5325,7 +5323,7 @@ meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung seiner 
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die Lesbarkeit.</p>
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
-<p>Es wäre schön, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
+<p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
 versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
@@ -5359,7 +5357,8 @@ soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
 Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
 Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
 zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von <code>Display</code>.</p>
+Standardimplementierung von <code>Display</code>, um die mit <code>println!</code> und dem
+Platzhalter <code>{}</code> verwenden zu können.</p>
 <p>Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:</p>
 <pre><code class="language-text">   = help: the trait `std::fmt::Display` is not implemented for `Rectangle`
@@ -5413,7 +5412,8 @@ rect1 ist Rectangle { width: 30, height: 50 }
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
 ist. In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
-<code>println!</code>-Meldung verwenden. Die Ausgabe sieht dann wie folgt aus:</p>
+<code>println!</code>-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
+<code>{:#?}</code> folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s
@@ -5424,17 +5424,20 @@ rect1 ist Rectangle {
 }
 </code></pre>
 <p>Eine andere Möglichkeit, einen Wert im <code>Debug</code>-Format auszugeben, ist die
-Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>. Das Makro <code>dbg!</code> übernimmt die
-Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
-der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
-Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
-des Makros <code>dbg!</code> schreibt in den Standard-Fehler-Konsolenstrom (<code>stderr</code>), im
-Gegensatz zu <code>println!</code>, das in den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>)
-schreibt. Wir werden mehr über <code>stderr</code> und <code>stdout</code> im Abschnitt
-<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
-schreiben“ in Kapitel 12</a> erfahren. Hier ist ein Beispiel, bei dem wir am
-Wert interessiert sind, der dem Feld <code>width</code> zugewiesen wird, als auch am Wert
-der gesamten Struktur in <code>rect1</code>:</p>
+Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>, das die Eigentümerschaft eines Ausdrucks
+übernimmt, die Datei und Zeilennummer, in der der <code>dbg!</code>-Makroaufruf in deinem
+Code vorkommt, zusammen mit dem resultierenden Wert des Ausdrucks ausgibt und
+die Eigentümerschaft am Wert zurückgibt.</p>
+<blockquote>
+<p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in den
+Standard-Fehler-Konsolenstrom (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
+den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>) schreibt. Wir werden mehr über
+<code>stderr</code> und <code>stdout</code> im Abschnitt <a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die
+Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
+12</a> erfahren.</p>
+</blockquote>
+<p>Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
+<code>width</code> zugewiesen wird, als auch am Wert der gesamten Struktur in <code>rect1</code>:</p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct Rectangle {
     width: u32,
@@ -5556,7 +5559,7 @@ sie <code>self</code> als ersten Parameter verwendet. Diese Technik wird typisch
 dann verwendet, wenn die Methode <code>self</code> in etwas anderes transformiert und man
 verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
 Instanz verwendet.</p>
-<p>Der Hauptvorteil von Methoden gegenüber Funktionen liegt abgesehen davon, dass
+<p>Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von <code>self</code> nicht ständig wiederholt
 werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
 Instanz eines Typs tun können, in einen einzigen <code>impl</code> Block gepackt.
@@ -5589,13 +5592,12 @@ fn main() {
     }
 }
 </code></pre></pre>
-<p>Hier entscheiden wir uns dafür, dass das Verhalten der Methode <code>width</code> so
-aussieht, dass sie <code>true</code> zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz
-größer als 0 ist, und <code>false</code>, wenn der Wert 0 ist: Wir können ein Feld
-innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
-<code>main</code> nach <code>rect1.width</code> Klammern setzen, weiß Rust, dass wir die Methode
-<code>width</code> meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
-<code>width</code> meinen.</p>
+<p>Hier entscheiden wir uns dafür, dass die Methode <code>width</code> den Wert <code>true</code>
+zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz größer als 0 ist, und
+<code>false</code>, wenn der Wert 0 ist: Wir können ein Feld innerhalb einer gleichnamigen
+Methode für jeden Zweck verwenden. Wenn wir in <code>main</code> nach <code>rect1.width</code> eine
+Klammer setzen, weiß Rust, dass wir die Methode <code>width</code> meinen. Wenn wir keine
+Klammern verwenden, weiß Rust, dass wir das Feld <code>width</code> meinen.</p>
 <p>Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
 Methoden wie diese werden <em>getters</em> genannt, und Rust implementiert sie nicht
@@ -5656,10 +5658,10 @@ zur Ergonomie der Eigentümerschaft in der Praxis.</p>
 <p>Lass uns den Umgang mit Methoden üben, indem wir eine zweite Methode zur
 Struktur <code>Rectangle</code> implementieren. Diesmal soll eine zweite Instanz von
 <code>Rectangle</code> entgegengenommen und <code>true</code> zurückgeben werden, wenn das zweite
-<code>Rectangle</code> vollständig in <code>self</code> hineinpasst; andernfalls soll <code>false</code>
-zurückgegeben werden. Das heißt, wir wollen in der Lage sein, das in Codeblock
-5-14 gezeigte Programm zu schreiben, sobald wir die Methode <code>can_hold</code>
-definiert haben.</p>
+<code>Rectangle</code> vollständig in <code>self</code> (dem ersten <code>Rectangle</code>) hineinpasst;
+andernfalls soll <code>false</code> zurückgegeben werden. Das heißt, sobald wir die
+Methode <code>can_hold</code> definiert haben, wollen wir in der Lage sein, das in
+Codeblock 5-14 gezeigte Programm zu schreiben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let rect1 = Rectangle {
@@ -5747,7 +5749,7 @@ funktionieren genau wie Parameter in Funktionen.</p>
 nach dem <code>impl</code> benannt ist. Wir können assoziierte Funktionen definieren, die
 nicht <code>self</code> als ihren ersten Parameter haben (und somit keine Methoden sind),
 weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
-bereits eine solche Funktion verwendet, die Funktion <code>String::from</code>, die für
+bereits eine solche Funktion verwendet: Die Funktion <code>String::from</code>, die für
 den Typ <code>String</code> definiert ist.</p>
 <p>Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
 verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
@@ -12144,10 +12146,12 @@ als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
 <code>tests</code> haben, um gängige Szenarien aufzusetzen oder gängige Operationen
 durchzuführen, daher müssen wir mit dem Attribut <code>#[test]</code> angeben, welche
 Funktionen Tests sind.</p>
-<p>Der Funktionsrumpf verwendet das Makro <code>assert_eq!</code>, um sicherzustellen, dass 2
-+ 2 gleich 4 ist. Diese Prüfung dient als Beispiel für den Aufbau eines
+<p>Der Funktionsrumpf verwendet das Makro <code>assert_eq!</code>, um sicherzustellen, dass 2</p>
+<ul>
+<li>2 gleich 4 ist. Diese Prüfung dient als Beispiel für den Aufbau eines
 typischen Tests. Lassen wir ihn laufen, um zu sehen, dass dieser Test
-erfolgreich ist.</p>
+erfolgreich ist.</li>
+</ul>
 <p>Das Kommando <code>cargo test</code> führt alle Tests in unserem Projekt aus, wie in
 Codeblock 11-2 zu sehen ist.</p>
 <pre><code class="language-console">$ cargo test
@@ -30878,61 +30882,61 @@ Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überlad
 werden kann. Wenn ein Operator überladen werden kann, wird das relevante
 Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <p><span class="caption">Tabelle B-1: Operatoren</span></p>
-<table><thead><tr><th align="left">Operator</th><th align="left">Beispiel</th><th align="left">Erklärung</th><th align="left">Überladbar?</th></tr></thead><tbody>
-<tr><td align="left"><code>!</code></td><td align="left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td align="left">Makro-Expansion</td><td align="left"></td></tr>
-<tr><td align="left"><code>!</code></td><td align="left"><code>!expr</code></td><td align="left">Bitweises oder logisches Komplement</td><td align="left"><code>Not</code></td></tr>
-<tr><td align="left"><code>!=</code></td><td align="left"><code>var != expr</code></td><td align="left">Vergleich auf Ungleichheit</td><td align="left"><code>PartialEq</code></td></tr>
-<tr><td align="left"><code>%</code></td><td align="left"><code>expr % expr</code></td><td align="left">Arithmetischer Restbetrag</td><td align="left"><code>Rem</code></td></tr>
-<tr><td align="left"><code>%=</code></td><td align="left"><code>var %= expr</code></td><td align="left">Arithmetischer Restbetrag und Zuweisung</td><td align="left"><code>RemAssign</code></td></tr>
-<tr><td align="left"><code>&amp;</code></td><td align="left"><code>&amp;expr</code>,<br> <code>&amp;mut expr</code></td><td align="left">Ausleihe</td><td align="left"></td></tr>
-<tr><td align="left"><code>&amp;</code></td><td align="left"><code>&amp;type</code>,<br> <code>&amp;mut type</code>,<br> <code>&amp;'a type</code>,<br> <code>&amp;'a mut type</code></td><td align="left">Ausleih-Referenz-Typ</td><td align="left"></td></tr>
-<tr><td align="left"><code>&amp;</code></td><td align="left"><code>expr &amp; expr</code></td><td align="left">Bitweises UND</td><td align="left"><code>BitAnd</code></td></tr>
-<tr><td align="left"><code>&amp;=</code></td><td align="left"><code>var &amp;= expr</code></td><td align="left">Bitweises UND und Zuweisung</td><td align="left"><code>BitAndAssign</code></td></tr>
-<tr><td align="left"><code>&amp;&amp;</code></td><td align="left"><code>expr &amp;&amp; expr</code></td><td align="left">Logisches UND mit Kurzschlussauswertung</td><td align="left"></td></tr>
-<tr><td align="left"><code>*</code></td><td align="left"><code>expr * expr</code></td><td align="left">Arithmetische Multiplikation</td><td align="left"><code>Mul</code></td></tr>
-<tr><td align="left"><code>*=</code></td><td align="left"><code>var *= expr</code></td><td align="left">Arithmetische Multiplikation und Zuweisung</td><td align="left"><code>MulAssign</code></td></tr>
-<tr><td align="left"><code>*</code></td><td align="left"><code>*expr</code></td><td align="left">Dereferenzierung</td><td align="left"><code>Deref</code></td></tr>
-<tr><td align="left"><code>*</code></td><td align="left"><code>*const type</code>,<br> <code>*mut type</code></td><td align="left">Roh-Referenz</td><td align="left"></td></tr>
-<tr><td align="left"><code>+</code></td><td align="left"><code>trait + trait</code>,<br> <code>'a + trait</code></td><td align="left">Verbundtypabgrenzung</td><td align="left"></td></tr>
-<tr><td align="left"><code>+</code></td><td align="left"><code>expr + expr</code></td><td align="left">Arithmetische Addition</td><td align="left"><code>Add</code></td></tr>
-<tr><td align="left"><code>+=</code></td><td align="left"><code>var += expr</code></td><td align="left">Arithmetische Addition und Zuweisung</td><td align="left"><code>AddAssign</code></td></tr>
-<tr><td align="left"><code>,</code></td><td align="left"><code>expr, expr</code></td><td align="left">Argument- und Elementseparator</td><td align="left"></td></tr>
-<tr><td align="left"><code>-</code></td><td align="left"><code>- expr</code></td><td align="left">Arithmetische Negation</td><td align="left"><code>Neg</code></td></tr>
-<tr><td align="left"><code>-</code></td><td align="left"><code>expr - expr</code></td><td align="left">Arithmetische Subtraktion</td><td align="left"><code>Sub</code></td></tr>
-<tr><td align="left"><code>-=</code></td><td align="left"><code>var -= expr</code></td><td align="left">Arithmetische Subtraktion und Zuweisung</td><td align="left"><code>SubAssign</code></td></tr>
-<tr><td align="left"><code>-&gt;</code></td><td align="left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td align="left">Funktion und Funktionsabschlussrückgabetyp</td><td align="left"></td></tr>
-<tr><td align="left"><code>.</code></td><td align="left"><code>expr.ident</code></td><td align="left">Elementzugriff</td><td align="left"></td></tr>
-<tr><td align="left"><code>..</code></td><td align="left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td align="left">Rechts-ausschließendes Bereichsliteral</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>..=</code></td><td align="left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td align="left">Rechts-einschließendes Bereichsliteral</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>..</code></td><td align="left"><code>..expr</code></td><td align="left">Aktualisierungssyntax für Strukturliterale</td><td align="left"></td></tr>
-<tr><td align="left"><code>..</code></td><td align="left"><code>variant(x, ..)</code>,<br> <code>struct_type { x, .. }</code></td><td align="left">„Und der Rest“-Musterbindung</td><td align="left"></td></tr>
-<tr><td align="left"><code>...</code></td><td align="left"><code>expr...expr</code></td><td align="left">(Veraltet, verwende stattdessen <code>..=</code>) In einem Muster: inklusives Bereichsmuster</td><td align="left"></td></tr>
-<tr><td align="left"><code>/</code></td><td align="left"><code>expr / expr</code></td><td align="left">Arithmetische Division</td><td align="left"><code>Div</code></td></tr>
-<tr><td align="left"><code>/=</code></td><td align="left"><code>var /= expr</code></td><td align="left">Arithmetische Division und Zuweisung</td><td align="left"><code>DivAssign</code></td></tr>
-<tr><td align="left"><code>:</code></td><td align="left"><code>pat: type</code>,<br> <code>ident: type</code></td><td align="left">Typabgrenzung</td><td align="left"></td></tr>
-<tr><td align="left"><code>:</code></td><td align="left"><code>ident: expr</code></td><td align="left">Struktur-Feld-Initialisierer</td><td align="left"></td></tr>
-<tr><td align="left"><code>:</code></td><td align="left"><code>'a: loop {...}</code></td><td align="left">Schleifen-Label</td><td align="left"></td></tr>
-<tr><td align="left"><code>;</code></td><td align="left"><code>expr;</code></td><td align="left">Anweisungs- und Element-Endezeichen</td><td align="left"></td></tr>
-<tr><td align="left"><code>;</code></td><td align="left"><code>[...; len]</code></td><td align="left">Syntaxteil für Array fester Größe</td><td align="left"></td></tr>
-<tr><td align="left"><code>&lt;&lt;</code></td><td align="left"><code>expr &lt;&lt; expr</code></td><td align="left">Bitweise Links-Schiebung</td><td align="left"><code>Shl</code></td></tr>
-<tr><td align="left"><code>&lt;&lt;=</code></td><td align="left"><code>var &lt;&lt;= expr</code></td><td align="left">Bitweise Links-Schiebung und Zuweisung</td><td align="left"><code>ShlAssign</code></td></tr>
-<tr><td align="left"><code>&lt;</code></td><td align="left"><code>expr &lt; expr</code></td><td align="left">Kleiner-als-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>&lt;=</code></td><td align="left"><code>expr &lt;= expr</code></td><td align="left">Kleiner-gleich-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>=</code></td><td align="left"><code>var = expr</code>,<br> <code>ident = type</code></td><td align="left">Zuweisung/Äquivalenz</td><td align="left"></td></tr>
-<tr><td align="left"><code>==</code></td><td align="left"><code>expr == expr</code></td><td align="left">Gleichheitsvergleich</td><td align="left"><code>PartialEq</code></td></tr>
-<tr><td align="left"><code>=&gt;</code></td><td align="left"><code>pat =&gt; expr</code></td><td align="left">Teilsyntax im Abgleichs-Zweig (match arm)</td><td align="left"></td></tr>
-<tr><td align="left"><code>&gt;</code></td><td align="left"><code>expr &gt; expr</code></td><td align="left">Größer-als-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>&gt;=</code></td><td align="left"><code>expr &gt;= expr</code></td><td align="left">Größer-gleich-Vergleich</td><td align="left"><code>PartialOrd</code></td></tr>
-<tr><td align="left"><code>&gt;&gt;</code></td><td align="left"><code>expr &gt;&gt; expr</code></td><td align="left">Bitweise Rechts-Schiebung</td><td align="left"><code>Shr</code></td></tr>
-<tr><td align="left"><code>&gt;&gt;=</code></td><td align="left"><code>var &gt;&gt;= expr</code></td><td align="left">Bitweise Rechts-Schiebung und Zuweisung</td><td align="left"><code>ShrAssign</code></td></tr>
-<tr><td align="left"><code>@</code></td><td align="left"><code>ident @ pat</code></td><td align="left">Muster-Bindung</td><td align="left"></td></tr>
-<tr><td align="left"><code>^</code></td><td align="left"><code>expr ^ expr</code></td><td align="left">Bitweises exklusives ODER</td><td align="left"><code>BitXor</code></td></tr>
-<tr><td align="left"><code>^=</code></td><td align="left"><code>var ^= expr</code></td><td align="left">Bitweises exklusives ODER und Zuweisung</td><td align="left"><code>BitXorAssign</code></td></tr>
-<tr><td align="left"><code>|</code></td><td align="left"><code>pat | pat</code></td><td align="left">Muster-Alternativen</td><td align="left"></td></tr>
-<tr><td align="left"><code>|</code></td><td align="left"><code>expr | expr</code></td><td align="left">Bitweises ODER</td><td align="left"><code>BitOr</code></td></tr>
-<tr><td align="left"><code>|=</code></td><td align="left"><code>var |= expr</code></td><td align="left">Bitweises ODER und Zuweisung</td><td align="left"><code>BitOrAssign</code></td></tr>
-<tr><td align="left"><code>||</code></td><td align="left"><code>expr || expr</code></td><td align="left">Logisches ODER mit Kurzschlussauswertung</td><td align="left"></td></tr>
-<tr><td align="left"><code>?</code></td><td align="left"><code>expr?</code></td><td align="left">Fehler-Weitergabe</td><td align="left"></td></tr>
+<table><thead><tr><th style="text-align: left">Operator</th><th style="text-align: left">Beispiel</th><th style="text-align: left">Erklärung</th><th style="text-align: left">Überladbar?</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Expansion</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>!expr</code></td><td style="text-align: left">Bitweises oder logisches Komplement</td><td style="text-align: left"><code>Not</code></td></tr>
+<tr><td style="text-align: left"><code>!=</code></td><td style="text-align: left"><code>var != expr</code></td><td style="text-align: left">Vergleich auf Ungleichheit</td><td style="text-align: left"><code>PartialEq</code></td></tr>
+<tr><td style="text-align: left"><code>%</code></td><td style="text-align: left"><code>expr % expr</code></td><td style="text-align: left">Arithmetischer Restbetrag</td><td style="text-align: left"><code>Rem</code></td></tr>
+<tr><td style="text-align: left"><code>%=</code></td><td style="text-align: left"><code>var %= expr</code></td><td style="text-align: left">Arithmetischer Restbetrag und Zuweisung</td><td style="text-align: left"><code>RemAssign</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;expr</code>,<br> <code>&amp;mut expr</code></td><td style="text-align: left">Ausleihe</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>&amp;type</code>,<br> <code>&amp;mut type</code>,<br> <code>&amp;'a type</code>,<br> <code>&amp;'a mut type</code></td><td style="text-align: left">Ausleih-Referenz-Typ</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>&amp;</code></td><td style="text-align: left"><code>expr &amp; expr</code></td><td style="text-align: left">Bitweises UND</td><td style="text-align: left"><code>BitAnd</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;=</code></td><td style="text-align: left"><code>var &amp;= expr</code></td><td style="text-align: left">Bitweises UND und Zuweisung</td><td style="text-align: left"><code>BitAndAssign</code></td></tr>
+<tr><td style="text-align: left"><code>&amp;&amp;</code></td><td style="text-align: left"><code>expr &amp;&amp; expr</code></td><td style="text-align: left">Logisches UND mit Kurzschlussauswertung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>*</code></td><td style="text-align: left"><code>expr * expr</code></td><td style="text-align: left">Arithmetische Multiplikation</td><td style="text-align: left"><code>Mul</code></td></tr>
+<tr><td style="text-align: left"><code>*=</code></td><td style="text-align: left"><code>var *= expr</code></td><td style="text-align: left">Arithmetische Multiplikation und Zuweisung</td><td style="text-align: left"><code>MulAssign</code></td></tr>
+<tr><td style="text-align: left"><code>*</code></td><td style="text-align: left"><code>*expr</code></td><td style="text-align: left">Dereferenzierung</td><td style="text-align: left"><code>Deref</code></td></tr>
+<tr><td style="text-align: left"><code>*</code></td><td style="text-align: left"><code>*const type</code>,<br> <code>*mut type</code></td><td style="text-align: left">Roh-Referenz</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>+</code></td><td style="text-align: left"><code>trait + trait</code>,<br> <code>'a + trait</code></td><td style="text-align: left">Verbundtypabgrenzung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>+</code></td><td style="text-align: left"><code>expr + expr</code></td><td style="text-align: left">Arithmetische Addition</td><td style="text-align: left"><code>Add</code></td></tr>
+<tr><td style="text-align: left"><code>+=</code></td><td style="text-align: left"><code>var += expr</code></td><td style="text-align: left">Arithmetische Addition und Zuweisung</td><td style="text-align: left"><code>AddAssign</code></td></tr>
+<tr><td style="text-align: left"><code>,</code></td><td style="text-align: left"><code>expr, expr</code></td><td style="text-align: left">Argument- und Elementseparator</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>-</code></td><td style="text-align: left"><code>- expr</code></td><td style="text-align: left">Arithmetische Negation</td><td style="text-align: left"><code>Neg</code></td></tr>
+<tr><td style="text-align: left"><code>-</code></td><td style="text-align: left"><code>expr - expr</code></td><td style="text-align: left">Arithmetische Subtraktion</td><td style="text-align: left"><code>Sub</code></td></tr>
+<tr><td style="text-align: left"><code>-=</code></td><td style="text-align: left"><code>var -= expr</code></td><td style="text-align: left">Arithmetische Subtraktion und Zuweisung</td><td style="text-align: left"><code>SubAssign</code></td></tr>
+<tr><td style="text-align: left"><code>-&gt;</code></td><td style="text-align: left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td style="text-align: left">Funktion und Funktionsabschlussrückgabetyp</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident</code></td><td style="text-align: left">Elementzugriff</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td style="text-align: left">Rechts-ausschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>..=</code></td><td style="text-align: left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td style="text-align: left">Rechts-einschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..expr</code></td><td style="text-align: left">Aktualisierungssyntax für Strukturliterale</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>variant(x, ..)</code>,<br> <code>struct_type { x, .. }</code></td><td style="text-align: left">„Und der Rest“-Musterbindung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>...</code></td><td style="text-align: left"><code>expr...expr</code></td><td style="text-align: left">(Veraltet, verwende stattdessen <code>..=</code>) In einem Muster: inklusives Bereichsmuster</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>/</code></td><td style="text-align: left"><code>expr / expr</code></td><td style="text-align: left">Arithmetische Division</td><td style="text-align: left"><code>Div</code></td></tr>
+<tr><td style="text-align: left"><code>/=</code></td><td style="text-align: left"><code>var /= expr</code></td><td style="text-align: left">Arithmetische Division und Zuweisung</td><td style="text-align: left"><code>DivAssign</code></td></tr>
+<tr><td style="text-align: left"><code>:</code></td><td style="text-align: left"><code>pat: type</code>,<br> <code>ident: type</code></td><td style="text-align: left">Typabgrenzung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>:</code></td><td style="text-align: left"><code>ident: expr</code></td><td style="text-align: left">Struktur-Feld-Initialisierer</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>:</code></td><td style="text-align: left"><code>'a: loop {...}</code></td><td style="text-align: left">Schleifen-Label</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>;</code></td><td style="text-align: left"><code>expr;</code></td><td style="text-align: left">Anweisungs- und Element-Endezeichen</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>;</code></td><td style="text-align: left"><code>[...; len]</code></td><td style="text-align: left">Syntaxteil für Array fester Größe</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>&lt;&lt;</code></td><td style="text-align: left"><code>expr &lt;&lt; expr</code></td><td style="text-align: left">Bitweise Links-Schiebung</td><td style="text-align: left"><code>Shl</code></td></tr>
+<tr><td style="text-align: left"><code>&lt;&lt;=</code></td><td style="text-align: left"><code>var &lt;&lt;= expr</code></td><td style="text-align: left">Bitweise Links-Schiebung und Zuweisung</td><td style="text-align: left"><code>ShlAssign</code></td></tr>
+<tr><td style="text-align: left"><code>&lt;</code></td><td style="text-align: left"><code>expr &lt; expr</code></td><td style="text-align: left">Kleiner-als-Vergleich</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>&lt;=</code></td><td style="text-align: left"><code>expr &lt;= expr</code></td><td style="text-align: left">Kleiner-gleich-Vergleich</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>=</code></td><td style="text-align: left"><code>var = expr</code>,<br> <code>ident = type</code></td><td style="text-align: left">Zuweisung/Äquivalenz</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>==</code></td><td style="text-align: left"><code>expr == expr</code></td><td style="text-align: left">Gleichheitsvergleich</td><td style="text-align: left"><code>PartialEq</code></td></tr>
+<tr><td style="text-align: left"><code>=&gt;</code></td><td style="text-align: left"><code>pat =&gt; expr</code></td><td style="text-align: left">Teilsyntax im Abgleichs-Zweig (match arm)</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>&gt;</code></td><td style="text-align: left"><code>expr &gt; expr</code></td><td style="text-align: left">Größer-als-Vergleich</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>&gt;=</code></td><td style="text-align: left"><code>expr &gt;= expr</code></td><td style="text-align: left">Größer-gleich-Vergleich</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
+<tr><td style="text-align: left"><code>&gt;&gt;</code></td><td style="text-align: left"><code>expr &gt;&gt; expr</code></td><td style="text-align: left">Bitweise Rechts-Schiebung</td><td style="text-align: left"><code>Shr</code></td></tr>
+<tr><td style="text-align: left"><code>&gt;&gt;=</code></td><td style="text-align: left"><code>var &gt;&gt;= expr</code></td><td style="text-align: left">Bitweise Rechts-Schiebung und Zuweisung</td><td style="text-align: left"><code>ShrAssign</code></td></tr>
+<tr><td style="text-align: left"><code>@</code></td><td style="text-align: left"><code>ident @ pat</code></td><td style="text-align: left">Muster-Bindung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>^</code></td><td style="text-align: left"><code>expr ^ expr</code></td><td style="text-align: left">Bitweises exklusives ODER</td><td style="text-align: left"><code>BitXor</code></td></tr>
+<tr><td style="text-align: left"><code>^=</code></td><td style="text-align: left"><code>var ^= expr</code></td><td style="text-align: left">Bitweises exklusives ODER und Zuweisung</td><td style="text-align: left"><code>BitXorAssign</code></td></tr>
+<tr><td style="text-align: left"><code>|</code></td><td style="text-align: left"><code>pat | pat</code></td><td style="text-align: left">Muster-Alternativen</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>|</code></td><td style="text-align: left"><code>expr | expr</code></td><td style="text-align: left">Bitweises ODER</td><td style="text-align: left"><code>BitOr</code></td></tr>
+<tr><td style="text-align: left"><code>|=</code></td><td style="text-align: left"><code>var |= expr</code></td><td style="text-align: left">Bitweises ODER und Zuweisung</td><td style="text-align: left"><code>BitOrAssign</code></td></tr>
+<tr><td style="text-align: left"><code>||</code></td><td style="text-align: left"><code>expr || expr</code></td><td style="text-align: left">Logisches ODER mit Kurzschlussauswertung</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>?</code></td><td style="text-align: left"><code>expr?</code></td><td style="text-align: left">Fehler-Weitergabe</td><td style="text-align: left"></td></tr>
 </tbody></table>
 <h3 id="nicht-operator-symbole"><a class="header" href="#nicht-operator-symbole">Nicht-Operator-Symbole</a></h3>
 <p>Die folgende Liste enthält alle nicht-Buchstaben, die nicht als Operatoren
@@ -30940,106 +30944,106 @@ fungieren, d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.</p>
 <p>Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
 Stellen gültig sind.</p>
 <p><span class="caption">Tabelle B-2: Eigenständige Syntax</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>'ident</code></td><td align="left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
-<tr><td align="left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td align="left">Numerisches Literal eines bestimmten Typs</td></tr>
-<tr><td align="left"><code>&quot;...&quot;</code></td><td align="left">Zeichenketten-Literal</td></tr>
-<tr><td align="left"><code>r&quot;...&quot;</code>,<br> <code>r#&quot;...&quot;#</code>,<br> <code>r##&quot;...&quot;##</code><br> usw.</td><td align="left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
-<tr><td align="left"><code>b&quot;...&quot;</code></td><td align="left">Byte-Zeichenkettenliteral, konstruiert ein <code>[u8]</code> anstelle einer Zeichenkette</td></tr>
-<tr><td align="left"><code>br&quot;...&quot;</code>,<br> <code>br#&quot;...&quot;#</code>,<br> <code>br##&quot;...&quot;##</code><br> usw.</td><td align="left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
-<tr><td align="left"><code>'...'</code></td><td align="left">Zeichen-Literal</td></tr>
-<tr><td align="left"><code>b'...'</code></td><td align="left">ASCII-Byte-Literal</td></tr>
-<tr><td align="left"><code>|...| expr</code></td><td align="left">Funktionsabschluss (closure)</td></tr>
-<tr><td align="left"><code>!</code></td><td align="left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
-<tr><td align="left"><code>_</code></td><td align="left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>'ident</code></td><td style="text-align: left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
+<tr><td style="text-align: left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td style="text-align: left">Numerisches Literal eines bestimmten Typs</td></tr>
+<tr><td style="text-align: left"><code>&quot;...&quot;</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
+<tr><td style="text-align: left"><code>r&quot;...&quot;</code>,<br> <code>r#&quot;...&quot;#</code>,<br> <code>r##&quot;...&quot;##</code><br> usw.</td><td style="text-align: left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
+<tr><td style="text-align: left"><code>b&quot;...&quot;</code></td><td style="text-align: left">Byte-Zeichenkettenliteral, konstruiert ein <code>[u8]</code> anstelle einer Zeichenkette</td></tr>
+<tr><td style="text-align: left"><code>br&quot;...&quot;</code>,<br> <code>br#&quot;...&quot;#</code>,<br> <code>br##&quot;...&quot;##</code><br> usw.</td><td style="text-align: left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
+<tr><td style="text-align: left"><code>'...'</code></td><td style="text-align: left">Zeichen-Literal</td></tr>
+<tr><td style="text-align: left"><code>b'...'</code></td><td style="text-align: left">ASCII-Byte-Literal</td></tr>
+<tr><td style="text-align: left"><code>|...| expr</code></td><td style="text-align: left">Funktionsabschluss (closure)</td></tr>
+<tr><td style="text-align: left"><code>!</code></td><td style="text-align: left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
+<tr><td style="text-align: left"><code>_</code></td><td style="text-align: left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
 </tbody></table>
 <p>Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die
 Modulhierarchie eines Elements vorkommen.</p>
 <p><span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>ident::ident</code></td><td align="left">Namensraum-Pfad</td></tr>
-<tr><td align="left"><code>::path</code></td><td align="left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
-<tr><td align="left"><code>self::path</code></td><td align="left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
-<tr><td align="left"><code>super::path</code></td><td align="left">Pfad relativ zum Elternmodul</td></tr>
-<tr><td align="left"><code>type::ident</code>,<br> <code>&lt;type as trait&gt;::ident</code></td><td align="left">Zugehörige Konstanten, Funktionen<br> und Typen</td></tr>
-<tr><td align="left"><code>&lt;type&gt;::...</code></td><td align="left">Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. <code>&lt;&amp;T&gt;::...</code>, <code>&lt;[T]&gt;:::...</code> usw.)</td></tr>
-<tr><td align="left"><code>trait::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen</td></tr>
-<tr><td align="left"><code>type::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
-<tr><td align="left"><code>&lt;type as trait&gt;::method(...)</code></td><td align="left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>ident::ident</code></td><td style="text-align: left">Namensraum-Pfad</td></tr>
+<tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
+<tr><td style="text-align: left"><code>self::path</code></td><td style="text-align: left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
+<tr><td style="text-align: left"><code>super::path</code></td><td style="text-align: left">Pfad relativ zum Elternmodul</td></tr>
+<tr><td style="text-align: left"><code>type::ident</code>,<br> <code>&lt;type as trait&gt;::ident</code></td><td style="text-align: left">Zugehörige Konstanten, Funktionen<br> und Typen</td></tr>
+<tr><td style="text-align: left"><code>&lt;type&gt;::...</code></td><td style="text-align: left">Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. <code>&lt;&amp;T&gt;::...</code>, <code>&lt;[T]&gt;:::...</code> usw.)</td></tr>
+<tr><td style="text-align: left"><code>trait::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen</td></tr>
+<tr><td style="text-align: left"><code>type::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
+<tr><td style="text-align: left"><code>&lt;type as trait&gt;::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
 </tbody></table>
 <p>Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.</p>
 <p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>path&lt;...&gt;</code></td><td align="left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
-<tr><td align="left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td align="left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
-<tr><td align="left"><code>fn ident&lt;...&gt; ...</code></td><td align="left">Generische Funktion definieren</td></tr>
-<tr><td align="left"><code>struct ident&lt;...&gt; ...</code></td><td align="left">Generische Struktur definieren</td></tr>
-<tr><td align="left"><code>enum ident&lt;...&gt; ...</code></td><td align="left">Generische Aufzählung definieren</td></tr>
-<tr><td align="left"><code>impl&lt;...&gt; ...</code></td><td align="left">Generische Implementierung definieren</td></tr>
-<tr><td align="left"><code>for&lt;...&gt; type</code></td><td align="left">Höherstufige Lebensdauerbegrenzungen</td></tr>
-<tr><td align="left"><code>type&lt;ident=type&gt;</code></td><td align="left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
+<tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
+<tr><td style="text-align: left"><code>fn ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Funktion definieren</td></tr>
+<tr><td style="text-align: left"><code>struct ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Struktur definieren</td></tr>
+<tr><td style="text-align: left"><code>enum ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Aufzählung definieren</td></tr>
+<tr><td style="text-align: left"><code>impl&lt;...&gt; ...</code></td><td style="text-align: left">Generische Implementierung definieren</td></tr>
+<tr><td style="text-align: left"><code>for&lt;...&gt; type</code></td><td style="text-align: left">Höherstufige Lebensdauerbegrenzungen</td></tr>
+<tr><td style="text-align: left"><code>type&lt;ident=type&gt;</code></td><td style="text-align: left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
 </tbody></table>
 <p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <p><span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>T: U</code></td><td align="left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
-<tr><td align="left"><code>T: 'a</code></td><td align="left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
-<tr><td align="left"><code>T: 'static</code></td><td align="left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
-<tr><td align="left"><code>'b: 'a</code></td><td align="left">Generische Lebensdauer <code>'b</code>, muss Lebensdauer <code>'a</code> überdauern</td></tr>
-<tr><td align="left"><code>T: ?Sized</code></td><td align="left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
-<tr><td align="left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td align="left">Zusammengesetzte Typabgrenzung</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>T: U</code></td><td style="text-align: left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
+<tr><td style="text-align: left"><code>T: 'a</code></td><td style="text-align: left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
+<tr><td style="text-align: left"><code>T: 'static</code></td><td style="text-align: left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
+<tr><td style="text-align: left"><code>'b: 'a</code></td><td style="text-align: left">Generische Lebensdauer <code>'b</code>, muss Lebensdauer <code>'a</code> überdauern</td></tr>
+<tr><td style="text-align: left"><code>T: ?Sized</code></td><td style="text-align: left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
+<tr><td style="text-align: left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td style="text-align: left">Zusammengesetzte Typabgrenzung</td></tr>
 </tbody></table>
 <p>Tabelle B-6 zeigt Symbole, die im Zusammenhang mit dem Aufruf oder der
 Definition von Makros und der Angabe von Attributen an einem Element
 vorkommen.</p>
 <p><span class="caption">Tabelle B-6: Makros und Attribute</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>#[meta]</code></td><td align="left">Äußeres Attribut</td></tr>
-<tr><td align="left"><code>#![meta]</code></td><td align="left">Inneres Attribut</td></tr>
-<tr><td align="left"><code>$ident</code></td><td align="left">Makro-Ersetzung</td></tr>
-<tr><td align="left"><code>$ident:kind</code></td><td align="left">Makro-Erfassung</td></tr>
-<tr><td align="left"><code>$(…)…</code></td><td align="left">Makro-Wiederholung</td></tr>
-<tr><td align="left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td align="left">Makro-Aufruf</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>#[meta]</code></td><td style="text-align: left">Äußeres Attribut</td></tr>
+<tr><td style="text-align: left"><code>#![meta]</code></td><td style="text-align: left">Inneres Attribut</td></tr>
+<tr><td style="text-align: left"><code>$ident</code></td><td style="text-align: left">Makro-Ersetzung</td></tr>
+<tr><td style="text-align: left"><code>$ident:kind</code></td><td style="text-align: left">Makro-Erfassung</td></tr>
+<tr><td style="text-align: left"><code>$(…)…</code></td><td style="text-align: left">Makro-Wiederholung</td></tr>
+<tr><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Aufruf</td></tr>
 </tbody></table>
 <p>Tabelle B-7 zeigt Symbole, die Kommentare erzeugen.</p>
 <p><span class="caption">Tabelle B-7: Kommentare</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>//</code></td><td align="left">Einzeiliger Kommentar</td></tr>
-<tr><td align="left"><code>//!</code></td><td align="left">Einzeiliger Dokumentationskommentar innen</td></tr>
-<tr><td align="left"><code>///</code></td><td align="left">Einzeiliger Dokumentationskommentar außen</td></tr>
-<tr><td align="left"><code>/*...*/</code></td><td align="left">Block-Kommentar</td></tr>
-<tr><td align="left"><code>/*!...*/</code></td><td align="left">Mehrzeiliger Dokumentationskommentar innen</td></tr>
-<tr><td align="left"><code>/**...*/</code></td><td align="left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>//</code></td><td style="text-align: left">Einzeiliger Kommentar</td></tr>
+<tr><td style="text-align: left"><code>//!</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar innen</td></tr>
+<tr><td style="text-align: left"><code>///</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar außen</td></tr>
+<tr><td style="text-align: left"><code>/*...*/</code></td><td style="text-align: left">Block-Kommentar</td></tr>
+<tr><td style="text-align: left"><code>/*!...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar innen</td></tr>
+<tr><td style="text-align: left"><code>/**...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
 </tbody></table>
 <p>Tabelle B-8 zeigt Symbole, die im Zusammenhang mit der Verwendung von Tupeln
 auftreten.</p>
 <p><span class="caption">Tabelle B-8: Tupel</span></p>
-<table><thead><tr><th align="left">Symbol</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>()</code></td><td align="left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
-<tr><td align="left"><code>(expr)</code></td><td align="left">Eingeklammerter Ausdruck</td></tr>
-<tr><td align="left"><code>(expr,)</code></td><td align="left">Ein-Element-Tupel-Ausdruck</td></tr>
-<tr><td align="left"><code>(type,)</code></td><td align="left">Ein-Element-Tupel-Typ</td></tr>
-<tr><td align="left"><code>(expr, ...)</code></td><td align="left">Tupel-Ausdruck</td></tr>
-<tr><td align="left"><code>(type, ...)</code></td><td align="left">Tupel-Typ</td></tr>
-<tr><td align="left"><code>expr(expr, ...)</code></td><td align="left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
-<tr><td align="left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td align="left">Tupel-Indexierung</td></tr>
+<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>()</code></td><td style="text-align: left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
+<tr><td style="text-align: left"><code>(expr)</code></td><td style="text-align: left">Eingeklammerter Ausdruck</td></tr>
+<tr><td style="text-align: left"><code>(expr,)</code></td><td style="text-align: left">Ein-Element-Tupel-Ausdruck</td></tr>
+<tr><td style="text-align: left"><code>(type,)</code></td><td style="text-align: left">Ein-Element-Tupel-Typ</td></tr>
+<tr><td style="text-align: left"><code>(expr, ...)</code></td><td style="text-align: left">Tupel-Ausdruck</td></tr>
+<tr><td style="text-align: left"><code>(type, ...)</code></td><td style="text-align: left">Tupel-Typ</td></tr>
+<tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
+<tr><td style="text-align: left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td style="text-align: left">Tupel-Indexierung</td></tr>
 </tbody></table>
 <p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-9: Geschweifte Klammern</span></p>
-<table><thead><tr><th align="left">Context</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>{...}</code></td><td align="left">Block-Ausdruck</td></tr>
-<tr><td align="left"><code>Type {...}</code></td><td align="left"><code>struct</code>-Literal</td></tr>
+<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>{...}</code></td><td style="text-align: left">Block-Ausdruck</td></tr>
+<tr><td style="text-align: left"><code>Type {...}</code></td><td style="text-align: left"><code>struct</code>-Literal</td></tr>
 </tbody></table>
 <p>Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-10: Eckige Klammern</span></p>
-<table><thead><tr><th align="left">Context</th><th align="left">Erklärung</th></tr></thead><tbody>
-<tr><td align="left"><code>[...]</code></td><td align="left">Array-Literal</td></tr>
-<tr><td align="left"><code>[expr; len]</code></td><td align="left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
-<tr><td align="left"><code>[type; len]</code></td><td align="left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
-<tr><td align="left"><code>expr[expr]</code></td><td align="left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
-<tr><td align="left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td align="left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
+<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<tr><td style="text-align: left"><code>[...]</code></td><td style="text-align: left">Array-Literal</td></tr>
+<tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
+<tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
+<tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
+<tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
 </tbody></table>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-c-ableitbare-merkmale-traits"><a class="header" href="#anhang-c-ableitbare-merkmale-traits">Anhang C: Ableitbare Merkmale (traits)</a></h2>
 <p>An verschiedenen Stellen im Buch haben wir das Attribut <code>derive</code> besprochen,

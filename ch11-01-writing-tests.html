@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -196,10 +196,12 @@ als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
 <code>tests</code> haben, um gängige Szenarien aufzusetzen oder gängige Operationen
 durchzuführen, daher müssen wir mit dem Attribut <code>#[test]</code> angeben, welche
 Funktionen Tests sind.</p>
-<p>Der Funktionsrumpf verwendet das Makro <code>assert_eq!</code>, um sicherzustellen, dass 2
-+ 2 gleich 4 ist. Diese Prüfung dient als Beispiel für den Aufbau eines
+<p>Der Funktionsrumpf verwendet das Makro <code>assert_eq!</code>, um sicherzustellen, dass 2</p>
+<ul>
+<li>2 gleich 4 ist. Diese Prüfung dient als Beispiel für den Aufbau eines
 typischen Tests. Lassen wir ihn laufen, um zu sehen, dass dieser Test
-erfolgreich ist.</p>
+erfolgreich ist.</li>
+</ul>
 <p>Das Kommando <code>cargo test</code> führt alle Tests in unserem Projekt aus, wie in
 Codeblock 11-2 zu sehen ist.</p>
 <pre><code class="language-console">$ cargo test

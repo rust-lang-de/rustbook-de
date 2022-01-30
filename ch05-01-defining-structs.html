@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -177,15 +177,15 @@ Codeblock 5-2 zu sehen ist.</p>
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let user1 = User {
+</span>fn main() {
+    let user1 = User {
         email: String::from(&quot;jemand@example.com&quot;),
         username: String::from(&quot;benutzername123&quot;),
         active: true,
         sign_in_count: 1,
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-2: Eine Instanz der Struktur <code>User</code>
 erzeugen</span></p>
 <p>Um auf einen bestimmten Wert in einer Struktur zuzugreifen, können wir die
@@ -201,8 +201,8 @@ Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geänder
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let mut user1 = User {
+</span>fn main() {
+    let mut user1 = User {
         email: String::from(&quot;jemand@example.com&quot;),
         username: String::from(&quot;benutzername123&quot;),
         active: true,
@@ -210,8 +210,8 @@ Feld <code>email</code> einer veränderlichen <code>User</code>-Instanz geänder
     };
 
     user1.email = String::from(&quot;andere-email@example.com&quot;);
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-3: Wert im Feld <code>email</code> einer <code>User</code>-Instanz ändern</span></p>
 <p>Beachte, dass die gesamte Instanz veränderlich sein muss. Rust erlaubt es
 nicht, nur einzelne Felder als veränderlich zu markieren. Wie mit jedem
@@ -303,22 +303,23 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    let user1 = User {
+</span>fn main() {
+    // --abschneiden--
+<span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
 </span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
-</span><span class="boring">
-</span>    let user2 = User {
+</span>
+    let user2 = User {
         active: user1.active,
         username: user1.username,
         email: String::from(&quot;andere@example.com&quot;),
         sign_in_count: user1.sign_in_count,
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
 Verwendung eines Werts von <code>user1</code>.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
@@ -332,20 +333,21 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">    sign_in_count: u64,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    let user1 = User {
+</span>fn main() {
+    // --abschneiden--
+<span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
 </span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
-</span><span class="boring">
-</span>    let user2 = User {
+</span>
+    let user2 = User {
         email: String::from(&quot;andere@example.com&quot;),
         ..user1
     };
-<span class="boring">}
-</span></code></pre></pre>
+}
+</code></pre></pre>
 <p><span class="caption">Codeblock 5-7: Verwenden der
 Strukturaktualisierungssyntax, um einen neuen Wert für <code>email</code> in der
 <code>User</code>-Instanz zu setzen und die restlichen Werte aus der Instanz <code>user1</code> zu
@@ -379,16 +381,14 @@ einer regulären Struktur langatmig oder unnötig wären.</p>
 <p>Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort <code>struct</code>,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct Color(i32, i32, i32);
+<pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
-let black = Color(0, 0, 0);
-let origin = Point(0, 0, 0);
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let black = Color(0, 0, 0);
+    let origin = Point(0, 0, 0);
+}
+</code></pre></pre>
 <p>Beachte, dass die Werte <code>black</code> und <code>origin</code> unterschiedliche Typen haben, weil
 sie Instanzen unterschiedlicher Tupel-Strukturen sind. Jede von dir definierte
 Struktur ist ein eigenständiger Typ, auch wenn die Felder innerhalb der
@@ -407,14 +407,12 @@ Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens <code>AlwaysEqual</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct AlwaysEqual;
+<pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
 
-let subject = AlwaysEqual;
-<span class="boring">}
-</span></code></pre></pre>
+fn main() {
+    let subject = AlwaysEqual;
+}
+</code></pre></pre>
 <p>Um <code>AlwaysEqual</code> zu definieren, verwenden wir das Schlüsselwort <code>struct</code>, den
 gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
 sind nicht erforderlich! Dann können wir eine Instanz von <code>AlwaysEqual</code> in der

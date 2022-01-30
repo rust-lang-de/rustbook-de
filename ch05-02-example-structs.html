@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -168,10 +168,9 @@ durch separate Breiten- und Höhenvariablen beschrieben wird</span></p>
      Running `target/debug/structs`
 Die Fläche des Rechtecks ist 1500 Quadratpixel.
 </code></pre>
-<p>Auch wenn Codeblock 5-8 funktioniert und die Fläche des Rechtecks durch
-Aufrufen der Funktion <code>area</code> mit jeder Dimension herausfindet, können wir es
-besser machen. Breite und Höhe hängen zusammen, sie beschreiben zusammen ein
-Rechteck.</p>
+<p>Mit diesem Code gelingt es, die Fläche des Rechtecks zu ermitteln, indem die
+Funktion <code>area</code> mit jeder Dimension aufgerufen wird, aber wir können noch mehr
+tun, um diesen Code klar und lesbar zu machen.</p>
 <p>Das Problem dieses Codes wird bei der Signatur von <code>area</code> deutlich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let width1 = 30;
@@ -188,10 +187,10 @@ Rechteck.</p>
 </span><span class="boring">}
 </span></code></pre></pre>
 <p>Die Funktion <code>area</code> soll die Fläche eines Rechtecks berechnen, aber die von uns
-geschriebene Funktion hat zwei Parameter. Dass die Parameter zusammenhängen,
-wird aber nirgendwo in unserem Programm ausgedrückt. Es wäre besser lesbar und
-überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu haben
-wir bereits im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
+geschriebene Funktion hat zwei Parameter und es geht in unserem Programm
+nirgendwo klar hervor, dass die Parameter zusammenhängen. Es wäre besser lesbar
+und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
+haben wir bereits im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.</p>
 <h3 id="refaktorierung-mit-tupeln"><a class="header" href="#refaktorierung-mit-tupeln">Refaktorierung mit Tupeln</a></h3>
 <p>Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
@@ -214,20 +213,19 @@ fn area(dimensions: (u32, u32)) -&gt; u32 {
 einem Tupel beschrieben</span></p>
 <p>In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
 hinein und wir geben jetzt nur noch ein Argument weiter. Andererseits ist
-dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, so dass
-unsere Berechnung noch unübersichtlicher geworden ist, weil wir die Teile des
-Tupels indizieren müssen.</p>
-<p>Es spielt zwar keine Rolle, wenn wir bei der Flächenberechnung Breite und Höhe
-verwechseln, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollten,
-würde es eine Rolle spielen! Wir müssten berücksichtigen, dass <code>width</code> den
-Tupelindex <code>0</code> und <code>height</code> den Tupelindex <code>1</code> hat. Wenn eine andere Person an
-diesem Code arbeiten würde, müsste er das herausfinden und sich das ebenfalls
-merken. Es wäre leicht, diese Werte zu vergessen oder zu verwechseln und Fehler
-zu verursachen, weil wir die Bedeutung unserer Daten in unserem Code nicht
-hinterlegt haben.</p>
+dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, sodass wir
+die Teile des Tupels indizieren müssen, was unsere Berechnung weniger klar
+macht.</p>
+<p>Die Verwechslung von Breite und Höhe ist für die Flächenberechnung nicht von
+Bedeutung, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollen, wäre
+es wichtig! Wir müssen uns merken, dass <code>width</code> der Tupelindex <code>0</code> und <code>height</code>
+der Tupelindex <code>1</code> ist. Für andere wäre es noch schwieriger, dies
+herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
+Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
+es jetzt einfacher, Fehler zu machen.</p>
 <h3 id="refaktorierung-mit-strukturen-mehr-semantik"><a class="header" href="#refaktorierung-mit-strukturen-mehr-semantik">Refaktorierung mit Strukturen: Mehr Semantik</a></h3>
 <p>Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
-anzugeben. Wir können das verwendete Tupel in einen Datentyp mit einem Namen
+anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
 5-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -271,7 +269,7 @@ meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung seiner 
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die Lesbarkeit.</p>
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
-<p>Es wäre schön, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
+<p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
 versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
@@ -305,7 +303,8 @@ soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
 Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
 Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
 zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von <code>Display</code>.</p>
+Standardimplementierung von <code>Display</code>, um die mit <code>println!</code> und dem
+Platzhalter <code>{}</code> verwenden zu können.</p>
 <p>Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:</p>
 <pre><code class="language-text">   = help: the trait `std::fmt::Display` is not implemented for `Rectangle`
@@ -359,7 +358,8 @@ rect1 ist Rectangle { width: 30, height: 50 }
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
 ist. In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
-<code>println!</code>-Meldung verwenden. Die Ausgabe sieht dann wie folgt aus:</p>
+<code>println!</code>-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
+<code>{:#?}</code> folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
     Finished dev [unoptimized + debuginfo] target(s) in 0.48s
@@ -370,17 +370,20 @@ rect1 ist Rectangle {
 }
 </code></pre>
 <p>Eine andere Möglichkeit, einen Wert im <code>Debug</code>-Format auszugeben, ist die
-Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>. Das Makro <code>dbg!</code> übernimmt die
-Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
-der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
-Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
-des Makros <code>dbg!</code> schreibt in den Standard-Fehler-Konsolenstrom (<code>stderr</code>), im
-Gegensatz zu <code>println!</code>, das in den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>)
-schreibt. Wir werden mehr über <code>stderr</code> und <code>stdout</code> im Abschnitt
-<a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
-schreiben“ in Kapitel 12</a> erfahren. Hier ist ein Beispiel, bei dem wir am
-Wert interessiert sind, der dem Feld <code>width</code> zugewiesen wird, als auch am Wert
-der gesamten Struktur in <code>rect1</code>:</p>
+Verwendung des <a href="https://doc.rust-lang.org/std/macro.dbg.html">Makros <code>dbg!</code></a>, das die Eigentümerschaft eines Ausdrucks
+übernimmt, die Datei und Zeilennummer, in der der <code>dbg!</code>-Makroaufruf in deinem
+Code vorkommt, zusammen mit dem resultierenden Wert des Ausdrucks ausgibt und
+die Eigentümerschaft am Wert zurückgibt.</p>
+<blockquote>
+<p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in den
+Standard-Fehler-Konsolenstrom (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
+den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>) schreibt. Wir werden mehr über
+<code>stderr</code> und <code>stdout</code> im Abschnitt <a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die
+Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
+12</a> erfahren.</p>
+</blockquote>
+<p>Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
+<code>width</code> zugewiesen wird, als auch am Wert der gesamten Struktur in <code>rect1</code>:</p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct Rectangle {
     width: u32,

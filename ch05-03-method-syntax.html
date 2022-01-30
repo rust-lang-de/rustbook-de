@@ -7,7 +7,7 @@
 
 
         <!-- Custom HTML head -->
-
+        
         <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
@@ -91,7 +91,7 @@
         <div id="page-wrapper" class="page-wrapper">
 
             <div class="page">
-                <div id="menu-bar-hover-placeholder"></div>
+                                <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky bordered">
                     <div class="left-buttons">
                         <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
@@ -202,7 +202,7 @@ sie <code>self</code> als ersten Parameter verwendet. Diese Technik wird typisch
 dann verwendet, wenn die Methode <code>self</code> in etwas anderes transformiert und man
 verhindern will, dass der Aufrufer nach der Transformation die ursprüngliche
 Instanz verwendet.</p>
-<p>Der Hauptvorteil von Methoden gegenüber Funktionen liegt abgesehen davon, dass
+<p>Der Hauptgrund für Methoden gegenüber Funktionen liegt abgesehen davon, dass
 bei jeder Methodendeklaration der Typ von <code>self</code> nicht ständig wiederholt
 werden muss, in der Organisation. Wir haben alle Dinge, die wir mit einer
 Instanz eines Typs tun können, in einen einzigen <code>impl</code> Block gepackt.
@@ -235,13 +235,12 @@ fn main() {
     }
 }
 </code></pre></pre>
-<p>Hier entscheiden wir uns dafür, dass das Verhalten der Methode <code>width</code> so
-aussieht, dass sie <code>true</code> zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz
-größer als 0 ist, und <code>false</code>, wenn der Wert 0 ist: Wir können ein Feld
-innerhalb einer gleichnamigen Methode für jeden Zweck verwenden. Wenn wir in
-<code>main</code> nach <code>rect1.width</code> Klammern setzen, weiß Rust, dass wir die Methode
-<code>width</code> meinen. Wenn wir keine Klammern verwenden, weiß Rust, dass wir das Feld
-<code>width</code> meinen.</p>
+<p>Hier entscheiden wir uns dafür, dass die Methode <code>width</code> den Wert <code>true</code>
+zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz größer als 0 ist, und
+<code>false</code>, wenn der Wert 0 ist: Wir können ein Feld innerhalb einer gleichnamigen
+Methode für jeden Zweck verwenden. Wenn wir in <code>main</code> nach <code>rect1.width</code> eine
+Klammer setzen, weiß Rust, dass wir die Methode <code>width</code> meinen. Wenn wir keine
+Klammern verwenden, weiß Rust, dass wir das Feld <code>width</code> meinen.</p>
 <p>Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
 Methoden wie diese werden <em>getters</em> genannt, und Rust implementiert sie nicht
@@ -302,10 +301,10 @@ zur Ergonomie der Eigentümerschaft in der Praxis.</p>
 <p>Lass uns den Umgang mit Methoden üben, indem wir eine zweite Methode zur
 Struktur <code>Rectangle</code> implementieren. Diesmal soll eine zweite Instanz von
 <code>Rectangle</code> entgegengenommen und <code>true</code> zurückgeben werden, wenn das zweite
-<code>Rectangle</code> vollständig in <code>self</code> hineinpasst; andernfalls soll <code>false</code>
-zurückgegeben werden. Das heißt, wir wollen in der Lage sein, das in Codeblock
-5-14 gezeigte Programm zu schreiben, sobald wir die Methode <code>can_hold</code>
-definiert haben.</p>
+<code>Rectangle</code> vollständig in <code>self</code> (dem ersten <code>Rectangle</code>) hineinpasst;
+andernfalls soll <code>false</code> zurückgegeben werden. Das heißt, sobald wir die
+Methode <code>can_hold</code> definiert haben, wollen wir in der Lage sein, das in
+Codeblock 5-14 gezeigte Programm zu schreiben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     let rect1 = Rectangle {
@@ -393,7 +392,7 @@ funktionieren genau wie Parameter in Funktionen.</p>
 nach dem <code>impl</code> benannt ist. Wir können assoziierte Funktionen definieren, die
 nicht <code>self</code> als ihren ersten Parameter haben (und somit keine Methoden sind),
 weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben
-bereits eine solche Funktion verwendet, die Funktion <code>String::from</code>, die für
+bereits eine solche Funktion verwendet: Die Funktion <code>String::from</code>, die für
 den Typ <code>String</code> definiert ist.</p>
 <p>Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
 verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
