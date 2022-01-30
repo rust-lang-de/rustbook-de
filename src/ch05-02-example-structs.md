@@ -43,10 +43,9 @@ $ cargo run
 Die Fläche des Rechtecks ist 1500 Quadratpixel.
 ```
 
-Auch wenn Codeblock 5-8 funktioniert und die Fläche des Rechtecks durch
-Aufrufen der Funktion `area` mit jeder Dimension herausfindet, können wir es
-besser machen. Breite und Höhe hängen zusammen, sie beschreiben zusammen ein
-Rechteck.
+Mit diesem Code gelingt es, die Fläche des Rechtecks zu ermitteln, indem die
+Funktion `area` mit jeder Dimension aufgerufen wird, aber wir können noch mehr
+tun, um diesen Code klar und lesbar zu machen.
 
 Das Problem dieses Codes wird bei der Signatur von `area` deutlich:
 
@@ -67,10 +66,10 @@ fn area(width: u32, height: u32) -> u32 {
 ```
 
 Die Funktion `area` soll die Fläche eines Rechtecks berechnen, aber die von uns
-geschriebene Funktion hat zwei Parameter. Dass die Parameter zusammenhängen,
-wird aber nirgendwo in unserem Programm ausgedrückt. Es wäre besser lesbar und
-überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu haben
-wir bereits im Abschnitt [„Der Tupel-Typ“][the-tuple-type] in Kapitel 3
+geschriebene Funktion hat zwei Parameter und es geht in unserem Programm
+nirgendwo klar hervor, dass die Parameter zusammenhängen. Es wäre besser lesbar
+und überschaubarer, Breite und Höhe zusammenzufassen. Eine Möglichkeit dazu
+haben wir bereits im Abschnitt [„Der Tupel-Typ“][the-tuple-type] in Kapitel 3
 vorgestellt: Der Einsatz von Tupeln.
 
 ### Refaktorierung mit Tupeln
@@ -100,23 +99,22 @@ einem Tupel beschrieben</span>
 
 In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
 hinein und wir geben jetzt nur noch ein Argument weiter. Andererseits ist
-dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, so dass
-unsere Berechnung noch unübersichtlicher geworden ist, weil wir die Teile des
-Tupels indizieren müssen.
+dieser Ansatz weniger deutlich: Tupel benennen ihre Elemente nicht, sodass wir
+die Teile des Tupels indizieren müssen, was unsere Berechnung weniger klar
+macht.
 
-Es spielt zwar keine Rolle, wenn wir bei der Flächenberechnung Breite und Höhe
-verwechseln, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollten,
-würde es eine Rolle spielen! Wir müssten berücksichtigen, dass `width` den
-Tupelindex `0` und `height` den Tupelindex `1` hat. Wenn eine andere Person an
-diesem Code arbeiten würde, müsste er das herausfinden und sich das ebenfalls
-merken. Es wäre leicht, diese Werte zu vergessen oder zu verwechseln und Fehler
-zu verursachen, weil wir die Bedeutung unserer Daten in unserem Code nicht
-hinterlegt haben.
+Die Verwechslung von Breite und Höhe ist für die Flächenberechnung nicht von
+Bedeutung, aber wenn wir das Rechteck auf dem Bildschirm zeichnen wollen, wäre
+es wichtig! Wir müssen uns merken, dass `width` der Tupelindex `0` und `height`
+der Tupelindex `1` ist. Für andere wäre es noch schwieriger, dies
+herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
+Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
+es jetzt einfacher, Fehler zu machen.
 
 ### Refaktorierung mit Strukturen: Mehr Semantik
 
 Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
-anzugeben. Wir können das verwendete Tupel in einen Datentyp mit einem Namen
+anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
 5-10 gezeigt.
 
@@ -169,7 +167,7 @@ Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
 ### Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)
 
-Es wäre schön, eine Instanz von `Rectangle` samt der Werte seiner Felder
+Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
 versuchen wir das [Makro `println!`][println] zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
@@ -210,7 +208,8 @@ soll, weniger klar, da es mehrere Darstellungsmöglichkeiten gibt: Möchtest du
 Kommas oder nicht? Möchtest du die geschweiften Klammern ausgeben? Sollen alle
 Felder angezeigt werden? Aufgrund der vielen Möglichkeiten versucht Rust nicht
 zu erraten, was wir wollen. Strukturen haben daher keine
-Standardimplementierung von `Display`.
+Standardimplementierung von `Display`, um die mit `println!` und dem
+Platzhalter `{}` verwenden zu können.
 
 Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:
@@ -283,7 +282,8 @@ Toll! Es ist nicht die schönste Ausgabe, aber sie zeigt die Werte aller Felder
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
 ist. In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
-`println!`-Meldung verwenden. Die Ausgabe sieht dann wie folgt aus:
+`println!`-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
+`{:#?}` folgendes ausgegeben:
 
 ```console
 $ cargo run
@@ -297,17 +297,20 @@ rect1 ist Rectangle {
 ```
 
 Eine andere Möglichkeit, einen Wert im `Debug`-Format auszugeben, ist die
-Verwendung des [Makros `dbg!`][dbg]. Das Makro `dbg!` übernimmt die
-Eigentümerschaft eines Ausdrucks, gibt die Datei und Zeilennummer aus, in der
-der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen mit dem resultierenden
-Wert des Ausdrucks, und gibt die Eigentümerschaft am Wert zurück. Der Aufruf
-des Makros `dbg!` schreibt in den Standard-Fehler-Konsolenstrom (`stderr`), im
-Gegensatz zu `println!`, das in den Standard-Ausgabe-Konsolenstrom (`stdout`)
-schreibt. Wir werden mehr über `stderr` und `stdout` im Abschnitt
-[„Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe
-schreiben“ in Kapitel 12][err] erfahren. Hier ist ein Beispiel, bei dem wir am
-Wert interessiert sind, der dem Feld `width` zugewiesen wird, als auch am Wert
-der gesamten Struktur in `rect1`:
+Verwendung des [Makros `dbg!`][dbg], das die Eigentümerschaft eines Ausdrucks
+übernimmt, die Datei und Zeilennummer, in der der `dbg!`-Makroaufruf in deinem
+Code vorkommt, zusammen mit dem resultierenden Wert des Ausdrucks ausgibt und
+die Eigentümerschaft am Wert zurückgibt.
+
+> Hinweis: Der Aufruf des Makros `dbg!` schreibt in den
+> Standard-Fehler-Konsolenstrom (`stderr`), im Gegensatz zu `println!`, das in
+> den Standard-Ausgabe-Konsolenstrom (`stdout`) schreibt. Wir werden mehr über
+> `stderr` und `stdout` im Abschnitt [„Fehlermeldungen in die
+> Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
+> 12][err] erfahren.
+ 
+Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
+`width` zugewiesen wird, als auch am Wert der gesamten Struktur in `rect1`:
 
 ```rust
 #[derive(Debug)]
