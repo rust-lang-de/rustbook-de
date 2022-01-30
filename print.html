@@ -7776,8 +7776,8 @@ abzulegen. Vektoren können nur Werte desselben Typs speichern. Sie sind nützli
 wenn du eine Liste von Einträgen hast, z.B. die Textzeilen einer Datei oder die
 Preise der Artikel in einem Einkaufswagen.</p>
 <h3 id="erstellen-eines-neuen-vektors"><a class="header" href="#erstellen-eines-neuen-vektors">Erstellen eines neuen Vektors</a></h3>
-<p>Um einen neuen, leeren Vektor zu erstellen, können wir die Funktion <code>Vec::new</code>
-aufrufen, wie in Codeblock 8-1 gezeigt.</p>
+<p>Um einen neuen, leeren Vektor zu erstellen, rufen wir die Funktion <code>Vec::new</code>
+auf, wie in Codeblock 8-1 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7792,18 +7792,17 @@ zu speichern beabsichtigen. Dies ist ein wichtiger Punkt. Vektoren werden mit
 Hilfe generischer Typen implementiert; wie du eigene generische Typen verwenden
 kannst, wird in Kapitel 10 behandelt. Für den Moment sollst du wissen, dass der
 von der Standardbibliothek bereitgestellte Typ <code>Vec&lt;T&gt;</code> jeden Typ enthalten
-kann, und wenn ein bestimmter Vektor einen bestimmten Typ enthält, wird der Typ
+kann. Wenn wir einen Vektor zu einem bestimmten Typ erstellen, wird der Typ
 in spitzen Klammern angegeben. In Codeblock 8-1 haben wir Rust gesagt, dass der
 Vektor <code>Vec&lt;T&gt;</code> in <code>v</code> Elemente des Typs <code>i32</code> enthalten wird.</p>
-<p>In realistischerem Code kann Rust oft auf den Typ des Wertes schließen, den du
-nach dem Einfügen von Werten speichern möchtest, sodass du diese Art der
-Annotation nur selten verwenden musst. Häufiger kommt es vor, einen <code>Vec&lt;T&gt;</code> zu
-erstellen, der Anfangswerte hat, und Rust stellt der Einfachheit halber das
-Makro <code>vec!</code> zur Verfügung. Das Makro erstellt einen neuen Vektor, der die von
-dir angegebenen Werte enthält. Codeblock 8-2 erzeugt einen neuen <code>Vec&lt;i32&gt;</code>,
-der die Werte <code>1</code>, <code>2</code> und <code>3</code> enthält. Als Integer-Typ wird <code>i32</code> verwendet,
-weil das der Standard-Integer-Typ ist, wie wir im Abschnitt
-<a href="ch03-02-data-types.html">„Datentypen“</a> in Kapitel 3 besprochen haben.</p>
+<p>Meistens wird man ein <code>Vec&lt;T&gt;</code> mit Anfangswerten erstellen und Rust wird den
+Typ des Wertes, den man speichern will, ableiten, sodass man diese
+Typ-Annotation nur selten benötigt. Rust bietet praktischerweise das Makro
+<code>vec!</code>, das einen neuen Vektor erzeugt, der die von dir angegebenen Werte
+enthält. Codeblock 8-2 erzeugt einen neuen <code>Vec&lt;i32&gt;</code>, der die Werte <code>1</code>, <code>2</code>
+und <code>3</code> enthält. Als Integer-Typ wird <code>i32</code> verwendet, weil das der
+Standard-Integer-Typ ist, wie wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
+Kapitel 3 besprochen haben.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7853,15 +7852,12 @@ Gültigkeitsbereich verlässt, wie in Codeblock 8-4 kommentiert wird.</p>
 aufgeräumt werden</span></p>
 <p>Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt,
 d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Dies mag recht
-einfach erscheinen, kann aber etwas komplizierter werden, wenn du anfängst,
-Referenzen auf Elemente des Vektors einzuführen. Lass uns das als Nächstes
-angehen!</p>
+einfach erscheinen, kann aber kompliziert werden, wenn du anfängst, Referenzen
+auf Elemente des Vektors einzuführen. Lass uns das als Nächstes angehen!</p>
 <h3 id="elemente-aus-vektoren-lesen"><a class="header" href="#elemente-aus-vektoren-lesen">Elemente aus Vektoren lesen</a></h3>
-<p>Da du jetzt weißt, wie man Vektoren erstellt, aktualisiert und aufräumt, ist es
-ein guter nächster Schritt zu wissen, wie man ihre Inhalte ausliest. Es gibt
-zwei Möglichkeiten, einen in einem Vektor gespeicherten Wert zu referenzieren. 
-In den Beispielen haben wir zur besseren Lesbarkeit die Werttypen, die von den
-Funktionen zurückgegeben werden, mit angegeben.</p>
+<p>Es gibt zwei Möglichkeiten, einen in einem Vektor gespeicherten Wert zu
+referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
+Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.</p>
 <p>Codeblock 8-5 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
 mittels Indexierungssyntax und die Methode <code>get</code>.</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -7881,17 +7877,17 @@ match v.get(2) {
 <p><span class="caption">Codeblock 8-5: Verwenden der Indexierungssyntax und der
 Methode <code>get</code> für den Zugriff auf ein Element in einem Vektor</span></p>
 <p>Beachte hier zwei Details. Erstens verwenden wir den Indexwert <code>2</code>, um das
-dritte Element zu erhalten: Vektoren werden mit Zahlen indiziert, beginnend bei
-null. Zweitens gibt es zwei Möglichkeiten, das dritte Element zu erhalten:
+dritte Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
+werden. Zweitens gibt es zwei Möglichkeiten, das dritte Element zu erhalten:
 Entweder durch Verwendung von <code>&amp;</code> und <code>[]</code>, was eine Referenz ergibt, oder
 durch die Methode <code>get</code> mit dem Index als Argument, was eine <code>Option&lt;&amp;T&gt;</code>
 ergibt.</p>
-<p>Rust hat zwei Möglichkeiten, ein Element zu referenzieren, sodass du bestimmen
-kannst, wie sich das Programm verhalten soll, wenn du versuchst, einen
-Indexwert zu verwenden, für den der Vektor kein Element enthält. Als Beispiel
-wollen wir sehen, was ein Programm tut, wenn wir bei einem Vektor mit fünf
-Elementen versuchen, auf ein Element mit Index 100 zuzugreifen, wie in
-Codeblock 8-6 zu sehen ist.</p>
+<p>Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
+referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
+verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
+vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
+Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
+Element mit Index 100 zuzugreifen, wie in Codeblock 8-6 zu sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust should_panic panics">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7925,7 +7921,7 @@ Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
 veränderlichen und unveränderlichen Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-7 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
-versuchen, am Ende ein Element hinzuzufügen, was nicht funktionieren wird, wenn
+versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
 wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -7962,21 +7958,21 @@ error: could not compile `collections` due to previous error
 <p>Der Code in Codeblock 8-7 sieht so aus, als könnte er funktionieren: Warum
 sollte sich eine Referenz auf das erste Element darum kümmern, was sich am
 Ende des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
-begründet: Das Hinzufügen eines neuen Elements am Ende des Vektors könnte die
-Allokation neuen Speichers und das Kopieren der alten Elemente an die neue
-Stelle erfordern, wenn nicht genügend Platz vorhanden ist, um alle Elemente
-nebeneinander an der aktuellen Stelle des Vektors zu platzieren. In diesem Fall
-würde die Referenz auf das erste Element auf einen freigegebenen Speicherplatz
-verweisen. Die Ausleihregeln verhindern, dass Programme in diese Situation
-geraten.</p>
+begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte
+das Hinzufügen eines neuen Elements am Ende des Vektors die Allokation neuen
+Speichers und das Kopieren der alten Elemente an die neue Stelle erfordern,
+wenn nicht genügend Platz vorhanden ist, um alle Elemente nebeneinander an der
+aktuellen Stelle des Vektors zu platzieren. In diesem Fall würde die Referenz
+auf das erste Element auf einen freigegebenen Speicherplatz verweisen. Die
+Ausleihregeln verhindern, dass Programme in diese Situation geraten.</p>
 <blockquote>
 <p>Anmerkung: Weitere Einzelheiten zu den Implementierungsdetails des Typs
 <code>Vec&lt;T&gt;</code> findest du in <a href="https://doc.rust-lang.org/nomicon/vec.html">„Das Rustonomicon“</a>.</p>
 </blockquote>
 <h3 id="iterieren-über-die-werte-in-einem-vektor"><a class="header" href="#iterieren-über-die-werte-in-einem-vektor">Iterieren über die Werte in einem Vektor</a></h3>
-<p>Wenn wir auf die Elemente eines Vektors der Reihe nach zugreifen wollen, können
-wir über alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils
-ein Element zur gleichen Zeit zuzugreifen. Codeblock 8-8 zeigt, wie man eine
+<p>Um auf die Elemente eines Vektors der Reihe nach zuzugreifen, können wir über
+alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
+Element zur gleichen Zeit zuzugreifen. Codeblock 8-8 zeigt, wie man eine
 <code>for</code>-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
 Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -8010,20 +8006,19 @@ kommen, bevor wir den Operator <code>+=</code> verwenden können. Wir werden meh
 Dereferenzierungsoperator im Abschnitt <a href="ch15-02-deref.html#dem-zeiger-zum-wert-folgen-mit-dem-dereferenzierungsoperator">„Dem Zeiger zum Wert folgen mit dem
 Dereferenzierungsoperator“</a> in Kapitel 15 sprechen.</p>
 <h3 id="verwenden-einer-aufzählung-zum-speichern-mehrerer-typen"><a class="header" href="#verwenden-einer-aufzählung-zum-speichern-mehrerer-typen">Verwenden einer Aufzählung zum Speichern mehrerer Typen</a></h3>
-<p>Zu Beginn dieses Kapitels haben wir gesagt, dass Vektoren nur Werte desselben
-Typs speichern können. Das kann unbequem sein; es gibt definitiv
-Anwendungsfälle, in denen es notwendig ist, eine Liste von Einträgen
-unterschiedlicher Typen zu speichern. Glücklicherweise werden die Varianten
-einer Aufzählung unter dem gleichen Aufzählungstyp definiert. Wenn wir also
-Elemente eines anderen Typs in einem Vektor speichern wollen, können wir eine
-Aufzählung definieren und verwenden! Angenommen, wir möchten Werte aus einer
-Zeile einer Tabellenkalkulationstabelle erhalten, in der einige Spalten der
-Zeile ganze Zahlen, Fließkommazahlen und Zeichenketten enthalten.  Wir können
-eine Aufzählung definieren, deren Varianten die verschiedenen Werttypen
-enthalten, und dann werden alle Aufzählungsvarianten als derselbe Typ
-angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor erstellen, der
-diese Aufzählung und damit letztlich verschiedene Typen enthält. Wir haben dies
-in Codeblock 8-10 demonstriert.</p>
+<p>Vektoren können nur Werte desselben Typs speichern. Das kann unbequem sein; es
+gibt definitiv Anwendungsfälle, in denen es notwendig ist, eine Liste von
+Einträgen unterschiedlicher Typen zu speichern. Glücklicherweise werden die
+Varianten einer Aufzählung unter dem gleichen Aufzählungstyp definiert. Wenn
+wir also Elemente eines anderen Typs in einem Vektor speichern wollen, können
+wir eine Aufzählung definieren und verwenden!</p>
+<p>Angenommen, wir möchten Werte aus einer Zeile einer Tabellenkalkulationstabelle
+erhalten, in der einige Spalten der Zeile ganze Zahlen, Fließkommazahlen und
+Zeichenketten enthalten. Wir können eine Aufzählung definieren, deren Varianten
+die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
+derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
+erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
+Wir haben dies in Codeblock 8-10 demonstriert.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8044,18 +8039,17 @@ let row = vec![
 verschiedener Typen in einem Vektor zu speichern</span></p>
 <p>Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
 werden, damit es genau weiß, wie viel Speicherplatz im Haldenspeicher
-benötigt wird, um alle Elemente zu speichern. Ein zweiter Vorteil ist, dass wir
-explizit festlegen können, welche Typen in diesem Vektor erlaubt sind. Wenn
-Rust einen Vektor mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass
-einer oder mehrere Typen Fehler bei den an den Elementen des Vektors
-durchgeführten Operationen verursachen würden. Das Verwenden einer Aufzählung
-zusammen mit einem <code>match</code>-Ausdruck bedeutet, dass Rust zur Kompilierzeit
-sicherstellt, dass jeder mögliche Fall behandelt wird, wie in Kapitel 6
-besprochen.</p>
-<p>Wenn du ein Programm schreibst und nicht weißt, welche Typen das Programm zur
-Laufzeit in einen Vektor speichern wird, funktioniert der Aufzählungsansatz
-nicht. Stattdessen kannst du ein Merkmalsobjekt (trait object) verwenden, das
-wir in Kapitel 17 behandeln werden.</p>
+benötigt wird, um alle Elemente zu speichern. Wir müssen auch eindeutig
+festlegen, welche Typen in diesem Vektor zulässig sind. Wenn Rust einen Vektor
+mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass einer oder mehrere
+Typen Fehler bei den an den Elementen des Vektors durchgeführten Operationen
+verursachen würden. Das Verwenden einer Aufzählung zusammen mit einem
+<code>match</code>-Ausdruck bedeutet, dass Rust zur Kompilierzeit sicherstellt, dass jeder
+mögliche Fall behandelt wird, wie in Kapitel 6 besprochen.</p>
+<p>Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
+speichern kann, funktioniert die Aufzählungsansatz nicht. Stattdessen kannst du
+ein Merkmalsobjekt (trait object) verwenden, das wir in Kapitel 17 behandeln
+werden.</p>
 <p>Nachdem wir nun einige der gängigsten Methoden zur Verwendung von Vektoren
 besprochen haben, solltest du dir unbedingt die <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html">API-Dokumentation</a> zu
 den vielen nützlichen Methoden ansehen, die die Standardbibliothek für <code>Vec&lt;T&gt;</code>
@@ -8070,15 +8064,14 @@ mögliche Fehler aufzudecken, Zeichenketten als eine kompliziertere
 Datenstruktur, als viele Programmierer ihnen zugestehen, und UTF-8. Diese
 Faktoren kombinieren sich in einer Weise, die schwierig erscheinen kann, wenn
 man von anderen Programmiersprachen kommt.</p>
-<p>Es ist hilfreich, Zeichenketten im Kontext von Kollektionen zu besprechen, da
-Zeichenketten als Byte-Kollektion implementiert sind, sowie einige Methoden,
-die nützliche Funktionalitäten bieten, wenn diese Bytes als Text interpretiert
-werden. In diesem Abschnitt werden wir über <code>String</code>-Operationen sprechen, die
-jeder Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir
-werden auch die Art und Weise besprechen, in der sich <code>String</code> von den anderen
-Kollektionen unterscheidet, nämlich warum die Indexierung bei einem <code>String</code>
-kompliziert ist, weil Menschen und Computer <code>String</code>-Daten unterschiedlich
-interpretieren.</p>
+<p>Wir besprechen Zeichenketten im Kontext von Kollektionen, da Zeichenketten als
+Byte-Kollektion implementiert sind, sowie einige Methoden, die nützliche
+Funktionalitäten bieten, wenn diese Bytes als Text interpretiert werden. In
+diesem Abschnitt werden wir über <code>String</code>-Operationen sprechen, die jeder
+Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir werden auch
+die Art und Weise besprechen, in der sich <code>String</code> von den anderen Kollektionen
+unterscheidet, nämlich warum die Indexierung bei einem <code>String</code> kompliziert
+ist, weil Menschen und Computer <code>String</code>-Daten unterschiedlich interpretieren.</p>
 <h3 id="was-ist-eine-zeichenkette"><a class="header" href="#was-ist-eine-zeichenkette">Was ist eine Zeichenkette?</a></h3>
 <p>Zuerst werden wir definieren, was wir mit dem Begriff <em>Zeichenkette</em> (string)
 meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
@@ -8155,7 +8148,7 @@ verschiedene generische Programmierschnittstellen (APIs) für Zeichenketten
 verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
 überflüssig erscheinen, aber sie alle haben ihren Platz! In diesem Fall machen
 <code>String::from</code> und <code>to_string</code> dasselbe, also ist die Wahl eine Frage des
-Stils.</p>
+Stils und der Lesbarkeit.</p>
 <p>Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
 ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">
@@ -8198,9 +8191,9 @@ s.push_str(&quot;bar&quot;);
 an einen <code>String</code> mit der Methode <code>push_str</code></span></p>
 <p>Nach diesen beiden Zeilen enthält <code>s</code> den Wert <code>foobar</code>. Die Methode <code>push_str</code>
 nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
-Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel zeigt der Code
-in Codeblock 8-16, dass es bedauerlich wäre, wenn wir nicht in der Lage wären,
-<code>s2</code> zu verwenden, nachdem wir seinen Inhalt an <code>s1</code> angehängt haben.</p>
+Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
+Code in Codeblock 8-16 in der Lage sein, <code>s2</code> zu verwenden, nachdem wir seinen
+Inhalt an <code>s1</code> angehängt haben.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8216,8 +8209,8 @@ nach dem Anhängen seines Inhalts an eine Zeichenkette</span></p>
 könnten wir ihren Wert nicht in der letzten Zeile ausgeben. Dieser Code
 funktioniert jedoch wie erwartet!</p>
 <p>Die Methode <code>push</code> nimmt ein einzelnes Zeichen als Parameter und fügt es dem
-<code>String</code> hinzu. Codeblock 8-17 zeigt Code, der den Buchstaben <code>l</code> mit der
-Methode <code>push</code> zu einem <code>String</code> hinzufügt.</p>
+<code>String</code> hinzu. Codeblock 8-17 fügt den Buchstaben <code>l</code> mit der Methode <code>push</code>
+zu einem <code>String</code> hinzu.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8227,10 +8220,10 @@ s.push('l');
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
 <code>String</code>-Wert mit <code>push</code></span></p>
-<p>Als Ergebnis dieses Codes wird <code>s</code> den Wert <code>lol</code> enthalten.</p>
+<p>Als Ergebnis wird <code>s</code> den Wert <code>lol</code> enthalten.</p>
 <h4 id="aneinanderhängen-mit-dem-operator--und-dem-makro-format"><a class="header" href="#aneinanderhängen-mit-dem-operator--und-dem-makro-format">Aneinanderhängen mit dem Operator <code>+</code> und dem Makro <code>format!</code></a></h4>
 <p>Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
-ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
+das zu tun ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8242,26 +8235,25 @@ let s3 = s1 + &amp;s2; // Beachte, s1 wurde hierher verschoben und
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 8-18: Verwenden des Operators <code>+</code>, um zwei
 Zeichenketten zu einer neuen zu kombinieren</span></p>
-<p>Die Zeichenkette <code>s3</code> wird als Ergebnis dieses Codes <code>Hallo Welt!</code> enthalten.
-Der Grund, warum <code>s1</code> nach der Addition nicht mehr gültig ist und warum wir
-eine Referenz auf <code>s2</code> verwendet haben, hat mit der Signatur der Methode zu
-tun, die aufgerufen wird, wenn wir den Operator <code>+</code> verwenden. Der Operator <code>+</code>
-benutzt die Methode <code>add</code>, deren Signatur ungefähr so aussieht:</p>
+<p>Die Zeichenkette <code>s3</code> wird <code>Hallo Welt!</code> enthalten. Der Grund, warum <code>s1</code> nach
+der Addition nicht mehr gültig ist und warum wir eine Referenz auf <code>s2</code>
+verwendet haben, hat mit der Signatur der Methode zu tun, die aufgerufen wird,
+wenn wir den Operator <code>+</code> verwenden. Der Operator <code>+</code> benutzt die Methode
+<code>add</code>, deren Signatur ungefähr so aussieht:</p>
 <pre><code class="language-rust ignore">fn add(self, s: &amp;str) -&gt; String {
 </code></pre>
-<p>Dies ist nicht die exakte Signatur aus der Standardbibliothek: In der
-Standardbibliothek wird <code>add</code> mittels generischer Datentypen definiert. Hier
-sehen wir uns die Signatur von <code>add</code> mit konkreten Typen an, die die
+<p>In der Standardbibliothek wird <code>add</code> mittels generischer Datentypen definiert.
+Hier sehen wir uns die Signatur von <code>add</code> mit konkreten Typen an, die die
 generischen Typen ersetzen; das passiert, wenn wir diese Methode mit
 <code>String</code>-Werten aufrufen. Wir werden generische Datentypen in Kapitel 10
 besprechen. Diese Signatur gibt uns den entscheidenden Hinweis, um die
 kniffligen Stellen des Operators <code>+</code> zu verstehen.</p>
-<p>Erstens hat <code>s2</code> ein <code>&amp;</code>, was bedeutet, dass wir aufgrund des Parameters <code>s</code> in
-der Funktion <code>add</code> eine <em>Referenz</em> der zweiten Zeichenkette an die erste
-Zeichenkette anhängen: Wir können nur einen <code>&amp;str</code> zu einem <code>String</code>
-hinzufügen; wir können nicht zwei <code>String</code>-Werte miteinander addieren. Aber
-warte – der Typ von <code>&amp;s2</code> ist <code>&amp;String</code>, nicht <code>&amp;str</code>, wie im zweiten
-Parameter von <code>add</code> spezifiziert. Warum kompiliert also Codeblock 8-18?</p>
+<p>Erstens hat <code>s2</code> ein <code>&amp;</code>, was bedeutet, dass wir eine <em>Referenz</em> der zweiten
+Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
+Parameter <code>s</code> in der Funktion <code>add</code>: Wir können nur einen <code>&amp;str</code> zu einem
+<code>String</code> hinzufügen; wir können nicht zwei <code>String</code>-Werte aneinanderhängen.
+Aber warte – der Typ von <code>&amp;s2</code> ist <code>&amp;String</code>, nicht <code>&amp;str</code>, wie im
+zweiten Parameter von <code>add</code> spezifiziert. Warum kompiliert also Codeblock 8-18?</p>
 <p>Der Grund, warum wir <code>&amp;s2</code> im Aufruf von <code>add</code> verwenden können, ist, dass der
 Compiler das Argument <code>&amp;String</code> in einen <code>&amp;str</code> umwandeln (coerce) kann.
 Wenn wir die Methode <code>add</code> aufrufen, benutzt Rust eine <em>automatische
@@ -8292,7 +8284,7 @@ let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
 </span></code></pre></pre>
 <p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
 und <code>&quot;</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
-String-Kombinationen können wir das Makro <code>format!</code> verwenden:</p>
+String-Kombinationen können wir stattdessen das Makro <code>format!</code> verwenden:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8304,11 +8296,11 @@ let s = format!(&quot;{}-{}-{}&quot;, s1, s2, s3);
 <span class="boring">}
 </span></code></pre></pre>
 <p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
-arbeitet auf die gleiche Weise wie <code>println!</code>, aber anstatt das Ergebnis auf
-den Bildschirm auszugeben, gibt es einen <code>String</code> mit dem Inhalt zurück. Die
-Codevariante, die <code>format!</code> verwendet, ist viel leichter zu lesen, und der
-durch das Makro <code>format!</code> erzeugte Code verwendet Referenzen sodass dieser
-Aufruf keine Eigentümerschaft seiner Parameter übernimmt.</p>
+funktioniert wie <code>println!</code>, aber anstatt das Ergebnis auf den Bildschirm
+auszugeben, gibt es einen <code>String</code> mit dem Inhalt zurück. Die Codevariante, die
+<code>format!</code> verwendet, ist viel leichter zu lesen, und der durch das Makro
+<code>format!</code> erzeugte Code verwendet Referenzen sodass dieser Aufruf keine
+Eigentümerschaft seiner Parameter übernimmt.</p>
 <h3 id="indexierung-von-zeichenketten"><a class="header" href="#indexierung-von-zeichenketten">Indexierung von Zeichenketten</a></h3>
 <p>In vielen anderen Programmiersprachen ist das Zugreifen auf einzelne Zeichen in
 einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
@@ -8355,9 +8347,9 @@ diese:</p>
 </span></code></pre></pre>
 <p>In diesem Fall wird <code>hello.len()</code> gleich 4 sein, was bedeutet, dass der Vektor,
 der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
-Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Aber was ist mit der folgenden
-Zeile? (Beachte, dass diese Zeichenkette mit dem kyrillischen Großbuchstaben
-„Ze“ beginnt, nicht mit der arabischen Zahl 3.)</p>
+Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
+jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
+Großbuchstaben „Ze“ beginnt, nicht mit der arabischen Zahl 3.)</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8379,8 +8371,8 @@ let answer = &amp;hello[0];
 
 <span class="boring">}
 </span></code></pre></pre>
-<p>Was sollte der Wert von<code>answer</code> sein? Sollte es <code>З</code> sein, der erste Buchstabe?
-In der UTF-8-Kodierung von <code>З</code> ist das erste Byte <code>208</code> und das zweite <code>151</code>,
+<p>Du weißt bereits, dass <code>answer</code> nicht <code>З</code>, der erste Buchstabe, sein wird. In
+der UTF-8-Kodierung von <code>З</code> ist das erste Byte <code>208</code> und das zweite <code>151</code>,
 sodass <code>answer</code> eigentlich <code>208</code> sein müsste, aber <code>208</code> ist kein eigenständig
 gültiges Zeichen. Die Rückgabe von <code>208</code> ist wahrscheinlich nicht das, was ein
 Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
@@ -8388,10 +8380,11 @@ fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
 Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
 selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
 <code>&amp;&quot;hallo&quot;[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
-zurückgeben, nicht <code>h</code>. Um zu vermeiden, dass ein unerwarteter Wert
-zurückgegeben und Fehler verursacht werden, die nicht sofort entdeckt werden,
-kompiliert Rust diesen Code überhaupt nicht und verhindert Missverständnisse
-schon früh im Entwicklungsprozess.</p>
+zurückgeben, nicht <code>h</code>.</p>
+<p>Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
+Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
+Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
+frühen Stadium des Entwicklungsprozesses.</p>
 <h4 id="bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje">Bytes, skalare Werte und Graphemgruppen (grapheme clusters)! Oje!</a></h4>
 <p>Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
 Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
@@ -8428,12 +8421,11 @@ müsste, um festzustellen, wie viele gültige Zeichen es gibt.</p>
 <p>Die Indexierung einer Zeichenkette ist oft eine schlechte Idee, weil nicht klar
 ist, was der Rückgabetyp der Zeichenketten-Indexoperation sein soll: Ein
 Byte-Wert, ein Zeichen, eine Graphemgruppe oder ein Zeichenkettenanteilstyp.
-Daher bittet dich Rust, konkretere Angaben zu machen, wenn du wirklich Indexes
-zum Erstellen von Zeichenkettenanteilstypen verwenden musst. Um bei der
-Indexierung spezifischer zu sein und anzugeben, dass du einen
-Zeichenkettenanteilstyp wünschst, kannst du statt der Indexierung mit <code>[]</code> mit
-einer einzigen Nummer <code>[]</code> mit einem Bereich verwenden, um einen
-Zeichenkettenanteilstyp zu erstellen, der bestimmte Bytes enthält:</p>
+Wenn du wirklich Indizes verwenden musst, um Zeichenkettenanteilstypen zu
+erstellen, bittet Rust dich daher, genauer zu sein.</p>
+<p>Anstatt <code>[]</code> mit einer einzelnen Zahl zu indizieren, kannst du <code>[]</code> mit einem
+Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
+Bytes enthält:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8444,10 +8436,11 @@ let s = &amp;hello[0..4];
 </span></code></pre></pre>
 <p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten 4 Bytes der Zeichenkette enthält.
 Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
-was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist. Was würde passieren, wenn wir
-<code>&amp;hello[0..1]</code> benutzen würden? Die Antwort: Rust würde das Programm zur
-Laufzeit abbrechen, genauso als wenn mit einem ungültigen Index auf einen
-Vektor zugegriffen würde:</p>
+was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
+<p>Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
+wie <code>&amp;hello[0..1]</code> zu zerschneiden, würde Rust das Programm zur Laufzeit
+abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
+zugegriffen würde:</p>
 <pre><code class="language-console">$ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
@@ -8458,12 +8451,12 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <p>Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
 ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.</p>
 <h3 id="methoden-zum-iterieren-über-zeichenketten"><a class="header" href="#methoden-zum-iterieren-über-zeichenketten">Methoden zum Iterieren über Zeichenketten</a></h3>
-<p>Glücklicherweise kannst du auf andere Weise auf Elemente in einer Zeichenkette
-zugreifen.</p>
-<p>Wenn du Operationen mit einzelnen Unicode-Skalarwerten durchführen musst,
-verwende am besten die Methode <code>chars</code>. Der Aufruf von <code>chars</code> auf „नमस्ते“
-trennt sechs Werte vom Typ <code>char</code> heraus und gibt sie zurück, und du kannst
-über das Ergebnis iterieren, um auf jedes Element zuzugreifen:</p>
+<p>Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
+explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
+Unicode-Skalarwerte ist die Methode <code>chars</code> zu verwenden. Der Aufruf von
+<code>chars</code> auf „नमस्ते“ trennt sechs Werte vom Typ <code>char</code> heraus und gibt sie
+zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
+zuzugreifen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8518,14 +8511,14 @@ Nicht-ASCII-Zeichen vorkommen.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="schlüssel-mit-zugehörigen-werten-in-hashtabellen-ablegen"><a class="header" href="#schlüssel-mit-zugehörigen-werten-in-hashtabellen-ablegen">Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></h2>
 <p>Die letzte unserer allgemeinen Kollektionen ist die <em>Hashtabelle</em> (hash map).
 Der Typ <code>HashMap&lt;K, V&gt;</code> speichert eine Zuordnung von Schlüsseln vom Typ <code>K</code> zu
-Werten vom Typ <code>V</code>. Er tut dies über eine <em>Hashfunktion</em> (hash function), die
-bestimmt, wie er diese Schlüssel und Werte im Speicher ablegt. Viele
-Programmiersprachen unterstützen diese Art Datenstruktur, aber sie verwenden
-oft einen anderen Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash
-table), Wörterbuch (dictionary) oder assoziatives Array (associative array), um
-nur einige zu nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei
-Vektoren über einen Index nachschlagen willst, sondern über einen Schlüssel,
-der ein beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
+Werten vom Typ <code>V</code> mittels einer <em>Hashfunktion</em> (hash function), die bestimmt,
+wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
+(dictionary) oder assoziatives Array (associative array), um nur einige zu
+nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über
+einen Index nachschlagen willst, sondern über einen Schlüssel, der ein
+beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
 Spielstand jedes Teams in einer Hashtabelle vermerken, in der die Schlüssel den
 Teamnamen und die Werte den Spielstand des jeweiligen Teams darstellen. Wenn du
 den Namen eines Teams angibst, kannst du seine Punktzahl abrufen.</p>
@@ -8535,10 +8528,10 @@ Funktionen, die in der Standardbibliothek für <code>HashMap&lt;K, V&gt;</code> 
 Weitere Informationen findest du wie immer in der
 Standardbibliotheksdokumentation.</p>
 <h3 id="erstellen-einer-neuen-hashtabelle"><a class="header" href="#erstellen-einer-neuen-hashtabelle">Erstellen einer neuen Hashtabelle</a></h3>
-<p>Du kannst eine leere Hashtabelle mit <code>new</code> erstellen und Elemente mit <code>insert</code>
-hinzufügen. In Codeblock 8-20 verfolgen wir die Ergebnisse zweier Mannschaften
-mit den Namen Blau und Gelb. Das Team Blau startet mit 10 Punkten, das Team
-Gelb mit 50 Punkten.</p>
+<p>Ein Weg um eine leere Hashtabelle zu erzeugen ist mit <code>new</code> und um Elemente
+hinzuzufügen mit <code>insert</code>. In Codeblock 8-20 verfolgen wir die Ergebnisse
+zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+Punkten, das Team Gelb mit 50 Punkten.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -8593,7 +8586,7 @@ welche du willst, es sei denn, du gibst sie an. Für die Typparameter der
 Schlüssel- und Werttypen geben wir jedoch Unterstriche an, Rust kann anhand der
 Datentypen in den Vektoren auf die Typen schließen, die die Hashtabelle
 enthält. In Codeblock 8-21 wird der Schlüsseltyp <code>String</code> und der Werttyp <code>i32</code>
-sein, genau wie die Typen in Codeblock 8-20.</p>
+sein, genau wie in Codeblock 8-20.</p>
 <h3 id="hashtabellen-und-eigentümerschaft"><a class="header" href="#hashtabellen-und-eigentümerschaft">Hashtabellen und Eigentümerschaft</a></h3>
 <p>Bei Typen wie <code>i32</code>, die das Merkmal <code>Copy</code> implementieren, werden die Werte in
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie <code>String</code> werden die Werte
@@ -8668,7 +8661,7 @@ for (key, value) in &amp;scores {
 Blau: 10
 </code></pre>
 <h3 id="aktualisieren-einer-hashtabelle"><a class="header" href="#aktualisieren-einer-hashtabelle">Aktualisieren einer Hashtabelle</a></h3>
-<p>Obwohl die Anzahl der Schlüssel und Werte wachsen kann, kann jedem Schlüssel
+<p>Obwohl die Anzahl der Schlüssel-Werte-Paare wachsen kann, kann jedem Schlüssel
 jeweils nur ein Wert zugeordnet werden. Wenn du die Daten in einer Hashtabelle
 ändern willst, musst du entscheiden, wie der Fall zu behandeln ist, wenn einem
 Schlüssel bereits ein Wert zugewiesen wurde. Du kannst den alten Wert durch den
@@ -8772,14 +8765,14 @@ zuerst <code>count</code> mittels Sternoperator (<code>*</code>) dereferenzieren
 Referenz verlässt den Gültigkeitsbereich am Ende der <code>for</code>-Schleife, sodass all
 diese Änderungen sicher sind und von den Ausleihregeln erlaubt werden.</p>
 <h3 id="hash-funktionen"><a class="header" href="#hash-funktionen">Hash-Funktionen</a></h3>
-<p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens SipHash, die robust
+<p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens <em>SipHash</em>, die robust
 gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference"><a href="#siphash">1</a></sup> ist. Dies
 ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
 zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
 Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-Hash-Funktion ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
+<em>Hash-Funktion</em> ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
 werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
 nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
 <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
@@ -18339,7 +18332,7 @@ Programmcode jedoch auch für andere Personen freigeben, indem du eigene Pakete
 veröffentlichst. Die Registrierung von Kisten auf <a href="https://crates.io/">crates.io</a>
 verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcode
 gehostet.</p>
-<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr 
+<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr
 veröffentlichtes Paket zu verwenden und zu finden. Wir werden nun über einige
 dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
 wird.</p>
@@ -18348,7 +18341,7 @@ wird.</p>
 wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
 Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
 Rust-Code mit zwei Schrägstrichen <code>//</code> kommentiert. Rust hat auch eine eigene
-Art von Kommentar für die Dokumentation, die passenderweise als 
+Art von Kommentar für die Dokumentation, die passenderweise als
 <em>Dokumentationskommentar</em> bezeichnet wird und HTML-Dokumentation generiert.
 Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
 API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
@@ -18356,9 +18349,9 @@ wie deine Kiste <em>benutzt</em> wird, und nicht, wie deine Kiste <em>implementi
 ist.</p>
 <p>Dokumentationskommentare verwenden drei Schrägstriche <code>///</code> anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
-Dokumentationskommentare nur vor dem zu dokumentierenden Element. 
-Codeblock 14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in
-einer Kiste mit dem Namen <code> my_crate</code>:</p>
+Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
+14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in einer Kiste
+mit dem Namen <code>my_crate</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">/// Adds one to the number given 
 ///
@@ -18699,7 +18692,10 @@ anschließend ein Fehler angezeigt:</p>
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
 --snip--
-error: api errors (status 200 OK): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+error: failed to publish to registry at https://crates.io
+
+Caused by:
+  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 </code></pre>
 <p>Der Grund dafür ist, dass einige wichtige Informationen fehlen: Eine
 Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
@@ -19702,17 +19698,18 @@ wir ein <code>*</code> in unserem Programmcode verwenden. Da die Ersetzung des
 <code>*</code>-Operator nicht unendlich rekursiv ist, erhalten wir Daten vom Typ
 <code>i32</code>, die mit der <code>5</code> in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
 <h3 id="implizite-automatische-umwandlung-mit-funktionen-und-methoden"><a class="header" href="#implizite-automatische-umwandlung-mit-funktionen-und-methoden">Implizite automatische Umwandlung mit Funktionen und Methoden</a></h3>
-<p><em>Automatische Umwandlung</em> (deref coercion) ist eine bequeme Funktionalität die Rust bei Argumenten für
-Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur bei Typen,
-die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung wandelt einen solchen
-Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
+<p><em>Automatische Umwandlung</em> (deref coercion) ist eine bequeme Funktionalität die
+Rust bei Argumenten für Funktionen und Methoden ausführt. Die automatische
+Umwandlung funktioniert nur bei Typen, die das Merkmal <code>Deref</code> implementieren.
+Die automatische Umwandlung wandelt eine Referenz auf einen solchen Typ in eine
+Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung <code>&amp;String</code> in <code>&amp;str</code> konvertieren, da <code>String</code> das Merkmal <code>Deref</code>
-implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
-automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
-eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
-oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der
-<code>deref</code>-Methode konvertiert den von uns angegebenen Typ in den Typ, den der
-Parameter benötigt.</p>
+implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung
+erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
+als Argument an eine Funktion oder Methode übergeben, die nicht dem
+Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
+von Aufrufen der <code>deref</code>-Methode konvertiert den von uns angegebenen Typ in den
+Typ, den der Parameter benötigt.</p>
 <p>Rust wurde um die automatische Umwandlung erweitert, damit Programmierer, die Funktions- und
 Methodenaufrufe schreiben, nicht so viele explizite Referenzierungen und Dereferenzierungen
 mit <code>&amp;</code> und <code>*</code> angeben müssen. Mit der Funktionalität der automatischen Umwandlung
@@ -20891,13 +20888,12 @@ Standardbibliotheksdokumenten.</p>
 <p>Die Speichersicherheitsgarantien von Rust machen es schwierig, aber nicht
 unmöglich, versehentlich Speicher zu erstellen, der niemals bereinigt wird
 (bekannt als <em>Speicherleck</em> (memory leak)). Das vollständige Verhindern von
-Speicherlecks ist keine der Garantien von Rust, ebenso wie das Nichtzulassen von
-Daten-Wettlaufsituationen (data races) zur Kompilierzeit. Dies bedeutet, dass
-Speicherlecks in Rust speichersicher sind. Wir können sehen, dass Rust
-Speicherlecks mithilfe von <code>Rc&lt;T&gt;</code> und <code>RefCell&lt;T&gt;</code> zulässt: Es ist möglich,
-Referenzen zu erstellen, bei denen Elemente in einem Zyklus aufeinander
-referenzieren. Dies führt zu Speicherlecks, da der Referenzzähler jedes Elements im
-Zyklus niemals 0 erreicht und die Werte niemals gelöscht werden.</p>
+Speicherlecks gehört nicht zu den Garantien von Rust, d.h. Speicherlecks sind
+in Rust speichersicher. Wir können sehen, dass Rust Speicherlecks mithilfe von
+<code>Rc&lt;T&gt;</code> und <code>RefCell&lt;T&gt;</code> zulässt: Es ist möglich, Referenzen zu erstellen, bei
+denen Elemente in einem Zyklus aufeinander referenzieren. Dies führt zu
+Speicherlecks, da der Referenzzähler jedes Elements im Zyklus niemals 0
+erreicht und die Werte niemals gelöscht werden.</p>
 <h3 id="einen-referenzzyklus-erstellen"><a class="header" href="#einen-referenzzyklus-erstellen">Einen Referenzzyklus erstellen</a></h3>
 <p>Schauen wir uns an, wie ein Referenzzyklus stattfinden kann und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung <code>List</code> und einer

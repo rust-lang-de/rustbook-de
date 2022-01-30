@@ -141,7 +141,7 @@ Programmcode jedoch auch für andere Personen freigeben, indem du eigene Pakete
 veröffentlichst. Die Registrierung von Kisten auf <a href="https://crates.io/">crates.io</a>
 verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcode
 gehostet.</p>
-<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr 
+<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr
 veröffentlichtes Paket zu verwenden und zu finden. Wir werden nun über einige
 dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
 wird.</p>
@@ -150,7 +150,7 @@ wird.</p>
 wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
 Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
 Rust-Code mit zwei Schrägstrichen <code>//</code> kommentiert. Rust hat auch eine eigene
-Art von Kommentar für die Dokumentation, die passenderweise als 
+Art von Kommentar für die Dokumentation, die passenderweise als
 <em>Dokumentationskommentar</em> bezeichnet wird und HTML-Dokumentation generiert.
 Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
 API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
@@ -158,9 +158,9 @@ wie deine Kiste <em>benutzt</em> wird, und nicht, wie deine Kiste <em>implementi
 ist.</p>
 <p>Dokumentationskommentare verwenden drei Schrägstriche <code>///</code> anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
-Dokumentationskommentare nur vor dem zu dokumentierenden Element. 
-Codeblock 14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in
-einer Kiste mit dem Namen <code> my_crate</code>:</p>
+Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
+14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in einer Kiste
+mit dem Namen <code>my_crate</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">/// Adds one to the number given 
 ///
@@ -501,7 +501,10 @@ anschließend ein Fehler angezeigt:</p>
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
 --snip--
-error: api errors (status 200 OK): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+error: failed to publish to registry at https://crates.io
+
+Caused by:
+  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 </code></pre>
 <p>Der Grund dafür ist, dass einige wichtige Informationen fehlen: Eine
 Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was

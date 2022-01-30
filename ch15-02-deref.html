@@ -360,17 +360,18 @@ wir ein <code>*</code> in unserem Programmcode verwenden. Da die Ersetzung des
 <code>*</code>-Operator nicht unendlich rekursiv ist, erhalten wir Daten vom Typ
 <code>i32</code>, die mit der <code>5</code> in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
 <h3 id="implizite-automatische-umwandlung-mit-funktionen-und-methoden"><a class="header" href="#implizite-automatische-umwandlung-mit-funktionen-und-methoden">Implizite automatische Umwandlung mit Funktionen und Methoden</a></h3>
-<p><em>Automatische Umwandlung</em> (deref coercion) ist eine bequeme Funktionalität die Rust bei Argumenten für
-Funktionen und Methoden ausführt. Die automatische Umwandlung funktioniert nur bei Typen,
-die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung wandelt einen solchen
-Typ in eine Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
+<p><em>Automatische Umwandlung</em> (deref coercion) ist eine bequeme Funktionalität die
+Rust bei Argumenten für Funktionen und Methoden ausführt. Die automatische
+Umwandlung funktioniert nur bei Typen, die das Merkmal <code>Deref</code> implementieren.
+Die automatische Umwandlung wandelt eine Referenz auf einen solchen Typ in eine
+Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
 Umwandlung <code>&amp;String</code> in <code>&amp;str</code> konvertieren, da <code>String</code> das Merkmal <code>Deref</code>
-implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung erfolgt
-automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs als Argument an
-eine Funktion oder Methode übergeben, die nicht dem Parametertyp in der Funktion
-oder Methodendefinition übereinstimmt. Eine Folge von Aufrufen der
-<code>deref</code>-Methode konvertiert den von uns angegebenen Typ in den Typ, den der
-Parameter benötigt.</p>
+implementiert, sodass <code>&amp;str</code> zurückgegeben wird. Die automatische Umwandlung
+erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
+als Argument an eine Funktion oder Methode übergeben, die nicht dem
+Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
+von Aufrufen der <code>deref</code>-Methode konvertiert den von uns angegebenen Typ in den
+Typ, den der Parameter benötigt.</p>
 <p>Rust wurde um die automatische Umwandlung erweitert, damit Programmierer, die Funktions- und
 Methodenaufrufe schreiben, nicht so viele explizite Referenzierungen und Dereferenzierungen
 mit <code>&amp;</code> und <code>*</code> angeben müssen. Mit der Funktionalität der automatischen Umwandlung
