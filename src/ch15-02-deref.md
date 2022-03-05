@@ -84,7 +84,6 @@ Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
 Referenz `Box<T>` zu verwenden. Wie Codeblock 15-7 zeigt, funktioniert der
 Dereferenzierungsoperator:
 
-
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
@@ -100,14 +99,14 @@ fn main() {
 <span class="caption">Codeblock 15-7: Using the dereference operator on a
 `Box<i32>`</span>
 
-Der einzige Unterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir 
-hier `y` als Instanz eines Feldes festlegen, das auf einen kopierten Wert von `x`
-zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
-Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um dem Zeiger
-der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als `y` eine
-Referenz war. Als Nächstes werden wir ergründen, was das Besondere an `Box<T>`
-ist, das es uns ermöglicht, den Dereferenzierungsoperator zu verwenden, indem
-wir unseren eigenen Box-Typ definieren.
+Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
+hier `y` als Instanz eines Feldes festlegen, das auf einen kopierten Wert von
+`x` zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
+Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
+dem Zeiger der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als
+`y` eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere an
+`Box<T>` ist, das es uns ermöglicht, den Dereferenzierungsoperator zu
+verwenden, indem wir unseren eigenen Box-Typ definieren.
 
 ### Einen eigenen intelligenten Zeiger definieren
 
@@ -190,9 +189,10 @@ Fähigkeit für unseren Typ nicht implementiert haben. Um eine
 Dereferenzierung mit dem Operator `*` zu ermöglichen, implementieren wir das
 Merkmal `Deref`.
 
-### Einen Typ wie eine Referenz behandeln durch Implementierens des `Deref`-Merkmals
+### Einen Typ wie eine Referenz behandeln durch Implementieren des `Deref`-Merkmals
 
-Wie in Kapitel 10 besprochen, müssen wir zur Implementierung eines Merkmals
+Wie im Abschnitt [„Ein Merkmal für einen Typ implementieren“][impl-trait] in
+Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
 Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
 Das von der Standardbibliothek bereitgestellte Merkmal `Deref` erfordert die
 Implementierung einer Methode namens `deref`, die `self` ausleiht (borrow) und
@@ -236,10 +236,13 @@ Die Syntax `type Target = T;` definiert einen assoziierten Typ, den das Merkmal
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
 keine Gedanken machen, in Kapitel 19 werden wir sie ausführlicher behandeln.
 
-Wir füllen den Rumpf der `deref`-Methode mit `&self.0`, und `deref` gibt
-eine Referenz auf den Wert zurück, auf den wir mit dem `*`-Operator zugreifen
-möchten. Die `main`-Funktion in Codeblock 15-9, die `*` für den Wert `MyBox<T>`
-aufruft, kompiliert nun und die Zusicherungen werden bestanden!
+Wir füllen den Rumpf der Methode `deref` mit `&self.0`, damit `deref` eine
+Referenz auf den Wert zurückgibt, auf den wir mit dem Operator `*` zugreifen
+wollen. Erinnere dich an den Abschnitt [„Verwenden von Tupel-Strukturen ohne
+benannte Felder um verschiedene Typen zu erzeugen“][tuple-structs] in Kapitel
+5, wo `.0` auf den ersten Wert in einer Tupel-Struktur zugreift. Die
+`main`-Funktion in Codeblock 15-9, die `*` für den Wert `MyBox<T>` aufruft,
+kompiliert nun und die Zusicherungen werden erfüllt!
 
 Ohne das Merkmal `Deref` kann der Compiler nur `&`-Referenzen dereferenzieren.
 Die `deref`-Methode gibt dem Compiler die Möglichkeit, einen Wert eines
@@ -441,3 +444,6 @@ Referenz die einzige unveränderliche Referenz auf diese Daten ist, aber die
 Ausleihregeln garantieren dies nicht.
 Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
 unveränderlichen Referenz in eine veränderbare Referenz möglich ist.
+
+[impl-trait]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
+[tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen

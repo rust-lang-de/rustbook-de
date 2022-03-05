@@ -380,7 +380,7 @@ bounds`.
 der Argumente</span>
 
 Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Codeblock
-9-10][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
+9-13][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
 wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args`
 mindestens 3 beträgt und der Rest der Funktion unter der Annahme arbeiten kann,

@@ -4,8 +4,8 @@ Wie entscheidest du also, wann du `panic!` aufrufen und wann `Result`
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
 Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation anrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
-aber dann triffst du die Entscheidung für den Code, der deinen Code aufruft,
-dass eine Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
+aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
+Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 `Result`-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
 Code könnte sich dafür entscheiden, sich vom Fehler auf eine angemessene Weise
@@ -15,22 +15,21 @@ Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
 `Result` eine gute Standardwahl, wenn du eine Funktion definierst, die
 fehlschlagen könnte.
 
-In seltenen Situationen ist es besser, Code zu schreiben, der das Programm
-abbricht, anstatt ein `Result` zurückzugeben. Lass uns untersuchen, warum es
-bei Beispielen, Code-Prototypen und Tests angebracht ist, das Programm
-abzubrechen. Dann werden wir Situationen besprechen, in denen der Compiler
-nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch aber
-schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
+In Beispielen, Prototyp-Code und Tests ist es sinnvoller, Code zu schreiben,
+der das Programm abbricht, anstatt ein `Result` zurückzugeben. Lass uns
+herausfinden, warum das so ist, und dann Situationen besprechen, in denen der
+Compiler nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch
+aber schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
 Entscheidung, ob in Bibliothekscode ein Programm abgebrochen werden soll.
 
 ### Beispiele, Code-Prototypen und Tests
 
-Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann ein
-robuster Fehlerbehandlungscode das Beispiel unklarer machen. In Beispielen wird
-davon ausgegangen, dass der Aufruf einer Methode wie `unwrap`, die das Programm
-abbrechen könnte, als Platzhalter für die Art und Weise gedacht ist, wie deine
-Anwendung mit Fehlern umgehen soll, die je nachdem, was der Rest deines Codes
-tut, unterschiedlich sein können.
+Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann die
+Einbeziehung von robustem Fehlerbehandlungscode das Beispiel unklarer machen.
+In Beispielen wird davon ausgegangen, dass der Aufruf einer Methode wie
+`unwrap`, die das Programm abbrechen könnte, als Platzhalter für die Art und
+Weise gedacht ist, wie deine Anwendung mit Fehlern umgehen soll, die je
+nachdem, was der Rest deines Codes tut, unterschiedlich sein können.
 
 In ähnlicher Weise sind die Methoden `unwrap` und `expect` bei Prototypen sehr
 praktisch, wenn du noch nicht entscheiden willst, wie mit Fehlern umzugehen
