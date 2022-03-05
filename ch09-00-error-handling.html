@@ -135,20 +135,20 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="fehlerbehandlung"><a class="header" href="#fehlerbehandlung">Fehlerbehandlung</a></h1>
-<p>Rusts Engagement für Zuverlässigkeit erstreckt sich auch auf die
-Fehlerbehandlung. Fehler sind Gegebenheiten in Software, deshalb enthält Rust
-eine Reihe von Funktionalitäten zur Behandlung von Situationen, in denen etwas
-schiefgeht. In vielen Fällen verlangt Rust von dir, dass du die Möglichkeit
-eines Fehlers anerkennst und Vorkehrungen ergreifst, damit dein Code kompiliert
-werden kann. Diese Anforderung macht dein Programm robuster, da sichergestellt
-wird, dass du Fehler entdeckst und diese angemessen behandelst, bevor dein Code
-in Produktion gebracht wird!</p>
+<p>Fehler sind Gegebenheiten in Software, deshalb enthält Rust eine Reihe von
+Funktionalitäten zur Behandlung von Situationen, in denen etwas schiefgeht. In
+vielen Fällen verlangt Rust von dir, dass du die Möglichkeit eines Fehlers
+anerkennst und Vorkehrungen ergreifst, damit dein Code kompiliert werden kann.
+Diese Anforderung macht dein Programm robuster, da sichergestellt wird, dass du
+Fehler entdeckst und diese angemessen behandelst, bevor dein Code in Produktion
+gebracht wird!</p>
 <p>Rust gruppiert Fehler in zwei Hauptkategorien: <em>Behebbare</em> (recoverable) und
 <em>nicht behebbare</em> (unrecoverable) Fehler. Bei einem behebbaren Fehler, z.B.
-„Datei nicht gefunden“, ist es sinnvoll, das Problem dem Benutzer zu melden und
-den Vorgang erneut zu versuchen. Nicht behebbare Fehler sind immer Symptome von
-Programmierfehlern, z.B. der Versuch, auf eine Stelle jenseits des Endes eines
-Arrays zuzugreifen.</p>
+„Datei nicht gefunden“, wollen wir das Problem wahrscheinlich dem Benutzer
+melden und den Vorgang erneut versuchen. Nicht behebbare Fehler sind immer
+Symptome von Programmierfehlern, z.B. der Versuch, auf eine Stelle hinter dem
+Ende eines Arrays zuzugreifen, und deshalb wollen wir das Programm sofort
+anhalten.</p>
 <p>Die meisten Sprachen unterscheiden nicht zwischen diesen beiden Fehlerarten und
 behandeln beide auf die gleiche Weise, indem sie Mechanismen wie die
 Ausnahmebehandlung verwenden. Rust hat keine Ausnahmebehandlung. Stattdessen

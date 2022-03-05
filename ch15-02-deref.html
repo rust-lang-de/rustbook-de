@@ -215,14 +215,14 @@ Dereferenzierungsoperator:</p>
 </code></pre></pre>
 <p><span class="caption">Codeblock 15-7: Using the dereference operator on a
 <code>Box&lt;i32&gt;</code></span></p>
-<p>Der einzige Unterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir 
-hier <code>y</code> als Instanz eines Feldes festlegen, das auf einen kopierten Wert von <code>x</code>
-zeigt, und nicht als Referenz, die auf den Wert <code>x</code> zeigt. In der letzten
-Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um dem Zeiger
-der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als <code>y</code> eine
-Referenz war. Als Nächstes werden wir ergründen, was das Besondere an <code>Box&lt;T&gt;</code>
-ist, das es uns ermöglicht, den Dereferenzierungsoperator zu verwenden, indem
-wir unseren eigenen Box-Typ definieren.</p>
+<p>Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
+hier <code>y</code> als Instanz eines Feldes festlegen, das auf einen kopierten Wert von
+<code>x</code> zeigt, und nicht als Referenz, die auf den Wert <code>x</code> zeigt. In der letzten
+Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
+dem Zeiger der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als
+<code>y</code> eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere an
+<code>Box&lt;T&gt;</code> ist, das es uns ermöglicht, den Dereferenzierungsoperator zu
+verwenden, indem wir unseren eigenen Box-Typ definieren.</p>
 <h3 id="einen-eigenen-intelligenten-zeiger-definieren"><a class="header" href="#einen-eigenen-intelligenten-zeiger-definieren">Einen eigenen intelligenten Zeiger definieren</a></h3>
 <p>Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
 bereitgestellten Typ <code>Box&lt;T&gt;</code> ähnelt, um zu erfahren, wie sich intelligente
@@ -291,8 +291,9 @@ error: could not compile `deref-example` due to previous error
 Fähigkeit für unseren Typ nicht implementiert haben. Um eine
 Dereferenzierung mit dem Operator <code>*</code> zu ermöglichen, implementieren wir das
 Merkmal <code>Deref</code>.</p>
-<h3 id="einen-typ-wie-eine-referenz-behandeln-durch-implementierens-des-deref-merkmals"><a class="header" href="#einen-typ-wie-eine-referenz-behandeln-durch-implementierens-des-deref-merkmals">Einen Typ wie eine Referenz behandeln durch Implementierens des <code>Deref</code>-Merkmals</a></h3>
-<p>Wie in Kapitel 10 besprochen, müssen wir zur Implementierung eines Merkmals
+<h3 id="einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals"><a class="header" href="#einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals">Einen Typ wie eine Referenz behandeln durch Implementieren des <code>Deref</code>-Merkmals</a></h3>
+<p>Wie im Abschnitt <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a> in
+Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
 Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
 Das von der Standardbibliothek bereitgestellte Merkmal <code>Deref</code> erfordert die
 Implementierung einer Methode namens <code>deref</code>, die <code>self</code> ausleiht (borrow) und
@@ -330,10 +331,13 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <code>Deref</code> verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
 keine Gedanken machen, in Kapitel 19 werden wir sie ausführlicher behandeln.</p>
-<p>Wir füllen den Rumpf der <code>deref</code>-Methode mit <code>&amp;self.0</code>, und <code>deref</code> gibt
-eine Referenz auf den Wert zurück, auf den wir mit dem <code>*</code>-Operator zugreifen
-möchten. Die <code>main</code>-Funktion in Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code>
-aufruft, kompiliert nun und die Zusicherungen werden bestanden!</p>
+<p>Wir füllen den Rumpf der Methode <code>deref</code> mit <code>&amp;self.0</code>, damit <code>deref</code> eine
+Referenz auf den Wert zurückgibt, auf den wir mit dem Operator <code>*</code> zugreifen
+wollen. Erinnere dich an den Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne
+benannte Felder um verschiedene Typen zu erzeugen“</a> in Kapitel
+5, wo <code>.0</code> auf den ersten Wert in einer Tupel-Struktur zugreift. Die
+<code>main</code>-Funktion in Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code> aufruft,
+kompiliert nun und die Zusicherungen werden erfüllt!</p>
 <p>Ohne das Merkmal <code>Deref</code> kann der Compiler nur <code>&amp;</code>-Referenzen dereferenzieren.
 Die <code>deref</code>-Methode gibt dem Compiler die Möglichkeit, einen Wert eines
 beliebigen Typs zu verwenden, der <code>Deref</code> implementiert, und die <code>deref</code>-Methode

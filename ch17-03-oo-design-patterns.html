@@ -187,14 +187,13 @@ fn main() {
 <p><span class="caption">Codeblock 17-11: Code, der das gewünschte Verhalten
 demonstriert, das wir für unsere Kiste <code>blog</code> haben wollen</span></p>
 <p>Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
-<code>Post::new</code> zu erstellen. Dann möchten wir dem Blog-Beitrag erlauben, Text
-hinzuzufügen, während er sich im Entwurfszustand befindet. Wenn wir versuchen,
-den Inhalt des Beitrags sofort, vor der Genehmigung, zu erhalten, sollte nichts
-passieren, weil der Beitrag noch ein Entwurf ist. Wir haben zu
-Demonstrationszwecken <code>assert_eq!</code> in den Code eingefügt. Ein ausgezeichneter
-Unit-Test dafür wäre die Zusicherung, dass ein Entwurf eines Blog-Beitrags eine
-leere Zeichenkette aus der Methode <code>content</code> zurückgibt, aber wir werden für
-dieses Beispiel keine Tests schreiben.</p>
+<code>Post::new</code> zu erstellen. Wir möchten dem Blog-Beitrag erlauben, Text
+hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
+Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
+ein Entwurf ist. Wir haben zu Demonstrationszwecken <code>assert_eq!</code> in den Code
+eingefügt. Ein ausgezeichneter Unit-Test dafür wäre die Zusicherung, dass ein
+Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode <code>content</code>
+zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.</p>
 <p>Als nächstes wollen wir einen Antrag auf Überprüfung des Beitrags ermöglichen
 und wir wollen, dass <code>content</code> eine leere Zeichenkette zurückgibt, solange wir
 auf die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
@@ -539,18 +538,18 @@ impl State for Published {
 bei <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Merkmal <code>State</code> hinzu und fügen eine neue
 Struktur <code>State</code> hinzu, die den Zustand <code>Published</code> implementiert.</p>
-<p>Ähnlich wie bei <code>request_review</code>, wenn wir die Methode <code>approve</code> auf einem
-<code>Draft</code> aufrufen, wird sie keine Wirkung haben, weil sie <code>self</code> zurückgibt.
-Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen, gibt sie eine
-neue, geschlossene Instanz der Struktur <code>Published</code> zurück. Die Struktur
-<code>Published</code> implementiert das Merkmal <code>State</code> und sowohl bei der Methode
-<code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich selbst
-zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben
+<p>Ähnlich wie <code>request_review</code> bei <code>PendingReview</code> funktioniert, hat der Aufruf
+der Methode <code>approve</code> bei einem <code>Draft</code> keine Wirkung, weil <code>approve</code> den Wert
+<code>self</code> zurückgibt. Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen,
+gibt sie eine neue, geschlossene Instanz der Struktur <code>Published</code> zurück. Die
+Struktur <code>Published</code> implementiert das Merkmal <code>State</code> und sowohl bei der
+Methode <code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich
+selbst zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben
 sollte.</p>
-<p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wenn der
-Zustand <code>Published</code> ist, wollen wir den Wert im Feld <code>content</code> des Beitrags
-zurückgeben; andernfalls wollen wir einen leeren Zeichenkettenanteilstyp
-zurückgeben, wie in Codeblock 17-17 gezeigt:</p>
+<p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wir wollen,
+dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von <code>Post</code>
+abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Methode, die auf seinen
+<code>state</code> definiert ist, wie in Codeblock 17-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]

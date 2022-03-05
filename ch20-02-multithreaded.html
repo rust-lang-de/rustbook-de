@@ -1307,8 +1307,7 @@ die sendende Seite des Kanals hält, beendet hat, ähnlich wie die <code>send</c
 wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der <code>Mutex&lt;T&gt;</code>
 stellt sicher, dass immer nur ein <code>Worker</code>-Strang zur gleichen Zeit versucht,
 einen Auftrag anzufordern.</p>
-<p>Mit der Umsetzung dieses Tricks ist unser Strang-Vorrat in einem
-funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
+<p>Unser Strang-Vorrat ist nun in einem funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
 warning: field is never read: `workers`

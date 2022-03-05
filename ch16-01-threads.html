@@ -163,41 +163,9 @@ bei Programmen, die in einem einzigen Strang laufen.</p>
 Betriebssysteme bieten eine API zum Erstellen neuer Stränge. Dieses Modell, bei
 dem eine Sprache die API des Betriebssystems aufruft, um Stränge zu erstellen,
 wird manchmal <em>1:1</em> genannt, das bedeutet einen Betriebssystem-Strang pro
-Strang in der Sprache.</p>
-<p>Viele Programmiersprachen bringen ihre eigene spezielle Implementierung von
-Strängen mit. Von Programmiersprachen bereitgestellte Stränge sind als <em>grüne</em>
-Stränge (green threads) bekannt und Sprachen, die diese grünen Stränge
-verwenden, führen sie im Kontext einer verschiedenen Zahl von
-Betriebssystem-Strängen aus. Aus diesem Grund wird das Modell mit grünen
-Strängen als <em>M:N</em>-Modell bezeichnet: Es gibt <code>M</code> grüne Stränge auf <code>N</code>
-Betriebssystem-Strängen, wobei <code>M</code> und <code>N</code> nicht notwendigerweise die gleiche
-Zahl sind.</p>
-<p>Jedes Modell hat seine eigenen Vorteile und Kompromisse und der wichtigste
-Kompromiss für Rust ist die Laufzeitunterstützung. <em>Laufzeit</em> (runtime) ist ein
-verwirrender Begriff und kann in verschiedenen Kontexten unterschiedliche
-Bedeutungen haben.</p>
-<p>In diesem Zusammenhang meinen wir mit <em>Laufzeit</em> Code, der von der Sprache in
-jeder Binärdatei enthalten ist. Dieser Code kann groß oder klein sein, abhängig
-von der Sprache, aber jede Nicht-Assembler-Sprache wird eine gewisse Menge an
-Laufzeit-Code haben. Aus diesem Grund meinen Leute umgangssprachlich, wenn sie
-sagen, eine Sprache habe „keine Laufzeit“, dass sie oft eine „kleine Laufzeit“
-hat. Kleinere Laufzeiten haben weniger Funktionen, haben aber den Vorteil, dass
-sie zu kleineren Binärdateien führen, die es leichter machen, die Sprache mit
-anderen Sprachen in mehr Kontexten zu kombinieren. Obwohl viele Sprachen damit
-einverstanden sind, die Laufzeitgröße im Tausch gegen mehr Funktionen zu
-erhöhen, kann Rust fast keine Laufzeit haben und kann keine Kompromisse
-eingehen, wenn es darum geht, C zur Aufrechterhaltung der Performanz
-aufzurufen.</p>
-<p>Das M:N-Modell bei grünen Strängen erfordert eine größere Sprachlaufzeit zur
-Verwaltung von Strängen. Daher bietet die Rust-Standardbibliothek nur eine
-Implementierung von 1:1-Strängen. Da Rust solch eine Sprache auf niedriger
-Ebene ist, gibt es Kisten (crates), die M:N-Stränge implementieren, wenn du den
-Mehraufwand (overhead) lieber gegen Aspekte wie mehr Kontrolle darüber, welche
-Stränge wann laufen, und geringere Kosten für den Kontextwechsel (context
-switching) eintauschen möchtest.</p>
-<p>Nachdem wir nun Stränge in Rust definiert haben, wollen wir untersuchen, wie
-die Strang-bezogene API, die von der Standardbibliothek bereitgestellt wird,
-verwendet werden kann.</p>
+Strang in der Sprache. Die Rust-Standardbibliothek bietet nur eine
+Implementierung von 1:1-Strängen; es gibt Kisten, die andere Strangmodelle
+implementieren und andere Kompromisse eingehen.</p>
 <h3 id="erstellen-eines-neuen-strangs-mit-spawn"><a class="header" href="#erstellen-eines-neuen-strangs-mit-spawn">Erstellen eines neuen Strangs mit <code>spawn</code></a></h3>
 <p>Um einen neuen Strang zu erstellen, rufen wir die Funktion <code>thread::spawn</code> auf
 und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
@@ -352,9 +320,14 @@ Hallo Zahl 4 aus dem Hauptstrang!
 <p>Kleine Details, z.B. wo <code>join</code> aufgerufen wird, können beeinflussen, ob deine
 Stränge zur gleichen Zeit laufen oder nicht.</p>
 <h3 id="verwenden-von-move-funktionsabschlüssen-mit-strängen"><a class="header" href="#verwenden-von-move-funktionsabschlüssen-mit-strängen">Verwenden von <code>move</code>-Funktionsabschlüssen mit Strängen</a></h3>
-<p>Der <code>move</code>-Funktionsabschluss wird oft zusammen mit <code>thread::spawn</code> verwendet,
-weil es dir erlaubt, Daten von einem Strang in einem anderen Strang zu
-verwenden.</p>
+<p>Das Schluesselwort <code>move</code> wird oft mit Funktionsabschlüssen verwendet, die an
+<code>thread::spawn</code> übergeben werden, weil der Funktionsabschluss dann die
+Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
+damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
+überträgt. Im Abschnitt <a href="ch13-01-closures.html#mit-funktionsabschl%C3%BCssen-die-umgebung-erfassen">„Mit Funktionsabschlüssen die Umgebung
+erfassen“</a> in Kapitel 13 haben wir <code>move</code> im Zusammenhang mit
+Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
+zwischen <code>move</code> und <code>thread::spawn</code> konzentrieren.</p>
 <p>In Kapitel 13 haben wir erwähnt, dass wir das Schlüsselwort <code>move</code> vor der
 Parameterliste eines Funktionsabschlusses verwenden können, um den
 Funktionsabschluss dazu zu zwingen, die Eigentümerschaft der Werte zu

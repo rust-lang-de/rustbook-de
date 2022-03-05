@@ -139,8 +139,8 @@
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
 Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation anrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
-aber dann triffst du die Entscheidung für den Code, der deinen Code aufruft,
-dass eine Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
+aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
+Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 <code>Result</code>-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
 Code könnte sich dafür entscheiden, sich vom Fehler auf eine angemessene Weise
@@ -149,20 +149,19 @@ diesem Fall nicht behebbar ist und <code>panic!</code> aufrufen, und so deinen b
 Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
 <code>Result</code> eine gute Standardwahl, wenn du eine Funktion definierst, die
 fehlschlagen könnte.</p>
-<p>In seltenen Situationen ist es besser, Code zu schreiben, der das Programm
-abbricht, anstatt ein <code>Result</code> zurückzugeben. Lass uns untersuchen, warum es
-bei Beispielen, Code-Prototypen und Tests angebracht ist, das Programm
-abzubrechen. Dann werden wir Situationen besprechen, in denen der Compiler
-nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch aber
-schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
+<p>In Beispielen, Prototyp-Code und Tests ist es sinnvoller, Code zu schreiben,
+der das Programm abbricht, anstatt ein <code>Result</code> zurückzugeben. Lass uns
+herausfinden, warum das so ist, und dann Situationen besprechen, in denen der
+Compiler nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch
+aber schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
 Entscheidung, ob in Bibliothekscode ein Programm abgebrochen werden soll.</p>
 <h3 id="beispiele-code-prototypen-und-tests"><a class="header" href="#beispiele-code-prototypen-und-tests">Beispiele, Code-Prototypen und Tests</a></h3>
-<p>Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann ein
-robuster Fehlerbehandlungscode das Beispiel unklarer machen. In Beispielen wird
-davon ausgegangen, dass der Aufruf einer Methode wie <code>unwrap</code>, die das Programm
-abbrechen könnte, als Platzhalter für die Art und Weise gedacht ist, wie deine
-Anwendung mit Fehlern umgehen soll, die je nachdem, was der Rest deines Codes
-tut, unterschiedlich sein können.</p>
+<p>Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann die
+Einbeziehung von robustem Fehlerbehandlungscode das Beispiel unklarer machen.
+In Beispielen wird davon ausgegangen, dass der Aufruf einer Methode wie
+<code>unwrap</code>, die das Programm abbrechen könnte, als Platzhalter für die Art und
+Weise gedacht ist, wie deine Anwendung mit Fehlern umgehen soll, die je
+nachdem, was der Rest deines Codes tut, unterschiedlich sein können.</p>
 <p>In ähnlicher Weise sind die Methoden <code>unwrap</code> und <code>expect</code> bei Prototypen sehr
 praktisch, wenn du noch nicht entscheiden willst, wie mit Fehlern umzugehen
 ist. Du hinterlässt klare Markierungen in deinem Code für später, wenn du dein

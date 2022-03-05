@@ -218,9 +218,9 @@ zulässig, da <code>a</code> verschoben wurde.</p>
 <p>Wir könnten die Definition von <code>Cons</code> ändern, um stattdessen Referenzen zu
 erhalten, aber dann müssten wir Lebensdauerparameter (lifetime parameters)
 angeben. Durch die Angabe von Lebensdauerparametern würden wir angeben, dass
-jedes Element in der Liste mindestens so lange wie die gesamte Liste lebt. Mit
-dem Ausleihenprüfer (borrow checker) können wir beispielsweise <code>let a = Cons(10, &amp;Nil);</code> nicht kompilieren, da der temporäre <code>Nil</code>-Wert aufgeräumt
-wird, bevor <code>a</code> darauf referenzieren kann.</p>
+jedes Element in der Liste mindestens so lange wie die gesamte Liste lebt. Dies
+ist bei den Elementen und Listen in Codeblock 15-17 der Fall, aber nicht in
+jedem Szenario.</p>
 <p>Stattdessen ändern wir unsere Definition von <code>List</code> so, dass <code>Rc&lt;T&gt;</code> anstelle
 von <code>Box&lt;T&gt;</code> verwendet wird, wie in Codeblock 15-18 gezeigt. Jede
 <code>Cons</code>-Variante enthält nun einen Wert und ein <code>Rc&lt;T&gt;</code>, das auf eine <code>List</code>

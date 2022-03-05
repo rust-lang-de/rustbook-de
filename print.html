@@ -8809,20 +8809,20 @@ Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
 einzugehen. Das werden wir als nächstes tun!</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="fehlerbehandlung"><a class="header" href="#fehlerbehandlung">Fehlerbehandlung</a></h1>
-<p>Rusts Engagement für Zuverlässigkeit erstreckt sich auch auf die
-Fehlerbehandlung. Fehler sind Gegebenheiten in Software, deshalb enthält Rust
-eine Reihe von Funktionalitäten zur Behandlung von Situationen, in denen etwas
-schiefgeht. In vielen Fällen verlangt Rust von dir, dass du die Möglichkeit
-eines Fehlers anerkennst und Vorkehrungen ergreifst, damit dein Code kompiliert
-werden kann. Diese Anforderung macht dein Programm robuster, da sichergestellt
-wird, dass du Fehler entdeckst und diese angemessen behandelst, bevor dein Code
-in Produktion gebracht wird!</p>
+<p>Fehler sind Gegebenheiten in Software, deshalb enthält Rust eine Reihe von
+Funktionalitäten zur Behandlung von Situationen, in denen etwas schiefgeht. In
+vielen Fällen verlangt Rust von dir, dass du die Möglichkeit eines Fehlers
+anerkennst und Vorkehrungen ergreifst, damit dein Code kompiliert werden kann.
+Diese Anforderung macht dein Programm robuster, da sichergestellt wird, dass du
+Fehler entdeckst und diese angemessen behandelst, bevor dein Code in Produktion
+gebracht wird!</p>
 <p>Rust gruppiert Fehler in zwei Hauptkategorien: <em>Behebbare</em> (recoverable) und
 <em>nicht behebbare</em> (unrecoverable) Fehler. Bei einem behebbaren Fehler, z.B.
-„Datei nicht gefunden“, ist es sinnvoll, das Problem dem Benutzer zu melden und
-den Vorgang erneut zu versuchen. Nicht behebbare Fehler sind immer Symptome von
-Programmierfehlern, z.B. der Versuch, auf eine Stelle jenseits des Endes eines
-Arrays zuzugreifen.</p>
+„Datei nicht gefunden“, wollen wir das Problem wahrscheinlich dem Benutzer
+melden und den Vorgang erneut versuchen. Nicht behebbare Fehler sind immer
+Symptome von Programmierfehlern, z.B. der Versuch, auf eine Stelle hinter dem
+Ende eines Arrays zuzugreifen, und deshalb wollen wir das Programm sofort
+anhalten.</p>
 <p>Die meisten Sprachen unterscheiden nicht zwischen diesen beiden Fehlerarten und
 behandeln beide auf die gleiche Weise, indem sie Mechanismen wie die
 Ausnahmebehandlung verwenden. Rust hat keine Ausnahmebehandlung. Stattdessen
@@ -8836,23 +8836,25 @@ zu erholen, und wann die Ausführung zu stoppen.</p>
 <p>Manchmal passieren schlimme Dinge in deinem Code und du kannst nichts dagegen
 tun. Für diese Fälle hat Rust das Makro <code>panic!</code>. Wenn das Makro <code>panic!</code>
 ausgeführt wird, wird dein Programm eine Fehlermeldung ausgeben, den
-Stapelspeicher abwickeln und aufräumen und sich dann beenden. Dies tritt am
-häufigsten dann auf, wenn ein Fehler irgendeiner Art entdeckt wurde und dem
-Programmierer nicht klar ist, wie er mit dem Fehler umgehen soll.</p>
+Stapelspeicher abwickeln und aufräumen und sich dann beenden. Normalerweise
+brechen wir das Programm ab, wenn ein Fehler entdeckt wurde und zum Zeitpunkt
+des Schreibens unseres Programms nicht klar ist, wie das Problem zu behandeln
+ist.</p>
 <blockquote>
 <h3 id="auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion"><a class="header" href="#auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion">Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion</a></h3>
 <p>Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
 <em>Abwickeln</em>, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
-und die Daten von jeder Funktion, auf die es trifft, bereinigt. Aber dieses
-Zurückgehen und Aufräumen ist eine Menge Arbeit. Die Alternative ist der
-sofortige <em>Abbruch</em> (abort), der das Programm ohne aufzuräumen beendet. Der
-Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
-aufgeräumt werden. Wenn du in deinem Projekt die resultierende Binärdatei so
-klein wie möglich machen willst, kannst du für ein vorzeitiges Programmende
-vom Abwickeln zum sofortigen Abbrechen umschalten, indem du <code>panic = 'abort'</code>
-in den entsprechenden <code>[profile]</code>-Abschnitten in deiner <em>Cargo.toml</em>-Datei
-hinzufügst. Wenn du beispielsweise im Freigabemodus (release mode) im
-Fehlerfall sofort abbrechen möchtest, füge dies hinzu:</p>
+und die Daten von jeder Funktion, auf die es trifft, bereinigt. Allerdings
+ist dieses Zurückgehen und Aufräumen eine Menge Arbeit. Rust bietet dir als
+Alternative daher an, das Programm sofort <em>abzubrechen</em>, wobei das Programm
+beendet wird, ohne aufzuräumen. Der Speicher, den das Programm benutzt hat,
+muss dann vom Betriebssystem aufgeräumt werden. Wenn du in deinem Projekt die
+resultierende Binärdatei so klein wie möglich machen willst, kannst du für
+ein vorzeitiges Programmende vom Abwickeln zum sofortigen Abbrechen
+umschalten, indem du <code>panic = 'abort'</code> in den entsprechenden
+<code>[profile]</code>-Abschnitten in deiner <em>Cargo.toml</em>-Datei hinzufügst. Wenn du
+beispielsweise im Freigabemodus (release mode) im Fehlerfall sofort abbrechen
+möchtest, füge dies hinzu:</p>
 <pre><code class="language-toml">[profile.release]
 panic = 'abort'
 </code></pre>
@@ -8883,13 +8885,14 @@ der Dateiname und die Zeilennummer in der Fehlermeldung gehören zu Code von
 jemand anderen, der das Makro <code>panic!</code> aufruft, nicht zu unserem Code, der
 schließlich zum Aufruf von <code>panic!</code> geführt hat. Wir können die Aufrufhistorie
 (backtrace) der Funktionen, von der der <code>panic!</code>-Aufruf kam, nutzen, um den
-Codeteil zu ermitteln, der das Problem verursacht. Im Folgenden sehen wir uns
-genauer an, was eine Aufrufhistorie ist.</p>
+Codeteil zu ermitteln, der das Problem verursacht. Wir werden Aufrufhistorien
+im nächsten Abschnitt ausführlicher besprechen.</p>
 <h3 id="verwenden-einer-panic-aufrufhistorie"><a class="header" href="#verwenden-einer-panic-aufrufhistorie">Verwenden einer <code>panic!</code>-Aufrufhistorie</a></h3>
 <p>Sehen wir uns ein weiteres Beispiel an, bei dem der <code>panic!</code>-Aufruf von einer
 Bibliothek kommt, weil wir einen Fehler in unserem Code haben, anstatt das
 Makro direkt aufzurufen. Codeblock 9-1 enthält einen Code, der versucht, auf
-ein Element per Index in einem Vektor zuzugreifen.</p>
+einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs gültiger
+Indizes liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic panics">fn main() {
     let v = vec![1, 2, 3];
@@ -8899,11 +8902,12 @@ ein Element per Index in einem Vektor zuzugreifen.</p>
 </code></pre></pre>
 <p><span class="caption">Codeblock 9-1: Versuch, auf ein Element jenseits des
 Endes eines Vektors zuzugreifen, was einen Aufruf von <code>panic!</code> auslöst</span></p>
-<p>Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei Index 99
-liegt, weil die Indexierung bei Null beginnt), der aber nur 3 Elemente hat. In dieser
-Situation wird Rust das Programm abbrechen. Das Verwenden von <code>[]</code> soll ein Element
-zurückgeben, aber wenn du einen ungültigen Index übergibst, gibt es kein Element, das
-Rust hier korrekterweise zurückgeben könnte.</p>
+<p>Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei
+Index 99 liegt, weil die Indexierung bei Null beginnt), der Vektor hat aber nur
+3 Elemente. In dieser Situation wird Rust das Programm abbrechen. Das Verwenden
+von <code>[]</code> soll ein Element zurückgeben, aber wenn du einen ungültigen Index
+übergibst, gibt es kein Element, das Rust hier korrekterweise zurückgeben
+könnte.</p>
 <p>In C ist der Versuch, über das Ende einer Datenstruktur hinaus zu lesen, ein
 undefiniertes Verhalten. Möglicherweise erhältst du den Wert im Speicher an der
 der Datenstruktur entsprechenden Stelle, selbst wenn der Speicher nicht zu
@@ -8930,13 +8934,12 @@ erhalten, was genau passiert ist, das den Fehler verursacht hat. Ein
 diesen Punkt zu gelangen. Backtraces in Rust funktionieren wie in anderen
 Sprachen: Der Schlüssel zum Lesen des Backtraces ist, von oben zu beginnen und
 zu lesen, bis du Dateien siehst, die du geschrieben hast. Das ist die Stelle,
-an der das Problem entstanden ist. Die Zeilen oberhalb der Zeilen, die deine
-Dateien erwähnen, sind Code, den dein Code aufgerufen hat; die Zeilen darunter
-sind Code, der deinen Code aufgerufen hat. Diese Zeilen können Core-Rust-Code,
-Code der Standardbibliothek oder Kisten enthalten, die du verwendest. Versuchen
-wir, einen Backtrace zu erhalten, indem wir die Umgebungsvariable
-<code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer 0 setzen. Codeblock 9-2 zeigt
-eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
+an der das Problem entstanden ist. Die Zeilen darüber sind Code, den dein Code
+aufgerufen hat; die Zeilen darunter sind Code, der deinen Code aufgerufen hat.
+Diese Zeilen können Core-Rust-Code, Code der Standardbibliothek oder Kisten,
+enthalten, die du verwendest. Versuchen wir, einen Backtrace zu erhalten, indem
+wir die Umgebungsvariable <code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer 0
+setzen. Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
 <pre><code class="language-console">$ RUST_BACKTRACE=1 cargo run
 thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806:10
 stack backtrace:
@@ -9005,11 +9008,10 @@ in unserem Projekt, die das Problem verursacht: Zeile 4 in <em>src/main.rs</em>.
 wir nicht wollen, dass unser Programm abbricht, sollten wir bei der ersten
 Zeile, die auf eine von uns geschriebenen Datei verweist, mit der Untersuchung
 beginnen. In Codeblock 9-1, wo wir absichtlich Code geschrieben haben, der das
-Programm abbricht, um zu demonstrieren, wie man Aufrufhistorien liest, lässt
-sich der Abbruch beheben, indem kein Element mit Index 99 von einem Vektor mit
-nur 3 Elementen gelesen wird. Wenn dein Code in Zukunft abbricht, musst du
-herausfinden, bei welcher Aktion der Code mit welchen Werten abbricht und was
-der Code stattdessen tun sollte.</p>
+Programm abbricht, besteht die Möglichkeit das Problem zu beheben darin, kein
+Element außerhalb des Bereichs der Vektorindizes anzufordern. Wenn dein Code in
+Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit
+welchen Werten abbricht und was der Code stattdessen tun sollte.</p>
 <p>In Abschnitt <a href="ch09-03-to-panic-or-not-to-panic.html">„Wann <code>panic!</code> verwenden und wann
 nicht?“</a> später in diesem Kapitel kommen wir noch
 einmal auf <code>panic!</code> zurück und wann wir <code>panic!</code> verwenden sollten und wann
@@ -9039,10 +9041,10 @@ Kapitel 10 ausführlicher besprechen. Was du jetzt wissen musst, ist, dass <code
 den Typ des Wertes darstellt, der im Erfolgsfall innerhalb der <code>Ok</code>-Variante
 zurückgegeben wird, und <code>E</code> den Typ des Fehlers, der im Fehlerfall innerhalb
 der <code>Err</code>-Variante zurückgegeben wird. Da <code>Result</code> diese generischen
-Typparameter hat, können wir den <code>Result</code>-Typ und die Funktionen, die die
-Standardbibliothek darauf definiert hat, in vielen verschiedenen Situationen
-verwenden, in denen der Erfolgswert und der Fehlerwert, den wir zurückgeben
-wollen, unterschiedlich sein können.</p>
+Typparameter hat, können wir den <code>Result</code>-Typ und die Funktionen, die darauf
+definiert sind, in vielen verschiedenen Situationen verwenden, in denen der
+Erfolgswert und der Fehlerwert, den wir zurückgeben wollen, unterschiedlich
+sein können.</p>
 <p>Rufen wir eine Funktion auf, die einen <code>Result</code>-Wert zurückgibt, weil die
 Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 öffnen.</p>
@@ -9125,10 +9127,9 @@ Behandeln der <code>Result</code>-Varianten, die zurückgegeben werden könnten<
 Gültigkeitsbereich verfügbar sind, genau wie bei der Aufzählung <code>Option</code>,
 sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vor den Varianten <code>Ok</code>
 und <code>Err</code> angeben müssen.</p>
-<p>Hier sagen wir Rust, dass wir, wenn das Ergebnis <code>Ok</code> ist, den inneren Wert
-<code>file</code> aus der <code>Ok</code>-Variante zurückgeben, und dann weisen wir diese
-Dateiressource der Variablen <code>f</code> zu. Nach dem <code>match</code> können wir die
-Dateiressource zum Lesen und Schreiben verwenden.</p>
+<p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
+<code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen <code>f</code> zu.
+Nach dem <code>match</code> können wir die Dateiressource zum Lesen und Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
 <code>File::open</code> erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
 Makro <code>panic!</code> aufzurufen. Wenn es keine Datei namens <em>hallo.txt</em> in unserem
@@ -9144,14 +9145,14 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
 <h3 id="abgleich-verschiedener-fehler"><a class="header" href="#abgleich-verschiedener-fehler">Abgleich verschiedener Fehler</a></h3>
 <p>Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
-fehlschlug. Was wir stattdessen tun wollen, ist, bei verschiedenen
-Fehlerursachen unterschiedliche Maßnahmen zu ergreifen: Wenn <code>File::open</code>
-fehlgeschlagen ist, weil die Datei nicht existiert, wollen wir die Datei
-erstellen und die Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code>
-aus irgendeinem anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum
-Öffnen der Datei hatten, wollen wir immer noch, dass der Code abbricht, so wie
-es in Codeblock 9-4 der Fall war. Schau dir Codeblock 9-5 an, der zusätzlich
-einen inneren <code>match</code>-Ausdruck hat.</p>
+fehlschlug. Stattdessen wollen wir bei verschiedenen Fehlerursachen
+unterschiedliche Maßnahmen ergreifen: Wenn <code>File::open</code> fehlgeschlagen ist,
+weil die Datei nicht existiert, wollen wir die Datei erstellen und die
+Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code> aus irgendeinem
+anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
+hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Codeblock
+9-4 der Fall war. Dazu fügen wir einen inneren <code>match</code>-Ausdruck hinzu, wie in
+Codeblock 9-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::fs::File;
 use std::io::ErrorKind;
@@ -9193,12 +9194,16 @@ brauchen wir einen zweiten Zweig im inneren <code>match</code>-Ausdruck. Wenn di
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler außer dem Fehler der fehlenden Datei abbricht.</p>
-<p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch sehr
-primitiv. In Kapitel 13 erfährst du etwas über Funktionsabschlüsse (closures);
-der Typ <code>Result&lt;T, E&gt;</code> hat viele Methoden, die einen Funktionsabschluss
-akzeptieren und mittels <code>match</code>-Ausdrücke implementiert sind. Das Verwenden
-dieser Methoden wird deinen Code prägnanter machen. Ein erfahrenerer
-Rust-Entwickler könnte diesen Code anstelle von Codeblock 9-5 schreiben:</p>
+<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
+<blockquote>
+<p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
+sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
+(closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
+verwendet werden. Diese Methoden können prägnanter sein als die Verwendung
+von <code>match</code> bei der Behandlung von <code>Result&lt;T, E&gt;</code>-Werten in deinem Code.</p>
+<p>Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
+Codeblock 9-5 zu schreiben, aber unter Verwendung von Funktionsabschlüssen
+und der Methode <code>unwrap_or_else</code>:</p>
 <pre><pre class="playground"><code class="language-rust">use std::fs::File;
 use std::io::ErrorKind;
 
@@ -9218,18 +9223,18 @@ fn main() {
 keine <code>match</code>-Ausdrücke und ist einfacher zu lesen. Kehre zu diesem Beispiel
 zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 <code>unwrap_or_else</code> in der Standardbibliotheksdokumentation nach. Viele weitere
-dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden, wenn
-du mit Fehlern zu tun hast.</p>
+dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden,
+wenn du mit Fehlern zu tun hast.</p>
+</blockquote>
 <h3 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h3>
 <p>Das Verwenden von <code>match</code> funktioniert gut genug, aber es kann etwas wortreich
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet
-viele Hilfsmethoden, um verschiedene Aufgaben zu erledigen. Eine dieser
-Methoden, genannt <code>unwrap</code>, ist eine Abkürzungsmethode, die genauso
-implementiert ist wie der Ausdruck <code>match</code>, den wir in Codeblock 9-4
-geschrieben haben. Wenn der <code>Result</code>-Wert die Variante <code>Ok</code> ist, gibt <code>unwrap</code>
-den Wert innerhalb <code>Ok</code> zurück. Wenn <code>Result</code> die Variante <code>Err</code> ist, ruft
-<code>unwrap</code> das Makro <code>panic!</code> für uns auf. Hier ist ein Beispiel für <code>unwrap</code> in
-Aktion:</p>
+viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
+Methode <code>unwrap</code> ist eine Abkürzungsmethode, implementiert wie der Ausdruck
+<code>match</code>, den wir in Codeblock 9-4 verwendet haben. Wenn der <code>Result</code>-Wert die
+Variante <code>Ok</code> ist, gibt <code>unwrap</code> den Wert innerhalb <code>Ok</code> zurück. Wenn <code>Result</code>
+die Variante <code>Err</code> ist, ruft <code>unwrap</code> das Makro <code>panic!</code> für uns auf. Hier ist
+ein Beispiel für <code>unwrap</code> im Einsatz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
@@ -9243,11 +9248,10 @@ Fehlermeldung des <code>panic!</code>-Aufrufs sehen, den die Methode <code>unwra
 repr: Os { code: 2, message: &quot;No such file or directory&quot; } }',
 src/libcore/result.rs:906:4
 </code></pre>
-<p>Des Weiteren gibt es die Methode <code>expect</code>, die ähnlich wie <code>unwrap</code>
-funktioniert und uns zusätzlich die <code>panic!</code>-Fehlermeldung angeben lässt. Das
-Verwenden von <code>expect</code> anstelle von <code>unwrap</code> und das Angeben guter
-Fehlermeldungen kann deine Absicht vermitteln und das Aufspüren der
-Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folgt aus:</p>
+<p>In ähnlicher Weise können wir bei der Methode <code>expect</code> auch die Fehlermeldung
+von <code>panic!</code> angeben. Das Verwenden von <code>expect</code> anstelle von <code>unwrap</code> und das
+Angeben guter Fehlermeldungen kann deine Absicht vermitteln und das Aufspüren
+der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folgt aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
@@ -9269,16 +9273,16 @@ kann es länger dauern, genau herauszufinden, welches <code>unwrap</code> zum
 Programmabbruch geführt hat, weil alle <code>unwrap</code>-Aufrufe die gleiche Nachricht
 ausgeben.</p>
 <h3 id="fehler-weitergeben"><a class="header" href="#fehler-weitergeben">Fehler weitergeben</a></h3>
-<p>Wenn du eine Funktion schreibst, deren Implementierung etwas aufruft, das
-fehlschlagen könnte, kannst du, anstatt den Fehler innerhalb dieser Funktion
-zu behandeln, den Fehler an den aufrufenden Code zurückgeben, damit dieser
-entscheiden kann, was zu tun ist. Dies wird als <em>Weitergeben</em> (propagating) des
-Fehlers bezeichnet und gibt dem aufrufenden Code mehr Kontrolle, wo mehr
-Informationen und Logik zur Fehlerbehandlung vorhanden sein könnte, als im
-Kontext deines Codes zur Verfügung steht.</p>
+<p>Wenn die Implementierung einer Funktion etwas aufruft, das fehlschlagen könnte,
+kannst du, anstatt den Fehler innerhalb dieser Funktion zu behandeln, den
+Fehler an den aufrufenden Code zurückgeben, damit dieser entscheiden kann, was
+zu tun ist. Dies wird als <em>Weitergeben</em> (propagating) des Fehlers bezeichnet
+und gibt dem aufrufenden Code mehr Kontrolle, wo mehr Informationen und Logik
+zur Fehlerbehandlung vorhanden sein könnte, als im Kontext deines Codes zur
+Verfügung steht.</p>
 <p>Beispielsweise zeigt Codeblock 9-6 eine Funktion, die einen Benutzernamen aus
 einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
-kann, gibt diese Funktion den Fehler an den Code zurück, der diese Funktion
+kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -9346,19 +9350,20 @@ ausdrücklich <code>return</code> anzugeben, weil dies der letzte Ausdruck in de
 ist.</p>
 <p>Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
 einen <code>Ok</code>-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
-<code>Err</code>-Wert, der einen <code>io::Error</code> enthält. Wir wissen nicht, was der Aufrufcode
-mit diesen Werten machen wird. Wenn der aufrufende Code einen <code>Err</code>-Wert
-erhält, könnte er <code>panic!</code> aufrufen und das Programm zum Absturz bringen, einen
-Standardbenutzernamen verwenden oder den Benutzernamen von irgendwo anders als
-z.B. einer Datei nachschlagen. Wir haben nicht genug Informationen darüber, was
-der aufrufende Code tatsächlich versucht, also propagieren wir alle Erfolgs-
-und Fehlerinformationen nach oben, damit sie angemessen behandelt werden.
-Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
-Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
+<code>Err</code>-Wert, der einen <code>io::Error</code> enthält. Es ist Sache des aufrufenden Codes,
+zu entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
+einen <code>Err</code>-Wert erhält, könnte er <code>panic!</code> aufrufen und das Programm zum
+Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
+von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
+Informationen darüber, was der aufrufende Code tatsächlich versucht, also
+propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
+angemessen behandelt werden. Dieses Muster der Fehlerweitergabe ist in Rust so
+verbreitet, dass Rust den Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu
+erleichtern.</p>
 <h4 id="abkürzung-zum-weitergeben-von-fehlern-der-operator-"><a class="header" href="#abkürzung-zum-weitergeben-von-fehlern-der-operator-">Abkürzung zum Weitergeben von Fehlern: Der Operator <code>?</code></a></h4>
 <p>Codeblock 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
-dasselbe Verhalten wie in Codeblock 9-6 hat, aber diese Implementierung
-verwendet den <code>?</code>-Operator.</p>
+dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
+den <code>?</code>-Operator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9430,8 +9435,8 @@ der den Benutzernamen in <code>s</code> enthält, wenn sowohl <code>File::open</
 <code>read_to_string</code> erfolgreich sind, anstatt Fehler zurückzugeben. Die
 Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.</p>
-<p>Wenn wir schon von verschiedenen Schreibweisen dieser Funktion sprechen, zeigt
-Codeblock 9-9, dass es einen Weg gibt, diese Funktion noch kürzer zu machen.</p>
+<p>Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
+machen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -9447,22 +9452,23 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <p><span class="caption">Codeblock 9-9: Verwenden von <code>fs::read_to_string</code>,
 anstatt die Datei zu öffnen und dann zu lesen</span></p>
 <p>Das Einlesen einer Datei in eine Zeichenkette ist eine ziemlich häufig
-benötigte Operation, daher bringt Rust die praktische Funktion
+benötigte Operation, daher bringt die Standardbibliothek die praktische Funktion
 <code>fs::read_to_string</code> mit, die die Datei öffnet, einen neuen <code>String</code> erzeugt,
 den Inhalt der Datei einliest, den Inhalt in den <code>String</code> einfügt und ihn
 zurückgibt. Natürlich gibt uns die Verwendung von <code>fs::read_to_string</code> nicht
 die Möglichkeit, die ganze Fehlerbehandlung zu erklären, also haben wir es
 zuerst auf dem längeren Weg gemacht.</p>
 <h4 id="wo-der-operator--verwendet-werden-kann"><a class="header" href="#wo-der-operator--verwendet-werden-kann">Wo der Operator <code>?</code> verwendet werden kann</a></h4>
-<p>Der <code>?</code>-Operator kann in Funktionen verwendet werden, die den Rückgabetyp
-<code>Result</code> haben, weil er so definiert ist, dass er auf die gleiche Weise
-arbeitet wie der <code>match</code>-Ausdruck, den wir in Codeblock 9-6 definiert haben. 
-Der Teil von <code>match</code>, der den Rückgabetyp <code>Result</code> erfordert, ist
-<code>return Err(e)</code>, daher muss der Rückgabetyp der Funktion <code>Result</code> sein, um mit
-<code>return</code> kompatibel zu sein.</p>
+<p>Der Operator <code>?</code> kann nur in Funktionen verwendet werden, deren Rückgabetyp mit
+dem Wert, auf den <code>?</code> angewendet wird, kompatibel ist. Das liegt daran, dass
+der Operator <code>?</code> so definiert ist, dass er einen Wert frühzeitig aus der
+Funktion zurückgibt, genauso wie der Ausdruck <code>match</code>, den wir in Codeblock 9-6
+definiert haben. In Codeblock 9-6 verwendet <code>match</code> einen <code>Result</code>-Wert, und
+der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabetyp der
+Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
 <p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
-in der Funktion <code>main</code> verwenden, die, wie du dich erinnern wirst, den
-Rückgabetyp <code>()</code> hat:</p>
+in einer <code>main</code>-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
+Wertes, für den wir &quot;?&quot; verwenden, kompatibel ist:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
 fn main() {
@@ -9495,11 +9501,12 @@ error: could not compile `error-handling` due to previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der
-<code>FromResidual</code> implementiert, zurückgibt. Um diesen Fehler zu beheben, hast du
-zwei Möglichkeiten. Eine Technik besteht darin, den Rückgabetyp deiner Funktion
-in <code>Result&lt;T, E&gt;</code> zu ändern, wenn dem nichts entgegensteht. Die andere Technik
+<code>FromResidual</code> implementiert, zurückgibt. Um den Fehler zu beheben, hast du
+zwei Möglichkeiten. Eine Möglichkeit besteht darin, den Rückgabetyp deiner
+Funktion so zu ändern, dass er mit dem Wert kompatibel ist, für den du den
+Operator <code>?</code> verwendest, wenn dem nichts entgegensteht. Die andere Möglichkeit
 besteht darin, <code>match</code> oder eine der Methoden von <code>Result&lt;T, E&gt;</code> zu verwenden,
-um das <code>Result&lt;T, E&gt;</code> in geeigneter Weise zu behandeln.</p>
+um <code>Result&lt;T, E&gt;</code> in geeigneter Weise zu behandeln.</p>
 <p>Die Fehlermeldung hat auch erwähnt, dass <code>?</code> ebenso mit <code>Option&lt;T&gt;</code>-Werten
 verwendet werden kann. Wie bei der Verwendung von <code>?</code> für <code>Result</code>, kannst du
 <code>?</code> für <code>Option</code> nur in einer Funktion verwenden, die eine <code>Option</code> zurückgibt.
@@ -9526,49 +9533,42 @@ gegebenen Text findet:</p>
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 9-11: Verwenden des <code>?</code>-Operators auf einem
 <code>Option&lt;T&gt;</code>-Wert</span></p>
-<p>Diese Funktion gibt <code>Option&lt;char&gt;</code> zurück, weil sie an dieser Position ein
-Zeichen finden könnte, oder es könnte dort kein Zeichen sein. Dieser Code nimmt
-das Zeichenkettenanteilstyp-Argument <code>text</code> und ruft die Methode <code>lines</code> darauf
-auf, die einen Iterator über die Zeilen der Zeichenkette zurückgibt. Da diese
-Funktion die erste Zeile untersuchen will, ruft sie <code>next</code> auf dem Iterator
-auf, um den ersten Wert vom Iterator zu erhalten. Wenn <code>text</code> die leere
-Zeichenkette ist, gibt dieser Aufruf von <code>next</code> <code>None</code> zurück, und hier können
-wir <code>?</code> benutzen, um zu stoppen und <code>None</code> von <code>last_char_of_first_line</code>
-zurückgeben, wenn dies der Fall ist. Wenn <code>text</code> nicht die leere Zeichenkette
-ist, gibt <code>next</code> einen <code>Some</code>-Wert zurück, der einen Zeichenkettenanteilstyp
-der ersten Zeile in <code>text</code> enthält.</p>
+<p>Diese Funktion gibt <code>Option&lt;char&gt;</code> zurück, weil es möglich ist, dass ein
+Zeichen vorhanden ist, aber es ist auch möglich, dass keines vorhanden ist.
+Dieser Code nimmt das Zeichenkettenanteilstyp-Argument <code>text</code> und ruft die
+Methode <code>lines</code> darauf auf, die einen Iterator über die Zeilen der Zeichenkette
+zurückgibt. Da diese Funktion die erste Zeile untersuchen will, ruft sie <code>next</code>
+auf dem Iterator auf, um den ersten Wert vom Iterator zu erhalten. Wenn <code>text</code>
+die leere Zeichenkette ist, gibt dieser Aufruf von <code>next</code> <code>None</code> zurück, und
+hier können wir <code>?</code> benutzen, um zu stoppen und <code>None</code> von
+<code>last_char_of_first_line</code> zurückgeben, wenn dies der Fall ist. Wenn <code>text</code>
+nicht die leere Zeichenkette ist, gibt <code>next</code> einen <code>Some</code>-Wert zurück, der
+einen Zeichenkettenanteilstyp der ersten Zeile in <code>text</code> enthält.</p>
 <p>Das <code>?</code> extrahiert den Zeichenkettenanteilstyp, und wir können <code>chars</code> auf
-diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für die Zeichen in
-diesem Zeichenkettenanteilstyp zu erhalten. Wir sind am letzten Zeichen in
-dieser ersten Zeile interessiert, also rufen wir <code>last</code> auf, um das letzte
-Element im Iterator über die Zeichen zurückzugeben. Dies ist eine <code>Option</code>,
-weil die erste Zeile die leere Zeichenkette sein kann, wenn <code>text</code> mit einer
-Leerzeile beginnt, aber Zeichen in anderen Zeilen enthält, wie in <code>&quot;\nhi&quot;</code>.
-Wenn es jedoch ein letztes Zeichen in der ersten Zeile gibt, wird es in der
-Variante <code>Some</code> zurückgegeben. Der <code>?</code>-Operator in der Mitte gibt uns eine
-prägnante Möglichkeit, diese Logik auszudrücken, und diese Funktion kann in
-einer Zeile implementiert werden. Wenn wir den <code>?</code>-Operator nicht auf <code>Option</code>
-verwenden könnten, müssten wir diese Logik mit weiteren Methodenaufrufen oder
-einem Ausdruck implementieren.</p>
+diesem Zeichenkettenanteilstyp aufrufen, um einen Iterator für seine Zeichen zu
+erhalten. Wir sind am letzten Zeichen in dieser ersten Zeile interessiert, also
+rufen wir <code>last</code> auf, um das letzte Element im Iterator über die Zeichen
+zurückzugeben. Dies ist eine <code>Option</code>, weil die erste Zeile die leere
+Zeichenkette sein kann, wenn <code>text</code> mit einer Leerzeile beginnt, aber Zeichen
+in anderen Zeilen enthält, wie in <code>&quot;\nhi&quot;</code>. Wenn es jedoch ein letztes Zeichen
+in der ersten Zeile gibt, wird es in der Variante <code>Some</code> zurückgegeben. Der
+<code>?</code>-Operator in der Mitte gibt uns eine prägnante Möglichkeit, diese Logik
+auszudrücken, und diese Funktion kann in einer Zeile implementiert werden. Wenn
+wir den <code>?</code>-Operator nicht auf <code>Option</code> verwenden könnten, müssten wir diese
+Logik mit weiteren Methodenaufrufen oder einem Ausdruck implementieren.</p>
 <p>Beachte, dass du den <code>?</code>-Operator auf ein <code>Result</code> in einer Funktion anwenden
 kannst, die <code>Result</code> zurückgibt, und du kannst den <code>?</code>-Operator auf eine
 <code>Option</code> in einer Funktion anwenden, die <code>Option</code> zurückgibt, aber du kannst
 nicht beides mischen. Der Operator <code>?</code> konvertiert nicht automatisch ein
-<code>Result</code> in eine <code>Option</code> oder umgekehrt; in diesen Fällen gibt es Methoden wie
-die <code>ok</code>-Methode für <code>Result</code> oder die <code>ok_or</code>-Methode für <code>Option</code>, die die
-Umwandlung explizit vornehmen.</p>
+<code>Result</code> in eine <code>Option</code> oder umgekehrt; in diesen Fällen kannst du Methoden
+wie <code>ok</code> für <code>Result</code> oder <code>ok_or</code> für <code>Option</code> verwenden, die die Umwandlung
+explizit vornehmen.</p>
 <p>Bis jetzt haben alle <code>main</code>-Funktionen, die wir benutzt haben, <code>()</code>
 zurückgegeben. Die Funktion <code>main</code> ist etwas Besonderes, weil sie der Ein- und
 Ausstiegspunkt von ausführbaren Programmen ist, und es gibt Einschränkungen
 hinsichtlich ihres Rückgabetyps, damit sich die Programme wie erwartet
-verhalten. In C geschriebene Programme geben beim Beenden ganze Zahlen zurück,
-und auch Rust-Programme folgen dieser Konvention: Programme, die erfolgreich
-beendet werden, geben die Zahl <code>0</code> zurück, und Programme, die einen Fehler
-machen, geben eine andere Zahl als <code>0</code> zurück. Wenn <code>main</code> <code>()</code> zurückgibt,
-geben Rust-Programme <code>0</code> zurück, wenn sich <code>main</code> normal beendet, und einen
-Wert ungleich Null, wenn das Programm abbricht, bevor es das Ende von <code>main</code>
-erreicht.</p>
-<p>Ein weiterer Rückgabetyp, den <code>main</code> haben kann, ist <code>Result&lt;(), E&gt;</code>. Codeblock
+verhalten.</p>
+<p>Glücklicherweise kann <code>main</code> auch ein <code>Result&lt;(), E&gt;</code> zurückgeben. Codeblock
 9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
 <code>main</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert und am Ende einen Rückgabewert
 <code>Ok(())</code> hinzugefügt. Dieser Code wird nun kompilieren:</p>
@@ -9584,17 +9584,22 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
 <code>Result</code>-Werte</span></p>
-<p>Der Typ <code>Box&lt;dyn Error&gt;</code> wird als Markmalsobjekt (trait object) bezeichnet,
-über das wir im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte
-unterschiedlicher Typen erlauben“</a> in Kapitel 17 sprechen
-werden. Vorerst kannst du <code>Box&lt;dyn Fehler&gt;</code> als „eine beliebige Fehlerart“
-ansehen. Das Verwenden von <code>?</code> in einer <code>main</code>-Funktion mit diesem Rückgabetyp
-ist erlaubt, weil jetzt ein <code>Err</code>-Wert vorzeitig zurückgegeben werden kann.
-Wenn eine Funktion <code>main</code> ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
-ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> <code>Ok(())</code> zurückgibt, und
-mit einem Wert ungleich Null, wenn <code>main</code> einen <code>Err</code>-Wert zurückgibt.</p>
-<p>Die Typen, die <code>main</code> zurückgeben kann, sind diejenigen, die <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">das Merkmal
-<code>std::process::Termination</code></a> implementieren. Zum jetzigen
+<p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
+im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
+Typen erlauben“</a> in Kapitel 17 sprechen werden. Vorerst kannst
+du <code>Box&lt;dyn Fehler&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
+<code>?</code> auf einen <code>Result</code>-Wert in einer <code>main</code>-Funktion mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
+werden kann.</p>
+<p>Wenn eine <code>main</code>-Funktion ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
+ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> den Wert <code>Ok(())</code>
+zurückgibt, und mit einem Wert ungleich Null, wenn <code>main</code> einen <code>Err</code>-Wert
+zurückgibt. In C geschriebene ausführbare Programme geben beim Beenden ganze
+Zahlen zurück: Programme, die erfolgreich beendet werden, geben die Zahl <code>0</code>
+zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich <code>0</code>
+zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
+mit dieser Konvention kompatibel zu sein.</p>
+<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">das Merkmal
+<code>std::process::Termination</code></a> implementiert. Zum jetzigen
 Zeitpunkt ist das Merkmal <code>Termination</code> ein instabiles Feature, das nur in
 Nightly Rust verfügbar ist, sodass du es noch nicht für deine eigenen Typen in
 Stable Rust implementieren kannst, aber vielleicht kannst du das ja eines
@@ -9607,8 +9612,8 @@ entscheiden können, was in welchen Fällen angemessen ist.</p>
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
 Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation anrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
-aber dann triffst du die Entscheidung für den Code, der deinen Code aufruft,
-dass eine Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
+aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
+Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 <code>Result</code>-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
 Code könnte sich dafür entscheiden, sich vom Fehler auf eine angemessene Weise
@@ -9617,20 +9622,19 @@ diesem Fall nicht behebbar ist und <code>panic!</code> aufrufen, und so deinen b
 Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
 <code>Result</code> eine gute Standardwahl, wenn du eine Funktion definierst, die
 fehlschlagen könnte.</p>
-<p>In seltenen Situationen ist es besser, Code zu schreiben, der das Programm
-abbricht, anstatt ein <code>Result</code> zurückzugeben. Lass uns untersuchen, warum es
-bei Beispielen, Code-Prototypen und Tests angebracht ist, das Programm
-abzubrechen. Dann werden wir Situationen besprechen, in denen der Compiler
-nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch aber
-schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
+<p>In Beispielen, Prototyp-Code und Tests ist es sinnvoller, Code zu schreiben,
+der das Programm abbricht, anstatt ein <code>Result</code> zurückzugeben. Lass uns
+herausfinden, warum das so ist, und dann Situationen besprechen, in denen der
+Compiler nicht feststellen kann, dass ein Fehler unmöglich ist, du als Mensch
+aber schon. Das Kapitel schließt mit einigen allgemeinen Richtlinien zur
 Entscheidung, ob in Bibliothekscode ein Programm abgebrochen werden soll.</p>
 <h3 id="beispiele-code-prototypen-und-tests"><a class="header" href="#beispiele-code-prototypen-und-tests">Beispiele, Code-Prototypen und Tests</a></h3>
-<p>Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann ein
-robuster Fehlerbehandlungscode das Beispiel unklarer machen. In Beispielen wird
-davon ausgegangen, dass der Aufruf einer Methode wie <code>unwrap</code>, die das Programm
-abbrechen könnte, als Platzhalter für die Art und Weise gedacht ist, wie deine
-Anwendung mit Fehlern umgehen soll, die je nachdem, was der Rest deines Codes
-tut, unterschiedlich sein können.</p>
+<p>Wenn du ein Beispiel schreibst, um ein Konzept zu veranschaulichen, kann die
+Einbeziehung von robustem Fehlerbehandlungscode das Beispiel unklarer machen.
+In Beispielen wird davon ausgegangen, dass der Aufruf einer Methode wie
+<code>unwrap</code>, die das Programm abbrechen könnte, als Platzhalter für die Art und
+Weise gedacht ist, wie deine Anwendung mit Fehlern umgehen soll, die je
+nachdem, was der Rest deines Codes tut, unterschiedlich sein können.</p>
 <p>In ähnlicher Weise sind die Methoden <code>unwrap</code> und <code>expect</code> bei Prototypen sehr
 praktisch, wenn du noch nicht entscheiden willst, wie mit Fehlern umzugehen
 ist. Du hinterlässt klare Markierungen in deinem Code für später, wenn du dein
@@ -14252,7 +14256,7 @@ ab und zeigt eine bessere Fehlermeldung an als die Meldung <code>index out of bo
 <p><span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span></p>
 <p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-f%C3%BCr-die-validierung-erstellen">der Funktion <code>Guess::new</code>, die wir in Codeblock
-9-10</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
+9-13</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
 wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code>
 mindestens 3 beträgt und der Rest der Funktion unter der Annahme arbeiten kann,
@@ -19553,14 +19557,14 @@ Dereferenzierungsoperator:</p>
 </code></pre></pre>
 <p><span class="caption">Codeblock 15-7: Using the dereference operator on a
 <code>Box&lt;i32&gt;</code></span></p>
-<p>Der einzige Unterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir 
-hier <code>y</code> als Instanz eines Feldes festlegen, das auf einen kopierten Wert von <code>x</code>
-zeigt, und nicht als Referenz, die auf den Wert <code>x</code> zeigt. In der letzten
-Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um dem Zeiger
-der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als <code>y</code> eine
-Referenz war. Als Nächstes werden wir ergründen, was das Besondere an <code>Box&lt;T&gt;</code>
-ist, das es uns ermöglicht, den Dereferenzierungsoperator zu verwenden, indem
-wir unseren eigenen Box-Typ definieren.</p>
+<p>Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
+hier <code>y</code> als Instanz eines Feldes festlegen, das auf einen kopierten Wert von
+<code>x</code> zeigt, und nicht als Referenz, die auf den Wert <code>x</code> zeigt. In der letzten
+Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
+dem Zeiger der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als
+<code>y</code> eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere an
+<code>Box&lt;T&gt;</code> ist, das es uns ermöglicht, den Dereferenzierungsoperator zu
+verwenden, indem wir unseren eigenen Box-Typ definieren.</p>
 <h3 id="einen-eigenen-intelligenten-zeiger-definieren"><a class="header" href="#einen-eigenen-intelligenten-zeiger-definieren">Einen eigenen intelligenten Zeiger definieren</a></h3>
 <p>Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
 bereitgestellten Typ <code>Box&lt;T&gt;</code> ähnelt, um zu erfahren, wie sich intelligente
@@ -19629,8 +19633,9 @@ error: could not compile `deref-example` due to previous error
 Fähigkeit für unseren Typ nicht implementiert haben. Um eine
 Dereferenzierung mit dem Operator <code>*</code> zu ermöglichen, implementieren wir das
 Merkmal <code>Deref</code>.</p>
-<h3 id="einen-typ-wie-eine-referenz-behandeln-durch-implementierens-des-deref-merkmals"><a class="header" href="#einen-typ-wie-eine-referenz-behandeln-durch-implementierens-des-deref-merkmals">Einen Typ wie eine Referenz behandeln durch Implementierens des <code>Deref</code>-Merkmals</a></h3>
-<p>Wie in Kapitel 10 besprochen, müssen wir zur Implementierung eines Merkmals
+<h3 id="einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals"><a class="header" href="#einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals">Einen Typ wie eine Referenz behandeln durch Implementieren des <code>Deref</code>-Merkmals</a></h3>
+<p>Wie im Abschnitt <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a> in
+Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
 Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
 Das von der Standardbibliothek bereitgestellte Merkmal <code>Deref</code> erfordert die
 Implementierung einer Methode namens <code>deref</code>, die <code>self</code> ausleiht (borrow) und
@@ -19668,10 +19673,13 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <code>Deref</code> verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
 keine Gedanken machen, in Kapitel 19 werden wir sie ausführlicher behandeln.</p>
-<p>Wir füllen den Rumpf der <code>deref</code>-Methode mit <code>&amp;self.0</code>, und <code>deref</code> gibt
-eine Referenz auf den Wert zurück, auf den wir mit dem <code>*</code>-Operator zugreifen
-möchten. Die <code>main</code>-Funktion in Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code>
-aufruft, kompiliert nun und die Zusicherungen werden bestanden!</p>
+<p>Wir füllen den Rumpf der Methode <code>deref</code> mit <code>&amp;self.0</code>, damit <code>deref</code> eine
+Referenz auf den Wert zurückgibt, auf den wir mit dem Operator <code>*</code> zugreifen
+wollen. Erinnere dich an den Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne
+benannte Felder um verschiedene Typen zu erzeugen“</a> in Kapitel
+5, wo <code>.0</code> auf den ersten Wert in einer Tupel-Struktur zugreift. Die
+<code>main</code>-Funktion in Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code> aufruft,
+kompiliert nun und die Zusicherungen werden erfüllt!</p>
 <p>Ohne das Merkmal <code>Deref</code> kann der Compiler nur <code>&amp;</code>-Referenzen dereferenzieren.
 Die <code>deref</code>-Methode gibt dem Compiler die Möglichkeit, einen Wert eines
 beliebigen Typs zu verwenden, der <code>Deref</code> implementiert, und die <code>deref</code>-Methode
@@ -20122,9 +20130,9 @@ zulässig, da <code>a</code> verschoben wurde.</p>
 <p>Wir könnten die Definition von <code>Cons</code> ändern, um stattdessen Referenzen zu
 erhalten, aber dann müssten wir Lebensdauerparameter (lifetime parameters)
 angeben. Durch die Angabe von Lebensdauerparametern würden wir angeben, dass
-jedes Element in der Liste mindestens so lange wie die gesamte Liste lebt. Mit
-dem Ausleihenprüfer (borrow checker) können wir beispielsweise <code>let a = Cons(10, &amp;Nil);</code> nicht kompilieren, da der temporäre <code>Nil</code>-Wert aufgeräumt
-wird, bevor <code>a</code> darauf referenzieren kann.</p>
+jedes Element in der Liste mindestens so lange wie die gesamte Liste lebt. Dies
+ist bei den Elementen und Listen in Codeblock 15-17 der Fall, aber nicht in
+jedem Szenario.</p>
 <p>Stattdessen ändern wir unsere Definition von <code>List</code> so, dass <code>Rc&lt;T&gt;</code> anstelle
 von <code>Box&lt;T&gt;</code> verwendet wird, wie in Codeblock 15-18 gezeigt. Jede
 <code>Cons</code>-Variante enthält nun einen Wert und ein <code>Rc&lt;T&gt;</code>, das auf eine <code>List</code>
@@ -21450,41 +21458,9 @@ bei Programmen, die in einem einzigen Strang laufen.</p>
 Betriebssysteme bieten eine API zum Erstellen neuer Stränge. Dieses Modell, bei
 dem eine Sprache die API des Betriebssystems aufruft, um Stränge zu erstellen,
 wird manchmal <em>1:1</em> genannt, das bedeutet einen Betriebssystem-Strang pro
-Strang in der Sprache.</p>
-<p>Viele Programmiersprachen bringen ihre eigene spezielle Implementierung von
-Strängen mit. Von Programmiersprachen bereitgestellte Stränge sind als <em>grüne</em>
-Stränge (green threads) bekannt und Sprachen, die diese grünen Stränge
-verwenden, führen sie im Kontext einer verschiedenen Zahl von
-Betriebssystem-Strängen aus. Aus diesem Grund wird das Modell mit grünen
-Strängen als <em>M:N</em>-Modell bezeichnet: Es gibt <code>M</code> grüne Stränge auf <code>N</code>
-Betriebssystem-Strängen, wobei <code>M</code> und <code>N</code> nicht notwendigerweise die gleiche
-Zahl sind.</p>
-<p>Jedes Modell hat seine eigenen Vorteile und Kompromisse und der wichtigste
-Kompromiss für Rust ist die Laufzeitunterstützung. <em>Laufzeit</em> (runtime) ist ein
-verwirrender Begriff und kann in verschiedenen Kontexten unterschiedliche
-Bedeutungen haben.</p>
-<p>In diesem Zusammenhang meinen wir mit <em>Laufzeit</em> Code, der von der Sprache in
-jeder Binärdatei enthalten ist. Dieser Code kann groß oder klein sein, abhängig
-von der Sprache, aber jede Nicht-Assembler-Sprache wird eine gewisse Menge an
-Laufzeit-Code haben. Aus diesem Grund meinen Leute umgangssprachlich, wenn sie
-sagen, eine Sprache habe „keine Laufzeit“, dass sie oft eine „kleine Laufzeit“
-hat. Kleinere Laufzeiten haben weniger Funktionen, haben aber den Vorteil, dass
-sie zu kleineren Binärdateien führen, die es leichter machen, die Sprache mit
-anderen Sprachen in mehr Kontexten zu kombinieren. Obwohl viele Sprachen damit
-einverstanden sind, die Laufzeitgröße im Tausch gegen mehr Funktionen zu
-erhöhen, kann Rust fast keine Laufzeit haben und kann keine Kompromisse
-eingehen, wenn es darum geht, C zur Aufrechterhaltung der Performanz
-aufzurufen.</p>
-<p>Das M:N-Modell bei grünen Strängen erfordert eine größere Sprachlaufzeit zur
-Verwaltung von Strängen. Daher bietet die Rust-Standardbibliothek nur eine
-Implementierung von 1:1-Strängen. Da Rust solch eine Sprache auf niedriger
-Ebene ist, gibt es Kisten (crates), die M:N-Stränge implementieren, wenn du den
-Mehraufwand (overhead) lieber gegen Aspekte wie mehr Kontrolle darüber, welche
-Stränge wann laufen, und geringere Kosten für den Kontextwechsel (context
-switching) eintauschen möchtest.</p>
-<p>Nachdem wir nun Stränge in Rust definiert haben, wollen wir untersuchen, wie
-die Strang-bezogene API, die von der Standardbibliothek bereitgestellt wird,
-verwendet werden kann.</p>
+Strang in der Sprache. Die Rust-Standardbibliothek bietet nur eine
+Implementierung von 1:1-Strängen; es gibt Kisten, die andere Strangmodelle
+implementieren und andere Kompromisse eingehen.</p>
 <h3 id="erstellen-eines-neuen-strangs-mit-spawn"><a class="header" href="#erstellen-eines-neuen-strangs-mit-spawn">Erstellen eines neuen Strangs mit <code>spawn</code></a></h3>
 <p>Um einen neuen Strang zu erstellen, rufen wir die Funktion <code>thread::spawn</code> auf
 und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
@@ -21639,9 +21615,14 @@ Hallo Zahl 4 aus dem Hauptstrang!
 <p>Kleine Details, z.B. wo <code>join</code> aufgerufen wird, können beeinflussen, ob deine
 Stränge zur gleichen Zeit laufen oder nicht.</p>
 <h3 id="verwenden-von-move-funktionsabschlüssen-mit-strängen"><a class="header" href="#verwenden-von-move-funktionsabschlüssen-mit-strängen">Verwenden von <code>move</code>-Funktionsabschlüssen mit Strängen</a></h3>
-<p>Der <code>move</code>-Funktionsabschluss wird oft zusammen mit <code>thread::spawn</code> verwendet,
-weil es dir erlaubt, Daten von einem Strang in einem anderen Strang zu
-verwenden.</p>
+<p>Das Schluesselwort <code>move</code> wird oft mit Funktionsabschlüssen verwendet, die an
+<code>thread::spawn</code> übergeben werden, weil der Funktionsabschluss dann die
+Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
+damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
+überträgt. Im Abschnitt <a href="ch13-01-closures.html#mit-funktionsabschl%C3%BCssen-die-umgebung-erfassen">„Mit Funktionsabschlüssen die Umgebung
+erfassen“</a> in Kapitel 13 haben wir <code>move</code> im Zusammenhang mit
+Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
+zwischen <code>move</code> und <code>thread::spawn</code> konzentrieren.</p>
 <p>In Kapitel 13 haben wir erwähnt, dass wir das Schlüsselwort <code>move</code> vor der
 Parameterliste eines Funktionsabschlusses verwenden können, um den
 Funktionsabschluss dazu zu zwingen, die Eigentümerschaft der Werte zu
@@ -23098,77 +23079,6 @@ verwenden, was wiederum einige Optimierungen verhindert. Wir haben jedoch
 zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 17-5
 geschrieben haben und in Codeblock 17-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.</p>
-<h3 id="objektsicherheit-ist-für-merkmalsobjekte-erforderlich"><a class="header" href="#objektsicherheit-ist-für-merkmalsobjekte-erforderlich">Objektsicherheit ist für Merkmalsobjekte erforderlich</a></h3>
-<p>Du kannst nur <em>objektsichere</em> (object-safe) Merkmale zu Merkmalsobjekten
-machen. Einige komplexe Regeln bestimmen alle Eigenschaften, die ein
-Merkmalsobjekt sicher machen, aber in der Praxis sind nur zwei Regeln relevant.
-Ein Merkmal ist objektsicher, wenn alle im Merkmal definierten Methoden die
-folgenden Eigenschaften haben:</p>
-<ul>
-<li>Der Rückgabetyp ist nicht <code>Self</code>.</li>
-<li>Es gibt keine generischen Typparameter.</li>
-</ul>
-<p>Das Schlüsselwort <code>Self</code> ist ein Alias für den Typ, auf dem wir das Merkmal
-oder Methoden implementieren. Merkmalsobjekte müssen objektsicher sein, denn
-sobald du ein Merkmalsobjekt verwendet hast, kennt Rust nicht mehr den
-konkreten Typ, der dieses Merkmal implementiert. Wenn eine Merkmalsmethode den
-konkreten <code>Self</code>-Typ zurückgibt, aber ein Merkmalsobjekt den genauen Typ
-vergisst, der <code>Self</code> ist, gibt es keine Möglichkeit, dass die Methode den
-ursprünglichen konkreten Typ verwenden kann. Dasselbe gilt für generische
-Typparameter, die bei der Verwendung des Merkmals mit konkreten Typparametern
-ausgefüllt werden: Die konkreten Typen werden Teil des Typs, der das Merkmal
-implementiert. Wenn der Typ durch das Verwenden eines Merkmalsobjekts vergessen
-wird, gibt es keine Möglichkeit zu wissen, mit welchen Typen die generischen
-Typparameter zu füllen sind.</p>
-<p>Ein Beispiel für ein Merkmal, dessen Methoden nicht objektsicher sind, ist das
-Merkmal <code>Clone</code> der Standardbibliothek. Die Signatur für die Methode <code>clone</code> im
-Merkmal <code>Clone</code> sieht wie folgt aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub trait Clone {
-    fn clone(&amp;self) -&gt; Self;
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Der Typ <code>String</code> implementiert das Merkmal <code>Clone</code>, und wenn wir die Methode
-<code>clone</code> auf einer Instanz von <code>String</code> aufrufen, erhalten wir eine Instanz von
-<code>String</code> zurück. In ähnlicher Weise erhalten wir eine Instanz von <code>Vec&lt;T&gt;</code>
-zurück, wenn wir die Methode <code>clone</code> für eine Instanz von <code>Vec&lt;T&gt;</code> aufrufen.
-Die Signatur von <code>clone</code> muss wissen, welcher Typ für <code>Self</code> steht, denn das
-ist der Rückgabetyp.</p>
-<p>Der Compiler zeigt an, wenn du versuchst, etwas zu tun, das gegen die Regeln
-der Objektsicherheit in Bezug auf Merkmalsobjekte verstößt. Nehmen wir zum
-Beispiel an, wir würden versuchen, die Struktur <code>Screen</code> in Codeblock 17-4 zu
-implementieren, um Typen zu halten, die das Merkmal <code>Clone</code> statt dem Merkmal
-<code>Draw</code> implementieren, so wie hier:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub struct Screen {
-    pub components: Vec&lt;Box&lt;dyn Clone&gt;&gt;,
-}
-<span class="boring">}
-</span></code></pre></pre>
-<p>Wir würden diesen Fehler bekommen:</p>
-<pre><code class="language-console">$ cargo build
-   Compiling gui v0.1.0 (file:///projects/gui)
-error[E0038]: the trait `Clone` cannot be made into an object
- --&gt; src/lib.rs:2:29
-  |
-2 |     pub components: Vec&lt;Box&lt;dyn Clone&gt;&gt;,
-  |                             ^^^^^^^^^ `Clone` cannot be made into an object
-  |
-  = note: the trait cannot be made into an object because it requires `Self: Sized`
-  = note: for a trait to be &quot;object safe&quot; it needs to allow building a vtable to allow the call to be resolvable dynamically; for more information visit &lt;https://doc.rust-lang.org/reference/items/traits.html#object-safety&gt;
-
-For more information about this error, try `rustc --explain E0038`.
-error: could not compile `gui` due to previous error
-</code></pre>
-<p>Dieser Fehler bedeutet, dass du dieses Merkmal auf diese Weise nicht als
-Merkmalsobjekt verwenden kannst. Wenn du an weiteren Details zur
-Objektsicherheit interessiert bist, lies <a href="https://github.com/rust-lang/rfcs/blob/master/text/0255-object-safety.md">Rust RFC 255</a> oder schaue
-dir die <a href="https://doc.rust-lang.org/reference/items/traits.html#object-safety">Objektsicherheits-Referenz</a> an.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="ein-objektorientiertes-entwurfsmuster-implementieren"><a class="header" href="#ein-objektorientiertes-entwurfsmuster-implementieren">Ein objektorientiertes Entwurfsmuster implementieren</a></h2>
 <p>Das <em>Zustandsmuster</em> (state pattern) ist ein objektorientiertes Entwurfsmuster.
 Der springende Punkt des Musters ist, dass ein Wert einen internen Zustand hat,
@@ -23222,14 +23132,13 @@ fn main() {
 <p><span class="caption">Codeblock 17-11: Code, der das gewünschte Verhalten
 demonstriert, das wir für unsere Kiste <code>blog</code> haben wollen</span></p>
 <p>Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
-<code>Post::new</code> zu erstellen. Dann möchten wir dem Blog-Beitrag erlauben, Text
-hinzuzufügen, während er sich im Entwurfszustand befindet. Wenn wir versuchen,
-den Inhalt des Beitrags sofort, vor der Genehmigung, zu erhalten, sollte nichts
-passieren, weil der Beitrag noch ein Entwurf ist. Wir haben zu
-Demonstrationszwecken <code>assert_eq!</code> in den Code eingefügt. Ein ausgezeichneter
-Unit-Test dafür wäre die Zusicherung, dass ein Entwurf eines Blog-Beitrags eine
-leere Zeichenkette aus der Methode <code>content</code> zurückgibt, aber wir werden für
-dieses Beispiel keine Tests schreiben.</p>
+<code>Post::new</code> zu erstellen. Wir möchten dem Blog-Beitrag erlauben, Text
+hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
+Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
+ein Entwurf ist. Wir haben zu Demonstrationszwecken <code>assert_eq!</code> in den Code
+eingefügt. Ein ausgezeichneter Unit-Test dafür wäre die Zusicherung, dass ein
+Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode <code>content</code>
+zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.</p>
 <p>Als nächstes wollen wir einen Antrag auf Überprüfung des Beitrags ermöglichen
 und wir wollen, dass <code>content</code> eine leere Zeichenkette zurückgibt, solange wir
 auf die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
@@ -23574,18 +23483,18 @@ impl State for Published {
 bei <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Merkmal <code>State</code> hinzu und fügen eine neue
 Struktur <code>State</code> hinzu, die den Zustand <code>Published</code> implementiert.</p>
-<p>Ähnlich wie bei <code>request_review</code>, wenn wir die Methode <code>approve</code> auf einem
-<code>Draft</code> aufrufen, wird sie keine Wirkung haben, weil sie <code>self</code> zurückgibt.
-Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen, gibt sie eine
-neue, geschlossene Instanz der Struktur <code>Published</code> zurück. Die Struktur
-<code>Published</code> implementiert das Merkmal <code>State</code> und sowohl bei der Methode
-<code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich selbst
-zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben
+<p>Ähnlich wie <code>request_review</code> bei <code>PendingReview</code> funktioniert, hat der Aufruf
+der Methode <code>approve</code> bei einem <code>Draft</code> keine Wirkung, weil <code>approve</code> den Wert
+<code>self</code> zurückgibt. Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen,
+gibt sie eine neue, geschlossene Instanz der Struktur <code>Published</code> zurück. Die
+Struktur <code>Published</code> implementiert das Merkmal <code>State</code> und sowohl bei der
+Methode <code>request_review</code> als auch bei der Methode <code>approve</code> gibt sie sich
+selbst zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</code> bleiben
 sollte.</p>
-<p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wenn der
-Zustand <code>Published</code> ist, wollen wir den Wert im Feld <code>content</code> des Beitrags
-zurückgeben; andernfalls wollen wir einen leeren Zeichenkettenanteilstyp
-zurückgeben, wie in Codeblock 17-17 gezeigt:</p>
+<p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wir wollen,
+dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von <code>Post</code>
+abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Methode, die auf seinen
+<code>state</code> definiert ist, wie in Codeblock 17-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">
 <span class="boring">#![allow(unused)]
@@ -29467,8 +29376,7 @@ die sendende Seite des Kanals hält, beendet hat, ähnlich wie die <code>send</c
 wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der <code>Mutex&lt;T&gt;</code>
 stellt sicher, dass immer nur ein <code>Worker</code>-Strang zur gleichen Zeit versucht,
 einen Auftrag anzufordern.</p>
-<p>Mit der Umsetzung dieses Tricks ist unser Strang-Vorrat in einem
-funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
+<p>Unser Strang-Vorrat ist nun in einem funktionierenden Zustand! Führe <code>cargo run</code> aus und stelle einige Anfragen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
 warning: field is never read: `workers`
