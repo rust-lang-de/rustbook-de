@@ -1311,8 +1311,8 @@ wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der `Mutex<T>`
 stellt sicher, dass immer nur ein `Worker`-Strang zur gleichen Zeit versucht,
 einen Auftrag anzufordern.
 
-Mit der Umsetzung dieses Tricks ist unser Strang-Vorrat in einem
-funktionierenden Zustand! Führe `cargo run` aus und stelle einige Anfragen:
+Unser Strang-Vorrat ist nun in einem funktionierenden Zustand! Führe `cargo
+run` aus und stelle einige Anfragen:
 
 ```console
 $ cargo run

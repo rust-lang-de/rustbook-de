@@ -60,14 +60,13 @@ fn main() {
 demonstriert, das wir für unsere Kiste `blog` haben wollen</span>
 
 Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
-`Post::new` zu erstellen. Dann möchten wir dem Blog-Beitrag erlauben, Text
-hinzuzufügen, während er sich im Entwurfszustand befindet. Wenn wir versuchen,
-den Inhalt des Beitrags sofort, vor der Genehmigung, zu erhalten, sollte nichts
-passieren, weil der Beitrag noch ein Entwurf ist. Wir haben zu
-Demonstrationszwecken `assert_eq!` in den Code eingefügt. Ein ausgezeichneter
-Unit-Test dafür wäre die Zusicherung, dass ein Entwurf eines Blog-Beitrags eine
-leere Zeichenkette aus der Methode `content` zurückgibt, aber wir werden für
-dieses Beispiel keine Tests schreiben.
+`Post::new` zu erstellen. Wir möchten dem Blog-Beitrag erlauben, Text
+hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
+Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
+ein Entwurf ist. Wir haben zu Demonstrationszwecken `assert_eq!` in den Code
+eingefügt. Ein ausgezeichneter Unit-Test dafür wäre die Zusicherung, dass ein
+Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode `content`
+zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.
 
 Als nächstes wollen wir einen Antrag auf Überprüfung des Beitrags ermöglichen
 und wir wollen, dass `content` eine leere Zeichenkette zurückgibt, solange wir
@@ -449,19 +448,19 @@ bei `Post` und des Merkmals `State`</span>
 Wir fügen die Methode `approve` zum Merkmal `State` hinzu und fügen eine neue
 Struktur `State` hinzu, die den Zustand `Published` implementiert.
 
-Ähnlich wie bei `request_review`, wenn wir die Methode `approve` auf einem
-`Draft` aufrufen, wird sie keine Wirkung haben, weil sie `self` zurückgibt.
-Wenn wir die Methode `approve` bei `PendingReview` aufrufen, gibt sie eine
-neue, geschlossene Instanz der Struktur `Published` zurück. Die Struktur
-`Published` implementiert das Merkmal `State` und sowohl bei der Methode
-`request_review` als auch bei der Methode `approve` gibt sie sich selbst
-zurück, weil der Beitrag in diesen Fällen im Zustand `Published` bleiben
+Ähnlich wie `request_review` bei `PendingReview` funktioniert, hat der Aufruf
+der Methode `approve` bei einem `Draft` keine Wirkung, weil `approve` den Wert
+`self` zurückgibt. Wenn wir die Methode `approve` bei `PendingReview` aufrufen,
+gibt sie eine neue, geschlossene Instanz der Struktur `Published` zurück. Die
+Struktur `Published` implementiert das Merkmal `State` und sowohl bei der
+Methode `request_review` als auch bei der Methode `approve` gibt sie sich
+selbst zurück, weil der Beitrag in diesen Fällen im Zustand `Published` bleiben
 sollte.
 
-Jetzt müssen wir die Methode `content` auf `Post` aktualisieren: Wenn der
-Zustand `Published` ist, wollen wir den Wert im Feld `content` des Beitrags
-zurückgeben; andernfalls wollen wir einen leeren Zeichenkettenanteilstyp
-zurückgeben, wie in Codeblock 17-17 gezeigt:
+Jetzt müssen wir die Methode `content` auf `Post` aktualisieren: Wir wollen,
+dass der von `content` zurückgegebene Wert vom aktuellen Zustand von `Post`
+abhängt, also delegieren wir `Post` an eine `content`-Methode, die auf seinen
+`state` definiert ist, wie in Codeblock 17-17 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

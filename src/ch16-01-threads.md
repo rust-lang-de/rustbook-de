@@ -30,46 +30,9 @@ Programmiersprachen implementieren Stränge auf verschiedene Weise. Viele
 Betriebssysteme bieten eine API zum Erstellen neuer Stränge. Dieses Modell, bei
 dem eine Sprache die API des Betriebssystems aufruft, um Stränge zu erstellen,
 wird manchmal *1:1* genannt, das bedeutet einen Betriebssystem-Strang pro
-Strang in der Sprache.
-
-Viele Programmiersprachen bringen ihre eigene spezielle Implementierung von
-Strängen mit. Von Programmiersprachen bereitgestellte Stränge sind als *grüne*
-Stränge (green threads) bekannt und Sprachen, die diese grünen Stränge
-verwenden, führen sie im Kontext einer verschiedenen Zahl von
-Betriebssystem-Strängen aus. Aus diesem Grund wird das Modell mit grünen
-Strängen als *M:N*-Modell bezeichnet: Es gibt `M` grüne Stränge auf `N`
-Betriebssystem-Strängen, wobei `M` und `N` nicht notwendigerweise die gleiche
-Zahl sind.
-
-Jedes Modell hat seine eigenen Vorteile und Kompromisse und der wichtigste
-Kompromiss für Rust ist die Laufzeitunterstützung. *Laufzeit* (runtime) ist ein
-verwirrender Begriff und kann in verschiedenen Kontexten unterschiedliche
-Bedeutungen haben.
-
-In diesem Zusammenhang meinen wir mit *Laufzeit* Code, der von der Sprache in
-jeder Binärdatei enthalten ist. Dieser Code kann groß oder klein sein, abhängig
-von der Sprache, aber jede Nicht-Assembler-Sprache wird eine gewisse Menge an
-Laufzeit-Code haben. Aus diesem Grund meinen Leute umgangssprachlich, wenn sie
-sagen, eine Sprache habe „keine Laufzeit“, dass sie oft eine „kleine Laufzeit“
-hat. Kleinere Laufzeiten haben weniger Funktionen, haben aber den Vorteil, dass
-sie zu kleineren Binärdateien führen, die es leichter machen, die Sprache mit
-anderen Sprachen in mehr Kontexten zu kombinieren. Obwohl viele Sprachen damit
-einverstanden sind, die Laufzeitgröße im Tausch gegen mehr Funktionen zu
-erhöhen, kann Rust fast keine Laufzeit haben und kann keine Kompromisse
-eingehen, wenn es darum geht, C zur Aufrechterhaltung der Performanz
-aufzurufen.
-     
-Das M:N-Modell bei grünen Strängen erfordert eine größere Sprachlaufzeit zur
-Verwaltung von Strängen. Daher bietet die Rust-Standardbibliothek nur eine
-Implementierung von 1:1-Strängen. Da Rust solch eine Sprache auf niedriger
-Ebene ist, gibt es Kisten (crates), die M:N-Stränge implementieren, wenn du den
-Mehraufwand (overhead) lieber gegen Aspekte wie mehr Kontrolle darüber, welche
-Stränge wann laufen, und geringere Kosten für den Kontextwechsel (context
-switching) eintauschen möchtest.
-
-Nachdem wir nun Stränge in Rust definiert haben, wollen wir untersuchen, wie
-die Strang-bezogene API, die von der Standardbibliothek bereitgestellt wird,
-verwendet werden kann.
+Strang in der Sprache. Die Rust-Standardbibliothek bietet nur eine
+Implementierung von 1:1-Strängen; es gibt Kisten, die andere Strangmodelle
+implementieren und andere Kompromisse eingehen.
 
 ### Erstellen eines neuen Strangs mit `spawn`
 
@@ -256,9 +219,14 @@ Stränge zur gleichen Zeit laufen oder nicht.
 
 ### Verwenden von `move`-Funktionsabschlüssen mit Strängen
 
-Der `move`-Funktionsabschluss wird oft zusammen mit `thread::spawn` verwendet,
-weil es dir erlaubt, Daten von einem Strang in einem anderen Strang zu
-verwenden.
+Das Schluesselwort `move` wird oft mit Funktionsabschlüssen verwendet, die an
+`thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
+Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
+damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
+überträgt. Im Abschnitt [„Mit Funktionsabschlüssen die Umgebung
+erfassen“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
+Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
+zwischen `move` und `thread::spawn` konzentrieren.
 
 In Kapitel 13 haben wir erwähnt, dass wir das Schlüsselwort `move` vor der
 Parameterliste eines Funktionsabschlusses verwenden können, um den
@@ -446,3 +414,5 @@ Eigentumsregeln verstoßen.
 
 Mit einem grundlegenden Verständnis von Strängen und der Strang-API wollen wir
 uns ansehen, was wir mit Strängen noch machen können.
+
+[capture]: ch13-01-closures.html#mit-funktionsabschlüssen-die-umgebung-erfassen
