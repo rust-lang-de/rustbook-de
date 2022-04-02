@@ -1,28 +1,34 @@
-## Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können
+## Funktionsabschlüsse (closures): Anonyme Funktionen die ihre Umgebung erfassen können
 
 Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
 speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen 
 Funktionsabschluss erstellen und dann in einem anderen Zusammenhang aufrufen
 und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte 
-(values) im Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden.
+(values) im Gültigkeitsbereich (scope) in dem sie erstellt wurden zugreifen.
 Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
 die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
 
 ### Mit Funktionsabschlüssen Verhaltensabstraktion erzeugen
 
-Lass uns eine Beispielsituation betrachten, in der es nützlich ist, einen
-Funktionsabschluss zu speichern, um ihn später auszuführen. Nebenbei werden
+Lass uns an einem Beispiel einer Situation arbeiten, in der es nützlich ist, einen
+Funktionsabschluss zu speichern, um ihn später auszuführen. In dieser Zeit werden
 wir über Typinferenz, Merkmale (traits) und die Syntax von Funktionsabschlüssen
 sprechen.
 
-Stell Dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up und entwickeln eine App zur Erstellung die kundenspezifischer Trainingspläne.
-Das Backend ist in Rust geschrieben und der verwendete Algorithmus zur Erzeugung der Trainingspläne nutzt viele Einflussfaktoren: das Alter des Benutzers, dessen Body Mass Index und Trainingsvorlieben, die zuletzt erfolgten Work-outs sowie deren Intensitätslevel. 
-Der eigentliche Algorithmus ist für unser Beispiel nicht
-entscheidend; lediglich wichtig ist, dass die Ausführungsdauer ein paar Sekunden beträgt.
-Um die Wartezeit für den Benutzer zu verkürzen, wollen wir den Algorithmus nur bei Bedarf und lediglich einmal aufrufen.
+Ziehe diese hypothetische Situation in Betracht: Wir arbeiten für ein Start-up 
+das eine App entwickelt die benutzerdefinierte Work-out-Trainingspläne generiert.
+Das Backend ist in Rust geschrieben und der Algorithmus, der die Trainingspläne
+erzeugt, berücksichtigt viele Faktoren: Das Alter des Benutzers, Body Mass Index,
+Übungsvoreinstellungen, kürzlich erfolgte Work-outs und eine Zahl, die deren
+Intensität festlegt. Der eigentliche Algorithmus ist für unser Beispiel nicht
+wichtig. Bemerkenswert ist, dass die Berechnung ein paar Sekunden Zeit benötigt,
+um die Wartezeit für den Benutzer zu verkürzen, wollen wir daher den Algorithmus
+nur einmal aufrufen, und zwar dann, wenn es notwendig ist.
 
-Den Aufruf des hypothetischen Algorithmus simulieren wir mit der Funktion
-`simulated_expensive_calculation` (siehe Codeblock 13-1). Diese Funktion gibt den Text `rechnet langsam...` aus, wartet zwei Sekunden lang und gibt dann die Nummer zurück, die wir übergeben haben.
+Den Aufruf des hypothetischen Algorithmus werden wir mit der Funktion
+`simulated_expensive_calculation` die im Codeblock 13-1 gezeigt wird und
+`rechnet langsam...`, ausgibt, zwei Sekunden lang wartet und dann die Nummer
+zurückgibt die wir übergeben haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -36,27 +42,25 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
     intensity
 }
 ```
-<span class="caption">Codeblock 13-1: Eine Funktion, die für eine hypothetische
+<span class="caption">Codeblock 13-1: Eine Funktion die für eine hypothetische
 Berechnung steht, die etwa 2 Sekunden Laufzeit benötigt.</span>
 
-Als Nächstes betachten wir die Hauptfunktion `main`, welche die für unser Beispiel
-relevanten Teile der App beinhaltet. 
-Diese Funktion stellt den Code dar, den die App
-aufrufen wird, wenn ein Benutzer einen Trainingsplan anfordert. 
-Da die
+Als Nächstes folgt die Hauptfunktion `main`, welche die für unser Beispiel
+relevanten Teile beinhalten wird. Diese Funktion stellt den Code dar, den die App
+aufrufen wird, wenn ein Benutzer einen Trainingsplan anfordert. Da die
 Interaktion mit dem Frontend für die Benutzung von Funktionsabschlüssen nicht
-von Bedeutung ist, werden die Eingabewerte (inputs) fest
-einprogrammiert (hardcoded) und die Ausgaben (outputs) einfach mit `print`
+von Bedeutung ist, werden Werte die Eingaben (inputs) repräsentieren fest
+einprogrammiert (hardcoded) und Ausgaben (outputs) einfach mit `print`
 ausgegeben.
 
 Das sind die benötigten Eingaben:
 
-* Eine Intensitätszahl, über die der Benutzer angibt, ob sein Training
+* Eine Intensitätszahl mit der die Benutzer festlegen können ob ein Training
     von leichter oder hoher Intensität sein soll.
 * Eine Zufallszahl, die für Abwechslung im Trainingsplan sorgt.
 
 Ausgegeben wird der empfohlene Trainingsplan. Codeblock 13-2 zeigt die
-Funktion `main`, die wir benutzen.
+Funktion `main` die wir benutzen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
