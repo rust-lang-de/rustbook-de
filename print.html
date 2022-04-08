@@ -27074,25 +27074,24 @@ darin, dass du Makros definieren oder in den Gültigkeitsbereich bringen musst,
 <em>bevor</em> du sie in einer Datei aufrufst, im Gegensatz zu Funktionen, die du
 überall definieren und überall aufrufen kannst.</p>
 <h3 id="deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung"><a class="header" href="#deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung">Deklarative Makros mit <code>macro_rules!</code> für allgemeine Metaprogrammierung</a></h3>
-<p>Die am weitesten verbreitete Form von Makros in Rust sind <em>deklarative Makros</em>.
+<p>Die am häufigsten verwendete Form von Makros in Rust sind <em>deklarative Makros</em>.
 Diese werden manchmal auch als „Beispielmakros“ (macros by example),
 „<code>macro_rules!</code>-Makros“ oder einfach nur „Makros“ bezeichnet. In ihrem Kern
-erlauben deklarative Makros etwas Ähnliches wie einen Rust-Ausdruck zu
+erlauben deklarative Makros, etwas Ähnliches wie einen Rust-Ausdruck zu
 schreiben. Wie in Kapitel 6 besprochen, sind <code>match</code>-Ausdrücke
 Kontrollstrukturen, die einen Ausdruck entgegennehmen, den resultierenden Wert
 des Ausdrucks mit Mustern abgleichen und dann den Code ausführen, der mit dem
-passenden Muster assoziiert ist. Makros vergleichen ebenfalls einen Wert mit
-Mustern, die mit einem bestimmten Code assoziiert sind: In dieser Situation ist
+passenden Muster verknüpft ist. Makros vergleichen ebenfalls einen Wert mit
+Mustern, die mit einem bestimmten Code verknüpft sind: In diesem Fall ist
 der Wert der literale Rust-Quellcode, der an das Makro übergeben wird; die
 Muster werden mit der Struktur dieses Quellcodes verglichen; und der mit jedem
-Muster assoziierte Code ersetzt, wenn er passt, den an das Makro übergebenen
+Muster verküpften Code ersetzt, wenn er passt, den an das Makro übergebenen
 Code. Dies alles geschieht während der Kompilierung.</p>
 <p>Um ein Makro zu definieren, verwendest du das Konstrukt <code>macro_rules!</code>. Lass
 uns untersuchen, wie man <code>macro_rules!</code> benutzt, indem wir uns ansehen, wie das
 Makro <code>vec!</code> definiert wird. Kapitel 8 behandelte, wie wir das Makro <code>vec!</code>
 verwenden können, um einen neuen Vektor mit bestimmten Werten zu erzeugen. Zum
-Beispiel erzeugt das folgende Makro einen neuen Vektor, der drei ganze Zahlen
-enthält:</p>
+Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganze Zahlen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -27101,9 +27100,8 @@ enthält:</p>
 </span></code></pre></pre>
 <p>Wir könnten auch das Makro <code>vec!</code> verwenden, um einen Vektor aus zwei ganzen
 Zahlen oder einen Vektor aus fünf Zeichenkettenanteilstypen (string slices) zu
-erstellen. Wir wären nicht in der Lage, eine Funktion zu verwenden, um dasselbe
-zu tun, weil wir die Anzahl oder den Typ der Werte nicht im Voraus kennen
-würden.</p>
+erstellen. Mit einer Funktion wäre das nicht möglich,
+da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.</p>
 <p>Codeblock 19-28 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -27128,44 +27126,44 @@ Makrodefinition <code>vec!</code></span></p>
 <blockquote>
 <p>Hinweis: Die eigentliche Definition des Makros <code>vec!</code> in der
 Standardbibliothek enthält Code zum Vorbelegen der korrekten Speichermenge.
-Dieser Code ist eine Optimierung, die wir hier nicht angeben, um das Beispiel
-einfacher zu machen.</p>
+Dieser Code ist eine Optimierung, die wir hier zur Vereinfachung des 
+Beispiels nicht darstellen.</p>
 </blockquote>
 <p>Die Annotation <code>#[macro_export]</code> gibt an, dass dieses Makro immer dann zur
 Verfügung gestellt werden soll, wenn die Kiste (crate), in der das Makro
 definiert ist, in den Gültigkeitsbereich gebracht wird. Ohne diese Annotation
 kann das Makro nicht in den Gültigkeitsbereich gebracht werden.</p>
 <p>Dann beginnen wir die Makrodefinition mit <code>macro_rules!</code> und dem Namen des
-Makros, den wir <em>ohne</em> Ausrufezeichen definieren. Der Name, in diesem Fall
-<code>vec</code>, wird von geschweiften Klammern gefolgt, die den Rumpf der
+Makros, das wir definieren, <em>ohne</em> Ausrufezeichen. Auf den Name, in diesem Fall
+<code>vec</code>, folgen geschweifte Klammern, die den Rumpf der
 Makrodefinition kennzeichnen.</p>
 <p>Die Struktur im <code>vec!</code> -Rumpf ähnelt der Struktur eines <code>match</code>-Ausdrucks. Hier
 haben wir einen Zweig mit dem Muster <code>( $( $x:expr ),* )</code>, gefolgt von <code>=&gt;</code> und
-dem mit diesem Muster assoziierten Codeblock. Wenn das Muster passt, wird der
+dem mit diesem Muster verknüpften Codeblock. Wenn das Muster passt, wird der
 zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
-ist, gibt es nur einen gültigen Weg der passen kann; jedes andere Muster führt
+ist, kann es nur einen passenden Zweig geben; jedes andere Muster führt
 zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.</p>
 <p>Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
 Kapitel 18 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
-und nicht mit Werten abgeglichen werden. Lass uns durchgehen, was die
-Musterteile in Listing 19-28 bedeuten; die vollständige Makromustersyntax
+und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
+der Musterteile in Listing 19-28 betrachten; die vollständige Makromustersyntax
 findest du in <a href="https://doc.rust-lang.org/reference/macros-by-example.html">der Referenz</a>.</p>
-<p>Zunächst umfasst eine Reihe von Klammern das gesamte Muster. Als Nächstes folgt
-ein Dollarzeichen (<code>$</code>), gefolgt von einem Satz von Klammern, der Werte
-erfasst, die mit dem Muster innerhalb der Klammern übereinstimmen, um sie im
-Ersatzcode zu verwenden. Innerhalb von <code>$()</code> befindet sich <code>$x:expr</code>, das zu
-jedem beliebigen Rust-Ausdruck passt und dem Ausdruck den Namen <code>$x</code> gibt.</p>
+<p>Zunächst umfasst ein äußeres Klammernpaar das gesamte Muster. Als Nächstes folgt
+ein Dollarzeichen (<code>$</code>), wiederum gefolgt von einem Klammernpaar, das Parameter
+enthält, die bei Musterübereinstimmung im
+Ersetzungscode verwendet werdenn. Innerhalb von <code>$()</code> befindet sich <code>$x:expr</code>, das mit
+jedem beliebigen Rust-Ausdruck übereinstimmt und dem Ausdruck den Namen <code>$x</code> gibt.</p>
 <p>Das Komma nach <code>$()</code> gibt an, dass ein literales Komma-Trennzeichen optional
-nach dem Code erscheinen könnte, der dem Code in <code>$()</code> entspricht. Der <code>*</code> gibt
-an, dass das Muster keinmal oder mehrmals zu dem passt, was vor dem <code>*</code> steht.</p>
+nach dem Code erscheinen könnte, der mit dem Code in <code>$()</code> übereinstimmt. Der <code>*</code> besagt,
+dass das Muster keinmal oder mehrmals zu dem passt, was vor dem <code>*</code> steht.</p>
 <p>Wenn wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, passt das Muster <code>$x</code>
 dreimal zu den drei Ausdrücken <code>1</code>, <code>2</code> und <code>3</code>.</p>
-<p>Betrachten wir nun das Muster im Hauptteil des mit diesem Zweig assoziierten
+<p>Betrachten wir nun das Muster im Hauptteil des mit diesem Zweig verknüpften
 Codes: <code>temp_vec.push()</code> innerhalb von <code>$()*</code> wird für jeden Teil erzeugt, der
 keinmal oder mehrmals mit <code>$()</code> im Muster übereinstimmt, je nachdem, wie oft
 das Muster passt. Das <code>$x</code> wird durch jeden passenden Ausdruck ersetzt. Wenn
-wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird der generierte Code, der
-diesen Makroaufruf ersetzt, wie folgt aussehen:</p>
+wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird durch diesen Aufruf 
+folgender Code generierte:</p>
 <pre><code class="language-rust ignore">{
     let mut temp_vec = Vec::new();
     temp_vec.push(1);
@@ -27175,12 +27173,12 @@ diesen Makroaufruf ersetzt, wie folgt aussehen:</p>
 }
 </code></pre>
 <p>Wir haben ein Makro definiert, das eine beliebige Anzahl von Argumenten
-beliebigen Typs aufnehmen und Code erzeugen kann, um einen Vektor zu erstellen,
-der die angegebenen Elemente enthält.</p>
-<p>Es gibt einige seltsame Randfälle mit <code>macro_rules!</code>. In Zukunft wird Rust eine
+beliebigen Typs aufnehmen und Code zur Erstellung eines Vektors erzeugen 
+kann, der die angegebenen Elemente enthält.</p>
+<p>Es gibt einige seltsame Grenzfälle mit <code>macro_rules!</code>. In Zukunft wird Rust eine
 zweite Art deklarativer Makros haben, die auf ähnliche Weise funktionieren,
-aber einige dieser Randfälle beheben. Nach diesem Update wird <code>macro_rules!</code>
-effektiv veraltet sein. Vor diesem Hintergrund und angesichts der Tatsache,
+aber einige dieser Grenzfälle beheben wird. Nach diesem Update wird <code>macro_rules!</code>
+de facto veraltet sein. Vor diesem Hintergrund und angesichts der Tatsache,
 dass die meisten Rust-Programmierer Makros eher <em>verwenden</em> als Makros
 <em>schreiben</em> werden, werden wir nicht weiter auf <code>macro_rules!</code> eingehen. Um
 mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
