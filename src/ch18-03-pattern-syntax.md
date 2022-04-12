@@ -150,9 +150,9 @@ und gibt `früher ASCII-Buchstabe` aus.
 
 ### Destrukturieren, um Werte aufzuteilen
 
-Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen
-(enums), Tupel und Referenzen zu destrukturieren, um verschiedene Teile dieser
-Werte zu verwenden. Lass uns jeden Wert durchgehen.
+Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen (enums)
+und Tupel zu destrukturieren, um verschiedene Teile dieser Werte zu verwenden.
+Lass uns jeden Wert durchgehen.
 
 #### Destrukturieren von Strukturen
 
@@ -698,14 +698,15 @@ es ein Muster allein erlaubt.
 
 Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
 Codeblock 18-26 zeigt ein `match`, wobei der erste Zweig das Muster `Some(x)`
-und die Abgleichsbedingung `if x < 5` hat.
+und die Abgleichsbedingung `if x % 2 == 0` (die wahr ist, wenn die Zahl gerade
+ist) hat.
 
 ```rust
     let num = Some(4);
 
     match num {
-        Some(x) if x < 5 => println!("kleiner als fünf: {}", x),
-        Some(x) => println!("{}", x),
+        Some(x) if x % 2 == 0 => println!("Die Zahl {} ist gerade", x),
+        Some(x) => println!("Die Zahl {} ist ungerade", x),
         None => (),
     }
 ```
@@ -713,19 +714,22 @@ und die Abgleichsbedingung `if x < 5` hat.
 <span class="caption">Codeblock 18-26: Hinzufügen einer Abgleichsbedingung zu
 einem Muster</span>
 
-In diesem Beispiel wird `kleiner als fünf: 4` ausgegeben. Wenn `num` mit dem
+In diesem Beispiel wird `Die Zahl 4 ist gerade` ausgegeben. Wenn `num` mit dem
 Muster im ersten Zweig abgeglichen wird, passt es, weil `Some(4)` zu `Some(x)`
-passt. Dann prüft die Abgleichsbedingung, ob der Wert in `x` kleiner als `5`
-ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.
+passt. Dann prüft die Abgleichsbedingung, ob der Rest der Division von `x`
+durch 2 gleich 0 ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.
 
-Hätte `num` stattdessen den Wert `Some(10)` gehabt, wäre die Abgleichsbedingung
-im ersten Zweig falsch gewesen, denn 10 ist nicht weniger als 5. Rust würde
-dann zum zweiten Zweig gehen, der passen würde, weil der zweite Zweig keine
-Abgleichsbedingung hat und daher zu allen `Some`-Varianten passt.
+Wenn `num` stattdessen `Some(5)` gewesen wäre, wäre die Abgleichsbedingung im
+ersten Zweig falsch gewesen, weil der Rest von 5 geteilt durch 2 den Wert 1
+ergibt, was ungleich 0 ist. Rust würde dann zum zweiten Zweig gehen, der passen
+würde, weil der zweite Zweig keine Abgleichsbedingung hat und daher zu allen
+`Some`-Varianten passt.
 
-Es gibt keine Möglichkeit, die Bedingung `if x < 5` innerhalb eines Musters
+Es gibt keine Möglichkeit, die Bedingung `if x % 2 == 0` innerhalb eines Musters
 auszudrücken, also gibt uns die Abgleichsbedingung die Möglichkeit, diese Logik
-anzugeben.
+anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
+Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
+Abgleichsbedingungs-Ausdrücke beteiligt sind.
 
 In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
 Musterbeschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
