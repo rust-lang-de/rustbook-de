@@ -12096,7 +12096,8 @@ Codeblock 11-1 aussehen.</p>
 mod tests {
     #[test]
     fn it_works() {
-        assert_eq!(2 + 2, 4);
+        let result = 2 + 2;
+        assert_eq!(result, 4);
     }
 }
 <span class="boring">}
@@ -24540,9 +24541,9 @@ Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder nicht, sind
 <p>Rust kann erkennen, dass <code>c</code> innerhalb des Bereichs des ersten Musters liegt
 und gibt <code>früher ASCII-Buchstabe</code> aus.</p>
 <h3 id="destrukturieren-um-werte-aufzuteilen"><a class="header" href="#destrukturieren-um-werte-aufzuteilen">Destrukturieren, um Werte aufzuteilen</a></h3>
-<p>Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen
-(enums), Tupel und Referenzen zu destrukturieren, um verschiedene Teile dieser
-Werte zu verwenden. Lass uns jeden Wert durchgehen.</p>
+<p>Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen (enums)
+und Tupel zu destrukturieren, um verschiedene Teile dieser Werte zu verwenden.
+Lass uns jeden Wert durchgehen.</p>
 <h4 id="destrukturieren-von-strukturen"><a class="header" href="#destrukturieren-von-strukturen">Destrukturieren von Strukturen</a></h4>
 <p>Codeblock 18-12 zeigt eine Struktur <code>Point</code> mit zwei Feldern, <code>x</code> und <code>y</code>, die
 wir mit einem Muster in einer <code>let</code>-Anweisung aufteilen können.</p>
@@ -25004,32 +25005,36 @@ wird. Abgleichsbedingungen sind nützlich, um komplexere Ideen auszudrücken, al
 es ein Muster allein erlaubt.</p>
 <p>Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
 Codeblock 18-26 zeigt ein <code>match</code>, wobei der erste Zweig das Muster <code>Some(x)</code>
-und die Abgleichsbedingung <code>if x &lt; 5</code> hat.</p>
+und die Abgleichsbedingung <code>if x % 2 == 0</code> (die wahr ist, wenn die Zahl gerade
+ist) hat.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let num = Some(4);
 
     match num {
-        Some(x) if x &lt; 5 =&gt; println!(&quot;kleiner als fünf: {}&quot;, x),
-        Some(x) =&gt; println!(&quot;{}&quot;, x),
+        Some(x) if x % 2 == 0 =&gt; println!(&quot;Die Zahl {} ist gerade&quot;, x),
+        Some(x) =&gt; println!(&quot;Die Zahl {} ist ungerade&quot;, x),
         None =&gt; (),
     }
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 18-26: Hinzufügen einer Abgleichsbedingung zu
 einem Muster</span></p>
-<p>In diesem Beispiel wird <code>kleiner als fünf: 4</code> ausgegeben. Wenn <code>num</code> mit dem
+<p>In diesem Beispiel wird <code>Die Zahl 4 ist gerade</code> ausgegeben. Wenn <code>num</code> mit dem
 Muster im ersten Zweig abgeglichen wird, passt es, weil <code>Some(4)</code> zu <code>Some(x)</code>
-passt. Dann prüft die Abgleichsbedingung, ob der Wert in <code>x</code> kleiner als <code>5</code>
-ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.</p>
-<p>Hätte <code>num</code> stattdessen den Wert <code>Some(10)</code> gehabt, wäre die Abgleichsbedingung
-im ersten Zweig falsch gewesen, denn 10 ist nicht weniger als 5. Rust würde
-dann zum zweiten Zweig gehen, der passen würde, weil der zweite Zweig keine
-Abgleichsbedingung hat und daher zu allen <code>Some</code>-Varianten passt.</p>
-<p>Es gibt keine Möglichkeit, die Bedingung <code>if x &lt; 5</code> innerhalb eines Musters
+passt. Dann prüft die Abgleichsbedingung, ob der Rest der Division von <code>x</code>
+durch 2 gleich 0 ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.</p>
+<p>Wenn <code>num</code> stattdessen <code>Some(5)</code> gewesen wäre, wäre die Abgleichsbedingung im
+ersten Zweig falsch gewesen, weil der Rest von 5 geteilt durch 2 den Wert 1
+ergibt, was ungleich 0 ist. Rust würde dann zum zweiten Zweig gehen, der passen
+würde, weil der zweite Zweig keine Abgleichsbedingung hat und daher zu allen
+<code>Some</code>-Varianten passt.</p>
+<p>Es gibt keine Möglichkeit, die Bedingung <code>if x % 2 == 0</code> innerhalb eines Musters
 auszudrücken, also gibt uns die Abgleichsbedingung die Möglichkeit, diese Logik
-anzugeben.</p>
+anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
+Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
+Abgleichsbedingungs-Ausdrücke beteiligt sind.</p>
 <p>In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
 Musterbeschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
 verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
