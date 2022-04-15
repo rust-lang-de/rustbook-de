@@ -774,10 +774,11 @@ kompiliert. Dann lassen sie <code>cargo build</code> laufen, wenn sie bereit sin
 ausführbare Datei zu benutzen.</p>
 <p>Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:</p>
 <ul>
-<li>Wir können ein Projekt bauen mit <code>cargo build</code>.</li>
-<li>Wir können ein Projekt in einem Schritt bauen und ausführen mit <code>cargo run</code>.</li>
-<li>Wir können ein Projekt bauen, ohne eine Binärdatei zu erzeugen, um auf Fehler
-zu prüfen, mit <code>cargo check</code>.</li>
+<li>Wir können ein Projekt mit <code>cargo new</code> erstellen.</li>
+<li>Wir können ein Projekt mit <code>cargo build</code> bauen.</li>
+<li>Wir können ein Projekt mit <code>cargo run</code> in einem Schritt bauen und ausführen.</li>
+<li>Wir können ein Projekt mit <code>cargo check</code> bauen, ohne eine Binärdatei zu
+erzeugen, um auf Fehler zu prüfen.</li>
 <li>Anstatt das Ergebnis des Bauvorgangs im selben Verzeichnis wie unser Code
 abzulegen, legt Cargo es im Verzeichnis <em>target/debug</em> ab.</li>
 </ul>
@@ -3429,8 +3430,8 @@ Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
 Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
 Benutzung und gibt einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser
 Stelle ist. Dieser Vorgang wird als <em>Allokieren im Haldenspeicher</em>
-bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt. Das Legen von Werten auf
-den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
+bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt (Das Legen von Werten auf
+den Stapelspeicher gilt nicht als Allokieren). Da es sich beim Zeiger um eine
 bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
 legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
 folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
@@ -9886,20 +9887,19 @@ deinem Code verwenden kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="generische-typen-merkmale-traits-und-lebensdauer"><a class="header" href="#generische-typen-merkmale-traits-und-lebensdauer">Generische Typen, Merkmale (traits) und Lebensdauer</a></h1>
 <p>Jede Programmiersprache verfügt über Werkzeuge, mit denen die Duplizierung von
 Konzepten (duplication of concepts) effektiv gehandhabt werden kann. In Rust
-ist ein solches Werkzeug der <em>generische Datentyp</em> (generics). Generische
-Datentypen sind abstrakte Stellvertreter für konkrete Typen oder andere
-Eigenschaften. Wenn wir Code schreiben, können wir das Verhalten generischer
-Datentypen oder ihre Beziehung zu anderen generischen Datentypen ausdrücken,
-ohne zu wissen, was an ihrer Stelle beim Kompilieren und Ausführen des Codes
-stehen wird.</p>
-<p>Ähnlich wie eine Funktion Parameter mit unbekannten Werten entgegennimmt, um
-den gleichen Code auf mehreren konkreten Werten auszuführen, können Funktionen
-Parameter irgendeines generischen Typs anstelle eines konkreten Typs, wie <code>i32</code>
-oder <code>String</code>, haben. Tatsächlich haben wir generische Datentypen bereits in
-Kapitel 6 mit <code>Option&lt;T&gt;</code>, in Kapitel 8 mit <code>Vec&lt;T&gt;</code> und <code>HashMap&lt;K, V&gt;</code> und in
-Kapitel 9 mit <code>Result&lt;T, E&gt;</code> verwendet. In diesem Kapitel erfährst du, wie du
-deine eigenen Typen, Funktionen und Methoden mit generischen Datentypen
-definieren kannst!</p>
+ist ein solches Werkzeug der <em>generische Datentyp</em> (generics): Abstrakte
+Stellvertreter für konkrete Typen oder andere Eigenschaften. Wir können das
+Verhalten generischer Datentypen oder ihre Beziehung zu anderen generischen
+Datentypen ausdrücken, ohne zu wissen, was an ihrer Stelle beim Kompilieren und
+Ausführen des Codes stehen wird.</p>
+<p>Funktionen können Parameter eines generischen Typs anstelle eines konkreten
+Typs wie <code>i32</code> oder <code>String</code> annehmen, so wie eine Funktion Parameter mit
+unbekannten Werten annimmt, um denselben Code auf mehrere konkrete Werte
+anzuwenden. Tatsächlich haben wir generische Datentypen bereits in Kapitel 6
+mit <code>Option&lt;T&gt;</code>, in Kapitel 8 mit <code>Vec&lt;T&gt;</code> und <code>HashMap&lt;K, V&gt;</code> und in Kapitel
+9 mit <code>Result&lt;T, E&gt;</code> verwendet. In diesem Kapitel erfährst du, wie du deine
+eigenen Typen, Funktionen und Methoden mit generischen Datentypen definieren
+kannst!</p>
 <p>Zunächst werden wir uns anschauen, wie eine Funktion extrahiert werden kann, um
 Code-Duplizierung zu reduzieren. Danach verwenden wir dieselbe Technik, um aus
 zwei Funktionen, die sich nur im Datentyp ihrer Parameter unterscheiden, eine
@@ -9910,20 +9910,25 @@ können.</p>
 generische Weise zu definieren. Du kannst Merkmale mit generischen Typen
 kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.</p>
-<p>Schließlich werden wir die <em>Lebensdauer</em> (lifetimes) besprechen, eine Spielart
+<p>Schließlich werden wir die <em>Lebensdauer</em> (lifetimes) besprechen: Eine Spielart
 generischer Typen, die dem Compiler Informationen darüber gibt, wie
-Referenzen zueinander in Beziehung stehen. Die Lebensdauer erlaubt es uns, in
-vielen Situationen Werte auszuleihen und gleichzeitig dem Compiler die
-Möglichkeit zu geben, die Gültigkeit der Referenzen zu überprüfen.</p>
+Referenzen zueinander in Beziehung stehen. Lebensdauern ermöglichen es uns, dem
+Compiler genügend Informationen über ausgeliehene Werte zu geben, sodass er
+sicherstellen kann, dass Referenzen in mehr Situationen gültig sind, als er es
+ohne unsere Hilfe könnte.</p>
 <h2 id="duplikate-entfernen-durch-extrahieren-einer-funktion"><a class="header" href="#duplikate-entfernen-durch-extrahieren-einer-funktion">Duplikate entfernen durch Extrahieren einer Funktion</a></h2>
-<p>Bevor wir in die Syntax der generischen Typen eintauchen, wollen wir uns
-zunächst ansehen, wie man Duplikate, die keine generischen Typen betreffen,
-durch Extrahieren einer Funktion entfernt. Dann werden wir diese Technik
-anwenden, um eine generische Funktion zu extrahieren! Auf die gleiche Weise,
-wie du doppelten Code erkennst, der zu einer Funktion extrahiert wird, wirst du
-auch doppelten Code erkennen, der generische Typen verwenden kann.</p>
-<p>Betrachte ein kurzes Programm, das die größte Zahl in einer Liste findet, wie
-in Codeblock 10-1 gezeigt.</p>
+<p>Mit Hilfe von generischen Typen können wir spezifische Typen durch einen
+Platzhalter ersetzen, der mehrere Typen repräsentiert, um Code-Duplizierung zu
+vermeiden. Bevor wir uns mit der generischen Syntax befassen, wollen wir uns
+zunächst ansehen, wie man Duplikate auf eine Weise entfernt, die keine
+generischen Typen erfordert, indem man eine Funktion extrahiert, die
+spezifische Werte durch einen Platzhalter ersetzt, der mehrere Werte
+repräsentiert. Dann wenden wir die gleiche Technik an, um eine generische
+Funktion zu extrahieren! Wenn du dir ansiehst, wie du doppelten Code
+erkennst, den du in eine Funktion extrahieren kannst, wirst du beginnen,
+doppelten Code zu erkennen, der generische Typen verwenden kann.</p>
+<p>Wir beginnen mit dem kurzen Programm in Codeblock 10-1, das die größte Zahl in
+einer Liste findet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
@@ -9940,19 +9945,20 @@ in Codeblock 10-1 gezeigt.</p>
 <span class="boring">    assert_eq!(largest, 100);
 </span>}
 </code></pre></pre>
-<p><span class="caption">Codeblock 10-1: Code zum Finden der größten Zahl in einer
-Liste von Zahlen</span></p>
-<p>Dieser Code enthält eine Liste von ganzen Zahlen in der Variablen <code>number_list</code>
-und weist die erste Zahl der Liste einer Variablen namens <code>largest</code> zu. Dann
-iteriert sie über alle Zahlen in der Liste und wenn die aktuelle Zahl größer
-ist als die in <code>largest</code> gespeicherte Zahl, ersetzt sie die Zahl in dieser
+<p><span class="caption">Codeblock 10-1: Finden der größten Zahl in einer Liste
+von Zahlen</span></p>
+<p>Wir speichern eine Liste von ganzen Zahlen in der Variablen <code>number_list</code> und
+weisen die erste Zahl der Liste einer Variablen namens <code>largest</code> zu. Dann
+iterieren wir über alle Zahlen in der Liste und wenn die aktuelle Zahl größer
+als die in <code>largest</code> gespeicherte Zahl ist, ersetzen wir die Zahl in dieser
 Variablen. Wenn die aktuelle Zahl jedoch kleiner oder gleich der größten bisher
 gefundenen Zahl ist, ändert sich die Variable nicht, und der Code geht zur
 nächsten Zahl in der Liste weiter. Nach dem Durchlaufen aller Zahlen in der
 Liste sollte <code>largest</code> die größte Zahl enthalten, in diesem Fall 100.</p>
-<p>Um die größte Zahl in zwei verschiedenen Zahlenlisten zu finden, können wir den
-Code in Codeblock 10-1 duplizieren und dieselbe Logik an zwei verschiedenen
-Stellen im Programm verwenden, wie in Codeblock 10-2 gezeigt.</p>
+<p>Wir haben nun die Aufgabe bekommen, die größte Zahl in zwei verschiedenen
+Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Codeblock 10-1
+duplizieren und dieselbe Logik an zwei verschiedenen Stellen im Programm
+verwenden, wie in Codeblock 10-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
@@ -9983,17 +9989,18 @@ Stellen im Programm verwenden, wie in Codeblock 10-2 gezeigt.</p>
 <p><span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
 <em>zwei</em> Zahlenlisten</span></p>
 <p>Obwohl dieser Code funktioniert, ist das Duplizieren von Code mühsam und
-fehleranfällig. Außerdem müssen wir den Code an mehreren Stellen aktualisieren,
-wenn wir ihn ändern wollen.</p>
+fehleranfällig. Außerdem müssen wir daran denken, den Code an mehreren Stellen
+zu aktualisieren, wenn wir ihn ändern wollen.</p>
 <p>Um diese Redundanz zu eliminieren, können wir eine Abstraktion schaffen, indem
 wir eine Funktion definieren, die auf einer beliebigen Liste ganzer Zahlen
 operiert, die ihr als Parameter übergeben wird. Diese Lösung macht unseren Code
 klarer und lässt uns das Konzept, die größte Zahl in einer Liste zu finden,
 abstrakter ausdrücken.</p>
-<p>In Codeblock 10-3 extrahierten wir den Code, der die größte Zahl findet, in
-eine Funktion namens <code>largest</code>. Im Unterschied zum Code in Codeblock 10-1, der
-die größte Zahl in nur einer bestimmten Liste finden kann, kann dieses Programm
-die größte Zahl in zwei verschiedenen Listen finden.</p>
+<p>In Codeblock 10-3 extrahieren wir den Code, der die größte Zahl findet, in eine
+Funktion namens <code>largest</code>. Dann rufen wir die Funktion auf, um die größte Zahl
+in den beiden Listen aus Codeblock 10-2 zu finden. Wir könnten die Funktion
+auch auf jede andere Liste von <code>i32</code>-Werten anwenden, die wir in Zukunft haben
+könnten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn largest(list: &amp;[i32]) -&gt; i32 {
     let mut largest = list[0];
@@ -10042,20 +10049,20 @@ Eingabe- und Rückgabewerte dieses Codes in der Funktionssignatur.</li>
 Funktion aufzurufen.</li>
 </ol>
 <p>Als Nächstes werden wir dieselben Schritte auf generische Datentypen anwenden,
-um doppelten Code auf unterschiedliche Weise zu reduzieren. Ähnlich wie der
-Funktionsrumpf auf einer abstrakten Liste anstelle spezifischer Werte arbeiten
-kann, erlauben es generische Datentypen, auf abstrakten Typen zu arbeiten.</p>
+um doppelten Code zu reduzieren. Ähnlich wie der Funktionsrumpf auf einer
+abstrakten Liste anstelle spezifischer Werte arbeiten kann, erlauben es
+generische Datentypen, auf abstrakten Typen zu arbeiten.</p>
 <p>Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
 Element in einem Anteilstyp mit <code>i32</code>-Werten findet, und eine, die das größte
 Element in einem Anteilstyp mit <code>char</code>-Werten findet. Wie würden wir diese
 Duplizierung beseitigen? Lass es uns herausfinden!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="generische-datentypen"><a class="header" href="#generische-datentypen">Generische Datentypen</a></h2>
-<p>Wir können generische Datentypen (generics) verwenden, um Definitionen für
-Elemente wie Funktionssignaturen oder Strukturen (structs) zu erstellen, die
-wir dann mit vielen verschiedenen konkreten Datentypen verwenden können. Sehen
-wir uns zunächst an, wie Funktionen, Strukturen, Aufzählungen und Methoden
-mithilfe von generischen Datentypen definiert werden können. Danach werden wir
-uns ansehen, wie generische Datentypen die Code-Performanz beeinflussen.</p>
+<p>Wir verwenden generische Datentypen (generics), um Definitionen für Elemente
+wie Funktionssignaturen oder Strukturen (structs) zu erstellen, die wir dann
+mit vielen verschiedenen konkreten Datentypen verwenden können. Sehen wir uns
+zunächst an, wie Funktionen, Strukturen, Aufzählungen und Methoden mithilfe von
+generischen Datentypen definiert werden können. Danach werden wir uns ansehen,
+wie generische Datentypen die Code-Performanz beeinflussen.</p>
 <h3 id="in-funktionsdefinitionen"><a class="header" href="#in-funktionsdefinitionen">In Funktionsdefinitionen</a></h3>
 <p>Bei der Definition einer Funktion, die generische Datentypen verwendet,
 platzieren wir die generischen Datentypen in der Signatur der Funktion, wo wir
@@ -10064,7 +10071,9 @@ würden. Dadurch wird unser Code flexibler und bietet den Aufrufern unserer
 Funktion mehr Funktionalität, während gleichzeitig Code-Duplikate verhindert
 werden.</p>
 <p>Um mit unserer Funktion <code>largest</code> fortzufahren, zeigt Codeblock 10-4 zwei
-Funktionen, die beide den größten Wert in einem Anteilstyp finden.</p>
+Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
+diese dann in einer einzigen Funktion kombinieren, die generische Typen
+verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn largest_i32(list: &amp;[i32]) -&gt; i32 {
     let mut largest = list[0];
@@ -10112,13 +10121,13 @@ haben und die den größten <code>i32</code> in einem Anteilstyp findet. Die Fun
 Funktionsrümpfe haben den gleichen Code, also lass uns die Duplizierung
 eliminieren, indem wir einen generischen Typparameter in einer einzigen
 Funktion einführen.</p>
-<p>Um die Typen in der neuen Funktion, die wir definieren werden, zu
-parametrisieren, müssen wir den Typparameter benennen, so wie wir es für die
-Wertparameter einer Funktion tun. Du kannst jeden beliebigen Bezeichner als
-Typparametername verwenden. Aber wir werden <code>T</code> verwenden, weil die
-Parameternamen gemäß Konvention in Rust kurz sind, oft nur ein Buchstabe, und
-Rusts Typbezeichnungskonvention verwendet Binnenmajuskel (CamelCase). Als
-Abkürzung für „Typ“ ist <code>T</code> die Standardwahl der meisten Rust-Programmierer.</p>
+<p>Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
+den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
+tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
+wir werden <code>T</code> verwenden, weil die Parameternamen gemäß Konvention in Rust kurz
+sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
+Binnenmajuskel (CamelCase). Als Abkürzung für „Typ“ ist <code>T</code> die Standardwahl
+der meisten Rust-Programmierer.</p>
 <p>Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
 dieser Name bedeutet. In ähnlicher Weise müssen wir den Typ-Parameternamen
@@ -10163,8 +10172,8 @@ fn main() {
     println!(&quot;Das größte Zeichen ist {}&quot;, result);
 }
 </code></pre></pre>
-<p><span class="caption">Codeblock 10-5: Eine Definition der Funktion <code>largest</code>,
-die generische Typparameter verwendet, aber noch nicht kompiliert</span></p>
+<p><span class="caption">Codeblock 10-5: Die Funktion <code>largest</code> mit generischen
+Typparametern; diese kompiliert aber noch nicht</span></p>
 <p>Wenn wir diesen Code kompilieren, erhalten wir diesen Fehler:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
@@ -10193,13 +10202,13 @@ können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
 <code>std::cmp::PartialOrd</code>, das du auf Typen implementieren kannst (siehe Anhang C
 für weitere Informationen zu diesem Merkmal). Du wirst im Abschnitt <a href="ch10-02-traits.html#merkmale-als-parameter">„Merkmale
 als Parameter“</a> lernen, wie man angibt, dass ein
-generischer Typ ein bestimmtes Merkmal hat, aber lass uns zunächst andere
+generischer Typ ein bestimmtes Merkmal hat. Lass uns zunächst andere
 Möglichkeiten der Verwendung generischer Typparameter untersuchen.</p>
 <h3 id="in-struktur-definitionen"><a class="header" href="#in-struktur-definitionen">In Struktur-Definitionen</a></h3>
 <p>Wir können auch Strukturen definieren, um einen generischen Typparameter in
 einem oder mehreren Feldern mit der <code>&lt;&gt;</code> Syntax zu verwenden. Codeblock 10-6
-zeigt, wie man eine Struktur <code>Point&lt;T&gt;</code> definiert, um Koordinatenwerte <code>x</code> und
-<code>y</code> eines beliebigen Typs aufzunehmen.</p>
+definiert eine Struktur <code>Point&lt;T&gt;</code>, um Koordinatenwerte <code>x</code> und <code>y</code> eines
+beliebigen Typs aufzunehmen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Point&lt;T&gt; {
     x: T,
@@ -10216,8 +10225,8 @@ und <code>y</code> vom Typ <code>T</code> enthält</span></p>
 <p>Die Syntax zum Verwenden von generischen Datentypen in Strukturdefinitionen
 ähnelt der Syntax, die in Funktionsdefinitionen verwendet wird. Zuerst
 deklarieren wir den Namen des Typparameters innerhalb spitzer Klammern direkt
-nach dem Namen der Struktur. Dann können wir den generischen Typ in der
-Strukturdefinition verwenden, wo wir sonst konkrete Datentypen angeben würden.</p>
+nach dem Namen der Struktur. Dann verwenden wir den generischen Typ in der
+Strukturdefinition, wo wir sonst konkrete Datentypen angeben würden.</p>
 <p>Beachte, da wir nur einen generischen Typ zur Definition von <code>Point&lt;T&gt;</code>
 verwendet haben, besagt diese Definition, dass die Struktur <code>Point&lt;T&gt;</code>
 generisch über einen Typ <code>T</code> ist, und die beiden Felder <code>x</code> und <code>y</code> <em>denselben</em>
@@ -10254,9 +10263,9 @@ error: could not compile `chapter10` due to previous error
 </code></pre>
 <p>Um eine Struktur <code>Point</code> zu definieren, bei der <code>x</code> und <code>y</code> generische, aber
 unterschiedliche, Typen haben können, können wir mehrere generische
-Typparameter verwenden. Zum Beispiel können wir in Codeblock 10-8 die
-Definition von <code>Point</code> so ändern, dass sie über den Typen <code>T</code> und <code>U</code> generisch
-ist, wobei <code>x</code> vom Typ <code>T</code> und <code>y</code> vom Typ <code>U</code> ist.</p>
+Typparameter verwenden. Zum Beispiel ändern wir in Codeblock 10-8 die
+Definition von <code>Point</code> so, dass sie über den Typen <code>T</code> und <code>U</code> generisch ist,
+wobei <code>x</code> vom Typ <code>T</code> und <code>y</code> vom Typ <code>U</code> ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Point&lt;T, U&gt; {
     x: T,
@@ -10274,8 +10283,8 @@ Typen, sodass <code>x</code> und <code>y</code> Werte unterschiedlichen Typs hab
 <p>Jetzt sind alle gezeigten Instanzen von <code>Point</code> erlaubt! Du kannst so viele
 generische Typparameter in einer Definition verwenden, wie du willst, aber das
 Verwenden von mehr als einigen wenigen macht deinen Code schwer lesbar. Wenn du
-viele generische Typen in deinem Code benötigst, könnte dies darauf hinweisen,
-dass dein Code in kleinere Teile zerlegt werden muss.</p>
+denkst, dass du in deinem Code viele generische Typen benötigst, könnte dies
+darauf hinweisen, dass dein Code in kleinere Teile zerlegt werden muss.</p>
 <h3 id="in-aufzählungsdefinitionen"><a class="header" href="#in-aufzählungsdefinitionen">In Aufzählungsdefinitionen</a></h3>
 <p>Wie wir es bei Strukturen gemacht haben, können wir Aufzählungen definieren, um
 generische Datentypen in ihren Varianten zu verwenden. Werfen wir noch einmal
@@ -10291,10 +10300,10 @@ und die wir in Kapitel 6 verwendet haben:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>Diese Definition dürfte für dich jetzt mehr Sinn machen. Wie du sehen kannst,
-ist <code>Option&lt;T&gt;</code> eine Aufzählung, die über dem Typ <code>T</code> generisch ist und zwei
-Varianten hat: <code>Some</code>, die einen Wert vom Typ <code>T</code> enthält, und <code>None</code>, die
-keinen Wert enthält. Durch das Verwenden der Aufzählung <code>Option&lt;T&gt;</code> können wir
-das abstrakte Konzept eines optionalen Wertes ausdrücken und da <code>Option&lt;T&gt;</code>
+ist die Aufzählung <code>Option&lt;T&gt;</code> über dem Typ <code>T</code> generisch und hat zwei
+Varianten: <code>Some</code>, die einen Wert vom Typ <code>T</code> enthält, und <code>None</code>, die keinen
+Wert enthält. Durch das Verwenden der Aufzählung <code>Option&lt;T&gt;</code> können wir das
+abstrakte Konzept eines optionalen Wertes ausdrücken und da <code>Option&lt;T&gt;</code>
 generisch ist, können wir diese Abstraktion unabhängig vom Typ des
 optionalen Wertes verwenden.</p>
 <p>Aufzählungen können auch mehrere generische Typen verwenden. Die Definition der
@@ -10353,20 +10362,18 @@ den Wert im Feld <code>x</code> zurückgibt.</p>
 <p>Beachte, dass wir <code>T</code> direkt nach <code>impl</code> deklarieren müssen, damit wir Methoden
 zum Typ <code>Point&lt;T&gt;</code> implementieren können. Durch das Deklarieren von <code>T</code> als
 generischen Typ hinter <code>impl</code> kann Rust erkennen, dass der Typ in spitzen
-Klammern in <code>Point</code> ein generischer und kein konkreter Typ ist. Da es sich hier
-um eine erneute Deklaration des generischen Typs handelt, hätten wir einen
-anderen Namen für den generischen Parameter wählen können als den in der
+Klammern in <code>Point</code> ein generischer und kein konkreter Typ ist. Wir hätten
+einen anderen Namen für den generischen Parameter wählen können als den in der
 Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
 desselben Namens ist üblich. Methoden, die innerhalb eines <code>impl</code> geschrieben
 werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
 definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
 ersetzt.</p>
-<p>Die andere Möglichkeit, die wir haben, ist die Definition von Methoden auf dem
-Typ mit einer gewissen Einschränkung auf den generischen Typ. Wir könnten zum
-Beispiel Methoden nur auf <code>Point&lt;f32&gt;</code>-Instanzen implementieren und nicht auf
-<code>Point&lt;T&gt;</code>-Instanzen mit einem beliebigen generischen Typ. In Codeblock 10-10
-verwenden wir den konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter
-<code>impl</code>.</p>
+<p>Wir können auch Einschränkungen für generische Typen angeben, wenn wir Methoden
+auf dem Typ definieren. Wir könnten zum Beispiel Methoden nur auf
+<code>Point&lt;f32&gt;</code>-Instanzen implementieren und nicht auf <code>Point&lt;T&gt;</code>-Instanzen mit
+einem beliebigen generischen Typ. In Codeblock 10-10 verwenden wir den
+konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter <code>impl</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct Point&lt;T&gt; {
 </span><span class="boring">    x: T,
@@ -10394,14 +10401,14 @@ verwenden wir den konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Ty
 <p><span class="caption">Codeblock 10-10: Ein <code>impl</code>-Block, der nur für eine
 Struktur mit einem bestimmten konkreten Typ für den generischen Typparameter
 <code>T</code> gilt</span></p>
-<p>Dieser Code bedeutet, dass der Typ <code>Point&lt;f32&gt;</code> eine Methode namens
+<p>Dieser Code bedeutet, dass der Typ <code>Point&lt;f32&gt;</code> eine Methode
 <code>distance_from_origin</code> hat und andere Instanzen von <code>Point&lt;T&gt;</code>, bei denen <code>T</code>
 nicht vom Typ <code>f32</code> ist, haben diese Methode nicht. Die Methode misst, wie weit
 unser Punkt vom Punkt mit den Koordinaten (0,0, 0,0) entfernt ist, und
 verwendet mathematische Operationen, die nur für Fließkomma-Typen zur Verfügung
 stehen.</p>
 <p>Generische Typparameter in einer Strukturdefinition sind nicht immer die
-gleichen wie die, die du in den Methodensignaturen für diese Struktur
+gleichen wie die, die du in denselben Methodensignaturen für diese Struktur
 verwendest. In Codeblock 10-11 werden die generischen Typen <code>X1</code> und <code>Y1</code> für
 die Struktur <code>Point</code> und <code>X2</code> und <code>Y2</code> für die Signatur der Methode <code>mixup</code>
 verwendet, um das Beispiel zu verdeutlichen. Die Methode erzeugt eine neue
@@ -10431,8 +10438,8 @@ fn main() {
     println!(&quot;p3.x = {}, p3.y = {}&quot;, p3.x, p3.y);
 }
 </code></pre></pre>
-<p><span class="caption">Codeblock 10-11: Eine Methode, die verschiedene
-generische Typen aus der Definition ihrer Struktur verwendet</span></p>
+<p><span class="caption">Codeblock 10-11: Eine Methode, die generische Typen aus
+der Definition ihrer Struktur anders verwendet</span></p>
 <p>In <code>main</code> haben wir einen <code>Point</code> definiert, bei dem <code>x</code> den Typ <code>i32</code> (mit dem
 Wert <code>5</code>) und <code>y</code> den Typ <code>f64</code> (mit dem Wert <code>10.4</code>) hat. Die Variable <code>p2</code>
 ist eine Struktur <code>Point</code>, bei der <code>x</code> einen Zeichenkettenanteilstyp (mit dem
@@ -10449,20 +10456,19 @@ Parameter <code>X2</code> und <code>Y2</code> werden nach <code>fn mixup</code> 
 Methode relevant sind.</p>
 <h3 id="code-performanz-beim-verwenden-generischer-datentypen"><a class="header" href="#code-performanz-beim-verwenden-generischer-datentypen">Code-Performanz beim Verwenden generischer Datentypen</a></h3>
 <p>Du fragst dich vielleicht, ob beim Verwenden generischer Typparameter
-Laufzeitkosten anfallen. Die gute Nachricht ist, dass Rust generische
-Typparameter so implementiert, dass dein Code mit generischen Typen nicht
-langsamer läuft als mit konkreten Typen.</p>
-<p>Rust erreicht dies durch Duplizierung von Code, der zur Kompilierzeit
-generische Datentypen verwendet. <em>Codeduplizierung</em> (monomorphization) ist der
-Vorgang der Umwandlung von generischem Code in spezifischen Code durch
-Ausfüllen der konkreten Typen, die bei der Kompilierung verwendet werden.</p>
-<p>Bei diesem Prozess führt der Compiler das Gegenteil der Schritte aus, die
-wir beim Erstellen der generischen Funktion in Codeblock 10-5 angewendet haben: 
-Der Compiler schaut sich alle Stellen an, an denen generischer Code
-aufgerufen wird, und generiert Code für die konkreten Typen, mit denen der
-generische Code aufgerufen wird.</p>
-<p>Betrachten wir die Funktionsweise anhand eines Beispiels, das die Aufzählung
-<code>Option&lt;T&gt;</code> der Standardbibliothek verwendet:</p>
+Laufzeitkosten anfallen. Die gute Nachricht ist, dass die Verwendung
+generischer Typen die Ausführung nicht langsamer macht als bei konkreten
+Typen.</p>
+<p>Rust erreicht dies durch Duplizierung von Code mit generischen Datentypen zur
+Kompilierzeit. <em>Codeduplizierung</em> (monomorphization) ist der Vorgang der
+Umwandlung von generischem Code in spezifischen Code durch Ausfüllen der
+konkreten Typen, die bei der Kompilierung verwendet werden. Bei diesem Vorgang
+führt der Compiler das Gegenteil der Schritte aus, die wir beim Erstellen der
+generischen Funktion in Codeblock 10-5 angewendet haben: Der Compiler schaut
+sich alle Stellen an, an denen generischer Code aufgerufen wird, und generiert
+Code für die konkreten Typen, mit denen der generische Code aufgerufen wird.</p>
+<p>Betrachten wir die Funktionsweise bei der Aufzählung <code>Option&lt;T&gt;</code> der
+Standardbibliothek:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10476,8 +10482,7 @@ dieses Vorgangs liest der Compiler die Werte ein, die in
 <code>Option&lt;T&gt;</code>: Eine verwendet den Typ <code>i32</code> und die andere <code>f64</code>. Daraufhin
 erweitert es die generische Definition von <code>Option&lt;T&gt;</code> zu <code>Option_i32</code> und
 <code>Option_f64</code> und ersetzt damit die generische Definition durch die spezifische.</p>
-<p>Die duplizierte Codeversion sieht wie folgt aus. Die generische <code>Option&lt;T&gt;</code>
-wird durch die vom Compiler erstellten spezifischen Definitionen ersetzt:</p>
+<p>Die duplizierte Codeversion sieht wie folgt aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">enum Option_i32 {
     Some(i32),
@@ -10494,17 +10499,19 @@ fn main() {
     let float = Option_f64::Some(5.0);
 }
 </code></pre></pre>
-<p>Da Rust generischen Code in Code kompiliert, der den Typ in jedem Fall
-spezifiziert, zahlen wir keine Laufzeitkosten beim Verwenden von generischen
-Datentypen. Wenn der Code läuft, verhält er sich genauso, wie wenn wir jede
-Definition von Hand dupliziert hätten. Der Vorgang der Codeduplizierung macht
-Rusts generische Datentypen zur Laufzeit äußerst effizient.</p>
+<p>Der generische Typ <code>Option&lt;T&gt;</code> wird durch die vom Compiler erstellten
+spezifischen Definitionen ersetzt. Da Rust generischen Code in Code kompiliert,
+der den Typ in jedem Fall spezifiziert, zahlen wir keine Laufzeitkosten beim
+Verwenden von generischen Datentypen. Wenn der Code läuft, verhält er sich
+genauso, wie wenn wir jede Definition von Hand dupliziert hätten. Der Vorgang
+der Codeduplizierung macht Rusts generische Datentypen zur Laufzeit äußerst
+effizient.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="merkmale-traits-gemeinsames-verhalten-definieren"><a class="header" href="#merkmale-traits-gemeinsames-verhalten-definieren">Merkmale (traits): Gemeinsames Verhalten definieren</a></h2>
-<p>Ein <em>Merkmal</em> (trait) teilt dem Rust-Compiler mit, welche Funktionalität ein
-bestimmter Typ hat und mit anderen Typen teilen kann. Wir können Merkmale
-verwenden, um gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir
-können Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
-generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.</p>
+<p>Ein <em>Merkmal</em> (trait) definiert Funktionalität, den ein bestimmter Typ hat und
+mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
+Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
+(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
+kann, der ein bestimmtes Verhalten aufweist.</p>
 <blockquote>
 <p>Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 Sprachen oft <em>Schnittstelle</em> (interface) genannt wird, wenn auch mit einigen
@@ -10614,8 +10621,8 @@ den jeweiligen Typ haben sollen.</p>
 <p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>Tweet</code>
 implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
 Instanzen von <code>NewsArticle</code> und <code>Tweet</code> auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
-Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
+Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
 <pre><code class="language-rust ignore"><span class="boring">use chapter10::{self, Summary, Tweet};
@@ -10635,16 +10642,15 @@ wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden
 </span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
-<code>Summary</code> in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
-Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
-Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
-implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
-Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
-<code>Display</code> auf einem benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
-<code>aggregator</code>-Kistenfunktionalität implementieren, weil der Typ <code>Tweet</code> lokal zu
-unserer <code>aggregator</code>-Kiste gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in
-unserer <code>aggregator</code>-Kiste implementieren, weil das Merkmal <code>Summary</code> lokal zu
-unserer <code>aggregator</code>-Kiste gehört.</p>
+<code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
+Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
+Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
+wie <code>Tweet</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität implementieren,
+weil der Typ <code>Tweet</code> lokal zu unserer <code>aggregator</code>-Kiste gehört. Wir können
+auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste implementieren, weil
+das Merkmal <code>Summary</code> lokal zu unserer <code>aggregator</code>-Kiste gehört.</p>
 <p>Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
 können wir das Merkmal <code>Display</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
 nicht implementieren, weil <code>Display</code> und <code>Vec&lt;T&gt;</code> in der Standardbibliothek
@@ -10662,8 +10668,8 @@ eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
 Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
 implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 überschreiben.</p>
-<p>Codeblock 10-14 zeigt, wie man eine Standard-Zeichenkette für die Methode
-<code>summarize</code> des Merkmals <code>Summary</code> angibt, anstatt nur die Methodensignatur zu
+<p>In Codeblock 10-14 geben wir eine Standard-Zeichenkette für die Methode
+<code>summarize</code> des Merkmals <code>Summary</code> an, anstatt nur die Methodensignatur zu
 definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -10676,11 +10682,10 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><span class="caption">Codeblock 10-14: Definition eines Merkmals <code>Summary</code> mit
+<p><span class="caption">Codeblock 10-14: Definieren eines Merkmals <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
 <p>Um eine Standard-Implementierung zu verwenden, um Instanzen von <code>NewsArticle</code>
-zusammenzufassen, anstatt eine benutzerdefinierte Implementierung zu
-definieren, geben wir einen leeren <code>impl</code>-Block mit <code>impl Summary for NewsArticle {}</code> an.</p>
+zusammenzufassen, geben wir einen leeren <code>impl</code>-Block mit <code>impl Summary for NewsArticle {}</code> an.</p>
 <p>Auch wenn wir die Methode <code>summarize</code> nicht mehr direkt für <code>NewsArticle</code>
 definieren, haben wir eine Standard-Implementierung bereitgestellt und
 festgelegt, dass <code>NewsArticle</code> das Merkmal <code>Summary</code> implementiert.
@@ -10702,9 +10707,9 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 <span class="boring">}
 </span></code></pre>
 <p>Dieser Code gibt <code>Neuer Artikel verfügbar! (Lies mehr ...)</code> aus.</p>
-<p>Das Erstellen einer Standard-Implementierung für <code>summarize</code> erfordert nicht,
-dass wir an der Implementierung von <code>Summary</code> für <code>Tweet</code> in Codeblock 10-13
-etwas ändern. Der Grund dafür ist, dass die Syntax für das Überschreiben einer
+<p>Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
+Implementierung von <code>Summary</code> für <code>Tweet</code> in Codeblock 10-13 etwas ändern. Der
+Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Merkmalsmethode, die keine Standard-Implementierung hat.</p>
 <p>Standard-Implementierungen können andere Methoden desselben Merkmals aufrufen,
@@ -10779,12 +10784,12 @@ dass wir weiteren Code schreiben müssen. </p>
 <h3 id="merkmale-als-parameter"><a class="header" href="#merkmale-als-parameter">Merkmale als Parameter</a></h3>
 <p>Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
-viele verschiedene Typen akzeptieren.</p>
-<p>Beispielsweise haben wir in Codeblock 10-13 das Merkmal <code>Summary</code> für die Typen
-<code>NewsArticle</code> und <code>Tweet</code> implementiert. Wir können eine Funktion <code>notify</code>
-definieren, die die Methode <code>summarize</code> ihres <code>item</code>-Parameters aufruft, der
-einen Typ hat, der das Merkmal <code>Summary</code> implementiert. Um dies zu tun, können
-wir die Syntax <code>impl Trait</code> verwenden, etwa so:</p>
+viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal <code>Summary</code>, das
+wir für die Typen <code>NewsArticle</code> und <code>Tweet</code> in Codeblock 10-13 implementiert
+haben, um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summarize</code> für
+ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das Merkmal
+<code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code>
+verwenden, etwa so:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -10826,17 +10831,16 @@ wortreicher. Wir platzieren Merkmalsabgrenzungen in der Deklaration des
 generischen Typparameters nach einem Doppelpunkt und innerhalb spitzer
 Klammern.</p>
 <p>Die Syntax <code>impl Trait</code> ist bequem und ermöglicht in einfachen Fällen einen
-prägnanteren Code. Die Merkmalsabgrenzungs-Syntax kann andererseits mehr
-Komplexität ausdrücken. Zum Beispiel können wir zwei Parameter haben, die
+prägnanteren Code, während die umfassendere Merkmalsabgrenzungs-Syntax mehr
+Komplexität ausdrücken kann. Zum Beispiel können wir zwei Parameter haben, die
 <code>Summary</code> implementieren. Das Verwenden der Syntax <code>impl Trait</code> sieht
 folgendermaßen aus:</p>
 <pre><code class="language-rust ignore">pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {
 </code></pre>
-<p>Wenn wir wollten, dass diese Funktion bei <code>item1</code> und <code>item2</code> unterschiedliche
-Typen haben kann, wäre das Verwenden von <code>impl Trait</code> dafür geeignet (solange
+<p>Die Verwendung von <code>impl Trait</code> ist angemessen, wenn wir wollten, dass diese
+Funktion bei <code>item1</code> und <code>item2</code> unterschiedliche Typen haben kann (solange
 beide Typen <code>Summary</code> implementieren). Wenn beide Parameter aber den gleichen
-Typ haben sollten, dann kann man das nur durch eine Merkmalsabgrenzung
-ausdrücken, so wie hier:</p>
+Typ haben sollen, müssen wir eine Merkmalsabgrenzung verwenden, so wie hier:</p>
 <pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {
 </code></pre>
 <p>Der als Parametertyp für <code>item1</code> und <code>item2</code> angegebene generische Typ <code>T</code>
@@ -10911,9 +10915,9 @@ gezeigt:</p>
 Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Merkmal <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
 <code>returns_summarizable</code> einen <code>Tweet</code> zurück, aber der Code, der diese Funktion
-aufruft, weiß das nicht.</p>
-<p>Die Fähigkeit, einen Typ zurückzugeben, der nur durch das Merkmal spezifiziert
-ist, das er implementiert, ist besonders nützlich im Zusammenhang mit
+aufruft, muss das nicht wissen.</p>
+<p>Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
+zu spezifizieren, ist besonders nützlich im Zusammenhang mit
 Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
 Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
 kennt oder deren Spezifikation sehr lang ist. Mit der Syntax <code>impl Trait</code>
@@ -11120,16 +11124,15 @@ dass wir potenziell mehr Allokationen im Haldenspeicher im Falle von
 Typen vornehmen, die Haldenspeicherdaten wie <code>String</code> besitzen. Und
 Allokationen im Haldenspeicher können langsam sein, wenn wir mit großen
 Datenmengen arbeiten.</p>
-<p>Eine andere Möglichkeit, wie wir <code>largest</code> implementieren könnten, besteht
-darin, dass die Funktion eine Referenz auf einen <code>T</code>-Wert im Anteilstyp
-zurückgibt. Wenn wir den Rückgabetyp in <code>&amp;T</code> anstelle von <code>T</code> ändern und
-dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
-wir die Merkmalsabgrenzungen <code>Clone</code> oder <code>Copy</code> nicht und könnten Allokationen
-im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
-zu implementieren! Wenn du bei Fehlern, die mit Lebensdauern zu tun haben,
-hängen bleibst, lese weiter: Der Abschnitt „Referenzen validieren mit
-Lebensdauern“ wird dies erläutern, aber Lebensdauern sind nicht erforderlich,
-um diese Probleme zu lösen.</p>
+<p>Wir könnten <code>largest</code> auch implementieren, indem die Funktion eine Referenz auf
+einen <code>T</code>-Wert im Anteilstyp zurückgibt. Wenn wir den Rückgabetyp in <code>&amp;T</code>
+anstelle von <code>T</code> ändern und dadurch den Funktionsrumpf ändern, um eine Referenz
+zurückzugeben, bräuchten wir die Merkmalsabgrenzungen <code>Clone</code> oder <code>Copy</code> nicht
+und könnten Allokationen im Haldenspeicher vermeiden. Versuche, diese
+alternativen Lösungen selbst zu implementieren! Wenn du bei Fehlern, die mit
+Lebensdauern zu tun haben, hängen bleibst, lese weiter: Der Abschnitt
+„Referenzen validieren mit Lebensdauern“ wird dies erläutern, aber Lebensdauern
+sind nicht erforderlich, um diese Probleme zu lösen.</p>
 <h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
@@ -11209,12 +11212,11 @@ Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zu
 Kompilierungszeit überprüft haben. Auf diese Weise wird die Performanz
 verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
 müssen.</p>
-<p>Eine weitere generische Funktionalität, die wir bereits verwendet haben, heißt
-<em>Lebensdauer</em> (lifetimes). Anstatt sicherzustellen, dass ein Typ das von uns
-gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
-Referenzen so lange gültig sind, wie wir sie brauchen. Schauen wir uns an, wie
-Lebensdauern das tun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="referenzen-validieren-mit-lebensdauern"><a class="header" href="#referenzen-validieren-mit-lebensdauern">Referenzen validieren mit Lebensdauern</a></h2>
+<p><em>Lebensdauer</em> (lifetimes) sind eine weitere generische Funktionalität, die wir
+bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
+gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
+Referenzen so lange gültig sind, wie wir sie brauchen.</p>
 <p>Ein Detail, das wir im Abschnitt <a href="ch04-02-references-and-borrowing.html">„Referenzen und Ausleihen
 (borrowing)“</a> in Kapitel 4 nicht erörtert haben, ist,
 dass jede Referenz in Rust eine <em>Lebensdauer</em> (lifetime) hat, d.h. einen
@@ -11233,10 +11235,11 @@ wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
 werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
 mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.</p>
 <h3 id="verhindern-hängender-referenzen-mit-lebensdauern"><a class="header" href="#verhindern-hängender-referenzen-mit-lebensdauern">Verhindern hängender Referenzen mit Lebensdauern</a></h3>
-<p>Das Hauptziel der Lebensdauer ist es, hängende Referenzen zu verhindern, die
-dazu führen, dass ein Programm auf andere Daten referenziert als die, auf die
-es referenzieren soll. Betrachte das Programm in Codeblock 10-17, das einen
-äußeren und einen inneren Gültigkeitsbereich hat.</p>
+<p>Das Hauptziel der Lebensdauer ist es, <em>hängende Referenzen</em> (dangling
+references) zu verhindern, die dazu führen, dass ein Programm auf andere
+Daten referenziert als die, auf die es referenzieren soll. Betrachte das
+Programm in Codeblock 10-17, das einen äußeren und einen inneren
+Gültigkeitsbereich hat.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     {
         let r;
@@ -11342,9 +11345,9 @@ Lebensdauer analysiert, um sicherzustellen, dass Referenzen immer gültig sind,
 lass uns die generischen Lebensdauern von Parametern und Rückgabewerten im
 Kontext von Funktionen untersuchen.</p>
 <h3 id="generische-lebensdauern-in-funktionen"><a class="header" href="#generische-lebensdauern-in-funktionen">Generische Lebensdauern in Funktionen</a></h3>
-<p>Schreiben wir eine Funktion, die den längeren von zwei
+<p>Wir schreiben eine Funktion, die den längeren von zwei
 Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
-Zeichenkettenanteilstypen entgegen und gibt einen
+Zeichenkettenanteilstypen entgegen und gibt einen einzigen
 Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion <code>longest</code>
 implementiert haben, sollte der Code in Codeblock 10-20 <code>Die längere Zeichenkette ist abcd</code> ausgeben.</p>
 <p><span class="filename">Datei: src/main.rs</span></p>
@@ -11360,11 +11363,12 @@ implementiert haben, sollte der Code in Codeblock 10-20 <code>Die längere Zeich
 <code>longest</code> aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
 bestimmen</span></p>
 <p>Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
-die Referenzen sind, weil wir nicht wollen, dass die Funktion <code>longest</code> die
-Eigentümerschaft ihrer Parameter übernimmt. Lies den Abschnitt
-<a href="ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter">„Zeichenkettenanteilstypen als Parameter“</a> in
-Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
-Codeblock 10-20 verwenden, die von uns gewünschten sind.</p>
+die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
+Funktion <code>longest</code> die Eigentümerschaft ihrer Parameter übernimmt. Lies den
+Abschnitt <a href="ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter">„Zeichenkettenanteilstypen als
+Parameter“</a> in Kapitel 4, um mehr darüber zu
+erfahren, warum die Parameter, die wir in Codeblock 10-20 verwenden, die von
+uns gewünschten sind.</p>
 <p>Wenn wir versuchen, die Funktion <code>longest</code>, wie in Codeblock 10-21 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -11424,17 +11428,18 @@ Lebensdauerparameter an, die die Beziehung zwischen den Referenzen definieren,
 damit der Ausleihenprüfer seine Analyse durchführen kann.</p>
 <h3 id="lebensdauer-annotationssyntax"><a class="header" href="#lebensdauer-annotationssyntax">Lebensdauer-Annotationssyntax</a></h3>
 <p>Lebensdauer-Annotationen ändern nichts daran, wie lange eine Referenz lebt.
-Genauso wie Funktionen jeden Typ entgegennehmen können, wenn die Signatur einen
-generischen Typparameter angibt, können Funktionen Referenzen mit beliebiger
-Lebensdauer akzeptieren, indem sie einen generischen Lebensdauerparameter
-angeben. Lebensdauer-Annotationen beschreiben die Beziehungen der Lebensdauern
-mehrerer Referenzen zueinander, ohne die Lebensdauern zu beeinflussen.</p>
+Vielmehr beschreiben sie die Beziehungen der Lebensdauern mehrerer Referenzen
+zueinander, ohne die Lebensdauern zu beeinflussen. Genauso wie Funktionen jeden
+Typ entgegennehmen können, wenn die Signatur einen generischen Typparameter
+angibt, können Funktionen Referenzen mit beliebiger Lebensdauer akzeptieren,
+indem sie einen generischen Lebensdauerparameter angeben.</p>
 <p>Lebensdauer-Annotationen haben eine etwas ungewöhnliche Syntax: Die Namen der
 Lebensdauer-Parameter müssen mit einem Apostroph (<code>'</code>) beginnen und sind
 normalerweise kleingeschrieben und sehr kurz, wie generische Typen. Die meisten
-Menschen verwenden den Namen <code>'a</code>. Wir platzieren
-Lebensdauer-Parameter-Annotationen hinter dem <code>&amp;</code> einer Referenz, wobei wir ein
-Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu trennen.</p>
+Menschen verwenden den Namen <code>'a</code> für die erste Lebensdauer-Annotationen. Wir
+platzieren Lebensdauer-Parameter-Annotationen hinter dem <code>&amp;</code> einer Referenz,
+wobei wir ein Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu
+trennen.</p>
 <p>Hier sind einige Beispiele: Eine Referenz auf einen <code>i32</code> ohne
 Lebensdauer-Parameter, eine Referenz auf einen <code>i32</code>, die einen
 Lebensdauer-Parameter namens <code>'a</code> hat, und eine veränderlicher Referenz auf
@@ -11456,12 +11461,11 @@ leben müssen wie diese generische Lebensdauer.</p>
 <p>Lass uns nun Lebensdauer-Annotationen im Kontext der Funktion <code>longest</code>
 untersuchen. Wie bei generischen Typparametern müssen wir generische
 Lebensdauerparameter innerhalb spitzer Klammern zwischen dem Funktionsnamen und
-der Parameterliste deklarieren. Die Beschränkung, die wir in dieser Signatur
-ausdrücken wollen, besteht darin, dass die Lebensdauer der beiden Parameter und
-die Lebensdauer der zurückgegebenen Referenz so aufeinander bezogen sind, dass
-die zurückgegebene Referenz so lange gültig ist, wie es die beiden Parameter
-sind. Wir nennen die Lebensdauer <code>'a</code> und fügen sie dann jeder Referenz hinzu,
-wie in Codeblock 10-22 gezeigt.</p>
+der Parameterliste deklarieren. Wir möchten, dass die Signatur die folgende
+Bedingung ausdrückt: Die zurückgegebene Referenz ist gültig, solange die beiden
+Parameter gültig sind. Dies ist die Beziehung zwischen den Lebensdauern der
+Parameter und des Rückgabewerts. Wir nennen die Lebensdauer <code>'a</code> und fügen sie
+dann jeder Referenz hinzu, wie in Codeblock 10-22 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
@@ -11548,7 +11552,7 @@ haben</span></p>
 gültig, <code>string2</code> ist bis zum Ende des inneren Gültigkeitsbereichs gültig, und
 <code>result</code> referenziert auf etwas, das bis zum Ende des inneren
 Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
-der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt <code>Die längere Zeichenkette ist lange Zeichenkette ist lang</code>.</p>
+der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt <code>Die längere Zeichenkette ist lange Zeichenkette ist lang</code> aus.</p>
 <p>Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
 Referenz in <code>result</code> die kürzere Lebensdauer der beiden Argumente sein muss. 
 Wir verschieben die Deklaration der Variable <code>result</code> oberhalb des inneren
@@ -11631,15 +11635,15 @@ kompilieren:</p>
     x
 }
 </code></pre></pre>
-<p>In diesem Beispiel haben wir einen Lebensdauer-Parameter <code>'a</code> für den Parameter
-<code>x</code> und den Rückgabetyp angegeben, aber nicht für den Parameter <code>y</code>, weil die
-Lebensdauer von <code>y</code> in keiner Beziehung zur Lebensdauer von <code>x</code> oder dem
-Rückgabewert steht.</p>
+<p>Wir haben einen Lebensdauer-Parameter <code>'a</code> für den Parameter <code>x</code> und den
+Rückgabetyp angegeben, aber nicht für den Parameter <code>y</code>, weil die Lebensdauer
+von <code>y</code> in keiner Beziehung zur Lebensdauer von <code>x</code> oder dem Rückgabewert
+steht.</p>
 <p>Wenn eine Funktion eine Referenz zurückgibt, muss der Lebensdauerparameter für
 den Rückgabetyp mit dem Lebensdauerparameter für einen der Parameter
 übereinstimmen. Wenn sich die zurückgegebene Referenz <em>nicht</em> auf einen der
 Parameter bezieht, muss er sich auf einen innerhalb dieser Funktion erzeugten
-Wert beziehen, was eine hängende Referenz wäre, da der Wert am Ende der
+Wert beziehen. Dies wäre jedoch eine hängende Referenz, da der Wert am Ende der
 Funktion den Gültigkeitsbereich verlässt. Betrachte diesen Versuch einer
 Implementierung der Funktion <code>longest</code>, die sich nicht kompilieren lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -11784,10 +11788,10 @@ einem dieser Fälle passt, brauchst du die Lebensdauer nicht explizit anzugeben.
 <p>Die Elisionsregeln bieten keine vollständige Schlussfolgerung. Wenn Rust die
 Regeln deterministisch anwendet, aber immer noch Unklarheit darüber besteht,
 welche Lebensdauer die Referenzen haben, wird der Compiler nicht erraten,
-wie lang die Lebensdauer der verbleibenden Referenzen sein sollte. In diesem
-Fall gibt dir der Compiler statt einer Vermutung einen Fehler an, den du
-beheben kannst, indem du die Lebensdauer-Annotationen angibst, die festlegen,
-wie sich die Referenzen zueinander verhalten.</p>
+wie lang die Lebensdauer der verbleibenden Referenzen sein sollte. Statt einer
+Vermutung gibt dir der Compiler einen Fehler an, den du beheben kannst, indem
+du die Lebensdauer-Annotationen angibst, die festlegen, wie sich die Referenzen
+zueinander verhalten.</p>
 <p>Die Lebensdauern der Funktions- oder Methodenparameter werden als
 <em>Eingangslebensdauern</em> (input lifetimes) bezeichnet, und die Lebensdauern der
 Rückgabewerte als <em>Ausgangslebensdauern</em> (output lifetimes) bezeichnet.</p>
@@ -11798,11 +11802,10 @@ Ausgangslebensdauern. Wenn der Compiler das Ende der drei Regeln erreicht
 und es immer noch Referenzen gibt, für die er keine Lebensdauern ermitteln
 kann, bricht der Compiler mit einem Fehler ab. Diese Regeln gelten sowohl
 für <code>fn</code>-Definitionen als auch für <code>impl</code>-Blöcke.</p>
-<p>Die erste Regel ist, dass jeder Parameter, der eine Referenz ist, seinen
-eigenen Lebensdauerparameter erhält. Mit anderen Worten, eine Funktion mit
-einem Parameter erhält einen Lebensdauerparameter: <code>fn foo&lt;'a&gt;(x: &amp;'a i32)</code>;
-eine Funktion mit zwei Parametern erhält zwei separate Lebensdauerparameter:
-<code>fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>; und so weiter.</p>
+<p>Die erste Regel ist, dass der Compiler jedem Parameter, der eine Referenz ist,
+seinen eigenen Lebensdauerparameter zuweist. Mit anderen Worten, eine Funktion
+mit einem Parameter erhält einen Lebensdauerparameter: <code>fn foo&lt;'a&gt;(x: &amp;'a i32)</code>; eine Funktion mit zwei Parametern erhält zwei separate
+Lebensdauerparameter: <code>fn foo&lt;'a, 'b&gt;(x: &amp;'a i32, y: &amp;'b i32)</code>; und so weiter.</p>
 <p>Die zweite Regel lautet: Wenn es genau einen Eingangslebensdauer-Parameter
 gibt, wird diese Lebensdauer allen Ausgangslebensdauer-Parametern zugewiesen:
 <code>fn foo&lt;'a&gt;(x: &amp;'a i32) -&gt; &amp;'a i32</code>.</p>
@@ -11948,12 +11951,12 @@ Zeichenkettenliterale <code>'static</code>.</p>
 <p>Möglicherweise siehst du Hinweise zur Verwendung der Lebensdauer <code>'static</code> in
 Fehlermeldungen. Aber bevor du <code>'static</code> als Lebensdauer für eine Referenz
 angibst, denke darüber nach, ob deine Referenz tatsächlich während der gesamten
-Lebensdauer deines Programms lebt oder nicht. Du könntest überlegen, ob du
-willst, dass sie so lange lebt, selbst wenn sie das könnte. Meistens ergibt
-sich das Problem aus dem Versuch, eine hängende Referenz zu erstellen oder eine
-Unvereinbarkeit zwischen den verfügbaren Lebensdauern zu beheben. In solchen
-Fällen besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
-Lebensdauer als <code>'static</code> festzulegen.</p>
+Lebensdauer deines Programms lebt oder nicht, und ob du das so willst. In den
+meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer <code>'static</code>
+hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder aus einer
+Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen besteht
+die Lösung darin, diese Probleme zu beheben und nicht darin, die Lebensdauer
+als <code>'static</code> festzulegen.</p>
 <h2 id="generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen"><a class="header" href="#generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen">Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen</a></h2>
 <p>Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
 Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
@@ -24538,7 +24541,7 @@ Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder nicht, sind
     }
 <span class="boring">}
 </span></code></pre></pre>
-<p>Rust kann erkennen, dass <code>c</code> innerhalb des Bereichs des ersten Musters liegt
+<p>Rust kann erkennen, dass <code>'c'</code> innerhalb des Bereichs des ersten Musters liegt
 und gibt <code>früher ASCII-Buchstabe</code> aus.</p>
 <h3 id="destrukturieren-um-werte-aufzuteilen"><a class="header" href="#destrukturieren-um-werte-aufzuteilen">Destrukturieren, um Werte aufzuteilen</a></h3>
 <p>Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen (enums)
@@ -25428,12 +25431,12 @@ Versuch könnte in etwa wie in Codeblock 19-5 aussehen, der sich nicht
 kompilieren lässt. Der Einfachheit halber implementieren wir <code>split_at_mut</code> als
 Funktion und nicht als Methode und nur für Anteilstypen von <code>i32</code>-Werten, nicht
 für einen generischen Typ <code>T</code>.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-    let len = slice.len();
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
 
     assert!(mid &lt;= len);
 
-    (&amp;mut slice[..mid], &amp;mut slice[mid..])
+    (&amp;mut values[..mid], &amp;mut values[mid..])
 }
 <span class="boring">
 </span><span class="boring">fn main() {
@@ -25456,18 +25459,18 @@ von <code>mid</code> bis zum Ende des Anteilstyps.</p>
 einen Fehler.</p>
 <pre><code class="language-console">$ cargo run
    Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
-error[E0499]: cannot borrow `*slice` as mutable more than once at a time
- --&gt; src/main.rs:6:30
+error[E0499]: cannot borrow `*values` as mutable more than once at a time
+ --&gt; src/main.rs:6:31
   |
-1 | fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-  |                        - let's call the lifetime of this reference `'1`
+1 | fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+  |                         - let's call the lifetime of this reference `'1`
 ...
-6 |     (&amp;mut slice[..mid], &amp;mut slice[mid..])
-  |     -------------------------^^^^^--------
-  |     |     |                  |
-  |     |     |                  second mutable borrow occurs here
+6 |     (&amp;mut values[..mid], &amp;mut values[mid..])
+  |     --------------------------^^^^^^--------
+  |     |     |                   |
+  |     |     |                   second mutable borrow occurs here
   |     |     first mutable borrow occurs here
-  |     returning this value requires that `*slice` is borrowed for `'1`
+  |     returning this value requires that `*values` is borrowed for `'1`
 
 For more information about this error, try `rustc --explain E0499`.
 error: could not compile `unsafe-example` due to previous error
@@ -25484,9 +25487,9 @@ Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 <code>split_at_mut</code> zum Funktionieren zu bringen.</p>
 <pre><pre class="playground"><code class="language-rust">use std::slice;
 
-fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-    let len = slice.len();
-    let ptr = slice.as_mut_ptr();
+fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
+    let ptr = values.as_mut_ptr();
 
     assert!(mid &lt;= len);
 
@@ -25546,15 +25549,15 @@ mit einer Länge von 10.000 Elementen.</p>
     let address = 0x01234usize;
     let r = address as *mut i32;
 
-    let slice: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+    let values: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 19-7: Erstellen eines Anteilstyps aus einer
 beliebigen Speicherstelle</span></p>
 <p>Wir besitzen den Speicher an dieser beliebigen Stelle nicht und es gibt keine
 Garantie, dass der von diesem Code erzeugte Anteilstyp gültige <code>i32</code>-Werte
-enthält. Der Versuch, <code>slice</code> so zu benutzen, als ob er ein gültiger Anteilstyp
-ist, führt zu undefiniertem Verhalten.</p>
+enthält. Der Versuch, <code>values</code> so zu benutzen, als ob er ein gültiger
+Anteilstyp ist, führt zu undefiniertem Verhalten.</p>
 <h4 id="verwenden-von-extern-funktionen-um-externen-code-aufzurufen"><a class="header" href="#verwenden-von-extern-funktionen-um-externen-code-aufzurufen">Verwenden von <code>extern</code>-Funktionen um externen Code aufzurufen</a></h4>
 <p>Manchmal muss dein Rust-Code möglicherweise mit Code interagieren, der in einer
 anderen Sprache geschrieben wurde. Hierfür hat Rust das Schlüsselwort <code>extern</code>,
@@ -25723,8 +25726,8 @@ ein deklariertes Feld in einer bestimmten Instanz verwendet wird. Vereinigungen
 werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
-Weitere Informationen über Vereinigung findest du in <a href="https://doc.rust-lang.org/reference/items/unions.html">der
-Referenz</a>.</p>
+Weitere Informationen über Vereinigung findest du in der
+<a href="https://doc.rust-lang.org/reference/items/unions.html">Rust-Referenz</a>.</p>
 <h3 id="wann-unsicheren-code-verwenden"><a class="header" href="#wann-unsicheren-code-verwenden">Wann unsicheren Code verwenden?</a></h3>
 <p>Es ist nicht falsch oder gar verpönt, eine der fünf soeben besprochenen
 Aktionen (Superkräfte) mit <code>unsafe</code> zu verwenden. Aber es ist kniffliger,
@@ -25735,9 +25738,8 @@ es einfacher, die Quelle von Problemen aufzuspüren, wenn sie auftreten.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
 <p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Merkmale (traits):
 Gemeinsames Verhalten definieren“</a> in Kapitel
-10, aber wie bei der Lebensdauer haben wir die fortgeschrittenen Details nicht
-besprochen. Jetzt, da du mehr über Rust weißt, können wir zum Kern der Sache
-kommen.</p>
+10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
+mehr über Rust weißt, können wir zum Kern der Sache kommen.</p>
 <h3 id="spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen"><a class="header" href="#spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen">Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen</a></h3>
 <p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
@@ -25917,11 +25919,12 @@ Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
 <p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
 verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
 in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
-Abschnitt <a href="ch19-04-advanced-types.html#verwenden-des-newtype-musters-f%C3%BCr-typsicherheit-und-abstraktion">„Verwenden des Newtype-Musters für Typsicherheit und
-Abstraktion“</a> ausführlicher beschreiben. Wir wollen Werte in
-Millimeter zu Werten in Meter addieren und die Implementierung von <code>Add</code> die
-Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit
-<code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15 gezeigt.</p>
+Abschnitt <a href="ch19-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen
+Merkmalen auf externen Typen“</a> ausführlicher beschreiben. Wir wollen
+Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
+<code>Add</code> die Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für
+<code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -26111,13 +26114,14 @@ Hoch!
 zwei <em>Typen</em> hätten, die beide ein <em>Merkmal</em> implementieren, herausfinden,
 welche Implementierung eines Merkmals basierend auf dem Typ von <code>self</code> zu
 verwenden ist.</p>
-<p>Assoziierte Funktionen, die Teil von Merkmalen sind, haben jedoch keinen
-<code>self</code>-Parameter. Wenn zwei Typen im gleichen Gültigkeitsbereich dieses Merkmal
-implementieren, kann Rust nicht herausfinden, welchen Typ du meinst, es sei
-denn, du verwendest eine <em>vollständig qualifizierte Syntax</em>. Zum Beispiel hat
-das Merkmal <code>Animal</code> in Codeblock 19-19 die assoziierte Funktion <code>baby_name</code>,
-die Implementierung von <code>Animal</code> für die Struktur <code>Dog</code> und die assoziierte
-Funktion <code>baby_name</code>, die direkt auf <code>Dog</code> definiert ist.</p>
+<p>Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
+<code>self</code>-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
+Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
+nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine <em>voll
+qualifizierte Syntax</em>. Zum Beispiel hat das Merkmal <code>Animal</code> in Codeblock 19-19
+die assoziierte Funktion <code>baby_name</code>, die Implementierung von <code>Animal</code> für die
+Struktur <code>Dog</code> und die assoziierte Funktion <code>baby_name</code>, die direkt auf <code>Dog</code>
+definiert ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">trait Animal {
     fn baby_name() -&gt; String;
@@ -26193,9 +26197,9 @@ Codeblock 19-20 ändern, erhalten wir einen Kompilierfehler.</p>
 <p><span class="caption">Codeblock 19-20: Versuch, die Funktion <code>baby_name</code> des
 Merkmals <code>Animal</code> aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span></p>
-<p>Da <code>Animal::baby_name</code> eine assoziierte Funktion ist und keine Methode und
-somit keinen Parameter <code>self</code> hat, kann Rust nicht herausfinden, welche
-Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
+<p>Da <code>Animal::baby_name</code> keinen <code>self</code>-Parameter hat, und es andere Typen geben
+könnte, die das Merkmal <code>Animal</code> implementieren, kann Rust nicht herausfinden,
+welche Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
 Kompilierfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
@@ -26216,9 +26220,10 @@ For more information about this error, try `rustc --explain E0283`.
 error: could not compile `traits-example` due to previous error
 </code></pre>
 <p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
-<code>Animal</code> für <code>Dog</code> verwenden wollen, müssen wir eine vollständig qualifizierte
-Syntax verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte
-Syntax verwendet.</p>
+<code>Animal</code> für <code>Dog</code> verwenden wollen und nicht die Implementierung von <code>Animal</code>
+für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
+verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte Syntax
+verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">trait Animal {
 </span><span class="boring">    fn baby_name() -&gt; String;
@@ -26259,14 +26264,14 @@ Ein Hundebaby wird Welpe genannt.
 <p>Im Allgemeinen wird die vollständig qualifizierte Syntax wie folgt definiert:</p>
 <pre><code class="language-rust ignore">&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);
 </code></pre>
-<p>Für assoziierte Funktionen gäbe es keinen <code>receiver</code>: Es gäbe nur die Liste der
-anderen Argumente. Du könntest eine vollständig qualifizierte Syntax überall
-dort verwenden, wo du Funktionen oder Methoden aufrufst. Du darfst jedoch jeden
-Teil dieser Syntax weglassen, den Rust aus anderen Informationen im Programm
-herausfinden kann. Du musst diese ausführlichere Syntax nur in Fällen
-verwenden, in denen es mehrere Implementierungen gibt, die denselben Namen
-verwenden, und Rust Hilfe benötigt, um herauszufinden, welche Implementierung
-du aufrufen möchtest.</p>
+<p>Für assoziierte Funktionen, die keine Methoden sind, gäbe es keinen <code>receiver</code>:
+Es gäbe nur die Liste der anderen Argumente. Du könntest eine vollständig
+qualifizierte Syntax überall dort verwenden, wo du Funktionen oder Methoden
+aufrufst. Du darfst jedoch jeden Teil dieser Syntax weglassen, den Rust aus
+anderen Informationen im Programm herausfinden kann. Du musst diese
+ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
+Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
+um herauszufinden, welche Implementierung du aufrufen möchtest.</p>
 <h3 id="verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern"><a class="header" href="#verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern">Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern</a></h3>
 <p>Manchmal benötigst du vielleicht die Funktionalität eines Merkmal für ein
 anderes Merkmal. In diesem Fall musst du dich darauf verlassen, dass das
@@ -26493,8 +26498,7 @@ vom Typ <code>Meters</code> oder einem einfachen <code>u32</code> aufzurufen.</p
 <p>Eine weitere Verwendung des Newtype-Musters besteht darin, einige
 Implementierungsdetails eines Typs zu abstrahieren: Der neue Typ kann eine
 öffentliche API bereitstellen, die sich von der API des privaten, inneren Typs
-unterscheidet, wenn wir den neuen Typ z.B. direkt verwendet haben, um die
-verfügbare Funktionalität einzuschränken.</p>
+unterscheidet.</p>
 <p>Newtypes können auch die interne Implementierung verbergen. Zum Beispiel
 könnten wir einen Typ <code>People</code> zur Verfügung stellen, um eine <code>HashMap&lt;i32, String&gt;</code> einzupacken, die die ID einer Person in Verbindung mit ihrem Namen
 speichert. Code, der <code>People</code> verwendet, würde nur mit der öffentlichen API
@@ -26878,9 +26882,9 @@ haben. Da der Typ möglicherweise nicht <code>Sized</code> ist, müssen wir ihn 
 Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
 <p>Als nächstes werden wir über Funktionen und Funktionsabschlüsse sprechen!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="erweiterte-funktionen-und-funktionsabschlüsse-closures"><a class="header" href="#erweiterte-funktionen-und-funktionsabschlüsse-closures">Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></h2>
-<p>Als Nächstes werden wir einige fortgeschrittene Funktionalitäten bezüglich
-Funktionen und Funktionsabschlüsse untersuchen, zu denen Funktionszeiger und
-das Zurückgeben von Funktionsabschlüssen gehören.</p>
+<p>Dieser Abschnitt befasst sich mit fortgeschrittenen Funktionalitäten im
+Zusammenhang mit Funktionen und Funktionsabschlüsse, einschließlich
+Funktionszeigern und Zurückgeben von Funktionsabschlüssen.</p>
 <h3 id="funktionszeiger"><a class="header" href="#funktionszeiger">Funktionszeiger</a></h3>
 <p>Wir haben darüber gesprochen, wie man Funktionsabschlüsse an Funktionen
 übergibt; man kann auch reguläre Funktionen an Funktionen übergeben! Diese
@@ -26957,15 +26961,12 @@ die wir vorhin im Abschnitt <a href="ch19-03-advanced-traits.html">„Fortgeschr
 <code>to_string</code> gibt. Hier verwenden wir die Funktion <code>to_string</code>, die im Merkmal
 <code>ToString</code> definiert ist, welche die Standardbibliothek für jeden Typ
 implementiert hat, der <code>Display</code> implementiert.</p>
-<p>Wir haben ein weiteres nützliches Muster, das ein Implementierungsdetail von
-Tupel-Strukturen und Tupel-Struktur-Aufzählungs-Varianten ausnutzt. Diese Typen
-verwenden <code>()</code> als Initialisierungssyntax, die wie ein Funktionsaufruf
-aussieht. Die Initialisierer sind eigentlich als Funktionen implementiert, die
-eine Instanz zurückgeben, die aus ihren Argumenten konstruiert wurde. Wir
-können diese Initialisierungsfunktionen als Funktionszeiger verwenden, die die
-Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
-Initialisierungsfunktionen als Argumente für Methoden angeben können, die
-Funktionsabschlüsse wie diese nehmen:</p>
+<p>Aus dem Abschnitt <a href="ch06-01-defining-an-enum.html#werte-in-aufz%C3%A4hlungen">„Werte in Aufzählungen“</a> in Kapitel 6 weißt du,
+dass der Name jeder definierten Aufzählungsvariante auch eine
+Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
+Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
+was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
+Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -27200,7 +27201,7 @@ Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.</
 <p>Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
 komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
-werden. Das Verwenden von prozeduralen Makros sieht aus wie der Code in
+werden. Das Definieren von prozeduralen Makros sieht aus wie der Code in
 Codeblock 19-29, wobei <code>some_attribute</code> ein Platzhalter für die Verwendung
 eines bestimmten Makros ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -27210,7 +27211,7 @@ eines bestimmten Makros ist.</p>
 pub fn some_name(input: TokenStream) -&gt; TokenStream {
 }
 </code></pre>
-<p><span class="caption">Codeblock 19-29: Beispiel für die Verwendung eines
+<p><span class="caption">Codeblock 19-29: Beispiel für die Definition eines
 prozeduralen Makros</span></p>
 <p>Die Funktion, die ein prozedurales Makro definiert, nimmt einen <code>TokenStream</code>
 als Eingabe und erzeugt einen <code>TokenStream</code> als Ausgabe. Der Typ <code>TokenStream</code>
@@ -31288,6 +31289,7 @@ eine neue Übersetzung zu informieren!</p>
 – <a href="https://rustdili.github.io/">HTML-Version</a></li>
 <li><a href="https://github.com/venkatarun95/rust-book-hindi">हिंदी</a></li>
 <li><a href="https://github.com/rust-lang-th/book-th">ไทย</a></li>
+<li><a href="https://github.com/DanKHansen/book-dk">Danske</a></li>
 </ul>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-g---wie-rust-erstellt-wird-und-nächtliches-rust"><a class="header" href="#anhang-g---wie-rust-erstellt-wird-und-nächtliches-rust">Anhang G - Wie Rust erstellt wird und „nächtliches Rust“</a></h2>
 <p>In diesem Anhang geht es darum, wie Rust erstellt wird und wie sich das auf

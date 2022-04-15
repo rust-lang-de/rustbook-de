@@ -300,7 +300,7 @@ Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.</
 <p>Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
 komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
-werden. Das Verwenden von prozeduralen Makros sieht aus wie der Code in
+werden. Das Definieren von prozeduralen Makros sieht aus wie der Code in
 Codeblock 19-29, wobei <code>some_attribute</code> ein Platzhalter für die Verwendung
 eines bestimmten Makros ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -310,7 +310,7 @@ eines bestimmten Makros ist.</p>
 pub fn some_name(input: TokenStream) -&gt; TokenStream {
 }
 </code></pre>
-<p><span class="caption">Codeblock 19-29: Beispiel für die Verwendung eines
+<p><span class="caption">Codeblock 19-29: Beispiel für die Definition eines
 prozeduralen Makros</span></p>
 <p>Die Funktion, die ein prozedurales Makro definiert, nimmt einen <code>TokenStream</code>
 als Eingabe und erzeugt einen <code>TokenStream</code> als Ausgabe. Der Typ <code>TokenStream</code>

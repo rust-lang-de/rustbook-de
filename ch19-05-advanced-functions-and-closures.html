@@ -135,9 +135,9 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="erweiterte-funktionen-und-funktionsabschlüsse-closures"><a class="header" href="#erweiterte-funktionen-und-funktionsabschlüsse-closures">Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></h2>
-<p>Als Nächstes werden wir einige fortgeschrittene Funktionalitäten bezüglich
-Funktionen und Funktionsabschlüsse untersuchen, zu denen Funktionszeiger und
-das Zurückgeben von Funktionsabschlüssen gehören.</p>
+<p>Dieser Abschnitt befasst sich mit fortgeschrittenen Funktionalitäten im
+Zusammenhang mit Funktionen und Funktionsabschlüsse, einschließlich
+Funktionszeigern und Zurückgeben von Funktionsabschlüssen.</p>
 <h3 id="funktionszeiger"><a class="header" href="#funktionszeiger">Funktionszeiger</a></h3>
 <p>Wir haben darüber gesprochen, wie man Funktionsabschlüsse an Funktionen
 übergibt; man kann auch reguläre Funktionen an Funktionen übergeben! Diese
@@ -214,15 +214,12 @@ die wir vorhin im Abschnitt <a href="ch19-03-advanced-traits.html">„Fortgeschr
 <code>to_string</code> gibt. Hier verwenden wir die Funktion <code>to_string</code>, die im Merkmal
 <code>ToString</code> definiert ist, welche die Standardbibliothek für jeden Typ
 implementiert hat, der <code>Display</code> implementiert.</p>
-<p>Wir haben ein weiteres nützliches Muster, das ein Implementierungsdetail von
-Tupel-Strukturen und Tupel-Struktur-Aufzählungs-Varianten ausnutzt. Diese Typen
-verwenden <code>()</code> als Initialisierungssyntax, die wie ein Funktionsaufruf
-aussieht. Die Initialisierer sind eigentlich als Funktionen implementiert, die
-eine Instanz zurückgeben, die aus ihren Argumenten konstruiert wurde. Wir
-können diese Initialisierungsfunktionen als Funktionszeiger verwenden, die die
-Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
-Initialisierungsfunktionen als Argumente für Methoden angeben können, die
-Funktionsabschlüsse wie diese nehmen:</p>
+<p>Aus dem Abschnitt <a href="ch06-01-defining-an-enum.html#werte-in-aufz%C3%A4hlungen">„Werte in Aufzählungen“</a> in Kapitel 6 weißt du,
+dass der Name jeder definierten Aufzählungsvariante auch eine
+Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
+Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
+was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
+Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

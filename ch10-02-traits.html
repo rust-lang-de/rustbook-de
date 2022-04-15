@@ -135,11 +135,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="merkmale-traits-gemeinsames-verhalten-definieren"><a class="header" href="#merkmale-traits-gemeinsames-verhalten-definieren">Merkmale (traits): Gemeinsames Verhalten definieren</a></h2>
-<p>Ein <em>Merkmal</em> (trait) teilt dem Rust-Compiler mit, welche Funktionalität ein
-bestimmter Typ hat und mit anderen Typen teilen kann. Wir können Merkmale
-verwenden, um gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir
-können Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
-generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.</p>
+<p>Ein <em>Merkmal</em> (trait) definiert Funktionalität, den ein bestimmter Typ hat und
+mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
+Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
+(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
+kann, der ein bestimmtes Verhalten aufweist.</p>
 <blockquote>
 <p>Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 Sprachen oft <em>Schnittstelle</em> (interface) genannt wird, wenn auch mit einigen
@@ -249,8 +249,8 @@ den jeweiligen Typ haben sollen.</p>
 <p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>Tweet</code>
 implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
 Instanzen von <code>NewsArticle</code> und <code>Tweet</code> auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
-Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
+Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
 <pre><code class="language-rust ignore"><span class="boring">use chapter10::{self, Summary, Tweet};
@@ -270,16 +270,15 @@ wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden
 </span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
-<code>Summary</code> in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
-Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
-Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
-implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
-Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
-<code>Display</code> auf einem benutzerdefinierten Typ wie <code>Tweet</code> als Teil unserer
-<code>aggregator</code>-Kistenfunktionalität implementieren, weil der Typ <code>Tweet</code> lokal zu
-unserer <code>aggregator</code>-Kiste gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in
-unserer <code>aggregator</code>-Kiste implementieren, weil das Merkmal <code>Summary</code> lokal zu
-unserer <code>aggregator</code>-Kiste gehört.</p>
+<code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
+Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
+Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
+wie <code>Tweet</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität implementieren,
+weil der Typ <code>Tweet</code> lokal zu unserer <code>aggregator</code>-Kiste gehört. Wir können
+auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste implementieren, weil
+das Merkmal <code>Summary</code> lokal zu unserer <code>aggregator</code>-Kiste gehört.</p>
 <p>Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
 können wir das Merkmal <code>Display</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
 nicht implementieren, weil <code>Display</code> und <code>Vec&lt;T&gt;</code> in der Standardbibliothek
@@ -297,8 +296,8 @@ eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
 Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
 implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 überschreiben.</p>
-<p>Codeblock 10-14 zeigt, wie man eine Standard-Zeichenkette für die Methode
-<code>summarize</code> des Merkmals <code>Summary</code> angibt, anstatt nur die Methodensignatur zu
+<p>In Codeblock 10-14 geben wir eine Standard-Zeichenkette für die Methode
+<code>summarize</code> des Merkmals <code>Summary</code> an, anstatt nur die Methodensignatur zu
 definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
@@ -311,11 +310,10 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 }
 <span class="boring">}
 </span></code></pre></pre>
-<p><span class="caption">Codeblock 10-14: Definition eines Merkmals <code>Summary</code> mit
+<p><span class="caption">Codeblock 10-14: Definieren eines Merkmals <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
 <p>Um eine Standard-Implementierung zu verwenden, um Instanzen von <code>NewsArticle</code>
-zusammenzufassen, anstatt eine benutzerdefinierte Implementierung zu
-definieren, geben wir einen leeren <code>impl</code>-Block mit <code>impl Summary for NewsArticle {}</code> an.</p>
+zusammenzufassen, geben wir einen leeren <code>impl</code>-Block mit <code>impl Summary for NewsArticle {}</code> an.</p>
 <p>Auch wenn wir die Methode <code>summarize</code> nicht mehr direkt für <code>NewsArticle</code>
 definieren, haben wir eine Standard-Implementierung bereitgestellt und
 festgelegt, dass <code>NewsArticle</code> das Merkmal <code>Summary</code> implementiert.
@@ -337,9 +335,9 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 <span class="boring">}
 </span></code></pre>
 <p>Dieser Code gibt <code>Neuer Artikel verfügbar! (Lies mehr ...)</code> aus.</p>
-<p>Das Erstellen einer Standard-Implementierung für <code>summarize</code> erfordert nicht,
-dass wir an der Implementierung von <code>Summary</code> für <code>Tweet</code> in Codeblock 10-13
-etwas ändern. Der Grund dafür ist, dass die Syntax für das Überschreiben einer
+<p>Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
+Implementierung von <code>Summary</code> für <code>Tweet</code> in Codeblock 10-13 etwas ändern. Der
+Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Merkmalsmethode, die keine Standard-Implementierung hat.</p>
 <p>Standard-Implementierungen können andere Methoden desselben Merkmals aufrufen,
@@ -414,12 +412,12 @@ dass wir weiteren Code schreiben müssen. </p>
 <h3 id="merkmale-als-parameter"><a class="header" href="#merkmale-als-parameter">Merkmale als Parameter</a></h3>
 <p>Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
-viele verschiedene Typen akzeptieren.</p>
-<p>Beispielsweise haben wir in Codeblock 10-13 das Merkmal <code>Summary</code> für die Typen
-<code>NewsArticle</code> und <code>Tweet</code> implementiert. Wir können eine Funktion <code>notify</code>
-definieren, die die Methode <code>summarize</code> ihres <code>item</code>-Parameters aufruft, der
-einen Typ hat, der das Merkmal <code>Summary</code> implementiert. Um dies zu tun, können
-wir die Syntax <code>impl Trait</code> verwenden, etwa so:</p>
+viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal <code>Summary</code>, das
+wir für die Typen <code>NewsArticle</code> und <code>Tweet</code> in Codeblock 10-13 implementiert
+haben, um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summarize</code> für
+ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das Merkmal
+<code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code>
+verwenden, etwa so:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -461,17 +459,16 @@ wortreicher. Wir platzieren Merkmalsabgrenzungen in der Deklaration des
 generischen Typparameters nach einem Doppelpunkt und innerhalb spitzer
 Klammern.</p>
 <p>Die Syntax <code>impl Trait</code> ist bequem und ermöglicht in einfachen Fällen einen
-prägnanteren Code. Die Merkmalsabgrenzungs-Syntax kann andererseits mehr
-Komplexität ausdrücken. Zum Beispiel können wir zwei Parameter haben, die
+prägnanteren Code, während die umfassendere Merkmalsabgrenzungs-Syntax mehr
+Komplexität ausdrücken kann. Zum Beispiel können wir zwei Parameter haben, die
 <code>Summary</code> implementieren. Das Verwenden der Syntax <code>impl Trait</code> sieht
 folgendermaßen aus:</p>
 <pre><code class="language-rust ignore">pub fn notify(item1: &amp;impl Summary, item2: &amp;impl Summary) {
 </code></pre>
-<p>Wenn wir wollten, dass diese Funktion bei <code>item1</code> und <code>item2</code> unterschiedliche
-Typen haben kann, wäre das Verwenden von <code>impl Trait</code> dafür geeignet (solange
+<p>Die Verwendung von <code>impl Trait</code> ist angemessen, wenn wir wollten, dass diese
+Funktion bei <code>item1</code> und <code>item2</code> unterschiedliche Typen haben kann (solange
 beide Typen <code>Summary</code> implementieren). Wenn beide Parameter aber den gleichen
-Typ haben sollten, dann kann man das nur durch eine Merkmalsabgrenzung
-ausdrücken, so wie hier:</p>
+Typ haben sollen, müssen wir eine Merkmalsabgrenzung verwenden, so wie hier:</p>
 <pre><code class="language-rust ignore">pub fn notify&lt;T: Summary&gt;(item1: &amp;T, item2: &amp;T) {
 </code></pre>
 <p>Der als Parametertyp für <code>item1</code> und <code>item2</code> angegebene generische Typ <code>T</code>
@@ -546,9 +543,9 @@ gezeigt:</p>
 Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Merkmal <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
 <code>returns_summarizable</code> einen <code>Tweet</code> zurück, aber der Code, der diese Funktion
-aufruft, weiß das nicht.</p>
-<p>Die Fähigkeit, einen Typ zurückzugeben, der nur durch das Merkmal spezifiziert
-ist, das er implementiert, ist besonders nützlich im Zusammenhang mit
+aufruft, muss das nicht wissen.</p>
+<p>Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
+zu spezifizieren, ist besonders nützlich im Zusammenhang mit
 Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
 Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
 kennt oder deren Spezifikation sehr lang ist. Mit der Syntax <code>impl Trait</code>
@@ -755,16 +752,15 @@ dass wir potenziell mehr Allokationen im Haldenspeicher im Falle von
 Typen vornehmen, die Haldenspeicherdaten wie <code>String</code> besitzen. Und
 Allokationen im Haldenspeicher können langsam sein, wenn wir mit großen
 Datenmengen arbeiten.</p>
-<p>Eine andere Möglichkeit, wie wir <code>largest</code> implementieren könnten, besteht
-darin, dass die Funktion eine Referenz auf einen <code>T</code>-Wert im Anteilstyp
-zurückgibt. Wenn wir den Rückgabetyp in <code>&amp;T</code> anstelle von <code>T</code> ändern und
-dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
-wir die Merkmalsabgrenzungen <code>Clone</code> oder <code>Copy</code> nicht und könnten Allokationen
-im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
-zu implementieren! Wenn du bei Fehlern, die mit Lebensdauern zu tun haben,
-hängen bleibst, lese weiter: Der Abschnitt „Referenzen validieren mit
-Lebensdauern“ wird dies erläutern, aber Lebensdauern sind nicht erforderlich,
-um diese Probleme zu lösen.</p>
+<p>Wir könnten <code>largest</code> auch implementieren, indem die Funktion eine Referenz auf
+einen <code>T</code>-Wert im Anteilstyp zurückgibt. Wenn wir den Rückgabetyp in <code>&amp;T</code>
+anstelle von <code>T</code> ändern und dadurch den Funktionsrumpf ändern, um eine Referenz
+zurückzugeben, bräuchten wir die Merkmalsabgrenzungen <code>Clone</code> oder <code>Copy</code> nicht
+und könnten Allokationen im Haldenspeicher vermeiden. Versuche, diese
+alternativen Lösungen selbst zu implementieren! Wenn du bei Fehlern, die mit
+Lebensdauern zu tun haben, hängen bleibst, lese weiter: Der Abschnitt
+„Referenzen validieren mit Lebensdauern“ wird dies erläutern, aber Lebensdauern
+sind nicht erforderlich, um diese Probleme zu lösen.</p>
 <h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
@@ -844,11 +840,6 @@ Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zu
 Kompilierungszeit überprüft haben. Auf diese Weise wird die Performanz
 verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
 müssen.</p>
-<p>Eine weitere generische Funktionalität, die wir bereits verwendet haben, heißt
-<em>Lebensdauer</em> (lifetimes). Anstatt sicherzustellen, dass ein Typ das von uns
-gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
-Referenzen so lange gültig sind, wie wir sie brauchen. Schauen wir uns an, wie
-Lebensdauern das tun.</p>
 
                     </main>
 

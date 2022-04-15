@@ -159,8 +159,7 @@ vom Typ <code>Meters</code> oder einem einfachen <code>u32</code> aufzurufen.</p
 <p>Eine weitere Verwendung des Newtype-Musters besteht darin, einige
 Implementierungsdetails eines Typs zu abstrahieren: Der neue Typ kann eine
 öffentliche API bereitstellen, die sich von der API des privaten, inneren Typs
-unterscheidet, wenn wir den neuen Typ z.B. direkt verwendet haben, um die
-verfügbare Funktionalität einzuschränken.</p>
+unterscheidet.</p>
 <p>Newtypes können auch die interne Implementierung verbergen. Zum Beispiel
 könnten wir einen Typ <code>People</code> zur Verfügung stellen, um eine <code>HashMap&lt;i32, String&gt;</code> einzupacken, die die ID einer Person in Verbindung mit ihrem Namen
 speichert. Code, der <code>People</code> verwendet, würde nur mit der öffentlichen API

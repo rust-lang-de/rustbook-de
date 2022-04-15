@@ -137,9 +137,8 @@
                         <h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
 <p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Merkmale (traits):
 Gemeinsames Verhalten definieren“</a> in Kapitel
-10, aber wie bei der Lebensdauer haben wir die fortgeschrittenen Details nicht
-besprochen. Jetzt, da du mehr über Rust weißt, können wir zum Kern der Sache
-kommen.</p>
+10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
+mehr über Rust weißt, können wir zum Kern der Sache kommen.</p>
 <h3 id="spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen"><a class="header" href="#spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen">Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen</a></h3>
 <p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
@@ -319,11 +318,12 @@ Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
 <p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
 verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
 in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
-Abschnitt <a href="ch19-04-advanced-types.html#verwenden-des-newtype-musters-f%C3%BCr-typsicherheit-und-abstraktion">„Verwenden des Newtype-Musters für Typsicherheit und
-Abstraktion“</a> ausführlicher beschreiben. Wir wollen Werte in
-Millimeter zu Werten in Meter addieren und die Implementierung von <code>Add</code> die
-Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit
-<code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15 gezeigt.</p>
+Abschnitt <a href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen
+Merkmalen auf externen Typen“</a> ausführlicher beschreiben. Wir wollen
+Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
+<code>Add</code> die Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für
+<code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
@@ -513,13 +513,14 @@ Hoch!
 zwei <em>Typen</em> hätten, die beide ein <em>Merkmal</em> implementieren, herausfinden,
 welche Implementierung eines Merkmals basierend auf dem Typ von <code>self</code> zu
 verwenden ist.</p>
-<p>Assoziierte Funktionen, die Teil von Merkmalen sind, haben jedoch keinen
-<code>self</code>-Parameter. Wenn zwei Typen im gleichen Gültigkeitsbereich dieses Merkmal
-implementieren, kann Rust nicht herausfinden, welchen Typ du meinst, es sei
-denn, du verwendest eine <em>vollständig qualifizierte Syntax</em>. Zum Beispiel hat
-das Merkmal <code>Animal</code> in Codeblock 19-19 die assoziierte Funktion <code>baby_name</code>,
-die Implementierung von <code>Animal</code> für die Struktur <code>Dog</code> und die assoziierte
-Funktion <code>baby_name</code>, die direkt auf <code>Dog</code> definiert ist.</p>
+<p>Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
+<code>self</code>-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
+Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
+nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine <em>voll
+qualifizierte Syntax</em>. Zum Beispiel hat das Merkmal <code>Animal</code> in Codeblock 19-19
+die assoziierte Funktion <code>baby_name</code>, die Implementierung von <code>Animal</code> für die
+Struktur <code>Dog</code> und die assoziierte Funktion <code>baby_name</code>, die direkt auf <code>Dog</code>
+definiert ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">trait Animal {
     fn baby_name() -&gt; String;
@@ -595,9 +596,9 @@ Codeblock 19-20 ändern, erhalten wir einen Kompilierfehler.</p>
 <p><span class="caption">Codeblock 19-20: Versuch, die Funktion <code>baby_name</code> des
 Merkmals <code>Animal</code> aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span></p>
-<p>Da <code>Animal::baby_name</code> eine assoziierte Funktion ist und keine Methode und
-somit keinen Parameter <code>self</code> hat, kann Rust nicht herausfinden, welche
-Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
+<p>Da <code>Animal::baby_name</code> keinen <code>self</code>-Parameter hat, und es andere Typen geben
+könnte, die das Merkmal <code>Animal</code> implementieren, kann Rust nicht herausfinden,
+welche Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
 Kompilierfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
@@ -618,9 +619,10 @@ For more information about this error, try `rustc --explain E0283`.
 error: could not compile `traits-example` due to previous error
 </code></pre>
 <p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
-<code>Animal</code> für <code>Dog</code> verwenden wollen, müssen wir eine vollständig qualifizierte
-Syntax verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte
-Syntax verwendet.</p>
+<code>Animal</code> für <code>Dog</code> verwenden wollen und nicht die Implementierung von <code>Animal</code>
+für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
+verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte Syntax
+verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">trait Animal {
 </span><span class="boring">    fn baby_name() -&gt; String;
@@ -661,14 +663,14 @@ Ein Hundebaby wird Welpe genannt.
 <p>Im Allgemeinen wird die vollständig qualifizierte Syntax wie folgt definiert:</p>
 <pre><code class="language-rust ignore">&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);
 </code></pre>
-<p>Für assoziierte Funktionen gäbe es keinen <code>receiver</code>: Es gäbe nur die Liste der
-anderen Argumente. Du könntest eine vollständig qualifizierte Syntax überall
-dort verwenden, wo du Funktionen oder Methoden aufrufst. Du darfst jedoch jeden
-Teil dieser Syntax weglassen, den Rust aus anderen Informationen im Programm
-herausfinden kann. Du musst diese ausführlichere Syntax nur in Fällen
-verwenden, in denen es mehrere Implementierungen gibt, die denselben Namen
-verwenden, und Rust Hilfe benötigt, um herauszufinden, welche Implementierung
-du aufrufen möchtest.</p>
+<p>Für assoziierte Funktionen, die keine Methoden sind, gäbe es keinen <code>receiver</code>:
+Es gäbe nur die Liste der anderen Argumente. Du könntest eine vollständig
+qualifizierte Syntax überall dort verwenden, wo du Funktionen oder Methoden
+aufrufst. Du darfst jedoch jeden Teil dieser Syntax weglassen, den Rust aus
+anderen Informationen im Programm herausfinden kann. Du musst diese
+ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
+Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
+um herauszufinden, welche Implementierung du aufrufen möchtest.</p>
 <h3 id="verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern"><a class="header" href="#verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern">Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern</a></h3>
 <p>Manchmal benötigst du vielleicht die Funktionalität eines Merkmal für ein
 anderes Merkmal. In diesem Fall musst du dich darauf verlassen, dass das

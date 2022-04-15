@@ -368,12 +368,12 @@ Versuch könnte in etwa wie in Codeblock 19-5 aussehen, der sich nicht
 kompilieren lässt. Der Einfachheit halber implementieren wir <code>split_at_mut</code> als
 Funktion und nicht als Methode und nur für Anteilstypen von <code>i32</code>-Werten, nicht
 für einen generischen Typ <code>T</code>.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-    let len = slice.len();
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
 
     assert!(mid &lt;= len);
 
-    (&amp;mut slice[..mid], &amp;mut slice[mid..])
+    (&amp;mut values[..mid], &amp;mut values[mid..])
 }
 <span class="boring">
 </span><span class="boring">fn main() {
@@ -396,18 +396,18 @@ von <code>mid</code> bis zum Ende des Anteilstyps.</p>
 einen Fehler.</p>
 <pre><code class="language-console">$ cargo run
    Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
-error[E0499]: cannot borrow `*slice` as mutable more than once at a time
- --&gt; src/main.rs:6:30
+error[E0499]: cannot borrow `*values` as mutable more than once at a time
+ --&gt; src/main.rs:6:31
   |
-1 | fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-  |                        - let's call the lifetime of this reference `'1`
+1 | fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+  |                         - let's call the lifetime of this reference `'1`
 ...
-6 |     (&amp;mut slice[..mid], &amp;mut slice[mid..])
-  |     -------------------------^^^^^--------
-  |     |     |                  |
-  |     |     |                  second mutable borrow occurs here
+6 |     (&amp;mut values[..mid], &amp;mut values[mid..])
+  |     --------------------------^^^^^^--------
+  |     |     |                   |
+  |     |     |                   second mutable borrow occurs here
   |     |     first mutable borrow occurs here
-  |     returning this value requires that `*slice` is borrowed for `'1`
+  |     returning this value requires that `*values` is borrowed for `'1`
 
 For more information about this error, try `rustc --explain E0499`.
 error: could not compile `unsafe-example` due to previous error
@@ -424,9 +424,9 @@ Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 <code>split_at_mut</code> zum Funktionieren zu bringen.</p>
 <pre><pre class="playground"><code class="language-rust">use std::slice;
 
-fn split_at_mut(slice: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
-    let len = slice.len();
-    let ptr = slice.as_mut_ptr();
+fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+    let len = values.len();
+    let ptr = values.as_mut_ptr();
 
     assert!(mid &lt;= len);
 
@@ -486,15 +486,15 @@ mit einer Länge von 10.000 Elementen.</p>
     let address = 0x01234usize;
     let r = address as *mut i32;
 
-    let slice: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+    let values: &amp;[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 19-7: Erstellen eines Anteilstyps aus einer
 beliebigen Speicherstelle</span></p>
 <p>Wir besitzen den Speicher an dieser beliebigen Stelle nicht und es gibt keine
 Garantie, dass der von diesem Code erzeugte Anteilstyp gültige <code>i32</code>-Werte
-enthält. Der Versuch, <code>slice</code> so zu benutzen, als ob er ein gültiger Anteilstyp
-ist, führt zu undefiniertem Verhalten.</p>
+enthält. Der Versuch, <code>values</code> so zu benutzen, als ob er ein gültiger
+Anteilstyp ist, führt zu undefiniertem Verhalten.</p>
 <h4 id="verwenden-von-extern-funktionen-um-externen-code-aufzurufen"><a class="header" href="#verwenden-von-extern-funktionen-um-externen-code-aufzurufen">Verwenden von <code>extern</code>-Funktionen um externen Code aufzurufen</a></h4>
 <p>Manchmal muss dein Rust-Code möglicherweise mit Code interagieren, der in einer
 anderen Sprache geschrieben wurde. Hierfür hat Rust das Schlüsselwort <code>extern</code>,
@@ -663,8 +663,8 @@ ein deklariertes Feld in einer bestimmten Instanz verwendet wird. Vereinigungen
 werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
-Weitere Informationen über Vereinigung findest du in <a href="https://doc.rust-lang.org/reference/items/unions.html">der
-Referenz</a>.</p>
+Weitere Informationen über Vereinigung findest du in der
+<a href="https://doc.rust-lang.org/reference/items/unions.html">Rust-Referenz</a>.</p>
 <h3 id="wann-unsicheren-code-verwenden"><a class="header" href="#wann-unsicheren-code-verwenden">Wann unsicheren Code verwenden?</a></h3>
 <p>Es ist nicht falsch oder gar verpönt, eine der fünf soeben besprochenen
 Aktionen (Superkräfte) mit <code>unsafe</code> zu verwenden. Aber es ist kniffliger,
