@@ -200,10 +200,11 @@ ausführbare Datei zu benutzen.
 
 Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:
 
-* Wir können ein Projekt bauen mit `cargo build`.
-* Wir können ein Projekt in einem Schritt bauen und ausführen mit `cargo run`.
-* Wir können ein Projekt bauen, ohne eine Binärdatei zu erzeugen, um auf Fehler
-  zu prüfen, mit `cargo check`.
+* Wir können ein Projekt mit `cargo new` erstellen.
+* Wir können ein Projekt mit `cargo build` bauen.
+* Wir können ein Projekt mit `cargo run` in einem Schritt bauen und ausführen.
+* Wir können ein Projekt mit `cargo check` bauen, ohne eine Binärdatei zu
+  erzeugen, um auf Fehler zu prüfen.
 * Anstatt das Ergebnis des Bauvorgangs im selben Verzeichnis wie unser Code
   abzulegen, legt Cargo es im Verzeichnis *target/debug* ab.
 

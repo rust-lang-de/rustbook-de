@@ -1,8 +1,8 @@
 ## Erweiterte Funktionen und Funktionsabschlüsse (closures)
 
-Als Nächstes werden wir einige fortgeschrittene Funktionalitäten bezüglich
-Funktionen und Funktionsabschlüsse untersuchen, zu denen Funktionszeiger und
-das Zurückgeben von Funktionsabschlüssen gehören.
+Dieser Abschnitt befasst sich mit fortgeschrittenen Funktionalitäten im
+Zusammenhang mit Funktionen und Funktionsabschlüsse, einschließlich
+Funktionszeigern und Zurückgeben von Funktionsabschlüssen.
 
 ### Funktionszeiger
 
@@ -89,15 +89,12 @@ die wir vorhin im Abschnitt [„Fortgeschrittene Merkmale
 `ToString` definiert ist, welche die Standardbibliothek für jeden Typ
 implementiert hat, der `Display` implementiert.
 
-Wir haben ein weiteres nützliches Muster, das ein Implementierungsdetail von
-Tupel-Strukturen und Tupel-Struktur-Aufzählungs-Varianten ausnutzt. Diese Typen
-verwenden `()` als Initialisierungssyntax, die wie ein Funktionsaufruf
-aussieht. Die Initialisierer sind eigentlich als Funktionen implementiert, die
-eine Instanz zurückgeben, die aus ihren Argumenten konstruiert wurde. Wir
-können diese Initialisierungsfunktionen als Funktionszeiger verwenden, die die
-Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
-Initialisierungsfunktionen als Argumente für Methoden angeben können, die
-Funktionsabschlüsse wie diese nehmen:
+Aus dem Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 weißt du,
+dass der Name jeder definierten Aufzählungsvariante auch eine
+Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
+Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
+was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
+Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:
 
 ```rust
     enum Status {
@@ -172,4 +169,5 @@ Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 17.
 Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch19-03-advanced-traits.html
+[enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch17-02-trait-objects.html

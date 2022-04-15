@@ -145,7 +145,7 @@ Hier ist ein Beispiel mit Bereichen von `char`-Werten:
     }
 ```
 
-Rust kann erkennen, dass `c` innerhalb des Bereichs des ersten Musters liegt
+Rust kann erkennen, dass `'c'` innerhalb des Bereichs des ersten Musters liegt
 und gibt `früher ASCII-Buchstabe` aus.
 
 ### Destrukturieren, um Werte aufzuteilen

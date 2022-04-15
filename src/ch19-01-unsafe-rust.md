@@ -280,12 +280,12 @@ Funktion und nicht als Methode und nur für Anteilstypen von `i32`-Werten, nicht
 für einen generischen Typ `T`.
 
 ```rust,does_not_compile
-fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
-    let len = slice.len();
+fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+    let len = values.len();
 
     assert!(mid <= len);
 
-    (&mut slice[..mid], &mut slice[mid..])
+    (&mut values[..mid], &mut values[mid..])
 }
 #
 # fn main() {
@@ -314,18 +314,18 @@ einen Fehler.
 ```console
 $ cargo run
    Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
-error[E0499]: cannot borrow `*slice` as mutable more than once at a time
- --> src/main.rs:6:30
+error[E0499]: cannot borrow `*values` as mutable more than once at a time
+ --> src/main.rs:6:31
   |
-1 | fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
-  |                        - let's call the lifetime of this reference `'1`
+1 | fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+  |                         - let's call the lifetime of this reference `'1`
 ...
-6 |     (&mut slice[..mid], &mut slice[mid..])
-  |     -------------------------^^^^^--------
-  |     |     |                  |
-  |     |     |                  second mutable borrow occurs here
+6 |     (&mut values[..mid], &mut values[mid..])
+  |     --------------------------^^^^^^--------
+  |     |     |                   |
+  |     |     |                   second mutable borrow occurs here
   |     |     first mutable borrow occurs here
-  |     returning this value requires that `*slice` is borrowed for `'1`
+  |     returning this value requires that `*values` is borrowed for `'1`
 
 For more information about this error, try `rustc --explain E0499`.
 error: could not compile `unsafe-example` due to previous error
@@ -346,9 +346,9 @@ Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 ```rust
 use std::slice;
 
-fn split_at_mut(slice: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
-    let len = slice.len();
-    let ptr = slice.as_mut_ptr();
+fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
+    let len = values.len();
+    let ptr = values.as_mut_ptr();
 
     assert!(mid <= len);
 
@@ -416,7 +416,7 @@ mit einer Länge von 10.000 Elementen.
     let address = 0x01234usize;
     let r = address as *mut i32;
 
-    let slice: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
+    let values: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
 # }
 ```
 
@@ -425,8 +425,8 @@ beliebigen Speicherstelle</span>
 
 Wir besitzen den Speicher an dieser beliebigen Stelle nicht und es gibt keine
 Garantie, dass der von diesem Code erzeugte Anteilstyp gültige `i32`-Werte
-enthält. Der Versuch, `slice` so zu benutzen, als ob er ein gültiger Anteilstyp
-ist, führt zu undefiniertem Verhalten.
+enthält. Der Versuch, `values` so zu benutzen, als ob er ein gültiger
+Anteilstyp ist, führt zu undefiniertem Verhalten.
 
 #### Verwenden von `extern`-Funktionen um externen Code aufzurufen
 
@@ -624,8 +624,8 @@ ein deklariertes Feld in einer bestimmten Instanz verwendet wird. Vereinigungen
 werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
-Weitere Informationen über Vereinigung findest du in [der
-Referenz][union-reference].
+Weitere Informationen über Vereinigung findest du in der
+[Rust-Referenz][union-reference].
 
 ### Wann unsicheren Code verwenden?
 
