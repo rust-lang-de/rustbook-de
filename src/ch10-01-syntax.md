@@ -1,11 +1,11 @@
 ## Generische Datentypen
 
-Wir können generische Datentypen (generics) verwenden, um Definitionen für
-Elemente wie Funktionssignaturen oder Strukturen (structs) zu erstellen, die
-wir dann mit vielen verschiedenen konkreten Datentypen verwenden können. Sehen
-wir uns zunächst an, wie Funktionen, Strukturen, Aufzählungen und Methoden
-mithilfe von generischen Datentypen definiert werden können. Danach werden wir
-uns ansehen, wie generische Datentypen die Code-Performanz beeinflussen.
+Wir verwenden generische Datentypen (generics), um Definitionen für Elemente
+wie Funktionssignaturen oder Strukturen (structs) zu erstellen, die wir dann
+mit vielen verschiedenen konkreten Datentypen verwenden können. Sehen wir uns
+zunächst an, wie Funktionen, Strukturen, Aufzählungen und Methoden mithilfe von
+generischen Datentypen definiert werden können. Danach werden wir uns ansehen,
+wie generische Datentypen die Code-Performanz beeinflussen.
 
 ### In Funktionsdefinitionen
 
@@ -17,7 +17,9 @@ Funktion mehr Funktionalität, während gleichzeitig Code-Duplikate verhindert
 werden.
 
 Um mit unserer Funktion `largest` fortzufahren, zeigt Codeblock 10-4 zwei
-Funktionen, die beide den größten Wert in einem Anteilstyp finden.
+Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
+diese dann in einer einzigen Funktion kombinieren, die generische Typen
+verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -71,13 +73,13 @@ Funktionsrümpfe haben den gleichen Code, also lass uns die Duplizierung
 eliminieren, indem wir einen generischen Typparameter in einer einzigen
 Funktion einführen.
 
-Um die Typen in der neuen Funktion, die wir definieren werden, zu
-parametrisieren, müssen wir den Typparameter benennen, so wie wir es für die
-Wertparameter einer Funktion tun. Du kannst jeden beliebigen Bezeichner als
-Typparametername verwenden. Aber wir werden `T` verwenden, weil die
-Parameternamen gemäß Konvention in Rust kurz sind, oft nur ein Buchstabe, und
-Rusts Typbezeichnungskonvention verwendet Binnenmajuskel (CamelCase). Als
-Abkürzung für „Typ“ ist `T` die Standardwahl der meisten Rust-Programmierer.
+Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
+den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
+tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
+wir werden `T` verwenden, weil die Parameternamen gemäß Konvention in Rust kurz
+sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
+Binnenmajuskel (CamelCase). Als Abkürzung für „Typ“ ist `T` die Standardwahl
+der meisten Rust-Programmierer.
 
 Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
@@ -131,8 +133,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-5: Eine Definition der Funktion `largest`,
-die generische Typparameter verwendet, aber noch nicht kompiliert</span>
+<span class="caption">Codeblock 10-5: Die Funktion `largest` mit generischen
+Typparametern; diese kompiliert aber noch nicht</span>
 
 Wenn wir diesen Code kompilieren, erhalten wir diesen Fehler:
 
@@ -165,15 +167,15 @@ können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
 `std::cmp::PartialOrd`, das du auf Typen implementieren kannst (siehe Anhang C
 für weitere Informationen zu diesem Merkmal). Du wirst im Abschnitt [„Merkmale
 als Parameter“][traits-as-parameters] lernen, wie man angibt, dass ein
-generischer Typ ein bestimmtes Merkmal hat, aber lass uns zunächst andere
+generischer Typ ein bestimmtes Merkmal hat. Lass uns zunächst andere
 Möglichkeiten der Verwendung generischer Typparameter untersuchen.
 
 ### In Struktur-Definitionen
 
 Wir können auch Strukturen definieren, um einen generischen Typparameter in
 einem oder mehreren Feldern mit der `<>` Syntax zu verwenden. Codeblock 10-6
-zeigt, wie man eine Struktur `Point<T>` definiert, um Koordinatenwerte `x` und
-`y` eines beliebigen Typs aufzunehmen.
+definiert eine Struktur `Point<T>`, um Koordinatenwerte `x` und `y` eines
+beliebigen Typs aufzunehmen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -195,8 +197,8 @@ und `y` vom Typ `T` enthält</span>
 Die Syntax zum Verwenden von generischen Datentypen in Strukturdefinitionen
 ähnelt der Syntax, die in Funktionsdefinitionen verwendet wird. Zuerst
 deklarieren wir den Namen des Typparameters innerhalb spitzer Klammern direkt
-nach dem Namen der Struktur. Dann können wir den generischen Typ in der
-Strukturdefinition verwenden, wo wir sonst konkrete Datentypen angeben würden.
+nach dem Namen der Struktur. Dann verwenden wir den generischen Typ in der
+Strukturdefinition, wo wir sonst konkrete Datentypen angeben würden.
 
 Beachte, da wir nur einen generischen Typ zur Definition von `Point<T>`
 verwendet haben, besagt diese Definition, dass die Struktur `Point<T>`
@@ -242,9 +244,9 @@ error: could not compile `chapter10` due to previous error
 
 Um eine Struktur `Point` zu definieren, bei der `x` und `y` generische, aber
 unterschiedliche, Typen haben können, können wir mehrere generische
-Typparameter verwenden. Zum Beispiel können wir in Codeblock 10-8 die
-Definition von `Point` so ändern, dass sie über den Typen `T` und `U` generisch
-ist, wobei `x` vom Typ `T` und `y` vom Typ `U` ist.
+Typparameter verwenden. Zum Beispiel ändern wir in Codeblock 10-8 die
+Definition von `Point` so, dass sie über den Typen `T` und `U` generisch ist,
+wobei `x` vom Typ `T` und `y` vom Typ `U` ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -267,8 +269,8 @@ Typen, sodass `x` und `y` Werte unterschiedlichen Typs haben können</span>
 Jetzt sind alle gezeigten Instanzen von `Point` erlaubt! Du kannst so viele
 generische Typparameter in einer Definition verwenden, wie du willst, aber das
 Verwenden von mehr als einigen wenigen macht deinen Code schwer lesbar. Wenn du
-viele generische Typen in deinem Code benötigst, könnte dies darauf hinweisen,
-dass dein Code in kleinere Teile zerlegt werden muss.
+denkst, dass du in deinem Code viele generische Typen benötigst, könnte dies
+darauf hinweisen, dass dein Code in kleinere Teile zerlegt werden muss.
 
 ### In Aufzählungsdefinitionen
 
@@ -285,10 +287,10 @@ enum Option<T> {
 ```
 
 Diese Definition dürfte für dich jetzt mehr Sinn machen. Wie du sehen kannst,
-ist `Option<T>` eine Aufzählung, die über dem Typ `T` generisch ist und zwei
-Varianten hat: `Some`, die einen Wert vom Typ `T` enthält, und `None`, die
-keinen Wert enthält. Durch das Verwenden der Aufzählung `Option<T>` können wir
-das abstrakte Konzept eines optionalen Wertes ausdrücken und da `Option<T>`
+ist die Aufzählung `Option<T>` über dem Typ `T` generisch und hat zwei
+Varianten: `Some`, die einen Wert vom Typ `T` enthält, und `None`, die keinen
+Wert enthält. Durch das Verwenden der Aufzählung `Option<T>` können wir das
+abstrakte Konzept eines optionalen Wertes ausdrücken und da `Option<T>`
 generisch ist, können wir diese Abstraktion unabhängig vom Typ des
 optionalen Wertes verwenden.
 
@@ -356,21 +358,19 @@ den Wert im Feld `x` zurückgibt.
 Beachte, dass wir `T` direkt nach `impl` deklarieren müssen, damit wir Methoden
 zum Typ `Point<T>` implementieren können. Durch das Deklarieren von `T` als
 generischen Typ hinter `impl` kann Rust erkennen, dass der Typ in spitzen
-Klammern in `Point` ein generischer und kein konkreter Typ ist. Da es sich hier
-um eine erneute Deklaration des generischen Typs handelt, hätten wir einen
-anderen Namen für den generischen Parameter wählen können als den in der
+Klammern in `Point` ein generischer und kein konkreter Typ ist. Wir hätten
+einen anderen Namen für den generischen Parameter wählen können als den in der
 Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
 desselben Namens ist üblich. Methoden, die innerhalb eines `impl` geschrieben
 werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
 definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
 ersetzt.
 
-Die andere Möglichkeit, die wir haben, ist die Definition von Methoden auf dem
-Typ mit einer gewissen Einschränkung auf den generischen Typ. Wir könnten zum
-Beispiel Methoden nur auf `Point<f32>`-Instanzen implementieren und nicht auf
-`Point<T>`-Instanzen mit einem beliebigen generischen Typ. In Codeblock 10-10
-verwenden wir den konkreten Typ `f32`, d.h. wir deklarieren keinen Typ hinter
-`impl`.
+Wir können auch Einschränkungen für generische Typen angeben, wenn wir Methoden
+auf dem Typ definieren. Wir könnten zum Beispiel Methoden nur auf
+`Point<f32>`-Instanzen implementieren und nicht auf `Point<T>`-Instanzen mit
+einem beliebigen generischen Typ. In Codeblock 10-10 verwenden wir den
+konkreten Typ `f32`, d.h. wir deklarieren keinen Typ hinter `impl`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -403,7 +403,7 @@ impl Point<f32> {
 Struktur mit einem bestimmten konkreten Typ für den generischen Typparameter
 `T` gilt</span>
 
-Dieser Code bedeutet, dass der Typ `Point<f32>` eine Methode namens
+Dieser Code bedeutet, dass der Typ `Point<f32>` eine Methode
 `distance_from_origin` hat und andere Instanzen von `Point<T>`, bei denen `T`
 nicht vom Typ `f32` ist, haben diese Methode nicht. Die Methode misst, wie weit
 unser Punkt vom Punkt mit den Koordinaten (0,0, 0,0) entfernt ist, und
@@ -411,7 +411,7 @@ verwendet mathematische Operationen, die nur für Fließkomma-Typen zur Verfügu
 stehen.
 
 Generische Typparameter in einer Strukturdefinition sind nicht immer die
-gleichen wie die, die du in den Methodensignaturen für diese Struktur
+gleichen wie die, die du in denselben Methodensignaturen für diese Struktur
 verwendest. In Codeblock 10-11 werden die generischen Typen `X1` und `Y1` für
 die Struktur `Point` und `X2` und `Y2` für die Signatur der Methode `mixup`
 verwendet, um das Beispiel zu verdeutlichen. Die Methode erzeugt eine neue
@@ -445,8 +445,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 10-11: Eine Methode, die verschiedene
-generische Typen aus der Definition ihrer Struktur verwendet</span>
+<span class="caption">Codeblock 10-11: Eine Methode, die generische Typen aus
+der Definition ihrer Struktur anders verwendet</span>
 
 In `main` haben wir einen `Point` definiert, bei dem `x` den Typ `i32` (mit dem
 Wert `5`) und `y` den Typ `f64` (mit dem Wert `10.4`) hat. Die Variable `p2`
@@ -467,23 +467,21 @@ Methode relevant sind.
 ### Code-Performanz beim Verwenden generischer Datentypen
 
 Du fragst dich vielleicht, ob beim Verwenden generischer Typparameter
-Laufzeitkosten anfallen. Die gute Nachricht ist, dass Rust generische
-Typparameter so implementiert, dass dein Code mit generischen Typen nicht
-langsamer läuft als mit konkreten Typen.
+Laufzeitkosten anfallen. Die gute Nachricht ist, dass die Verwendung
+generischer Typen die Ausführung nicht langsamer macht als bei konkreten
+Typen.
 
-Rust erreicht dies durch Duplizierung von Code, der zur Kompilierzeit
-generische Datentypen verwendet. *Codeduplizierung* (monomorphization) ist der
-Vorgang der Umwandlung von generischem Code in spezifischen Code durch
-Ausfüllen der konkreten Typen, die bei der Kompilierung verwendet werden.
+Rust erreicht dies durch Duplizierung von Code mit generischen Datentypen zur
+Kompilierzeit. *Codeduplizierung* (monomorphization) ist der Vorgang der
+Umwandlung von generischem Code in spezifischen Code durch Ausfüllen der
+konkreten Typen, die bei der Kompilierung verwendet werden. Bei diesem Vorgang
+führt der Compiler das Gegenteil der Schritte aus, die wir beim Erstellen der
+generischen Funktion in Codeblock 10-5 angewendet haben: Der Compiler schaut
+sich alle Stellen an, an denen generischer Code aufgerufen wird, und generiert
+Code für die konkreten Typen, mit denen der generische Code aufgerufen wird.
 
-Bei diesem Prozess führt der Compiler das Gegenteil der Schritte aus, die
-wir beim Erstellen der generischen Funktion in Codeblock 10-5 angewendet haben: 
-Der Compiler schaut sich alle Stellen an, an denen generischer Code
-aufgerufen wird, und generiert Code für die konkreten Typen, mit denen der
-generische Code aufgerufen wird.
-
-Betrachten wir die Funktionsweise anhand eines Beispiels, das die Aufzählung
-`Option<T>` der Standardbibliothek verwendet:
+Betrachten wir die Funktionsweise bei der Aufzählung `Option<T>` der
+Standardbibliothek:
 
 ```rust
 let integer = Some(5);
@@ -497,8 +495,7 @@ dieses Vorgangs liest der Compiler die Werte ein, die in
 erweitert es die generische Definition von `Option<T>` zu `Option_i32` und
 `Option_f64` und ersetzt damit die generische Definition durch die spezifische.
 
-Die duplizierte Codeversion sieht wie folgt aus. Die generische `Option<T>`
-wird durch die vom Compiler erstellten spezifischen Definitionen ersetzt:
+Die duplizierte Codeversion sieht wie folgt aus:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -519,10 +516,12 @@ fn main() {
 }
 ```
 
-Da Rust generischen Code in Code kompiliert, der den Typ in jedem Fall
-spezifiziert, zahlen wir keine Laufzeitkosten beim Verwenden von generischen
-Datentypen. Wenn der Code läuft, verhält er sich genauso, wie wenn wir jede
-Definition von Hand dupliziert hätten. Der Vorgang der Codeduplizierung macht
-Rusts generische Datentypen zur Laufzeit äußerst effizient.
+Der generische Typ `Option<T>` wird durch die vom Compiler erstellten
+spezifischen Definitionen ersetzt. Da Rust generischen Code in Code kompiliert,
+der den Typ in jedem Fall spezifiziert, zahlen wir keine Laufzeitkosten beim
+Verwenden von generischen Datentypen. Wenn der Code läuft, verhält er sich
+genauso, wie wenn wir jede Definition von Hand dupliziert hätten. Der Vorgang
+der Codeduplizierung macht Rusts generische Datentypen zur Laufzeit äußerst
+effizient.
 
 [traits-as-parameters]: ch10-02-traits.html#merkmale-als-parameter

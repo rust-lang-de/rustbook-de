@@ -1,10 +1,10 @@
 ## Merkmale (traits): Gemeinsames Verhalten definieren
 
-Ein *Merkmal* (trait) teilt dem Rust-Compiler mit, welche Funktionalität ein
-bestimmter Typ hat und mit anderen Typen teilen kann. Wir können Merkmale
-verwenden, um gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir
-können Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
-generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.
+Ein *Merkmal* (trait) definiert Funktionalität, den ein bestimmter Typ hat und
+mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
+Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
+(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
+kann, der ein bestimmtes Verhalten aufweist.
 
 > Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 > Sprachen oft *Schnittstelle* (interface) genannt wird, wenn auch mit einigen
@@ -124,8 +124,8 @@ den jeweiligen Typ haben sollen.
 Da die Bibliothek nun das Merkmal `Summary` auf `NewsArticle` und `Tweet`
 implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
 Instanzen von `NewsArticle` und `Tweet` auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass das
-Merkmal sowie die Typen in den Gültigkeitsbereich gebracht werden müssen, um
+reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
+Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
 
@@ -150,16 +150,15 @@ Dieser Code gibt `1 neue Kurznachricht: horse_ebooks: natürlich, wie du
 wahrscheinlich schon weißt` aus.
 
 Andere Kisten, die von der `aggregator`-Kiste abhängen, können auch das Merkmal
-`Summary` in den Gültigkeitsbereich bringen, um das Merkmal auf ihren eigenen
-Typen zu implementieren. Eine Einschränkung, die bei der Implementierung von
-Merkmalen zu beachten ist, ist, dass wir ein Merkmal für einen Typ nur dann
-implementieren können, wenn entweder das Merkmal oder der Typ lokal in unserer
-Kiste vorhanden ist. Zum Beispiel können wir Standard-Bibliotheksmerkmale wie
-`Display` auf einem benutzerdefinierten Typ wie `Tweet` als Teil unserer
-`aggregator`-Kistenfunktionalität implementieren, weil der Typ `Tweet` lokal zu
-unserer `aggregator`-Kiste gehört. Wir können auch `Summary` auf `Vec<T>` in
-unserer `aggregator`-Kiste implementieren, weil das Merkmal `Summary` lokal zu
-unserer `aggregator`-Kiste gehört.
+`Summary` in den Gültigkeitsbereich bringen, um `Summary` auf ihren eigenen
+Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
+Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
+Standard-Bibliotheksmerkmale wie `Display` auf einem benutzerdefinierten Typ
+wie `Tweet` als Teil unserer `aggregator`-Kistenfunktionalität implementieren,
+weil der Typ `Tweet` lokal zu unserer `aggregator`-Kiste gehört. Wir können
+auch `Summary` auf `Vec<T>` in unserer `aggregator`-Kiste implementieren, weil
+das Merkmal `Summary` lokal zu unserer `aggregator`-Kiste gehört.
 
 Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
 können wir das Merkmal `Display` auf `Vec<T>` in unserer `aggregator`-Kiste
@@ -181,8 +180,8 @@ Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
 implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 überschreiben.
 
-Codeblock 10-14 zeigt, wie man eine Standard-Zeichenkette für die Methode
-`summarize` des Merkmals `Summary` angibt, anstatt nur die Methodensignatur zu
+In Codeblock 10-14 geben wir eine Standard-Zeichenkette für die Methode
+`summarize` des Merkmals `Summary` an, anstatt nur die Methodensignatur zu
 definieren, wie wir es in Codeblock 10-12 getan haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -195,12 +194,11 @@ pub trait Summary {
 }
 ```
 
-<span class="caption">Codeblock 10-14: Definition eines Merkmals `Summary` mit
+<span class="caption">Codeblock 10-14: Definieren eines Merkmals `Summary` mit
 einer Standard-Implementierung der Methode `summarize`</span>
 
 Um eine Standard-Implementierung zu verwenden, um Instanzen von `NewsArticle`
-zusammenzufassen, anstatt eine benutzerdefinierte Implementierung zu
-definieren, geben wir einen leeren `impl`-Block mit `impl Summary for
+zusammenzufassen, geben wir einen leeren `impl`-Block mit `impl Summary for
 NewsArticle {}` an.
 
 Auch wenn wir die Methode `summarize` nicht mehr direkt für `NewsArticle`
@@ -228,9 +226,9 @@ Infolgedessen können wir immer noch die Methode `summarize` einer
 
 Dieser Code gibt `Neuer Artikel verfügbar! (Lies mehr ...)` aus.
 
-Das Erstellen einer Standard-Implementierung für `summarize` erfordert nicht,
-dass wir an der Implementierung von `Summary` für `Tweet` in Codeblock 10-13
-etwas ändern. Der Grund dafür ist, dass die Syntax für das Überschreiben einer
+Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
+Implementierung von `Summary` für `Tweet` in Codeblock 10-13 etwas ändern. Der
+Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Merkmalsmethode, die keine Standard-Implementierung hat.
 
@@ -310,13 +308,12 @@ Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 
 Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
-viele verschiedene Typen akzeptieren.
-
-Beispielsweise haben wir in Codeblock 10-13 das Merkmal `Summary` für die Typen
-`NewsArticle` und `Tweet` implementiert. Wir können eine Funktion `notify`
-definieren, die die Methode `summarize` ihres `item`-Parameters aufruft, der
-einen Typ hat, der das Merkmal `Summary` implementiert. Um dies zu tun, können
-wir die Syntax `impl Trait` verwenden, etwa so:
+viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal `Summary`, das
+wir für die Typen `NewsArticle` und `Tweet` in Codeblock 10-13 implementiert
+haben, um eine Funktion `notify` zu definieren, die die Methode `summarize` für
+ihren Parameter `item` aufruft, der von einem Typ ist, der das Merkmal
+`Summary` implementiert. Um dies zu tun, können wir die Syntax `impl Trait`
+verwenden, etwa so:
 
 ```rust
 # pub trait Summary {
@@ -360,8 +357,8 @@ generischen Typparameters nach einem Doppelpunkt und innerhalb spitzer
 Klammern.
 
 Die Syntax `impl Trait` ist bequem und ermöglicht in einfachen Fällen einen
-prägnanteren Code. Die Merkmalsabgrenzungs-Syntax kann andererseits mehr
-Komplexität ausdrücken. Zum Beispiel können wir zwei Parameter haben, die
+prägnanteren Code, während die umfassendere Merkmalsabgrenzungs-Syntax mehr
+Komplexität ausdrücken kann. Zum Beispiel können wir zwei Parameter haben, die
 `Summary` implementieren. Das Verwenden der Syntax `impl Trait` sieht
 folgendermaßen aus:
 
@@ -369,11 +366,10 @@ folgendermaßen aus:
 pub fn notify(item1: &impl Summary, item2: &impl Summary) {
 ```
 
-Wenn wir wollten, dass diese Funktion bei `item1` und `item2` unterschiedliche
-Typen haben kann, wäre das Verwenden von `impl Trait` dafür geeignet (solange
+Die Verwendung von `impl Trait` ist angemessen, wenn wir wollten, dass diese
+Funktion bei `item1` und `item2` unterschiedliche Typen haben kann (solange
 beide Typen `Summary` implementieren). Wenn beide Parameter aber den gleichen
-Typ haben sollten, dann kann man das nur durch eine Merkmalsabgrenzung
-ausdrücken, so wie hier:
+Typ haben sollen, müssen wir eine Merkmalsabgrenzung verwenden, so wie hier:
 
 ```rust,ignore
 pub fn notify<T: Summary>(item1: &T, item2: &T) {
@@ -468,10 +464,10 @@ Durch Verwenden von `impl Summary` für den Rückgabetyp legen wir fest, dass di
 Funktion `returns_summarizable` einen Typ zurückgibt, der das Merkmal `Summary`
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
 `returns_summarizable` einen `Tweet` zurück, aber der Code, der diese Funktion
-aufruft, weiß das nicht.
+aufruft, muss das nicht wissen.
 
-Die Fähigkeit, einen Typ zurückzugeben, der nur durch das Merkmal spezifiziert
-ist, das er implementiert, ist besonders nützlich im Zusammenhang mit
+Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
+zu spezifizieren, ist besonders nützlich im Zusammenhang mit
 Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
 Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
 kennt oder deren Spezifikation sehr lang ist. Mit der Syntax `impl Trait`
@@ -697,16 +693,15 @@ Typen vornehmen, die Haldenspeicherdaten wie `String` besitzen. Und
 Allokationen im Haldenspeicher können langsam sein, wenn wir mit großen
 Datenmengen arbeiten.
 
-Eine andere Möglichkeit, wie wir `largest` implementieren könnten, besteht
-darin, dass die Funktion eine Referenz auf einen `T`-Wert im Anteilstyp
-zurückgibt. Wenn wir den Rückgabetyp in `&T` anstelle von `T` ändern und
-dadurch den Funktionsrumpf ändern, um eine Referenz zurückzugeben, bräuchten
-wir die Merkmalsabgrenzungen `Clone` oder `Copy` nicht und könnten Allokationen
-im Haldenspeicher vermeiden. Versuche, diese alternativen Lösungen selbst
-zu implementieren! Wenn du bei Fehlern, die mit Lebensdauern zu tun haben,
-hängen bleibst, lese weiter: Der Abschnitt „Referenzen validieren mit
-Lebensdauern“ wird dies erläutern, aber Lebensdauern sind nicht erforderlich,
-um diese Probleme zu lösen.
+Wir könnten `largest` auch implementieren, indem die Funktion eine Referenz auf
+einen `T`-Wert im Anteilstyp zurückgibt. Wenn wir den Rückgabetyp in `&T`
+anstelle von `T` ändern und dadurch den Funktionsrumpf ändern, um eine Referenz
+zurückzugeben, bräuchten wir die Merkmalsabgrenzungen `Clone` oder `Copy` nicht
+und könnten Allokationen im Haldenspeicher vermeiden. Versuche, diese
+alternativen Lösungen selbst zu implementieren! Wenn du bei Fehlern, die mit
+Lebensdauern zu tun haben, hängen bleibst, lese weiter: Der Abschnitt
+„Referenzen validieren mit Lebensdauern“ wird dies erläutern, aber Lebensdauern
+sind nicht erforderlich, um diese Probleme zu lösen.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
@@ -792,12 +787,6 @@ Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zu
 Kompilierungszeit überprüft haben. Auf diese Weise wird die Performanz
 verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
 müssen.
-
-Eine weitere generische Funktionalität, die wir bereits verwendet haben, heißt
-*Lebensdauer* (lifetimes). Anstatt sicherzustellen, dass ein Typ das von uns
-gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
-Referenzen so lange gültig sind, wie wir sie brauchen. Schauen wir uns an, wie
-Lebensdauern das tun.
 
 [methods]: ch05-03-method-syntax.html#definieren-von-methoden
 [stack-only-data-copy]:

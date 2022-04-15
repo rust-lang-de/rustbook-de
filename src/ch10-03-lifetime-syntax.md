@@ -1,5 +1,10 @@
 ## Referenzen validieren mit Lebensdauern
 
+*Lebensdauer* (lifetimes) sind eine weitere generische Funktionalität, die wir
+bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
+gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
+Referenzen so lange gültig sind, wie wir sie brauchen.
+
 Ein Detail, das wir im Abschnitt [„Referenzen und Ausleihen
 (borrowing)“][references-and-borrowing] in Kapitel 4 nicht erörtert haben, ist,
 dass jede Referenz in Rust eine *Lebensdauer* (lifetime) hat, d.h. einen
@@ -21,10 +26,11 @@ mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.
 
 ### Verhindern hängender Referenzen mit Lebensdauern
 
-Das Hauptziel der Lebensdauer ist es, hängende Referenzen zu verhindern, die
-dazu führen, dass ein Programm auf andere Daten referenziert als die, auf die
-es referenzieren soll. Betrachte das Programm in Codeblock 10-17, das einen
-äußeren und einen inneren Gültigkeitsbereich hat.
+Das Hauptziel der Lebensdauer ist es, *hängende Referenzen* (dangling
+references) zu verhindern, die dazu führen, dass ein Programm auf andere
+Daten referenziert als die, auf die es referenzieren soll. Betrachte das
+Programm in Codeblock 10-17, das einen äußeren und einen inneren
+Gültigkeitsbereich hat.
 
 ```rust,does_not_compile
 fn main() {
@@ -150,9 +156,9 @@ Kontext von Funktionen untersuchen.
 
 ### Generische Lebensdauern in Funktionen
 
-Schreiben wir eine Funktion, die den längeren von zwei
+Wir schreiben eine Funktion, die den längeren von zwei
 Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
-Zeichenkettenanteilstypen entgegen und gibt einen
+Zeichenkettenanteilstypen entgegen und gibt einen einzigen
 Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion `longest`
 implementiert haben, sollte der Code in Codeblock 10-20 `Die längere
 Zeichenkette ist abcd` ausgeben.
@@ -174,11 +180,12 @@ fn main() {
 bestimmen</span>
 
 Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
-die Referenzen sind, weil wir nicht wollen, dass die Funktion `longest` die
-Eigentümerschaft ihrer Parameter übernimmt. Lies den Abschnitt
-[„Zeichenkettenanteilstypen als Parameter“][string-slices-as-parameters] in
-Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
-Codeblock 10-20 verwenden, die von uns gewünschten sind.
+die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
+Funktion `longest` die Eigentümerschaft ihrer Parameter übernimmt. Lies den
+Abschnitt [„Zeichenkettenanteilstypen als
+Parameter“][string-slices-as-parameters] in Kapitel 4, um mehr darüber zu
+erfahren, warum die Parameter, die wir in Codeblock 10-20 verwenden, die von
+uns gewünschten sind.
 
 Wenn wir versuchen, die Funktion `longest`, wie in Codeblock 10-21 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.
@@ -250,18 +257,19 @@ damit der Ausleihenprüfer seine Analyse durchführen kann.
 ### Lebensdauer-Annotationssyntax
 
 Lebensdauer-Annotationen ändern nichts daran, wie lange eine Referenz lebt.
-Genauso wie Funktionen jeden Typ entgegennehmen können, wenn die Signatur einen
-generischen Typparameter angibt, können Funktionen Referenzen mit beliebiger
-Lebensdauer akzeptieren, indem sie einen generischen Lebensdauerparameter
-angeben. Lebensdauer-Annotationen beschreiben die Beziehungen der Lebensdauern
-mehrerer Referenzen zueinander, ohne die Lebensdauern zu beeinflussen.
+Vielmehr beschreiben sie die Beziehungen der Lebensdauern mehrerer Referenzen
+zueinander, ohne die Lebensdauern zu beeinflussen. Genauso wie Funktionen jeden
+Typ entgegennehmen können, wenn die Signatur einen generischen Typparameter
+angibt, können Funktionen Referenzen mit beliebiger Lebensdauer akzeptieren,
+indem sie einen generischen Lebensdauerparameter angeben.
 
 Lebensdauer-Annotationen haben eine etwas ungewöhnliche Syntax: Die Namen der
 Lebensdauer-Parameter müssen mit einem Apostroph (`'`) beginnen und sind
 normalerweise kleingeschrieben und sehr kurz, wie generische Typen. Die meisten
-Menschen verwenden den Namen `'a`. Wir platzieren
-Lebensdauer-Parameter-Annotationen hinter dem `&` einer Referenz, wobei wir ein
-Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu trennen.
+Menschen verwenden den Namen `'a` für die erste Lebensdauer-Annotationen. Wir
+platzieren Lebensdauer-Parameter-Annotationen hinter dem `&` einer Referenz,
+wobei wir ein Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu
+trennen.
 
 Hier sind einige Beispiele: Eine Referenz auf einen `i32` ohne
 Lebensdauer-Parameter, eine Referenz auf einen `i32`, die einen
@@ -289,12 +297,11 @@ leben müssen wie diese generische Lebensdauer.
 Lass uns nun Lebensdauer-Annotationen im Kontext der Funktion `longest`
 untersuchen. Wie bei generischen Typparametern müssen wir generische
 Lebensdauerparameter innerhalb spitzer Klammern zwischen dem Funktionsnamen und
-der Parameterliste deklarieren. Die Beschränkung, die wir in dieser Signatur
-ausdrücken wollen, besteht darin, dass die Lebensdauer der beiden Parameter und
-die Lebensdauer der zurückgegebenen Referenz so aufeinander bezogen sind, dass
-die zurückgegebene Referenz so lange gültig ist, wie es die beiden Parameter
-sind. Wir nennen die Lebensdauer `'a` und fügen sie dann jeder Referenz hinzu,
-wie in Codeblock 10-22 gezeigt.
+der Parameterliste deklarieren. Wir möchten, dass die Signatur die folgende
+Bedingung ausdrückt: Die zurückgegebene Referenz ist gültig, solange die beiden
+Parameter gültig sind. Dies ist die Beziehung zwischen den Lebensdauern der
+Parameter und des Rückgabewerts. Wir nennen die Lebensdauer `'a` und fügen sie
+dann jeder Referenz hinzu, wie in Codeblock 10-22 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -397,7 +404,7 @@ gültig, `string2` ist bis zum Ende des inneren Gültigkeitsbereichs gültig, un
 `result` referenziert auf etwas, das bis zum Ende des inneren
 Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
 der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt `Die längere
-Zeichenkette ist lange Zeichenkette ist lang`.
+Zeichenkette ist lange Zeichenkette ist lang` aus.
 
 Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
 Referenz in `result` die kürzere Lebensdauer der beiden Argumente sein muss. 
@@ -497,16 +504,16 @@ fn longest<'a>(x: &'a str, y: &str) -> &'a str {
 }
 ```
 
-In diesem Beispiel haben wir einen Lebensdauer-Parameter `'a` für den Parameter
-`x` und den Rückgabetyp angegeben, aber nicht für den Parameter `y`, weil die
-Lebensdauer von `y` in keiner Beziehung zur Lebensdauer von `x` oder dem
-Rückgabewert steht.
+Wir haben einen Lebensdauer-Parameter `'a` für den Parameter `x` und den
+Rückgabetyp angegeben, aber nicht für den Parameter `y`, weil die Lebensdauer
+von `y` in keiner Beziehung zur Lebensdauer von `x` oder dem Rückgabewert
+steht.
 
 Wenn eine Funktion eine Referenz zurückgibt, muss der Lebensdauerparameter für
 den Rückgabetyp mit dem Lebensdauerparameter für einen der Parameter
 übereinstimmen. Wenn sich die zurückgegebene Referenz *nicht* auf einen der
 Parameter bezieht, muss er sich auf einen innerhalb dieser Funktion erzeugten
-Wert beziehen, was eine hängende Referenz wäre, da der Wert am Ende der
+Wert beziehen. Dies wäre jedoch eine hängende Referenz, da der Wert am Ende der
 Funktion den Gültigkeitsbereich verlässt. Betrachte diesen Versuch einer
 Implementierung der Funktion `longest`, die sich nicht kompilieren lässt:
 
@@ -680,10 +687,10 @@ einem dieser Fälle passt, brauchst du die Lebensdauer nicht explizit anzugeben.
 Die Elisionsregeln bieten keine vollständige Schlussfolgerung. Wenn Rust die
 Regeln deterministisch anwendet, aber immer noch Unklarheit darüber besteht,
 welche Lebensdauer die Referenzen haben, wird der Compiler nicht erraten,
-wie lang die Lebensdauer der verbleibenden Referenzen sein sollte. In diesem
-Fall gibt dir der Compiler statt einer Vermutung einen Fehler an, den du
-beheben kannst, indem du die Lebensdauer-Annotationen angibst, die festlegen,
-wie sich die Referenzen zueinander verhalten.
+wie lang die Lebensdauer der verbleibenden Referenzen sein sollte. Statt einer
+Vermutung gibt dir der Compiler einen Fehler an, den du beheben kannst, indem
+du die Lebensdauer-Annotationen angibst, die festlegen, wie sich die Referenzen
+zueinander verhalten.
 
 Die Lebensdauern der Funktions- oder Methodenparameter werden als
 *Eingangslebensdauern* (input lifetimes) bezeichnet, und die Lebensdauern der
@@ -697,11 +704,11 @@ und es immer noch Referenzen gibt, für die er keine Lebensdauern ermitteln
 kann, bricht der Compiler mit einem Fehler ab. Diese Regeln gelten sowohl
 für `fn`-Definitionen als auch für `impl`-Blöcke.
 
-Die erste Regel ist, dass jeder Parameter, der eine Referenz ist, seinen
-eigenen Lebensdauerparameter erhält. Mit anderen Worten, eine Funktion mit
-einem Parameter erhält einen Lebensdauerparameter: `fn foo<'a>(x: &'a i32)`;
-eine Funktion mit zwei Parametern erhält zwei separate Lebensdauerparameter:
-`fn foo<'a, 'b>(x: &'a i32, y: &'b i32)`; und so weiter.
+Die erste Regel ist, dass der Compiler jedem Parameter, der eine Referenz ist,
+seinen eigenen Lebensdauerparameter zuweist. Mit anderen Worten, eine Funktion
+mit einem Parameter erhält einen Lebensdauerparameter: `fn foo<'a>(x: &'a
+i32)`; eine Funktion mit zwei Parametern erhält zwei separate
+Lebensdauerparameter: `fn foo<'a, 'b>(x: &'a i32, y: &'b i32)`; und so weiter.
 
 Die zweite Regel lautet: Wenn es genau einen Eingangslebensdauer-Parameter
 gibt, wird diese Lebensdauer allen Ausgangslebensdauer-Parametern zugewiesen:
@@ -881,12 +888,12 @@ Zeichenkettenliterale `'static`.
 Möglicherweise siehst du Hinweise zur Verwendung der Lebensdauer `'static` in
 Fehlermeldungen. Aber bevor du `'static` als Lebensdauer für eine Referenz
 angibst, denke darüber nach, ob deine Referenz tatsächlich während der gesamten
-Lebensdauer deines Programms lebt oder nicht. Du könntest überlegen, ob du
-willst, dass sie so lange lebt, selbst wenn sie das könnte. Meistens ergibt
-sich das Problem aus dem Versuch, eine hängende Referenz zu erstellen oder eine
-Unvereinbarkeit zwischen den verfügbaren Lebensdauern zu beheben. In solchen
-Fällen besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
-Lebensdauer als `'static` festzulegen.
+Lebensdauer deines Programms lebt oder nicht, und ob du das so willst. In den
+meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer `'static`
+hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder aus einer
+Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen besteht
+die Lösung darin, diese Probleme zu beheben und nicht darin, die Lebensdauer
+als `'static` festzulegen.
 
 ## Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen
 

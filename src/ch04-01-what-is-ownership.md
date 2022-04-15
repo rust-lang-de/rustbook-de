@@ -58,8 +58,8 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
 > Benutzung und gibt einen *Zeiger* (pointer) zurück, der die Adresse dieser
 > Stelle ist. Dieser Vorgang wird als *Allokieren im Haldenspeicher*
-> bezeichnet und manchmal mit *Allokieren* abgekürzt. Das Legen von Werten auf
-> den Stapelspeicher gilt nicht als Allokieren. Da es sich beim Zeiger um eine
+> bezeichnet und manchmal mit *Allokieren* abgekürzt (Das Legen von Werten auf
+> den Stapelspeicher gilt nicht als Allokieren). Da es sich beim Zeiger um eine
 > bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
 > legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
 > folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,

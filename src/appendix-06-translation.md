@@ -40,3 +40,4 @@ eine neue Übersetzung zu informieren!
   &ndash; [HTML-Version](https://rustdili.github.io/)
 - [हिंदी](https://github.com/venkatarun95/rust-book-hindi)
 - [ไทย](https://github.com/rust-lang-th/book-th)
+- [Danske](https://github.com/DanKHansen/book-dk)

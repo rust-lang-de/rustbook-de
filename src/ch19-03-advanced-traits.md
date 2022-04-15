@@ -2,9 +2,8 @@
 
 Merkmale behandelten wir als Erstes im Abschnitt [„Merkmale (traits):
 Gemeinsames Verhalten definieren“][traits-defining-shared-behavior] in Kapitel
-10, aber wie bei der Lebensdauer haben wir die fortgeschrittenen Details nicht
-besprochen. Jetzt, da du mehr über Rust weißt, können wir zum Kern der Sache
-kommen.
+10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
+mehr über Rust weißt, können wir zum Kern der Sache kommen.
 
 ### Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen
 
@@ -203,11 +202,12 @@ Typ `Rhs` anpassen wollen, anstatt den Standardwert zu verwenden.
 Wir haben zwei Strukturen `Millimeters` und `Meters`, die Werte in
 verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
 in einer anderen Struktur ist als *Newtype-Muster* bekannt, das wir im
-Abschnitt [„Verwenden des Newtype-Musters für Typsicherheit und
-Abstraktion“][newtype] ausführlicher beschreiben. Wir wollen Werte in
-Millimeter zu Werten in Meter addieren und die Implementierung von `Add` die
-Umrechnung korrekt durchführen lassen. Wir können `Add` für `Millimeters` mit
-`Meters` als `Rhs` implementieren, wie in Codeblock 19-15 gezeigt.
+Abschnitt [„Verwenden des Newtype-Musters zum Implementieren von externen
+Merkmalen auf externen Typen“][newtype] ausführlicher beschreiben. Wir wollen
+Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
+`Add` die Umrechnung korrekt durchführen lassen. Wir können `Add` für
+`Millimeters` mit `Meters` als `Rhs` implementieren, wie in Codeblock 19-15
+gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -420,13 +420,14 @@ zwei *Typen* hätten, die beide ein *Merkmal* implementieren, herausfinden,
 welche Implementierung eines Merkmals basierend auf dem Typ von `self` zu
 verwenden ist.
 
-Assoziierte Funktionen, die Teil von Merkmalen sind, haben jedoch keinen
-`self`-Parameter. Wenn zwei Typen im gleichen Gültigkeitsbereich dieses Merkmal
-implementieren, kann Rust nicht herausfinden, welchen Typ du meinst, es sei
-denn, du verwendest eine *vollständig qualifizierte Syntax*. Zum Beispiel hat
-das Merkmal `Animal` in Codeblock 19-19 die assoziierte Funktion `baby_name`,
-die Implementierung von `Animal` für die Struktur `Dog` und die assoziierte
-Funktion `baby_name`, die direkt auf `Dog` definiert ist.
+Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
+`self`-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
+Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
+nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine *voll
+qualifizierte Syntax*. Zum Beispiel hat das Merkmal `Animal` in Codeblock 19-19
+die assoziierte Funktion `baby_name`, die Implementierung von `Animal` für die
+Struktur `Dog` und die assoziierte Funktion `baby_name`, die direkt auf `Dog`
+definiert ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -516,9 +517,9 @@ fn main() {
 Merkmals `Animal` aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span>
 
-Da `Animal::baby_name` eine assoziierte Funktion ist und keine Methode und
-somit keinen Parameter `self` hat, kann Rust nicht herausfinden, welche
-Implementierung von `Animal::baby_name` wir wollen. Wir werden diesen
+Da `Animal::baby_name` keinen `self`-Parameter hat, und es andere Typen geben
+könnte, die das Merkmal `Animal` implementieren, kann Rust nicht herausfinden,
+welche Implementierung von `Animal::baby_name` wir wollen. Wir werden diesen
 Kompilierfehler erhalten:
 
 ```console
@@ -542,9 +543,10 @@ error: could not compile `traits-example` due to previous error
 ```
 
 Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
-`Animal` für `Dog` verwenden wollen, müssen wir eine vollständig qualifizierte
-Syntax verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte
-Syntax verwendet.
+`Animal` für `Dog` verwenden wollen und nicht die Implementierung von `Animal`
+für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
+verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte Syntax
+verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -596,14 +598,14 @@ Im Allgemeinen wird die vollständig qualifizierte Syntax wie folgt definiert:
 <Type as Trait>::function(receiver_if_method, next_arg, ...);
 ```
 
-Für assoziierte Funktionen gäbe es keinen `receiver`: Es gäbe nur die Liste der
-anderen Argumente. Du könntest eine vollständig qualifizierte Syntax überall
-dort verwenden, wo du Funktionen oder Methoden aufrufst. Du darfst jedoch jeden
-Teil dieser Syntax weglassen, den Rust aus anderen Informationen im Programm
-herausfinden kann. Du musst diese ausführlichere Syntax nur in Fällen
-verwenden, in denen es mehrere Implementierungen gibt, die denselben Namen
-verwenden, und Rust Hilfe benötigt, um herauszufinden, welche Implementierung
-du aufrufen möchtest.
+Für assoziierte Funktionen, die keine Methoden sind, gäbe es keinen `receiver`:
+Es gäbe nur die Liste der anderen Argumente. Du könntest eine vollständig
+qualifizierte Syntax überall dort verwenden, wo du Funktionen oder Methoden
+aufrufst. Du darfst jedoch jeden Teil dieser Syntax weglassen, den Rust aus
+anderen Informationen im Programm herausfinden kann. Du musst diese
+ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
+Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
+um herauszufinden, welche Implementierung du aufrufen möchtest.
 
 ### Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern
 
@@ -838,7 +840,7 @@ Möglichkeiten an, mit Rusts Typsystem zu interagieren.
 [implementing-a-trait-on-a-type]:
 ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
 [newtype]:
-ch19-04-advanced-types.html#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion
+#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
 [the-iterator-trait-and-the-next-method]:
 ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next
 [traits-defining-shared-behavior]: ch10-02-traits.html
