@@ -39,7 +39,7 @@ fn simulated_expensive_calculation(intensity: u32) -> u32 {
 <span class="caption">Codeblock 13-1: Eine Funktion, die für eine hypothetische
 Berechnung steht, die etwa 2 Sekunden Laufzeit benötigt.</span>
 
-Als Nächstes betachten wir die Hauptfunktion `main`, welche die für unser Beispiel
+Als Nächstes betrachten wir die Hauptfunktion `main`, welche die für unser Beispiel
 relevanten Teile der App beinhaltet. 
 Diese Funktion stellt den Code dar, den die App
 aufrufen wird, wenn ein Benutzer einen Trainingsplan anfordert. 
