@@ -15,8 +15,8 @@ Funktionsabschluss zu speichern, um ihn später auszuführen. Nebenbei werden
 wir über Typableitung, Merkmale (traits) und die Syntax von Funktionsabschlüssen
 sprechen.
 
-Stell Dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up
-und entwickeln eine App zur Erstellung die kundenspezifischer Trainingspläne.
+Stell dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up
+und entwickeln eine App zur Erstellung kundenspezifischer Trainingspläne.
 Das Backend ist in Rust geschrieben und der verwendete Algorithmus zur Erzeugung 
 der Trainingspläne nutzt viele Einflussfaktoren: das Alter des Benutzers, dessen 
 Body Mass Index und Trainingsvorlieben, die zuletzt erfolgten Work-outs sowie 
@@ -275,15 +275,15 @@ Codeblock 13-5) abspeichern. Wir können sogar den gesamten Inhalt von
 <span class="caption">Codeblock 13-5: Definition eines Funktionsabschlusses 
 und dessen Speicherung in der Variable `expensive_closure`</span>
 
-Das '=' weist der Variablen `expensive_closure`den Funktionsabschlusses zu. Die 
-Definition des Funktionsabschlusses folgt mit einem Paar vertikaler
+Das `=` weist der Variablen `expensive_closure` den Funktionsabschluss zu. Der 
+Definition des Funktionsabschlusses folgt ein Paar vertikaler
 Pipes (`|`), zwischen denen wir die Parameter des Funktionsabschlusses angeben.
 Diese Syntax wurde von der Funktionsabschluss-Definition in 
 Smalltalk und Ruby beeinflusst. Unser Funktionsabschluss hat einen
 Parameter `num`. Mehrere Parameter trennen wir mit
 Kommata: `|param1, param2|`.
 
-Den Parameter folgen geschweifte Klammern `{}`, die den Rumpf des
+Den Parametern folgen geschweifte Klammern `{}`, die den Rumpf des
 Funktionsabschlusses enthalten. Enhält der Rumpf nur einen Ausdruck, sind
 diese Klammern optional. Nach den geschweiften Klammern benötigen wir ein 
 Semikolon zum Abschluss der `let`-Anweisung. Der Rückgabewert des
@@ -291,7 +291,7 @@ Funktionsabschlusses ist der Wert der letzten Rumpf-Zeile (`num`).
 Wie bei Funktionsrümpfen endet diese Zeile nicht mit einem Semikolon.
 
 Beachte, die `let`-Anweisung bedeutet, dass `expensive_closure` die *Definition*
-einer anonymen Funktion enzhält und nicht den *Ergebniswert* des
+einer anonymen Funktion enthält und nicht den *Ergebniswert* des
 Aufrufs der anonymen Funktion. Wir benutzen einen
 Funktionsabschluss, um Programmcode an einer Stelle
 zu definieren und abzuspeichern, und um ihn später an einer anderen Stelle 
@@ -299,7 +299,7 @@ aufzurufen. Unser Programmteil ist nun in
 `expensive_closure` gespeichert.
 
 Da wir nun einen Funktionsabschluss definiert haben, können wir den Code so anpassen,
-dass der Funktionsabschluss im`if`-Block aufgerufen wird. Dadurch wird der zugehörige 
+dass der Funktionsabschluss im `if`-Block aufgerufen wird. Dadurch wird der zugehörige 
 Code ausgeführt und der Ergebniswert zurückgeliefert. Der Aufruf eines
 Funktionsabschlusses gleicht dem einer Funktion: Wir geben den Variablennamen
 an, der den Funktionsabschluss enthält, gefolgt von den Argumentwerten in
@@ -349,7 +349,7 @@ ausgeführt, wo wir das Ergebnis benötigen.
 
 Wir haben jedoch eines der Probleme von Codeblock 13-3 wieder eingeführt.
 Im ersten `if`-Block rufen wir den Funktionsabschluss zweimal auf und lassen
-somit den Benutzer doppelt solange warten als notwendig. Wir könnten das Problem
+somit den Benutzer doppelt so lange warten als notwendig. Wir könnten das Problem
 beheben, indem wir eine lokale Variable definieren, die das Ergebnis des
 Funktionsabschluss-Aufrufs hält. Funktionsabschlüsse bieten uns eine andere
 Lösung. Wir werden diese Lösung in Kürze erklären, aber lass uns zuerst über die
@@ -421,8 +421,7 @@ würde die Definition wie in Codeblock 13-7 aussehen.
 ```
 
 <span class="caption">Codeblock 13-7: Hinzufügen optionaler Datentypangabe
-der Parameter- und Rückgabewert-Typen im Funktionsabschluss
-</span>
+der Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
 
 Mit Datentypangabe ähnelt die Syntax eines Funktionsabschlusses sehr der Syntax 
 einer Funktion. Im Folgenden vergleichen wir die Syntax einer
@@ -464,7 +463,7 @@ Fehlermeldung.
 ```rust,does_not_compile
 let example_closure = |x| x;
 
-let s = example_closure(String::from("hello"));
+let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 ```
 
