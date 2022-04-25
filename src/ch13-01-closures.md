@@ -12,17 +12,25 @@ die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
 
 Lass uns eine Beispielsituation betrachten, in der es nützlich ist, einen
 Funktionsabschluss zu speichern, um ihn später auszuführen. Nebenbei werden
-wir über Typinferenz, Merkmale (traits) und die Syntax von Funktionsabschlüssen
+wir über Typableitung, Merkmale (traits) und die Syntax von Funktionsabschlüssen
 sprechen.
 
-Stell Dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up und entwickeln eine App zur Erstellung die kundenspezifischer Trainingspläne.
-Das Backend ist in Rust geschrieben und der verwendete Algorithmus zur Erzeugung der Trainingspläne nutzt viele Einflussfaktoren: das Alter des Benutzers, dessen Body Mass Index und Trainingsvorlieben, die zuletzt erfolgten Work-outs sowie deren Intensitätslevel. 
+Stell Dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up
+und entwickeln eine App zur Erstellung die kundenspezifischer Trainingspläne.
+Das Backend ist in Rust geschrieben und der verwendete Algorithmus zur Erzeugung 
+der Trainingspläne nutzt viele Einflussfaktoren: das Alter des Benutzers, dessen 
+Body Mass Index und Trainingsvorlieben, die zuletzt erfolgten Work-outs sowie 
+deren Intensitätslevel. 
 Der eigentliche Algorithmus ist für unser Beispiel nicht
-entscheidend; lediglich wichtig ist, dass die Ausführungsdauer ein paar Sekunden beträgt.
-Um die Wartezeit für den Benutzer zu verkürzen, wollen wir den Algorithmus nur bei Bedarf und lediglich einmal aufrufen.
+entscheidend; lediglich wichtig ist, dass die Ausführungsdauer ein paar Sekunden 
+beträgt.
+Um die Wartezeit für den Benutzer zu verkürzen, wollen wir den Algorithmus nur 
+bei Bedarf und lediglich einmal aufrufen.
 
 Den Aufruf des hypothetischen Algorithmus simulieren wir mit der Funktion
-`simulated_expensive_calculation` (siehe Codeblock 13-1). Diese Funktion gibt den Text `rechnet langsam...` aus, wartet zwei Sekunden lang und gibt dann die Nummer zurück, die wir übergeben haben.
+`simulated_expensive_calculation` (siehe Codeblock 13-1). Diese Funktion gibt 
+den Text `rechnet langsam...` aus, wartet zwei Sekunden lang und gibt dann die 
+Nummer zurück, die wir übergeben haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -43,11 +51,9 @@ Als Nächstes betrachten wir die Hauptfunktion `main`, welche die für unser Bei
 relevanten Teile der App beinhaltet. 
 Diese Funktion stellt den Code dar, den die App
 aufrufen wird, wenn ein Benutzer einen Trainingsplan anfordert. 
-Da die
-Interaktion mit dem Frontend für die Benutzung von Funktionsabschlüssen nicht
-von Bedeutung ist, werden die Eingabewerte (inputs) fest
-einprogrammiert (hardcoded) und die Ausgaben (outputs) einfach mit `print`
-ausgegeben.
+Da die Interaktion mit dem Frontend für die Benutzung von Funktionsabschlüssen
+nicht von Bedeutung ist, werden die Eingabewerte (inputs) fest einprogrammiert 
+(hardcoded) und die Ausgaben (outputs) einfach mit `print` ausgegeben.
 
 Das sind die benötigten Eingaben:
 
@@ -83,18 +89,18 @@ fn main() {
 einprogrammierten Werten, um Eingaben zu simulieren und Zufallszahlen zu
 erzeugen</span>
 
-Die Variable `simulated_user_specified_value` wurde als 10 fest einprogrammiert
-und die Variable `simulated_random_number` zur Vereinfachung als 7. In einem
-tatsächlichen Programm würden wir die Intensitäts-Zahl vom App-Frontend bekommen
-und wir würden die Kiste (crate) `rand` benutzen um eine Zufallszahl zu
-erzeugen, so wie wir es im Ratespiel-Beispiel in Kapitel 2 bereits gemacht
-haben. Die Funktion `main` ruft eine Funktion `generate_workout` mit
+Zur Vereinfachung haben wir die Variablen `simulated_user_specified_value` auf 
+den Wert 10 und `simulated_random_number` auf den Wert 7 fest kodiert.
+Im tatsächlichen Programm würden wir die Intensitäts-Zahl vom App-Frontend 
+erhalten und die Kiste (crate) `rand` benutzen, um eine Zufallszahl zu
+erzeugen, so wie wir es im Ratespiel-Beispiel in Kapitel 2 bereits durchgeführt
+haben. Die Hauptfunktion `main` ruft eine Funktion `generate_workout` mit
 simulierten Eingabewerten auf.
 
-Nun da wir einen Kontext haben, lass uns zum Algorithmus kommen. Die Funktion
-`generate_workout` im Codeblock 13-3 beinhaltet die Anwendungslogik der App
-mit der wir in diesem Beispiel am häufigsten zu tun haben werden, die folgenden
-Veränderungen werden diese Funktion betreffen.
+Da wir nun die Zusammenhänge kennen, können wir uns dem Algorithmus zuwenden.
+Die Funktion `generate_workout` im Codeblock 13-3 beinhaltet die Anwendungslogik 
+der App, mit der wir uns in diesem Beispiel am meisten beschäftigen. Die folgenden
+Codeänderungen werden diese Funktion betreffen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -143,23 +149,23 @@ der Eingaben und durch Aufrufe der Funktion `simulated_expensive_calculation`
 ausgibt</span>
 
 Der Code im Codeblock 13-3 ruft die langsame Berechnungsfunktion mehrfach auf.
-Der erste `if`-Block verwendet `simulated_expensive_calculation` zweifach, das
-`if` im äußeren `else` verwendet die Berechnung nicht und der Code im zweiten
-`else` einmal.
+Der erste `if`-Block ruft `simulated_expensive_calculation` zweimal auf, das
+`if` im äußeren `else`-Block verwendet die Berechnung gar nicht und der Code im
+zweiten `else` einmal.
 
-Das gewünschte Verhalten der Funktion `generate_workout` ist, als Erstes zu
-überprüfen, ob der Benutzer ein Training von niedriger Intensität möchte
-(gekennzeichnet durch eine Zahl kleiner 25) oder ein Training von hoher
-Intensität (eine Zahl größer oder gleich 25). 
+Als Erstes soll die Funktion `generate_workout` überprüfen,
+ob der Benutzer ein Training mit niedriger Intensität 
+(gekennzeichnet durch eine Zahl kleiner 25) oder mit hoher
+Intensität (eine Zahl größer oder gleich 25) wünscht. 
 
-Trainingspläne von niedriger Intensität empfehlen eine mittels simulierten 
-Algorithmus berechnete Anzahl von Liegestützen und Sit-ups.
+Trainingspläne mit niedriger Intensität empfehlen eine Anzahl von Liegestützen 
+und Sit-ups, die mit dem simulierten komplexen Algorithmus ermittelt werden.
 
-Falls der Benutzer ein Training von hoher Intensität anfordert, gibt es eine 
+Falls der Benutzer ein Training mit hoher Intensität anfordert, gibt es eine 
 zusätzliche Logik: Ergibt der Wert der ermittelten Zufallszahl 3, wird die App
-dem Benutzer eine Trinkpause empfehlen, falls sich eine andere Zahl ergibt,
-werden dem Benutzer einige Minuten Lauftraining, berechnet durch den simulierten 
-Algorithmus, empfohlen.
+dem Benutzer eine Trinkpause empfehlen. Andernfalls werden dem Benutzer einige 
+Minuten Lauftraining empfohlen, berechnet durch den simulierten 
+komplexen Algorithmus.
 
 Lass uns nun annehmen, dass das Datenforschungsteam einige Änderungen anordnet.
 Das Programm funktioniert zwar soweit wie gewünscht, aber
@@ -169,9 +175,10 @@ nur noch einmal aufgerufen wird, wenn es notwendig ist.
 
 #### Umformen (refactoring) mit Funktionen
 
-Wir könnten den Programmcode auf viele Arten umstrukturieren, aber zuerst, werden
-wir versuchen den doppelten Aufruf der Funktion `simulated_expensive_calculation`
-in eine Variable zu extrahieren, wie es im Codeblock 13-4 gezeigt wird.
+Wir könnten den Programmcode auf viele Arten umstrukturieren. Als erstes werden
+wir die Funktion `simulated_expensive_calculation` verschieben, den Rückgabewert
+in einer Variablen speichern und so den doppelten Aufruf vermeiden 
+(siehe Codeblock 13-4).
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -208,26 +215,26 @@ fn generate_workout(intensity: u32, random_number: u32) {
 #}
 ```
 
-<span class="caption">Codeblock 13-4: Extraktion der Aufrufe von
-`simulated_expensive_calculation` zu einem Ort und Speichern des Ergebnisses in
+<span class="caption">Codeblock 13-4: Verschieben des Aufrufs der Funktion
+`simulated_expensive_calculation` und Speichern des Rückgabewerts in
 der Variable `expensive_result`</span>
 
 Diese Änderung vereinigt alle Aufrufe von `simulated_expensive_calculation` und
-löst das Problem mit deren unnötigen doppelten Aufruf im ersten `if`-Block.
-Leider rufen wir nun die Funktion auf und warten in jeden Fall auf das Ergebnis,
-sogar im inneren `if`-Block der den Ergebniswert überhaupt nicht verwendet.
+löst im ersten `if`-Block das Problem mit dem unnötigen zweifachen Funktionsaufruf.
+Leider rufen wir nun die Funktion in jeden Fall auf und warten auf das Ergebnis,
+auch im inneren `if`-Block, der den Ergebniswert überhaupt nicht benötigt.
 
 Wir wollen in `generate_workout` nur ein Mal auf
-`simulated_expensive_calculation` referenzieren, aber die teure Berechnung nur
+`simulated_expensive_calculation` zugreifen, aber trotzdem die teure Berechnung nur
 dort durchführen, wo wir das Ergebnis tatsächlich benötigen. Dies ist ein
 Anwendungsfall für Funktionsabschlüsse!
 
-#### Umformen mit Funktionsabschlüssen um Programmcode zu speichern
+#### Umformen mit Funktionsabschlüssen zum Abspeichern von Programmcode
 
-Anstatt die Funktion `simulated_expensive_calculation` vor den `if`-Blöcken
-immer aufzurufen, können wir einen *Funktionsabschluss* definieren und diesen
-anstatt des Resultates in einer Variable abspeichern, wie es im 
-Codeblock 13-5 gezeigt wird. Eigentlich können wir den gesamten Rumpf von
+Anstatt die Funktion `simulated_expensive_calculation` stets vor den `if`-Blöcken
+aufzurufen, können wir einen *Funktionsabschluss* definieren und diesen
+Funktionsabschluss anstatt des Funktionsrückgabewerts in einer Variable (wie im 
+Codeblock 13-5) abspeichern. Wir können sogar den gesamten Inhalt von
 `simulated_expensive_calculation` in einen Funktionsabschluss verschieben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -268,35 +275,35 @@ Codeblock 13-5 gezeigt wird. Eigentlich können wir den gesamten Rumpf von
 <span class="caption">Codeblock 13-5: Definition eines Funktionsabschlusses 
 und dessen Speicherung in der Variable `expensive_closure`</span>
 
-Die Definition des Funktionsabschlusses folgt dem `=` um es der Variable
-`expensive_closure` zuzuweisen. Wir beginnen mit einem Paar vertikaler
-Pipes (`|`), worin wir die Parameter des Funktionsabschlusses spezifizieren.
-Diese Syntax wurde ausgewählt, da sie so ähnlich ist wie die Definition von
-Funktionsabschlüssen in Ruby und Smalltalk. Dieser Funktionsabschluss hat einen
-Parameter `num`: Sollten mehrere Parameter benötigt werden, würden wir diese mit
-Kommata getrennt schreiben wie `|param1, param2|`.
+Das '=' weist der Variablen `expensive_closure`den Funktionsabschlusses zu. Die 
+Definition des Funktionsabschlusses folgt mit einem Paar vertikaler
+Pipes (`|`), zwischen denen wir die Parameter des Funktionsabschlusses angeben.
+Diese Syntax wurde von der Funktionsabschluss-Definition in 
+Smalltalk und Ruby beeinflusst. Unser Funktionsabschluss hat einen
+Parameter `num`. Mehrere Parameter trennen wir mit
+Kommata: `|param1, param2|`.
 
-Hinter den Parameter kommen geschweifte Klammern `{}` die den Rumpf des
-Funktionsabschlusses beinhalten. Diese Klammern sind optional, wenn der Rumpf nur
-einen Ausdruck beinhaltet. Zum Schluss benötigen wir nach den geschweiften
-Klammern ein Semikolon aufgrund der `let`-Anweisung. Der Wert, der vom
-Funktionsabschluss zurückgegeben wird, ist der Wert der letzten Zeile
-im Rumpf des Funktionsabschlusses (`num`), da diese Zeile nicht mit einem
-Semikolon endet, wie auch bei Funktionsrümpfen.
+Den Parameter folgen geschweifte Klammern `{}`, die den Rumpf des
+Funktionsabschlusses enthalten. Enhält der Rumpf nur einen Ausdruck, sind
+diese Klammern optional. Nach den geschweiften Klammern benötigen wir ein 
+Semikolon zum Abschluss der `let`-Anweisung. Der Rückgabewert des
+Funktionsabschlusses ist der Wert der letzten Rumpf-Zeile (`num`).
+Wie bei Funktionsrümpfen endet diese Zeile nicht mit einem Semikolon.
 
-Merke, die `let`-Anweisung bedeutet, dass `expensive_closure` die *Definition*
-einer anonymen Funktion beinhaltet und nicht den *Wert des Ergebnisses* des
-Aufrufs der anonymen Funktion. Wir benutzen, zur Erinnerung, einen
-Funktionsabschluss, da wir den aufzurufenden Programmcode an einer Stelle
-definieren, speichern und ihn später aufrufen wollen. Dieser Programmteil ist nun in
+Beachte, die `let`-Anweisung bedeutet, dass `expensive_closure` die *Definition*
+einer anonymen Funktion enzhält und nicht den *Ergebniswert* des
+Aufrufs der anonymen Funktion. Wir benutzen einen
+Funktionsabschluss, um Programmcode an einer Stelle
+zu definieren und abzuspeichern, und um ihn später an einer anderen Stelle 
+aufzurufen. Unser Programmteil ist nun in
 `expensive_closure` gespeichert.
 
-Da wir nun einen Funktionsabschluss definiert haben, können wir nun den Code im
-`if`-Block so ändern, damit der Funktionsabschluss aufgerufen wird um dessen
-Code auszuführen und einen Ergebniswert zu erhalten. Der Aufruf eines
+Da wir nun einen Funktionsabschluss definiert haben, können wir den Code so anpassen,
+dass der Funktionsabschluss im`if`-Block aufgerufen wird. Dadurch wird der zugehörige 
+Code ausgeführt und der Ergebniswert zurückgeliefert. Der Aufruf eines
 Funktionsabschlusses gleicht dem einer Funktion: Wir geben den Variablennamen
 an, der den Funktionsabschluss enthält, gefolgt von den Argumentwerten in
-Klammern, die wir verwenden möchten, wie in Codeblock 13-6 zu sehen ist.
+Klammern, die wir übergeben möchten, wie in Codeblock 13-6 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -341,40 +348,39 @@ Nun wird die langsame Berechnung an einer Stelle definiert und nur noch dort
 ausgeführt, wo wir das Ergebnis benötigen.
 
 Wir haben jedoch eines der Probleme von Codeblock 13-3 wieder eingeführt.
-Im ersten `if`-Block rufen wir den Funktionsabschluss mehrfach auf und lassen
+Im ersten `if`-Block rufen wir den Funktionsabschluss zweimal auf und lassen
 somit den Benutzer doppelt solange warten als notwendig. Wir könnten das Problem
-beheben, indem wir eine lokale Variable definieren die das Ergebnis des
+beheben, indem wir eine lokale Variable definieren, die das Ergebnis des
 Funktionsabschluss-Aufrufs hält. Funktionsabschlüsse bieten uns eine andere
 Lösung. Wir werden diese Lösung in Kürze erklären, aber lass uns zuerst über die
 fehlenden Typzuweisungen in der Definition des Funktionsabschlusses und den
 Merkmalen (traits) von Funktionsabschlüssen sprechen.
 
-### Typinferenz und Zuweisung bei Funktionsabschlüssen
+### Typableitung und Zuweisung bei Funktionsabschlüssen
 
-Bei Funktionsabschlüssen musst du die Typen der Parameter und Rückgabewerte nicht,
-wie bei Funktionen, mit Anmerkungen versehen. Für Funktionen sind Typanmerkungen 
+Bei Funktionsabschlüssen musst du die Datentypen der Parameter und Rückgabewerte nicht,
+wie bei Funktionen, ausdrücklich angeben. Für Funktionen sind Datentypangaben 
 erforderlich, da sie Bestandteil einer expliziten Benutzerschnittstelle sind.
 Die starre Festlegung dieser Schnittstelle ist wichtig, damit sichergestellt
-ist, dass jeder damit übereinstimmt, welche Arten von Werten von der Funktion
+ist, dass jedem eindeutig klar ist, welche Arten von Werten von der Funktion
 entgegengenommen und zurückgegeben werden. Funktionsabschlüsse werden hingegen nicht
 in einer Schnittstelle verwendet, sie werden in einer Variable gespeichert und 
 aufgerufen, ohne sie zu benennen und Benutzern unserer Bibliothek (library)
 zugänglich zu machen.
 
 Funktionsabschlüsse sind für gewöhnlich kurz und eher in einem begrenzten Kontext
-relevant, als in einem beliebigen Szenario. Innerhalb dieses beschränkten
-Einsatzbereichs ist der Compiler verlässlich in der Lage, Typen, Parameter und
-Rückgabewerte zu inferieren, ähnlich wie er meistens bei Variablen die Typen
-herleiten kann.
+relevant, als in einem beliebigen Anwendungsfall. Innerhalb dieses beschränkten
+Einsatzbereichs ist der Compiler verlässlich in der Lage, die Datentypen der Parameter und
+Rückgabewerte abzuleiten, ähnlich wie er dies meistens bei Variablen kann.
 
-Den Programmierer die Typen in diesen kurzen, anonymen Funktionen anmerken zu
-lassen wäre nur störend und überflüssig, da der Compiler bereits über die
+Den Programmierer die Typen in diesen kurzen, anonymen Funktionen angeben zu
+lassen, wäre störend und überflüssig, da der Compiler bereits über die
 dafür notwendigen Informationen verfügt.
 
-Wir können wie bei Variablen Typanmerkungen angeben, wenn wir die Klarheit
-und Aussagekraft über das notwendige Maß hinaus erhöhen möchten.
-Das Anmerken der Typen für den in Codeblock 13-5 definierten Funktionsabschluss
-würde wie die Definition in Codeblock 13-7 aussehen.
+Wie bei Variablen können wir die Datentypen angeben, wenn wir die Klarheit
+und Deutlichkeit mehr als notwendig erhöhen möchten.
+Wollen wir die Datentypen für dem Funktionsabschluss aus Codeblock 13-5 angeben,
+würde die Definition wie in Codeblock 13-7 aussehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -414,15 +420,16 @@ würde wie die Definition in Codeblock 13-7 aussehen.
 #}
 ```
 
-<span class="caption">Codeblock 13-7: Hinzufügen optionaler Typanmerkungen
+<span class="caption">Codeblock 13-7: Hinzufügen optionaler Datentypangabe
 der Parameter- und Rückgabewert-Typen im Funktionsabschluss
 </span>
 
-Die Syntax eines Funktionsabschlusses mit Typanmerkungen sieht der Syntax einer
-Funktion sehr ähnlich. Es folgt ein vertikaler Vergleich der Syntax einer
-Funktionsdefinition, die 1 zu ihrem Parameter addiert und einem
-Funktionsabschluss mit dem gleichen Verhalten. Wir haben einige Abstände hinzugefügt,
-um die relevanten Teile besser darzustellen. Dies zeigt wie ähnlich die Syntax
+Mit Datentypangabe ähnelt die Syntax eines Funktionsabschlusses sehr der Syntax 
+einer Funktion. Im Folgenden vergleichen wir die Syntax einer
+Funktionsdefinition, die zu ihrem Parameter den Wert 1 addiert, und die eines
+Funktionsabschlusses mit identischem Verhalten.
+Zur besseren Darstellung der relevanten Teile haben wir einige Leerzeichen eingefügt.
+Dies zeigt, wie ähnlich die Syntax
 von Funktionen der von Funktionsabschlüssen ist, abgesehen von Pipes und der 
 Möglichkeit, einen Teil der Syntax wegzulassen:
 
@@ -434,20 +441,21 @@ let add_one_v4 = |x|               x + 1  ;
 ```
 
 Die erste Zeile zeigt eine Funktionsdefinition und die zweite eine Definition
-eines Funktionsabschlusses mit allen Typanmerkungen. Bei der dritten Zeile
-werden die Typanmerkungen in der Definition des Funktionsabschlusses weggelassen,
-in der vierten Zeile das Gleiche ohne Klammern &ndash; da diese optional sind da der
-Rumpf des Funktionsabschlusses nur einen Ausdruck beinhaltet. Dies sind alles
-gültige Ausdrücke die sich beim Aufruf gleich Verhalten. Für `add_one_v3` und
-`add_one_v4` wird der Aufruf zum Kompilieren des Codes benötigt, da die Typen
-hier abhängig von der Benutzung bestimmt werden.
+eines Funktionsabschlusses mit allen Datentypangaben. Bei der dritten Zeile
+werden die Datentypangaben in der Definition des Funktionsabschlusses weggelassen.
+Zusätzlich entfällt in der vierten Zeile die optionalen geschweiften Klammern, 
+da der
+Rumpf des Funktionsabschlusses nur einen Ausdruck beinhaltet. Alle diese Ausdrücke
+sind gültig und verhalten sich beim Aufruf gleich. Von `add_one_v3` und
+`add_one_v4` wird ein Aufruf zum Kompilieren des Codes benötigt, da hier die Typen
+abhängig von der Verwendung abgeleitet werden.
 
 Bei Funktionsabschlüssen wird für jeden Parameter und für den Rückgabewert ein
 konkreter Typ abgeleitet. Codeblock 13-8 zeigt zum Beispiel die Definition eines
-kurzen Funktionsabschlusses, der nur den Wert zurückgibt, den er als Parameter
-erhält. Dieser Funktionsabschluss ist abgesehen von seinem Zweck als Beispiel zu
-dienen nicht weiter nützlich. Beachte, dass wir der Definition keine
-Typanmerkungen hinzugefügt haben. Wenn wir nun versuchen, die Funktion zweimal
+kurzen Funktionsabschlusses, der nur den Wert des übergebenen Parameters 
+zurückgibt. Dieser Funktionsabschluss ist außer für diese Beispiel 
+nicht weiter nützlich. Beachte, dass wir der Definition keine
+Datentypangaben hinzugefügt haben. Wenn wir nun versuchen, den Funktionsabschluss zweimal
 aufzurufen, einmal mit `String` und einmal mit `u32`, erhalten wir eine
 Fehlermeldung.
 
@@ -460,8 +468,8 @@ let s = example_closure(String::from("hello"));
 let n = example_closure(5);
 ```
 
-<span class="caption">Codeblock 13-8: Versuchter Aufruf eines Funktionsabschluss
-den zwei unterschiedliche Typen zugewiesen wurden</span>
+<span class="caption">Codeblock 13-8: Versuchter Aufruf eines Funktionsabschlusses,
+dem zwei unterschiedliche Typen zugewiesen wurden</span>
 
 Der Compiler gibt diesen Fehler aus:
 
@@ -482,7 +490,7 @@ error: could not compile `closure-example` due to previous error
 ```
 Beim ersten Aufruf von `example_closure` wird dem Typ von `x` und dem
 Rückgabewert des Funktionsabschlusses der Typ `String` zugewiesen. Diese Typen
-sind dann für den Funktionsabschluss `example_closure` festgeschrieben und daher
+sind dann für den Funktionsabschluss `example_closure` festgeschrieben. Daher
 bekommen wir eine Fehlermeldung, wenn wir versuchen einen anderen Typ mit dem
 gleichen Funktionsabschluss zu benutzen.
 
