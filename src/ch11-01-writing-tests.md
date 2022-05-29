@@ -10,7 +10,7 @@ diese drei Aktionen aus:
 
 Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
-`test`, einige Makros und das Attribut `hould_panic`.
+`test`, einige Makros und das Attribut `should_panic`.
 
 ### Anatomie einer Testfunktion
 
