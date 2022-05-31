@@ -166,11 +166,22 @@ dessen Rumpf sich in <em>src/front_of_house.rs</em> befinden wird</span></p>
 </code></pre>
 <p><span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
 <code>front_of_house</code> in <em>src/front_of_house.rs</em></span></p>
-<p>Das Verwenden eines Semikolons nach <code>mod front_of_house</code> anstelle eines Blocks
-weist Rust an, den Inhalt des Moduls aus einer anderen Datei mit dem gleichen
-Namen wie das Modul zu laden. Um mit unserem Beispiel fortzufahren und das
-Modul <code>hosting</code> ebenfalls in seine eigene Datei zu extrahieren, ändern wir
-<em>src/front_of_house.rs</em> so, dass es nur die Deklaration des Moduls <code>hosting</code>
+<p>Beachte, dass du eine Datei mit einer <code>mod</code>-Deklaration nur <em>einmal</em> in deinem
+Modulbaum laden musst. Sobald der Compiler weiß, dass die Datei Teil des
+Projekts ist (und weiß, wo im Modulbaum sich der Code befindet, weil du die
+<code>mod</code>-Anweisung eingefügt hast), sollten andere Dateien in deinem Projekt auf
+den Code der geladenen Datei referenzieren, indem sie einen Pfad zu der Stelle
+verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden auf ein
+Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen Worten: <code>mod</code>
+ist <em>keine</em> „include“-Operation, wie du sie vielleicht aus anderen
+Programmiersprachen kennst.</p>
+<p>Als Nächstes extrahieren wir das Modul <code>hosting</code> in seine eigene Datei. Der
+Prozess ist ein bisschen anders, weil <code>hosting</code> ein untergeordnetes Modul von
+<code>front_of_house</code> ist, nicht vom Stammmodul. Wir legen die Datei für <code>hosting</code>
+in einem neuen Verzeichnis ab, das nach seinen Vorgängern im Modulbaum benannt
+wird, in diesem Fall <em>src/front_of_house/</em>.</p>
+<p>Um mit dem Verschieben von <code>hosting</code> zu beginnen, ändern wir
+<em>src/front_of_house.rs</em> so, dass es nur die Deklaration des <code>hosting</code>-Moduls
 enthält:</p>
 <p><span class="filename">Dateiname: src/front_of_house.rs</span></p>
 <pre><code class="language-rust ignore">pub mod hosting;
@@ -185,10 +196,42 @@ Definitionen enthält:</p>
 </span>pub fn add_to_waitlist() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>Der Modulbaum bleibt derselbe und die Funktionsaufrufe in <code>eat_at_restaurant</code>
-funktionieren ohne jede Änderung, auch wenn sich die Definitionen in
-verschiedenen Dateien befinden. Mit dieser Technik kannst du Module in neue
-Dateien verschieben, wenn diese größer werden.</p>
+<p>Wenn wir stattdessen <em>hosting.rs</em> in das <em>src</em>-Verzeichnis legen, würde der
+Compiler erwarten, dass der <em>hosting.rs</em>-Code in einem <code>hosting</code>-Modul
+enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
+Kind des <code>front_of_house</code>-Moduls. Die Regeln des Compilers dafür, welche
+Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
+Verzeichnisse und Dateien dem Modulbaum besser entsprechen.</p>
+<blockquote>
+<h3 id="alternative-dateipfade"><a class="header" href="#alternative-dateipfade">Alternative Dateipfade</a></h3>
+<p>Bis jetzt haben wir die idiomatischsten Dateipfade behandelt, die der
+Rust-Compiler verwendet, aber Rust unterstützt auch eine ältere Art von
+Dateipfaden. Für ein Modul mit dem Namen <code>front_of_house</code>, das in der
+Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
+<ul>
+<li><em>src/front_of_house.rs</em> (was wir behandelt haben)</li>
+<li><em>src/front_of_house/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
+</ul>
+<p>Bei einem Modul mit dem Namen <code>hosting</code>, das ein Untermodul von
+<code>front_of_house</code> ist, sucht der Compiler den Code des Moduls in:</p>
+<ul>
+<li><em>src/front_of_house/hosting.rs</em> (was wir behandelt haben)</li>
+<li><em>src/front_of_house/hosting/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
+</ul>
+<p>Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
+Compilerfehler. Die Verwendung beider Stile für verschiedene Module im selben
+Projekt ist zulässig, kann aber für die Benutzer verwirrend sein, die durch
+dein Projekt navigieren.</p>
+<p>Der größte Nachteil des Stils, der Dateien mit dem Namen <em>mod.rs</em> verwendet,
+ist, dass dein Projekt am Ende viele Dateien mit dem Namen <em>mod.rs</em> haben
+kann, was verwirrend sein kann, wenn du sie gleichzeitig in deinem Editor
+geöffnet hast.</p>
+</blockquote>
+<p>Wir haben den Code jedes Moduls in eine separate Datei verschoben, und der
+Modulbaum bleibt derselbe. Die Funktionsaufrufe in <code>eat_at_restaurant</code>
+funktionieren ohne jede Änderung, auch wenn die Definitionen in verschiedenen
+Dateien stehen. Mit dieser Technik kannst du Module in neue Dateien
+verschieben, wenn diese größer werden.</p>
 <p>Beachte, dass sich die Anweisung <code>pub use crate::front_of_house::hosting</code> in
 <em>src/lib.rs</em> ebenfalls nicht geändert hat und dass <code>use</code> keinen Einfluss darauf
 hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort

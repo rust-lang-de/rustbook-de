@@ -6797,18 +6797,44 @@ Gültigkeitsbereiche eingesetzt werden können. Am Ende solltest du ein solides
 Verständnis des Modulsystems haben und in der Lage sein, mit den
 Gültigkeitsbereichen wie ein Profi zu arbeiten!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="pakete-packages-und-kisten-crates"><a class="header" href="#pakete-packages-und-kisten-crates">Pakete (packages) und Kisten (crates)</a></h2>
-<p>Die ersten Bestandteile des Modulsystems, die wir behandeln werden, sind Pakete
-(packages) und Kisten (crates). Eine Kiste ist eine Binärdatei oder eine
-Bibliothek. Die <em>Kistenwurzel</em> (crate root) ist eine Quelldatei, bei der der
-Rust-Compiler anfängt und die das Wurzelmodul deiner Kiste darstellt (Module
-werden im Abschnitt <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Mit Modulen den Kontrollumfang und Datenschutz
-steuern“</a> ausführlich erklärt). Ein <em>Paket</em> besteht aus einer oder
-mehreren Kisten, die eine Reihe von Funktionalitäten bereitstellen. Ein Paket
-enthält eine Datei <em>Cargo.toml</em>, die beschreibt, wie man diese Kisten baut.</p>
-<p>Mehrere Regeln bestimmen, was ein Paket enthalten kann. Ein Paket kann <em>maximal
-eine</em> Bibliothekskiste enthalten. Sie kann so viele binäre Kisten
-enthalten, wie du möchtest, aber sie muss mindestens eine Kiste enthalten
-(egal ob Bibliothek oder binär).</p>
+<p>Die ersten Teile des Modulsystems, die wir behandeln werden, sind Pakete und
+Kisten.</p>
+<p>Eine <em>Kiste</em> ist die kleinste Menge an Code, die der Rust-Compiler zu einem
+bestimmten Zeitpunkt berücksichtigt. Selbst wenn du <code>rustc</code> anstelle von
+<code>cargo</code> ausführst und eine einzelne Quellcodedatei übergibst (wie wir es
+bereits im Abschnitt „Schreiben und Ausführen eines Rust-Programms“ in Kapitel
+1 getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten
+können Module enthalten, und die Module können in anderen Dateien definiert
+sein, die mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten
+sehen werden.</p>
+<p>Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. <em>Binäre
+Kisten</em> (binary crates) sind Programme, die du zu einer ausführbaren Datei
+kompilieren kannst, die du ausführen kannst, z.B. ein Befehlszeilenprogramm
+oder einen Server. Jede muss eine Funktion namens <code>main</code> haben, die definiert,
+was passiert, wenn die ausführbare Datei läuft. Alle Kisten, die wir bisher
+erstellt haben, waren binäre Kisten.</p>
+<p><em>Bibliothekskisten</em> (library crates) haben keine <code>main</code>-Funktion und sie werden
+nicht zu einer ausführbaren Datei kompiliert. Stattdessen definieren sie
+Funktionalität, die für mehrere Projekte gemeinsam genutzt werden soll. Zum
+Beispiel bietet die Kiste <code>rand</code>, die wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">Kapitel 2</a> verwendet haben,
+Funktionalität, die Zufallszahlen erzeugt. Wenn Rust-Entwickler „Kiste“ sagen,
+meinen sie meistens „Bibliothekskiste“, und sie verwenden „Kiste“ austauschbar
+mit dem allgemeinen Programmierkonzept einer „Bibliothek“.</p>
+<p>Die <em>Kistenwurzel</em> ist eine Quelldatei, von der der Rust-Compiler ausgeht und
+die das Wurzel-Modul deiner Kiste bildet (Module werden im Abschnitt <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Mit
+Modulen den Kontrollumfang und Datenschutz steuern“</a> ausführlich
+erklärt).</p>
+<p>Ein <em>Paket</em> ist ein Bündel von einer oder mehreren Kisten, die eine Reihe von
+Funktionalitäten bereitstellen. Ein Paket enthält eine Datei <em>Cargo.toml</em>, die
+beschreibt, wie diese Kisten zu bauen sind. Cargo ist eigentlich ein Paket, das
+die Binärkiste für das Kommandozeilenwerkzeug enthält, das du zum Erstellen
+deines Codes verwendet hast. Das Cargo-Paket enthält auch eine
+Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können von
+der Cargo-Bibliothekskiste abhängen, um die gleiche Logik wie das
+Cargo-Befehlszeilenwerkzeug zu verwenden.</p>
+<p>Ein Paket kann beliebig viele Binärkisten enthalten, aber höchstens eine
+Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
+davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.</p>
 <p>Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
 wir den Befehl <code>cargo new</code> ein:</p>
 <pre><code class="language-console">$ cargo new my-project
@@ -6819,48 +6845,119 @@ src
 $ ls my-project/src
 main.rs
 </code></pre>
-<p>Nachdem wir den Befehl eingegeben haben, erstellte Cargo eine Datei
-<em>Cargo.toml</em> und gab uns ein Paket. Wenn man sich den Inhalt von <em>Cargo.toml</em>
-ansieht, wird <em>src/main.rs</em> nicht erwähnt, weil Cargo einer Konvention folgt,
-dass <em>src/main.rs</em> die Kistenwurzel einer binären Kiste mit dem gleichen Namen
-wie das Paket ist. Ebenso weiß Cargo, dass, wenn im Paketverzeichnis
-<em>src/lib.rs</em> enthalten ist, das Paket eine Bibliothekskiste mit dem gleichen
-Namen wie das Paket enthält und <em>src/lib.rs</em> seine Kistenwurzel ist. Cargo
-übergibt die Kistenwurzeldateien an <code>rustc</code>, um die Bibliothek oder Binärdatei
-zu bauen.</p>
-<p>Hier haben wir ein Paket, das nur <em>src/main.rs</em> enthält, was bedeutet, dass es
-nur eine binäre Kiste namens <code>my-project</code> enthält. Wenn ein Paket
-<em>src/main.rs</em> und <em>src/lib.rs</em> enthält, hat es zwei Kisten: Eine Binärdatei und
-eine Bibliothek, beide mit dem gleichen Namen wie das Paket. Ein Paket kann
-mehrere Binär-Kisten haben, indem Dateien im Verzeichnis <em>src/bin</em> abgelegt
-werden: Jede Datei wird eine separate Binär-Kiste sein. Eine Kiste fasst
-verwandte Funktionalitäten in einen Gültigkeitsbereich zusammen, sodass die
-Funktionalität leicht von mehreren Projekten gemeinsam genutzt werden kann. Zum
-Beispiel bietet die in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">Kapitel 2</a> verwendete Kiste <code>rand</code> eine
-Funktionalität, die Zufallszahlen erzeugt. Wir können diese Funktionalität in
-unseren eigenen Projekten nutzen, indem wir die Kiste <code>rand</code> in den
-Gültigkeitsbereich unseres Projekts aufnehmen. Die gesamte Funktionalität, die
-von der Kiste <code>rand</code> zur Verfügung gestellt wird, ist über den Namen <code>rand</code> der
-Kiste zugänglich.</p>
-<p>Das Beibehalten der Funktionalität einer Kiste in ihrem eigenen
-Gültigkeitsbereich klärt, ob eine bestimmte Funktionalität in unserer Kiste
-oder in der Kiste <code>rand</code> definiert ist, und verhindert potenzielle Konflikte.
-Zum Beispiel bietet die Kiste <code>rand</code> ein Merkmal (trait) namens <code>Rng</code>. Wir
-können auch eine Struktur (struct) mit dem Namen <code>Rng</code> in unserer eigenen Kiste
-definieren. Da die Funktionalität einer Kiste im Namensraum des eigenen
-Gültigkeitsbereichs ist, können wir <code>rand</code> als Abhängigkeit hinzufügen, ohne
-dadurch den Compiler durcheinanderzubringen, worauf sich der Name <code>Rng</code>
-bezieht. In unserer Kiste bezieht er sich auf <code>struct Rng</code>, die wir definiert
-haben. Wir würden auf das Merkmal <code>Rng</code> aus der Kiste <code>rand</code> mit <code>rand::Rng</code>
-zugreifen.</p>
-<p>Lass uns weitermachen und über das Modulsystem sprechen!</p>
+<p>Nachdem wir <code>cargo new</code> ausgeführt haben, verwenden wir <code>ls</code>, um zu sehen, was
+Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei <em>Cargo.toml</em>, die uns
+ein Paket gibt. Es gibt auch ein Verzeichnis <em>src</em>, das <em>main.rs</em> enthält.
+Öffne <em>Cargo.toml</em> in deinem Texteditor und beachte, dass <em>src/main.rs</em> nicht
+erwähnt wird. Cargo folgt der Konvention, dass <em>src/main.rs</em> die Kistenwurzel
+einer binären Kiste mit dem gleichen Namen wie das Paket ist. Ebenso weiß
+Cargo, dass, wenn das Paketverzeichnis <em>src/lib.rs</em> enthält, das Paket eine
+Bibliothekskiste mit dem gleichen Namen wie das Paket enthält, und <em>src/lib.rs</em>
+deren Kistenstamm ist. Cargo übergibt die Kistenwurzel-Dateien an <code>rustc</code>, um
+die Bibliothek oder Binärdatei zu bauen.</p>
+<p>Hier haben wir ein Paket, das nur <em>src/main.rs</em> enthält, d.h. es enthält nur
+eine binäre Kiste mit dem Namen <code>my-project</code>. Wenn ein Paket <em>src/main.rs</em> und
+<em>src/lib.rs</em> enthält, hat es zwei Kisten: Eine binäre und eine Bibliothek,
+beide mit dem gleichen Namen wie das Paket. Ein Paket kann mehrere binäre
+Kisten haben, indem es Dateien im Verzeichnis <em>src/bin</em> ablegt: Jede Datei ist
+dann eine eigene binäre Kiste.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="mit-modulen-den-kontrollumfang-und-datenschutz-steuern"><a class="header" href="#mit-modulen-den-kontrollumfang-und-datenschutz-steuern">Mit Modulen den Kontrollumfang und Datenschutz steuern</a></h2>
 <p>In diesem Abschnitt werden wir über Module und andere Teile des Modulsystems
 sprechen, nämlich <em>Pfade</em>, die es dir erlauben, Elemente zu benennen; das
 Schlüsselwort <code>use</code>, das einen Pfad in den Gültigkeitsbereich bringt; und das
 Schlüsselwort <code>pub</code>, um Elemente öffentlich zu machen. Wir werden auch das
 Schlüsselwort <code>as</code>, externe Pakete und den Stern-Operator (glob operator)
-besprechen. Konzentrieren wir uns vorerst auf die Module!</p>
+besprechen.</p>
+<p>Zunächst werden wir mit einer Liste von Regeln beginnen, damit du bei der
+künftigen Organisation deines Codes leicht nachschlagen kannst. Dann werden wir
+jede der Regeln im Detail erklären.</p>
+<h3 id="spickzettel-für-module"><a class="header" href="#spickzettel-für-module">Spickzettel für Module</a></h3>
+<p>Hier bieten wir eine Kurzreferenz darüber, wie Module, Pfade, das Schlüsselwort
+<code>use</code> und das Schlüsselwort <code>pub</code> im Compiler funktionieren und wie die meisten
+Entwickler ihren Code organisieren. Wir werden im Laufe dieses Kapitels
+Beispiele für jede dieser Regeln durchgehen, aber dies ist ein guter Ort, um
+sich daran zu erinnern, wie Module funktionieren.</p>
+<ul>
+<li><strong>Beginne bei der Kistenwurzel (crate root)</strong>: Beim Kompilieren einer Kiste
+sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
+<em>src/lib.rs</em> für eine Bibliothekskiste oder <em>src/main.rs</em> für eine
+Binärkiste).</li>
+<li><strong>Module deklarieren</strong>: In der Kisten-Stammdatei kannst du neue Module
+deklarieren; z.B. deklarierst du ein „Garten“-Modul mit <code>mod garden;</code>. Der
+Compiler wird an diesen Stellen nach dem Code des Moduls suchen:
+<ul>
+<li>In der Zeile direkt nach <code>mod garden</code>, in geschweiften Klammern anstelle
+des Semikolons</li>
+<li>In der Datei <em>src/garden.rs</em></li>
+<li>In der Datei <em>src/garden/mod.rs</em></li>
+</ul>
+</li>
+<li><strong>Submodulen deklarieren</strong>: In jeder anderen Datei als der Kistenwurzel
+kannst du Untermodule deklarieren. Du kannst zum Beispiel <code>mod vegetables;</code>
+in <em>src/garden.rs</em> deklarieren. Der Compiler sucht den Code des Submoduls in
+dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
+Stellen:
+<ul>
+<li>In der Zeile direkt nach <code>mod vegetables</code>, in geschweiften Klammern
+anstelle des Semikolons</li>
+<li>In der Datei <em>src/garden/vegetables.rs</em></li>
+<li>In der Datei <em>src/garden/vegetables/mod.rs</em></li>
+</ul>
+</li>
+<li><strong>Pfade zum Code in Modulen</strong>: Sobald ein Modul Teil deiner Kiste ist, kannst
+du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
+referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
+zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> im
+Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
+sein.</li>
+<li><strong>Privat vs. öffentlich</strong>: Der Code innerhalb eines Moduls ist standardmäßig
+für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
+machen, deklariere es mit <code>pub mod</code> anstelle von <code>mod</code>. Um Elemente innerhalb
+eines öffentlichen Moduls ebenfalls öffentlich zu machen, verwende <code>pub</code> vor
+ihren Deklarationen.</li>
+<li><strong>Das Schlüsselwort <code>use</code></strong>: Innerhalb eines Gültigkeitsbereichs werden mit
+dem Schlüsselwort <code>use</code> Verknüpfungen zu Elementen erstellt, um die
+Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
+auf <code>crate::garden::vegetables::Asparagus</code> referenzieren kann, kann man eine
+Verknüpfung mit <code>use crate::garden::vegetables::Asparagus</code> erstellen und von
+da an braucht man nur noch <code>Asparagus</code> zu schreiben, um diesen Typ im
+Gültigkeitsbereich zu verwenden.</li>
+</ul>
+<p>Hier erstellen wir eine binäre Kiste namens <code>backyard</code> (Hinterhof), die diese
+Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls <code>backyard</code>
+genannt, enthält diese Dateien und Verzeichnisse:</p>
+<pre><code class="language-text">backyard
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── garden
+    │   └── vegetables.rs
+    ├── garden.rs
+    └── main.rs
+</code></pre>
+<p>Die Stammdatei der Kiste ist in diesem Fall <em>src/main.rs</em>, und sie enthält:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust noplayground ignore">use crate::garden::vegetables::Asparagus;
+
+pub mod garden;
+
+fn main() {
+    let plant = Asparagus {};
+    println!(&quot;Ich baue {:?} an!&quot;, plant);
+}
+</code></pre>
+<p>Die Zeile <code>pub mod garden;</code> weist den Compiler an, den Code einzubinden, den er
+in <em>src/garden.rs</em> findet, nämlich::</p>
+<p><span class="filename">Dateiname: src/garden.rs</span></p>
+<pre><code class="language-rust noplayground ignore">pub mod vegetables;
+</code></pre>
+<p>Hier bedeutet <code>pub mod vegetables;</code>, dass der Code in
+<em>src/garden/vegetables.rs</em> ebenfalls enthalten ist. Dieser Code ist:</p>
+<pre><code class="language-rust noplayground ignore">#[derive(Debug)]
+pub struct Asparagus {}
+</code></pre>
+<p>Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis demonstrieren!</p>
+<h3 id="gruppierung-von-zugehörigem-code-in-modulen"><a class="header" href="#gruppierung-von-zugehörigem-code-in-modulen">Gruppierung von zugehörigem Code in Modulen</a></h3>
 <p><em>Module</em> lassen uns Code innerhalb einer Kiste in Gruppen organisieren, um ihn
 lesbar und leicht wiederverwendbar zu machen. Module kontrollieren auch den
 <em>Datenschutz</em> (privacy) von Elementen, d.h. ob ein Element von einem externen
@@ -6951,8 +7048,10 @@ wir einen Pfad, auf gleiche Weise wie beim Navigieren durch ein Dateisystem.
 Wenn wir eine Funktion aufrufen wollen, müssen wir ihren Pfad kennen.</p>
 <p>Ein Pfad kann zwei Formen annehmen:</p>
 <ul>
-<li>Ein <em>absoluter Pfad</em> startet bei einer Kistenwurzel, indem ein Kistenname
-oder das Literal <code>crate</code> verwendet wird.</li>
+<li>Ein <em>absoluter Pfad</em> ist der vollständige Pfad ausgehend von einer
+Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
+der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
+Literal <code>crate</code>.</li>
 <li>Ein <em>relativer Pfad</em> startet beim aktuellen Modul und benutzt <code>self</code>, <code>super</code>
 oder einen Bezeichner im aktuellen Modul.</li>
 </ul>
@@ -7193,24 +7292,54 @@ desselben Moduls wie <code>eat_at_restaurant</code> definiert, sodass der relati
 ausgehend vom Modul, in dem <code>eat_at_restaurant</code> definiert ist, funktioniert.
 Weil <code>hosting</code> und <code>add_to_waitlist</code> nun mit <code>pub</code> markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!</p>
+<p>Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
+deinen Code verwenden können, ist deine öffentliche API dein Vertrag mit den
+Benutzern deiner Kiste, der festlegt, wie sie mit deinem Code interagieren
+können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
+öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
+verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
+du an diesem Thema interessiert bist, lies <a href="https://rust-lang.github.io/api-guidelines/">The Rust API
+Guidelines</a>.</p>
+<blockquote>
+<h4 id="bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek"><a class="header" href="#bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek">Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek</a></h4>
+<p>Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
+<em>src/main.rs</em> als auch eine Bibliothekskistenwurzel <em>src/lib.rs</em> enthalten
+kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
+haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
+Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
+ausführbare Datei zu starten, die Code aus der Bibliothekskiste aufruft.
+Dadurch können andere Projekte von den meisten Funktionen des Pakets
+profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.</p>
+<p>Der Modulbaum sollte in <em>src/lib.rs</em> definiert werden. Dann können alle
+öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
+mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
+der Bibliothekskiste, so wie eine vollständig externe Kiste die
+Bibliothekskiste verwenden würde: Sie kann nur die öffentliche API
+verwenden. Dies hilft dir, eine gute API zu entwerfen; Du bist nicht nur der
+Autor, sondern auch ein Kunde!</p>
+<p>In <a href="ch12-00-an-io-project.html">Kapitel 12</a> werden wir diese organisatorische Praxis anhand eines
+Befehlszeilenprogramms demonstrieren, das sowohl eine Binärkiste als auch
+eine Bibliothekskiste enthält.</p>
+</blockquote>
 <h3 id="relative-pfade-mit-super-beginnen"><a class="header" href="#relative-pfade-mit-super-beginnen">Relative Pfade mit <code>super</code> beginnen</a></h3>
 <p>Wir können auch relative Pfade konstruieren, die im Elternmodul beginnen, indem
 wir <code>super</code> am Anfang des Pfades verwenden. Das ist so, als würde man einen
 Dateisystempfad mit der Syntax <code>..</code> beginnen. Warum sollten wir das tun wollen?</p>
 <p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
-Funktion <code>fix_incorrect_order</code> ruft die Funktion <code>serve_order</code> auf, indem sie
-den Pfad zu <code>serve_order</code> beginnend mit <code>super</code> angibt:</p>
+Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,
+ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
+sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn serve_order() {}
+</span>fn deliver_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
         cook_order();
-        super::serve_order();
+        super::deliver_order();
     }
 
     fn cook_order() {}
@@ -7222,8 +7351,8 @@ eines relativen Pfades, der mit <code>super</code> beginnt</span></p>
 <p>Die Funktion <code>fix_incorrect_order</code> befindet sich im Modul <code>back_of_house</code>,
 sodass wir <code>super</code> benutzen können, um zum Elternmodul von <code>back_of_house</code> zu
 gelangen, was in diesem Fall die Wurzel <code>crate</code> ist. Von dort aus suchen wir
-nach <code>serve_order</code> und finden es. Erfolg! Wir denken, dass das Modul
-<code>back_of_house</code> und die Funktion <code>serve_order</code> wahrscheinlich in der gleichen
+nach <code>deliver_order</code> und finden es. Erfolg! Wir denken, dass das Modul
+<code>back_of_house</code> und die Funktion <code>deliver_order</code> wahrscheinlich in der gleichen
 Beziehung zueinander bleiben und zusammenrücken werden, sollten wir uns dazu
 entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
 <code>super</code> verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
@@ -7330,13 +7459,13 @@ haben, um Funktionen aufzurufen, unangenehm lang und wiederholend. Zum Beispiel
 mussten wir in Codeblock 7-7, unabhängig davon, ob wir den absoluten oder
 relativen Pfad zur Funktion <code>add_to_waitlist</code> wählten, bei jedem Aufruf von
 <code>add_to_waitlist</code> auch <code>front_of_house</code> und <code>hosting</code> angeben. Glücklicherweise
-gibt es einen Weg, diesen Vorgang zu vereinfachen. Wir können einen Pfad mit
-dem Schlüsselwort <code>use</code> einmalig in einen Gültigkeitsbereich bringen und dann
-die Elemente in diesem Pfad so aufrufen, als ob es sich um lokale Elemente
-handelt. In Codeblock 7-11 bringen wir das Modul
-<code>crate::front_of_house::hosting</code> in den Gültigkeitsbereich der Funktion
-<code>eat_at_restaurant</code>, sodass wir nur noch <code>hosting::add_to_waitlist</code> angeben
-müssen, um die Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant</code> aufzurufen.</p>
+gibt es einen Weg, diesen Vorgang zu vereinfachen: Wir können eine Verknüpfung
+zu einem Pfad mit dem Schlüsselwort <code>use</code> einmal erstellen und dann den
+kürzeren Namen überall sonst im Gültigkeitsbereich verwenden.</p>
+<p>In Codeblock 7-11 bringen wir das Modul <code>crate::front_of_house::hosting</code> in den
+Gültigkeitsbereich der Funktion <code>eat_at_restaurant</code>, sodass wir nur noch
+<code>hosting::add_to_waitlist</code> angeben müssen, um die Funktion <code>add_to_waitlist</code> in
+<code>eat_at_restaurant</code> aufzurufen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">mod front_of_house {
     pub mod hosting {
@@ -7347,8 +7476,6 @@ müssen, um die Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant
 use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
     hosting::add_to_waitlist();
 }
 </code></pre>
@@ -7361,27 +7488,55 @@ gültiger Name in diesem Gültigkeitsbereich, so als wäre das Modul <code>hosti
 der Kistenwurzel definiert worden. Pfade, die mit <code>use</code> in den
 Gültigkeitsbereich gebracht werden, überprüfen wie alle anderen Pfade auch die
 Privatsphäre.</p>
-<p>Du kannst ein Element auch mit <code>use</code> und einem relativen Pfad in den
-Gültigkeitsbereich bringen. In Codeblock 7-12 wird gezeigt, wie ein relativer
-Pfad angegeben werden kann, um dasselbe Verhalten wie in Codeblock 7-11 zu
-erzielen.</p>
+<p>Beachte, dass <code>use</code> nur die Verknüpfung für den jeweiligen Gültigkeitsbereich
+erstellt, in dem <code>use</code> vorkommt. Codeblock 7-12 verschiebt die Funktion
+<code>eat_at_restaurant</code> in ein neues untergeordnetes Modul namens <code>customer</code>, das
+dann einen anderen Gültigkeitsbereich als die <code>use</code>-Anweisung hat, sodass der
+Funktionsrumpf nicht kompiliert werden kann:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground test_harness">mod front_of_house {
+<pre><code class="language-rust noplayground test_harness does_not_compile">mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
     }
 }
 
-use self::front_of_house::hosting;
+use crate::front_of_house::hosting;
 
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
+mod customer {
+    pub fn eat_at_restaurant() {
+        hosting::add_to_waitlist();
+    }
 }
 </code></pre>
-<p><span class="caption">Codeblock 7-12: Ein Modul mit <code>use</code> und einem relativen
-Pfad in den Gültigkeitsbereich bringen</span></p>
+<p><span class="caption">Codeblock 7-12: Eine <code>use</code>-Anweisung gilt nur in dem
+Gültigkeitsbereich, in dem sie steht</span></p>
+<p>Der Compilerfehler zeigt, dass die Verknüpfung innerhalb des Moduls <code>customer</code>
+nicht mehr gilt:</p>
+<pre><code class="language-console">$ cargo build
+   Compiling restaurant v0.1.0 (file:///projects/restaurant)
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --&gt; src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
+
+warning: unused import: `crate::front_of_house::hosting`
+ --&gt; src/lib.rs:7:5
+  |
+7 | use crate::front_of_house::hosting;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+For more information about this error, try `rustc --explain E0433`.
+warning: `restaurant` (lib) generated 1 warning
+error: could not compile `restaurant` due to previous error; 1 warning emitted
+</code></pre>
+<p>Beachte, dass es auch eine Warnung gibt, dass <code>use</code> nicht mehr in seinem
+Gültigkeitsbereich verwendet wird! Um dieses Problem zu beheben, verschiebe
+<code>use</code> auch innerhalb des Moduls <code>customer</code>, oder referenziere die Verknüpfung
+im übergeordneten Modul mit <code>super::hosting</code> innerhalb des untergeordneten
+Moduls <code>customer</code>.</p>
 <h3 id="idiomatische-use-pfade-erstellen"><a class="header" href="#idiomatische-use-pfade-erstellen">Idiomatische <code>use</code>-Pfade erstellen</a></h3>
 <p>In Codeblock 7-11 hast du dich vielleicht gefragt, warum wir <code>use crate::front_of_house::hosting</code> angegeben und dann <code>hosting::add_to_waitlist</code>
 in <code>eat_at_restaurant</code> aufgerufen haben, anstatt den <code>use</code>-Pfad bis hin zur
@@ -7397,8 +7552,6 @@ Codeblock 7-13.</p>
 use crate::front_of_house::hosting::add_to_waitlist;
 
 pub fn eat_at_restaurant() {
-    add_to_waitlist();
-    add_to_waitlist();
     add_to_waitlist();
 }
 </code></pre>
@@ -7442,13 +7595,13 @@ use std::io;
 
 fn function1() -&gt; fmt::Result {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 
 fn function2() -&gt; io::Result&lt;()&gt; {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-15: Um zwei Typen mit dem gleichen Namen in
@@ -7474,13 +7627,13 @@ use std::io::Result as IoResult;
 
 fn function1() -&gt; Result {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 
 fn function2() -&gt; IoResult&lt;()&gt; {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-16: Umbenennen eines Typs, wenn er mit dem
@@ -7510,17 +7663,15 @@ pub use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
 }
 </code></pre>
 <p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
-<p>Durch Verwenden von <code>pub use</code> kann jetzt externer Code die Funktion
-<code>add_to_waitlist</code> unter Verwendung von <code>hosting::add_to_waitlist</code> aufrufen.
-Hätten wir nicht <code>pub use</code> angegeben, könnte die Funktion <code>eat_at_restaurant</code>
-in ihrem Gültigkeitsbereich <code>hosting::add_to_waitlist</code> aufrufen, aber externer
-Code könnte diesen neuen Pfad nicht nutzen.</p>
+<p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
+Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen. Nun, da
+<code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert hat, kann
+externer Code nun stattdessen den Pfad <code>restaurant::hosting::add_to_waitlist()</code>
+verwenden.</p>
 <p>Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
 dem unterscheidet, wie Programmierer, die deinen Code
 aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
@@ -7528,14 +7679,17 @@ Betreiber des Restaurants zum Beispiel an die „Vorderseite des Hauses“ und d
 „Rückseite des Hauses“. Mit <code>pub use</code> können wir unseren Code mit einer
 Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
-Programmierer, die die Bibliothek aufrufen, gut organisiert.</p>
+Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
+Beispiel für <code>pub use</code> und wie es sich auf die Dokumentation deiner Kiste
+auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-%C3%B6ffentliche-api-exportieren">„Mit <code>pub use</code> eine benutzerfreundliche
+öffentliche API exportieren“</a> in Kapitel 14 betrachten.</p>
 <h3 id="verwenden-externer-pakete"><a class="header" href="#verwenden-externer-pakete">Verwenden externer Pakete</a></h3>
 <p>In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.5.5&quot;
+rand = &quot;0.8.3&quot;
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
@@ -7553,7 +7707,7 @@ haben:</p>
 fn main() {
 <span class="boring">    println!(&quot;Rate die Zahl!&quot;);
 </span><span class="boring">
-</span>    let secret_number = rand::thread_rng().gen_range(1, 101);
+</span>    let secret_number = rand::thread_rng().gen_range(1..=100);
 <span class="boring">
 </span><span class="boring">    println!(&quot;Die geheime Zahl ist: {}&quot;, secret_number);
 </span><span class="boring">
@@ -7597,8 +7751,10 @@ Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::cmp::Ordering;
+</span>// --abschneiden--
+use std::cmp::Ordering;
 use std::io;
+// --abschneiden--
 <span class="boring">}
 </span></code></pre></pre>
 <p>Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
@@ -7610,7 +7766,9 @@ in Codeblock 7-18 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::{cmp::Ordering, io};
+</span>// --abschneiden--
+use std::{cmp::Ordering, io};
+// --abschneiden--
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-18: Angeben eines verschachtelten Pfades, um
@@ -7701,11 +7859,22 @@ dessen Rumpf sich in <em>src/front_of_house.rs</em> befinden wird</span></p>
 </code></pre>
 <p><span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
 <code>front_of_house</code> in <em>src/front_of_house.rs</em></span></p>
-<p>Das Verwenden eines Semikolons nach <code>mod front_of_house</code> anstelle eines Blocks
-weist Rust an, den Inhalt des Moduls aus einer anderen Datei mit dem gleichen
-Namen wie das Modul zu laden. Um mit unserem Beispiel fortzufahren und das
-Modul <code>hosting</code> ebenfalls in seine eigene Datei zu extrahieren, ändern wir
-<em>src/front_of_house.rs</em> so, dass es nur die Deklaration des Moduls <code>hosting</code>
+<p>Beachte, dass du eine Datei mit einer <code>mod</code>-Deklaration nur <em>einmal</em> in deinem
+Modulbaum laden musst. Sobald der Compiler weiß, dass die Datei Teil des
+Projekts ist (und weiß, wo im Modulbaum sich der Code befindet, weil du die
+<code>mod</code>-Anweisung eingefügt hast), sollten andere Dateien in deinem Projekt auf
+den Code der geladenen Datei referenzieren, indem sie einen Pfad zu der Stelle
+verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden auf ein
+Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen Worten: <code>mod</code>
+ist <em>keine</em> „include“-Operation, wie du sie vielleicht aus anderen
+Programmiersprachen kennst.</p>
+<p>Als Nächstes extrahieren wir das Modul <code>hosting</code> in seine eigene Datei. Der
+Prozess ist ein bisschen anders, weil <code>hosting</code> ein untergeordnetes Modul von
+<code>front_of_house</code> ist, nicht vom Stammmodul. Wir legen die Datei für <code>hosting</code>
+in einem neuen Verzeichnis ab, das nach seinen Vorgängern im Modulbaum benannt
+wird, in diesem Fall <em>src/front_of_house/</em>.</p>
+<p>Um mit dem Verschieben von <code>hosting</code> zu beginnen, ändern wir
+<em>src/front_of_house.rs</em> so, dass es nur die Deklaration des <code>hosting</code>-Moduls
 enthält:</p>
 <p><span class="filename">Dateiname: src/front_of_house.rs</span></p>
 <pre><code class="language-rust ignore">pub mod hosting;
@@ -7720,10 +7889,42 @@ Definitionen enthält:</p>
 </span>pub fn add_to_waitlist() {}
 <span class="boring">}
 </span></code></pre></pre>
-<p>Der Modulbaum bleibt derselbe und die Funktionsaufrufe in <code>eat_at_restaurant</code>
-funktionieren ohne jede Änderung, auch wenn sich die Definitionen in
-verschiedenen Dateien befinden. Mit dieser Technik kannst du Module in neue
-Dateien verschieben, wenn diese größer werden.</p>
+<p>Wenn wir stattdessen <em>hosting.rs</em> in das <em>src</em>-Verzeichnis legen, würde der
+Compiler erwarten, dass der <em>hosting.rs</em>-Code in einem <code>hosting</code>-Modul
+enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
+Kind des <code>front_of_house</code>-Moduls. Die Regeln des Compilers dafür, welche
+Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
+Verzeichnisse und Dateien dem Modulbaum besser entsprechen.</p>
+<blockquote>
+<h3 id="alternative-dateipfade"><a class="header" href="#alternative-dateipfade">Alternative Dateipfade</a></h3>
+<p>Bis jetzt haben wir die idiomatischsten Dateipfade behandelt, die der
+Rust-Compiler verwendet, aber Rust unterstützt auch eine ältere Art von
+Dateipfaden. Für ein Modul mit dem Namen <code>front_of_house</code>, das in der
+Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
+<ul>
+<li><em>src/front_of_house.rs</em> (was wir behandelt haben)</li>
+<li><em>src/front_of_house/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
+</ul>
+<p>Bei einem Modul mit dem Namen <code>hosting</code>, das ein Untermodul von
+<code>front_of_house</code> ist, sucht der Compiler den Code des Moduls in:</p>
+<ul>
+<li><em>src/front_of_house/hosting.rs</em> (was wir behandelt haben)</li>
+<li><em>src/front_of_house/hosting/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
+</ul>
+<p>Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
+Compilerfehler. Die Verwendung beider Stile für verschiedene Module im selben
+Projekt ist zulässig, kann aber für die Benutzer verwirrend sein, die durch
+dein Projekt navigieren.</p>
+<p>Der größte Nachteil des Stils, der Dateien mit dem Namen <em>mod.rs</em> verwendet,
+ist, dass dein Projekt am Ende viele Dateien mit dem Namen <em>mod.rs</em> haben
+kann, was verwirrend sein kann, wenn du sie gleichzeitig in deinem Editor
+geöffnet hast.</p>
+</blockquote>
+<p>Wir haben den Code jedes Moduls in eine separate Datei verschoben, und der
+Modulbaum bleibt derselbe. Die Funktionsaufrufe in <code>eat_at_restaurant</code>
+funktionieren ohne jede Änderung, auch wenn die Definitionen in verschiedenen
+Dateien stehen. Mit dieser Technik kannst du Module in neue Dateien
+verschieben, wenn diese größer werden.</p>
 <p>Beachte, dass sich die Anweisung <code>pub use crate::front_of_house::hosting</code> in
 <em>src/lib.rs</em> ebenfalls nicht geändert hat und dass <code>use</code> keinen Einfluss darauf
 hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort

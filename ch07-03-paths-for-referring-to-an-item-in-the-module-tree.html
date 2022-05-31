@@ -140,8 +140,10 @@ wir einen Pfad, auf gleiche Weise wie beim Navigieren durch ein Dateisystem.
 Wenn wir eine Funktion aufrufen wollen, müssen wir ihren Pfad kennen.</p>
 <p>Ein Pfad kann zwei Formen annehmen:</p>
 <ul>
-<li>Ein <em>absoluter Pfad</em> startet bei einer Kistenwurzel, indem ein Kistenname
-oder das Literal <code>crate</code> verwendet wird.</li>
+<li>Ein <em>absoluter Pfad</em> ist der vollständige Pfad ausgehend von einer
+Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
+der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
+Literal <code>crate</code>.</li>
 <li>Ein <em>relativer Pfad</em> startet beim aktuellen Modul und benutzt <code>self</code>, <code>super</code>
 oder einen Bezeichner im aktuellen Modul.</li>
 </ul>
@@ -382,24 +384,54 @@ desselben Moduls wie <code>eat_at_restaurant</code> definiert, sodass der relati
 ausgehend vom Modul, in dem <code>eat_at_restaurant</code> definiert ist, funktioniert.
 Weil <code>hosting</code> und <code>add_to_waitlist</code> nun mit <code>pub</code> markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!</p>
+<p>Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
+deinen Code verwenden können, ist deine öffentliche API dein Vertrag mit den
+Benutzern deiner Kiste, der festlegt, wie sie mit deinem Code interagieren
+können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
+öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
+verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
+du an diesem Thema interessiert bist, lies <a href="https://rust-lang.github.io/api-guidelines/">The Rust API
+Guidelines</a>.</p>
+<blockquote>
+<h4 id="bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek"><a class="header" href="#bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek">Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek</a></h4>
+<p>Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
+<em>src/main.rs</em> als auch eine Bibliothekskistenwurzel <em>src/lib.rs</em> enthalten
+kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
+haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
+Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
+ausführbare Datei zu starten, die Code aus der Bibliothekskiste aufruft.
+Dadurch können andere Projekte von den meisten Funktionen des Pakets
+profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.</p>
+<p>Der Modulbaum sollte in <em>src/lib.rs</em> definiert werden. Dann können alle
+öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
+mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
+der Bibliothekskiste, so wie eine vollständig externe Kiste die
+Bibliothekskiste verwenden würde: Sie kann nur die öffentliche API
+verwenden. Dies hilft dir, eine gute API zu entwerfen; Du bist nicht nur der
+Autor, sondern auch ein Kunde!</p>
+<p>In <a href="ch12-00-an-io-project.html">Kapitel 12</a> werden wir diese organisatorische Praxis anhand eines
+Befehlszeilenprogramms demonstrieren, das sowohl eine Binärkiste als auch
+eine Bibliothekskiste enthält.</p>
+</blockquote>
 <h3 id="relative-pfade-mit-super-beginnen"><a class="header" href="#relative-pfade-mit-super-beginnen">Relative Pfade mit <code>super</code> beginnen</a></h3>
 <p>Wir können auch relative Pfade konstruieren, die im Elternmodul beginnen, indem
 wir <code>super</code> am Anfang des Pfades verwenden. Das ist so, als würde man einen
 Dateisystempfad mit der Syntax <code>..</code> beginnen. Warum sollten wir das tun wollen?</p>
 <p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
-Funktion <code>fix_incorrect_order</code> ruft die Funktion <code>serve_order</code> auf, indem sie
-den Pfad zu <code>serve_order</code> beginnend mit <code>super</code> angibt:</p>
+Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,
+ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
+sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>fn serve_order() {}
+</span>fn deliver_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
         cook_order();
-        super::serve_order();
+        super::deliver_order();
     }
 
     fn cook_order() {}
@@ -411,8 +443,8 @@ eines relativen Pfades, der mit <code>super</code> beginnt</span></p>
 <p>Die Funktion <code>fix_incorrect_order</code> befindet sich im Modul <code>back_of_house</code>,
 sodass wir <code>super</code> benutzen können, um zum Elternmodul von <code>back_of_house</code> zu
 gelangen, was in diesem Fall die Wurzel <code>crate</code> ist. Von dort aus suchen wir
-nach <code>serve_order</code> und finden es. Erfolg! Wir denken, dass das Modul
-<code>back_of_house</code> und die Funktion <code>serve_order</code> wahrscheinlich in der gleichen
+nach <code>deliver_order</code> und finden es. Erfolg! Wir denken, dass das Modul
+<code>back_of_house</code> und die Funktion <code>deliver_order</code> wahrscheinlich in der gleichen
 Beziehung zueinander bleiben und zusammenrücken werden, sollten wir uns dazu
 entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
 <code>super</code> verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren

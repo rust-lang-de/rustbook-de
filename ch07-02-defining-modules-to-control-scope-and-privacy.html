@@ -140,7 +140,97 @@ sprechen, nämlich <em>Pfade</em>, die es dir erlauben, Elemente zu benennen; da
 Schlüsselwort <code>use</code>, das einen Pfad in den Gültigkeitsbereich bringt; und das
 Schlüsselwort <code>pub</code>, um Elemente öffentlich zu machen. Wir werden auch das
 Schlüsselwort <code>as</code>, externe Pakete und den Stern-Operator (glob operator)
-besprechen. Konzentrieren wir uns vorerst auf die Module!</p>
+besprechen.</p>
+<p>Zunächst werden wir mit einer Liste von Regeln beginnen, damit du bei der
+künftigen Organisation deines Codes leicht nachschlagen kannst. Dann werden wir
+jede der Regeln im Detail erklären.</p>
+<h3 id="spickzettel-für-module"><a class="header" href="#spickzettel-für-module">Spickzettel für Module</a></h3>
+<p>Hier bieten wir eine Kurzreferenz darüber, wie Module, Pfade, das Schlüsselwort
+<code>use</code> und das Schlüsselwort <code>pub</code> im Compiler funktionieren und wie die meisten
+Entwickler ihren Code organisieren. Wir werden im Laufe dieses Kapitels
+Beispiele für jede dieser Regeln durchgehen, aber dies ist ein guter Ort, um
+sich daran zu erinnern, wie Module funktionieren.</p>
+<ul>
+<li><strong>Beginne bei der Kistenwurzel (crate root)</strong>: Beim Kompilieren einer Kiste
+sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
+<em>src/lib.rs</em> für eine Bibliothekskiste oder <em>src/main.rs</em> für eine
+Binärkiste).</li>
+<li><strong>Module deklarieren</strong>: In der Kisten-Stammdatei kannst du neue Module
+deklarieren; z.B. deklarierst du ein „Garten“-Modul mit <code>mod garden;</code>. Der
+Compiler wird an diesen Stellen nach dem Code des Moduls suchen:
+<ul>
+<li>In der Zeile direkt nach <code>mod garden</code>, in geschweiften Klammern anstelle
+des Semikolons</li>
+<li>In der Datei <em>src/garden.rs</em></li>
+<li>In der Datei <em>src/garden/mod.rs</em></li>
+</ul>
+</li>
+<li><strong>Submodulen deklarieren</strong>: In jeder anderen Datei als der Kistenwurzel
+kannst du Untermodule deklarieren. Du kannst zum Beispiel <code>mod vegetables;</code>
+in <em>src/garden.rs</em> deklarieren. Der Compiler sucht den Code des Submoduls in
+dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
+Stellen:
+<ul>
+<li>In der Zeile direkt nach <code>mod vegetables</code>, in geschweiften Klammern
+anstelle des Semikolons</li>
+<li>In der Datei <em>src/garden/vegetables.rs</em></li>
+<li>In der Datei <em>src/garden/vegetables/mod.rs</em></li>
+</ul>
+</li>
+<li><strong>Pfade zum Code in Modulen</strong>: Sobald ein Modul Teil deiner Kiste ist, kannst
+du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
+referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
+zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> im
+Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
+sein.</li>
+<li><strong>Privat vs. öffentlich</strong>: Der Code innerhalb eines Moduls ist standardmäßig
+für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
+machen, deklariere es mit <code>pub mod</code> anstelle von <code>mod</code>. Um Elemente innerhalb
+eines öffentlichen Moduls ebenfalls öffentlich zu machen, verwende <code>pub</code> vor
+ihren Deklarationen.</li>
+<li><strong>Das Schlüsselwort <code>use</code></strong>: Innerhalb eines Gültigkeitsbereichs werden mit
+dem Schlüsselwort <code>use</code> Verknüpfungen zu Elementen erstellt, um die
+Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
+auf <code>crate::garden::vegetables::Asparagus</code> referenzieren kann, kann man eine
+Verknüpfung mit <code>use crate::garden::vegetables::Asparagus</code> erstellen und von
+da an braucht man nur noch <code>Asparagus</code> zu schreiben, um diesen Typ im
+Gültigkeitsbereich zu verwenden.</li>
+</ul>
+<p>Hier erstellen wir eine binäre Kiste namens <code>backyard</code> (Hinterhof), die diese
+Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls <code>backyard</code>
+genannt, enthält diese Dateien und Verzeichnisse:</p>
+<pre><code class="language-text">backyard
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── garden
+    │   └── vegetables.rs
+    ├── garden.rs
+    └── main.rs
+</code></pre>
+<p>Die Stammdatei der Kiste ist in diesem Fall <em>src/main.rs</em>, und sie enthält:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><code class="language-rust noplayground ignore">use crate::garden::vegetables::Asparagus;
+
+pub mod garden;
+
+fn main() {
+    let plant = Asparagus {};
+    println!(&quot;Ich baue {:?} an!&quot;, plant);
+}
+</code></pre>
+<p>Die Zeile <code>pub mod garden;</code> weist den Compiler an, den Code einzubinden, den er
+in <em>src/garden.rs</em> findet, nämlich::</p>
+<p><span class="filename">Dateiname: src/garden.rs</span></p>
+<pre><code class="language-rust noplayground ignore">pub mod vegetables;
+</code></pre>
+<p>Hier bedeutet <code>pub mod vegetables;</code>, dass der Code in
+<em>src/garden/vegetables.rs</em> ebenfalls enthalten ist. Dieser Code ist:</p>
+<pre><code class="language-rust noplayground ignore">#[derive(Debug)]
+pub struct Asparagus {}
+</code></pre>
+<p>Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis demonstrieren!</p>
+<h3 id="gruppierung-von-zugehörigem-code-in-modulen"><a class="header" href="#gruppierung-von-zugehörigem-code-in-modulen">Gruppierung von zugehörigem Code in Modulen</a></h3>
 <p><em>Module</em> lassen uns Code innerhalb einer Kiste in Gruppen organisieren, um ihn
 lesbar und leicht wiederverwendbar zu machen. Module kontrollieren auch den
 <em>Datenschutz</em> (privacy) von Elementen, d.h. ob ein Element von einem externen

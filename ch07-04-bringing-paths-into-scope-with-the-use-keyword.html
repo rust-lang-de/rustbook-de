@@ -140,13 +140,13 @@ haben, um Funktionen aufzurufen, unangenehm lang und wiederholend. Zum Beispiel
 mussten wir in Codeblock 7-7, unabhängig davon, ob wir den absoluten oder
 relativen Pfad zur Funktion <code>add_to_waitlist</code> wählten, bei jedem Aufruf von
 <code>add_to_waitlist</code> auch <code>front_of_house</code> und <code>hosting</code> angeben. Glücklicherweise
-gibt es einen Weg, diesen Vorgang zu vereinfachen. Wir können einen Pfad mit
-dem Schlüsselwort <code>use</code> einmalig in einen Gültigkeitsbereich bringen und dann
-die Elemente in diesem Pfad so aufrufen, als ob es sich um lokale Elemente
-handelt. In Codeblock 7-11 bringen wir das Modul
-<code>crate::front_of_house::hosting</code> in den Gültigkeitsbereich der Funktion
-<code>eat_at_restaurant</code>, sodass wir nur noch <code>hosting::add_to_waitlist</code> angeben
-müssen, um die Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant</code> aufzurufen.</p>
+gibt es einen Weg, diesen Vorgang zu vereinfachen: Wir können eine Verknüpfung
+zu einem Pfad mit dem Schlüsselwort <code>use</code> einmal erstellen und dann den
+kürzeren Namen überall sonst im Gültigkeitsbereich verwenden.</p>
+<p>In Codeblock 7-11 bringen wir das Modul <code>crate::front_of_house::hosting</code> in den
+Gültigkeitsbereich der Funktion <code>eat_at_restaurant</code>, sodass wir nur noch
+<code>hosting::add_to_waitlist</code> angeben müssen, um die Funktion <code>add_to_waitlist</code> in
+<code>eat_at_restaurant</code> aufzurufen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">mod front_of_house {
     pub mod hosting {
@@ -157,8 +157,6 @@ müssen, um die Funktion <code>add_to_waitlist</code> in <code>eat_at_restaurant
 use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
     hosting::add_to_waitlist();
 }
 </code></pre>
@@ -171,27 +169,55 @@ gültiger Name in diesem Gültigkeitsbereich, so als wäre das Modul <code>hosti
 der Kistenwurzel definiert worden. Pfade, die mit <code>use</code> in den
 Gültigkeitsbereich gebracht werden, überprüfen wie alle anderen Pfade auch die
 Privatsphäre.</p>
-<p>Du kannst ein Element auch mit <code>use</code> und einem relativen Pfad in den
-Gültigkeitsbereich bringen. In Codeblock 7-12 wird gezeigt, wie ein relativer
-Pfad angegeben werden kann, um dasselbe Verhalten wie in Codeblock 7-11 zu
-erzielen.</p>
+<p>Beachte, dass <code>use</code> nur die Verknüpfung für den jeweiligen Gültigkeitsbereich
+erstellt, in dem <code>use</code> vorkommt. Codeblock 7-12 verschiebt die Funktion
+<code>eat_at_restaurant</code> in ein neues untergeordnetes Modul namens <code>customer</code>, das
+dann einen anderen Gültigkeitsbereich als die <code>use</code>-Anweisung hat, sodass der
+Funktionsrumpf nicht kompiliert werden kann:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground test_harness">mod front_of_house {
+<pre><code class="language-rust noplayground test_harness does_not_compile">mod front_of_house {
     pub mod hosting {
         pub fn add_to_waitlist() {}
     }
 }
 
-use self::front_of_house::hosting;
+use crate::front_of_house::hosting;
 
-pub fn eat_at_restaurant() {
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
+mod customer {
+    pub fn eat_at_restaurant() {
+        hosting::add_to_waitlist();
+    }
 }
 </code></pre>
-<p><span class="caption">Codeblock 7-12: Ein Modul mit <code>use</code> und einem relativen
-Pfad in den Gültigkeitsbereich bringen</span></p>
+<p><span class="caption">Codeblock 7-12: Eine <code>use</code>-Anweisung gilt nur in dem
+Gültigkeitsbereich, in dem sie steht</span></p>
+<p>Der Compilerfehler zeigt, dass die Verknüpfung innerhalb des Moduls <code>customer</code>
+nicht mehr gilt:</p>
+<pre><code class="language-console">$ cargo build
+   Compiling restaurant v0.1.0 (file:///projects/restaurant)
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --&gt; src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
+
+warning: unused import: `crate::front_of_house::hosting`
+ --&gt; src/lib.rs:7:5
+  |
+7 | use crate::front_of_house::hosting;
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+For more information about this error, try `rustc --explain E0433`.
+warning: `restaurant` (lib) generated 1 warning
+error: could not compile `restaurant` due to previous error; 1 warning emitted
+</code></pre>
+<p>Beachte, dass es auch eine Warnung gibt, dass <code>use</code> nicht mehr in seinem
+Gültigkeitsbereich verwendet wird! Um dieses Problem zu beheben, verschiebe
+<code>use</code> auch innerhalb des Moduls <code>customer</code>, oder referenziere die Verknüpfung
+im übergeordneten Modul mit <code>super::hosting</code> innerhalb des untergeordneten
+Moduls <code>customer</code>.</p>
 <h3 id="idiomatische-use-pfade-erstellen"><a class="header" href="#idiomatische-use-pfade-erstellen">Idiomatische <code>use</code>-Pfade erstellen</a></h3>
 <p>In Codeblock 7-11 hast du dich vielleicht gefragt, warum wir <code>use crate::front_of_house::hosting</code> angegeben und dann <code>hosting::add_to_waitlist</code>
 in <code>eat_at_restaurant</code> aufgerufen haben, anstatt den <code>use</code>-Pfad bis hin zur
@@ -207,8 +233,6 @@ Codeblock 7-13.</p>
 use crate::front_of_house::hosting::add_to_waitlist;
 
 pub fn eat_at_restaurant() {
-    add_to_waitlist();
-    add_to_waitlist();
     add_to_waitlist();
 }
 </code></pre>
@@ -252,13 +276,13 @@ use std::io;
 
 fn function1() -&gt; fmt::Result {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 
 fn function2() -&gt; io::Result&lt;()&gt; {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-15: Um zwei Typen mit dem gleichen Namen in
@@ -284,13 +308,13 @@ use std::io::Result as IoResult;
 
 fn function1() -&gt; Result {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 
 fn function2() -&gt; IoResult&lt;()&gt; {
     // --abschneiden--
-    Ok(())
-}
+<span class="boring">    Ok(())
+</span>}
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-16: Umbenennen eines Typs, wenn er mit dem
@@ -320,17 +344,15 @@ pub use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
 }
 </code></pre>
 <p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
-<p>Durch Verwenden von <code>pub use</code> kann jetzt externer Code die Funktion
-<code>add_to_waitlist</code> unter Verwendung von <code>hosting::add_to_waitlist</code> aufrufen.
-Hätten wir nicht <code>pub use</code> angegeben, könnte die Funktion <code>eat_at_restaurant</code>
-in ihrem Gültigkeitsbereich <code>hosting::add_to_waitlist</code> aufrufen, aber externer
-Code könnte diesen neuen Pfad nicht nutzen.</p>
+<p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
+Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen. Nun, da
+<code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert hat, kann
+externer Code nun stattdessen den Pfad <code>restaurant::hosting::add_to_waitlist()</code>
+verwenden.</p>
 <p>Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
 dem unterscheidet, wie Programmierer, die deinen Code
 aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
@@ -338,14 +360,17 @@ Betreiber des Restaurants zum Beispiel an die „Vorderseite des Hauses“ und d
 „Rückseite des Hauses“. Mit <code>pub use</code> können wir unseren Code mit einer
 Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
-Programmierer, die die Bibliothek aufrufen, gut organisiert.</p>
+Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
+Beispiel für <code>pub use</code> und wie es sich auf die Dokumentation deiner Kiste
+auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-%C3%B6ffentliche-api-exportieren">„Mit <code>pub use</code> eine benutzerfreundliche
+öffentliche API exportieren“</a> in Kapitel 14 betrachten.</p>
 <h3 id="verwenden-externer-pakete"><a class="header" href="#verwenden-externer-pakete">Verwenden externer Pakete</a></h3>
 <p>In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.5.5&quot;
+rand = &quot;0.8.3&quot;
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
@@ -363,7 +388,7 @@ haben:</p>
 fn main() {
 <span class="boring">    println!(&quot;Rate die Zahl!&quot;);
 </span><span class="boring">
-</span>    let secret_number = rand::thread_rng().gen_range(1, 101);
+</span>    let secret_number = rand::thread_rng().gen_range(1..=100);
 <span class="boring">
 </span><span class="boring">    println!(&quot;Die geheime Zahl ist: {}&quot;, secret_number);
 </span><span class="boring">
@@ -407,8 +432,10 @@ Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::cmp::Ordering;
+</span>// --abschneiden--
+use std::cmp::Ordering;
 use std::io;
+// --abschneiden--
 <span class="boring">}
 </span></code></pre></pre>
 <p>Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
@@ -420,7 +447,9 @@ in Codeblock 7-18 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">
 <span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>use std::{cmp::Ordering, io};
+</span>// --abschneiden--
+use std::{cmp::Ordering, io};
+// --abschneiden--
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 7-18: Angeben eines verschachtelten Pfades, um
