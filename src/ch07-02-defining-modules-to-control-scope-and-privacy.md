@@ -5,7 +5,109 @@ sprechen, nämlich *Pfade*, die es dir erlauben, Elemente zu benennen; das
 Schlüsselwort `use`, das einen Pfad in den Gültigkeitsbereich bringt; und das
 Schlüsselwort `pub`, um Elemente öffentlich zu machen. Wir werden auch das
 Schlüsselwort `as`, externe Pakete und den Stern-Operator (glob operator)
-besprechen. Konzentrieren wir uns vorerst auf die Module!
+besprechen.
+
+Zunächst werden wir mit einer Liste von Regeln beginnen, damit du bei der
+künftigen Organisation deines Codes leicht nachschlagen kannst. Dann werden wir
+jede der Regeln im Detail erklären.
+
+### Spickzettel für Module
+
+Hier bieten wir eine Kurzreferenz darüber, wie Module, Pfade, das Schlüsselwort
+`use` und das Schlüsselwort `pub` im Compiler funktionieren und wie die meisten
+Entwickler ihren Code organisieren. Wir werden im Laufe dieses Kapitels
+Beispiele für jede dieser Regeln durchgehen, aber dies ist ein guter Ort, um
+sich daran zu erinnern, wie Module funktionieren.
+
+- **Beginne bei der Kistenwurzel (crate root)**: Beim Kompilieren einer Kiste
+  sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
+  *src/lib.rs* für eine Bibliothekskiste oder *src/main.rs* für eine
+  Binärkiste).
+- **Module deklarieren**: In der Kisten-Stammdatei kannst du neue Module
+  deklarieren; z.B. deklarierst du ein „Garten“-Modul mit `mod garden;`. Der
+  Compiler wird an diesen Stellen nach dem Code des Moduls suchen:
+    - In der Zeile direkt nach `mod garden`, in geschweiften Klammern anstelle
+      des Semikolons
+    - In der Datei *src/garden.rs*
+    - In der Datei *src/garden/mod.rs*
+- **Submodulen deklarieren**: In jeder anderen Datei als der Kistenwurzel
+  kannst du Untermodule deklarieren. Du kannst zum Beispiel `mod vegetables;`
+  in *src/garden.rs* deklarieren. Der Compiler sucht den Code des Submoduls in
+  dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
+  Stellen:
+    - In der Zeile direkt nach `mod vegetables`, in geschweiften Klammern
+      anstelle des Semikolons
+    - In der Datei *src/garden/vegetables.rs*
+    - In der Datei *src/garden/vegetables/mod.rs*
+- **Pfade zum Code in Modulen**: Sobald ein Modul Teil deiner Kiste ist, kannst
+  du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
+  referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
+  zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` im
+  Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
+  sein.
+- **Privat vs. öffentlich**: Der Code innerhalb eines Moduls ist standardmäßig
+  für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
+  machen, deklariere es mit `pub mod` anstelle von `mod`. Um Elemente innerhalb
+  eines öffentlichen Moduls ebenfalls öffentlich zu machen, verwende `pub` vor
+  ihren Deklarationen.
+- **Das Schlüsselwort `use`**: Innerhalb eines Gültigkeitsbereichs werden mit
+  dem Schlüsselwort `use` Verknüpfungen zu Elementen erstellt, um die
+  Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
+  auf `crate::garden::vegetables::Asparagus` referenzieren kann, kann man eine
+  Verknüpfung mit `use crate::garden::vegetables::Asparagus` erstellen und von
+  da an braucht man nur noch `Asparagus` zu schreiben, um diesen Typ im
+  Gültigkeitsbereich zu verwenden.
+
+Hier erstellen wir eine binäre Kiste namens `backyard` (Hinterhof), die diese
+Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls `backyard`
+genannt, enthält diese Dateien und Verzeichnisse:
+
+```text
+backyard
+├── Cargo.lock
+├── Cargo.toml
+└── src
+    ├── garden
+    │   └── vegetables.rs
+    ├── garden.rs
+    └── main.rs
+```
+
+Die Stammdatei der Kiste ist in diesem Fall *src/main.rs*, und sie enthält:
+
+<span class="filename">Dateiname: src/main.rs</span>
+
+```rust,noplayground,ignore
+use crate::garden::vegetables::Asparagus;
+
+pub mod garden;
+
+fn main() {
+    let plant = Asparagus {};
+    println!("Ich baue {:?} an!", plant);
+}
+```
+
+Die Zeile `pub mod garden;` weist den Compiler an, den Code einzubinden, den er
+in *src/garden.rs* findet, nämlich::
+
+<span class="filename">Dateiname: src/garden.rs</span>
+
+```rust,noplayground,ignore
+pub mod vegetables;
+```
+
+Hier bedeutet `pub mod vegetables;`, dass der Code in
+*src/garden/vegetables.rs* ebenfalls enthalten ist. Dieser Code ist:
+
+```rust,noplayground,ignore
+#[derive(Debug)]
+pub struct Asparagus {}
+```
+
+Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis demonstrieren!
+
+### Gruppierung von zugehörigem Code in Modulen
 
 *Module* lassen uns Code innerhalb einer Kiste in Gruppen organisieren, um ihn
 lesbar und leicht wiederverwendbar zu machen. Module kontrollieren auch den
