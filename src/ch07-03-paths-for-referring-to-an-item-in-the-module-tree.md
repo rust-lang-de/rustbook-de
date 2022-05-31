@@ -6,8 +6,10 @@ Wenn wir eine Funktion aufrufen wollen, müssen wir ihren Pfad kennen.
 
 Ein Pfad kann zwei Formen annehmen:
 
-* Ein *absoluter Pfad* startet bei einer Kistenwurzel, indem ein Kistenname
-  oder das Literal `crate` verwendet wird.
+* Ein *absoluter Pfad* ist der vollständige Pfad ausgehend von einer
+  Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
+  der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
+  Literal `crate`.
 * Ein *relativer Pfad* startet beim aktuellen Modul und benutzt `self`, `super`
   oder einen Bezeichner im aktuellen Modul.
 
@@ -278,6 +280,38 @@ ausgehend vom Modul, in dem `eat_at_restaurant` definiert ist, funktioniert.
 Weil `hosting` und `add_to_waitlist` nun mit `pub` markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!
 
+Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
+deinen Code verwenden können, ist deine öffentliche API dein Vertrag mit den
+Benutzern deiner Kiste, der festlegt, wie sie mit deinem Code interagieren
+können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
+öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
+verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
+du an diesem Thema interessiert bist, lies [The Rust API
+Guidelines][api-guidelines].
+
+> #### Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek
+>
+> Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
+> *src/main.rs* als auch eine Bibliothekskistenwurzel *src/lib.rs* enthalten
+> kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
+> haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
+> Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
+> ausführbare Datei zu starten, die Code aus der Bibliothekskiste aufruft.
+> Dadurch können andere Projekte von den meisten Funktionen des Pakets
+> profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.
+>
+> Der Modulbaum sollte in *src/lib.rs* definiert werden. Dann können alle
+> öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
+> mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
+> der Bibliothekskiste, so wie eine vollständig externe Kiste die
+> Bibliothekskiste verwenden würde: Sie kann nur die öffentliche API
+> verwenden. Dies hilft dir, eine gute API zu entwerfen; Du bist nicht nur der
+> Autor, sondern auch ein Kunde!
+>
+> In [Kapitel 12][ch12] werden wir diese organisatorische Praxis anhand eines
+> Befehlszeilenprogramms demonstrieren, das sowohl eine Binärkiste als auch
+> eine Bibliothekskiste enthält.
+
 ### Relative Pfade mit `super` beginnen
 
 Wir können auch relative Pfade konstruieren, die im Elternmodul beginnen, indem
@@ -286,18 +320,19 @@ Dateisystempfad mit der Syntax `..` beginnen. Warum sollten wir das tun wollen?
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
-Funktion `fix_incorrect_order` ruft die Funktion `serve_order` auf, indem sie
-den Pfad zu `serve_order` beginnend mit `super` angibt:
+Funktion `fix_incorrect_order`, die im Modul `back_of_house` definiert ist,
+ruft die im übergeordneten Modul definierte Funktion `deliver_order` auf, indem
+sie den Pfad zu `deliver_order` angibt, der mit `super` beginnt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-fn serve_order() {}
+fn deliver_order() {}
 
 mod back_of_house {
     fn fix_incorrect_order() {
         cook_order();
-        super::serve_order();
+        super::deliver_order();
     }
 
     fn cook_order() {}
@@ -310,8 +345,8 @@ eines relativen Pfades, der mit `super` beginnt</span>
 Die Funktion `fix_incorrect_order` befindet sich im Modul `back_of_house`,
 sodass wir `super` benutzen können, um zum Elternmodul von `back_of_house` zu
 gelangen, was in diesem Fall die Wurzel `crate` ist. Von dort aus suchen wir
-nach `serve_order` und finden es. Erfolg! Wir denken, dass das Modul
-`back_of_house` und die Funktion `serve_order` wahrscheinlich in der gleichen
+nach `deliver_order` und finden es. Erfolg! Wir denken, dass das Modul
+`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen
 Beziehung zueinander bleiben und zusammenrücken werden, sollten wir uns dazu
 entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
 `super` verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
@@ -420,4 +455,6 @@ haben, und das ist unser letztes Modulsystem-Feature: Das Schlüsselwort `use`.
 Zuerst werden wir `use` an sich behandeln, und dann zeigen wir, wie man `pub`
 und `use` kombiniert.
 
+[api-guidelines]: https://rust-lang.github.io/api-guidelines/
+[ch12]: ch12-00-an-io-project.html
 [pub]: #pfade-mit-dem-schlüsselwort-pub-öffnen
