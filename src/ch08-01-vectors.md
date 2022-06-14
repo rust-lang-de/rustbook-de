@@ -72,34 +72,13 @@ besprochen. Die Zahlen, die wir darin platzieren, sind alle vom Typ `i32`, und
 Rust leitet dies aus den Daten ab, sodass wir die Annotation `Vec<i32>` nicht
 benötigen.
 
-### Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt
-
-Wie bei jeder anderen Struktur wird ein Vektor freigegeben, wenn er den
-Gültigkeitsbereich verlässt, wie in Codeblock 8-4 kommentiert wird.
-
-```rust
-{
-    let v = vec![1, 2, 3, 4];
-
-    // mache etwas mit v
-} // <- v verlässt den Gültigkeitsbereich und wird hier freigegeben
-```
-
-<span class="caption">Codeblock 8-4: Zeigt, wo der Vektor und seine Elemente
-aufgeräumt werden</span>
-
-Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt,
-d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Dies mag recht
-einfach erscheinen, kann aber kompliziert werden, wenn du anfängst, Referenzen
-auf Elemente des Vektors einzuführen. Lass uns das als Nächstes angehen!
-
 ### Elemente aus Vektoren lesen
 
 Es gibt zwei Möglichkeiten, einen in einem Vektor gespeicherten Wert zu
 referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
 Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.
 
-Codeblock 8-5 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
+Codeblock 8-4 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
 mittels Indexierungssyntax und die Methode `get`.
 
 ```rust
@@ -114,22 +93,21 @@ match v.get(2) {
 }
 ```
 
-<span class="caption">Codeblock 8-5: Verwenden der Indexierungssyntax und der
+<span class="caption">Codeblock 8-4: Verwenden der Indexierungssyntax und der
 Methode `get` für den Zugriff auf ein Element in einem Vektor</span>
 
-Beachte hier zwei Details. Erstens verwenden wir den Indexwert `2`, um das
-dritte Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
-werden. Zweitens gibt es zwei Möglichkeiten, das dritte Element zu erhalten:
-Entweder durch Verwendung von `&` und `[]`, was eine Referenz ergibt, oder
-durch die Methode `get` mit dem Index als Argument, was eine `Option<&T>`
-ergibt.
+Beachte hier einige Details. Wir verwenden den Indexwert `2`, um das dritte
+Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
+werden. Mit `&` und `[]` erhalten wir eine Referenz auf das Element mit dem
+Indexwert. Wenn wir die Methode `get` mit dem Index als Argument verwenden,
+erhalten wir eine `Option<&T>`, die wir mit `match` verwenden können.
 
 Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
 referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
 verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
 vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
 Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
-Element mit Index 100 zuzugreifen, wie in Codeblock 8-6 zu sehen ist.
+Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.
 
 ```rust,should_panic,panics
 let v = vec![1, 2, 3, 4, 5];
@@ -138,7 +116,7 @@ let does_not_exist = &v[100];
 let does_not_exist = v.get(100);
 ```
 
-<span class="caption">Codeblock 8-6: Versuch, auf das Element mit Index 100 in
+<span class="caption">Codeblock 8-5: Versuch, auf das Element mit Index 100 in
 einem Vektor zuzugreifen, der fünf Elemente enthält</span>
 
 Wenn wir diesen Code ausführen, wird die Variante `[]` das Programm abbrechen
@@ -163,10 +141,10 @@ Ausleihenprüfer mittels Eigentümerschafts- und Ausleihregeln (siehe Kapitel 4)
 sicher, dass diese Referenz und alle anderen Referenzen auf den Inhalt des
 Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
 veränderlichen und unveränderlichen Referenzen im gleichen Gültigkeitsbereich
-haben kannst. Diese Regel trifft in Codeblock 8-7 zu, wo wir eine
+haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
-wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.
+wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:
 
 ```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];
@@ -178,7 +156,7 @@ v.push(6);
 println!("Das erste Element ist: {}", first);
 ```
 
-<span class="caption">Codeblock 8-7: Versuch, ein Element zu einem Vektor
+<span class="caption">Codeblock 8-6: Versuch, ein Element zu einem Vektor
 hinzuzufügen, während eine Referenz auf ein Element gehalten wird</span>
 
 Das Kompilieren dieses Codes führt zu folgendem Fehler:
@@ -202,7 +180,7 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
 ```
 
-Der Code in Codeblock 8-7 sieht so aus, als könnte er funktionieren: Warum
+Der Code in Codeblock 8-6 sieht so aus, als könnte er funktionieren: Warum
 sollte sich eine Referenz auf das erste Element darum kümmern, was sich am
 Ende des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
 begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte
@@ -220,7 +198,7 @@ Ausleihregeln verhindern, dass Programme in diese Situation geraten.
 
 Um auf die Elemente eines Vektors der Reihe nach zuzugreifen, können wir über
 alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
-Element zur gleichen Zeit zuzugreifen. Codeblock 8-8 zeigt, wie man eine
+Element zur gleichen Zeit zuzugreifen. Codeblock 8-7 zeigt, wie man eine
 `for`-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
 Vektors von `i32`-Werten zu erhalten und diese auszugeben.
 
@@ -231,12 +209,12 @@ for i in &v {
 }
 ```
 
-<span class="caption">Codeblock 8-8: Ausgeben aller Elemente eines Vektors
+<span class="caption">Codeblock 8-7: Ausgeben aller Elemente eines Vektors
 durch Iterieren über die Elemente mittels `for`-Schleife</span>
 
 Wir können auch über veränderliche Referenzen der Elemente eines veränderlichen
 Vektors iterieren, um Änderungen an allen Elementen vorzunehmen. Die
-`for`-Schleife in Codeblock 8-9 addiert zu jedem Element `50`.
+`for`-Schleife in Codeblock 8-8 addiert zu jedem Element `50`.
 
 ```rust
 let mut v = vec![100, 32, 57];
@@ -245,7 +223,7 @@ for i in &mut v {
 }
 ```
 
-<span class="caption">Codeblock 8-9: Iterieren über veränderliche Referenzen
+<span class="caption">Codeblock 8-8: Iterieren über veränderliche Referenzen
 der Elemente eines Vektors</span>
 
 Um den Wert, auf den sich die veränderliche Referenz bezieht, zu ändern, müssen
@@ -253,6 +231,14 @@ wir den Dereferenzierungsoperator (`*`) verwenden, um an den Wert in `i` zu
 kommen, bevor wir den Operator `+=` verwenden können. Wir werden mehr über den
 Dereferenzierungsoperator im Abschnitt [„Dem Zeiger zum Wert folgen mit dem
 Dereferenzierungsoperator“][deref] in Kapitel 15 sprechen.
+
+Die Iteration über einen Vektor, ob unveränderlich oder veränderlich, ist
+aufgrund der Regeln des Ausleihenprüfers sicher. Wenn wir versuchen würden,
+Elemente in den `for`-Schleifenrümpfen in Codeblock 8-7 und Codeblock 8-8
+einzufügen oder zu entfernen, würden wir einen Compilerfehler erhalten, ähnlich
+dem, den wir mit dem Code in Codeblock 8-6 erhalten haben. Die Referenz auf den
+Vektor, den die `for`-Schleife enthält, verhindert eine gleichzeitige Änderung
+des gesamten Vektors.
 
 ### Verwenden einer Aufzählung zum Speichern mehrerer Typen
 
@@ -269,7 +255,7 @@ Zeichenketten enthalten. Wir können eine Aufzählung definieren, deren Variante
 die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
 derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
 erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
-Wir haben dies in Codeblock 8-10 demonstriert.
+Wir haben dies in Codeblock 8-9 demonstriert.
 
 ```rust
 enum SpreadsheetCell {
@@ -285,7 +271,7 @@ let row = vec![
 ];
 ```
 
-<span class="caption">Codeblock 8-10: Definieren eines `enum`, um Werte
+<span class="caption">Codeblock 8-9: Definieren eines `enum`, um Werte
 verschiedener Typen in einem Vektor zu speichern</span>
 
 Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
@@ -309,6 +295,29 @@ den vielen nützlichen Methoden ansehen, die die Standardbibliothek für `Vec<T>
 mitbringt. Zum Beispiel gibt es zusätzlich zu `push` die Methode `pop`, die das
 letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
 übergehen: `String`
+
+### Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt
+
+Wie bei jeder anderen Struktur wird ein Vektor freigegeben, wenn er den
+Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.
+
+```rust
+{
+    let v = vec![1, 2, 3, 4];
+
+    // mache etwas mit v
+} // <- v verlässt den Gültigkeitsbereich und wird hier freigegeben
+```
+
+<span class="caption">Codeblock 8-10: Zeigt, wo der Vektor und seine Elemente
+aufgeräumt werden</span>
+
+Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt,
+d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Der Ausleihenprüfer
+stellt sicher, dass alle Referenzen auf den Inhalt eines Vektors nur verwendet
+werden, solange der Vektor selbst gültig ist.
+
+Lassen Sie uns zum nächsten Sammlungstyp übergehen: `String`!
 
 [data-types]: ch03-02-data-types.html
 [nomicon]: https://doc.rust-lang.org/nomicon/vec.html
