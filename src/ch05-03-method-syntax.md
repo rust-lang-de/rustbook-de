@@ -296,11 +296,13 @@ bereits eine solche Funktion verwendet: Die Funktion `String::from`, die für
 den Typ `String` definiert ist.
 
 Assoziierte Funktionen, die keine Methoden sind, werden oft als Konstruktoren
-verwendet, die eine neue Instanz der Struktur zurückgeben. Zum Beispiel könnten
-wir eine assoziierte Funktion bereitstellen, die einen eindimensionalen
-Parameter hat und diesen sowohl als Breite als auch als Höhe verwendet, wodurch
-auf einfache Weise ein quadratisches `Rectangle` erzeugt werden kann, ohne
-denselben Wert zweimal angeben zu müssen:
+verwendet, die eine neue Instanz der Struktur zurückgeben. Diese werden oft als
+`new` bezeichnet, aber `new` ist kein spezieller Name und ist nicht in die
+Sprache eingebaut. Wir könnten zum Beispiel eine assoziierte Funktion mit dem
+Namen `square` bereitstellen, die einen eindimensionalen Parameter hat und
+diesen sowohl für die Breite als auch für die Höhe verwendet, sodass es
+einfacher ist, ein quadratisches `Rectangle` zu erstellen, anstatt denselben
+Wert zweimal angeben zu müssen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -312,7 +314,7 @@ denselben Wert zweimal angeben zu müssen:
 # }
 #
 impl Rectangle {
-    fn square(size: u32) -> Rectangle {
+    fn square(size: u32) -> Self {
         Rectangle {
             width: size,
             height: size,
@@ -324,6 +326,10 @@ impl Rectangle {
 #     let sq = Rectangle::square(3);
 # }
 ```
+
+Die Schlüsselwörter `Self` im Rückgabetyp und im Rumpf der Funktion sind Aliase
+für den Typ, der nach dem Schlüsselwort `impl` steht, in diesem Fall
+`Rectangle`.
 
 Um diese assoziierte Funktion aufzurufen, verwenden wir die Syntax `::` mit dem
 Strukturnamen, z.B. `let sq = Rectangle::square(3);`. Diese Funktion gehört zum
