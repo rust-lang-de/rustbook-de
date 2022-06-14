@@ -90,13 +90,13 @@ Typnamen-Deklarationen innerhalb spitzer Klammern `<>`, zwischen dem
 Funktionsnamen und der Parameterliste, so wie hier:
 
 ```rust,ignore
-fn largest<T>(list: &[T]) -> T {
+fn largest<T>(list: &[T]) -> &T {
 ```
 
 Wir lesen diese Definition wie folgt: Die Funktion `largest` ist generisch über
 einen Typ `T`. Sie hat einen Parameter namens `list`, der ein Anteilstyp von
-Werten des Typs `T` ist. Die Funktion `largest` gibt einen Wert des gleichen
-Typs `T` zurück.
+Werten des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn
+Wert des gleichen Typs `T` zurück.
 
 Codeblock 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
 generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
@@ -158,17 +158,18 @@ For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` due to previous error
 ```
 
-Der Hinweis erwähnt `std::cmp::PartialOrd`, was ein *Merkmal* (trait) ist. Wir
-werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet dieser
-Fehler, dass der Rumpf von `largest` nicht für alle möglichen Typen
+Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein *Merkmal* (trait) ist,
+und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
+dieser Fehler, dass der Rumpf von `largest` nicht für alle möglichen Typen
 funktioniert, die `T` sein könnten. Da wir Werte des Typs `T` im Rumpf
 vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
 können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
 `std::cmp::PartialOrd`, das du auf Typen implementieren kannst (siehe Anhang C
-für weitere Informationen zu diesem Merkmal). Du wirst im Abschnitt [„Merkmale
-als Parameter“][traits-as-parameters] lernen, wie man angibt, dass ein
-generischer Typ ein bestimmtes Merkmal hat. Lass uns zunächst andere
-Möglichkeiten der Verwendung generischer Typparameter untersuchen.
+für weitere Informationen zu diesem Merkmal). Indem wir dem Vorschlag des
+Hilfetextes folgen, schränken wir die für `T` gültigen Typen auf diejenigen
+ein, die `PartialOrd` implementieren und dieses Beispiel kompiliert, weil die
+Standardbibliothek `PartialOrd` sowohl auf `i32` als auch auf `char`
+implementiert.
 
 ### In Struktur-Definitionen
 
@@ -491,11 +492,13 @@ let float = Some(5.0);
 Wenn Rust diesen Code kompiliert, führt es eine Codeduplizierung durch. Während
 dieses Vorgangs liest der Compiler die Werte ein, die in
 `Option<T>`-Instanzen verwendet wurden, und identifiziert zwei Arten von
-`Option<T>`: Eine verwendet den Typ `i32` und die andere `f64`. Daraufhin
-erweitert es die generische Definition von `Option<T>` zu `Option_i32` und
-`Option_f64` und ersetzt damit die generische Definition durch die spezifische.
+`Option<T>`: Eine verwendet den Typ `i32` und die andere `f64`. Als solches
+erweitert es die allgemeine Definition von `Option<T>` in zwei auf `i32` und
+`f64` spezialisierte Definitionen, wodurch die allgemeine Definition durch die
+spezifische ersetzt wird.
 
-Die duplizierte Codeversion sieht wie folgt aus:
+Die duplizierte Codeversion sieht ähnlich aus wie die folgende (der Compiler
+verwendet andere Namen als die, die wir hier zur Veranschaulichung verwenden):
 
 <span class="filename">Dateiname: src/main.rs</span>
 
