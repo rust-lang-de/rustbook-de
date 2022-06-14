@@ -2,8 +2,8 @@
 
 *von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft*
 
-Diese Version des Textes geht davon aus, dass du Rust 1.58 (veröffentlicht am
-2022-01-13) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
+Diese Version des Textes geht davon aus, dass du Rust 1.61 (veröffentlicht am
+2022-05-10) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
 1][install] zum Installieren und Aktualisieren von Rust.
 
 Die HTML-Version ist online verfügbar unter
