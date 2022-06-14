@@ -35,7 +35,7 @@ Falls du Linux oder macOS verwendest, öffne ein Konsolenfenster und gib den
 folgenden Befehl ein:
 
 ```console
-$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
+$ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
 ```
 
 Dieser Befehl lädt ein Skript herunter und startet die Installation
