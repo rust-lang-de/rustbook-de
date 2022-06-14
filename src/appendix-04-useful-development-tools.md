@@ -37,9 +37,9 @@ Dokumentation][rustfmt].
 ### Korrigiere deinen Code mit `rustfix`
 
 Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-einige Compiler-Warnungen beheben. Wenn du Code in Rust geschrieben hast,
-hast du wahrscheinlich Compiler-Warnungen gesehen. Betrachte zum Beispiel
-diesen Code:
+Compiler-Warnungen beheben, die eine Möglichkeit haben, das Problem zu beheben,
+was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du schon einmal
+Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -147,10 +147,11 @@ error: approximate value of `f{32, 64}::consts::PI` found. Consider using it dir
   = help: for further information visit https://rust-lang-nursery.github.io/rust-clippy/master/index.html#approx_constant
 ```
 
-Dieser Fehler lässt dich wissen, dass Rust diese Konstante genauer definiert
-hat und dass dein Programm korrekter wäre, wenn du stattdessen die Konstante
-verwenden würdest. Du würdest dann deinen Code ändern, um die Konstante `PI` zu
-verwenden. Der folgende Code führt zu keinen Fehlern oder Warnungen von Clippy:
+Dieser Fehler weist dich darauf hin, dass in Rust bereits eine präzisere
+Konstante `PI` definiert ist und dass dein Programm korrekter wäre, wenn du
+stattdessen diese Konstante verwenden würdest. Du würdest dann deinen Code
+ändern, um die Konstante `PI` zu verwenden. Der folgende Code führt zu keinen
+Fehlern oder Warnungen von Clippy:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -188,4 +189,4 @@ Dokumentation][rust-analyzer-manual].
 [lsp]: http://langserver.org/
 [rust-analyzer]: https://rust-analyzer.github.io
 [rust-analyzer-manual]: https://rust-analyzer.github.io/manual.html
-[vscode]: https://marketplace.visualstudio.com/items?itemName=matklad.rust-analyzer
+[vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer

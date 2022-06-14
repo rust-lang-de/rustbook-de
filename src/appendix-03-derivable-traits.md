@@ -21,10 +21,11 @@ Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut `derive`
 bereitgestellt wird, schaue in die [Standard-Bibliotheksdokumentation][std-lib]
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.
 
-Der Rest der in der Standardbibliothek definierten Merkmale kann bei deinen
-Typen nicht mit `derive` implementiert werden. Diese Merkmale haben kein
-wahrnehmbares Standardverhalten, es liegt also an dir, sie so zu
-implementieren, dass sie für das, was du erreichen willst, sinnvoll sind.
+Diese hier aufgelisteten Merkmale sind die einzigen, die von der
+Standardbibliothek definiert werden und die mit `derive` in deinen Typen
+implementiert werden können. Andere in der Standardbibliothek definierte
+Merkmale haben kein sinnvolles Standardverhalten, sodass es an dir liegt, sie
+so zu implementieren, wie es für dein Vorhaben sinnvoll ist.
 
 Ein Beispiel für ein Merkmal, das nicht abgeleitet werden kann, ist `Display`,
 das die Formatierung für Endbenutzer übernimmt. Du solltest immer eine
