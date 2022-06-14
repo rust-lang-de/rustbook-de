@@ -43,25 +43,29 @@ ist der Aufruf von `unwrap` und `expect` genau das, was passieren sollte.
 
 ### Fälle, in denen du mehr Informationen als der Compiler hast
 
-Es wäre auch angemessen, `unwrap` aufzurufen, wenn du eine andere Logik hast,
-die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik kann vom
-Compiler nicht verstanden werden. Du wirst immer noch ein `Result` haben,
-mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es besteht
-immer noch die Möglichkeit, dass sie im Allgemeinen scheitert, auch wenn es in
-deiner speziellen Situation logischerweise unmöglich ist. Wenn du durch
-manuelle Codeinspektion sicherstellen kannst, dass du niemals eine
-`Err`-Variante haben wirst, ist es vollkommen akzeptabel, `unwrap` aufzurufen.
-Hier ist ein Beispiel:
+Es wäre auch angemessen, `unwrap` oder `expect` aufzurufen, wenn du eine andere
+Logik hast, die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik
+kann vom Compiler nicht verstanden werden. Du wirst immer noch ein `Result`
+haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
+besteht immer noch die Möglichkeit, dass sie im Allgemeinen scheitert, auch
+wenn es in deiner speziellen Situation logischerweise unmöglich ist. Wenn du
+durch manuelle Codeinspektion sicherstellen kannst, dass du niemals eine
+`Err`-Variante haben wirst, ist es vollkommen akzeptabel, `unwrap` aufzurufen,
+und noch besser ist es, den Grund, warum du glaubst, dass du niemals eine
+`Err`-Variante haben wirst, im `expect`-Text zu dokumentieren. Hier ist ein
+Beispiel:
 
 ```rust
 use std::net::IpAddr;
 
-let home: IpAddr = "127.0.0.1".parse().unwrap();
+let home: IpAddr = "127.0.0.1"
+    .parse()
+    .expect("Fest programmierte IP-Adresse sollte gültig sein");
 ```
 
 Wir erstellen eine `IpAddr`-Instanz, indem wir eine hartkodierte Zeichenkette
 parsen. Wir können sehen, dass `127.0.0.1` eine gültige IP-Adresse ist, sodass
-es akzeptabel ist, hier `unwrap` zu verwenden. Eine hartkodierte, gültige
+es akzeptabel ist, hier `expect` zu verwenden. Eine hartkodierte, gültige
 Zeichenkette ändert jedoch nicht den Rückgabetyp der `parse`-Methode: Wir
 erhalten immer noch einen `Result`-Wert und der Compiler wird von uns
 verlangen, `Result` so zu behandeln, als ob die `Err`-Variante möglich wäre,
@@ -91,12 +95,15 @@ werden &ndash; sowie eine oder mehrere der folgenden Punkte zutreffen:
   Zuständen und Verhalten als Typen“][encoding] in Kapitel 17 ein Beispiel
   dafür durcharbeiten.
 
-Wenn jemand deinen Code aufruft und Werte eingibt, die keinen Sinn ergeben, ist
-es vielleicht die beste Wahl, `panic!` anzurufen und die Person, die deine
-Bibliothek benutzt, auf den Fehler in ihrem Code hinzuweisen, damit sie ihn
-während der Entwicklung beheben kann. In ähnlicher Weise ist `panic!` oft
-angebracht, wenn du externen Code aufrufst, der sich deiner Kontrolle entzieht
-und einen ungültigen Zustand zurückgibt, den du nicht beheben kannst.
+Wenn jemand deinen Code aufruft und Werte übergibt, die keinen Sinn ergeben,
+ist es am besten, einen Fehler zurückzugeben, damit der Benutzer der Bibliothek
+entscheiden kann, was er in diesem Fall tun möchte. In Fällen, in denen eine
+Fortsetzung unsicher oder schädlich sein könnte, ist es jedoch am besten,
+`panic!` aufzurufen und die Person, die deine Bibliothek verwendet, auf den
+Fehler in ihrem Code hinzuweisen, damit sie ihn während der Entwicklung beheben
+kann. In ähnlicher Weise ist `panic!` oft angebracht, wenn du externen Code
+aufrufst, der sich deiner Kontrolle entzieht und einen ungültigen Zustand
+zurückgibt, den du nicht beheben kannst.
 
 Wenn jedoch ein Fehler erwartet wird, ist es angemessener, ein `Result`
 zurückzugeben, als `panic!` aufzurufen. Beispiele hierfür sind ein Parser, dem
@@ -106,7 +113,8 @@ Fällen zeigt der Rückgabetyp `Result` an, dass ein Fehler eine erwartete
 Möglichkeit ist, bei der der aufrufende Code entscheiden muss, wie er damit
 umgeht.
 
-Wenn dein Code Operationen mit Werten ausführt, sollte dein Code zuerst
+Wenn dein Code einen Vorgang ausführt, der einen Benutzer gefährden könnte,
+wenn er mit ungültigen Werten aufgerufen wird, sollte dein Code zuerst
 überprüfen, ob die Werte gültig sind, und das Programm abbrechen, wenn die
 Werte nicht gültig sind. Dies geschieht hauptsächlich aus Sicherheitsgründen:
 Der Versuch, mit ungültigen Daten zu operieren, kann deinen Code Schwachstellen
