@@ -482,24 +482,24 @@ weglassen.
 
 Rust hat eine spezielle Annotation, das Merkmal `Copy`, die wir an Typen hängen
 können, die auf dem Stapelspeicher wie ganze Zahlen gespeichert sind (wir
-werden in Kapitel 10 mehr über Merkmale sprechen). Wenn ein Typ das Merkmal
-`Copy` hat, ist eine Variable nach der Zuweisung an eine andere Variable noch
-verwendbar. Rust lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren,
-wenn der Typ oder einer seiner Teile das Merkmal `Drop` implementiert. Wenn der
-Typ eine Sonderbehandlung braucht, wenn der Wert den Gültigkeitsbereich
-verlässt und wir die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir
-einen Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem
-Typ hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits]
-in Anhang C.
+werden in [Kapitel 10][traits] mehr über Merkmale sprechen). Wenn ein Typ das
+Merkmal `Copy` implementiert, werden Variablen, die dieses Merkmal verwenden,
+nicht verschoben, sondern trivialerweise kopiert, sodass sie auch nach der
+Zuweisung an eine andere Variable noch gültig sind.
+
+Rust lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren, wenn der Typ
+oder einer seiner Teile das Merkmal `Drop` implementiert. Wenn der Typ eine
+Sonderbehandlung benötigt, wenn der Wert den Gültigkeitsbereich verlässt und
+wir die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir einen
+Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem Typ
+hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits] in
+Anhang C.
 
 Welche Typen unterstützen also `Copy`? Du kannst die Dokumentation für einen
 gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:
-
-1. Jede Gruppierung von einfachen skalaren Werten unterstützt `Copy`.
-2. Nichts, was eine Allokation erfordert oder irgendeine Form von Ressource
-   ist, erlaubt `Copy`. 
-
-Hier sind einige Typen, die `Copy` unterstützen:
+Jede Gruppierung von einfachen skalaren Werten unterstützt `Copy`, und nichts,
+was eine Allokation erfordert oder irgendeine Form von Ressource ist, kann
+`Copy` implementieren. Hier sind einige Typen, die `Copy` unterstützen:
 
 * Alle ganzzahligen Typen, z.B. `u32`.
 * Der boolesche Typ `bool` mit den Werten `true` und `false`.
@@ -510,11 +510,11 @@ Hier sind einige Typen, die `Copy` unterstützen:
 
 ### Eigentümerschaft und Funktionen
 
-Die Semantik für die Übergabe eines Wertes an eine Funktion ist ähnlich wie bei
-der Zuweisung eines Wertes an eine Variable. Wenn eine Variable an eine
-Funktion übergeben wird, wird sie verschoben oder kopiert, genau wie bei der
-Zuweisung. Codeblock 4-3 enthält ein Beispiel mit einigen Anmerkungen, aus
-denen hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.
+Die Übergabe eines Wertes an eine Funktion funktioniert ähnlich wie die
+Zuweisung eines Wertes an eine Variable. Wenn eine Variable an eine Funktion
+übergeben wird, wird sie verschoben oder kopiert, genau wie bei der Zuweisung.
+Codeblock 4-3 enthält ein Beispiel mit einigen Anmerkungen, aus denen
+hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -645,3 +645,4 @@ einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
 [drop-doc]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
 [method-syntax]: ch05-03-method-syntax.html
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[traits]: ch10-02-traits.html
