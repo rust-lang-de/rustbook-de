@@ -1,14 +1,20 @@
 ## Eine Aufzählung (enum) definieren
 
-Aufzählungen (enums) sind eine Möglichkeit, benutzerdefinierte Datentypen auf
-eine andere Art und Weise als mit Strukturen (structs) zu definieren. Schauen
-wir uns eine Situation an, die wir vielleicht in Code ausdrücken wollen, und
-sehen wir, warum Aufzählungen in diesem Fall nützlich und besser geeignet sind
-als Strukturen. Angenommen, wir müssen mit IP-Adressen arbeiten. Aktuell werden
-zwei Hauptstandards für IP-Adressen verwendet: Version vier und Version sechs.
-Da dies die einzigen Möglichkeiten für eine IP-Adresse sind, auf die unser
-Programm stößt, können wir alle möglichen Varianten *aufzählen*, woher die
-Aufzählung ihren Namen hat.
+Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
+und Daten zu gruppieren, wie ein `Rectangle`" mit seiner `width` und `height`,
+bieten Aufzählungen (enums) eine Möglichkeit, einen Wert als einen aus einer
+möglichen Gruppe von Werten anzugeben. Wir können zum Beispiel sagen, dass
+`Rectangle` eine von mehreren möglichen Formen ist, zu denen auch `Circle` und
+`Triangle` gehören. Um dies zu tun, erlaubt Rust uns, diese Möglichkeiten als
+Aufzählung zu kodieren.
+
+Schauen wir uns eine Situation an, die wir vielleicht in Code ausdrücken
+wollen, und sehen wir, warum Aufzählungen in diesem Fall nützlich und besser
+geeignet sind als Strukturen. Angenommen, wir müssen mit IP-Adressen arbeiten.
+Aktuell werden zwei Hauptstandards für IP-Adressen verwendet: Version vier und
+Version sechs. Da dies die einzigen Möglichkeiten für eine IP-Adresse sind, auf
+die unser Programm stößt, können wir alle möglichen Varianten *aufzählen*,
+woher die Aufzählung ihren Namen hat.
 
 Jede IP-Adresse kann entweder eine Adresse der Version vier oder der Version
 sechs sein, aber nicht beides gleichzeitig. Diese Eigenschaft der IP-Adressen
@@ -309,9 +315,13 @@ verbreitet und hilfreich ist: `Option`
 Dieser Abschnitt befasst sich mit einer Fallstudie zu `Option`, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ `Option`
 kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
-Im Sinne des Typsystems bedeutet das, dass der Compiler überprüfen kann, ob du
-alle Fälle behandelt hast, die du behandelt sollst. Diese Funktionalität kann
-Fehler vermeiden, die in anderen Programmiersprachen extrem häufig auftreten.
+
+Wenn du zum Beispiel das erste Element einer Liste mit Elementen anforderst,
+erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
+erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
+Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
+extrem häufig auftreten.
 
 Bei der Entwicklung von Programmiersprachen wird oft überlegt, welche
 Funktionalität aufgenommen werden soll, aber auch die auszuschließende
