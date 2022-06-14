@@ -106,14 +106,9 @@ Der Wert von x ist: 6
 ```
 
 Wir dürfen den Wert, an den sich `x` bindet, von `5` auf `6` ändern, wenn `mut`
-verwendet wird. Es gibt mehrere Kompromisse, die zusätzlich zur Vermeidung von
-Fehlern in Betracht gezogen werden müssen. In Fällen, in denen du
-beispielsweise große Datenstrukturen verwendest, kann es schneller sein, eine
-vorhandene Instanz zu mutieren, als neu zugewiesene Instanzen zu kopieren und
-zurückzugeben. Bei kleineren Datenstrukturen kann es einfacher sein, neue
-Instanzen zu erstellen und in einem funktionelleren Programmierstil zu
-schreiben, sodass eine geringere Performanz ein lohnender Nachteil sein kann,
-um diese Klarheit zu erlangen.
+verwendet wird. Letztendlich ist es deine Entscheidung, ob du Veränderlichkeit
+einsetzen willst oder nicht, und es hängt davon ab, was du in der jeweiligen
+Situation für am sinnvollsten hältst.
 
 ### Konstanten
 
@@ -174,10 +169,12 @@ Wie du in der Anleitung zum Ratespiel in [Kapitel
 2][comparing-the-guess-to-the-secret-number] gesehen hast, kannst du eine neue
 Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
 Rust-Entwickler sagen, dass die erste Variable von der zweiten *beschattet*
-(shadowed) wird, was bedeutet, dass der Wert der zweiten Variable das ist, was
-das Programm sieht, wenn die Variable verwendet wird. Wir können eine Variable
-beschatten, indem wir denselben Variablenamen verwenden und das Schlüsselwort
-`let` wie folgt wiederholen:
+(shadowed) wird, was bedeutet, dass die zweite Variable das ist, was der
+Compiler sieht, wenn du den Namen der Variable verwendest. Die zweite Variable
+beschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,
+bis sie entweder selbst beschattet wird oder der Gültigkeitsbereich endet. Wir
+können eine Variable beschatten, indem wir denselben Variablenamen verwenden
+und das Schlüsselwort `let` wie folgt wiederholen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -196,13 +193,16 @@ fn main() {
 }
 ```
 
-Dieses Programm bindet zunächst `x` an den Wert `5`. Dann beschattet es `x`,
-indem es `let x =` wiederholt, den ursprünglichen Wert nimmt und `1` addiert,
-sodass der Wert von `x` dann `6` ist. Im inneren Gültigkeitsbereich beschattet
-die dritte `let`-Anweisung auch `x` und multipliziert den vorherigen Wert mit
-`2`, sodass `x` den Wert `12` erhält. Wenn dieser Gültigkeitsbereich zu Ende
-ist, endet die innere Beschattung und `x` wird wieder zu `6`. Wenn wir dieses
-Programm ausführen, wird es folgendes ausgeben:
+Dieses Programm bindet zunächst `x` an den Wert `5`. Dann wird eine neue
+Variable `x` erzeugt, indem `let x =` wiederholt wird, wobei der ursprüngliche
+Wert genommen und `1` hinzugefügt wird, sodass der Wert von `x` dann `6` ist.
+Innerhalb eines inneren Gültigkeitsbereichs, der durch die geschweiften
+Klammern geschaffen wird, beschattet die dritte `let`-Anweisung dann ebenfalls
+`x` und erzeugt eine neue Variable, wobei der vorherige Wert mit `2`
+multipliziert wird, um `x` einen Wert von `12` zu geben. Wenn dieser
+Gültigkeitsbereich zu Ende ist, endet die innere Beschattung und `x` wird
+wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
+--
 
 ```console
 $ cargo run

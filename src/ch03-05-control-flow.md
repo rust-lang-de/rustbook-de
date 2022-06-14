@@ -419,6 +419,62 @@ Semikolon, um die Anweisung zu beenden, die `result` den Wert zuweist.
 Schließlich geben wir den Wert in `result` aus, der in diesem Fall `20`
 beträgt.
 
+#### Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen
+
+Wenn du Schleifen innerhalb von Schleifen hast, gelten `break` und `continue`
+für die innerste Schleife an diesem Punkt. Du kannst optional ein
+*Schleifenlabel* (loop label) für eine Schleife angeben, das wir dann mit
+`break` oder `continue` verwenden können, um festzulegen, dass diese
+Schlüsselwörter für die gekennzeichnete Schleife gelten und nicht für die
+innerste Schleife. Schleifenlabel müssen mit einem einfachen Anführungszeichen
+beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("Zähler = {count}");
+        let mut remaining = 10;
+
+        loop {
+            println!("Restliche = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("Zähler-Endstand = {count}");
+}
+```
+
+Die äußere Schleife hat das Label `'counting_up` und zählt von 0 bis 2
+aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
+`break`, das kein Label angibt, beendet nur die innere Schleife. Mit der
+Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
+gibt folgendes aus:
+
+```console
+$ cargo run
+   Compiling loops v0.1.0 (file:///projects/loops)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/loops`
+Zähler = 0
+Restliche = 10
+Restliche = 9
+Zähler = 1
+Restliche = 10
+Restliche = 9
+Zähler = 2
+Restliche = 10
+Zähler-Endstand = 2
+```
+
 #### Bedingte Schleifen mit `while`
 
 Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
