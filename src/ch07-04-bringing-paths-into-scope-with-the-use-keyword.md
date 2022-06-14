@@ -1,13 +1,13 @@
 ## Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`
 
-Es mag den Anschein haben, als seien die Pfade, die wir bisher geschrieben
-haben, um Funktionen aufzurufen, unangenehm lang und wiederholend. Zum Beispiel
-mussten wir in Codeblock 7-7, unabhängig davon, ob wir den absoluten oder
-relativen Pfad zur Funktion `add_to_waitlist` wählten, bei jedem Aufruf von
-`add_to_waitlist` auch `front_of_house` und `hosting` angeben. Glücklicherweise
-gibt es einen Weg, diesen Vorgang zu vereinfachen: Wir können eine Verknüpfung
-zu einem Pfad mit dem Schlüsselwort `use` einmal erstellen und dann den
-kürzeren Namen überall sonst im Gültigkeitsbereich verwenden.
+Die Pfade für den Aufruf von Funktionen auszuschreiben, kann lästig sein und
+sich wiederholen. In Codeblock 7-7 mussten wir, unabhängig davon, ob wir den
+absoluten oder relativen Pfad zur Funktion `add_to_waitlist` wählten, jedes
+Mal, wenn wir `add_to_waitlist` aufrufen wollten, auch `front_of_house` und
+`hosting` angeben. Glücklicherweise gibt es eine Möglichkeit, diesen Vorgang zu
+vereinfachen: Wir können eine Verknüpfung zu einem Pfad mit dem Schlüsselwort
+`use` einmal erstellen und dann den kürzeren Namen überall sonst im
+Gültigkeitsbereich verwenden.
 
 In Codeblock 7-11 bringen wir das Modul `crate::front_of_house::hosting` in den
 Gültigkeitsbereich der Funktion `eat_at_restaurant`, sodass wir nur noch
@@ -194,7 +194,7 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 
 Es gibt eine andere Lösung für das Problem, zwei Typen desselben Namens mit
 `use` in den gleichen Gültigkeitsbereich zu bringen: Hinter dem Pfad können wir
-`as` und einen neuen lokalen Namen oder Alias für den Typ angeben. Codeblock
+`as` und einen neuen lokalen Namen oder *Alias* für den Typ angeben. Codeblock
 7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
 indem einer der beiden `Result`-Typen mittels `as` umbenannt wird.
 
@@ -327,8 +327,8 @@ in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie
 in der Datei *Cargo.toml* deines Pakets auf und verwende `use`, um Elemente aus
 ihren Kisten in den Gültigkeitsbereich zu bringen.
 
-Beachte, dass die Standardbibliothek (`std`) ebenfalls eine Kiste ist, die
-nicht zu unserem Paket gehört. Da die Standardbibliothek mit der Sprache Rust
+Beachte, dass die Standardbibliothek `std` ebenfalls eine Kiste ist, die nicht
+zu unserem Paket gehört. Da die Standardbibliothek mit der Sprache Rust
 ausgeliefert wird, brauchen wir *Cargo.toml* nicht zu ändern, um `std`
 einzubinden. Aber wir müssen `use` verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
@@ -415,8 +415,8 @@ Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.
 ### Der Stern-Operator (glob)
 
 Wenn wir *alle* öffentlichen Elemente, die in einem Pfad definiert sind, in den
-Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt von `*`, dem
-Stern-Operator, angeben:
+Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
+Stern-Operator `*` angeben:
 
 ```rust
 use std::collections::*;

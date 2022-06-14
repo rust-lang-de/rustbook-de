@@ -1,27 +1,26 @@
 # Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen
 
-Wenn du große Programme schreibst, ist es wichtig, deinen Code zu organisieren,
-da es unmöglich wird, den Überblick über dein gesamtes Programm im Kopf zu
-behalten. Durch Gruppieren verwandter Funktionen und Aufteilen von Code mit
-unterschiedlichen Funktionalitäten wirst du klären, wo du Code findest, der
-eine bestimmte Funktionalität implementiert, und an welcher Stelle du eine
-Funktionalität ändern musst.
+Wenn du große Programme schreibst, wird die Organisation deines Codes immer
+wichtiger. Durch die Gruppierung verwandter Funktionen und die Trennung von
+Code mit unterschiedlichen Funktionalitäten wird klar, wo der Code zu finden
+ist, der eine bestimmte Funktionalität implementiert, und an welcher Stelle
+die Funktionalität eines Merkmals zu ändern ist.
 
 Die Programme, die wir bisher geschrieben haben, waren in einem Modul in einer
-Datei. Wenn ein Projekt wächst, kannst du den Code organisieren, indem du ihn
+Datei. Wenn ein Projekt wächst, solltest du den Code organisieren, indem du ihn
 in mehrere Module und dann in mehrere Dateien aufteilst. Ein Paket (package)
 kann mehrere Binär-Kisten (binary crates) und optional eine Bibliotheks-Kiste
 (library crate) enthalten. Wenn ein Paket wächst, kannst du Teile in separate
 Kisten extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel
 behandelt all diese Techniken. Für sehr große Projekte aus einer Reihe von
 zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
-Arbeitsbereiche zur Verfügung, die wir im Abschnitt
+*Arbeitsbereiche* zur Verfügung, die wir im Abschnitt
 [„Cargo-Arbeitsbereiche“][workspaces] in Kapitel 14 behandeln werden.
 
-Zusätzlich zur Gruppierungsfunktionalität ermöglicht die Kapselung von
-Implementierungsdetails die Wiederverwendung von Code auf einer höheren Ebene:
-Sobald du eine Operation implementiert hast, kann anderer Code diesen Code über
-die öffentliche Schnittstelle des Codes aufrufen, ohne zu wissen, wie die
+Wir werden auch die Kapselung von Implementierungsdetails besprechen, wodurch
+du Code auf einer höheren Ebene wiederverwenden kannst: Sobald du eine
+Operation implementiert hast, kann anderer Code diesen Code über die
+öffentliche Schnittstelle des Codes aufrufen, ohne wissen zu müssen, wie die
 Implementierung funktioniert. Die Art und Weise, wie du Code schreibst,
 definiert, welche Teile für anderen Code öffentlich sind und welche Teile
 private Implementierungsdetails sind, deren Änderung du dir vorbehältst. Dies
