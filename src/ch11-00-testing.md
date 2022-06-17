@@ -10,15 +10,14 @@ Korrektheit unserer Programme ist das Maß, inwieweit unser Code das tut, was
 wir beabsichtigen. Bei der Entwicklung von Rust wird der Korrektheit von
 Programmen große Bedeutung beigemessen, aber Korrektheit ist komplex und nicht
 leicht zu beweisen. Das Typsystem von Rust trägt einen großen Teil dieser Last,
-aber das Typsystem kann nicht jede Art von Unrichtigkeit erkennen. Rust
-beinhaltet Unterstützung für das Schreiben automatisierter Softwaretests
-innerhalb der Sprache.
+aber das Typsystem kann nicht alles erkennen. Rust beinhaltet Unterstützung für
+das Schreiben automatisierter Softwaretests.
 
-Nehmen wir beispielsweise an, wir schreiben eine Funktion namens `add_two`, die
-2 zu jeder Zahl addiert, die ihr übergeben wird. Die Signatur dieser Funktion
-akzeptiert eine ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl
-zurück. Wenn wir diese Funktion implementieren und kompilieren, führt Rust die
-gesamte Typ- und Ausleihenprüfung durch, die du bisher kennengelernt hast, um
+Nehmen wir an, wir schreiben eine Funktion namens `add_two`, die 2 zu jeder
+Zahl addiert, die ihr übergeben wird. Die Signatur dieser Funktion akzeptiert
+eine ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück.
+Wenn wir diese Funktion implementieren und kompilieren, führt Rust die gesamte
+Typ- und Ausleihenprüfung durch, die du bisher kennengelernt hast, um
 sicherzustellen, dass wir z.B. keinen `String`-Wert oder eine ungültige
 Referenz an diese Funktion übergeben. Aber Rust kann *nicht* überprüfen, ob
 diese Funktion genau das tut, was wir beabsichtigen, nämlich den Parameter plus

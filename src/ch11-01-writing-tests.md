@@ -20,23 +20,23 @@ Beispiel ist das Attribut `derive`, das wir in Kapitel 5 bei Strukturen
 verwendet haben. Um eine Funktion in eine Testfunktion zu verwandeln, füge
 `#[test]` oberhalb der Zeile mit `fn` ein. Wenn du deine Tests mit dem Befehl
 `cargo test` ausführst, erstellt Rust eine Testausführungs-Binärdatei (test
-runner binary), die die mit dem Attribut `test` annotierten Funktionen ausführt
-und darüber berichtet, ob jede Testfunktion erfolgreich war oder nicht.
+runner binary), die die annotierte Funktionen ausführt und darüber berichtet,
+ob jede Testfunktion erfolgreich war oder nicht.
                                            
-Wenn wir ein neues Bibliotheksprojekt mit Cargo durchführen, wird für uns
+Wann immer wir ein neues Bibliotheksprojekt mit Cargo durchführen, wird für uns
 automatisch ein Testmodul mit einer Testfunktion darin generiert. Dieses Modul
-hilft dir, mit dem Schreiben deiner Tests zu beginnen, sodass du nicht jedes
-Mal, wenn du ein neues Projekt startest, die genaue Struktur und Syntax der
-Testfunktionen nachschlagen musst. Du kannst so viele zusätzliche
-Testfunktionen und Testmodule hinzufügen, wie du möchtest!
+gibt dir eine Vorlage, um deine Tests zu schreiben, sodass du nicht jedes Mal,
+wenn du ein neues Projekt startest, die genaue Struktur und Syntax nachschlagen
+musst. Du kannst so viele zusätzliche Testfunktionen und Testmodule hinzufügen,
+wie du möchtest!
                                    
 Wir werden einige Aspekte der Funktionsweise von Tests untersuchen, indem wir
-mit der für uns generierten Testvorlage experimentieren, ohne tatsächlich Code
-zu testen. Dann schreiben wir einige Tests aus der realen Welt, die einen von
-uns geschriebenen Code aufrufen und sicherstellen, dass sein Verhalten korrekt
-ist.
+mit der Testvorlage experimentieren, bevor wir tatsächlich Code testen. Dann
+schreiben wir einige Tests aus der realen Welt, die einen von uns geschriebenen
+Code aufrufen und sicherstellen, dass sein Verhalten korrekt ist.
            
-Lass uns ein neues Bibliotheksprojekt namens `adder` erstellen:
+Lass uns ein neues Bibliotheksprojekt namens `adder` erstellen, das zwei Zahlen
+addiert:
 
 ```console,noplayground
 $ cargo new adder --lib
@@ -64,18 +64,17 @@ mod tests {
 automatisch von `cargo new` generiert werden</span>
 
 Ignorieren wir vorerst die beiden oberen Zeilen und konzentrieren uns auf die
-Funktion, um zu sehen, wie sie funktioniert. Beachte die Annotation `#[test]`
-oberhalb der Zeile mit `fn`: Dieses Attribut zeigt an, dass es sich um eine
-Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
-als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
-`tests` haben, um gängige Szenarien aufzusetzen oder gängige Operationen
-durchzuführen, daher müssen wir mit dem Attribut `#[test]` angeben, welche
+Funktion. Beachte die Annotation `#[test]`: Dieses Attribut zeigt an, dass es
+sich um eine Testfunktion handelt, sodass die Testausführung weiß, dass es
+diese Funktion als einen Test behandeln soll. Wir könnten auch
+Nicht-Test-Funktionen im Modul `tests` haben, um gängige Szenarien aufzusetzen
+oder gängige Operationen durchzuführen, daher müssen wir immer angeben, welche
 Funktionen Tests sind.
 
-Der Funktionsrumpf verwendet das Makro `assert_eq!`, um sicherzustellen, dass 2
-+ 2 gleich 4 ist. Diese Prüfung dient als Beispiel für den Aufbau eines
-typischen Tests. Lassen wir ihn laufen, um zu sehen, dass dieser Test
-erfolgreich ist.
+Der Beispiel-Funktionsrumpf verwendet das Makro `assert_eq!`, um
+sicherzustellen, dass 2 + 2 gleich 4 ist. Diese Prüfung dient als Beispiel für
+den Aufbau eines typischen Tests. Lassen wir ihn laufen, um zu sehen, dass
+dieser Test erfolgreich ist.
 
 Das Kommando `cargo test` führt alle Tests in unserem Projekt aus, wie in
 Codeblock 11-2 zu sehen ist.
@@ -109,32 +108,34 @@ Testausführung angegeben. Der Text `test result: ok.` bedeutet, dass alle Tests
 bestanden wurden, und der Teil `1 passed; 0 failed` gibt die Anzahl der Tests
 an, die bestanden oder nicht bestanden wurden.
 
-Da wir keine Tests haben, die wir als ignoriert markiert haben, zeigt die
-Zusammenfassung `0 ignored`. Wir haben zudem die auszuführenden Tests nicht
-gefiltert, sodass am Ende der Zusammenfassung `0 filtered out` steht. Wir
-werden das Ignorieren und Herausfiltern von Tests im nächsten Abschnitt,
-[„Steuern wie Tests ausgeführt werden“][controlling-how-tests-are-run],
-besprechen.
+Es ist möglich, einen Test als ignoriert zu markieren, sodass er in einer
+bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt [„Tests
+ignorieren, die nicht ausdrücklich verlangt werden“][ignorieren] später in
+diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
+Zusammenfassung `0 ignored`. Wir können auch ein Argument an den Befehl
+`cargo test` übergeben, um nur Tests auszuführen, deren Name mit einer
+Zeichenkette übereinstimmt; dies wird *Filtern* genannt und wir werden dies im
+Abschnitt [„Ausführen einer Test-Teilmenge mittels Name“][subset] behandeln.
+Außerdem haben wir die durchgeführten Tests nicht gefiltert, sodass am Ende der
+Zusammenfassung `0 filtered out` steht.
 
 Die Statistik `0 measured` ist für Benchmark-Tests, die die Performanz messen.
 Benchmark-Tests sind zum Zeitpunkt, als dieser Text verfasst wurde, nur im
 nächtlichen (nightly) Rust verfügbar. Siehe [„Dokumentation über
 Benchmark-Tests“][bench], um mehr zu erfahren.
 
-[bench]: https://doc.rust-lang.org/unstable-book/library-features/test.html
-
 Der nächste Teil der Testausgabe, der mit `Doc-tests adder` beginnt, ist für
 die Ergebnisse von Dokumentationstests. Wir haben noch keine
 Dokumentationstests, aber Rust kann alle Code-Beispiele kompilieren, die in
-unserer API-Dokumentation erscheinen. Diese Funktionalität hilft uns dabei,
-unsere Dokumentation und unseren Code synchron zu halten! Wie man
+unserer API-Dokumentation erscheinen. Diese Funktionalität hilft dabei,
+deine Dokumentation und deinen Code synchron zu halten! Wie man
 Dokumentationstests schreibt, werden wir im Abschnitt
 [„Dokumentationskommentare als Tests“][doc-comments] in Kapitel 14 besprechen.
 Vorerst ignorieren wir die Ausgabe von `Doc-tests`.
 
-Lass uns den Namen unseres Tests ändern, um zu sehen, wie sich dadurch die
-Testausgabe ändert. Ändere die Funktion `it_works` auf einen anderen Namen,
-z.B. `exploration`, etwa so:
+Beginnen wir damit, den Test an unsere eigenen Bedürfnisse anzupassen. Ändere
+zunächst den Namen der Funktion `it_works` in einen anderen Namen, z.B.
+`exploration`, wie folgt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -231,9 +232,9 @@ und ein Test nicht bestanden wird</span>
 
 Statt `ok` zeigt die Zeile `test tests::another` das Ergebnis `FAILED`.
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
-Abschnitte: Der erste Abschnitt zeigt die detaillierte Ursache für jeden
-fehlgeschlagenen Test an. In diesem Fall scheiterte `another` mit der Meldung
-`panicked at 'Lasse diesen Test fehlschlagen'` in Zeile 10 der Datei
+Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
+Test an. In diesem Fall erhalten wir Details, dass `another` scheiterte mit der
+Meldung `panicked at 'Lasse diesen Test fehlschlagen'` in Zeile 10 der Datei
 *src/lib.rs*. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -254,16 +255,16 @@ nützlich sind.
 Das Makro `assert!`, das von der Standardbibliothek bereitgestellt wird, ist
 nützlich, wenn du sicherstellen willst, dass eine Bedingung in einem Test als
 wahr (true) bewertet wird. Wir geben dem Makro `assert!` ein Argument, das
-boolesch ausgewertet wird. Wenn der Wert `true` ist, tut `assert!` nichts und
-der Test ist bestanden. Wenn der Wert `false` ist, ruft das Makro `assert!` das
-Makro `panic!` auf, wodurch der Test fehlschlägt. Das Verwenden des Makros
-`assert!` hilft uns zu überprüfen, ob unser Code so funktioniert, wie wir es
-beabsichtigen.
+boolesch ausgewertet wird. Wenn der Wert `true` ist, passiert nichts und der
+Test ist bestanden. Wenn der Wert `false` ist, ruft das Makro `assert!` das
+Makro `panic!` auf, um den Test fehlschlagen zu lassen. Das Verwenden des
+Makros `assert!` hilft uns zu überprüfen, ob unser Code so funktioniert, wie
+wir es beabsichtigen.
 
 In Codeblock 5-15 in Kapitel 5 haben wir eine Struktur `Rectangle` und eine
 Methode `can_hold` verwendet, die hier in Codeblock 11-5 wiederholt werden.
-Lass uns diesen Code in die Datei *src/lib.rs* packen und einige Tests dafür
-mit dem Makro `assert!` schreiben.
+Lass uns diesen Code in die Datei *src/lib.rs* packen und dann einige Tests
+dafür mit dem Makro `assert!` schreiben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -442,7 +443,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 
 Zwei Tests, die erfolgreich sind! Nun wollen wir sehen, was mit unseren
 Testergebnissen passiert, wenn wir einen Fehler in unseren Code einbringen.
-Lass uns die Implementierung der Methode `can_hold` ändern, indem wir das
+Wir ändern die Implementierung der Methode `can_hold`, indem wir das
 größer-als-Zeichen durch ein kleiner-als-Zeichen ersetzen, wenn sie die Breiten
 vergleicht:
 
@@ -527,9 +528,9 @@ Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich 8 ist und
 
 ### Prüfung auf Gleichheit mit den Makros `assert_eq!` und `assert_ne!`
 
-Eine übliche Methode zum Testen der Funktionalität besteht darin, das Ergebnis
-des zu testenden Codes mit dem Wert zu vergleichen, den du vom Code erwartest,
-um sicherzustellen, dass sie gleich sind. Du könntest dies mit dem Makro
+Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
+Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
+vom Code erwartest, um sicherzustellen. Du könntest dies mit dem Makro
 `assert!` tun und ihm einen Ausdruck mit dem Operator `==` übergeben. Dies ist
 jedoch ein so häufiger Testfall, dass die Standardbibliothek zwei Makros zur
 Verfügung stellt, um diesen Test bequemer durchzuführen: `assert_eq!` und
@@ -537,12 +538,12 @@ Verfügung stellt, um diesen Test bequemer durchzuführen: `assert_eq!` und
 Ungleichheit. Sie geben auch die beiden Werte aus, wenn die Zusicherung
 fehlschlägt, was es einfacher macht zu erkennen, *warum* der Test
 fehlgeschlagen ist; umgekehrt zeigt das Makro `assert!` nur an, dass der
-Ausdruck `==` den Wert `false` ergeben hat, nicht die Werte, die zum falschen
-Testergebnis geführt haben.
+Ausdruck `==` den Wert `false` ergeben hat, ohne die Werte auszugeben, die zum
+falschen Testergebnis geführt haben.
 
 In Codeblock 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
-Parameter `2` addiert und das Ergebnis zurückgibt. Dann testen wir diese
-Funktion mit dem Makro `assert_eq!`.
+Parameter `2` addiert, dann testen wir diese Funktion mit dem Makro
+`assert_eq!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -585,14 +586,14 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 ```
 
-Das erste Argument `4`, das wir dem Makro `assert_eq!` übergeben haben, ist
-identisch mit dem Ergebnis des Aufrufs `add_two(2)`. Die Zeile für diesen Test
+Wir übergeben `4` als Argument an `assert_eq!`, was identisch mit dem Ergebnis
+des Aufrufs `add_two(2)` ist. Die Zeile für diesen Test
 lautet `test tests::it_adds_two ... ok`, und der Text `ok` zeigt an, dass unser
 Test bestanden wurde!
 
-Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie es aussieht,
-wenn ein Test, der `assert_eq!` verwendet, fehlschlägt. Ändern wir die
-Implementierung der Funktion `add_two`, sodass sie stattdessen `3` addiert:
+Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie `assert_eq!`
+aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
+`add_two`, sodass sie stattdessen `3` addiert:
 
 ```rust,not_desired_behavior,noplayground
 pub fn add_two(a: i32) -> i32 {
@@ -637,32 +638,31 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
 error: test failed, to rerun pass '--lib'
 ```
 
-Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl mit der
-Meldung ``assertion failed: `(left == right)` `` und dass `left` den Wert `4`
-und `right` den Wert `5` hatte. Diese Nachricht ist nützlich und hilft uns, mit
- der Fehlersuche zu beginnen: Sie bedeutet, dass das Argument `left` von
- `assert_eq!` den Wert `4` hatte, aber das Argument `right`, wo wir
- `add_two(2)` hatten, war `5`.
+Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl und die
+Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion failed:
+`(left == right)` `` war und welche Werte `left` und `right` hatten. Diese
+Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` war
+`4`, aber das Argument `right` mit dem Ergebnis von `add_two(2)` war `5`. Du
+kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
+durchführen.
 
 Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
-Funktionen, die zwei Werte auf Gleichheit prüfen, `expected` und `actual`
-genannt werden und deren Reihenfolge wichtig ist. In Rust werden sie jedoch
-`left` und `right` genannt und die Reihenfolge, in der wir den erwarteten Wert
-und den vom zu testenden Code produzierten Wert angeben, spielt keine Rolle.
-Wir könnten die Zusicherung in diesem Test als `assert_eq!(add_two(2), 4)`
-schreiben, was zur Fehlermeldung ``assertion failed: `(left == right)` ``
-führen würde und dass `left` den Wert `5` und `right` den Wert `4` hatte.
+Gleichheitszusicherung `expected` und `actual` genannt werden und deren
+Reihenfolge wichtig ist. In Rust werden sie jedoch `left` und `right` genannt
+und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
+produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
+diesem Test als `assert_eq!(add_two(2), 4)` schreiben, was zur gleichen
+Fehlermeldung ``assertion failed: `(left == right)` `` führen würde.
 
 Das Makro `assert_ne!` prüft, ob die beiden Werte, die wir ihm übergeben,
 ungleich sind und scheitert, wenn sie gleich sind. Dieses Makro ist am
 nützlichsten in Fällen, in denen wir nicht sicher sind, *welchen* Wert wir
-bekommen werden, aber wir wissen, welcher Wert es definitiv *nicht* sein wird,
-wenn unser Code so funktioniert, wie wir es beabsichtigen. Wenn wir zum
-Beispiel eine Funktion testen, die ihre Eingabe garantiert in irgendeiner Weise
-verändert, aber die Art und Weise, wie die Eingabe verändert wird, vom
-Wochentag abhängt, an dem wir unsere Tests ausführen, ist es vielleicht am
-besten sicherzustellen, dass die Ausgabe der Funktion nicht gleich der Eingabe
-ist.
+bekommen werden, aber wir wissen, welcher Wert es definitiv *nicht* sein sollte.
+Wenn wir zum Beispiel eine Funktion testen, die ihre Eingabe garantiert in
+irgendeiner Weise verändert, aber die Art und Weise, wie die Eingabe verändert
+wird, vom Wochentag abhängt, an dem wir unsere Tests ausführen, ist es
+vielleicht am besten sicherzustellen, dass die Ausgabe der Funktion nicht
+gleich der Eingabe ist.
 
 Unter der Haube verwenden die Makros `assert_eq!` und `assert_ne!` die
 Operatoren `==` bzw. `!=`. Wenn die Zusicherungen fehlschlagen, geben diese
@@ -671,23 +671,21 @@ bedeutet, dass die zu vergleichenden Werte die Merkmale `PartialEq` und
 `Debug` implementieren müssen. Alle primitiven Typen und die meisten
 Standardbibliothekstypen implementieren diese Merkmale. Für Strukturen und
 Aufzählungen, die du definierst, musst du `PartialEq` implementieren, um
-prüfen zu können, dass Werte dieser Typen gleich oder ungleich sind. Du musst
-`Debug` implementieren, um die Werte auszugeben, wenn die Zusicherung
-fehlschlägt. Da es sich bei beiden Merkmalen um ableitbare Merkmale handelt,
-wie in Codeblock 5-12 in Kapitel 5 erwähnt, genügt normalerweise das Ergänzen
-der Annotation `#[derive(PartialEq, Debug)]` bei deiner Struktur- und
-Aufzählungsdefinition. Siehe Anhang C [„Ableitbare Merkmale
-(traits)“][derivable-traits] für weitere Einzelheiten über diese und andere
-ableitbare Merkmale.
+die Gleichheit dieser Typen sicherzustellen. Du musst auch `Debug`
+implementieren, um die Werte auszugeben, wenn die Zusicherung fehlschlägt. Da
+es sich bei beiden Merkmalen um ableitbare Merkmale handelt, wie in Codeblock
+5-12 in Kapitel 5 erwähnt, genügt normalerweise das Ergänzen der Annotation
+`#[derive(PartialEq, Debug)]` bei deiner Struktur- und Aufzählungsdefinition.
+Siehe Anhang C [„Ableitbare Merkmale (traits)“][derivable-traits] für weitere
+Einzelheiten über diese und andere ableitbare Merkmale.
 
 ### Benutzerdefinierte Fehlermeldungen angeben
 
 Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch
 eine benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen
-ausgegeben wird. Alle Argumente, die nach dem einen erforderlichen Argument für
-`assert!` oder den beiden erforderlichen Argumenten für `assert_eq!` und
-`assert_ne!` angegeben werden, werden an das Makro `format!` übergeben (siehe
-Kapitel 8, Abschnitt [„Aneinanderhängen mit dem Operator `+` und dem Makro
+ausgegeben wird. Alle Argumente, die nach den erforderlichen Argumenten
+angegeben werden, werden an das Makro `format!` übergeben (siehe Kapitel 8,
+Abschnitt [„Aneinanderhängen mit dem Operator `+` und dem Makro
 `format!`“][concatenation-with-the--operator-or-the-format-macro]), sodass du
 eine Formatierungs-Zeichenkette übergeben kannst, die Platzhalter `{}` und
 Werte enthält, die in diese Platzhalter gehören. Benutzerdefinierte Nachrichten
@@ -725,9 +723,9 @@ sich die Anforderungen ändern. Anstatt also zu prüfen, ob der Test exakt dem
 von der Funktion `greeting` zurückgegebenen Wert entspricht, stellen wir
 einfach sicher, dass die Ausgabe den Text des Eingabeparameters enthält.
 
-Lass uns einen Fehler in diesen Code einbringen, indem wir `greeting` so
-ändern, dass `name` nicht enthalten ist, um zu sehen, wie dieses Testversagen
-aussieht:
+Lass uns nun einen Fehler in diesen Code einbringen, indem wir `greeting` so
+ändern, dass `name` nicht enthalten ist, um zu sehen, wie das
+Standard-Testversagen aussieht:
 
 ```rust,not_desired_behavior,noplayground
 pub fn greeting(name: &str) -> String {
@@ -772,12 +770,11 @@ error: test failed, to rerun pass '--lib'
 ```
 
 Dieses Ergebnis zeigt nur an, dass die Zusicherung fehlgeschlagen ist und in
-welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde in
-diesem Fall den Wert ausgeben, den wir von der Funktion `greeting` erhalten
-haben. Lass uns die Testfunktion ändern, indem wir ihr eine benutzerdefinierte
-Fehlermeldung angeben, die aus einer Formatierungszeichenkette mit einem
-Platzhalter besteht, der mit dem tatsächlichen Wert gefüllt ist, den wir von
-der Funktion `greeting` erhalten haben:
+welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
+Wert der Funktion `greeting` ausgeben. Fügen wir eine benutzerdefinierte
+Fehlermeldung hinzu, die aus einer Formatierungszeichenkette mit einem
+Platzhalter besteht, der mit dem tatsächlichen Wert aus der Funktion `greeting`
+gefüllt ist:
 
 ```rust
 # pub fn greeting(name: &str) -> String {
@@ -832,19 +829,18 @@ was wir erwartet hatten.
 
 ### Mit `should_panic` auf Programmabbrüche prüfen
 
-Neben der Prüfung, ob unser Code die von uns erwarteten korrekten Werte
-zurückgibt, ist es auch wichtig zu prüfen, ob unser Code Fehlerbedingungen so
-behandelt, wie wir es erwarten. Denke zum Beispiel an den Typ `Guess`, den wir
-in Kapitel 9 in Codeblock 9-13 erstellt haben. Anderer Code, der `Guess`
-verwendet, hängt von der Garantie ab, dass `Guess`-Instanzen nur Werte zwischen
-1 und 100 enthalten. Wir können einen Test schreiben, der sicherstellt, dass
-der Versuch, eine `Guess`-Instanz mit einem Wert außerhalb dieses Bereichs zu
-erzeugen, zum Programmabbrucht führt.
+Neben der Prüfung von Rückgabewerten ist es auch wichtig zu prüfen, ob unser
+Code Fehlerbedingungen so behandelt, wie wir es erwarten. Denke zum Beispiel an
+den Typ `Guess`, den wir in Kapitel 9 in Codeblock 9-13 erstellt haben. Anderer
+Code, der `Guess` verwendet, hängt von der Garantie ab, dass `Guess`-Instanzen
+nur Werte zwischen 1 und 100 enthalten. Wir können einen Test schreiben, der
+sicherstellt, dass der Versuch, eine `Guess`-Instanz mit einem Wert außerhalb
+dieses Bereichs zu erzeugen, zum Programmabbrucht führt.
 
-Wir tun dies, indem wir ein weiteres Attribut `should_panic` zu unserer
-Testfunktion hinzufügen. Dieses Attribut bewirkt, dass ein Test als bestanden
-gilt, wenn der Code innerhalb der Funktion abbricht; der Test schlägt fehl,
-wenn der Code innerhalb der Funktion nicht abbricht.
+Wir tun dies, indem wir das Attribut `should_panic` zu unserer Testfunktion
+hinzufügen. Der Test gilt als bestanden, wenn der Code innerhalb der Funktion
+abbricht; der Test schlägt fehl, wenn der Code innerhalb der Funktion nicht
+abbricht.
 
 Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 `Guess::new` eintreten, wenn wir dies erwarten.
@@ -964,8 +960,7 @@ die Testfunktion ansehen, sehen wir, dass sie mit `#[should_panic]` annotiert
 ist. Der Fehler, den wir erhielten, bedeutet, dass der Code in der Testfunktion
 keinen Programmabbruch verursacht hat.
 
-Tests, die `should_panic` verwenden, können ungenau sein, weil sie nur
-anzeigen, dass der Code einen Programmabbruch verursacht hat. Ein Test mit
+Tests, die `should_panic` verwenden, können ungenau sein. Ein Test mit
 `should_panic` würde auch dann bestanden werden, wenn der Test aus einem
 anderen Grund zum Programmabbrucht führt als dem, den wir erwartet haben. Um
 Tests mit `should_panic` präziser zu machen, können wir beim
@@ -1007,19 +1002,18 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 11-9: Testet, ob ein Zustand einen
-Programmabbruch mit einer bestimmten Abbruchsmeldung auslöst</span>
+<span class="caption">Codeblock 11-9: Testen eines Programmabbruchs mit einer
+bestimmten Teilzeichenkette in der Meldung</span>
 
 Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
 `expected` des `should_panic`-Attributs angeben, eine Teilzeichenkette der
 Nachricht ist, mit der die Funktion `Guess::new` das Programm abbricht. Wir
 hätten die gesamte erwartete Abbruchsnachricht angeben können, in diesem Fall
-also `Schätzwert muss kleiner oder gleich 100 sein, ist 200`. Was du im
-Parameter `expected` für `should_panic` angibst, hängt davon ab, wie viel von
-der Abbruchsnachricht eindeutig oder dynamisch ist und wie präzise dein Test
-sein soll. In diesem Fall reicht eine Teilzeichenkette der Abbruchsnachricht
-aus, um sicherzustellen, dass der Code in der Testfunktion den Fall `else if
-value > 100` ausführt.
+also `Schätzwert muss kleiner oder gleich 100 sein, ist 200`. Was du angibst,
+hängt davon ab, wie viel von der Abbruchsnachricht eindeutig oder dynamisch ist
+und wie präzise dein Test sein soll. In diesem Fall reicht eine
+Teilzeichenkette der Abbruchsnachricht aus, um sicherzustellen, dass der Code
+in der Testfunktion den Fall `else if value > 100` ausführt.
 
 Um zu sehen, was passiert, wenn ein Test mit `should_panic` und einer
 `expected`-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren
@@ -1094,10 +1088,10 @@ wo unser Fehler liegt!
 
 ### Verwenden von `Result<T, E>` in Tests
 
-Bisher haben wir Tests geschrieben, die das Programm abbrechen, wenn sie
-fehlschlagen. Wir können auch Tests schreiben, die `Result<T, E>` verwenden!
-Hier ist der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>`
-verwendet und `Err` zurückgibt, anstatt das Programm abzubrechen:
+Bei unseren bisherigen Tests sind alle abgebrochen, wenn sie fehlgeschlagen
+sind. Wir können auch Tests schreiben, die `Result<T, E>` verwenden! Hier ist
+der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet
+und `Err` zurückgibt, anstatt das Programm abzubrechen:
 
 ```rust,noplayground
 # #![allow(unused_variables)]
@@ -1135,9 +1129,13 @@ Da du nun verschiedene Möglichkeiten kennst, Tests zu schreiben, lass uns einen
 Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
 verschiedenen Optionen untersuchen, die wir mit `cargo test` verwenden können.
 
+[bench]: https://doc.rust-lang.org/unstable-book/library-features/test.html
 [concatenation-with-the--operator-or-the-format-macro]:
 ch08-02-strings.html#aneinanderhängen-mit-dem-operator--und-dem-makro-format
 [controlling-how-tests-are-run]: ch11-02-running-tests.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [doc-comments]: ch14-02-publishing-to-crates-io.html#dokumentationskommentare-als-tests
-[paths-for-referring-to-an-item-in-the-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[ignoring]: ch11-02-running-tests.html#tests-ignorieren-die-nicht-ausdrücklich-verlangt-werden
+[paths-for-referring-to-an-item-in-the-module-tree]:
+ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
+[subset]: ch11-02-running-tests.html#ausführen-einer-test-teilmenge-mittels-name

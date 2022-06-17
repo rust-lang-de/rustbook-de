@@ -2,12 +2,12 @@
 
 So wie `cargo run` deinen Code kompiliert und dann die resultierende Binärdatei
 ausführt, kompiliert `cargo test` deinen Code im Testmodus und führt die
-resultierende Testbinärdatei aus. Du kannst Befehlszeilenoptionen angeben, um
-das Standardverhalten von `cargo test` zu ändern. Das Standardverhalten der von
-`cargo test` erzeugten Binärdatei besteht beispielsweise darin, alle Tests
-parallel auszuführen und die während der Testläufe generierte Ausgabe zu
-erfassen, wodurch verhindert wird, dass die Ausgabe angezeigt wird, und das
-Lesen der Ausgabe bezüglich der Testergebnisse erleichtert wird.
+resultierende Testbinärdatei aus. Das Standardverhalten der von `cargo test`
+erzeugten Binärdatei besteht darin, alle Tests parallel auszuführen und die
+während der Testläufe generierte Ausgabe zu erfassen, wodurch verhindert wird,
+dass die Ausgabe angezeigt wird, und das Lesen der Ausgabe bezüglich der
+Testergebnisse erleichtert wird. Du kannst jedoch Kommandozeilen-Optionen
+angeben, um dieses Standardverhalten zu ändern.
 
 Einige Kommandozeilen-Optionen betreffen `cargo test` und einige betreffen die
 resultierende Testbinärdatei. Um diese beiden Argumentarten
@@ -15,17 +15,17 @@ auseinanderzuhalten, gibst du zuerst die Argumente für `cargo test`, gefolgt
 vom Trennzeichen `--`, und danach die der Testbinärdatei an. Wenn du `cargo
 test --help` ausführst, werden die Optionen angezeigt, die du für `cargo test`
 verwenden kannst, und wenn du `cargo test -- --help` ausführst, werden die
-Optionen angezeigt, die du nach dem Trennzeichen `--` verwenden kannst.
+Optionen angezeigt, die du nach dem Trennzeichen verwenden kannst.
 
 ### Tests parallel oder nacheinander ausführen
 
 Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in
-Strängen (threads) ausgeführt. Das bedeutet, dass die Tests schneller
-abgeschlossen werden, sodass du schneller Rückmeldung darüber erhältst, ob dein
-Code funktioniert oder nicht. Da die Tests gleichzeitig ausgeführt werden,
-stelle sicher, dass deine Tests nicht voneinander oder von einem gemeinsam
-genutzten Zustand abhängen, einschließlich einer gemeinsam genutzten Umgebung,
-z.B. dem aktuellen Arbeitsverzeichnis oder Umgebungsvariablen.
+Strängen (threads) ausgeführt, das bedeutet, dass die Tests schneller
+abgeschlossen werden und du schneller Rückmeldung erhältst. Da die Tests
+gleichzeitig ausgeführt werden, musst du sicherstellen, dass deine Tests nicht
+voneinander oder von einem gemeinsam genutzten Zustand abhängen, einschließlich
+einer gemeinsam genutzten Umgebung, z.B. dem aktuellen Arbeitsverzeichnis oder
+Umgebungsvariablen.
 
 Angenommen, jeder deiner Tests führt einen Code aus, der eine Datei auf der
 Festplatte mit dem Namen *test-output.txt* erstellt und einige Daten in diese
@@ -135,8 +135,8 @@ Tests erscheint im Abschnitt der Testzusammenfassung, der auch die Ursache des
 Testfehlers anzeigt.
 
 Wenn wir auch die ausgegebenen Werte der bestandenen Tests sehen wollen, können
-wir Rust mit `--show-output` anweisen, die Ausgabe erfolgreicher Tests
-ebenfalls mit anzuzeigen.
+wir Rust mit `--show-output` anweisen, die Ausgabe erfolgreicher Tests mit
+anzuzeigen.
 
 ```console
 $ cargo test -- --show-output
@@ -188,9 +188,9 @@ vielleicht nur die Tests ausführen, die diesen Code betreffen. Du kannst
 wählen, welche Tests ausgeführt werden sollen, indem du `cargo test` den oder
 die Namen der Tests, die du ausführen willst, als Argument übergibst.
 
-Um zu demonstrieren, wie man eine Teilmenge von Tests ausführt, werden wir drei
-Tests für unsere Funktion `add_two` erstellen, wie in Codeblock 11-11 zu sehen
-ist, und auswählen, welche wir ausführen wollen.
+Um zu demonstrieren, wie man eine Teilmenge von Tests ausführt, werden wir
+zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Codeblock
+11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
