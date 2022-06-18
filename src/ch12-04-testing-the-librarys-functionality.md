@@ -18,10 +18,10 @@ Softwareentwicklungstechnik folgt diesen Schritten:
    stelle sicher, dass die Tests weiterhin bestanden werden.
 4. Wiederhole ab Schritt 1!
 
-Diese Methode ist nur eine von vielen Möglichkeiten, Software zu schreiben,
-aber TDD kann auch beim Code-Design helfen. Das Schreiben der Tests vor dem
-Schreiben des Codes, der den Test bestehen lässt, trägt dazu bei, während des
-gesamten Entwicklungsprozesses eine hohe Testabdeckung aufrechtzuerhalten.
+Obwohl es nur eine von vielen Möglichkeiten ist, Software zu schreiben, kann
+TDD auch beim Code-Design helfen. Das Schreiben der Tests vor dem Schreiben des
+Codes, der den Test bestehen lässt, trägt dazu bei, während des gesamten
+Entwicklungsprozesses eine hohe Testabdeckung aufrechtzuerhalten.
 
 Wir werden die Implementierung der Funktionalität testen, die tatsächlich die
 Suche nach der Suchzeichenkette im Dateiinhalt durchführt und eine Liste von
@@ -32,7 +32,7 @@ Funktionalität in einer Funktion namens `search` hinzufügen.
 
 Da wir sie nicht mehr benötigen, entfernen wir die `println!` -Anweisungen aus
 *src/lib.rs* und *src/main.rs*, die wir zum Überprüfen des Programmverhaltens
-verwendet haben. Dann fügen wir in *src/lib.rs* ein Modul `tests` mit einer
+verwendet haben. Dann füge in *src/lib.rs* ein Modul `tests` mit einer
 Testfunktion hinzu, wie wir es in [Kapitel 11][ch11-anatomy] getan haben. Die
 Testfunktion spezifiziert das Verhalten, das die Funktion `search` haben soll:
 Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
@@ -96,14 +96,15 @@ Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
 setzen.) Wir verlangen, dass der von der Funktion `search` zurückgegebene Wert
 nur die Zeile enthält, die wir erwarten.
 
-Wir sind nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
+Wir sind noch nicht in der Lage, diesen Test auszuführen und zuzusehen, wie er
 fehlschlägt, weil der Test noch nicht mal kompiliert: Die Funktion `search`
-existiert noch nicht! Daher fügen wir jetzt gerade genug Code hinzu, um den
-Test zum Kompilieren und Ausführen zu bringen, indem wir eine Definition der
-Funktion `search` hinzufügen, die immer einen leeren Vektor zurückgibt, wie in
-Codeblock 12-16 gezeigt. Dann sollte der Test kompiliert werden können und
-fehlschlagen, weil ein leerer Vektor nicht mit einem Vektor übereinstimmt, der
-die Zeile `"sicher, schnell, produktiv."` enthält.
+existiert noch nicht! In Übereinstimmung mit den TDD-Prinzipien werden wir
+jetzt gerade genug Code hinzufügen, um den Test zum Kompilieren und Ausführen
+zu bringen, indem wir eine Definition der Funktion `search` hinzufügen, die
+immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
+sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
+Vektor nicht mit einem Vektor übereinstimmt, der die Zeile `"sicher, schnell,
+produktiv."` enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -160,11 +161,11 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 `search`, damit unser Test kompiliert</span>
 
 Beachte, dass wir eine explizite Lebensdauer `'a` in der Signatur von `search`
-benötigen und diese beim Argument `contents` und dem Rückgabewert verwenden.
-Erinnere dich in [Kapitel 10][ch10-lifetimes] daran, dass die
-Lebensdauer-Parameter angeben, welche Argument-Lebensdauer mit der Lebensdauer
-des Rückgabewertes verbunden ist. In diesem Fall geben wir an, dass der
-zurückgegebene Vektor Zeichenkettenanteilstypen enthalten sollte, die auf
+definieren müssen und diese Lebensdauer beim Argument `contents` und dem
+Rückgabewert verwenden. Erinnere dich in [Kapitel 10][ch10-lifetimes] daran,
+dass die Lebensdauer-Parameter angeben, welche Argument-Lebensdauer mit der
+Lebensdauer des Rückgabewertes verbunden ist. In diesem Fall geben wir an, dass
+der zurückgegebene Vektor Zeichenkettenanteilstypen enthalten sollte, die auf
 Anteilstypen des Arguments `contents` (und nicht auf das Argument `query`)
 referenzieren.
 
@@ -199,16 +200,16 @@ error: could not compile `minigrep` due to previous error
 ```
 
 Rust kann unmöglich wissen, welches der beiden Argumente wir brauchen, also
-müssen wir es ihm sagen. Da `contents` das Argument ist, das unseren gesamten
-Text enthält, und wir diejenigen Teile dieses Textes zurückgeben wollen, die
-passen, wissen wir, dass `contents` das Argument ist, das mit dem Rückgabewert
-unter Verwendung der Lebensdauer-Syntax verbunden werden sollte.
+müssen wir es ihm explizit sagen. Da `contents` das Argument ist, das unseren
+gesamten Text enthält, und wir diejenigen Teile dieses Textes zurückgeben
+wollen, die passen, wissen wir, dass `contents` das Argument ist, das mit dem
+Rückgabewert unter Verwendung der Lebensdauer-Syntax verbunden werden sollte.
 
 Bei anderen Programmiersprachen ist es nicht erforderlich, Argumente zu
-verbinden, um Werte in der Signatur zurückzugeben. Obwohl dies seltsam
-erscheinen mag, wird es mit der Zeit einfacher werden. Vergleiche dieses
-Beispiel mit dem Abschnitt [„Referenzen validieren mit
-Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10.
+verbinden, um Werte in der Signatur zurückzugeben, aber dieses Vorgehen wird
+mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit dem Abschnitt
+[„Referenzen validieren mit Lebensdauern“][validating-references-with-lifetimes]
+in Kapitel 10.
 
 Lass uns jetzt den Test ausführen:
 
@@ -389,13 +390,17 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 <span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
 sehen, ob die Zeile die Zeichenkette in `query` enthält</span>
 
+Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
+müssen wir einen Wert aus dem Rumpf zurückgeben, wie wir es in der
+Funktionssignatur angegeben haben.
+
 #### Speichern passender Zeilen
 
-Wir brauchen auch eine Möglichkeit, die Zeilen zu speichern, die unsere
-Abfragezeichenkette enthalten. Dafür können wir einen veränderlichen Vektor vor
-der `for`-Schleife erstellen und die `push`-Methode aufrufen, um eine `line` im
-Vektor zu speichern. Nach der `for`-Schleife geben wir den Vektor zurück, wie
-in Codeblock 12-19 gezeigt.
+Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
+passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
+einen veränderlichen Vektor vor der `for`-Schleife erstellen und die
+`push`-Methode aufrufen, um eine `line` im Vektor zu speichern. Nach der
+`for`-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

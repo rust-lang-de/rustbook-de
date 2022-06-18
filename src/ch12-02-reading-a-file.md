@@ -1,7 +1,7 @@
 ## Eine Datei einlesen
 
 Jetzt fügen wir Funktionalität zum Lesen der Datei hinzu, die im
-Befehlszeilenargument `filename` angegeben ist. Zuerst brauchen wir eine
+Befehlszeilenargument `file_path` angegeben ist. Zuerst brauchen wir eine
 Beispieldatei, um sie zu testen: Die beste Art von Datei, die wir benutzen
 können, um sicherzustellen, dass `minigrep` funktioniert, ist eine Datei mit
 einer kleinen Menge Text über mehrere Zeilen mit einigen sich wiederholenden
@@ -60,8 +60,8 @@ der Standardbibliothek einzubringen: Wir brauchen `std::fs`, um Dateien zu
 verwenden.
 
 In `main` haben wir eine neue Anweisung hinzugefügt: `fs::read_to_string` nimmt
-den `filename`, öffnet diese Datei und gibt ein `Result<String>` mit dem Inhalt
-der Datei zurück.
+den `file_path`, öffnet diese Datei und gibt ein `Result<String>` mit dem
+Inhalt der Datei zurück.
 
 Nach dieser Anweisung haben wir wieder eine temporäre `println!`-Anweisung
 hinzugefügt, die den Wert von `contents` ausgibt, nachdem die Datei eingelesen
@@ -91,7 +91,7 @@ To an admiring bog!
 ```
 
 Großartig! Der Code wurde eingelesen und dann der Inhalt der Datei ausgegeben.
-Aber der Code hat ein paar Mängel. Die Funktion `main` hat mehrere
+Aber der Code hat ein paar Mängel. Die Funktion `main` hat momentan mehrere
 Verantwortlichkeiten: Im Allgemeinen sind Funktionen klarer und einfacher zu
 warten, wenn jede Funktion nur für eine Idee verantwortlich ist. Das andere
 Problem ist, dass wir mit Fehlern nicht so gut umgehen, wie wir es könnten. Das

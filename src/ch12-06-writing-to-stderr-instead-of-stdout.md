@@ -16,7 +16,7 @@ schreiben.
 Lass uns zunächst beobachten, wie der von `minigrep` ausgegebene Inhalt derzeit
 in die Standardausgabe geschrieben wird, einschließlich aller Fehlermeldungen,
 die wir stattdessen in die Standardfehlerausgabe schreiben wollen. Wir tun
-dies, indem wir die Standardausgabe in eine Datei umleiten und dabei auch
+dies, indem wir die Standardausgabe in eine Datei umleiten und dabei
 absichtlich einen Fehler verursachen. Wir werden die Standardfehlerausgabe
 nicht umleiten, sodass alle Inhalte, die an die Standardfehlerausgabe gesendet
 werden, weiterhin auf dem Bildschirm angezeigt werden.
@@ -28,7 +28,7 @@ Unser Programm ist zur Zeit nicht sehr brav: Wir werden gleich sehen, dass es
 die ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!
 
 Der Weg, dieses Verhalten zu demonstrieren, besteht darin, das Programm mit `>`
-und dem Dateinamen *output.txt* laufen zu lassen, zu dem wir die
+und dem Dateipfad *output.txt* laufen zu lassen, zu dem wir die
 Standardausgabe umleiten wollen. Wir werden keine Argumente übergeben, was
 einen Fehler verursachen sollte:
 
@@ -89,9 +89,8 @@ fn main() {
 Standardfehlerausgabe anstelle der Standardausgabe durch Verwenden von
 `eprintln!`</span>
 
-Nachdem wir `println!` in `eprintln!` geändert haben, lassen wir das Programm
-auf die gleiche Art und Weise erneut laufen, ohne Argumente und mit Umleitung
-der Standardausgabe mit `>`:
+Lassen wir das Programm nun auf die gleiche Art und Weise erneut laufen, ohne
+Argumente und mit Umleitung der Standardausgabe mit `>`:
 
 ```console
 $ cargo run > output.txt
@@ -105,7 +104,7 @@ Lassen wir das Programm erneut mit Argumenten laufen, die keinen Fehler
 verursachen, aber dennoch die Standardausgabe in eine Datei umleiten, etwa so:
 
 ```console
-$ cargo run to poem.txt > output.txt
+$ cargo run -- to poem.txt > output.txt
 ```
 
 Wir werden keine Ausgabe auf dem Terminal sehen und *output.txt* wird unsere
@@ -127,8 +126,8 @@ Dieses Kapitel rekapituliert einige der wichtigsten Konzepte, die du bisher
 gelernt hast, und behandelt das Durchführen gängiger E/A-Operationen in Rust.
 Durch das Verwenden von Kommandozeilenargumenten, Dateien, Umgebungsvariablen
 und des Makros `eprintln!` für die Fehlerausgabe bist du jetzt bereit,
-Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte in den
-vorhergehenden Kapiteln verwendest, wird dein Code gut organisiert sein, Daten
+Kommandozeilenanwendungen zu schreiben. Wenn du die Konzepte mit denen in den
+vorhergehenden Kapiteln kombinierst, wird dein Code gut organisiert sein, Daten
 effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut behandeln
 und gut getestet sein.
 

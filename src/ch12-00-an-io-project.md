@@ -12,7 +12,7 @@ Erstellen von Kommandozeilenwerkzeugen. Für unser Projekt werden wir daher eine
 eigene Version des klassischen Kommandozeilenwerkzeugs `grep` (**g**lobally
 search a **r**egular **e**xpression and **p**rint) erstellen. Im einfachsten
 Anwendungsfall durchsucht `grep` eine angegebene Datei nach einer bestimmten
-Zeichenkette. Dazu nimmt `grep` als Argumente einen Dateinamen und eine
+Zeichenkette. Dazu nimmt `grep` als Argumente einen Dateipfad und eine
 Zeichenkette. Dann liest es die Datei, findet Zeilen in dieser Datei, die das
 Zeichenketten-Argument enthalten, und gibt diese Zeilen aus.
 
