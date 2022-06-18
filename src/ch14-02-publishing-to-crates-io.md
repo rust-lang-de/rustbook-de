@@ -8,7 +8,7 @@ verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcod
 gehostet.
 
 Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr
-veröffentlichtes Paket zu verwenden und zu finden. Wir werden nun über einige
+veröffentlichtes Paket zu finden und zu verwenden. Wir werden nun über einige
 dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
 wird.
 
@@ -79,23 +79,22 @@ einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
 verwenden:
 
 * **Panics**: Die Szenarien, in denen die dokumentierte Funktion `panic`
-    aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
-    `panic` aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
-    Situationen nicht aufrufen.
+  aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
+  `panic` aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
+  Situationen nicht aufrufen.
 * **Errors**: Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
-    Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
-    Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
-    Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
-    unterschiedliche Art behandelt.
+  Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
+  Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
+  Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
+  unterschiedliche Art behandelt.
 * **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
-    behandeln die Unsicherheit im Kapitel 19), sollte ein Abschnitt existieren,
-    in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
-    behandelt werden die die Funktion vom Aufrufenden erwartet.
+  behandeln die Unsicherheit im Kapitel 19), sollte ein Abschnitt existieren,
+  in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
+  behandelt werden die die Funktion vom Aufrufenden erwartet.
 
 Die meisten Dokumentationskommentare benötigen nicht alle Abschnitte, aber dies
 ist eine gute Checkliste um dich an die Aspekte deines Programmcodes erinnern,
-die für andere Personen die ihn aufrufen interessant sein werden.
-
+die für Benutzer interessant sein werden.
 
 #### Dokumentationskommentare als Tests
 
@@ -124,17 +123,17 @@ synchron miteinander sind!
 
 #### Enthaltene Elemente kommentieren
 
-Ein anderer Stil des Dokumentationskommentars `//!` fügt dem Element, das die
+Der Stil des Dokumentationskommentars `//!` fügt dem Element, das die
 Kommentare enthält, Dokumentation hinzu, anstatt den Elementen die auf die
 Kommentare folgen Dokumentation hinzuzufügen. Wir verwenden diese
 Dokumentationskommentare üblicherweise in der Wurzeldatei (laut Konvention
 *src/lib.rs*) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
 dokumentieren.
 
-Wenn wir beispielsweise eine Dokumentation hinzufügen möchten, die den Zweck
-der `my_crate`-Kiste beschreibt, die die Funktion `add_one` enthält, können wir
-am Anfang der Datei *src/lib.rs* Dokumentationskommentare hinzufügen die mit
-`//!` beginnen. Siehe Codeblock 14-2: 
+Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
+`my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
+der Datei *src/lib.rs* Dokumentationskommentare hinzufügen die mit `//!`
+beginnen. Siehe Codeblock 14-2: 
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -166,9 +165,9 @@ am Anfang der Datei *src/lib.rs* Dokumentationskommentare hinzufügen die mit
 Beachte, dass nach der letzten Zeile, die mit `//!` beginnt, kein Programmcode
 mehr vorhanden ist. Da wir die Kommentare mit `//!` anstatt `///` begonnen
 haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht ein 
-Element, das diesem Kommentar folgt. In diesem Fall ist das Element, das diesen
-Kommentar enthält, die Datei *src/lib.rs*, dabei handelt es sich um das
-Wurzelverzeichnis der Kiste. Diese Kommentare beschreiben die gesamte Kiste.
+Element, das diesem Kommentar folgt. In diesem Fall ist dieses Element die
+Datei *src/lib.rs*, dabei handelt es sich um das Wurzelverzeichnis der Kiste.
+Diese Kommentare beschreiben die gesamte Kiste.
 
 Wenn wir `cargo doc --open` ausführen, werden diese Kommentare auf der
 Startseite der Dokumentation für `my_crate` angezeigt, oberhalb der Liste der
@@ -186,22 +185,23 @@ besser verstehen können.
 
 ### Mit `pub use` eine benutzerfreundliche öffentliche API exportieren
 
-In Kapitel 7 wurde erläutert, wie wir unseren Programmcode mithilfe des
-Schlüsselworts `mod` in Module organisieren, Elemente mit dem Schlüsselwort 
-`pub` veröffentlichen und Elemente mit dem Schlüsselwort `use` in einen
-Gültigkeitsbereich (scope) bringen. Die Struktur, die für dich während der
-Entwicklung einer Kiste sinnvoll ist, ist für ihre Benutzer jedoch möglicherweise
-nicht sehr benutzerfreundlich. Vielleicht möchtest du Strukturen in einer 
-Hierarchie mit mehreren Ebenen organisieren, aber Personen, die einen Typ
-verwenden möchten, den du tief in der Hierarchie definiert hast, haben
-möglicherweise Probleme, herauszufinden, ob dieser Typ vorhanden ist. Sie könnten
-sich auch darüber ärgern, dass sie `use` ` my_crate::some_module::another_module::UsefulType;`
-eingeben müssen anstatt `use` `my_crate::UsefulType;`.
-
 Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste eine
 wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur weniger
 vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu finden,
 die sie verwenden möchten, wenn deine Kiste eine große Modulhierarchie aufweist.
+
+In Kapitel 7 wurde erläutert, wie wir unseren Programmcode mithilfe des
+Schlüsselworts `mod` in Module organisieren, Elemente mit dem Schlüsselwort 
+`pub` veröffentlichen und Elemente mit dem Schlüsselwort `use` in einen
+Gültigkeitsbereich (scope) bringen. Die Struktur, die für dich während der
+Entwicklung einer Kiste sinnvoll ist, ist für ihre Benutzer jedoch
+möglicherweise nicht sehr benutzerfreundlich. Vielleicht möchtest du Strukturen
+in einer Hierarchie mit mehreren Ebenen organisieren, aber Personen, die einen
+Typ verwenden möchten, den du tief in der Hierarchie definiert hast, haben
+möglicherweise Probleme, herauszufinden, ob dieser Typ vorhanden ist. Sie
+könnten sich auch darüber ärgern, dass sie `use`
+`my_crate::some_module::another_module::UsefulType;`
+eingeben müssen anstatt `use` `my_crate::UsefulType;`.
 
 Die gute Nachricht ist, dass du die interne Organisation nicht neu anordnen
 musst, wenn sie für andere aus einer anderen Bibliothek *nicht* geeignet ist.
@@ -293,11 +293,10 @@ Der Autor des Programmcodes in Codeblock 14-4, der die Kiste `art` verwendet,
 musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im Modul
 `utils` befindet. Die Modulstruktur der `art`-Kiste ist für Entwickler, die an
 der `art`-Kiste arbeiten, relevanter als für Entwickler die die `art`-Kiste
-verwenden. Die interne Struktur, die Teile der Kiste in das Modul `kinds` und das
-Modul `utils` unterteilt, enthält keine nützlichen Informationen für jemanden,
-der die `art`-Kiste benutzen möchte, sondern sorgt für Verwirrung, da Entwickler
-herausfinden müssen wo sie suchen müssen und die Struktur ist unpraktisch, da
-Entwickler die Modulnamen in den `use`-Anweisungen angeben müssen.
+verwenden. Die interne Struktur enthält keine nützlichen Informationen für jemanden,
+der diese benutzen möchte, sondern sorgt für Verwirrung, da diese herausfinden
+müssen wo sie suchen müssen und die Struktur ist unpraktisch, da Entwickler die
+Modulnamen in den `use`-Anweisungen angeben müssen.
 
 Um die interne Organisation aus der öffentlichen API zu entfernen, können wir den
 Programmcode der `art`-Kiste ändern, um `pub use`-Anweisungen hinzuzufügen, um
@@ -381,7 +380,11 @@ Elemente der `art`-Kiste verwendet</span>
 
 In Fällen, in denen es viele verschachtelte Module gibt, kann das erneute 
 Exportieren der Typen auf der obersten Ebene mit `pub use` die Erfahrung der
-Benutzer der Kiste signifikant verbessern.
+Benutzer der Kiste signifikant verbessern. Eine andere häufige Verwendung von
+`pub use` ist es, Definitionen einer Abhängigkeit in der aktuellen Kiste zu
+re-exportieren, um die Definitionen dieser Kiste zu einem Teil der öffentlichen
+API deiner Kiste zu machen.
+
 
 Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst als
 eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
@@ -411,21 +414,19 @@ $ cargo login abcdefghijklmnopqrstuvwxyz012345
 ```
 ### Metadaten zu einer neuen Kiste hinzufügen
 
-Angenommen, du hast ein Konto und eine Kiste, die du veröffentlichen möchtest.
-Vor dem Veröffentlichen musst du deiner Kiste einige Metadaten hinzufügen,
-indem du sie im Abschnitt `[package]` der Datei *Cargo.toml* der Kiste
-hinzufügst.
+Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem
+Veröffentlichen musst du deiner Kiste einige Metadaten im Abschnitt `[package]`
+der Datei *Cargo.toml* der Kiste hinzufügen.
 
 Deine Kiste benötigt einen eindeutigen Namen. Während du vor Ort an einer Kiste
-arbeitest, kannst du eine Kiste beliebig benennen. Allerdings werden Kistennamen
-auf [crates.io](https://crates.io/) nach Verfügbarkeit vergeben.
-Sobald ein Kistenname vergeben ist, kann niemand mehr eine Kiste mit
-diesem Namen veröffentlichen. Suche vor dem Versuch, eine Kiste zu veröffentlichen,
-nach dem Namen, den du auf der Webseite verwenden möchtest. Wenn
-der Name von einer anderen Kiste verwendet wurde, wirst du einen anderen Namen
-suchen müssen und das Feld `name` in der Datei *Cargo.toml* im Abschnitt
-`[package]` bearbeiten, um den neuen Namen für die Veröffentlichung zu
-verwenden:
+arbeitest, kannst du eine Kiste beliebig benennen. Allerdings werden
+Kistennamen auf [crates.io][crates] nach Verfügbarkeit vergeben. Sobald ein
+Kistenname vergeben ist, kann niemand mehr eine Kiste mit diesem Namen
+veröffentlichen. Suche vor dem Versuch, eine Kiste zu veröffentlichen, nach dem
+Namen, den du verwenden möchtest. Wenn der Name von einer anderen Kiste
+verwendet wurde, wirst du einen anderen Namen suchen müssen und das Feld `name`
+in der Datei *Cargo.toml* im Abschnitt `[package]` bearbeiten, um den neuen
+Namen für die Veröffentlichung zu verwenden:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -449,21 +450,16 @@ Caused by:
   the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
 ```
 
-Der Grund dafür ist, dass einige wichtige Informationen fehlen: Eine
+Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine
 Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
-deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Um diesen
-Fehler zu beheben, muss man diese Informationen in die Datei *Cargo.toml*
-aufnehmen.
-
-Füge eine Beschreibung hinzu, die nur ein oder zwei Sätze umfasst, da sie
-zusammen mit deiner Kiste in den Suchergebnissen angezeigt wird. Für das Feld
-`license` musst du einen *Lizenzkennungswert* (licence identifier value) angeben.
-In [Linux Foundation's Software Package Data Exchange (SPDX)][spdx]
-sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden können. Um
-beispielsweise anzugeben, dass du deine Kiste mit der MIT-Lizenz lizenziert
-hast, füge die `MIT`-Identifikation hinzu:
-
-[spdx]: http://spdx.org/licenses/
+deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Ergänze
+in der Datei *Cargo.toml* eine Beschreibung hinzu, die nur ein oder zwei Sätze
+umfasst, da sie zusammen mit deiner Kiste in den Suchergebnissen angezeigt
+wird. Für das Feld `license` musst du einen *Lizenzkennungswert* (licence
+identifier value) angeben. In [Linux Foundation's Software Package Data
+Exchange (SPDX)][spdx] sind die Bezeichner aufgeführt, die Sie für diesen Wert
+verwenden können. Um beispielsweise anzugeben, dass du deine Kiste mit der
+MIT-Lizenz lizenziert hast, füge die `MIT`-Identifikation hinzu:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -509,17 +505,15 @@ leichter entdecken und verwenden können.
 Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für seine
 Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
-Version auf [crates.io](https://crates.io/) hochgeladen, damit andere sie
-verwenden können.
+Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.
 
-Sei vorsichtig, wenn du eine Kiste veröffentlichst, da eine
-Veröffentlichung *permanent* ist. Die Version kann niemals überschrieben und
-der Programmcode nicht gelöscht werden. Ein Hauptziel von [crates.io](https://crates.io/)
-ist es, als permanentes Archiv von Code zu fungieren, sodass alle Projekte
-die erstellt werden und von Kisten aus [crates.io](https://crates.io/) abhängen
-weiter funktionieren werden. Das Zulassen von Versionslöschungen würde das
-Erreichen dieses Ziels unmöglich machen. Die Anzahl der Kistenversionen, die man
-veröffentlichen kann, ist jedoch unbegrenzt.
+Sei vorsichtig, da eine Veröffentlichung *dauerhaft* ist. Die Version kann
+niemals überschrieben und der Programmcode nicht gelöscht werden. Ein Hauptziel
+von [crates.io][crates] ist es, als permanentes Archiv von Code zu fungieren,
+sodass alle Projekte die erstellt werden und von Kisten aus [crates.io][crates]
+abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde
+das Erreichen dieses Ziels unmöglich machen. Die Anzahl der Kistenversionen,
+die man veröffentlichen kann, ist jedoch unbegrenzt.
 
 Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 
@@ -546,9 +540,7 @@ angegebenen Versionswert und veröffentliche ihn erneut. Verwende die
 vorgenommenen Änderungen basierend welche neue Versionsnummer geeignet ist.
 Führe dann `cargo publish` aus, um die neue Version hochzuladen.
 
-[semver]: https://semver.org/lang/de/
-
-### Mit `cargo yank` Versionen von Crates.io entfernen
+### Mit `cargo yank` Versionen auf Crates.io als veraltet kennzeichnen
 
 Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
@@ -559,14 +551,20 @@ einer Kistenversion.
 Durch das Herausziehen einer Version wird verhindert, dass neue Projekte von
 dieser Version abhängen, während alle vorhandenen Projekte, die davon abhängen,
 weiterhin heruntergeladen werden können. Im Wesentlichen bedeutet Herausziehen
-(yank), dass alle Projekte mit einem *Cargo.lock* nicht kaputt gehen und zukünftige
-generierte *Cargo.lock*-Dateien nicht die herausgezogene Version verwenden.
+(yank), dass alle Projekte mit einem *Cargo.lock* nicht kaputt gehen und
+zukünftige generierte *Cargo.lock*-Dateien nicht die herausgezogene Version
+verwenden.
 
 Um eine Version einer Kiste herauszuziehen, rufe `cargo yank` auf und
-spezifiziere welche Version du herausziehen möchtest:
+spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel
+eine Kiste mit dem Namen `guessing_game` in Version 1.0.1 veröffentlicht haben
+und sie löschen wollen, würden wir im Projektverzeichnis für `guessing_game`
+folgendes ausführen:
 
 ```console
 $ cargo yank --vers 1.0.1
+    Updating crates.io index
+        Yank guessing_game:1.0.1
 ```
 
 Durch Hinzufügen von `--undo`, kann man das Herausziehen rückgängig machen und
@@ -574,8 +572,15 @@ Projekten wieder erlauben von der Version abzuhängen:
 
 ```console
 $ cargo yank --vers 1.0.1 --undo
+    Updating crates.io index
+      Unyank guessing_game_:1.0.1
 ```
 
 Das Herausziehen löscht *keinen* Programmcode. Beispielsweise ist die
 Herausziehen-Funktion nicht zum Löschen versehentlich hochgeladener Geheimnisse
-gedacht. Falls das passieren sollte musst du diese Geheimnisse sofort zurücksetzen.
+gedacht. Falls das passieren sollte musst du diese Geheimnisse sofort
+zurücksetzen.
+
+[crates]: https://crates.io/
+[semver]: https://semver.org/lang/de/
+[spdx]: http://spdx.org/licenses/

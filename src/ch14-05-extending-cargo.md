@@ -11,11 +11,12 @@ diese dann wie die integrierten Werkzeuge von Cargo auszuführen, ist ein
 
 ## Zusammenfassung
 
-Das veröffentlichen von Programmcode mit Cargo und [crates.io](https://crates.io/)
-ist Teil dessen, was das Rust-Ökosystem für viele verschiedene Aufgaben nützlich
-macht. Die Standardbibliothek von Rust ist klein und stabil, aber Kisten können
+Das veröffentlichen von Programmcode mit Cargo und [crates.io][crates] ist Teil
+dessen, was das Rust-Ökosystem für viele verschiedene Aufgaben nützlich macht.
+Die Standardbibliothek von Rust ist klein und stabil, aber Kisten können
 einfach geteilt, verwendet und auf einer von der Sprache unterschiedlichen
 Zeitlinie verbessert werden. Scheue dich nicht, Programmcode von 
-[crates.io](https://crates.io/), der für dich nützlich ist, zu
-veröffentlichen. Es ist wahrscheinlich, dass er auch für andere nützlich sein
-wird!
+[crates.io][crates], der für dich nützlich ist, zu veröffentlichen. Es ist
+wahrscheinlich, dass er auch für andere nützlich sein wird!
+
+[crates]: https://crates.io/

@@ -84,7 +84,7 @@
     - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)
     - [Kisten (crate) auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
     - [Cargo-Arbeitsbereiche](ch14-03-cargo-workspaces.md)
-    - [Kommandozeilenwerkzeuge von crates.io installieren mit `cargo install`](ch14-04-installing-binaries.md)
+    - [Installieren von Binärdateien mit  `cargo install`](ch14-04-installing-binaries.md)
     - [Cargo um benutzerdefinierte Befehle erweitern](ch14-05-extending-cargo.md)
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
