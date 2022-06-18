@@ -8,7 +8,7 @@ neu zu implementieren.
 
 Die Iteratoren in Rust sind *faul* (lazy), das bedeutet, dass sie erst durch
 Methodenaufrufe verbraucht werden müssen, um einen Effekt zu haben. Der Programmcode in
-Codeblock 13-13 erstellt beispielsweise einen Iterator über die Elemente im
+Codeblock 13-10 erstellt beispielsweise einen Iterator über die Elemente im
 Vektor `v1` indem die in `Vec<T>` definierte Methode `iter` aufgerufen wird.
 Dieser Programmcode macht nichts Sinnvolles.
 
@@ -19,14 +19,14 @@ let v1 = vec![1, 2, 3];
 let v1_iter = v1.iter();
 ```
 
-<span class="caption">Codeblock 13-13: Einen Iterator erstellen</span>
+<span class="caption">Codeblock 13-10: Einen Iterator erstellen</span>
 
 Ein Iterator kann nach Erstellung auf verschiedene Weise verwendet werden. In
 Codeblock 3-5 in Kapitel 3 haben wir Iteratoren mit `for`-Schleifen verwendet,
 um Programmcode für jedes Element auszuführen, wenngleich wir dadurch nur den
 Aufruf von `iter` schöngefärbt haben.
 
-In Codeblock 13-14 wird die Erstellung des Iterators von dessen Verwendung in
+In Codeblock 13-11 wird die Erstellung des Iterators von dessen Verwendung in
 der `for`-Schleife getrennt. Der Iterator wird in der Variable `v1_iter`
 gespeichert und es findet noch keine Iteration statt. Erst wenn die
 `for`-Schleife mit dem Iterator in `v1_iter` aufgerufen wird, wird jedes
@@ -42,7 +42,7 @@ for val in v1_iter {
     println!("Erhielt: {}", val);
 }
 ```
-<span class="caption">Codeblock 13-14: Verwendung eines Iterators in einer
+<span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
 `for`-Schleife</span>
 
 In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
@@ -85,7 +85,7 @@ Für das `Iterator`-Merkmal muss man bei der Implementierung nur eine Methode
 definieren: Die `next`-Methode, die jeweils ein Element des Iterators verpackt
 in `Some` zurückgibt und nach Beendigung der Iteration `None` zurückgibt.
 
-Wir können für Iteratoren die `next`-Methode direkt aufrufen. Codeblock 13-15
+Wir können für Iteratoren die `next`-Methode direkt aufrufen. Codeblock 13-12
 zeigt, welche Werte bei wiederholten Aufrufen von `next` auf einen aus einem
 Vektor erstellten Iterator zurückgegeben werden:
 
@@ -110,7 +110,8 @@ Vektor erstellten Iterator zurückgegeben werden:
 # }
 ```
 
-<span class="caption">Codeblock 13-15: Iterator mit der `next`-Methode aufrufen</span>
+<span class="caption">Codeblock 13-12: Iterator mit der `next`-Methode
+aufrufen</span>
 
 Beachte, dass wir `v1_iter` veränderlich (mutable) machen mussten: Beim Aufrufen
 der `next`-Methode auf einen Iterator wird dessen interner Status geändert, der
@@ -144,7 +145,7 @@ die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
 Summe hinzugefügt, die zurückgegeben wird, sobald die Iteration abgeschlossen
-ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
+ist. Codeblock 13-13 enthält einen Test, der die `sum`-Methode veranschaulicht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -166,7 +167,7 @@ ist. Codeblock 13-16 enthält einen Test, der die `sum`-Methode veranschaulicht:
 # }
 ```
 
-<span class="caption">Codeblock 13-16: Aufruf der `sum`-Methode um den Wert der
+<span class="caption">Codeblock 13-13: Aufruf der `sum`-Methode um den Wert der
 Summe aller Elemente zu erhalten</span>
 
 Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` die
@@ -181,7 +182,7 @@ Iteratoradaptern verketten und dadurch komplexe Handlungen auf lesbare Art
 ausführen. Da alle Iteratoren jedoch faul sind, ist es notwendig, eine der
 konsumierenden Adapter-Methoden aufzurufen, um Ergebnisse zu erhalten.
 
-Codeblock 13-17 zeigt ein Beispiel von einen Aufruf der `map`-Methode, die einen
+Codeblock 13-14 zeigt ein Beispiel von einen Aufruf der `map`-Methode, die einen
 Funktionsabschluss auf jedes Element anwendet, um einen neuen Iterator zu
 erstellen. Dieser Funktionsabschluss inkrementiert den Wert jedes Elementes des
 Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:
@@ -194,7 +195,7 @@ Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:
     v1.iter().map(|x| x + 1);
 ```
 
-<span class="caption">Codeblock 13-17: Aufruf des Iteratoradapters `map` um
+<span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters `map` um
 einen neuen Iterator zu erzeugen</span>
 
 Wir erhalten folgende Warnung:
@@ -217,7 +218,7 @@ warning: `iterators` (bin "iterators") generated 1 warning
      Running `target/debug/iterators`
 ```
 
-Der Programmcode in Codeblock 13-17 hat keine Wirkung, der Funktionsabschluss
+Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
 wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
 sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
@@ -226,7 +227,7 @@ Um das zu beheben, werden wir die `collect`-Methode verwenden, die wir im Kapite
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
-In Codeblock 13-18 sammeln wir die Resultate der Iterationen über den Iterator,
+In Codeblock 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
 der vom Aufruf der `map`-Methode zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
 
@@ -240,7 +241,7 @@ Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
     assert_eq!(v2, vec![2, 3, 4]);
 ```
 
-<span class="caption">Codeblock 13-18: Aufruf der `map`-Methode um einen
+<span class="caption">Codeblock 13-15: Aufruf der `map`-Methode um einen
 Iterator zu erzeugen und anschließend der `collect`-Methode um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 
@@ -261,7 +262,7 @@ zurückgibt, wird der Wert in den von `filter` erzeugten Iterator aufgenommen,
 wird `false` zurückgegeben, ist der Wert im resultierenden Iterator nicht
 enthalten.
 
-Im Codeblock 13-19 benutzen wir `filter` mit einem Funktionsabschluss, der die
+Im Codeblock 13-16 benutzen wir `filter` mit einem Funktionsabschluss, der die
 Variable `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
 `shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
@@ -319,7 +320,7 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 13-19: Die `filter`-Methode mit einen
+<span class="caption">Codeblock 13-16: Die `filter`-Methode mit einen
 Funktionsabschluss benutzen der `shoe_size` erfasst</span>
 
 Die `shoes_in_size`-Funktion übernimmt die Eigentümerschaft über einen Vektor
@@ -339,230 +340,3 @@ Funktion zurückgegeben wird.
 
 Der Test zeigt, wenn wir `shoes_in_size` aufrufen, bekommen wir nur Schuhe
 der spezifizierten Größe zurück.
-
-### Mit dem `Iterator`-Merkmal eigene Iteratoren erstellen
-
-Wir haben bereits gezeigt, wie man mit `iter`, `into_iter` und `iter_mut` einen
-Iterator zu einem Vektor erstellen kann. Du kannst Iteratoren
-auch aus anderen Kollektion-Typen der Standardbibliothek wie zum Beispiel einer 
-Hashtabelle (hash map) herstellen. Du kannst auch beliebige Iteratoren
-durch Implementierung des `Iterator`-Merkmals auf eigene Typen erstellen. 
-Wie bereits erwähnt ist die einzige Methode, für die du eine Definition angeben
-musst, die `next`-Methode. Sobald man das getan hat, kann man alle anderen
-Methoden verwenden, die die Standardimplementierung des `Iterator`-Merkmals
-bereitstellt.
-
-Erstellen wir nun einen Iterator zur Demonstration, der immer nur von 1 bis 5 zählt.
-Zunächst erstellen wir eine Struktur, die einige Werte enthält, anschließend
-machen wir aus dieser Struktur einen Iterator, indem wir das `Iterator`-Merkmal
-implementieren und die Werte in dieser Implementierung benutzen.
-
-Codeblock 13-20 enthält die Definition einer `Counter`-Struktur und eine
-zugehörige `new`-Funktion zur Erstellung von Instanzen von `Counter`:
-
-<span class="filename">Dateiname: src/lib.rs</span>
-
-```rust,noplayground
-struct Counter {
-    count: u32,
-}
-
-impl Counter {
-    fn new() -> Counter {
-        Counter { count: 0 }
-    }
-}
-```
-
-<span class="caption">Codeblock 13-20: Definition einer `Counter`-Struktur und einer
-Funktion `new` die Instanzen von `Counter` mit einem Startwert 0 für `count` erstellt</span>
-
-Die `Counter`-Struktur beinhaltet ein Feld `count`, dieses Feld hält einen
-`u32`-Wert der den aktuellen Status der Iteration von 1 bis 5 wiedergibt. Das
-Feld `count` ist privat, da wir möchten, das die Implementierung von `Counter`
-den Wert verwaltet. Die `new`-Funktion erzwingt, dass neue Instanzen stets mit
-einem Wert 0 im `count`-Feld beginnen.
-
-Als Nächstes werden wir das `Iterator`-Merkmal für unseren `Counter`-Typ
-implementieren, indem wir den Rumpf der `next`-Methode so definieren, das er
-beinhaltet was wir geschehen lassen möchten, wenn der Iterator benutzt wird.
-Siehe Codeblock 12-21:
-
-<span class="filename">Dateiname: src/lib.rs</span>
-
-```rust,noplayground
-#struct Counter {
-#    count: u32,
-#}
-#
-#impl Counter {
-#    fn new() -> Counter {
-#        Counter { count: 0 }
-#    }
-#}
-#
-#
-impl Iterator for Counter {
-    type Item = u32;
-
-    fn next(&mut self) -> Option<Self::Item> {
-        if self.count < 5 {
-            self.count += 1;
-            Some(self.count)
-        } else {
-            None
-        }
-    }
-}
-```
-
-<span class="caption">Codeblock 13-21: Implementierung des `Iterator`-Merkmals für
-die `Counter`-Struktur</span>
-
-Wir setzen den zugehörigen Typ unseres Iterators auf `u32`, was bedeutet, dass 
-der Iterator `u32`-Werte zurückgibt. Nochmals, kümmere dich derzeit nicht um 
-zugehörige Typen, wir werden sie in Kapitel 19 behandeln.
-
-Wir möchten, dass unser Iterator 1 zum aktuellen Wert hinzufügt, daher haben wir 
-`count` mit 0 initialisiert. Damit er zuerst 1 zurückgibt, wenn der Wert von
-`count` kleiner als 5 ist, erhöht `next` `count` und gibt den aktuellen Wert
-zurück, der in `Some` eingeschlossen ist. Wenn `count` gleich 5 ist, stoppt
-unser Iterator das Inkrementieren und gibt immer `None` zurück.
-
-#### Verwendung der `next`-Methode unseres `Counter`-Iterators
-
-Sobald wir das `Iterator`-Merkmal implementiert haben, verfügen wir über einen
-Iterator! Codeblock 13-22 zeigt mittels Test, dass wir die
-`Iterator`-Funktionalität unserer `Counter`-Funktion benutzen können, indem wir
-die `next`-Methode direkt auf ihn verwenden, so wie wir es mit dem von einem
-Vektor erzeugten Iterator im Codeblock 13-15 gemacht haben.
-
-<span class="filename">Codeblock: src/lib.rs</span>
-
-```rust,noplayground
-# struct Counter {
-#     count: u32,
-# }
-#
-# impl Counter {
-#     fn new() -> Counter {
-#         Counter { count: 0 }
-#     }
-# }
-#
-# impl Iterator for Counter {
-#     type Item = u32;
-#
-#     fn next(&mut self) -> Option<Self::Item> {
-#         if self.count < 5 {
-#             self.count += 1;
-#             Some(self.count)
-#         } else {
-#             None
-#         }
-#     }
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-    #[test]
-    fn calling_next_directly() {
-        let mut counter = Counter::new();
-
-        assert_eq!(counter.next(), Some(1));
-        assert_eq!(counter.next(), Some(2));
-        assert_eq!(counter.next(), Some(3));
-        assert_eq!(counter.next(), Some(4));
-        assert_eq!(counter.next(), Some(5));
-        assert_eq!(counter.next(), None);
-    }
-# }
-```
-
-<span class="caption">Codeblock 13-22: Testen der Funktionalität der
-Implementierung der `next`-Methode</span>
-
-Dieser Test erstellt eine neue Instanz von `Counter` in der `counter`-Variable
-und ruft dann wiederholt `next` auf, um zu überprüfen, ob wir das Verhalten
-entsprechend implementiert haben und der Iterator die Werte von 1 bis 5
-zurückgibt.
-
-#### Verwendung anderer `Iterator`-Merkmalsmethoden
-
-Da wir das `Iterator`-Merkmal durch implementieren der `next`-Methode
-eingerichtet haben, können wir nun beliebige Methoden der
-Standardimplementierung des `Iterator`-Merkmals benutzen, da sie alle die
-Funktionalität der `next`-Methode verwenden.
-
-Wenn wir beispielsweise die Werte übernehmen  und sie mit den Werten
-einer anderen `Counter`-Instanz koppeln wollen und nach dem Überspringen des
-ersten Wertes der anderen Instanz jedes Zahlenpaar miteinander multiplizieren
-dabei allerdings nur die Werte behalten, die durch 3 teilbar sind, und diese dann
-summieren möchten, können wir das wie im Codeblock 13-23 beschrieben erreichen:
-
-<span class="filename">Dateiname: src/lib.rs</span>
-
-```rust,noplayground
-# struct Counter {
-#     count: u32,
-# }
-#
-# impl Counter {
-#     fn new() -> Counter {
-#         Counter { count: 0 }
-#     }
-# }
-#
-# impl Iterator for Counter {
-#     type Item = u32;
-#
-#     fn next(&mut self) -> Option<Self::Item> {
-#         if self.count < 5 {
-#             self.count += 1;
-#             Some(self.count)
-#         } else {
-#             None
-#         }
-#     }
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-#     #[test]
-#     fn calling_next_directly() {
-#         let mut counter = Counter::new();
-#
-#         assert_eq!(counter.next(), Some(1));
-#         assert_eq!(counter.next(), Some(2));
-#         assert_eq!(counter.next(), Some(3));
-#         assert_eq!(counter.next(), Some(4));
-#         assert_eq!(counter.next(), Some(5));
-#         assert_eq!(counter.next(), None);
-#     }
-#
-    #[test]
-    fn using_other_iterator_trait_methods() {
-        let sum: u32 = Counter::new()
-            .zip(Counter::new().skip(1))
-            .map(|(a, b)| a * b)
-            .filter(|x| x % 3 == 0)
-            .sum();
-        assert_eq!(18, sum);
-    }
-# }
-```
-
-<span class="caption">Codeblock 13-23: Benutzung einer Auswahl von `Iterator`-Merkmal
-Methoden auf unseren `Counter`-Iterator</span>
-
-Beachte, dass `zip` nur vier Paare erzeugt. Das theoretische fünfte Paar `(5,
-None)` wird nicht erzeugt da `zip` `None` zurückgibt wenn einer seiner
-Eingabeiteratoren `None` zurückgibt.
-
-Alle diese Methodenaufrufe sind möglich, da wir angegeben haben wie die
-`next`-Methode in `Counter` funktioniert und die Standardbibliothek für andere
-Methoden, die `next` aufrufen, Standardimplementierungen bereitstellt.

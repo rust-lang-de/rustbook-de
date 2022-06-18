@@ -3,7 +3,7 @@
 Mit diesem Wissen über Iteratoren können wir unser E/A-Projekt in Kapitel 12
 verbessern. Wir werden Bereiche im Code klarer und prägnanter gestalten. Lass
 uns herausfinden wie Iteratoren unsere Implementierung der
-Funktion `Config::new` und der Funktion `search` optimieren können.
+Funktion `Config::build` und der Funktion `search` optimieren können.
 
 ### Ein `clone` durch Verwendung eines Iterators entfernen
 
@@ -11,7 +11,7 @@ Im Codeblock 12-6 haben wir Programmcode hinzugefügt, der einen Anteilstyp
 (slice) von `Zeichenketten`-Werten (String values) nimmt, und erzeugten eine
 `Config`-Struktur indem wir den Anteilstyp indexierten und die Werte klonten
 und der `Config`-Struktur die Eigentümerschaft dieser Werte gaben. Im Codeblock
-13-24 haben wir die Implementierung der Funktion `Config::new` so reproduziert 
+13-17 haben wir die Implementierung der Funktion `Config::build` so reproduziert 
 wie sie im Codeblock 12-23 aussah:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -123,7 +123,7 @@ impl Config {
 # }
 ```
 
-<span class="caption">Codeblock 13-24: Reproduktion der `Config::new`-Funktion
+<span class="caption">Codeblock 13-17: Reproduktion der `Config::build`-Funktion
 vom Codeblock 12-23</span>
 
 Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
@@ -131,20 +131,22 @@ ineffizienten `clone`-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
 entfernt werden. Jetzt ist es an der Zeit, dass wir uns darum kümmern!
 
 Wir haben `clone` benutzt, da wir einen Anteilstyp mit `String`-Elementen im
-Parameter `args` haben. Um die Eigentümerschaft einer `Config`-Instanz
-zurückzugeben, mussten wir die Werte aus den Feldern `query` und `filename` von
-`Config` klonen, damit die `Config`-Instanz ihre Werte besitzen kann.
+Parameter `args` haben, ab die Funktion `build` besitzt `args` nicht. Um die
+Eigentümerschaft einer `Config`-Instanz zurückzugeben, mussten wir die Werte
+aus den Feldern `query` und `filename` von `Config` klonen, damit die
+`Config`-Instanz ihre Werte besitzen kann.
 
-Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die
-`new`-Funktion so ändern, dass sie die Eigentümerschaft eines Iterators als
-Argument nimmt anstatt sich einen Anteilstyp auszuleihen. Wir werden die
-`Iterator`-Funktionalität benutzen und nicht mehr den Programmcode der die Länge
-des Anteilstyps überprüft und an bestimmte Stellen indiziert. Dadurch wird deutlich,
-was die `Config::new`-Funktion bewirkt, da der Iterator auf Werte zugreift.
+Mithilfe unserer neuen Kenntnisse über Iteratoren können wir die Funktion
+`build` so ändern, dass sie die Eigentümerschaft eines Iterators als Argument
+nimmt anstatt sich einen Anteilstyp auszuleihen. Wir werden die
+`Iterator`-Funktionalität benutzen und nicht mehr den Programmcode der die
+Länge des Anteilstyps überprüft und an bestimmte Stellen indiziert. Dadurch
+wird deutlich, was die Funktion `Config::build` bewirkt, da der Iterator auf
+Werte zugreift.
 
-Sobald `Config::new` die Eigentümerschaft des Iterators hat und keine
-ausgeliehenen Indexierungsoperationen mehr verwendet, können wir die
-`Zeichenketten`-Werte vom `Iterator` in `Config` verschieben anstatt `clone`
+Sobald `Config::build` die Eigentümerschaft des Iterators hat und keine
+ausleihenden Indexierungsoperationen mehr verwendet, können wir die
+`String`-Werte vom `Iterator` in `Config` verschieben anstatt `clone`
 aufzurufen und eine neue Zuweisung vorzunehmen.
 
 #### Direktes Verwenden des zurückgegebenen Iterators
@@ -176,10 +178,10 @@ fn main() {
 #    }
 }
 ```
-Wir werden den Anfang der Funktion `main` von Codeblock 12-24 in den 
-Programmcode im Codeblock 13-25 ändern. Dieser Code wird erst kompilieren,
-wenn wir auch `Config::new` abgeändert haben.
 
+Wir werden den Anfang der Funktion `main` von Codeblock 12-24 in den 
+Programmcode im Codeblock 13-28 ändern. Dieser Code wird erst kompilieren,
+wenn wir auch `Config::build` abgeändert haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -206,18 +208,18 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-25: Übergabe des Rückgabewerts von 
-`env::args` an `Config::new`</span>
+<span class="caption">Codeblock 13-18: Übergabe des Rückgabewerts von 
+`env::args` an `Config::build`</span>
 	
 Die `env::arg`-Funktion gibt einen Iterator zurück! Anstatt die Werte des Iterators
-in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::new` zu
+in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
 übergeben, geben wir nun die Eigentümerschaft des Iterators, der von `env::args`
-zurückgegeben wird, direkt an `Config::new`.
+zurückgegeben wird, direkt an `Config::build`.
 
-Als Nächstes müssen wir die Definition von `Config::new` aktualisieren. Ändere
-in der Datei *src/lib.rs* deines E/A-Projekts die Signatur von `Config::new` um,
-damit sie so wie im Codeblock 13-26 aussieht. Dies wird noch immer nicht
-kompilieren, da der Funktionsrumpf aktualisiert werden muss.
+Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
+Ändere in der Datei *src/lib.rs* deines E/A-Projekts die Signatur von
+`Config::build` um, damit sie so wie im Codeblock 13-26 aussieht. Dies wird
+noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.
 
 <span class="filename">Dateiname src/lib.rs</span>
 
@@ -330,24 +332,31 @@ impl Config {
 #}
 ```
 
-<span class="caption">Codeblock 13-26: Aktualisieren der Funktion`Config::new`
-damit sie einen Iterator annimmt</span>
+<span class="caption">Codeblock 13-19: Aktualisieren der Funktion
+`Config::build` damit sie einen Iterator annimmt</span>
 
 Laut Dokumentation der Standardbibliothek für die Funktion `env::args` ist der
-Typ des zurückgegebenen Iterators `std::env::Args`. Wir haben die Signatur
-der Funktion `Config::New` aktualisiert, damit der Parameter `args` den Typ
-`std::env::Args` statt `&[String]` hat. Da wir die Eigentümerschaft von `args`
-übernehmen und `args` beim Iterieren verändern werden, können wir das
-Schlüsselwort `mut` in die Spezifikation des Parameters `args` eintragen, um
-ihn veränderlich (mutable) zu machen.
+Typ des zurückgegebenen Iterators `std::env::Args`, und dieser Typ
+implementiert das Merkmal `Iterator` und gibt `String`-Werte zurück.
+
+Wir haben die Signatur der Funktion `Config::build` aktualisiert, sodass der
+Parameter `args` einen generischen Typ mit den Merkmalsabgrenzungen `impl
+Iterator<Item = String>` anstelle von `&[String]` hat. Diese Verwendung der
+Syntax `impl Trait`, die wir im Abschnitt [„Merkmale als
+Parameter“][impl-trait] in Kapitel 10 besprochen haben, bedeutet, dass `args`
+jeder Typ sein kann, der den Typ `Iterator` implementiert und `String`-Elemente
+zurückgibt.
+
+Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
+verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
+Parameters `args` eintragen, um ihn veränderlich (mutable) zu machen.
 
 #### Verwenden von `Iterator`-Merkmalen anstelle von Indizierung
 
-Als Nächstes werden wir den Rumpf von `Config::new` in Ordnung bringen. In der
-Standardbibliotheksdokumentation wird auch beschrieben, dass `std::env::Args`
-das `Iterator`-Merkmal implementiert, daher wissen wir, dass wir die Methode
-`next` darauf anwenden können! Codeblock 13-27 aktualisiert den Programmcode aus
-Codeblock 12-23, damit `next` verwendet wird:
+Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
+`args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
+`next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
+Codeblock 12-23, um die `next`-Methode zu verwenden:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -463,7 +472,7 @@ impl Config {
 #}
 ```
 
-<span class="caption">Codeblock 13-27: Ändern des Rumpfes von `Config::new` um
+<span class="caption">Codeblock 13-20: Ändern des Rumpfes von `Config::build` um
 Iterator-Methoden zu verwenden</span>
 
 Beachte, dass der erste Wert des Rückgabewerts von `env::args` der Name des
@@ -479,7 +488,7 @@ vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert `filename`.
 
 
 Wir können die Vorteile der Iteratoren auch in der Funktion `search` unseres
-E/A-Projekts nutzen, die hier im Codeblock 13-28 wiedergegeben, ist wie im
+E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben, ist wie im
 Codeblock 12-19:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -541,7 +550,7 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #}
 ```
 
-<span class="caption">Codeblock 13-28: Implementierung der Funktion `search`
+<span class="caption">Codeblock 13-21: Implementierung der Funktion `search`
 aus Codeblock 12-19</span>
 
 Wir können diesen Programmcode durch die Verwendung von Iteratoradaptern
@@ -550,7 +559,9 @@ die Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil
 die Menge der veränderlichen Werte reduziert, um den Code übersichtlicher zu
 machen. Das Entfernen des veränderlich-Status kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
-um die Verwaltung des simultanen Zugriffs auf den Ergebnisvektor kümmern müssen.
+um die Verwaltung des simultanen Zugriffs auf den Vektor `results` kümmern
+müssen. Codeblock 13-22 zeigt diese Änderung:
+
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -660,20 +671,20 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #    }
 #}
 ```
-<span class="caption">Codeblock 13-29: Verwendung von Iteratoradapter-Methoden
+<span class="caption">Codeblock 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion `search`</span>
 
 Denke daran, der Zweck der Funktion `search` besteht darin, alle Zeilen in
 `contents` zurückzugeben, die die `query` enthalten. So ähnlich wie im Beispiel
-`filter` im Codeblock 13-19 verwendet dieser Programmcode den `filter`-Adapter,
+`filter` im Codeblock 13-16 verwendet dieser Programmcode den `filter`-Adapter,
 um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true` zurückgibt.
 Wir sammeln dann die passenden Zeilen mit `collect` in einen anderen Vektor.
 Viel einfacher! Nimm die gleiche Änderung vor, um Iteratormethoden auch in der
 Funktion `search_case_insensitive` zu nutzen.
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
-wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-28
-oder die Version die Iteratoren verwendet im Codeblock 13-29. Die meisten
+wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21
+oder die Version die Iteratoren verwendet im Codeblock 13-22. Die meisten
 Rust-Programmierer bevorzugen den Iterator-Stil. Zunächst ist es zwar
 schwieriger, den Überblick zu behalten, aber sobald du ein Gefühl für die
 verschiedenen Iteratoradapter und deren Funktionsweise hast, können Iteratoren 
@@ -687,3 +698,5 @@ erkennbar.
 Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über
 Performanz sprechen.
+
+[impl-trait]: ch10-02-traits.html#merkmale-als-parameter

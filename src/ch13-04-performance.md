@@ -33,7 +33,7 @@ entspricht der Definition von *Zero-Overhead* in C++ von Bjarne Stroustrup in
 
 > Im Allgemeinen folgen C++-Implementierungen dem Zero-Overhead-Prinzip: Was
 > du nicht verwendest, bezahlst du nicht. Und darüber hinaus: Was du verwendest,
-> hättest du von Hand nicht besser programmieren können. [^1]
+> hättest du von Hand nicht besser programmieren können.
 
 Als anderes Beispiel wird der folgende Programmcode eines Audiodecoders
 übernommen. Der Decodierungsalgorithmus verwendet die mathematische Operation
@@ -100,5 +100,3 @@ Zero-Cost-Abstraktionen zu ermöglichen.
 Nachdem wir die Ausdruckskraft unseres E/A-Projekts verbessert haben, wollen
 wir uns nun einige weitere Funktionalitäten von `cargo` ansehen, die uns helfen
 werden, das Projekt mit der Welt zu teilen.
-
-[^1]: (eigene Übersetzung) 
