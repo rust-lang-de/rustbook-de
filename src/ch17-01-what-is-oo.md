@@ -141,32 +141,34 @@ nicht, ermöglicht die Kapselung von Implementierungsdetails.
 
 ### Vererbung als Typsystem und für gemeinsamen Code
 
-*Vererbung* ist ein Mechanismus, mit dem ein Objekt von der Definition eines
-anderen Objekts erben kann und so die Daten und das Verhalten des
+*Vererbung* ist ein Mechanismus, mit dem ein Objekt Elemente von der Definition
+eines anderen Objekts erben kann und so die Daten und das Verhalten des
 übergeordneten Objekts erhält, ohne dass du diese erneut definieren musst.
 
 Wenn eine Sprache Vererbung haben muss, um eine objektorientierte Sprache zu
 sein, dann ist Rust keine solche. Es gibt keine Möglichkeit, eine Struktur zu
 definieren, die die Felder und Methodenimplementierungen der Elternstruktur
-erbt. Wenn du jedoch daran gewöhnt bist, Vererbung in deinem
+erbt, ohne ein Makro zu benutzen.
+
+Wenn du jedoch daran gewöhnt bist, Vererbung in deinem
 Programmierwerkzeugkasten zu haben, kannst du in Rust andere Lösungen
 verwenden, je nachdem, warum du überhaupt zu Vererbung gegriffen hast.
 
-Du entscheidest dich aus zwei Hauptgründen für die Vererbung. Einer ist die
-Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
+Du würdest dich aus zwei Hauptgründen für die Vererbung entscheiden. Einer ist
+die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
 implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
-einen anderen Typ wiederzuverwenden. Du kannst stattdessen Rust-Code unter
-Verwendung von Standard-Merkmalsmethoden-Implementierungen freigeben, was du in
-Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung der Methode
-`summarize` für das Merkmal (trait) `Summary` hinzugefügt haben. Jeder Typ, der
-das Merkmal `Summary` implementiert, hätte die Methode `summarize` ohne
-weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit einer
-Elternklasse, die eine Implementierung einer Methode hat, und einer erbenden
-Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir können auch
-die Standard-Implementierung der Methode `summarize` außer Kraft setzen, wenn
-wir das Markmal `Summary` implementieren, die einer Kindklasse ähnelt, die die
-Implementierung einer von einer Elternklasse geerbten Methode außer Kraft
-setzt.
+einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
+Rust-Code unter Verwendung von Standard-Merkmalsmethoden-Implementierungen tun,
+was du in Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung
+der Methode `summarize` für das Merkmal (trait) `Summary` hinzugefügt haben.
+Jeder Typ, der das Merkmal `Summary` implementiert, hätte die Methode
+`summarize` ohne weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit
+einer Elternklasse, die eine Implementierung einer Methode hat, und einer
+erbenden Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir
+können auch die Standard-Implementierung der Methode `summarize` außer Kraft
+setzen, wenn wir das Markmal `Summary` implementieren, die einer Kindklasse
+ähnelt, die die Implementierung einer von einer Elternklasse geerbten Methode
+außer Kraft setzt.
 
 Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
 untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
@@ -194,10 +196,10 @@ Charakteristiken ihrer Elternklasse teilen, bei Vererbung tun sie es aber. Dies
 kann den Programmentwurf weniger flexibel machen. Es wird auch die Möglichkeit
 eingeführt, Methoden auf Unterklassen aufzurufen, die keinen Sinn machen oder
 die Fehler verursachen, weil die Methoden nicht auf die Unterklasse zutreffen.
-Darüber hinaus ermöglichen einige Sprachen einer Unterklasse, lediglich von
-einer Klasse zu erben, was die Flexibilität des Programmdesigns weiter
-einschränkt.
+Darüber hinaus lassen einige Sprachen nur Einfachvererbung zu (d.h. eine
+Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
+Programmdesigns weiter einschränkt.
 
-Aus diesen Gründen verfolgt Rust einen anderen Ansatz und verwendet
-Merkmalsobjekte (trait objects) anstelle der Vererbung. Schauen wir uns an, wie
-Merkmalsobjekte Polymorphismus in Rust ermöglichen.
+Aus diesen Gründen verfolgt Rust den anderen Ansatz durch Verwendung von
+Merkmalsobjekten (trait objects) anstelle der Vererbung. Schauen wir uns an,
+wie Merkmalsobjekte Polymorphismus in Rust ermöglichen.

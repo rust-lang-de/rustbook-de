@@ -2,13 +2,13 @@
 
 In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
-in Codeblock 8-10 eine Abhilfe geschaffen, indem wir eine
-`SpreadsheetCell`-Aufzählung (enum) definiert haben, die Varianten zur Aufnahme
-von Ganzzahlen, Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in
-jeder Zelle verschiedene Typen von Daten speichern konnten und trotzdem einen
-Vektor hatten, der eine Reihe von Zellen darstellte. Dies ist eine perfekte
-Lösung, wenn unsere austauschbaren Elemente ein fester Satz von Typen sind, die
-wir kennen, wenn unser Code kompiliert wird.
+in Codeblock 8-9 eine Abhilfe geschaffen, indem wir eine Aufzählung (enum)
+`SpreadsheetCell` definiert haben, die Varianten zur Aufnahme von Ganzzahlen,
+Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in jeder Zelle
+verschiedene Typen von Daten speichern konnten und trotzdem einen Vektor
+hatten, der eine Reihe von Zellen darstellte. Dies ist eine perfekte Lösung,
+wenn unsere austauschbaren Elemente ein fester Satz von Typen sind, die wir
+kennen, wenn unser Code kompiliert wird.
 
 Manchmal möchten wir jedoch, dass unsere Bibliotheksbenutzer in der Lage sind,
 die Menge der Typen, die in einer bestimmten Situation erlaubt sind, zu
@@ -49,12 +49,12 @@ Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir ei
 Merkmal namens `Draw` definieren, das eine Methode namens `draw` haben wird.
 Dann können wir einen Vektor definieren, der ein *Merkmalsobjekt* (trait
 object) annimmt. Ein Merkmalsobjekt verweist sowohl auf eine Instanz eines
-Typs, der das von uns spezifizierte Merkmal implementiert, als auch auf eine
-Tabelle, in der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden
-können. Wir erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben,
-z.B. eine Referenz `&` oder einen intelligenten Zeiger `Box<T>`, dann das
-Schlüsselwort `dyn` und dann das relevante Merkmal. (Wir werden über den Grund,
-warum Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 19 im Abschnitt
+Typs, der das von uns spezifizierte Merkmal implementiert, und eine Tabelle, in
+der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden können. Wir
+erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben, z.B. eine
+Referenz `&` oder einen intelligenten Zeiger `Box<T>`, dann das Schlüsselwort
+`dyn` und dann das relevante Merkmal. (Wir werden über den Grund, warum
+Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 19 im Abschnitt
 [„Dynamisch große Typen und das Merkmal `Sized`“][dynamically-sized]) sprechen.
 Wir können Merkmalsobjekte an Stelle eines generischen oder konkreten Typs
 verwenden. Wo immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem
@@ -230,16 +230,15 @@ impl Draw for Button {
 `Draw` implementiert</span>
 
 Die Felder `width`, `height` und `label` in `Button` unterscheiden sich von den
-Feldern anderer Komponenten, z.B. dem Typ `TextField`, die diese Felder und
-zusätzlich ein `placeholder` haben könnte. Jeder der Typen, die wir auf dem
+Feldern anderer Komponenten; beispielsweise könnte ein Typ `TextField` diese
+Felder und zusätzlich ein `placeholder` haben. Jeder der Typen, die wir auf dem
 Bildschirm zeichnen wollen, wird das Merkmal `Draw` implementieren, aber
 unterschiedlichen Code in der `draw`-Methode verwenden, um zu definieren, wie
 dieser bestimmte Typ gezeichnet werden soll, wie es hier bei `Button` der Fall
-ist (ohne den eigentlichen GUI-Code, der den Rahmen dieses Kapitels sprengt).
-Der Typ `Button` könnte zum Beispiel einen zusätzlichen `impl`-Block haben, der
-Methoden enthält, die sich darauf beziehen, was passiert, wenn ein Benutzer auf
-die Schaltfläche klickt. Diese Art von Methoden trifft nicht auf Typen wie
-`TextField` zu.
+ist (ohne wie erwähnt den eigentlichen GUI-Code). Der Typ `Button` könnte zum
+Beispiel einen zusätzlichen `impl`-Block haben, der Methoden enthält, die sich
+darauf beziehen, was passiert, wenn ein Benutzer auf die Schaltfläche klickt.
+Diese Art von Methoden trifft nicht auf Typen wie `TextField` zu.
 
 Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine
 Struktur `SelectBox` zu implementieren, die die Felder `width`, `height` und
@@ -410,7 +409,7 @@ Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
 Merkmalsobjekte verwendet, sodass er nicht weiß, welche Methode auf welchem Typ
 implementiert ist, um sie aufzurufen. Stattdessen verwendet Rust zur Laufzeit
 die Zeiger innerhalb des Merkmalsobjekts, um zu wissen, welche Methode
-aufgerufen werden soll. Durch dieses Nachschlagen entstehen Laufzeitkosten, die
+aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
 beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
 dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Wir haben jedoch
