@@ -115,7 +115,8 @@ durcharbeiten:
 * Jeder Wert in Rust hat eine Variable, die als sein *Eigentümer* bezeichnet
   wird.
 * Es kann immer nur einen Eigentümer zur gleichen Zeit geben.
-* Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert gelöscht.
+* Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
+  aufgeräumt.
 
 ### Gültigkeitsbereich (scope) einer Variable
 

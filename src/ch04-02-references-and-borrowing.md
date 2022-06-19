@@ -90,7 +90,7 @@ fn calculate_length(s: &String) -> usize { // s ist eine Referenz
 
 Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
 der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
-Referenz zeigt, wird nicht gelöscht, wenn `s` nicht mehr verwendet wird, weil
+Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
 `s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
