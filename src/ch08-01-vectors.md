@@ -229,8 +229,8 @@ der Elemente eines Vektors</span>
 Um den Wert, auf den sich die veränderliche Referenz bezieht, zu ändern, müssen
 wir den Dereferenzierungsoperator (`*`) verwenden, um an den Wert in `i` zu
 kommen, bevor wir den Operator `+=` verwenden können. Wir werden mehr über den
-Dereferenzierungsoperator im Abschnitt [„Dem Zeiger zum Wert folgen mit dem
-Dereferenzierungsoperator“][deref] in Kapitel 15 sprechen.
+Dereferenzierungsoperator im Abschnitt [„Dem Zeiger zum Wert folgen“][deref] in
+Kapitel 15 sprechen.
 
 Die Iteration über einen Vektor, ob unveränderlich oder veränderlich, ist
 aufgrund der Regeln des Ausleihenprüfers sicher. Wenn wir versuchen würden,
@@ -322,4 +322,4 @@ Lassen Sie uns zum nächsten Sammlungstyp übergehen: `String`!
 [data-types]: ch03-02-data-types.html
 [nomicon]: https://doc.rust-lang.org/nomicon/vec.html
 [vec-api]: https://doc.rust-lang.org/std/vec/struct.Vec.html
-[deref]: ch15-02-deref.html#dem-zeiger-zum-wert-folgen-mit-dem-dereferenzierungsoperator
+[deref]: ch15-02-deref.html#dem-zeiger-zum-wert-folgen
