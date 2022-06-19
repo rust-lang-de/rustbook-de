@@ -1,13 +1,14 @@
 ## Nebenläufigkeit mit gemeinsamem Zustand
 
 Die Nachrichtenübermittlung ist eine gute Methode zur Behandlung von
-Nebenläufigkeit, aber sie ist nicht die einzige. Betrachte folgenden Teil des
-Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere nicht, indem
-du Arbeitsspeicher teilst.“
+Nebenläufigkeit, aber sie ist nicht die einzige. Eine andere Methode wäre, dass
+mehrere Stränge auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
+Teil des Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere
+nicht, indem du Arbeitsspeicher teilst.“
                                                     
 Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
-Darüber hinaus, warum würden nachrichtenübermittelnde Enthusiasten sie nicht
-nutzen und stattdessen das Gegenteil tun?
+Und warum sollten Liebhaber der Nachrichtenübermittlung davor warnen,
+gemeinsamen Arbeitsspeicher zu verwenden?
 
 In gewisser Weise ähneln Kanäle in jeder Programmiersprache dem Alleineigentum,
 denn sobald du einen Wert in einen Kanal übertragen hast, solltest du diesen
@@ -94,10 +95,10 @@ diesen Strang abstürzen zu lassen, wenn wir uns in dieser Situation befinden.
 Nachdem wir die Sperre erworben haben, können wir den Rückgabewert, in diesem
 Fall `num` genannt, als veränderliche Referenz auf die darin enthaltenen Daten
 verwenden. Das Typsystem stellt sicher, dass wir eine Sperre erwerben, bevor
-wir den Wert in `m` verwenden: `Mutex<i32>` ist kein `i32`, also *müssen* wir
-die Sperre erwerben, um den `i32`-Wert verwenden zu können. Wir können das
-nicht vergessen, das Typsystem würde uns sonst keinen Zugriff auf das innere
-`i32` erlauben.
+wir den Wert in `m` verwenden. Der Typ von `m` ist `Mutex<i32>`, nicht `i32`,
+also *müssen* wir `lock` aufrufen, um den `i32`-Wert verwenden zu können. Wir
+können das nicht vergessen, das Typsystem würde uns sonst keinen Zugriff auf
+das innere `i32` erlauben.
 
 Wie du vielleicht vermutest, ist `Mutex<T>` ein intelligenter Zeiger. Genauer
 gesagt gibt der Aufruf von `lock` einen intelligenten Zeiger namens
@@ -106,10 +107,9 @@ Aufruf von `unwrap` behandelt haben. Der intelligente Zeiger `MutexGuard`
 implementiert `Deref`, um auf unsere inneren Daten zu zeigen; der intelligente
 Zeiger hat auch eine `Drop`-Implementierung, die die Sperre automatisch
 aufhebt, wenn ein `MutexGuard` den Gültigkeitsbereich verlässt, was am Ende des
-inneren Gültigkeitsbereichs in Codeblock 16-12 geschieht. Dadurch laufen wir
-nicht Gefahr, zu vergessen, die Sperre freizugeben und die Verwendung des Mutex
-durch andere Stränge zu blockieren, da die Freigabe der Sperre automatisch
-erfolgt.
+inneren Gültigkeitsbereichs geschieht. Dadurch laufen wir nicht Gefahr, zu
+vergessen, die Sperre freizugeben und die Verwendung des Mutex durch andere
+Stränge zu blockieren, da die Freigabe der Sperre automatisch erfolgt.
 
 Nachdem wir die Sperre aufgehoben haben, können wir den Mutex-Wert ausgeben und
 sehen, dass wir den inneren `i32` in 6 ändern konnten.
@@ -190,10 +190,10 @@ error: could not compile `shared-state` due to previous error
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
-der Schleife verschoben wurde. Rust sagt uns also, dass wir die
-Eigentümerschaft der Sperre `counter` nicht in mehrere Stränge verschieben
-können. Lass uns den Kompilierfehler mit einer Mehrfacheigentums-Methode
-beheben, die wir in Kapitel 15 besprochen haben.
+der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft der
+Sperre `counter` nicht in mehrere Stränge verschieben können. Lass uns den
+Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
+15 besprochen haben.
 
 #### Mehrfacheigentum mit mehreren Strängen
 
@@ -288,7 +288,7 @@ handelt sich um einen *atomar referenzgezählten* (atomically reference
 counted) Typ. Atomare Typen (atomics) sind eine zusätzliche Art von
 Nebenläufigkeitsprimitiven, die wir hier nicht im Detail behandeln werden:
 Weitere Einzelheiten findest du in der Standardbibliotheksdokumentation für
-[`std::sync::atomic`][atomic-doc]. An dieser Stelle musst du nur wissen, dass
+[`std::sync::atomic`][atomic]. An dieser Stelle musst du nur wissen, dass
 atomare Typen wie primitive Typen funktionieren, aber sicher über Stränge
 hinweg gemeinsam genutzt werden können.
 
@@ -351,6 +351,14 @@ inkrementieren. Mit dieser Strategie kannst du eine Berechnung in unabhängige
 Teile aufteilen, diese Teile auf Stränge aufteilen und dann `Mutex<T>`
 verwenden, damit jeder Strang das Endergebnis mit seinem Teil aktualisiert.
 
+Beachte, dass es für einfache numerische Operationen einfachere Typen als
+`Mutex<T>` gibt, die durch das [Modul `std::sync::atomic` der
+Standardbibliothek][atomic] bereitgestellt werden. Diese Typen bieten sicheren,
+gleichzeitigen, atomaren Zugriff auf primitive Typen. Wir haben uns
+entschieden, `Mutex<T>` mit einem primitiven Typ für dieses Beispiel zu
+verwenden, damit wir uns darauf konzentrieren können, wie `Mutex<T>`
+funktioniert.
+
 ### Ähnlichkeiten zwischen `RefCell<T>`/`Rc<T>` und `Mutex<T>`/`Arc<T>`
 
 Du hast vielleicht bemerkt, dass `counter` unveränderlich (immutable) ist, aber
@@ -378,4 +386,4 @@ implementieren. Die Standardbibliotheks-API-Dokumentation für `Mutex<T>` und
 Wir runden dieses Kapitel ab, indem wir über die Merkmale `Send` und `Sync`
 sprechen und wie wir sie mit benutzerdefinierten Typen verwenden können.
 
-[atomic-doc]: https://doc.rust-lang.org/std/sync/atomic/index.html
+[atomic]: https://doc.rust-lang.org/std/sync/atomic/index.html

@@ -2,22 +2,22 @@
 
 In den meisten aktuellen Betriebssystemen wird der Code eines ausgeführten
 Programms in einem *Prozess* ausgeführt und das Betriebssystem verwaltet
-mehrere Prozesse gleichzeitig. Innerhalb deines Programms kannst du auch
+mehrere Prozesse gleichzeitig. Innerhalb eines Programms kannst du auch
 unabhängige Teile haben, die gleichzeitig laufen. Die Funktionalitäten, die
-diese unabhängigen Teile ausführen, werden *Stränge* (threads) genannt.
+diese unabhängigen Teile ausführen, werden *Stränge* (threads) genannt. Ein
+Webserver könnte beispielsweise mehrere Stränge haben, damit er auf mehrere
+Anfragen gleichzeitig reagieren kann.
 
-Das Aufteilen der Berechnung in deinem Programm in mehrere Stränge kann die
-Performanz verbessern, da das Programm mehrere Aufgaben gleichzeitig ausführt,
-aber es erhöht auch die Komplexität. Da Stränge gleichzeitig laufen können,
-gibt es keine inhärente Garantie für die Reihenfolge, in der Teile deines Codes
-in verschiedenen Strängen ausgeführt werden. Dies kann zu Problemen führen
-wie:
+Das Aufteilen der Berechnung in deinem Programm in mehrere Stränge, um mehrere
+Aufgaben gleichzeitig auszuführen, kann die Performanz erhöhen, aber es erhöht
+auch die Komplexität. Da Stränge gleichzeitig laufen können, gibt es keine
+inhärente Garantie für die Reihenfolge, in der Teile deines Codes in
+verschiedenen Strängen ausgeführt werden. Dies kann zu Problemen führen wie:
 
 * Wettlaufsituationen (race conditions), bei denen Stränge auf Daten oder
   Ressourcen in einer inkonsistenten Reihenfolge zugreifen.
-* Deadlocks, bei denen zwei Stränge darauf warten, dass der jeweils andere
-  Strang eine Ressource freigibt, sodass beide Stränge nicht fortgesetzt werden
-  können.
+* Deadlocks, bei denen zwei Stränge auf den jeweils anderen warten, sodass
+  beide Stränge nicht fortgesetzt werden können.
 * Fehler, die nur in bestimmten Situationen auftreten und schwer zu
   reproduzieren und zu beheben sind.
 
@@ -26,13 +26,12 @@ mildern, aber die Programmierung in einem mehrsträngigen Kontext erfordert
 immer noch sorgfältige Überlegungen und benötigt eine andere Code-Struktur als
 bei Programmen, die in einem einzigen Strang laufen.
 
-Programmiersprachen implementieren Stränge auf verschiedene Weise. Viele
-Betriebssysteme bieten eine API zum Erstellen neuer Stränge. Dieses Modell, bei
-dem eine Sprache die API des Betriebssystems aufruft, um Stränge zu erstellen,
-wird manchmal *1:1* genannt, das bedeutet einen Betriebssystem-Strang pro
-Strang in der Sprache. Die Rust-Standardbibliothek bietet nur eine
-Implementierung von 1:1-Strängen; es gibt Kisten, die andere Strangmodelle
-implementieren und andere Kompromisse eingehen.
+Programmiersprachen implementieren Stränge auf verschiedene Weise, und viele
+Betriebssysteme bieten eine API, die die Sprache aufrufen kann, um neue Stränge
+zu erstellen. Die Rust-Standardbibliothek verwendet ein *1:1*-Modell der
+Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
+einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
+implementieren, die andere Kompromisse als das 1:1-Modell eingehen.
 
 ### Erstellen eines neuen Strangs mit `spawn`
 
@@ -66,10 +65,10 @@ fn main() {
 <span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um eine
 Sache auszugeben, während der Hauptstrang etwas anderes ausgibt</span>
 
-Beachte, dass mit dieser Funktion der neue Strang beendet wird, wenn der
-Hauptstrang endet, unabhängig davon, ob er zu Ende gelaufen ist oder nicht. Die
-Ausgabe dieses Programms kann jedes Mal ein wenig anders sein, aber sie wird
-ähnlich wie die folgende aussehen:
+Beachte, dass bei der Beendigung des Haupt-Strangs eines Rust-Programms alle
+erzeugten Stränge beendet werden, unabhängig davon, ob sie zu Ende gelaufen
+sind oder nicht. Die Ausgabe dieses Programms kann jedes Mal ein wenig anders
+sein, aber sie wird ähnlich wie die folgende aussehen:
 
 ```text
 Hallo Zahl 1 aus dem Hauptstrang!
@@ -100,19 +99,18 @@ zu wechseln.
 ### Warten auf das Ende aller Stränge mit `join`
 
 Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
-vorzeitig aufgrund des Endes des Hauptstrangs, sondern kann auch nicht
-garantieren, dass der erzeugte Strang überhaupt zum Laufen kommt. Der Grund
-dafür ist, dass es keine Garantie für die Reihenfolge gibt, in der die Stränge
-laufen!
+vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die
+Reihenfolge gibt, in der Stränge laufen. Wir können auch nicht garantieren,
+dass der erzeugten Strang überhaupt zum Laufen kommt!
 
-Wir können das Problem, dass der erzeugte Strang nicht oder nicht vollständig
-ausgeführt wird, beheben, indem wir den Rückgabewert von `thread::spawn` in
-einer Variablen speichern. Der Rückgabetyp von `thread::spawn` ist
-`JoinHandle`. Ein `JoinHandle` ist ein aneigenbarer (owned) Wert, der, wenn wir
-die Methode `join` darauf aufrufen, darauf wartet, bis sich sein Strang
-beendet. Codeblock 16-2 zeigt, wie der `JoinHandle` des Strangs, den wir in
-Codeblock 16-1 erstellt haben, verwendet und `join` aufgerufen wird, um
-sicherzustellen, dass der erzeugte Strang beendet wird, bevor `main` endet:
+Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
+beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
+Variablen speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle`. Ein
+`JoinHandle` ist ein aneigenbarer (owned) Wert, der, wenn wir die Methode
+`join` darauf aufrufen, darauf wartet, bis sich sein Strang beendet. Codeblock
+16-2 zeigt, wie der `JoinHandle` des Strangs, den wir in Codeblock 16-1
+erstellt haben, verwendet und `join` aufgerufen wird, um sicherzustellen, dass
+der erzeugte Strang beendet wird, bevor `main` endet:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -219,8 +217,8 @@ Stränge zur gleichen Zeit laufen oder nicht.
 
 ### Verwenden von `move`-Funktionsabschlüssen mit Strängen
 
-Das Schluesselwort `move` wird oft mit Funktionsabschlüssen verwendet, die an
-`thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
+Wir werden oft das Schlüsselwort `move` mit Funktionsabschlüssen verwenden, die
+an `thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
 Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
 damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
 überträgt. Im Abschnitt [„Mit Funktionsabschlüssen die Umgebung
@@ -327,13 +325,13 @@ fn main() {
 der versucht, eine Referenz auf `v` vom Hauptstrang zu erfassen, der `v`
 aufräumt</span>
 
-Wenn wir diesen Code ausführen dürften, bestünde die Möglichkeit, dass der
-erzeugte Strang sofort in den Hintergrund gestellt wird, ohne überhaupt zu
-laufen. Der erzeugte Strang hat eine Referenz auf `v` im Inneren, aber der
-Hauptstrang räumt `v` sofort auf, indem er die Funktion `drop` benutzt, die wir
-in Kapitel 15 besprochen haben. Wenn der erzeugte Strang dann mit der
-Ausführung beginnt, ist `v` nicht mehr gültig, sodass eine Referenz darauf
-ebenfalls ungültig ist. Oh nein!
+Wenn Rust uns erlauben würde, diesen Code auszuführen, bestünde die
+Möglichkeit, dass der erzeugte Strang sofort in den Hintergrund gestellt wird,
+ohne überhaupt zu laufen. Der erzeugte Strang hat eine Referenz auf `v` im
+Inneren, aber der Hauptstrang räumt `v` sofort auf, indem er die Funktion
+`drop` benutzt, die wir in Kapitel 15 besprochen haben. Wenn der erzeugte
+Strang dann mit der Ausführung beginnt, ist `v` nicht mehr gültig, sodass eine
+Referenz darauf ebenfalls ungültig ist. Oh nein!
 
 Um den Kompilierfehler in Codeblock 16-3 zu beheben, können wir die Hinweise
 der Fehlermeldung verwenden:
@@ -371,14 +369,14 @@ fn main() {
 `move` zwigen wir den Funktionsabschluss, die Eigentümerschaft der von ihm
 verwendeten Werte zu übernehmen</span>
 
-Was würde mit dem Code in Codeblock 16-4 geschehen, bei dem der Hauptstrang
-`drop` aufruft, wenn wir einen `move`-Funktionsabschluss verwenden? Würde
-`move` den Fall lösen? Leider nein; wir würden einen anderen Fehler erhalten,
-weil das, was in Codeblock 16-4 versucht wird, aus einem anderen Grund nicht
-erlaubt ist. Wenn wir dem Funktionsabschluss `move` hinzufügen würden, würden
-wir `v` in die Umgebung des Funktionsabschlusses verschieben, und wir könnten im
-Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden stattdessen diesen
-Kompilierfehler erhalten:
+Wir könnten versucht sein, dasselbe zu versuchen, um den Code in Codeblock 16-4
+zu reparieren, wo der Hauptstrang `drop` aufruft, indem wir einen
+`move`-Funktionsabschluss verwenden. Diese Lösung wird jedoch nicht
+funktionieren, weil das, was Codeblock 16-4 versucht, aus einem anderen Grund
+nicht erlaubt ist. Wenn wir dem Funktionsabschluss `move` hinzufügen würden,
+würden wir `v` in die Umgebung des Funktionsabschlusses verschieben, und wir
+könnten im Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden
+stattdessen diesen Kompilierfehler erhalten:
 
 ```console
 $ cargo run
