@@ -1,8 +1,7 @@
 ## Mustersyntax
 
-Im ganzen Buch hast du Beispiele für viele Arten von Mustern gesehen. In diesem
-Abschnitt stellen wir die gesamte Syntax gültiger Muster zusammen und erörtern,
-wann du jedes einzelne Muster verwenden solltest.
+In diesem Abschnitt stellen wir die gesamte Syntax gültiger Muster zusammen und
+erörtern, warum und wann du jedes einzelne Muster verwenden solltest.
 
 ### Passende Literale
 
@@ -90,10 +89,10 @@ Abgleichsbedingungen“](#extra-bedingungen-mit-abgleichsbedingungen) sprechen.
 ### Mehrfache Muster
 
 In `match`-Ausdrücken kannst du mehrere Muster mit der Syntax `|` abgleichen,
-die *oder* bedeutet. Zum Beispiel gleicht der folgende Code den Wert von `x`
-mit den `match`-Zweigen ab, wobei der erste davon eine *oder*-Option hat, was
-bedeutet, wenn der Wert von `x` zu einem der Werte in diesem Zweig passt, wird
-der Code dieses Zweigs ausgeführt:
+die das *oder*-Operator-Muster ist. Zum Beispiel gleicht der folgende Code den
+Wert von `x` mit den `match`-Zweigen ab, wobei der erste davon eine
+*oder*-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
+diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:
 
 ```rust
     let x = 1;
@@ -110,8 +109,8 @@ Dieser Code gibt `eins oder zwei` aus.
 ### Abgleichen von Wertebereichen mit `..=`
 
 Die Syntax `..=` erlaubt es uns, einen inklusiven Wertebereich abzugleichen.
-Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des Bereichs
-passt, wird dieser Zweig ausgeführt:
+Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des
+vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:
 
 ```rust
     let x = 5;
@@ -123,15 +122,16 @@ passt, wird dieser Zweig ausgeführt:
 ```
 
 Wenn `x` 1, 2, 3, 4 oder 5 ist, passt der erste Zweig. Diese Syntax ist
-bequemer als das Verwenden des `|`-Operators, um die gleiche Idee auszudrücken;
-statt `1..=5` müssten wir `1 | 2 | 3 | 4 | 5` angeben, wenn wir `|` verwenden
-würden. Die Angabe eines Bereichs ist viel kürzer, besonders wenn wir
-beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben wollen!
+bequemer bei mehreren Abgleichswerten als das Verwenden des `|`-Operators, um
+die gleiche Idee auszudrücken; wenn wir `|` verwenden wollten, müssten wir `1 |
+2 | 3 | 4 | 5` angeben. Die Angabe eines Bereichs ist viel kürzer, besonders
+wenn wir beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben
+wollen!
 
-Bereiche sind nur mit numerischen Werten oder `char`-Werten erlaubt, da der
-Compiler zur Kompilierzeit prüft, dass der Bereich nicht leer ist. Die einzigen
-Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder nicht, sind
-`char` und numerische Werte.
+Der prüft Compiler zur Kompilierzeit, dass der Bereich nicht leer ist. Die
+einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
+nicht, sind `char` und numerische Werte, Bereiche sind nur mit numerischen oder
+`char`-Werten zulässig.
 
 Hier ist ein Beispiel mit Bereichen von `char`-Werten:
 
@@ -184,16 +184,13 @@ und `y` der Struktur `p` entsprechen. Dieses Beispiel zeigt, dass die Namen der
 Variablen im Muster nicht mit den Feldnamen der Struktur übereinstimmen müssen.
 Aber es ist üblich, dass die Variablennamen mit den Feldnamen übereinstimmen,
 damit man sich leichter merken kann, welche Variablen aus welchen Feldern
-stammen.
-
-Weil es üblich ist, dass die Variablennamen mit den Feldnamen übereinstimmen,
-und weil das Schreiben von `let Point { x: x, y: y } = p;` viel Duplikation
-enthält, gibt es eine Kurzform für Muster, die mit Struktur-Feldern
-übereinstimmen: Du musst nur die Namen des Struktur-Felder auflisten, und die
-Variablen, die aus dem Muster erzeugt werden, haben die gleichen Namen.
-Codeblock 18-13 zeigt Code, der sich gleich verhält wie der Code in Codeblock
-18-12, aber die Variablen, die im Muster `let` erzeugt werden, sind `x` und `y`
-anstelle von `a` und `b`.
+stammen. Wegen dieser häufigen Verwendung und weil das Schreiben von `let Point
+{ x: x, y: y } = p;` eine Menge Duplikation enthält, hat Rust eine Kurzform
+für Muster, die mit Strukturfeldern übereinstimmen: Du musst nur die Namen des
+Struktur-Felder auflisten, und die Variablen, die aus dem Muster erzeugt
+werden, haben die gleichen Namen. Codeblock 18-13 zeigt Code, der sich gleich
+verhält wie der Code in Codeblock 18-12, aber die Variablen, die im Muster
+`let` erzeugt werden, sind `x` und `y` anstelle von `a` und `b`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -224,9 +221,9 @@ destrukturieren, anstatt Variablen für alle Felder zu erstellen. Auf diese
 Weise können wir einige der Felder auf bestimmte Werte testen, während wir
 Variablen zum Destrukturieren der anderen Felder erstellen.
 
-Codeblock 18-14 zeigt einen `match`-Ausdruck, der `Point`-Werte in drei Fälle
-unterscheidet: Punkte, die direkt auf der `x`-Achse liegen (was zutrifft, wenn
-`y = 0`), auf der `y`-Achse liegen (`x = 0`) oder keines von beiden.
+In Codeblock 18-14 haben wir einen `match`-Ausdruck, der `Point`-Werte in drei
+Fälle unterscheidet: Punkte, die direkt auf der `x`-Achse liegen (was zutrifft,
+wenn `y = 0`), auf der `y`-Achse liegen (`x = 0`) oder keines von beiden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -266,11 +263,10 @@ sodass dieser Code `Auf der y-Achse bei 7` ausgeben wird.
 
 #### Destrukturieren von Auszählungen
 
-Wir haben früher Aufzählungen in diesem Buch destrukturiert, zum Beispiel, als
-wir `Option<i32>` in Codeblock 6-5 in Kapitel 6 destrukturiert haben. Ein
-Detail, das wir nicht explizit erwähnt haben, ist, dass das Muster zum
-Destrukturieren einer Aufzählung mit der Art und Weise übereinstimmen sollte,
-wie die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
+Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
+6-5 in Kapitel 6), sind aber noch nicht explizit darauf eingegangen, dass das
+Muster zur Destrukturierung einer Aufzählung der Art und Weise entspricht, wie
+die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
 verwenden wir in Codeblock 18-15 die Aufzählung `Message` aus Codeblock 6-2 und
 schreiben ein `match` mit Mustern, das jeden inneren Wert destrukturiert.
 
@@ -332,12 +328,10 @@ Elemente in der Variante, die wir abgleichen, übereinstimmen.
 
 #### Destrukturieren verschachtelter Strukturen und Aufzählungen
 
-Bis jetzt haben all unsere Beispiele zu Strukturen oder Aufzählungen gepasst,
-die eine Ebene tief waren. Der Abgleich kann auch auf verschachtelte Elemente
-angewendet werden!
-
-Beispielsweise können wir den Code in Codeblock 18-15 so umformulieren, dass
-RGB- und HSV-Farben in der `ChangeColor`-Nachricht unterstützt werden, wie in
+Bis jetzt haben unsere Beispiele alle Strukturen oder Aufzählungen auf einer
+Ebene abgeglichen, aber der Abgleich funktioniert auch bei verschachtelten
+Elementen! Zum Beispiel können wir den Code in Codeblock 18-15 umstrukturieren,
+um RGB- und HSV-Farben in der `ChangeColor`-Nachricht zu unterstützen, wie in
 Codeblock 18-16 gezeigt.
 
 ```rust
@@ -421,10 +415,9 @@ wann jedes dieser Muster zu verwenden ist.
 #### Ignorieren eines Gesamtwertes mit `_`
 
 Wir haben den Unterstrich (`_`) als Platzhalter verwendet, der zu jedem Wert
-passt, aber nicht an den Wert gebunden ist. Obwohl das Unterstrichmuster `_`
-besonders nützlich als letzter Zweig in einem `match`-Ausdruck ist, können wir
-es in jedem Muster verwenden, einschließlich Funktionsparameter, wie in
-Codeblock 18-17 gezeigt.
+passt, aber nicht an den Wert gebunden ist. Dies ist besonders nützlich als
+letzter Zweig in einem `match`-Ausdruck ist, aber wir können es in jedem Muster
+verwenden, einschließlich Funktionsparameter, wie in Codeblock 18-17 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -450,8 +443,8 @@ Parameter nicht mehr enthält. Das Ignorieren eines Funktionsparameters kann in
 einigen Fällen besonders nützlich sein, z.B. bei der Implementierung eines
 Merkmals (trait), wenn du eine bestimmte Typsignatur benötigst, der
 Funktionsrumpf in deiner Implementierung jedoch keinen der Parameter benötigt.
-Der Compiler wird dann nicht vor unbenutzten Funktionsparametern warnen, wie es
-der Fall wäre, wenn du stattdessen einen Namen verwenden würdest.
+Du kannst dann vermeiden, dass der Compiler vor unbenutzten Funktionsparametern
+warnt, wie es der Fall wäre, wenn du stattdessen einen Namen verwenden würdest.
 
 #### Ignorieren von Teilen eines Wertes mit einem verschachtelten `_`
 
@@ -490,8 +483,8 @@ Dieser Code gibt `Kann einen vorhandenen benutzerdefinierten Wert nicht
 `match`-Zweig müssen wir nicht die Werte innerhalb der beiden `Some`-Varianten
 abgleichen oder diese verwenden, aber wir müssen den Fall prüfen, dass
 `setting_value` und `new_setting_value` jeweils `Some`-Varianten sind. In
-diesem Fall geben wir aus, warum wir `setting_value` nicht ändern, und es wird
-nicht geändert.
+diesem Fall geben wir den Grund aus, warum wir `setting_value` nicht ändern,
+und es wird nicht geändert.
 
 In allen anderen Fällen (wenn entweder `setting_value` oder `new_setting_value`
 den Wert `None` hat), die durch das Muster `_` im zweiten Zweig ausgedrückt
@@ -522,14 +515,14 @@ ignoriert.
 #### Ignorieren einer unbenutzten Variable, indem ihr Name mit `_` beginnt
 
 Wenn du eine Variable erstellst, sie aber nirgendwo verwendest, wird Rust
-normalerweise eine Warnung ausgeben, weil das ein Fehler sein könnte. Aber
-manchmal ist es nützlich, eine Variable zu erstellen, die du noch nicht
-verwenden wirst, z.B. wenn du einen Prototyp erstellst oder gerade ein Projekt
-beginnst. In dieser Situation kannst du Rust anweisen, dich nicht vor der
-unbenutzten Variablen zu warnen, indem du den Namen der Variablen mit einem
-Unterstrich beginnst. In Codeblock 18-20 erstellen wir zwei unbenutzte
-Variablen, aber wenn wir diesen Code kompilieren, sollten wir nur vor einer von
-ihnen eine Warnung erhalten.
+normalerweise eine Warnung ausgeben, weil eine unbenutzte Variable ein Fehler
+sein könnte. Aber manchmal ist es nützlich, eine Variable erstellen zu können,
+die du noch nicht verwenden wirst, z.B. wenn du einen Prototyp erstellst oder
+gerade ein Projekt beginnst. In dieser Situation kannst du Rust anweisen, dich
+nicht vor der unbenutzten Variablen zu warnen, indem du den Namen der Variablen
+mit einem Unterstrich beginnst. In Codeblock 18-20 erstellen wir zwei
+unbenutzte Variablen, aber wenn wir diesen Code kompilieren, sollten wir nur
+vor einer von ihnen eine Warnung erhalten.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -544,7 +537,7 @@ fn main() {
 Unterstrich, um Warnungen zu unbenutzten Variablen zu vermeiden</span>
 
 Hier erhalten wir eine Warnung zur unbenutzten Variablen `y`, aber wir erhalten
-keine Warnung zur unbenutzten Variablen mit vorangestelltem Unterstrich.
+keine Warnung zur unbenutzten Variablen `_x`.
 
 Beachte, dass es einen feinen Unterschied gibt zwischen dem Verwenden von `_`
 und dem Verwenden eines Namens, der mit einem Unterstrich beginnt. Die Syntax
@@ -590,7 +583,7 @@ verschoben.
 #### Ignorieren der verbleibenden Teile eines Wertes mit `..`
 
 Bei Werten, die viele Teile haben, können wir die Syntax `..` verwenden, um nur
-einige wenige Teile zu verwenden und den Rest zu ignorieren, sodass es nicht
+spezifische Teile zu verwenden und den Rest zu ignorieren, sodass es nicht
 notwendig ist, für jeden ignorierten Wert Unterstriche aufzulisten. Das Muster
 `..` ignoriert alle Teile eines Wertes, die wir im Rest des Musters nicht
 explizit zugeordnet haben. In Codeblock 18-23 haben wir eine Struktur `Point`,
@@ -817,14 +810,14 @@ hätte `ja` ausgegeben.
 
 ### `@`-Bindungen
 
-Mit dem *at*-Operator (`@`) können wir eine Variable erstellen, die einen Wert
+Mit dem *at*-Operator `@` können wir eine Variable erstellen, die einen Wert
 enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
 zu einem Muster passt. Codeblock 18-29 zeigt ein Beispiel, bei dem wir testen
 wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs `3..=7`
-liegt. Aber wir wollen den Wert auch an die Variable `id_variable` binden,
-damit wir ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir
-könnten diese Variable `id` nennen, so wie das Feld, aber für dieses Beispiel
-werden wir einen anderen Namen verwenden.
+liegt. Wir wollen den Wert auch an die Variable `id_variable` binden, damit wir
+ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
+Variable `id` nennen, so wie das Feld, aber für dieses Beispiel werden wir
+einen anderen Namen verwenden.
 
 ```rust
     enum Message {
@@ -871,11 +864,11 @@ Musters speichern.
 
 ## Zusammenfassung
 
-Die Muster in Rust sind sehr nützlich, da sie helfen, zwischen verschiedenen
-Arten von Daten zu unterscheiden. Wenn sie in `match`-Ausdrücken verwendet
-werden, stellt Rust sicher, dass deine Muster jeden möglichen Wert abdecken
-oder dein Programm sich nicht kompilieren lässt. Muster in `let`-Anweisungen
-und Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
+Die Muster in Rust sind sehr nützlich, um zwischen verschiedenen Arten von
+Daten zu unterscheiden. Wenn sie in `match`-Ausdrücken verwendet werden, stellt
+Rust sicher, dass deine Muster jeden möglichen Wert abdecken oder dein Programm
+sich nicht kompilieren lässt. Muster in `let`-Anweisungen und
+Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
 Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen an
 Variablen. Wir können einfache oder komplexe Muster erstellen, die unseren
 Bedürfnissen entsprechen.

@@ -72,12 +72,12 @@ error: could not compile `patterns` due to previous error
 Da wir nicht jeden gültigen Wert mit dem Muster `Some(x)` abgedeckt haben (und
 auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.
 
-Um das Problem zu beheben, bei dem wir ein abweisbares Muster haben, obwohl ein
-unabweisbares Muster benötigt wird, können wir den Code ändern, der das Muster
-verwendet: Anstatt `let` zu verwenden, können wir `if let` verwenden. Wenn das
-Muster dann nicht passt, überspringt der Code einfach den Code in den
-geschweiften Klammern und gibt ihm die Möglichkeit, gültig fortzufahren.
-Codeblock 18-9 zeigt, wie der Code in Codeblock 18-8 zu korrigieren ist.
+Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
+wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`
+zu verwenden, können wir `if let` verwenden. Wenn das Muster dann nicht passt,
+überspringt der Code einfach den Code in den geschweiften Klammern und gibt ihm
+die Möglichkeit, gültig fortzufahren. Codeblock 18-9 zeigt, wie der Code in
+Codeblock 18-8 zu korrigieren ist.
 
 ```rust
 # fn main() {

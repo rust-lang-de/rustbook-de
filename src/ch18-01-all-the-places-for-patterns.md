@@ -19,6 +19,20 @@ match VALUE {
     PATTERN => EXPRESSION,
 }
 ```
+
+Hier ist zum Beispiel der `match`-Ausdruck aus Codeblock 6-5, der auf einen
+`Option<i32>`-Wert in der Variablen `x` passt:
+
+```rust,ignore
+match x {
+    None => None,
+    Some(i) => Some(i + 1),
+}
+```
+
+Die Muster in diesem `match`-Ausdruck sind `None` und `Some(i)` links von jedem
+Pfeil.
+
 Eine Anforderung für `match`-Ausdrücke ist, dass sie *erschöpfend* (exhaustive)
 in dem Sinne sein müssen, dass alle Möglichkeiten für den Wert im
 `match`-Ausdruck berücksichtigt sein müssen. Ein Weg, um sicherzustellen, dass
@@ -43,14 +57,14 @@ haben mit Code, der ausgeführt wird, wenn das Muster in `if let` nicht passt.
 Codeblock 18-1 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
 if` und `else if let` zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein `match`-Ausdruck, in dem wir nur einen Wert zum Abgleich
-mit den Mustern haben können. Auch die Bedingungen in einer Reihe von `if
-let`-, `else if`- und `else if let`-Zweigen müssen sich nicht notwendigerweise
-aufeinander beziehen.
+mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
+in einer Reihe von `if let`-, `else if`- und `else if let`-Zweigen sich
+notwendigerweise aufeinander beziehen.
 
-Der Code in Codeblock 18-1 zeigt eine Reihe von Prüfungen für verschiedene
-Bedingungen, die darüber entscheiden, welche Hintergrundfarbe verwendet werden
-soll. Für dieses Beispiel haben wir Variablen mit hartkodierten Werten
-erstellt, die ein reales Programm von Benutzereingaben erhalten könnte.
+Der Code in Codeblock 18-1 bestimmt die Farbe des Hintergrunds auf der
+Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
+haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
+von Benutzereingaben erhalten könnte.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -80,10 +94,11 @@ fn main() {
 let` und `else`</span>
 
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
-Hintergrundfarbe. Wenn heute Dienstag ist, ist die Hintergrundfarbe grün. Wenn
-der Benutzer sein Alter als Zeichenkette angibt und wir es erfolgreich als Zahl
-parsen können, ist die Farbe entweder violett oder orange, je nach dem Wert der
-Zahl. Wenn keine dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.
+Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
+ist, ist die Hintergrundfarbe grün. Ansonsten, wenn der Benutzer sein Alter als
+Zeichenkette angibt und wir es erfolgreich als Zahl parsen können, ist die
+Farbe entweder violett oder orange, je nach dem Wert der Zahl. Wenn keine
+dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.
 
 Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
@@ -106,9 +121,9 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 ### `while let`-bedingte Schleifen
 
 Ähnlich konstruiert wie `if let` erlaubt die `while let`-bedingte Schleife,
-dass eine `while`-Schleife so lange läuft, wie ein Muster weiterhin passt. Das
-Beispiel in Codeblock 18-2 zeigt eine `while let`-Schleife, die einen Vektor
-als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
+dass eine `while`-Schleife so lange läuft, wie ein Muster weiterhin passt. In
+Codeblock 18-2 haben wir eine `while let`-Schleife geschrieben, die einen
+Vektor als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
 Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.
 
 ```rust
@@ -135,15 +150,10 @@ Element von unserem Stapel zu holen.
 
 ### `for`-Schleifen
 
-In Kapitel 3 haben wir erwähnt, dass die `for`-Schleife die häufigste
-Schleifenkonstruktion in Rust-Code ist, aber wir haben das Muster, das `for`
-annimmt, noch nicht besprochen. In einer `for`-Schleife ist das Muster der
-Wert, der direkt auf das Schlüsselwort `for` folgt, sodass in `for x in y` das
-`x` das Muster ist.
-
-Codeblock 18-3 zeigt, wie ein Muster in einer `for`-Schleife verwendet werden
-kann, um ein Tupel als Teil der `for`-Schleife zu destrukturieren oder
-auseinanderzubrechen.
+In einer `for`-Schleife ist der Wert, der direkt auf das Schlüsselwort `for`
+folgt, ein Muster. Zum Beispiel ist in `for x in y` das `x` das Muster.
+Codeblock 18-3 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
+ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
     let v = vec!['a', 'b', 'c'];
@@ -168,11 +178,11 @@ b ist beim Index 1
 c ist beim Index 2
 ```
 
-Wir verwenden die Methode `enumerate`, um einen Iterator so anzupassen, dass er
-einen Wert und den Index dieses Wertes im Iterator erzeugt, die in ein Tupel
-gesetzt werden. Der erste Aufruf von `enumerate` erzeugt das Tupel `(0, 'a')`.
-Wenn dieser Wert zum Muster `(index, value)` passt, ist `index` gleich `0` und
-`value` gleich `'a'`, wodurch die erste Zeile der Ausgabe ausgegeben wird.
+Wir passen einen Iterator mit der Methode `enumerate` so an, dass er einen
+Wert und den Index für diesen Wert erzeugt, die in einem Tupel abgelegt sind.
+Der erste Aufruf von `enumerate` erzeugt das Tupel `(0, 'a')`. Wenn dieser Wert
+zum Muster `(index, value)` passt, ist `index` gleich `0` und `value` gleich
+`'a'`, wodurch die erste Zeile der Ausgabe ausgegeben wird.
 
 ### `let`-Anweisungen
 
@@ -185,9 +195,9 @@ diese einfache Variablenzuweisung mit `let`:
 let x = 5;
 ```
 
-In diesem Buch haben wir `let` wie dieses hunderte Male verwendet und obwohl du
-es vielleicht nicht bemerkt hast, hast du ein Muster verwendet! Formell gesehen
-sieht eine `let`-Anweisung so aus:
+Jedes Mal, wenn di eine `let`-Anweisung wie diese verwendet hast, hast du
+Muster verwendet, auch wenn du es vielleicht nicht bemerkt hast! Formal sieht
+eine `let`-Anweisung wie folgt aus:
 
 ```text
 let PATTERN = EXPRESSION;
@@ -227,8 +237,6 @@ funktioniert.
 
 ```rust,does_not_compile
     let (x, y) = (1, 2, 3);
-
-
 ```
 
 <span class="caption">Codeblock 18-5: Fehlerhaft aufgebautes Musters, dessen
@@ -243,9 +251,7 @@ error[E0308]: mismatched types
  --> src/main.rs:2:9
   |
 2 |     let (x, y) = (1, 2, 3);
-  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
-  |         |
-  |         expected a tuple with 3 elements, found one with 2 elements
+  |         ^^^^^^ expected a tuple with 3 elements, found one with 2 elements
   |
   = note: expected tuple `({integer}, {integer}, {integer})`
              found tuple `(_, _)`
@@ -254,12 +260,12 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `patterns` due to previous error
 ```
 
-Wenn wir einen oder mehrere der Werte im Tupel ignorieren wollten, könnten wir
-`_` oder `..` verwenden, wie du im Abschnitt [„Ignorieren von Werten in einem
-Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem darin
-besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
-die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
-Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
+Um den Fehler zu beheben, könnten wir einen oder mehrere der Werte im Tupel
+mittels `_` oder `..` ignorieren, wie du im Abschnitt [„Ignorieren von Werten
+in einem Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem
+darin besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung
+darin, die Typen aufeinander abzustimmen, indem Variablen entfernt werden,
+sodass die Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
 
 ### Funktionsparameter
 
