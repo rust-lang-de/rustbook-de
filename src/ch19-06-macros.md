@@ -52,11 +52,11 @@ darin, dass du Makros definieren oder in den Gültigkeitsbereich bringen musst,
 
 ### Deklarative Makros mit `macro_rules!` für allgemeine Metaprogrammierung
 
-Die am häufigsten verwendete Form von Makros in Rust sind *deklarative Makros*.
-Diese werden manchmal auch als „Beispielmakros“ (macros by example),
-„`macro_rules!`-Makros“ oder einfach nur „Makros“ bezeichnet. In ihrem Kern
-erlauben deklarative Makros, etwas Ähnliches wie einen Rust-Ausdruck zu
-schreiben. Wie in Kapitel 6 besprochen, sind `match`-Ausdrücke
+Die am häufigsten verwendete Form von Makros in Rust ist das *deklarative
+Makro*. Diese werden manchmal auch als „Makros am Beispiel“ (macros by
+example), „`macro_rules!`-Makros“ oder einfach nur „Makros“ bezeichnet. In
+ihrem Kern erlauben deklarative Makros, etwas Ähnliches wie einen Rust-Ausdruck
+zu schreiben. Wie in Kapitel 6 besprochen, sind `match`-Ausdrücke
 Kontrollstrukturen, die einen Ausdruck entgegennehmen, den resultierenden Wert
 des Ausdrucks mit Mustern abgleichen und dann den Code ausführen, der mit dem
 passenden Muster verknüpft ist. Makros vergleichen ebenfalls einen Wert mit
@@ -130,17 +130,22 @@ Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
 Kapitel 18 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
 und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
 der Musterteile in Listing 19-28 betrachten; die vollständige Makromustersyntax
-findest du in [der Referenz][macro-reference].
+findest du in [der Rust-Referenz][macro-reference].
 
-Zunächst umfasst ein äußeres Klammernpaar das gesamte Muster. Als Nächstes folgt
-ein Dollarzeichen (`$`), wiederum gefolgt von einem Klammernpaar, das Parameter
-enthält, die bei Musterübereinstimmung im
-Ersetzungscode verwendet werdenn. Innerhalb von `$()` befindet sich `$x:expr`, das mit
-jedem beliebigen Rust-Ausdruck übereinstimmt und dem Ausdruck den Namen `$x` gibt.
+Zunächst verwenden wir ein äußeres Klammernpaar, um das gesamte Muster zu
+umfassen. Wir verwenden ein Dollarzeichen (`$`), um eine Variable im
+Makrosystem zu deklarieren, die den Rust-Code enthält, der zum Muster passt.
+Das Dollarzeichen macht deutlich, dass es sich um eine Makrovariable und nicht
+um eine normale Rust-Variable handelt. Danach folgt eine Reihe von Klammern,
+die Werte erfassen, die mit dem Muster innerhalb der Klammern übereinstimmen,
+um sie im Ersetzungscode zu verwenden. Innerhalb von `$()` befindet sich
+`$x:expr`, das mit jedem beliebigen Rust-Ausdruck übereinstimmt und dem
+Ausdruck den Namen `$x` gibt.
 
 Das Komma nach `$()` gibt an, dass ein literales Komma-Trennzeichen optional
-nach dem Code erscheinen könnte, der mit dem Code in `$()` übereinstimmt. Der `*` besagt,
-dass das Muster keinmal oder mehrmals zu dem passt, was vor dem `*` steht.
+nach dem Code erscheinen könnte, der mit dem Code in `$()` übereinstimmt. Der
+`*` besagt, dass das Muster keinmal oder mehrmals zu dem passt, was vor dem `*`
+steht.
 
 Wenn wir dieses Makro mit `vec![1, 2, 3];` aufrufen, passt das Muster `$x`
 dreimal zu den drei Ausdrücken `1`, `2` und `3`.
@@ -178,11 +183,11 @@ of Rust Macros“][tlborm] (engl. „Das kleine Buch der Rust-Makros“).
 
 ### Prozedurale Makros zur Code-Generierung aus Attributen
 
-Die zweite Form von Makros sind *prozedurale Makros*, die sich eher wie
-Funktionen verhalten (und eine Art Prozedur sind). Prozedurale Makros
-akzeptieren etwas Code als Eingabe, operieren mit diesem Code und erzeugen
-etwas Code als Ausgabe, anstatt gegen Muster abzugleichen und den Code durch
-anderen Code zu ersetzen, wie es deklarative Makros tun.
+Die zweite Form von Makros ist das *prozedurale Makro*, das sich eher wie eine
+Funktion verhält (und eine Art Prozedur ist). Prozedurale Makros akzeptieren
+etwas Code als Eingabe, operieren mit diesem Code und erzeugen etwas Code als
+Ausgabe, anstatt gegen Muster abzugleichen und den Code durch anderen Code zu
+ersetzen, wie es deklarative Makros tun.
 
 Die drei Arten von prozeduralen Makros (benutzerdefinierte derive-Makros,
 Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.
@@ -190,9 +195,9 @@ Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.
 Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
 komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
-werden. Das Definieren von prozeduralen Makros sieht aus wie der Code in
-Codeblock 19-29, wobei `some_attribute` ein Platzhalter für die Verwendung
-eines bestimmten Makros ist.
+werden. In Codeblock 19-29 zeigen wir, wie man ein prozedurales Makro
+definiert, wobei `some_attribute` ein Platzhalter für die Verwendung einer
+bestimmten Makro-Variante ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -224,15 +229,15 @@ Unterschiede, in denen sich die anderen Formen unterscheiden.
 
 Lass uns eine Kiste namens `hello_macro` erstellen, die ein Merkmal namens
 `HelloMacro` mit einer assoziierten Funktion namens `hello_macro` definiert.
-Anstatt unsere Kisten-Benutzer dazu zu bringen, das Merkmal `HelloMacro` für
-jeden ihrer Typen zu implementieren, werden wir ein prozedurales Makro zur
-Verfügung stellen, damit die Benutzer ihren Typ mit `#[derive(HelloMacro)]`
-annotieren können, um eine Standardimplementierung der Funktion `hello_macro`
-zu erhalten. Die Standardimplementierung gibt `Hallo Makro! Mein Name ist
-TypeName!` aus, wobei `TypeName` der Name des Typs ist, auf dem dieses Merkmal
-definiert wurde. Mit anderen Worten, wir werden eine Kiste schreiben, die es
-einem anderen Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock
-19-30 zu schreiben.
+Anstatt unsere Benutzer dazu zu bringen, das Merkmal `HelloMacro` für jeden
+ihrer Typen zu implementieren, werden wir ein prozedurales Makro zur Verfügung
+stellen, damit die Benutzer ihren Typ mit `#[derive(HelloMacro)]` annotieren
+können, um eine Standardimplementierung der Funktion `hello_macro` zu erhalten.
+Die Standardimplementierung gibt `Hallo Makro! Mein Name ist TypeName!` aus,
+wobei `TypeName` der Name des Typs ist, auf dem dieses Merkmal definiert wurde.
+Mit anderen Worten, wir werden eine Kiste schreiben, die es einem anderen
+Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock 19-30 zu
+schreiben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

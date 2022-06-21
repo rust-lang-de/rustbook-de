@@ -13,9 +13,10 @@ zurückzuweisen, als einige ungültige Programme zu akzeptieren. Obwohl der Code
 *möglicherweise* in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
 er nicht genügend Informationen hat, um sicher zu sein. In diesen Fällen kannst
 du unsicheren Code verwenden, um dem Compiler zu sagen: „Vertraue mir, ich
-weiß, was ich tue.“ Der Nachteil ist, dass du ihn auf eigenes Risiko
-verwendest: Wenn du unsicheren Code falsch verwendest, können Probleme aufgrund
-von Speicherunsicherheiten, z.B. Dereferenzierung von Null-Zeigern, auftreten.
+weiß, was ich tue.“ Sei jedoch gewarnt, dass du unsicheres Rust auf eigenes
+Risiko verwendest: Wenn du unsicheren Code falsch verwendest, können Probleme
+aufgrund von Speicherunsicherheiten auftreten, z.B. Dereferenzierung von
+Null-Zeigern.
 
 Ein weiterer Grund, warum Rust ein unsicheres zweites Ich hat, ist, dass die
 zugrunde liegende Computer-Hardware von Natur aus unsicher ist. Wenn Rust dich
@@ -29,10 +30,10 @@ untersuchen, was wir mit unsicherem Rust tun können und wie wir es tun können.
 ### Unsichere Superkräfte
 
 Um auf unsicheres Rust umzuschalten, verwendest du das Schlüsselwort `unsafe`
-und startest dann einen neuen Block, der den unsicheren Code enthält. Du kannst
-in unsicherem Rust fünf Aktionen durchführen, die als *unsichere Superkräfte*
-bezeichnet werden und in sicherem Rust nicht möglich sind. Diese Superkräfte
-beinhalten folgende Möglichkeiten:
+und startest dann einen neuen Block, der den unsicheren Code enthält. In
+unsicherem Rust kannst du fünf Aktionen ausführen, die du in sicherem Rust
+nicht ausführen kannst, die wir *unsichere Superkräfte* nennen. Zu diesen
+Superkräften gehören folgende Fähigkeiten:
 
 * Dereferenzieren eines Rohzeigers
 * Aufrufen einer unsicheren Funktion oder Methode
@@ -127,14 +128,14 @@ haben, deren Gültigkeit garantiert ist, wissen wir, dass diese speziellen
 Rohzeiger gültig sind, aber wir können diese Annahme nicht für jeden beliebigen
 Rohzeiger treffen.
 
-Als Nächstes werden wir einen Rohzeiger erstellen, bei dem wir uns nicht sicher
-sein können, das er gültig ist. Codeblock 19-2 zeigt, wie man einen Rohzeiger
-auf eine willkürliche Stelle im Speicher erstellt. Der Versuch, willkürlichen
-Speicher zu verwenden, ist undefiniert: Es könnten Daten an dieser Adresse
-vorhanden sein oder auch nicht, der Compiler könnte den Code so optimieren,
-dass es keinen Speicherzugriff gibt, oder das Programm könnte eine
-Schutzverletzung (segmentation fault) verursachen. Normalerweise gibt es keinen
-guten Grund, Code wie diesen zu schreiben, aber es ist möglich.
+Um das zu demonstrieren, werden wir als Nächstes einen Rohzeiger erstellen, bei
+dem wir uns nicht sicher sein können, das er gültig ist. Codeblock 19-2 zeigt,
+wie man einen Rohzeiger auf eine willkürliche Stelle im Speicher erstellt. Der
+Versuch, willkürlichen Speicher zu verwenden, ist undefiniert: Es könnten Daten
+an dieser Adresse vorhanden sein oder auch nicht, der Compiler könnte den Code
+so optimieren, dass es keinen Speicherzugriff gibt, oder das Programm könnte
+eine Schutzverletzung (segmentation fault) verursachen. Normalerweise gibt es
+keinen guten Grund, Code wie diesen zu schreiben, aber es ist möglich.
 
 ```rust
 # fn main() {
@@ -193,16 +194,16 @@ Beispiel für eine sichere Abstraktion, die unsicheren Code verwendet.
 
 ### Aufrufen einer unsicheren Funktion oder Methode
 
-Die zweite Art von Operationen, die einen unsicheren Block erfordern, sind
-Aufrufe von unsicheren Funktionen. Unsichere Funktionen und Methoden sehen
-genau wie reguläre Funktionen und Methoden aus, aber sie haben ein zusätzliches
-`unsafe` vor dem Rest der Definition. Das Schlüsselwort `unsafe` weist in
-diesem Zusammenhang darauf hin, dass die Funktion Anforderungen hat, die wir
-einhalten müssen, wenn wir diese Funktion aufrufen, denn Rust kann nicht
-garantieren, dass wir diese Anforderungen erfüllt haben. Indem wir eine
-unsichere Funktion innerhalb eines `unsafe`-Blocks aufrufen, sagen wir, dass
-wir die Dokumentation dieser Funktion gelesen haben und die Verantwortung für
-die Einhaltung der Verträge der Funktion übernehmen.
+Die zweite Art von Operationen, die du in einem unsicheren Block ausführen
+kannst, sind Aufrufe von unsicheren Funktionen. Unsichere Funktionen und
+Methoden sehen genau wie reguläre Funktionen und Methoden aus, aber sie haben
+ein zusätzliches `unsafe` vor dem Rest der Definition. Das Schlüsselwort
+`unsafe` weist in diesem Zusammenhang darauf hin, dass die Funktion
+Anforderungen hat, die wir einhalten müssen, wenn wir diese Funktion aufrufen,
+denn Rust kann nicht garantieren, dass wir diese Anforderungen erfüllt haben.
+Indem wir eine unsichere Funktion innerhalb eines `unsafe`-Blocks aufrufen,
+sagen wir, dass wir die Dokumentation dieser Funktion gelesen haben und die
+Verantwortung für die Einhaltung der Verträge der Funktion übernehmen.
 
 Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
 tut:
@@ -236,10 +237,9 @@ For more information about this error, try `rustc --explain E0133`.
 error: could not compile `unsafe-example` due to previous error
 ```
 
-Indem wir den `unsafe`-Block um unseren Aufruf von `dangerous` legen,
-versichern wir Rust, dass wir die Dokumentation der Funktion gelesen haben,
-dass wir verstehen, wie sie richtig zu benutzen ist, und dass wir überprüft
-haben, dass wir den Vertrag der Funktion erfüllen.
+Mit dem `unsafe`-Block versichern wir Rust, dass wir die Dokumentation der
+Funktion gelesen haben, dass wir verstehen, wie sie richtig zu benutzen ist,
+und dass wir überprüft haben, dass wir den Vertrag der Funktion erfüllen.
 
 Rümpfe von unsicheren Funktionen sind effektiv `unsafe`-Blöcke, d.h. wir können
 andere unsichere Operationen innerhalb einer unsicheren Funktion ausführen,
@@ -251,7 +251,7 @@ Nur weil eine Funktion unsicheren Code enthält, bedeutet das nicht, dass wir
 die gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das
 Einpacken von unsicherem Codes in eine sichere Funktion eine gängige
 Abstraktion. Als Beispiel betrachten wir die Funktion `split_at_mut` aus der
-Standardbibliothek, die unsicheren Code verwendet, und untersuchen, wie wir sie
+Standardbibliothek, die unsicheren Code verwendet. Wir untersuchen, wie wir sie
 implementieren könnten. Diese sichere Methode ist auf veränderlichen
 Anteilstypen definiert: Sie nimmt einen Anteilstyp und macht zwei daraus, indem
 sie den Anteilstyp an dem als Argument angegebenen Index teilt. Codeblock 19-4
@@ -473,15 +473,15 @@ Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
 > Wir können auch `extern` verwenden, um eine Schnittstelle zu schaffen, die es
 > anderen Sprachen erlaubt, Rust-Funktionen aufzurufen. Anstelle eines
 > `extern`-Blocks fügen wir das Schlüsselwort `extern` hinzu und geben die zu
-> verwendende ABI unmittelbar vor dem Schlüsselwort `fn` an. Wir müssen auch
-> eine Annotation `#[no_mangle]` hinzufügen, um dem Rust-Compiler mitzuteilen,
-> dass er den Namen dieser Funktion nicht verändern soll. *Mangling* bedeutet,
-> dass ein Compiler den Namen, den wir einer Funktion gegeben haben, in einen
-> anderen Namen ändert, der mehr Informationen für andere Teile des
-> Kompiliervorgangs enthält, aber weniger menschenlesbar ist. Jeder
-> Programmiersprachen-Compiler verändert Namen etwas anders. Damit eine
-> Rust-Funktion von anderen Sprachen aufgerufen werden kann, müssen wir also
-> die Namensveränderung des Rust-Compilers deaktivieren.
+> verwendende ABI unmittelbar vor dem Schlüsselwort `fn` der relevanten
+> Funktion an. Wir müssen auch eine Annotation `#[no_mangle]` hinzufügen, um
+> dem Rust-Compiler mitzuteilen, dass er den Namen dieser Funktion nicht
+> verändern soll. *Mangling* bedeutet, dass ein Compiler den Namen, den wir
+> einer Funktion gegeben haben, in einen anderen Namen ändert, der mehr
+> Informationen für andere Teile des Kompiliervorgangs enthält, aber weniger
+> menschenlesbar ist. Jeder Programmiersprachen-Compiler verändert Namen etwas
+> anders. Damit eine Rust-Funktion von anderen Sprachen aufgerufen werden kann,
+> müssen wir also die Namensveränderung des Rust-Compilers deaktivieren.
 >
 > Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
 > zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
@@ -498,8 +498,8 @@ Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
 
 ### Zugreifen oder Ändern einer veränderlichen, statischen Variable
 
-Bis jetzt haben wir noch nicht über *globale Variablen* gesprochen, die Rust
-zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
+In diesem Buch haben wir noch nicht über *globale Variablen* gesprochen, die
+Rust zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
 problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
 veränderliche, globale Variable zugreifen, kann dies zu einer
 Daten-Wettlaufsituation (data race) führen.
@@ -526,21 +526,19 @@ zwischen Variablen und Konstanten“][differences-between-variables-and-constant
 in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
 Konvention in `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur
 Referenzen mit der Lebensdauer `'static` speichern, was bedeutet, dass der
-Rust-Compiler die Lebensdauer herausfinden kann; wir brauchen sie nicht
+Rust-Compiler die Lebensdauer herausfinden kann, und wir brauchen sie nicht
 explizit anzugeben. Der Zugriff auf eine unveränderliche, statische Variable
 ist sicher.
 
-Konstanten und unveränderliche, statische Variablen mögen ähnlich aussehen,
-aber ein subtiler Unterschied besteht darin, dass Werte in einer statischen
-Variable eine feste Adresse im Speicher haben. Beim Verwenden des Wertes wird
-immer auf die gleichen Daten zugegriffen. Konstanten hingegen dürfen ihre Daten
-duplizieren, wann immer sie verwendet werden.
-
-Ein weiterer Unterschied zwischen Konstanten und statischen Variablen besteht
-darin, dass statische Variablen veränderlich sein können. Der Zugriff auf und
-die Änderung von veränderlichen, statischen Variablen ist *unsicher*. Codeblock
-19-10 zeigt, wie man eine veränderliche, statische Variable namens `COUNTER`
-deklariert, auf sie zugreift und sie modifiziert.
+Ein feiner Unterschied zwischen Konstanten und unveränderlichen, statischen
+Variablen besteht darin, dass Werte in einer statischen Variable eine feste
+Adresse im Speicher haben. Beim Verwenden des Wertes wird immer auf die
+gleichen Daten zugegriffen. Konstanten hingegen dürfen ihre Daten duplizieren,
+wann immer sie verwendet werden. Ein weiterer Unterschied besteht darin, dass
+statische Variablen veränderlich sein können. Der Zugriff auf und die Änderung
+von veränderlichen, statischen Variablen ist *unsicher*. Codeblock 19-10 zeigt,
+wie man eine veränderliche, statische Variable namens `COUNTER` deklariert, auf
+sie zugreift und sie modifiziert.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -581,12 +579,12 @@ prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.
 
 ### Implementieren eines unsicheren Merkmals
 
-Ein anderer Anwendungsfall für `unsafe` ist das Implementieren eines unsicheren
-Merkmals (unsafe trait). Ein Merkmal ist unsicher, wenn mindestens eine ihrer
-Methoden eine Invariante hat, die der Compiler nicht verifizieren kann. Wir
-können erklären, dass ein Merkmal `unsafe` ist, indem wir das Schlüsselwort
-`unsafe` vor `trait` einfügen und die Implementierung des Merkmals ebenfalls
-mit `unsafe` markieren, wie in Codeblock 19-11 gezeigt.
+Wir können `unsafe` zum Implementieren eines unsicheren Merkmals (unsafe trait)
+verwenden. Ein Merkmal ist unsicher, wenn mindestens eine ihrer Methoden eine
+Invariante hat, die der Compiler nicht verifizieren kann. Wir können erklären,
+dass ein Merkmal `unsafe` ist, indem wir das Schlüsselwort `unsafe` vor `trait`
+einfügen und die Implementierung des Merkmals ebenfalls mit `unsafe` markieren,
+wie in Codeblock 19-11 gezeigt.
 
 ```rust
 unsafe trait Foo {

@@ -9,13 +9,22 @@ Funktionszeigern und Zurückgeben von Funktionsabschlüssen.
 Wir haben darüber gesprochen, wie man Funktionsabschlüsse an Funktionen
 übergibt; man kann auch reguläre Funktionen an Funktionen übergeben! Diese
 Technik ist nützlich, wenn du eine Funktion, die du bereits definiert hast,
-übergeben willst, anstatt einen neuen Funktionsabschluss zu definieren. Wenn du
-dies mit Funktionszeigern tust, kannst du Funktionen als Argumente für andere
-Funktionen verwenden. Funktionen erzwingen den Typ `fn` (mit einem kleinen f),
-nicht zu verwechseln mit dem Funktionsabschlussmerkmal (closure trait) `Fn`.
-Der Typ `fn` wird als *Funktionszeiger* (function pointer) bezeichnet. Die
-Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ist ähnlich
-der von Funktionsabschlüssen, wie in Codeblock 19-27 gezeigt.
+übergeben willst, anstatt einen neuen Funktionsabschluss zu definieren.
+Funktionen haben den Typ `fn` (mit kleinem f), nicht zu verwechseln mit dem
+Funktionsabschlussmerkmal (closure trait) `Fn`. Der Typ `fn` wird
+*Funktionszeiger* (function pointer) genannt. Die Übergabe von Funktionen mit
+Funktionszeigern ermöglicht es dir, Funktionen als Argumente für andere
+Funktionen zu verwenden.
+
+Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
+der von Funktionsabschlüssen, wie in Codeblock 19-27 gezeigt, wo wir eine
+Funktion `add_one` definiert haben, die ihrem Parameter eins hinzufügt. Die
+Funktion `do_twice` nimmt zwei Parameter entgegen: Einen Funktionszeiger auf
+eine beliebige Funktion mit einem `i32`-Parameter und einem `i32`-Rückgabewert,
+und einen `i32`-Parameter. Die Funktion `do_twice` ruft die Funktion `f`
+zweimal auf, übergibt ihr den Wert `arg` und addiert dann die Ergebnisse der
+beiden Funktionsaufrufe zusammen. Die Funktion `main` ruft `do_twice` mit den
+Argumenten `add_one` und `5` auf.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -50,21 +59,22 @@ Typparameter mit einem Merkmal `Fn` als Merkmalsabgrenzung (trait bound) zu
 deklarieren.
 
 Funktionszeiger implementieren alle drei Funktionsabschlussmerkmale (`Fn`,
-`FnMut` und `FnOnce`), sodass du immer einen Funktionszeiger als Argument an
-eine Funktion übergeben kannst, die einen Funktionsabschluss erwartet. Es ist
-am besten, Funktionen mit einem generischen Typ und einer der
+`FnMut` und `FnOnce`), was bedeutet, dass du immer einen Funktionszeiger als
+Argument an eine Funktion übergeben kannst, die einen Funktionsabschluss
+erwartet. Es ist am besten, Funktionen mit einem generischen Typ und einer der
 Funktionsabschlussmerkmale zu schreiben, sodass deine Funktionen entweder
 Funktionen oder Funktionsabschlüsse akzeptieren können.
 
-Ein Fall, bei dem du nur `fn` und keine Funktionsabschlüsse akzeptieren
-möchtest, ist die Kopplung mit externem Code, der keine Funktionsabschlüsse
+Ein Beispiel, bei dem du nur `fn` und keine Funktionsabschlüsse akzeptieren
+möchtest, ist die Schnittstelle zu externem Code, der keine Funktionsabschlüsse
 hat: C-Funktionen können Funktionen als Argumente akzeptieren, aber C hat keine
 Funktionsabschlüsse.
 
 Als Beispiel dafür, wo du entweder einen inline definierten Funktionsabschluss
 oder eine benannte Funktion verwenden könntest, sehen wir uns die Verwendung
-von `map` an. Um die Funktion `map` zu verwenden, um einen Vektor von Zahlen in
-einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
+der Methode `map` an, die vom Merkmal `Iterator` in der Standardbibliothek
+bereitgestellt wird. Um die Funktion `map` zu verwenden, um einen Vektor von
+Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss wie diesen verwenden:
 
 ```rust
@@ -89,8 +99,8 @@ die wir vorhin im Abschnitt [„Fortgeschrittene Merkmale
 `ToString` definiert ist, welche die Standardbibliothek für jeden Typ
 implementiert hat, der `Display` implementiert.
 
-Aus dem Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 weißt du,
-dass der Name jeder definierten Aufzählungsvariante auch eine
+Aus dem Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen
+wir, dass der Name jeder definierten Aufzählungsvariante auch eine
 Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
 Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
 was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
