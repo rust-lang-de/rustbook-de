@@ -12,7 +12,7 @@ sagt und in einem Webbrowser wie Abbildung 20-1 aussieht.
 
 <span class="caption">Abbildung 20-1: Unser letztes gemeinsames Projekt</span>
 
-Hier ist der Plan zum Bauen des Webservers:
+Hier ist unser Plan zum Bauen des Webservers:
 
 1. Lerne ein wenig über TCP und HTTP.
 2. Lausche auf TCP-Verbindungen an einem Netzwerkknoten (socket).
@@ -21,17 +21,18 @@ Hier ist der Plan zum Bauen des Webservers:
 5. Verbessere den Durchsatz unseres Servers mit einem Strang-Vorrat (thread
    pool).
 
-Aber bevor wir anfangen, sollten wir ein Detail erwähnen: Die Methode, die wir
+Bevor wir anfangen, sollten wir ein Detail erwähnen: Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu
-bauen. Auf [crates.io](https://crates.io/) sind etliche produktionsreife Kisten
-(crates) verfügbar, die umfassendere Webserver- und
-Strang-Vorrats-Implementierungen bereitstellen, als wir bauen werden.
-
+bauen. Community-Mitglieder haben eine Reihe von produktionsreifen Kisten auf
+[crates.io][crates] veröffentlicht, die umfassendere Webserver- und
+Strang-Vorrats-Implementierungen bereitstellen, als wir sie bauen werden.
 Unsere Absicht in diesem Kapitel ist es jedoch, dir beim Lernen zu helfen, und
 nicht, den einfachen Weg zu gehen. Da es sich bei Rust um eine
 Systemprogrammiersprache handelt, können wir die Abstraktionsebene wählen, mit
 der wir arbeiten wollen, und können auf eine niedrigere Ebene gehen, als dies
-in anderen Sprachen möglich oder zweckmäßig ist. Wir werden den grundlegenden
-HTTP-Server und den Strang-Vorrat manuell schreiben, damit du die allgemeinen
-Ideen und Techniken hinter den Kisten lernst, die du in Zukunft verwenden
-kannst.
+in anderen Sprachen möglich oder zweckmäßig ist. Wir werden daher den
+grundlegenden HTTP-Server und den Strang-Vorrat manuell schreiben, damit du die
+allgemeinen Ideen und Techniken hinter den Kisten lernst, die du in Zukunft
+verwenden kannst.
+
+[crates]: https://crates.io/

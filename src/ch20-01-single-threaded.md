@@ -36,9 +36,9 @@ $ cd hello
 ```
 
 Gib nun den Code in Codeblock 20-1 in *src/main.rs* ein, um zu beginnen. Dieser
-Code lauscht unter der Adresse `127.0.0.1:7878` auf eingehende TCP-Ströme (TCP
-streams). Wenn er einen eingehenden Strom erhält, wird er `Verbindung
-hergestellt!` ausgeben.
+Code lauscht unter der lokalen Adresse `127.0.0.1:7878` auf eingehende
+TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
+`Verbindung hergestellt!` ausgeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -63,25 +63,26 @@ Mit `TcpListener` können wir unter der Adresse `127.0.0.1:7878` auf
 TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
 eine IP-Adresse, die deinen Computer repräsentiert (dies ist auf jedem Computer
 gleich und gilt nicht nur speziell für den Computer der Autoren), und `7878`
-ist der Port. Wir haben diesen Port aus zwei Gründen gewählt: HTTP wird
-normalerweise auf diesem Port nicht akzeptiert und 7878 ist *rust* auf einem
-Telefon getippt.
+ist der Port. Wir haben diesen Port aus zwei Gründen gewählt: HTTP wird auf
+diesem Port normalerweise nicht akzeptiert, sodass unser Server wahrscheinlich
+nicht mit anderen Webservern in Konflikt geraten wird, die du auf deinem
+Rechner hast, und 7878 steht für *rust*, wenn du es auf einem Telefon tippst.
 
 Die Funktion `bind` in diesem Szenario arbeitet wie die Funktion `new`, indem
-sie eine neue `TcpListener`-Instanz zurückgibt. Der Grund dafür, dass die
-Funktion `bind` genannt wird, liegt darin, dass in Netzwerken das Verbinden mit
-einem Port zum Lauschen als „Binden (binding) an einen Port“ bezeichnet wird.
+sie eine neue `TcpListener`-Instanz zurückgibt. Die Funktion wird `bind`
+genannt, weil in Netzwerken das Verbinden mit einem Port zum Lauschen als
+„Binden (binding) an einen Port“ bezeichnet wird.
 
-Die Funktion `bind` gibt ein `Result<T, E>` zurück, was anzeigt, dass das
-Binden fehlschlagen könnte. Zum Beispiel erfordert das Binden an Port 80
-Administrator-Rechte (Nicht-Administratoren können nur auf Ports größer als
-1023 lauschen). Wenn wir also versuchen würden, an Port 80 zu lauschen, ohne
-Administrator zu sein, würde das Binden nicht funktionieren. Ein weiteres
-Beispiel: Binden ist nicht möglich, wenn wir zwei Instanzen unseres Programms
-laufen lassen und somit zwei Programme auf dem gleichen Port lauschen würden.
-Da wir einen einfachen Server nur für Lernzwecke schreiben, werden wir uns
-nicht um die Behandlung dieser Art von Fehlern kümmern; stattdessen verwenden
-wir `unwrap`, um das Programm zu stoppen, wenn Fehler auftreten.
+Die Funktion `bind` gibt ein `Result<T, E>` zurück, was anzeigt, dass es
+möglich ist, dass das Binden fehlschlagen könnte. Zum Beispiel erfordert das
+Binden an Port 80 Administrator-Rechte (Nicht-Administratoren können nur auf
+Ports größer als 1023 lauschen). Wenn wir also versuchen würden, an Port 80 zu
+lauschen, ohne Administrator zu sein, würde das Binden nicht funktionieren. Das
+Binden wäre beispielsweise auch nicht möglich, wenn wir zwei Instanzen unseres
+Programms laufen lassen und somit zwei Programme auf dem gleichen Port lauschen
+würden. Da wir einen einfachen Server nur für Lernzwecke schreiben, werden wir
+uns nicht um die Behandlung dieser Art von Fehlern kümmern; stattdessen
+verwenden wir `unwrap`, um das Programm zu stoppen, wenn Fehler auftreten.
 
 Die Methode `incoming` von `TcpListener` gibt einen Iterator zurück, der uns
 eine Sequenz von Strömen (genauer gesagt Ströme vom Typ `TcpStream`) liefert.
@@ -89,10 +90,11 @@ Ein einzelner *Strom* (stream) stellt eine offene Verbindung zwischen dem
 Client und dem Server dar. Eine *Verbindung* (connection) ist der Name für den
 vollständigen Anfrage- und Antwortprozess, bei dem sich ein Client mit dem
 Server verbindet, der Server eine Antwort erzeugt und der Server die Verbindung
-schließt. Als solches liest `TcpStream` von sich selbst, um zu sehen, was der
-Kunde gesendet hat, und erlaubt uns dann, unsere Antwort in den Strom zu
-schreiben. Insgesamt wird diese `for`-Schleife jede Verbindung der Reihe nach
-verarbeiten und eine Reihe von Strömen erzeugen, die wir verarbeiten müssen.
+schließt. Daher werden wir aus dem `TcpStream` lesen, um zu sehen, was der
+Client gesendet hat, und dann unsere Antwort in den Strom schreiben, um Daten
+zurück an den Client zu senden. Insgesamt wird diese `for`-Schleife jede
+Verbindung der Reihe nach verarbeiten und eine Reihe von Strömen erzeugen, die
+wir verarbeiten müssen.
 
 Im Moment besteht unsere Behandlung des Stroms darin, dass wir `unwrap`
 aufrufen, um unser Programm zu beenden, wenn der Strom Fehler aufweist; wenn
@@ -136,9 +138,9 @@ Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!
 
 Denke daran, das Programm durch Drücken von <span
 class="keystroke">Strg+c</span> zu beenden, wenn du mit der Ausführung einer
-bestimmten Version des Codes fertig bist. Starte dann `cargo run` erneut,
-nachdem du jede Menge Code-Änderungen vorgenommen hast, um sicherzustellen,
-dass du den neuesten Code ausführst.
+bestimmten Version des Codes fertig bist. Starte dann das Programm neu, indem
+du den Befehl `cargo run` aufrufst, nachdem du die einzelnen Codeänderungen
+vorgenommen hast, um sicherzustellen, dass du den neuesten Code ausführst.
 
 ### Lesen der Anfrage
 
@@ -179,38 +181,39 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="caption">Codeblock 20-2: Lesen aus dem `TcpStream` und Ausgeben
 der Daten</span>
 
-Wir bringen `std::io::prelude` in den Gültigkeitsbereich, um Zugang zu
-bestimmten Merkmalen (traits) zu erhalten, die es uns ermöglichen, aus dem
-Strom zu lesen und in den Strom zu schreiben. In der `for`-Schleife in der
-Funktion `main` rufen wir jetzt, statt eine Nachricht auszugeben, dass wir eine
-Verbindung hergestellt haben, die neue Funktion `handle_connection` auf und
-übergeben ihr den `stream`.
+Wir bringen `std::io::prelude` und `std::io::BufReader` in den
+Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
+es uns ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In
+der `for`-Schleife in der Funktion `main` rufen wir jetzt, statt eine Nachricht
+auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
+`handle_connection` auf und übergeben ihr den `stream`.
 
-In der Funktion `handle_connection` haben wir den Parameter `stream`
-veränderlich gemacht. Der Grund dafür ist, dass die `TcpStream`-Instanz
-verfolgt, welche Daten sie intern an uns zurückgibt. Sie liest möglicherweise
-mehr Daten, als wir angefordert haben, und speichert diese Daten für die
-nächste Datenanforderung. Sie muss daher `mut` sein, weil sich ihr interner
-Zustand ändern könnte; normalerweise denken wir beim „Lesen“ nicht an eine
-Veränderung, aber in diesem Fall brauchen wir das Schlüsselwort `mut`.
+In der Funktion `handle_connection` erstellen wir eine neue
+`BufReader`-Instanz, die eine veränderliche Referenz auf den `stream` enthält.
+`BufReader` sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden
+von `std::io::Read` für uns verwaltet.
 
-Als Nächstes müssen wir tatsächlich aus dem Strom lesen. Wir tun dies in zwei
-Schritten: Zuerst deklarieren wir einen `buffer` auf dem Stapelspeicher
-(stack), um die eingelesenen Daten aufzunehmen. Wir haben den Puffer 1024 Bytes
-groß gemacht, was groß genug ist, um die Daten einer einfachen Anfrage
-aufzunehmen und für unsere Zwecke in diesem Kapitel ausreicht. Wenn wir
-Anfragen beliebiger Größe bearbeiten wollten, müsste die Pufferverwaltung
-komplizierter sein; wir werden es vorerst einfach halten. Wir übergeben den
-Puffer an die Funktion `stream.read`, die Bytes aus dem `TcpStream` liest und
-sie in den Puffer legt.
+Wir erstellen eine Variable namens `http_request`, um die Zeilen der Anfrage zu
+aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
+diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
+`Vec<_>` hinzufügen.
 
-Zweitens wandeln wir die Bytes im Puffer in eine Zeichenkette (string) um und
-geben diese Zeichenkette aus. Die Funktion `String::from_utf8_lossy` nimmt ein
-`&[u8]` und erzeugt daraus einen `String`. Der „verlustbehaftete“ (lossy) Teil
-des Namens weist auf das Verhalten dieser Funktion hin, wenn sie eine ungültige
-UTF-8-Sequenz erhält: Sie ersetzt die ungültige Sequenz durch `�`, dem
-Ersetzungszeichen `U+FFFD`. Möglicherweise siehst du Ersatzzeichen für Zeichen
-im Puffer, die nicht durch Anforderungsdaten gefüllt sind.
+`BufReader` implementiert das Merkmal `std::io::BufRead`, das die Methode
+`lines` bereitstellt. Die Methode `lines` gibt einen Iterator von
+`Result<String, std::io::Error>` zurück, indem sie den Datenstrom immer dann
+aufteilt, wenn sie ein Neue-Zeile-Byte sieht. Um jeden `String` zu erhalten,
+wird jedes `Result` abgebildet und `unwrap` aufgerufen. Das `Result` könnte
+einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es
+ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
+Produktivprogramm diese Fehler besser behandeln, aber der Einfachheit halber
+brechen wir das Programm im Fehlerfall ab.
+
+Der Browser signalisiert das Ende einer HTTP-Anfrage, indem er zwei
+Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Strom zu
+erhalten, nehmen wir so lange Zeilen an, bis wir eine leere Zeile erhalten.
+Sobald wir die Zeilen im Vektor gesammelt haben, geben wir sie mit einer
+hübschen Debug-Formatierung aus, damit wir einen Blick auf die Anweisungen
+werfen können, die der Webbrowser an unseren Server sendet.
 
 Lass uns diesen Code ausprobieren! Starte das Programm und stelle erneut eine
 Anfrage in einem Webbrowser. Beachte, dass wir immer noch eine Fehlerseite im
@@ -222,24 +225,30 @@ $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
     Finished dev [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/hello`
-Request: GET / HTTP/1.1
-Host: 127.0.0.1:7878
-User-Agent: Mozilla/5.0 (Windows NT 10.0; WOW64; rv:52.0) Gecko/20100101
-Firefox/52.0
-Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8
-Accept-Language: en-US,en;q=0.5
-Accept-Encoding: gzip, deflate
-Connection: keep-alive
-Upgrade-Insecure-Requests: 1
-������������������������������������
+Request: [
+    "GET / HTTP/1.1",
+    "Host: 127.0.0.1:7878",
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language: en-US,en;q=0.5",
+    "Accept-Encoding: gzip, deflate, br",
+    "DNT: 1",
+    "Connection: keep-alive",
+    "Upgrade-Insecure-Requests: 1",
+    "Sec-Fetch-Dest: document",
+    "Sec-Fetch-Mode: navigate",
+    "Sec-Fetch-Site: none",
+    "Sec-Fetch-User: ?1",
+    "Cache-Control: max-age=0",
+]
 ```
 
 Je nach Browser erhältst du möglicherweise eine etwas andere Ausgabe. Jetzt, wo
 wir die Anfragedaten ausgeben, können wir sehen, warum wir mehrere Verbindungen
-von einer Browser-Anfrage erhalten, wenn wir uns den Pfad nach `Request: GET`
-ansehen. Wenn die wiederholten Verbindungen alle `/` anfordern, wissen wir,
-dass der Browser wiederholt versucht, `/` abzurufen, weil er keine Antwort von
-unserem Programm erhält.
+von einer Browser-Anfrage erhalten, wenn wir uns den Pfad nach `GET` in der
+ersten Zeile der Anfrage ansehen. Wenn die wiederholten Verbindungen alle `/`
+anfordern, wissen wir, dass der Browser wiederholt versucht, `/` abzurufen,
+weil er keine Antwort von unserem Programm erhält.
 
 Lass uns diese Anfragedaten aufschlüsseln, um zu verstehen, was der Browser von
 unserem Programm will.
@@ -257,7 +266,8 @@ message-body
 Die erste Zeile ist die *Anfragezeile* (request line), die Informationen
 darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
 die *Methode* an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt,
-wie der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage.
+wie der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage,
+was bedeutet, dass er nach Informationen fragt.
 
 Der nächste Teil der Anfragezeile ist `/`, der den *einheitlichen
 Ressourcenbezeichner* (Uniform Resource Identifier, kurz *URI*) angibt, den der
@@ -291,8 +301,8 @@ zurück!
 
 ### Schreiben einer Antwort
 
-Jetzt werden wir das Senden von Daten als Antwort auf eine Clientanfrage
-implementieren. Die Antworten haben das folgende Format:
+Wir implementieren das Senden von Daten als Antwort auf eine Clientanfrage. Die
+Antworten haben das folgende Format:
 
 ```text
 HTTP-Version Status-Code Reason-Phrase CRLF
@@ -353,26 +363,23 @@ HTTP-Antwort in den Strom</span>
 
 Die erste neue Zeile definiert die Variable `response`, die die Daten der
 Erfolgsmeldung enthält. Dann rufen wir `as_bytes` auf unserer `response` auf,
-um die Zeichenkettendaten in Bytes zu konvertieren. Die Methode `write` auf
-`stream` nimmt ein `&[u8]` und sendet diese Bytes direkt in die Verbindung.
-
-Da die Operation `write` fehlschlagen könnte, verwenden wir wie bisher bei
+um die Zeichenkettendaten in Bytes zu konvertieren. Die Methode `write_all` auf
+`stream` nimmt ein `&[u8]` und sendet diese Bytes direkt in die Verbindung. Da
+die Operation `write_all` fehlschlagen könnte, verwenden wir wie bisher bei
 jedem Fehlerergebnis `unwrap` . Auch hier würdest du in einer echten Anwendung
-eine Fehlerbehandlung hinzufügen. Schließlich wird `flush` aufgerufen, damit
-das Programm wartet, bis alle Bytes in die Verbindung geschrieben sind;
-`TcpStream` enthält einen internen Puffer, um Aufrufe an das darunterliegende
-Betriebssystem zu minimieren.
+eine Fehlerbehandlung hinzufügen.
 
 Lass uns mit diesen Änderungen unseren Code ausführen und eine Anfrage stellen.
 Wir geben keine Daten mehr im Terminal aus, sodass wir außer der Ausgabe von
 Cargo keine weiteren Ausgaben sehen werden. Wenn du *127.0.0.1:7878* in einem
 Webbrowser lädst, solltest du statt eines Fehlers eine leere Seite sehen. Du
-hast gerade eine HTTP-Anfrage und -Antwort von Hand kodiert!
+hast soeben das Empfangen einer HTTP-Anfrage und das Senden einer Antwort von
+Hand programmiert!
 
 ### Echtes HTML zurückgeben
 
 Lass uns die Funktionalität für die Rückgabe von mehr als einer leeren Seite
-implementieren. Erstelle eine neue Datei *hello.html* in der Wurzel deines
+implementieren. Erstelle die neue Datei *hello.html* in der Wurzel deines
 Projektverzeichnisses, nicht im Verzeichnis *src*. Du kannst beliebiges HTML
 eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.
 
@@ -440,7 +447,7 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="caption">Codeblock 20-5: Senden des Inhalts von *hello.html* als
 Rumpf der Antwort</span>
 
-Wir haben oben eine Zeile hinzugefügt, um das Dateisystemmodul der
+Wir haben `fs` zur `use`-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
 Inhalts einer Datei in eine Zeichenkette sollte vertraut aussehen; wir haben
 ihn in Kapitel 12 verwendet, als wir den Inhalt einer Datei für unser
@@ -454,13 +461,13 @@ Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von `hello.html`.
 Führe diesen Code mit `cargo run` aus und lade *127.0.0.1:7878* im Browser; du
 solltest dein HTML gerendert sehen!
 
-Gegenwärtig ignorieren wir die Anfragedaten in `buffer` und senden einfach den
-Inhalt der HTML-Datei bedingungslos zurück. Das heißt, wenn du versuchst,
-*127.0.0.1:7878/something-else* in deinem Browser anzufragen, erhältst du immer
-noch dieselbe HTML-Antwort zurück. Unser Server ist sehr begrenzt und ist nicht
-das, was die meisten Webserver tun. Wir wollen unsere Antworten je nach Anfrage
-anpassen und nur die HTML-Datei für eine wohlgeformte Anfrage an `/`
-zurücksenden.
+Gegenwärtig ignorieren wir die Anfragedaten in `http_request` und senden
+einfach den Inhalt der HTML-Datei bedingungslos zurück. Das heißt, wenn du
+versuchst, *127.0.0.1:7878/something-else* in deinem Browser anzufragen,
+erhältst du immer noch dieselbe HTML-Antwort zurück. Unser Server ist im Moment
+sehr begrenzt und macht nicht das, was die meisten Webserver tun. Wir wollen
+unsere Antworten je nach Anfrage anpassen und nur die HTML-Datei für eine
+wohlgeformte Anfrage an `/` zurücksenden.
 
 ### Validieren der Anfrage und selektives Beantworten
 
@@ -516,20 +523,23 @@ fn handle_connection(mut stream: TcpStream) {
 }
 ```
 
-<span class="caption">Codeblock 20-6: Abgleichen der Anfrage und Behandeln von
-Anfragen an `/` anders als bei anderen Anfragen</span>
+<span class="caption">Codeblock 20-6: Behandlung von Anfragen an `/` anders als
+andere Anfragen</span>
 
-Zuerst werden die Daten, die der `/`-Anfrage entsprechen, fest in die Variable
-`get` kodiert. Da wir Roh-Bytes in den Puffer einlesen, wandeln wir `get` in
-eine Byte-Zeichenkette um, indem wir die Byte-Zeichenkettensyntax `b""` am
-Anfang der Inhaltsdaten hinzufügen. Dann prüfen wir, ob `buffer` mit den Bytes
-in `get` beginnt. Wenn dies der Fall ist, bedeutet es, dass wir eine
-wohlgeformte Anfrage an `/` erhalten haben, was der Erfolgsfall ist, den wir im
-`if`-Block behandeln, der den Inhalt unserer HTML-Datei zurückgibt.
+Wir werden uns nur die erste Zeile der HTTP-Anfrage ansehen. Anstatt also die
+gesamte Anfrage in einen Vektor zu lesen, rufen wir `next` auf, um das erste
+Element aus dem Iterator zu erhalten. Das erste `unwrap` kümmert sich um die
+`Option` und hält das Programm an, wenn der Iterator keine Elemente hat. Das
+zweite `unwrap` behandelt das `Result` und hat den gleichen Effekt wie das
+`unwrap` in  `map` in Codeblock 20-2.
 
-Wenn `buffer` *nicht* mit den Bytes in `get` beginnt, bedeutet das, dass wir
-eine andere Anfrage erhalten haben. Wir fügen gleich Code zum `else`-Block
-hinzu, um auf alle anderen Anfragen zu antworten.
+Als nächstes überprüfen wir `request_line`, um zu sehen, ob es der Anfragezeile
+einer GET-Anfrage mit dem Pfad `/` entspricht. Ist dies der Fall, gibt der
+`if`-Block den Inhalt unserer HTML-Datei zurück.
+
+Wenn `request_line` *nicht* der GET-Anfrage mit dem `/` Pfad entspricht,
+bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
+`else`-Block gleich Code hinzufügen, um auf alle anderen Anfragen zu reagieren.
 
 Führe diesen Code jetzt aus und frage *127.0.0.1:7878* an; du solltest das HTML
 in *hello.html* erhalten. Wenn du eine andere Anfrage stellst, z.B.
