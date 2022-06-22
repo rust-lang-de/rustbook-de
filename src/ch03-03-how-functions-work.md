@@ -113,7 +113,7 @@ fn main() {
 }
 
 fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!("Das Maß ist: {}{}", value, unit_label);
+    println!("Das Maß ist: {value}{unit_label}");
 }
 ```
 
@@ -246,7 +246,7 @@ fn main() {
         x + 1
     };
 
-    println!("Der Wert von y ist: {}", y);
+    println!("Der Wert von y ist: {y}");
 }
 ```
 
@@ -288,7 +288,7 @@ fn five() -> i32 {
 fn main() {
     let x = five();
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -328,7 +328,7 @@ Sehen wir uns ein weiteres Beispiel an:
 fn main() {
     let x = plus_one(5);
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -> i32 {
@@ -346,7 +346,7 @@ Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler.
 fn main() {
     let x = plus_one(5);
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -> i32 {

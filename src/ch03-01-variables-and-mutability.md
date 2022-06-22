@@ -24,9 +24,9 @@ kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.
 ```rust,does_not_compile
 fn main() {
     let x = 5;
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
     x = 6;
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -88,9 +88,9 @@ Lass uns zum Beispiel *src/main.rs* wie folgt ändern:
 ```rust
 fn main() {
     let mut x = 5;
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
     x = 6;
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -186,10 +186,10 @@ fn main() {
 
     {
         let x = x * 2;
-        println!("Der Wert von x im inneren Gültigkeitsbereich ist: {}", x);
+        println!("Der Wert von x im inneren Gültigkeitsbereich ist: {x}");
     }
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -202,7 +202,6 @@ Klammern geschaffen wird, beschattet die dritte `let`-Anweisung dann ebenfalls
 multipliziert wird, um `x` einen Wert von `12` zu geben. Wenn dieser
 Gültigkeitsbereich zu Ende ist, endet die innere Beschattung und `x` wird
 wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
---
 
 ```console
 $ cargo run
@@ -254,6 +253,8 @@ $ cargo run
 error[E0308]: mismatched types
  --> src/main.rs:3:14
   |
+2 |     let mut spaces = "   ";
+  |                      ----- expected due to this value
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&str`, found `usize`
 

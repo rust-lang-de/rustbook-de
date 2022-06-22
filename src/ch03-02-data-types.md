@@ -238,7 +238,7 @@ einige Beispiele für die Deklaration von `char`-Werten:
 ```rust
 fn main() {
     let c = 'z';
-    let z = 'ℤ';
+    let z: char = 'ℤ'; // mit expliziter Typannotation
     let heart_eyed_cat = '😻';
 }
 ```
@@ -293,7 +293,7 @@ fn main() {
 
     let (x, y, z) = tup;
 
-    println!("Der Wert von y ist: {}", y);
+    println!("Der Wert von y ist: {y}");
 }
 ```
 
@@ -445,9 +445,7 @@ fn main() {
     let element = a[index];
 
     println!(
-        "Der Wert von element beim Index {} ist: {}",
-        index, element
-    );
+        "Der Wert von element beim Index {index} ist: {element}");
 }
 ```
 
