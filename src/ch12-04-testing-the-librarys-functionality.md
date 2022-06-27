@@ -47,7 +47,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -57,14 +57,14 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     Ok(())
 # }
@@ -114,7 +114,7 @@ produktiv."` enthält.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -124,14 +124,14 @@ produktiv."` enthält.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     Ok(())
 # }
@@ -193,7 +193,7 @@ error[E0106]: missing lifetime specifier
 help: consider introducing a named lifetime parameter
    |
 28 | pub fn search<'a>(query: &'a str, contents: &'a str) -> Vec<&'a str> {
-   |              ^^^^        ^^^^^^^            ^^^^^^^         ^^^
+   |              ++++         ++                 ++              ++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `minigrep` due to previous error
@@ -270,7 +270,7 @@ Beachte, dass dies noch nicht kompiliert.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -280,14 +280,14 @@ Beachte, dass dies noch nicht kompiliert.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     Ok(())
 # }
@@ -340,7 +340,7 @@ dies noch nicht kompiliert werden kann.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -350,14 +350,14 @@ dies noch nicht kompiliert werden kann.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     Ok(())
 # }
@@ -410,7 +410,7 @@ einen veränderlichen Vektor vor der `for`-Schleife erstellen und die
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -420,14 +420,14 @@ einen veränderlichen Vektor vor der `for`-Schleife erstellen und die
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     Ok(())
 # }
@@ -516,7 +516,7 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -526,17 +526,17 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
+    let contents = fs::read_to_string(config.file_path)?;
 
     for line in search(&config.query, &contents) {
-        println!("{}", line);
+        println!("{line}");
     }
 
     Ok(())

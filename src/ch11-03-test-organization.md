@@ -45,7 +45,8 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 mod tests {
     #[test]
     fn it_works() {
-        assert_eq!(2 + 2, 4);
+        let result = 2 + 2;
+        assert_eq!(result, 4);
     }
 }
 ```

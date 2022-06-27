@@ -28,7 +28,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -38,17 +38,17 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     for line in search(&config.query, &contents) {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -140,7 +140,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -150,17 +150,17 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     for line in search(&config.query, &contents) {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -299,7 +299,7 @@ nirgendwo initialisiert haben:
 #
 pub struct Config {
     pub query: String,
-    pub filename: String,
+    pub file_path: String,
     pub case_sensitive: bool,
 }
 # 
@@ -310,14 +310,14 @@ pub struct Config {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.case_sensitive {
 #         search(&config.query, &contents)
@@ -326,7 +326,7 @@ pub struct Config {
 #     };
 #
 #     for line in results {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -407,7 +407,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 #     pub case_sensitive: bool,
 # }
 # 
@@ -418,14 +418,14 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
+    let contents = fs::read_to_string(config.file_path)?;
 
     let results = if config.case_sensitive {
         search(&config.query, &contents)
@@ -434,7 +434,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     };
 
     for line in results {
-        println!("{}", line);
+        println!("{line}");
     }
 
     Ok(())
@@ -522,7 +522,7 @@ use std::env;
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 #     pub case_sensitive: bool,
 # }
 #
@@ -533,20 +533,20 @@ impl Config {
         }
 
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
         Ok(Config {
             query,
-            filename,
+            file_path,
             case_sensitive,
         })
     }
 }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.case_sensitive {
 #         search(&config.query, &contents)
@@ -555,7 +555,7 @@ impl Config {
 #     };
 #
 #     for line in results {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())

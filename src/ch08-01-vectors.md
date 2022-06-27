@@ -87,7 +87,8 @@ let v = vec![1, 2, 3, 4, 5];
 let third: &i32 = &v[2];
 println!("Das dritte Element ist {}", third);
 
-match v.get(2) {
+let third: Option<&i32> = v.get(2);
+match third {
     Some(third) => println!("Das dritte Element ist {}", third),
     None => println!("Es gibt kein drittes Element."),
 }

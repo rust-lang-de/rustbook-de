@@ -40,15 +40,15 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let query = &args[1];
-#     let filename = &args[2];
+#     let file_path = &args[2];
 #
 #     println!("Suche nach {}", query);
-    println!("In Datei {}", filename);
+    println!("In Datei {}", file_path);
 
-    let contents = fs::read_to_string(filename)
+    let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{}", contents);
+    println!("Mit text:\n{contents}");
 }
 ```
 

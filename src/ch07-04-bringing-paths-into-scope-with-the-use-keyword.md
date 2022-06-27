@@ -282,7 +282,6 @@ Projekt zu verwenden, fügten wir diese Zeile zu *Cargo.toml* hinzu:
 <span class="filename">Dateiname: Cargo.toml</span>
 
 ```toml
-[dependencies]
 rand = "0.8.3"
 ```
 

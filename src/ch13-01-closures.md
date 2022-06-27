@@ -445,7 +445,7 @@ so flexibel wie nur möglich.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
 Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich unterscheidet.
-Sie nimmt einen Funktionsabschluss, der `FnMut` implementiert. Der
+Sie nimmt einen Funktionsabschluss, die `FnMut` implementiert. Der
 Funktionsabschluss erhält ein Argument, eine Referenz auf das aktuelle Element
 im betrachteten Anteilstyp, und gibt einen Wert vom Typ `K` zurück, der
 geordnet werden kann. Diese Funktion ist nützlich, wenn man einen Anteilstyp
@@ -533,18 +533,9 @@ struct Rectangle {
 
 fn main() {
     let mut list = [
-        Rectangle {
-            width: 10,
-            height: 1,
-        },
-        Rectangle {
-            width: 3,
-            height: 5,
-        },
-        Rectangle {
-            width: 7,
-            height: 12,
-        },
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
     ];
 
     let mut sort_operations = vec![];
@@ -618,18 +609,9 @@ struct Rectangle {
 
 fn main() {
     let mut list = [
-        Rectangle {
-            width: 10,
-            height: 1,
-        },
-        Rectangle {
-            width: 3,
-            height: 5,
-        },
-        Rectangle {
-            width: 7,
-            height: 12,
-        },
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
     ];
 
     let mut num_sort_operations = 0;

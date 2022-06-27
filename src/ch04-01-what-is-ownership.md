@@ -366,12 +366,10 @@ Haldenspeicher für diese Variable säubert, wenn eine Variable den
 Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
 auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn `s2` und `s1` den
 Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
-freizugeben.
-
-Dies wird als *doppelter Freigabefehler* (double free error) bezeichnet und ist
-einer der Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das
-zweimalige Freigeben des Speichers kann zu einer Speicherverfälschung führen,
-was potenziell zu Sicherheitslücken führen kann.
+freizugeben. Dies wird als *doppelter Freigabefehler* (double free error)
+bezeichnet und ist einer der Speichersicherheitsfehler, die wir zuvor erwähnt
+haben. Das zweimalige Freigeben des Speichers kann zu einer
+Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.
 
 Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile `let s2
 = s1` die Variable `s1` als nicht mehr gültig. Daher braucht Rust nichts

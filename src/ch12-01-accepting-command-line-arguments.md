@@ -49,7 +49,7 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
+    dbg!(args);
 }
 ```
 
@@ -96,15 +96,21 @@ $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
-["target/debug/minigrep"]
+[src/main.rs:5] args = [
+    "target/debug/minigrep",
+]
 ```
 
 ```console
-$ cargo run Nadel Heuhaufen
+$ cargo run -- Nadel Heuhaufen
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 1.57s
-     Running `target/debug/minigrep Nadel Heuhaufen`
-["target/debug/minigrep", "Nadel", "Heuhaufen"]
+     Running `target/debug/minigrep needle haystack`
+[src/main.rs:5] args = [
+    "target/debug/minigrep",
+    "Nadel",
+    "Heuhaufen",
+]
 ```
 
 Beachte, dass der erste Wert im Vektor `"target/debug/minigrep"` ist, was der

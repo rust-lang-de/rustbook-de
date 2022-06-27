@@ -383,13 +383,13 @@ Aufnahme von Zahlentypen und Zeichenkettentypen:
 
 ```rust
 let some_number = Some(5);
-let some_string = Some("eine Zeichenkette");
+let some_char = Some('e');
 
 let absent_number: Option<i32> = None;
 ```
 
-Der Typ von `some_number` ist `Option<i32>`. Der Typ von `some_string` ist
-`Option<&str>`, was ein anderer Typ ist. Rust kann diese Typen ableiten, weil
+Der Typ von `some_number` ist `Option<i32>`. Der Typ von `some_char` ist
+`Option<char>`, was ein anderer Typ ist. Rust kann diese Typen ableiten, weil
 wir einen Wert innerhalb der `Some`-Variante angegeben haben. Für
 `absent_number` verlangt Rust den gesamten Typ `Option` zu annotieren: Der
 Compiler kann den Typ, den die entsprechende `Some`-Variante haben wird, nicht

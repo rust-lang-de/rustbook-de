@@ -91,24 +91,24 @@ wir vorerst in *src/main.rs* definieren werden.
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let (query, filename) = parse_config(&args);
+    let (query, file_path) = parse_config(&args);
 
     // --abschneiden--
 #
 #     println!("Suche nach {}", query);
-#     println!("In Datei {}", filename);
+#     println!("In Datei {}", file_path);
 #
-#     let contents = fs::read_to_string(filename)
+#     let contents = fs::read_to_string(file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 }
 
 fn parse_config(args: &[String]) -> (&str, &str) {
     let query = &args[1];
-    let filename = &args[2];
+    let file_path = &args[2];
 
-    (query, filename)
+    (query, file_path)
 }
 ```
 
@@ -163,26 +163,26 @@ fn main() {
     let config = parse_config(&args);
 
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
-    let contents = fs::read_to_string(config.filename)
+    let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
     // --abschneiden--
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 }
 
 struct Config {
     query: String,
-    filename: String,
+    file_path: String,
 }
 
 fn parse_config(args: &[String]) -> Config {
     let query = args[1].clone();
-    let filename = args[2].clone();
+    let file_path = args[2].clone();
 
-    Config { query, filename }
+    Config { query, file_path }
 }
 ```
 
@@ -268,12 +268,12 @@ fn main() {
     let config = Config::new(&args);
 
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
     // --abschneiden--
 }
@@ -282,15 +282,15 @@ fn main() {
 
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 impl Config {
     fn new(args: &[String]) -> Config {
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
-        Config { query, filename }
+        Config { query, file_path }
     }
 }
 ```
@@ -345,17 +345,17 @@ ab und zeigt eine bessere Fehlermeldung an.
 #     let config = Config::new(&args);
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -367,9 +367,9 @@ ab und zeigt eine bessere Fehlermeldung an.
         // --snip--
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Config { query, filename }
+#         Config { query, file_path }
 #     }
 # }
 ```
@@ -436,17 +436,17 @@ wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
 #     let config = Config::new(&args);
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 impl Config {
@@ -456,9 +456,9 @@ impl Config {
         }
 
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
-        Ok(Config { query, filename })
+        Ok(Config { query, file_path })
     }
 }
 ```
@@ -501,24 +501,24 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("Fehler beim Parsen der Argumente: {}", err);
+        println!("Fehler beim Parsen der Argumente: {err}");
         process::exit(1);
     });
 
     // --abschneiden--
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -528,9 +528,9 @@ fn main() {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -603,28 +603,28 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
     run(config);
 }
 
 fn run(config: Config) {
-    let contents = fs::read_to_string(config.filename)
+    let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{}", contents);
+    println!("Mit text:\n{contents}");
 }
 
 // --abschneiden--
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -634,9 +634,9 @@ fn run(config: Config) {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -673,27 +673,27 @@ use std::error::Error;
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
 #     run(config);
 # }
 #
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
+    let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Mit text:\n{}", contents);
+    println!("Mit text:\n{contents}");
 
     Ok(())
 }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -703,9 +703,9 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -800,31 +800,31 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
     if let Err(e) = run(config) {
-        println!("Anwendungsfehler: {}", e);
+        println!("Anwendungsfehler: {e}");
 
         process::exit(1);
     }
 }
 #
 # fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
 #     Ok(())
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -834,9 +834,9 @@ fn main() {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -880,7 +880,7 @@ use std::fs;
 
 pub struct Config {
     pub query: String,
-    pub filename: String,
+    pub file_path: String,
 }
 
 impl Config {
@@ -891,17 +891,17 @@ impl Config {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
     }
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // --abschneiden--
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
 #     Ok(())
 }
@@ -931,16 +931,16 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
     if let Err(e) = minigrep::run(config) {
         // --abschneiden--
-#         println!("Anwendungsfehler: {}", e);
+#         println!("Anwendungsfehler: {e}");
 #
 #         process::exit(1);
     }
