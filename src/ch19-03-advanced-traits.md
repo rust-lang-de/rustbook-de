@@ -522,15 +522,10 @@ $ cargo run
 error[E0283]: type annotations needed
   --> src/main.rs:20:43
    |
-20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
-   |                                                ^^^^^^^^^^^^^^^^^ cannot infer type
+20 |     println!("A baby dog is called a {}", Animal::baby_name());
+   |                                           ^^^^^^^^^^^^^^^^^ cannot infer type
    |
    = note: cannot satisfy `_: Animal`
-note: required by `Animal::baby_name`
-  --> src/main.rs:2:5
-   |
-2  |     fn baby_name() -> String;
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0283`.
 error: could not compile `traits-example` due to previous error
@@ -706,14 +701,16 @@ $ cargo run
 error[E0277]: `Point` doesn't implement `std::fmt::Display`
   --> src/main.rs:20:6
    |
-3  | trait OutlinePrint: fmt::Display {
-   |                     ------------ required by this bound in `OutlinePrint`
-...
 20 | impl OutlinePrint for Point {}
    |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
    |
    = help: the trait `std::fmt::Display` is not implemented for `Point`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+note: required by a bound in `OutlinePrint`
+  --> src/main.rs:3:21
+   |
+3  | trait OutlinePrint: fmt::Display {
+   |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `traits-example` due to previous error

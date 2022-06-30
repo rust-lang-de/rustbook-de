@@ -46,11 +46,11 @@ wird, bevor du diesen Code ausführst oder weiterliest.
 
     match x {
         Some(50) => println!("Habe 50 erhalten"),
-        Some(y) => println!("Passt, y = {:?}", y),
+        Some(y) => println!("Passt, y = {y}"),
         _ => println!("Standardfall, x = {:?}", x),
     }
 
-    println!("Am Ende: x = {:?}, y = {:?}", x, y);
+    println!("Am Ende: x = {:?}, y = {y}", x);
 ```
 
 <span class="caption">Codeblock 18-11: Ein `match`-Ausdruck mit einem Zweig,
@@ -501,7 +501,7 @@ Elementen.
 
     match numbers {
         (first, _, third, _, fifth) => {
-            println!("Einige Zahlen: {}, {}, {}", first, third, fifth)
+            println!("Einige Zahlen: {first}, {third}, {fifth}")
         }
     }
 ```
@@ -623,7 +623,7 @@ zeigt, wie man `..` mit einem Tupel verwendet.
 
     match numbers {
         (first, .., last) => {
-            println!("Einige Zahlen: {}, {}", first, last);
+            println!("Einige Zahlen: {first}, {last}");
         }
     }
 ```
@@ -740,11 +740,11 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
 
     match x {
         Some(50) => println!("Habe 50 erhalten"),
-        Some(n) if n == y => println!("Passt, n = {}", n),
+        Some(n) if n == y => println!("Passt, n = {n}"),
         _ => println!("Standardfall, x = {:?}", x),
     }
 
-    println!("Am Ende: x = {:?}, y = {}", x, y);
+    println!("Am Ende: x = {:?}, y = {y}", x);
 ```
 
 <span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum

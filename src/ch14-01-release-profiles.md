@@ -75,4 +75,5 @@ Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen f�
 jedes Profil findest du in [Cargos Dokumentation][cargo].
 
 [^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
+
 [cargo]: https://doc.rust-lang.org/cargo/reference/profiles.html

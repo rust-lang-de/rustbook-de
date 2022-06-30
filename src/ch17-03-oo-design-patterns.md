@@ -431,7 +431,7 @@ impl State for Draft {
 struct PendingReview {}
 
 impl State for PendingReview {
-    // --snip--
+    // --abschneiden--
 #     fn request_review(self: Box<Self>) -> Box<dyn State> {
 #         self
 #     }
@@ -627,9 +627,9 @@ Codeblock 17-18 gezeigt wird:
 #
 trait State {
     // --abschneiden--
-    fn request_review(self: Box<Self>) -> Box<dyn State>;
-    fn approve(self: Box<Self>) -> Box<dyn State>;
-
+#     fn request_review(self: Box<Self>) -> Box<dyn State>;
+#     fn approve(self: Box<Self>) -> Box<dyn State>;
+#
     fn content<'a>(&self, post: &'a Post) -> &'a str {
         ""
     }

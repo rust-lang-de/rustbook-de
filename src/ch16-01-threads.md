@@ -226,13 +226,6 @@ erfassen“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
 Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
 zwischen `move` und `thread::spawn` konzentrieren.
 
-In Kapitel 13 haben wir erwähnt, dass wir das Schlüsselwort `move` vor der
-Parameterliste eines Funktionsabschlusses verwenden können, um den
-Funktionsabschluss dazu zu zwingen, die Eigentümerschaft der Werte zu
-übernehmen, die er aus der Umgebung verwendet. Diese Technik ist besonders
-nützlich, wenn neue Stränge erstellt werden, um die Eigentümerschaft an Werten
-von einem Strang auf einen anderen zu übertragen.
-
 Beachte in Codeblock 16-1, dass der Funktionsabschluss, den wir an
 `thread::spawn` übergeben, keine Argumente erfordert: Wir verwenden keine Daten
 aus dem Hauptstrang im Code des erzeugten Strangs. Um Daten aus dem Hauptstrang
@@ -340,7 +333,7 @@ der Fehlermeldung verwenden:
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
   |
 6 |     let handle = thread::spawn(move || {
-  |                                ^^^^^^^
+  |                                ++++
 ```
 
 Indem wir vor dem Funktionsabschluss das Schlüsselwort `move` hinzufügen,

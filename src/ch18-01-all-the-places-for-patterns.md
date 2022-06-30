@@ -75,7 +75,7 @@ fn main() {
     let age: Result<u8, _> = "34".parse();
 
     if let Some(color) = favorite_color {
-        println!("Verwende deine Lieblingsfarbe {} als Hintergrund", color);
+        println!("Verwende deine Lieblingsfarbe {color} als Hintergrund");
     } else if is_tuesday {
         println!("Dienstag ist grüner Tag!");
     } else if let Ok(age) = age {
@@ -251,7 +251,9 @@ error[E0308]: mismatched types
  --> src/main.rs:2:9
   |
 2 |     let (x, y) = (1, 2, 3);
-  |         ^^^^^^ expected a tuple with 3 elements, found one with 2 elements
+  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
+  |         |
+  |         expected a tuple with 3 elements, found one with 2 elements
   |
   = note: expected tuple `({integer}, {integer}, {integer})`
              found tuple `(_, _)`

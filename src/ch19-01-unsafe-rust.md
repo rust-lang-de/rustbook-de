@@ -594,6 +594,8 @@ unsafe trait Foo {
 unsafe impl Foo for i32 {
     // Methoden-Implementierungen kommen hierhin
 }
+
+fn main() {}
 ```
 
 <span class="caption">Codeblock 19-11: Definition und Implementierung eines

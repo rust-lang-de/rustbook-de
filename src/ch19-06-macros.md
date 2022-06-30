@@ -171,13 +171,7 @@ Wir haben ein Makro definiert, das eine beliebige Anzahl von Argumenten
 beliebigen Typs aufnehmen und Code zur Erstellung eines Vektors erzeugen 
 kann, der die angegebenen Elemente enthält.
 
-Es gibt einige seltsame Grenzfälle mit `macro_rules!`. In Zukunft wird Rust eine
-zweite Art deklarativer Makros haben, die auf ähnliche Weise funktionieren,
-aber einige dieser Grenzfälle beheben wird. Nach diesem Update wird `macro_rules!`
-de facto veraltet sein. Vor diesem Hintergrund und angesichts der Tatsache,
-dass die meisten Rust-Programmierer Makros eher *verwenden* als Makros
-*schreiben* werden, werden wir nicht weiter auf `macro_rules!` eingehen. Um
-mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
+Um mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
 Online-Dokumentation oder andere Ressourcen, wie zum Beispiel [„The Little Book
 of Rust Macros“][tlborm] (engl. „Das kleine Buch der Rust-Makros“).
 
@@ -187,10 +181,9 @@ Die zweite Form von Makros ist das *prozedurale Makro*, das sich eher wie eine
 Funktion verhält (und eine Art Prozedur ist). Prozedurale Makros akzeptieren
 etwas Code als Eingabe, operieren mit diesem Code und erzeugen etwas Code als
 Ausgabe, anstatt gegen Muster abzugleichen und den Code durch anderen Code zu
-ersetzen, wie es deklarative Makros tun.
-
-Die drei Arten von prozeduralen Makros (benutzerdefinierte derive-Makros,
-Attribut-ähnliche und Funktions-ähnliche) arbeiten alle auf ähnliche Weise.
+ersetzen, wie es deklarative Makros tun. Die drei Arten von prozeduralen Makros
+(benutzerdefinierte derive-Makros, Attribut-ähnliche und Funktions-ähnliche)
+arbeiten alle auf ähnliche Weise.
 
 Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
@@ -542,16 +535,13 @@ An diesem Punkt sollte `cargo build` sowohl bei `hello_macro` als auch bei
 `hello_macro_derive` erfolgreich durchlaufen. Schließen wir diese Kisten an den
 Code in Codeblock 19-30 an, um das prozedurale Makro in Aktion zu sehen!
 Erstelle ein neues Binärprojekt in deinem *projects*-Verzeichnis durch Aufrufen
-von `cargo new pancakes`. 
-
-Wir müssen `hello_macro` und `hello_macro_derive` als Abhängigkeiten in der
-Datei *Cargo.toml* der Kiste `pancakes` hinzufügen. Wenn du deine Versionen von
-`hello_macro` und `hello_macro_derive` in [crates.io](https://crates.io/)
-veröffentlichst, wären das reguläre Abhängigkeiten; wenn nicht, kannst du sie
-wie folgt als `path`-Abhängigkeiten angeben:
+von `cargo new pancakes`. Wir müssen `hello_macro` und `hello_macro_derive` als
+Abhängigkeiten in der Datei *Cargo.toml* der Kiste `pancakes` hinzufügen. Wenn
+du deine Versionen von `hello_macro` und `hello_macro_derive` in
+[crates.io][crates] veröffentlichst, wären das reguläre Abhängigkeiten; wenn
+nicht, kannst du sie wie folgt als `path`-Abhängigkeiten angeben:
 
 ```toml
-[dependencies]
 hello_macro = { path = "../hello_macro" }
 hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 ```
@@ -642,6 +632,7 @@ Verwende dieses Kapitel als Referenz, um Lösungen zu finden.
 Als Nächstes werden wir alles, was wir im Laufe des Buches besprochen haben, in
 die Praxis umsetzen und ein weiteres Projekt durchführen!
 
+[crates]: https://crates.io/
 [decl]: #deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung
 [macro-reference]: https://doc.rust-lang.org/reference/macros-by-example.html
 [quote-crates]: https://crates.io/crates/quote

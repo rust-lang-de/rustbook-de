@@ -28,10 +28,10 @@ ganz funktionieren.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,does_not_compile
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -94,7 +94,7 @@ impl Drop for ThreadPool {
 #         let thread = thread::spawn(move || loop {
 #             let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
 #             job();
 #         });
@@ -120,10 +120,14 @@ Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0507]: cannot move out of `worker.thread` which is behind a mutable reference
-  --> src/lib.rs:52:13
-   |
-52 |             worker.thread.join().unwrap();
-   |             ^^^^^^^^^^^^^ move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
+    --> src/lib.rs:52:13
+     |
+52   |             worker.thread.join().unwrap();
+     |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
+     |             |
+     |             move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
+     |
+note: this function takes ownership of the receiver `self`, which moves `worker.thread`
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `hello` due to previous error
@@ -146,10 +150,10 @@ Wir wissen also, dass wir die Definition von `Worker` so aktualisieren wollen:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,does_not_compile
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -212,7 +216,7 @@ struct Worker {
 #         let thread = thread::spawn(move || loop {
 #             let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
 #             job();
 #         });
@@ -229,7 +233,7 @@ Fehler:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no method named `join` found for enum `Option<JoinHandle<()>>` in the current scope
+error[E0599]: no method named `join` found for enum `Option` in the current scope
   --> src/lib.rs:52:27
    |
 52 |             worker.thread.join().unwrap();
@@ -239,17 +243,18 @@ error[E0308]: mismatched types
   --> src/lib.rs:72:22
    |
 72 |         Worker { id, thread }
-   |                      ^^^^^^
-   |                      |
-   |                      expected enum `Option`, found struct `JoinHandle`
-   |                      help: try using a variant of the expected enum: `Some(thread)`
+   |                      ^^^^^^ expected enum `Option`, found struct `JoinHandle`
    |
    = note: expected enum `Option<JoinHandle<()>>`
             found struct `JoinHandle<_>`
+help: try wrapping the expression in `Some`
+   |
+72 |         Worker { id, thread: Some(thread) }
+   |                      +++++++++++++      +
 
 Some errors have detailed explanations: E0308, E0599.
 For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` due to 2 previous errors
 ```
 
 Lass uns den zweiten Fehler beheben, der auf den Code am Ende von `Worker::new`
@@ -260,10 +265,10 @@ zu beheben:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -328,7 +333,7 @@ impl Worker {
 #         let thread = thread::spawn(move || loop {
 #             let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
 #             job();
 #         });
@@ -349,10 +354,10 @@ dies tun:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore,not_desired_behavior
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -417,7 +422,7 @@ impl Drop for ThreadPool {
 #         let thread = thread::spawn(move || loop {
 #             let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
 #             job();
 #         });
@@ -461,28 +466,20 @@ beim Strang, um `sender` aus dem `ThreadPool` herauszuverschieben:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 pub struct ThreadPool {
     workers: Vec<Worker>,
     sender: mpsc::Sender<Message>,
 }
-
 // --abschneiden--
-
+#
 # type Job = Box<dyn FnOnce() + Send + 'static>;
 #
-# enum Message {
-#     NewJob(Job),
-#     Terminate,
-# }
-#
 impl ThreadPool {
-    // --abschneiden--
-
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
 #     /// Die Größe ist die Anzahl der Stränge im Vorrat.
@@ -491,6 +488,8 @@ impl ThreadPool {
 #     ///
 #     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
+          // --abschneiden--
+
 #         assert!(size > 0);
 #
 #         let (sender, receiver) = mpsc::channel();
@@ -503,7 +502,10 @@ impl ThreadPool {
 #             workers.push(Worker::new(id, Arc::clone(&receiver)));
 #         }
 #
-#         ThreadPool { workers, sender }
+        ThreadPool {
+            workers,
+            sender: Some(sender),
+        }
 #     }
 #
     pub fn execute<F>(&self, f: F)
@@ -516,50 +518,41 @@ impl ThreadPool {
     }
 }
 
-// --abschneiden--
+impl Drop for ThreadPool {
+    fn drop(&mut self) {
+        drop(self.sender.take());
 
-# impl Drop for ThreadPool {
-#     fn drop(&mut self) {
-#         for worker in &mut self.workers {
-#             println!("Worker {} herunterfahren", worker.id);
-#
-#             if let Some(thread) = worker.thread.take() {
-#                 thread.join().unwrap();
-#             }
-#         }
-#     }
-# }
+        for worker in &mut self.workers {
+            println!("Worker {} herunterfahren", worker.id);
+
+            if let Some(thread) = worker.thread.take() {
+                thread.join().unwrap();
+            }
+        }
+    }
+}
 #
 # struct Worker {
 #     id: usize,
 #     thread: Option<thread::JoinHandle<()>>,
 # }
 #
-impl Worker {
-    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
-        let thread = thread::spawn(move || loop {
-            let message = receiver.lock().unwrap().recv().unwrap();
-
-            match message {
-                Message::NewJob(job) => {
-                    println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
-
-                    job();
-                }
-                Message::Terminate => {
-                    println!("Worker {} wurde aufgefordert sich zu beenden.", id);
-
-                    break;
-                }
-            }
-        });
-
-        Worker {
-            id,
-            thread: Some(thread),
-        }
-    }
-}
+# impl Worker {
+#     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
+#         let thread = thread::spawn(move || loop {
+#             let job = receiver.lock().unwrap().recv().unwrap();
+#          
+#             println!("Worker {id} got a job; executing.");
+#          
+#             job();
+#         });
+#
+#         Worker {
+#             id,
+#             thread: Some(thread),
+#         }
+#     }
+# }
 ```
 
 <span class="caption">Codeblock 20-23: `sender` vor dem Warten auf die
@@ -576,10 +569,10 @@ aufruft.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -587,11 +580,6 @@ aufruft.
 # }
 #
 # type Job = Box<dyn FnOnce() + Send + 'static>;
-#
-# enum Message {
-#     NewJob(Job),
-#     Terminate,
-# }
 #
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
@@ -614,7 +602,10 @@ aufruft.
 #             workers.push(Worker::new(id, Arc::clone(&receiver)));
 #         }
 #
-#         ThreadPool { workers, sender }
+#         ThreadPool {
+#             workers,
+#             sender: Some(sender),
+#         }
 #     }
 #
 #     pub fn execute<F>(&self, f: F)
@@ -627,56 +618,47 @@ aufruft.
 #     }
 # }
 #
-impl Drop for ThreadPool {
-    fn drop(&mut self) {
-        println!("Sende eine Beendigungsnachricht an alle worker.");
-
-        for _ in &self.workers {
-            self.sender.send(Message::Terminate).unwrap();
-        }
-
-        println!("Fahre alle Worker herunter.");
-
-        for worker in &mut self.workers {
-            println!("Worker {} herunterfahren", worker.id);
-
-            if let Some(thread) = worker.thread.take() {
-                thread.join().unwrap();
-            }
-        }
-    }
-}
+# impl Drop for ThreadPool {
+#     fn drop(&mut self) {
+#         drop(self.sender.take());
+#
+#         for worker in &mut self.workers {
+#             println!("Worker {} herunterfahren", worker.id);
+#
+#             if let Some(thread) = worker.thread.take() {
+#                 thread.join().unwrap();
+#             }
+#         }
+#     }
+# }
 #
 # struct Worker {
 #     id: usize,
 #     thread: Option<thread::JoinHandle<()>>,
 # }
 #
-# impl Worker {
-#     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Message>>>) -> Worker {
-#         let thread = thread::spawn(move || loop {
-#             let message = receiver.lock().unwrap().recv().unwrap();
-#
-#             match message {
-#                 Message::NewJob(job) => {
-#                     println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
-#
-#                     job();
-#                 }
-#                 Message::Terminate => {
-#                     println!("Worker {} wurde aufgefordert sich zu beenden.", id);
-#
-#                     break;
-#                 }
-#             }
-#         });
-#
-#         Worker {
-#             id,
-#             thread: Some(thread),
-#         }
-#     }
-# }
+impl Worker {
+    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
+        let thread = thread::spawn(move || loop {
+            match receiver.lock().unwrap().recv() {
+                Ok(job) => {
+                    println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+
+                    job();
+                }
+                Err(_) => {
+                    println!("Worker {id} nicht mehr verbunden, wird beendet.");
+                    break;
+                }
+            }
+        });
+
+        Worker {
+            id,
+            thread: Some(thread),
+        }
+    }
+}
 ```
 
 <span class="caption">Codeblock 20-24: Explizites Verlassen der Schleife, wenn
@@ -863,10 +845,10 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-use std::sync::mpsc;
-use std::sync::Arc;
-use std::sync::Mutex;
-use std::thread;
+use std::{
+    sync::{mpsc, Arc, Mutex},
+    thread,
+};
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
@@ -874,11 +856,6 @@ pub struct ThreadPool {
 }
 
 type Job = Box<dyn FnOnce() + Send + 'static>;
-
-enum Message {
-    NewJob(Job),
-    Terminate,
-}
 
 impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
@@ -901,7 +878,10 @@ impl ThreadPool {
             workers.push(Worker::new(id, Arc::clone(&receiver)));
         }
 
-        ThreadPool { workers, sender }
+        ThreadPool {
+            workers,
+            sender: Some(sender),
+        }
     }
 
     pub fn execute<F>(&self, f: F)
@@ -916,13 +896,7 @@ impl ThreadPool {
 
 impl Drop for ThreadPool {
     fn drop(&mut self) {
-        println!("Sende eine Beendigungsnachricht an alle worker.");
-
-        for _ in &self.workers {
-            self.sender.send(Message::Terminate).unwrap();
-        }
-
-        println!("Fahre alle Worker herunter.");
+        drop(self.sender.take());
 
         for worker in &mut self.workers {
             println!("Worker {} herunterfahren", worker.id);
@@ -945,14 +919,13 @@ impl Worker {
             let message = receiver.lock().unwrap().recv().unwrap();
 
             match message {
-                Message::NewJob(job) => {
+                Ok(job) => {
                     println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
 
                     job();
                 }
-                Message::Terminate => {
-                    println!("Worker {} wurde aufgefordert sich zu beenden.", id);
-
+                Err(_) => {
+                    println!("Worker {} nicht mehr verbunden, wird beendet.", id);
                     break;
                 }
             }

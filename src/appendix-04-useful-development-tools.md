@@ -183,10 +183,6 @@ Sprachserver-Unterstützung in deiner speziellen IDE. Deine IDE wird
 Fähigkeiten wie Autovervollständigung, Sprung zur Definition und im Code
 eingeblendete Fehlermeldungen erhalten.
 
-Für weitere Informationen zum `rust-analyzer` siehe [seine
-Dokumentation][rust-analyzer-manual].
-
 [lsp]: http://langserver.org/
 [rust-analyzer]: https://rust-analyzer.github.io
-[rust-analyzer-manual]: https://rust-analyzer.github.io/manual.html
 [vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer

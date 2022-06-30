@@ -307,7 +307,7 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:
 
 ```rust
 fn hello(name: &str) {
-    println!("Hallo {}!", name);
+    println!("Hallo {name}!");
 }
 ```
 
@@ -341,7 +341,7 @@ wie es in Codeblock 15-12 gezeigt wird:
 # }
 # 
 # fn hello(name: &str) {
-#     println!("Hallo {}!", name);
+#     println!("Hallo {name}!");
 # }
 #
 fn main() {
@@ -388,7 +388,7 @@ um `hello` mit einem Wert vom Typ `&MyBox<String>` aufzurufen.
 # }
 # 
 # fn hello(name: &str) {
-#     println!("Hallo {}!", name);
+#     println!("Hallo {name}!");
 # }
 # 
 fn main() {

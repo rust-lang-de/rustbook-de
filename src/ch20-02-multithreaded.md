@@ -20,12 +20,13 @@ zu schlafen, bevor er antwortet.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,no_run
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
-use std::thread;
-use std::time::Duration;
+use std::{
+    fs,
+    io::{prelude::*, BufReader},
+    net::{TcpListener, TcpStream},
+    thread,
+    time::Duration,
+};
 // --abschneiden--
 
 # fn main() {
@@ -41,34 +42,26 @@ use std::time::Duration;
 fn handle_connection(mut stream: TcpStream) {
     // --abschneiden--
 
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
+#     let buf_reader = BufReader::new(&mut stream);
+#     let request_line = buf_reader.lines().next().unwrap().unwrap();
 #
-    let get = b"GET / HTTP/1.1\r\n";
-    let sleep = b"GET /sleep HTTP/1.1\r\n";
-
-    let (status_line, filename) = if buffer.starts_with(get) {
-        ("HTTP/1.1 200 OK", "hello.html")
-    } else if buffer.starts_with(sleep) {
-        thread::sleep(Duration::from_secs(5));
-        ("HTTP/1.1 200 OK", "hello.html")
-    } else {
-        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    let (status_line, filename) = match &request_line[..] {
+        "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "hello.html"),
+        "GET /sleep HTTP/1.1" => {
+            thread::sleep(Duration::from_secs(5));
+            ("HTTP/1.1 200 OK", "hello.html")
+        }
+        _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
     };
 
     // --abschneiden--
-#
 #     let contents = fs::read_to_string(filename).unwrap();
+#     let length = contents.len();
 #
-#     let response = format!(
-#         "{}\r\nContent-Length: {}\r\n\r\n{}",
-#         status_line,
-#         contents.len(),
-#         contents
-#     );
+#     let response =
+#         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 #
-#     stream.write(response.as_bytes()).unwrap();
-#     stream.flush().unwrap();
+#     stream.write_all(response.as_bytes()).unwrap();
 }
 ```
 
@@ -170,12 +163,13 @@ innerhalb der `for`-Schleife verarbeitet.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,no_run
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
-# use std::thread;
-# use std::time::Duration;
+# use std::{
+#     fs,
+#     io::{prelude::*, BufReader},
+#     net::{TcpListener, TcpStream},
+#     thread,
+#     time::Duration,
+# };
 #
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -190,32 +184,25 @@ fn main() {
 }
 #
 # fn handle_connection(mut stream: TcpStream) {
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
+#     let buf_reader = BufReader::new(&mut stream);
+#     let request_line = buf_reader.lines().next().unwrap().unwrap();
 #
-#     let get = b"GET / HTTP/1.1\r\n";
-#     let sleep = b"GET /sleep HTTP/1.1\r\n";
-#
-#     let (status_line, filename) = if buffer.starts_with(get) {
-#         ("HTTP/1.1 200 OK", "hello.html")
-#     } else if buffer.starts_with(sleep) {
-#         thread::sleep(Duration::from_secs(5));
-#         ("HTTP/1.1 200 OK", "hello.html")
-#     } else {
-#         ("HTTP/1.1 404 NOT FOUND", "404.html")
+#     let (status_line, filename) = match &request_line[..] {
+#         "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "hello.html"),
+#         "GET /sleep HTTP/1.1" => {
+#             thread::sleep(Duration::from_secs(5));
+#             ("HTTP/1.1 200 OK", "hello.html")
+#         }
+#         _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
 #     };
 #
 #     let contents = fs::read_to_string(filename).unwrap();
+#     let length = contents.len();
 #
-#     let response = format!(
-#         "{}\r\nContent-Length: {}\r\n\r\n{}",
-#         status_line,
-#         contents.len(),
-#         contents
-#     );
+#     let response =
+#         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 #
-#     stream.write(response.as_bytes()).unwrap();
-#     stream.flush().unwrap();
+#     stream.write_all(response.as_bytes()).unwrap();
 # }
 ```
 
@@ -241,12 +228,13 @@ wir anstelle von `thread::spawn` verwenden wollen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
-# use std::thread;
-# use std::time::Duration;
+# use std::{
+#     fs,
+#     io::{prelude::*, BufReader},
+#     net::{TcpListener, TcpStream},
+#     thread,
+#     time::Duration,
+# };
 #
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -262,32 +250,25 @@ fn main() {
 }
 #
 # fn handle_connection(mut stream: TcpStream) {
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
+#     let buf_reader = BufReader::new(&mut stream);
+#     let request_line = buf_reader.lines().next().unwrap().unwrap();
 #
-#     let get = b"GET / HTTP/1.1\r\n";
-#     let sleep = b"GET /sleep HTTP/1.1\r\n";
-#
-#     let (status_line, filename) = if buffer.starts_with(get) {
-#         ("HTTP/1.1 200 OK", "hello.html")
-#     } else if buffer.starts_with(sleep) {
-#         thread::sleep(Duration::from_secs(5));
-#         ("HTTP/1.1 200 OK", "hello.html")
-#     } else {
-#         ("HTTP/1.1 404 NOT FOUND", "404.html")
+#     let (status_line, filename) = match &request_line[..] {
+#         "GET / HTTP/1.1" => ("HTTP/1.1 200 OK", "hello.html"),
+#         "GET /sleep HTTP/1.1" => {
+#             thread::sleep(Duration::from_secs(5));
+#             ("HTTP/1.1 200 OK", "hello.html")
+#         }
+#         _ => ("HTTP/1.1 404 NOT FOUND", "404.html"),
 #     };
 #
 #     let contents = fs::read_to_string(filename).unwrap();
+#     let length = contents.len();
 #
-#     let response = format!(
-#         "{}\r\nContent-Length: {}\r\n\r\n{}",
-#         status_line,
-#         contents.len(),
-#         contents
-#     );
+#     let response =
+#         format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 #
-#     stream.write(response.as_bytes()).unwrap();
-#     stream.flush().unwrap();
+#     stream.write_all(response.as_bytes()).unwrap();
 # }
 ```
 
@@ -671,7 +652,6 @@ impl ThreadPool {
 
         ThreadPool { threads }
     }
-
     // --abschneiden--
 #
 #     pub fn execute<F>(&self, f: F)
@@ -860,9 +840,7 @@ Element sein, die wir in den Kanal senden.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-# use std::thread;
-// --abschneiden--
-use std::sync::mpsc;
+use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
     workers: Vec<Worker>,
@@ -931,8 +909,7 @@ lässt sich noch nicht ganz kompilieren.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
-# use std::sync::mpsc;
-# use std::thread;
+# use std::{sync::mpsc, thread};
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -1041,10 +1018,10 @@ Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt die
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-# use std::sync::mpsc;
-# use std::thread;
-use std::sync::Arc;
-use std::sync::Mutex;
+use std::{
+    sync::{mpsc, Arc, Mutex},
+    thread,
+};
 // --abschneiden--
 
 # pub struct ThreadPool {
@@ -1130,10 +1107,10 @@ Siehe Codeblock 20-19.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -1223,10 +1200,10 @@ vornehmen.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -1281,7 +1258,7 @@ impl Worker {
         let thread = thread::spawn(move || loop {
             let job = receiver.lock().unwrap().recv().unwrap();
 
-            println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
             job();
         });
@@ -1376,10 +1353,10 @@ haben, wie in Codeblock 20-21 gezeigt.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore,not_desired_behavior
-# use std::sync::mpsc;
-# use std::sync::Arc;
-# use std::sync::Mutex;
-# use std::thread;
+# use std::{
+#     sync::{mpsc, Arc, Mutex},
+#     thread,
+# };
 #
 # pub struct ThreadPool {
 #     workers: Vec<Worker>,
@@ -1432,7 +1409,7 @@ impl Worker {
     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
         let thread = thread::spawn(move || {
             while let Ok(job) = receiver.lock().unwrap().recv() {
-                println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
                 job();
             }
@@ -1471,7 +1448,6 @@ dass andere `Worker` keine Aufträge erhalten können.
 [type-synonyms]:
 ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
-[similar-interface]:
-#erstellen-einer-endlichen-anzahl-von-strängen
+[similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
 [fn-traits]:
 ch13-01-closures.html#verschieben-erfasster-werte-aus-dem-funktionsabschluss-und-die-fn-merkmale

@@ -483,10 +483,11 @@ zu behandeln.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,no_run
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
+# use std::{
+#     fs,
+#     io::{prelude::*, BufReader},
+#     net::{TcpListener, TcpStream},
+# };
 #
 # fn main() {
 #     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -501,22 +502,19 @@ zu behandeln.
 // --abschneiden--
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&mut buffer).unwrap();
+    let buf_reader = BufReader::new(&mut stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    let get = b"GET / HTTP/1.1\r\n";
-
-    if buffer.starts_with(get) {
+    if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
         let contents = fs::read_to_string("hello.html").unwrap();
+        let length = contents.len();
 
         let response = format!(
-            "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-            contents.len(),
-            contents
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
         );
 
-        stream.write(response.as_bytes()).unwrap();
-        stream.flush().unwrap();
+        stream.write_all(response.as_bytes()).unwrap();
     } else {
         // eine andere Anfrage
     }
@@ -555,10 +553,11 @@ anzuzeigen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,no_run
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
+# use std::{
+#     fs,
+#     io::{prelude::*, BufReader},
+#     net::{TcpListener, TcpStream},
+# };
 #
 # fn main() {
 #     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -571,36 +570,30 @@ anzuzeigen.
 # }
 #
 # fn handle_connection(mut stream: TcpStream) {
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
+#     let buf_reader = BufReader::new(&mut stream);
+#     let request_line = buf_reader.lines().next().unwrap().unwrap();
 #
-#     let get = b"GET / HTTP/1.1\r\n";
-#
-#     if buffer.starts_with(get) {
+#     if request_line == "GET / HTTP/1.1" {
+#         let status_line = "HTTP/1.1 200 OK";
 #         let contents = fs::read_to_string("hello.html").unwrap();
+#         let length = contents.len();
 #
 #         let response = format!(
-#             "HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}",
-#             contents.len(),
-#             contents
+#             "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
 #         );
 #
-#         stream.write(response.as_bytes()).unwrap();
-#         stream.flush().unwrap();
+#         stream.write_all(response.as_bytes()).unwrap();
     // --abschneiden--
     } else {
         let status_line = "HTTP/1.1 404 NOT FOUND";
         let contents = fs::read_to_string("404.html").unwrap();
+        let length = contents.len();
 
         let response = format!(
-            "{}\r\nContent-Length: {}\r\n\r\n{}",
-            status_line,
-            contents.len(),
-            contents
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
         );
 
-        stream.write(response.as_bytes()).unwrap();
-        stream.flush().unwrap();
+        stream.write_all(response.as_bytes()).unwrap();
     }
 # }
 ```
@@ -653,10 +646,11 @@ zeigt den resultierenden Code nach dem Ersetzen der großen `if`- und
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,no_run
-# use std::fs;
-# use std::io::prelude::*;
-# use std::net::TcpListener;
-# use std::net::TcpStream;
+# use std::{
+#     fs,
+#     io::{prelude::*, BufReader},
+#     net::{TcpListener, TcpStream},
+# };
 #
 # fn main() {
 #     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -673,28 +667,22 @@ zeigt den resultierenden Code nach dem Ersetzen der großen `if`- und
 fn handle_connection(mut stream: TcpStream) {
     // --abschneiden--
 
-#     let mut buffer = [0; 1024];
-#     stream.read(&mut buffer).unwrap();
+#     let buf_reader = BufReader::new(&mut stream);
+#     let request_line = buf_reader.lines().next().unwrap().unwrap();
 #
-#     let get = b"GET / HTTP/1.1\r\n";
-#
-    let (status_line, filename) = if buffer.starts_with(get) {
+    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
         ("HTTP/1.1 200 OK", "hello.html")
     } else {
         ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
 
-    let response = format!(
-        "{}\r\nContent-Length: {}\r\n\r\n{}",
-        status_line,
-        contents.len(),
-        contents
-    );
+    let contents = fs::read_to_string(filename).unwrap();
+    let length = contents.len();
 
-    let response = format!("{}{}", status_line, contents);
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    stream.write_all(response.as_bytes()).unwrap();
 }
 ```
 

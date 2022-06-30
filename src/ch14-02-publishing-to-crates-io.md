@@ -500,7 +500,7 @@ license = "MIT OR Apache-2.0"
 Metadaten, die du angeben kannst, um sicherzustellen, dass andere deine Kiste
 leichter entdecken und verwenden können.
 
-### Veröffentlichung auf Crates.io
+### Veröffentlichen auf Crates.io
 
 Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für seine
 Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man

@@ -59,11 +59,12 @@ error[E0005]: refutable pattern in local binding: `None` not covered
     |
     = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
     = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
+note: `Option<i32>` defined here
     = note: the matched value is of type `Option<i32>`
 help: you might want to use `if let` to ignore the variant that isn't matched
     |
-3   |     if let Some(x) = some_option_value { /* */ }
-    |
+3   |     let x = if let Some(x) = some_option_value { x } else { todo!() };
+    |     ++++++++++                                 ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
 error: could not compile `patterns` due to previous error
@@ -114,19 +115,16 @@ Muster zu verwenden:
 $ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
 warning: irrefutable `if let` pattern
- --> src/main.rs:2:5
+ --> src/main.rs:2:8
   |
-2 | /     if let x = 5 {
-3 | |         println!("{}", x);
-4 | |     };
-  | |_____^
+2 |     if let x = 5 {
+  |        ^^^^^^^^^
   |
   = note: `#[warn(irrefutable_let_patterns)]` on by default
   = note: this pattern will always match, so the `if let` is useless
   = help: consider replacing the `if let` with a `let`
 
 warning: `patterns` (bin "patterns") generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.39s
      Running `target/debug/patterns`
 5

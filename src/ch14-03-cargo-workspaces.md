@@ -206,20 +206,32 @@ verwenden können:
 
 ```toml
 [dependencies]
-rand = "0.5.5"
+rand = "0.8.3"
 ```
 
 Wir können nun `use rand;` zur Datei *add_one/src/lib.rs* hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von `cargo build` im Verzeichnis
-*add* erstellst, wird die `rand`-Kiste eingefügt und kompiliert:
+*add* erstellst, wird die Kiste `rand` eingefügt und kompiliert. Wir erhalten
+eine Warnung, weil wir nicht auf `rand` referenzieren, das wir in den
+Gültigkeitsbereich gebracht haben:
 
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.5.5
-   --snip--
-   Compiling rand v0.5.6
+  Downloaded rand v0.8.3
+   --abschneiden--
+   Compiling rand v0.8.3
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
+warning: unused import: `rand`
+ --> add_one/src/lib.rs:1:5
+  |
+1 | use rand;
+  |     ^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: 1 warning emitted
+
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished dev [unoptimized + debuginfo] target(s) in 10.18s
 ```
@@ -234,7 +246,7 @@ Wenn wir beispielsweise `use rand;` zur Datei *adder/src/main.rs* für das Paket
 
 ```console
 $ cargo build
-  --snip--
+  --abschneiden--
    Compiling adder v0.1.0 (file:///projects/add/adder)
 error[E0432]: unresolved import `rand`
  --> adder/src/main.rs:2:5
