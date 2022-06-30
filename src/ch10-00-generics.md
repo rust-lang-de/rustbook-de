@@ -75,13 +75,13 @@ fn main() {
 von Zahlen</span>
 
 Wir speichern eine Liste von ganzen Zahlen in der Variablen `number_list` und
-weisen die erste Zahl der Liste einer Variablen namens `largest` zu. Dann
-iterieren wir über alle Zahlen in der Liste und wenn die aktuelle Zahl größer
-als die in `largest` gespeicherte Zahl ist, ersetzen wir die Zahl in dieser
-Variablen. Wenn die aktuelle Zahl jedoch kleiner oder gleich der größten bisher
-gefundenen Zahl ist, ändert sich die Variable nicht, und der Code geht zur
-nächsten Zahl in der Liste weiter. Nach dem Durchlaufen aller Zahlen in der
-Liste sollte `largest` die größte Zahl enthalten, in diesem Fall 100.
+weisen eine Referenz der ersten Zahl der Liste einer Variablen namens `largest`
+zu. Dann iterieren wir über alle Zahlen in der Liste und wenn die aktuelle Zahl
+größer als die in `largest` gespeicherte Zahl ist, ersetzen wir die Referenz in
+dieser Variablen. Wenn die aktuelle Zahl jedoch kleiner oder gleich der größten
+bisher gefundenen Zahl ist, ändert sich die Variable nicht, und der Code geht
+zur nächsten Zahl in der Liste weiter. Nach dem Durchlaufen aller Zahlen in der
+Liste sollte `largest` auf die größte Zahl referenzieren, in diesem Fall 100.
 
 Wir haben nun die Aufgabe bekommen, die größte Zahl in zwei verschiedenen
 Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Codeblock 10-1
@@ -173,12 +173,7 @@ zwei Listen zu finden</span>
 Die Funktion `largest` hat einen Parameter `list`, der einen beliebigen
 Anteilstyp von `i32`-Werten repräsentiert, die wir an die Funktion übergeben
 könnten. Wenn wir die Funktion aufrufen, läuft der Code also auf den
-spezifischen Werten, die wir übergeben. Mach dir vorerst keine Gedanken über
-die Syntax der `for`-Schleife. Wir verweisen hier nicht auf eine Referenz auf
-ein `i32`; wir machen einen Musterabgleich und destrukturieren jedes `&i32`,
-das die `for`-Schleife erhält, sodass `item` innerhalb des Schleifenrumpfs ein
-`i32` ist. Wir werden den Musterabgleich im Detail in [Kapitel 18][ch18]
-behandeln.
+spezifischen Werten, die wir übergeben.
 
 Zusammenfassend hier die Schritte, die wir unternommen haben, um den Code aus
 Codeblock 10-2 in Codeblock 10-3 zu überführen:

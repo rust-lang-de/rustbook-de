@@ -130,7 +130,7 @@ die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
 
 ```rust,ignore
-# use chapter10::{self, Summary, Tweet};
+# use aggregator::{self, Summary, Tweet};
 #
 # fn main() {
     let tweet = Tweet {
@@ -208,7 +208,7 @@ Infolgedessen können wir immer noch die Methode `summarize` einer
 `NewsArticle`-Instanz aufrufen, etwa so:
 
 ```rust,ignore
-# use chapter10::{self, NewsArticle, Summary};
+# use aggregator::{self, NewsArticle, Summary};
 #
 # fn main() {
     let article = NewsArticle {
@@ -285,7 +285,7 @@ das Merkmal `Summary` das Verhalten der `summarize`-Methode mitgeliefert, ohne
 dass wir weiteren Code schreiben müssen. 
 
 ```rust,ignore
-# use chapter10::{self, Summary, Tweet};
+# use aggregator::{self, Summary, Tweet};
 #
 # fn main() {
     let tweet = Tweet {
@@ -544,171 +544,12 @@ wird im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedliche
 Typen erlauben“][using-trait-objects-that-allow-for-values-of-different-types]
 in Kapitel 17 behandelt.
 
-### Korrigieren der Funktion `largest` mit Merkmalsabgrenzungen
-
-Da du nun weißt, wie du das gewünschte Verhalten mit generischer
-Typparameterabgrenzung spezifizieren kannst, kehren wir zu Codeblock 10-5
-zurück, um die Definition der Funktion `largest`, die einen generischen
-Typparameter verwendet, zu korrigieren! Als wir das letzte Mal versuchten,
-den Code auszuführen, erhielten wir diesen Fehler:
-
-```console
-$ cargo run
-   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0369]: binary operation `>` cannot be applied to type `T`
- --> src/main.rs:5:17
-  |
-5 |         if item > largest {
-  |            ---- ^ ------- T
-  |            |
-  |            T
-  |
-  = note: `T` might need a bound for `std::cmp::PartialOrd`
-
-For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10` due to previous error
-```
-
-Im Rumpf von `largest` wollten wir zwei Werte vom Typ `T` mit dem Operator
-größer als (`>`) vergleichen. Da dieser Operator als Standardmethode für das
-Standardbibliotheks-Merkmal `std::cmp::PartialOrd` definiert ist, müssen wir
-`PartialOrd` als Merkmalsabgrenzung für `T` angeben, damit die Funktion
-`largest` auf Anteilstypen beliebiger Typen arbeiten kann, die wir vergleichen
-können. Wir brauchen `PartialOrd` nicht in den Gültigkeitsbereich zu bringen,
-weil das automatisch erfolgt. Ändere die Signatur von `largest` wie folgt:
-
-```rust
-fn largest<T: PartialOrd>(list: &[T]) -> T {
-#     let mut largest = list[0];
-#
-#     for &item in list {
-#         if item > largest {
-#             largest = item;
-#         }
-#     }
-#
-#     largest
-# }
-#
-# fn main() {
-#     let number_list = vec![34, 50, 25, 100, 65];
-#
-#     let result = largest(&number_list);
-#     println!("Die größte Zahl ist {}", result);
-#
-#     let char_list = vec!['y', 'm', 'a', 'q'];
-#
-#     let result = largest(&char_list);
-#     println!("Das größte Zeichen ist {}", result);
-# }
-```
-
-Wenn wir den Code kompilieren, erhalten wir nun andere Fehlermeldungen:
-
-```console
-$ cargo run
-   Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0508]: cannot move out of type `[T]`, a non-copy slice
- --> src/main.rs:2:23
-  |
-2 |     let mut largest = list[0];
-  |                       ^^^^^^^
-  |                       |
-  |                       cannot move out of here
-  |                       move occurs because `list[_]` has type `T`, which does not implement the `Copy` trait
-  |                       help: consider borrowing here: `&list[0]`
-
-error[E0507]: cannot move out of a shared reference
- --> src/main.rs:4:18
-  |
-4 |     for &item in list {
-  |         -----    ^^^^
-  |         ||
-  |         |data moved here
-  |         |move occurs because `item` has type `T`, which does not implement the `Copy` trait
-  |         help: consider removing the `&`: `item`
-
-Some errors have detailed explanations: E0507, E0508.
-For more information about an error, try `rustc --explain E0507`.
-error: could not compile `chapter10` due to previous error
-```
-
-Die Schlüsselzeile bei diesem Fehler ist `cannot move out of type [T], a
-non-copy slice`. Mit unseren nicht-generischen Versionen der Funktion `largest`
-versuchten wir nur, die größte `i32` oder `char` zu finden. Wie im Abschnitt
-[„Nur Stapelspeicher-Daten: Kopieren (copy)“][stack-only-data-copy] in Kapitel
-4 besprochen, können Typen wie `i32` und `char`, die eine bekannte Größe haben,
-auf dem Stapelspeicher gespeichert werden, sodass sie das Merkmal `Copy`
-implementieren. Aber als wir die Funktion `largest` generisch gemacht haben,
-wurde es möglich, dass der Parameter `list` Typen enthält, die das Merkmal
-`Copy` nicht implementieren. Folglich wären wir nicht in der Lage, den Wert aus
-`list[0]` in die Variable `largest` zu verschieben, was zu diesem Fehler führt.
-
-Um diesen Code nur mit den Typen aufzurufen, die das Merkmal `Copy`
-implementieren, können wir `Copy` zu den Merkmalsabgrenzungen von `T`
-hinzufügen! Codeblock 10-15 zeigt den vollständigen Code einer generischen
-Funktion `largest`, die kompiliert, solange die Typen der Werte im Anteilstyp,
-die wir der Funktion übergeben, die Merkmale `PartialOrd` *und* `Copy`
-implementieren, wie `i32` und `char` es tun.
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-fn largest<T: PartialOrd + Copy>(list: &[T]) -> T {
-    let mut largest = list[0];
-
-    for &item in list {
-        if item > largest {
-            largest = item;
-        }
-    }
-
-    largest
-}
-
-fn main() {
-    let number_list = vec![34, 50, 25, 100, 65];
-
-    let result = largest(&number_list);
-    println!("Die größte Zahl ist {}", result);
-
-    let char_list = vec!['y', 'm', 'a', 'q'];
-
-    let result = largest(&char_list);
-    println!("Das größte Zeichen ist {}", result);
-}
-```
-
-<span class="caption">Codeblock 10-15: Eine funktionierende Definition der
-Funktion `largest`, die mit jedem generischen Typ funktioniert, der die
-Merkmale `PartialOrd` und `Copy` implementiert</span>
-
-Wenn wir die Funktion `largest` nicht auf Typen beschränken wollen, die das
-Merkmal `Copy` implementieren, könnten wir angeben, dass `T` die
-Merkmalsabgrenzung `Clone` anstelle von `Copy` verwendet. Dann könnten wir
-jeden Wert des Anteilstyps klonen, wenn wir wollen, dass die Funktion `largest`
-die Eigentümerschaft übernimmt. Das Verwenden der Funktion `clone` bedeutet,
-dass wir potenziell mehr Allokationen im Haldenspeicher im Falle von
-Typen vornehmen, die Haldenspeicherdaten wie `String` besitzen. Und
-Allokationen im Haldenspeicher können langsam sein, wenn wir mit großen
-Datenmengen arbeiten.
-
-Wir könnten `largest` auch implementieren, indem die Funktion eine Referenz auf
-einen `T`-Wert im Anteilstyp zurückgibt. Wenn wir den Rückgabetyp in `&T`
-anstelle von `T` ändern und dadurch den Funktionsrumpf ändern, um eine Referenz
-zurückzugeben, bräuchten wir die Merkmalsabgrenzungen `Clone` oder `Copy` nicht
-und könnten Allokationen im Haldenspeicher vermeiden. Versuche, diese
-alternativen Lösungen selbst zu implementieren! Wenn du bei Fehlern, die mit
-Lebensdauern zu tun haben, hängen bleibst, lese weiter: Der Abschnitt
-„Referenzen validieren mit Lebensdauern“ wird dies erläutern, aber Lebensdauern
-sind nicht erforderlich, um diese Probleme zu lösen.
-
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
 Durch Verwenden einer Merkmalsabgrenzung mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
-`Pair<T>` in Codeblock 10-16 immer die Funktion `new`, um eine neue Instanz von
+`Pair<T>` in Codeblock 10-15 immer die Funktion `new`, um eine neue Instanz von
 `Pair<T>` zurückzugeben (erinnere dich an den Abschnitt [„Definieren von
 Methoden“][methods] in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des
 `impl`-Blocks ist, der in diesem Fall `Pair<T>` ist). Aber im nächsten
@@ -743,7 +584,7 @@ impl<T: Display + PartialOrd> Pair<T> {
 }
 ```
 
-<span class="caption">Codeblock 10-16: Bedingte Implementierung von Methoden
+<span class="caption">Codeblock 10-15: Bedingte Implementierung von Methoden
 für einen generischen Typ in Abhängigkeit von Merkmalsabgrenzungen</span>
 
 Wir können auch ein Merkmal für beliebige Typen bedingt implementieren, die ein
@@ -789,7 +630,5 @@ verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
 müssen.
 
 [methods]: ch05-03-method-syntax.html#definieren-von-methoden
-[stack-only-data-copy]:
-ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [using-trait-objects-that-allow-for-values-of-different-types]:
 ch17-02-trait-objects.html

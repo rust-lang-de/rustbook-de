@@ -7,10 +7,14 @@ fortgeschrittenen Funktionalitäten erläutern, um zu zeigen, wie man Folgendes
 tun kann:
 
 * Anpassen deines Bauvorgangs mit Freigabeprofilen (release profiles)
-* Veröffentlichen von Programmbibliotheken auf [crates.io](https://crates.io/)
+* Veröffentlichen von Programmbibliotheken auf [crates.io][crates]
 * Organisieren von großen Projekten mit Arbeitsbereichen (workspaces)
-* Installieren von Binärdateien (binaries) von [crates.io](https://crates.io/)
+* Installieren von Binärdateien (binaries) von [crates.io][crates]
 * Cargo erweitern mit benutzerdefinierten Befehlen
 
-Cargo kann noch einiges mehr als wir in diesem Kapitel behandeln, eine vollständige
-Erklärung aller Funktionen findest du in [seiner Dokumentation](https://doc.rust-lang.org/cargo/).
+Cargo kann noch einiges mehr als die Funktionalität, die wir in diesem Kapitel
+behandeln, eine vollständige Erklärung aller Funktionen findest du in seiner
+[Dokumentation][cargo].
+
+[cargo]: https://doc.rust-lang.org/cargo/
+[crates]: https://crates.io/

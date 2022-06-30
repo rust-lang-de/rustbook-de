@@ -14,11 +14,13 @@ rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
 durchlaufen die Werte die Muster in einem `match`-Ausdruck und beim ersten
 „passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
-werden soll. Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von
-`match`! Wir können eine Funktion schreiben, die eine unbekannte Münze der
-Vereinigten Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um
-welche Münze es sich handelt und ihren Wert in Cent zurückgibt, wie hier in
-Codeblock 6-3 gezeigt.
+werden soll.
+
+Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von `match`! Wir
+können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
+Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
+sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
+gezeigt.
 
 ```rust
 enum Coin {
@@ -70,9 +72,10 @@ des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
 Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
-geschweifte Klammern verwenden. Zum Beispiel gibt der folgende Code jedes Mal
-"Glückspfennig!" aus, wenn die Methode mit `Coin::Penny` aufgerufen wird, er
-gibt aber immer noch den letzten Wert `1` des Blocks zurück:
+geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
+Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
+Methode mit `Coin::Penny` aufgerufen wird, er gibt aber immer noch den letzten
+Wert `1` des Blocks zurück:
 
 ```rust
 # enum Coin {
@@ -251,9 +254,10 @@ Sprachen zu haben. Es ist durchweg ein Benutzerfavorit.
 
 ### Abgleiche sind vollständig
 
-Es gibt noch einen weiteren Aspekt von `match`, den wir besprechen müssen.
-Betrachte folgende Version unserer Funktion `plus_one`, die einen Fehler hat
-und sich nicht kompilieren lässt:
+Es gibt noch einen weiteren Aspekt von `match`, den wir besprechen müssen: Die
+Muster der Zweige müssen alle Möglichkeiten abdecken. Betrachte folgende
+Version unserer Funktion `plus_one`, die einen Fehler hat und sich nicht
+kompilieren lässt:
 
 ```rust,does_not_compile
 fn plus_one(x: Option<i32>) -> Option<i32> {
@@ -333,19 +337,20 @@ aufgelistet haben, die ein `u8` haben kann, weil das letzte Muster zu allen
 nicht explizit aufgeführten Werte passt. Dieses Auffangmuster (catch-all
 pattern) erfüllt die Anforderung, dass `match` vollständig sein muss. Beachte,
 dass wir den Auffangzweig an letzter Stelle angeben müssen, da die Muster der
-Reihe nach ausgewertet werden. Rust warnt uns, wenn wir nach einem Auffangzweig
-weitere Zweige angeben, da diese niemals zutreffen würden!
+Reihe nach ausgewertet werden. Wenn wir den Auffangzweig früher einfügen
+würden, würden die anderen Zweige nie ausgeführt werden, also warnt uns Rust,
+wenn wir Zweige nach einem Auffangzweig hinzufügen!
 
-Rust hat auch ein Muster, das wir verwenden können, wenn wir den Wert nicht im
-Auffangmuster verwenden wollen: `_`, das ein spezielles Muster ist, das zu
-jedem beliebigen Wert passt und nicht an diesen Wert gebunden ist. Dies sagt
-Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht vor einer
-unbenutzten Variable warnt.
+Rust hat auch ein Muster, das wir verwenden können, wenn wir einen Auffangzweig
+wollen, aber den Wert im Auffangmuster *nicht* verwenden wollen: `_` ist ein
+spezielles Muster, das zu jedem Wert passt und nicht an diesen Wert bindet.
+Dies sagt Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht
+vor einer unbenutzten Variable warnt.
 
-Ändern wir die Spielregeln dahingehend, dass wir erneut würfeln müssen, wenn
-wir etwas anderes als eine 3 oder eine 7 würfeln. Wir brauchen den Wert in
-diesem Fall nicht zu verwenden, also können wir unseren Code so ändern, dass
-wir `_` anstelle der Variable `other` verwenden:
+Ändern wir die Spielregeln: Wenn du jetzt etwas anderes als eine 3 oder eine 7
+würfelst, musst du erneut würfeln. Wir brauchen den Auffangwert nicht mehr zu
+verwenden, also können wir unseren Code so ändern, dass wir `_` anstelle der
+Variable namens `other` verwenden:
 
 ```rust
 let dice_roll = 9;
@@ -364,10 +369,10 @@ Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
 ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
 vergessen.
 
-Wenn wir die Spielregeln noch einmal ändern, sodass bei deinem Zug nichts
-anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst, können
-wir das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den wir
-im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt haben) als Code im `_`-Zweig
+Zu Schluss ändern wir die Spielregeln noch einmal, sodass bei deinem Zug nichts
+anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst. Wir
+können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
+wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt haben) als Code im `_`-Zweig
 angeben:
 
 ```rust

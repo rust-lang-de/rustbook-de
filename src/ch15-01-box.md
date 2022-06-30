@@ -34,11 +34,11 @@ Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“][trait-objects] diesem Thema. Was du hier lernst, wirst du im Kapitel
 17 erneut anwenden!
 
-### `Box<T> verwenden um Daten im Haldenspeicher zu speichern`
+### `Box<T>` verwenden um Daten im Haldenspeicher zu speichern
 
-Bevor wir diesen Anwendungsfall für `Box<T>` behandeln, werden wir die Syntax
-und die Interaktion mit Werten behandeln, die in einer `Box<T>` gespeichert
-sind.
+Bevor wir den Haldenspeicher-Anwendungsfall für `Box<T>` besprechen, werden wir
+die Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
+gespeichert sind.
 
 Codeblock 15.1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
 Haldenspeicher speichert:
@@ -61,8 +61,9 @@ Dieses Programm gibt `b = 5` aus, in diesem Fall können wir auf die Daten in de
 Box zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden.
 Genau wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben
 wenn sie den Gültigkeitsbereich verlässt, wie dies bei `b` am Ende von `main`
-der Fall ist. Die Freigabe erfolgt für die Box (gespeichert im Stapelspeicher)
-und die Daten, auf die sie verweist (gespeichert im Haldenspeicher).
+der Fall ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im
+Stapelspeicher) als auch für die Daten, auf die sie zeigt (gespeichert im
+Haldenspeicher).
 
 Es ist nicht sehr nützlich, einen einzelnen Wert im Haldenspeicher zu
 speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
@@ -73,33 +74,37 @@ gäbe.
 
 ### Ermöglichen rekursiver Typen mit Boxen
 
-Zum Zeitpunkt der Kompilierung muss Rust wissen, wie viel Speicherplatz ein Typ einnimmt.
-Ein Typ, dessen Größe zum Zeitpunkt des Kompilierung nicht bekannt sein kann,
-ist ein *rekursiver Typ*, bei dem ein Wert einen anderen Wert desselben Typs als
-Teil von sich selbst haben kann. Da diese Verschachtelung von Werten theoretisch
-unendlich oft fortgesetzt werden kann, weiß Rust nicht, wie viel Speicherplatz
-der Wert eines rekursiven Typs benötigt. Boxen haben jedoch eine bekannte
-Größe. Wenn man also eine Box in eine rekursive Typdefinition einfügt, kann man
-rekursive Typen verwenden.
+Ein Wert eines *rekursiven Typs* kann einen anderen Wert desselben Typs als
+Teil von sich selbst haben. Rekursive Typen stellen ein Problem dar, weil Rust
+zur Kompilierzeit wissen muss, wie viel Platz ein Typ einnimmt. Allerdings
+könnte die Verschachtelung von Werten rekursiver Typen theoretisch unendlich
+weitergehen, sodass Rust nicht wissen kann, wie viel Platz der Wert benötigt.
+Da Boxen eine bekannte Größe haben, können wir rekursive Typen ermöglichen,
+indem wir eine Box in die Definition des rekursiven Typs einfügen.
 
-Lass uns die *Cons-Liste*, einen Datentyp, der in funktionalen
-Programmiersprachen üblich ist, als Beispiel für einen rekursiven Typ
-untersuchen. Der von uns definierte cons-Listentyp ist abgesehen von der
-Rekursion unkompliziert. Daher sind die Konzepte in diesem Beispiel immer dann
-nützlich, wenn man in komplexeren Situationen mit rekursiven Typen arbeitet.
+Als Beispiel für einen rekursiven Typ wollen wir uns die *Cons-Liste* ansehen.
+Dies ist ein Datentyp, den man häufig in funktionalen Programmiersprachen
+findet. Der Cons-Listen-Typ, den wir definieren werden, ist bis auf die
+Rekursion einfach; daher werden die Konzepte in dem Beispiel, mit dem wir
+arbeiten werden, immer dann nützlich sein, wenn du in komplexeren Situationen
+mit rekursiven Typen arbeitest.
 
 #### Weitere Informationen zur Cons-Liste
 
 Eine *Cons-Liste* ist eine Datenstruktur, die aus der Programmiersprache Lisp
-und ihren Dialekten stammt. In Lisp erstellt die Konstruktionsfunktion `cons`
-(Kurzform von „construct function“) aus ihren beiden Argumenten, die
-normalerweise aus einem einzelnen Wert und einem anderen Paar bestehen, ein
-neues Paar. Diese Paare die wiederum Paare enthalten, bilden eine Liste.
+und ihren Dialekten stammt und aus verschachtelten Paaren besteht. Sie ist die
+Lisp-Version einer verketteten Liste. Ihr Name stammt von der Funktion `cons`
+(Kurzform von „construct function“) in Lisp, die aus ihren beiden Argumenten
+ein neues Paar konstruiert. Durch den Aufruf von `cons` für ein Paar, das aus
+einem Wert und einem anderen Paar besteht, können wir Cons-Listen konstruieren,
+die aus rekursiven Paaren bestehen.
 
-Das Konzept der Cons-Liste hat seinen Weg in den allgemeineren Jargon für
-funktionale Programmierung gefunden: „to cons *x* onto *y*“ bedeutet informell,
-eine neue Containerinstanz zu erstellen, indem das Element *x* an den Anfang dieses
-neuen Containers gestellt wird gefolgt vom Container *y*.
+Hier ist zum Beispiel eine Pseudocode-Darstellung einer Cons-Liste, die die
+Liste 1, 2, 3 enthält, wobei jedes Paar in Klammern steht:
+
+```text
+(1, (2, (3, Nil)))
+```
 
 Jedes Element in einer Cons-Liste enthält zwei Elemente: Den Wert des aktuellen
 Elements und das nächste Element. Das letzte Element in der Liste enthält nur
@@ -109,12 +114,12 @@ Basisfall der Rekursion lautet `Nil`. Beachte, dass dies nicht mit dem Konzept
 „null“ oder „nil“ in Kapitel 6 identisch ist, das einen fehlenden oder
 ungültigen Wert darstellt.
 
-Obwohl funktionale Programmiersprachen häufig Cons-Listen verwenden, ist sie in
-Rust keine häufig vorkommende Datenstruktur. Wenn man in Rust eine Liste von
-Elementen hat, ist `Vec<T>` die bessere Wahl. Andere, komplexere rekursive
-Datentypen sind in verschiedenen Situationen nützlich. Wenn wir jedoch mit der
-Cons-Liste beginnen, können wir untersuchen, wie Boxen es uns ermöglichen, ohne
-grosse Ablenkung einen rekursiven Datentyp zu definieren.
+Die Cons-Liste verwenden ist keine häufig verwendete Datenstruktur in Rust. Wenn
+man in Rust eine Liste von Elementen hat, ist `Vec<T>` die bessere Wahl.
+Andere, komplexere rekursive Datentypen sind in verschiedenen Situationen
+nützlich. Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen,
+wie Boxen es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp
+zu definieren.
 
 Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste. Beachte,
 dass dieser Code nicht kompiliert werden kann, da der Typ `List` keine bekannte
@@ -205,9 +210,9 @@ Der Fehler zeigt, dass dieser Typ „unendlich groß“ ist. Der Grund dafür is
 dass wir `List` mit einer rekursiven Variante definiert haben, sie enthält
 direkt einen anderen Wert von sich selbst, daher kann Rust nicht herausfinden,
 wie viel Speicherplatz zum Speichern eines Listenwerts erforderlich ist. Lass
-uns kurz zusammenfassen, warum wir diesen Fehler bekommen. Schauen wir uns
-zunächst an, wie Rust entscheidet, wie viel Speicherplatz zum Speichern des
-Werts eines nicht rekursiven Typs benötigt wird.
+uns zusammenfassen, warum wir diesen Fehler bekommen. Schauen wir uns zunächst
+an, wie Rust entscheidet, wie viel Speicherplatz zum Speichern des Werts eines
+nicht rekursiven Typs benötigt wird.
 
 #### Die Größe eines nicht-rekursiven Typs berechnen
 
@@ -247,9 +252,9 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.
 
 #### Verwenden von `Box<T>`, um einen rekursiven Typ mit einer bekannten Größe zu erhalten
 
-Rust kann nicht herausfinden, wie viel Speicherplatz für rekursiv definierte
-Typen reserviert werden muss. Daher gibt der Compiler den Fehler in Codeblock
-15-4 aus. Der Fehler enthält jedoch diesen hilfreichen Hinweis:
+Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
+Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
+hilfreichen Vorschlag aus:
 
 ```text
 help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
@@ -258,9 +263,10 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` repre
   |               ^^^^    ^
 ```
 
-In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle eines
-direkten Speicherns des Wertes die Datenstruktur geändert wird, um den Wert
-indirekt zu speichern, indem stattdessen ein Zeiger zum Wert gespeichert wird.
+In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle
+eines direkten Speicherns des Wertes die Datenstruktur geändert werden soll, um
+den Wert indirekt zu speichern, indem stattdessen ein Zeiger auf den Wert
+gespeichert wird.
 
 Da eine `Box<T>` ein Zeiger ist, weiß Rust immer, wie viel Platz eine `Box<T>`
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
@@ -320,8 +326,9 @@ Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
 implementiert, mit dem `Box<T>` Werte wie Referenzen behandelt werden können.
 Wenn ein `Box<T>`-Wert den Gültigkeitsbereich verlässt, werden die Daten am
 Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-`Drop`-Merkmals ebenfalls bereinigt. Lass uns diese beiden Merkmale genauer
-untersuchen. Diese beiden Merkmale sind für die Funktionalität der anderen
-intelligenten Zeigertypen, die wir im restlichen Kapitel erläutern, noch wichtiger.
+Merkmals `Drop` ebenfalls bereinigt. Diese beiden Merkmale sind für die
+Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
+Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
+untersuchen.
 
 [trait-objects]: ch17-02-trait-objects.html

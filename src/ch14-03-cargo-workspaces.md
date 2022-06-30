@@ -3,25 +3,23 @@
 In Kapitel 12 haben wir ein Paket erstellt, das eine binäre Kiste und eine
 Bibliothekskiste enthält. Während dein Projekt entwickelt wird, wirst du
 möglicherweise feststellen, dass die Bibliothekskiste immer größer wird und du
-dein Paket weiter in mehrere Bibliothekskisten aufteilen möchtest. In dieser
-Situation bietet Cargo eine Funktion namens *Arbeitsbereiche* (workspaces), mit
-denen mehrere verwandte Pakete verwaltet werden können, die gemeinsam entwickelt
-werden.
+dein Paket weiter in mehrere Bibliothekskisten aufteilen möchtest. Cargo bietet
+eine Funktion namens *Arbeitsbereiche* (workspaces), mit denen mehrere
+verwandte Pakete verwaltet werden können, die gemeinsam entwickelt werden.
 
 ### Einen Arbeitsbereich erstellen
 
 Ein *Arbeitsbereich* ist eine Reihe von Paketen, die dieselbe Datei
-*Cargo.lock* sowie dasselbe Ausgabeverzeichnis
-(output directory) verwenden. Lass uns mithilfe eines Arbeitsbereiches ein
-Projekt erstellen. Wir verwenden einfachen Programmcode, damit wir uns auf die
-Struktur des Arbeitsbereiches konzentrieren können. Es gibt verschiedene
-Möglichkeiten, einen Arbeitsbereich zu strukturieren. Wir werden einen einen
-üblichen Weg zeigen. Wir haben einen Arbeitsbereich mit einer Binärdatei und
-zwei Bibliotheken. Die Binärdatei stellt die Hauptfunktion bereit und hängt von
-den beiden Bibliotheken ab. Eine Bibliothek stellt die Funktion `add_one` und
-die andere `add_two` zur Verfügung. Diese drei Kisten werden Teil desselben
-Arbeitsbereichs sein. Zunächst erstellen wir ein neues Verzeichnis für den
-Arbeitsbereich:
+*Cargo.lock* sowie dasselbe Ausgabeverzeichnis (output directory) verwenden.
+Lass uns mithilfe eines Arbeitsbereiches ein Projekt erstellen. Wir verwenden
+einfachen Programmcode, damit wir uns auf die Struktur des Arbeitsbereiches
+konzentrieren können. Es gibt verschiedene Möglichkeiten, einen Arbeitsbereich
+zu strukturieren. Wir werden nur einen einen üblichen Weg zeigen. Wir haben
+einen Arbeitsbereich mit einer Binärdatei und zwei Bibliotheken. Die Binärdatei
+stellt die Hauptfunktion bereit und hängt von den beiden Bibliotheken ab. Eine
+Bibliothek stellt die Funktion `add_one` und die andere `add_two` zur
+Verfügung. Diese drei Kisten werden Teil desselben Arbeitsbereichs sein.
+Zunächst erstellen wir ein neues Verzeichnis für den Arbeitsbereich:
 
 ```console
 $ mkdir add
@@ -29,12 +27,11 @@ $ cd add
 ```
 
 Als Nächstes erstellen wir im Verzeichnis *add* die Datei *Cargo.toml*, mit der
-der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält weder einen
-Abschnitt `[package]` noch die Metadaten, die wir in den anderen
-*Cargo.toml*-Dateien gesehen haben. Stattdessen beginnt sie mit einem Abschnitt
-`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können, indem
-wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall lautet
-dieser Pfad *adder*:
+der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
+Abschnitt `[package]`. Stattdessen beginnt sie mit einem Abschnitt
+`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können,
+indem wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall
+lautet dieser Pfad *adder*:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -69,7 +66,7 @@ aussehen:
 ```
 
 Der Arbeitsbereich verfügt auf der obersten Ebene über ein *Zielverzeichnis* 
-(target), in das die kompilierten Artefakte abgelegt werden sollen. Das Paket
+(target), in das die kompilierten Artefakte abgelegt werden; das Paket
 `adder` hat kein eigenes *Zielverzeichnis*. Selbst wenn wir `cargo build` aus
 dem Verzeichnis *adder* heraus ausführen würden, landen die kompilierten
 Artefakte noch immer in *add/target* und nicht in *add/adder/target*. Cargo
@@ -129,10 +126,9 @@ pub fn add_one(x: i32) -> i32 {
 }
 ```
 
-Nun, da wir ein zusätzliches Paket im Arbeitsbereich haben, können wir das
-`adder`-Paket von unserem `add_one`-Paket, das unsere Bibliothek enthält,
-abhängig machen. Zuerst müssen wir *adder/Cargo.toml* einen Pfad zur
-Abhängigkeit von `add_one` hinzufügen.
+Nun können wir das `adder`-Paket von unserem `add_one`-Paket, das unsere
+Bibliothek enthält, abhängig machen. Zuerst müssen wir *adder/Cargo.toml*
+einen Pfad zur Abhängigkeit von `add_one` hinzufügen.
 
 <span class="filename">Dateiname: adder/Cargo.toml</span>
 
@@ -145,10 +141,10 @@ add_one = { path = "../add_one" }
 Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.
 
-Als nächstes verwenden wir die Funktion `add_one` aus der `add_one`-Kiste der
-`adder`-Kiste. Öffne die Datei *adder/src/main.rs* und füge oben eine Zeile `use`
-hinzu, um die neue Bibliothekskiste `add_one` in den Gültigkeitsbereich (scope)
-zu bringen. Ändere dann die Funktion `main`, um die Funktion `add_one`
+Als nächstes verwenden wir die Funktion `add_one` (aus der `add_one`-Kiste) in
+der `adder`-Kiste. Öffne die Datei *adder/src/main.rs* und füge oben eine Zeile
+`use` hinzu, um die neue Bibliothekskiste `add_one` in den Gültigkeitsbereich
+(scope) zu bringen. Ändere dann die Funktion `main`, um die Funktion `add_one`
 aufzurufen, siehe Codeblock 14-7.
 
 <span class="filename">Dateiname: adder/src/main.rs</span>
@@ -196,35 +192,46 @@ Kiste `add_one` abhängt.
 #### Abhängigkeiten zu externen Paketen in einem Arbeitsbereich
 
 Beachte, dass der Arbeitsbereich nur eine *Cargo.lock*-Datei auf der obersten
-Ebene des Arbeitsbereichs enthält, anstatt einer in jeder Kiste. Dies stellt
-sicher, dass alle Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn
-wir das Paket `rand` zu den Dateien *adder/Cargo.toml* und *add_one/Cargo.toml*
-hinzufügen, löst Cargo beide dieser Versionen zu einer auf und fügt diese in der
+Ebene enthält, anstatt einer in jeder Kiste. Dies stellt sicher, dass alle
+Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn wir das Paket
+`rand` zu den Dateien *adder/Cargo.toml* und *add_one/Cargo.toml* hinzufügen,
+löst Cargo beide dieser Versionen zu einer auf und fügt diese in der
 *Cargo.lock*-Datei hinzu. Wenn alle Kisten im Arbeitsbereich dieselben
-Abhängigkeiten verwenden, sind die Kisten im Arbeitsbereich immer miteinander
-kompatibel. Lass uns die `rand`-Kiste in der Datei *add_one/Cargo.toml* 
-zum Abschnitt `[dependencies]` hinzufügen, um die Kiste `rand` in der `add_one`-Kiste
-verwenden zu können:
-
+Abhängigkeiten verwenden, sind die Kisten immer miteinander kompatibel. Lass
+uns die `rand`-Kiste in der Datei *add_one/Cargo.toml* zum Abschnitt
+`[dependencies]` hinzufügen, damit wir die Kiste `rand` in der `add_one`-Kiste
+verwenden können:
 
 <span class="filename">Dateiname: add_one/Cargo.toml</span>
 
 ```toml
 [dependencies]
-rand = "0.5.5"
+rand = "0.8.3"
 ```
 
 Wir können nun `use rand;` zur Datei *add_one/src/lib.rs* hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von `cargo build` im Verzeichnis
-*add* erstellst, wird die `rand`-Kiste eingefügt und kompiliert:
+*add* erstellst, wird die Kiste `rand` eingefügt und kompiliert. Wir erhalten
+eine Warnung, weil wir nicht auf `rand` referenzieren, das wir in den
+Gültigkeitsbereich gebracht haben:
 
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.5.5
-   --snip--
-   Compiling rand v0.5.6
+  Downloaded rand v0.8.3
+   --abschneiden--
+   Compiling rand v0.8.3
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
+warning: unused import: `rand`
+ --> add_one/src/lib.rs:1:5
+  |
+1 | use rand;
+  |     ^^^^
+  |
+  = note: `#[warn(unused_imports)]` on by default
+
+warning: 1 warning emitted
+
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished dev [unoptimized + debuginfo] target(s) in 10.18s
 ```
@@ -239,7 +246,7 @@ Wenn wir beispielsweise `use rand;` zur Datei *adder/src/main.rs* für das Paket
 
 ```console
 $ cargo build
-  --snip--
+  --abschneiden--
    Compiling adder v0.1.0 (file:///projects/add/adder)
 error[E0432]: unresolved import `rand`
  --> adder/src/main.rs:2:5
@@ -252,11 +259,10 @@ Um dies zu beheben, bearbeiten wir die Datei *Cargo.toml* für das Paket `adder`
 und geben an, dass `rand` auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets `adder` wird `rand` zur Liste der Abhängigkeiten für `adder` in
 *Cargo.lock* hinzugefügt, es werden jedoch keine zusätzlichen Kopien von `rand`
-heruntergeladen. Cargo hat sichergestellt, dass jede Kiste in jedem Paket im
-Arbeitsbereich, die das `rand`-Paket verwendet, dieselbe Version benutzt.
-Verwenden der gleichen Version von `rand` im gesamten Arbeitsbereich spart
-Platz, da wir nicht mehrere Kopien haben und sicherstellen, dass die Kisten im
-Arbeitsbereich miteinander kompatibel sind.
+heruntergeladen. Cargo hat dafür gesorgt, dass jede Kiste in jedem Paket im
+Arbeitsbereich, das das `rand`-Paket verwendet, die gleiche Version verwendet,
+was uns Platz spart und sicherstellt, dass die Kisten im Arbeitsbereich
+miteinander kompatibel sind.
 
 #### Hinzufügen eines Tests zu einem Arbeitsbereich
 
@@ -281,8 +287,9 @@ mod tests {
 }
 ```
 
-Führen wir nun `cargo test` in der obersten Ebene im Verzeichnis *add* aus:
-
+Führen wir nun `cargo test` in der obersten Ebene im Verzeichnis *add* aus. Die
+Ausführung von `cargo test` in einem Arbeitsbereich, der wie dieser
+strukturiert ist, führt die Tests für alle Kisten im Arbeitsbereich aus:
 
 ```console
 $ cargo test
@@ -312,9 +319,7 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 Der erste Abschnitt der Ausgabe zeigt, dass der Test `it_works` in der
 `add_one`-Kiste bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
 `adder` keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in der
-Kiste `add_one` keine Dokumentationstests gefunden wurden. Wenn du in einem auf
-diese Weise strukturierten Arbeitsbereich `cargo test` ausführst, werden die
-Tests für alle Kisten im Arbeitsbereich ausgeführt.
+Kiste `add_one` keine Dokumentationstests gefunden wurden.
 
 Wir können auch Tests für eine bestimmte Kiste in einem Arbeitsbereich aus dem
 Verzeichnis der obersten Ebene ausführen, indem wir die Option `-p` verwenden und
@@ -352,5 +357,5 @@ eine `add-two`-Kiste hinzu!
 Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden, es ist
 einfacher kleinere, einzelne Komponenten zu verstehen, als ein großes
 Programmcode-Objekt. Darüber hinaus kann die Verwaltung von Kisten in einem
-Arbeitsbereich die Koordination zwischen ihnen erleichtern, wenn sie häufig zur
-gleichen Zeit verändert werden.
+Arbeitsbereich die Koordination zwischen Kisten erleichtern, wenn sie häufig
+zur gleichen Zeit verändert werden.

@@ -97,7 +97,7 @@ fn main() {
         .read_line(&mut guess)
         .expect("Fehler beim Lesen der Zeile");
 
-    println!("Du hast geschätzt: {}", guess);
+    println!("Du hast geschätzt: {guess}");
 }
 ```
 
@@ -124,11 +124,11 @@ use std::io;
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
-Standardmäßig hat Rust ein paar Elemente in der Standardbibliothek definiert,
+Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert,
 die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
 *Präludium* genannt, und du kannst deren Inhalt [in der Dokumentation der
 Standardbibliothek][prelude] sehen.
@@ -156,7 +156,7 @@ fn main() {
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -181,7 +181,7 @@ Zeichenkette auf dem Bildschirm ausgibt:
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -207,7 +207,7 @@ speichern, wie hier:
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -219,9 +219,10 @@ weiteres Beispiel:
 let apples = 5;
 ```
 
-Diese Zeile erzeugt eine neue Variable namens `apples` und bindet sie an den Wert
-5. In Rust sind Variablen standardmäßig unveränderlich (immutable). Wir werden
-dieses Konzept im Abschnitt [„Variablen und
+Diese Zeile erzeugt eine neue Variable namens `apples` und bindet sie an den
+Wert 5. In Rust sind Variablen standardmäßig unveränderlich (immutable), das
+heißt, sobald wir der Variablen einen Wert gegeben haben, wird sich der Wert
+nicht mehr ändern. Wir werden dieses Konzept im Abschnitt [„Variablen und
 Veränderlichkeit“][variables-and-mutability] in Kapitel 3 ausführlich
 besprechen. Um eine Variable veränderlich zu machen, ergänzen wir `mut` vor dem
 Variablennamen:
@@ -278,7 +279,7 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.
         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -312,9 +313,9 @@ ausführlicher erklärt.)
 
 ### Behandeln potentieller Fehler mit dem Typ `Result`
 
-Wir arbeiten noch immer an dieser Codezeile. Obwohl wir jetzt eine dritte
-Textzeile besprechen, ist sie immer noch Teil einer einzigen logischen
-Codezeile. Der nächste Teil ist diese Methode:
+Wir arbeiten noch immer an dieser Codezeile. Wir besprechen jetzt eine dritte
+Textzeile, aber beachte, dass sie immer noch Teil einer einzigen logischen
+Codezeile ist. Der nächste Teil ist diese Methode:
 
 ```rust,ignore
 # use std::io;
@@ -330,7 +331,7 @@ Codezeile. Der nächste Teil ist diese Methode:
 #         .read_line(&mut guess)
         .expect("Fehler beim Lesen der Zeile");
 #
-#     println!("Du hast geschätzt: {}", guess);
+#     println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -347,16 +348,10 @@ Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
 Wie bereits erwähnt, schreibt `read_line` das, was der Benutzer eingibt, in die
-Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen Wert zurück
-&ndash; in diesem Fall ein [`io::Result`][ioresult]. Rust hat eine Reihe von
-Typen namens `Result` in seiner Standardbibliothek: Ein generisches
-[`Result`][result] sowie spezifische Versionen für Untermodule, z.B.
-`io::Result`. Die `Result`-Typen sind [*Aufzählungen*][enums] (enumerations),
-die oft als *enums* bezeichnet werden, die einen festen Satz von Werten haben
-können, bekannt als *Varianten* (variants). Aufzählungen werden oft mit `match`
-verwendet, einer Bedingung, die es ermöglicht, unterschiedlichen Code
-auszuführen, je nachdem, welche Variante ein Aufzählungswert ist, wenn die
-Bedingung ausgewertet wird.
+Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen `Result`-Wert
+zurück. [`Result`][result] ist eine [*Aufzählung*][enums] (enumeration, oder
+kurz enum), die einen Typ darstellt, der sich in einem von mehreren möglichen
+Zuständen befinden kann. Wir nennen jeden möglichen Zustand eine *Variante*.
 
 In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
 `Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
@@ -368,7 +363,7 @@ ist, und `Err` enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.
 
 Für Werte vom Typ `Result` sind, wie für Werte jedes Typs, Methoden definiert.
-Eine Instanz von `io::Result` hat eine [Methode `expect`][expect], die du
+Eine Instanz von `Result` hat eine [Methode `expect`][expect], die du
 aufrufen kannst. Wenn diese `io::Result`-Instanz ein `Err`-Wert ist, wird
 `expect` das Programm zum Absturz bringen und die Meldung anzeigen, die du als
 Argument an `expect` übergeben hast. Wenn die Methode `read_line` ein `Err`
@@ -426,7 +421,7 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen:
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 #
-    println!("Du hast geschätzt: {}", guess);
+    println!("Du hast geschätzt: {guess}");
 # }
 ```
 
@@ -508,11 +503,13 @@ Versionsspezifikator `0.8.3`. Cargo versteht [semantische
 Versionierung][semver] (manchmal auch *SemVer* genannt), was ein Standard zum
 Schreiben von Versionsnummern ist. Die Zahl `0.8.3` ist eigentlich die
 Abkürzung für `^0.8.3`, was für alle Versionen ab `0.8.3` und kleiner als
-`0.9.0` steht. Cargo geht davon aus dass die öffentliche API dieser Versionen
-kompatibel zur Version 0.8.3 ist und diese Angabe stellt sicher, dass du die
-neueste Patch-Version erhälten, die noch mit dem Code in diesem Kapitel
-kompiliert werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API
-mit der in den folgenden Beispielen verwendeten übereinstimmt.
+`0.9.0` steht.
+
+Cargo geht davon aus dass die öffentliche API dieser Versionen kompatibel zur
+Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
+Patch-Version erhälten, die noch mit dem Code in diesem Kapitel kompiliert
+werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
+den folgenden Beispielen verwendeten übereinstimmt.
 
 Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Codeblock 2-2
 gezeigt.
@@ -594,7 +591,9 @@ sehen, dass die Datei *Cargo.lock* existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
 Worten, dein Projekt bleibt dank der Datei *Cargo.lock* auf `0.8.3`, bis du
-explizit die Versionsnummer erhöhst.
+explizit die Versionsnummer erhöhst. Da die Datei *Cargo.lock* für das
+reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
+Code deines Projekts in die Versionskontrolle eingecheckt.
 
 #### Aktualisieren einer Kiste, um eine neue Version zu erhalten
 
@@ -649,9 +648,9 @@ use rand::Rng;
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!("Die Geheimzahl ist: {}", secret_number);
+    println!("Die Geheimzahl ist: {secret_number}");
 
     println!("Bitte gib deine Schätzung ein.");
 
@@ -661,7 +660,7 @@ fn main() {
         .read_line(&mut guess)
         .expect("Fehler beim Lesen der Zeile");
 
-    println!("Du hast geschätzt: {}", guess);
+    println!("Du hast geschätzt: {guess}");
 }
 ```
 
@@ -682,10 +681,9 @@ Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal `Rng`
 definiert, das wir mit der Anweisung `use rand::Rng` in den Gültigkeitsbereich
 gebracht haben. Die Methode `gen_range` nimmt einen Bereichsausdruck als
 Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
-hat die Form `start..end`. Er beinhaltet die Untergrenze, nicht jedoch die
-Obergrenze, sodass wir `1..101` angeben müssen, um eine Zahl zwischen 1 und 100
-zu erhalten. Alternativ könnten wir den Bereich `1..=100` angeben, was
-äquivalent ist.
+hat die Form `start..=end` und er beinhaltet die Untergrenze und die
+Obergrenze, sodass wir `1..=100` angeben müssen, um eine Zahl zwischen 1 und 100
+zu erhalten.
 
 > Hinweis: Du wirst nicht immer wissen, welche Merkmale du verwenden sollst und
 > welche Methoden und Funktionen einer Kiste du aufrufen musst, daher hat jede
@@ -745,9 +743,9 @@ fn main() {
     // --abschneiden--
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..101);
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die Geheimzahl ist: {}", secret_number);
+#     println!("Die Geheimzahl ist: {secret_number}");
 #
 #     println!("Bitte gib deine Schätzung ein.");
 #
@@ -757,7 +755,7 @@ fn main() {
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen der Zeile");
 
-    println!("Du hast geschätzt: {}", guess);
+    println!("Du hast geschätzt: {guess}");
 
     match guess.cmp(&secret_number) {
         Ordering::Less => println!("Zu klein!"),
@@ -807,8 +805,8 @@ nicht mit `Ordering::Less` übereinstimmt, also ignoriert er den Code in diesem
 Zweig und geht zum nächsten Zweig über. Das Muster `Ordering::Greater` des
 nächsten Zweigs *passt* zu `Ordering::Greater`! Der dazugehörige Code in diesem
 Zweig wird ausgeführt und `Zu groß!` auf den Bildschirm ausgegeben. Der
-`match`-Ausdruck endet, weil er in diesem Szenario nicht auf den letzten Zweig
-zu schauen braucht.
+`match`-Ausdruck endet nach der ersten erfolgreichen Übereinstimmung, sodass
+der letzte Zweig in diesem Szenario nicht berücksichtigt wird.
 
 Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:
@@ -861,9 +859,9 @@ hinzufügen:
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..101);
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die Geheimzahl ist: {}", secret_number);
+#     println!("Die Geheimzahl ist: {secret_number}");
 #
 #     println!("Bitte gib deine Schätzung ein.");
 #
@@ -877,7 +875,7 @@ hinzufügen:
 
     let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 
-    println!("Du hast geschätzt: {}", guess);
+    println!("Du hast geschätzt: {guess}");
 
     match guess.cmp(&secret_number) {
         Ordering::Less => println!("Zu klein!"),
@@ -919,12 +917,12 @@ Drücken der <span class="keystroke">Eingabetaste</span> einen Wagenrücklauf
 (carriage return) und einen Zeilenumbruch (newline): `\r\n`) Die `trim`-Methode
 entfernt `\n` und `\r\n`, was nur `5` ergibt.
 
-Die [`parse`-Methode für Zeichenketten][parse] zerlegt eine Zeichenkette in
-eine Art Zahl. Da diese Methode eine Vielzahl von Zahlentypen parsen kann,
-müssen wir Rust den genauen Zahlentyp mitteilen, den wir wollen, indem wir `let
-guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt Rust, dass wir
-den Typ der Variablen annotieren werden. Rust hat ein paar eingebaute
-Zahlentypen; `u32`, das du hier siehst, ist eine vorzeichenlose
+Die [`parse`-Methode für Zeichenketten][parse] konvertiert eine Zeichenkette in
+einen anderen Typ. Hier verwenden wir sie, um eine Zeichenkette in eine Zahl
+umzuwandeln. Wir müssen Rust den genauen Zahlentyp mitteilen, den wir wollen,
+indem wir `let guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt
+Rust, dass wir den Typ der Variablen annotieren werden. Rust hat ein paar
+eingebaute Zahlentypen; `u32`, das du hier siehst, ist eine vorzeichenlose
 32-Bit-Ganzzahl. Es ist eine gute Standardwahl für eine kleine positive Zahl.
 Über andere Zahlentypen erfährst du in Kapitel 3. Zusätzlich bedeuten die
 Annotation `u32` in diesem Beispielprogramm und der Vergleich mit
@@ -986,11 +984,11 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..101);
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
     // --abschneiden--
 
-    println!("Die Geheimzahl ist: {}", secret_number);
+    println!("Die Geheimzahl ist: {secret_number}");
 
     loop {
         println!("Bitte gib deine Schätzung ein.");
@@ -1005,7 +1003,7 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:
 #
 #         let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 #
-#         println!("Du hast geschätzt: {}", guess);
+#         println!("Du hast geschätzt: {guess}");
 #
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Zu klein!"),
@@ -1077,9 +1075,9 @@ gewinnt, indem wir eine `break`-Anweisung hinzufügen:
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..101);
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die Geheimzahl ist: {}", secret_number);
+#     println!("Die Geheimzahl ist: {secret_number}");
 #
 #     loop {
 #         println!("Bitte gib deine Schätzung ein.");
@@ -1092,7 +1090,7 @@ gewinnt, indem wir eine `break`-Anweisung hinzufügen:
 #
 #         let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 #
-#         println!("Du hast geschätzt: {}", guess);
+#         println!("Du hast geschätzt: {guess}");
 #
         // --abschneiden--
 
@@ -1131,9 +1129,9 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 # fn main() {
 #     println!("Rate die Zahl!");
 #
-#     let secret_number = rand::thread_rng().gen_range(1..101);
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die Geheimzahl ist: {}", secret_number);
+#     println!("Die Geheimzahl ist: {secret_number}");
 #
 #     loop {
 #         println!("Bitte gib deine Schätzung ein.");
@@ -1151,7 +1149,7 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
             Err(_) => continue,
         };
 
-        println!("Du hast geschätzt: {}", guess);
+        println!("Du hast geschätzt: {guess}");
 
         // --abschneiden--
 #
@@ -1236,7 +1234,7 @@ use std::io;
 fn main() {
     println!("Rate die Zahl!");
 
-    let secret_number = rand::thread_rng().gen_range(1..101);
+    let secret_number = rand::thread_rng().gen_range(1..=100);
 
     loop {
         println!("Bitte gib deine Schätzung ein.");
@@ -1252,7 +1250,7 @@ fn main() {
             Err(_) => continue,
         };
 
-        println!("Du hast geschätzt: {}", guess);
+        println!("Du hast geschätzt: {guess}");
 
         match guess.cmp(&secret_number) {
             Ordering::Less => println!("Zu klein!"),
@@ -1289,7 +1287,6 @@ besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert
 [doccratesio]: http://doc.crates.io/crates-io.html
 [enums]: ch06-00-enums.html
 [expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
-[ioresult]: https://doc.rust-lang.org/std/io/type.Result.html
 [iostdin]: https://doc.rust-lang.org/std/io/struct.Stdin.html
 [match]: ch06-02-match.html
 [parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse

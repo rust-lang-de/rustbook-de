@@ -8,10 +8,11 @@ den `String`-Wert angeben. Eine *Referenz* ist wie ein Zeiger, d.h. eine
 Adresse, der wir folgen können, um auf Daten zugreifen können, die an dieser
 Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
 einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
-Wert eines bestimmten Typs zeigt. Im Folgenden siehst du, wie du eine Funktion
-`calculate_length` definieren und verwenden kannst, die eine Referenz auf ein
-Objekt als Parameter hat, anstatt die Eigentümerschaft (ownership) des Wertes
-zu übernehmen:
+Wert eines bestimmten Typs zeigt.
+
+Im Folgenden siehst du, wie du eine Funktion `calculate_length` definieren und
+verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
+die Eigentümerschaft (ownership) des Wertes zu übernehmen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -36,7 +37,7 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.
 
-<img alt="&String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
+<img alt="&amp;String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
 
 <span class="caption">Abbildung 4-5: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
@@ -89,7 +90,7 @@ fn calculate_length(s: &String) -> usize { // s ist eine Referenz
 
 Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
 der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
-Referenz zeigt, wird nicht gelöscht, wenn `s` nicht mehr verwendet wird, weil
+Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
 `s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
@@ -165,10 +166,10 @@ aufrufen, und aktualisieren die Funktionssignatur, um eine veränderliche
 Referenz mit `some_string: &mut String` entgegenzunehmen. Dies macht deutlich,
 dass die Funktion `change` den Wert, den sie ausleiht, verändert.
 
-Veränderliche Referenzen haben eine große Einschränkung: Du kannst nur eine
-veränderliche Referenz auf einen bestimmten Datenwert zur gleichen Zeit haben.
-Dieser Code versucht, zwei veränderliche Referenzen auf `s` zu erstellen, und
-wird fehlschlagen:
+Veränderliche Referenzen haben eine große Einschränkung: Wenn du eine
+veränderliche Referenz auf einen Wert hast, kannst du keine andere Referenz auf
+diesen Wert haben. Dieser Code versucht, zwei veränderliche Referenzen auf `s`
+zu erstellen, und wird fehlschlagen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -277,11 +278,12 @@ error: could not compile `ownership` due to previous error
 ```
 
 Puh! Wir können auch keine veränderlichen Referenzen haben, solange wir eine
-unveränderliche haben auf denselben Wert haben. Nutzer einer unveränderlichen
-Referenz erwarten nicht, dass sich die Werte dahinter plötzlich ändern! Mehrere
-unveränderliche Referenzen sind jedoch in Ordnung, da niemand, der die Daten
-nur liest, die Möglichkeit hat, das Lesen der Daten durch andere zu
-beeinflussen.
+unveränderliche haben auf denselben Wert haben.
+
+Nutzer einer unveränderlichen Referenz erwarten nicht, dass sich die Werte
+dahinter plötzlich ändern! Mehrere unveränderliche Referenzen sind jedoch in
+Ordnung, da niemand, der die Daten nur liest, die Möglichkeit hat, das Lesen
+der Daten durch andere zu beeinflussen.
 
 Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 

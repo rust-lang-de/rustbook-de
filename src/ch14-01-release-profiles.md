@@ -20,15 +20,15 @@ $ cargo build --release
     Finished release [optimized] target(s) in 0.0s
 ```
 
-Die Angaben `dev` und `release` zeigen an, dass der Compiler
-unterschiedliche Profile verwendet.
+Die Angaben `dev` und `release` sind diese verschiedenen Profile, die vom
+Compiler verwendet werden.
 
 Cargo hat Standardeinstellungen für jedes der Profile, die verwendet werden,
-wenn es keine Abschnitte `[profile.*]` in der Datei *Cargo.toml* des Projekts
-gibt. Durch Hinzufügen eines Abschnitts `[profile.*]` für Profile, die du
-anpassen möchtest, kannst du Teile der Standardeinstellungen überschreiben.
-Hier sind zum Beispiel die Standardwerte für die Einstellung `opt-level` der
-Profile `dev` und `release`:
+wenn du keine expliziten Abschnitte `[profile.*]` in der Datei *Cargo.toml* des
+Projekts hast. Durch Hinzufügen eines Abschnitts `[profile.*]` für Profile, die
+du anpassen möchtest, überschreibst du Teile der Standardeinstellungen. Hier
+sind zum Beispiel die Standardwerte für die Einstellung `opt-level` der Profile
+`dev` und `release`:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -43,20 +43,20 @@ opt-level = 3
 Die Einstellung `opt-level` steuert die Anzahl der Optimierungen, die Rust auf
 den Programmcode anwendet, in einem Bereich 0 bis 3. Das Anwenden zusätzlicher
 Optimierungen verlängert die Kompilierungszeit. Wenn man in der Entwicklung
-häufig den Programmcode kompiliert, wünscht man zumeist, dass das Kompilieren
-schneller ist, auch wenn dadurch der resultierende Programmcode langsamer
-ausgeführt wird. Aus diesem Grund ist die Standardeinstellung `opt-level` für
-`dev` `0`. Wenn du bereit bist, deinen Programmcode zu veröffentlichen, ist es
-besser, wenn das Kompilieren mehr Zeit benötigt, man wird nur einmal im
-Releasemodus kompilieren, aber das Programm oft ausführen, daher tauscht der
-Releasemodus eine längere Kompilierungszeit gegen Programmcode, der schneller
-ausgeführt wird. Aus diesem Grund ist das standardmäßige `opt-level` für das 
-Profil `release` `3`.
+häufig den Programmcode kompiliert, wünscht man zumeist weniger Optimierungen,
+um schneller zu kompilieren, auch wenn dadurch der resultierende Programmcode
+langsamer ausgeführt wird. Das Standard-`opt-level` für `dev` ist daher `0`.
+Wenn du bereit bist, deinen Programmcode zu veröffentlichen, ist es besser,
+wenn das Kompilieren mehr Zeit benötigt, man wird nur einmal im Releasemodus
+kompilieren, aber das Programm oft ausführen, daher tauscht der Releasemodus
+eine längere Kompilierungszeit gegen Programmcode, der schneller ausgeführt
+wird. Aus diesem Grund ist das standardmäßige `opt-level` für das Profil
+`release` `3`.
 
-Du kannst jede Standardeinstellung überschreiben, indem du dafür in *Cargo.toml*
-einen anderen Wert hinzufügst. Wenn wir zum Beispiel die Optimierungsstufe 1 im
-Entwicklungsprofil verwenden möchten, können wir diese beiden Zeilen in die
-Datei *Cargo.toml* unseres Projekts hinzufügen:
+Du kannst eine Standardeinstellung überschreiben, indem du dafür in
+*Cargo.toml* einen anderen Wert hinzufügst. Wenn wir zum Beispiel die
+Optimierungsstufe 1 im Entwicklungsprofil verwenden möchten, können wir diese
+beiden Zeilen in die Datei *Cargo.toml* unseres Projekts hinzufügen:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -72,7 +72,8 @@ vornehmen als mit Standardeinstellungen, aber weniger als bei einem
 Releasebuild.
 
 Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
-jedes Profil findest du in [Cargos
-Dokumentation](https://doc.rust-lang.org/cargo/reference/profiles.html).
+jedes Profil findest du in [Cargos Dokumentation][cargo].
 
 [^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
+
+[cargo]: https://doc.rust-lang.org/cargo/reference/profiles.html

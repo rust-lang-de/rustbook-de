@@ -4,14 +4,17 @@
 mit dem man Daten auch dann verändern kann, wenn unveränderliche Referenzen auf
 diese Daten vorhanden sind. Normalerweise ist diese Aktion nach den
 Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
-„unsicheren“ Programmcode (`unsafe` code) innerhalb einer Datenstruktur, um Rusts
-übliche Regeln, die Veränderlichkeit und Ausleihen betreffen, zu verändern. Wir
-haben unsicheren Code noch nicht behandelt. Wir werden in Kapitel 19 darauf
-eingehen. Wir können Typen verwenden, die das innere Veränderlichkeitsmuster
-verwenden, wenn wir sicherstellen können, dass die Ausleihregeln zur Laufzeit
-eingehalten werden, obwohl der Compiler dies nicht garantieren kann. Der
-betreffende unsichere Programmcode wird dann in eine sichere API
-eingeschlossen und der äußere Typ ist immer noch unveränderlich.
+„unsicherer Programmcode“ (`unsafe` code) innerhalb einer Datenstruktur, um
+Rusts übliche Regeln, die Veränderlichkeit und Ausleihen betreffen, zu
+verändern. Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell
+überprüfen, anstatt uns darauf zu verlassen, dass der Compiler sie für uns
+überprüft; wir werden unsicheren Code in Kapitel 19 genauer besprechen.
+
+Wir können Typen verwenden, die das innere Veränderlichkeitsmuster verwenden,
+wenn wir sicherstellen können, dass die Ausleihregeln zur Laufzeit eingehalten
+werden, obwohl der Compiler dies nicht garantieren kann. Der betroffene
+unsichere Programmcode wird dann in eine sichere API eingeschlossen und der
+äußere Typ ist immer noch unveränderlich.
 
 Lass uns dieses Konzept untersuchen, indem wir uns den Typ `RefCell<T>` ansehen,
 der dem inneren Veränderlichkeitsmuster folgt.
@@ -42,11 +45,11 @@ Standardeinstellung von Rust.
 
 Der Vorteil der Überprüfung der Ausleihregeln zur Laufzeit besteht darin, dass
 bestimmte speichersichere Szenarien zulässig sind, während sie durch die
-Überprüfung zur Kompilierzeit nicht zulässig sind. Die statische Analyse
-ist wie der Rust-Compiler von Natur aus konservativ. Einige Eigenschaften des
-Programmcodes lassen sich durch Analyse des Programmcodes nicht erkennen: Das
-bekannteste Beispiel ist das Halteproblem, das den Rahmen dieses Buches sprengt,
-aber ein interessantes Thema zum Nachforschen darstellt.
+Überprüfung zur Kompilierzeit nicht zulässig gewesen wären. Die statische
+Analyse ist wie der Rust-Compiler von Natur aus konservativ. Einige
+Eigenschaften des Programmcodes lassen sich durch Analyse des Programmcodes
+nicht erkennen: Das bekannteste Beispiel ist das Halteproblem, das den Rahmen
+dieses Buches sprengt, aber ein interessantes Thema zum Nachforschen darstellt.
 
 Da eine Analyse nicht möglich ist, lehnt der Rust-Compiler möglicherweise ein
 ein korrektes Programm ab, wenn er nicht sicher sein kann, dass der Programmcode
@@ -113,14 +116,14 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `borrowing` due to previous error
 ```
 Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
-seinen Methoden selbst veränderlich ist, aber für einen anderen Programmcode 
+seinen Methoden selbst veränderlich ist, aber für einen anderen Programmcode
 unveränderlich erscheint. Programmcode außerhalb der Methoden des Werts kann
 diesen nicht verändern. Die Verwendung von `RefCell<T>` ist eine Möglichkeit,
-die Fähigkeit zur inneren Veränderlichkeit zu erhalten, allerdings
-umgeht `RefCell<T>` die Ausleihregeln nicht vollständig: Der Ausleihenprüfer (borrow checker) im
-Compiler ermöglicht diese innere Veränderlichkeit, und die Ausleihregeln werden
-stattdessen zur Laufzeit überprüft. Wenn man gegen die Regeln verstößt wird
-`panic` anstelle eines Fehlers beim Kompilieren ausgelöst.
+die Fähigkeit zur inneren Veränderlichkeit zu erhalten, allerdings umgeht
+`RefCell<T>` die Ausleihregeln nicht vollständig: Der Ausleihenprüfer (borrow
+checker) im Compiler ermöglicht diese innere Veränderlichkeit, und die
+Ausleihregeln werden stattdessen zur Laufzeit überprüft. Wenn man gegen die
+Regeln verstößt wird `panic` anstelle eines Fehlers beim Kompilieren ausgelöst.
 
 Lass uns ein praktisches Beispiel durcharbeiten, in dem wir `RefCell<T>`
 verwenden können, um einen unveränderlichen Wert zu ändern und herauszufinden,
@@ -128,11 +131,15 @@ warum dies nützlich ist.
 
 #### Ein Anwendungsfall für die innere Veränderlichkeit: Mock-Objekte (Mock Objects)
 
-Ein *Testdoppel* (test double) ist das allgemeine Programmierkonzept für einen 
-Typ, der beim Testen anstelle eines anderen Typs verwendet wird. *Mock-Objekte* 
-sind bestimmte Arten von Testdoppeln, die aufzeichnen, was während eines Tests
-passiert, damit man bestätigen kann, dass die richtigen Aktionen ausgeführt
-wurden.
+Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
+anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
+es korrekt implementiert ist. Dieser Platzhaltertyp wird *Testdoppel* (test
+double) genannt. Stell dir das so vor wie ein „Stunt-Double“ beim Film, bei dem
+eine Person einspringt und einen Schauspieler in einer besonders schwierigen
+Szene ersetzt. Testdoppel stehen für andere Typen ein, wenn wir Tests
+durchführen. *Mock-Objekte* sind bestimmte Arten von Testdoppeln, die
+aufzeichnen, was während eines Tests passiert, damit man bestätigen kann, dass
+die richtigen Aktionen ausgeführt wurden.
 
 Rust verfügt nicht im gleichen Sinne wie andere Programmiersprachen über
 Objekte und in die Standardbibliothek integrierte Mock-Objekt-Funktionen. Man
@@ -579,7 +586,7 @@ fehl:
 $ cargo test
    Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
-     Running unittests target/debug/deps/limit_tracker-d1b2637139dca6ca
+     Running unittests src/lib.rs (target/debug/deps/limit_tracker-e599811fa246dbde)
 
 running 1 test
 test tests::it_sends_an_over_75_percent_warning_message ... FAILED
@@ -587,29 +594,32 @@ test tests::it_sends_an_over_75_percent_warning_message ... FAILED
 failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
-thread 'main' panicked at 'already borrowed: BorrowMutError', src/libcore/result.rs:1188:5
+thread 'main' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
-tests::it_sends_an_over_75_percent_warning_message
+    tests::it_sends_an_over_75_percent_warning_message
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
+
+error: test failed, to rerun pass '--lib'
 ```
 Beachte, dass der Programmcode mit der Meldung `already borrowed:
 BorrowMutError` abstürzt. Auf diese Weise behandelt `RefCell<T>` zur
 Laufzeit Verstöße gegen die Ausleihregel.
 
-Das Abfangen von Ausleihfehlern zur Laufzeit anstelle der Kompilierzeit
-bedeutet, dass man später im Entwicklungsprozess einen Fehler im Programmcode
-finden und möglicherweise erst, wenn das Programm für die Produktion
-bereitgestellt wurde. Außerdem würde dieser Programmcode eine kleine
-Beeinträchtigung der Laufzeitperformanz verursachen, da die Ausleihen zur Laufzeit
-und nicht zur Kompilierzeit nachverfolgt werden. Die Verwendung von
-`RefCell<T>` ermöglicht es jedoch, ein Mock-Objekt zu schreiben, das sich selbst
-ändern kann, um die Nachrichten zu verfolgen, die es gesehen hat, während man es
-in einem Kontext verwendet, in dem nur unveränderliche Werte zulässig sind. Man
-kann `RefCell<T>` trotz seiner Kompromisse verwenden, um mehr Funktionen zu
+Wenn du dich dafür entscheidest, Ausleihfehler zur Laufzeit und nicht zur
+Kompilierzeit abzufangen, wie wir es hier getan haben, bedeutet das, dass du
+Fehler in deinem Code möglicherweise erst später im Entwicklungsprozess
+findest: Möglicherweise erst, wenn dein Code in der Produktion eingesetzt
+wurde. Außerdem würde dieser Programmcode eine kleine Beeinträchtigung der
+Laufzeitperformanz verursachen, da die Ausleihen zur Laufzeit und nicht zur
+Kompilierzeit nachverfolgt werden. Die Verwendung von `RefCell<T>` ermöglicht
+es jedoch, ein Mock-Objekt zu schreiben, das sich selbst ändern kann, um die
+Nachrichten zu verfolgen, die es gesehen hat, während man es in einem Kontext
+verwendet, in dem nur unveränderliche Werte zulässig sind. Man kann
+`RefCell<T>` trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.
 
 ### Mehrere Eigentümer veränderlicher Daten durch Kombinieren von `Rc<T>` und `RefCell<T>`
@@ -671,13 +681,13 @@ Wir wickeln die Liste `a` in ein `Rc<T>` ein. Wenn wir also die Listen `b` und
 `c` erstellen, können beide auf `a` verweisen, was wir in Codeblock 15-18 getan
 haben.
 
-Nachdem wir die Listen `a`, `b` und `c` erstellt haben, addieren wir 10 zum Wert
-in `value`. Dazu rufen wir `borrow_mut` für `value` auf, wobei die in Kapitel 5
-beschriebene automatische Dereferenzierung verwendet wird 
-(siehe Abschnitt [„Wo ist der Operator `->`?“][wheres-the-operator]), um den
-`Rc<T>` auf den inneren `RefCell<T>`-Wert zu dereferenzieren. Die
-`borrow_mut`-Methode gibt einen intelligenten Zeiger `RefMut<T>` zurück, und wir
-verwenden den Dereferenzierungsoperator darauf und ändern den inneren Wert.
+Nachdem wir die Listen `a`, `b` und `c` erstellt haben, wollen wir 10 zum Wert
+in `value` addieren. Dazu rufen wir `borrow_mut` für `value` auf, wobei die in
+Kapitel 5 beschriebene automatische Dereferenzierung verwendet wird (siehe
+Abschnitt [„Wo ist der Operator `->`?“][wheres-the-operator]), um den `Rc<T>`
+auf den inneren `RefCell<T>`-Wert zu dereferenzieren. Die Methode `borrow_mut`
+gibt einen intelligenten Zeiger `RefMut<T>` zurück, und wir verwenden den
+Dereferenzierungsoperator darauf und ändern den inneren Wert.
 
 Wenn wir `a`, `b` und `c` ausgeben, können wir sehen, dass sie alle den
 veränderten Wert 15 anstelle von 5 haben:
@@ -699,15 +709,8 @@ Veränderlichkeit ermöglichen, damit wir unsere Daten bei Bedarf ändern könne
 Die Laufzeitprüfungen der Ausleihregeln schützen uns vor
 Daten-Wettlaufsituationen (data races), und manchmal lohnt es sich, ein wenig
 Geschwindigkeit für diese Flexibilität in unseren Datenstrukturen
-einzutauschen.
-
-Die Standardbibliothek verfügt über andere Typen, die eine innere
-Veränderlichkeit bieten, z.B. `Cell<T>`, die ähnlich ist, mit der Ausnahme, dass
-der Wert nicht auf den inneren Wert referenziert, sondern in die `Cell<T>` hinein 
-und aus dieser herauskopiert wird. Es gibt auch `Mutex<T>`, das eine innere
-Veränderlichkeit bietet, die sicher über Stränge (threads) hinweg verwendet
-werden kann. Wir werden die Verwendung in Kapitel 16 erläutern. Weitere
-Informationen zu den Unterschieden zwischen diesen Typen findest du in den
-Standardbibliotheksdokumenten.
+einzutauschen. Beachte, dass `RefCell<T>` nicht bei nebenläufigen Code
+funktioniert! `Mutex<T>` ist die Strang-sichere (thread-safe) Version von
+`RefCell<T>` und wir werden `Mutex<T>` in Kapitel 16 besprechen.
 
 [wheres-the-operator]: ch05-03-method-syntax.html#wo-ist-der-operator--

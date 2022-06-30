@@ -3,11 +3,11 @@
 Inzwischen hast du die am häufigsten verwendeten Teile der Programmiersprache
 Rust gelernt. Bevor wir in Kapitel 20 ein weiteres Projekt durchführen, werden
 wir uns einige Aspekte der Sprache ansehen, auf die du hin und wieder stoßen
-könntest. Du kannst dieses Kapitel als Referenz verwenden, wenn du beim
-Verwenden von Rust auf Unbekanntes stößt. Die Funktionalitäten, die du in
-diesem Kapitel lernen wirst, sind in sehr speziellen Situationen nützlich. Auch
-wenn du vielleicht nicht oft danach greifst, möchten wir sicherstellen, dass du
-alle Funktionen, die Rust zu bieten hat, beherrschst.
+könntest, aber nicht jeden Tag verwenden wirst. Du kannst dieses Kapitel als
+Referenz verwenden, wenn du auf Unbekanntes stößt. Die hier beschriebenen
+Funktionalitäten sind in ganz bestimmten Situationen nützlich. Auch wenn du sie
+vielleicht nicht oft brauchst, möchten wir sicherstellen, dass du alle
+Funktionen von Rust kennst. 
 
 In diesem Kapitel werden wir behandeln:
 

@@ -7,30 +7,32 @@ gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 [der Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
 Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“
 
-Ein Hauptwerkzeug von Rust zum Erreichen von nachrichtenübermittelnder
-Nebenläufigkeit ist der *Kanal* (channel), ein Programmierkonzept, das in der
-Standardbibliothek von Rust implementiert ist. Man kann sich einen Kanal in der
-Programmierung wie einen Wasserkanal vorstellen, wie einen Bach oder einen
-Fluss. Wenn du etwas wie eine Gummiente oder ein Boot in einen Fluss setzt,
-wird sie/es flussabwärts bis zum Ende des Wasserwegs reisen.
+Um die Gleichzeitigkeit beim Senden von Nachrichten zu erreichen, bietet die
+Standardbibliothek von Rust eine Implementierung von *Kanälen* (channels). Ein
+Kanal ist ein allgemeines Programmierkonzept, mit dem Daten von einem Strang zu
+einem anderen gesendet werden.
 
-Ein Kanal in der Programmierung hat zwei Hälften: Einen Sender und einen
-Empfänger. Die Senderhälfte ist die stromaufwärts gelegene Stelle, an der du
-Gummienten in den Fluss setzt, und die Empfängerhälfte ist die Stelle, an der
-die Gummiente stromabwärts ankommt. Ein Teil deines Codes ruft Methoden auf dem
-Sender mit den Daten auf, die du senden möchtest, und ein anderer Teil
-überprüft die Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als
-*geschlossen* (closed), wenn entweder die Sender- oder die Empfängerhälfte
-aufgeräumt (dropped) wird.
+Du kannst dir einen Kanal in der Programmierung wie einen gerichteten
+Wasserkanal vorstellen, z.B. einen Bach oder einen Fluss. Wenn du etwas wie
+eine Gummiente in einen Fluss setzt, wird sie stromabwärts bis zum Ende des
+Wasserwegs reisen.
+
+Ein Kanal hat zwei Hälften: Einen Sender und einen Empfänger. Die Senderhälfte
+ist die stromaufwärts gelegene Stelle, an der du Gummienten in den Fluss setzt,
+und die Empfängerhälfte ist die Stelle, an der die Gummiente stromabwärts
+ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit den Daten auf,
+die du senden möchtest, und ein anderer Teil überprüft die Empfangsseite auf
+ankommende Nachrichten. Ein Kanal gilt als *geschlossen* (closed), wenn
+entweder die Sender- oder die Empfängerhälfte aufgeräumt (dropped) wird.
 
 Hier arbeiten wir uns zu einem Programm hoch, das einen Strang hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
 die Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Strängen
 über einen Kanal senden, um die Funktionalität zu veranschaulichen. Sobald du
-mit der Technik vertraut bist, kannst du Kanäle verwenden, um ein Chatsystem zu
-implementieren oder ein System, bei dem viele Stränge Teile einer Berechnung
-durchführen und die Teile an einen Strang senden, der die Ergebnisse
-zusammenfasst.
+mit der Technik vertraut bist, kannst du Kanäle für alle Stränge verwenden, die
+miteinander kommunizieren müssen, z.B. für ein Chatsystem oder ein System, in
+dem viele Stränge Teile einer Berechnung durchführen und die Teile an einen
+Strang senden, der die Ergebnisse zusammenfasst.
 
 Erstens werden wir in Codeblock 16-6 einen Kanal erstellen, aber nichts damit
 machen. Beachte, dass sich dieser noch nicht kompilieren lässt, weil Rust nicht
@@ -66,9 +68,9 @@ Abkürzungen `tx` und `rx` werden traditionell in vielen Feldern für *Sender*
 Variablen als solche, um jedes Ende anzugeben. Wir verwenden eine
 `let`-Anweisung mit einem Muster, das die Tupel destrukturiert; wir werden die
 Verwendung von Mustern in `let`-Anweisungen und die Destrukturierung in Kapitel
-18 besprechen. Das Verwenden einer `let`-Anweisung auf diese Weise ist ein
-bequemer Ansatz, um die Teile des Tupels zu extrahieren, die von
-`mpsc::channel` zurückgegeben werden.
+18 besprechen. Für den Moment solltest du wissen, dass die Verwendung einer
+`let`-Anweisung auf diese Weise ein bequemer Ansatz ist, um die Teile des
+Tupels zu extrahieren, die von `mpsc::channel` zurückgegeben werden.
 
 Verschieben wir das sendende Ende in einen erzeugten Strang und lassen es eine
 Zeichenkette senden, sodass der erzeugte Strang mit dem Hauptstrang
@@ -97,20 +99,19 @@ Strang und Senden von „hallo“</span>
 
 Wieder verwenden wir `thread::spawn`, um einen neuen Strang zu erstellen, und
 dann `move`, um `tx` in den Funktionsabschluss zu verschieben, sodass der
-erzeugte Strang `tx` besitzt. Der erzeugte Strang muss das sendende Ende des
-Kanals besitzen, um in der Lage zu sein, Nachrichten durch den Kanal zu senden.
+erzeugte Strang `tx` besitzt. Der erzeugte Strang muss den Sender besitzen, um
+in der Lage zu sein, Nachrichten durch den Kanal zu senden. Der Sender hat eine
+Methode `send`, die den Wert nimmt, den wir senden wollen. Die Methode `send`
+gibt ein `Result<T, E>` zurück; wenn also die empfangende Seite bereits
+aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet werden kann,
+wird die Sendeoperation einen Fehler zurückgeben. In diesem Beispiel rufen wir
+`unwrap` auf, um im Falle eines Fehlers abzustürzen. Aber in einer echten
+Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9 zurück, um
+Strategien für eine korrekte Fehlerbehandlung anzusehen.
 
-Auf der Sendeseite gibt es eine Methode `send`, die den Wert nimmt, den wir
-senden wollen. Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die
-empfangende Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein
-Wert gesendet werden kann, wird die Sendeoperation einen Fehler zurückgeben. In
-diesem Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzustürzen.
-Aber in einer echten Anwendung würden wir es richtig handhaben: Kehre zu
-Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
-
-In Codeblock 16-8 erhalten wir den Wert vom empfangenden Ende des Kanals im
-Hauptstrang. Das ist so, als würde man die Gummiente am Ende des Flusses aus
-dem Wasser holen oder eine Chat-Nachricht erhalten.
+In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
+so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
+eine Chat-Nachricht erhalten.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -134,13 +135,12 @@ fn main() {
 <span class="caption">Codeblock 16-8: Empfangen des Wertes „hallo“ im
 Hauptstrang und Ausgeben des Wertes</span>
 
-Das empfangende Ende eines Kanals hat zwei nützliche Methoden: `recv` und
-`try_recv`. Wir benutzen `recv`, kurz für *empfangen* (receive), was die
-Ausführung des Hauptstrangs blockiert und wartet, bis ein Wert in den Kanal
-geschickt wird. Sobald ein Wert gesendet wurde, wird er von `recv` in einem
-`Result<T, E>` zurückgegeben. Wenn das Sendeende des Kanals geschlossen wird,
-gibt `recv` einen Fehler zurück, um zu signalisieren, dass keine weiteren Werte
-mehr kommen werden.
+Das Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
+`recv`, kurz für *empfangen* (receive), was die Ausführung des Hauptstrangs
+blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
+gesendet wurde, wird er von `recv` in einem `Result<T, E>` zurückgegeben. Wenn
+der Sender geschlossen wird, gibt `recv` einen Fehler zurück, um zu
+signalisieren, dass keine weiteren Werte mehr kommen werden.
 
 Die Methode `try_recv` blockiert nicht, sondern gibt stattdessen sofort ein
 `Result<T, E>` zurück: Einen `Ok`-Wert, der eine Nachricht enthält, wenn eine
@@ -300,8 +300,8 @@ erzeugten Strang zu erhalten.
 Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für *mehrfacher Produzent,
 einzelner Konsument* ist. Lass uns `mpsc` verwenden und den Code in Codeblock
 16-10 erweitern, um mehrere Stränge zu erzeugen, die alle Werte an den gleichen
-Empfänger senden. Wir können dies tun, indem wir die sendende Hälfte des Kanals
-klonen, wie in Codeblock 16-11 gezeigt:
+Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
+Codeblock 16-11 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -356,11 +356,10 @@ klonen, wie in Codeblock 16-11 gezeigt:
 Produzenten</span>
 
 Bevor wir den ersten Strang erzeugen, rufen wir dieses Mal `clone` auf dem
-sendenden Ende des Kanals auf. Dadurch erhalten wir ein weiteres sendendes
-Ende, das wir an den ersten erzeugten Strang weitergeben können. Wir übergeben
-das ursprüngliche sendende Ende des Kanals an einen zweiten erzeugten Strang.
-Dadurch erhalten wir zwei Stränge, die jeweils unterschiedliche Nachrichten an
-das empfangende Ende des Kanals senden.
+Sender auf. Dadurch erhalten wir einen weiteren Sender, das wir an den ersten
+erzeugten Strang weitergeben können. Wir übergeben den ursprüngliche Sender an
+einen zweiten erzeugten Strang. Dadurch erhalten wir zwei Stränge, die jeweils
+unterschiedliche Nachrichten an den Empfänger senden.
 
 Wenn du den Code ausführst, sollte deine Ausgabe in etwa so aussehen:
 
@@ -375,7 +374,7 @@ Erhalten: Strang
 Erhalten: dich
 ```
 
-Möglicherweise siehst du die Werte in einer anderen Reihenfolge; dies hängt von
+Möglicherweise siehst du die Werte in einer anderen Reihenfolge, dies hängt von
 deinem System ab. Das macht die Nebenläufigkeit sowohl interessant als auch
 schwierig. Wenn du mit `thread::sleep` experimentierst und ihm verschiedene
 Werte in den verschiedenen Strängen gibst, wird jeder Durchlauf

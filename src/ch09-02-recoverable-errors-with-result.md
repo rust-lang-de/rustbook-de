@@ -44,63 +44,23 @@ fn main() {
 
 <span class="caption">Codeblock 9-3: Eine Datei öffnen</span>
 
-Woher wissen wir, dass `File::open` ein `Result` zurückgibt? Wir könnten uns
-die [Standard-Bibliotheks-API-Dokumentation][std-library-doc] ansehen oder wir
-könnten den Compiler fragen! Wenn wir `f` eine Typ-Annotation geben, von der
-wir wissen, dass sie *nicht* der Rückgabetyp der Funktion ist, und dann
-versuchen, den Code zu kompilieren, wird der Compiler uns sagen, dass die
-Typen nicht übereinstimmen. Die Fehlermeldung sagt uns dann, welchen Typ `f`
-tatsächlich hat. Versuchen wir es! Wir wissen, dass der Rückgabetyp von
-`File::open` nicht vom Typ `u32` ist, also lass uns die Anweisung `let f` wie
-folgt ändern:
-
-```rust,does_not_compile
-# use std::fs::File;
-#
-# fn main() {
-    let f: u32 = File::open("hallo.txt");
-# }
-```
-
-Der Versuch, zu kompilieren, liefert uns nun folgende Ausgabe:
-
-```console
-$ cargo run
-   Compiling error-handling v0.1.0 (file:///projects/error-handling)
-error[E0308]: mismatched types
- --> src/main.rs:4:18
-  |
-4 |     let f: u32 = File::open("hallo.txt");
-  |            ---   ^^^^^^^^^^^^^^^^^^^^^^^ expected `u32`, found enum `Result`
-  |            |
-  |            expected due to this
-  |
-  = note: expected type `u32`
-             found enum `Result<File, std::io::Error>`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `error-handling` due to previous error
-```
-
-Dies sagt uns, dass die Funktion `File::open` den Rückgabetyp `Result<T, E>`
-hat. Der generische Parameter `T` wurde hier mit dem Typ des Erfolgswertes
-`std::fs::File`, der eine Dateiressource (file handle) ist, gefüllt. Der Typ
-`E` für den Fehlerwert ist `std::io::Error`.
-
-Dieser Rückgabetyp bedeutet, dass der Aufruf von `File::open` erfolgreich sein
-könnte und eine Dateiressource zurückgibt, aus der wir lesen oder in die wir
-schreiben können. Der Funktionsaufruf kann auch fehlschlagen: Zum Beispiel
-könnte die Datei nicht existieren oder wir haben möglicherweise keine
-Zugriffsberechtigung für die Datei. Die Funktion `File::open` muss eine
+Der Rückgabetyp von `File::open` ist `Result<T, E>`. Der generische Parameter
+`T` wurde hier mit dem Typ des Erfolgswertes `std::fs::File`, der eine
+Dateiressource (file handle) ist, gefüllt. Der Typ `E` für den Fehlerwert ist
+`std::io::Error`. Dieser Rückgabetyp bedeutet, dass der Aufruf von `File::open`
+erfolgreich sein könnte und eine Dateiressource zurückgibt, aus der wir lesen
+oder in die wir schreiben können. Der Funktionsaufruf kann auch fehlschlagen:
+Zum Beispiel könnte die Datei nicht existieren oder wir haben möglicherweise
+keine Zugriffsberechtigung für die Datei. Die Funktion `File::open` muss eine
 Möglichkeit haben, uns zu sagen, ob sie erfolgreich war oder fehlgeschlagen
 ist, und uns gleichzeitig entweder die Dateiressource oder die
 Fehlerinformationen liefern. Diese Informationen sind genau das, was die
 Aufzählung `Result` übermittelt.
 
-Falls `File::open` erfolgreich ist, wird der Wert der Variable `f` eine Instanz
-von `Ok` sein, die eine Dateiressource enthält. Im Fehlerfall ist der Wert von
-`f` eine Instanz von `Err`, die mehr Informationen über die Art des
-aufgetretenen Fehlers enthält.
+Falls `File::open` erfolgreich ist, wird der Wert der Variable
+`greeting_file_result` eine Instanz von `Ok` sein, die eine Dateiressource
+enthält. Im Fehlerfall ist der Wert von `greeting_file_result` eine Instanz von
+`Err`, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.
 
 Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
 `File::open` unterschiedliche Aktionen durchzuführen. Codeblock 9-4 zeigt eine
@@ -198,8 +158,8 @@ aufrufen können, um einen `io::ErrorKind`-Wert zu erhalten. Die Aufzählung
 enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer `io`-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist `ErrorKind::NotFound`, was bedeutet, dass die Datei, die wir zu öffnen
-versuchen, noch nicht existiert. Wir werten also `f` aus, als auch
-`error.kind()`.
+versuchen, noch nicht existiert. Wir werten also `greeting_file_result` aus,
+als auch `error.kind()`.
 
 Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
 `error.kind()` zurückgegebene Wert die Variante `NotFound` der Aufzählung
@@ -298,16 +258,16 @@ zurückzugeben oder das Makro `panic!` aufzurufen. Die Fehlermeldung, die
 verwendet. So sieht sie aus:
 
 ```text
-thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os { code: 2,
-kind: NotFound, message: "No such file or directory" }', src/main.rs:4:13
+thread 'main' panicked at 'hello.txt should be included in this project: Error
+{ repr: Os { code: 2, message: "No such file or directory" } }',
+src/libcore/result.rs:906:4
 ```
 
-Da diese Fehlermeldung mit dem von uns angegebenen Text `Problem beim Öffnen
-von hallo.txt` beginnt, ist es einfacher herauszufinden, woher diese
-Fehlermeldung im Code kommt. Wenn wir `unwrap` an mehreren Stellen verwenden,
-kann es länger dauern, genau herauszufinden, welches `unwrap` zum
-Programmabbruch geführt hat, weil alle `unwrap`-Aufrufe die gleiche Nachricht
-ausgeben.
+In produktivem Code wählen die meisten Rust-Entwickler `expect` statt
+`unwrap` und geben mehr Kontext darüber an, warum die Operation voraussichtlich
+immer erfolgreich sein wird. Auf diese Weise hast du mehr Informationen, die du
+bei der Fehlersuche verwenden kannst, falls sich deine Annahmen als falsch
+erweisen sollten.
 
 ### Fehler weitergeben
 
@@ -356,40 +316,41 @@ Fehlerbehandlung zu erkunden; am Ende werden wir den kürzeren Weg zeigen. Sehen
 wir uns zunächst den Rückgabetyp der Funktion an: `Result<String, io::Error>`.
 Das bedeutet, dass die Funktion einen Wert vom Typ `Result<T, E>` zurückgibt,
 wobei der generische Typ `T` mit dem konkreten Typ `String` und der generische
-Typ `E` mit dem konkreten Typ `io::Fehler` gefüllt wurde. Wenn diese Funktion
-erfolgreich ist, erhält der aufrufende Code einen `Ok`-Wert, der einen `String`
-enthält &ndash; den Benutzernamen, den diese Funktion aus der Datei liest. Wenn
-diese Funktion auf Probleme stößt, erhält der aufrufende Code einen `Err`-Wert,
-der eine Instanz von `io::Error` enthält, mit weiteren Informationen darüber,
-was die Probleme waren. Wir wählten `io::Error` als Rückgabetyp dieser
-Funktion, weil dies zufällig der Typ des Fehlerwertes ist, der von beiden
-Operationen zurückgegeben wird, die wir im Funktionsrumpf aufrufen und
-fehlschlagen könnten: Die Funktion `File::open` und die Methode
-`read_to_string`.
+Typ `E` mit dem konkreten Typ `io::Fehler` gefüllt wurde.
+
+Wenn diese Funktion erfolgreich ist, erhält der aufrufende Code einen
+`Ok`-Wert, der einen `String` enthält &ndash; den Benutzernamen, den diese
+Funktion aus der Datei liest. Wenn diese Funktion auf Probleme stößt, erhält
+der aufrufende Code einen `Err`-Wert, der eine Instanz von `io::Error` enthält,
+mit weiteren Informationen darüber, was die Probleme waren. Wir wählten
+`io::Error` als Rückgabetyp dieser Funktion, weil dies zufällig der Typ des
+Fehlerwertes ist, der von beiden Operationen zurückgegeben wird, die wir im
+Funktionsrumpf aufrufen und fehlschlagen könnten: Die Funktion `File::open` und
+die Methode `read_to_string`.
 
 Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`. Dann
 behandeln wir den `Result`-Wert, der von `match` zurückgegeben wird, auf
 ähnliche Weise wie bei `match` in Codeblock 9-4. Wenn `File::open` erfolgreich
 ist, erhält die Dateiressource in der Mustervariablen `file` den Wert in der
-veränderlichen Variablen `f` und die Funktion wird fortgesetzt. Im Fall von
-`Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!` aufzurufen, um
-die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von `File::open` in
-der Mustervariablen `e` als Fehlerwert dieser Funktion an den aufrufenden Code
-zurückzugeben.
+veränderlichen Variablen `username_file` und die Funktion wird fortgesetzt. Im
+Fall von `Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!`
+aufzurufen, um die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von
+`File::open` in der Mustervariablen `e` als Fehlerwert dieser Funktion an den
+aufrufenden Code zurückzugeben.
 
-Wenn wir also eine Dateiressource in `f` haben, erzeugt die Funktion einen
-neuen `String` in der Variablen `s` und ruft die Methode `read_to_string` für
-die Dateiressource in `f` auf, um den Inhalt der Datei in die Variable `s` zu
-lesen. Die Methode `read_to_string` gibt ebenfalls ein `Result` zurück, weil
-sie fehlschlagen könnte, obwohl `File::open` erfolgreich war. Wir brauchen also
-ein weiteres `match`, um dieses `Result` zu verarbeiten: Wenn `read_to_string`
-erfolgreich ist, dann war unsere Funktion erfolgreich und wir geben den
-Benutzernamen aus der Datei zurück, die jetzt in `s` innerhalb `Ok` enthalten
-ist. Wenn `read_to_string` fehlschlägt, geben wir den Fehlerwert auf die
-gleiche Weise zurück, wie wir den Fehlerwert in `match` zurückgegeben haben,
-das den Rückgabewert von `File::open` behandelt hat. Wir brauchen jedoch nicht
-ausdrücklich `return` anzugeben, weil dies der letzte Ausdruck in der Funktion
-ist.
+Wenn wir also eine Dateiressource in `username_file` haben, erzeugt die
+Funktion einen neuen `String` in der Variablen `username` und ruft die Methode
+`read_to_string` für die Dateiressource in `username_file` auf, um den Inhalt
+der Datei in die Variable `username` zu lesen. Die Methode `read_to_string`
+gibt ebenfalls ein `Result` zurück, weil sie fehlschlagen könnte, obwohl
+`File::open` erfolgreich war. Wir brauchen also ein weiteres `match`, um dieses
+`Result` zu verarbeiten: Wenn `read_to_string` erfolgreich ist, dann war unsere
+Funktion erfolgreich und wir geben den Benutzernamen aus der Datei zurück, die
+jetzt in `username` innerhalb `Ok` enthalten ist. Wenn `read_to_string`
+fehlschlägt, geben wir den Fehlerwert auf die gleiche Weise zurück, wie wir den
+Fehlerwert in `match` zurückgegeben haben, das den Rückgabewert von
+`File::open` behandelt hat. Wir brauchen jedoch nicht ausdrücklich `return`
+anzugeben, weil dies der letzte Ausdruck in der Funktion ist.
 
 Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
 einen `Ok`-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
@@ -438,21 +399,26 @@ Es gibt einen Unterschied zwischen dem, was der `match`-Ausdruck aus Codeblock
 9-6 tut, und dem, was der `?`-Operator tut: Fehlerwerte, bei denen der
 `?`-Operator aufgerufen wird, durchlaufen die Funktion `from`, die im Merkmal
 `From` der Standardbibliothek definiert ist und die zur Konvertierung von
-Fehlern eines Typs in einen anderen verwendet wird. Wenn der `?`-Operator die
+Werten eines Typs in einen anderen verwendet wird. Wenn der `?`-Operator die
 Funktion `from` aufruft, wird der empfangene Fehlertyp in den Fehlertyp
 umgewandelt, der als Rückgabetyp der aktuellen Funktion definiert ist. Das ist
 hilfreich, wenn eine Funktion einen einzigen Fehlertyp zurückgibt, um alle
 möglichen Fehlerarten einer Funktion darzustellen, auch wenn Teile aus vielen
-verschiedenen Gründen versagen könnten. Solange es ein `impl From<OtherError>
-für ReturnedError` gibt, um die Konvertierung in der `from`-Funktion des
-Merkmals zu definieren, kümmert sich der `?`-Operator automatisch um den Aufruf
-der `from`-Funktion.
+verschiedenen Gründen versagen könnten.
+
+Wir könnten zum Beispiel die Funktion `read_username_from_file` in Codeblock
+9-7 so ändern, dass sie einen von uns definierten Fehlertyp namens `OurError`
+zurückgibt. Wenn wir auch `impl From<io::Error> for OurError` definieren, um
+eine Instanz von `OurError` aus einem `io::Error` zu konstruieren, dann werden
+die `?`-Operator-Aufrufe im Rumpf von `read_username_from_file` `from` aufrufen
+und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
+hinzugefügt werden muss.
 
 Im Zusammenhang mit Codeblock 9-7 gibt das `?` am Ende des Aufrufs von
-`File::open` den Wert innerhalb eines `Ok` an die Variable `f` zurück. Wenn ein
-Fehler auftritt, beendet der Operator vorzeitig die gesamte Funktion und gibt
-dem aufrufenden Code einen `Err`-Wert zurück. Dasselbe gilt für das `?` am Ende
-des `read_to_string`-Aufrufs.
+`File::open` den Wert innerhalb eines `Ok` an die Variable `username_file`
+zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
+Funktion und gibt dem aufrufenden Code einen `Err`-Wert zurück. Dasselbe gilt
+für das `?` am Ende des `read_to_string`-Aufrufs.
 
 Der `?`-Operator eliminiert viel umständlichen Code und macht die
 Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
@@ -477,13 +443,13 @@ fn read_username_from_file() -> Result<String, io::Error> {
 <span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
 `?`-Operator</span>
 
-Wir haben das Erstellen des neuen `String` in `s` an den Anfang der Funktion
-verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable `f` zu
-erzeugen, haben wir den Aufruf von `read_to_string` direkt an das Ergebnis von
-`File::open("hallo.txt")?` gehängt. Wir haben immer noch ein `?` am Ende des
-Aufrufs von `read_to_string`, und wir geben immer noch einen `Ok`-Wert zurück,
-der den Benutzernamen in `s` enthält, wenn sowohl `File::open` als auch
-`read_to_string` erfolgreich sind, anstatt Fehler zurückzugeben. Die
+Wir haben das Erstellen des neuen `String` in `username` an den Anfang der
+Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
+`username_file` zu erzeugen, haben wir den Aufruf von `read_to_string` direkt
+an das Ergebnis von `File::open("hallo.txt")?` gehängt. Wir haben immer noch
+ein `?` am Ende des Aufrufs von `read_to_string`, und wir geben immer noch
+einen `Ok`-Wert zurück, der `username` enthält, wenn sowohl `File::open` als
+auch `read_to_string` erfolgreich sind, anstatt Fehler zurückzugeben. Die
 Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.
 
@@ -526,6 +492,8 @@ Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den `?`-Operator
 in einer `main`-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir "?" verwenden, kompatibel ist:
 
+<span class="filename">Dateiname: src/main.rs</span>
+
 ```rust,does_not_compile
 use std::fs::File;
 
@@ -564,12 +532,14 @@ error: could not compile `error-handling` due to previous error
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion
 verwenden dürfen, die `Result` oder `Option` oder einen anderen Typ, der
-`FromResidual` implementiert, zurückgibt. Um den Fehler zu beheben, hast du
-zwei Möglichkeiten. Eine Möglichkeit besteht darin, den Rückgabetyp deiner
-Funktion so zu ändern, dass er mit dem Wert kompatibel ist, für den du den
-Operator `?` verwendest, wenn dem nichts entgegensteht. Die andere Möglichkeit
-besteht darin, `match` oder eine der Methoden von `Result<T, E>` zu verwenden,
-um `Result<T, E>` in geeigneter Weise zu behandeln.
+`FromResidual` implementiert, zurückgibt.
+
+Um den Fehler zu beheben, hast du zwei Möglichkeiten. Eine Möglichkeit besteht
+darin, den Rückgabetyp deiner Funktion so zu ändern, dass er mit dem Wert
+kompatibel ist, für den du den Operator `?` verwendest, wenn dem nichts
+entgegensteht. Die andere Möglichkeit besteht darin, `match` oder eine der
+Methoden von `Result<T, E>` zu verwenden, um `Result<T, E>` in geeigneter Weise
+zu behandeln.
 
 Die Fehlermeldung hat auch erwähnt, dass `?` ebenso mit `Option<T>`-Werten
 verwendet werden kann. Wie bei der Verwendung von `?` für `Result`, kannst du
@@ -666,7 +636,10 @@ Typen erlauben“][trait-objects] in Kapitel 17 sprechen werden. Vorerst kannst
 du `Box<dyn Fehler>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
 `?` auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
-werden kann.
+werden kann. Obwohl der Rumpf dieser `main`-Funktion nur Fehler des Typs
+`std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von
+`Box<dyn Error>` auch dann noch korrekt, wenn weiterer Code, der andere Fehler
+zurückgibt, dem Rumpf von `main` hinzugefügt wird.
 
 Wenn eine `main`-Funktion ein `Result<(), E>` zurückgibt, beendet sich die
 ausführbare Datei mit einem Wert von `0`, wenn `main` den Wert `Ok(())`
@@ -678,17 +651,15 @@ zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
 mit dieser Konvention kompatibel zu sein.
 
 Die Funktion `main` kann jeden Typ zurückgeben, der [das Merkmal
-`std::process::Termination`][termination] implementiert. Zum jetzigen
-Zeitpunkt ist das Merkmal `Termination` ein instabiles Feature, das nur in
-Nightly Rust verfügbar ist, sodass du es noch nicht für deine eigenen Typen in
-Stable Rust implementieren kannst, aber vielleicht kannst du das ja eines
-Tages!
+`std::process::Termination`][termination] implementiert, das eine Funktion
+`report` enthält, die einen `ExitCode` zurückgibt. Weitere Informationen zur
+Implementierung des Merkmals `Termination` für deine eigenen Typen findest du
+in der Dokumentation der Standardbibliothek.
 
 Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir
 entscheiden können, was in welchen Fällen angemessen ist.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result
-[std-library-doc]: https://doc.rust-lang.org/std/index.html
 [termination]: https://doc.rust-lang.org/std/process/trait.Termination.html
 [trait-objects]: ch17-02-trait-objects.html

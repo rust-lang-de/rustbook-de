@@ -1,21 +1,22 @@
 ## Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`
 
 Durch die Implementierung des Merkmals `Deref` kann man das Verhalten des
-*Dereferenzierungsoperators* (dereference operator) `*` (im Gegensatz zum Multiplikations- oder
-Stern-Operator (glob operator)) anpassen. Indem du `Deref` so implementierst, dass ein
-intelligenter Zeiger wie eine reguläre Referenz behandelt werden kann, kannst du
-Programmcode schreiben, der mit Referenzen arbeitet, und diesen Programmcode
-auch mit intelligenten Zeigern verwenden.
+*Dereferenzierungsoperators* (dereference operator) `*` (nicht zu verwechseln
+mit dem Multiplikations- oder Stern-Operator (glob operator)) anpassen. Indem
+du `Deref` so implementierst, dass ein intelligenter Zeiger wie eine reguläre
+Referenz behandelt werden kann, kannst du Programmcode schreiben, der mit
+Referenzen arbeitet, und diesen Programmcode auch mit intelligenten Zeigern
+verwenden.
 
 Schauen wir uns zunächst an, wie der Dereferenzierungsoperator mit regulären
-Referenzen arbeitet. Dann werden wir versuchen, einen benutzerdefinierten Typ zu
-definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
+Referenzen arbeitet. Dann werden wir versuchen, einen benutzerdefinierten Typ
+zu definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
 Dereferenzierungsoperator nicht wie eine Referenz für unseren neu definierten
 Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
 `Deref` es intelligenten Zeigern ermöglicht, auf ähnliche Weise wie Referenzen
 zu funktionieren, dann sehen wir uns an wie wir mit Rusts *automatischer
-Umwandlung* (deref coercion) mit Referenzen oder
-intelligenten Zeigern arbeiten können.
+Umwandlung* (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
+können.
 
 > Hinweis: Es gibt einen großen Unterschied zwischen dem Typ `MyBox<T>`, den wir
 > gerade erstellen, und dem echten Typ `Box<T>`: Unsere Version speichert ihre
@@ -23,13 +24,13 @@ intelligenten Zeigern arbeiten können.
 > `Deref`, daher ist es weniger wichtig, wo die Daten tatsächlich gespeichert sind
 > als das zeigerähnliche Verhalten.
 
-### Dem Zeiger zum Wert folgen mit dem Dereferenzierungsoperator
+### Dem Zeiger zum Wert folgen
 
 Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
 Zeiger vorzustellen, ein Pfeil der auf einen Wert zeigt der an einer anderen
 Stelle gespeichert ist. In Codeblock 15-6 erstellen wir eine Referenz auf einen
-`i32`-Wert und verwenden dann den Dereferenzierungsoperator, um der Referenz zu
-den Daten zu folgen:
+`i32`-Wert und verwenden dann den Dereferenzierungsoperator, um der Referenz
+zum Wert zu folgen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -47,12 +48,12 @@ fn main() {
 um einer Referenz auf einen `i32`-Wert zu folgen </span>
 
 Die Variable `x` enthält den `i32`-Wert `5`. Wir setzen `y` gleich einer
-Referenz auf `x`. Wir können sicherstellen, das `x`
-gleich `5` ist. Wenn wir jedoch eine Aussage über den Wert `y` machen möchten,
-auf den er zeigt, müssen wir `*y` verwenden, um der Referenz auf den Wert zu
-folgen, auf den sie zeigt (daher *Dereferenzierung*). Sobald wir `y`
-dereferenzieren, haben wir Zugriff auf den Zahlenwert auf den `y` zeigt und 
-können ihn mit `5` vergleichen.
+Referenz auf `x`. Wir können sicherstellen, das `x` gleich `5` ist. Wenn wir
+jedoch eine Aussage über den Wert `y` machen möchten, auf den er zeigt, müssen
+wir `*y` verwenden, um der Referenz auf den Wert zu folgen, auf den sie zeigt
+(daher *Dereferenzierung*), damit der Compiler den aktuellen Wert vergleichen
+kann. Sobald wir `y` dereferenzieren, haben wir Zugriff auf den Zahlenwert auf
+den `y` zeigt und können ihn mit `5` vergleichen.
 
 Wenn wir stattdessen versuchen würden, `assert_eq!(5, y);` zu schreiben, würden
 wir diesen Fehler beim Kompilieren erhalten:
@@ -262,11 +263,11 @@ müssen, ob wir die `deref`-Methode aufrufen müssen oder nicht. Mit dieser
 Rust-Funktionalität können wir Code schreiben, der unabhängig davon, ob wir eine reguläre
 Referenz oder einen Typ haben der `Deref` implementiert, identisch funktioniert.
 
-Der Grund, warum die `deref`-Methode eine Referenz auf einen Wert zurückgibt und
-die einfache Dereferenzierung außerhalb der Klammern in `*(y.deref())`
-weiterhin erforderlich ist, ist die Eigentümerschaft (ownership). Wenn die
-`deref`-Methode den Wert direkt anstelle einer Referenz auf den Wert zurückgibt,
-wird der Wert aus `self` herausverschoben. Meistens wenn wir den
+Der Grund, warum die `deref`-Methode eine Referenz auf einen Wert zurückgibt
+und die einfache Dereferenzierung außerhalb der Klammern in `*(y.deref())`
+weiterhin erforderlich ist, hat mit der Eigentümerschaft (ownership) zu tun.
+Wenn die `deref`-Methode den Wert direkt anstelle einer Referenz auf den Wert
+zurückgibt, wird der Wert aus `self` herausverschoben. Meistens wenn wir den
 Dereferenzierungsoperator verwenden, wollen wir, so wie auch in diesem Fall,
 nicht die Eigentümerschaft des inneren Wertes von `MyBox<T>` übernehmen.
 
@@ -278,13 +279,13 @@ wir ein `*` in unserem Programmcode verwenden. Da die Ersetzung des
 
 ### Implizite automatische Umwandlung mit Funktionen und Methoden
 
-*Automatische Umwandlung* (deref coercion) ist eine bequeme Funktionalität die
-Rust bei Argumenten für Funktionen und Methoden ausführt. Die automatische
-Umwandlung funktioniert nur bei Typen, die das Merkmal `Deref` implementieren.
-Die automatische Umwandlung wandelt eine Referenz auf einen solchen Typ in eine
-Referenz auf einen anderen Typ um. Zum Beispiel kann die automatische
-Umwandlung `&String` in `&str` konvertieren, da `String` das Merkmal `Deref`
-implementiert, sodass `&str` zurückgegeben wird. Die automatische Umwandlung
+*Automatische Umwandlung* (deref coercion) wandelt eine Referenz auf einen Typ,
+der das Merkmal `Deref` implementiert, in eine Referenz auf einen anderen Typ
+um. Zum Beispiel kann die automatische Umwandlung `&String` in `&str`
+konvertieren, da `String` das Merkmal `Deref` implementiert, sodass `&str`
+zurückgegeben wird. Die automatische Umwandlung ist eine Bequemlichkeit, die
+Rust auf Argumente für Funktionen und Methoden ausübt, und funktioniert nur bei
+Typen, die das Merkmal `Deref` implementieren. Die automatische Umwandlung
 erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
 als Argument an eine Funktion oder Methode übergeben, die nicht dem
 Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
@@ -306,7 +307,7 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:
 
 ```rust
 fn hello(name: &str) {
-    println!("Hallo {}!", name);
+    println!("Hallo {name}!");
 }
 ```
 
@@ -340,7 +341,7 @@ wie es in Codeblock 15-12 gezeigt wird:
 # }
 # 
 # fn hello(name: &str) {
-#     println!("Hallo {}!", name);
+#     println!("Hallo {name}!");
 # }
 #
 fn main() {
@@ -387,7 +388,7 @@ um `hello` mit einem Wert vom Typ `&MyBox<String>` aufzurufen.
 # }
 # 
 # fn hello(name: &str) {
-#     println!("Hallo {}!", name);
+#     println!("Hallo {name}!");
 # }
 # 
 fn main() {
@@ -399,11 +400,12 @@ fn main() {
 <span class="caption">Codeblock 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span>
 
-Das `(*m)` dereferenziert `Mybox<String>` in einen `String`. Dann nehmen die `&`
-und `[..]` einen Anteilstyp des `String`, der gleich der gesamten Zeichenkette ist, um der
-Signatur von `hello` zu entsprechen. Der Programmcode ohne automatische Umwandlung ist
-mit allen Symbolen schwerer zu lesen, zu schreiben und zu verstehen. Durch
-die automatische Umwandlung kann Rust diese Konvertierung automatisch für uns abwickeln.
+Das `(*m)` dereferenziert `Mybox<String>` in einen `String`. Dann nehmen die
+`&` und `[..]` einen Anteilstyp des `String`, der gleich der gesamten
+Zeichenkette ist, um der Signatur von `hello` zu entsprechen. Dieser
+Programmcode ohne automatische Umwandlung ist mit allen Symbolen schwerer zu
+lesen, zu schreiben und zu verstehen. Durch die automatische Umwandlung kann
+Rust diese Konvertierung automatisch für uns abwickeln.
 
 Wenn das Merkmal `Deref` für die beteiligten Typen definiert ist, analysiert
 Rust die Typen und verwendet `Deref::deref` so oft wie nötig, um eine Referenz
@@ -418,18 +420,18 @@ entsteht!
 unveränderlichen Referenzen zu überschreiben, kannst du das Merkmal `DerefMut`
 verwenden, um den `*`-Operator bei veränderlichen Referenzen zu überschreiben.
 
-Rust wendet die automatische Umwandlung an, wenn Typen und Merkmalsimplementierungen in
-folgenden drei Fällen gefunden werden:
+Rust wendet die automatische Umwandlung an, wenn Typen und
+Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:
 
 * Von `&T` zu `&U`, wenn `T:Deref<Target=U>`
 * Von `&mutT` zu `&mutU`, wenn `T:DerefMut<Target=U>`
 * Von `&mutT` zu `&U`, wenn `T:Deref<Target=U>`
 
-Die ersten beiden Fälle sind bis auf die Veränderlichkeit gleich. Der erste Fall
-besagt, dass wenn man einen `&T` hat und `T` `Deref` für einen Typ `U` 
-implementiert hat, man transparent einen `&U` erhalten kann. Der zweite Fall
-besagt, dass die gleiche automatische Umwandlung bei veränderlichen Referenzen
-erfolgt.
+Die ersten beiden Fälle sind identisch, mit der Ausnahme, dass der zweite die
+Veränderlichkeit implementiert. Der erste Fall besagt, dass wenn man einen `&T`
+hat und `T` `Deref` für einen Typ `U` implementiert hat, man transparent einen
+`&U` erhalten kann. Der zweite Fall besagt, dass die gleiche automatische
+Umwandlung bei veränderlichen Referenzen erfolgt.
 
 Der dritte Fall ist schwieriger: Rust wird auch eine veränderliche Referenz in
 eine unveränderliche umwandeln. Das Gegenteil ist jedoch *nicht* möglich:

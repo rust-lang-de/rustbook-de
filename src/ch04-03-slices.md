@@ -5,10 +5,10 @@ einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
 Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
-Zeichenkette entgegennimmt und das erste Wort zurückgibt, das sie in dieser
-Zeichenkette findet. Wenn die Funktion kein Leerzeichen in der Zeichenkette
-findet, muss die gesamte Zeichenkette ein Wort sein, also sollte die gesamte
-Zeichenkette zurückgegeben werden.
+Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
+erste Wort zurückgibt, das sie in dieser Zeichenkette findet. Wenn die Funktion
+kein Leerzeichen in der Zeichenkette findet, muss die gesamte Zeichenkette ein
+Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.
 
 Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
 von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch

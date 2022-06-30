@@ -4,12 +4,12 @@ Bisher haben alle Beispiele in diesem Kapitel mehrere Module in einer Datei
 definiert. Wenn Module groß werden, solltest du ihre Definitionen in eine
 separate Datei verschieben, um die Navigation im Code zu erleichtern.
 
-Beginnen wir beispielsweise mit dem Code in Codeblock 7-17 und verschieben das
-Modul `front_of_house` in seine eigene Datei *src/front_of_house.rs*, indem wir
-die Kistenwurzeldatei so ändern, dass sie den in Codeblock 7-21 gezeigten Code
-enthält. In diesem Fall ist die Kistenwurzeldatei *src/lib.rs*, aber dieses
-Vorgehensweise funktioniert auch mit binären Kisten, deren Kistenwurzeldatei
-*src/main.rs* ist.
+Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
+Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
+eigene Datei *src/front_of_house.rs*, indem wir die Kistenwurzeldatei so
+ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
+ist die Kistenwurzeldatei *src/lib.rs*, aber dieses Vorgehensweise funktioniert
+auch mit binären Kisten, deren Kistenwurzeldatei *src/main.rs* ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -20,16 +20,17 @@ pub use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
-    hosting::add_to_waitlist();
 }
 ```
 
 <span class="caption">Codeblock 7-21: Deklarieren des Moduls `front_of_house`,
 dessen Rumpf sich in *src/front_of_house.rs* befinden wird</span>
 
-Und *src/front_of_house.rs* erhält die Definitionen aus dem Modulrumpf von
-`front_of_house`, wie in Codeblock 7-22 zu sehen ist.
+Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
+namens *src/front_of_house.rs* ein, wie in Codeblock 7-22 zu sehen ist. Der
+Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
+Moduldeklaration in der Kistenwurzel mit dem Namen `front_of_house` gestoßen
+ist.
 
 <span class="filename">Dateiname: src/front_of_house.rs</span>
 
@@ -42,15 +43,15 @@ pub mod hosting {
 <span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
 `front_of_house` in *src/front_of_house.rs*</span>
 
-Beachte, dass du eine Datei mit einer `mod`-Deklaration nur *einmal* in deinem
-Modulbaum laden musst. Sobald der Compiler weiß, dass die Datei Teil des
-Projekts ist (und weiß, wo im Modulbaum sich der Code befindet, weil du die
-`mod`-Anweisung eingefügt hast), sollten andere Dateien in deinem Projekt auf
-den Code der geladenen Datei referenzieren, indem sie einen Pfad zu der Stelle
-verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden auf ein
-Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen Worten: `mod`
-ist *keine* „include“-Operation, wie du sie vielleicht aus anderen
-Programmiersprachen kennst.
+Beachte, dass du den Inhalt einer Datei mit einer `mod`-Deklaration nur
+*einmal* in deinem Modulbaum laden musst. Sobald der Compiler weiß, dass die
+Datei Teil des Projekts ist (und weiß, wo im Modulbaum sich der Code befindet,
+weil du die `mod`-Anweisung eingefügt hast), sollten andere Dateien in deinem
+Projekt auf den Code der geladenen Datei referenzieren, indem sie einen Pfad zu
+der Stelle verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden
+auf ein Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen
+Worten: `mod` ist *keine* „include“-Operation, wie du sie vielleicht aus
+anderen Programmiersprachen kennst.
 
 Als Nächstes extrahieren wir das Modul `hosting` in seine eigene Datei. Der
 Prozess ist ein bisschen anders, weil `hosting` ein untergeordnetes Modul von
@@ -69,8 +70,7 @@ pub mod hosting;
 ```
 
 Dann erstellen wir ein Verzeichnis *src/front_of_house* und eine Datei
-*src/front_of_house/hosting.rs*, die die im Modul `hosting` vorgenommenen
-Definitionen enthält:
+*hosting.rs*, die die Definitionen des Moduls `hosting` enthält:
 
 <span class="filename">Dateiname: src/front_of_house/hosting.rs</span>
 

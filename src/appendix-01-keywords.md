@@ -3,8 +3,8 @@
 Die folgende Liste enthält Schlüsselwörter, die für die gegenwärtige oder
 zukünftige Verwendung durch die Sprache Rust reserviert sind. Als solche können
 sie nicht als Bezeichner verwendet werden (außer als Roh-Bezeichner, die wir im
-Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen werden),
-einschließlich Namen von Funktionen, Variablen, Parametern, Strukturfeldern
+Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen werden). Bezeichner
+sind Namen von Funktionen, Variablen, Parametern, Strukturfeldern
 (struct fields), Modulen, Kisten (crates), Konstanten, Makros, statischen
 Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).
 
@@ -12,7 +12,8 @@ Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).
 
 ### Derzeit verwendete Schlüsselwörter
 
-Die folgenden Schlüsselwörter haben derzeit die beschriebene Funktionalität.
+Nachstehend findest du eine Liste der derzeit verwendeten Schlüsselwörter mit
+einer Beschreibung ihrer Funktion.
 
 * `as` &ndash; primitive Typen umwandeln; ein spezifisches Merkmal mit einem
   Element eindeutig machen; Elemente in `use`- und `extern crate`-Anweisungen
@@ -71,8 +72,8 @@ Die folgenden Schlüsselwörter haben derzeit die beschriebene Funktionalität.
 
 ### Schlüsselwörter reserviert für zukünftige Verwendung
 
-Die folgenden Schlüsselwörter haben keine Funktionalität, sondern sind von Rust
-für eine mögliche zukünftige Verwendung reserviert.
+Die folgenden Schlüsselwörter haben noch keine Funktionalität, sondern sind von
+Rust für eine mögliche zukünftige Verwendung reserviert.
 
 * `abstract`
 * `become`

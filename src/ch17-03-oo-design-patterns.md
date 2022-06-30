@@ -1,25 +1,33 @@
 ## Ein objektorientiertes Entwurfsmuster implementieren
 
 Das *Zustandsmuster* (state pattern) ist ein objektorientiertes Entwurfsmuster.
-Der springende Punkt des Musters ist, dass ein Wert einen internen Zustand hat,
-der durch eine Menge von *Zustandsobjekten* (state objects) repräsentiert wird,
-und dass sich das Verhalten des Wertes auf der Grundlage des internen Zustands
-ändert. Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust
-verwenden wir Strukturen (structs) und Merkmale (traits) und nicht Objekte und
-Vererbung. Jedes Zustandsobjekt ist für sein eigenes Verhalten verantwortlich
-und bestimmt, wann es in einen anderen Zustand übergehen soll. Der Wert, der
-ein Zustandsobjekt enthält, weiß nichts über das unterschiedliche Verhalten der
+Der Kernpunkt des Musters besteht darin, dass wir eine Reihe von Zuständen
+definieren, die ein Wert intern annehmen kann. Die Zustände werden durch eine
+Reihe von *Zustandsobjekten* (state objects) dargestellt, und das Verhalten des
+Wertes ändert sich je nach Zustand. Wir werden ein Beispiel für eine
+Blog-Post-Struktur durcharbeiten, die ein Feld für ihren Status hat, das ein
+Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
+„Veröffentlicht“ sein wird.
+
+Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust verwenden wir
+Strukturen (structs) und Merkmale (traits) und nicht Objekte und Vererbung.
+Jedes Zustandsobjekt ist für sein eigenes Verhalten verantwortlich und
+bestimmt, wann es in einen anderen Zustand übergehen soll. Der Wert, den ein
+Zustandsobjekt enthält, weiß nichts über das unterschiedliche Verhalten der
 Zustände oder den Zeitpunkt des Übergangs zwischen den Zuständen.
 
-Die Verwendung des Zustandsmusters bedeutet, dass wir, wenn sich die
-Geschäftsanforderungen des Programms ändern, weder den Code des Wertes, der den
-Zustand hält, noch den Code, der den Wert verwendet, ändern müssen. Wir müssen
-nur den Code innerhalb eines der Zustandsobjekte aktualisieren, um seine Regeln
-zu ändern oder vielleicht weitere Zustandsobjekte hinzufügen. Sehen wir uns ein
-Beispiel für das Zustandsentwurfsmuster und seine Verwendung in Rust an.
+Der Vorteil der Verwendung des Zustandsmusters besteht darin, dass wir, wenn
+sich die geschäftlichen Anforderungen des Programms ändern, weder den Code des
+Werts, der den Zustand hält, noch den Code, der den Wert verwendet, ändern
+müssen. Wir müssen nur den Code in einem der Zustandsobjekte aktualisieren, um
+seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.
 
-Wir werden einen Blog-Beitrags-Workflow inkrementell implementieren. Die finale
-Funktionalität des Blogs wird wie folgt aussehen:
+Zunächst werden wir das Zustandsmuster auf eine traditionellere
+objektorientierte Weise implementieren, dann werden wir einen Ansatz verwenden,
+der in Rust etwas natürlicher ist. Beginnen wir mit der inkrementellen
+Implementierung eines Blogpost-Workflows unter Verwendung des Zustandsmusters.
+
+Die finale Funktionalität des Blogs wird wie folgt aussehen:
 
 1. Ein Blog-Beitrag (post) beginnt als leerer Entwurf.
 2. Wenn der Entwurf fertig ist, wird um eine Überprüfung des Beitrags gebeten.
@@ -64,7 +72,7 @@ Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
 hinzuzufügen. Wenn wir versuchen, den Inhalt des Beitrags sofort, also vor der
 Genehmigung, abzurufen, sollten wir keinen Text erhalten, da der Beitrag noch
 ein Entwurf ist. Wir haben zu Demonstrationszwecken `assert_eq!` in den Code
-eingefügt. Ein ausgezeichneter Unit-Test dafür wäre die Zusicherung, dass ein
+eingefügt. Ein ausgezeichneter Modultest dafür wäre die Zusicherung, dass ein
 Entwurf eines Blog-Beitrags eine leere Zeichenkette aus der Methode `content`
 zurückgibt, aber wir werden für dieses Beispiel keine Tests schreiben.
 
@@ -92,10 +100,13 @@ Fangen wir mit der Implementierung der Bibliothek an! Wir wissen, dass wir eine
 öffentliche Struktur `Post` benötigen, die einige Inhalte enthält, also
 beginnen wir mit der Definition der Struktur und einer zugehörigen öffentlichen
 Funktion `new`, um eine Instanz von `Post` zu erzeugen, wie in Codeblock 17-12
-gezeigt. Wir werden auch ein privates Merkmal `State` anlegen. Dann wird `Post`
-ein Merkmalsobjekt (trait object) von `Box<dyn State>` innerhalb einer
-`Option<T>` in einem privaten Feld namens `state` halten. Du wirst gleich
-sehen, warum die `Option<T>` notwendig ist.
+gezeigt. Wir werden auch ein privates Merkmal `State` erstellen, das das
+Verhalten definiert, das alle Zustandsobjekte für einen `Post` haben müssen.
+
+Dann wird `Post` ein Merkmalsobjekt (trait object) von `Box<dyn State>`
+innerhalb einer `Option<T>` in einem privaten Feld namens `state` halten, um
+das Zustandsobjekt zu halten. Du wirst gleich sehen, warum die `Option<T>`
+notwendig ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -126,10 +137,11 @@ einer Funktion `new`, die eine neue `Post`-Instanz erzeugt, einem Merkmal
 `State` und einer Struktur `Draft`</span>
 
 Das Merkmal `State` definiert das Verhalten, das die verschiedenen
-Beitragszustände gemeinsam haben, und die Zustände `Draft`, `PendingReview` und
-`Published` implementieren alle das Merkmal `State`. Im Moment hat das Merkmal
-noch keine Methoden und wir werden damit beginnen, nur den Zustand `Draft` zu
-definieren, weil das der Zustand ist, in dem ein Beitrag beginnen soll.
+Beitragszustände gemeinsam haben. Die Zustandsobjekte sind `Draft`,
+`PendingReview` und `Published` und sie werden alle das Merkmal `State`
+implementieren. Im Moment hat das Merkmal noch keine Methoden und wir werden
+damit beginnen, nur den Zustand `Draft` zu definieren, weil das der Zustand
+ist, in dem ein Beitrag beginnen soll.
 
 Wenn wir einen neuen `Post` erstellen, setzen wir sein `state`-Feld auf einen
 `Some`-Wert, der eine `Box` enthält. Diese `Box` verweist auf eine neue Instanz
@@ -141,11 +153,11 @@ auf einen neuen, leeren `String`.
 
 ### Speichern des Textes des Beitragsinhalts
 
-Codeblock 17-11 zeigte, dass wir in der Lage sein wollen, eine Methode namens
-`add_text` aufzurufen und ihr einen `&str` zu übergeben, die dann dem
-Textinhalt des Blog-Beitrags hinzugefügt wird. Wir implementieren dies als
-Methode, anstatt das Feld `content` mit `pub` offenzulegen. Das bedeutet, dass
-wir später eine Methode implementieren können, die steuert, wie die Daten des
+Wir haben in Codeblock 17-11 gesehen, dass wir in der Lage sein wollen, eine
+Methode namens `add_text` aufzurufen und ihr einen `&str` zu übergeben, die
+dann als Textinhalt des Blog-Beitrags hinzugefügt wird. Wir implementieren dies
+als Methode, anstatt das Feld `content` mit `pub` offenzulegen, damit wir
+später eine Methode implementieren können, die steuert, wie die Daten des
 Feldes `content` gelesen werden. Die Methode `add_text` ist ziemlich einfach,
 also lass uns die Implementierung in Codeblock 17-13 zum Block `impl Post`
 hinzufügen:
@@ -312,8 +324,8 @@ veränderliche Referenz auf `self` nimmt. Dann rufen wir eine interne
 zweite `request_review`-Methode konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.
 
-Wir haben die Methode `request_review` zum Merkmal `State` hinzugefügt; alle
-Typen, die das Merkmal implementieren, müssen nun die Methode `request_review`
+Wir fügen die Methode `request_review` zum Merkmal `State` hinzu; alle Typen,
+die das Merkmal implementieren, müssen nun die Methode `request_review`
 implementieren. Beachte, dass wir statt `self`, `&self` oder `&mut self` als
 ersten Parameter der Methode `self: Box<Self>` haben. Diese Syntax bedeutet,
 dass die Methode nur gültig ist, wenn sie auf einer `Box` mit dem Typ
@@ -336,8 +348,8 @@ Eigentümerschaft des `state`-Wertes zu erhalten. Das stellt sicher, dass `Post`
 nicht den alten `state`-Wert verwenden kann, nachdem wir ihn in einen neuen
 Zustand transformiert haben.
 
-Die Methode `request_review` auf `Draft` muss eine neue, in einer Box
-gespeicherte Instanz einer neuen `PendingReview`-Struktur zurückgeben, die den
+Die Methode `request_review` auf `Draft` gibt eine neue, in einer Box
+gespeicherte Instanz einer neuen `PendingReview`-Struktur zurück, die den
 Zustand darstellt, in dem ein Beitrag auf eine Überprüfung wartet. Die Struktur
 `PendingReview` implementiert auch die Methode `request_review`, führt aber
 keine Transformationen durch. Vielmehr gibt sie sich selbst zurück, denn wenn
@@ -354,7 +366,7 @@ Zustand `PendingReview` als auch im Zustand `Draft` haben, aber wir wollen das
 gleiche Verhalten im Zustand `PendingReview`. Codeblock 17-11 funktioniert
 jetzt bis Zeile 10!
 
-### Hinzufügen der Methode `approve`, die das Verhalten von `content` ändert
+### Hinzufügen von `approve`, um das Verhalten von `content` zu ändern
 
 Die Methode `approve` ähnelt der Methode `request_review`: Sie setzt den
 `state` auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
@@ -419,7 +431,7 @@ impl State for Draft {
 struct PendingReview {}
 
 impl State for PendingReview {
-    // --snip--
+    // --abschneiden--
 #     fn request_review(self: Box<Self>) -> Box<dyn State> {
 #         self
 #     }
@@ -615,9 +627,9 @@ Codeblock 17-18 gezeigt wird:
 #
 trait State {
     // --abschneiden--
-    fn request_review(self: Box<Self>) -> Box<dyn State>;
-    fn approve(self: Box<Self>) -> Box<dyn State>;
-
+#     fn request_review(self: Box<Self>) -> Box<dyn State>;
+#     fn approve(self: Box<Self>) -> Box<dyn State>;
+#
     fn content<'a>(&self, post: &'a Post) -> &'a str {
         ""
     }
@@ -686,6 +698,17 @@ Und wir sind fertig &ndash; der Codeblock 17-11 funktioniert jetzt! Wir haben
 das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten `Post` verstreut.
+
+> #### Warum nicht eine Aufzählung?
+>
+> Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
+> verschiedenen möglichen Poststatus als Varianten verwendet haben. Das ist
+> sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
+> Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
+> einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
+> einen `match`-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
+> behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
+> Merkmals-Objekt.
 
 ### Kompromisse des Zustandsmusters
 
@@ -974,11 +997,10 @@ sichergestellt, dass bestimmte Fehler, z.B. das Anzeigen des Inhalts eines
 unveröffentlichten Beitrags, entdeckt werden, bevor sie in die Produktion
 gelangen.
 
-Versuche es mit den Aufgaben, die für zusätzliche Anforderungen vorgeschlagen
-wurden und die wir zu Beginn dieses Abschnitts über die Kiste `blog` nach
-Codeblock 17-20 erwähnt haben, um zu sehen, was du über das Design dieser
-Version des Codes denkst. Beachte, dass einige der Aufgaben möglicherweise
-bereits in diesem Entwurf abgeschlossen sind.
+Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die
+Kiste `blog` nach Codeblock 17-20 erwähnt haben, um zu sehen, was du über das
+Design dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
+möglicherweise bereits in diesem Entwurf abgeschlossen sind.
 
 Wir haben gesehen, dass, obwohl Rust in der Lage ist, objektorientierte
 Entwurfsmuster zu implementieren, auch andere Muster, z.B. das Kodieren des

@@ -8,429 +8,196 @@ und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte
 Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
 die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
 
-### Mit Funktionsabschlüssen Verhaltensabstraktion erzeugen
+### Erfassen der Umgebung mit Funktionsabschlüssen
 
-Lass uns eine Beispielsituation betrachten, in der es nützlich ist, einen
-Funktionsabschluss zu speichern, um ihn später auszuführen. Nebenbei werden
-wir über Typableitung, Merkmale (traits) und die Syntax von Funktionsabschlüssen
-sprechen.
+Der erste Aspekt von Funktionsabschlüssen, den wir untersuchen werden, ist,
+dass Funktionsabschlüsse Werte aus der Umgebung, in der sie definiert sind, zur
+späteren Verwendung erfassen können. Das Szenario sieht folgendermaßen aus:
+Eine T-Shirt-Firma verschenkt in regelmäßigen Abständen ein kostenloses T-Shirt
+an jemanden aus ihrer Mailingliste. Die Personen auf der Mailingliste können
+optional ihre Lieblingsfarbe zu ihrem Profil hinzufügen. Wenn die Person, die
+das kostenlose Shirt erhalten soll, ihre Lieblingsfarbe in ihrem Profil
+angegeben hat, erhält sie das Hemd in dieser Farbe. Wenn die Person keine
+Lieblingsfarbe angegeben hat, erhält sie die Farbe, in der das Unternehmen
+derzeit die meisten Exemplare hat.
 
-Stell dir die folgende hypothetische Situation vor: Wir arbeiten für ein Start-up
-und entwickeln eine App zur Erstellung kundenspezifischer Trainingspläne.
-Das Backend ist in Rust geschrieben und der verwendete Algorithmus zur Erzeugung 
-der Trainingspläne nutzt viele Einflussfaktoren: das Alter des Benutzers, dessen 
-Body Mass Index und Trainingsvorlieben, die zuletzt erfolgten Work-outs sowie 
-deren Intensitätslevel. 
-Der eigentliche Algorithmus ist für unser Beispiel nicht
-entscheidend; lediglich wichtig ist, dass die Ausführungsdauer ein paar Sekunden 
-beträgt.
-Um die Wartezeit für den Benutzer zu verkürzen, wollen wir den Algorithmus nur 
-bei Bedarf und lediglich einmal aufrufen.
-
-Den Aufruf des hypothetischen Algorithmus simulieren wir mit der Funktion
-`simulated_expensive_calculation` (siehe Codeblock 13-1). Diese Funktion gibt 
-den Text `rechnet langsam...` aus, wartet zwei Sekunden lang und gibt dann die 
-Nummer zurück, die wir übergeben haben.
+Es gibt viele Möglichkeiten, dies zu implementieren. Für dieses Beispiel werden
+wir eine Aufzählung namens `ShirtColor` verwenden, die die Varianten `Red` und
+`Blue` hat. Das Inventar des Unternehmens wird durch eine Struktur `Inventory`
+repräsentiert, die ein Feld mit dem Namen `shirts` hat, das ein
+`Vec<ShirtColor>` mit den derzeit vorrätigen Hemden enthält. Die Methode
+`shirt_giveaway`, die auf `Inventory` definiert ist, erhält die optionale
+Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
+zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
-use std::thread;
-use std::time::Duration;
-
-fn simulated_expensive_calculation(intensity: u32) -> u32 {
-    println!("rechnet langsam...");
-    thread::sleep(Duration::from_secs(2));
-    intensity
+```rust,noplayground
+#[derive(Debug, PartialEq, Copy, Clone)]
+enum ShirtColor {
+    Red,
+    Blue,
 }
-```
-<span class="caption">Codeblock 13-1: Eine Funktion, die für eine hypothetische
-Berechnung steht, die etwa 2 Sekunden Laufzeit benötigt.</span>
 
-Als Nächstes betrachten wir die Hauptfunktion `main`, welche die für unser Beispiel
-relevanten Teile der App beinhaltet. 
-Diese Funktion stellt den Code dar, den die App
-aufrufen wird, wenn ein Benutzer einen Trainingsplan anfordert. 
-Da die Interaktion mit dem Frontend für die Benutzung von Funktionsabschlüssen
-nicht von Bedeutung ist, werden die Eingabewerte (inputs) fest einprogrammiert 
-(hardcoded) und die Ausgaben (outputs) einfach mit `print` ausgegeben.
+struct Inventory {
+    shirts: Vec<ShirtColor>,
+}
 
-Das sind die benötigten Eingaben:
+impl Inventory {
+    fn giveaway(&self, user_preference: Option<ShirtColor>) -> ShirtColor {
+        user_preference.unwrap_or_else(|| self.most_stocked())
+    }
 
-* Eine Intensitätszahl, über die der Benutzer angibt, ob sein Training
-    von leichter oder hoher Intensität sein soll.
-* Eine Zufallszahl, die für Abwechslung im Trainingsplan sorgt.
+    fn most_stocked(&self) -> ShirtColor {
+        let mut num_red = 0;
+        let mut num_blue = 0;
 
-Ausgegeben wird der empfohlene Trainingsplan. Codeblock 13-2 zeigt die
-Funktion `main`, die wir benutzen.
+        for color in &self.shirts {
+            match color {
+                ShirtColor::Red => num_red += 1,
+                ShirtColor::Blue => num_blue += 1,
+            }
+        }
+        if num_red > num_blue {
+            ShirtColor::Red
+        } else {
+            ShirtColor::Blue
+        }
+    }
+}
 
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-#use std::thread;
-#use std::time::Duration;
-#
-#fn simulated_expensive_calculation(intensity: u32) -> u32 {
-#    println!("rechnet langsam...");
-#    thread::sleep(Duration::from_secs(2));
-#    intensity
-#}
-#
-#fn generate_workout(intensity: u32, random_number: u32) {}
-#
 fn main() {
-    let simulated_user_specified_value = 10;
-    let simulated_random_number = 7;
-
-    generate_workout(simulated_user_specified_value, simulated_random_number);
-}
-```
-<span class="caption">Codeblock 13-2: Eine Funktion `main` mit fest
-einprogrammierten Werten, um Eingaben zu simulieren und Zufallszahlen zu
-erzeugen</span>
-
-Zur Vereinfachung haben wir die Variablen `simulated_user_specified_value` auf 
-den Wert 10 und `simulated_random_number` auf den Wert 7 fest kodiert.
-Im tatsächlichen Programm würden wir die Intensitäts-Zahl vom App-Frontend 
-erhalten und die Kiste (crate) `rand` benutzen, um eine Zufallszahl zu
-erzeugen, so wie wir es im Ratespiel-Beispiel in Kapitel 2 bereits durchgeführt
-haben. Die Hauptfunktion `main` ruft eine Funktion `generate_workout` mit
-simulierten Eingabewerten auf.
-
-Da wir nun die Zusammenhänge kennen, können wir uns dem Algorithmus zuwenden.
-Die Funktion `generate_workout` im Codeblock 13-3 beinhaltet die Anwendungslogik 
-der App, mit der wir uns in diesem Beispiel am meisten beschäftigen. Die folgenden
-Codeänderungen werden diese Funktion betreffen.
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-#use std::thread;
-#use std::time::Duration;
-#
-#fn simulated_expensive_calculation(intensity: u32) -> u32 {
-#    println!("rechnet langsam...");
-#    thread::sleep(Duration::from_secs(2));
-#    intensity
-#}
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    if intensity < 25 {
-        println!(
-            "Mach heute {} Liegestütze!",
-            simulated_expensive_calculation(intensity)
-        );
-        println!(
-            "Als nächstes {} Sit-ups!",
-            simulated_expensive_calculation(intensity)
-        );
-    } else {
-        if random_number == 3 {
-            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-        } else {
-            println!(
-                "Heute, {} Minuten Lauftrainig!",
-                simulated_expensive_calculation(intensity)
-            );
-        }
-    }
-}
-#
-#fn main() {
-#    let simulated_user_specified_value = 10;
-#    let simulated_random_number = 7;
-#
-#    generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
-#
-```
-<span class="caption">Codeblock 13-3: Die Anwendungslogik, die Trainingspläne anhand
-der Eingaben und durch Aufrufe der Funktion `simulated_expensive_calculation`
-ausgibt</span>
-
-Der Code im Codeblock 13-3 ruft die langsame Berechnungsfunktion mehrfach auf.
-Der erste `if`-Block ruft `simulated_expensive_calculation` zweimal auf, das
-`if` im äußeren `else`-Block verwendet die Berechnung gar nicht und der Code im
-zweiten `else` einmal.
-
-Als Erstes soll die Funktion `generate_workout` überprüfen,
-ob der Benutzer ein Training mit niedriger Intensität 
-(gekennzeichnet durch eine Zahl kleiner 25) oder mit hoher
-Intensität (eine Zahl größer oder gleich 25) wünscht. 
-
-Trainingspläne mit niedriger Intensität empfehlen eine Anzahl von Liegestützen 
-und Sit-ups, die mit dem simulierten komplexen Algorithmus ermittelt werden.
-
-Falls der Benutzer ein Training mit hoher Intensität anfordert, gibt es eine 
-zusätzliche Logik: Ergibt der Wert der ermittelten Zufallszahl 3, wird die App
-dem Benutzer eine Trinkpause empfehlen. Andernfalls werden dem Benutzer einige 
-Minuten Lauftraining empfohlen, berechnet durch den simulierten 
-komplexen Algorithmus.
-
-Lass uns nun annehmen, dass das Datenforschungsteam einige Änderungen anordnet.
-Das Programm funktioniert zwar soweit wie gewünscht, aber
-`simulated_expensive_calculation` wird unnötigerweise mehrfach aufgerufen.
-Wir sollen daher den Programmcode umformen und vereinfachen, damit die Funktion
-nur noch einmal aufgerufen wird, wenn es notwendig ist.
-
-#### Umformen (refactoring) mit Funktionen
-
-Wir könnten den Programmcode auf viele Arten umstrukturieren. Als erstes werden
-wir die Funktion `simulated_expensive_calculation` verschieben, den Rückgabewert
-in einer Variablen speichern und so den doppelten Aufruf vermeiden 
-(siehe Codeblock 13-4).
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-#use std::thread;
-#use std::time::Duration;
-#
-#fn simulated_expensive_calculation(intensity: u32) -> u32 {
-#    println!("rechnet langsam...");
-#    thread::sleep(Duration::from_secs(2));
-#    intensity
-#}
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_result = simulated_expensive_calculation(intensity);
-
-    if intensity < 25 {
-        println!("Mach heute {} Liegestütze!", expensive_result);
-        println!("Als nächstes {} Sit-ups!", expensive_result);
-    } else {
-        if random_number == 3 {
-            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-        } else {
-            println!("Heute, {} Minuten Lauftrainig!", expensive_result);
-        }
-    }
-}
-#
-#fn main() {
-#    let simulated_user_specified_value = 10;
-#    let simulated_random_number = 7;
-#
-#    generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
-```
-
-<span class="caption">Codeblock 13-4: Verschieben des Aufrufs der Funktion
-`simulated_expensive_calculation` und Speichern des Rückgabewerts in
-der Variable `expensive_result`</span>
-
-Diese Änderung vereinigt alle Aufrufe von `simulated_expensive_calculation` und
-löst im ersten `if`-Block das Problem mit dem unnötigen zweifachen Funktionsaufruf.
-Leider rufen wir nun die Funktion in jeden Fall auf und warten auf das Ergebnis,
-auch im inneren `if`-Block, der den Ergebniswert überhaupt nicht benötigt.
-
-Wir wollen in `generate_workout` nur ein Mal auf
-`simulated_expensive_calculation` zugreifen, aber trotzdem die teure Berechnung nur
-dort durchführen, wo wir das Ergebnis tatsächlich benötigen. Dies ist ein
-Anwendungsfall für Funktionsabschlüsse!
-
-#### Umformen mit Funktionsabschlüssen zum Abspeichern von Programmcode
-
-Anstatt die Funktion `simulated_expensive_calculation` stets vor den `if`-Blöcken
-aufzurufen, können wir einen *Funktionsabschluss* definieren und diesen
-Funktionsabschluss anstatt des Funktionsrückgabewerts in einer Variable (wie im 
-Codeblock 13-5) abspeichern. Wir können sogar den gesamten Inhalt von
-`simulated_expensive_calculation` in einen Funktionsabschluss verschieben.
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-#use std::thread;
-#use std::time::Duration;
-#
-#fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_closure = |num| {
-        println!("rechnet langsam...");
-        thread::sleep(Duration::from_secs(2));
-        num
-    };
-#    if intensity < 25 {
-#        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
-#        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
-#    } else {
-#        if random_number == 3 {
-#            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-#        } else {
-#            println!(
-#                "Heute, {} Minuten Lauftrainig!",
-#                expensive_closure(intensity)
-#            );
-#        }
-#    }
-#}
-#
-#fn main() {
-#    let simulated_user_specified_value = 10;
-#    let simulated_random_number = 7;
-#
-#    generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
-```
-
-<span class="caption">Codeblock 13-5: Definition eines Funktionsabschlusses 
-und dessen Speicherung in der Variable `expensive_closure`</span>
-
-Das `=` weist der Variablen `expensive_closure` den Funktionsabschluss zu. Der 
-Definition des Funktionsabschlusses folgt ein Paar vertikaler
-Pipes (`|`), zwischen denen wir die Parameter des Funktionsabschlusses angeben.
-Diese Syntax wurde von der Funktionsabschluss-Definition in 
-Smalltalk und Ruby beeinflusst. Unser Funktionsabschluss hat einen
-Parameter `num`. Mehrere Parameter trennen wir mit
-Kommata: `|param1, param2|`.
-
-Den Parametern folgen geschweifte Klammern `{}`, die den Rumpf des
-Funktionsabschlusses enthalten. Enhält der Rumpf nur einen Ausdruck, sind
-diese Klammern optional. Nach den geschweiften Klammern benötigen wir ein 
-Semikolon zum Abschluss der `let`-Anweisung. Der Rückgabewert des
-Funktionsabschlusses ist der Wert der letzten Rumpf-Zeile (`num`).
-Wie bei Funktionsrümpfen endet diese Zeile nicht mit einem Semikolon.
-
-Beachte, die `let`-Anweisung bedeutet, dass `expensive_closure` die *Definition*
-einer anonymen Funktion enthält und nicht den *Ergebniswert* des
-Aufrufs der anonymen Funktion. Wir benutzen einen
-Funktionsabschluss, um Programmcode an einer Stelle
-zu definieren und abzuspeichern, und um ihn später an einer anderen Stelle 
-aufzurufen. Unser Programmteil ist nun in
-`expensive_closure` gespeichert.
-
-Da wir nun einen Funktionsabschluss definiert haben, können wir den Code so anpassen,
-dass der Funktionsabschluss im `if`-Block aufgerufen wird. Dadurch wird der zugehörige 
-Code ausgeführt und der Ergebniswert zurückgeliefert. Der Aufruf eines
-Funktionsabschlusses gleicht dem einer Funktion: Wir geben den Variablennamen
-an, der den Funktionsabschluss enthält, gefolgt von den Argumentwerten in
-Klammern, die wir übergeben möchten, wie in Codeblock 13-6 zu sehen ist.
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust
-#use std::thread;
-#use std::time::Duration;
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let expensive_closure = |num| {
-        println!("rechnet langsam...");
-        thread::sleep(Duration::from_secs(2));
-        num
+    let store = Inventory {
+        shirts: vec![ShirtColor::Blue, ShirtColor::Red, ShirtColor::Blue],
     };
 
-    if intensity < 25 {
-        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
-        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
-    } else {
-        if random_number == 3 {
-            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-        } else {
-            println!(
-                "Heute, {} Minuten Lauftrainig!",
-                expensive_closure(intensity)
-            );
-        }
-    }
+    let user_pref1 = Some(ShirtColor::Red);
+    let giveaway1 = store.giveaway(user_pref1);
+    println!(
+        "Der Benutzer mit Präferenz {:?} erhält {:?}",
+        user_pref1, giveaway1
+    );
+
+    let user_pref2 = None;
+    let giveaway2 = store.giveaway(user_pref2);
+    println!(
+        "Der Benutzer mit Präferenz {:?} erhält {:?}",
+        user_pref2, giveaway2
+    );
 }
-#
-#fn main() {
-#    let simulated_user_specified_value = 10;
-#    let simulated_random_number = 7;
-#
-#    generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
+```
+<span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span>
+
+Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt auf
+Lager. Dann ruft er die Methode `giveaway` für einen Benutzer mit einer
+Präferenz für ein rotes Shirt und einen Benutzer ohne Referenz auf. Die
+Ausführung dieses Codes gibt aus:
+
+```console
+$ cargo run
+   Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
+     Running `target/debug/shirt-company`
+Der Benutzer mit Präferenz Some(Red) erhält Red
+Der Benutzer mit Präferenz None erhält Blue
 ```
 
-<span class="caption">Codeblock 13-6: Aufruf der neu definierten
-`expensive_closure`</span>
+Auch dieser Code könnte auf viele Arten implementiert werden, aber dieser Weg
+verwendet Konzepte, die du bereits gelernt hast, mit Ausnahme des Rumpfs der
+Methode `giveaway`, der einen Funktionsabschluss verwendet. Die Methode
+`giveaway` nimmt die Benutzerpräferenz `Option<ShirtColor>` und ruft
+`unwrap_or_else` auf. Die [Methode `unwrap_or_else` auf
+`Option<T>`][unwrap-or-else] ist in der Standardbibliothek definiert. Sie nimmt
+ein Argument: Ein Funktionsabschluss ohne Argumente, der einen Wert `T`
+zurückgibt (den gleichen Typ, der in der `Some`-Variante der `Option<T>`
+gespeichert ist, in diesem Fall eine `ShirtColor`). Wenn `Option<T>` die
+Variante `Some` ist, gibt `unwrap_or_else` den Wert aus `Some` zurück. Wenn
+`Option<T>` die Variante `None` ist, ruft `unwrap_or_else` den
+Funktionsabschluss auf und gibt den vom Funktionsabschluss zurückgegebenen Wert
+zurück.
 
-Nun wird die langsame Berechnung an einer Stelle definiert und nur noch dort
-ausgeführt, wo wir das Ergebnis benötigen.
+Das ist interessant, weil wir einen Funktionsabschluss übergeben haben, der
+`self.most_stocked()` für die aktuelle `Inventory`-Instanz aufruft. Die
+Standardbibliothek musste nichts über die von uns definierten Typen `Inventory`
+oder `ShirtColor` oder die Logik, die wir in diesem Szenario verwenden wollen,
+wissen. Der Funktionsabschluss hat eine unveränderliche Referenz auf die
+`self`-Instanz von `Inventory` erfasst und sie mit dem von uns angegebenen Code
+an die Methode `unwrap_or_else` übergeben. Funktionen sind nicht in der Lage,
+ihre Umgebung auf diese Weise zu erfassen.
 
-Wir haben jedoch eines der Probleme von Codeblock 13-3 wieder eingeführt.
-Im ersten `if`-Block rufen wir den Funktionsabschluss zweimal auf und lassen
-somit den Benutzer doppelt so lange warten als notwendig. Wir könnten das Problem
-beheben, indem wir eine lokale Variable definieren, die das Ergebnis des
-Funktionsabschluss-Aufrufs hält. Funktionsabschlüsse bieten uns eine andere
-Lösung. Wir werden diese Lösung in Kürze erklären, aber lass uns zuerst über die
-fehlenden Typzuweisungen in der Definition des Funktionsabschlusses und den
-Merkmalen (traits) von Funktionsabschlüssen sprechen.
+### Funktionsabschluss-Typinferenz und Annotation
 
-### Typableitung und Zuweisung bei Funktionsabschlüssen
+Es gibt weitere Unterschiede zwischen Funktionen und Funktionsabschlüssen. Bei
+Funktionsabschlüssen ist es normalerweise nicht erforderlich, die Typen der
+Parameter oder des Rückgabewertes zu annotieren, wie es bei `fn`-Funktionen der
+Fall ist. Typ-Annotationen sind bei Funktionen erforderlich, weil sie Teil
+einer expliziten Schnittstelle sind, die für deine Benutzer sichtbar ist. Die
+strikte Definition dieser Schnittstelle ist wichtig, um sicherzustellen, dass
+alle Beteiligten sich darüber einig sind, welche Arten von Werten eine Funktion
+verwendet und zurückgibt. Aber Funktionsabschlüsse werden nicht in einer
+exponierten Schnittstelle wie dieser verwendet: Sie werden in Variablen
+gespeichert und verwendet, ohne sie zu benennen und den Benutzern unserer
+Bibliothek offenzulegen.
 
-Bei Funktionsabschlüssen musst du die Datentypen der Parameter und Rückgabewerte nicht,
-wie bei Funktionen, ausdrücklich angeben. Für Funktionen sind Datentypangaben 
-erforderlich, da sie Bestandteil einer expliziten Benutzerschnittstelle sind.
-Die starre Festlegung dieser Schnittstelle ist wichtig, damit sichergestellt
-ist, dass jedem eindeutig klar ist, welche Arten von Werten von der Funktion
-entgegengenommen und zurückgegeben werden. Funktionsabschlüsse werden hingegen nicht
-in einer Schnittstelle verwendet, sie werden in einer Variable gespeichert und 
-aufgerufen, ohne sie zu benennen und Benutzern unserer Bibliothek (library)
-zugänglich zu machen.
+Funktionsabschlüsse sind in der Regel kurz und nur in einem engen Kontext und
+nicht in jedem beliebigen Szenario relevant. Innerhalb dieser begrenzten
+Kontexte kann der Compiler die Typen der Parameter und des Rückgabetyps
+ableiten, ähnlich wie er die Typen der meisten Variablen ableiten kann (es gibt
+seltene Fälle, in denen der Compiler auch Funktionsabschluss-Typannotationen
+benötigt).
 
-Funktionsabschlüsse sind für gewöhnlich kurz und eher in einem begrenzten Kontext
-relevant, als in einem beliebigen Anwendungsfall. Innerhalb dieses beschränkten
-Einsatzbereichs ist der Compiler verlässlich in der Lage, die Datentypen der Parameter und
-Rückgabewerte abzuleiten, ähnlich wie er dies meistens bei Variablen kann.
-
-Den Programmierer die Typen in diesen kurzen, anonymen Funktionen angeben zu
-lassen, wäre störend und überflüssig, da der Compiler bereits über die
-dafür notwendigen Informationen verfügt.
-
-Wie bei Variablen können wir die Datentypen angeben, wenn wir die Klarheit
-und Deutlichkeit mehr als notwendig erhöhen möchten.
-Wollen wir die Datentypen für dem Funktionsabschluss aus Codeblock 13-5 angeben,
-würde die Definition wie in Codeblock 13-7 aussehen.
+Wie bei Variablen können wir Typ-Annotationen hinzufügen, wenn wir die
+Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher
+sind als unbedingt nötig. Die Annotation der Typen für einen Funktionsabschluss
+würde wie die in Codeblock 13-2 gezeigte Definition aussehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-#use std::thread;
-#use std::time::Duration;
+# use std::thread;
+# use std::time::Duration;
 #
-#fn generate_workout(intensity: u32, random_number: u32) {
-#    
+# fn generate_workout(intensity: u32, random_number: u32) {
     let expensive_closure = |num: u32| -> u32 {
         println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
-#  
 #
-#    if intensity < 25 {
-#        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
-#        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
-#    } else {
-#        if random_number == 3 {
-#            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-#        } else {
-#            println!(
-#                "Heute, {} Minuten Lauftrainig!",
-#                expensive_closure(intensity)
-#            );
-#        }
-#    }
-#}
+#     if intensity < 25 {
+#         println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+#         println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
+#     } else {
+#         if random_number == 3 {
+#             println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
+#         } else {
+#             println!(
+#                 "Heute, {} Minuten Lauftraining!",
+#                 expensive_closure(intensity)
+#             );
+#         }
+#     }
+# }
 #
-#fn main() {
-#   let simulated_user_specified_value = 10;
-#   let simulated_random_number = 7;
+# fn main() {
+#     let simulated_user_specified_value = 10;
+#     let simulated_random_number = 7;
 #
-#   generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
+#     generate_workout(simulated_user_specified_value, simulated_random_number);
+# }
 ```
 
-<span class="caption">Codeblock 13-7: Hinzufügen optionaler Datentypangabe
-der Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
+<span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
+Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
 
-Mit Datentypangabe ähnelt die Syntax eines Funktionsabschlusses sehr der Syntax 
-einer Funktion. Im Folgenden vergleichen wir die Syntax einer
+Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
+Syntax einer Funktion. Im Folgenden vergleichen wir die Syntax einer
 Funktionsdefinition, die zu ihrem Parameter den Wert 1 addiert, und die eines
-Funktionsabschlusses mit identischem Verhalten.
-Zur besseren Darstellung der relevanten Teile haben wir einige Leerzeichen eingefügt.
-Dies zeigt, wie ähnlich die Syntax
-von Funktionen der von Funktionsabschlüssen ist, abgesehen von Pipes und der 
-Möglichkeit, einen Teil der Syntax wegzulassen:
+Funktionsabschlusses mit identischem Verhalten. Zur besseren Darstellung der
+relevanten Teile haben wir einige Leerzeichen eingefügt. Dies zeigt, wie
+ähnlich die Syntax von Funktionen der von Funktionsabschlüssen ist, abgesehen
+von den senkrechten Strichen und der Möglichkeit, einen Teil der Syntax
+wegzulassen:
 
 ```rust,ignore
 fn  add_one_v1   (x: u32) -> u32 { x + 1 }
@@ -440,23 +207,22 @@ let add_one_v4 = |x|               x + 1  ;
 ```
 
 Die erste Zeile zeigt eine Funktionsdefinition und die zweite eine Definition
-eines Funktionsabschlusses mit allen Datentypangaben. Bei der dritten Zeile
-werden die Datentypangaben in der Definition des Funktionsabschlusses weggelassen.
-Zusätzlich entfällt in der vierten Zeile die optionalen geschweiften Klammern, 
-da der
-Rumpf des Funktionsabschlusses nur einen Ausdruck beinhaltet. Alle diese Ausdrücke
-sind gültig und verhalten sich beim Aufruf gleich. Von `add_one_v3` und
-`add_one_v4` wird ein Aufruf zum Kompilieren des Codes benötigt, da hier die Typen
-abhängig von der Verwendung abgeleitet werden.
+eines Funktionsabschlusses mit allen Datentypangaben. In der dritten Zeile
+werden die Datentypangaben aus der Funktionsabschlusses-Definition entfernt,
+und in der vierten Zeile werden die geschweiften Klammern weggelassen, die
+optional sind, da der Funktionsabschlusses-Rumpf nur einen Ausdruck beinhaltet.
+Alle diese Ausdrücke sind gültig und verhalten sich beim Aufruf gleich. Von
+`add_one_v3` und `add_one_v4` wird ein Aufruf zum Kompilieren des Codes
+benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden.
 
-Bei Funktionsabschlüssen wird für jeden Parameter und für den Rückgabewert ein
-konkreter Typ abgeleitet. Codeblock 13-8 zeigt zum Beispiel die Definition eines
-kurzen Funktionsabschlusses, der nur den Wert des übergebenen Parameters 
-zurückgibt. Dieser Funktionsabschluss ist außer für diese Beispiel 
-nicht weiter nützlich. Beachte, dass wir der Definition keine
-Datentypangaben hinzugefügt haben. Wenn wir nun versuchen, den Funktionsabschluss zweimal
-aufzurufen, einmal mit `String` und einmal mit `u32`, erhalten wir eine
-Fehlermeldung.
+Bei Funktionsabschluss-Definitionen wird für jeden Parameter und für den
+Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-8 zeigt zum Beispiel
+die Definition eines kurzen Funktionsabschlusses, der nur den Wert des
+übergebenen Parameters zurückgibt. Dieser Funktionsabschluss ist außer für
+dieses Beispiel nicht weiter nützlich. Beachte, dass wir der Definition keine
+Datentypangaben hinzugefügt haben: Wenn wir nun versuchen, den
+Funktionsabschluss zweimal aufzurufen, einmal mit `String` und einmal mit
+`u32`, erhalten wir eine Fehlermeldung.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -467,8 +233,8 @@ let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 ```
 
-<span class="caption">Codeblock 13-8: Versuchter Aufruf eines Funktionsabschlusses,
-dem zwei unterschiedliche Typen zugewiesen wurden</span>
+<span class="caption">Codeblock 13-3: Versuchter Aufruf eines
+Funktionsabschlusses, dem zwei unterschiedliche Typen zugewiesen wurden</span>
 
 Der Compiler gibt diesen Fehler aus:
 
@@ -479,530 +245,391 @@ error[E0308]: mismatched types
  --> src/main.rs:5:29
   |
 5 |     let n = example_closure(5);
-  |                             ^
+  |                             ^- help: try using a conversion method: `.to_string()`
   |                             |
   |                             expected struct `String`, found integer
-  |                             help: try using a conversion method: `5.to_string()`
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` due to previous error
 ```
+
 Beim ersten Aufruf von `example_closure` wird dem Typ von `x` und dem
 Rückgabewert des Funktionsabschlusses der Typ `String` zugewiesen. Diese Typen
 sind dann für den Funktionsabschluss `example_closure` festgeschrieben. Daher
 bekommen wir eine Fehlermeldung, wenn wir versuchen einen anderen Typ mit dem
 gleichen Funktionsabschluss zu benutzen.
 
-### Speichern von Funktionsabschlüssen unter Verwendung generischer Parameter und `Fn`-Merkmalen (traits)
+### Erfassen von Referenzen oder Verschieben der Eigentümerschaft
 
-Lass uns auf unser Trainingsplan-Erstellungsprogramm zurückkommen. Im Codeblock
-13-6 hat unser Programm, noch immer häufiger als notwendig, den
-Funktionsabschluss `expensive_closure` aufgerufen. Eine Möglichkeit, dieses
-Problem zu beheben, besteht darin, das Ergebnis des Funktionsabschlusses in
-einer Variable zu speichern und diese Variable zu benutzen, wann immer wir das
-Resultat brauchen. Diese Methode würde allerdings zu ziemlich viel wiederholtem
-Code führen.
+Funktionsabschlüsse können Werte aus ihrer Umgebung auf drei Arten erfassen,
+die direkt den drei Möglichkeiten entsprechen, wie eine Funktion einen
+Parameter aufnehmen kann: Unveränderliche Ausleihen (borrowing immutably),
+veränderliche Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
+(taking ownership). Der Funktionsabschluss entscheidet, welche dieser
+Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
+erfassten Werten macht.
 
-Glücklicherweise steht uns eine andere Lösung zur Verfügung. Wir können eine
-Struktur (struct) anlegen die den Funktionsabschluss und dessen Rückgabewert
-hält. Die Struktur wird den Funktionsabschluss nur dann ausführen, wenn
-wir ein Ergebnis benötigen, und sie wird unseren Rückgabewert zwischenspeichern
-damit der Rest unseres Programmcodes nicht mehr für das Speichern und 
-Wiederverwenden verantwortlich ist. Dieses Muster (pattern) ist dir vielleicht
-als *Memoisation* (memoization) oder *Lazy Evaluation* bekannt.
-
-Um eine Struktur für unseren Funktionsabschluss zu erstellen, müssen wir dessen
-Typ spezifizieren, da die Definition einer Struktur den Typ aller ihrer Felder
-kennen muss. Jede Instanz eines Funktionsabschlusses besitzt ihren einzigartigen
-anonymen Typ, der selbst wenn zwei Funktionsabschlüsse identische Signaturen
-haben, immer noch als verschieden betrachtet wird. Um Strukturen, Aufzählungen
-(enums) oder Funktionen zu definieren, die Funktionsabschlüsse verwenden,
-benutzen wir generische Datentypen (generics) und Merkmalsabgrenzungen (trait bounds),
-die wir bereits im Kapitel 10 besprochen haben.
-
-Die `Fn`-Merkmale werden von der Standardbibliothek (standard library) zur
-Verfügung gestellt. Alle Funktionsabschlüsse implementieren mindestens eines der
-Merkmale: `Fn`, `FnMut` oder `FnOnce`. Wir werden den Unterschied dieser
-Merkmale im Abschnitt [„Mit Funktionsabschlüssen die Umgebung
-erfassen“](#mit-funktionsabschlüssen-die-umgebung-erfassen) besprechen. 
-Für unser Beispiel können wir das `Fn`-Merkmal benutzen.
-
-Den `Fn`-Merkmalsabgrenzungen fügen wir Typanmerkungen für die Typen, die mit dem
-Funktionsabschluss übereinstimmen müssen, hinzu. In diesem Fall hat unser
-Funktionsabschluss einen Parameter vom Typ `u32` und gibt einen `u32` zurück,
-daher spezifizieren wir die Merkmalsabgrenzung mit `Fn(u32) -> u32`.
-
-Codeblock 13-9 zeigt die Definition der Struktur `Cacher`, die einen
-Funktionsabschluss und optional einen Rückgabewert hält.
+Codeblock 13-4 definiert einen Funktionsabschluss, der eine unveränderliche
+Ausleihe an den Vektor mit dem Namen `list` erfasst, weil sie nur eine
+unveränderliche Ausleihe benötigt, um den Wert auszugeben. Dieses Beispiel
+veranschaulicht auch, dass eine Variable an eine Funktionsabschluss-Definition
+gebunden werden kann und der Funktionsabschluss später durch Verwendung des
+Variablennamens und Klammern aufgerufen werden kann, als ob der Variablenname
+ein Funktionsname wäre:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-struct Cacher<T>
-where
-    T: Fn(u32) -> u32,
-{
-    calculation: T,
-    value: Option<u32>,
+fn main() {
+    let list = vec![1, 2, 3];
+    println!("Vor der Funktionsabschluss-Definition: {:?}", list);
+
+    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
+
+    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
+    only_borrows();
+    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
 }
 ```
 
-<span class="caption">Codeblock 13-9: Definition einer Struktur `Cacher`, die
-einen Funktionsabschluss in `calculation` enthält und in `value` optional ein
-Resultat</span>
+<span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
+Funktionsabschlusses, der eine unveränderliche Ausleihe erfasst</span>
 
-Die Struktur `Cacher` hat ein Feld `calculation` vom generischen Datentyp `T`.
-Die Merkmalsabgrenzungen auf `T` legen das `Fn`-Merkmal für den
-Funktionsabschluss fest. Jeder Funktionsabschluss, den wir im Feld `calculation`
-speichern, muss einen `u32`-Parameter (spezifiziert innerhalb runder Klammern
-hinter `Fn`) haben und ein `u32` (festgelegt nach dem `->`) zurückgeben.
+Der Code vor der Funktionsabschluss-Definition, nach der
+Funktionsabschluss-Definition, aber vor dem Aufruf des Funktionsabschlusses,
+und nach dem Aufruf des Funktionsabschlusses kann immer noch auf `list`
+zugreifen, da wir mehrere unveränderliche Ausleihen von `list` zur gleichen
+Zeit haben können. Dieser Code kompiliert, läuft und gibt folgendes aus:
 
-> Merke: Auch Funktionen können alle drei `Fn`-Merkmale implementieren.
-> Falls eine Problemstellung das Erfassen eines Wertes der Umgebung nicht erfordert,
-> können wir eine Funktion anstatt eines Funktionsabschlusses benutzen, der etwas
-> benötigt, um für ihn das `Fn`-Merkmal zu implementieren.
+```console
+$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/closure-example`
+Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
+Im Funktionsabschluss: [1, 2, 3]
+Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
+```
 
-Das Feld `value` hat den Typ `Option<u32>`. Bevor wir den Funktionsabschluss
-ausführen, hat `value` den Wert `None`. Wenn Programmcode mit einem `Cacher` nach dem
-*Ergebnis* des Funktionsabschlusses fragt, wird der `Cacher` zu diesem Zeitpunkt
-den Funktionsabschluss ausführen und das Ergebnis in einer `Some`-Variante im
-Feld `value` speichern. Wenn der Code später wieder nach dem Resultat des
-Funktionsabschlusses fragt, wird anstatt der erneuten Ausführung der Berechnung
-der `Cacher` den Wert zurückgeben, der in der `Some`-Variante enthalten ist.
- 
-Im Codeblock 13-10, wird die Logik um das soeben beschriebene Feld `value`
-definiert.
+In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
+dass eine veränderliche Ausleihe benötigt wird, da der Funktionsabschluss ein
+Element zum Vektor `list` hinzufügt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-#struct Cacher<T>
-#where
-#    T: Fn(u32) -> u32,
-#{
-#    calculation: T,
-#    value: Option<u32>,
-#}
-#
-impl<T> Cacher<T>
-where
-    T: Fn(u32) -> u32,
-{
-    fn new(calculation: T) -> Cacher<T> {
-        Cacher {
-            calculation,
-            value: None,
-        }
-    }
+fn main() {
+    let mut list = vec![1, 2, 3];
+    println!("Vor der Funktionsabschluss-Definition: {:?}", list);
 
-    fn value(&mut self, arg: u32) -> u32 {
-        match self.value {
-            Some(v) => v,
-            None => {
-                let v = (self.calculation)(arg);
-                self.value = Some(v);
-                v
-            }
+    let mut borrows_mutably = || list.push(7);
+
+    borrows_mutably();
+    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+}
+```
+
+<span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
+Funktionsabschlusses, der eine veränderliche Ausleihe erfasst</span>
+
+Dieser Code kompiliert, läuft und gibt aus:
+
+```console
+$ cargo run
+   Compiling closure-example v0.1.0 (file:///projects/closure-example)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+     Running `target/debug/closure-example`
+Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
+```
+
+Beachte, dass es kein `println!` mehr zwischen der Definition und dem Aufruf
+des Funktionsabschlusses `borrows_mutably` gibt: Wenn `borrows_mutably`
+definiert ist, erfasst es eine veränderliche Referenz auf `list`. Nachdem der
+Funktionsabschluss aufgerufen wurde, endet die veränderliche Ausleihe, da wir
+den Funktionsabschluss ab diesem Zeitpunkt nicht mehr verwenden. Zwischen der
+Funktionsabschluss-Definition und dem Funktionsabschluss-Aufruf ist eine
+unveränderliche Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
+Ausleihen erlaubt sind, wenn es eine veränderliche Ausleihe gibt. Versuche,
+dort ein `println!` hinzuzufügen, um zu sehen, welche Fehlermeldung du
+erhältst!
+
+Wenn du den Funktionsabschluss zwingen willst, die Eigentümerschaft der Werte,
+die er in der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des
+Funktionsabschlusses nicht unbedingt Eigentümer sein muss, kannst du das
+Schlüsselwort `move` vor der Parameterliste verwenden. Diese Technik ist vor
+allem nützlich, wenn ein Funktionsabschluss an einen neuen Strang (thread)
+übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Strang
+gehören. Wir werden mehr Beispiele für Funktionsabschlüsse mit `move` in
+Kapitel 16 sehen, wenn wir über Nebenläufigkeit (concurrency) sprechen.
+
+### Verschieben erfasster Werte aus dem Funktionsabschluss und die `Fn`-Merkmale
+
+Sobald ein Funktionsabschluss eine Referenz erfasst oder einen Wert in den
+Funktionsabschluss verschoben hat, beeinflusst der Code im Rumpf der Funktion
+auch, was mit den Referenzen oder Werten als Ergebnis des Funktionsaufrufs
+geschieht. Ein Funktionsabschluss-Rumpf kann einen erfassten Wert aus dem
+Funktionsabschluss herausverschieben, den erfassten Wert verändern, den
+erfassten Wert weder verschieben noch verändern oder nichts aus der Umgebung
+erfassen. Die Art und Weise, wie ein Funktionsabschluss Werte aus der Umgebung
+erfasst und verarbeitet, wirkt sich auf die Merkmale (traits) aus, die der
+Funktionsabschluss implementiert. Mit den Merkmalen können Funktionen und
+Strukturen angeben, welche Arten von Funktionsabschlüssen sie verwenden können.
+
+Funktionsabschlüsse implementieren automatisch eine, zwei oder alle drei dieser
+`Fn`-Merkmale, und zwar in additiver Weise:
+
+1. `FnOnce` gilt für Funktionsabschlüsse, die mindestens einmal aufgerufen
+   werden können. Alle Funktionsabschlüsse implementieren dieses Merkmal, weil
+   alle Funktionsabschlüsse aufgerufen werden können. Wenn ein
+   Funktionsabschluss erfasste Werte aus seinem Rumpf herausverschiebt, dann
+   implementiert dieser Funktionsabschluss nur `FnOnce` und keine der anderen
+   `Fn`-Merkmals, weil sie nur einmal aufgerufen werden kann.
+2. `FnMut` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus
+   ihrem Rumpf herausverschieben, aber die erfassten Werte möglicherweise
+   verändern. Diese Funktionsabschlüsse können mehr als einmal aufgerufen
+   werden.
+3. `Fn` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
+   Rumpf herausbewegen und die erfassten Werte nicht verändern. Diese
+   Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
+   Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
+   mehrere Male gleichzeitig aufgerufen wird. Funktionsabschlüsse, die keine
+   Werte aus ihrer Umgebung erfassen, implementieren `Fn`.
+
+Schauen wir uns die Definition der Methode `unwrap_or_else` auf `Option<T>` an,
+die wir in Codeblock 13-6 verwendet haben:
+
+```rust,ignore
+impl<T> Option<T> {
+    pub fn unwrap_or_else<F>(self, f: F) -> T
+    where
+        F: FnOnce() -> T
+    {
+        match self {
+            Some(x) => x,
+            None => f(),
         }
     }
 }
 ```
 
-<span class="caption">Codeblock 13-10: Die Zwischenspeicherungs-Logik von `Cacher`</span>
+Erinnere dich, dass `T` der generische Typ ist, der den Typ des Wertes in der
+`Some`-Variante einer `Option` darstellt. Dieser Typ `T` ist auch der
+Rückgabetyp der Funktion `unwrap_or_else`: Code, der `unwrap_or_else` auf einer
+`Option<String>` aufruft, erhält zum Beispiel einen `String`.
 
-Wir möchten, dass `Cacher` die Felder der Struktur verwaltet, anstatt den
-aufrufenden Code die Werte unter Umständen direkt ändern zu lassen, sodass diese
-Felder privat sind.
+Als Nächstes ist zu beachten, dass die Funktion `unwrap_or_else` einen
+zusätzlichen generischen Typ-Parameter `F` hat. Der Typ `F` ist der Typ des
+Parameters namens `f`, der der Funktionsabschluss ist, den wir beim Aufruf von
+`unwrap_or_else` bereitstellen.
 
-Die Funktion `Cacher::new` nimmt einen generischen Datentyp-Parameter `T`,
-welchen wir so definiert haben, dass er dieselbe Merkmalsabgrenzung wie die
-`Cacher`-Struktur hat. Anschließend gibt `Cacher::new` eine `Cacher`-Instanz aus
-die den Funktionsabschluss enthält der im `calculation`-Feld spezifiziert wurde
-und den Wert `None` in seinem `value`-Feld enthält da wir den Funktionsabschluss
-bisher noch nicht ausgeführt haben.
+Die für den generischen Typ `F` spezifizierte Merkmalsabgrenzung ist `FnOnce()
+-> T`, was bedeutet, dass `F` mindestens einmal aufgerufen werden können muss,
+keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
+`FnOnce` in der Merkmalsabgrenzung drückt die Einschränkung aus, dass
+`unwrap_or_else` `f` höchstens ein Mal aufrufen wird. Im Rumpf von
+`unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f`
+nicht aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal
+aufgerufen. Da alle Funktionsabschlüsse `FnOnce` implementieren, akzeptiert
+`unwrap_or_else` die unterschiedlichsten Arten von Funktionsabschlüssen und ist
+so flexibel wie nur möglich.
 
-Wenn der aufrufende Code das Auswertungsergebnis des Funktionsabschlusses
-benötigt, ruft er die Methode `value` auf, anstatt direkt den Funktionsabschluss.
-Diese Methode überprüft, ob wir bereits einen Rückgabewert in `self.value`
-in einen `Some` gespeichert haben, falls ja, gibt es den Wert, der in `Some`
-enthalten ist zurück ohne den Funktionsabschluss erneut auszuführen.
+> Anmerkung: Funktionen können auch alle drei `Fn`-Merkmale implementieren.
+> Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
+> erfordert, können wir den Namen einer Funktion anstelle eines
+> Funktionsabschlüsses verwenden, bei dem wir etwas brauchen, das eine der
+> `Fn`-Markmale implementiert. Zum Beispiel könnten wir bei einem
+> `Option<Vec<T>>`-Wert `unwrap_or_else(Vec::new)` aufrufen, um einen neuen,
+> leeren Vektor zu erhalten, wenn der Wert `None` ist.
 
-Falls `self.value` ein `None` ist, ruft der Programmcode den Funktionsabschluss
-auf, der in `self.calculation` gespeichert ist, speichert das Resultat in
-`self.value` für seine zukünftige Verwendung und gibt den Wert zurück.
-
-Codeblock 13-11 zeigt wie wir die `Cacher`-Struktur in der Funktion
-`generate_workout` vom Codeblock 13-6 verwenden können.
+Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
+Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich unterscheidet.
+Sie nimmt einen Funktionsabschluss, die `FnMut` implementiert. Der
+Funktionsabschluss erhält ein Argument, eine Referenz auf das aktuelle Element
+im betrachteten Anteilstyp, und gibt einen Wert vom Typ `K` zurück, der
+geordnet werden kann. Diese Funktion ist nützlich, wenn man einen Anteilstyp
+nach einem bestimmten Attribut der einzelnen Elemente sortieren will. In
+Codeblock 13-7 haben wir eine Liste von `Rectangle`-Instanzen und benutzen
+`sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach hoch zu
+sortieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-#use std::thread;
-#use std::time::Duration;
-#
-#struct Cacher<T>
-#where
-#    T: Fn(u32) -> u32,
-#{
-#    calculation: T,
-#    value: Option<u32>,
-#}
-#
-#impl<T> Cacher<T>
-#where
-#    T: Fn(u32) -> u32,
-#{
-#    fn new(calculation: T) -> Cacher<T> {
-#        Cacher {
-#            calculation,
-#            value: None,
-#        }
-#    }
-#
-#    fn value(&mut self, arg: u32) -> u32 {
-#        match self.value {
-#            Some(v) => v,
-#            None => {
-#                let v = (self.calculation)(arg);
-#                self.value = Some(v);
-#                v
-#            }
-#        }
-#    }
-#}
-#
-fn generate_workout(intensity: u32, random_number: u32) {
-    let mut expensive_result = Cacher::new(|num| {
-        println!("rechnet langsam...");
-        thread::sleep(Duration::from_secs(2));
-        num
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let mut list = [
+        Rectangle {
+            width: 10,
+            height: 1,
+        },
+        Rectangle {
+            width: 3,
+            height: 5,
+        },
+        Rectangle {
+            width: 7,
+            height: 12,
+        },
+    ];
+
+    list.sort_by_key(|r| r.width);
+    println!("{:#?}", list);
+}
+```
+
+<span class="caption">Codeblock 13-7: Verwendung von `sort_by_key` und eines
+Funktionsabschlusses zum Sortieren einer Liste von `Rectangle`-Instanzen nach
+ihrem `width`-Wert</span>
+
+Dieser Code gibt aus:
+
+```console
+$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.41s
+     Running `target/debug/rectangles`
+[
+    Rectangle {
+        width: 3,
+        height: 5,
+    },
+    Rectangle {
+        width: 7,
+        height: 12,
+    },
+    Rectangle {
+        width: 10,
+        height: 1,
+    },
+]
+```
+
+Der Grund, warum `sort_by_key` so definiert ist, dass es einen
+`FnMut`-Funktionsabschluss nimmt, ist, dass es den Funktionsabschluss mehrfach
+aufruft: Einmal für jedes Element im Anteilstyp. Der Funktionsabschluss `|r|
+r.width` erfasst, verändert oder verschiebt nichts aus seiner Umgebung, sodass
+er die Anforderungen der Merkmalsabgrenzung erfüllt.
+
+Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen
+Funktionsabschluss, die nur `FnOnce` implementiert, weil er einen Wert aus der
+Umgebung verschiebt. Der Compiler lässt uns diesen Funktionsabschluss nicht mit
+`sort_by_key` verwenden:
+
+<span class="filename">Dateiname: src/main.rs</span>
+
+```rust,ignore,does_not_compile
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
+fn main() {
+    let mut list = [
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
+    ];
+
+    let mut sort_operations = vec![];
+    let value = String::from("by key called");
+
+    list.sort_by_key(|r| {
+        sort_operations.push(value);
+        r.width
     });
-
-    if intensity < 25 {
-        println!("Mach heute {} Liegestütze!", expensive_result.value(intensity));
-        println!("Als nächstes {} Sit-ups!", expensive_result.value(intensity));
-    } else {
-        if random_number == 3 {
-            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
-        } else {
-            println!(
-                "Heute, {} Minuten Lauftrainig!",
-                expensive_result.value(intensity)
-            );
-        }
-    }
+    println!("{:#?}", list);
 }
-#
-#fn main() {
-#    let simulated_user_specified_value = 10;
-#    let simulated_random_number = 7;
-#
-#    generate_workout(simulated_user_specified_value, simulated_random_number);
-#}
 ```
 
-<span class="caption">Codeblock 13-11: Die Verwendung von `Cacher` in der
-Funktion `generate_workout` zur Abstraktion der Zwischenspeicherungs-Logik</span>
+<span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
+mit `sort_by_key` zu verwenden</span>
 
-Anstatt den Funktionsabschluss direkt in einer Variable zu speichern, speichern
-wir eine neue Instanz von `Cacher` die den Funktionsabschluss beinhaltet. An
-jeder Stelle, an der wir ein Resultat benötigen, rufen wir dann die Methode
-`value` an der `Cacher`-Instanz auf. Egal ob wir nun die Methode `value`
-mehrmals aufrufen oder gar nicht wird die aufwendige Berechnung nur einmal 
-ausgeführt.
-
-### Einschränkungen der `Cacher`-Implementierung
-
-Das Zwischenspeichern von Werten ist allgemein eine nützliche Vorgehensweise,
-die wir möglicherweise auch an anderen Programmteilen mit verschieden
-Funktionsabschlüssen verwenden möchten. Jedoch gibt es zwei Probleme der aktuellen
-Implementierung von `Cacher`, die eine Wiederverwendung in verschiedenen Kontexten
-erschweren würden.
-
-Das erste Problem ist, dass eine `Cacher`-Instanz davon ausgeht, dass sie immer
-den gleichen Wert für den `arg`-Parameter der Methode `value` bekommt. Das
-bedeutet, dass dieser Test fehlschlagen wird:
-
-```rust,panics
-#struct Cacher<T>
-#where
-#    T: Fn(u32) -> u32,
-#{
-#    calculation: T,
-#    value: Option<u32>,
-#}
-#
-#impl<T> Cacher<T>
-#where
-#    T: Fn(u32) -> u32,
-#{
-#    fn new(calculation: T) -> Cacher<T> {
-#        Cacher {
-#            calculation,
-#            value: None,
-#        }
-#    }
-#
-#    fn value(&mut self, arg: u32) -> u32 {
-#        match self.value {
-#            Some(v) => v,
-#            None => {
-#                let v = (self.calculation)(arg);
-#                self.value = Some(v);
-#                v
-#            }
-#        }
-#    }
-#}
-#
-# #[cfg(test)]
-# mod tests {
-#    use super::*;
-#
-    #[test]
-    fn call_with_different_values() {
-        let mut c = Cacher::new(|a| a);
-
-        let v1 = c.value(1);
-        let v2 = c.value(2);
-
-        assert_eq!(v2, 2);
-    }
-#}    
-```
-
-Dieser Test erzeugt eine neue `Cacher`-Instanz mit einem Funktionsabschluss, der
-den Wert zurückgibt, den er erhalten hat. Wir rufen nun die `Cacher`-Instanz
-mit der Methode `value` auf, zuerst mit dem `arg`-Wert 1 und dann mit dem
-`arg`-Wert 2 und erwarten, dass beim zweiten Aufruf 2 zurückgegeben wird.
-
-Führe diesen Test mit der Implementierung von `Cacher` vom Codeblock 13-9 und
-13-10 durch und der Test wird an `assert_eq!` mit folgender Meldung
-fehlschlagen:
+Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
+versuchen, die Anzahl der Aufrufe von `sort_by_key` beim Sortieren von `list`
+zu zählen. Dieser Code versucht, diese Zählung durchzuführen, indem er `value`,
+einen `String` aus der Umgebung des Funktionsabschlusses, in den
+`sort_operations`-Vektor schiebt. Der Funktionsabschluss erfasst `value` und
+verschiebt dann `value` aus dem Funktionsabschluss heraus, indem er die
+Eigentümerschaft von `value` an den Vektor `sort_operations` überträgt. Dieser
+Funktionsabschluss kann einmal aufgerufen werden; ein zweiter Aufruf würde nicht
+funktionieren, da `value` nicht mehr in der Umgebung wäre, um erneut in
+`sort_operations` verschoben zu werden! Daher implementiert dieser
+Funktionsabschluss nur `FnOnce`. Wenn wir versuchen, diesen Code zu
+kompilieren, erhalten wir die Fehlermeldung, dass `value` nicht aus dem
+Funktionsabschluss verschoben werden kann, weil der Funktionsabschluss `FnMut`
+implementieren muss:
 
 ```console
-$ cargo test
-   Compiling cacher v0.1.0 (file:///projects/cacher)
-    Finished test [unoptimized + debuginfo] target(s) in 0.72s
-     Running target/debug/deps/cacher-4116485fb32b3fff
+$ cargo run
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
+  --> src/main.rs:27:30
+   |
+24 |       let value = String::from("by key called");
+   |           ----- captured outer variable
+25 | 
+26 |       list.sort_by_key(|r| {
+   |  ______________________-
+27 | |         sort_operations.push(value);
+   | |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
+28 | |         r.width
+29 | |     });
+   | |_____- captured by this `FnMut` closure
 
-running 1 test
-test tests::call_with_different_values ... FAILED
-
-failures:
-
----- tests::call_with_different_values stdout ----
-thread 'main' panicked at 'assertion failed: `(left == right)`
-  left: `1`,
- right: `2`', src/lib.rs:43:9
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::call_with_different_values
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
-
-error: test failed, to rerun pass '--lib'
+For more information about this error, try `rustc --explain E0507`.
+error: could not compile `rectangles` due to previous error
 ```
 
-Das Problem ist, dass die `Cacher`-Instanz beim ersten Aufruf von `c.value` mit 1
-den Wert `Some(1)` in `self.value` gespeichert hat. Egal was wir danach der
-`value`-Methode als Wert  mitgeben, wir werden immer 1 zurückbekommen.
-
-Versuche `Cacher` so zu verändern, dass es anstatt eines Wertes eine Hash-Tabelle
-(hash map) enthält. Die Schlüssel (keys) der Hash-Tabelle werden die `arg`-Werte
-die mitgegeben werden sein und die Werte der Hash-Tabelle werden das Resultat des Aufrufs des
-Funktionsabschlusses mit dem jeweiligen Schlüssel sein. Anstatt `value` direkt
-zu betrachten, ob es einen `Some` oder `None` enthält, wird die `value`-Funktion
-nach `arg` in der Hash-Tabelle suchen und den Wert, falls vorhanden, zurückgeben.
-Falls der Wert nicht vorhanden ist, wird der `Cacher` den Funktionsabschluss
-aufrufen und den Rückgabewert in der Hash-Tabelle zusammen mit seinem `arg`-Wert
-speichern.
-
-Das zweite Problem mit der derzeitigen Implementierung von `Cacher` ist, dass
-sie nur Funktionsabschlüsse annimmt die einen Parameter vom Typ `u32` haben und 
-ein `u32` zurückgeben. Möglicherweise möchten wir zum Beispiel Ergebnisse von
-Funktionsabschlüssen zwischenspeichern die einen Zeichenketten-Anteilstyp (string
-slice) nehmen und `usize`-Werte zurückgeben. Um dieses Problem zu beheben,
-versuche generische Datentypen zu verwenden, um die `Cacher`-Funktionalität
-flexibler zu machen.
-
-### Mit Funktionsabschlüssen die Umgebung erfassen
-
-Im Trainingsplan-Erstellungs-Beispiel haben wir Funktionsabschlüsse nur als
-anonyme Inline-Funktionen verwendet, Funktionsabschlüsse verfügen jedoch über
-eine Fähigkeit die Funktionen nicht haben: Sie können ihre Umgebung erfassen und
-auf Variablen die im selben Gültigkeitsbereich definiert wurden zugreifen.
-
-Codeblock 13-12 beinhaltet ein Beispiel eines Funktionsabschlusses der in einer
-Variable `equal_to_x` gespeichert ist und eine Variable `x` aus ihrer Umgebung
-verwendet.
+Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die `value`
+aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
+Funktionsabschlusses so ändern, dass er keine Werte aus der Umgebung
+verschiebt. Wenn wir daran interessiert sind, wie oft `sort_by_key` aufgerufen
+wird, ist es einfacher, einen Zähler in der Umgebung zu halten und seinen Wert
+im Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
+Funktionsabschluss in Codeblock 13-9 funktioniert mit `sort_by_key`, weil er
+nur eine veränderliche Referenz auf den `num_sort_operations`-Zähler erfasst
+und daher mehr als einmal aufgerufen werden kann:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
+#[derive(Debug)]
+struct Rectangle {
+    width: u32,
+    height: u32,
+}
+
 fn main() {
-    let x = 4;
+    let mut list = [
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
+    ];
 
-    let equal_to_x = |z| z == x;
-
-    let y = 4;
-
-    assert!(equal_to_x(y));
+    let mut num_sort_operations = 0;
+    list.sort_by_key(|r| {
+        num_sort_operations += 1;
+        r.width
+    });
+    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
 }
 ```
 
-<span class="caption">Codeblock 13-12: Beispiel eines Funktionsabschlusses, der
-sich auf eine Variable im umgebenden Gültigkeitsbereich bezieht.</span>
+<span class="caption">Listing 13-9: Verwenden eines
+`FnMut`-Funktionsabschlusses mit `sort_by_key` ist erlaubt</span>
 
-Auch wenn `x` hier keiner der Parameter von `equal_to_x` ist, darf der
-Funktionsabschluss `equal_to_x` die Variable `x` benutzen, die im gleichen
-Gültigkeitsbereich definiert wurde wie `equal_to_x`.
+Die `Fn`-Merkmale sind wichtig bei der Definition oder Verwendung von
+Funktionen oder Typen, die Funktionsabschlüsse verwenden. Der nächste Abschnitt
+bespricht Iteratoren, und viele Iterator-Methoden nehmen
+Funktionsabschluss-Argumente entgegen. Behalte diese Details von
+Funktionsabschlüssen im Kopf, wenn wir Iteratoren erforschen!
 
-Mit Funktionen können wir dasselbe nicht machen. Wenn wir es wie im folgenden
-Beispiel versuchen wird der Programmcode nicht kompilieren:
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust,does_not_compile
-fn main() {
-    let x = 4;
-
-    fn equal_to_x(z: i32) -> bool {
-        z == x
-    }
-
-    let y = 4;
-
-    assert!(equal_to_x(y));
-}
-```
-
-Wir bekommen eine Fehlermeldung:
-
-```console
-$ cargo run
-   Compiling equal-to-x v0.1.0 (file:///projects/equal-to-x)
-error[E0434]: can't capture dynamic environment in a fn item
- --> src/main.rs:5:14
-  |
-5 |         z == x
-  |              ^
-  |
-  = help: use the `|| { ... }` closure form instead
-```
-Der Compiler erinnert uns sogar daran, dass dies nur mit Funktionsabschlüssen
-funktioniert!
-
-Wenn ein Funktionsabschluss einen Wert aus seiner Umgebung erfasst, benutzt er
-Speicher, um die Werte im Funktionsabschluss-Rumpf für die Benutzung zu halten.
-Diesen zusätzlichen Aufwand der Speichernutzung wollen wir, wenn wir
-Code ausführen möchten der seine Umgebung nicht erfasst, nicht verursachen. Da
-Funktionen ihre Umgebung niemals erfassen können, kann das Definieren und
-Ausführen von Funktionen auch nie diesen Speichernutzungsmehraufwand
-verursachen.
-
-Es gibt drei Möglichkeiten wie Funktionsabschlüsse ihre Umgebung erfassen
-können, den drei Möglichkeiten entsprechend wie Funktionen ein Parameter
-erhalten können: Eigentümerschaft übernehmen (taking ownership), veränderliches
-Ausleihen (borrowing mutably) und unveränderliches Ausleihen (borrowing immutably).
-Diese sind wie folgt, in den drei `Fn`-Merkmalen codiert:
-
-* `FnOnce` verbraucht die Variablen, die vom umgebenden Gültigkeitsbereich
-    erfasst werden, dieser Bereich wird als Funktionsabschluss-Umgebung
-    (closure's *enviroment*) bezeichnet. Um die erfassten Variablen verbrauchen
-    zu können, muss der Funktionsabschluss die Eigentümerschaft dieser Variablen
-    übernehmen und sie bei dessen Definition, in den Funktionsabschluss verschieben
-    (move). Der Namensteil `Once` repräsentiert die Tatsache, dass der
-    Funktionsabschluss nur einmal die Eigentümerschaft der gleichen Variablen
-    übernehmen kann, daher kann er nur einmal aufgerufen werden.
-* `FnMut` kann die Funktionsabschluss-Umgebung verändern, da es Werte
-    veränderlich ausleiht.
-* `Fn` leiht Werte des umgebenden Gültigkeitsbereiches unveränderlich aus.
-
-Wenn du einen Funktionsabschluss erstellst, schließt Rust, welches Merkmal
-verwendet werden soll, aus der Verwendungsweise der vom Funktionsabschluss 
-erfassten Variablen. Alle Funktionsabschlüsse implementieren `FnOnce`, da sie
-mindestens einmal aufgerufen werden können. Funktionsabschlüsse, die erfasste
-Variablen nicht verschieben, implementieren zusätzlich `FnMut` und
-Funktionsabschlüsse, die keinen veränderlichen Zugriff auf die erfassten Werte
-benötigen, implementieren des weiteren `Fn`. Im Codeblock 13-12, leiht der
-Funktionsabschluss `equal_to_x` den Parameter `x` unveränderlich (dadurch hat
-`equal_to_x` das `Fn`-Merkmal), da der Funktionsabschluss-Rumpf den
-Variablenwert `x` nur liest.
-
-Falls du erzwingen möchtest, dass ein Funktionsabschluss die Eigentümerschaft
-der aus dem umgebenden Gültigkeitsbereich verwendeten Werte übernimmt, kannst du
-vor der Parameterliste das Schlüsselwort `move` verwenden. Diese Technik ist vor
-allem dann nützlich, wenn ein Funktionsabschluss an einen neuen Strang (thread) 
-übergeben wird, um die Daten so zu verschieben, dass sie dem neuen Strang
-gehören.
-
-> Hinweis: `move`-Funktionsabschlüsse können immer noch `Fn` oder `FnMut`
-> implementieren, auch wenn sie Variablen verschieben. Das liegt daran, dass
-> die von einem Funktionsabschluss-Typ implementierten Merkmale dadurch
-> bestimmt werden, was der Funktionsabschluss mit den erfassten Werten macht,
-> nicht wie es sie erfasst. Das Schlüsselwort `move` legt nur Letzteres fest.
-
-Weitere Beispiele für `move` bei Funktionsabschlüssen folgen in Kapitel 16, wenn
-wir über Parallelität sprechen. Einstweilen ist hier der Programmcode von
-Codeblock 13-12 mit dem Schlüsselwort `move`, das der Funktionsabschlussdefinition
-hinzugefügt wurde und Vektoren statt Ganzzahlen (integers) verwendet, da
-Ganzzahlen kopiert und nicht verschoben werden. Beachte, dass dieser Programmcode
-noch nicht kompiliert.
-
-<span class="filename">Dateiname: src/main.rs</span>
-
-```rust,does_not_compile
-fn main() {
-    let x = vec![1, 2, 3];
-
-    let equal_to_x = move |z| z == x;
-
-    println!("kann x hier nicht verwenden: {:?}", x);
-
-    let y = vec![1, 2, 3];
-
-    assert!(equal_to_x(y));
-}
-```
-
-Wir erhalten folgende Fehlermeldung:
-
-```console
-$ cargo run
-   Compiling equal-to-x v0.1.0 (file:///projects/equal-to-x)
-error[E0382]: borrow of moved value: `x`
- --> src/main.rs:6:40
-  |
-2 |     let x = vec![1, 2, 3];
-  |         - move occurs because `x` has type `Vec<i32>`, which does not implement the `Copy` trait
-3 | 
-4 |     let equal_to_x = move |z| z == x;
-  |                      --------      - variable moved due to use in closure
-  |                      |
-  |                      value moved into closure here
-5 | 
-6 |     println!("kann x hier nicht verwenden: {:?}", x);
-  |                                                   ^ value borrowed here after move
-
-For more information about this error, try `rustc --explain E0382`.
-error: could not compile `equal-to-x` due to previous error
-
-```
-
-Der Wert `x` wurde bei der Funktionsabschlussdefinition in diesen hineinbewegt,
-da wir das Schlüsselwort `move` angegeben haben. Der Funktionsabschluss hat
-dadurch die Eigentümerschaft von `x` und `main` kann daher `x` nicht mehr 
-im `println!`-Statement benutzen. Durch Entfernen von `println!` wird dieser
-Fehler behoben.
-
-Wenn du eine `Fn`-Merkmalsabgrenzung spezifizierst, reicht es zumeist wenn du
-mit `Fn` beginnst. Der Compiler wird dir mitteilen, wenn es notwendig ist
-`FnMut` oder `FnOnce` anzugeben, basierend auf dem was im
-Funktionsabschluss-Rumpf passiert. 
-
-Um Situationen zu veranschaulichen, die die Nützlichkeit von
-Umgebung erfassenden Funktionsabschlüssen als Funktionsparameter demonstrieren,
-fahren wir mit unserem nächsten Thema fort: Iteratoren.
+[unwrap-or-else]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else

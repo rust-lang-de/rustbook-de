@@ -48,41 +48,58 @@ gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.
 
 Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
 Obige `HashMap` hat Schlüssel vom Typ `String` und Werte vom Typ `i32`.
-Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen den gleichen Typ
-haben und alle Werte müssen den gleichen Typ haben.
+Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
+haben und alle Werte müssen denselben Typ haben.
 
-Eine andere Möglichkeit, eine Hashtabelle zu erstellen, besteht im Verwenden
-von Iteratoren und der Methode `collect` für einen Vektor von Tupeln, wobei
-jedes Tupel aus einem Schlüssel und seinem Wert besteht. Auf Iteratoren und die
-dazu gehörenden Methoden werden wir im Abschnitt [„Eine Reihe von Elementen
-verarbeiten mit Iteratoren“][iterators] in Kapitel 13 ausführlicher eingehen.
-Die Methode `collect` sammelt Daten für zahlreiche Kollektionstypen,
-einschließlich `HashMap`. Wenn wir z.B. die Teamnamen und Anfangsspielstände in
-zwei getrennten Vektoren hätten, könnten wir die Methode `zip` verwenden, um
-einen Iterator von Tupeln zu erstellen, in dem „Blau“ mit 10 gepaart ist, und
-so weiter. Dann könnten wir die Methode `collect` verwenden, um diesen Iterator
-von Tupeln in eine Hashtabelle umzuwandeln, wie in Codeblock 8-21 gezeigt wird.
+### Zugreifen auf Werte in einer Hashtabelle
+
+Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
+`get` mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.
 
 ```rust
 use std::collections::HashMap;
 
-let teams = vec![String::from("Blau"), String::from("Gelb")];
-let initial_scores = vec![10, 50];
+let mut scores = HashMap::new();
 
-let mut scores: HashMap<_, _> =
-    teams.into_iter().zip(initial_scores.into_iter()).collect();
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Geld"), 50);
+
+let team_name = String::from("Blau");
+let score = scores.get(&team_name);
 ```
 
-<span class="caption">Codeblock 8-21: Erstellen einer Hashtabelle aus einer
-Liste von Teams und einer Liste von Spielständen</span>
+<span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
+Blau in der Hashtabelle</span>
 
-Die Typannotation `HashMap<_, _>` wird hier benötigt, weil `collect`
-verschiedene Datenstrukturen als Rückgabetyp unterstützt und Rust nicht weiß,
-welche du willst, es sei denn, du gibst sie an. Für die Typparameter der
-Schlüssel- und Werttypen geben wir jedoch Unterstriche an, Rust kann anhand der
-Datentypen in den Vektoren auf die Typen schließen, die die Hashtabelle
-enthält. In Codeblock 8-21 wird der Schlüsseltyp `String` und der Werttyp `i32`
-sein, genau wie in Codeblock 8-20.
+Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
+Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurückgibt;
+wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt `get`
+den Wert `None` zurück. Dieses Programm behandelt die `Option`, indem es
+`unwrap_or` aufruft, um `score` auf Null zu setzen, wenn `scores` keinen
+Eintrag für den Schlüssel hat.
+
+Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
+Weise iterieren wie bei Vektoren, indem wir eine `for`-Schleife verwenden:
+
+```rust
+use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Gelb"), 50);
+
+for (key, value) in &scores {
+    println!("{}: {}", key, value);
+}
+```
+
+Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:
+
+```text
+Gelb: 50
+Blau: 10
+```
 
 ### Hashtabellen und Eigentümerschaft
 
@@ -115,72 +132,26 @@ müssen mindestens so lange gültig sein, wie die Hashtabelle gültig ist. Wir
 werden mehr über diese Fragen im Abschnitt [„Referenzen validieren mit
 Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10 sprechen.
 
-### Zugreifen auf Werte in einer Hashtabelle
-
-Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
-`get` mit ihrem Schlüssel aufrufen, wie in Codeblock 8-23 gezeigt.
-
-```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blau"), 10);
-scores.insert(String::from("Geld"), 50);
-
-let team_name = String::from("Blau");
-let score = scores.get(&team_name);
-```
-
-<span class="caption">Codeblock 8-23: Zugreifen auf den Spielstand von Team
-Blau in der Hashtabelle</span>
-
-Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
-Ergebnis wird `Some(&10)` sein. Das Ergebnis ist in `Some` eingepackt, weil
-`get` eine `Option<&V>` zurückgibt; wenn es keinen Wert für diesen Schlüssel in
-der Hashtabelle gibt, gibt `get` den Wert `None` zurück. Das Programm muss die
-`Option` auf eine Weise behandeln, die wir in Kapitel 6 besprochen haben.
-
-Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
-Weise iterieren wie bei Vektoren, indem wir eine `for`-Schleife verwenden:
-
-```rust
-use std::collections::HashMap;
-
-let mut scores = HashMap::new();
-
-scores.insert(String::from("Blau"), 10);
-scores.insert(String::from("Gelb"), 50);
-
-for (key, value) in &scores {
-    println!("{}: {}", key, value);
-}
-```
-
-Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:
-
-```text
-Gelb: 50
-Blau: 10
-```
-
 ### Aktualisieren einer Hashtabelle
 
-Obwohl die Anzahl der Schlüssel-Werte-Paare wachsen kann, kann jedem Schlüssel
-jeweils nur ein Wert zugeordnet werden. Wenn du die Daten in einer Hashtabelle
-ändern willst, musst du entscheiden, wie der Fall zu behandeln ist, wenn einem
-Schlüssel bereits ein Wert zugewiesen wurde. Du kannst den alten Wert durch den
-neuen ersetzen und dabei den alten Wert völlig außer Acht lassen. Du kannst den
-alten Wert behalten und den neuen Wert ignorieren und nur dann den neuen Wert
-hinzufügen, wenn der Schlüssel noch *keinen* zugewiesenen Wert hat. Oder du
-kannst den alten und neuen Wert kombinieren. Schauen wir uns an, wie diese
-Varianten jeweils funktionieren!
+Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
+eindeutigen Schlüssel jeweils nur ein Wert zugeordnet werden (aber nicht
+umgekehrt: Zum Beispiel könnten sowohl das blaue Team als auch das gelbe Team
+den Wert 10 in der Hashtabelle `scores` gespeichert haben).
+
+Wenn du die Daten in einer Hashtabelle ändern willst, musst du entscheiden, wie
+der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
+wurde. Du kannst den alten Wert durch den neuen ersetzen und dabei den alten
+Wert völlig außer Acht lassen. Du kannst den alten Wert behalten und den neuen
+Wert ignorieren und nur dann den neuen Wert hinzufügen, wenn der Schlüssel noch
+*keinen* zugewiesenen Wert hat. Oder du kannst den alten und neuen Wert
+kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!
 
 #### Überschreiben eines Wertes
 
 Wenn wir einen Schlüssel und einen Wert in eine Hashtabelle einfügen und dann
 denselben Schlüssel mit einem anderen Wert einfügen, wird der mit diesem
-Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-24
+Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
 zweimal `insert` aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.
@@ -196,23 +167,27 @@ scores.insert(String::from("Blau"), 25);
 println!("{:?}", scores);
 ```
 
-<span class="caption">Codeblock 8-24: Ersetzen eines gespeicherten Wertes für
+<span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span>
 
 Dieser Code wird `{"Blau": 25}` ausgeben. Der ursprüngliche Wert `10` wurde
 überschrieben.
 
-#### Nur einen Wert einfügen, wenn der Schlüssel keinen Wert hat
+#### Nur einen Schlüssel und Wert einfügen, wenn der Schlüssel nicht vorhanden ist
 
-Es kommt oft vor, dass man zunächst prüfen will, ob ein bestimmter Schlüssel
-einen Wert hat, und wenn dies nicht der Fall ist, einen Wert für ihn einzufügt.
+Es ist üblich, zu prüfen, ob ein bestimmter Schlüssel bereits in der
+Hashtabelle mit einem Wert vorhanden ist, und dann folgende Maßnahmen zu
+ergreifen: Wenn der Schlüssel in der Hashtabelle vorhanden ist, sollte der
+vorhandene Wert so bleiben, wie er ist. Wenn der Schlüssel nicht vorhanden ist,
+füge ihn und einen Wert für ihn ein.
+
 Hashtabellen haben dafür eine spezielle Programmierschnittstelle (API) namens
 `entry`, die den Schlüssel, den du prüfen willst, als Parameter nimmt. Der
 Rückgabewert der Methode `entry` ist eine Aufzählung (enum) namens `Entry`, die
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
 nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
-Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-25 aus.
+Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-24 aus.
 
 ```rust
 use std::collections::HashMap;
@@ -226,7 +201,7 @@ scores.entry(String::from("Blau")).or_insert(50);
 println!("{:?}", scores);
 ```
 
-<span class="caption">Codeblock 8-25: Verwenden der Methode `entry` zum
+<span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span>
 
 Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine
@@ -236,7 +211,7 @@ als neuen Wert für diesen Schlüssel ein und gibt eine veränderliche Referenz
 auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
 selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.
 
-Der Code in Codeblock 8-25 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
+Der Code in Codeblock 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
 Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
 da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von `entry` wird die
 Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.
@@ -245,7 +220,7 @@ Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.
 
 Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
-aktualisieren. Beispielsweise zeigt Codeblock 8-26 einen Code, der zählt, wie
+aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
@@ -266,16 +241,23 @@ for word in text.split_whitespace() {
 println!("{:?}", map);
 ```
 
-<span class="caption">Codeblock 8-26: Zählen des Vorkommens von Wörtern mit
+<span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span>
 
-Dieser Code wird `{"Welt": 2, "wunderbare": 1, "Hallo": 1}` ausgeben. Die
-Methode `or_insert` gibt tatsächlich eine veränderliche Referenz (`&mut V`) auf
-den Wert für diesen Schlüssel zurück. Hier speichern wir diese veränderliche
-Referenz in der Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also
-zuerst `count` mittels Sternoperator (`*`) dereferenzieren. Die veränderliche
-Referenz verlässt den Gültigkeitsbereich am Ende der `for`-Schleife, sodass all
-diese Änderungen sicher sind und von den Ausleihregeln erlaubt werden.
+Dieser Code gibt `{"Welt": 2, "wunderbare": 1, "Hallo": 1}` aus. Es kann sein,
+dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
+werden: Du erinnerst dich an den Abschnitt [„Zugreifen auf Werte in einer
+Hashtabelle“][access], dass die Iteration über eine Hashtabelle in beliebiger
+Reihenfolge erfolgt.
+
+Die Methode `split_whitespace` gibt einen Iterator über durch Leerzeichen
+getrennte Sub-Anteilstypen des Wertes in `text` zurück. Die Methode `or_insert`
+gibt eine veränderliche Referenz (`&mut V`) auf den Wert für den angegebenen
+Schlüssel zurück. Hier speichern wir diese veränderlichen Referenz in der
+Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count`
+mit dem Stern (`*`) derefenzieren. Die veränderliche Referenz verlässt am Ende
+der `for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher
+und gemäß der Ausleihregeln zulässig sind.
 
 ### Hash-Funktionen
 
@@ -325,6 +307,6 @@ Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
 einzugehen. Das werden wir als nächstes tun!
 
-[iterators]: ch13-02-iterators.html
+[access]: #zugreifen-auf-werte-in-einer-hashtabelle
 [validating-references-with-lifetimes]:
 ch10-03-lifetime-syntax.html

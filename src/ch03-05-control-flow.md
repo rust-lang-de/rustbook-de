@@ -2,7 +2,7 @@
 
 Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
 erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
-erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen.  Die
+erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
 gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
 kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
 
@@ -38,7 +38,7 @@ wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
 Klammern gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken
 verbunden sind, werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie
 die Zweige in `match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der
-Schätzung mit der eheimzahl“][comparing-the-guess-to-the-secret-number] in
+Schätzung mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] in
 Kapitel 2 besprochen haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht
@@ -196,7 +196,7 @@ fn main() {
     let condition = true;
     let number = if condition { 5 } else { 6 };
 
-    println!("Der Wert der Zahl ist: {}", number);
+    println!("Der Wert der Zahl ist: {number}");
 }
 ```
 
@@ -231,7 +231,7 @@ fn main() {
 
     let number = if condition { 5 } else { "sechs" };
 
-    println!("Der Wert der Zahl ist: {}", number);
+    println!("Der Wert der Zahl ist: {number}");
 }
 ```
 
@@ -329,59 +329,6 @@ Wir haben im Ratespiel auch `continue` verwendet, das innerhalb einer Schleife
 das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
 überspringen und mit der nächsten Iteration fortzufahren.
 
-Wenn du Schleifen innerhalb Schleifen hast, beziehen sich `break` und
-`continue` auf die innerste Schleife an diesem Punkt. Du kannst einer Schleife
-optional einen *Schleifennamen* (loop label) geben, die wir mit `break` oder
-`continue` verwenden, um zu spezifizieren, dass sich diese Schlüsselwörter auf
-die bezeichnete Schleife anstelle der innersten Schleife beziehen. Hier ist ein
-Beispiel mit zwei geschachtelten Schleifen:
-
-```rust
-fn main() {
-    let mut count = 0;
-    'counting_up: loop {
-        println!("count = {}", count);
-        let mut remaining = 10;
-
-        loop {
-            println!("remaining = {}", remaining);
-            if remaining == 9 {
-                break;
-            }
-            if count == 2 {
-                break 'counting_up;
-            }
-            remaining -= 1;
-        }
-
-        count += 1;
-    }
-    println!("count am Ende = {}", count);
-}
-```
-
-Die äußere Schleife hat den Namen `'counting_up` und sie zählt von 0 bis 2
-aufwärts. Die innere Schleife ohne Name zählt von 10 bis 9 herunter. Das erste
-`break`, das keinen Namen angibt, beendet nur die innere Schleife. Mit der
-Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
-gibt folgendes aus:
-
-```console
-$ cargo run
-   Compiling loops v0.1.0 (file:///projects/loops)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
-     Running `target/debug/loops`
-count = 0
-remaining = 10
-remaining = 9
-count = 1
-remaining = 10
-remaining = 9
-count = 2
-remaining = 10
-count am Ende = 2
-```
-
 #### Rückgabe von Werten aus Schleifen
 
 Eine der Verwendungen von `loop` besteht darin, eine Operation, von der du
@@ -405,7 +352,7 @@ fn main() {
         }
     };
 
-    println!("Das Ergebnis ist {}", result);
+    println!("Das Ergebnis ist {result}");
 }
 ```
 
@@ -418,6 +365,62 @@ gleich `10` ist. Wenn dies der Fall ist, verwenden wir das Schlüsselwort
 Semikolon, um die Anweisung zu beenden, die `result` den Wert zuweist.
 Schließlich geben wir den Wert in `result` aus, der in diesem Fall `20`
 beträgt.
+
+#### Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen
+
+Wenn du Schleifen innerhalb von Schleifen hast, gelten `break` und `continue`
+für die innerste Schleife an diesem Punkt. Du kannst optional ein
+*Schleifenlabel* (loop label) für eine Schleife angeben, das wir dann mit
+`break` oder `continue` verwenden können, um festzulegen, dass diese
+Schlüsselwörter für die gekennzeichnete Schleife gelten und nicht für die
+innerste Schleife. Schleifenlabel müssen mit einem einfachen Anführungszeichen
+beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:
+
+```rust
+fn main() {
+    let mut count = 0;
+    'counting_up: loop {
+        println!("Zähler = {count}");
+        let mut remaining = 10;
+
+        loop {
+            println!("Restliche = {remaining}");
+            if remaining == 9 {
+                break;
+            }
+            if count == 2 {
+                break 'counting_up;
+            }
+            remaining -= 1;
+        }
+
+        count += 1;
+    }
+    println!("Zähler-Endstand = {count}");
+}
+```
+
+Die äußere Schleife hat das Label `'counting_up` und zählt von 0 bis 2
+aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
+`break`, das kein Label angibt, beendet nur die innere Schleife. Mit der
+Anweisung `break 'counting_up;` wird die äußere Schleife verlassen. Dieser Code
+gibt folgendes aus:
+
+```console
+$ cargo run
+   Compiling loops v0.1.0 (file:///projects/loops)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+     Running `target/debug/loops`
+Zähler = 0
+Restliche = 10
+Restliche = 9
+Zähler = 1
+Restliche = 10
+Restliche = 9
+Zähler = 2
+Restliche = 10
+Zähler-Endstand = 2
+```
 
 #### Bedingte Schleifen mit `while`
 
@@ -439,7 +442,7 @@ fn main() {
     let mut number = 3;
 
     while number != 0 {
-        println!("{}!", number);
+        println!("{number}!");
 
         number -= 1;
     }
@@ -520,7 +523,7 @@ fn main() {
     let a = [10, 20, 30, 40, 50];
 
     for element in a {
-        println!("Der Wert ist: {}", element);
+        println!("Der Wert ist: {element}");
     }
 }
 ```
@@ -556,7 +559,7 @@ verwenden würde:
 ```rust
 fn main() {
     for number in (1..4).rev() {
-        println!("{}!", number);
+        println!("{number}!");
     }
     println!("ABHEBEN!!!");
 }

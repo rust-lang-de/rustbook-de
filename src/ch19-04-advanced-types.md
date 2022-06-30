@@ -1,11 +1,11 @@
 ## Fortgeschrittene Typen
 
-Das Rust-Typsystem weist einige Funktionalitäten auf, die wir in diesem Buch
-erwähnt, aber noch nicht besprochen haben. Wir beginnen mit einer allgemeinen
-Diskussion über Newtypes, während wir untersuchen, warum Newtypes als Typen
-nützlich sind. Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den
-Newtypes ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den
-Typ `!` und dynamisch große Typen besprechen.
+Das Rust-Typsystem weist einige Funktionalitäten auf, die wir bisher erwähnt,
+aber noch nicht besprochen haben. Wir beginnen mit einer allgemeinen Diskussion
+über Newtypes, während wir untersuchen, warum Newtypes als Typen nützlich sind.
+Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den Newtypes
+ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den Typ `!`
+und dynamisch große Typen besprechen.
 
 ### Verwenden des Newtype-Musters für Typsicherheit und Abstraktion
 
@@ -13,20 +13,19 @@ Typ `!` und dynamisch große Typen besprechen.
 > [„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
 > externen Typen“][using-the-newtype-pattern] gelesen hast.
 
-Das Newtype-Muster ist nützlich für Aufgaben, die über die bisher besprochenen
-hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
-verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
-für die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock
-19-15 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und
-`Meters` `u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
+Das Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher
+besprochenen hinausgehen, einschließlich statisch sicherzustellen, dass Werte
+niemals verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein
+Beispiel für die Verwendung von Newtypes zum Angeben von Einheiten hast du in
+Codeblock 19-15 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters`
+und `Meters` `u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
 einem Parameter vom Typ `Millimeters` schreiben würden, könnten wir kein
 Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
 vom Typ `Meters` oder einem einfachen `u32` aufzurufen.
 
-Eine weitere Verwendung des Newtype-Musters besteht darin, einige
-Implementierungsdetails eines Typs zu abstrahieren: Der neue Typ kann eine
-öffentliche API bereitstellen, die sich von der API des privaten, inneren Typs
-unterscheidet.
+Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
+eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
+bereitstellen, die sich von der API des privaten, inneren Typs unterscheidet.
 
 Newtypes können auch die interne Implementierung verbergen. Zum Beispiel
 könnten wir einen Typ `People` zur Verfügung stellen, um eine `HashMap<i32,
@@ -42,10 +41,10 @@ haben.
 
 ### Erstellen von Typ-Synonymen mit Typ-Alias
 
-Zusammen mit dem Newtype-Muster bietet Rust die Möglichkeit, einen *Typ-Alias*
-zu deklarieren, um einem vorhandenen Typ einen anderen Namen zu geben. Hierfür
-verwenden wir das Schlüsselwort `type`. Zum Beispiel können wir den Alias
-`Kilometers` für `i32` so anlegen:
+Rust bietet die Möglichkeit, einen *Typ-Alias* zu deklarieren, um einem
+vorhandenen Typ einen anderen Namen zu geben. Hierfür verwenden wir das
+Schlüsselwort `type`. Zum Beispiel können wir den Alias `Kilometers` für `i32`
+so anlegen:
 
 ```rust
     type Kilometers = i32;
@@ -171,7 +170,7 @@ type Result<T> = std::result::Result<T, std::io::Error>;
 ```
 
 Da sich diese Deklaration im Modul `std::io` befindet, können wir den
-vollständig qualifizierten Alias `std::io::Result<T>` verwenden &ndash; das ist
+vollständig qualifizierten Alias `std::io::Result<T>` verwenden; das ist
 ein `Result<T, E>` mit `E` als `std::io::Error`. Die Funktionssignaturen des
 Merkmals `Write` sehen am Ende so aus:
 
@@ -215,9 +214,9 @@ Funktionen, die niemals zurückkehren, werden *divergierende Funktionen*
 (diverging functions) genannt. Wir können keine Werte vom Typ `!` erzeugen,
 also kann `bar` niemals zurückkehren.
 
-Aber was nützt ein Typ, für den man niemals Werte erzeugen kann? Erinnere dich
-an den Code aus Codeblock 2-5; wir haben einen Teil davon hier in Codeblock
-19-26 wiedergegeben.
+Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
+den Code aus Codeblock 2-5, der Teil des Zahlenratespiels ist; wir haben einen
+Teil davon hier in Codeblock 19-26 wiedergegeben.
 
 ```rust,ignore
 # use rand::Rng;
@@ -313,7 +312,7 @@ impl<T> Option<T> {
     pub fn unwrap(self) -> T {
         match self {
             Some(val) => val,
-            None => panic!("called `Option::unwrap()` on a `None` value"),
+            None => panic!("Aufruf von `Option::unwrap()` auf einem `None`-Wert"),
         }
     }
 }
@@ -341,12 +340,12 @@ würde, wenn sie bei `break` ankommt.
 
 ### Dynamisch große Typen und das Merkmal `Sized`
 
-Aufgrund Rusts Bedürfnis, bestimmte Details zu kennen, z.B. wie viel Platz für
-einen Wert eines bestimmten Typs zuzuweisen ist, gibt es eine Ecke seines
-Typsystems, die verwirrend sein kann: Das Konzept der *dynamisch großen Typen*
-(dynamically sized types). Diese Typen, die manchmal als *DSTs* oder *Typen
-ohne Größe* (unsized types) bezeichnet werden, erlauben es uns, Code mit Werten
-zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
+Rusts muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
+einen Wert eines bestimmten Typs zuzuweisen ist. Das lässt eine Ecke des
+Typsystems zunächst etwas verwirrend erscheinen: Das Konzept der *dynamisch
+großen Typen* (dynamically sized types). Diese Typen, die manchmal als *DSTs*
+oder *Typen ohne Größe* (unsized types) bezeichnet werden, erlauben es uns,
+Code mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
 
 Schauen wir uns die Details eines dynamisch großen Typs namens `str` an, den
 wir im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an
@@ -397,12 +396,12 @@ haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
 diese hinter einen Zeiger setzen müssen, z.B. `&dyn Trait` oder `Box<dyn
 Trait>` (`Rc<dyn Trait>` würde auch funktionieren).
 
-Um mit DSTs zu arbeiten, hat Rust ein bestimmtes Merkmal, das `Sized` genannt
-wird, um zu bestimmen, ob die Größe eines Typs zur Kompilierzeit bekannt ist
-oder nicht. Dieses Merkmal wird automatisch für alles implementiert, dessen
-Größe zur Kompilierzeit bekannt ist. Zusätzlich fügt Rust implizit jeder
-generischen Funktion eine Merkmalsabgrenzung auf `Sized` hinzu. Das heißt, eine
-generische Funktionsdefinition wie diese:
+Um mit DSTs zu arbeiten, hat Rust das Merkmal `Sized`, um zu bestimmen, ob die
+Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Merkmal wird
+automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
+ist. Zusätzlich fügt Rust implizit jeder generischen Funktion eine
+Merkmalsabgrenzung auf `Sized` hinzu. Das heißt, eine generische
+Funktionsdefinition wie diese:
 
 ```rust
 fn generic<T>(t: T) {

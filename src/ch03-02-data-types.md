@@ -238,7 +238,7 @@ einige Beispiele für die Deklaration von `char`-Werten:
 ```rust
 fn main() {
     let c = 'z';
-    let z = 'ℤ';
+    let z: char = 'ℤ'; // mit expliziter Typannotation
     let heart_eyed_cat = '😻';
 }
 ```
@@ -293,7 +293,7 @@ fn main() {
 
     let (x, y, z) = tup;
 
-    println!("Der Wert von y ist: {}", y);
+    println!("Der Wert von y ist: {y}");
 }
 ```
 
@@ -321,14 +321,15 @@ fn main() {
 }
 ```
 
-Dieses Programm erzeugt das Tupel `x` und erstellt dann neue Variablen für
-jedes Element, indem es ihre jeweiligen Indizes verwendet. Wie bei den meisten
-Programmiersprachen ist der erste Index in einem Tupel 0.
+Dieses Programm erstellt das Tupel `x` und greift dann auf jedes Element des
+Tupels über die jeweiligen Indizes zu. Wie bei den meisten Programmiersprachen
+ist der erste Index in einem Tupel 0.
 
-Das Tupel ohne Werte, `()`, ist ein spezieller Typ, der nur einen Wert hat,
-auch `()` geschrieben. Der Typ wird als *Einheitstyp* (unit type) und der Wert
-als der *Einheitswert* (unit value) bezeichnet. Ausdrücke geben implizit den
-Einheitswert zurück, wenn sie keinen anderen Wert zurückgeben.
+Das Tupel ohne Werte hat einen speziellen Namen: *Einheitswert* (unit value).
+Dieser Wert und der zugehörige Typ (*Einheitstyp* (unit type)) werden beide mit
+`()` geschrieben und stellen einen leeren Wert oder einen leeren Rückgabetyp
+dar. Ausdrücke geben implizit den Einheitswert zurück, wenn sie keinen anderen
+Wert zurückgeben.
 
 #### Der Array-Typ
 
@@ -444,9 +445,7 @@ fn main() {
     let element = a[index];
 
     println!(
-        "Der Wert von element beim Index {} ist: {}",
-        index, element
-    );
+        "Der Wert von element beim Index {index} ist: {element}");
 }
 ```
 
@@ -475,8 +474,9 @@ Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
 Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,
 indem es das Programm sofort beendet, anstatt den Speicherzugriff zuzulassen
-und fortzusetzen. In Kapitel 9 wird mehr über die Fehlerbehandlung von Rust
-gesprochen.
+und fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
+lesbaren, sicheren Code schreiben kannst, der weder abstürzt noch ungültige
+Speicherzugriffe zulässt.
 
 [appendix_b]: appendix-02-operators.md
 [comparing-the-guess-to-the-secret-number]:

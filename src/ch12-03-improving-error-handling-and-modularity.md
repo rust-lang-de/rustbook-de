@@ -14,17 +14,17 @@ Funktionalität so aufzuteilen, dass jede Funktion für eine Aufgabe zuständig
 ist.
 
 Diese Frage hängt auch mit dem zweiten Problem zusammen: Obwohl `query` und
-`filename` Konfigurationsvariablen unseres Programms sind, werden Variablen wie
-`contents` verwendet, um die Logik des Programms umzusetzen. Je länger `main`
-wird, desto mehr Variablen müssen wir in den Gültigkeitsbereich bringen; je
-mehr Variablen wir im Gültigkeitsbereich haben, desto schwieriger wird es, den
-Zweck der einzelnen Variablen im Auge zu behalten. Es ist am besten, die
+`file_path` Konfigurationsvariablen unseres Programms sind, werden Variablen
+wie `contents` verwendet, um die Logik des Programms umzusetzen. Je länger
+`main` wird, desto mehr Variablen müssen wir in den Gültigkeitsbereich bringen;
+je mehr Variablen wir im Gültigkeitsbereich haben, desto schwieriger wird es,
+den Zweck der einzelnen Variablen im Auge zu behalten. Es ist am besten, die
 Konfigurationsvariablen in einer Struktur zu gruppieren, um ihren Zweck zu
 verdeutlichen.
 
 Das dritte Problem ist, dass wir `expect` benutzt haben, um eine Fehlermeldung
 auszugeben, wenn das Lesen der Datei fehlschlägt, aber die Fehlermeldung gibt
-nur `Etwas ging beim Lesen der Datei schief` aus. Das Lesen einer Datei kann
+nur `Sollte die Datei lesen können` aus. Das Lesen einer Datei kann
 auf verschiedene Arten fehlschlagen: Zum Beispiel könnte die Datei fehlen oder
 wir haben keine Berechtigung, sie zu öffnen. Im Moment würden wir unabhängig
 von der Situation die Fehlermeldung „Etwas ging beim Lesen der Datei schief“
@@ -46,10 +46,9 @@ Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.
 
 Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion `main` ist vielen Binärprojekten gemein.
-Infolgedessen hat die Rust-Gemeinschaft ein Verfahren entwickelt, das als
-Richtlinie für die Aufteilung der einzelnen Aufgaben eines Binärprogramms
-verwendet werden kann, wenn die Funktion `main` groß wird. Der Prozess umfasst
-die folgenden Schritte:
+Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
+einzelnen Aufgaben eines Binärprogramms entwickelt, wenn die Funktion `main`
+groß wird. Dieser Prozess umfasst die folgenden Schritte:
 
 * Teile dein Programm in eine *main.rs* und eine *lib.rs* auf und verschiebe
   die Logik deines Programms in die *lib.rs*.
@@ -70,10 +69,10 @@ Bei diesem Muster geht es darum, Verantwortlichkeiten zu trennen: *main.rs*
 kümmert sich um die Ausführung des Programms und *lib.rs* kümmert sich um die
 gesamte Logik der anstehenden Aufgabe. Da du die Funktion `main` nicht direkt
 testen kannst, kannst du mit dieser Struktur die gesamte Logik deines Programms
-testen, indem du sie in Funktionen in *lib.rs* verschiebst. Der einzige Code,
-der in *main.rs* verbleibt, wird klein genug sein, um seine Korrektheit durch
-Lesen zu überprüfen. Lass uns unser Programm überarbeiten, indem wir diesem
-Prozess folgen.
+testen, indem du sie in Funktionen in *lib.rs* verschiebst. Der Code, der in
+*main.rs* verbleibt, wird klein genug sein, um seine Korrektheit durch Lesen zu
+überprüfen. Lass uns unser Programm überarbeiten, indem wir diesem Prozess
+folgen.
                                                             
 #### Extrahieren des Argument-Parsers
      
@@ -92,24 +91,24 @@ wir vorerst in *src/main.rs* definieren werden.
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let (query, filename) = parse_config(&args);
+    let (query, file_path) = parse_config(&args);
 
     // --abschneiden--
 #
 #     println!("Suche nach {}", query);
-#     println!("In Datei {}", filename);
+#     println!("In Datei {}", file_path);
 #
-#     let contents = fs::read_to_string(filename)
+#     let contents = fs::read_to_string(file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 }
 
 fn parse_config(args: &[String]) -> (&str, &str) {
     let query = &args[1];
-    let filename = &args[2];
+    let file_path = &args[2];
 
-    (query, filename)
+    (query, file_path)
 }
 ```
 
@@ -118,11 +117,11 @@ aus `main`</span>
 
 Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
 anstatt den Argumentwert am Index 1 der Variablen `query` und den Argumentwert
-am Index 2 der Variablen `filename` innerhalb der `main`-Funktion zuzuweisen,
+am Index 2 der Variablen `file_path` innerhalb der `main`-Funktion zuzuweisen,
 übergeben wir den gesamten Vektor an die Funktion `parse_config`. Die Funktion
 `parse_config` enthält dann die Logik, die bestimmt, welches Argument in welche
 Variable geht und die Werte an `main` zurückgibt. Wir erstellen immer noch die
-Variablen `query` und `filename` in `main`, aber `main` hat nicht mehr die
+Variablen `query` und `file_path` in `main`, aber `main` hat nicht mehr die
 Verantwortung zu bestimmen, wie die Kommandozeilenargumente und Variablen
 zusammenpassen.
 
@@ -145,7 +144,7 @@ der `config`-Teil von `parse_config`, der impliziert, dass die beiden von uns
 zurückgegebenen Werte miteinander in Beziehung stehen und beide Teil eines
 Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit in der
 Struktur der Daten nur durch die Gruppierung der beiden Werte in einem Tupel;
-wir könnten die beiden Werte in eine Struktur setzen und jedem der
+wir werden stattdessen die beiden Werte in eine Struktur setzen und jedem der
 Strukturfelder einen aussagekräftigen Namen geben. Auf diese Weise wird es
 künftigen Betreuern dieses Codes leichter fallen, zu verstehen, wie die
 verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.
@@ -164,26 +163,26 @@ fn main() {
     let config = parse_config(&args);
 
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
-    let contents = fs::read_to_string(config.filename)
+    let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
     // --abschneiden--
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 }
 
 struct Config {
     query: String,
-    filename: String,
+    file_path: String,
 }
 
 fn parse_config(args: &[String]) -> Config {
     let query = args[1].clone();
-    let filename = args[2].clone();
+    let file_path = args[2].clone();
 
-    Config { query, filename }
+    Config { query, file_path }
 }
 ```
 
@@ -191,7 +190,7 @@ fn parse_config(args: &[String]) -> Config {
 Rückgabe einer Instanz einer `Config`-Struktur</span>
 
 Wir haben eine Struktur namens `Config` hinzugefügt, die so definiert ist, dass
-sie Felder mit den Namen `query` und `filename` enthält. Die Signatur von
+sie Felder mit den Namen `query` und `file_path` enthält. Die Signatur von
 `parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im
 Rumpf von `parse_config`, wo wir früher Zeichenkettenanteilstypen (string
 slices) zurückgegeben haben, die auf `String`-Werte in `args` referenzieren,
@@ -218,7 +217,7 @@ bekommen.
 > 13][ch13] erfährst du, wie du in solchen Situationen effizientere Methoden
 > einsetzen kannst. Aber für den Moment ist es in Ordnung, ein paar
 > Zeichenketten zu kopieren, um weiter voranzukommen, da du diese Kopien nur
-> einmal erstellen wirst und dein Dateiname und deine Suchzeichenkette sehr
+> einmal erstellen wirst und dein Dateipfad und deine Suchzeichenkette sehr
 > klein sind. Es ist besser, ein funktionierendes Programm zu haben, das ein
 > bisschen ineffizient ist, als zu versuchen, den Code beim ersten Durchgang zu
 > hyperoptimieren. Je mehr Erfahrung du mit Rust sammelst, desto einfacher wird
@@ -228,10 +227,10 @@ bekommen.
 Wir haben `main` aktualisiert, sodass es die Instanz von `Config`, die von
 `parse_config` zurückgegeben wird, in eine Variable namens `config` setzt, und
 wir haben den Code aktualisiert, der vorher die separaten Variablen `query` und
-`filename` verwendet hat, sodass er jetzt stattdessen die Felder der
+`file_path` verwendet hat, sodass er jetzt stattdessen die Felder der
 `Config`-Struktur verwendet.
 
-Nun vermittelt unser Code deutlicher, dass `query` und `filename` zueinander
+Nun vermittelt unser Code deutlicher, dass `query` und `file_path` zueinander
 gehören und dass ihr Zweck darin besteht, die Funktionsweise des Programms zu
 konfigurieren. Jeder Code, der diese Werte verwendet, weiß, dass er sie in der
 `config`-Instanz in den für ihren Zweck benannten Feldern findet.
@@ -240,10 +239,10 @@ konfigurieren. Jeder Code, der diese Werte verwendet, weiß, dass er sie in der
 
 Bisher haben wir die Logik, die für das Parsen der Kommandozeilenargumente
 verantwortlich ist, aus `main` extrahiert und in die Funktion `parse_config`
-verschoben. Dies half uns zu erkennen, dass die Werte `query` und `filename`
+verschoben. Dies half uns zu erkennen, dass die Werte `query` und `file_path`
 miteinander in Beziehung stehen und diese Beziehung in unserem Code vermittelt
 werden sollte. Wir fügten dann eine `Config`-Struktur hinzu, um das
-Zusammengehören von `query` und `filename` zu benennen und um die Namen der
+Zusammengehören von `query` und `file_path` zu benennen und um die Namen der
 Werte als Feldnamen der Struktur von der `parse_config`-Funktion zurückgeben zu
 können.
 
@@ -269,12 +268,12 @@ fn main() {
     let config = Config::new(&args);
 
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
     // --abschneiden--
 }
@@ -283,15 +282,15 @@ fn main() {
 
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 impl Config {
     fn new(args: &[String]) -> Config {
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
-        Config { query, filename }
+        Config { query, file_path }
     }
 }
 ```
@@ -324,16 +323,15 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 Die Zeile `index out of bounds: the len is 1 but the index is 1` ist eine für
 Programmierer bestimmte Fehlermeldung. Sie wird unseren Endbenutzern nicht
-helfen zu verstehen, was passiert ist und was sie stattdessen tun sollten. Lass
-uns das jetzt korrigieren.
+helfen zu verstehen, was sie stattdessen tun sollten. Lass uns das jetzt
+korrigieren.
 
 #### Verbessern der Fehlermeldung
 
 In Codeblock 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
 überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und 2
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
-ab und zeigt eine bessere Fehlermeldung an als die Meldung `index out of
-bounds`.
+ab und zeigt eine bessere Fehlermeldung an.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -347,17 +345,17 @@ bounds`.
 #     let config = Config::new(&args);
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -369,9 +367,9 @@ bounds`.
         // --snip--
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Config { query, filename }
+#         Config { query, file_path }
 #     }
 # }
 ```
@@ -413,16 +411,18 @@ verwenden, über die du in Kapitel 9 gelernt hast &ndash; [Rückgabe eines
 
 Wir können stattdessen einen `Result`-Wert zurückgeben, der im erfolgreichen
 Fall eine `Config`-Instanz enthält und im Fehlerfall das Problem beschreibt.
-Wenn `Config::new` mit `main` kommuniziert, können wir den `Result`-Typ
-verwenden, um zu signalisieren, dass ein Problem aufgetreten ist. Dann können
-wir `main` ändern, um eine `Err`-Variante in einen praktikableren Fehler für
-unsere Benutzer umzuwandeln, ohne den umgebenden Text über `thread 'main'` und
+Wir werden auch den Namen der Funktion von `new` in `build` ändern, weil viele
+Programmierer erwarten, dass `new`-Funktionen niemals fehlschlagen. Wenn
+`Config::new` mit `main` kommuniziert, können wir den `Result`-Typ verwenden,
+um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir `main`
+ändern, um eine `Err`-Variante in einen praktikableren Fehler für unsere
+Benutzer umzuwandeln, ohne den umgebenden Text über `thread 'main'` und
 `RUST_BACKTRACE`, den ein Aufruf von `panic!` verursacht.
 
-Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert von `Config::new`
-und am Funktionsrumpf vornehmen müssen, um ein `Result` zurückzugeben. Beachte,
-dass dies nicht kompiliert werden kann, bis wir auch `main` aktualisieren, was
-wir im nächsten Codeblock tun werden.
+Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
+nun `Config::new` aufruft, und am Funktionsrumpf vornehmen müssen, um ein
+`Result` zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
+wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -436,17 +436,17 @@ wir im nächsten Codeblock tun werden.
 #     let config = Config::new(&args);
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 impl Config {
@@ -456,33 +456,33 @@ impl Config {
         }
 
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
-        Ok(Config { query, filename })
+        Ok(Config { query, file_path })
     }
 }
 ```
 
 <span class="caption">Codeblock 12-9: Rückgabe eines `Result` von
-`Config::new`</span>
+`Config::build`</span>
 
-Unsere Funktion `new` liefert jetzt ein `Result` mit einer `Config`-Instanz im
+Unsere Funktion `build` liefert jetzt ein `Result` mit einer `Config`-Instanz im
 Erfolgsfall und ein `&str` im Fehlerfall.
 
-Wir haben zwei Änderungen im Rumpf der Funktion `new` vorgenommen: Anstatt
-`panic!` aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben
-wir jetzt einen `Err`-Wert zurück, und wir haben den `Config`-Rückgabewert in
-ein `Ok` verpackt. Diese Änderungen machen die Funktion konform mit ihrer neuen
+Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt `panic!`
+aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
+einen `Err`-Wert zurück, und wir haben den `Config`-Rückgabewert in ein `Ok`
+verpackt. Diese Änderungen machen die Funktion konform mit ihrer neuen
 Typsignatur.
 
-Die Rückgabe eines `Err`-Wertes aus `Config::new` erlaubt es der Funktion
-`main`, den von der `new`-Funktion zurückgegebenen `Result`-Wert zu verarbeiten
+Die Rückgabe eines `Err`-Wertes aus `Config::build` erlaubt es der Funktion
+`main`, den von der `build`-Funktion zurückgegebenen `Result`-Wert zu verarbeiten
 und den Prozess im Fehlerfall sauberer zu beenden.
 
-#### Aufrufen von `Config::new` und Behandeln von Fehlern
+#### Aufrufen von `Config::build` und Behandeln von Fehlern
 
 Um den Fehlerfall zu behandeln und eine benutzerfreundliche Meldung auszugeben,
-müssen wir `main` aktualisieren, um das von `Config::new` zurückgegebene
+müssen wir `main` aktualisieren, um das von `Config::build` zurückgegebene
 `Result` zu behandeln, wie in Codeblock 12-10 gezeigt. Wir werden auch die
 Verantwortung dafür übernehmen, das Kommandozeilenwerkzeug mit einem Fehlercode
 ungleich Null wie bei `panic!` zu beenden und es von Hand zu implementieren.
@@ -501,24 +501,24 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let config = Config::new(&args).unwrap_or_else(|err| {
-        println!("Fehler beim Parsen der Argumente: {}", err);
+        println!("Fehler beim Parsen der Argumente: {err}");
         process::exit(1);
     });
 
     // --abschneiden--
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
-#     let contents = fs::read_to_string(config.filename)
+#     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -528,15 +528,15 @@ fn main() {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
 
 <span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
-Erstellen einer neuen `Config` fehlschlägt</span>
+Erstellen einer `Config` fehlschlägt</span>
 
 In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch
 nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
@@ -603,28 +603,28 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
     run(config);
 }
 
 fn run(config: Config) {
-    let contents = fs::read_to_string(config.filename)
+    let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{}", contents);
+    println!("Mit text:\n{contents}");
 }
 
 // --abschneiden--
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -634,9 +634,9 @@ fn run(config: Config) {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -651,7 +651,7 @@ beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 #### Rückgabe von Fehlern aus der Funktion `run`
 
 Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird,
-können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::new` in
+können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in
 Codeblock 12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect`
 abstürzen zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn
 etwas schief läuft. Auf diese Weise können wir in `main` die Logik rund um den
@@ -673,27 +673,27 @@ use std::error::Error;
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
 #     run(config);
 # }
 #
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
+    let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Mit text:\n{}", contents);
+    println!("Mit text:\n{contents}");
 
     Ok(())
 }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -703,9 +703,9 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -783,8 +783,8 @@ Fehlerbehandlungscode zu haben! Lass uns dieses Problem jetzt beheben.
 #### Behandeln von Fehlern, die von `run` in `main` zurückgegeben wurden
 
 Wir werden nach Fehlern suchen und sie mit einer Technik behandeln, die ähnlich
-der Technik ist, die wir mit `Config::new` in Codeblock 12-10 verwendet haben,
-aber mit einem kleinen Unterschied:
+der Technik ist, die wir mit `Config::build` in Codeblock 12-10 verwendet
+haben, aber mit einem kleinen Unterschied:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -800,31 +800,31 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
     println!("Suche nach {}", config.query);
-    println!("In Datei {}", config.filename);
+    println!("In Datei {}", config.file_path);
 
     if let Err(e) = run(config) {
-        println!("Anwendungsfehler: {}", e);
+        println!("Anwendungsfehler: {e}");
 
         process::exit(1);
     }
 }
 #
 # fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
 #     Ok(())
 # }
 #
 # struct Config {
 #     query: String,
-#     filename: String,
+#     file_path: String,
 # }
 #
 # impl Config {
@@ -834,9 +834,9 @@ fn main() {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 ```
@@ -844,10 +844,10 @@ fn main() {
 Wir benutzen `if let` statt `unwrap_or_else`, um zu prüfen, ob `run` einen
 `Err`-Wert zurückgibt und rufen `process::exit(1)` auf, wenn dies der Fall ist.
 Die Funktion `run` gibt keinen Wert zurück, den wir mit `unwrap` auspacken
-wollen, auf die gleiche Weise, wie `Config::new` die `Config`-Instanz
+wollen, auf die gleiche Weise, wie `Config::build` die `Config`-Instanz
 zurückgibt. Da `run` im Erfolgsfall `()` zurückgibt, geht es uns nur darum,
 einen Fehler zu entdecken, wir brauchen also nicht `unwrap_or_else`, um den
-ausgepackten Wert zurückzugeben, weil er nur `()` wäre.
+ausgepackten Wert zurückzugeben, der nur `()` wäre.
 
 Die Rümpfe von `if let` und der `unwrap_or_else`-Funktionen sind in beiden
 Fällen gleich: Wir geben den Fehler aus und beenden.
@@ -855,9 +855,9 @@ Fällen gleich: Wir geben den Fehler aus und beenden.
 ### Code in eine Bibliothekskiste aufteilen
 
 Unser `minigrep`-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
-*src/main.rs* auf und fügen etwas Code in die Datei *src/lib.rs* ein, damit wir
-sie testen können und eine Datei *src/main.rs* mit weniger Verantwortlichkeiten
-haben.
+*src/main.rs* auf und fügen etwas Code in die Datei *src/lib.rs* ein. Auf
+diese Weise können wir den Code testen und haben eine Datei *src/main.rs* mit
+weniger Verantwortlichkeiten.
 
 Lass uns den ganzen Code, der nicht die Funktion `main` ist, von *src/main.rs*
 nach *src/lib.rs* verschieben:
@@ -865,7 +865,7 @@ nach *src/lib.rs* verschieben:
 * Die Definition der Funktion `run`
 * Die relevanten `use`-Anweisungen
 * Die Definition von `Config`
-* Die Funktionsdefinition `Config::new`
+* Die Funktionsdefinition `Config::build`
 
 Der Inhalt von *src/lib.rs* sollte die in Codeblock 12-13 gezeigten Signaturen
 haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
@@ -880,7 +880,7 @@ use std::fs;
 
 pub struct Config {
     pub query: String,
-    pub filename: String,
+    pub file_path: String,
 }
 
 impl Config {
@@ -891,17 +891,17 @@ impl Config {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
     }
 }
 
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     // --abschneiden--
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{}", contents);
+#     println!("Mit text:\n{contents}");
 #
 #     Ok(())
 }
@@ -931,16 +931,16 @@ fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
 #     let config = Config::new(&args).unwrap_or_else(|err| {
-#         println!("Fehler beim Parsen der Argumente: {}", err);
+#         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
 #
 #     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.filename);
+#     println!("In Datei {}", config.file_path);
 #
     if let Err(e) = minigrep::run(config) {
         // --abschneiden--
-#         println!("Anwendungsfehler: {}", e);
+#         println!("Anwendungsfehler: {e}");
 #
 #         process::exit(1);
     }

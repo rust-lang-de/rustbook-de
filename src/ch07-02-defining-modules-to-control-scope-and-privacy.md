@@ -109,17 +109,19 @@ Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis d
 
 ### Gruppierung von zugehörigem Code in Modulen
 
-*Module* lassen uns Code innerhalb einer Kiste in Gruppen organisieren, um ihn
-lesbar und leicht wiederverwendbar zu machen. Module kontrollieren auch den
-*Datenschutz* (privacy) von Elementen, d.h. ob ein Element von einem externen
-Code verwendet werden kann (*öffentlich*) oder ob es sich um ein internes
-Implementierungsdetail handelt und nicht für die externe Verwendung verfügbar
-ist (*privat*).
+*Module* ermöglichen es uns, den Code innerhalb einer Kiste zu organisieren,
+damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch
+den *Datenschutz* (privacy) von Elementen kontrollieren, da Code innerhalb
+eines Moduls standardmäßig privat ist. Private Elemente sind interne
+Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung
+stehen. Wir können uns dafür entscheiden, Module und die darin enthaltenen
+Elemente öffentlich zu machen, damit externer Code sie verwenden und von ihnen
+abhängen kann.
 
 Als Beispiel schreiben wir eine Bibliothekskiste, die die Funktionalität eines
 Restaurants bietet. Wir werden die Signaturen der Funktionen definieren, aber
-ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu
-konzentrieren, anstatt tatsächlich ein Restaurant im Code zu implementieren.
+ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu konzentrieren
+und nicht auf die Implementierung eines Restaurants.
 
 Im Gaststättengewerbe werden einige Teile eines Restaurants als *Vorderseite
 des Hauses* und andere als *Hinterseite des Hauses* bezeichnet. Auf der
@@ -128,11 +130,11 @@ Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
 Getränke. Auf der Hinterseite des Hauses arbeiten die Küchenchefs und Köche in
 der Küche, Geschirrspüler waschen ab und Manager erledigen Verwaltungsarbeiten.
 
-Um unsere Kiste so zu strukturieren, wie ein echtes Restaurant funktioniert,
-können wir die Funktionen in verschachtelten Modulen organisieren. Erstelle
-eine neue Bibliothek namens `restaurant`, indem du `cargo new --lib restaurant`
-ausführst; dann schreibe den Code aus Codeblock 7-1 in *src/lib.rs*, um einige
-Module und Funktionssignaturen zu definieren.
+Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
+verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
+`restaurant`, indem du `cargo new --lib restaurant` ausführst; gib dann den
+Code in Codeblock 7-1 in *src/lib.rs* ein, um einige Module und
+Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -157,21 +159,20 @@ mod front_of_house {
 <span class="caption">Codeblock 7-1: Ein Modul `front_of_house`, das andere
 Module enthält, die dann Funktionen enthalten</span>
 
-Wir definieren ein Modul, indem wir mit dem Schlüsselwort `mod` beginnen und
-dann den Namen des Moduls angeben (in diesem Fall `front_of_house`) und
-geschweifte Klammern um den Rumpf des Moduls setzen. Innerhalb von Modulen
-können wir andere Module haben, wie in diesem Fall mit den Modulen `hosting`
-und `serving`. Module können auch Definitionen für andere Elemente enthalten,
-z.B. Strukturen, Aufzählungen, Konstanten, Merkmale oder &ndash; wie in
-Codeblock 7-1 &ndash; Funktionen.
+Wir definieren ein Modul mit dem Schlüsselwort `mod`, gefolgt vom Namen des
+Moduls (in diesem Fall `front_of_house`). Der Rumpf des Moduls steht dann in
+geschweiften Klammern. Innerhalb von Modulen können wir andere Module
+platzieren, wie in diesem Fall mit den Modulen `hosting` und `serving`. Module
+können auch Definitionen für andere Elemente enthalten, wie Strukturen,
+Aufzählungen, Konstanten, Merkmalen und &ndash; wie in Codeblock 7-1 &ndash;
+Funktionen.
 
 Durch die Verwendung von Modulen können wir verwandte Definitionen gruppieren
-und benennen, warum sie verwandt sind. Programmierer, die diesen Code
-verwenden, hätten es leichter, die Definitionen zu finden, die sie verwenden
-wollten, da sie sich anhand der Gruppen im Code bewegen könnten, anstatt alle
-Definitionen durchlesen zu müssen. Programmierer, die diesem Code neue
-Funktionen hinzufügen, wüssten, wo sie den Code platzieren müssten, um das
-Programm zu organisieren.
+und angeben, warum sie verwandt sind. Programmierer, die diesen Code verwenden,
+können anhand der Gruppen durch den Code navigieren, anstatt alle Definitionen
+lesen zu müssen, und finden so leichter die für sie relevanten Definitionen.
+Programmierer, die diesem Code neue Funktionalität hinzufügen, wissen, wo sie
+den Code platzieren müssen, damit das Programm übersichtlich bleibt.
 
 Vorhin haben wir erwähnt, dass *src/main.rs* und *src/lib.rs* als Kistenwurzel
 bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
@@ -195,14 +196,14 @@ crate
 <span class="caption">Codeblock 7-2: Modulbaum für den Code in Codeblock
 7-1</span>
 
-Dieser Baum zeigt, wie einige der Module ineinander verschachtelt sind (z.B.
-ist `hosting` innerhalb von `front_of_house`). Der Baum zeigt auch, dass einige
+Dieser Baum zeigt, wie einige der Module ineinander verschachtelt sind; z.B.
+ist `hosting` innerhalb von `front_of_house`. Der Baum zeigt auch, dass einige
 Module *Geschwister* voneinander sind, was bedeutet, dass sie im selben Modul
-definiert sind (`hosting` und `serving` sind innerhalb von `front_of_house`
-definiert). Um die Familienmetapher fortzusetzen: Wenn Modul A innerhalb von
-Modul B enthalten ist, sagen wir, dass Modul A das *Kind* (child) von Modul B
-ist und dass Modul B der *Elternteil* (parent) von Modul A ist. Beachte, dass der
-gesamte Modulbaum als Wurzel das implizite Modul namens `crate` hat.
+definiert sind; `hosting` und `serving` sind Geschwister, die innerhalb von
+`front_of_house` definiert sind. Wenn Modul A innerhalb von Modul B enthalten
+ist, sagen wir, dass Modul A das *Kind* (child) von Modul B ist und dass Modul
+B der *Elternteil* (parent) von Modul A ist. Beachte, dass der gesamte
+Modulbaum als Wurzel das implizite Modul namens `crate` hat.
 
 Der Modulbaum könnte dich an den Verzeichnisbaum des Dateisystems auf deinem
 Computer erinnern; dies ist ein sehr treffender Vergleich! Genau wie

@@ -74,7 +74,7 @@ fn main() {
 }
 
 fn another_function(x: i32) {
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -91,14 +91,16 @@ Der Wert von x ist: 5
 
 Die Deklaration `another_function` hat einen Parameter namens `x`. Der Typ von
 `x` wird als `i32` angegeben. Wenn wir `5` an `another_function` übergeben,
-setzt das Makro `println!` `5` an die Stelle, an der sich das Paar geschweifter
-Klammern in der Formatierungszeichenkette befand.
+setzt das Makro `println!` den Wert `5` an die Stelle, an der sich das Paar
+geschweifter Klammern mit dem `x` darin in der Formatierungszeichenkette
+befand.
 
 In Funktionssignaturen *musst* du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
-meinst.
+meinst. Der Compiler ist auch in der Lage, hilfreichere Fehlermeldungen zu
+geben, wenn er weiß, welche Typen die Funktion erwartet.
 
 Wenn wir mehrere Parameter definieren, trennen wir die Parameterdeklarationen
 mit Kommas, so wie hier:
@@ -111,7 +113,7 @@ fn main() {
 }
 
 fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!("Das Maß ist: {}{}", value, unit_label);
+    println!("Das Maß ist: {value}{unit_label}");
 }
 ```
 
@@ -244,7 +246,7 @@ fn main() {
         x + 1
     };
 
-    println!("Der Wert von y ist: {}", y);
+    println!("Der Wert von y ist: {y}");
 }
 ```
 
@@ -286,7 +288,7 @@ fn five() -> i32 {
 fn main() {
     let x = five();
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 ```
 
@@ -326,7 +328,7 @@ Sehen wir uns ein weiteres Beispiel an:
 fn main() {
     let x = plus_one(5);
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -> i32 {
@@ -344,7 +346,7 @@ Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler.
 fn main() {
     let x = plus_one(5);
 
-    println!("Der Wert von x ist: {}", x);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -> i32 {

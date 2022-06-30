@@ -1,21 +1,20 @@
 ## Referenzzyklen können zu einem Speicherleck führen
 
 Die Speichersicherheitsgarantien von Rust machen es schwierig, aber nicht
-unmöglich, versehentlich Speicher zu erstellen, der niemals bereinigt wird
+unmöglich, versehentlich Speicher zu erstellen, der niemals aufgeräumt wird
 (bekannt als *Speicherleck* (memory leak)). Das vollständige Verhindern von
 Speicherlecks gehört nicht zu den Garantien von Rust, d.h. Speicherlecks sind
 in Rust speichersicher. Wir können sehen, dass Rust Speicherlecks mithilfe von
 `Rc<T>` und `RefCell<T>` zulässt: Es ist möglich, Referenzen zu erstellen, bei
 denen Elemente in einem Zyklus aufeinander referenzieren. Dies führt zu
 Speicherlecks, da der Referenzzähler jedes Elements im Zyklus niemals 0
-erreicht und die Werte niemals gelöscht werden.
+erreicht und die Werte niemals aufgeräumt werden.
 
 ### Einen Referenzzyklus erstellen
 
 Schauen wir uns an, wie ein Referenzzyklus stattfinden kann und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung `List` und einer
 Methode `tail` in Codeblock 15-25:
-
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -46,18 +45,18 @@ fn main() {}
 `RefCell<T>` hält, damit man ändern kann, worauf eine `Cons`-Variante
 referenziert</span>
 
-Wir verwenden eine andere Variante der `List`-Definition aus Codeblock 15-5 Das
-zweite Element in der `Cons`-Variante ist jetzt `RefCell<Rc<List>>`. Dies
+Wir verwenden eine andere Variante der `List`-Definition aus Codeblock 15-5.
+Das zweite Element in der `Cons`-Variante ist jetzt `RefCell<Rc<List>>`. Dies
 bedeutet, dass wir anstelle der Möglichkeit, den `i32`-Wert wie in Codeblock
-15-24 zu ändern, den `List`-Wert einer `Cons`-Variante ändern auf den sie zeigt.
-Wir fügen eine `tail`-Methode hinzu, damit wir bequem auf das zweite Element
-zugreifen können, wenn wir eine `Cons`-Variante haben.
+15-24 zu ändern, den `List`-Wert einer `Cons`-Variante ändern auf den sie
+zeigt. Wir fügen eine `tail`-Methode hinzu, damit wir bequem auf das zweite
+Element zugreifen können, wenn wir eine `Cons`-Variante haben.
 
-In Codeblock 15-26 fügen wir eine Funktion `main` hinzu, die die Definitionen in
-Codeblock 15-25 verwendet. Dieser Code erstellt eine Liste in `a` und eine Liste
-in `b`, die auf die Liste in `a` verweist. Anschließend wird die Liste in `a` so
-geändert, dass sie auf `b` zeigt, wodurch ein Referenzzyklus erstellt wird. Es
-gibt `println!`-Anweisungen auf dem Weg, um zu zeigen, wie hoch der
+In Codeblock 15-26 fügen wir eine Funktion `main` hinzu, die die Definitionen
+in Codeblock 15-25 verwendet. Dieser Code erstellt eine Liste in `a` und eine
+Liste in `b`, die auf die Liste in `a` verweist. Anschließend wird die Liste in
+`a` so geändert, dass sie auf `b` zeigt, wodurch ein Referenzzyklus erstellt
+wird. Es gibt `println!`-Anweisungen auf dem Weg, um zu zeigen, wie hoch der
 Referenzzähler an verschiedenen Punkten in diesem Prozess sind.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -110,8 +109,8 @@ fn main() {
 <span class="caption">Codeblock 15-26: Erstellen eines Referenzzyklus aus zwei
 aufeinanderzeigenden Listenwerten</span>
 
-Wir erstellen eine `Rc<List>`-Instanz, die einen `List`-Wert in der Variablen `a`
-mit einer initialen Liste `5, Nil` enthält. Wir erstellen dann eine
+Wir erstellen eine `Rc<List>`-Instanz, die einen `List`-Wert in der Variablen
+`a` mit einer initialen Liste `5, Nil` enthält. Wir erstellen dann eine
 `Rc<List>`-Instanz, die einen anderen `List`-Wert in der Variablen `b` enthält,
 die den Wert 10 enthält und auf die Liste in `a` zeigt.
 
@@ -142,7 +141,7 @@ a Rc-Zählung nach Änderung von a = 2
 
 Der Referenzzähler der `Rc<List>`-Instanzen in `a` und `b` beträgt 2, nachdem
 wir die Liste in `a` so geändert haben, dass sie auf `b` zeigt. Am Ende von
-`main` versucht Rust, zuerst `b` zu löschen, wodurch der Zähler der
+`main` versucht Rust, zuerst `b` aufzuräumen, wodurch der Zähler der
 `Rc<List>`-Instanz in `b` um 1 verringert wird.
 
 Da `a` jedoch immer noch auf die `Rc<List>` verweist, die sich in `b` befand,
@@ -152,7 +151,7 @@ Speicher wird bei einem Zählerwert von 1 einfach bestehen bleiben, für immer.
 Zur Veranschaulichung dieses Referenzzyklus haben wir in Abbildung 15-4 ein
 Diagramm erstellt.
 
-<img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 30%;" />
+<img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen `a` und `b`,
 die aufeinander zeigen</span>
@@ -161,11 +160,12 @@ Wenn man das letzte `println!` auskommentiert und das Programm ausführt,
 versucht Rust, diesen Zyklus mit `a` auszugeben, wobei `b` auf `a` zeigt, und so
 weiter, bis der Stapelspeicher (stack) überläuft.
 
-In diesem Fall endet das Programm direkt nach dem Erstellen des Referenzzyklus.
-Die Folgen dieses Zyklus sind nicht sehr schlimm. Wenn jedoch ein komplexeres
-Programm viel Speicher in einem Zyklus allokierte und diesen lange Zeit
-behielte, würde das Programm mehr Speicher als erforderlich verbrauchen und
-das System möglicherweise überlasten, sodass ihm der verfügbare Speicher
+Im Vergleich zu einem realen Programm sind die Konsequenzen, die das Anlegen
+eines Referenzzyklus in diesem Beispiel hat, nicht sehr schlimm: Gleich nachdem
+wir den Referenzzyklus angelegt haben, endet das Programm. Wenn jedoch ein
+komplexeres Programm viel Speicher in einem Zyklus allokierte und diesen lange
+Zeit behielte, würde das Programm mehr Speicher als erforderlich verbrauchen
+und das System möglicherweise überlasten, sodass ihm der verfügbare Speicher
 ausgeht.
 
 Das Erstellen von Referenzzyklen ist nicht einfach, aber auch nicht unmöglich.
@@ -182,7 +182,7 @@ Datenstrukturen so zu reorganisieren, dass einige Referenzen die
 Eigentümerschaft (ownership) erhalten und andere nicht. Infolgedessen können
 Zyklen bestehen, die aus Beziehungen mit und ohne Eigentümerschaft bestehen,
 und nur die Beziehungen mit Eigentümerschaft beeinflussen, ob ein
-Wert gelöscht wird oder nicht. In Codeblock 15-25 möchten wir immer, dass
+Wert aufgeräumt wird oder nicht. In Codeblock 15-25 möchten wir immer, dass
 `Cons`-Varianten ihre Liste besitzen, sodass eine Neuorganisation der
 Datenstruktur nicht möglich ist. Schauen wir uns ein Beispiel an, in dem
 Diagramme aus übergeordneten und untergeordneten Knoten verwendet werden, um
@@ -195,8 +195,15 @@ Bisher haben wir gezeigt, dass das Aufrufen von `Rc::clone` den `strong_count`
 einer `Rc<T>`-Instanz erhöht und eine `Rc<T>`-Instanz nur dann aufgeräumt wird,
 wenn ihr `strong_count` 0 ist. Man kann auch eine *schwache Referenz* (weak
 reference) auf den Wert innerhalb einer `Rc<T>`-Instanz erstellen, indem man
-`Rc::downgrade` aufruft und eine Referenz auf den `Rc<T>` übergibt. Wenn man
-`Rc::downgrade` aufruft, erhält man einen intelligenten Zeiger vom Typ
+`Rc::downgrade` aufruft und eine Referenz auf den `Rc<T>` übergibt. Starke
+Referenzen sind die Art und Weise, wie man die Eigentümerschaft an einer
+`Rc<T>`-Instanz teilen kann. Schwache Referenzen drücken keine
+Eigentumsbeziehung aus, und ihre Anzahl hat keinen Einfluss darauf, wann eine
+`Rc<T>` Instanz aufgeräumt wird. Sie werden keinen Referenzzyklus verursachen,
+weil jeder Zyklus, der schwache Referenzen beinhaltet, unterbrochen wird,
+sobald die Anzahl der starken Referenzen der beteiligten Werte 0 ist.
+
+Wenn man `Rc::downgrade` aufruft, erhält man einen intelligenten Zeiger vom Typ
 `Weak<T>`. Anstatt den `strong_count` in der `Rc<T>`-Instanz um 1 zu erhöhen,
 erhöht der Aufruf von `Rc::downgrade` den `weak_count` um 1. Der Typ `Rc<T>`
 verwendet `weak_count`, um den Überblick zu behalten wie viele
@@ -215,7 +222,7 @@ du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
 tun, auf den ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für eine
 `Weak<T>`-Instanz auf, die eine `Option<Rc<T>>`zurückgibt, erhält man ein `Some`
 als Ergebnis, wenn der Wert `Rc<T>` noch nicht aufgeräumt wurde, und das Ergebnis
-`None`, wenn der `Rc<T>`-Wert gelöscht wurde. Da `upgrade` eine
+`None`, wenn der `Rc<T>`-Wert aufgeräumt wurde. Da `upgrade` eine
 `Option<Rc<T>>` zurückgibt, stellt Rust sicher, dass der Fall `Some` und der
 Fall `None` behandelt werden und es keine ungültigen Zeiger gibt.
 
@@ -399,10 +406,9 @@ fn main() {
 <span class="caption">Codeblock 15-28: Ein `leaf`-Knoten mit einer schwachen
 Referenz auf seinen Eltern-Knoten `branch`</span>
 
-Das Erstellen des `leaf`-Knotens ähnelt dem Erstellen des `leaf`-Knotens in
-Codeblock 15-27 mit Ausnahme des Feldes `parent`: `leaf` beginnt ohne
-Eltern-Knoten, daher erstellen wir eine neue leere
-`Weak<Node>`-Referenz-Instanz.
+Das Erstellen des `leaf`-Knotens ähnelt Codeblock 15-27 mit Ausnahme des Feldes
+`parent`: `leaf` beginnt ohne Eltern-Knoten, daher erstellen wir eine neue
+leere `Weak<Node>`-Referenz-Instanz.
 
 Wenn wir zu diesem Zeitpunkt versuchen, mit der Methode `upgrade` eine
 Referenz auf das Eltern-Element von `leaf` zu bekommen, erhalten wir den

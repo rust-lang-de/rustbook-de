@@ -10,10 +10,11 @@ mehr über Rust weißt, können wir zum Kern der Sache kommen.
 *Assoziierte Typen* (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
 Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
-Merkmals gibt den konkreten Typ an, der anstelle dieses Typs für die jeweilige
-Implementierung verwendet werden soll. Auf diese Weise können wir ein Merkmal
-definieren, das einige Typen verwendet, ohne dass wir genau wissen müssen, um
-welche Typen es sich dabei handelt, bis das Merkmal implementiert ist.
+Merkmals gibt den konkreten Typ an, der anstelle des Platzhaltertyps für die
+jeweilige Implementierung verwendet werden soll. Auf diese Weise können wir ein
+Merkmal definieren, das einige Typen verwendet, ohne dass wir genau wissen
+müssen, um welche Typen es sich dabei handelt, bis das Merkmal implementiert
+ist.
 
 Wir haben die meisten der fortgeschrittenen Funktionalitäten in diesem Kapitel
 als selten benötigt beschrieben. Assoziierte Typen liegen irgendwo dazwischen:
@@ -24,10 +25,8 @@ besprochenen Funktionalitäten.
 Ein Beispiel für ein Merkmal mit einem assoziierten Typ ist das Merkmal
 `Iterator`, das die Standardbibliothek zur Verfügung stellt. Der assoziierte
 Typ wird `Item` genannt und steht für den Typ der Werte, über die der Typ, der
-das Merkmal `Iterator` implementiert, iteriert. Im Abschnitt [„Das Merkmal
-(trait) `Iterator` und die Methode `next`“][the-iterator-trait-and-the-next-method]
-des Kapitels 13 erwähnten wir, dass die Definition des Merkmals `Iterator` der
-Definition in Codeblock 19-12 entspricht.
+das Merkmal `Iterator` implementiert, iteriert. Die Definition des Merkmals
+`Iterator` ist in Codeblock 19-12 zu sehen.
 
 ```rust
 pub trait Iterator {
@@ -40,21 +39,17 @@ pub trait Iterator {
 <span class="caption">Codeblock 19-12: Definition des Merkmals `Iterator`, das
 einen assoziierten Typ `Item` hat</span>
 
-Der Typ `Item` ist ein Platzhaltertyp und die Definition der Methode `next`
-zeigt, dass sie Werte vom Typ `Option<Self::Item>` zurückgibt.
-Implementierungen des Merkmals `Iterator` geben den konkreten Typ für `Item` an
-und die Methode `next` gibt eine `Option` zurück, die einen Wert dieses
-konkreten Typs enthält.
+Der Typ `Item` ist ein Platzhalter und die Definition der Methode `next` zeigt,
+dass sie Werte vom Typ `Option<Self::Item>` zurückgibt. Implementierungen des
+Merkmals `Iterator` geben den konkreten Typ für `Item` an und die Methode
+`next` gibt eine `Option` zurück, die einen Wert dieses konkreten Typs enthält.
 
 Assoziierte Typen scheinen ein ähnliches Konzept wie generische Datentypen
 (generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu
-definieren, ohne anzugeben, welche Typen sie handhaben kann. Warum also
-assoziierte Typen verwenden?
-
-Untersuchen wir den Unterschied zwischen den beiden Konzepten anhand eines
-Beispiels aus Kapitel 13, das das Merkmal `Iterator` auf der Struktur
-`Counter` implementiert. In Codeblock 13-21 haben wir angegeben, dass der
-`Item`-Typ `u32` ist:
+definieren, ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied
+zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
+Implementierung des Merkmals `Iterator` für einen Typ namens `Counter`, der
+angibt, dass der `Item`-Typ `u32` ist:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -120,14 +115,12 @@ Counter` geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
 Wenn wir generische Typparameter verwenden, können wir einen konkreten
 Standardtyp für den generischen Typ angeben. Dadurch entfällt die Notwendigkeit
 für Implementierer des Merkmals, einen konkreten Typ anzugeben, wenn der
-Standardtyp passt. Die Syntax für die Angabe eines Standardtyps für einen
-generischen Typ ist `<PlaceholderType=ConcreteType>` bei der Deklaration des
-generischen Typs.
+Standardtyp passt. Du gibst einen Standardtyp an, wenn du einen generischen Typ
+mit der Syntax `<PlaceholderType=ConcreteType>` deklarierst.
 
-Ein hervorragendes Beispiel für eine Situation, in der diese Technik nützlich
-ist, ist die Operatorüberladung. Unter *Operatorüberladung* (operator
-overloading) versteht man das Anpassen des Verhaltens eines Operators (z.B.
-`+`) in bestimmten Situationen.
+Ein gutes Beispiel für eine Situation, in der diese Technik nützlich ist, ist
+die *Operatorüberladung* (operator overloading), bei der du das Verhalten eines
+Operators (wie `+`) in bestimmten Situationen anpasst.
 
 Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
 Operatoren zu überladen. Aber du kannst die in `std::ops` aufgeführten
@@ -423,11 +416,13 @@ verwenden ist.
 Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
 `self`-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
-nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine *voll
-qualifizierte Syntax*. Zum Beispiel hat das Merkmal `Animal` in Codeblock 19-19
-die assoziierte Funktion `baby_name`, die Implementierung von `Animal` für die
-Struktur `Dog` und die assoziierte Funktion `baby_name`, die direkt auf `Dog`
-definiert ist.
+nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
+*voll-qualifizierte Syntax*. In Codeblock 19-19 erstellen wir zum Beispiel
+ein Merkmal für ein Tierheim, das alle Hundebabys *Spot* nennen möchte. Wir
+erstellen ein Merkmal `Animal` mit einer assoziierten Nicht-Methodenfunktion
+`baby_name`. Das Merkmal `Animal` ist für die Struktur `Dog` implementiert, für
+die wir auch direkt eine assoziierte Nicht-Methodenfunktionen `baby_name`
+bereitstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -459,13 +454,12 @@ fn main() {
 Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
 Merkmal ebenfalls implementiert</span>
 
-Dieser Code ist für ein Tierheim, das allen Welpen den Namen Spot geben möchte,
-der in der assoziierten Funktion `baby_name` implementiert ist, die auf `Dog`
-definiert ist. Der Typ `Dog` implementiert auch das Merkmal `Animal`, das
-Charakteristiken beschreibt, die alle Tiere haben. Hundebabys werden Welpen
-genannt und das drückt sich in der Implementierung des Merkmals `Animal` auf
-`Dog` in der Funktion `baby_name` aus, die mit dem Merkmal `Animal` assoziiert
-ist.
+Wir implementieren den Code für die Benennung aller Welpen Spot in der
+assoziierten Funktion `baby_name`, die auf `Dog` definiert ist. Der Typ `Dog`
+implementiert auch das Merkmal `Animal`, das Charakteristiken beschreibt, die
+alle Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
+Implementierung des Merkmals `Animal` auf `Dog` in der Funktion `baby_name`
+aus, die mit dem Merkmal `Animal` assoziiert ist.
 
 In `main` rufen wir die Funktion `Dog::baby_name` auf, die die assoziierte
 Funktion, die auf `Dog` definiert ist, direkt aufruft. Dieser Code gibt
@@ -528,15 +522,10 @@ $ cargo run
 error[E0283]: type annotations needed
   --> src/main.rs:20:43
    |
-20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
-   |                                                ^^^^^^^^^^^^^^^^^ cannot infer type
+20 |     println!("A baby dog is called a {}", Animal::baby_name());
+   |                                           ^^^^^^^^^^^^^^^^^ cannot infer type
    |
    = note: cannot satisfy `_: Animal`
-note: required by `Animal::baby_name`
-  --> src/main.rs:2:5
-   |
-2  |     fn baby_name() -> String;
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0283`.
 error: could not compile `traits-example` due to previous error
@@ -609,18 +598,19 @@ um herauszufinden, welche Implementierung du aufrufen möchtest.
 
 ### Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern
 
-Manchmal benötigst du vielleicht die Funktionalität eines Merkmal für ein
-anderes Merkmal. In diesem Fall musst du dich darauf verlassen, dass das
-abhängige Merkmal ebenfalls implementiert wird. Das Merkmal, auf das du dich
-verlässt, ist ein *Supermerkmal* (supertrait) des Merkmals, das du
-implementierst.
+Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
+einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
+kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
+tun, damit deine Merkmalsdefinition die zugehörigen Elemente des zweiten
+Merkmals verwenden kann. Das Merkmal, auf das sich deine Merkmalsdefinition
+stützt, wird als *Supermerkmal* (supertrait) deines Merkmals bezeichnet.
 
 Nehmen wir zum Beispiel an, wir wollen ein Merkmal `OutlinePrint` mit einer
-Methode `outline_print` erstellen, das einen in Sternchen eingerahmten Wert
-ausgibt. Das heißt, wenn wir eine Struktur `Point` haben, die `Display` so
-implementiert, dass sie `(x, y)` ausgibt, dann gibt der Aufruf von
-`outline_print` einer `Point`-Instanz, die `1` für `x` und `3` für `y` hat,
-folgendes aus:
+Methode `outline_print` erstellen, das einen bestimmten Wert so formatiert,
+dass er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine
+Struktur `Point` haben, die `Display` so implementiert, dass sie `(x, y)`
+ausgibt, dann gibt der Aufruf von `outline_print` einer `Point`-Instanz, die
+`1` für `x` und `3` für `y` hat, folgendes aus:
 
 ```text
 **********
@@ -630,14 +620,14 @@ folgendes aus:
 **********
 ```
 
-Bei der Implementierung von `outline_print` wollen wir die Funktionalität des
-Merkmals `Display` nutzen. Daher müssen wir festlegen, dass das Merkmal
-`OutlinePrint` nur bei Typen funktioniert, die auch `Display` implementieren
-und die Funktionalität bieten, die `OutlinePrint` benötigt. Wir können dies in
-der Merkmalsdefinition tun, indem wir `OutlinePrint: Display` angeben. Diese
-Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait bound) bei einem
-Merkmal. Codeblock 19-22 zeigt eine Implementierung des Merkmals
-`OutlinePrint`.
+Bei der Implementierung der Methode `outline_print` wollen wir die
+Funktionalität des Merkmals `Display` nutzen. Daher müssen wir festlegen, dass
+das Merkmal `OutlinePrint` nur bei Typen funktioniert, die auch `Display`
+implementieren und die Funktionalität bieten, die `OutlinePrint` benötigt. Wir
+können dies in der Merkmalsdefinition tun, indem wir `OutlinePrint: Display`
+angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
+bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
+Merkmals `OutlinePrint`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -711,14 +701,16 @@ $ cargo run
 error[E0277]: `Point` doesn't implement `std::fmt::Display`
   --> src/main.rs:20:6
    |
-3  | trait OutlinePrint: fmt::Display {
-   |                     ------------ required by this bound in `OutlinePrint`
-...
 20 | impl OutlinePrint for Point {}
    |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
    |
    = help: the trait `std::fmt::Display` is not implemented for `Point`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+note: required by a bound in `OutlinePrint`
+  --> src/main.rs:3:21
+   |
+3  | trait OutlinePrint: fmt::Display {
+   |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `traits-example` due to previous error
@@ -771,12 +763,12 @@ erfolgreich kompilieren und wir können `outline_print` auf einer
 
 In Kapitel 10 im Abschnitt [„Ein Merkmal für einen Typ
 implementieren“][implementing-a-trait-on-a-type] erwähnten wir die Waisenregel,
-die besagt, dass wir ein Merkmal auf einem Typ implementieren dürfen, solange
-entweder das Merkmal oder der Typ lokal in unserer Kiste (crate) vorhanden ist.
-Es ist möglich, diese Einschränkung zu umgehen, indem man das *Newtype-Muster*
-(newtype pattern) verwendet, bei dem ein neuer Typ in einer Tupelstruktur
-erzeugt wird. (Wir haben Tupelstrukturen im Abschnitt [„Verwenden von
-Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu
+die besagt, dass wir ein Merkmal nur dann auf einem Typ implementieren dürfen,
+wenn entweder das Merkmal oder der Typ lokal in unserer Kiste (crate) vorhanden
+ist. Es ist möglich, diese Einschränkung zu umgehen, indem man das
+*Newtype-Muster* (newtype pattern) verwendet, bei dem ein neuer Typ in einer
+Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen im Abschnitt [„Verwenden
+von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu
 erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
 Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
 implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
@@ -832,17 +824,14 @@ wollen, dass der `Wrapper`-Typ alle Methoden des inneren Typs hat &ndash; zum
 Beispiel, um das Verhalten des `Wrapper`-Typs einzuschränken &ndash; müssten
 wir nur die Methoden manuell implementieren, die wir wollen.
 
-Jetzt weißt du, wie das Newtype-Muster in Bezug auf Merkmale verwendet wird; es
-ist auch dann ein nützliches Muster, wenn keine Merkmale beteiligt sind.
-Wechseln wir den Schwerpunkt und sehen wir uns einige fortgeschrittene
-Möglichkeiten an, mit Rusts Typsystem zu interagieren.
+Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
+sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
+Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.
 
 [implementing-a-trait-on-a-type]:
 ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
 [newtype]:
 #verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
-[the-iterator-trait-and-the-next-method]:
-ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next
 [traits-defining-shared-behavior]: ch10-02-traits.html
 [smart-pointer-deref]: ch15-02-deref.html
 [tuple-structs]:

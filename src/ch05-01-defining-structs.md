@@ -58,12 +58,12 @@ fn main() {
 <span class="caption">Codeblock 5-2: Eine Instanz der Struktur `User`
 erzeugen</span>
 
-Um auf einen bestimmten Wert in einer Struktur zuzugreifen, können wir die
-Punktnotation verwenden. Wenn wir nur die E-Mail-Adresse dieses Benutzers
-wollen, können wir `user1.email` überall dort einsetzen, wo wir diesen Wert
-verwenden wollen. Wenn die Instanz veränderlich ist, können wir einen Wert
-mittels Punktnotation verändern. Codeblock 5-3 gezeigt, wie der Wert im
-Feld `email` einer veränderlichen `User`-Instanz geändert werden kann.
+Um auf einen bestimmten Wert in einer Struktur zuzugreifen, verwenden wir die
+Punktnotation. Um beispielsweise auf die E-Mail-Adresse dieses Benutzers
+zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderlich ist,
+können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
+einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
+`email` einer veränderlichen `User`-Instanz geändert werden kann.
 
 ```rust
 # struct User {
@@ -295,14 +295,14 @@ fn main() {
 Beachte, dass die Werte `black` und `origin` unterschiedliche Typen haben, weil
 sie Instanzen unterschiedlicher Tupel-Strukturen sind. Jede von dir definierte
 Struktur ist ein eigenständiger Typ, auch wenn die Felder innerhalb der
-Struktur die gleichen Typen haben. Zum Beispiel kann eine Funktion, die einen
-Parameter vom Typ `Color` hat, keinen `Point` als Argument nehmen, obwohl beide
-Typen aus drei `i32`-Werten bestehen. Ansonsten verhalten sich
-Tupel-Struktur-Instanzen wie Tupel: Du kannst sie in ihre Einzelteile zerlegen,
-indem du `.` gefolgt vom Index schreibst, um auf einen einzelnen Wert
-zuzugreifen, und so weiter.
+Struktur die gleichen Typen haben könnten. Zum Beispiel kann eine Funktion, die
+einen Parameter vom Typ `Color` hat, keinen `Point` als Argument nehmen, obwohl
+beide Typen aus drei `i32`-Werten bestehen. Ansonsten ähneln
+Tupel-Struktur-Instanzen den Tupeln insofern, als dass sie in ihre einzelnen
+Teile zerlegt werden können, und du kannst ein `.` gefolgt vom Index verwenden,
+um auf einen einzelnen Wert zuzugreifen.
 
-### Einheitstyp
+### Einheitstyp-ähnliche Strukturen ohne Felder
 
 Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 *Einheitstyp* (unit-like structs) genannt, weil sie sich ähnlich zum leeren

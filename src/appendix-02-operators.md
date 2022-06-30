@@ -18,7 +18,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 |:---------|:---------|:----------|:------------|
 | `!` | `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Expansion | |
 | `!` | `!expr` | Bitweises oder logisches Komplement | `Not` |
-| `!=` | `var != expr` | Vergleich auf Ungleichheit | `PartialEq` |
+| `!=` | `expr != expr` | Vergleich auf Ungleichheit | `PartialEq` |
 | `%` | `expr % expr` | Arithmetischer Restbetrag | `Rem` |
 | `%=` | `var %= expr` | Arithmetischer Restbetrag und Zuweisung | `RemAssign` |
 | `&` | `&expr`,<br> `&mut expr` | Ausleihe | |
@@ -73,26 +73,26 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 
 ### Nicht-Operator-Symbole
 
-Die folgende Liste enthält alle nicht-Buchstaben, die nicht als Operatoren
-fungieren, d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.
+Die folgende Liste enthält alle Symbole, die nicht als Operatoren fungieren,
+d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.
 
 Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
 Stellen gültig sind.
 
 <span class="caption">Tabelle B-2: Eigenständige Syntax</span>
 
-| Symbol | Erklärung |
-|:-------|:----------|
-| `'ident` | Benannte Lebensdauer oder Schleifenbeschriftung |
-| `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs |
-| `"..."` | Zeichenketten-Literal |
-| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet |
-| `b"..."` | Byte-Zeichenkettenliteral, konstruiert ein `[u8]` anstelle einer Zeichenkette |
-| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral |
-| `'...'` | Zeichen-Literal |
-| `b'...'` | ASCII-Byte-Literal |
-| <code>&vert;...&vert; expr</code> | Funktionsabschluss (closure) |
-| `!` | Leerer Typ (bottom type) für nicht-endende Funktionen |
+| Symbol | Erklärung                                                                                |
+|:-------|:-----------------------------------------------------------------------------------------|
+| `'ident` | Benannte Lebensdauer oder Schleifenbeschriftung                                          |
+| `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs                                                |
+| `"..."` | Zeichenketten-Literal                                                                    |
+| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet                       |
+| `b"..."` | Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette            |
+| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral        |
+| `'...'` | Zeichen-Literal                                                                          |
+| `b'...'` | ASCII-Byte-Literal                                                                       |
+| <code>&vert;...&vert; expr</code> | Funktionsabschluss (closure)                                                             |
+| `!` | Leerer Typ (bottom type) für nicht-endende Funktionen                                    |
 | `_` | Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen |
 
 Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die

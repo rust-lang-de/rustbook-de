@@ -159,9 +159,11 @@ weiterhin `rect1` verwenden, weshalb wir `&` in der Funktionssignatur und an
 der Aufrufstelle verwenden.
 
 Die Funktion `area` greift auf die Felder `width` und `height` der Instanz
-`Rectangle` zu. Unsere Funktionssignatur für `area` sagt jetzt genau was wir
-meinen: Berechne die Fläche von `Rectangle` unter Verwendung seiner Felder
-`width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehung
+`Rectangle` zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
+Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
+von Strukturen siehst.) Unsere Funktionssignatur für `area` sagt jetzt genau
+was wir meinen: Berechne die Fläche von `Rectangle` unter Verwendung seiner
+Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
@@ -298,9 +300,10 @@ rect1 ist Rectangle {
 
 Eine andere Möglichkeit, einen Wert im `Debug`-Format auszugeben, ist die
 Verwendung des [Makros `dbg!`][dbg], das die Eigentümerschaft eines Ausdrucks
-übernimmt, die Datei und Zeilennummer, in der der `dbg!`-Makroaufruf in deinem
-Code vorkommt, zusammen mit dem resultierenden Wert des Ausdrucks ausgibt und
-die Eigentümerschaft am Wert zurückgibt.
+übernimmt (im Gegensatz zu `println!`, das eine Referenz nimmt), die Datei und
+Zeilennummer, in der der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen
+mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
+Wert zurückgibt.
 
 > Hinweis: Der Aufruf des Makros `dbg!` schreibt in den
 > Standard-Fehler-Konsolenstrom (`stderr`), im Gegensatz zu `println!`, das in

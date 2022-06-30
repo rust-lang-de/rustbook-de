@@ -51,9 +51,12 @@ jeder einzelne geeignet ist.
 
 ### Erstellen einer neuen Zeichenkette
 
-Viele Operationen, die für `Vec<T>` verfügbar sind, sind auch für `String`
-vorhanden, beginnend mit der Funktion `new` zum Erstellen einer Zeichenkette,
-wie in Codeblock 8-11 zu sehen ist.
+Viele der gleichen Operationen, die mit `Vec<T>` verfügbar sind, sind auch mit
+`String` verfügbar, weil `String` eigentlich als Hülle um einen Vektor von
+Bytes mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
+implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise
+mit `Vec<T>` und `String` arbeitet, ist die Funktion `new` zum Erstellen einer
+Instanz, die in Codeblock 8-11 gezeigt wird.
 
 ```rust
 let mut s = String::new();
@@ -204,12 +207,12 @@ wenn wir den Operator `+` verwenden. Der Operator `+` benutzt die Methode
 fn add(self, s: &str) -> String {
 ```
 
-In der Standardbibliothek wird `add` mittels generischer Datentypen definiert.
-Hier sehen wir uns die Signatur von `add` mit konkreten Typen an, die die
-generischen Typen ersetzen; das passiert, wenn wir diese Methode mit
-`String`-Werten aufrufen. Wir werden generische Datentypen in Kapitel 10
-besprechen. Diese Signatur gibt uns den entscheidenden Hinweis, um die
-kniffligen Stellen des Operators `+` zu verstehen.
+In der Standardbibliothek wird `add` mittels generischer Datentypen und
+assoziierter Typen definiert. Hier haben wir konkrete Typen ersetzt, was
+geschieht, wenn wir diese Methode mit `String`-Werten aufrufen. Wir werden
+generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
+entscheidenden Hinweis, um die kniffligen Stellen des Operators `+` zu
+verstehen.
 
 Erstens hat `s2` ein `&`, was bedeutet, dass wir eine *Referenz* der zweiten
 Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
@@ -443,12 +446,12 @@ ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.
 Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
 explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
 Unicode-Skalarwerte ist die Methode `chars` zu verwenden. Der Aufruf von
-`chars` auf „नमस्ते“ trennt sechs Werte vom Typ `char` heraus und gibt sie
+`chars` auf „Зд“ trennt zwei Werte vom Typ `char` heraus und gibt sie
 zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
 zuzugreifen:
 
 ```rust
-for c in "नमस्ते".chars() {
+for c in "Зд".chars() {
     println!("{}", c);
 }
 ```
@@ -456,40 +459,36 @@ for c in "नमस्ते".chars() {
 Dieser Code wird folgendes ausgeben:
 
 ```text
-न
-म
-स
-्
-त
-े
+З
+д
 ```
 
 Die Methode `bytes` gibt jedes rohe Byte zurück, das für deinen
 Verwendungszweck benötigt wird:
 
 ```rust
-for b in "नमस्ते".bytes() {
+for b in "Зд".bytes() {
     println!("{}", b);
 }
 ```
 
-Dieser Code gibt die 18 Bytes aus, aus denen diese Zeichenkette besteht:
+Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:
 
 ```text
-224
-164
-// --abschneiden--
-165
-135
+208
+151
+208
+180
 ```
 
 Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
 können.
 
-Graphemgruppen aus Zeichenketten auszulesen ist komplex, daher wird diese
-Funktionalität nicht von der Standardbibliothek bereitgestellt. Kisten (crates)
-sind unter [crates.io](https://crates.io/) verfügbar, falls du diese
-Funktionalität benötigst.
+Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
+Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
+Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter
+[crates.io](https://crates.io/) verfügbar, falls du diese Funktionalität
+benötigst.
 
 ### Zeichenketten sind nicht so einfach
 
@@ -503,5 +502,12 @@ machen müssen. Dieser Zielkonflikt macht die Komplexität von Zeichenketten
 größer als in anderen Programmiersprachen, aber er verhindert, dass du später
 in deinem Entwicklungslebenszyklus mit Fehlern umgehen musst, wenn
 Nicht-ASCII-Zeichen vorkommen.
+
+Die gute Nachricht ist, dass die Standardbibliothek eine Vielzahl von
+Funktionen bietet, die auf den Typen `String` und `&str` aufbauen, um diese
+komplexen Situationen korrekt zu behandeln. In der Dokumentation findest du
+nützliche Methoden wie `contains` zum Suchen in einer Zeichenkette und
+`replace` zum Ersetzen von Teilen einer Zeichenkette durch eine andere
+Zeichenkette.
 
 Lass uns zu etwas weniger Kompliziertem übergehen: Hashtabellen!

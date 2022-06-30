@@ -1,12 +1,15 @@
 ## Nicht behebbare Fehler mit `panic!`
 
 Manchmal passieren schlimme Dinge in deinem Code und du kannst nichts dagegen
-tun. Für diese Fälle hat Rust das Makro `panic!`. Wenn das Makro `panic!`
-ausgeführt wird, wird dein Programm eine Fehlermeldung ausgeben, den
-Stapelspeicher abwickeln und aufräumen und sich dann beenden. Normalerweise
-brechen wir das Programm ab, wenn ein Fehler entdeckt wurde und zum Zeitpunkt
-des Schreibens unseres Programms nicht klar ist, wie das Problem zu behandeln
-ist.
+tun. Für diese Fälle hat Rust das Makro `panic!`. In der Praxis gibt es zwei
+Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unseren
+Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
+durch den expliziten Aufruf des Makros `panic!`. In beiden Fällen brechen wir
+unser Programm aus. Standardmäßig geben diese Programmabbrüche eine
+Fehlermeldung aus, räumen den Stapelspeicher auf und beenden sich. Über eine
+Umgebungsvariable kannst du auch festlegen, dass Rust den Stapelspeicher
+anzeigt, wenn das Programm abbricht, damit du die Quelle des Abbruchs leichter
+aufspüren kannst.
 
 > ### Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion
 >
@@ -15,14 +18,15 @@ ist.
 > und die Daten von jeder Funktion, auf die es trifft, bereinigt. Allerdings
 > ist dieses Zurückgehen und Aufräumen eine Menge Arbeit. Rust bietet dir als
 > Alternative daher an, das Programm sofort *abzubrechen*, wobei das Programm
-> beendet wird, ohne aufzuräumen. Der Speicher, den das Programm benutzt hat,
-> muss dann vom Betriebssystem aufgeräumt werden. Wenn du in deinem Projekt die
-> resultierende Binärdatei so klein wie möglich machen willst, kannst du für
-> ein vorzeitiges Programmende vom Abwickeln zum sofortigen Abbrechen
-> umschalten, indem du `panic = 'abort'` in den entsprechenden
-> `[profile]`-Abschnitten in deiner *Cargo.toml*-Datei hinzufügst. Wenn du
-> beispielsweise im Freigabemodus (release mode) im Fehlerfall sofort abbrechen
-> möchtest, füge dies hinzu:
+> beendet wird, ohne aufzuräumen.
+>
+> Der Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
+> aufgeräumt werden. Wenn du in deinem Projekt die resultierende Binärdatei so
+> klein wie möglich machen willst, kannst du für ein vorzeitiges Programmende
+> vom Abwickeln zum sofortigen Abbrechen umschalten, indem du `panic = 'abort'`
+> in den entsprechenden `[profile]`-Abschnitten in deiner *Cargo.toml*-Datei
+> hinzufügst. Wenn du beispielsweise im Freigabemodus (release mode) im
+> Fehlerfall sofort abbrechen möchtest, füge dies hinzu:
 >
 > ```toml
 > [profile.release]
@@ -133,60 +137,25 @@ setzen. Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.
 
 ```console
 $ RUST_BACKTRACE=1 cargo run
-thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806:10
+thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', src/main.rs:4:5
 stack backtrace:
-   0: backtrace::backtrace::libunwind::trace
-             at /Users/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/backtrace-0.3.40/src/backtrace/libunwind.rs:88
-   1: backtrace::backtrace::trace_unsynchronized
-             at /Users/runner/.cargo/registry/src/github.com-1ecc6299db9ec823/backtrace-0.3.40/src/backtrace/mod.rs:66
-   2: std::sys_common::backtrace::_print_fmt
-             at src/libstd/sys_common/backtrace.rs:84
-   3: <std::sys_common::backtrace::_print::DisplayBacktrace as core::fmt::Display>::fmt
-             at src/libstd/sys_common/backtrace.rs:61
-   4: core::fmt::ArgumentV1::show_usize
-   5: std::io::Write::write_fmt
-             at src/libstd/io/mod.rs:1426
-   6: std::sys_common::backtrace::_print
-             at src/libstd/sys_common/backtrace.rs:65
-   7: std::sys_common::backtrace::print
-             at src/libstd/sys_common/backtrace.rs:50
-   8: std::panicking::default_hook::{{closure}}
-             at src/libstd/panicking.rs:193
-   9: std::panicking::default_hook
-             at src/libstd/panicking.rs:210
-  10: std::panicking::rust_panic_with_hook
-             at src/libstd/panicking.rs:471
-  11: rust_begin_unwind
-             at src/libstd/panicking.rs:375
-  12: core::panicking::panic_fmt
-             at src/libcore/panicking.rs:84
-  13: core::panicking::panic_bounds_check
-             at src/libcore/panicking.rs:62
-  14: <usize as core::slice::SliceIndex<[T]>>::index
-             at /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806
-  15: core::slice::<impl core::ops::index::Index<I> for [T]>::index
-             at /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2657
-  16: <alloc::vec::Vec<T> as core::ops::index::Index<I>>::index
-             at /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/liballoc/vec.rs:1871
-  17: panic::main
-             at src/main.rs:4
-  18: std::rt::lang_start::{{closure}}
-             at /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libstd/rt.rs:67
-  19: std::rt::lang_start_internal::{{closure}}
-             at src/libstd/rt.rs:52
-  20: std::panicking::try::do_call
-             at src/libstd/panicking.rs:292
-  21: __rust_maybe_catch_panic
-             at src/libpanic_unwind/lib.rs:78
-  22: std::panicking::try
-             at src/libstd/panicking.rs:270
-  23: std::panic::catch_unwind
-             at src/libstd/panic.rs:394
-  24: std::rt::lang_start_internal
-             at src/libstd/rt.rs:51
-  25: std::rt::lang_start
-             at /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libstd/rt.rs:67
-  26: panic::main
+   0: rust_begin_unwind
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/std/src/panicking.rs:483
+   1: core::panicking::panic_fmt
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:85
+   2: core::panicking::panic_bounds_check
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:62
+   3: <usize as core::slice::index::SliceIndex<[T]>>::index
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:255
+   4: core::slice::index::<impl core::ops::index::Index<I> for [T]>::index
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:15
+   5: <alloc::vec::Vec<T> as core::ops::index::Index<I>>::index
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/alloc/src/vec.rs:1982
+   6: panic::main
+             at ./src/main.rs:4
+   7: core::ops::function::FnOnce::call_once
+             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/ops/function.rs:227
+note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 ```
 
 <span class="caption">Codeblock 9-2: Aufrufhistorie, erzeugt durch einen Aufruf

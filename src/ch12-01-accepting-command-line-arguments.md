@@ -11,7 +11,7 @@ $ cd minigrep
 ```
 
 Die erste Aufgabe besteht darin, `minigrep` dazu zu bringen, seine beiden
-Kommandozeilenargumente entgegennehmen: Den Dateinamen und eine Zeichenkette,
+Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
 nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
 Programm mit `cargo run`, einer zu suchenden Zeichenkette und einem Pfad zu
 einer Datei, in der gesucht werden soll, auszuführen:
@@ -29,18 +29,18 @@ erst erlernst, sollten wir diese Fähigkeit selbst implementieren.
 ### Lesen der Argumentwerte
 
 Um `minigrep` in die Lage zu versetzen, die Werte der Kommandozeilenargumente
-zu lesen, die wir ihm übergeben, benötigen wir eine Funktion, die in der
-Standardbibliothek von Rust bereitgestellt wird, nämlich `std::env::args`.
-Diese Funktion gibt einen Iterator der Befehlszeilenargumente zurück, die an
-`minigrep` übergeben wurden. Iteratoren werden wir in [Kapitel 13][ch13]
-ausführlich behandeln. Im Moment brauchst du nur zwei Details über Iteratoren
-zu wissen: Iteratoren erzeugen eine Reihe von Werten und wir können die Methode
-`collect` auf einem Iterator aufrufen, um ihn in eine Kollektion, z.B. einen
-Vektor, zu verwandeln, der alle Elemente enthält, die der Iterator erzeugt.
+zu lesen, die wir ihm übergeben, benötigen wir die Funktion `std::env::args`,
+die in der Standardbibliothek von Rust bereitgestellt wird. Diese Funktion gibt
+einen Iterator der Befehlszeilenargumente zurück, die an `minigrep` übergeben
+wurden. Iteratoren werden wir in [Kapitel 13][ch13] ausführlich behandeln. Im
+Moment brauchst du nur zwei Details über Iteratoren zu wissen: Iteratoren
+erzeugen eine Reihe von Werten und wir können die Methode `collect` auf einem
+Iterator aufrufen, um ihn in eine Kollektion, z.B. einen Vektor, zu verwandeln,
+der alle Elemente enthält, die der Iterator erzeugt.
 
-Verwende den Code in Codeblock 12-1, um deinem `minigrep`-Programm zu
-ermöglichen, alle ihm übergebenen Befehlszeilenargumente zu lesen und die Werte
-dann in einem Vektor zu sammeln.
+Der Code in Codeblock 12-1 ermöglicht deinem `minigrep`-Programm, alle ihm
+übergebenen Befehlszeilenargumente zu lesen und die Werte dann in einem Vektor
+zu sammeln.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -49,7 +49,7 @@ use std::env;
 
 fn main() {
     let args: Vec<String> = env::args().collect();
-    println!("{:?}", args);
+    dbg!(args);
 }
 ```
 
@@ -59,11 +59,11 @@ einem Vektor und Ausgeben dieser Werte</span>
 Zuerst bringen wir das Modul `std::env` mit einer `use`-Anweisung in den
 Gültigkeitsbereich, damit wir seine `args`-Funktion verwenden können. Beachte,
 dass die Funktion `std::env::args` in zwei Modulebenen verschachtelt ist. Wie
-wir in [Kapitel 7][ch7-idiomatic-use] besprochen haben, ist es in Fällen, in
+wir in [Kapitel 7][ch7-idiomatic-use] besprochen haben, haben wir in Fällen, in
 denen die gewünschte Funktion in mehr als einem Modul verschachtelt ist,
-üblich, das übergeordnete Modul in den Gültigkeitsbereich zu bringen, anstatt
-nur die Funktion. Auf diese Weise können wir leicht andere Funktionen aus
-`std::env` verwenden. Es ist auch weniger mehrdeutig als das Hinzufügen von
+das übergeordnete Modul in den Gültigkeitsbereich gebracht, anstatt nur die
+Funktion. Auf diese Weise können wir leicht andere Funktionen aus `std::env`
+verwenden. Es ist auch weniger mehrdeutig als das Hinzufügen von
 `use std::env::args` und dem anschließenden Aufrufen der Funktion nur mit
 `args`, weil `args` leicht mit einer Funktion verwechselt werden könnte, die im
 aktuellen Modul definiert ist.
@@ -88,24 +88,29 @@ Obwohl wir in Rust nur sehr selten Typen mit Annotationen versehen müssen, ist
 `collect` eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
 nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
 
-Zum Schluss geben wir den Vektor mit dem Debug-Formatierer `:?` aus. Versuchen
-wir, den Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu
-lassen:
+Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
+Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:
 
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
-["target/debug/minigrep"]
+[src/main.rs:5] args = [
+    "target/debug/minigrep",
+]
 ```
 
 ```console
-$ cargo run Nadel Heuhaufen
+$ cargo run -- Nadel Heuhaufen
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 1.57s
-     Running `target/debug/minigrep Nadel Heuhaufen`
-["target/debug/minigrep", "Nadel", "Heuhaufen"]
+     Running `target/debug/minigrep needle haystack`
+[src/main.rs:5] args = [
+    "target/debug/minigrep",
+    "Nadel",
+    "Heuhaufen",
+]
 ```
 
 Beachte, dass der erste Wert im Vektor `"target/debug/minigrep"` ist, was der
@@ -119,10 +124,10 @@ ihn und speichern nur die beiden Argumente, die wir brauchen.
 
 ### Speichern der Argumentwerte in Variablen
 
-Das Ausgeben der Werte des Argumentvektors veranschaulicht, dass das Programm
-auf die als Kommandozeilenargumente angegebenen Werte zugreifen kann. Jetzt
-müssen wir die Werte der beiden Argumente in Variablen speichern, damit wir die
-Werte im restlichen Programm verwenden können. Das tun wir in Codeblock 12-2.
+Das Programm ist derzeit in der Lage, auf die als Kommandozeilenargumente
+angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
+in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
+können. Das tun wir in Codeblock 12-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -133,23 +138,23 @@ fn main() {
     let args: Vec<String> = env::args().collect();
 
     let query = &args[1];
-    let filename = &args[2];
+    let file_path = &args[2];
 
     println!("Suche nach {}", query);
-    println!("In Datei {}", filename);
+    println!("In Datei {}", file_path);
 }
 ```
 
 <span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
-Such-Arguments und des Dateiname-Arguments</span>
+Such-Arguments und des Dateipfad-Arguments</span>
 
 Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der
 Programmname den ersten Wert im Vektor bei `args[0]` ein, also beginnen wir
 beim Index `1`. Das erste Argument, das `minigrep` annimmt, ist die
 Zeichenkette, nach der wir suchen, also setzen wir eine Referenz auf das erste
-Argument in die Variable `query`. Das zweite Argument wird der Dateiname sein,
+Argument in die Variable `query`. Das zweite Argument wird der Dateipfad sein,
 also setzen wir eine Referenz auf das zweite Argument in die Variable
-`filename`.
+`file_path`.
 
 Wir geben vorübergehend die Werte dieser Variablen aus, um zu belegen, dass der
 Code so funktioniert, wie wir es beabsichtigen. Lassen wir dieses Programm mit

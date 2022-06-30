@@ -2,7 +2,7 @@
 
 Um Rust zu zeigen, wo ein Element in einem Modulbaum zu finden ist, verwenden
 wir einen Pfad, auf gleiche Weise wie beim Navigieren durch ein Dateisystem.
-Wenn wir eine Funktion aufrufen wollen, müssen wir ihren Pfad kennen.
+Um eine Funktion aufzurufen, müssen wir ihren Pfad kennen.
 
 Ein Pfad kann zwei Formen annehmen:
 
@@ -16,8 +16,8 @@ Ein Pfad kann zwei Formen annehmen:
 Sowohl absolute als auch relative Pfade bestehen aus einem oder mehreren
 Bezeichnern, die durch doppelte Doppelpunkte (`::`) getrennt sind.
 
-Kommen wir auf das Beispiel in Codeblock 7-1 zurück. Wie rufen wir die Funktion
-`add_to_waitlist` auf? Das ist dasselbe wie die Frage, wie der Pfad der
+Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
+`add_to_waitlist` aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
 Funktion `add_to_waitlist` ist. In Codeblock 7-3 haben wir unseren Code etwas
 vereinfacht, indem wir einige der Module und Funktionen entfernt haben. Wir
 zeigen zwei Möglichkeiten, wie die Funktion `add_to_waitlist` von einer neuen
@@ -53,34 +53,32 @@ mittels absoluter und relativer Pfade</span>
 Beim ersten Aufruf der Funktion `add_to_waitlist` in `eat_at_restaurant`
 verwenden wir einen absoluten Pfad. Die Funktion `add_to_waitlist` ist in der
 gleichen Kiste definiert wie `eat_at_restaurant`, daher können wir das
-Schlüsselwort `crate` verwenden, um einen absoluten Pfad zu beginnen.
-
-Nach `crate` geben wir jedes der aufeinanderfolgenden Module an, bis wir
-`add_to_waitlist` erreichen. Du kannst dir ein Dateisystem mit der gleichen
-Struktur vorstellen und wir würden den Pfad
-`/front_of_house/hosting/add_to_waitlist` angeben, um das Programm
-`add_to_waitlist` auszuführen; das Verwenden des Namens `crate`, um von der
-Kistenwurzel aus zu beginnen, ist analog zu `/`, um vom
+Schlüsselwort `crate` verwenden, um einen absoluten Pfad zu beginnen. Dann
+geben wir jedes der aufeinanderfolgenden Module an, bis wir `add_to_waitlist`
+erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
+Wir würden den Pfad `/front_of_house/hosting/add_to_waitlist` angeben, um das
+Programm `add_to_waitlist` auszuführen; das Verwenden des Namens `crate`, um
+von der Kistenwurzel aus zu beginnen, ist analog zu `/`, um vom
 Dateisystem-Wurzelverzeichnis in deiner Eingabeaufforderung aus zu beginnen.
 
 Beim zweiten Aufruf von `add_to_waitlist` in `eat_at_restaurant` verwenden wir
 einen relativen Pfad. Der Pfad beginnt mit `front_of_house`, dem Namen des
 Moduls, das auf der gleichen Ebene des Modulbaums definiert ist wie
 `eat_at_restaurant`. Hier wäre das Dateisystem-Äquivalent die Verwendung des
-Pfades `front_of_house/hosting/add_to_waitlist`. Mit einem Namen zu beginnen
-bedeutet, dass der Pfad relativ ist.
+Pfades `front_of_house/hosting/add_to_waitlist`. Mit einem Modulnamen zu
+beginnen bedeutet, dass der Pfad relativ ist.
 
 Die Überlegung, ob ein relativer oder absoluter Pfad verwendet wird, ist eine
-Entscheidung, die du auf Basis deines Projekts treffen wirst. Die Entscheidung
-sollte davon abhängen, ob du den Code für die Elementdefinition eher separat
-oder zusammen mit dem Code ablegen möchtest, der das Element verwendet. Wenn
-wir zum Beispiel das Modul `front_of_house` und die Funktion
-`eat_at_restaurant` in ein Modul namens `customer_experience` verschieben,
-müssten wir den absoluten Pfad in `add_to_waitlist` ändern, aber der relative
-Pfad wäre immer noch gültig. Wenn wir jedoch die Funktion `eat_at_restaurant`
-in ein separates Modul namens `dining` verschieben würden, würde der absolute
-Pfad beim Aufruf `add_to_waitlist` gleich bleiben, aber der relative Pfad
-müsste aktualisiert werden. Wir bevorzugen die Angabe absoluter Pfade, da es
+Entscheidung, die du auf Basis deines Projekts treffen wirst, und hängt davon
+ab, ob du den Code für die Elementdefinition eher separat oder zusammen mit dem
+Code ablegen möchtest, der das Element verwendet. Wenn wir zum Beispiel das
+Modul `front_of_house` und die Funktion `eat_at_restaurant` in ein Modul namens
+`customer_experience` verschieben, müssten wir den absoluten Pfad in
+`add_to_waitlist` ändern, aber der relative Pfad wäre immer noch gültig. Wenn
+wir jedoch die Funktion `eat_at_restaurant` in ein separates Modul namens
+`dining` verschieben würden, würde der absolute Pfad beim Aufruf
+`add_to_waitlist` gleich bleiben, aber der relative Pfad müsste aktualisiert
+werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.
 
@@ -125,33 +123,27 @@ error: could not compile `restaurant` due to 2 previous errors
 Die Fehlermeldungen besagen, dass das Modul `hosting` privat ist. Mit anderen
 Worten, wir haben die korrekten Pfade für das Modul `hosting` und die Funktion
 `add_to_waitlist` angegeben, aber Rust lässt sie uns nicht nutzen, weil es
-keinen Zugriff auf die privaten Abschnitte hat.
+keinen Zugriff auf die privaten Abschnitte hat. In Rust sind alle Elemente
+(Funktionen, Methoden, Strukturen, Aufzählungen, Module und Konstanten)
+standardmäßig privat für übergeordnete Module. Wenn du ein Element wie eine
+Funktion oder Struktur privat machen willst, setze es in ein Modul.
 
-Module sind nicht nur zum Organisieren deines Codes nützlich. Sie definieren
-auch Rusts *Datenschutzbegrenzung* (privacy boundary): Die Zeile, die die
-Implementierungsdetails kapselt, darf externen Code nicht kennen, aufrufen oder
-sich auf ihn verlassen. Wenn du also ein Element wie eine Funktion oder
-Struktur privat machen willst, lege es in einem Modul ab.
-
-Die Art und Weise, wie der Datenschutz in Rust funktioniert, ist, dass alle
-Elemente (Funktionen, Methoden, Strukturen, Aufzählungen, Module und
-Konstanten) standardmäßig privat sind. Objekte in einem übergeordneten Modul
-können die privaten Objekte in untergeordneten Modulen nicht verwenden, aber
-Objekte in untergeordneten Modulen können die Objekte in ihren übergeordneten
-Modulen verwenden. Der Grund dafür ist, dass untergeordnete Module ihre
-Implementierungsdetails ein- und ausblenden, aber die untergeordneten Module
-können den Gültigkeitsbereich sehen, in dem sie definiert sind. Um mit der
-Restaurantmetapher fortzufahren, stelle dir die Datenschutzregeln wie das
-Backoffice eines Restaurants vor: Was dort drinnen passiert, ist für
-Restaurantkunden privat, aber Büroleiter können alles im Restaurant, in dem sie
-arbeiten, sehen und tun.
+Objekte in einem übergeordneten Modul können die privaten Objekte in
+untergeordneten Modulen nicht verwenden, aber Objekte in untergeordneten
+Modulen können die Objekte in ihren übergeordneten Modulen verwenden. Der Grund
+dafür ist, dass untergeordnete Module ihre Implementierungsdetails ein- und
+ausblenden, aber die untergeordneten Module können den Gültigkeitsbereich
+sehen, in dem sie definiert sind. Um mit unserer Metapher fortzufahren, stelle
+dir die Datenschutzregeln wie das Backoffice eines Restaurants vor: Was dort
+drinnen passiert, ist für Restaurantkunden privat, aber Büroleiter können alles
+im Restaurant, in dem sie arbeiten, sehen und tun.
 
 Rust entschied sich dafür, das Modulsystem auf diese Weise funktionieren zu
 lassen, sodass das Ausblenden innerer Implementierungsdetails die Vorgabe ist.
 Auf diese Weise weißt du, welche Teile des inneren Codes du ändern kannst, ohne
-den äußeren Code zu brechen. Aber du kannst innere Teile des Codes von
-Kindmodulen für äußere Elternmodule freigeben, indem du das Schlüsselwort `pub`
-verwendest, um ein Element öffentlich zu machen.
+den äußeren Code zu brechen. Rust gibt dir jedoch die Möglichkeit, innere Teile
+des Codes von Kindmodulen für äußere Vorgängermodule offenzulegen, indem du das
+Schlüsselwort `pub` verwendest, um ein Element öffentlich zu machen.
 
 ### Pfade mit dem Schlüsselwort `pub` öffnen
 
@@ -223,8 +215,12 @@ Was ist passiert? Das Hinzufügen des Schlüsselworts `pub` vor `mod hosting`
 macht das Modul öffentlich. Wenn wir auf `front_of_house` zugreifen können,
 können wir mit dieser Änderung auch auf `hosting` zugreifen. Aber die *Inhalte*
 von `hosting` sind immer noch privat; das Modul öffentlich zu machen, macht
-seinen Inhalt nicht öffentlich. Das Schlüsselwort `pub` in einem Modul lässt
-nur Code in seinen Vorgängermodulen auf dieses Modul verweisen.
+seinen Inhalt nicht öffentlich. Das Schlüsselwort `pub` für ein Modul erlaubt
+es dem Code in seinen Vorgängermodulen nur, auf das Modul zu referenzieren,
+nicht aber auf seinen inneren Code zuzugreifen. Da Module Container sind,
+können wir nicht viel tun, indem wir nur das Modul öffentlich machen; wir
+müssen weiter gehen und eines oder mehrere der Elemente innerhalb des Moduls
+ebenfalls öffentlich machen.
 
 Die Fehler in Codeblock 7-6 besagen, dass die Funktion `add_to_waitlist` privat
 ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
@@ -255,14 +251,14 @@ pub fn eat_at_restaurant() {
 `mod hosting` und `fn add_to_waitlist` lässt uns die Funktion in
 `eat_at_restaurant` aufrufen</span>
 
-Jetzt kompiliert der Code! Schauen wir uns den absoluten und den relativen Pfad
-an und prüfen wir noch einmal, warum das Hinzufügen des Schlüsselwortes `pub`
-uns diese Pfade in `add_to_waitlist` im Hinblick auf die Datenschutzregeln
-verwenden lässt.
+Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
+`pub` uns erlaubt, diese Pfade in `add_to_waitlist` im Hinblick auf die
+Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
+an.
 
 Auf dem absoluten Pfad beginnen wir mit `crate`, der Wurzel des Modulbaums
 unserer Kiste. Dann wird das Modul `front_of_house` in der Kistenwurzel
-definiert. Das Modul `front_of_house` ist nicht öffentlich, aber weil die
+definiert. Da das Modul `front_of_house` ist nicht öffentlich, weil die
 `eat_at_restaurant`-Funktion im gleichen Modul wie `front_of_house` definiert
 ist (d.h. `eat_at_restaurant` und `front_of_house` sind Geschwister), können
 wir auf `front_of_house` von `eat_at_restaurant` aus zugreifen. Als nächstes
@@ -314,9 +310,14 @@ Guidelines][api-guidelines].
 
 ### Relative Pfade mit `super` beginnen
 
-Wir können auch relative Pfade konstruieren, die im Elternmodul beginnen, indem
-wir `super` am Anfang des Pfades verwenden. Das ist so, als würde man einen
-Dateisystempfad mit der Syntax `..` beginnen. Warum sollten wir das tun wollen?
+Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
+und nicht im aktuellen Modul oder der Kistenwurzel, indem wir `super` am Anfang
+des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
+Syntax `..` beginnen. Dies erlaubt es uns, auf ein Element zu referenzieren,
+von dem wir wissen, dass es sich im übergeordneten Modul befindet, was die
+Neuordnung des Modulbaums erleichtern kann, wenn das Modul eng mit dem
+übergeordneten Modul verwandt ist, aber das übergeordnete Modul eines Tages an
+eine andere Stelle im Modulbaum verschoben werden könnte.
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
@@ -354,11 +355,12 @@ haben, wenn dieser Code in ein anderes Modul verschoben wird.
 
 ### Strukturen und Aufzählungen öffentlich machen
 
-Wir können `pub` auch benutzen, um Strukturen und Aufzählungen als öffentlich
-zu kennzeichnen, aber es gibt ein paar zusätzliche Details. Wenn wir `pub` vor
-einer Struktur-Definition verwenden, machen wir die Struktur öffentlich, aber
-die Felder der Struktur sind immer noch privat. Wir können jedes Feld von Fall
-zu Fall öffentlich machen oder auch nicht. In Codeblock 7-9 haben wir eine
+Wir können auch `pub` verwenden, um Strukturen und Aufzählungen als öffentlich
+zu kennzeichnen, aber es gibt ein paar zusätzliche Details zur Verwendung von
+`pub` mit Strukturen und Aufzählungen. Wenn wir `pub` vor einer
+Struktur-Definition verwenden, machen wir die Struktur öffentlich, aber die
+Felder der Struktur sind immer noch privat. Wir können jedes Feld von Fall zu
+Fall öffentlich machen oder auch nicht. In Codeblock 7-9 haben wir eine
 öffentliche Struktur `back_of_house::Breakfast` mit einem öffentlichen Feld
 `toast`, aber einem privaten Feld `seasonal_fruit` definiert. Dies ist der Fall
 in einem Restaurant, in dem der Kunde die Brotsorte auswählen kann, die zu
@@ -442,13 +444,14 @@ pub fn eat_at_restaurant() {
 öffentlich macht alle ihre Varianten öffentlich</span>
 
 Da wir die Aufzählung `Appetizer` öffentlich gemacht haben, können wir die
-Varianten `Soup` und `Salad` in `eat_at_restaurant` verwenden. Aufzählungen
-wären ohne öffentliche Varianten nicht sehr nützlich; es wäre ärgerlich, alle
-Aufzählungs-Varianten stets mit `pub` annotieren zu müssen, daher sind die
-Aufzählungs-Varianten standardmäßig öffentlich. Strukturen sind auch ohne
-öffentliche Felder nützlich, daher folgen Strukturfelder standardmäßig der
-allgemeinen Regel, dass alles privat ist, es sei denn, es wird mit `pub`
-kommentiert.
+Varianten `Soup` und `Salad` in `eat_at_restaurant` verwenden.
+
+Aufzählungen wären ohne öffentliche Varianten nicht sehr nützlich; es wäre
+ärgerlich, alle Aufzählungs-Varianten stets mit `pub` annotieren zu müssen,
+daher sind die Aufzählungs-Varianten standardmäßig öffentlich. Strukturen sind
+auch ohne öffentliche Felder nützlich, daher folgen Strukturfelder
+standardmäßig der allgemeinen Regel, dass alles privat ist, es sei denn, es
+wird mit `pub` annotiert.
 
 Es gibt noch eine weitere Situation mit `pub`, die wir noch nicht behandelt
 haben, und das ist unser letztes Modulsystem-Feature: Das Schlüsselwort `use`.

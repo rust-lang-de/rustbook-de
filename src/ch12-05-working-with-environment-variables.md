@@ -12,8 +12,8 @@ durchführen.
 
 ### Schreiben eines fehlschlagenden Tests für die Suche unabhängig von der Groß-/Kleinschreibung
 
-Wir wollen eine neue Funktion `search_case_insensitive` hinzufügen, die wir
-aufrufen werden, wenn die Umgebungsvariable gesetzt ist. Wir werden die
+Wir fügen zuerst eine neue Funktion `search_case_insensitive` hinzu, die
+aufgerufen wird, wenn die Umgebungsvariable einen Wert hat. Wir werden die
 TDD-Methode weiter verfolgen, sodass der erste Schritt wieder darin besteht,
 einen fehlschlagenden Test zu schreiben. Wir werden einen neuen Test für die
 neue Funktion `search_case_insensitive` hinzufügen und unseren alten Test von
@@ -28,7 +28,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -38,17 +38,17 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     for line in search(&config.query, &contents) {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -140,7 +140,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 # }
 #
 # impl Config {
@@ -150,17 +150,17 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     for line in search(&config.query, &contents) {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -253,9 +253,9 @@ angeben, weil die Signatur von `contains` so definiert ist, dass sie einen
 Zeichenkettenanteilstyp nimmt.
 
 Als nächstes fügen wir einen Aufruf von `to_lowercase` für jede `line` ein,
-bevor wir prüfen, ob sie `query` enthält, um alle Zeichen kleinzuschreiben. Da
-wir nun `line` und `query` in Kleinbuchstaben umgewandelt haben, werden wir
-passende Zeilen finden, egal wie die Groß-/Kleinschreibung der Abfrage ist.
+um alle Zeichen kleinzuschreiben. Da wir nun `line` und `query` in
+Kleinbuchstaben umgewandelt haben, werden wir passende Zeilen finden, egal wie
+die Groß-/Kleinschreibung der Abfrage ist.
 
 Warten wir ab, ob diese Implementierung die Tests besteht:
 
@@ -299,7 +299,7 @@ nirgendwo initialisiert haben:
 #
 pub struct Config {
     pub query: String,
-    pub filename: String,
+    pub file_path: String,
     pub case_sensitive: bool,
 }
 # 
@@ -310,14 +310,14 @@ pub struct Config {
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.case_sensitive {
 #         search(&config.query, &contents)
@@ -326,7 +326,7 @@ pub struct Config {
 #     };
 #
 #     for line in results {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -393,12 +393,11 @@ pub struct Config {
 # }
 ```
 
-Beachte, dass wir das Feld `case_sensitive` hinzugefügt haben, das ein Boolean
-enthält. Als Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes
-`case_sensitive` auszuwerten, und verwenden diese, um zu entscheiden, ob die
-Funktion `search` oder die Funktion `search_case_insensitive` aufgerufen werden
-soll, wie in Codeblock 12-22 gezeigt. Beachte, dass dies noch nicht kompiliert
-werden kann.
+Wir haben das Feld `ignore_case` hinzugefügt, das ein Boolean enthält. Als
+Nächstes benötigen wir die Funktion `run`, um den Wert des Feldes `ignore_case`
+auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion `search`
+oder die Funktion `search_case_insensitive` aufgerufen werden soll, wie in
+Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -408,7 +407,7 @@ werden kann.
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 #     pub case_sensitive: bool,
 # }
 # 
@@ -419,14 +418,14 @@ werden kann.
 #         }
 #
 #         let query = args[1].clone();
-#         let filename = args[2].clone();
+#         let file_path = args[2].clone();
 #
-#         Ok(Config { query, filename })
+#         Ok(Config { query, file_path })
 #     }
 # }
 #
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.filename)?;
+    let contents = fs::read_to_string(config.file_path)?;
 
     let results = if config.case_sensitive {
         search(&config.query, &contents)
@@ -435,7 +434,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     };
 
     for line in results {
-        println!("{}", line);
+        println!("{line}");
     }
 
     Ok(())
@@ -503,16 +502,14 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 ```
 
 <span class="caption">Codeblock 12-22: Aufruf von entweder `search` oder
-`search_case_insensitive` basierend auf dem Wert in
-`config.case_sensitive`</span>
+`search_case_insensitive` basierend auf dem Wert in `config.ignore_case`</span>
 
 Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
-Standardbibliothek, daher wollen wir dieses Modul mit einer Zeile `use
-std::env;` am Anfang von *src/lib.rs* in den Gültigkeitsbereich bringen. Dann
-werden wir die Funktion `var` aus dem Modul `env` verwenden, um auf eine
-Umgebungsvariable namens `CASE_INSENSITIVE` zu prüfen, wie in Codeblock 12-23
-gezeigt.
+Standardbibliothek, daher bringen wir dieses Modul am Anfang von *src/lib.rs*
+in den Gültigkeitsbereich. Dann werden wir die Funktion `var` aus dem Modul
+`env` verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE`
+einen Wert hat, wie in Codeblock 12-23 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -525,7 +522,7 @@ use std::env;
 #
 # pub struct Config {
 #     pub query: String,
-#     pub filename: String,
+#     pub file_path: String,
 #     pub case_sensitive: bool,
 # }
 #
@@ -536,20 +533,20 @@ impl Config {
         }
 
         let query = args[1].clone();
-        let filename = args[2].clone();
+        let file_path = args[2].clone();
 
         let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
 
         Ok(Config {
             query,
-            filename,
+            file_path,
             case_sensitive,
         })
     }
 }
 #
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.filename)?;
+#     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.case_sensitive {
 #         search(&config.query, &contents)
@@ -558,7 +555,7 @@ impl Config {
 #     };
 #
 #     for line in results {
-#         println!("{}", line);
+#         println!("{line}");
 #     }
 #
 #     Ok(())
@@ -625,29 +622,29 @@ impl Config {
 # }
 ```
 
-<span class="caption">Codeblock 12-23: Prüfen auf eine Umgebungsvariable namens
-`CASE_INSENSITIVE`</span>
+<span class="caption">Codeblock 12-23: Prüfen, ob eine Umgebungsvariable namens
+`IGNORE_CASE` einen Wert hat</span>
 
-Hier erstellen wir eine neue Variable `case_sensitive`. Um ihren Wert zu
-setzen, rufen wir die Funktion `env::var` auf und übergeben ihr den Namen der
-Umgebungsvariablen `CASE_INSENSITIVE`. Die Funktion `env::var` gibt ein
-`Result` zurück, das die erfolgreiche `Ok`-Variante ist, die den Wert der
-Umgebungsvariablen enthält, wenn die Umgebungsvariable gesetzt ist. Sie gibt
+Hier erstellen wir eine neue Variable `ignore_case`. Um ihren Wert zu setzen,
+rufen wir die Funktion `env::var` auf und übergeben ihr den Namen der
+Umgebungsvariablen `IGNORE_CASE`. Die Funktion `env::var` gibt ein `Result`
+zurück, das die erfolgreiche `Ok`-Variante ist, die den Wert der
+Umgebungsvariablen enthält, wenn die Umgebungsvariable einen Wert hat. Sie gibt
 die Variante `Err` zurück, wenn die Umgebungsvariable nicht gesetzt ist.
 
-Wir benutzen die Methode `is_err` auf `Result`, um zu prüfen, ob es sich um
-einen Fehler handelt und daher nicht gesetzt ist, was bedeutet, dass die Suche
-unter Berücksichtigung der Groß-/Kleinschreibung durchgeführt werden soll. Wenn
-die Umgebungsvariable `CASE_INSENSITIVE` auf irgendetwas gesetzt ist, gibt
-`is_err` den Wert false zurück und das Programm führt eine Suche ohne
-Berücksichtigung der Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den
-*Wert* der Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also
-prüfen wir mit `is_err`, anstatt mit `unwrap`, `expect` oder einer der anderen
-Methoden, die wir bei `Result` gesehen haben.
+Wir benutzen die Methode `is_ok` auf `Result`, um zu prüfen, ob die
+Umgebungsvariable gesetzt ist, was bedeutet, dass das Programm die Suche
+ohne Berücksichtigung der Groß-/Kleinschreibung durchführen soll. Wenn
+die Umgebungsvariable `IGNORE_CASE` keinen Wert hat, gibt `is_ok` false zurück
+und das Programm führt eine Suche mit Berücksichtigung der
+Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den *Wert* der
+Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also prüfen wir
+mit `is_ok`, anstatt mit `unwrap`, `expect` oder einer der anderen Methoden,
+die wir bei `Result` gesehen haben.
 
-Wir übergeben den Wert in der Variablen `case_sensitive` an die
+Wir übergeben den Wert in der Variablen `ignore_case` an die
 `Config`-Instanz, sodass die Funktion `run` diesen Wert lesen und entscheiden
-kann, ob sie `search` oder `search_case_insensitive` aufrufen soll, wie wir es
+kann, ob sie `search_case_insensitive` oder `search` aufrufen soll, wie wir es
 in Codeblock 12-22 implementiert haben.
 
 Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
@@ -664,21 +661,25 @@ How dreary to be somebody!
 ```
 
 Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
-`CASE_INSENSITIVE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
+`IGNORE_CASE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
 `to`.
+
+```console
+$ IGNORE_CASE=1 cargo run -- to poem.txt
+```
 
 Wenn du die PowerShell verwendest, sind das Setzen der Umgebungsvariable und
 das Ausführen des Programms separate Befehle:
 
 ```console
-PS> $Env:CASE_INSENSITIVE=1; cargo run to poem.txt
+PS> $Env:IGNORE_CASE=1; cargo run to poem.txt
 ```
 
-Dadurch bleibt `CASE_INSENSITIVE` für den Rest deiner Shell-Sitzung bestehen.
-Sie kann mit `Remove-Item` zurückgesetzt werden:
+Dadurch bleibt `IGNORE_CASE` für den Rest deiner Shell-Sitzung bestehen. Sie
+kann mit `Remove-Item` zurückgesetzt werden:
 
 ```console
-PS> Remove-Item Env:CASE_INSENSITIVE
+PS> Remove-Item Env:IGNORE_CASE
 ```
 
 Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
