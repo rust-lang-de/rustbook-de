@@ -507,7 +507,7 @@ Abkürzung für `^0.8.3`, was für alle Versionen ab `0.8.3` und kleiner als
 
 Cargo geht davon aus dass die öffentliche API dieser Versionen kompatibel zur
 Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
-Patch-Version erhälten, die noch mit dem Code in diesem Kapitel kompiliert
+Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.
 
