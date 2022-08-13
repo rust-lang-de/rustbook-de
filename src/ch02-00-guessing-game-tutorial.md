@@ -254,7 +254,7 @@ gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Ar
 erzeugt.
 
 Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderliche
-Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines `String`
+Variable erzeugt, die derzeit an eine neue, leere Instanz eines `String`
 gebunden ist. Uff!
 
 ### Empfangen von Benutzereingaben
