@@ -463,7 +463,7 @@ eine Eingabe über die Tastatur und geben sie dann aus.
 
 ## Generieren einer Geheimzahl
 
-Als nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
+Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
 versucht. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
