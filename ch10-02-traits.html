@@ -166,8 +166,7 @@ anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufru
 Codeblock 10-12 zeigt die Definition eines öffentlichen <code>Summary</code>-Merkmals, das
 dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize(&amp;self) -&gt; String;
@@ -201,8 +200,7 @@ Struktur <code>Tweet</code> definieren wir <code>summarize</code> als den Benutz
 gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
 Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -300,8 +298,7 @@ implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 <code>summarize</code> des Merkmals <code>Summary</code> an, anstatt nur die Methodensignatur zu
 definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize(&amp;self) -&gt; String {
@@ -348,8 +345,7 @@ Beispiel könnten wir das Merkmal <code>Summary</code> so definieren, dass wir e
 <code>summarize_author</code> haben, deren Implementierung erforderlich ist, und dann eine
 Methode <code>summarize</code> definieren, die eine Standard-Implementierung hat und die
 Methode <code>summarize_author</code> aufruft:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize_author(&amp;self) -&gt; String;
@@ -362,8 +358,7 @@ Methode <code>summarize_author</code> aufruft:</p>
 </span></code></pre></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
@@ -418,8 +413,7 @@ haben, um eine Funktion <code>notify</code> zu definieren, die die Methode <code
 ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das Merkmal
 <code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code>
 verwenden, etwa so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -442,8 +436,7 @@ diese Typen kein <code>Summary</code> implementieren.</p>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die <em>Merkmalsabgrenzung</em> (trait
 bound) genannt wird; sie sieht so aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -509,8 +502,7 @@ einer Funktion ohne viele Merkmalsabgrenzungen.</p>
 <h3 id="rückgabetypen-die-merkmale-implementieren"><a class="header" href="#rückgabetypen-die-merkmale-implementieren">Rückgabetypen, die Merkmale implementieren</a></h3>
 <p>Wir können die Syntax <code>impl Trait</code> auch für den Rückgabetyp verwenden, wie hier
 gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -556,8 +548,7 @@ musst.</p>
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
 oder einen <code>Tweet</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
 funktionieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -633,8 +624,7 @@ Methoden“</a> in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ 
 innerer Typ <code>T</code> die Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die
 den Vergleich bzw. eine Ausgabe ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Display;
 
@@ -678,8 +668,7 @@ zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Merkmal
 Typ aufrufen, der das Merkmal <code>Display</code> implementiert. Zum Beispiel können wir
 ganze Zahlen in ihre entsprechenden <code>String</code>-Werte umwandeln, weil ganze
 Zahlen <code>Display</code> implementieren:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = 3.to_string();
 <span class="boring">}

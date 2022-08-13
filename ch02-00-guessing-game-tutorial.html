@@ -314,8 +314,7 @@ nicht mehr ändern. Wir werden dieses Konzept im Abschnitt <a href="ch03-01-vari
 Veränderlichkeit“</a> in Kapitel 3 ausführlich
 besprechen. Um eine Variable veränderlich zu machen, ergänzen wir <code>mut</code> vor dem
 Variablennamen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let apples = 5; // unveränderlich
 let mut bananas = 5; // veränderlich
@@ -341,7 +340,7 @@ Du wirst eine Funktion <code>new</code> bei vielen Typen finden, weil es ein
 gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
 erzeugt.</p>
 <p>Insgesamt hat die Zeile <code>let mut guess = String::new();</code> eine veränderliche
-Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines <code>String</code>
+Variable erzeugt, die derzeit an eine neue, leere Instanz eines <code>String</code>
 gebunden ist. Uff!</p>
 <h3 id="empfangen-von-benutzereingaben"><a class="header" href="#empfangen-von-benutzereingaben">Empfangen von Benutzereingaben</a></h3>
 <p>Erinnere dich, dass wir die Ein-/Ausgabefunktionalität aus der
@@ -490,8 +489,7 @@ erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
 Formatierungszeichenkette aufgeführt ist, der zweite Satz enthält den zweiten
 Wert usw. Das Ausgeben mehrerer Werte in einem Aufruf von <code>println!</code> würde
 folgendermaßen aussehen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;

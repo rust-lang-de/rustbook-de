@@ -145,8 +145,7 @@ Methodenaufrufe verbraucht werden müssen, um einen Effekt zu haben. Der Program
 Codeblock 13-10 erstellt beispielsweise einen Iterator über die Elemente im
 Vektor <code>v1</code> indem die in <code>Vec&lt;T&gt;</code> definierte Methode <code>iter</code> aufgerufen wird.
 Dieser Programmcode macht nichts Sinnvolles.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -164,8 +163,7 @@ gespeichert und es findet noch keine Iteration statt. Erst wenn die
 <code>for</code>-Schleife mit dem Iterator in <code>v1_iter</code> aufgerufen wird, wird jedes
 Element von <code>v1_iter</code> in einer Iteration der Schleife verwendet, die den
 jeweiligen Wert ausgibt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -193,8 +191,7 @@ bewerkstelligen.</p>
 <p>Alle Iteratoren implementieren ein Merkmal namens <code>Iterator</code> das in der
 Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
 aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
     type Item;
@@ -300,8 +297,7 @@ Funktionsabschluss auf jedes Element anwendet, um einen neuen Iterator zu
 erstellen. Dieser Funktionsabschluss inkrementiert den Wert jedes Elementes des
 Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust not_desired_behavior">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust not_desired_behavior"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
@@ -338,8 +334,7 @@ data type).</p>
 der vom Aufruf der <code>map</code>-Methode zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 

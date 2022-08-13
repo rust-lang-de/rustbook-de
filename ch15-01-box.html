@@ -239,8 +239,7 @@ zu definieren.</p>
 dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine bekannte
 Grösse hat, was wir zeigen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum List {
     Cons(i32, List),
@@ -319,8 +318,7 @@ nicht rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
 <p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Message {
     Quit,

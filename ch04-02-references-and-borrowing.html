@@ -275,8 +275,7 @@ veränderliche Referenz auf einen Wert hast, kannst du keine andere Referenz auf
 diesen Wert haben. Dieser Code versucht, zwei veränderliche Referenzen auf <code>s</code>
 zu erstellen, und wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -330,8 +329,7 @@ Daten-Wettlaufsituationen gar nicht erst kompiliert!</p>
 <p>Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderliche Verweise erlaubt, nur
 nicht <em>gleichzeitige</em>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -345,8 +343,7 @@ let r2 = &amp;mut s;
 </span></code></pre></pre>
 <p>Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -386,8 +383,7 @@ eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt.
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
 unveränderlichen Referenzen in <code>println!</code> vor der Einführung der veränderlichen
 Referenz erfolgt:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 

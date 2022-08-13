@@ -174,8 +174,7 @@ $ cd adder
 <p>Der Inhalt der Datei <em>src/lib.rs</em> in deiner Bibliothek <code>adder</code> sollte wie
 Codeblock 11-1 aussehen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[cfg(test)]
 mod tests {
@@ -807,8 +806,7 @@ Wert der Funktion <code>greeting</code> ausgeben. Fügen wir eine benutzerdefini
 Fehlermeldung hinzu, die aus einer Formatierungszeichenkette mit einem
 Platzhalter besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code>
 gefüllt ist:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
 </span><span class="boring">    String::from(&quot;Hallo!&quot;)
@@ -1024,8 +1022,7 @@ in der Testfunktion den Fall <code>else if value &gt; 100</code> ausführt.</p>
 <code>expected</code>-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren
 Code einbringen, indem wir die Zweige <code>if value &lt; 1</code>  und <code>else if value &gt; 100</code>
 vertauschen:</p>
-<pre><pre class="playground"><code class="language-rust not_desired_behavior">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust not_desired_behavior"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,

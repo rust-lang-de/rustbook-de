@@ -144,8 +144,7 @@ Preise der Artikel in einem Einkaufswagen.</p>
 <h3 id="erstellen-eines-neuen-vektors"><a class="header" href="#erstellen-eines-neuen-vektors">Erstellen eines neuen Vektors</a></h3>
 <p>Um einen neuen, leeren Vektor zu erstellen, rufen wir die Funktion <code>Vec::new</code>
 auf, wie in Codeblock 8-1 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v: Vec&lt;i32&gt; = Vec::new();
 <span class="boring">}
@@ -169,8 +168,7 @@ enthält. Codeblock 8-2 erzeugt einen neuen <code>Vec&lt;i32&gt;</code>, der die
 und <code>3</code> enthält. Als Integer-Typ wird <code>i32</code> verwendet, weil das der
 Standard-Integer-Typ ist, wie wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
 Kapitel 3 besprochen haben.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3];
 <span class="boring">}
@@ -183,8 +181,7 @@ Nächstes werden wir uns ansehen, wie man einen Vektor modifiziert.</p>
 <h3 id="aktualisieren-eines-vektors"><a class="header" href="#aktualisieren-eines-vektors">Aktualisieren eines Vektors</a></h3>
 <p>Um einen Vektor zu erstellen und ihm dann Elemente hinzuzufügen, können wir die
 Methode <code>push</code> verwenden, wie in Codeblock 8-3 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = Vec::new();
 
@@ -207,8 +204,7 @@ referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
 Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.</p>
 <p>Codeblock 8-4 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
 mittels Indexierungssyntax und die Methode <code>get</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
 
@@ -235,8 +231,7 @@ verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
 vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
 Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
 Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust should_panic panics">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust should_panic panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
 
@@ -270,8 +265,7 @@ haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
 wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![1, 2, 3, 4, 5];
 
@@ -322,8 +316,7 @@ alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
 Element zur gleichen Zeit zuzugreifen. Codeblock 8-7 zeigt, wie man eine
 <code>for</code>-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
 Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![100, 32, 57];
 for i in &amp;v {
@@ -336,8 +329,7 @@ durch Iterieren über die Elemente mittels <code>for</code>-Schleife</span></p>
 <p>Wir können auch über veränderliche Referenzen der Elemente eines veränderlichen
 Vektors iterieren, um Änderungen an allen Elementen vorzunehmen. Die
 <code>for</code>-Schleife in Codeblock 8-8 addiert zu jedem Element <code>50</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![100, 32, 57];
 for i in &amp;mut v {
@@ -373,8 +365,7 @@ die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
 derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
 erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
 Wir haben dies in Codeblock 8-9 demonstriert.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum SpreadsheetCell {
     Int(i32),
@@ -413,8 +404,7 @@ letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
 <h3 id="beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt"><a class="header" href="#beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt">Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt</a></h3>
 <p>Wie bei jeder anderen Struktur wird ein Vektor freigegeben, wenn er den
 Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
     let v = vec![1, 2, 3, 4];

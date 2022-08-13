@@ -140,8 +140,7 @@ erörtern, warum und wann du jedes einzelne Muster verwenden solltest.</p>
 <h3 id="passende-literale"><a class="header" href="#passende-literale">Passende Literale</a></h3>
 <p>Wie du in Kapitel 6 gesehen hast, kannst du Muster direkt mit Literalen
 abgleichen. Der folgende Code enthält einige Beispiele:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 1;
 
@@ -170,8 +169,7 @@ Wert <code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10
 und <code>println!</code> am Ende an und versuche herauszufinden, was der Code ausgeben
 wird, bevor du diesen Code ausführst oder weiterliest.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = Some(5);
     let y = 10;
@@ -217,8 +215,7 @@ die das <em>oder</em>-Operator-Muster ist. Zum Beispiel gleicht der folgende Cod
 Wert von <code>x</code> mit den <code>match</code>-Zweigen ab, wobei der erste davon eine
 <em>oder</em>-Option hat, was bedeutet, wenn der Wert von <code>x</code> zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 1;
 
@@ -234,8 +231,7 @@ diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:</p>
 <p>Die Syntax <code>..=</code> erlaubt es uns, einen inklusiven Wertebereich abzugleichen.
 Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des
 vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 5;
 
@@ -255,8 +251,7 @@ einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
 nicht, sind <code>char</code> und numerische Werte, Bereiche sind nur mit numerischen oder
 <code>char</code>-Werten zulässig.</p>
 <p>Hier ist ein Beispiel mit Bereichen von <code>char</code>-Werten:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 'c';
 
@@ -521,8 +516,7 @@ ist. Die Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht
 erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
 überschreiben, sondern dass er die Einstellung rückgängig machen kann und ihr
 einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let mut setting_value = Some(5);
     let new_setting_value = Some(10);
@@ -556,8 +550,7 @@ werden, wollen wir erlauben, dass <code>setting_value</code> den Wert von
 verwenden, um bestimmte Werte zu ignorieren. Codeblock 18-19 zeigt ein Beispiel
 für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
 Elementen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let numbers = (2, 4, 8, 16, 32);
 
@@ -597,8 +590,7 @@ und dem Verwenden eines Namens, der mit einem Unterstrich beginnt. Die Syntax
 <code>_x</code> bindet immer noch den Wert an die Variable, während <code>_</code> überhaupt nicht
 bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
 wird uns Codeblock 18-21 einen Fehler liefern.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s = Some(String::from(&quot;Hallo!&quot;));
 
@@ -616,8 +608,7 @@ Wertes übernehmen könnte</span></p>
 verschoben wird, was uns daran hindert, <code>s</code> wieder zu verwenden. Das Verwenden
 des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 18-22 wird
 ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s = Some(String::from(&quot;Hallo!&quot;));
 
@@ -641,8 +632,7 @@ explizit zugeordnet haben. In Codeblock 18-23 haben wir eine Struktur <code>Poin
 die eine Koordinate im dreidimensionalen Raum enthält. Im <code>match</code>-Ausdruck
 wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den Feldern
 <code>y</code> und <code>z</code> ignorieren.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    struct Point {
         x: i32,
@@ -666,8 +656,7 @@ oder zwei Felder relevant sind.</p>
 <p>Die Syntax <code>..</code> wird auf so viele Werte wie nötig erweitert. Codeblock 18-24
 zeigt, wie man <code>..</code> mit einem Tupel verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let numbers = (2, 4, 8, 16, 32);
 
@@ -730,8 +719,7 @@ es ein Muster allein erlaubt.</p>
 Codeblock 18-26 zeigt ein <code>match</code>, wobei der erste Zweig das Muster <code>Some(x)</code>
 und die Abgleichsbedingung <code>if x % 2 == 0</code> (die wahr ist, wenn die Zahl gerade
 ist) hat.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let num = Some(4);
 
@@ -766,8 +754,7 @@ Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die Variable auß
 Wert der äußeren Variable testen konnten. Codeblock 18-27 zeigt, wie wir eine
 Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = Some(5);
     let y = 10;
@@ -800,8 +787,7 @@ Codeblock 18-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
 einem Muster, das <code>|</code> verwendet. Der wichtige Teil dieses Beispiels ist, dass
 die Abgleichsbedingung <code>if y</code> auf <code>4</code>, <code>5</code> <em>und</em> <code>6</code> zutrifft, auch wenn es so
 aussehen mag, als ob <code>if y</code> nur auf <code>6</code> zutrifft.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 4;
     let y = false;
@@ -841,8 +827,7 @@ liegt. Wir wollen den Wert auch an die Variable <code>id_variable</code> binden,
 ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
 Variable <code>id</code> nennen, so wie das Feld, aber für dieses Beispiel werden wir
 einen anderen Namen verwenden.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    enum Message {
         Hello { id: i32 },

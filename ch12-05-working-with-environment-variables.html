@@ -405,8 +405,7 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -513,8 +512,7 @@ auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion <code>searc
 oder die Funktion <code>search_case_insensitive</code> aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;

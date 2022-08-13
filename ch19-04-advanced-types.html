@@ -174,8 +174,7 @@ haben.</p>
 vorhandenen Typ einen anderen Namen zu geben. Hierfür verwenden wir das
 Schlüsselwort <code>type</code>. Zum Beispiel können wir den Alias <code>Kilometers</code> für <code>i32</code>
 so anlegen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Kilometers = i32;
 <span class="boring">
@@ -189,8 +188,7 @@ so anlegen:</p>
 <code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 19-15 erstellt haben, ist
 <code>Kilometers</code> kein separater, neuer Typ. Werte, die den Typ <code>Kilometers</code> haben,
 werden genauso behandelt wie Werte des Typs <code>i32</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Kilometers = i32;
 
@@ -211,8 +209,7 @@ Zum Beispiel könnten wir einen längeren Typ wie diesen haben:</p>
 <p>Das Schreiben dieses langen Typs in Funktionssignaturen und als
 Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stelle
 dir vor, du hättest ein Projekt voller Code wie das in Codeblock 19-24.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!(&quot;hallo&quot;));
 
@@ -232,8 +229,7 @@ Stellen</span></p>
 reduziert. In Codeblock 19-25 haben wir einen Alias namens <code>Thunk</code> für den
 verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias <code>Thunk</code> ersetzen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Thunk = Box&lt;dyn Fn() + Send + 'static&gt;;
 
@@ -264,8 +260,7 @@ Bibliothek hat eine Struktur <code>std::io::Error</code>, die alle möglichen E/
 repräsentiert. Viele der Funktionen in <code>std::io</code> geben <code>Result&lt;T, E&gt;</code> zurück,
 wobei für <code>E</code> der Typ <code>std::io::Error</code> verwendet wird, so wie bei diesen
 Funktionen im Merkmal (trait) <code>Write</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
 use std::io::Error;
@@ -380,8 +375,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 Abschnitts <a href="ch06-02-match.html">„Das Kontrollflusskonstrukt <code>match</code>“</a> haben wir
 erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktioniert
 zum Beispiel der folgende Code nicht:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">    let guess = &quot;3&quot;;
 </span>    let guess = match guess.trim().parse() {
@@ -408,8 +402,7 @@ Schleife, sodass wir im <code>Err</code>-Fall <code>guess</code> niemals einen W
 <p>Der Niemals-Typ ist auch beim Makro <code>panic!</code> nützlich. Erinnere dich an die
 Funktion <code>unwrap</code>, die wir auf <code>Option&lt;T&gt;</code> Werte aufrufen, um einen Wert zu
 erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum Option&lt;T&gt; {
 </span><span class="boring">    Some(T),
@@ -434,8 +427,7 @@ des gesamten <code>match</code>-Ausdrucks <code>T</code> ist. Dieser Code funkti
 keinen Wert produziert; es beendet das Programm. Im Fall von <code>None</code> geben wir
 keinen Wert von <code>unwrap</code> zurück, also ist dieser Code gültig.</p>
 <p>Ein letzter Ausdruck, der den Typ <code>!</code> hat, ist <code>loop</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    print!(&quot;für immer &quot;);
 
@@ -460,8 +452,7 @@ sich ist ein DST. Wir können nicht wissen, wie lang die Zeichenkette zur
 Laufzeit ist, d.h. wir können weder eine Variable vom Typ <code>str</code> erzeugen, noch
 können wir ein Argument vom Typ <code>str</code> nehmen. Betrachte den folgenden Code, der
 nicht funktioniert:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s1: str = &quot;Guten Tag!&quot;;
     let s2: str = &quot;Wie geht es dir?&quot;;
@@ -505,8 +496,7 @@ automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
 ist. Zusätzlich fügt Rust implizit jeder generischen Funktion eine
 Merkmalsabgrenzung auf <code>Sized</code> hinzu. Das heißt, eine generische
 Funktionsdefinition wie diese:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T&gt;(t: T) {
     // --abschneiden--
@@ -514,8 +504,7 @@ Funktionsdefinition wie diese:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>wird tatsächlich so behandelt, als hätten wir das geschrieben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T: Sized&gt;(t: T) {
     // --abschneiden--
@@ -525,8 +514,7 @@ Funktionsdefinition wie diese:</p>
 <p>Standardmäßig funktionieren generische Funktionen nur bei Typen, die zur
 Kompilierzeit eine bekannte Größe haben. Du kannst jedoch die folgende
 spezielle Syntax verwenden, um diese Einschränkung zu lockern:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T: ?Sized&gt;(t: &amp;T) {
     // --abschneiden--

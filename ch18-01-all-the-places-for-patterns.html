@@ -232,8 +232,7 @@ dass eine <code>while</code>-Schleife so lange läuft, wie ein Muster weiterhin 
 Codeblock 18-2 haben wir eine <code>while let</code>-Schleife geschrieben, die einen
 Vektor als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
 Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let mut stack = Vec::new();
 
@@ -259,8 +258,7 @@ Element von unserem Stapel zu holen.</p>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
 Codeblock 18-3 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
 ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerlegen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v = vec!['a', 'b', 'c'];
 
@@ -290,8 +288,7 @@ zum Muster <code>(index, value)</code> passt, ist <code>index</code> gleich <cod
 <code>match</code> und <code>if let</code> besprochen, aber tatsächlich haben wir Muster auch an
 anderen Stellen verwendet, auch in <code>let</code>-Anweisungen. Betrachte zum Beispiel
 diese einfache Variablenzuweisung mit <code>let</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 <span class="boring">}
@@ -311,8 +308,7 @@ immer der Wert ist.“.</p>
 <p>Um den Aspekt des Musterabgleichs (pattern matching) von <code>let</code> deutlicher zu
 sehen, betrachte Codeblock 18-4, der ein Muster mit <code>let</code> verwendet, um ein
 Tupel zu destrukturieren.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y, z) = (1, 2, 3);
 <span class="boring">}
@@ -329,8 +325,7 @@ Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
 Kompilierfehler. Beispielsweise zeigt Codeblock 18-5 einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y) = (1, 2, 3);
 <span class="boring">}

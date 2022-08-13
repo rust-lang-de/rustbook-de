@@ -199,8 +199,7 @@ der Methode <code>map</code> an, die vom Merkmal <code>Iterator</code> in der St
 bereitgestellt wird. Um die Funktion <code>map</code> zu verwenden, um einen Vektor von
 Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss wie diesen verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -209,8 +208,7 @@ Funktionsabschluss wie diesen verwenden:</p>
 </span></code></pre></pre>
 <p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben anstelle des
 Funktionsabschlusses, so wie hier:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -229,8 +227,7 @@ Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
 Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
 was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
 Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    enum Status {
         Value(u32),
@@ -255,8 +252,7 @@ konkreten Typ haben, der rückgabefähig ist; es ist dir beispielsweise nicht
 erlaubt, den Funktionszeiger <code>fn</code> als Rückgabetyp zu verwenden.</p>
 <p>Der folgende Code versucht, einen Funktionsabschluss direkt zurückzugeben, aber
 er lässt sich nicht kompilieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
     |x| x + 1
@@ -285,8 +281,7 @@ error: could not compile `functions-example` due to previous error
 viel Platz benötigt wird, um den Funktionsabschluss zu speichern. Wir haben
 vorhin eine Lösung für dieses Problem gesehen. Wir können ein Merkmalsobjekt
 (trait object) verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
     Box::new(|x| x + 1)

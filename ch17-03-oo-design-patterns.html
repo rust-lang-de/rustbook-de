@@ -228,8 +228,7 @@ innerhalb einer <code>Option&lt;T&gt;</code> in einem privaten Feld namens <code
 das Zustandsobjekt zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code>
 notwendig ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Post {
     state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -461,8 +460,7 @@ jetzt bis Zeile 10!</p>
 <code>state</code> auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
 sollte, wie in Codeblock 17-16 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -560,8 +558,7 @@ dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von
 abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Methode, die auf seinen
 <code>state</code> definiert ist, wie in Codeblock 17-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -670,8 +667,7 @@ die <code>content</code>-Methode letztlich auf dem Typ aufgerufen wird, der das 
 unterbringen, welcher Inhalt je nach Zustand zurückgegeben wird, wie in
 Codeblock 17-18 gezeigt wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -887,8 +883,7 @@ Code nicht einmal kompilieren lässt. Codeblock 17-19 zeigt die Definition einer
 Struktur <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser
 Strukturen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Post {
     content: String,
@@ -946,8 +941,7 @@ indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> def
 <code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Codeblock 17-20
 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    content: String,

@@ -147,8 +147,7 @@ möglich sind, wie zum Beispiel als wir im Abschnitt <a href="ch02-00-guessing-g
 mit der Geheimzahl“</a> eine
 Zeichenkette (<code>String</code>) mittels <code>parse</code> zu einem numerischen Typ umwandelten,
 müssen wir eine Typ-Annotation ergänzen, wie hier:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let guess: u32 = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
 <span class="boring">}
@@ -181,7 +180,7 @@ Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
 verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <p><span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span></p>
-<table><thead><tr><th style="text-align: right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
 <tr><td style="text-align: right">8 Bit</td><td><code>i8</code></td><td><code>u8</code></td></tr>
 <tr><td style="text-align: right">16 Bit</td><td><code>i16</code></td><td><code>u16</code></td></tr>
 <tr><td style="text-align: right">32 Bit</td><td><code>i32</code></td><td><code>u32</code></td></tr>
@@ -189,6 +188,7 @@ verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <tr><td style="text-align: right">128 Bit</td><td><code>i128</code></td><td><code>u128</code></td></tr>
 <tr><td style="text-align: right">arch</td><td><code>isize</code></td><td><code>usize</code></td></tr>
 </tbody></table>
+</div>
 <p>Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. <em>Vorzeichenbehaftet</em> (signed) und <em>vorzeichenlos</em>
 (unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
@@ -218,13 +218,14 @@ Zahlenliterale können auch <code>_</code> als visuelles Trennzeichen verwenden,
 Zahl leichter lesbar zu machen, z.B. <code>1_000</code>, das den gleichen Wert hat, wie
 wenn du <code>1000</code> angegeben hättest.</p>
 <p><span class="caption">Tabelle 3-2: Ganzzahl-Literale in Rust</span></p>
-<table><thead><tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr></thead><tbody>
 <tr><td>Dezimal</td><td><code>98_222</code></td></tr>
 <tr><td>Hex</td><td><code>0xff</code></td></tr>
 <tr><td>Oktal</td><td><code>0o77</code></td></tr>
 <tr><td>Binär</td><td><code>0b1111_0000</code></td></tr>
 <tr><td>Byte (nur <code>u8</code>)</td><td><code>b'A'</code></td></tr>
 </tbody></table>
+</div>
 <p>Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
 bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
 Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <code>isize</code> oder
@@ -430,8 +431,7 @@ wahrscheinlich, dass du einen Vektor verwenden solltest. In <a href="ch08-01-vec
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
 verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let months = [&quot;Januar&quot;, &quot;Februar&quot;, &quot;März&quot;, &quot;April&quot;, &quot;Mai&quot;, &quot;Juni&quot;, &quot;Juli&quot;,
               &quot;August&quot;, &quot;September&quot;, &quot;Oktober&quot;, &quot;November&quot;, &quot;Dezember&quot;];
@@ -440,8 +440,7 @@ verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
 <p>Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
 Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
 etwa so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a: [i32; 5] = [1, 2, 3, 4, 5];
 <span class="boring">}
@@ -451,8 +450,7 @@ dass das Array fünf Elemente enthält.</p>
 <p>Du kannst ein Array auch so initialisieren, dass es für jedes Element denselben
 Wert enthält, indem du den Anfangswert, gefolgt von einem Semikolon, und dann
 die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [3; 5];
 <span class="boring">}

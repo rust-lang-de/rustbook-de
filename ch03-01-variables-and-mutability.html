@@ -242,8 +242,7 @@ Teile des Codes Bescheid wissen müssen.</p>
 Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
 berechnet werden könnte.</p>
 <p>Hier ist ein Beispiel für eine Konstantendeklaration:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}
@@ -324,8 +323,7 @@ wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
 Benutzer, durch Eingeben von Leerzeichen zu zeigen, wie viele Leerzeichen er
 zwischen irgendeinem Text haben möchte, und wir möchten diese Eingabe als Zahl
 speichern:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let spaces = &quot;   &quot;;
 let spaces = spaces.len();
@@ -336,8 +334,7 @@ ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
 den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
 dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut spaces = &quot;   &quot;;
 spaces = spaces.len();

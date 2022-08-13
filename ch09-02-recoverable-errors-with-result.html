@@ -144,8 +144,7 @@ den Vorgang zu beenden.</p>
 <p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result">„Behandeln potentieller Fehler mit dem Typ
 <code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
 Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
     Ok(T),
@@ -370,8 +369,7 @@ einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
 kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -450,8 +448,7 @@ erleichtern.</p>
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
 den <code>?</code>-Operator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -499,8 +496,7 @@ Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
 weiter verkürzen, indem wir die Methodenaufrufe unmittelbar nach dem <code>?</code>
 verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -528,8 +524,7 @@ das ist nur eine andere, ergonomischere Schreibweise.</p>
 <p>Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
 machen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs;
 use std::io;

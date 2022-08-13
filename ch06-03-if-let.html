@@ -140,8 +140,7 @@ Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
 auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
 Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 match config_max {
@@ -160,8 +159,7 @@ ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
 Codeblock 6-6:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 if let Some(max) = config_max {

@@ -266,8 +266,7 @@ der wenigen Orte in Rust, der dieses Verhalten aufweist.</p>
 aufrufst, fügt Rust automatisch <code>&amp;</code>, <code>&amp;mut</code> oder <code>*</code> hinzu, sodass <code>object</code>
 zur Signatur der Methode passt. Mit anderen Worten sind folgende Aufrufe
 gleich:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[derive(Debug,Copy,Clone)]
 </span><span class="boring">struct Point {

@@ -275,8 +275,7 @@ Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes Merkmal
 (trait) namens <code>Messenger</code> implementiert. Codeblock 15-20 zeigt den
 Bibliothekscode:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Messenger {
     fn send(&amp;self, msg: &amp;str);
@@ -342,8 +341,7 @@ Mock-Objekt die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den
 Versuch, ein Mock-Objekt zu implementieren, um genau das zu tun, aber der
 Ausleihenprüfer erlaubt dies nicht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -583,8 +581,7 @@ absichtlich, zwei veränderliche Ausleihen zu erstellen, die für denselben
 Bereich aktiv sind, um zu veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran
 hindert, dies zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust panics">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);

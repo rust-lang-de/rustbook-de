@@ -253,8 +253,7 @@ herum betrachten zu müssen.</p>
 (scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
 innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
 Variable an:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = &quot;Hallo&quot;;
 <span class="boring">}
@@ -264,8 +263,7 @@ Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
 <em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable <code>s</code> gültig ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{                      // s ist hier nicht gültig, es wurde noch nicht deklariert
     let s = &quot;Hallo&quot;;   // s ist ab dieser Stelle gültig
@@ -313,8 +311,7 @@ Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
 zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
 Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
 verwendest:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
 <span class="boring">}
@@ -326,8 +323,7 @@ wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im Abschnitt
 in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
 verweisen“</a> über den Namensraum mit Modulen sprechen. </p>
 <p>Diese Art von Zeichenkette kann <em>verändert</em> werden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -373,8 +369,7 @@ Fehler. Wir müssen eine <em>Allokierung</em> mit genau einer <em>Freigabe</em> 
 sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
 eine Variante unseres Gültigkeitsbereich-Beispiels aus Codeblock 4-1, bei der
 ein <code>String</code> anstelle eines Zeichenkettenliterals verwendet wird:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
     let s = String::from(&quot;Hallo&quot;); // s ist ab dieser Stelle gültig
@@ -407,8 +402,7 @@ Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.<
 <p>Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
 interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
 4-2.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = x;
@@ -422,8 +416,7 @@ jetzt zwei Variablen <code>x</code> und <code>y</code> und beide sind gleich <co
 der Fall, denn ganze Zahlen sind einfache Werte mit einer bekannten, festen
 Größe, und diese beiden Werte <code>5</code> werden auf den Stapelspeicher gelegt.</p>
 <p>Schauen wir uns nun die <code>String</code>-Variante an:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1;
@@ -477,8 +470,7 @@ Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann
 freizugeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1;
@@ -529,8 +521,7 @@ nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
 da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
 du sie wahrscheinlich schon einmal gesehen.</p>
 <p>Hier ist ein Beispiel für die Methode <code>clone</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1.clone();
@@ -547,8 +538,7 @@ visueller Indikator dafür, dass etwas anderes vor sich geht.</p>
 <p>Es gibt noch einen weiteren Kniff, über den wir noch nicht gesprochen haben.
 Folgender Code mit ganzen Zahlen, der teilweise in Codeblock 4-2 gezeigt wurde,
 funktioniert und ist gültig:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = x;

@@ -206,8 +206,7 @@ Verhalten zu ermöglichen.</p>
 <p>In Codeblock 17-3 wird gezeigt, wie ein Merkmal namens <code>Draw</code> mit einer Methode
 namens <code>draw</code> definiert werden kann:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Draw {
     fn draw(&amp;self);
@@ -222,8 +221,7 @@ Codeblock 17-4 definiert eine Struktur namens <code>Screen</code>, die einen Vek
 Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
 <code>Box</code>, der das Merkmal <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -240,8 +238,7 @@ einem Feld <code>components</code>, das einen Vektor von Merkmalsobjekten enthä
 <p>Auf der Struktur <code>Screen</code> definieren wir eine Methode namens <code>run</code>, die die
 <code>draw</code>-Methode auf jeder ihrer <code>components</code> aufruft, wie in Codeblock 17-5 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -270,8 +267,7 @@ konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
 wie in Codeblock 17-6 definieren können:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);

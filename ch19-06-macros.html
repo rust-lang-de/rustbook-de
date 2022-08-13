@@ -197,8 +197,7 @@ uns untersuchen, wie man <code>macro_rules!</code> benutzt, indem wir uns ansehe
 Makro <code>vec!</code> definiert wird. Kapitel 8 behandelte, wie wir das Makro <code>vec!</code>
 verwenden können, um einen neuen Vektor mit bestimmten Werten zu erzeugen. Zum
 Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganze Zahlen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v: Vec&lt;u32&gt; = vec![1, 2, 3];
 <span class="boring">}
@@ -209,8 +208,7 @@ erstellen. Mit einer Funktion wäre das nicht möglich,
 da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.</p>
 <p>Codeblock 19-28 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export]
 macro_rules! vec {
@@ -355,8 +353,7 @@ crate), etwa so:</p>
 <p>Als Nächstes definieren wir das Merkmal <code>HelloMacro</code> und die damit assoziierte
 Funktion:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait HelloMacro {
     fn hello_macro();

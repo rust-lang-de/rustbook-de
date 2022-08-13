@@ -268,8 +268,7 @@ Codeblock 7-15 wird gezeigt, wie zwei <code>Result</code>-Typen mit gleichem Nam
 unterschiedlichen Elternmodulen in den Gültigkeitsbereich gebracht werden und
 wie auf sie verwiesen werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
 use std::io;
@@ -300,8 +299,7 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
 indem einer der beiden <code>Result</code>-Typen mittels <code>as</code> umbenannt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Result;
 use std::io::Result as IoResult;
@@ -413,8 +411,7 @@ ausgeliefert wird, brauchen wir <em>Cargo.toml</em> nicht zu ändern, um <code>s
 einzubinden. Aber wir müssen <code>use</code> verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 <code>HashMap</code> diese Zeile verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 <span class="boring">}
@@ -428,8 +425,7 @@ viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
 beiden <code>use</code>-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten,
 Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// --abschneiden--
 use std::cmp::Ordering;
@@ -443,8 +439,7 @@ den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
 dann geschweiften Klammern um Liste der Pfadteile, die sich unterscheiden, wie
 in Codeblock 7-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// --abschneiden--
 use std::{cmp::Ordering, io};
@@ -463,8 +458,7 @@ Teilpfad teilen. Beispielsweise zeigt Codeblock 7-19 zwei <code>use</code>-Anwei
 Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 <code>std::io::Write</code> in den Gültigkeitsbereich bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io;
 use std::io::Write;
@@ -477,8 +471,7 @@ vollständige erste Pfad. Um diese beiden Pfade zu einer einzigen
 <code>use</code>-Anweisung zu verschmelzen, können wir <code>self</code> im verschachtelten Pfad
 verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
 <span class="boring">}
@@ -490,8 +483,7 @@ verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <p>Wenn wir <em>alle</em> öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator <code>*</code> angeben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::*;
 <span class="boring">}

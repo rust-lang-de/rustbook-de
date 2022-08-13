@@ -157,8 +157,7 @@ warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
 einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -273,8 +272,7 @@ haben, und wenn wir einen <code>Worker</code> aufräumen wollen, ersetzen wir <c
 <code>None</code>, sodass der <code>Worker</code> keinen Strang zum Laufen hat.</p>
 <p>Wir wissen also, dass wir die Definition von <code>Worker</code> so aktualisieren wollen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -574,8 +572,7 @@ Codeblock 20-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>A
 explizit aufzuräumen. Wir verwenden die gleiche <code>Option</code> und <code>take</code>-Technik wie
 beim Strang, um <code>sender</code> aus dem <code>ThreadPool</code> herauszuverschieben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -931,8 +928,7 @@ fn handle_connection(mut stream: TcpStream) {
 }
 </code></pre>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{
     sync::{mpsc, Arc, Mutex},

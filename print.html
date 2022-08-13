@@ -345,11 +345,12 @@ eingibst und ausführen willst, lässt es sich möglicherweise nicht kompilieren
 Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
 Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt
 dir einen Hinweis bei Code, der nicht funktionieren soll:</p>
-<table><thead><tr><th>Ferris</th><th>Bedeutung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Ferris</th><th>Bedeutung</th></tr></thead><tbody>
 <tr><td><img src="img/ferris/does_not_compile.svg" class="ferris-explain" alt="Ferris mit Fragezeichen" /></td><td>Dieser Code lässt sich nicht kompilieren!</td></tr>
 <tr><td><img src="img/ferris/panics.svg" class="ferris-explain" alt="Ferris reißt die Hände hoch" /></td><td>Dieser Code bricht ab (panic)!</td></tr>
 <tr><td><img src="img/ferris/not_desired_behavior.svg" class="ferris-explain" alt="Ferris mit einer Kralle nach oben, achselzuckend" /></td><td>Dieser Code liefert nicht das gewünschte Verhalten.</td></tr>
 </tbody></table>
+</div>
 <p>In den meisten Situationen führen wir dich zu einer funktionierenden
 Codeversion, wenn er sich nicht kompilieren lässt.</p>
 <h2 id="quellcode"><a class="header" href="#quellcode">Quellcode</a></h2>
@@ -550,8 +551,7 @@ dieses Tool wie <code>rustc</code> in die Standard-Rust-Distribution aufgenommen
 sollte also bereits auf deinem Computer installiert sein! Schaue in die
 Online-Dokumentation für weitere Details.</p>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    println!(&quot;Hallo Welt!&quot;);
 <span class="boring">}
@@ -1008,8 +1008,7 @@ nicht mehr ändern. Wir werden dieses Konzept im Abschnitt <a href="ch03-01-vari
 Veränderlichkeit“</a> in Kapitel 3 ausführlich
 besprechen. Um eine Variable veränderlich zu machen, ergänzen wir <code>mut</code> vor dem
 Variablennamen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let apples = 5; // unveränderlich
 let mut bananas = 5; // veränderlich
@@ -1035,7 +1034,7 @@ Du wirst eine Funktion <code>new</code> bei vielen Typen finden, weil es ein
 gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
 erzeugt.</p>
 <p>Insgesamt hat die Zeile <code>let mut guess = String::new();</code> eine veränderliche
-Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines <code>String</code>
+Variable erzeugt, die derzeit an eine neue, leere Instanz eines <code>String</code>
 gebunden ist. Uff!</p>
 <h3 id="empfangen-von-benutzereingaben"><a class="header" href="#empfangen-von-benutzereingaben">Empfangen von Benutzereingaben</a></h3>
 <p>Erinnere dich, dass wir die Ein-/Ausgabefunktionalität aus der
@@ -1184,8 +1183,7 @@ erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
 Formatierungszeichenkette aufgeführt ist, der zweite Satz enthält den zweiten
 Wert usw. Das Ausgeben mehrerer Werte in einem Aufruf von <code>println!</code> würde
 folgendermaßen aussehen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;
@@ -2045,8 +2043,7 @@ Teile des Codes Bescheid wissen müssen.</p>
 Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
 berechnet werden könnte.</p>
 <p>Hier ist ein Beispiel für eine Konstantendeklaration:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}
@@ -2127,8 +2124,7 @@ wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
 Benutzer, durch Eingeben von Leerzeichen zu zeigen, wie viele Leerzeichen er
 zwischen irgendeinem Text haben möchte, und wir möchten diese Eingabe als Zahl
 speichern:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let spaces = &quot;   &quot;;
 let spaces = spaces.len();
@@ -2139,8 +2135,7 @@ ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
 den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
 dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut spaces = &quot;   &quot;;
 spaces = spaces.len();
@@ -2177,8 +2172,7 @@ möglich sind, wie zum Beispiel als wir im Abschnitt <a href="ch02-00-guessing-g
 mit der Geheimzahl“</a> eine
 Zeichenkette (<code>String</code>) mittels <code>parse</code> zu einem numerischen Typ umwandelten,
 müssen wir eine Typ-Annotation ergänzen, wie hier:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let guess: u32 = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
 <span class="boring">}
@@ -2211,7 +2205,7 @@ Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
 verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <p><span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span></p>
-<table><thead><tr><th style="text-align: right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: right">Länge</th><th>Vorzeichenbehaftet</th><th>Vorzeichenlos</th></tr></thead><tbody>
 <tr><td style="text-align: right">8 Bit</td><td><code>i8</code></td><td><code>u8</code></td></tr>
 <tr><td style="text-align: right">16 Bit</td><td><code>i16</code></td><td><code>u16</code></td></tr>
 <tr><td style="text-align: right">32 Bit</td><td><code>i32</code></td><td><code>u32</code></td></tr>
@@ -2219,6 +2213,7 @@ verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <tr><td style="text-align: right">128 Bit</td><td><code>i128</code></td><td><code>u128</code></td></tr>
 <tr><td style="text-align: right">arch</td><td><code>isize</code></td><td><code>usize</code></td></tr>
 </tbody></table>
+</div>
 <p>Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. <em>Vorzeichenbehaftet</em> (signed) und <em>vorzeichenlos</em>
 (unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
@@ -2248,13 +2243,14 @@ Zahlenliterale können auch <code>_</code> als visuelles Trennzeichen verwenden,
 Zahl leichter lesbar zu machen, z.B. <code>1_000</code>, das den gleichen Wert hat, wie
 wenn du <code>1000</code> angegeben hättest.</p>
 <p><span class="caption">Tabelle 3-2: Ganzzahl-Literale in Rust</span></p>
-<table><thead><tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th>Ganzahl-Literal</th><th>Beispiel</th></tr></thead><tbody>
 <tr><td>Dezimal</td><td><code>98_222</code></td></tr>
 <tr><td>Hex</td><td><code>0xff</code></td></tr>
 <tr><td>Oktal</td><td><code>0o77</code></td></tr>
 <tr><td>Binär</td><td><code>0b1111_0000</code></td></tr>
 <tr><td>Byte (nur <code>u8</code>)</td><td><code>b'A'</code></td></tr>
 </tbody></table>
+</div>
 <p>Woher weist du also, welcher Ganzzahltyp zu verwenden ist? Wenn du dir unsicher
 bist, sind Rusts Standards im Allgemeinen ein guter Ausgangspunkt: Ganzzahlige
 Typen sind standardmäßig <code>i32</code>. Die primäre Situation, in der du <code>isize</code> oder
@@ -2460,8 +2456,7 @@ wahrscheinlich, dass du einen Vektor verwenden solltest. In <a href="ch08-01-vec
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
 verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let months = [&quot;Januar&quot;, &quot;Februar&quot;, &quot;März&quot;, &quot;April&quot;, &quot;Mai&quot;, &quot;Juni&quot;, &quot;Juli&quot;,
               &quot;August&quot;, &quot;September&quot;, &quot;Oktober&quot;, &quot;November&quot;, &quot;Dezember&quot;];
@@ -2470,8 +2465,7 @@ verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
 <p>Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
 Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
 etwa so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a: [i32; 5] = [1, 2, 3, 4, 5];
 <span class="boring">}
@@ -2481,8 +2475,7 @@ dass das Array fünf Elemente enthält.</p>
 <p>Du kannst ein Array auch so initialisieren, dass es für jedes Element denselben
 Wert enthält, indem du den Anfangswert, gefolgt von einem Semikolon, und dann
 die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [3; 5];
 <span class="boring">}
@@ -2807,8 +2800,7 @@ Der Wert von x ist: 5
 Erstens zeigt die Zeile <code>let x = five();</code>, dass wir den Rückgabewert einer
 Funktion verwenden, um eine Variable zu initialisieren. Da die Funktion <code>five</code>
 den Wert <code>5</code> zurückgibt, ist diese Zeile die gleiche wie die folgende:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 <span class="boring">}
@@ -2873,8 +2865,7 @@ manchmal sind zusätzliche Erklärungen angebracht. In solchen Fällen versehen
 Entwickler den Quellcode mit <em>Kommentaren</em>, welche der Compiler ignoriert
 und für andere Entwickler nützlich sein können.</p>
 <p>Dies ist ein einfacher Kommentar:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Hallo Welt
 <span class="boring">}
@@ -2882,8 +2873,7 @@ und für andere Entwickler nützlich sein können.</p>
 <p>In Rust beginnt ein gewöhnlicher Kommentar mit zwei Schrägstrichen; der
 Kommentar reicht dann bis zum Ende der Zeile. Für Kommentare, die über eine
 einzelne Zeile hinausgehen, musst du bei jedem Zeilenanfang <code>//</code> angeben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Hier passiert etwas kompliziertes, so komplex dass wir
 // mehrere Kommentarzeilen brauchen! Puh! Hoffentlich erklärt
@@ -3499,8 +3489,7 @@ herum betrachten zu müssen.</p>
 (scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
 innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
 Variable an:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = &quot;Hallo&quot;;
 <span class="boring">}
@@ -3510,8 +3499,7 @@ Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
 <em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable <code>s</code> gültig ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{                      // s ist hier nicht gültig, es wurde noch nicht deklariert
     let s = &quot;Hallo&quot;;   // s ist ab dieser Stelle gültig
@@ -3559,8 +3547,7 @@ Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
 zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
 Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
 verwendest:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
 <span class="boring">}
@@ -3572,8 +3559,7 @@ wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im Abschnitt
 in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
 verweisen“</a> über den Namensraum mit Modulen sprechen. </p>
 <p>Diese Art von Zeichenkette kann <em>verändert</em> werden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -3619,8 +3605,7 @@ Fehler. Wir müssen eine <em>Allokierung</em> mit genau einer <em>Freigabe</em> 
 sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
 eine Variante unseres Gültigkeitsbereich-Beispiels aus Codeblock 4-1, bei der
 ein <code>String</code> anstelle eines Zeichenkettenliterals verwendet wird:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
     let s = String::from(&quot;Hallo&quot;); // s ist ab dieser Stelle gültig
@@ -3653,8 +3638,7 @@ Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.<
 <p>Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
 interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
 4-2.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = x;
@@ -3668,8 +3652,7 @@ jetzt zwei Variablen <code>x</code> und <code>y</code> und beide sind gleich <co
 der Fall, denn ganze Zahlen sind einfache Werte mit einer bekannten, festen
 Größe, und diese beiden Werte <code>5</code> werden auf den Stapelspeicher gelegt.</p>
 <p>Schauen wir uns nun die <code>String</code>-Variante an:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1;
@@ -3723,8 +3706,7 @@ Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann
 freizugeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1;
@@ -3775,8 +3757,7 @@ nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
 da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
 du sie wahrscheinlich schon einmal gesehen.</p>
 <p>Hier ist ein Beispiel für die Methode <code>clone</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let s2 = s1.clone();
@@ -3793,8 +3774,7 @@ visueller Indikator dafür, dass etwas anderes vor sich geht.</p>
 <p>Es gibt noch einen weiteren Kniff, über den wir noch nicht gesprochen haben.
 Folgender Code mit ganzen Zahlen, der teilweise in Codeblock 4-2 gezeigt wurde,
 funktioniert und ist gültig:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = x;
@@ -4090,8 +4070,7 @@ veränderliche Referenz auf einen Wert hast, kannst du keine andere Referenz auf
 diesen Wert haben. Dieser Code versucht, zwei veränderliche Referenzen auf <code>s</code>
 zu erstellen, und wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -4145,8 +4124,7 @@ Daten-Wettlaufsituationen gar nicht erst kompiliert!</p>
 <p>Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderliche Verweise erlaubt, nur
 nicht <em>gleichzeitige</em>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -4160,8 +4138,7 @@ let r2 = &amp;mut s;
 </span></code></pre></pre>
 <p>Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -4201,8 +4178,7 @@ eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt.
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
 unveränderlichen Referenzen in <code>println!</code> vor der Einführung der veränderlichen
 Referenz erfolgt:</p>
-<pre><pre class="playground"><code class="language-rust edition2021">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
 
@@ -4337,8 +4313,7 @@ haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenk
 sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
 das, wie in Codeblock 4-7 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first_word(s: &amp;String) -&gt; usize {
     let bytes = s.as_bytes();
@@ -4358,8 +4333,7 @@ Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Methode
 <code>as_bytes</code> in ein Byte-Array um:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span>    let bytes = s.as_bytes();
@@ -4376,8 +4350,7 @@ Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Method
 </span></code></pre></pre>
 <p>Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
 Methode <code>iter</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
@@ -4409,8 +4382,7 @@ wir <code>&amp;</code> im Muster.</p>
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
 Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
@@ -4481,8 +4453,7 @@ Zeichenkettenanteilstypen</p>
 <h3 id="zeichenkettenanteilstypen-string-slices"><a class="header" href="#zeichenkettenanteilstypen-string-slices">Zeichenkettenanteilstypen (string slices)</a></h3>
 <p>Ein <em>Zeichenkettenanteilstyp</em>  (string slice) ist ein Verweis auf einen Teil
 eines <code>String</code>, und er sieht so aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo Welt&quot;);
 
@@ -4507,8 +4478,7 @@ Teil eines <code>String</code> bezieht</span></p>
 <p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index Null beginnen
 willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
 sind diese gleich:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
 
@@ -4518,8 +4488,7 @@ let slice = &amp;s[..2];
 </span></code></pre></pre>
 <p>Ebenso kannst du den Endindex weglassen, wenn dein Anteilstyp das letzte Byte
 des <code>String</code> enthält. Das bedeutet, dass diese gleich sind:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
 
@@ -4531,8 +4500,7 @@ let slice = &amp;s[3..];
 </span></code></pre></pre>
 <p>Du kannst auch beide Werte weglassen, um einen Ausschnitt der gesamten
 Zeichenkette zu beschreiben. Diese sind also gleichwertig:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
 
@@ -4556,8 +4524,7 @@ Kapitel 8.</p>
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
 „Zeichenkettenanteilstyp“ wird <code>&amp;str</code> geschrieben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn first_word(s: &amp;String) -&gt; &amp;str {
     let bytes = s.as_bytes();
@@ -4651,8 +4618,7 @@ von Fehlern zur Kompilierzeit beseitigt!</p>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
 können wir Zeichenkettenliterale richtig verstehen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = &quot;Hallo Welt!&quot;;
 <span class="boring">}
@@ -4752,8 +4718,7 @@ Funktionalität einzubüßen:</p>
 <p>Zeichenkettenanteilstypen sind, wie du dir vorstellen kannst, spezifisch für
 Zeichenketten. Es gibt aber auch einen allgemeineren Anteilstyp. Betrachte
 dieses Array:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [1, 2, 3, 4, 5];
 <span class="boring">}
@@ -4761,8 +4726,7 @@ dieses Array:</p>
 <p>Genauso wie wir vielleicht auf einen Teil einer Zeichenkette verweisen möchten,
 möchten wir vielleicht auf einen Teil eines Arrays verweisen. Wir würden das so
 machen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [1, 2, 3, 4, 5];
 
@@ -4817,8 +4781,7 @@ Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
 geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em>
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct User {
     active: bool,
@@ -5601,8 +5564,7 @@ der wenigen Orte in Rust, der dieses Verhalten aufweist.</p>
 aufrufst, fügt Rust automatisch <code>&amp;</code>, <code>&amp;mut</code> oder <code>*</code> hinzu, sodass <code>object</code>
 zur Signatur der Methode passt. Mit anderen Worten sind folgende Aufrufe
 gleich:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">#[derive(Debug,Copy,Clone)]
 </span><span class="boring">struct Point {
@@ -5936,8 +5898,7 @@ tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche <em>Variante</
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
 hast, könnten du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
 Codeblock 6-1.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddrKind {
     V4,
@@ -5975,8 +5936,7 @@ prägnanter: Anstelle einer Aufzählung innerhalb einer Struktur können wir die
 Daten direkt in jede Aufzählungsvariante einfügen. Diese neue Definition der
 Aufzählung <code>IpAddr</code> legt fest, dass sowohl die Variante <code>V4</code> als auch <code>V6</code>
 zugehörige <code>String</code>-Werte haben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddr {
     V4(String),
@@ -6003,8 +5963,7 @@ numerische Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir
 <code>V4</code>-Adressen als vier <code>u8</code>-Werte speichern und <code>V6</code>-Adressen als einen
 <code>String</code>-Wert ausdrücken wollten, wäre das mit einer Struktur nicht möglich.
 Aufzählungen lösen diesen Fall ganz einfach:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddr {
     V4(u8, u8, u8, u8),
@@ -6025,8 +5984,7 @@ wie die Standardbibliothek <code>IpAddr</code> definiert: Es hat genau die Aufz�
 die Varianten, die wir definiert und verwendet haben, aber es bettet die
 Adressdaten innerhalb der Varianten in Form von zwei verschiedenen Strukturen
 ein, die für jede Variante unterschiedlich definiert sind:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Ipv4Addr {
     // --snip--
@@ -6053,8 +6011,7 @@ nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
 mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.</p>
 <p>Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Message {
     Quit,
@@ -6078,8 +6035,7 @@ zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort <code>struct</code> verwendet und alle Varianten unter
 dem Typ <code>Message</code> zusammengefasst sind. Die folgenden Strukturen könnten die
 gleichen Daten aufnehmen wie die vorhergehenden Aufzählungsvarianten:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct QuitMessage; // leere Struktur
 struct MoveMessage {
@@ -6165,8 +6121,7 @@ Umsetzung. Als solches hat Rust keine Nullen, aber es hat eine Aufzählung, die
 das Konzept des Vorhandenseins oder Nichtvorhandenseins eines Wertes abbilden
 kann. Diese Aufzählung heißt <code>Option&lt;T&gt;</code> und ist
 <a href="https://doc.rust-lang.org/std/option/enum.Option.html">in der Standardbibliothek</a> wie folgt definiert:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Option&lt;T&gt; {
     None,
@@ -6188,8 +6143,7 @@ Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
 anstelle von <code>T</code> verwendet wird, den Gesamttyp <code>Option&lt;T&gt;</code> zu einem anderen Typ
 macht. Hier sind einige Beispiele für die Verwendung von <code>Option</code>-Werten zur
 Aufnahme von Zahlentypen und Zeichenkettentypen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let some_number = Some(5);
 let some_char = Some('e');
@@ -6213,8 +6167,7 @@ unterschiedliche Typen sind, erlaubt es der Compiler nicht <code>Option&lt;T&gt;
 verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
 dieser Code nicht kompilieren, weil er versucht, ein <code>i8</code> mit einem
 <code>Option&lt;i8&gt;</code> zu addieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: i8 = 5;
 let y: Option&lt;i8&gt; = Some(5);
@@ -6291,8 +6244,7 @@ können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
 Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
 sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Coin {
     Penny,
@@ -6342,8 +6294,7 @@ geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
 Methode mit <code>Coin::Penny</code> aufgerufen wird, er gibt aber immer noch den letzten
 Wert <code>1</code> des Blocks zurück:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum Coin {
 </span><span class="boring">    Penny,
@@ -6376,8 +6327,7 @@ andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münze
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante <code>Quarter</code> so ändern, dass sie
 einen <code>UsState</code>-Wert enthält, wie in Codeblock 6-4 umgesetzt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum UsState {
     Alabama,
@@ -6453,8 +6403,7 @@ kein Wert enthalten ist, soll die Funktion den Wert <code>None</code> zurückgeb
 nicht versuchen, irgendwelche Operationen durchzuführen.</p>
 <p>Diese Funktion ist dank <code>match</code> sehr einfach zu schreiben und wird wie in
 Codeblock 6-5 aussehen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
     match x {
@@ -6503,8 +6452,7 @@ Sprachen zu haben. Es ist durchweg ein Benutzerfavorit.</p>
 Muster der Zweige müssen alle Möglichkeiten abdecken. Betrachte folgende
 Version unserer Funktion <code>plus_one</code>, die einen Fehler hat und sich nicht
 kompilieren lässt:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
     match x {
@@ -6553,8 +6501,7 @@ diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
 Zufallswerts fest kodiert ist, und alle weiter Logik wird durch Funktionen ohne
 Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
 Rahmen sprengen würde:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {
@@ -6590,8 +6537,7 @@ vor einer unbenutzten Variable warnt.</p>
 würfelst, musst du erneut würfeln. Wir brauchen den Auffangwert nicht mehr zu
 verwenden, also können wir unseren Code so ändern, dass wir <code>_</code> anstelle der
 Variable namens <code>other</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {
@@ -6613,8 +6559,7 @@ anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst. Wir
 können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
 wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
 angeben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {
@@ -6640,8 +6585,7 @@ Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
 auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
 Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 match config_max {
@@ -6660,8 +6604,7 @@ ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
 Codeblock 6-6:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 if let Some(max) = config_max {
@@ -7089,8 +7032,7 @@ Schlüsselwort <code>pub</code> öffnen“</a> gehen wir näher auf <code>pub</c
 sich dieses Beispiel noch nicht kompilieren lässt; wir werden gleich erklären,
 warum.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod front_of_house {
     mod hosting {
@@ -7201,8 +7143,7 @@ Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen
 untergeordneten Modul hat, also markieren wir das Modul <code>hosting</code> mit dem
 Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod front_of_house {
     pub mod hosting {
@@ -7353,8 +7294,7 @@ Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</cod
 ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
 sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn deliver_order() {}
 
@@ -7394,8 +7334,7 @@ Mahlzeit begleiten, je nach Saison und Vorrat. Das verfügbare Obst ändert sich
 schnell, sodass die Kunden nicht wählen oder gar sehen können, welches Obst sie
 bekommen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod back_of_house {
     pub struct Breakfast {
@@ -7446,8 +7385,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von <code>Breakfast</co
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort <code>pub</code> vor dem
 Schlüsselwort <code>enum</code>, wie in Codeblock 7-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod back_of_house {
     pub enum Appetizer {
@@ -7610,8 +7548,7 @@ Codeblock 7-15 wird gezeigt, wie zwei <code>Result</code>-Typen mit gleichem Nam
 unterschiedlichen Elternmodulen in den Gültigkeitsbereich gebracht werden und
 wie auf sie verwiesen werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
 use std::io;
@@ -7642,8 +7579,7 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
 indem einer der beiden <code>Result</code>-Typen mittels <code>as</code> umbenannt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Result;
 use std::io::Result as IoResult;
@@ -7755,8 +7691,7 @@ ausgeliefert wird, brauchen wir <em>Cargo.toml</em> nicht zu ändern, um <code>s
 einzubinden. Aber wir müssen <code>use</code> verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 <code>HashMap</code> diese Zeile verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 <span class="boring">}
@@ -7770,8 +7705,7 @@ viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
 beiden <code>use</code>-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten,
 Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// --abschneiden--
 use std::cmp::Ordering;
@@ -7785,8 +7719,7 @@ den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
 dann geschweiften Klammern um Liste der Pfadteile, die sich unterscheiden, wie
 in Codeblock 7-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// --abschneiden--
 use std::{cmp::Ordering, io};
@@ -7805,8 +7738,7 @@ Teilpfad teilen. Beispielsweise zeigt Codeblock 7-19 zwei <code>use</code>-Anwei
 Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 <code>std::io::Write</code> in den Gültigkeitsbereich bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io;
 use std::io::Write;
@@ -7819,8 +7751,7 @@ vollständige erste Pfad. Um diese beiden Pfade zu einer einzigen
 <code>use</code>-Anweisung zu verschmelzen, können wir <code>self</code> im verschachtelten Pfad
 verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
 <span class="boring">}
@@ -7832,8 +7763,7 @@ verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <p>Wenn wir <em>alle</em> öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator <code>*</code> angeben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::*;
 <span class="boring">}
@@ -7905,8 +7835,7 @@ enthält:</p>
 <p>Dann erstellen wir ein Verzeichnis <em>src/front_of_house</em> und eine Datei
 <em>hosting.rs</em>, die die Definitionen des Moduls <code>hosting</code> enthält:</p>
 <p><span class="filename">Dateiname: src/front_of_house/hosting.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn add_to_waitlist() {}
 <span class="boring">}
@@ -8002,8 +7931,7 @@ Preise der Artikel in einem Einkaufswagen.</p>
 <h3 id="erstellen-eines-neuen-vektors"><a class="header" href="#erstellen-eines-neuen-vektors">Erstellen eines neuen Vektors</a></h3>
 <p>Um einen neuen, leeren Vektor zu erstellen, rufen wir die Funktion <code>Vec::new</code>
 auf, wie in Codeblock 8-1 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v: Vec&lt;i32&gt; = Vec::new();
 <span class="boring">}
@@ -8027,8 +7955,7 @@ enthält. Codeblock 8-2 erzeugt einen neuen <code>Vec&lt;i32&gt;</code>, der die
 und <code>3</code> enthält. Als Integer-Typ wird <code>i32</code> verwendet, weil das der
 Standard-Integer-Typ ist, wie wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
 Kapitel 3 besprochen haben.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3];
 <span class="boring">}
@@ -8041,8 +7968,7 @@ Nächstes werden wir uns ansehen, wie man einen Vektor modifiziert.</p>
 <h3 id="aktualisieren-eines-vektors"><a class="header" href="#aktualisieren-eines-vektors">Aktualisieren eines Vektors</a></h3>
 <p>Um einen Vektor zu erstellen und ihm dann Elemente hinzuzufügen, können wir die
 Methode <code>push</code> verwenden, wie in Codeblock 8-3 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = Vec::new();
 
@@ -8065,8 +7991,7 @@ referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
 Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.</p>
 <p>Codeblock 8-4 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
 mittels Indexierungssyntax und die Methode <code>get</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
 
@@ -8093,8 +8018,7 @@ verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
 vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
 Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
 Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust should_panic panics">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust should_panic panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
 
@@ -8128,8 +8052,7 @@ haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderliche Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
 wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![1, 2, 3, 4, 5];
 
@@ -8180,8 +8103,7 @@ alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
 Element zur gleichen Zeit zuzugreifen. Codeblock 8-7 zeigt, wie man eine
 <code>for</code>-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
 Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![100, 32, 57];
 for i in &amp;v {
@@ -8194,8 +8116,7 @@ durch Iterieren über die Elemente mittels <code>for</code>-Schleife</span></p>
 <p>Wir können auch über veränderliche Referenzen der Elemente eines veränderlichen
 Vektors iterieren, um Änderungen an allen Elementen vorzunehmen. Die
 <code>for</code>-Schleife in Codeblock 8-8 addiert zu jedem Element <code>50</code>.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![100, 32, 57];
 for i in &amp;mut v {
@@ -8231,8 +8152,7 @@ die verschiedenen Werttypen enthalten, und alle Aufzählungsvarianten werden als
 derselbe Typ angesehen: Der Typ der Aufzählung. Dann können wir einen Vektor
 erstellen, der diese Aufzählung und damit letztlich verschiedene Typen enthält.
 Wir haben dies in Codeblock 8-9 demonstriert.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum SpreadsheetCell {
     Int(i32),
@@ -8271,8 +8191,7 @@ letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
 <h3 id="beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt"><a class="header" href="#beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt">Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt</a></h3>
 <p>Wie bei jeder anderen Struktur wird ein Vektor freigegeben, wenn er den
 Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>{
     let v = vec![1, 2, 3, 4];
@@ -8339,8 +8258,7 @@ Bytes mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
 implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise
 mit <code>Vec&lt;T&gt;</code> und <code>String</code> arbeitet, ist die Funktion <code>new</code> zum Erstellen einer
 Instanz, die in Codeblock 8-11 gezeigt wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::new();
 <span class="boring">}
@@ -8353,8 +8271,7 @@ wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode <code>to_str
 die für jeden Typ verfügbar ist, der das Merkmal <code>Display</code> implementiert, wie
 es bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei
 Beispiele.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let data = &quot;initialer Inhalt&quot;;
 
@@ -8370,8 +8287,7 @@ Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
 <p>Wir können auch die Funktion <code>String::from</code> verwenden, um einen <code>String</code> aus
 einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
 äquivalent zum Code in Codeblock 8-12, der <code>to_string</code> verwendet.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;initialer Inhalt&quot;);
 <span class="boring">}
@@ -8386,8 +8302,7 @@ verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
 Stils und der Lesbarkeit.</p>
 <p>Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
 ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from(&quot;السلام عليكم&quot;);
 let hello = String::from(&quot;Dobrý den&quot;);
@@ -8415,8 +8330,7 @@ kannst du bequem den Operator <code>+</code> oder das Makro <code>format!</code>
 <p>Wir können einen <code>String</code> wachsen lassen, indem wir die Methode <code>push_str</code>
 verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;foo&quot;);
 s.push_str(&quot;bar&quot;);
@@ -8429,8 +8343,7 @@ nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
 Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
 Code in Codeblock 8-16 in der Lage sein, <code>s2</code> zu verwenden, nachdem wir seinen
 Inhalt an <code>s1</code> angehängt haben.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s1 = String::from(&quot;foo&quot;);
 let s2 = &quot;bar&quot;;
@@ -8446,8 +8359,7 @@ funktioniert jedoch wie erwartet!</p>
 <p>Die Methode <code>push</code> nimmt ein einzelnes Zeichen als Parameter und fügt es dem
 <code>String</code> hinzu. Codeblock 8-17 fügt den Buchstaben <code>l</code> mit der Methode <code>push</code>
 zu einem <code>String</code> hinzu.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;lo&quot;);
 s.push('l');
@@ -8459,8 +8371,7 @@ s.push('l');
 <h4 id="aneinanderhängen-mit-dem-operator--und-dem-makro-format"><a class="header" href="#aneinanderhängen-mit-dem-operator--und-dem-makro-format">Aneinanderhängen mit dem Operator <code>+</code> und dem Makro <code>format!</code></a></h4>
 <p>Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
 das zu tun ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo &quot;);
 let s2 = String::from(&quot;Welt!&quot;);
@@ -8507,8 +8418,7 @@ Worten sieht es so aus, als würde es viele Kopien erstellen, das ist aber nicht
 so; die Implementierung ist effizienter als Kopieren.</p>
 <p>Wenn wir mehrere Zeichenketten aneinanderhängen wollen, wird das Verhalten des
 Operators <code>+</code> unhandlich:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;tic&quot;);
 let s2 = String::from(&quot;tac&quot;);
@@ -8520,8 +8430,7 @@ let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
 <p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
 und <code>&quot;</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
 String-Kombinationen können wir stattdessen das Makro <code>format!</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;tic&quot;);
 let s2 = String::from(&quot;tac&quot;);
@@ -8542,8 +8451,7 @@ einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
 jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
 Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
 ungültigen Code in Codeblock 8-19.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let h = s1[0];
@@ -8574,8 +8482,7 @@ beantworten, müssen wir uns ansehen, wie Rust Zeichenketten im Speicher ablegt.
 <p>Ein <code>String</code> ist eine Hülle um einen <code>Vec&lt;u8&gt;</code>. Sehen wir uns einige unserer
 korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
 diese:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from(&quot;Hola&quot;);
 <span class="boring">}
@@ -8585,8 +8492,7 @@ der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
 Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
 jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
 Großbuchstaben „Ze“ beginnt, nicht mit der arabischen Zahl 3.)</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from(&quot;Здравствуйте&quot;);
 <span class="boring">}
@@ -8597,8 +8503,7 @@ von Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
 Zeichenkette 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes
 der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
 Um das zu erläutern, betrachte diesen ungültigen Rust-Code:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = &quot;Здравствуйте&quot;;
 let answer = &amp;hello[0];
@@ -8661,8 +8566,7 @@ erstellen, bittet Rust dich daher, genauer zu sein.</p>
 <p>Anstatt <code>[]</code> mit einer einzelnen Zahl zu indizieren, kannst du <code>[]</code> mit einem
 Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
 Bytes enthält:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = &quot;Здравствуйте&quot;;
 
@@ -8692,8 +8596,7 @@ Unicode-Skalarwerte ist die Methode <code>chars</code> zu verwenden. Der Aufruf 
 <code>chars</code> auf „Зд“ trennt zwei Werte vom Typ <code>char</code> heraus und gibt sie
 zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
 zuzugreifen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for c in &quot;Зд&quot;.chars() {
     println!(&quot;{}&quot;, c);
@@ -8706,8 +8609,7 @@ zuzugreifen:</p>
 </code></pre>
 <p>Die Methode <code>bytes</code> gibt jedes rohe Byte zurück, das für deinen
 Verwendungszweck benötigt wird:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for b in &quot;Зд&quot;.bytes() {
     println!(&quot;{}&quot;, b);
@@ -8769,8 +8671,7 @@ Standardbibliotheksdokumentation.</p>
 hinzuzufügen mit <code>insert</code>. In Codeblock 8-20 verfolgen wir die Ergebnisse
 zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8795,8 +8696,7 @@ haben und alle Werte müssen denselben Typ haben.</p>
 <h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
 <p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
 <code>get</code> mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8819,8 +8719,7 @@ den Wert <code>None</code> zurück. Dieses Programm behandelt die <code>Option</
 Eintrag für den Schlüssel hat.</p>
 <p>Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
 Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8843,8 +8742,7 @@ Blau: 10
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie <code>String</code> werden die Werte
 verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
 8-22 gezeigt wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8885,8 +8783,7 @@ Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
 zweimal <code>insert</code> aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8915,8 +8812,7 @@ einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
 nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
 Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24 aus.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -8949,8 +8845,7 @@ oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
 Wort sehen, fügen wir zuerst den Wert 0 ein.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -9212,8 +9107,7 @@ den Vorgang zu beenden.</p>
 <p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result">„Behandeln potentieller Fehler mit dem Typ
 <code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
 Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
     Ok(T),
@@ -9438,8 +9332,7 @@ einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
 kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -9518,8 +9411,7 @@ erleichtern.</p>
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
 den <code>?</code>-Operator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -9567,8 +9459,7 @@ Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
 weiter verkürzen, indem wir die Methodenaufrufe unmittelbar nach dem <code>?</code>
 verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -9596,8 +9487,7 @@ das ist nur eine andere, ergonomischere Schreibweise.</p>
 <p>Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
 machen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs;
 use std::io;
@@ -9817,8 +9707,7 @@ durch manuelle Codeinspektion sicherstellen kannst, dass du niemals eine
 und noch besser ist es, den Grund, warum du glaubst, dass du niemals eine
 <code>Err</code>-Variante haben wirst, im <code>expect</code>-Text zu dokumentieren. Hier ist ein
 Beispiel:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::net::IpAddr;
 
@@ -9980,8 +9869,7 @@ neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
 vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
 Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Guess {
     value: i32,
@@ -10455,8 +10343,7 @@ darauf hinweisen, dass dein Code in kleinere Teile zerlegt werden muss.</p>
 generische Datentypen in ihren Varianten zu verwenden. Werfen wir noch einmal
 einen Blick auf die Aufzählung <code>Option&lt;T&gt;</code>, die die Standardbibliothek bietet
 und die wir in Kapitel 6 verwendet haben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Option&lt;T&gt; {
     Some(T),
@@ -10474,8 +10361,7 @@ optionalen Wertes verwenden.</p>
 <p>Aufzählungen können auch mehrere generische Typen verwenden. Die Definition der
 Aufzählung <code>Result</code>, die wir in Kapitel 9 verwendet haben, ist ein Beispiel
 dafür:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
     Ok(T),
@@ -10634,8 +10520,7 @@ sich alle Stellen an, an denen generischer Code aufgerufen wird, und generiert
 Code für die konkreten Typen, mit denen der generische Code aufgerufen wird.</p>
 <p>Betrachten wir die Funktionsweise bei der Aufzählung <code>Option&lt;T&gt;</code> der
 Standardbibliothek:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let integer = Some(5);
 let float = Some(5.0);
@@ -10705,8 +10590,7 @@ anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufru
 Codeblock 10-12 zeigt die Definition eines öffentlichen <code>Summary</code>-Merkmals, das
 dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize(&amp;self) -&gt; String;
@@ -10740,8 +10624,7 @@ Struktur <code>Tweet</code> definieren wir <code>summarize</code> als den Benutz
 gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
 Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -10839,8 +10722,7 @@ implementieren, können wir das Standardverhalten jeder Methode beibehalten oder
 <code>summarize</code> des Merkmals <code>Summary</code> an, anstatt nur die Methodensignatur zu
 definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize(&amp;self) -&gt; String {
@@ -10887,8 +10769,7 @@ Beispiel könnten wir das Merkmal <code>Summary</code> so definieren, dass wir e
 <code>summarize_author</code> haben, deren Implementierung erforderlich ist, und dann eine
 Methode <code>summarize</code> definieren, die eine Standard-Implementierung hat und die
 Methode <code>summarize_author</code> aufruft:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize_author(&amp;self) -&gt; String;
@@ -10901,8 +10782,7 @@ Methode <code>summarize_author</code> aufruft:</p>
 </span></code></pre></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
@@ -10957,8 +10837,7 @@ haben, um eine Funktion <code>notify</code> zu definieren, die die Methode <code
 ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das Merkmal
 <code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code>
 verwenden, etwa so:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -10981,8 +10860,7 @@ diese Typen kein <code>Summary</code> implementieren.</p>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die <em>Merkmalsabgrenzung</em> (trait
 bound) genannt wird; sie sieht so aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -11048,8 +10926,7 @@ einer Funktion ohne viele Merkmalsabgrenzungen.</p>
 <h3 id="rückgabetypen-die-merkmale-implementieren"><a class="header" href="#rückgabetypen-die-merkmale-implementieren">Rückgabetypen, die Merkmale implementieren</a></h3>
 <p>Wir können die Syntax <code>impl Trait</code> auch für den Rückgabetyp verwenden, wie hier
 gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -11095,8 +10972,7 @@ musst.</p>
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
 oder einen <code>Tweet</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
 funktionieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
@@ -11172,8 +11048,7 @@ Methoden“</a> in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ 
 innerer Typ <code>T</code> die Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die
 den Vergleich bzw. eine Ausgabe ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt::Display;
 
@@ -11217,8 +11092,7 @@ zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Merkmal
 Typ aufrufen, der das Merkmal <code>Display</code> implementiert. Zum Beispiel können wir
 ganze Zahlen in ihre entsprechenden <code>String</code>-Werte umwandeln, weil ganze
 Zahlen <code>Display</code> implementieren:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = 3.to_string();
 <span class="boring">}
@@ -11960,8 +11834,7 @@ berücksichtigt worden.</p>
 bedeutet, dass diese Referenz während der gesamten Dauer des Programms leben
 kann. Alle Zeichenkettenliterale haben die Lebensdauer <code>'static</code>, die wir wie
 folgt annotieren können:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s: &amp;'static str = &quot;Ich habe eine statische Lebensdauer.&quot;;
 <span class="boring">}
@@ -12112,8 +11985,7 @@ $ cd adder
 <p>Der Inhalt der Datei <em>src/lib.rs</em> in deiner Bibliothek <code>adder</code> sollte wie
 Codeblock 11-1 aussehen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[cfg(test)]
 mod tests {
@@ -12745,8 +12617,7 @@ Wert der Funktion <code>greeting</code> ausgeben. Fügen wir eine benutzerdefini
 Fehlermeldung hinzu, die aus einer Formatierungszeichenkette mit einem
 Platzhalter besteht, der mit dem tatsächlichen Wert aus der Funktion <code>greeting</code>
 gefüllt ist:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
 </span><span class="boring">    String::from(&quot;Hallo!&quot;)
@@ -12962,8 +12833,7 @@ in der Testfunktion den Fall <code>else if value &gt; 100</code> ausführt.</p>
 <code>expected</code>-Nachricht fehlschlägt, wollen wir wieder einen Fehler in unseren
 Code einbringen, indem wir die Zweige <code>if value &lt; 1</code>  und <code>else if value &gt; 100</code>
 vertauschen:</p>
-<pre><pre class="playground"><code class="language-rust not_desired_behavior">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust not_desired_behavior"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
@@ -13224,8 +13094,7 @@ die Namen der Tests, die du ausführen willst, als Argument übergibst.</p>
 zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Codeblock
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn add_two(a: i32) -&gt; i32 {
     a + 2
@@ -14845,8 +14714,7 @@ Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
 und gibt nur die Zeilen aus dem Text zurück, die die Suchabfrage enthalten.
 Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -14909,8 +14777,7 @@ immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>&quot;sicher, schnell, produktiv.&quot;</code> enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15050,8 +14917,7 @@ Zeilen.</p>
 bequemerweise <code>lines</code> genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15117,8 +14983,7 @@ enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
 in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15184,8 +15049,7 @@ einen veränderlichen Vektor vor der <code>for</code>-Schleife erstellen und die
 <code>push</code>-Methode aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der
 <code>for</code>-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15283,8 +15147,7 @@ von unserer Funktion <code>run</code> aus aufrufen. Wir müssen den Wert <code>c
 den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die Funktion <code>search</code>
 übergeben. Dann wird <code>run</code> jede von <code>search</code> zurückgegebene Zeile ausgeben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15652,8 +15515,7 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -15760,8 +15622,7 @@ auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion <code>searc
 oder die Funktion <code>search_case_insensitive</code> aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
@@ -16377,8 +16238,7 @@ Datentypangaben hinzugefügt haben: Wenn wir nun versuchen, den
 Funktionsabschluss zweimal aufzurufen, einmal mit <code>String</code> und einmal mit
 <code>u32</code>, erhalten wir eine Fehlermeldung.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let example_closure = |x| x;
 
@@ -16739,8 +16599,7 @@ Methodenaufrufe verbraucht werden müssen, um einen Effekt zu haben. Der Program
 Codeblock 13-10 erstellt beispielsweise einen Iterator über die Elemente im
 Vektor <code>v1</code> indem die in <code>Vec&lt;T&gt;</code> definierte Methode <code>iter</code> aufgerufen wird.
 Dieser Programmcode macht nichts Sinnvolles.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -16758,8 +16617,7 @@ gespeichert und es findet noch keine Iteration statt. Erst wenn die
 <code>for</code>-Schleife mit dem Iterator in <code>v1_iter</code> aufgerufen wird, wird jedes
 Element von <code>v1_iter</code> in einer Iteration der Schleife verwendet, die den
 jeweiligen Wert ausgibt.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -16787,8 +16645,7 @@ bewerkstelligen.</p>
 <p>Alle Iteratoren implementieren ein Merkmal namens <code>Iterator</code> das in der
 Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
 aus:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
     type Item;
@@ -16894,8 +16751,7 @@ Funktionsabschluss auf jedes Element anwendet, um einen neuen Iterator zu
 erstellen. Dieser Funktionsabschluss inkrementiert den Wert jedes Elementes des
 Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust not_desired_behavior">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust not_desired_behavior"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
@@ -16932,8 +16788,7 @@ data type).</p>
 der vom Aufruf der <code>map</code>-Methode zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
@@ -17358,8 +17213,7 @@ Parameters <code>args</code> eintragen, um ihn veränderlich (mutable) zu machen
 <code>next</code> darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
 Codeblock 12-23, um die <code>next</code>-Methode zu verwenden:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -18420,8 +18274,7 @@ members = [
 </code></pre>
 <p>Lass uns in der Datei <em>add_one/src/lib.rs</em>, eine Funktion <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn add_one(x: i32) -&gt; i32 {
     x + 1
@@ -18540,8 +18393,7 @@ miteinander kompatibel sind.</p>
 <p>Füge für eine weitere Verbesserung innerhalb der <code>add_one</code>-Kiste einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn add_one(x: i32) -&gt; i32 {
     x + 1
@@ -18840,8 +18692,7 @@ zu definieren.</p>
 dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine bekannte
 Grösse hat, was wir zeigen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum List {
     Cons(i32, List),
@@ -18920,8 +18771,7 @@ nicht rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
 <p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Message {
     Quit,
@@ -19116,8 +18966,7 @@ Element definiert, sodass Codeblock 15-8 einen Typ <code>MyBox&lt;T&gt;</code> a
 Weise definiert. Wir werden auch eine <code>new</code>-Funktion definieren, die mit der in
 der <code>Box&lt;T&gt;</code> definierten übereinstimmt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct MyBox&lt;T&gt;(T);
 
@@ -19268,8 +19117,7 @@ definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von <code>
 Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
 Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn hello(name: &amp;str) {
     println!(&quot;Hallo {name}!&quot;);
@@ -19935,8 +19783,7 @@ Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes Merkmal
 (trait) namens <code>Messenger</code> implementiert. Codeblock 15-20 zeigt den
 Bibliothekscode:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Messenger {
     fn send(&amp;self, msg: &amp;str);
@@ -20002,8 +19849,7 @@ Mock-Objekt die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den
 Versuch, ein Mock-Objekt zu implementieren, um genau das zu tun, aber der
 Ausleihenprüfer erlaubt dies nicht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -20243,8 +20089,7 @@ absichtlich, zwei veränderliche Ausleihen zu erstellen, die für denselben
 Bereich aktiv sind, um zu veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran
 hindert, dies zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust panics">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -22128,8 +21973,7 @@ Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
 zwischenspeichern. Codeblock 17-1 zeigt die Definition der Struktur
 <code>AveragedCollection</code>:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct AveragedCollection {
     list: Vec&lt;i32&gt;,
@@ -22147,8 +21991,7 @@ hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>remove</code> und
 <code>average</code> auf der Struktur implementieren, wie in Codeblock 17-2 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct AveragedCollection {
 </span><span class="boring">    list: Vec&lt;i32&gt;,
@@ -22338,8 +22181,7 @@ Verhalten zu ermöglichen.</p>
 <p>In Codeblock 17-3 wird gezeigt, wie ein Merkmal namens <code>Draw</code> mit einer Methode
 namens <code>draw</code> definiert werden kann:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Draw {
     fn draw(&amp;self);
@@ -22354,8 +22196,7 @@ Codeblock 17-4 definiert eine Struktur namens <code>Screen</code>, die einen Vek
 Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
 <code>Box</code>, der das Merkmal <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -22372,8 +22213,7 @@ einem Feld <code>components</code>, das einen Vektor von Merkmalsobjekten enthä
 <p>Auf der Struktur <code>Screen</code> definieren wir eine Methode namens <code>run</code>, die die
 <code>draw</code>-Methode auf jeder ihrer <code>components</code> aufruft, wie in Codeblock 17-5 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -22402,8 +22242,7 @@ konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
 wie in Codeblock 17-6 definieren können:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -22732,8 +22571,7 @@ innerhalb einer <code>Option&lt;T&gt;</code> in einem privaten Feld namens <code
 das Zustandsobjekt zu halten. Du wirst gleich sehen, warum die <code>Option&lt;T&gt;</code>
 notwendig ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Post {
     state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -22965,8 +22803,7 @@ jetzt bis Zeile 10!</p>
 <code>state</code> auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
 sollte, wie in Codeblock 17-16 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -23064,8 +22901,7 @@ dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von
 abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Methode, die auf seinen
 <code>state</code> definiert ist, wie in Codeblock 17-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -23174,8 +23010,7 @@ die <code>content</code>-Methode letztlich auf dem Typ aufgerufen wird, der das 
 unterbringen, welcher Inhalt je nach Zustand zurückgegeben wird, wie in
 Codeblock 17-18 gezeigt wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
@@ -23391,8 +23226,7 @@ Code nicht einmal kompilieren lässt. Codeblock 17-19 zeigt die Definition einer
 Struktur <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser
 Strukturen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Post {
     content: String,
@@ -23450,8 +23284,7 @@ indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> def
 <code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Codeblock 17-20
 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct Post {
 </span><span class="boring">    content: String,
@@ -23705,8 +23538,7 @@ dass eine <code>while</code>-Schleife so lange läuft, wie ein Muster weiterhin 
 Codeblock 18-2 haben wir eine <code>while let</code>-Schleife geschrieben, die einen
 Vektor als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
 Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let mut stack = Vec::new();
 
@@ -23732,8 +23564,7 @@ Element von unserem Stapel zu holen.</p>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
 Codeblock 18-3 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
 ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerlegen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v = vec!['a', 'b', 'c'];
 
@@ -23763,8 +23594,7 @@ zum Muster <code>(index, value)</code> passt, ist <code>index</code> gleich <cod
 <code>match</code> und <code>if let</code> besprochen, aber tatsächlich haben wir Muster auch an
 anderen Stellen verwendet, auch in <code>let</code>-Anweisungen. Betrachte zum Beispiel
 diese einfache Variablenzuweisung mit <code>let</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 <span class="boring">}
@@ -23784,8 +23614,7 @@ immer der Wert ist.“.</p>
 <p>Um den Aspekt des Musterabgleichs (pattern matching) von <code>let</code> deutlicher zu
 sehen, betrachte Codeblock 18-4, der ein Muster mit <code>let</code> verwendet, um ein
 Tupel zu destrukturieren.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y, z) = (1, 2, 3);
 <span class="boring">}
@@ -23802,8 +23631,7 @@ Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
 Kompilierfehler. Beispielsweise zeigt Codeblock 18-5 einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y) = (1, 2, 3);
 <span class="boring">}
@@ -23994,8 +23822,7 @@ erörtern, warum und wann du jedes einzelne Muster verwenden solltest.</p>
 <h3 id="passende-literale"><a class="header" href="#passende-literale">Passende Literale</a></h3>
 <p>Wie du in Kapitel 6 gesehen hast, kannst du Muster direkt mit Literalen
 abgleichen. Der folgende Code enthält einige Beispiele:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 1;
 
@@ -24024,8 +23851,7 @@ Wert <code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10
 und <code>println!</code> am Ende an und versuche herauszufinden, was der Code ausgeben
 wird, bevor du diesen Code ausführst oder weiterliest.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = Some(5);
     let y = 10;
@@ -24071,8 +23897,7 @@ die das <em>oder</em>-Operator-Muster ist. Zum Beispiel gleicht der folgende Cod
 Wert von <code>x</code> mit den <code>match</code>-Zweigen ab, wobei der erste davon eine
 <em>oder</em>-Option hat, was bedeutet, wenn der Wert von <code>x</code> zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 1;
 
@@ -24088,8 +23913,7 @@ diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:</p>
 <p>Die Syntax <code>..=</code> erlaubt es uns, einen inklusiven Wertebereich abzugleichen.
 Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des
 vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 5;
 
@@ -24109,8 +23933,7 @@ einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
 nicht, sind <code>char</code> und numerische Werte, Bereiche sind nur mit numerischen oder
 <code>char</code>-Werten zulässig.</p>
 <p>Hier ist ein Beispiel mit Bereichen von <code>char</code>-Werten:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 'c';
 
@@ -24375,8 +24198,7 @@ ist. Die Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht
 erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
 überschreiben, sondern dass er die Einstellung rückgängig machen kann und ihr
 einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let mut setting_value = Some(5);
     let new_setting_value = Some(10);
@@ -24410,8 +24232,7 @@ werden, wollen wir erlauben, dass <code>setting_value</code> den Wert von
 verwenden, um bestimmte Werte zu ignorieren. Codeblock 18-19 zeigt ein Beispiel
 für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
 Elementen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let numbers = (2, 4, 8, 16, 32);
 
@@ -24451,8 +24272,7 @@ und dem Verwenden eines Namens, der mit einem Unterstrich beginnt. Die Syntax
 <code>_x</code> bindet immer noch den Wert an die Variable, während <code>_</code> überhaupt nicht
 bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
 wird uns Codeblock 18-21 einen Fehler liefern.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s = Some(String::from(&quot;Hallo!&quot;));
 
@@ -24470,8 +24290,7 @@ Wertes übernehmen könnte</span></p>
 verschoben wird, was uns daran hindert, <code>s</code> wieder zu verwenden. Das Verwenden
 des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 18-22 wird
 ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben wird.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s = Some(String::from(&quot;Hallo!&quot;));
 
@@ -24495,8 +24314,7 @@ explizit zugeordnet haben. In Codeblock 18-23 haben wir eine Struktur <code>Poin
 die eine Koordinate im dreidimensionalen Raum enthält. Im <code>match</code>-Ausdruck
 wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den Feldern
 <code>y</code> und <code>z</code> ignorieren.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    struct Point {
         x: i32,
@@ -24520,8 +24338,7 @@ oder zwei Felder relevant sind.</p>
 <p>Die Syntax <code>..</code> wird auf so viele Werte wie nötig erweitert. Codeblock 18-24
 zeigt, wie man <code>..</code> mit einem Tupel verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let numbers = (2, 4, 8, 16, 32);
 
@@ -24584,8 +24401,7 @@ es ein Muster allein erlaubt.</p>
 Codeblock 18-26 zeigt ein <code>match</code>, wobei der erste Zweig das Muster <code>Some(x)</code>
 und die Abgleichsbedingung <code>if x % 2 == 0</code> (die wahr ist, wenn die Zahl gerade
 ist) hat.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let num = Some(4);
 
@@ -24620,8 +24436,7 @@ Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die Variable auß
 Wert der äußeren Variable testen konnten. Codeblock 18-27 zeigt, wie wir eine
 Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = Some(5);
     let y = 10;
@@ -24654,8 +24469,7 @@ Codeblock 18-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
 einem Muster, das <code>|</code> verwendet. Der wichtige Teil dieses Beispiels ist, dass
 die Abgleichsbedingung <code>if y</code> auf <code>4</code>, <code>5</code> <em>und</em> <code>6</code> zutrifft, auch wenn es so
 aussehen mag, als ob <code>if y</code> nur auf <code>6</code> zutrifft.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let x = 4;
     let y = false;
@@ -24695,8 +24509,7 @@ liegt. Wir wollen den Wert auch an die Variable <code>id_variable</code> binden,
 ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
 Variable <code>id</code> nennen, so wie das Feld, aber für dieses Beispiel werden wir
 einen anderen Namen verwenden.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    enum Message {
         Hello { id: i32 },
@@ -25181,8 +24994,7 @@ müssen wir also die Namensveränderung des Rust-Compilers deaktivieren.</p>
 <p>Im folgenden Beispiel machen wir die Funktion <code>call_from_c</code> von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 gelinkt wurde:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
 pub extern &quot;C&quot; fn call_from_c() {
@@ -25330,8 +25142,7 @@ besprochenen Funktionalitäten.</p>
 Typ wird <code>Item</code> genannt und steht für den Typ der Werte, über die der Typ, der
 das Merkmal <code>Iterator</code> implementiert, iteriert. Die Definition des Merkmals
 <code>Iterator</code> ist in Codeblock 19-12 zu sehen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
     type Item;
@@ -25353,8 +25164,7 @@ zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
 Implementierung des Merkmals <code>Iterator</code> für einen Typ namens <code>Counter</code>, der
 angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Counter {
 </span><span class="boring">    count: u32,
@@ -25384,8 +25194,7 @@ angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
 <p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Merkmal <code>Iterator</code> mit generischen Datentypen
 definieren, wie in Codeblock 19-13 gezeigt?</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator&lt;T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
@@ -25459,8 +25268,7 @@ Merkmal <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, 
 Methode <code>add</code> zurückgegebenen Typ bestimmt.</p>
 <p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Merkmals
 <code>Add</code>. Hier ist seine Definition:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Add&lt;Rhs=Self&gt; {
     type Output;
@@ -25491,8 +25299,7 @@ Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
 <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ops::Add;
 
@@ -25543,8 +25350,7 @@ Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide e
 bereits eine Methode namens <code>fly</code> implementiert hat. Jede <code>fly</code>-Methode macht
 etwas anderes.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Pilot {
     fn fly(&amp;self);
@@ -25861,8 +25667,7 @@ angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
 bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
 Merkmals <code>OutlinePrint</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
 
@@ -26076,8 +25881,7 @@ haben.</p>
 vorhandenen Typ einen anderen Namen zu geben. Hierfür verwenden wir das
 Schlüsselwort <code>type</code>. Zum Beispiel können wir den Alias <code>Kilometers</code> für <code>i32</code>
 so anlegen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Kilometers = i32;
 <span class="boring">
@@ -26091,8 +25895,7 @@ so anlegen:</p>
 <code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 19-15 erstellt haben, ist
 <code>Kilometers</code> kein separater, neuer Typ. Werte, die den Typ <code>Kilometers</code> haben,
 werden genauso behandelt wie Werte des Typs <code>i32</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Kilometers = i32;
 
@@ -26113,8 +25916,7 @@ Zum Beispiel könnten wir einen längeren Typ wie diesen haben:</p>
 <p>Das Schreiben dieses langen Typs in Funktionssignaturen und als
 Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stelle
 dir vor, du hättest ein Projekt voller Code wie das in Codeblock 19-24.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!(&quot;hallo&quot;));
 
@@ -26134,8 +25936,7 @@ Stellen</span></p>
 reduziert. In Codeblock 19-25 haben wir einen Alias namens <code>Thunk</code> für den
 verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias <code>Thunk</code> ersetzen.</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    type Thunk = Box&lt;dyn Fn() + Send + 'static&gt;;
 
@@ -26166,8 +25967,7 @@ Bibliothek hat eine Struktur <code>std::io::Error</code>, die alle möglichen E/
 repräsentiert. Viele der Funktionen in <code>std::io</code> geben <code>Result&lt;T, E&gt;</code> zurück,
 wobei für <code>E</code> der Typ <code>std::io::Error</code> verwendet wird, so wie bei diesen
 Funktionen im Merkmal (trait) <code>Write</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fmt;
 use std::io::Error;
@@ -26282,8 +26082,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 Abschnitts <a href="ch06-02-match.html">„Das Kontrollflusskonstrukt <code>match</code>“</a> haben wir
 erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktioniert
 zum Beispiel der folgende Code nicht:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">    let guess = &quot;3&quot;;
 </span>    let guess = match guess.trim().parse() {
@@ -26310,8 +26109,7 @@ Schleife, sodass wir im <code>Err</code>-Fall <code>guess</code> niemals einen W
 <p>Der Niemals-Typ ist auch beim Makro <code>panic!</code> nützlich. Erinnere dich an die
 Funktion <code>unwrap</code>, die wir auf <code>Option&lt;T&gt;</code> Werte aufrufen, um einen Wert zu
 erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">enum Option&lt;T&gt; {
 </span><span class="boring">    Some(T),
@@ -26336,8 +26134,7 @@ des gesamten <code>match</code>-Ausdrucks <code>T</code> ist. Dieser Code funkti
 keinen Wert produziert; es beendet das Programm. Im Fall von <code>None</code> geben wir
 keinen Wert von <code>unwrap</code> zurück, also ist dieser Code gültig.</p>
 <p>Ein letzter Ausdruck, der den Typ <code>!</code> hat, ist <code>loop</code>:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    print!(&quot;für immer &quot;);
 
@@ -26362,8 +26159,7 @@ sich ist ein DST. Wir können nicht wissen, wie lang die Zeichenkette zur
 Laufzeit ist, d.h. wir können weder eine Variable vom Typ <code>str</code> erzeugen, noch
 können wir ein Argument vom Typ <code>str</code> nehmen. Betrachte den folgenden Code, der
 nicht funktioniert:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let s1: str = &quot;Guten Tag!&quot;;
     let s2: str = &quot;Wie geht es dir?&quot;;
@@ -26407,8 +26203,7 @@ automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
 ist. Zusätzlich fügt Rust implizit jeder generischen Funktion eine
 Merkmalsabgrenzung auf <code>Sized</code> hinzu. Das heißt, eine generische
 Funktionsdefinition wie diese:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T&gt;(t: T) {
     // --abschneiden--
@@ -26416,8 +26211,7 @@ Funktionsdefinition wie diese:</p>
 <span class="boring">}
 </span></code></pre></pre>
 <p>wird tatsächlich so behandelt, als hätten wir das geschrieben:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T: Sized&gt;(t: T) {
     // --abschneiden--
@@ -26427,8 +26221,7 @@ Funktionsdefinition wie diese:</p>
 <p>Standardmäßig funktionieren generische Funktionen nur bei Typen, die zur
 Kompilierzeit eine bekannte Größe haben. Du kannst jedoch die folgende
 spezielle Syntax verwenden, um diese Einschränkung zu lockern:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn generic&lt;T: ?Sized&gt;(t: &amp;T) {
     // --abschneiden--
@@ -26508,8 +26301,7 @@ der Methode <code>map</code> an, die vom Merkmal <code>Iterator</code> in der St
 bereitgestellt wird. Um die Funktion <code>map</code> zu verwenden, um einen Vektor von
 Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss wie diesen verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -26518,8 +26310,7 @@ Funktionsabschluss wie diesen verwenden:</p>
 </span></code></pre></pre>
 <p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben anstelle des
 Funktionsabschlusses, so wie hier:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -26538,8 +26329,7 @@ Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
 Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
 was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
 Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    enum Status {
         Value(u32),
@@ -26564,8 +26354,7 @@ konkreten Typ haben, der rückgabefähig ist; es ist dir beispielsweise nicht
 erlaubt, den Funktionszeiger <code>fn</code> als Rückgabetyp zu verwenden.</p>
 <p>Der folgende Code versucht, einen Funktionsabschluss direkt zurückzugeben, aber
 er lässt sich nicht kompilieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
     |x| x + 1
@@ -26594,8 +26383,7 @@ error: could not compile `functions-example` due to previous error
 viel Platz benötigt wird, um den Funktionsabschluss zu speichern. Wir haben
 vorhin eine Lösung für dieses Problem gesehen. Wir können ein Merkmalsobjekt
 (trait object) verwenden:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
     Box::new(|x| x + 1)
@@ -26669,8 +26457,7 @@ uns untersuchen, wie man <code>macro_rules!</code> benutzt, indem wir uns ansehe
 Makro <code>vec!</code> definiert wird. Kapitel 8 behandelte, wie wir das Makro <code>vec!</code>
 verwenden können, um einen neuen Vektor mit bestimmten Werten zu erzeugen. Zum
 Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganze Zahlen:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v: Vec&lt;u32&gt; = vec![1, 2, 3];
 <span class="boring">}
@@ -26681,8 +26468,7 @@ erstellen. Mit einer Funktion wäre das nicht möglich,
 da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.</p>
 <p>Codeblock 19-28 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[macro_export]
 macro_rules! vec {
@@ -26827,8 +26613,7 @@ crate), etwa so:</p>
 <p>Als Nächstes definieren wir das Merkmal <code>HelloMacro</code> und die damit assoziierte
 Funktion:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait HelloMacro {
     fn hello_macro();
@@ -28190,8 +27975,7 @@ Strangs dauern wird. Lass uns eine Methode <code>execute</code> auf <code>Thread
 erstellen, die einen generischen Parameter vom Typ <code>F</code> mit diesen Abgrenzungen
 annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
@@ -28832,8 +28616,7 @@ Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
 bekommt. Lass uns die in Codeblock 20-20 gezeigte Änderung in <code>Worker::new</code>
 vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -29087,8 +28870,7 @@ warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
 einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -29203,8 +28985,7 @@ haben, und wenn wir einen <code>Worker</code> aufräumen wollen, ersetzen wir <c
 <code>None</code>, sodass der <code>Worker</code> keinen Strang zum Laufen hat.</p>
 <p>Wir wissen also, dass wir die Definition von <code>Worker</code> so aktualisieren wollen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -29504,8 +29285,7 @@ Codeblock 20-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>A
 explizit aufzuräumen. Wir verwenden die gleiche <code>Option</code> und <code>take</code>-Technik wie
 beim Strang, um <code>sender</code> aus dem <code>ThreadPool</code> herauszuverschieben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -29861,8 +29641,7 @@ fn handle_connection(mut stream: TcpStream) {
 }
 </code></pre>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{
     sync::{mpsc, Arc, Mutex},
@@ -30073,8 +29852,7 @@ voranstellst.</p>
 <p>Zum Beispiel ist <code>match</code> ein Schlüsselwort. Versuche, folgende Funktion zu
 kompilieren, die <code>match</code> als Namen benutzt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
     haystack.contains(needle)
@@ -30124,7 +29902,7 @@ Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überlad
 werden kann. Wenn ein Operator überladen werden kann, wird das relevante
 Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <p><span class="caption">Tabelle B-1: Operatoren</span></p>
-<table><thead><tr><th style="text-align: left">Operator</th><th style="text-align: left">Beispiel</th><th style="text-align: left">Erklärung</th><th style="text-align: left">Überladbar?</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Operator</th><th style="text-align: left">Beispiel</th><th style="text-align: left">Erklärung</th><th style="text-align: left">Überladbar?</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Expansion</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>!expr</code></td><td style="text-align: left">Bitweises oder logisches Komplement</td><td style="text-align: left"><code>Not</code></td></tr>
 <tr><td style="text-align: left"><code>!=</code></td><td style="text-align: left"><code>expr != expr</code></td><td style="text-align: left">Vergleich auf Ungleichheit</td><td style="text-align: left"><code>PartialEq</code></td></tr>
@@ -30180,13 +29958,14 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>||</code></td><td style="text-align: left"><code>expr || expr</code></td><td style="text-align: left">Logisches ODER mit Kurzschlussauswertung</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>?</code></td><td style="text-align: left"><code>expr?</code></td><td style="text-align: left">Fehler-Weitergabe</td><td style="text-align: left"></td></tr>
 </tbody></table>
+</div>
 <h3 id="nicht-operator-symbole"><a class="header" href="#nicht-operator-symbole">Nicht-Operator-Symbole</a></h3>
 <p>Die folgende Liste enthält alle Symbole, die nicht als Operatoren fungieren,
 d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.</p>
 <p>Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
 Stellen gültig sind.</p>
 <p><span class="caption">Tabelle B-2: Eigenständige Syntax</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>'ident</code></td><td style="text-align: left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
 <tr><td style="text-align: left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td style="text-align: left">Numerisches Literal eines bestimmten Typs</td></tr>
 <tr><td style="text-align: left"><code>&quot;...&quot;</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
@@ -30199,10 +29978,11 @@ Stellen gültig sind.</p>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
 <tr><td style="text-align: left"><code>_</code></td><td style="text-align: left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die
 Modulhierarchie eines Elements vorkommen.</p>
 <p><span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>ident::ident</code></td><td style="text-align: left">Namensraum-Pfad</td></tr>
 <tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
 <tr><td style="text-align: left"><code>self::path</code></td><td style="text-align: left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
@@ -30213,10 +29993,11 @@ Modulhierarchie eines Elements vorkommen.</p>
 <tr><td style="text-align: left"><code>type::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
 <tr><td style="text-align: left"><code>&lt;type as trait&gt;::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.</p>
 <p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
 <tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
 <tr><td style="text-align: left"><code>fn ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Funktion definieren</td></tr>
@@ -30226,10 +30007,11 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>for&lt;...&gt; type</code></td><td style="text-align: left">Höherstufige Lebensdauerbegrenzungen</td></tr>
 <tr><td style="text-align: left"><code>type&lt;ident=type&gt;</code></td><td style="text-align: left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <p><span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>T: U</code></td><td style="text-align: left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
 <tr><td style="text-align: left"><code>T: 'a</code></td><td style="text-align: left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
 <tr><td style="text-align: left"><code>T: 'static</code></td><td style="text-align: left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
@@ -30237,11 +30019,12 @@ mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <tr><td style="text-align: left"><code>T: ?Sized</code></td><td style="text-align: left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
 <tr><td style="text-align: left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td style="text-align: left">Zusammengesetzte Typabgrenzung</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-6 zeigt Symbole, die im Zusammenhang mit dem Aufruf oder der
 Definition von Makros und der Angabe von Attributen an einem Element
 vorkommen.</p>
 <p><span class="caption">Tabelle B-6: Makros und Attribute</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>#[meta]</code></td><td style="text-align: left">Äußeres Attribut</td></tr>
 <tr><td style="text-align: left"><code>#![meta]</code></td><td style="text-align: left">Inneres Attribut</td></tr>
 <tr><td style="text-align: left"><code>$ident</code></td><td style="text-align: left">Makro-Ersetzung</td></tr>
@@ -30249,9 +30032,10 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>$(…)…</code></td><td style="text-align: left">Makro-Wiederholung</td></tr>
 <tr><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Aufruf</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-7 zeigt Symbole, die Kommentare erzeugen.</p>
 <p><span class="caption">Tabelle B-7: Kommentare</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>//</code></td><td style="text-align: left">Einzeiliger Kommentar</td></tr>
 <tr><td style="text-align: left"><code>//!</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar innen</td></tr>
 <tr><td style="text-align: left"><code>///</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar außen</td></tr>
@@ -30259,10 +30043,11 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>/*!...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar innen</td></tr>
 <tr><td style="text-align: left"><code>/**...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-8 zeigt Symbole, die im Zusammenhang mit der Verwendung von Tupeln
 auftreten.</p>
 <p><span class="caption">Tabelle B-8: Tupel</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>()</code></td><td style="text-align: left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
 <tr><td style="text-align: left"><code>(expr)</code></td><td style="text-align: left">Eingeklammerter Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>(expr,)</code></td><td style="text-align: left">Ein-Element-Tupel-Ausdruck</td></tr>
@@ -30272,22 +30057,24 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
 <tr><td style="text-align: left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td style="text-align: left">Tupel-Indexierung</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-9: Geschweifte Klammern</span></p>
-<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>{...}</code></td><td style="text-align: left">Block-Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>Type {...}</code></td><td style="text-align: left"><code>struct</code>-Literal</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-10: Eckige Klammern</span></p>
-<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>[...]</code></td><td style="text-align: left">Array-Literal</td></tr>
 <tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
 <tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
 <tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
 <tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
 </tbody></table>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-c-ableitbare-merkmale-traits"><a class="header" href="#anhang-c-ableitbare-merkmale-traits">Anhang C: Ableitbare Merkmale (traits)</a></h2>
+</div><div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-c-ableitbare-merkmale-traits"><a class="header" href="#anhang-c-ableitbare-merkmale-traits">Anhang C: Ableitbare Merkmale (traits)</a></h2>
 <p>An verschiedenen Stellen im Buch haben wir das Attribut <code>derive</code> besprochen,
 das du auf eine Struktur- oder Aufzählungsdefinition anwenden kannst. Das
 Attribut <code>derive</code> generiert Code, der ein Merkmal (trait) mit seiner eigenen

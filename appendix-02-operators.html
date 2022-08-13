@@ -145,7 +145,7 @@ Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überlad
 werden kann. Wenn ein Operator überladen werden kann, wird das relevante
 Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <p><span class="caption">Tabelle B-1: Operatoren</span></p>
-<table><thead><tr><th style="text-align: left">Operator</th><th style="text-align: left">Beispiel</th><th style="text-align: left">Erklärung</th><th style="text-align: left">Überladbar?</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Operator</th><th style="text-align: left">Beispiel</th><th style="text-align: left">Erklärung</th><th style="text-align: left">Überladbar?</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Expansion</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left"><code>!expr</code></td><td style="text-align: left">Bitweises oder logisches Komplement</td><td style="text-align: left"><code>Not</code></td></tr>
 <tr><td style="text-align: left"><code>!=</code></td><td style="text-align: left"><code>expr != expr</code></td><td style="text-align: left">Vergleich auf Ungleichheit</td><td style="text-align: left"><code>PartialEq</code></td></tr>
@@ -201,13 +201,14 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>||</code></td><td style="text-align: left"><code>expr || expr</code></td><td style="text-align: left">Logisches ODER mit Kurzschlussauswertung</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>?</code></td><td style="text-align: left"><code>expr?</code></td><td style="text-align: left">Fehler-Weitergabe</td><td style="text-align: left"></td></tr>
 </tbody></table>
+</div>
 <h3 id="nicht-operator-symbole"><a class="header" href="#nicht-operator-symbole">Nicht-Operator-Symbole</a></h3>
 <p>Die folgende Liste enthält alle Symbole, die nicht als Operatoren fungieren,
 d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.</p>
 <p>Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
 Stellen gültig sind.</p>
 <p><span class="caption">Tabelle B-2: Eigenständige Syntax</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>'ident</code></td><td style="text-align: left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
 <tr><td style="text-align: left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td style="text-align: left">Numerisches Literal eines bestimmten Typs</td></tr>
 <tr><td style="text-align: left"><code>&quot;...&quot;</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
@@ -220,10 +221,11 @@ Stellen gültig sind.</p>
 <tr><td style="text-align: left"><code>!</code></td><td style="text-align: left">Leerer Typ (bottom type) für nicht-endende Funktionen</td></tr>
 <tr><td style="text-align: left"><code>_</code></td><td style="text-align: left">Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die
 Modulhierarchie eines Elements vorkommen.</p>
 <p><span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>ident::ident</code></td><td style="text-align: left">Namensraum-Pfad</td></tr>
 <tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
 <tr><td style="text-align: left"><code>self::path</code></td><td style="text-align: left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
@@ -234,10 +236,11 @@ Modulhierarchie eines Elements vorkommen.</p>
 <tr><td style="text-align: left"><code>type::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Typs eindeutig machen</td></tr>
 <tr><td style="text-align: left"><code>&lt;type as trait&gt;::method(...)</code></td><td style="text-align: left">Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.</p>
 <p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
 <tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
 <tr><td style="text-align: left"><code>fn ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Funktion definieren</td></tr>
@@ -247,10 +250,11 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>for&lt;...&gt; type</code></td><td style="text-align: left">Höherstufige Lebensdauerbegrenzungen</td></tr>
 <tr><td style="text-align: left"><code>type&lt;ident=type&gt;</code></td><td style="text-align: left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <p><span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>T: U</code></td><td style="text-align: left">Generischer Parameter <code>T</code>, beschränkt auf Typen,<br> die <code>U</code> implementieren</td></tr>
 <tr><td style="text-align: left"><code>T: 'a</code></td><td style="text-align: left">Generischer Typ <code>T</code>, der die Lebensdauer <code>'a</code> überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als <code>'a</code> enthalten)</td></tr>
 <tr><td style="text-align: left"><code>T: 'static</code></td><td style="text-align: left">Generischer Typ <code>T</code> mit Lebensdauer <code>'static</code></td></tr>
@@ -258,11 +262,12 @@ mit Merkmalsabgrenzung (trait bounds) auftreten.</p>
 <tr><td style="text-align: left"><code>T: ?Sized</code></td><td style="text-align: left">Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist</td></tr>
 <tr><td style="text-align: left"><code>'a + trait</code>,<br> <code>trait + trait</code></td><td style="text-align: left">Zusammengesetzte Typabgrenzung</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-6 zeigt Symbole, die im Zusammenhang mit dem Aufruf oder der
 Definition von Makros und der Angabe von Attributen an einem Element
 vorkommen.</p>
 <p><span class="caption">Tabelle B-6: Makros und Attribute</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>#[meta]</code></td><td style="text-align: left">Äußeres Attribut</td></tr>
 <tr><td style="text-align: left"><code>#![meta]</code></td><td style="text-align: left">Inneres Attribut</td></tr>
 <tr><td style="text-align: left"><code>$ident</code></td><td style="text-align: left">Makro-Ersetzung</td></tr>
@@ -270,9 +275,10 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>$(…)…</code></td><td style="text-align: left">Makro-Wiederholung</td></tr>
 <tr><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Aufruf</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-7 zeigt Symbole, die Kommentare erzeugen.</p>
 <p><span class="caption">Tabelle B-7: Kommentare</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>//</code></td><td style="text-align: left">Einzeiliger Kommentar</td></tr>
 <tr><td style="text-align: left"><code>//!</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar innen</td></tr>
 <tr><td style="text-align: left"><code>///</code></td><td style="text-align: left">Einzeiliger Dokumentationskommentar außen</td></tr>
@@ -280,10 +286,11 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>/*!...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar innen</td></tr>
 <tr><td style="text-align: left"><code>/**...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-8 zeigt Symbole, die im Zusammenhang mit der Verwendung von Tupeln
 auftreten.</p>
 <p><span class="caption">Tabelle B-8: Tupel</span></p>
-<table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>()</code></td><td style="text-align: left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
 <tr><td style="text-align: left"><code>(expr)</code></td><td style="text-align: left">Eingeklammerter Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>(expr,)</code></td><td style="text-align: left">Ein-Element-Tupel-Ausdruck</td></tr>
@@ -293,22 +300,24 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
 <tr><td style="text-align: left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td style="text-align: left">Tupel-Indexierung</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-9: Geschweifte Klammern</span></p>
-<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>{...}</code></td><td style="text-align: left">Block-Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>Type {...}</code></td><td style="text-align: left"><code>struct</code>-Literal</td></tr>
 </tbody></table>
+</div>
 <p>Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-10: Eckige Klammern</span></p>
-<table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>[...]</code></td><td style="text-align: left">Array-Literal</td></tr>
 <tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
 <tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
 <tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
 <tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
 </tbody></table>
-
+</div>
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">

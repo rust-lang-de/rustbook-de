@@ -544,8 +544,7 @@ müssen wir also die Namensveränderung des Rust-Compilers deaktivieren.</p>
 <p>Im folgenden Beispiel machen wir die Funktion <code>call_from_c</code> von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 gelinkt wurde:</p>
-<pre><pre class="playground"><code class="language-rust">
-<span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
 pub extern &quot;C&quot; fn call_from_c() {
