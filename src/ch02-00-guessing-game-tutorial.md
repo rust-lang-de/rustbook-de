@@ -254,7 +254,7 @@ gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Ar
 erzeugt.
 
 Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderliche
-Variable erzeugt, die derzeit an eine neue, leere Instanz eines `String`
+Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines `String`
 gebunden ist. Uff!
 
 ### Empfangen von Benutzereingaben
@@ -343,7 +343,7 @@ io::stdin().read_line(&mut guess).expect("Fehler beim Lesen der Zeile");
 
 Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
 aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
-einzufügen, um lange Zeilen aufzubrechen Zeilen, wenn du eine Methode mit der
+einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
