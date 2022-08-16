@@ -3,7 +3,7 @@
 Wie im Abschnitt [„Speichern von Werten mit
 Variablen“][storing-values-with-variables] erwähnt, sind Variablen
 standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
-gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheitvariables
+gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
 (safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
 bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
 (mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
