@@ -2,8 +2,8 @@
 
 Jeder Wert in Rust ist von einem bestimmten *Datentyp*, der Rust mitteilt,
 welche Art von Daten angegeben wird, damit es weiß, wie es mit diesen Daten
-arbeiten soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar und
-Verbund.
+arbeiten soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar (scalar) und
+Verbund (compound).
 
 Denk daran, dass Rust eine *statisch typisierte* Sprache ist, was bedeutet,
 dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
