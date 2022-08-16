@@ -72,7 +72,7 @@ kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite Stück
 Code den Wert nur *gelegentlich* ändert. In Rust garantiert der Compiler, dass
 sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
-leichter zu durchdenken.
+leichter zu durchschauen.
 
 Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
 erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
