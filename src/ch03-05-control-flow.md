@@ -570,7 +570,7 @@ Dieser Code ist ein bisschen schöner, nicht wahr?
 ## Zusammenfassung
 
 Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
-Variablen, skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
+Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 `if`-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:
 
