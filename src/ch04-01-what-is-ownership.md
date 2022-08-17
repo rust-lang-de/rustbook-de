@@ -17,7 +17,7 @@ läuft.
 Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
 Erfahrung du mit Rust und den Regeln der Eigentümerschaft gesammelt hast, desto
-einfacher findest du es auf natürliche Weise Code entwickeln, der sicher und
+einfacher findest du es, auf natürliche Weise Code zu entwickeln, der sicher und
 effizient ist. Bleib dran!
 
 Wenn du Eigentümerschaft verstehst, hast du eine solide Grundlage, um die
