@@ -218,10 +218,9 @@ Kompilierzeit verhindern kann. Eine *Daten-Wettlaufsituation* (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
 Verhaltensweisen auftreten:
 
-* Zwei oder mehr Zeiger greifen gleichzeitig auf dasselbe Datum zu.
-* Mindestens einer der Zeiger wird zum Schreiben auf das Datum verwendet.
-* Es kommt kein Mechanismus zur Anwendung, den Zugriff auf die Daten zu
-  synchronisieren.
+* Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
+* Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
+* Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
 
 Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
 schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
