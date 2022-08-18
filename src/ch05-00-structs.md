@@ -15,4 +15,4 @@ assoziierter Funktionen, die *Methoden* genannt werden, um das Verhalten eines
 Strukturtyps zu spezifizieren. Strukturen und Aufzählungen (enums) (siehe
 Kapitel 6) sind die Bausteine zum Erstellen neuer Typen in der Domäne deines
 Programms, mit denen du die Vorteile der Kompilierzeit-Typprüfung von Rust voll
-auszuschöpfen kannst.
+ausschöpfen kannst.
