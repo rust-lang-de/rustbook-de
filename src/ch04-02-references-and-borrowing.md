@@ -311,7 +311,7 @@ Gültigkeitsbereichs nicht mehr verwendet wird, wird als *nicht-lexikalische
 Lebensdauer* (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
 darüber in [The Edition Guide][nll] lesen.
 
-Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
+Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
 das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so
