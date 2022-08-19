@@ -44,7 +44,7 @@ Die Fläche des Rechtecks ist 1500 Quadratpixel.
 ```
 
 Mit diesem Code gelingt es, die Fläche des Rechtecks zu ermitteln, indem die
-Funktion `area` mit jeder Dimension aufgerufen wird, aber wir können noch mehr
+Funktion `area` mit jeder Dimension aufgerufen wird. Aber wir können noch mehr
 tun, um diesen Code klar und lesbar zu machen.
 
 Das Problem dieses Codes wird bei der Signatur von `area` deutlich:
