@@ -1,7 +1,7 @@
 ## Eine Aufzählung (enum) definieren
 
 Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
-und Daten zu gruppieren, wie ein `Rectangle`" mit seiner `width` und `height`,
+und Daten zu gruppieren, wie ein `Rectangle` mit seiner `width` und `height`,
 bieten Aufzählungen (enums) eine Möglichkeit, einen Wert als einen aus einer
 möglichen Gruppe von Werten anzugeben. Wir können zum Beispiel sagen, dass
 `Rectangle` eine von mehreren möglichen Formen ist, zu denen auch `Circle` und
