@@ -343,7 +343,7 @@ io::stdin().read_line(&mut guess).expect("Fehler beim Lesen der Zeile");
 
 Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
 aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
-einzufügen, um lange Zeilen aufzubrechen Zeilen, wenn du eine Methode mit der
+einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
