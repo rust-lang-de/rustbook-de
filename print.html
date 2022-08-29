@@ -1110,16 +1110,19 @@ aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
 einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax <code>.method_name()</code> aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. </p>
-<p>Wie bereits erwähnt, schreibt <code>read_line</code> das, was der Benutzer eingibt, in die
-Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen <code>Result</code>-Wert
-zurück. <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
-kurz enum), die einen Typ darstellt, der sich in einem von mehreren möglichen
-Zuständen befinden kann. Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
+<p>Wie bereits erwähnt, schreibt <code>read_line</code> die Benutzereingabe in die übergebene 
+String-Variable, gibt aber darüber hinaus auch einen <code>Result</code>-Wert
+zurück.
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
+kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
+Zuständen annehmen kann.
+Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
 <p>In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
 <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
-<p>Für <code>Result</code> sind die Varianten <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
-die Operation erfolgreich war, und innerhalb von <code>Ok</code> steht der erfolgreich
-generierte Wert. Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
+<p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
+die Operation erfolgreich war, und der erfolgreich
+generierte Wert innerhalb von <code>Ok</code> steht. 
+Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
 ist, und <code>Err</code> enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.</p>
 <p>Für Werte vom Typ <code>Result</code> sind, wie für Werte jedes Typs, Methoden definiert.
@@ -1206,16 +1209,16 @@ Du hast geschätzt: 6
 <p>An diesem Punkt ist der erste Teil des Spiels abgeschlossen: Wir erhalten
 eine Eingabe über die Tastatur und geben sie dann aus.</p>
 <h2 id="generieren-einer-geheimzahl"><a class="header" href="#generieren-einer-geheimzahl">Generieren einer Geheimzahl</a></h2>
-<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
-versucht. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
+<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht 
+zu erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
 jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> mit besagter Funktionalität zur
 Verfügung.</p>
-<h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste um mehr Funktionalität zu erhalten</a></h3>
-<p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Das
-Projekt, das wir gebaut haben, ist eine <em>binäre Kiste</em> (binary crate), die eine
+<h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste, um mehr Funktionalität zu erhalten</a></h3>
+<p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
+Projekt &quot;Ratespiel&quot; ist eine <em>binäre Kiste</em> (binary crate), die eine
 ausführbare Datei ist. Die Kiste <code>rand</code> ist eine <em>Bibliotheks-Kiste</em> (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.</p>
 <p>Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
@@ -1240,7 +1243,7 @@ Versionierung</a> (manchmal auch <em>SemVer</em> genannt), was ein Standard zum
 Schreiben von Versionsnummern ist. Die Zahl <code>0.8.3</code> ist eigentlich die
 Abkürzung für <code>^0.8.3</code>, was für alle Versionen ab <code>0.8.3</code> und kleiner als
 <code>0.9.0</code> steht.</p>
-<p>Cargo geht davon aus dass die öffentliche API dieser Versionen kompatibel zur
+<p>Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
 Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version <code>0.9.0</code> ist nicht garantiert, dass die API mit der in
@@ -5256,7 +5259,7 @@ der Aufrufstelle verwenden.</p>
 <p>Die Funktion <code>area</code> greift auf die Felder <code>width</code> und <code>height</code> der Instanz
 <code>Rectangle</code> zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
 Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
-von Strukturen siehst.) Unsere Funktionssignatur für <code>area</code> sagt jetzt genau
+von Strukturen siehst.) Unsere Funktionssignatur für <code>area</code> sagt jetzt genau,
 was wir meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung seiner
 Felder <code>width</code> und <code>height</code>. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
@@ -5264,7 +5267,7 @@ Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die 
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
 <p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
+versuchen wir, das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct Rectangle {
@@ -5349,8 +5352,8 @@ rect1 ist Rectangle { width: 30, height: 50 }
 </code></pre>
 <p>Toll! Es ist nicht die schönste Ausgabe, aber sie zeigt die Werte aller Felder
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
-Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
-ist. In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
+Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
+In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
 <code>println!</code>-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
 <code>{:#?}</code> folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
@@ -5439,7 +5442,7 @@ Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
 Merkmalsobjektes (trait object), die wir in Kapitel 6 und 17 behandeln)
 definiert werden und ihr erster Parameter stets <code>self</code> ist. <code>self</code>
-repräsentiert die Instanz der Struktur zu der die Methode aufgerufen wird.</p>
+repräsentiert die Instanz der Struktur, zu der die Methode aufgerufen wird.</p>
 <h3 id="definieren-von-methoden"><a class="header" href="#definieren-von-methoden">Definieren von Methoden</a></h3>
 <p>Lass uns die Funktion <code>area</code>, die eine <code>Rectangle</code>-Instanz als Parameter hat,
 ändern und stattdessen eine Methode <code>area</code> auf der Struktur <code>Rectangle</code>
@@ -7898,9 +7901,9 @@ Datenstrukturen, die <em>Kollektionen</em> (collections) genannt werden. Die mei
 anderen Datentypen repräsentieren einen bestimmten Wert, aber Kollektionen
 können mehrere Werte enthalten. Im Gegensatz zu den eingebauten Array- und
 Tupel-Typen werden die Daten, auf die diese Kollektionen zeigen, im dynamischen
-Speicher abgelegt, was bedeutet, dass die Datenmenge zur Kompilierzeit nicht
-bekannt sein muss und während der Programmausführung wachsen oder schrumpfen
-kann. Jede Kollektionsart hat unterschiedliche Fähigkeiten und Kosten, und die
+Speicher abgelegt. Somit muss die Datenmenge zum Kompilierzeitpunkt nicht
+bekannt sein und kann während der Programmausführung wachsen oder schrumpfen.
+Jede Kollektionsart hat unterschiedliche Fähigkeiten und Kosten, und die
 Auswahl einer für deine aktuelle Situation geeigneten Kollektion ist eine
 Fähigkeit, die du im Laufe der Zeit entwickeln wirst. In diesem Kapitel
 besprechen wir drei Kollektionen, die sehr häufig in Rust-Programmen verwendet

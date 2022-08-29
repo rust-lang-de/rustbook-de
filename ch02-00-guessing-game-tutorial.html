@@ -416,16 +416,19 @@ aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
 einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax <code>.method_name()</code> aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. </p>
-<p>Wie bereits erwähnt, schreibt <code>read_line</code> das, was der Benutzer eingibt, in die
-Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen <code>Result</code>-Wert
-zurück. <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
-kurz enum), die einen Typ darstellt, der sich in einem von mehreren möglichen
-Zuständen befinden kann. Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
+<p>Wie bereits erwähnt, schreibt <code>read_line</code> die Benutzereingabe in die übergebene 
+String-Variable, gibt aber darüber hinaus auch einen <code>Result</code>-Wert
+zurück.
+<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
+kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
+Zuständen annehmen kann.
+Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
 <p>In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
 <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
-<p>Für <code>Result</code> sind die Varianten <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
-die Operation erfolgreich war, und innerhalb von <code>Ok</code> steht der erfolgreich
-generierte Wert. Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
+<p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
+die Operation erfolgreich war, und der erfolgreich
+generierte Wert innerhalb von <code>Ok</code> steht. 
+Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
 ist, und <code>Err</code> enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.</p>
 <p>Für Werte vom Typ <code>Result</code> sind, wie für Werte jedes Typs, Methoden definiert.
@@ -512,16 +515,16 @@ Du hast geschätzt: 6
 <p>An diesem Punkt ist der erste Teil des Spiels abgeschlossen: Wir erhalten
 eine Eingabe über die Tastatur und geben sie dann aus.</p>
 <h2 id="generieren-einer-geheimzahl"><a class="header" href="#generieren-einer-geheimzahl">Generieren einer Geheimzahl</a></h2>
-<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
-versucht. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
+<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht 
+zu erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
 jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> mit besagter Funktionalität zur
 Verfügung.</p>
-<h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste um mehr Funktionalität zu erhalten</a></h3>
-<p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Das
-Projekt, das wir gebaut haben, ist eine <em>binäre Kiste</em> (binary crate), die eine
+<h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste, um mehr Funktionalität zu erhalten</a></h3>
+<p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
+Projekt &quot;Ratespiel&quot; ist eine <em>binäre Kiste</em> (binary crate), die eine
 ausführbare Datei ist. Die Kiste <code>rand</code> ist eine <em>Bibliotheks-Kiste</em> (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.</p>
 <p>Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
@@ -546,7 +549,7 @@ Versionierung</a> (manchmal auch <em>SemVer</em> genannt), was ein Standard zum
 Schreiben von Versionsnummern ist. Die Zahl <code>0.8.3</code> ist eigentlich die
 Abkürzung für <code>^0.8.3</code>, was für alle Versionen ab <code>0.8.3</code> und kleiner als
 <code>0.9.0</code> steht.</p>
-<p>Cargo geht davon aus dass die öffentliche API dieser Versionen kompatibel zur
+<p>Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
 Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version <code>0.9.0</code> ist nicht garantiert, dass die API mit der in

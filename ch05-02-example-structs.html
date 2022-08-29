@@ -265,7 +265,7 @@ der Aufrufstelle verwenden.</p>
 <p>Die Funktion <code>area</code> greift auf die Felder <code>width</code> und <code>height</code> der Instanz
 <code>Rectangle</code> zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
 Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
-von Strukturen siehst.) Unsere Funktionssignatur für <code>area</code> sagt jetzt genau
+von Strukturen siehst.) Unsere Funktionssignatur für <code>area</code> sagt jetzt genau,
 was wir meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung seiner
 Felder <code>width</code> und <code>height</code>. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
@@ -273,7 +273,7 @@ Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die 
 <h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
 <p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
+versuchen wir, das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">struct Rectangle {
@@ -358,8 +358,8 @@ rect1 ist Rectangle { width: 30, height: 50 }
 </code></pre>
 <p>Toll! Es ist nicht die schönste Ausgabe, aber sie zeigt die Werte aller Felder
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
-Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
-ist. In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
+Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
+In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> in der
 <code>println!</code>-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
 <code>{:#?}</code> folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
