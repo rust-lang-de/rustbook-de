@@ -250,7 +250,7 @@ nützlich. Du wirst dieses Muster häufig in Rust-Code sehen: `match` mit einer
 Aufzählung, eine Variable an die darin enthaltenen Daten binden und dann
 dazugehörenden Code ausführen. Am Anfang ist es etwas knifflig, aber wenn man
 sich erst einmal daran gewöhnt hat, wird man sich wünschen, es in allen
-Sprachen zu haben. Es ist durchweg ein Benutzerfavorit.
+Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.
 
 ### Abgleiche sind vollständig
 
