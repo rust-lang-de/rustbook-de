@@ -367,7 +367,7 @@ enum Option<T> {
 
 Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Präludium
 enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
-Seine Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
+Ihre Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
 `None` direkt ohne Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist
 dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur
 Varianten des Typs `Option<T>`.
