@@ -1,6 +1,6 @@
 ## Das Kontrollflusskonstrukt `match`
 
-Rust verfügt über einen extrem leistungsfähiges Kontrollflusskonstrukt namens
+Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
 `match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
