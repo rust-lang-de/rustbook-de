@@ -6194,8 +6194,7 @@ error: could not compile `enums` due to previous error
 <p>Stark! Tatsächlich bedeutet diese Fehlermeldung, dass Rust nicht versteht, wie
 man ein <code>i8</code> und eine <code>Option&lt;i8&gt;</code> addiert, da es sich um unterschiedliche Typen
 handelt. Wenn wir einen Wert eines Typs wie <code>i8</code> in Rust haben, stellt der
-Compiler sicher, dass wir immer einen gültigen Wert haben. Wir können mit
-Zuversicht vorgehen, ohne vor der Verwendung dieses Wertes auf Null prüfen zu
+Compiler sicher, dass wir immer einen gültigen Wert haben. Wir können getrost fortfahren, ohne vor der Verwendung dieses Wertes auf Null prüfen zu
 müssen. Nur wenn wir eine <code>Option&lt;i8&gt;</code> (oder einen anderen Werttyp) haben,
 müssen wir befürchten, dass wir möglicherweise keinen Wert haben, und der
 Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
