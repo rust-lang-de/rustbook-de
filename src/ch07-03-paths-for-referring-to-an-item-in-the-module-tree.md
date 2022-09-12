@@ -277,8 +277,8 @@ Weil `hosting` und `add_to_waitlist` nun mit `pub` markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!
 
 Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
-deinen Code verwenden können, ist deine öffentliche API dein Vertrag mit den
-Benutzern deiner Kiste, der festlegt, wie sie mit deinem Code interagieren
+deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit den
+Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
 verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
