@@ -226,8 +226,8 @@ Die Fehler in Codeblock 7-6 besagen, dass die Funktion `add_to_waitlist` privat
 ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
 Methoden sowie für Module.
 
-Lasse uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
-Schlüsselwort `pub` vor seiner Definition hinzufügen, wie in Codeblock 7-7.
+Lass uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
+Schlüsselwort `pub` vor ihre Definition hinzufügen, wie in Codeblock 7-7.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
