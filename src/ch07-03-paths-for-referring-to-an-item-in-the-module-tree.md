@@ -347,8 +347,7 @@ Die Funktion `fix_incorrect_order` befindet sich im Modul `back_of_house`,
 sodass wir `super` benutzen können, um zum Elternmodul von `back_of_house` zu
 gelangen, was in diesem Fall die Wurzel `crate` ist. Von dort aus suchen wir
 nach `deliver_order` und finden es. Erfolg! Wir denken, dass das Modul
-`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen
-Beziehung zueinander bleiben und zusammenrücken werden, sollten wir uns dazu
+`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
 entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
 `super` verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
 haben, wenn dieser Code in ein anderes Modul verschoben wird.
