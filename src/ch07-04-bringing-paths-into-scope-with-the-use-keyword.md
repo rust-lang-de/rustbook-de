@@ -219,7 +219,7 @@ fn function2() -> IoResult<()> {
 Schlüsselwort `as` in den Gültigkeitsbereich gebracht wird</span>
 
 In der zweiten `use`-Anweisung wählten wir den neuen Namen `IoResult` für den
-Typ `std::io::result`, der nicht im Konflikt zum ebenfalls von uns in den
+Typ `std::io::Result`, der nicht im Konflikt zum ebenfalls von uns in den
 Gültigkeitsbereich gebrachten `Result` aus `std::fmt` steht. Codeblock 7-15
 und Codeblock 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!
 
