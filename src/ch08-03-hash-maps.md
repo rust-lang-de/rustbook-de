@@ -72,7 +72,7 @@ let score = scores.get(&team_name);
 Blau in der Hashtabelle</span>
 
 Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
-Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurückgibt;
+Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt `get`
 den Wert `None` zurück. Dieses Programm behandelt die `Option`, indem es
 `unwrap_or` aufruft, um `score` auf Null zu setzen, wenn `scores` keinen
