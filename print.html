@@ -8941,15 +8941,15 @@ hat es den Typ <code>Result&lt;T, E&gt;</code> für behebbare Fehler und das Mak
 die Ausführung stoppt, wenn das Programm auf einen nicht behebbaren Fehler
 stößt. Dieses Kapitel behandelt zuerst das Aufrufen von <code>panic!</code> und spricht
 dann über die Rückgabe von <code>Result&lt;T, E&gt;</code>-Werten. Darüber hinaus werden wir
-Überlegungen anstellen, wann wir besser versuchen sollten, uns von einem Fehler
-zu erholen, und wann die Ausführung zu stoppen.</p>
+uns mit der Frage befassen, wann man versuchen sollte, einen Fehler zu beheben
+oder die Ausführung zu stoppen.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="nicht-behebbare-fehler-mit-panic"><a class="header" href="#nicht-behebbare-fehler-mit-panic">Nicht behebbare Fehler mit <code>panic!</code></a></h2>
 <p>Manchmal passieren schlimme Dinge in deinem Code und du kannst nichts dagegen
 tun. Für diese Fälle hat Rust das Makro <code>panic!</code>. In der Praxis gibt es zwei
 Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unseren
 Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
 durch den expliziten Aufruf des Makros <code>panic!</code>. In beiden Fällen brechen wir
-unser Programm aus. Standardmäßig geben diese Programmabbrüche eine
+unser Programm ab. Standardmäßig geben diese Programmabbrüche eine
 Fehlermeldung aus, räumen den Stapelspeicher auf und beenden sich. Über eine
 Umgebungsvariable kannst du auch festlegen, dass Rust den Stapelspeicher
 anzeigt, wenn das Programm abbricht, damit du die Quelle des Abbruchs leichter
