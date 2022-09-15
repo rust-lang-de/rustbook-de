@@ -9147,7 +9147,7 @@ ist, und uns gleichzeitig entweder die Dateiressource oder die
 Fehlerinformationen liefern. Diese Informationen sind genau das, was die
 Aufzählung <code>Result</code> übermittelt.</p>
 <p>Falls <code>File::open</code> erfolgreich ist, wird der Wert der Variable
-<code>greeting_file_result</code> eine Instanz von <code>Ok</code> sein, die eine Dateiressource
+<code>f</code> eine Instanz von <code>Ok</code> sein, die eine Dateiressource
 enthält. Im Fehlerfall ist der Wert von <code>f</code> eine Instanz von
 <code>Err</code>, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.</p>
 <p>Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
@@ -9229,7 +9229,7 @@ aufrufen können, um einen <code>io::ErrorKind</code>-Wert zu erhalten. Die Aufz
 enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer <code>io</code>-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist <code>ErrorKind::NotFound</code>, was bedeutet, dass die Datei, die wir zu öffnen
-versuchen, noch nicht existiert. Wir werten also <code>greeting_file_result</code> aus,
+versuchen, noch nicht existiert. Wir werten also <code>f</code> aus,
 als auch <code>error.kind()</code>.</p>
 <p>Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
 <code>error.kind()</code> zurückgegebene Wert die Variante <code>NotFound</code> der Aufzählung
