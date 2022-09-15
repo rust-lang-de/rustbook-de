@@ -285,7 +285,7 @@ darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für dere
 Lösung du jetzt gerüstet sein solltest:
 
 * Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
-  den Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
+  Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
   der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
   zurück.
 * Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
