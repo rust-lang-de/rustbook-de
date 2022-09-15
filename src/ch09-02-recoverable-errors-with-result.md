@@ -58,8 +58,8 @@ Fehlerinformationen liefern. Diese Informationen sind genau das, was die
 Aufzählung `Result` übermittelt.
 
 Falls `File::open` erfolgreich ist, wird der Wert der Variable
-`greeting_file_result` eine Instanz von `Ok` sein, die eine Dateiressource
-enthält. Im Fehlerfall ist der Wert von `greeting_file_result` eine Instanz von
+`f` eine Instanz von `Ok` sein, die eine Dateiressource
+enthält. Im Fehlerfall ist der Wert von `f` eine Instanz von
 `Err`, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.
 
 Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
@@ -158,7 +158,7 @@ aufrufen können, um einen `io::ErrorKind`-Wert zu erhalten. Die Aufzählung
 enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer `io`-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist `ErrorKind::NotFound`, was bedeutet, dass die Datei, die wir zu öffnen
-versuchen, noch nicht existiert. Wir werten also `greeting_file_result` aus,
+versuchen, noch nicht existiert. Wir werten also `f` aus,
 als auch `error.kind()`.
 
 Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
