@@ -8186,8 +8186,7 @@ werden.</p>
 besprochen haben, solltest du dir unbedingt die <a href="https://doc.rust-lang.org/std/vec/struct.Vec.html">API-Dokumentation</a> zu
 den vielen nützlichen Methoden ansehen, die die Standardbibliothek für <code>Vec&lt;T&gt;</code>
 mitbringt. Zum Beispiel gibt es zusätzlich zu <code>push</code> die Methode <code>pop</code>, die das
-letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
-übergehen: <code>String</code></p>
+letzte Element entfernt und zurückgibt.</p>
 <h3 id="beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt"><a class="header" href="#beim-aufräumen-eines-vektors-werden-seine-elemente-aufgeräumt">Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt</a></h3>
 <p>Wie bei jeder anderen Struktur wird ein Vektor freigegeben, wenn er den
 Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.</p>
@@ -8206,7 +8205,7 @@ aufgeräumt werden</span></p>
 d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Der Ausleihenprüfer
 stellt sicher, dass alle Referenzen auf den Inhalt eines Vektors nur verwendet
 werden, solange der Vektor selbst gültig ist.</p>
-<p>Lassen Sie uns zum nächsten Sammlungstyp übergehen: <code>String</code>!</p>
+<p>Lass uns zum nächsten Kollektionstyp übergehen: <code>String</code>!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="utf-8-kodierten-text-in-zeichenketten-strings-ablegen"><a class="header" href="#utf-8-kodierten-text-in-zeichenketten-strings-ablegen">UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></h2>
 <p>Wir haben in Kapitel 4 über Zeichenketten (strings) gesprochen, aber wir werden
 uns jetzt eingehender damit befassen. Neue Rust-Entwickler haben gewöhnlich aus
@@ -8712,7 +8711,7 @@ let score = scores.get(&amp;team_name);
 <p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span></p>
 <p>Hier wird <code>score</code> den Wert haben, der mit Team Blau assoziiert ist, und das
-Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurückgibt;
+Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt <code>get</code>
 den Wert <code>None</code> zurück. Dieses Programm behandelt die <code>Option</code>, indem es
 <code>unwrap_or</code> aufruft, um <code>score</code> auf Null zu setzen, wenn <code>scores</code> keinen
