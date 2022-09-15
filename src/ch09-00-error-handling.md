@@ -23,5 +23,5 @@ hat es den Typ `Result<T, E>` für behebbare Fehler und das Makro `panic!`, das
 die Ausführung stoppt, wenn das Programm auf einen nicht behebbaren Fehler
 stößt. Dieses Kapitel behandelt zuerst das Aufrufen von `panic!` und spricht
 dann über die Rückgabe von `Result<T, E>`-Werten. Darüber hinaus werden wir
-Überlegungen anstellen, wann wir besser versuchen sollten, uns von einem Fehler
-zu erholen, und wann die Ausführung zu stoppen.
+uns mit der Frage befassen, wann man versuchen sollte, einen Fehler zu beheben
+oder die Ausführung zu stoppen.
