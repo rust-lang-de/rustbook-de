@@ -59,7 +59,7 @@ Aufzählung `Result` übermittelt.
 
 Falls `File::open` erfolgreich ist, wird der Wert der Variable
 `greeting_file_result` eine Instanz von `Ok` sein, die eine Dateiressource
-enthält. Im Fehlerfall ist der Wert von `greeting_file_result` eine Instanz von
+enthält. Im Fehlerfall ist der Wert von `f` eine Instanz von
 `Err`, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.
 
 Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
