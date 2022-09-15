@@ -294,8 +294,7 @@ Nachdem wir nun einige der gängigsten Methoden zur Verwendung von Vektoren
 besprochen haben, solltest du dir unbedingt die [API-Dokumentation][vec-api] zu
 den vielen nützlichen Methoden ansehen, die die Standardbibliothek für `Vec<T>`
 mitbringt. Zum Beispiel gibt es zusätzlich zu `push` die Methode `pop`, die das
-letzte Element entfernt und zurückgibt. Lass uns zum nächsten Kollektionstyp
-übergehen: `String`
+letzte Element entfernt und zurückgibt.
 
 ### Beim Aufräumen eines Vektors werden seine Elemente aufgeräumt
 
@@ -318,7 +317,7 @@ d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Der Ausleihenprüfer
 stellt sicher, dass alle Referenzen auf den Inhalt eines Vektors nur verwendet
 werden, solange der Vektor selbst gültig ist.
 
-Lassen Sie uns zum nächsten Sammlungstyp übergehen: `String`!
+Lass uns zum nächsten Kollektionstyp übergehen: `String`!
 
 [data-types]: ch03-02-data-types.html
 [nomicon]: https://doc.rust-lang.org/nomicon/vec.html
