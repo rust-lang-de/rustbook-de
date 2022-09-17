@@ -311,8 +311,8 @@ fn read_username_from_file() -> Result<String, io::Error> {
 den aufrufenden Code zurückgibt</span>
 
 Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
-aber wir wollen für den Anfang viel davon manuell zu machen, um die
-Fehlerbehandlung zu erkunden; am Ende werden wir den kürzeren Weg zeigen. Sehen
+aber wir wollen für den Anfang viel davon manuell machen, um die
+Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. Sehen
 wir uns zunächst den Rückgabetyp der Funktion an: `Result<String, io::Error>`.
 Das bedeutet, dass die Funktion einen Wert vom Typ `Result<T, E>` zurückgibt,
 wobei der generische Typ `T` mit dem konkreten Typ `String` und der generische
