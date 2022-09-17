@@ -114,7 +114,7 @@ Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.
 ### Abgleich verschiedener Fehler
 
 Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund `File::open`
-fehlschlug. Stattdessen wollen wir bei verschiedenen Fehlerursachen
+fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
 unterschiedliche Maßnahmen ergreifen: Wenn `File::open` fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn `File::open` aus irgendeinem
