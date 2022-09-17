@@ -168,7 +168,7 @@ Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der vo
 brauchen wir einen zweiten Zweig im inneren `match`-Ausdruck. Wenn die Datei
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren `match` bleibt gleich, sodass das Programm bei jedem
-Fehler außer dem Fehler der fehlenden Datei abbricht.
+Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 
 ### Alternativen zur Verwendung von `match` mit `Result<T, E>`
 
