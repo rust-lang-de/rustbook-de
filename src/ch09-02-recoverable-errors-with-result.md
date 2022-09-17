@@ -208,7 +208,7 @@ Fehler außer dem Fehler der fehlenden Datei abbricht.
 
 ### Abkürzungen zum Abbrechen im Fehlerfall: `unwrap` und `expect`
 
-Das Verwenden von `match` funktioniert gut genug, aber es kann etwas wortreich
+Das Verwenden von `match` funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ `Result<T, E>` bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
 Methode `unwrap` ist eine Abkürzungsmethode, implementiert wie der Ausdruck
