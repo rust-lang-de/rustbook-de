@@ -394,8 +394,8 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <p><span class="caption">Codeblock 9-6: Eine Funktion, die mit <code>match</code> Fehler an
 den aufrufenden Code zurückgibt</span></p>
 <p>Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
-aber wir wollen für den Anfang viel davon manuell zu machen, um die
-Fehlerbehandlung zu erkunden; am Ende werden wir den kürzeren Weg zeigen. Sehen
+aber wir wollen für den Anfang viel davon manuell machen, um die
+Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. Sehen
 wir uns zunächst den Rückgabetyp der Funktion an: <code>Result&lt;String, io::Error&gt;</code>.
 Das bedeutet, dass die Funktion einen Wert vom Typ <code>Result&lt;T, E&gt;</code> zurückgibt,
 wobei der generische Typ <code>T</code> mit dem konkreten Typ <code>String</code> und der generische
