@@ -9190,7 +9190,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
 <h3 id="abgleich-verschiedener-fehler"><a class="header" href="#abgleich-verschiedener-fehler">Abgleich verschiedener Fehler</a></h3>
 <p>Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
-fehlschlug. Stattdessen wollen wir bei verschiedenen Fehlerursachen
+fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
 unterschiedliche Maßnahmen ergreifen: Wenn <code>File::open</code> fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code> aus irgendeinem
