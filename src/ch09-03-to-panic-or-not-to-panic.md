@@ -43,7 +43,7 @@ ist der Aufruf von `unwrap` und `expect` genau das, was passieren sollte.
 
 ### Fälle, in denen du mehr Informationen als der Compiler hast
 
-Es wäre auch angemessen, `unwrap` oder `expect` aufzurufen, wenn du eine andere
+Es wäre auch sinnvoll, `unwrap` oder `expect` aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik
 kann vom Compiler nicht verstanden werden. Du wirst immer noch ein `Result`
 haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
