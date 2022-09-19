@@ -171,7 +171,7 @@ gesamte Test fehlschlägt, auch wenn diese Methode nicht die zu testende
 Funktionalität ist. Da ein Test mit <code>panic!</code> als fehlgeschlagen markiert wird,
 ist der Aufruf von <code>unwrap</code> und <code>expect</code> genau das, was passieren sollte.</p>
 <h3 id="fälle-in-denen-du-mehr-informationen-als-der-compiler-hast"><a class="header" href="#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast">Fälle, in denen du mehr Informationen als der Compiler hast</a></h3>
-<p>Es wäre auch angemessen, <code>unwrap</code> oder <code>expect</code> aufzurufen, wenn du eine andere
+<p>Es wäre auch sinnvoll, <code>unwrap</code> oder <code>expect</code> aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass <code>Result</code> einen <code>Ok</code>-Wert hat, aber die Logik
 kann vom Compiler nicht verstanden werden. Du wirst immer noch ein <code>Result</code>
 haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es

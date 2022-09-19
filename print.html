@@ -9657,7 +9657,7 @@ Implementierung des Merkmals <code>Termination</code> für deine eigenen Typen f
 in der Dokumentation der Standardbibliothek.</p>
 <p>Nachdem wir nun die Einzelheiten des Aufrufs von <code>panic!</code> und der Rückgabe von
 <code>Result</code> besprochen haben, wollen wir zum Thema zurückkehren, wie wir
-entscheiden können, was in welchen Fällen angemessen ist.</p>
+entscheiden können, was in welchen Fällen geeignet ist.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="wann-panic-aufrufen-und-wann-nicht"><a class="header" href="#wann-panic-aufrufen-und-wann-nicht">Wann <code>panic!</code> aufrufen und wann nicht?</a></h2>
 <p>Wie entscheidest du also, wann du <code>panic!</code> aufrufen und wann <code>Result</code>
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
@@ -9695,7 +9695,7 @@ gesamte Test fehlschlägt, auch wenn diese Methode nicht die zu testende
 Funktionalität ist. Da ein Test mit <code>panic!</code> als fehlgeschlagen markiert wird,
 ist der Aufruf von <code>unwrap</code> und <code>expect</code> genau das, was passieren sollte.</p>
 <h3 id="fälle-in-denen-du-mehr-informationen-als-der-compiler-hast"><a class="header" href="#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast">Fälle, in denen du mehr Informationen als der Compiler hast</a></h3>
-<p>Es wäre auch angemessen, <code>unwrap</code> oder <code>expect</code> aufzurufen, wenn du eine andere
+<p>Es wäre auch sinnvoll, <code>unwrap</code> oder <code>expect</code> aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass <code>Result</code> einen <code>Ok</code>-Wert hat, aber die Logik
 kann vom Compiler nicht verstanden werden. Du wirst immer noch ein <code>Result</code>
 haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
