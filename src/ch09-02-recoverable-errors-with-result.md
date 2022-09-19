@@ -415,7 +415,7 @@ und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.
 
 Im Zusammenhang mit Codeblock 9-7 gibt das `?` am Ende des Aufrufs von
-`File::open` den Wert innerhalb eines `Ok` an die Variable `username_file`
+`File::open` den Wert innerhalb eines `Ok` an die Variable `f`
 zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
 Funktion und gibt dem aufrufenden Code einen `Err`-Wert zurück. Dasselbe gilt
 für das `?` am Ende des `read_to_string`-Aufrufs.
