@@ -443,12 +443,12 @@ fn read_username_from_file() -> Result<String, io::Error> {
 <span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
 `?`-Operator</span>
 
-Wir haben das Erstellen des neuen `String` in `username` an den Anfang der
+Wir haben das Erstellen des neuen `String` in `s` an den Anfang der
 Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
-`username_file` zu erzeugen, haben wir den Aufruf von `read_to_string` direkt
+`f` zu erzeugen, haben wir den Aufruf von `read_to_string` direkt
 an das Ergebnis von `File::open("hallo.txt")?` gehängt. Wir haben immer noch
 ein `?` am Ende des Aufrufs von `read_to_string`, und wir geben immer noch
-einen `Ok`-Wert zurück, der `username` enthält, wenn sowohl `File::open` als
+einen `Ok`-Wert zurück, der `s` enthält, wenn sowohl `File::open` als
 auch `read_to_string` erfolgreich sind, anstatt Fehler zurückzugeben. Die
 Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.
