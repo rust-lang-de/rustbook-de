@@ -9449,7 +9449,7 @@ die <code>?</code>-Operator-Aufrufe im Rumpf von <code>read_username_from_file</
 und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.</p>
 <p>Im Zusammenhang mit Codeblock 9-7 gibt das <code>?</code> am Ende des Aufrufs von
-<code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>username_file</code>
+<code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>f</code>
 zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
 Funktion und gibt dem aufrufenden Code einen <code>Err</code>-Wert zurück. Dasselbe gilt
 für das <code>?</code> am Ende des <code>read_to_string</code>-Aufrufs.</p>
