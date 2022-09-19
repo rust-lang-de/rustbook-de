@@ -633,7 +633,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 Der Typ `Box<dyn Error>` ist ein *Merkmalsobjekt* (trait object), über das wir
 im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“][trait-objects] in Kapitel 17 sprechen werden. Vorerst kannst
-du `Box<dyn Fehler>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
+du `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
 `?` auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser `main`-Funktion nur Fehler des Typs
