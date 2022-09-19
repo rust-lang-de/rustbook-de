@@ -658,7 +658,7 @@ in der Dokumentation der Standardbibliothek.
 
 Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir
-entscheiden können, was in welchen Fällen angemessen ist.
+entscheiden können, was in welchen Fällen geeignet ist.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result
 [termination]: https://doc.rust-lang.org/std/process/trait.Termination.html
