@@ -8,7 +8,7 @@ aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 `Result`-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
-Code könnte sich dafür entscheiden, sich vom Fehler auf eine angemessene Weise
+Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise
 zu erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in
 diesem Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren
 Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
@@ -105,7 +105,7 @@ kann. In ähnlicher Weise ist `panic!` oft angebracht, wenn du externen Code
 aufrufst, der sich deiner Kontrolle entzieht und einen ungültigen Zustand
 zurückgibt, den du nicht beheben kannst.
 
-Wenn jedoch ein Fehler erwartet wird, ist es angemessener, ein `Result`
+Wenn jedoch ein Fehler erwartet wird, ist es sinnvoller, ein `Result`
 zurückzugeben, als `panic!` aufzurufen. Beispiele hierfür sind ein Parser, dem
 fehlerhafte Daten übergeben werden, oder eine HTTP-Anfrage, die einen Status
 zurückgibt, der anzeigt, dass du ein Aufruflimit erreicht hast. In diesen
