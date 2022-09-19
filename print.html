@@ -9474,12 +9474,12 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
 <code>?</code>-Operator</span></p>
-<p>Wir haben das Erstellen des neuen <code>String</code> in <code>username</code> an den Anfang der
+<p>Wir haben das Erstellen des neuen <code>String</code> in <code>s</code> an den Anfang der
 Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
-<code>username_file</code> zu erzeugen, haben wir den Aufruf von <code>read_to_string</code> direkt
+<code>f</code> zu erzeugen, haben wir den Aufruf von <code>read_to_string</code> direkt
 an das Ergebnis von <code>File::open(&quot;hallo.txt&quot;)?</code> gehängt. Wir haben immer noch
 ein <code>?</code> am Ende des Aufrufs von <code>read_to_string</code>, und wir geben immer noch
-einen <code>Ok</code>-Wert zurück, der <code>username</code> enthält, wenn sowohl <code>File::open</code> als
+einen <code>Ok</code>-Wert zurück, der <code>s</code> enthält, wenn sowohl <code>File::open</code> als
 auch <code>read_to_string</code> erfolgreich sind, anstatt Fehler zurückzugeben. Die
 Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.</p>
