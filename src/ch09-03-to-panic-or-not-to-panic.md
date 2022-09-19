@@ -89,7 +89,7 @@ werden &ndash; sowie eine oder mehrere der folgenden Punkte zutreffen:
   falschen Format durch einen Benutzer.
 * Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
   in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
-  Problem zu prüfen
+  Problem zu prüfen.
 * Es gibt keine gute Möglichkeit, diese Informationen in den von dir
   verwendeten Typen zu kodieren. Wir werden im Abschnitt [„Kodieren von
   Zuständen und Verhalten als Typen“][encoding] in Kapitel 17 ein Beispiel
