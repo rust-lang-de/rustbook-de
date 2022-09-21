@@ -108,10 +108,10 @@ beheben.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,does_not_compile
-fn largest<T>(list: &[T]) -> T {
-    let mut largest = list[0];
+fn largest<T>(list: &[T]) -> &T {
+    let mut largest = &list[0];
 
-    for &item in list {
+    for item in list {
         if item > largest {
             largest = item;
         }
