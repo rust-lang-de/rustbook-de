@@ -149,9 +149,9 @@ ist.
 
 ### Benutzerdefinierte Typen für die Validierung erstellen
 
-Gehen wir die Idee, das Rust-Typsystem zu verwenden, um sicherzustellen, dass
-wir einen gültigen Wert haben, einen Schritt weiter und schauen uns an, wie wir
-einen benutzerdefinierten Typ für die Validierung erstellen können. Erinnere
+Gehen wir noch einen Schritt weiter, indem wir das Typsystem von Rust verwenden,
+um sicherzustellen, dass wir einen gültigen Wert haben, und betrachten wir die
+Erstellung eines benutzerdefinierten Typs für die Validierung. Erinnere
 dich an das Ratespiel in Kapitel 2, bei dem unser Code den Benutzer
 aufforderte, eine Zahl zwischen 1 und 100 zu erraten. Wir haben nie überprüft,
 ob die Schätzung des Benutzers zwischen diesen Zahlen lag, bevor wir sie mit
