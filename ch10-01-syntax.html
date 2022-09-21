@@ -226,10 +226,10 @@ wir die Funktion entweder mit einem Anteilstyp von <code>i32</code>-Werten oder
 kompilieren lässt, aber wir werden das Problem später in diesem Kapitel
 beheben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; T {
-    let mut largest = list[0];
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
