@@ -5,7 +5,7 @@ wie Funktionssignaturen oder Strukturen (structs) zu erstellen, die wir dann
 mit vielen verschiedenen konkreten Datentypen verwenden können. Sehen wir uns
 zunächst an, wie Funktionen, Strukturen, Aufzählungen und Methoden mithilfe von
 generischen Datentypen definiert werden können. Danach werden wir uns ansehen,
-wie generische Datentypen die Code-Performanz beeinflussen.
+wie generische Datentypen die Code-Performance beeinflussen.
 
 ### In Funktionsdefinitionen
 
