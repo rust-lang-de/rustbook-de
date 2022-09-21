@@ -9865,7 +9865,7 @@ mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühs
 Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
 überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
 neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
+bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
 Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -9894,7 +9894,7 @@ impl Guess {
 zwischen 1 und 100 fortsetzt</span></p>
 <p>Zuerst definieren wir eine Struktur <code>Guess</code>, die ein Feld <code>value</code> hat, das
 einen <code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
-<p>Dann implementieren wir die zugehörige Funktion <code>new</code> auf <code>Guess</code>, die
+<p>Dann implementieren wir die zugehörige Funktion <code>new</code> für <code>Guess</code>, die
 Instanzen von <code>Guess</code> erzeugt. Die Funktion <code>new</code> ist so definiert, dass sie
 einen Parameter <code>value</code> vom Typ <code>i32</code> nimmt und eine <code>Guess</code>-Instanz
 zurückgibt. Der Code im Funktionsrumpf von <code>new</code> testet den Wert in <code>value</code>, um
