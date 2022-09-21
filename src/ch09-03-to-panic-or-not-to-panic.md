@@ -226,7 +226,7 @@ Stattdessen können wir einen neuen Typ erstellen und die Validierungen in eine
 Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
 überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
 neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
+bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt, wenn die
 Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
