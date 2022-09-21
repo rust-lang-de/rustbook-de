@@ -217,7 +217,7 @@ der Schleife zu starten und um eine weitere Schätzung zu bitten. Nach dem
 `if`-Ausdruck können wir mit dem Vergleich zwischen `guess` und der Geheimzahl
 fortfahren, wobei wir wissen, dass `guess` zwischen 1 und 100 liegt.
 
-Dies ist jedoch keine Ideallösung: Wenn es absolut entscheidend wäre, dass das
+Dies ist jedoch keine ideale Lösung: Wenn es zwingend erforderlich wäre, dass das
 Programm nur mit Werten zwischen 1 und 100 arbeitet, und wir viele Funktionen
 mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühsam
 (und könnte die Leistung beeinträchtigen).
