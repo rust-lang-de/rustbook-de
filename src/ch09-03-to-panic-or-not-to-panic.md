@@ -257,7 +257,7 @@ zwischen 1 und 100 fortsetzt</span>
 Zuerst definieren wir eine Struktur `Guess`, die ein Feld `value` hat, das
 einen `i32` enthält. Hier wird die Nummer gespeichert.
 
-Dann implementieren wir die zugehörige Funktion `new` auf `Guess`, die
+Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
 Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
 einen Parameter `value` vom Typ `i32` nimmt und eine `Guess`-Instanz
 zurückgibt. Der Code im Funktionsrumpf von `new` testet den Wert in `value`, um
