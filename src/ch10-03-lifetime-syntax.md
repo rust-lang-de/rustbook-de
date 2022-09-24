@@ -18,7 +18,7 @@ Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.
 
-Das Kommentieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Das Vermerken von Lebensdauern ist ein Konzept, das die meisten anderen
 Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
 wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
 werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
