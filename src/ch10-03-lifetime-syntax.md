@@ -793,7 +793,7 @@ Lebensdauern der Referenzen in den Feldern der Struktur gebunden sein oder sie
 können unabhängig sein. Darüber hinaus sorgen die Lebensdauer-Elisionsregeln
 oft dafür, dass Lebensdauer-Annotationen in Methodensignaturen nicht
 erforderlich sind. Betrachten wir einige Beispiele mit der Struktur
-`ImportantExcerpt` an, die wir in Codeblock 10-24 definiert haben.
+`ImportantExcerpt`, die wir in Codeblock 10-24 definiert haben.
 
 Zuerst werden wir eine Methode namens `level` verwenden, deren einziger
 Parameter eine Referenz auf `self` ist und deren Rückgabewert ein `i32` ist,
