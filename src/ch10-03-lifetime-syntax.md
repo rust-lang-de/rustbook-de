@@ -956,7 +956,7 @@ Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
 sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
 [Rust-Referenz][reference] lesen. Aber als Nächstes wirst du lernen, wie man
 Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
-funktioniert, wie er sollte.
+funktioniert, wie er es soll.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
 [string-slices-as-parameters]:
