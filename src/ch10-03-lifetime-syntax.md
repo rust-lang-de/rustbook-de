@@ -868,9 +868,9 @@ berücksichtigt worden.
 ### Statische Lebensdauer
 
 Eine besondere Lebensdauer, die wir besprechen müssen, ist `'static`, was
-bedeutet, dass diese Referenz während der gesamten Dauer des Programms leben
-kann. Alle Zeichenkettenliterale haben die Lebensdauer `'static`, die wir wie
-folgt annotieren können:
+bedeutet, dass diese Referenz während der gesamten Dauer des Programms bestehen
+kann. Alle Zeichenkettenliterale haben die Lebensdauer `'static`. Sie wird wie
+folgt annotiert:
 
 ```rust
 let s: &'static str = "Ich habe eine statische Lebensdauer.";
