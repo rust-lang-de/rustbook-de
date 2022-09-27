@@ -11830,9 +11830,9 @@ Rückgabetyp die Lebensdauer von <code>&amp;self</code>, und alle Lebensdauern s
 berücksichtigt worden.</p>
 <h3 id="statische-lebensdauer"><a class="header" href="#statische-lebensdauer">Statische Lebensdauer</a></h3>
 <p>Eine besondere Lebensdauer, die wir besprechen müssen, ist <code>'static</code>, was
-bedeutet, dass diese Referenz während der gesamten Dauer des Programms leben
-kann. Alle Zeichenkettenliterale haben die Lebensdauer <code>'static</code>, die wir wie
-folgt annotieren können:</p>
+bedeutet, dass diese Referenz während der gesamten Dauer des Programms bestehen
+kann. Alle Zeichenkettenliterale haben die Lebensdauer <code>'static</code>. Sie wird wie
+folgt annotiert:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s: &amp;'static str = &quot;Ich habe eine statische Lebensdauer.&quot;;
