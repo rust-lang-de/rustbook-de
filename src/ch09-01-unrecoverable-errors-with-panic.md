@@ -181,6 +181,6 @@ In Abschnitt [„Wann `panic!` verwenden und wann
 nicht?“][to-panic-or-not-to-panic] später in diesem Kapitel kommen wir noch
 einmal auf `panic!` zurück und wann wir `panic!` verwenden sollten und wann
 nicht, um Fehlerfälle zu behandeln. Als Nächstes schauen wir uns an, wie man
-sich mit `Result` von einem Fehler erholt.
+Fehler mit `Result` abfangen kann.
 
 [to-panic-or-not-to-panic]: ch09-03-to-panic-or-not-to-panic.html
