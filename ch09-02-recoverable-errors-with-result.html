@@ -168,7 +168,7 @@ Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 <pre><pre class="playground"><code class="language-rust">use std::fs::File;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
 }
 </code></pre></pre>
 <p><span class="caption">Codeblock 9-3: Eine Datei öffnen</span></p>
@@ -185,8 +185,8 @@ ist, und uns gleichzeitig entweder die Dateiressource oder die
 Fehlerinformationen liefern. Diese Informationen sind genau das, was die
 Aufzählung <code>Result</code> übermittelt.</p>
 <p>Falls <code>File::open</code> erfolgreich ist, wird der Wert der Variable
-<code>f</code> eine Instanz von <code>Ok</code> sein, die eine Dateiressource
-enthält. Im Fehlerfall ist der Wert von <code>f</code> eine Instanz von
+<code>greeting_file_result</code> eine Instanz von <code>Ok</code> sein, die eine Dateiressource
+enthält. Im Fehlerfall ist der Wert von <code>greeting_file_result</code> eine Instanz von
 <code>Err</code>, die mehr Informationen über die Art des aufgetretenen Fehlers enthält.</p>
 <p>Wir müssen den Code in Codeblock 9-3 ergänzen, um abhängig vom Rückgabewert von
 <code>File::open</code> unterschiedliche Aktionen durchzuführen. Codeblock 9-4 zeigt eine
@@ -196,9 +196,9 @@ Möglichkeit, <code>Result</code> mit Hilfe eines grundlegenden Werkzeugs, dem A
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
 
-    let f = match f {
+    let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
         Err(error) =&gt; panic!(&quot;Problem beim Öffnen der Datei: {:?}&quot;, error),
     };
@@ -211,7 +211,8 @@ Gültigkeitsbereich verfügbar sind, genau wie bei der Aufzählung <code>Option<
 sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vor den Varianten <code>Ok</code>
 und <code>Err</code> angeben müssen.</p>
 <p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
-<code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen <code>f</code> zu.
+<code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen 
+<code>greeting_file </code> zu.
 Nach dem <code>match</code> können wir die Dateiressource zum Lesen und Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
 <code>File::open</code> erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
@@ -222,7 +223,7 @@ folgende Ausgabe des Makros <code>panic!</code>:</p>
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem opening the file: Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }', src/main.rs:8:23
+thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }', src/main.rs:8:23
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
@@ -241,9 +242,9 @@ Codeblock 9-5 gezeigt.</p>
 use std::io::ErrorKind;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
 
-    let f = match f {
+    let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
         Err(error) =&gt; match error.kind() {
             ErrorKind::NotFound =&gt; match File::create(&quot;hallo.txt&quot;) {
@@ -267,7 +268,7 @@ aufrufen können, um einen <code>io::ErrorKind</code>-Wert zu erhalten. Die Aufz
 enthält Varianten, die die verschiedenen Fehlerarten repräsentieren, die bei
 einer <code>io</code>-Operation auftreten können. Die Variante, die wir verwenden wollen,
 ist <code>ErrorKind::NotFound</code>, was bedeutet, dass die Datei, die wir zu öffnen
-versuchen, noch nicht existiert. Wir werten also <code>f</code> aus,
+versuchen, noch nicht existiert. Wir werten also <code>greeting_file_result</code> aus,
 als auch <code>error.kind()</code>.</p>
 <p>Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der von
 <code>error.kind()</code> zurückgegebene Wert die Variante <code>NotFound</code> der Aufzählung
@@ -291,7 +292,7 @@ und der Methode <code>unwrap_or_else</code>:</p>
 use std::io::ErrorKind;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;).unwrap_or_else(|error| {
+    let greeting_file = File::open(&quot;hallo.txt&quot;).unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             File::create(&quot;hallo.txt&quot;).unwrap_or_else(|error| {
                 panic!(&quot;Problem beim Erstellen der Datei: {:?}&quot;, error);
@@ -322,14 +323,14 @@ ein Beispiel für <code>unwrap</code> im Einsatz:</p>
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;).unwrap();
+    let greeting_file = File::open(&quot;hallo.txt&quot;).unwrap();
 }
 </code></pre></pre>
 <p>Wenn wir diesen Code ohne eine Datei <em>hallo.txt</em> ausführen, werden wir die
 Fehlermeldung des <code>panic!</code>-Aufrufs sehen, den die Methode <code>unwrap</code> macht:</p>
-<pre><code class="language-console">thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error {
-repr: Os { code: 2, message: &quot;No such file or directory&quot; } }',
-src/libcore/result.rs:906:4
+<pre><code class="language-console">thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
+code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }',
+src/main.rs:4:49
 </code></pre>
 <p>In ähnlicher Weise können wir bei der Methode <code>expect</code> auch die Fehlermeldung
 von <code>panic!</code> angeben. Das Verwenden von <code>expect</code> anstelle von <code>unwrap</code> und das
@@ -339,7 +340,7 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;).expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
+    let greeting_file = File::open(&quot;hallo.txt&quot;).expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
 }
 </code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
@@ -347,16 +348,16 @@ zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung,
 <code>expect</code> beim Aufruf von <code>panic!</code> mitgibt, wird als Parameter an <code>expect</code>
 übergeben, anstelle der standardmäßigen <code>panic!</code>-Nachricht, die <code>unwrap</code>
 verwendet. So sieht sie aus:</p>
-<pre><code class="language-text">thread 'main' panicked at 'hello.txt should be included in this project: Error
-{ repr: Os { code: 2, message: &quot;No such file or directory&quot; } }',
-src/libcore/result.rs:906:4
+<pre><code class="language-text">thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
+code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }',
+src/main.rs:5:10
 </code></pre>
 <p>In produktivem Code wählen die meisten Rust-Entwickler <code>expect</code> statt
 <code>unwrap</code> und geben mehr Kontext darüber an, warum die Operation voraussichtlich
 immer erfolgreich sein wird. Auf diese Weise hast du mehr Informationen, die du
 bei der Fehlersuche verwenden kannst, falls sich deine Annahmen als falsch
 erweisen sollten.</p>
-<h3 id="fehler-weitergeben"><a class="header" href="#fehler-weitergeben">Fehler weitergeben</a></h3>
+<h3 id="weitergabe-von-fehlern"><a class="header" href="#weitergabe-von-fehlern">Weitergabe von Fehlern</a></h3>
 <p>Wenn die Implementierung einer Funktion etwas aufruft, das fehlschlagen könnte,
 kannst du, anstatt den Fehler innerhalb dieser Funktion zu behandeln, den
 Fehler an den aufrufenden Code zurückgeben, damit dieser entscheiden kann, was
@@ -375,17 +376,17 @@ aufgerufen hat.</p>
 use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let f = File::open(&quot;hallo.txt&quot;);
+    let username_file_result = File::open(&quot;hallo.txt&quot;);
 
-    let mut f = match f {
+    let mut username_file = match username_file_result  {
         Ok(file) =&gt; file,
         Err(e) =&gt; return Err(e),
     };
 
-    let mut s = String::new();
+    let mut username = String::new();
 
-    match f.read_to_string(&amp;mut s) {
-        Ok(_) =&gt; Ok(s),
+    match username_file.read_to_string(&amp;mut username) {
+        Ok(_) =&gt; Ok(username),
         Err(e) =&gt; Err(e),
     }
 }
@@ -399,7 +400,7 @@ Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. 
 wir uns zunächst den Rückgabetyp der Funktion an: <code>Result&lt;String, io::Error&gt;</code>.
 Das bedeutet, dass die Funktion einen Wert vom Typ <code>Result&lt;T, E&gt;</code> zurückgibt,
 wobei der generische Typ <code>T</code> mit dem konkreten Typ <code>String</code> und der generische
-Typ <code>E</code> mit dem konkreten Typ <code>io::Fehler</code> gefüllt wurde.</p>
+Typ <code>E</code> mit dem konkreten Typ <code>io::Error</code> gefüllt wurde.</p>
 <p>Wenn diese Funktion erfolgreich ist, erhält der aufrufende Code einen
 <code>Ok</code>-Wert, der einen <code>String</code> enthält – den Benutzernamen, den diese
 Funktion aus der Datei liest. Wenn diese Funktion auf Probleme stößt, erhält
@@ -451,13 +452,14 @@ den <code>?</code>-Operator.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io::{self, Read};
+use std::io;
+use std::io::Read;
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let mut f = File::open(&quot;hallo.txt&quot;)?;
-    let mut s = String::new();
-    f.read_to_string(&amp;mut s)?;
-    Ok(s)
+    let mut username_file = File::open(&quot;hallo.txt&quot;)?;
+    let mut username = String::new();
+    username_file.read_to_string(&amp;mut username )?;
+    Ok(username)
 }
 <span class="boring">}
 </span></code></pre></pre>
@@ -487,7 +489,7 @@ die <code>?</code>-Operator-Aufrufe im Rumpf von <code>read_username_from_file</
 und die Fehlertypen konvertieren, ohne dass weiterer Code zur Funktion
 hinzugefügt werden muss.</p>
 <p>Im Zusammenhang mit Codeblock 9-7 gibt das <code>?</code> am Ende des Aufrufs von
-<code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>f</code>
+<code>File::open</code> den Wert innerhalb eines <code>Ok</code> an die Variable <code>username_file</code>
 zurück. Wenn ein Fehler auftritt, beendet der Operator vorzeitig die gesamte
 Funktion und gibt dem aufrufenden Code einen <code>Err</code>-Wert zurück. Dasselbe gilt
 für das <code>?</code> am Ende des <code>read_to_string</code>-Aufrufs.</p>
@@ -499,25 +501,26 @@ verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
-use std::io::{self, Read};
+use std::io;
+use std::io::Read;
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let mut s = String::new();
+    let mut username = String::new();
 
-    File::open(&quot;hallo.txt&quot;)?.read_to_string(&amp;mut s)?;
+    File::open(&quot;hallo.txt&quot;)?.read_to_string(&amp;mut username)?;
 
-    Ok(s)
+    Ok(username)
 }
 <span class="boring">}
 </span></code></pre></pre>
 <p><span class="caption">Codeblock 9-8: Verketten von Methodenaufrufen nach dem
 <code>?</code>-Operator</span></p>
-<p>Wir haben das Erstellen des neuen <code>String</code> in <code>s</code> an den Anfang der
+<p>Wir haben das Erstellen des neuen <code>String</code> in <code>username</code> an den Anfang der
 Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
-<code>f</code> zu erzeugen, haben wir den Aufruf von <code>read_to_string</code> direkt
+<code>username_file</code> zu erzeugen, haben wir den Aufruf von <code>read_to_string</code> direkt
 an das Ergebnis von <code>File::open(&quot;hallo.txt&quot;)?</code> gehängt. Wir haben immer noch
 ein <code>?</code> am Ende des Aufrufs von <code>read_to_string</code>, und wir geben immer noch
-einen <code>Ok</code>-Wert zurück, der <code>s</code> enthält, wenn sowohl <code>File::open</code> als
+einen <code>Ok</code>-Wert zurück, der <code>username</code> enthält, wenn sowohl <code>File::open</code> als
 auch <code>read_to_string</code> erfolgreich sind, anstatt Fehler zurückzugeben. Die
 Funktionalität ist wieder die gleiche wie in Codeblock 9-6 und Codeblock 9-7;
 das ist nur eine andere, ergonomischere Schreibweise.</p>
@@ -558,7 +561,7 @@ Wertes, für den wir &quot;?&quot; verwenden, kompatibel ist:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
 fn main() {
-    let f = File::open(&quot;hallo.txt&quot;)?;
+    let greeting_file = File::open(&quot;hallo.txt&quot;)?;
 }
 </code></pre></pre>
 <p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
@@ -571,7 +574,7 @@ kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
-   --&gt; src/main.rs:4:13
+   --&gt; src/main.rs:4:48
     |
 3   | / fn main() {
 4   | |     let f = File::open(&quot;hallo.txt&quot;)?;
@@ -580,7 +583,6 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
     | |_- this function should return `Result` or `Option` to accept `?`
     |
     = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
-    = note: required by `from_residual`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `error-handling` due to previous error
@@ -663,7 +665,7 @@ verhalten.</p>
 use std::fs::File;
 
 fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-    let f = File::open(&quot;hallo.txt&quot;)?;
+    let greeting_file = File::open(&quot;hallo.txt&quot;)?;
 
     Ok(())
 }
