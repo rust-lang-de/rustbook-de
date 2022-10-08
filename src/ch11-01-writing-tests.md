@@ -110,7 +110,7 @@ an, die bestanden oder nicht bestanden wurden.
 
 Es ist möglich, einen Test als ignoriert zu markieren, sodass er in einer
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt [„Tests
-ignorieren, die nicht ausdrücklich verlangt werden“][ignorieren] später in
+ignorieren, die nicht ausdrücklich verlangt werden“][ignoring] später in
 diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
 Zusammenfassung `0 ignored`. Wir können auch ein Argument an den Befehl
 `cargo test` übergeben, um nur Tests auszuführen, deren Name mit einer
