@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -157,8 +156,7 @@ Projekts macht.</p>
 
 fn area(width: u32, height: u32) -&gt; u32 {
     width * height
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 5-8: Berechnen der Fläche eines Rechtecks, das
 durch separate Breiten- und Höhenvariablen beschrieben wird</span></p>
 <p>Nun führe dieses Programm mit <code>cargo run</code> aus:</p>
@@ -184,8 +182,7 @@ tun, um diesen Code klar und lesbar zu machen.</p>
 </span><span class="boring">
 </span>fn area(width: u32, height: u32) -&gt; u32 {
 <span class="boring">    width * height
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Die Funktion <code>area</code> soll die Fläche eines Rechtecks berechnen, aber die von uns
 geschriebene Funktion hat zwei Parameter und es geht in unserem Programm
 nirgendwo klar hervor, dass die Parameter zusammenhängen. Es wäre besser lesbar
@@ -207,8 +204,7 @@ verwendet.</p>
 
 fn area(dimensions: (u32, u32)) -&gt; u32 {
     dimensions.0 * dimensions.1
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 5-9: Breite und Höhe des Rechtecks werden mit
 einem Tupel beschrieben</span></p>
 <p>In einem Punkt ist dieses Programm besser. Das Tupel bringt etwas Struktur
@@ -248,8 +244,7 @@ fn main() {
 
 fn area(rectangle: &amp;Rectangle) -&gt; u32 {
     rectangle.width * rectangle.height
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 5-10: Definieren der Struktur <code>Rectangle</code></span></p>
 <p>Hier haben wir eine Struktur definiert und sie <code>Rectangle</code> genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder <code>width</code> und <code>height</code> definiert,
@@ -288,8 +283,7 @@ fn main() {
     };
 
     println!(&quot;rect1 ist {}&quot;, rect1);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 5-11: Versuch, eine <code>Rectangle</code>-Instanz
 auszugeben</span></p>
 <p>Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:</p>
@@ -344,8 +338,7 @@ fn main() {
     };
 
     println!(&quot;rect1 ist {:?}&quot;, rect1);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
 <code>Debug</code> und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>
 <p>Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
@@ -401,8 +394,7 @@ fn main() {
     };
 
     dbg!(&amp;rect1);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Wir können <code>dbg!</code> um den Ausdruck <code>30 * scale</code> setzen, und da <code>dbg!</code> die
 Eigentümerschaft des Werts des Ausdrucks zurückgibt, erhält das Feld <code>width</code>
 denselben Wert, als wenn wir den <code>dbg!</code>-Aufruf dort nicht hätten. Wir wollen
@@ -473,18 +465,18 @@ an, wie wir den Code weiter umgestalten und unsere Funktion <code>area</code> in
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

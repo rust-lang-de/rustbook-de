@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -158,8 +157,7 @@ use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 7-11: Ein Modul mit <code>use</code> in den
 Gültigkeitsbereich bringen</span></p>
 <p>Das Angeben von <code>use</code> und einem Pfad in einem Gültigkeitsbereich ist ähnlich
@@ -187,8 +185,7 @@ mod customer {
     pub fn eat_at_restaurant() {
         hosting::add_to_waitlist();
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 7-12: Eine <code>use</code>-Anweisung gilt nur in dem
 Gültigkeitsbereich, in dem sie steht</span></p>
 <p>Der Compilerfehler zeigt, dass die Verknüpfung innerhalb des Moduls <code>customer</code>
@@ -234,8 +231,7 @@ use crate::front_of_house::hosting::add_to_waitlist;
 
 pub fn eat_at_restaurant() {
     add_to_waitlist();
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 7-13: Die Funktion <code>add_to_waitlist</code> mit <code>use</code>
 in den Gültigkeitsbereich bringen ist nicht idiomatisch.</span></p>
 <p>Obwohl sowohl Codeblock 7-11 als auch Codeblock 7-13 die gleiche Aufgabe
@@ -255,8 +251,7 @@ Standardbibliothek in den Gültigkeitsbereich einer binären Kiste zu bringen.</
 fn main() {
     let mut map = HashMap::new();
     map.insert(1, 2);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 7-14: <code>HashMap</code> auf idiomatische Weise in den
 Gültigkeitsbereich bringen</span></p>
 <p>Es gibt keinen triftigen Grund für dieses Idiom: Es ist einfach eine
@@ -282,8 +277,7 @@ fn function2() -&gt; io::Result&lt;()&gt; {
     // --abschneiden--
 <span class="boring">    Ok(())
 </span>}
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-15: Um zwei Typen mit dem gleichen Namen in
 denselben Gültigkeitsbereich zu bringen, müssen ihre übergeordneten Module
 angegeben werden.</span></p>
@@ -313,8 +307,7 @@ fn function2() -&gt; IoResult&lt;()&gt; {
     // --abschneiden--
 <span class="boring">    Ok(())
 </span>}
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-16: Umbenennen eines Typs, wenn er mit dem
 Schlüsselwort <code>as</code> in den Gültigkeitsbereich gebracht wird</span></p>
 <p>In der zweiten <code>use</code>-Anweisung wählten wir den neuen Namen <code>IoResult</code> für den
@@ -342,8 +335,7 @@ pub use crate::front_of_house::hosting;
 
 pub fn eat_at_restaurant() {
     hosting::add_to_waitlist();
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
 <p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
@@ -398,8 +390,7 @@ fn main() {
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen einer Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geraten: {}&quot;, guess);
-</span>}
-</code></pre></pre>
+</span>}</code></pre></pre>
 <p>Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 <a href="https://crates.io/">crates.io</a> zur Verfügung gestellt und wenn du eines davon
 in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie
@@ -414,8 +405,7 @@ Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Dies ist ein absoluter Pfad, der mit <code>std</code>, dem Namen der
 Standard-Bibliothekskiste, beginnt.</p>
 <h3 id="verschachtelte-pfade-verwenden-um-lange-use-listen-zu-vereinfachen"><a class="header" href="#verschachtelte-pfade-verwenden-um-lange-use-listen-zu-vereinfachen">Verschachtelte Pfade verwenden, um lange <code>use</code>-Listen zu vereinfachen</a></h3>
@@ -431,8 +421,7 @@ Elemente aus <code>std</code> in den Gültigkeitsbereich:</p>
 use std::cmp::Ordering;
 use std::io;
 // --abschneiden--
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
 in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir
 den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
@@ -444,8 +433,7 @@ in Codeblock 7-18 gezeigt.</p>
 </span>// --abschneiden--
 use std::{cmp::Ordering, io};
 // --abschneiden--
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-18: Angeben eines verschachtelten Pfades, um
 mehrere Elemente mit demselben Präfix in den Gültigkeitsbereich zu
 bringen</span></p>
@@ -462,8 +450,7 @@ Eine, die <code>std::io</code> in den Gültigkeitsbereich bringt, und eine, die
 </span><span class="boring">fn main() {
 </span>use std::io;
 use std::io::Write;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-19: Zwei <code>use</code>-Anweisungen, bei denen eine
 ein Teilpfad der anderen ist</span></p>
 <p>Der gemeinsame Teil dieser beiden Pfade ist <code>std::io</code> und das ist der
@@ -474,8 +461,7 @@ verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::io::{self, Write};
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-20: Zusammenfassen der Pfade aus Codeblock
 7-19 zu einer <code>use</code>-Anweisung</span></p>
 <p>Diese Zeile bringt <code>std::io</code> und <code>std::io::Write</code> in den Gültigkeitsbereich.</p>
@@ -486,8 +472,7 @@ Stern-Operator <code>*</code> angeben:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::*;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Diese <code>use</code>-Anweisung bringt alle öffentlichen Elemente, die in
 <code>std::collections</code> definiert sind, in den aktuellen Gültigkeitsbereich. Sei
 vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
@@ -532,18 +517,18 @@ zu diesem Muster.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

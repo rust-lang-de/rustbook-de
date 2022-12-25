@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -173,8 +172,7 @@ world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     println!(&quot;Hello, world!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Kompilieren wir nun dieses „Hello, world!“-Programm und führen es im gleichen
 Schritt aus mit dem Befehl <code>cargo run</code>:</p>
 <pre><code class="language-console">$ cargo run
@@ -208,8 +206,7 @@ fn main() {
         .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 
     println!(&quot;Du hast geschätzt: {guess}&quot;);
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 2-1: Code, der eine Schätzung vom Benutzer
 erhält und ausgibt</span></p>
 <p>Dieser Code enthält eine Menge Informationen, also gehen wir ihn Zeile für
@@ -231,8 +228,7 @@ Standardbibliothek, bekannt als <code>std</code>:</p>
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert,
 die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
 <em>Präludium</em> genannt, und du kannst deren Inhalt <a href="https://doc.rust-lang.org/std/prelude/index.html">in der Dokumentation der
@@ -258,8 +254,7 @@ das Programm:</p>
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Die Syntax <code>fn</code> deklariert eine neue Funktion, die Klammern <code>()</code> zeigen an,
 dass es keine Parameter gibt, und die geschweifte Klammer <code>{</code> beginnt den Rumpf
 der Funktion.</p>
@@ -279,8 +274,7 @@ Zeichenkette auf dem Bildschirm ausgibt:</p>
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Dieser Code gibt eine Eingabeaufforderung aus, die angibt, um was für ein Spiel
 es sich handelt, und den Benutzer zur Eingabe auffordert.</p>
 <h3 id="speichern-von-werten-mit-variablen"><a class="header" href="#speichern-von-werten-mit-variablen">Speichern von Werten mit Variablen</a></h3>
@@ -300,13 +294,11 @@ speichern, wie hier:</p>
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Jetzt wird das Programm interessant! Es ist viel los in dieser kleinen Zeile.
 Wir verwenden eine <code>let</code>-Anweisung, um eine Variable zu erzeugen. Hier ist ein
 weiteres Beispiel:</p>
-<pre><code class="language-rust ignore">let apples = 5;
-</code></pre>
+<pre><code class="language-rust ignore">let apples = 5;</code></pre>
 <p>Diese Zeile erzeugt eine neue Variable namens <code>apples</code> und bindet sie an den
 Wert 5. In Rust sind Variablen standardmäßig unveränderlich (immutable), das
 heißt, sobald wir der Variablen einen Wert gegeben haben, wird sich der Wert
@@ -318,8 +310,7 @@ Variablennamen:</p>
 </span><span class="boring">fn main() {
 </span>let apples = 5; // unveränderlich
 let mut bananas = 5; // veränderlich
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p>Anmerkung: Die Syntax <code>//</code> beginnt einen Kommentar, der bis zum Ende der
 Zeile weitergeht. Rust ignoriert alles in Kommentaren. Diese werden in
@@ -361,8 +352,7 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 <span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms importiert,
 könnten wir die Funktion trotzdem verwenden, indem wir den Funktionsaufruf als
 <code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine Instanz von
@@ -406,11 +396,9 @@ Codezeile ist. Der nächste Teil ist diese Methode:</p>
 </span>        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 <span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wir hätten diesen Code auch so schreiben können:</p>
-<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Fehler beim Lesen der Zeile&quot;);
-</code></pre>
+<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Fehler beim Lesen der Zeile&quot;);</code></pre>
 <p>Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
 aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
 einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
@@ -482,8 +470,7 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen: </p>
 </span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 </span><span class="boring">
 </span>    println!(&quot;Du hast geschätzt: {guess}&quot;);
-<span class="boring">}
-</span></code></pre>
+<span class="boring">}</span></code></pre>
 <p>Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
 enthält. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
 Stelle dir <code>{}</code> wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
@@ -498,8 +485,7 @@ folgendermaßen aussehen:</p>
 let y = 10;
 
 println!(&quot;x = {} und y = {}&quot;, x, y);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Dieser Code würde <code>x = 5 und y = 10</code> ausgeben.</p>
 <h3 id="testen-des-ersten-teils"><a class="header" href="#testen-des-ersten-teils">Testen des ersten Teils</a></h3>
 <p>Testen wir den ersten Teil des Ratespiels. Führe ihn mit <code>cargo run</code> aus:</p>
@@ -675,8 +661,7 @@ fn main() {
         .expect(&quot;Fehler beim Lesen der Zeile&quot;);
 
     println!(&quot;Du hast geschätzt: {guess}&quot;);
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span></p>
 <p>Zuerst fügen wir die Zeile <code>use rand::Rng</code> hinzu. Das Merkmal (trait)
@@ -764,8 +749,7 @@ fn main() {
         Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
         Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 2-4: Behandeln der möglichen Rückgabewerte beim
 Vergleich zweier Zahlen</span></p>
 <p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, die einen Typ namens
@@ -871,11 +855,9 @@ hinzufügen:</p>
         Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
         Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
     }
-}
-</code></pre>
+}</code></pre>
 <p>Die Zeile lautet:</p>
-<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);
-</code></pre>
+<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);</code></pre>
 <p>Wir erstellen eine Variable mit dem Namen <code>guess</code>. Aber warte, hat das Programm
 nicht bereits eine Variable namens <code>guess</code>? Ja, aber Rust erlaubt uns, den
 vorherigen Wert von <code>guess</code> mit einem neuen Wert zu <em>beschatten</em> (shadow).
@@ -983,8 +965,7 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
             Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>Wie du sehen kannst, haben wir alles ab der Eingabeaufforderung für die
 Schätzung in eine Schleife verschoben. Achte darauf, die Zeilen innerhalb der
 Schleife jeweils um weitere vier Leerzeichen einzurücken und das Programm
@@ -1065,8 +1046,7 @@ gewinnt, indem wir eine <code>break</code>-Anweisung hinzufügen:</p>
             }
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>Das Hinzufügen der <code>break</code>-Zeile nach <code>Du hast gewonnen!</code> bewirkt, dass das
 Programm die Schleife verlässt, wenn der Benutzer die Geheimzahl richtig errät.
 Die Schleife zu verlassen bedeutet auch, das Programm zu beenden, da die
@@ -1118,8 +1098,7 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 </span><span class="boring">            }
 </span><span class="boring">        }
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 2-5: Ignorieren einer ungültigen Zahl und
 Auffordern zu einer weiteren Schätzung, anstatt das Programm zum Absturz zu
 bringen</span></p>
@@ -1206,8 +1185,7 @@ fn main() {
             }
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 2-6: Vollständiger Code des
 Ratespiels</span></p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
@@ -1255,18 +1233,18 @@ besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

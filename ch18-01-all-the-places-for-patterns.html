@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -155,8 +154,7 @@ ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:</p>
 <pre><code class="language-rust ignore">match x {
     None =&gt; None,
     Some(i) =&gt; Some(i + 1),
-}
-</code></pre>
+}</code></pre>
 <p>Die Muster in diesem <code>match</code>-Ausdruck sind <code>None</code> und <code>Some(i)</code> links von jedem
 Pfeil.</p>
 <p>Eine Anforderung für <code>match</code>-Ausdrücke ist, dass sie <em>erschöpfend</em> (exhaustive)
@@ -204,8 +202,7 @@ von Benutzereingaben erhalten könnte.</p>
     } else {
         println!(&quot;Verwende blau als Hintergrundfarbe&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 18-1: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
 <p>Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
 Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
@@ -243,8 +240,7 @@ Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
     while let Some(top) = stack.pop() {
         println!(&quot;{}&quot;, top);
     }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-2: Das Verwenden einer <code>while let</code>-Schleife,
 um Werte so lange auszugeben, wie <code>stack.pop()</code> ein <code>Some</code> zurückgibt</span></p>
 <p>Dieses Beispiel gibt 3, 2 und 1 aus. Die <code>pop</code>-Methode nimmt das letzte Element
@@ -265,8 +261,7 @@ ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerl
     for (index, value) in v.iter().enumerate() {
         println!(&quot;{} ist beim Index {}&quot;, value, index);
     }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-3: Verwenden eines Musters in einer
 <code>for</code>-Schleife zum Destrukturieren eines Tupels</span></p>
 <p>Der Code in Codeblock 18-3 wird Folgendes ausgeben:</p>
@@ -291,8 +286,7 @@ diese einfache Variablenzuweisung mit <code>let</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Jedes Mal, wenn di eine <code>let</code>-Anweisung wie diese verwendet hast, hast du
 Muster verwendet, auch wenn du es vielleicht nicht bemerkt hast! Formal sieht
 eine <code>let</code>-Anweisung wie folgt aus:</p>
@@ -311,8 +305,7 @@ Tupel zu destrukturieren.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y, z) = (1, 2, 3);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-4: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span></p>
@@ -328,8 +321,7 @@ funktioniert.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y) = (1, 2, 3);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-5: Fehlerhaft aufgebautes Musters, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span></p>
 <p>Der Versuch, diesen Code zu kompilieren, führt zu diesem Typfehler:</p>
@@ -363,8 +355,7 @@ eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <co
     // Code kommt hierher
 }
 <span class="boring">
-</span><span class="boring">fn main() {}
-</span></code></pre></pre>
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span></p>
 <p>Der Teil <code>x</code> ist ein Muster! Wie wir es mit <code>let</code> taten, konnten wir ein Tupel
@@ -378,8 +369,7 @@ Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 fn main() {
     let point = (3, 5);
     print_coordinates(&amp;point);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 18-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span></p>
 <p>Dieser Code gibt <code>Aktuelle Position: (3, 5)</code> aus. Die Werte <code>&amp;(3, 5)</code> passen
@@ -425,18 +415,18 @@ sein. Wir werden diese beiden Konzepte als Nächstes besprechen.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -168,8 +167,7 @@ impl List {
     }
 }
 
-fn main() {}
-</code></pre></pre>
+fn main() {}</code></pre></pre>
 <p><span class="caption">Codeblock 15-25: Definition einer Cons-Liste die ein
 <code>RefCell&lt;T&gt;</code> hält, damit man ändern kann, worauf eine <code>Cons</code>-Variante
 referenziert</span></p>
@@ -227,8 +225,7 @@ Referenzzähler an verschiedenen Punkten in diesem Prozess sind.</p>
     // Kommentiere die nächste Zeile aus, um zu sehen, dass wir einen Zyklus haben;
     // es wird den Stapelspeicher überlaufen lassen
     // println!(&quot;a nächstes Element = {:?}&quot;, a.tail());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 15-26: Erstellen eines Referenzzyklus aus zwei
 aufeinanderzeigenden Listenwerten</span></p>
 <p>Wir erstellen eine <code>Rc&lt;List&gt;</code>-Instanz, die einen <code>List</code>-Wert in der Variablen
@@ -356,8 +353,7 @@ struct Node {
 </span><span class="boring">        value: 5,
 </span><span class="boring">        children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
 </span><span class="boring">    });
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wir möchten, dass ein <code>Node</code> seine Kind-Elemente besitzt, und wir möchten diese
 Eigentümerschaft mit Variablen teilen, damit wir direkt auf jeden <code>Node</code> in
 der Baumstruktur zugreifen können. Zu diesem Zweck definieren wir die
@@ -388,8 +384,7 @@ Kind-Element, wie in Codeblock 15-27 gezeigt wird:</p>
         value: 5,
         children: RefCell::new(vec![Rc::clone(&amp;leaf)]),
     });
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 15-27: Erstellen eines <code>leaf</code>-Knotens ohne
 Kind-Element und eines <code>branch</code>-Knotens mit <code>leaf</code> als Kind-Element</span></p>
 <p>Wir klonen den <code>Rc&lt;Node&gt;</code> in <code>leaf</code> und speichern ihn in <code>branch</code>, was bedeutet,
@@ -445,8 +440,7 @@ struct Node {
 </span><span class="boring">    *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Ein Knoten kann auf seinen Eltern-Knoten referenzieren, besitzt ihn jedoch
 nicht. In Codeblock 15-28 aktualisieren wir <code>main</code>, um diese neue Definition
 zu verwenden, damit der <code>leaf</code>-Knoten auf seinen Eltern-Knoten <code>branch</code>
@@ -480,8 +474,7 @@ referenzieren kann:</p>
     *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
 
     println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 15-28: Ein <code>leaf</code>-Knoten mit einer schwachen
 Referenz auf seinen Eltern-Knoten <code>branch</code></span></p>
 <p>Das Erstellen des <code>leaf</code>-Knotens ähnelt Codeblock 15-27 mit Ausnahme des Feldes
@@ -571,8 +564,7 @@ sind in Codeblock 15-29 aufgeführt:</p>
         Rc::strong_count(&amp;leaf),
         Rc::weak_count(&amp;leaf),
     );
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 15-29: Erstellen von <code>branch</code> in einem inneren
 Gültigkeitsbereich und Prüfen der starken und schwachen Referenzzähler</span></p>
 <p>Nachdem <code>leaf</code> erstellt wurde, hat <code>Rc&lt;Node&gt;</code> einen <code>strong_count</code> von 1 und
@@ -651,18 +643,18 @@ Wir werden sogar einige neue intelligente Zeiger kennenlernen.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

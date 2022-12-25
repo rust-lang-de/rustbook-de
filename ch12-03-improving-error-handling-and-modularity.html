@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -232,8 +231,7 @@ fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
     let file_path = &amp;args[2];
 
     (query, file_path)
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 12-5: Extrahieren einer Funktion <code>parse_config</code>
 aus <code>main</code></span></p>
 <p>Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
@@ -296,8 +294,7 @@ fn parse_config(args: &amp;[String]) -&gt; Config {
     let file_path = args[2].clone();
 
     Config { query, file_path }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 12-6: Refactorieren von <code>parse_config</code> zur
 Rückgabe einer Instanz einer <code>Config</code>-Struktur</span></p>
 <p>Wir haben eine Struktur namens <code>Config</code> hinzugefügt, die so definiert ist, dass
@@ -394,8 +391,7 @@ Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> er
 
         Config { query, file_path }
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 12-7: Ändern von <code>parse_config</code> in
 <code>Config::new</code></span></p>
 <p>Wir haben <code>main</code> aktualisiert, wo wir <code>parse_config</code> aufgerufen haben, um
@@ -461,8 +457,7 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">
 </span><span class="boring">        Config { query, file_path }
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span></p>
 <p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-f%C3%BCr-die-validierung-erstellen">der Funktion <code>Guess::new</code>, die wir in Codeblock
@@ -538,8 +533,7 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 
         Ok(Config { query, file_path })
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
 <p>Unsere Funktion <code>build</code> liefert jetzt ein <code>Result</code> mit einer <code>Config</code>-Instanz im
@@ -601,8 +595,7 @@ fn main() {
 </span><span class="boring">
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
 Erstellen einer <code>Config</code> fehlschlägt</span></p>
 <p>In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch
@@ -694,8 +687,7 @@ fn run(config: Config) {
 </span><span class="boring">
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 12-11: Extrahieren einer Funktion <code>run</code>, die
 den Rest der Programmlogik enthält</span></p>
 <p>Die Funktion <code>run</code> enthält nun die gesamte restliche Logik von <code>main</code>,
@@ -756,10 +748,9 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 12-12: Ändern der Funktion <code>run</code>, um ein
-<code>Result</code> zurückzugeben</p>
+<code>Result</code> zurückzugeben</span></p>
 <p>Wir haben hier drei wesentliche Änderungen vorgenommen. Erstens haben wir den
 Rückgabetyp der Funktion <code>run</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert. Diese
 Funktion gab zuvor den Einheitstyp <code>()</code> zurück und wir behalten diesen als
@@ -872,8 +863,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">
 </span><span class="boring">        Ok(Config { query, file_path })
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wir benutzen <code>if let</code> statt <code>unwrap_or_else</code>, um zu prüfen, ob <code>run</code> einen
 <code>Err</code>-Wert zurückgibt und rufen <code>process::exit(1)</code> auf, wenn dies der Fall ist.
 Die Funktion <code>run</code> gibt keinen Wert zurück, den wir mit <code>unwrap</code> auspacken
@@ -930,8 +920,7 @@ pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
 </span><span class="boring">
 </span><span class="boring">    Ok(())
-</span>}
-</code></pre>
+</span>}</code></pre>
 <p><span class="caption">Codeblock 12-13: Verschieben von <code>Config</code> und <code>run</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> großzügig verwendet: Bei <code>Config</code>, bei seinen
@@ -964,8 +953,7 @@ fn main() {
 </span><span class="boring">
 </span><span class="boring">        process::exit(1);
 </span>    }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-14: Verwenden der
 <code>minigrep</code>-Bibliothekskiste in <em>src/main.rs</em></span></p>
 <p>Wir fügen eine Zeile <code>use minigrep::Config</code> hinzu, um den Typ <code>Config</code> aus der
@@ -1012,18 +1000,18 @@ schreiben ein paar Tests!</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

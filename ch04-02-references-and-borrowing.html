@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -158,8 +157,7 @@ die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
 
 fn calculate_length(s: &amp;String) -&gt; usize {
     s.len()
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>&amp;s1</code> an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
@@ -186,8 +184,7 @@ sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.</p>
 </span><span class="boring">
 </span><span class="boring">fn calculate_length(s: &amp;String) -&gt; usize {
 </span><span class="boring">    s.len()
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Die Syntax <code>&amp;s1</code> erlaubt es uns, eine Referenz zu erstellen, die auf den Wert
 von <code>s1</code> <em>referenziert</em>, ihn aber nicht besitzt. Da sie diesen nicht besitzt,
 verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz nicht mehr
@@ -207,8 +204,7 @@ Anmerkungen ergänzen:</p>
                                            // auf eine Zeichenkette
     s.len()
 } // Hier verlässt s den Gültigkeitsbereich. Aber weil es keine
-  // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
-</code></pre></pre>
+  // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.</code></pre></pre>
 <p>Der Gültigkeitsbereich, in dem die Variable <code>s</code> gültig ist, ist derselbe wie
 der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
 Referenz zeigt, wird nicht aufgeräumt, wenn <code>s</code> nicht mehr verwendet wird, weil
@@ -229,8 +225,7 @@ ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</
 
 fn change(some_string: &amp;String) {
     some_string.push_str(&quot; Welt&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 4-6: Versuch, einen ausgeliehenen Wert zu
 verändern</span></p>
 <p>Hier ist die Fehlermeldung:</p>
@@ -263,8 +258,7 @@ mit ein paar kleinen Änderungen ändern können, die stattdessen eine
 
 fn change(some_string: &amp;mut String) {
     some_string.push_str(&quot; Welt&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Zuerst ändern wir <code>s</code>, um <code>mut</code> zu sein. Dann erstellen wir eine
 veränderliche Referenz mit <code>&amp;mut s</code>, wo wir die Funktion <code>change</code>
 aufrufen, und aktualisieren die Funktionssignatur, um eine veränderliche
@@ -283,8 +277,7 @@ let r1 = &amp;mut s;
 let r2 = &amp;mut s;
 
 println!(&quot;{}, {}&quot;, r1, r2);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
@@ -338,8 +331,7 @@ nicht <em>gleichzeitige</em>:</p>
   // problemlos eine neue Referenz erstellen können.
 
 let r2 = &amp;mut s;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
 unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
@@ -351,8 +343,7 @@ let r2 = &amp;s;     // kein Problem
 let r3 = &amp;mut s; // GROSSES PROBLEM
 
 println!(&quot;{}, {} und {}&quot;, r1, r2, r3);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
@@ -393,8 +384,7 @@ println!(&quot;{} und {}&quot;, r1, r2);
 
 let r3 = &amp;mut s; // kein Problem
 println!(&quot;{}&quot;, r3);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Die Gültigkeitsbereiche der unveränderlichen Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
@@ -428,8 +418,7 @@ fn dangle() -&gt; &amp;String {
     let s = String::from(&quot;Hallo&quot;);
 
     &amp;s
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
@@ -469,8 +458,7 @@ for it to be borrowed from
 
     &amp;s // wir geben einen Verweis auf die Zeichenkette s zurück
 } // Hier verlässt s den Gültigkeitsbereich und wird verworfen.
-  // Sein Speicherplatz wird aufgeräumt. Gefahr!
-</code></pre></pre>
+  // Sein Speicherplatz wird aufgeräumt. Gefahr!</code></pre></pre>
 <p>Da <code>s</code> innerhalb <code>dangle</code> erzeugt wird, wird <code>s</code> wieder freigegeben, wenn der
 Code von <code>dangle</code> zu Ende ist. Aber wir haben versucht, eine Referenz darauf
 zurückzugeben. Das heißt, diese Referenz würde auf einen ungültigen <code>String</code>
@@ -484,8 +472,7 @@ verweisen. Das ist nicht gut! Rust lässt uns das nicht tun.</p>
     let s = String::from(&quot;Hallo&quot;);
 
     s
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Dies funktioniert ohne Probleme. Die Eigentümerschaft wird nach außen
 verschoben, und nichts wird freigegeben.</p>
 <h3 id="regeln-für-referenzen"><a class="header" href="#regeln-für-referenzen">Regeln für Referenzen</a></h3>
@@ -530,18 +517,18 @@ Anteilstypen (slice).</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

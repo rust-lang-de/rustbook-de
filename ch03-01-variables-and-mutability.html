@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -157,8 +156,7 @@ kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</
     println!(&quot;Der Wert von x ist: {x}&quot;);
     x = 6;
     println!(&quot;Der Wert von x ist: {x}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Speichere und starte das Programm mit <code>cargo run</code>. Du solltest eine
 Fehlermeldung erhalten, wie in dieser Ausgabe gezeigt:</p>
 <pre><code class="language-console">$ cargo run
@@ -210,8 +208,7 @@ dieser Variablen ändern werden.</p>
     println!(&quot;Der Wert von x ist: {x}&quot;);
     x = 6;
     println!(&quot;Der Wert von x ist: {x}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Wenn wir das Programm jetzt ausführen, bekommen wir dies:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
@@ -245,8 +242,7 @@ berechnet werden könnte.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Der Name der Konstante lautet <code>THREE_HOURS_IN_SECONDS</code> und ihr Wert wird auf
 das Ergebnis der Multiplikation von 60 (die Anzahl der Sekunden in einer
 Minute) mal 60 (die Anzahl der Minuten in einer Stunde) mal 3 (die Anzahl der
@@ -292,8 +288,7 @@ und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
     }
 
     println!(&quot;Der Wert von x ist: {x}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Dieses Programm bindet zunächst <code>x</code> an den Wert <code>5</code>. Dann wird eine neue
 Variable <code>x</code> erzeugt, indem <code>let x =</code> wiederholt wird, wobei der ursprüngliche
 Wert genommen und <code>1</code> hinzugefügt wird, sodass der Wert von <code>x</code> dann <code>6</code> ist.
@@ -327,8 +322,7 @@ speichern:</p>
 </span><span class="boring">fn main() {
 </span>let spaces = &quot;   &quot;;
 let spaces = spaces.len();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Die erste Variable <code>spaces</code> ist ein String-Typ und die zweite Variable <code>spaces</code>
 ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
@@ -339,8 +333,7 @@ dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompi
 </span>let mut spaces = &quot;   &quot;;
 spaces = spaces.len();
 
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Der Fehler besagt, dass es uns nicht erlaubt ist, den Typ einer Variable zu
 mutieren:</p>
 <pre><code class="language-console">$ cargo run
@@ -391,18 +384,18 @@ weitere Datentypen ansehen, die sie haben können.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

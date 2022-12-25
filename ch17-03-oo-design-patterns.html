@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -188,8 +187,7 @@ fn main() {
 
     post.approve();
     assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 17-11: Code, der das gewünschte Verhalten
 demonstriert, das wir für unsere Kiste <code>blog</code> haben wollen</span></p>
 <p>Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
@@ -249,8 +247,7 @@ trait State {}
 struct Draft {}
 
 impl State for Draft {}
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-12: Definition einer Struktur <code>Post</code> und
 einer Funktion <code>new</code>, die eine neue <code>Post</code>-Instanz erzeugt, einem Merkmal
 <code>State</code> und einer Struktur <code>Draft</code></span></p>
@@ -300,8 +297,7 @@ hinzufügen:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Codeblock 17-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderliche Referenz auf <code>self</code>, weil wir
@@ -351,8 +347,7 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}
-</span></code></pre>
+</span><span class="boring">impl State for Draft {}</span></code></pre>
 <p><span class="caption">Codeblock 17-14: Hinzufügen einer
 Platzhalter-Implementierung für die <code>content</code>-Methode auf <code>Post</code>, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
@@ -410,8 +405,7 @@ impl State for PendingReview {
     fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 17-15: Implementierung der Methoden
 <code>request_review</code> für <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
@@ -539,8 +533,7 @@ impl State for Published {
         self
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-16: Implementierung der Methode <code>approve</code>
 bei <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Merkmal <code>State</code> hinzu und fügen eine neue
@@ -636,8 +629,7 @@ abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Met
 </span><span class="boring">        self
 </span><span class="boring">    }
 </span><span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-17: Aktualisieren der Methode <code>content</code> auf
 <code>Post</code> zum Delegieren an eine Methode <code>content</code> auf <code>State</code></span></p>
 <p>Da das Ziel darin besteht, all diese Regeln innerhalb der Strukturen zu halten,
@@ -755,8 +747,7 @@ impl State for Published {
         &amp;post.content
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-18: Hinzufügen der Methode <code>content</code> zum
 Merkmal <code>State</code></span></p>
 <p>Wir fügen eine Standard-Implementierung für die Methode <code>content</code> hinzu, die
@@ -868,8 +859,7 @@ wird.</p>
 </span><span class="boring">
 </span><span class="boring">    post.approve();
 </span><span class="boring">    assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
-</span>}
-</code></pre>
+</span>}</code></pre>
 <p>Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von <code>Post::new</code> und der Möglichkeit, dem Inhalt des Beitrags
 Text hinzuzufügen. Aber anstatt eine <code>content</code>-Methode bei einem
@@ -910,8 +900,7 @@ impl DraftPost {
         self.content.push_str(text);
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-19: Ein <code>Post</code> mit einer Methode <code>content</code>
 und ein <code>DraftPost</code> ohne Methode <code>content</code></span></p>
 <p>Die beiden Strukturen <code>Post</code> und <code>DraftPost</code> haben ein privates Feld <code>content</code>,
@@ -987,8 +976,7 @@ impl PendingReviewPost {
         }
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-20: Ein <code>PendingReviewPost</code>, der durch
 Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine
 <code>approve</code>-Methode, die einen <code>PendingReviewPost</code> in einen veröffentlichten
@@ -1028,8 +1016,7 @@ fn main() {
     let post = post.approve();
 
     assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 17-21: Änderungen an <code>main</code>, um die neue
 Implementierung des Blog-Beitrags-Workflows zu nutzen</span></p>
 <p>Die Änderungen, die wir an <code>main</code> vornehmen mussten, um <code>post</code> neu zuzuweisen,
@@ -1102,18 +1089,18 @@ Leistungsfähigkeit gesehen. Los geht's!</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

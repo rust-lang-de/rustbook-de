@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -146,8 +145,7 @@ Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.</p>
 <p>Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
 von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
 Anteilstypen gelöst wird:</p>
-<pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?
-</code></pre>
+<pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?</code></pre>
 <p>Die Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
 Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
 haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenkette zu
@@ -167,8 +165,7 @@ das, wie in Codeblock 4-7 gezeigt.</p>
 
     s.len()
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 4-7: Die Funktion <code>first_word</code>, die einen
 Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
@@ -187,8 +184,7 @@ Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Method
 </span><span class="boring">
 </span><span class="boring">    s.len()
 </span><span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
 Methode <code>iter</code> verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -204,8 +200,7 @@ Methode <code>iter</code> verwenden:</p>
 </span><span class="boring">
 </span><span class="boring">    s.len()
 </span><span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Auf Iteratoren werden wir in <a href="ch13-02-iterators.html">Kapitel 13</a> näher eingehen. Fürs Erste
 solltest du wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer
 Kollektion zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und
@@ -236,8 +231,7 @@ Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden:</p>
 
     s.len()
 <span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wir haben jetzt eine Möglichkeit, den Index des ersten Wortendes in der
 Zeichenkette herauszufinden, aber es gibt ein Problem. Wir geben ein <code>usize</code>
 für sich allein zurück, aber die Zahl ist nur aussagekräftig im Kontext des
@@ -268,8 +262,7 @@ Codeblock 4-7 verwendet.</p>
     // word hat noch immer den Wert 5, aber es gibt keine Zeichenkette mehr,
     // mit der wir den Wert 5 sinnvoll verwenden könnten.
     // word ist jetzt völlig ungültig!
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 4-8: Speichern des Ergebnisses des
 Funktionsaufrufs <code>first_word</code> und anschließendes Ändern des Inhalts der
 Zeichenkette</span></p>
@@ -283,8 +276,7 @@ geändert hat, nachdem wir <code>5</code> in <code>word</code> gespeichert haben
 konform ist, ist mühsam und fehleranfällig! Das Verwalten dieser Indizes ist
 noch fehleranfälliger, wenn wir eine Funktion <code>second_word</code> schreiben. Ihre
 Signatur müsste dann so aussehen:</p>
-<pre><code class="language-rust ignore">fn second_word(s: &amp;String) -&gt; (usize, usize) {
-</code></pre>
+<pre><code class="language-rust ignore">fn second_word(s: &amp;String) -&gt; (usize, usize) {</code></pre>
 <p>Jetzt verfolgen wir einen Anfangs- <em>und</em> einen Endindex, und wir haben noch
 mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
 überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
@@ -300,8 +292,7 @@ eines <code>String</code>, und er sieht so aus:</p>
 
 let hello = &amp;s[0..5];
 let world = &amp;s[6..10];
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Anstelle einer Referenz auf den gesamten <code>String</code> ist <code>hello</code> eine Referenz auf
 einen Teil des <code>String</code>, der mit dem zusätzlichen <code>[0..5]</code> spezifiziert ist.
 Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
@@ -325,8 +316,7 @@ sind diese gleich:</p>
 
 let slice = &amp;s[0..2];
 let slice = &amp;s[..2];
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Ebenso kannst du den Endindex weglassen, wenn dein Anteilstyp das letzte Byte
 des <code>String</code> enthält. Das bedeutet, dass diese gleich sind:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -337,8 +327,7 @@ let len = s.len();
 
 let slice = &amp;s[3..len];
 let slice = &amp;s[3..];
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Du kannst auch beide Werte weglassen, um einen Ausschnitt der gesamten
 Zeichenkette zu beschreiben. Diese sind also gleichwertig:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -349,8 +338,7 @@ let len = s.len();
 
 let slice = &amp;s[0..len];
 let slice = &amp;s[..];
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <blockquote>
 <p>Hinweis: Bereichsindizes bei Zeichenkettenanteilstypen müssen sich nach
 gültigen UTF-8-Zeichengrenzen richten. Wenn du versuchst, einen
@@ -378,8 +366,7 @@ dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
 
     &amp;s[..]
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Codeblock
 4-7, indem wir nach dem ersten Vorkommen eines Leerzeichens suchen. Wenn wir
 ein Leerzeichen finden, geben wir einen Zeichenkettenanteilstyp zurück, wobei
@@ -391,8 +378,7 @@ Referenz auf den Startpunkt des Anteilstyps und der Anzahl der Elemente im
 Anteilstyp zusammen.</p>
 <p>Die Rückgabe eines Anteilstyps würde auch für eine Funktion <code>second_word</code>
 funktionieren:</p>
-<pre><code class="language-rust ignore">fn second_word(s: &amp;String) -&gt; &amp;str {
-</code></pre>
+<pre><code class="language-rust ignore">fn second_word(s: &amp;String) -&gt; &amp;str {</code></pre>
 <p>Wir haben jetzt eine einfache API, die viel schwieriger durcheinanderzubringen
 ist, weil der Compiler sicherstellt, dass die Referenzen auf den <code>String</code>
 gültig bleiben. Erinnere dich an den Fehler im Programm in Codeblock 4-8, als
@@ -425,8 +411,7 @@ Kompilierfehler:</p>
     s.clear(); // Fehler!
 
     println!(&quot;Das erste Wort ist: {}&quot;, word);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Hier ist der Kompilierfehler:</p>
 <pre><code class="language-console">$ cargo run
    Compiling ownership v0.1.0 (file:///projects/ownership)
@@ -462,8 +447,7 @@ können wir Zeichenkettenliterale richtig verstehen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = &quot;Hallo Welt!&quot;;
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Der Typ von <code>s</code> hier ist <code>&amp;str</code>: Es ist ein Anteilstyp, der auf diesen
 speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
 Zeichenkettenliterale unveränderlich sind; <code>&amp;str</code> ist ein unveränderliche
@@ -472,8 +456,7 @@ Referenz.</p>
 <p>Das Wissen, dass man Anteilstypen von Literalen und <code>String</code>-Werten erstellen
 kann, führt uns zu einer weiteren Verbesserung von <code>first_word</code>, und das ist
 ihre Signatur:</p>
-<pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; &amp;str {
-</code></pre>
+<pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; &amp;str {</code></pre>
 <p>Ein erfahrenerer Rust-Entwickler würde stattdessen die in Codeblock 4-9
 gezeigte Signatur schreiben, da sie es uns erlaubt, dieselbe Funktion sowohl
 auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzuwenden.</p>
@@ -508,8 +491,7 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 </span><span class="boring">    // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
 </span><span class="boring">    // funktioniert dies auch ohne die Anteilstypensyntax!
 </span><span class="boring">    let word = first_word(my_string_literal);
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 4-9: Verbessern der Funktion <code>first_word</code> durch
 Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</code></span></p>
 <p>Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
@@ -553,8 +535,7 @@ Funktionalität einzubüßen:</p>
     // Da Zeichenkettenliterale bereits Zeichenkettenanteilstypen sind,
     // funktioniert dies auch ohne die Anteilstypensyntax!
     let word = first_word(my_string_literal);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <h3 id="andere-anteilstypen"><a class="header" href="#andere-anteilstypen">Andere Anteilstypen</a></h3>
 <p>Zeichenkettenanteilstypen sind, wie du dir vorstellen kannst, spezifisch für
 Zeichenketten. Es gibt aber auch einen allgemeineren Anteilstyp. Betrachte
@@ -562,8 +543,7 @@ dieses Array:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [1, 2, 3, 4, 5];
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Genauso wie wir vielleicht auf einen Teil einer Zeichenkette verweisen möchten,
 möchten wir vielleicht auf einen Teil eines Arrays verweisen. Wir würden das so
 machen:</p>
@@ -574,8 +554,7 @@ machen:</p>
 let slice = &amp;a[1..3];
 
 assert_eq!(slice, &amp;[2, 3]);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Dieser Anteilstyp hat den Typ <code>&amp;[i32]</code>. Es funktioniert auf die gleiche Weise
 wie bei Zeichenkettenanteilstypen, indem es eine Referenz auf das erste Element
 und eine Länge speichert. Du wirst diese Art von Anteilstyp für alle möglichen
@@ -626,18 +605,18 @@ Datenteilen zu einer <code>struct</code> ansehen.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

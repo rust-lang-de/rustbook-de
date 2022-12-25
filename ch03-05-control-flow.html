@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -157,8 +156,7 @@ ein:</p>
     } else {
         println!(&quot;Bedingung war falsch&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen
 Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
@@ -190,8 +188,7 @@ Bedingung <code>falsch</code> macht, um zu sehen, was passiert:</p>
 </span><span class="boring">    } else {
 </span><span class="boring">        println!(&quot;Bedingung war falsch&quot;);
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Führe das Programm erneut aus und sieh dir die Ausgabe an:</p>
 <pre><code class="language-console">$ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
@@ -209,8 +206,7 @@ zum Beispiel, den folgenden Code auszuführen:</p>
     if number {
         println!(&quot;Zahl war drei&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Die <code>if</code>-Bedingung wird diesmal zum Wert <code>3</code> ausgewertet und Rust wirft einen
 Fehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -237,8 +233,7 @@ wenn eine Zahl ungleich <code>0</code> ist, können wir den <code>if</code>-Ausd
     if number != 0 {
         println!(&quot;Zahl war etwas anderes als Null&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Wenn du diesen Code ausführst, wird <code>Zahl war etwas anderes als Null</code>
 ausgegeben.</p>
 <h4 id="behandeln-mehrerer-bedingungen-mit-else-if"><a class="header" href="#behandeln-mehrerer-bedingungen-mit-else-if">Behandeln mehrerer Bedingungen mit <code>else if</code></a></h4>
@@ -257,8 +252,7 @@ ausgegeben.</p>
     } else {
         println!(&quot;Zahl ist nicht durch 4, 3 oder 2 teilbar&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Dieses Programm hat vier mögliche Wege, die es nehmen kann. Nachdem du es
 ausgeführt hast, solltest du folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
@@ -286,8 +280,7 @@ Codeblock 3-2.</p>
     let number = if condition { 5 } else { 6 };
 
     println!(&quot;Der Wert der Zahl ist: {number}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 3-2: Zuweisen des Ergebnisses eines
 <code>if</code>-Ausdrucks an eine Variable</span></p>
 <p>Die Variable <code>number</code> wird an einen Wert gebunden, der auf dem Ergebnis des
@@ -313,8 +306,7 @@ Fehler:</p>
     let number = if condition { 5 } else { &quot;sechs&quot; };
 
     println!(&quot;Der Wert der Zahl ist: {number}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Wenn wir versuchen, diesen Code zu kompilieren, erhalten wir einen Fehler. Die
 <code>if</code>- und <code>else</code>-Zweige haben Werttypen, die inkompatibel sind, und Rust zeigt
 genau an, wo das Problem im Programm zu finden ist:</p>
@@ -359,8 +351,7 @@ so, dass sie wie folgt aussieht:</p>
     loop {
         println!(&quot;nochmal!&quot;);
     }
-}
-</code></pre>
+}</code></pre>
 <p>Wenn wir dieses Programm ausführen, werden wir sehen, dass es immer und immer
 wieder <code>nochmal!</code> ausgibt, bis wir das Programm manuell stoppen. Die meisten
 Terminals unterstützen das Tastaturkürzel <span
@@ -411,8 +402,7 @@ verwenden kannst, wie hier gezeigt:</p>
     };
 
     println!(&quot;Das Ergebnis ist {result}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Vor der Schleife deklarieren wir eine Variable namens <code>counter</code> und
 initialisieren sie mit <code>0</code>. Dann deklarieren wir eine Variable namens <code>result</code>,
 die den von der Schleife zurückgegebenen Wert enthält. Bei jeder Iteration der
@@ -450,8 +440,7 @@ beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:</p>
         count += 1;
     }
     println!(&quot;Zähler-Endstand = {count}&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Die äußere Schleife hat das Label <code>'counting_up</code> und zählt von 0 bis 2
 aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
 <code>break</code>, das kein Label angibt, beendet nur die innere Schleife. Mit der
@@ -493,8 +482,7 @@ nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
     }
 
     println!(&quot;ABHEBEN!!!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 3-3: Verwenden einer <code>while</code>-Schleife, um Code
 auszuführen, solange eine Bedingung wahr ist</span></p>
 <p>Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
@@ -515,8 +503,7 @@ gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 
         index += 1;
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 3-4: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer <code>while</code>-Schleife</span></p>
 <p>Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index <code>0</code>
@@ -553,8 +540,7 @@ wie der Code in Codeblock 3-5 aus.</p>
     for element in a {
         println!(&quot;Der Wert ist: {element}&quot;);
     }
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 3-5: Wiederholen anhand aller Elemente einer
 Kollektion unter Verwendung einer <code>for</code>-Schleife</span></p>
 <p>Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Codeblock
@@ -582,8 +568,7 @@ verwenden würde:</p>
         println!(&quot;{number}!&quot;);
     }
     println!(&quot;ABHEBEN!!!&quot;);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Dieser Code ist ein bisschen schöner, nicht wahr?</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
@@ -632,18 +617,18 @@ Eigentümerschaft (ownership).</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

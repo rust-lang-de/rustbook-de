@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -184,8 +183,7 @@ mod tests {
         assert_eq!(result, 4);
     }
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
 <p>Ignorieren wir vorerst die beiden oberen Zeilen und konzentrieren uns auf die
@@ -258,8 +256,7 @@ mod tests {
     fn exploration() {
         assert_eq!(2 + 2, 4);
     }
-}
-</code></pre>
+}</code></pre>
 <p>Dann führe <code>cargo test</code> erneut aus. Die Ausgabe zeigt nun <code>exploration</code>
 anstelle von <code>it_works</code>:</p>
 <pre><code class="language-console">$ cargo test
@@ -298,8 +295,7 @@ mod tests {
     fn another() {
         panic!(&quot;Lasse diesen Test fehlschlagen&quot;);
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-3: Hinzufügen eines zweiten Tests, der
 fehlschlägt, weil wir das Makro <code>panic!</code> aufrufen</span></p>
 <p>Führe die Tests erneut mit <code>cargo test</code> aus. Die Ausgabe sollte wie in
@@ -370,8 +366,7 @@ impl Rectangle {
     fn can_hold(&amp;self, other: &amp;Rectangle) -&gt; bool {
         self.width &gt; other.width &amp;&amp; self.height &gt; other.height
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-5: Verwenden der Struktur <code>Rectangle</code> und
 ihrer Methode <code>can_hold</code> aus Kapitel 5</span></p>
 <p>Die Methode <code>can_hold</code> gibt ein Boolean zurück, was bedeutet, dass es ein
@@ -410,8 +405,7 @@ mod tests {
 
         assert!(larger.can_hold(&amp;smaller));
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-6: Ein Test für <code>can_hold</code>, der prüft, ob in
 ein größeres Rechteck tatsächlich ein kleineres Rechteck passt</span></p>
 <p>Beachte, dass wir eine neue Zeile innerhalb des Moduls <code>tests</code> hinzugefügt
@@ -491,8 +485,7 @@ mod tests {
 
         assert!(!smaller.can_hold(&amp;larger));
     }
-}
-</code></pre>
+}</code></pre>
 <p>Da das korrekte Ergebnis der Funktion <code>can_hold</code> in diesem Fall <code>false</code> ist,
 müssen wir dieses Ergebnis negieren, bevor wir es an das Makro <code>assert!</code>
 übergeben. Als Ergebnis wird unser Test bestehen, wenn <code>can_hold</code> den
@@ -563,8 +556,7 @@ impl Rectangle {
 </span><span class="boring">
 </span><span class="boring">        assert!(!smaller.can_hold(&amp;larger));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Das Ausführen der Tests ergibt nun Folgendes:</p>
 <pre><code class="language-console">$ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
@@ -621,8 +613,7 @@ mod tests {
     fn it_adds_two() {
         assert_eq!(4, add_two(2));
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-7: Testen der Funktion <code>add_two</code> mit dem
 Makro <code>assert_eq!</code></span></p>
 <p>Lass uns prüfen, ob sie den Test besteht!</p>
@@ -661,8 +652,7 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">    fn it_adds_two() {
 </span><span class="boring">        assert_eq!(4, add_two(2));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
@@ -752,8 +742,7 @@ mod tests {
         let result = greeting(&quot;Carol&quot;);
         assert!(result.contains(&quot;Carol&quot;));
     }
-}
-</code></pre>
+}</code></pre>
 <p>Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
 sind ziemlich sicher, dass sich der Text <code>Hallo</code> zu Beginn der Begrüßung ändern
 wird. Wir haben beschlossen, dass wir den Test nicht aktualisieren wollen, wenn
@@ -776,8 +765,7 @@ Standard-Testversagen aussieht:</p>
 </span><span class="boring">        let result = greeting(&quot;Carol&quot;);
 </span><span class="boring">        assert!(result.contains(&quot;Carol&quot;));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Das Ausführen dieses Tests führt zu folgender Ausgabe:</p>
 <pre><code class="language-console">$ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
@@ -826,8 +814,7 @@ gefüllt ist:</p>
         );
     }
 <span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wenn wir jetzt den Test ausführen, erhalten wir eine aussagekräftigere
 Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo test
@@ -892,8 +879,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-8: Testet, dass eine Bedingung zum
 Programmabbruch führt</span></p>
 <p>Wir setzen das Attribut <code>#[should_panic]</code> hinter das Attribut <code>#[test]</code> und vor
@@ -942,8 +928,7 @@ impl Guess {
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
@@ -1005,8 +990,7 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-9: Testen eines Programmabbruchs mit einer
 bestimmten Teilzeichenkette in der Meldung</span></p>
 <p>Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
@@ -1052,8 +1036,7 @@ vertauschen:</p>
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
 </span><span class="boring">}
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wenn wir diesmal den <code>should_panic</code>-Test ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
@@ -1102,8 +1085,7 @@ mod tests {
             Err(String::from(&quot;zwei plus zwei ist nicht gleich vier&quot;))
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>Die Funktion <code>it_works</code> hat jetzt den Rückgabetyp <code>Result&lt;(), String&gt;</code>. Anstatt
 das Makro <code>assert_eq!</code> aufzurufen, geben wir im Funktionsrumpf <code>Ok(())</code> zurück,
 wenn der Test bestanden ist, und ein <code>Err</code> mit einem <code>String</code> im Inneren, wenn
@@ -1152,18 +1134,18 @@ verschiedenen Optionen untersuchen, die wir mit <code>cargo test</code> verwende
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

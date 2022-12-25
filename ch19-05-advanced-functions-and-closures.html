@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -170,8 +169,7 @@ fn main() {
     let answer = do_twice(add_one, 5);
 
     println!(&quot;Die Antwort ist: {}&quot;, answer);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 19-27: Verwenden des Typs <code>fn</code> zum
 Entgegennehmen eines Funktionszeigers als Argument</span></p>
 <p>Dieser Code gibt <code>Die Antwort ist: 12</code> aus. Wir spezifizieren, dass der
@@ -204,8 +202,7 @@ Funktionsabschluss wie diesen verwenden:</p>
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
         list_of_numbers.iter().map(|i| i.to_string()).collect();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben anstelle des
 Funktionsabschlusses, so wie hier:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -213,8 +210,7 @@ Funktionsabschlusses, so wie hier:</p>
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
         list_of_numbers.iter().map(ToString::to_string).collect();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
 die wir vorhin im Abschnitt <a href="ch19-03-advanced-traits.html">„Fortgeschrittene Merkmale
 (traits)“</a> gesprochen haben, weil es mehrere Funktionen namens
@@ -235,8 +231,7 @@ Methoden angeben können, die Funktionsabschlüsse wie diese nehmen:</p>
     }
 
     let list_of_statuses: Vec&lt;Status&gt; = (0u32..20).map(Status::Value).collect();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Hier erzeugen wir <code>Status::Value</code>-Instanzen für die <code>u32</code>-Werte im Bereich, für
 den <code>map</code> aufgerufen wird, indem wir die Initialisierungsfunktion von
 <code>Status::Value</code> verwenden. Einige Leute bevorzugen diesen Stil und einige Leute
@@ -257,8 +252,7 @@ er lässt sich nicht kompilieren:</p>
 </span>fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
     |x| x + 1
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Der Kompilierfehler ist folgender:</p>
 <pre><code class="language-console">$ cargo build
    Compiling functions-example v0.1.0 (file:///projects/functions-example)
@@ -286,8 +280,7 @@ vorhin eine Lösung für dieses Problem gesehen. Wir können ein Merkmalsobjekt
 </span>fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
     Box::new(|x| x + 1)
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
 Merkmalsobjekte findest du im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die
 Werte unterschiedlicher Typen erlauben“</a> in Kapitel 17.</p>
@@ -325,18 +318,18 @@ Werte unterschiedlicher Typen erlauben“</a> in Kapitel 17.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

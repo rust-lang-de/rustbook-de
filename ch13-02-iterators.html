@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -150,8 +149,7 @@ Dieser Programmcode macht nichts Sinnvolles.</p>
 </span>let v1 = vec![1, 2, 3];
 
 let v1_iter = v1.iter();
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-10: Einen Iterator erstellen</span></p>
 <p>Ein Iterator kann nach Erstellung auf verschiedene Weise verwendet werden. In
 Codeblock 3-5 in Kapitel 3 haben wir Iteratoren mit <code>for</code>-Schleifen verwendet,
@@ -172,8 +170,7 @@ let v1_iter = v1.iter();
 for val in v1_iter {
     println!(&quot;Erhielt: {}&quot;, val);
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
 <code>for</code>-Schleife</span></p>
 <p>In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
@@ -200,8 +197,7 @@ aus:</p>
 
     // Methoden mit Standardimplementierung wurden elidiert
 }
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
 <code>Self::Item</code> die einen <em>zugeordneten Typ</em> (associated type) mit diesem Merkmal 
 definieren. Wir werden zugeordnete Typen im Kapitel 19 besprechen. Im Moment
@@ -231,8 +227,7 @@ Vektor erstellten Iterator zurückgegeben werden:</p>
         assert_eq!(v1_iter.next(), None);
     }
 <span class="boring">
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 13-12: Iterator mit der <code>next</code>-Methode
 aufrufen</span></p>
 <p>Beachte, dass wir <code>v1_iter</code> veränderlich (mutable) machen mussten: Beim Aufrufen
@@ -279,8 +274,7 @@ ist. Codeblock 13-13 enthält einen Test, der die <code>sum</code>-Methode veran
         assert_eq!(total, 6);
     }
 <span class="boring">
-</span><span class="boring">}
-</span></code></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 13-13: Aufruf der <code>sum</code>-Methode um den Wert der
 Summe aller Elemente zu erhalten</span></p>
 <p>Man kann <code>v1_iter</code> nach dem Aufruf von <code>sum</code> nicht verwenden, da <code>sum</code> die
@@ -302,8 +296,7 @@ Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:</p>
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
     v1.iter().map(|x| x + 1);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters <code>map</code> um
 einen neuen Iterator zu erzeugen</span></p>
 <p>Wir erhalten folgende Warnung:</p>
@@ -341,8 +334,7 @@ Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
     let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
 
     assert_eq!(v2, vec![2, 3, 4]);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-15: Aufruf der <code>map</code>-Methode um einen
 Iterator zu erzeugen und anschließend der <code>collect</code>-Methode um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span></p>
@@ -412,8 +404,7 @@ mod tests {
             ]
         );
     }
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 13-16: Die <code>filter</code>-Methode mit einen
 Funktionsabschluss benutzen der <code>shoe_size</code> erfasst</span></p>
 <p>Die <code>shoes_in_size</code>-Funktion übernimmt die Eigentümerschaft über einen Vektor
@@ -463,18 +454,18 @@ der spezifizierten Größe zurück.</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>

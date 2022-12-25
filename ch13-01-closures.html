@@ -8,7 +8,6 @@
 
         <!-- Custom HTML head -->
         
-        <meta content="text/html; charset=utf-8" http-equiv="Content-Type">
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
         <meta name="theme-color" content="#ffffff" />
@@ -36,13 +35,13 @@
     </head>
     <body>
         <!-- Provide site root to javascript -->
-        <script type="text/javascript">
+        <script>
             var path_to_root = "";
             var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
         </script>
 
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
-        <script type="text/javascript">
+        <script>
             try {
                 var theme = localStorage.getItem('mdbook-theme');
                 var sidebar = localStorage.getItem('mdbook-sidebar');
@@ -58,7 +57,7 @@
         </script>
 
         <!-- Set the theme before any content is loaded, prevents flash -->
-        <script type="text/javascript">
+        <script>
             var theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
@@ -70,7 +69,7 @@
         </script>
 
         <!-- Hide / unhide sidebar before it is displayed -->
-        <script type="text/javascript">
+        <script>
             var html = document.querySelector('html');
             var sidebar = 'hidden';
             if (document.body.clientWidth >= 1080) {
@@ -101,7 +100,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
-                            <li role="none"><button role="menuitem" class="theme" id="light">Light (default)</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
@@ -124,7 +123,7 @@
 
 
                 <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
-                <script type="text/javascript">
+                <script>
                     document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
                     document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
                     Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
@@ -213,8 +212,7 @@ fn main() {
         &quot;Der Benutzer mit Präferenz {:?} erhält {:?}&quot;,
         user_pref2, giveaway2
     );
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span></p>
 <p>Der in <code>main</code> definierte <code>store</code> hat zwei blaue Shirts und ein rotes Shirt auf
 Lager. Dann ruft er die Methode <code>giveaway</code> für einen Benutzer mit einer
@@ -301,8 +299,7 @@ würde wie die in Codeblock 13-2 gezeigte Definition aussehen.</p>
 </span><span class="boring">    let simulated_random_number = 7;
 </span><span class="boring">
 </span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
-</span><span class="boring">}
-</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
 Parameter- und Rückgabewert-Typen im Funktionsabschluss</span></p>
 <p>Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
@@ -316,8 +313,7 @@ wegzulassen:</p>
 <pre><code class="language-rust ignore">fn  add_one_v1   (x: u32) -&gt; u32 { x + 1 }
 let add_one_v2 = |x: u32| -&gt; u32 { x + 1 };
 let add_one_v3 = |x|             { x + 1 };
-let add_one_v4 = |x|               x + 1  ;
-</code></pre>
+let add_one_v4 = |x|               x + 1  ;</code></pre>
 <p>Die erste Zeile zeigt eine Funktionsdefinition und die zweite eine Definition
 eines Funktionsabschlusses mit allen Datentypangaben. In der dritten Zeile
 werden die Datentypangaben aus der Funktionsabschlusses-Definition entfernt,
@@ -341,8 +337,7 @@ Funktionsabschluss zweimal aufzurufen, einmal mit <code>String</code> und einmal
 
 let s = example_closure(String::from(&quot;hallo&quot;));
 let n = example_closure(5);
-<span class="boring">}
-</span></code></pre></pre>
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-3: Versuchter Aufruf eines
 Funktionsabschlusses, dem zwei unterschiedliche Typen zugewiesen wurden</span></p>
 <p>Der Compiler gibt diesen Fehler aus:</p>
@@ -389,8 +384,7 @@ ein Funktionsname wäre:</p>
     println!(&quot;Vor dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
     only_borrows();
     println!(&quot;Nach dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine unveränderliche Ausleihe erfasst</span></p>
 <p>Der Code vor der Funktionsabschluss-Definition, nach der
@@ -419,8 +413,7 @@ Element zum Vektor <code>list</code> hinzufügt:</p>
 
     borrows_mutably();
     println!(&quot;Nach dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine veränderliche Ausleihe erfasst</span></p>
 <p>Dieser Code kompiliert, läuft und gibt aus:</p>
@@ -492,8 +485,7 @@ die wir in Codeblock 13-6 verwendet haben:</p>
             None =&gt; f(),
         }
     }
-}
-</code></pre>
+}</code></pre>
 <p>Erinnere dich, dass <code>T</code> der generische Typ ist, der den Typ des Wertes in der
 <code>Some</code>-Variante einer <code>Option</code> darstellt. Dieser Typ <code>T</code> ist auch der
 Rückgabetyp der Funktion <code>unwrap_or_else</code>: Code, der <code>unwrap_or_else</code> auf einer
@@ -555,8 +547,7 @@ fn main() {
 
     list.sort_by_key(|r| r.width);
     println!(&quot;{:#?}&quot;, list);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Codeblock 13-7: Verwendung von <code>sort_by_key</code> und eines
 Funktionsabschlusses zum Sortieren einer Liste von <code>Rectangle</code>-Instanzen nach
 ihrem <code>width</code>-Wert</span></p>
@@ -610,8 +601,7 @@ fn main() {
         r.width
     });
     println!(&quot;{:#?}&quot;, list);
-}
-</code></pre>
+}</code></pre>
 <p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
 mit <code>sort_by_key</code> zu verwenden</span></p>
 <p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
@@ -676,8 +666,7 @@ fn main() {
         r.width
     });
     println!(&quot;{:#?}, sortiert in {num_sort_operations} Operationen&quot;, list);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p><span class="caption">Listing 13-9: Verwenden eines
 <code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>
 <p>Die <code>Fn</code>-Merkmale sind wichtig bei der Definition oder Verwendung von
@@ -718,18 +707,18 @@ Funktionsabschlüssen im Kopf, wenn wir Iteratoren erforschen!</p>
 
 
 
-        <script type="text/javascript">
+        <script>
             window.playground_copyable = true;
         </script>
 
 
 
-        <script src="clipboard.min.js" type="text/javascript" charset="utf-8"></script>
-        <script src="highlight.js" type="text/javascript" charset="utf-8"></script>
-        <script src="book.js" type="text/javascript" charset="utf-8"></script>
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
 
         <!-- Custom JS scripts -->
-        <script type="text/javascript" src="theme/ferris.js"></script>
+        <script src="theme/ferris.js"></script>
 
 
     </body>
