@@ -4,7 +4,7 @@
 
 Diese Version des Textes geht davon aus, dass du Rust 1.61 (veröffentlicht am
 2022-05-10) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
-1][install] zum Installieren und Aktualisieren von Rust.
+1][install1] zum Installieren und Aktualisieren von Rust.
 
 Die HTML-Version ist online verfügbar unter
 [https://doc.rust-lang.org/stable/book/](https://doc.rust-lang.org/stable/book/)
@@ -18,6 +18,6 @@ Es sind auch mehrere [Gemeinschaftsübersetzungen][translations] verfügbar.
 Der englische Text ist auch als [Taschenbuch und E-Book bei No Starch
 Press][nsprust] erhältlich.
 
-[install]: ch01-01-installation.html
+[install1]: ch01-01-installation.html
 [nsprust]: https://nostarch.com/rust
 [translations]: appendix-06-translation.html

@@ -66,7 +66,7 @@ unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
 Kapitel 19 sprechen; für den Moment ist die wichtige Information, dass das
 Erstellen neuer nebenläufiger Typen, die nicht aus `Send`- und `Sync`-Teilen
 bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
-aufrechtzuerhalten. [„Das Rustonomicon“][nomicon] enthält weitere Informationen
+aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere Informationen
 über diese Garantien und wie man sie aufrechterhalten kann.
 
 ## Zusammenfassung
@@ -102,4 +102,4 @@ bekannt sind.
 
 [sharing-mutext]:
 ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen
-[nomicon]: https://doc.rust-lang.org/nomicon/index.html
+[nomicon3]: https://doc.rust-lang.org/nomicon/index.html

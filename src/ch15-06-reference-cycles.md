@@ -560,9 +560,9 @@ mithilfe von `Weak<T>` verhindert werden können.
 
 Wenn dieses Kapitel dein Interesse geweckt hat und du deinen eigenen
 intelligenten Zeiger implementieren möchtest, lies [„The
-Rustonomicon“][nomicon], um weitere nützliche Informationen zu erhalten.
+Rustonomicon“][nomicon2], um weitere nützliche Informationen zu erhalten.
 
 Als Nächstes werden wir über Nebenläufigkeit (concurrency) in Rust sprechen.
 Wir werden sogar einige neue intelligente Zeiger kennenlernen.
 
-[nomicon]: https://doc.rust-lang.org/nomicon/index.html
+[nomicon2]: https://doc.rust-lang.org/nomicon/index.html
