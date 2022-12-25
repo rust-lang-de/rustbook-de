@@ -18,7 +18,7 @@ Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.
 
-Das Kommentieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Das Vermerken von Lebensdauern ist ein Konzept, das die meisten anderen
 Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
 wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
 werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
@@ -793,7 +793,7 @@ Lebensdauern der Referenzen in den Feldern der Struktur gebunden sein oder sie
 können unabhängig sein. Darüber hinaus sorgen die Lebensdauer-Elisionsregeln
 oft dafür, dass Lebensdauer-Annotationen in Methodensignaturen nicht
 erforderlich sind. Betrachten wir einige Beispiele mit der Struktur
-`ImportantExcerpt` an, die wir in Codeblock 10-24 definiert haben.
+`ImportantExcerpt`, die wir in Codeblock 10-24 definiert haben.
 
 Zuerst werden wir eine Methode namens `level` verwenden, deren einziger
 Parameter eine Referenz auf `self` ist und deren Rückgabewert ein `i32` ist,
@@ -868,9 +868,9 @@ berücksichtigt worden.
 ### Statische Lebensdauer
 
 Eine besondere Lebensdauer, die wir besprechen müssen, ist `'static`, was
-bedeutet, dass diese Referenz während der gesamten Dauer des Programms leben
-kann. Alle Zeichenkettenliterale haben die Lebensdauer `'static`, die wir wie
-folgt annotieren können:
+bedeutet, dass diese Referenz während der gesamten Dauer des Programms bestehen
+kann. Alle Zeichenkettenliterale haben die Lebensdauer `'static`. Sie wird wie
+folgt annotiert:
 
 ```rust
 let s: &'static str = "Ich habe eine statische Lebensdauer.";
@@ -956,7 +956,7 @@ Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
 sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
 [Rust-Referenz][reference] lesen. Aber als Nächstes wirst du lernen, wie man
 Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
-funktioniert, wie er sollte.
+funktioniert, wie er es soll.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
 [string-slices-as-parameters]:

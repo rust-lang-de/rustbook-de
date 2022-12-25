@@ -1,7 +1,7 @@
 ## Eine Aufzählung (enum) definieren
 
 Während Strukturen (structs) eine Möglichkeit bieten, zusammengehörige Felder
-und Daten zu gruppieren, wie ein `Rectangle`" mit seiner `width` und `height`,
+und Daten zu gruppieren, wie ein `Rectangle` mit seiner `width` und `height`,
 bieten Aufzählungen (enums) eine Möglichkeit, einen Wert als einen aus einer
 möglichen Gruppe von Werten anzugeben. Wir können zum Beispiel sagen, dass
 `Rectangle` eine von mehreren möglichen Formen ist, zu denen auch `Circle` und
@@ -367,7 +367,7 @@ enum Option<T> {
 
 Die Aufzählung `Option<T>` ist so nützlich, dass sie sogar im Präludium
 enthalten ist; du musst sie nicht explizit in den Gültigkeitsbereich bringen.
-Seine Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
+Ihre Varianten sind ebenfalls im Präludium enthalten: Du kannst `Some` und
 `None` direkt ohne Präfix `Option::` verwenden. Die Aufzählung `Option<T>` ist
 dennoch nur eine normale Aufzählung, und `Some(T)` und `None` sind nur
 Varianten des Typs `Option<T>`.
@@ -434,8 +434,7 @@ error: could not compile `enums` due to previous error
 Stark! Tatsächlich bedeutet diese Fehlermeldung, dass Rust nicht versteht, wie
 man ein `i8` und eine `Option<i8>` addiert, da es sich um unterschiedliche Typen
 handelt. Wenn wir einen Wert eines Typs wie `i8` in Rust haben, stellt der
-Compiler sicher, dass wir immer einen gültigen Wert haben. Wir können mit
-Zuversicht vorgehen, ohne vor der Verwendung dieses Wertes auf Null prüfen zu
+Compiler sicher, dass wir immer einen gültigen Wert haben. Wir können getrost fortfahren, ohne vor der Verwendung dieses Wertes auf Null prüfen zu
 müssen. Nur wenn wir eine `Option<i8>` (oder einen anderen Werttyp) haben,
 müssen wir befürchten, dass wir möglicherweise keinen Wert haben, und der
 Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den

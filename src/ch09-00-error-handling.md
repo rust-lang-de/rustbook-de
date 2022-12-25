@@ -1,6 +1,6 @@
 # Fehlerbehandlung
 
-Fehler sind Gegebenheiten in Software, deshalb enthält Rust eine Reihe von
+Fehler sind eine Tatsache im Software-Alltag, deshalb enthält Rust eine Reihe von
 Funktionalitäten zur Behandlung von Situationen, in denen etwas schiefgeht. In
 vielen Fällen verlangt Rust von dir, dass du die Möglichkeit eines Fehlers
 anerkennst und Vorkehrungen ergreifst, damit dein Code kompiliert werden kann.
@@ -23,5 +23,5 @@ hat es den Typ `Result<T, E>` für behebbare Fehler und das Makro `panic!`, das
 die Ausführung stoppt, wenn das Programm auf einen nicht behebbaren Fehler
 stößt. Dieses Kapitel behandelt zuerst das Aufrufen von `panic!` und spricht
 dann über die Rückgabe von `Result<T, E>`-Werten. Darüber hinaus werden wir
-Überlegungen anstellen, wann wir besser versuchen sollten, uns von einem Fehler
-zu erholen, und wann die Ausführung zu stoppen.
+uns mit der Frage befassen, wann man versuchen sollte, einen Fehler zu beheben
+oder die Ausführung zu stoppen.

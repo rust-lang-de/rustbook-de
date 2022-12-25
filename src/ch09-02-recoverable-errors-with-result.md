@@ -38,7 +38,7 @@ Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 use std::fs::File;
 
 fn main() {
-    let f = File::open("hallo.txt");
+    let greeting_file_result = File::open("hallo.txt");
 }
 ```
 
@@ -73,9 +73,9 @@ Möglichkeit, `Result` mit Hilfe eines grundlegenden Werkzeugs, dem Ausdruck
 use std::fs::File;
 
 fn main() {
-    let f = File::open("hallo.txt");
+    let greeting_file_result = File::open("hallo.txt");
 
-    let f = match f {
+    let greeting_file = match greeting_file_result {
         Ok(file) => file,
         Err(error) => panic!("Problem beim Öffnen der Datei: {:?}", error),
     };
@@ -91,7 +91,8 @@ sodass wir in den `match`-Zweigen nicht mehr `Result::` vor den Varianten `Ok`
 und `Err` angeben müssen.
 
 Wenn das Ergebnis `Ok` ist, gibt dieser Code den inneren `file`-Wert aus der
-`Ok`-Variante zurück, und wir weisen diese Dateiressource der Variablen `f` zu.
+`Ok`-Variante zurück, und wir weisen diese Dateiressource der Variablen 
+`greeting_file ` zu.
 Nach dem `match` können wir die Dateiressource zum Lesen und Schreiben verwenden.
 
 Der andere Zweig von `match` behandelt den Fall, dass wir einen `Err`-Wert von
@@ -105,7 +106,7 @@ $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem opening the file: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
+thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -114,7 +115,7 @@ Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.
 ### Abgleich verschiedener Fehler
 
 Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund `File::open`
-fehlschlug. Stattdessen wollen wir bei verschiedenen Fehlerursachen
+fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
 unterschiedliche Maßnahmen ergreifen: Wenn `File::open` fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn `File::open` aus irgendeinem
@@ -130,9 +131,9 @@ use std::fs::File;
 use std::io::ErrorKind;
 
 fn main() {
-    let f = File::open("hallo.txt");
+    let greeting_file_result = File::open("hallo.txt");
 
-    let f = match f {
+    let greeting_file = match greeting_file_result {
         Ok(file) => file,
         Err(error) => match error.kind() {
             ErrorKind::NotFound => match File::create("hallo.txt") {
@@ -168,7 +169,7 @@ Die Bedingung, die wir beim inneren Abgleich überprüfen wollen, ist, ob der vo
 brauchen wir einen zweiten Zweig im inneren `match`-Ausdruck. Wenn die Datei
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren `match` bleibt gleich, sodass das Programm bei jedem
-Fehler außer dem Fehler der fehlenden Datei abbricht.
+Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 
 ### Alternativen zur Verwendung von `match` mit `Result<T, E>`
 
@@ -187,7 +188,7 @@ Fehler außer dem Fehler der fehlenden Datei abbricht.
 > use std::io::ErrorKind;
 >
 > fn main() {
->     let f = File::open("hallo.txt").unwrap_or_else(|error| {
+>     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
 >         if error.kind() == ErrorKind::NotFound {
 >             File::create("hallo.txt").unwrap_or_else(|error| {
 >                 panic!("Problem beim Erstellen der Datei: {:?}", error);
@@ -208,7 +209,7 @@ Fehler außer dem Fehler der fehlenden Datei abbricht.
 
 ### Abkürzungen zum Abbrechen im Fehlerfall: `unwrap` und `expect`
 
-Das Verwenden von `match` funktioniert gut genug, aber es kann etwas wortreich
+Das Verwenden von `match` funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ `Result<T, E>` bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
 Methode `unwrap` ist eine Abkürzungsmethode, implementiert wie der Ausdruck
@@ -223,7 +224,7 @@ ein Beispiel für `unwrap` im Einsatz:
 use std::fs::File;
 
 fn main() {
-    let f = File::open("hallo.txt").unwrap();
+    let greeting_file = File::open("hallo.txt").unwrap();
 }
 ```
 
@@ -231,9 +232,9 @@ Wenn wir diesen Code ohne eine Datei *hallo.txt* ausführen, werden wir die
 Fehlermeldung des `panic!`-Aufrufs sehen, den die Methode `unwrap` macht:
 
 ```console
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Error {
-repr: Os { code: 2, message: "No such file or directory" } }',
-src/libcore/result.rs:906:4
+thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
+code: 2, kind: NotFound, message: "No such file or directory" }',
+src/main.rs:4:49
 ```
 
 In ähnlicher Weise können wir bei der Methode `expect` auch die Fehlermeldung
@@ -247,7 +248,7 @@ der Fehlerursache erleichtern. Die Syntax von `expect` sieht wie folgt aus:
 use std::fs::File;
 
 fn main() {
-    let f = File::open("hallo.txt").expect("Problem beim Öffnen von hallo.txt");
+    let greeting_file = File::open("hallo.txt").expect("Problem beim Öffnen von hallo.txt");
 }
 ```
 
@@ -258,9 +259,9 @@ zurückzugeben oder das Makro `panic!` aufzurufen. Die Fehlermeldung, die
 verwendet. So sieht sie aus:
 
 ```text
-thread 'main' panicked at 'hello.txt should be included in this project: Error
-{ repr: Os { code: 2, message: "No such file or directory" } }',
-src/libcore/result.rs:906:4
+thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
+code: 2, kind: NotFound, message: "No such file or directory" }',
+src/main.rs:5:10
 ```
 
 In produktivem Code wählen die meisten Rust-Entwickler `expect` statt
@@ -269,7 +270,7 @@ immer erfolgreich sein wird. Auf diese Weise hast du mehr Informationen, die du
 bei der Fehlersuche verwenden kannst, falls sich deine Annahmen als falsch
 erweisen sollten.
 
-### Fehler weitergeben
+### Weitergabe von Fehlern
 
 Wenn die Implementierung einer Funktion etwas aufruft, das fehlschlagen könnte,
 kannst du, anstatt den Fehler innerhalb dieser Funktion zu behandeln, den
@@ -291,17 +292,17 @@ use std::fs::File;
 use std::io::{self, Read};
 
 fn read_username_from_file() -> Result<String, io::Error> {
-    let f = File::open("hallo.txt");
+    let username_file_result = File::open("hallo.txt");
 
-    let mut f = match f {
+    let mut username_file = match username_file_result  {
         Ok(file) => file,
         Err(e) => return Err(e),
     };
 
-    let mut s = String::new();
+    let mut username = String::new();
 
-    match f.read_to_string(&mut s) {
-        Ok(_) => Ok(s),
+    match username_file.read_to_string(&mut username) {
+        Ok(_) => Ok(username),
         Err(e) => Err(e),
     }
 }
@@ -311,12 +312,12 @@ fn read_username_from_file() -> Result<String, io::Error> {
 den aufrufenden Code zurückgibt</span>
 
 Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
-aber wir wollen für den Anfang viel davon manuell zu machen, um die
-Fehlerbehandlung zu erkunden; am Ende werden wir den kürzeren Weg zeigen. Sehen
+aber wir wollen für den Anfang viel davon manuell machen, um die
+Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. Sehen
 wir uns zunächst den Rückgabetyp der Funktion an: `Result<String, io::Error>`.
 Das bedeutet, dass die Funktion einen Wert vom Typ `Result<T, E>` zurückgibt,
 wobei der generische Typ `T` mit dem konkreten Typ `String` und der generische
-Typ `E` mit dem konkreten Typ `io::Fehler` gefüllt wurde.
+Typ `E` mit dem konkreten Typ `io::Error` gefüllt wurde.
 
 Wenn diese Funktion erfolgreich ist, erhält der aufrufende Code einen
 `Ok`-Wert, der einen `String` enthält &ndash; den Benutzernamen, den diese
@@ -375,13 +376,14 @@ den `?`-Operator.
 
 ```rust
 use std::fs::File;
-use std::io::{self, Read};
+use std::io;
+use std::io::Read;
 
 fn read_username_from_file() -> Result<String, io::Error> {
-    let mut f = File::open("hallo.txt")?;
-    let mut s = String::new();
-    f.read_to_string(&mut s)?;
-    Ok(s)
+    let mut username_file = File::open("hallo.txt")?;
+    let mut username = String::new();
+    username_file.read_to_string(&mut username )?;
+    Ok(username)
 }
 ```
 
@@ -429,14 +431,15 @@ verketten, wie in Codeblock 9-8 zu sehen ist.
 
 ```rust
 use std::fs::File;
-use std::io::{self, Read};
+use std::io;
+use std::io::Read;
 
 fn read_username_from_file() -> Result<String, io::Error> {
-    let mut s = String::new();
+    let mut username = String::new();
 
-    File::open("hallo.txt")?.read_to_string(&mut s)?;
+    File::open("hallo.txt")?.read_to_string(&mut username)?;
 
-    Ok(s)
+    Ok(username)
 }
 ```
 
@@ -498,7 +501,7 @@ Wertes, für den wir "?" verwenden, kompatibel ist:
 use std::fs::File;
 
 fn main() {
-    let f = File::open("hallo.txt")?;
+    let greeting_file = File::open("hallo.txt")?;
 }
 ```
 
@@ -515,7 +518,7 @@ kompilieren, erhalten wir folgende Fehlermeldung:
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
-   --> src/main.rs:4:13
+   --> src/main.rs:4:48
     |
 3   | / fn main() {
 4   | |     let f = File::open("hallo.txt")?;
@@ -524,7 +527,6 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
     | |_- this function should return `Result` or `Option` to accept `?`
     |
     = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
-    = note: required by `from_residual`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `error-handling` due to previous error
@@ -620,7 +622,7 @@ use std::error::Error;
 use std::fs::File;
 
 fn main() -> Result<(), Box<dyn Error>> {
-    let f = File::open("hallo.txt")?;
+    let greeting_file = File::open("hallo.txt")?;
 
     Ok(())
 }
@@ -633,7 +635,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 Der Typ `Box<dyn Error>` ist ein *Merkmalsobjekt* (trait object), über das wir
 im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“][trait-objects] in Kapitel 17 sprechen werden. Vorerst kannst
-du `Box<dyn Fehler>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
+du `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
 `?` auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser `main`-Funktion nur Fehler des Typs
@@ -658,7 +660,7 @@ in der Dokumentation der Standardbibliothek.
 
 Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir
-entscheiden können, was in welchen Fällen angemessen ist.
+entscheiden können, was in welchen Fällen geeignet ist.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result
 [termination]: https://doc.rust-lang.org/std/process/trait.Termination.html

@@ -8,7 +8,7 @@ aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
 `Result`-Wert zurückzugeben, überlässt du dem aufrufenden Code die
 Wahlmöglichkeit, anstatt die Entscheidung für ihn zu treffen. Der aufrufende
-Code könnte sich dafür entscheiden, sich vom Fehler auf eine angemessene Weise
+Code könnte sich dafür entscheiden, sich vom Fehler auf eine sinnvolle Weise
 zu erholen, oder er könnte sich dafür entscheiden, dass ein `Err`-Wert in
 diesem Fall nicht behebbar ist und `panic!` aufrufen, und so deinen behebbaren
 Fehler in einen nicht behebbaren verwandeln. Daher ist die Rückgabe von
@@ -43,7 +43,7 @@ ist der Aufruf von `unwrap` und `expect` genau das, was passieren sollte.
 
 ### Fälle, in denen du mehr Informationen als der Compiler hast
 
-Es wäre auch angemessen, `unwrap` oder `expect` aufzurufen, wenn du eine andere
+Es wäre auch sinnvoll, `unwrap` oder `expect` aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik
 kann vom Compiler nicht verstanden werden. Du wirst immer noch ein `Result`
 haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
@@ -89,7 +89,7 @@ werden &ndash; sowie eine oder mehrere der folgenden Punkte zutreffen:
   falschen Format durch einen Benutzer.
 * Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
   in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
-  Problem zu prüfen
+  Problem zu prüfen.
 * Es gibt keine gute Möglichkeit, diese Informationen in den von dir
   verwendeten Typen zu kodieren. Wir werden im Abschnitt [„Kodieren von
   Zuständen und Verhalten als Typen“][encoding] in Kapitel 17 ein Beispiel
@@ -105,7 +105,7 @@ kann. In ähnlicher Weise ist `panic!` oft angebracht, wenn du externen Code
 aufrufst, der sich deiner Kontrolle entzieht und einen ungültigen Zustand
 zurückgibt, den du nicht beheben kannst.
 
-Wenn jedoch ein Fehler erwartet wird, ist es angemessener, ein `Result`
+Wenn jedoch ein Fehler erwartet wird, ist es sinnvoller, ein `Result`
 zurückzugeben, als `panic!` aufzurufen. Beispiele hierfür sind ein Parser, dem
 fehlerhafte Daten übergeben werden, oder eine HTTP-Anfrage, die einen Status
 zurückgibt, der anzeigt, dass du ein Aufruflimit erreicht hast. In diesen
@@ -149,9 +149,9 @@ ist.
 
 ### Benutzerdefinierte Typen für die Validierung erstellen
 
-Gehen wir die Idee, das Rust-Typsystem zu verwenden, um sicherzustellen, dass
-wir einen gültigen Wert haben, einen Schritt weiter und schauen uns an, wie wir
-einen benutzerdefinierten Typ für die Validierung erstellen können. Erinnere
+Gehen wir noch einen Schritt weiter, indem wir das Typsystem von Rust verwenden,
+um sicherzustellen, dass wir einen gültigen Wert haben, und betrachten wir die
+Erstellung eines benutzerdefinierten Typs für die Validierung. Erinnere
 dich an das Ratespiel in Kapitel 2, bei dem unser Code den Benutzer
 aufforderte, eine Zahl zwischen 1 und 100 zu erraten. Wir haben nie überprüft,
 ob die Schätzung des Benutzers zwischen diesen Zahlen lag, bevor wir sie mit
@@ -217,7 +217,7 @@ der Schleife zu starten und um eine weitere Schätzung zu bitten. Nach dem
 `if`-Ausdruck können wir mit dem Vergleich zwischen `guess` und der Geheimzahl
 fortfahren, wobei wir wissen, dass `guess` zwischen 1 und 100 liegt.
 
-Dies ist jedoch keine Ideallösung: Wenn es absolut entscheidend wäre, dass das
+Dies ist jedoch keine ideale Lösung: Wenn es zwingend erforderlich wäre, dass das
 Programm nur mit Werten zwischen 1 und 100 arbeitet, und wir viele Funktionen
 mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühsam
 (und könnte die Leistung beeinträchtigen).
@@ -226,7 +226,7 @@ Stattdessen können wir einen neuen Typ erstellen und die Validierungen in eine
 Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
 überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
 neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-vertrauensvoll zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
+bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt, wenn die
 Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
@@ -257,7 +257,7 @@ zwischen 1 und 100 fortsetzt</span>
 Zuerst definieren wir eine Struktur `Guess`, die ein Feld `value` hat, das
 einen `i32` enthält. Hier wird die Nummer gespeichert.
 
-Dann implementieren wir die zugehörige Funktion `new` auf `Guess`, die
+Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
 Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
 einen Parameter `value` vom Typ `i32` nimmt und eine `Guess`-Instanz
 zurückgibt. Der Code im Funktionsrumpf von `new` testet den Wert in `value`, um

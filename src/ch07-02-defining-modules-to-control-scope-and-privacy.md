@@ -89,7 +89,7 @@ fn main() {
 ```
 
 Die Zeile `pub mod garden;` weist den Compiler an, den Code einzubinden, den er
-in *src/garden.rs* findet, nämlich::
+in *src/garden.rs* findet, nämlich:
 
 <span class="filename">Dateiname: src/garden.rs</span>
 

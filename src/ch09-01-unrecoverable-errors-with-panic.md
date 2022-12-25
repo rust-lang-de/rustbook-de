@@ -5,7 +5,7 @@ tun. Für diese Fälle hat Rust das Makro `panic!`. In der Praxis gibt es zwei
 Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unseren
 Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
 durch den expliziten Aufruf des Makros `panic!`. In beiden Fällen brechen wir
-unser Programm aus. Standardmäßig geben diese Programmabbrüche eine
+unser Programm ab. Standardmäßig geben diese Programmabbrüche eine
 Fehlermeldung aus, räumen den Stapelspeicher auf und beenden sich. Über eine
 Umgebungsvariable kannst du auch festlegen, dass Rust den Stapelspeicher
 anzeigt, wenn das Programm abbricht, damit du die Quelle des Abbruchs leichter
@@ -181,6 +181,6 @@ In Abschnitt [„Wann `panic!` verwenden und wann
 nicht?“][to-panic-or-not-to-panic] später in diesem Kapitel kommen wir noch
 einmal auf `panic!` zurück und wann wir `panic!` verwenden sollten und wann
 nicht, um Fehlerfälle zu behandeln. Als Nächstes schauen wir uns an, wie man
-sich mit `Result` von einem Fehler erholt.
+Fehler mit `Result` abfangen kann.
 
 [to-panic-or-not-to-panic]: ch09-03-to-panic-or-not-to-panic.html

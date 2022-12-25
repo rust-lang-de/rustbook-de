@@ -55,7 +55,7 @@ und dann wird `another_function` aufgerufen und ihre Nachricht ausgegeben.
 
 ### Parameter
 
-Wir können Funktionen auch so definiert werden, dass sie *Parameter* haben, das
+Wir können Funktionen auch so definieren, dass sie *Parameter* haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
 Funktion Parameter hat, kannst du sie mit konkreten Werten für diese Parameter
 versehen. Technisch gesehen werden die konkreten Werte *Argumente* genannt,

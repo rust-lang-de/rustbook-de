@@ -226,8 +226,8 @@ Die Fehler in Codeblock 7-6 besagen, dass die Funktion `add_to_waitlist` privat
 ist. Die Datenschutzregeln gelten für Strukturen, Aufzählungen, Funktionen und
 Methoden sowie für Module.
 
-Lasse uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
-Schlüsselwort `pub` vor seiner Definition hinzufügen, wie in Codeblock 7-7.
+Lass uns auch die Funktion `add_to_waitlist` öffentlich machen, indem wir das
+Schlüsselwort `pub` vor ihre Definition hinzufügen, wie in Codeblock 7-7.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -277,8 +277,8 @@ Weil `hosting` und `add_to_waitlist` nun mit `pub` markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!
 
 Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
-deinen Code verwenden können, ist deine öffentliche API dein Vertrag mit den
-Benutzern deiner Kiste, der festlegt, wie sie mit deinem Code interagieren
+deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit den
+Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
 verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
@@ -347,8 +347,7 @@ Die Funktion `fix_incorrect_order` befindet sich im Modul `back_of_house`,
 sodass wir `super` benutzen können, um zum Elternmodul von `back_of_house` zu
 gelangen, was in diesem Fall die Wurzel `crate` ist. Von dort aus suchen wir
 nach `deliver_order` und finden es. Erfolg! Wir denken, dass das Modul
-`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen
-Beziehung zueinander bleiben und zusammenrücken werden, sollten wir uns dazu
+`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
 entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
 `super` verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
 haben, wenn dieser Code in ein anderes Modul verschoben wird.

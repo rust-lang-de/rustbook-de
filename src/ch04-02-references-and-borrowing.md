@@ -5,7 +5,7 @@ Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
 `calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
 den `String`-Wert angeben. Eine *Referenz* ist wie ein Zeiger, d.h. eine
-Adresse, der wir folgen können, um auf Daten zugreifen können, die an dieser
+Adresse, der wir folgen können, um auf Daten zugreifen zu können, die an dieser
 Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
 einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
 Wert eines bestimmten Typs zeigt.
@@ -218,10 +218,9 @@ Kompilierzeit verhindern kann. Eine *Daten-Wettlaufsituation* (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
 Verhaltensweisen auftreten:
 
-* Zwei oder mehr Zeiger greifen gleichzeitig auf dasselbe Datum zu.
-* Mindestens einer der Zeiger wird zum Schreiben auf das Datum verwendet.
-* Es kommt kein Mechanismus zur Anwendung, den Zugriff auf die Daten zu
-  synchronisieren.
+* Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
+* Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
+* Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
 
 Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
 schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
@@ -312,7 +311,7 @@ Gültigkeitsbereichs nicht mehr verwendet wird, wird als *nicht-lexikalische
 Lebensdauer* (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
 darüber in [The Edition Guide][nll] lesen.
 
-Auch wenn das Ausleihen von Fehlern manchmal frustrierend sein kann, denke
+Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
 das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so

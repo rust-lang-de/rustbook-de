@@ -110,7 +110,7 @@ an, die bestanden oder nicht bestanden wurden.
 
 Es ist möglich, einen Test als ignoriert zu markieren, sodass er in einer
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt [„Tests
-ignorieren, die nicht ausdrücklich verlangt werden“][ignorieren] später in
+ignorieren, die nicht ausdrücklich verlangt werden“][ignoring] später in
 diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
 Zusammenfassung `0 ignored`. Wir können auch ein Argument an den Befehl
 `cargo test` übergeben, um nur Tests auszuführen, deren Name mit einer
@@ -173,8 +173,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
 Fügen wir einen weiteren Test hinzu, aber dieses Mal machen wir einen Test, der
 fehlschlägt! Tests schlagen fehl, wenn etwas die Testfunktion zum Abbrechen
 bringt. Jeder Test wird in einem neuen Strang (thread) ausgeführt und wenn der
-Hauptstrang (main thread) sieht, dass ein Teststrang (test thread) gestorben
-ist, wird der Test als fehlgeschlagen markiert. Über den einfachsten Weg, ein
+Hauptstrang (main thread) sieht, dass ein Teststrang (test thread) abgebrochen
+wurde, wird der Test als fehlgeschlagen markiert. Über den einfachsten Weg, ein
 Programm abzubrechen, sprachen wir in Kapitel 9, und zwar durch den Aufruf des
 Makros `panic!`. Erstelle einen neuen Test `another`, sodass deine Datei
 *src/lib.rs* wie in Codeblock 11-3 aussieht.

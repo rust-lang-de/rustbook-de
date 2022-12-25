@@ -44,7 +44,7 @@ Die Fläche des Rechtecks ist 1500 Quadratpixel.
 ```
 
 Mit diesem Code gelingt es, die Fläche des Rechtecks zu ermitteln, indem die
-Funktion `area` mit jeder Dimension aufgerufen wird, aber wir können noch mehr
+Funktion `area` mit jeder Dimension aufgerufen wird. Aber wir können noch mehr
 tun, um diesen Code klar und lesbar zu machen.
 
 Das Problem dieses Codes wird bei der Signatur von `area` deutlich:
@@ -161,7 +161,7 @@ der Aufrufstelle verwenden.
 Die Funktion `area` greift auf die Felder `width` und `height` der Instanz
 `Rectangle` zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
 Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
-von Strukturen siehst.) Unsere Funktionssignatur für `area` sagt jetzt genau
+von Strukturen siehst.) Unsere Funktionssignatur für `area` sagt jetzt genau,
 was wir meinen: Berechne die Fläche von `Rectangle` unter Verwendung seiner
 Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
@@ -171,7 +171,7 @@ Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
 Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
-versuchen wir das [Makro `println!`][println] zu verwenden, das wir in den
+versuchen wir, das [Makro `println!`][println] zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -282,8 +282,8 @@ rect1 ist Rectangle { width: 30, height: 50 }
 
 Toll! Es ist nicht die schönste Ausgabe, aber sie zeigt die Werte aller Felder
 dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
-Strukturen ist es hilfreich eine Ausgabe zu haben, die etwas leichter zu lesen
-ist. In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
+Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
+In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
 `println!`-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
 `{:#?}` folgendes ausgegeben:
 

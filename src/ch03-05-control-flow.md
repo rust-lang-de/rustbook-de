@@ -427,7 +427,7 @@ Zähler-Endstand = 2
 Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
 haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
 Bedingung nicht mehr wahr ist, ruft das Programm `break` auf und stoppt die
-Schleife. Es ist möglich, derartiges Verhalten mittels diner Kombination von
+Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination von
 `loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
@@ -570,7 +570,7 @@ Dieser Code ist ein bisschen schöner, nicht wahr?
 ## Zusammenfassung
 
 Du hast es geschafft! Das war ein beachtliches Kapitel: Du lerntest etwas über
-Variablen, skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
+Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 `if`-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:
 

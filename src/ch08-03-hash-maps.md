@@ -72,7 +72,7 @@ let score = scores.get(&team_name);
 Blau in der Hashtabelle</span>
 
 Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
-Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurückgibt;
+Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt `get`
 den Wert `None` zurück. Dieses Programm behandelt die `Option`, indem es
 `unwrap_or` aufruft, um `score` auf Null zu setzen, wenn `scores` keinen
@@ -285,7 +285,7 @@ darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für dere
 Lösung du jetzt gerüstet sein solltest:
 
 * Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
-  den Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
+  Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
   der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
   zurück.
 * Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant

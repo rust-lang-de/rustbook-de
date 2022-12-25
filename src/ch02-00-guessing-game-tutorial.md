@@ -254,7 +254,7 @@ gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Ar
 erzeugt.
 
 Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderliche
-Variable erzeugt hat, die derzeit an eine neue, leere Instanz eines `String`
+Variable erzeugt, die derzeit an eine neue, leere Instanz eines `String`
 gebunden ist. Uff!
 
 ### Empfangen von Benutzereingaben
@@ -343,22 +343,25 @@ io::stdin().read_line(&mut guess).expect("Fehler beim Lesen der Zeile");
 
 Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
 aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
-einzufügen, um lange Zeilen aufzubrechen Zeilen, wenn du eine Methode mit der
+einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
-Wie bereits erwähnt, schreibt `read_line` das, was der Benutzer eingibt, in die
-Zeichenkette, die wir ihm übergeben, aber sie gibt auch einen `Result`-Wert
-zurück. [`Result`][result] ist eine [*Aufzählung*][enums] (enumeration, oder
-kurz enum), die einen Typ darstellt, der sich in einem von mehreren möglichen
-Zuständen befinden kann. Wir nennen jeden möglichen Zustand eine *Variante*.
+Wie bereits erwähnt, schreibt `read_line` die Benutzereingabe in die übergebene 
+String-Variable, gibt aber darüber hinaus auch einen `Result`-Wert
+zurück.
+[`Result`][result] ist eine [*Aufzählung*][enums] (enumeration, oder
+kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
+Zuständen annehmen kann.
+Wir nennen jeden möglichen Zustand eine *Variante*.
 
 In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
 `Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
 
-Für `Result` sind die Varianten `Ok` und `Err`. Die Variante `Ok` gibt an, dass
-die Operation erfolgreich war, und innerhalb von `Ok` steht der erfolgreich
-generierte Wert. Die Variante `Err` bedeutet, dass die Operation fehlgeschlagen
+Die Varianten von  `Result` sind `Ok` und `Err`. Die Variante `Ok` gibt an, dass
+die Operation erfolgreich war, und der erfolgreich
+generierte Wert innerhalb von `Ok` steht. 
+Die Variante `Err` bedeutet, dass die Operation fehlgeschlagen
 ist, und `Err` enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.
 
@@ -463,18 +466,18 @@ eine Eingabe über die Tastatur und geben sie dann aus.
 
 ## Generieren einer Geheimzahl
 
-Als nächstes müssen wir eine Geheimzahl generieren, die der Benutzer zu erraten
-versucht. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
+Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht 
+zu erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
 jedoch eine [Kiste `rand`][randcrate] mit besagter Funktionalität zur
 Verfügung.
 
-### Verwenden einer Kiste um mehr Funktionalität zu erhalten
+### Verwenden einer Kiste, um mehr Funktionalität zu erhalten
 
-Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Das
-Projekt, das wir gebaut haben, ist eine *binäre Kiste* (binary crate), die eine
+Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
+Projekt "Ratespiel" ist eine *binäre Kiste* (binary crate), die eine
 ausführbare Datei ist. Die Kiste `rand` ist eine *Bibliotheks-Kiste* (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.
 
@@ -505,9 +508,9 @@ Schreiben von Versionsnummern ist. Die Zahl `0.8.3` ist eigentlich die
 Abkürzung für `^0.8.3`, was für alle Versionen ab `0.8.3` und kleiner als
 `0.9.0` steht.
 
-Cargo geht davon aus dass die öffentliche API dieser Versionen kompatibel zur
+Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
 Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
-Patch-Version erhälten, die noch mit dem Code in diesem Kapitel kompiliert
+Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.
 
