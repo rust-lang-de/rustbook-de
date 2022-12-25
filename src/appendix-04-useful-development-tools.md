@@ -102,7 +102,7 @@ mehr.
 
 Du kannst den Befehl `cargo fix` auch dazu verwenden, deinen Code zwischen
 verschiedenen Rust-Ausgaben zu konvertieren. Die Ausgaben sind in [Anhang
-E](appendix-05-editions.md) aufgeführt.
+E](appendix-05-editions.html) aufgeführt.
 
 ### Mehr statische Codeanalyse mit Clippy
 

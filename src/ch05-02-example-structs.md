@@ -376,7 +376,7 @@ Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
 *Methode* `area` unseres Typs `Rectangle` verwandeln können.
 
-[app-c]: appendix-03-derivable-traits.md
+[app-c]: appendix-03-derivable-traits.html
 [attributes]: https://doc.rust-lang.org/reference/attributes.html
 [dbg]: https://doc.rust-lang.org/std/macro.dbg.html
 [err]: ch12-06-writing-to-stderr-instead-of-stdout.html
