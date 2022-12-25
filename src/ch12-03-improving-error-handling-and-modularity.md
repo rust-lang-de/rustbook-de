@@ -711,7 +711,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 ```
 
 <span class="caption">Codeblock 12-12: Ändern der Funktion `run`, um ein
-`Result` zurückzugeben
+`Result` zurückzugeben</span>
 
 Wir haben hier drei wesentliche Änderungen vorgenommen. Erstens haben wir den
 Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
