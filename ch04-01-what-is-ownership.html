@@ -1,1 +1,730 @@
-# Was ist Eigentümerschaft (ownership)?
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Was ist Eigentümerschaft (ownership)? - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html" class="active"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Das Kontrollflusskonstrukt match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installieren von Binärdateien mit  cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="was-ist-eigentümerschaft-ownership"><a class="header" href="#was-ist-eigentümerschaft-ownership">Was ist Eigentümerschaft (ownership)?</a></h2>
+<p><em>Eigentümerschaft</em> ist eine Reihe von Regeln, die bestimmen, wie ein
+Rust-Programm den Speicher verwaltet.</p>
+<p>Alle Programme müssen den Arbeitsspeicher eines Rechners verwalten, während sie
+ausgeführt werden. Einige Sprachen verfügen über eine automatische
+Speicherbereinigung, die während der Programmausführung ständig nach nicht mehr
+genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
+den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
+Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
+von Regeln verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt
+wird, lässt sich das Programm nicht kompilieren. Keine der
+Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
+läuft.</p>
+<p>Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
+es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
+Erfahrung du mit Rust und den Regeln der Eigentümerschaft gesammelt hast, desto
+einfacher findest du es, auf natürliche Weise Code zu entwickeln, der sicher und
+effizient ist. Bleib dran!</p>
+<p>Wenn du Eigentümerschaft verstehst, hast du eine solide Grundlage, um die
+Funktionalitäten zu verstehen, die Rust einzigartig machen. In diesem Kapitel
+lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest,
+die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
+(strings).</p>
+<blockquote>
+<h3 id="stapelspeicher-stack-und-haldenspeicher-heap"><a class="header" href="#stapelspeicher-stack-und-haldenspeicher-heap">Stapelspeicher (stack) und Haldenspeicher (heap)</a></h3>
+<p>Viele Programmiersprachen erfordern nicht, dass du sehr oft über
+Stapelspeicher und Haldenspeicher nachdenken musst. Aber in einer
+Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
+Stapelspeicher oder im Haldenspeicher liegt, einen größeren Einfluss darauf,
+wie sich die Sprache verhält und warum du bestimmte Entscheidungen treffen
+musst. Teile der Eigentümerschaft werden später in diesem Kapitel in Bezug
+auf den Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
+kurze Erklärung zur Vorbereitung.</p>
+<p>Sowohl Stapelspeicher als auch Haldenspeicher sind Teile des
+Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
+sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
+Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
+Reihenfolge. Dies wird als <em>zuletzt herein, zuerst hinaus</em> (last in, first
+out) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
+hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
+nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
+Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
+Daten nennt man <em>auf den Stapel legen</em>, und das Entfernen von Daten nennt man
+<em>vom Stapel nehmen</em>. Alle im Stapelspeicher gespeicherten Daten müssen eine
+bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
+Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
+Haldenspeicher gespeichert werden.</p>
+<p>Der Haldenspeicher ist weniger organisiert: Wenn du
+Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
+Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
+Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
+Benutzung und gibt einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser
+Stelle ist. Dieser Vorgang wird als <em>Allokieren im Haldenspeicher</em>
+bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt (Das Legen von Werten auf
+den Stapelspeicher gilt nicht als Allokieren). Da es sich beim Zeiger um eine
+bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
+legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
+folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
+gibst du die Anzahl der Personen deiner Gruppe an, und das Personal findet
+einen leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand
+aus deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt,
+um euch zu finden.</p>
+<p>Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
+Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
+neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
+Vergleich dazu erfordert das Allokieren von Speicherplatz im dynamischen
+Speicher mehr Arbeit, da der Speicher-Allokator zunächst einen ausreichend
+großen Platz für die Daten finden und dann Buch führen muss, um die nächste
+Allokation vorzubereiten.</p>
+<p>Der Zugriff auf Daten im Haldenspeicher ist langsamer als der Zugriff
+auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um dorthin
+zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im Speicher
+herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner in einem
+Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
+effizientesten, alle Bestellungen an einem Tisch aufzunehmen, bevor man zum
+nächsten Tisch weitergeht. Eine Bestellung von Tisch A, dann eine Bestellung
+von Tisch B, dann wieder eine von A und dann wieder eine von B aufzunehmen,
+wäre ein viel langsamerer Vorgang. Umgekehrt kann ein Prozessor seine Arbeit
+besser erledigen, wenn er mit Daten arbeitet, die nahe beieinander liegen
+(wie sie auf dem Stapelspeicher liegen) und nicht weiter voneinander entfernt
+(wie sie im Haldenspeicher liegen können). Das Allokieren einer großen
+Menge an Platz im Haldenspeicher kann ebenfalls Zeit in Anspruch
+nehmen.</p>
+<p>Wenn dein Code eine Funktion aufruft, werden die an die Funktion übergebenen
+Werte (einschließlich potentieller Zeiger auf Daten im Haldenspeicher)
+und die lokalen Variablen der Funktion auf den Stapelspeicher gelegt. Wenn
+die Funktion beendet ist, werden diese Werte vom Stapelspeicher genommen.</p>
+<p>Das Nachverfolgen, welche Codeteile welche Daten im Haldenspeicher
+verwenden, das Minimieren der Menge an doppelten Daten im Haldenspeicher
+und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
+dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
+Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
+hast, brauchst du nicht mehr so oft über Stapelspeicher und Haldenspeicher 
+nachzudenken. Aber zu wissen, dass der Hauptzweck der Eigentümerschaft die
+Verwaltung der Haldenspeicher-Daten ist, kann helfen zu erklären, warum es so
+funktioniert, wie es funktioniert.</p>
+</blockquote>
+<h3 id="eigentumsregeln"><a class="header" href="#eigentumsregeln">Eigentumsregeln</a></h3>
+<p>Lass uns zunächst einen Blick auf die Eigentumsregeln (ownership rules) werfen.
+Behalte diese Regeln im Hinterkopf, während wir veranschaulichende Beispiele
+durcharbeiten:</p>
+<ul>
+<li>Jeder Wert in Rust hat eine Variable, die als sein <em>Eigentümer</em> bezeichnet
+wird.</li>
+<li>Es kann immer nur einen Eigentümer zur gleichen Zeit geben.</li>
+<li>Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
+aufgeräumt.</li>
+</ul>
+<h3 id="gültigkeitsbereich-scope-einer-variable"><a class="header" href="#gültigkeitsbereich-scope-einer-variable">Gültigkeitsbereich (scope) einer Variable</a></h3>
+<p>Da wir nun über die grundlegende Syntax hinausgehen, werden wir nicht mehr den
+gesamten <code>fn main() {</code>-Code in die Beispiele aufnehmen. Wenn du also
+weitermachst, musst du die folgenden Beispiele manuell in eine Funktion <code>main</code>
+einfügen. Folglich werden unsere Beispiele etwas prägnanter sein, damit wir uns
+auf die eigentlichen Details konzentrieren können, anstatt auch den Code darum
+herum betrachten zu müssen.</p>
+<p>Als erstes Beispiel zu Eigentümerschaft werden wir uns den <em>Gültigkeitsbereich</em>
+(scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
+innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
+Variable an:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = &quot;Hallo&quot;;
+<span class="boring">}</span></code></pre></pre>
+<p>Die Variable <code>s</code> bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
+Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
+ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
+<em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+die zeigen wo die Variable <code>s</code> gültig ist.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{                      // s ist hier nicht gültig, es wurde noch nicht deklariert
+    let s = &quot;Hallo&quot;;   // s ist ab dieser Stelle gültig
+
+    // etwas mit s machen
+}                      // dieser Gültigkeitsbereich ist nun vorbei,
+                       // und s ist nicht mehr gültig
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 4-1: Eine Variable und der Bereich, in dem sie
+gültig ist</span></p>
+<p>Mit anderen Worten, es gibt hier zwei wichtige Zeitpunkte:</p>
+<ul>
+<li>Wenn <code>s</code> <em>in den Gültigkeitsbereich</em> kommt, ist es gültig.</li>
+<li>Es bleibt gültig, bis es <em>den Gültigkeitsbereich</em> verlässt.</li>
+</ul>
+<p>An diesem Punkt ist die Beziehung zwischen Gültigkeitsbereichen und wann
+Variablen gültig sind ähnlich zu anderen Programmiersprachen. Nun werden wir
+auf diesem Verständnis aufbauen, indem wir den Typ <code>String</code> einführen.</p>
+<h3 id="der-typ-string"><a class="header" href="#der-typ-string">Der Typ <code>String</code></a></h3>
+<p>Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
+komplexer ist als die, die wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
+werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
+kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
+Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
+muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
+sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss, und
+der Typ <code>String</code> ist ein gutes Beispiel dafür.</p>
+<p>Wir werden uns auf die Teile von <code>String</code> konzentrieren, die sich auf die
+Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
+Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
+oder von dir erstellt wurden. Wir werden <code>String</code> in <a href="ch08-02-strings.html">Kapitel 8</a>
+eingehender behandeln.</p>
+<p>Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
+Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
+sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
+verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
+anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
+unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
+entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
+zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ verwaltet Daten, die auf dem
+Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
+zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
+Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
+verwendest:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s = String::from(&quot;Hallo&quot;);
+<span class="boring">}</span></code></pre></pre>
+<p>Der doppelte Doppelpunkt (<code>::</code>) Operator erlaubt uns, diese spezielle Funktion
+<code>from</code> mit dem Namensraum des <code>String</code>-Typs zu benennen, anstatt einen Namen
+wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im Abschnitt
+<a href="ch05-03-method-syntax.html">„Methodensyntax“</a> in Kapitel 5 näher betrachten, und wenn wir
+in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
+verweisen“</a> über den Namensraum mit Modulen sprechen. </p>
+<p>Diese Art von Zeichenkette kann <em>verändert</em> werden:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let mut s = String::from(&quot;Hallo&quot;);
+
+s.push_str(&quot; Welt!&quot;); // push_str() hängt ein Literal an eine Zeichenfolge an
+
+println!(&quot;{}&quot;, s);    // Gibt `Hallo Welt!` aus
+<span class="boring">}</span></code></pre></pre>
+<p>Was ist hier nun der Unterschied? Warum kann <code>String</code> verändert werden,
+Literale jedoch nicht? Der Unterschied liegt darin, wie diese beiden Typen mit
+dem Arbeitsspeicher umgehen.</p>
+<h3 id="speicher-und-allokation"><a class="header" href="#speicher-und-allokation">Speicher und Allokation</a></h3>
+<p>Im Falle eines Zeichenkettenliterals kennen wir den Inhalt zum Zeitpunkt der
+Kompilierung, sodass der Text direkt in die endgültige ausführbare Datei fest
+kodiert wird. Aus diesem Grund sind Zeichenkettenliterale schnell und
+effizient. Allerdings ergeben sich diese Eigenschaften nur aus der
+Unveränderlichkeit des Zeichenkettenliterals. Leider können wir nicht für jedes
+Stück Text, dessen Größe zum Zeitpunkt der Kompilierung unbekannt ist und
+dessen Größe sich während der Ausführung des Programms ändern könnte, einen
+Speicherblock in die Binärdatei packen.</p>
+<p>Um mit dem Typ <code>String</code> einen veränderlichen, größenänderbaren Textabschnitt zu
+unterstützen, müssen wir Speicher im Haldenspeicher allokieren, dessen
+Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:</p>
+<ul>
+<li>Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.</li>
+<li>Wir brauchen eine Möglichkeit, diesen Speicher an den Speicher-Allokator
+zurückzugeben, wenn wir mit unserem <code>String</code> fertig sind.</li>
+</ul>
+<p>Der erste Teil wird von uns erledigt: Wenn wir <code>String::from</code> aufrufen, fordert
+seine Implementierung den Speicher an, den sie benötigt. Dies ist in
+Programmiersprachen ziemlich einheitlich.</p>
+<p>Der zweite Teil ist jedoch anders. In Sprachen mit einer <em>automatischen
+Speicherbereinigung</em> (garbage collector, GC) behält der GC den Überblick und
+räumt Speicherplatz, der nicht mehr verwendet wird, auf; wir brauchen nicht
+darüber nachzudenken. Ohne einen GC liegt es in unserer Verantwortung, zu
+erkennen, wann Speicherplatz nicht mehr benutzt wird, und Code aufzurufen, der
+ihn explizit zurückgibt, so wie wir es beim Anfordern auch getan haben. Dies
+korrekt zu tun, war in der Vergangenheit ein schwieriges Programmierproblem.
+Wenn wir es vergessen, verschwenden wir Speicher. Wenn wir es zu früh machen,
+haben wir eine ungültige Variable. Wenn wir es zweimal machen, ist das auch ein
+Fehler. Wir müssen eine <em>Allokierung</em> mit genau einer <em>Freigabe</em> paaren.</p>
+<p>Rust geht einen anderen Weg: Der Speicher wird automatisch zurückgegeben,
+sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
+eine Variante unseres Gültigkeitsbereich-Beispiels aus Codeblock 4-1, bei der
+ein <code>String</code> anstelle eines Zeichenkettenliterals verwendet wird:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>{
+    let s = String::from(&quot;Hallo&quot;); // s ist ab dieser Stelle gültig
+
+    // etwas mit s machen
+}                                  // dieser Gültigkeitsbereich ist nun vorbei,
+                                   // und s ist nicht mehr gültig
+<span class="boring">}</span></code></pre></pre>
+<p>Es gibt eine natürliche Stelle, an der wir den Speicher, den unser <code>String</code>
+benötigt, an den Speicher-Allokator zurückgeben können: Wenn <code>s</code> den
+Gültigkeitsbereich verlässt. Wenn eine Variable den Gültigkeitsbereich
+verlässt, ruft Rust für uns eine spezielle Funktion auf: Diese Funktion heißt
+<a href="https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop"><code>drop</code></a> und an dieser Stelle kann der Autor von <code>String</code> Code
+einfügen, um den Speicher zurückzugeben. Rust ruft <code>drop</code> automatisch an der
+schließenden geschweiften Klammer auf.</p>
+<blockquote>
+<p>Hinweis: In C++ wird dieses Muster der Freigabe von Ressourcen am Ende der
+Lebensdauer eines Elements manchmal als <em>Ressourcenbelegung ist
+Initialisierung</em> (resource acquisition is initialization, RAII) bezeichnet.
+Die Funktion <code>drop</code> in Rust wird dir vertraut vorkommen, wenn du bereits
+RAII-Muster verwendet hast.</p>
+</blockquote>
+<p>Dieses Muster hat einen tiefgreifenden Einfluss auf die Art und Weise, wie
+Rust-Code geschrieben wird. Es mag im Moment einfach erscheinen, aber das
+Verhalten von Code kann in komplizierteren Situationen unerwartet sein, wenn
+wir wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen
+Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.</p>
+<h4 id="wege-wie-variablen-und-daten-interagieren-verschieben-move"><a class="header" href="#wege-wie-variablen-und-daten-interagieren-verschieben-move">Wege, wie Variablen und Daten interagieren: Verschieben (move)</a></h4>
+<p>Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
+interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
+4-2.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = x;
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 4-2: Zuweisen des ganzzahligen Wertes der
+Variablen <code>x</code> an <code>y</code></span></p>
+<p>Wir können wahrscheinlich erahnen, was das bewirkt: „Binde den Wert <code>5</code> an <code>x</code>;
+dann erstelle eine Kopie des Wertes in <code>x</code> und binde ihn an <code>y</code>.“ Wir haben
+jetzt zwei Variablen <code>x</code> und <code>y</code> und beide sind gleich <code>5</code>. Das ist in der Tat
+der Fall, denn ganze Zahlen sind einfache Werte mit einer bekannten, festen
+Größe, und diese beiden Werte <code>5</code> werden auf den Stapelspeicher gelegt.</p>
+<p>Schauen wir uns nun die <code>String</code>-Variante an:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;Hallo&quot;);
+let s2 = s1;
+<span class="boring">}</span></code></pre></pre>
+<p>Dies sieht sehr ähnlich aus, sodass wir annehmen könnten, dass die
+Funktionsweise die gleiche wäre: Das heißt, die zweite Zeile würde eine Kopie
+des Wertes in <code>s1</code> erstellen und sie an <code>s2</code> binden. Aber das ist nicht ganz
+das, was passiert.</p>
+<p>Betrachte Abbildung 4-1, um zu sehen, was mit dem <code>String</code> unter der Haube
+geschieht. Ein <code>String</code> besteht aus drei Teilen, die auf der linken Seite
+dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
+Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
+dem Stapelspeicher gespeichert. Auf der rechten Seite ist der Speicherbereich
+im Haldenspeicher, der den Inhalt enthält.</p>
+<img alt="String im Arbeitsspeicher" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+<p><span class="caption">Abbildung 4-1: Speicherdarstellung eines <code>String</code> mit dem
+Wert „Hallo“, gebunden an <code>s1</code></span></p>
+<p>Die Länge gibt an, wie viel Speicherplatz in Bytes der Inhalt der Zeichenkette
+derzeit belegt. Die Kapazität ist die Gesamtmenge des Speichers in Bytes, die
+der <code>String</code> vom Speicher-Allokator erhalten hat. Der Unterschied zwischen
+Länge und Kapazität ist von Bedeutung, aber nicht in diesem Zusammenhang,
+deshalb ist es im Moment in Ordnung, die Kapazität zu ignorieren.</p>
+<p>Wenn wir <code>s1</code> an <code>s2</code> zuweisen, werden die <code>String</code>-Daten kopiert, d.h. wir
+kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
+Stapelspeicher befinden. Wir kopieren nicht die Daten im Haldenspeicher,
+auf die sich der Zeiger bezieht. Die Speicherdarstellung sieht also wie in
+Abbildung 4-2 aus.</p>
+<img alt="s1 und s2 zeigen auf denselben Wert" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<p><span class="caption">Abbildung 4-2: Speicherdarstellung der Variable <code>s2</code>, die
+eine Kopie des Zeigers, der Länge und der Kapazität von <code>s1</code> hat</span></p>
+<p>Die Darstellung sieht <em>nicht</em> wie Abbildung 4-3 aus, so wie der Speicher
+aussehen würde, wenn Rust stattdessen auch die Daten im Haldenspeicher
+kopieren würde. Würde Rust dies tun, könnte die Operation <code>s2 = s1</code> bei großen
+Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
+Laufzeitperformanz werden.</p>
+<img alt="s1 und s2 als vollständige Kopien" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+<p><span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
+<code>s2 = s1</code> tun könnte, falls Rust auch die Daten im Haldenspeicher
+kopieren würde</span></p>
+<p>Vorhin sagten wir, dass Rust automatisch die Funktion <code>drop</code> aufruft und den
+Haldenspeicher für diese Variable säubert, wenn eine Variable den
+Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
+auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn <code>s2</code> und <code>s1</code> den
+Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
+freizugeben. Dies wird als <em>doppelter Freigabefehler</em> (double free error)
+bezeichnet und ist einer der Speichersicherheitsfehler, die wir zuvor erwähnt
+haben. Das zweimalige Freigeben des Speichers kann zu einer
+Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.</p>
+<p>Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile <code>let s2 = s1</code> die Variable <code>s1</code> als nicht mehr gültig. Daher braucht Rust nichts
+freizugeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
+passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
+wird nicht funktionieren:</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;Hallo&quot;);
+let s2 = s1;
+
+println!(&quot;{} Welt!&quot;, s1);
+<span class="boring">}</span></code></pre></pre>
+<p>Du erhältst eine Fehlermeldung wie diese, wodurch Rust dich daran hindert, die
+ungültige Referenz zu verwenden:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling ownership v0.1.0 (file:///projects/ownership)
+error[E0382]: borrow of moved value: `s1`
+ --&gt; src/main.rs:5:28
+  |
+2 |     let s1 = String::from(&quot;Hallo&quot;);
+  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+3 |     let s2 = s1;
+  |              -- value moved here
+4 | 
+5 |     println!(&quot;{} Welt!&quot;, s1);
+  |                          ^^ value borrowed here after move
+
+For more information about this error, try `rustc --explain E0382`.
+error: could not compile `ownership` due to previous error
+</code></pre>
+<p>Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe <em>flache
+Kopie</em> (shallow copy) und <em>tiefe Kopie</em> (deep copy) gehört hast, hört sich das
+Konzept des Kopierens des Zeigers, der Länge und der Kapazität ohne Kopieren
+der Daten nach einer flachen Kopie an. Aber weil Rust auch die erste Variable
+ungültig macht, wird es nicht als flache Kopie, sondern als <em>Verschieben</em>
+(move) bezeichnet. In diesem Beispiel würden wir sagen, dass <code>s1</code> in <code>s2</code>
+<em>verschoben</em> wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
+dargestellt.</p>
+<img alt="s1 moved to s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
+<p><span class="caption">Abbildung 4-4: Speicherdarstellung, nachdem <code>s1</code> ungültig
+gemacht wurde</span></p>
+<p>Damit ist unser Problem gelöst! Da nur <code>s2</code> gültig ist, wenn es den
+Gültigkeitsbereich verlässt, wird es allein den Speicher freigeben, und wir
+sind fertig.</p>
+<p>Darüber hinaus gibt es eine Entwurfsentscheidung, die damit impliziert ist:
+Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher kann
+man davon ausgehen, dass jedes <em>automatische</em> Kopieren im Hinblick auf die
+Laufzeitperformanz kostengünstig ist.</p>
+<h4 id="wege-wie-variablen-und-daten-interagieren-klonen-clone"><a class="header" href="#wege-wie-variablen-und-daten-interagieren-klonen-clone">Wege, wie Variablen und Daten interagieren: Klonen (clone)</a></h4>
+<p>Wenn wir die Daten von <code>String</code> im Haldenspeicher <em>tief</em> kopieren wollen,
+nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
+<code>clone</code> verwenden. Wir werden die Methodensyntax in Kapitel 5 besprechen, aber
+da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
+du sie wahrscheinlich schon einmal gesehen.</p>
+<p>Hier ist ein Beispiel für die Methode <code>clone</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let s1 = String::from(&quot;Hallo&quot;);
+let s2 = s1.clone();
+
+println!(&quot;s1 = {}, s2 = {}&quot;, s1, s2);
+<span class="boring">}</span></code></pre></pre>
+<p>Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
+Verhalten, bei dem die Daten im Haldenspeicher <em>kopiert</em> werden.</p>
+<p>Wenn du einen Aufruf von <code>clone</code> siehst, weißt du, dass irgendein beliebiger
+Code ausgeführt wird und dass dieser Code teuer sein könnte. Es ist ein
+visueller Indikator dafür, dass etwas anderes vor sich geht.</p>
+<h4 id="nur-stapelspeicher-daten-kopieren-copy"><a class="header" href="#nur-stapelspeicher-daten-kopieren-copy">Nur Stapelspeicher-Daten: Kopieren (copy)</a></h4>
+<p>Es gibt noch einen weiteren Kniff, über den wir noch nicht gesprochen haben.
+Folgender Code mit ganzen Zahlen, der teilweise in Codeblock 4-2 gezeigt wurde,
+funktioniert und ist gültig:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5;
+let y = x;
+
+println!(&quot;x = {}, y = {}&quot;, x, y);
+<span class="boring">}</span></code></pre></pre>
+<p>Aber dieser Code scheint dem zu widersprechen, was wir gerade gelernt haben:
+Wir haben keinen Aufruf von <code>clone</code>, aber <code>x</code> ist immer noch gültig und wurde
+nicht in <code>y</code> verschoben.</p>
+<p>Der Grund dafür ist, dass Typen wie ganze Zahlen, die zur Kompilierzeit eine
+bekannte Größe haben, vollständig auf dem Stack gespeichert werden, so dass
+Kopien der tatsächlichen Werte schnell erstellt werden können. Das bedeutet,
+dass es keinen Grund gibt, warum wir verhindern wollen, dass <code>x</code> gültig ist,
+nachdem wir die Variable <code>y</code> erstellt haben. Mit anderen Worten, es gibt hier
+keinen Unterschied zwischen tiefen und flachen Kopien, also würde der Aufruf
+<code>clone</code> nichts anderes tun als das übliche flache Kopieren, und wir können es
+weglassen.</p>
+<p>Rust hat eine spezielle Annotation, das Merkmal <code>Copy</code>, die wir an Typen hängen
+können, die auf dem Stapelspeicher wie ganze Zahlen gespeichert sind (wir
+werden in <a href="ch10-02-traits.html">Kapitel 10</a> mehr über Merkmale sprechen). Wenn ein Typ das
+Merkmal <code>Copy</code> implementiert, werden Variablen, die dieses Merkmal verwenden,
+nicht verschoben, sondern trivialerweise kopiert, sodass sie auch nach der
+Zuweisung an eine andere Variable noch gültig sind.</p>
+<p>Rust lässt uns einen Typ nicht mit dem Merkmal <code>Copy</code> annotieren, wenn der Typ
+oder einer seiner Teile das Merkmal <code>Drop</code> implementiert. Wenn der Typ eine
+Sonderbehandlung benötigt, wenn der Wert den Gültigkeitsbereich verlässt und
+wir die Annotation <code>Copy</code> zu diesem Typ hinzufügen, erhalten wir einen
+Kompilierfehler. Um zu erfahren, wie du die <code>Copy</code>-Annotation zu deinem Typ
+hinzufügen kannst, siehe <a href="appendix-03-derivable-traits.html">„Ableitbare Merkmale (traits)“</a> in
+Anhang C.</p>
+<p>Welche Typen unterstützen also <code>Copy</code>? Du kannst die Dokumentation für einen
+gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:
+Jede Gruppierung von einfachen skalaren Werten unterstützt <code>Copy</code>, und nichts,
+was eine Allokation erfordert oder irgendeine Form von Ressource ist, kann
+<code>Copy</code> implementieren. Hier sind einige Typen, die <code>Copy</code> unterstützen:</p>
+<ul>
+<li>Alle ganzzahligen Typen, z.B. <code>u32</code>.</li>
+<li>Der boolesche Typ <code>bool</code> mit den Werten <code>true</code> und <code>false</code>.</li>
+<li>Alle Fließkomma-Typen, z.B. <code>f64</code>.</li>
+<li>Der Zeichentyp <code>char</code>.</li>
+<li>Tupel, wenn sie nur Typen enthalten, die auch <code>Copy</code> unterstützen. Zum
+Beispiel unterstützt <code>(i32, i32)</code> <code>Copy</code>, nicht aber <code>(i32, String)</code>.</li>
+</ul>
+<h3 id="eigentümerschaft-und-funktionen"><a class="header" href="#eigentümerschaft-und-funktionen">Eigentümerschaft und Funktionen</a></h3>
+<p>Die Übergabe eines Wertes an eine Funktion funktioniert ähnlich wie die
+Zuweisung eines Wertes an eine Variable. Wenn eine Variable an eine Funktion
+übergeben wird, wird sie verschoben oder kopiert, genau wie bei der Zuweisung.
+Codeblock 4-3 enthält ein Beispiel mit einigen Anmerkungen, aus denen
+hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let s = String::from(&quot;Hallo&quot;);  // s kommt in den Gültigkeitsbereich
+
+    takes_ownership(s);             // Der Wert von s wird in die Funktion verschoben,
+                                    // und ist daher hier nicht mehr gültig.
+
+    let x = 5;                      // x kommt in den Gültigkeitsbereich
+
+    makes_copy(x);                  // x würde in die Funktion verschoben werden,
+                                    // aber i32 erlaubt Copy, also ist es in Ordnung,
+                                    // danach immer noch x zu verwenden,
+
+} // Hier verlässt x den Gültigkeitsbereich, dann s.
+  // Aber weil der Wert von s verschoben wurde, passiert nichts Besonderes.
+
+fn takes_ownership(some_string: String) { // some_string kommt in den Gültigkeitsbereich
+    println!(&quot;{}&quot;, some_string);
+} // Hier verlässt some_string den Gültigkeitsbereich und `drop` wird aufgerufen.
+  // Der zugehörige Speicherplatz wird freigegeben.
+
+fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbereich
+    println!(&quot;{}&quot;, some_integer);
+} // Hier verlässt some_integer den Gültigkeitsbereich. Es passiert nichts Besonderes.</code></pre></pre>
+<p><span class="caption">Codeblock 4-3: Funktionen mit kommentierter
+Eigentümerschaft und Gültigkeitsbereich</span></p>
+<p>Wenn wir versuchen würden, <code>s</code> nach dem Aufruf von <code>takes_ownership</code> zu
+verwenden, würde Rust einen Kompilierfehler anzeigen. Diese statischen
+Prüfungen schützen uns vor Fehlern. Versuche, weiteren Code zu <code>main</code>
+hinzuzufügen, der <code>s</code> und <code>x</code> verwendet, um zu sehen, wo du sie verwenden
+kannst und wo die Eigentumsregeln dich daran hindern.</p>
+<h3 id="rückgabewerte-und-gültigkeitsbereich"><a class="header" href="#rückgabewerte-und-gültigkeitsbereich">Rückgabewerte und Gültigkeitsbereich</a></h3>
+<p>Rückgabewerte können auch Eigentümerschaft übertragen. Codeblock 4-4 ist ein
+Beispiel für eine Funktion mit einem Rückgabewert mit ähnlichen Anmerkungen wie
+die in Codeblock 4-3.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let s1 = gives_ownership();         // gives_ownership verschiebt seinen
+                                        // Rückgabewert in s1
+
+    let s2 = String::from(&quot;Hallo&quot;);     // s2 kommt in den Gültigkeitsbereich
+
+    let s3 = takes_and_gives_back(s2);  // s2 wird in takes_and_gives_back verschoben
+                                        // und der Rückgabewert wird in s3 verschoben
+
+} // Hier verlässt s3 den Gültigkeitsbereich und wird aufgeräumt.
+  // s2 wurde verschoben, es passiert also nichts.
+  // s1 verlässt den Gültigkeitsbereich und wird aufgeräumt.
+
+fn gives_ownership() -&gt; String {        // gives_ownership verschiebt seinen
+                                        // Rückgabewert in die aufrufende Funktion
+
+    let some_string = String::from(&quot;Hallo&quot;); // some_string kommt in den
+                                             // Gültigkeitsbereich
+
+    some_string                         // some_string wird zurückgegeben und
+                                        // wird an die aufrufende Funktion verschoben
+}
+
+// Diese Funktion nimmt einen String entgegen und gibt einen zurück
+fn takes_and_gives_back(a_string: String) -&gt; String { // a_string kommt in den
+                                                      // Gültigkeitsbereich
+
+    a_string  // a_string wird zurückgegeben und
+              // an die aufrufende Funktion verschoben
+}</code></pre></pre>
+<p><span class="caption">Codeblock 4-4: Übertragen der Eigentümerschaft an Rückgabewerten</span></p>
+<p>Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
+Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
+Variable, die Daten im Haldenspeicher enthält, den Gültigkeitsbereich
+verlässt, wird der Wert durch <code>drop</code> aufgeräumt, es sei denn, die
+Eigentümerschaft wurde auf eine andere Variable verschoben.</p>
+<p>Dies funktioniert zwar, allerdings ist es etwas mühsam, die Eigentümerschaft zu
+übernehmen und in jeder Funktion zurückzugeben. Was ist, wenn wir eine Funktion
+einen Wert nutzen lassen wollen, aber nicht die Eigentümerschaft übergeben
+wollen? Es ist ziemlich lästig, dass alles, was wir übergeben, auch wieder
+zurückgegeben werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu
+den Daten, die sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch
+zurückgeben wollen.</p>
+<p>Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
+wie in Codeblock 4-5 gezeigt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let s1 = String::from(&quot;Hallo&quot;);
+
+    let (s2, len) = calculate_length(s1);
+
+    println!(&quot;Die Länge von '{}' ist {}.&quot;, s2, len);
+}
+
+fn calculate_length(s: String) -&gt; (String, usize) {
+    let length = s.len(); // len() gibt die Länge der Zeichenkette zurück
+
+    (s, length)
+}</code></pre></pre>
+<p><span class="caption">Codeblock 4-5: Rückgeben der Eigentümerschaft an
+Parametern</span></p>
+<p>Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
+gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
+einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
+<em>Referenzen</em> (references).</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch04-00-understanding-ownership.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch04-02-references-and-borrowing.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch04-00-understanding-ownership.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch04-02-references-and-borrowing.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </body>
+</html>

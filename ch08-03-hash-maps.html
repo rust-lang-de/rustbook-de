@@ -1,1 +1,450 @@
-# Schlüssel mit zugehörigen Werten in Hashtabellen ablegen
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Schlüssel mit zugehörigen Werten in Hashtabellen ablegen - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Das Kontrollflusskonstrukt match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html" class="active"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installieren von Binärdateien mit  cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="schlüssel-mit-zugehörigen-werten-in-hashtabellen-ablegen"><a class="header" href="#schlüssel-mit-zugehörigen-werten-in-hashtabellen-ablegen">Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></h2>
+<p>Die letzte unserer allgemeinen Kollektionen ist die <em>Hashtabelle</em> (hash map).
+Der Typ <code>HashMap&lt;K, V&gt;</code> speichert eine Zuordnung von Schlüsseln vom Typ <code>K</code> zu
+Werten vom Typ <code>V</code> mittels einer <em>Hashfunktion</em> (hash function), die bestimmt,
+wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
+unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
+Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
+(dictionary) oder assoziatives Array (associative array), um nur einige zu
+nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über
+einen Index nachschlagen willst, sondern über einen Schlüssel, der ein
+beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
+Spielstand jedes Teams in einer Hashtabelle vermerken, in der die Schlüssel den
+Teamnamen und die Werte den Spielstand des jeweiligen Teams darstellen. Wenn du
+den Namen eines Teams angibst, kannst du seine Punktzahl abrufen.</p>
+<p>In diesem Abschnitt gehen wir die grundlegende Programmierschnittstelle (API)
+von Hashtabellen durch, aber viele weitere Leckerbissen verbergen sich in den
+Funktionen, die in der Standardbibliothek für <code>HashMap&lt;K, V&gt;</code> definiert sind.
+Weitere Informationen findest du wie immer in der
+Standardbibliotheksdokumentation.</p>
+<h3 id="erstellen-einer-neuen-hashtabelle"><a class="header" href="#erstellen-einer-neuen-hashtabelle">Erstellen einer neuen Hashtabelle</a></h3>
+<p>Ein Weg um eine leere Hashtabelle zu erzeugen ist mit <code>new</code> und um Elemente
+hinzuzufügen mit <code>insert</code>. In Codeblock 8-20 verfolgen wir die Ergebnisse
+zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
+Punkten, das Team Gelb mit 50 Punkten.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from(&quot;Blau&quot;), 10);
+scores.insert(String::from(&quot;Gelb&quot;), 50);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-20: Erstellen einer neuen Hashtabelle und
+Einfügen einiger Schlüssel und Werte</span></p>
+<p>Beachte, dass wir zuerst mit <code>use</code> die <code>HashMap</code> aus dem Kollektionsteil der
+Standardbibliothek einbinden müssen. Von unseren drei allgemeinen Kollektionen
+wird diese am seltensten verwendet, sodass sie nicht zu den Funktionalitäten
+gehört, die automatisch in den Gültigkeitsbereich aufgenommen werden.
+Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
+gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.</p>
+<p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
+Obige <code>HashMap</code> hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>.
+Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
+haben und alle Werte müssen denselben Typ haben.</p>
+<h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
+<p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
+<code>get</code> mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from(&quot;Blau&quot;), 10);
+scores.insert(String::from(&quot;Geld&quot;), 50);
+
+let team_name = String::from(&quot;Blau&quot;);
+let score = scores.get(&amp;team_name);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
+Blau in der Hashtabelle</span></p>
+<p>Hier wird <code>score</code> den Wert haben, der mit Team Blau assoziiert ist, und das
+Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurück;
+wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt <code>get</code>
+den Wert <code>None</code> zurück. Dieses Programm behandelt die <code>Option</code>, indem es
+<code>unwrap_or</code> aufruft, um <code>score</code> auf Null zu setzen, wenn <code>scores</code> keinen
+Eintrag für den Schlüssel hat.</p>
+<p>Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
+Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwenden:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from(&quot;Blau&quot;), 10);
+scores.insert(String::from(&quot;Gelb&quot;), 50);
+
+for (key, value) in &amp;scores {
+    println!(&quot;{}: {}&quot;, key, value);
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:</p>
+<pre><code class="language-text">Gelb: 50
+Blau: 10
+</code></pre>
+<h3 id="hashtabellen-und-eigentümerschaft"><a class="header" href="#hashtabellen-und-eigentümerschaft">Hashtabellen und Eigentümerschaft</a></h3>
+<p>Bei Typen wie <code>i32</code>, die das Merkmal <code>Copy</code> implementieren, werden die Werte in
+die Hashtabelle kopiert. Bei aneigenbaren Werten wie <code>String</code> werden die Werte
+verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
+8-22 gezeigt wird.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let field_name = String::from(&quot;Lieblingsfarbe&quot;);
+let field_value = String::from(&quot;Blau&quot;);
+
+let mut map = HashMap::new();
+map.insert(field_name, field_value);
+// field_name und field_value sind zu diesem Zeitpunkt ungültig.
+// Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem
+Aufruf von <code>insert</code> Eigentum der Hashtabelle sind</span></p>
+<p>Wir können die Variablen <code>field_name</code> und <code>field_value</code> nicht mehr verwenden,
+nachdem sie mit dem Aufruf von <code>insert</code> in die Hashtabelle verschoben wurden.</p>
+<p>Wenn wir Referenzen auf Werte in die Hashtabelle einfügen, werden die Werte
+nicht in die Hashtabelle verschoben. Die Werte, auf die die Referenzen zeigen,
+müssen mindestens so lange gültig sein, wie die Hashtabelle gültig ist. Wir
+werden mehr über diese Fragen im Abschnitt <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
+Lebensdauern“</a> in Kapitel 10 sprechen.</p>
+<h3 id="aktualisieren-einer-hashtabelle"><a class="header" href="#aktualisieren-einer-hashtabelle">Aktualisieren einer Hashtabelle</a></h3>
+<p>Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
+eindeutigen Schlüssel jeweils nur ein Wert zugeordnet werden (aber nicht
+umgekehrt: Zum Beispiel könnten sowohl das blaue Team als auch das gelbe Team
+den Wert 10 in der Hashtabelle <code>scores</code> gespeichert haben).</p>
+<p>Wenn du die Daten in einer Hashtabelle ändern willst, musst du entscheiden, wie
+der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
+wurde. Du kannst den alten Wert durch den neuen ersetzen und dabei den alten
+Wert völlig außer Acht lassen. Du kannst den alten Wert behalten und den neuen
+Wert ignorieren und nur dann den neuen Wert hinzufügen, wenn der Schlüssel noch
+<em>keinen</em> zugewiesenen Wert hat. Oder du kannst den alten und neuen Wert
+kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!</p>
+<h4 id="Überschreiben-eines-wertes"><a class="header" href="#Überschreiben-eines-wertes">Überschreiben eines Wertes</a></h4>
+<p>Wenn wir einen Schlüssel und einen Wert in eine Hashtabelle einfügen und dann
+denselben Schlüssel mit einem anderen Wert einfügen, wird der mit diesem
+Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
+zweimal <code>insert</code> aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
+enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
+einfügen.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+
+scores.insert(String::from(&quot;Blau&quot;), 10);
+scores.insert(String::from(&quot;Blau&quot;), 25);
+
+println!(&quot;{:?}&quot;, scores);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
+einen bestimmten Schlüssel</span></p>
+<p>Dieser Code wird <code>{&quot;Blau&quot;: 25}</code> ausgeben. Der ursprüngliche Wert <code>10</code> wurde
+überschrieben.</p>
+<h4 id="nur-einen-schlüssel-und-wert-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist"><a class="header" href="#nur-einen-schlüssel-und-wert-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist">Nur einen Schlüssel und Wert einfügen, wenn der Schlüssel nicht vorhanden ist</a></h4>
+<p>Es ist üblich, zu prüfen, ob ein bestimmter Schlüssel bereits in der
+Hashtabelle mit einem Wert vorhanden ist, und dann folgende Maßnahmen zu
+ergreifen: Wenn der Schlüssel in der Hashtabelle vorhanden ist, sollte der
+vorhandene Wert so bleiben, wie er ist. Wenn der Schlüssel nicht vorhanden ist,
+füge ihn und einen Wert für ihn ein.</p>
+<p>Hashtabellen haben dafür eine spezielle Programmierschnittstelle (API) namens
+<code>entry</code>, die den Schlüssel, den du prüfen willst, als Parameter nimmt. Der
+Rückgabewert der Methode <code>entry</code> ist eine Aufzählung (enum) namens <code>Entry</code>, die
+einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
+wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
+nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
+Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24 aus.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let mut scores = HashMap::new();
+scores.insert(String::from(&quot;Blau&quot;), 10);
+
+scores.entry(String::from(&quot;Gelb&quot;)).or_insert(50);
+scores.entry(String::from(&quot;Blau&quot;)).or_insert(50);
+
+println!(&quot;{:?}&quot;, scores);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-24: Verwenden der Methode <code>entry</code> zum
+Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span></p>
+<p>Die Methode <code>or_insert</code> von <code>Entry</code> ist so definiert, dass sie eine
+veränderliche Referenz auf den Wert des entsprechenden <code>Entry</code>-Schlüssels
+zurückgibt, wenn dieser Schlüssel existiert, andernfalls fügt sie den Parameter
+als neuen Wert für diesen Schlüssel ein und gibt eine veränderliche Referenz
+auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
+selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.</p>
+<p>Der Code in Codeblock 8-24 gibt <code>{&quot;Gelb&quot;: 50, &quot;Blau&quot;: 10}</code> aus. Beim ersten
+Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
+da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code> wird die
+Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.</p>
+<h4 id="aktualisieren-eines-wertes-auf-basis-des-alten-wertes"><a class="header" href="#aktualisieren-eines-wertes-auf-basis-des-alten-wertes">Aktualisieren eines Wertes auf Basis des alten Wertes</a></h4>
+<p>Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
+eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
+aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
+oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
+Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
+wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
+Wort sehen, fügen wir zuerst den Wert 0 ein.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::collections::HashMap;
+
+let text = &quot;Hallo Welt wunderbare Welt&quot;;
+
+let mut map = HashMap::new();
+
+for word in text.split_whitespace() {
+    let count = map.entry(word).or_insert(0);
+    *count += 1;
+}
+
+println!(&quot;{:?}&quot;, map);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
+Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
+<p>Dieser Code gibt <code>{&quot;Welt&quot;: 2, &quot;wunderbare&quot;: 1, &quot;Hallo&quot;: 1}</code> aus. Es kann sein,
+dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
+werden: Du erinnerst dich an den Abschnitt <a href="#zugreifen-auf-werte-in-einer-hashtabelle">„Zugreifen auf Werte in einer
+Hashtabelle“</a>, dass die Iteration über eine Hashtabelle in beliebiger
+Reihenfolge erfolgt.</p>
+<p>Die Methode <code>split_whitespace</code> gibt einen Iterator über durch Leerzeichen
+getrennte Sub-Anteilstypen des Wertes in <code>text</code> zurück. Die Methode <code>or_insert</code>
+gibt eine veränderliche Referenz (<code>&amp;mut V</code>) auf den Wert für den angegebenen
+Schlüssel zurück. Hier speichern wir diese veränderlichen Referenz in der
+Variablen <code>count</code>. Um diesen Wert zuzuweisen, müssen wir also zuerst <code>count</code>
+mit dem Stern (<code>*</code>) derefenzieren. Die veränderliche Referenz verlässt am Ende
+der <code>for</code>-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher
+und gemäß der Ausleihregeln zulässig sind.</p>
+<h3 id="hash-funktionen"><a class="header" href="#hash-funktionen">Hash-Funktionen</a></h3>
+<p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens <em>SipHash</em>, die robust
+gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference"><a href="#siphash">1</a></sup> ist. Dies
+ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
+zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
+Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
+die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
+anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
+<em>Hash-Funktion</em> ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
+werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
+nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
+<a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
+Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
+implementieren.</p>
+<div class="footnote-definition" id="siphash"><sup class="footnote-definition-label">1</sup>
+<p><a href="https://en.wikipedia.org/wiki/SipHash">https://en.wikipedia.org/wiki/SipHash</a></p>
+</div>
+<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
+<p>Vektoren, Zeichenketten und Hashtabellen bieten eine große Menge an
+Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
+darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
+Lösung du jetzt gerüstet sein solltest:</p>
+<ul>
+<li>Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
+Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
+der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
+zurück.</li>
+<li>Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
+jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
+sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
+beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
+„ansehen-hay“). Beachte die Details zur UTF-8-Kodierung!</li>
+<li>Erstelle mit Hilfe einer Hashtabelle und Vektoren eine Textschnittstelle, die
+es einem Benutzer ermöglicht, Mitarbeiternamen zu einer Abteilung in einem
+Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
+„Amir zum Vertrieb hinzufügen“. Lass den Benutzer dann eine alphabetisch
+sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
+Firma nach Abteilung ausgeben.</li>
+</ul>
+<p>Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
+Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
+<p>Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
+können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
+einzugehen. Das werden wir als nächstes tun!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch08-02-strings.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch09-00-error-handling.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch08-02-strings.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch09-00-error-handling.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </body>
+</html>

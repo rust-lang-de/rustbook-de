@@ -1,1 +1,890 @@
-# Fortgeschrittene Merkmale (traits)
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Fortgeschrittene Merkmale (traits) - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Das Kontrollflusskonstrukt match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installieren von Binärdateien mit  cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html" class="active"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
+<p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Merkmale (traits):
+Gemeinsames Verhalten definieren“</a> in Kapitel
+10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
+mehr über Rust weißt, können wir zum Kern der Sache kommen.</p>
+<h3 id="spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen"><a class="header" href="#spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen">Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen</a></h3>
+<p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
+einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
+Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
+Merkmals gibt den konkreten Typ an, der anstelle des Platzhaltertyps für die
+jeweilige Implementierung verwendet werden soll. Auf diese Weise können wir ein
+Merkmal definieren, das einige Typen verwendet, ohne dass wir genau wissen
+müssen, um welche Typen es sich dabei handelt, bis das Merkmal implementiert
+ist.</p>
+<p>Wir haben die meisten der fortgeschrittenen Funktionalitäten in diesem Kapitel
+als selten benötigt beschrieben. Assoziierte Typen liegen irgendwo dazwischen:
+Sie werden seltener verwendet als die im Rest des Buches erläuterten
+Funktionalitäten, aber häufiger als viele der anderen in diesem Kapitel
+besprochenen Funktionalitäten.</p>
+<p>Ein Beispiel für ein Merkmal mit einem assoziierten Typ ist das Merkmal
+<code>Iterator</code>, das die Standardbibliothek zur Verfügung stellt. Der assoziierte
+Typ wird <code>Item</code> genannt und steht für den Typ der Werte, über die der Typ, der
+das Merkmal <code>Iterator</code> implementiert, iteriert. Die Definition des Merkmals
+<code>Iterator</code> ist in Codeblock 19-12 zu sehen.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Iterator {
+    type Item;
+
+    fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-12: Definition des Merkmals <code>Iterator</code>, das
+einen assoziierten Typ <code>Item</code> hat</span></p>
+<p>Der Typ <code>Item</code> ist ein Platzhalter und die Definition der Methode <code>next</code> zeigt,
+dass sie Werte vom Typ <code>Option&lt;Self::Item&gt;</code> zurückgibt. Implementierungen des
+Merkmals <code>Iterator</code> geben den konkreten Typ für <code>Item</code> an und die Methode
+<code>next</code> gibt eine <code>Option</code> zurück, die einen Wert dieses konkreten Typs enthält.</p>
+<p>Assoziierte Typen scheinen ein ähnliches Konzept wie generische Datentypen
+(generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu
+definieren, ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied
+zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
+Implementierung des Merkmals <code>Iterator</code> für einen Typ namens <code>Counter</code>, der
+angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Counter {
+</span><span class="boring">    count: u32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Counter {
+</span><span class="boring">    fn new() -&gt; Counter {
+</span><span class="boring">        Counter { count: 0 }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl Iterator for Counter {
+    type Item = u32;
+
+    fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt; {
+        // --abschneiden--
+<span class="boring">        if self.count &lt; 5 {
+</span><span class="boring">            self.count += 1;
+</span><span class="boring">            Some(self.count)
+</span><span class="boring">        } else {
+</span><span class="boring">            None
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre></pre>
+<p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
+Warum also nicht einfach das Merkmal <code>Iterator</code> mit generischen Datentypen
+definieren, wie in Codeblock 19-13 gezeigt?</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub trait Iterator&lt;T&gt; {
+    fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-13: Eine hypothetische Definition des
+Merkmals <code>Iterator</code> unter Verwendung eines generischen Datentyps</span></p>
+<p>Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
+Codeblock 19-13, die Typen in jeder Implementierung annotieren müssen; da wir
+auch <code>Iterator&lt;String&gt; for Counter</code> oder jeden anderen Typ implementieren
+können, könnten wir mehrere Implementierungen von <code>Iterator</code> für <code>Counter</code>
+haben. Mit anderen Worten, wenn ein Merkmal einen generischen Parameter hat,
+kann es für einen Typ mehrfach implementiert werden, wobei die konkreten Typen
+der generischen Typparameter jedes Mal geändert werden können. Wenn wir die
+Methode <code>next</code> auf <code>Counter</code> verwenden, müssten wir Typ-Annotationen
+bereitstellen, um anzugeben, welche Implementierung des <code>Iterators</code> wir
+verwenden wollen.</p>
+<p>Bei assoziierten Typen brauchen wir Typen nicht zu annotieren, weil wir ein
+Merkmal auf einem Typ nicht mehrfach implementieren können. In Codeblock 19-12
+mit der Definition, die assoziierte Typen verwendet, können wir nur einmal
+wählen, was der Typ von <code>Item</code> sein wird, weil es nur einen <code>impl Iterator for Counter</code> geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
+<code>u32</code>-Werten überall dort haben wollen, wo wir <code>next</code> auf <code>Counter</code> aufrufen.</p>
+<h3 id="standardparameter-für-generische-typen-und-operatorüberladung"><a class="header" href="#standardparameter-für-generische-typen-und-operatorüberladung">Standardparameter für generische Typen und Operatorüberladung</a></h3>
+<p>Wenn wir generische Typparameter verwenden, können wir einen konkreten
+Standardtyp für den generischen Typ angeben. Dadurch entfällt die Notwendigkeit
+für Implementierer des Merkmals, einen konkreten Typ anzugeben, wenn der
+Standardtyp passt. Du gibst einen Standardtyp an, wenn du einen generischen Typ
+mit der Syntax <code>&lt;PlaceholderType=ConcreteType&gt;</code> deklarierst.</p>
+<p>Ein gutes Beispiel für eine Situation, in der diese Technik nützlich ist, ist
+die <em>Operatorüberladung</em> (operator overloading), bei der du das Verhalten eines
+Operators (wie <code>+</code>) in bestimmten Situationen anpasst.</p>
+<p>Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
+Operatoren zu überladen. Aber du kannst die in <code>std::ops</code> aufgeführten
+Operationen und entsprechenden Merkmale überladen, indem du die mit dem
+Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
+Codeblock 19-14 den Operator <code>+</code>, um zwei <code>Point</code>-Instanzen zu addieren. Wir
+tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Struktur implementieren:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">use std::ops::Add;
+
+#[derive(Debug, Copy, Clone, PartialEq)]
+struct Point {
+    x: i32,
+    y: i32,
+}
+
+impl Add for Point {
+    type Output = Point;
+
+    fn add(self, other: Point) -&gt; Point {
+        Point {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
+    }
+}
+
+fn main() {
+    assert_eq!(
+        Point { x: 1, y: 0 } + Point { x: 2, y: 3 },
+        Point { x: 3, y: 3 }
+    );
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-14: Implementieren des Merkmals <code>Add</code>, um
+den Operator <code>+</code> für <code>Point</code>-Instanzen zu überladen</span></p>
+<p>Die Methode <code>add</code> addiert die <code>x</code>-Werte zweier <code>Point</code>-Instanzen und die
+<code>y</code>-Werte zweier <code>Point</code>-Instanzen, um einen neuen <code>Point</code> zu erzeugen. Das
+Merkmal <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, der den von der
+Methode <code>add</code> zurückgegebenen Typ bestimmt.</p>
+<p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Merkmals
+<code>Add</code>. Hier ist seine Definition:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Add&lt;Rhs=Self&gt; {
+    type Output;
+
+    fn add(self, rhs: Rhs) -&gt; Self::Output;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Dieser Code sollte allgemein bekannt aussehen: Ein Merkmal mit einer Methode
+und einem assoziierten Typ. Der neue Teil ist <code>Rhs=Self</code>: Diese Syntax heißt
+<em>Standardtypparameter</em> (default type parameters). Der generische Typparameter
+<code>Rhs</code> (kurz für „right hand side“, engl. „rechte Seite“) definiert den Typ des
+Parameters <code>rhs</code> in der Methode <code>add</code>. Wenn wir keinen konkreten Typ für <code>Rhs</code>
+angeben, wenn wir das Merkmal <code>Add</code> implementieren, wird der Typ <code>Rhs</code>
+standardmäßig auf <code>Self</code> gesetzt, was der Typ sein wird, auf dem wir <code>Add</code>
+implementieren.</p>
+<p>Als wir <code>Add</code> für <code>Point</code> implementiert haben, haben wir den Standardwert für
+<code>Rhs</code> verwendet, weil wir zwei <code>Point</code>-Instanzen addieren wollten. Schauen wir
+uns ein Beispiel für die Implementierung des Merkmals <code>Add</code> an, bei dem wir den
+Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
+<p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
+verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
+in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
+Abschnitt <a href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen
+Merkmalen auf externen Typen“</a> ausführlicher beschreiben. Wir wollen
+Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
+<code>Add</code> die Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für
+<code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 19-15
+gezeigt.</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::ops::Add;
+
+struct Millimeters(u32);
+struct Meters(u32);
+
+impl Add&lt;Meters&gt; for Millimeters {
+    type Output = Millimeters;
+
+    fn add(self, other: Meters) -&gt; Millimeters {
+        Millimeters(self.0 + (other.0 * 1000))
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-15: Implementieren des Merkmals <code>Add</code> auf
+<code>Millimeters</code>, um <code>Millimeters</code> zu <code>Meters</code> zu addieren</span></p>
+<p>Um <code>Millimeters</code> und <code>Meters</code> zu addieren, geben wir <code>impl Add&lt;Meters&gt;</code> an, um
+den Wert des Parameters vom Typ <code>Rhs</code> zu setzen, anstatt den Standardwert
+<code>Self</code> zu verwenden.</p>
+<p>Du wirst Standardtypparameter auf zwei Arten verwenden:</p>
+<ul>
+<li>Um einen Typ zu erweitern, ohne bestehenden Code zu brechen.</li>
+<li>Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
+Benutzer nicht benötigen.</li>
+</ul>
+<p>Das Merkmal <code>Add</code> der Standardbibliothek ist ein Beispiel für den zweiten
+Zweck: Normalerweise addierst du zwei ähnliche Typen, aber das Merkmal <code>Add</code>
+bietet die Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das
+Verwenden eines Standardtypparameters in der Merkmalsdefinition <code>Add</code> bedeutet,
+dass du den zusätzlichen Parameter die meiste Zeit nicht angeben musst. Mit
+anderen Worten kann etwas Implementierungscode eingespart werden, was das
+Verwenden des Merkmals erleichtert.</p>
+<p>Der erste Zweck ist ähnlich zum zweiten, nur umgekehrt: Wenn du einem
+vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm einen
+Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
+ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.</p>
+<h3 id="vollständig-qualifizierte-syntax-zur-vereindeutigung-aufrufen-von-methoden-mit-gleichem-namen"><a class="header" href="#vollständig-qualifizierte-syntax-zur-vereindeutigung-aufrufen-von-methoden-mit-gleichem-namen">Vollständig qualifizierte Syntax zur Vereindeutigung: Aufrufen von Methoden mit gleichem Namen</a></h3>
+<p>Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
+die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
+daran, beide Merkmale auf einem Typ zu implementieren. Es ist auch möglich,
+eine Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von
+Merkmalen zu implementieren.</p>
+<p>Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
+welche du verwenden willst. Betrachte den Code in Codeblock 19-16, wo wir zwei
+Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide eine Methode namens
+<code>fly</code> haben. Wir implementieren dann beide Merkmale auf einem Typ <code>Human</code>, der
+bereits eine Methode namens <code>fly</code> implementiert hat. Jede <code>fly</code>-Methode macht
+etwas anderes.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>trait Pilot {
+    fn fly(&amp;self);
+}
+
+trait Wizard {
+    fn fly(&amp;self);
+}
+
+struct Human;
+
+impl Pilot for Human {
+    fn fly(&amp;self) {
+        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+    }
+}
+
+impl Wizard for Human {
+    fn fly(&amp;self) {
+        println!(&quot;Hoch!&quot;);
+    }
+}
+
+impl Human {
+    fn fly(&amp;self) {
+        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
+sie eine Methode <code>fly</code> haben und auf dem Typ <code>Human</code> implementiert sind, und
+eine Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implementiert</span></p>
+<p>Wenn wir <code>fly</code> auf einer Instanz von <code>Human</code> aufrufen, ruft der Compiler
+standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
+Codeblock 19-17 gezeigt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Pilot {
+</span><span class="boring">    fn fly(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">trait Wizard {
+</span><span class="boring">    fn fly(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Human;
+</span><span class="boring">
+</span><span class="boring">impl Pilot for Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Wizard for Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;Hoch!&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let person = Human;
+    person.fly();
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-17: Aufrufen von <code>fly</code> auf einer Instanz von
+<code>Human</code></span></p>
+<p>Wenn man diesen Code ausführt, wird <code>*Wütend mit den Armen wedeln*</code> ausgegeben,
+was zeigt, dass Rust die Methode <code>fly</code>, die direkt auf <code>Human</code> implementiert
+wurde, aufgerufen hat.</p>
+<p>Um die Methoden <code>fly</code> entweder vom Merkmal <code>Pilot</code> oder vom Merkmal <code>Wizard</code>
+aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
+Methode <code>fly</code> wir meinen. Codeblock 19-18 demonstriert diese Syntax.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Pilot {
+</span><span class="boring">    fn fly(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">trait Wizard {
+</span><span class="boring">    fn fly(&amp;self);
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Human;
+</span><span class="boring">
+</span><span class="boring">impl Pilot for Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Wizard for Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;Hoch!&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Human {
+</span><span class="boring">    fn fly(&amp;self) {
+</span><span class="boring">        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    let person = Human;
+    Pilot::fly(&amp;person);
+    Wizard::fly(&amp;person);
+    person.fly();
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-18: Angeben, welche Methode <code>fly</code> wir
+aufrufen wollen</span></p>
+<p>Das Angeben des Merkmalsnamens vor dem Methodennamen verdeutlicht Rust, welche
+Implementierung von <code>fly</code> wir aufrufen wollen. Wir könnten auch
+<code>Human::fly(&amp;person)</code> schreiben, was äquivalent zu <code>person.fly()</code> ist, das wir
+in Codeblock 19-18 verwendet haben, aber das ist etwas länger zu schreiben, wenn
+wir nicht vereindeutigen müssen.</p>
+<p>Beim Ausführen dieses Codes wird Folgendes ausgegeben:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling traits-example v0.1.0 (file:///projects/traits-example)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
+     Running `target/debug/traits-example`
+Hier spricht Ihr Kapitän.
+Hoch!
+*Wütend mit den Armen wedeln*
+</code></pre>
+<p>Da die Methode <code>fly</code> einen Parameter <code>self</code> benötigt, könnte Rust, wenn wir
+zwei <em>Typen</em> hätten, die beide ein <em>Merkmal</em> implementieren, herausfinden,
+welche Implementierung eines Merkmals basierend auf dem Typ von <code>self</code> zu
+verwenden ist.</p>
+<p>Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
+<code>self</code>-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
+Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
+nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
+<em>voll-qualifizierte Syntax</em>. In Codeblock 19-19 erstellen wir zum Beispiel
+ein Merkmal für ein Tierheim, das alle Hundebabys <em>Spot</em> nennen möchte. Wir
+erstellen ein Merkmal <code>Animal</code> mit einer assoziierten Nicht-Methodenfunktion
+<code>baby_name</code>. Das Merkmal <code>Animal</code> ist für die Struktur <code>Dog</code> implementiert, für
+die wir auch direkt eine assoziierte Nicht-Methodenfunktionen <code>baby_name</code>
+bereitstellen.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">trait Animal {
+    fn baby_name() -&gt; String;
+}
+
+struct Dog;
+
+impl Dog {
+    fn baby_name() -&gt; String {
+        String::from(&quot;Spot&quot;)
+    }
+}
+
+impl Animal for Dog {
+    fn baby_name() -&gt; String {
+        String::from(&quot;Welpe&quot;)
+    }
+}
+
+fn main() {
+    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Dog::baby_name());
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-19: Ein Merkmal mit einer assoziierten
+Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
+Merkmal ebenfalls implementiert</span></p>
+<p>Wir implementieren den Code für die Benennung aller Welpen Spot in der
+assoziierten Funktion <code>baby_name</code>, die auf <code>Dog</code> definiert ist. Der Typ <code>Dog</code>
+implementiert auch das Merkmal <code>Animal</code>, das Charakteristiken beschreibt, die
+alle Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
+Implementierung des Merkmals <code>Animal</code> auf <code>Dog</code> in der Funktion <code>baby_name</code>
+aus, die mit dem Merkmal <code>Animal</code> assoziiert ist.</p>
+<p>In <code>main</code> rufen wir die Funktion <code>Dog::baby_name</code> auf, die die assoziierte
+Funktion, die auf <code>Dog</code> definiert ist, direkt aufruft. Dieser Code gibt
+Folgendes aus:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling traits-example v0.1.0 (file:///projects/traits-example)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.54s
+     Running `target/debug/traits-example`
+Ein Hundebaby wird Spot genannt.
+</code></pre>
+<p>Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
+<code>baby_name</code> aufrufen, die Teil des Merkmals <code>Animal</code> ist, das wir auf <code>Dog</code>
+implementiert haben, sodass der Code <code>Ein Hundebaby wird Welpe genannt</code>
+ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 19-18
+verwendet haben, hilft hier nicht weiter; wenn wir <code>main</code> in den Code in
+Codeblock 19-20 ändern, erhalten wir einen Kompilierfehler.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">trait Animal {
+</span><span class="boring">    fn baby_name() -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Dog;
+</span><span class="boring">
+</span><span class="boring">impl Dog {
+</span><span class="boring">    fn baby_name() -&gt; String {
+</span><span class="boring">        String::from(&quot;Spot&quot;)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Animal for Dog {
+</span><span class="boring">    fn baby_name() -&gt; String {
+</span><span class="boring">        String::from(&quot;Welpe&quot;)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Animal::baby_name());
+}
+</code></pre></pre>
+<p><span class="caption">Codeblock 19-20: Versuch, die Funktion <code>baby_name</code> des
+Merkmals <code>Animal</code> aufzurufen, aber Rust weiß nicht, welche Implementierung es
+verwenden soll</span></p>
+<p>Da <code>Animal::baby_name</code> keinen <code>self</code>-Parameter hat, und es andere Typen geben
+könnte, die das Merkmal <code>Animal</code> implementieren, kann Rust nicht herausfinden,
+welche Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden diesen
+Kompilierfehler erhalten:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling traits-example v0.1.0 (file:///projects/traits-example)
+error[E0283]: type annotations needed
+  --&gt; src/main.rs:20:43
+   |
+20 |     println!(&quot;A baby dog is called a {}&quot;, Animal::baby_name());
+   |                                           ^^^^^^^^^^^^^^^^^ cannot infer type
+   |
+   = note: cannot satisfy `_: Animal`
+
+For more information about this error, try `rustc --explain E0283`.
+error: could not compile `traits-example` due to previous error
+</code></pre>
+<p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
+<code>Animal</code> für <code>Dog</code> verwenden wollen und nicht die Implementierung von <code>Animal</code>
+für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
+verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte Syntax
+verwendet.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Animal {
+</span><span class="boring">    fn baby_name() -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Dog;
+</span><span class="boring">
+</span><span class="boring">impl Dog {
+</span><span class="boring">    fn baby_name() -&gt; String {
+</span><span class="boring">        String::from(&quot;Spot&quot;)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Animal for Dog {
+</span><span class="boring">    fn baby_name() -&gt; String {
+</span><span class="boring">        String::from(&quot;Welpe&quot;)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn main() {
+    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, &lt;Dog as Animal&gt;::baby_name());
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-21: Verwenden einer vollständig
+qualifizierten Syntax, um anzugeben, dass wir die Funktion <code>baby_name</code> des
+Merkmals <code>Animal</code> aufrufen wollen, wie sie auf <code>Dog</code> implementiert ist</span></p>
+<p>Wir geben Rust mit einer Typ-Annotation innerhalb spitzer Klammern an, dass wir
+die Methode <code>baby_name</code> des Merkmals <code>Animal</code>, die auf <code>Dog</code> implementiert ist,
+aufrufen wollen, indem wir sagen, dass wir den Typ <code>Dog</code> für diesen
+Funktionsaufruf als <code>Animal</code> behandeln wollen. Dieser Code wird nun ausgeben,
+was wir wollen:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling traits-example v0.1.0 (file:///projects/traits-example)
+    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+     Running `target/debug/traits-example`
+Ein Hundebaby wird Welpe genannt.
+</code></pre>
+<p>Im Allgemeinen wird die vollständig qualifizierte Syntax wie folgt definiert:</p>
+<pre><code class="language-rust ignore">&lt;Type as Trait&gt;::function(receiver_if_method, next_arg, ...);</code></pre>
+<p>Für assoziierte Funktionen, die keine Methoden sind, gäbe es keinen <code>receiver</code>:
+Es gäbe nur die Liste der anderen Argumente. Du könntest eine vollständig
+qualifizierte Syntax überall dort verwenden, wo du Funktionen oder Methoden
+aufrufst. Du darfst jedoch jeden Teil dieser Syntax weglassen, den Rust aus
+anderen Informationen im Programm herausfinden kann. Du musst diese
+ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
+Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
+um herauszufinden, welche Implementierung du aufrufen möchtest.</p>
+<h3 id="verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern"><a class="header" href="#verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern">Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern</a></h3>
+<p>Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
+einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
+kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
+tun, damit deine Merkmalsdefinition die zugehörigen Elemente des zweiten
+Merkmals verwenden kann. Das Merkmal, auf das sich deine Merkmalsdefinition
+stützt, wird als <em>Supermerkmal</em> (supertrait) deines Merkmals bezeichnet.</p>
+<p>Nehmen wir zum Beispiel an, wir wollen ein Merkmal <code>OutlinePrint</code> mit einer
+Methode <code>outline_print</code> erstellen, das einen bestimmten Wert so formatiert,
+dass er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine
+Struktur <code>Point</code> haben, die <code>Display</code> so implementiert, dass sie <code>(x, y)</code>
+ausgibt, dann gibt der Aufruf von <code>outline_print</code> einer <code>Point</code>-Instanz, die
+<code>1</code> für <code>x</code> und <code>3</code> für <code>y</code> hat, folgendes aus:</p>
+<pre><code class="language-text">**********
+*        *
+* (1, 3) *
+*        *
+**********
+</code></pre>
+<p>Bei der Implementierung der Methode <code>outline_print</code> wollen wir die
+Funktionalität des Merkmals <code>Display</code> nutzen. Daher müssen wir festlegen, dass
+das Merkmal <code>OutlinePrint</code> nur bei Typen funktioniert, die auch <code>Display</code>
+implementieren und die Funktionalität bieten, die <code>OutlinePrint</code> benötigt. Wir
+können dies in der Merkmalsdefinition tun, indem wir <code>OutlinePrint: Display</code>
+angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
+bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
+Merkmals <code>OutlinePrint</code>.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::fmt;
+
+trait OutlinePrint: fmt::Display {
+    fn outline_print(&amp;self) {
+        let output = self.to_string();
+        let len = output.len();
+        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+        println!(&quot;* {} *&quot;, output);
+        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 19-22: Implementieren des Merkmals
+<code>OutlinePrint</code>, das die Funktionalität von <code>Display</code> erfordert</span></p>
+<p>Da wir festgelegt haben, dass <code>OutlinePrint</code> das Merkmal <code>Display</code> erfordert,
+können wir die Funktion <code>to_string</code> verwenden, die automatisch für jeden Typ
+implementiert wird, der <code>Display</code> implementiert. Wenn wir versuchen würden,
+<code>to_string</code> zu verwenden, ohne einen Doppelpunkt und das Merkmal <code>Display</code> nach
+dem Merkmalsnamen anzugeben, würden wir eine Fehlermeldung erhalten, die
+besagt, dass keine Methode mit dem Namen <code>to_string</code> für den Typ <code>&amp;Self</code> im
+aktuellen Gültigkeitsbereich gefunden wurde.</p>
+<p>Lass uns sehen, was passiert, wenn wir versuchen, <code>OutlinePrint</code> auf einem Typ
+zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Struktur
+<code>Point</code>:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">use std::fmt;
+</span><span class="boring">
+</span><span class="boring">trait OutlinePrint: fmt::Display {
+</span><span class="boring">    fn outline_print(&amp;self) {
+</span><span class="boring">        let output = self.to_string();
+</span><span class="boring">        let len = output.len();
+</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+</span><span class="boring">        println!(&quot;* {} *&quot;, output);
+</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span>struct Point {
+    x: i32,
+    y: i32,
+}
+
+impl OutlinePrint for Point {}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let p = Point { x: 1, y: 3 };
+</span><span class="boring">    p.outline_print();
+</span><span class="boring">}</span></code></pre></pre>
+<p>Wir erhalten einen Fehler, der besagt, dass <code>Display</code> erforderlich, aber nicht
+implementiert ist:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling traits-example v0.1.0 (file:///projects/traits-example)
+error[E0277]: `Point` doesn't implement `std::fmt::Display`
+  --&gt; src/main.rs:20:6
+   |
+20 | impl OutlinePrint for Point {}
+   |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
+   |
+   = help: the trait `std::fmt::Display` is not implemented for `Point`
+   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+note: required by a bound in `OutlinePrint`
+  --&gt; src/main.rs:3:21
+   |
+3  | trait OutlinePrint: fmt::Display {
+   |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
+
+For more information about this error, try `rustc --explain E0277`.
+error: could not compile `traits-example` due to previous error
+</code></pre>
+<p>Um dies zu beheben, implementieren wir <code>Display</code> auf <code>Point</code> und erfüllen die
+Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">trait OutlinePrint: fmt::Display {
+</span><span class="boring">    fn outline_print(&amp;self) {
+</span><span class="boring">        let output = self.to_string();
+</span><span class="boring">        let len = output.len();
+</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+</span><span class="boring">        println!(&quot;* {} *&quot;, output);
+</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
+</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">struct Point {
+</span><span class="boring">    x: i32,
+</span><span class="boring">    y: i32,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl OutlinePrint for Point {}
+</span><span class="boring">
+</span>use std::fmt;
+
+impl fmt::Display for Point {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        write!(f, &quot;({}, {})&quot;, self.x, self.y)
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    let p = Point { x: 1, y: 3 };
+</span><span class="boring">    p.outline_print();
+</span><span class="boring">}</span></code></pre></pre>
+<p>Dann wird die Implementierung des Merkmals <code>OutlinePrint</code> auf <code>Point</code>
+erfolgreich kompilieren und wir können <code>outline_print</code> auf einer
+<code>Point</code>-Instanz aufrufen, um sie in Sternchen eingerahmt anzuzeigen.</p>
+<h3 id="verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen"><a class="header" href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf externen Typen</a></h3>
+<p>In Kapitel 10 im Abschnitt <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ
+implementieren“</a> erwähnten wir die Waisenregel,
+die besagt, dass wir ein Merkmal nur dann auf einem Typ implementieren dürfen,
+wenn entweder das Merkmal oder der Typ lokal in unserer Kiste (crate) vorhanden
+ist. Es ist möglich, diese Einschränkung zu umgehen, indem man das
+<em>Newtype-Muster</em> (newtype pattern) verwendet, bei dem ein neuer Typ in einer
+Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen im Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden
+von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu
+erzeugen“</a> in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
+Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
+implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
+wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
+<em>Newtype</em> ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
+Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
+und der Verpackungstyp wird zur Kompilierzeit elidiert.</p>
+<p>Nehmen wir als Beispiel an, wir wollen <code>Display</code> auf <code>Vec&lt;T&gt;</code> implementieren,
+was uns die Waisenregel direkt verbietet, weil das Merkmal <code>Display</code> und der
+Typ <code>Vec&lt;T&gt;</code> außerhalb unserer Kiste definiert sind. Wir können eine Struktur
+<code>Wrapper</code> erstellen, die eine Instanz von <code>Vec&lt;T&gt;</code> enthält; dann können wir
+<code>Display</code> auf <code>Wrapper</code> implementieren und den Wert <code>Vec&lt;T&gt;</code> verwenden, wie in
+Codeblock 19-23 gezeigt.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
+
+struct Wrapper(Vec&lt;String&gt;);
+
+impl fmt::Display for Wrapper {
+    fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
+        write!(f, &quot;[{}]&quot;, self.0.join(&quot;, &quot;))
+    }
+}
+
+fn main() {
+    let w = Wrapper(vec![String::from(&quot;Hallo&quot;), String::from(&quot;Welt&quot;)]);
+    println!(&quot;w = {}&quot;, w);
+}</code></pre></pre>
+<p><span class="caption">Codeblock 19-23: Erstellen eines Typs <code>Wrapper</code> um
+<code>Vec&lt;String&gt;</code> zur Implementierung von <code>Display</code></span></p>
+<p>Die Implementierung von <code>Display</code> verwendet <code>self.0</code>, um auf den inneren
+<code>Vec&lt;T&gt;</code> zuzugreifen, da <code>Wrapper</code> eine Tupelstruktur ist und <code>Vec&lt;T&gt;</code> das
+Element mit dem Index 0 im Tupel ist. Dann können wir die Funktionalität des
+<code>Display</code>-Typs auf <code>Wrapper</code> verwenden.</p>
+<p>Der Nachteil der Verwendung dieser Technik ist, dass <code>Wrapper</code> ein neuer Typ
+ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten alle
+Methoden von <code>Vec&lt;T&gt;</code> direkt auf <code>Wrapper</code> implementieren, sodass die Methoden
+an <code>self.0</code> delegieren, was uns erlauben würde, <code>Wrapper</code> genau wie einen
+<code>Vec&lt;T&gt;</code> zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode hat,
+die der innere Typ hat, wäre es eine Lösung, das Merkmal <code>Deref</code> (das in
+Kapitel 15 im Abschnitt <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale Referenzen behandeln
+mit dem Merkmal (trait) <code>Deref</code>“</a> behandelt wird) auf dem
+<code>Wrapper</code> zu implementieren, um den inneren Typ zurückzugeben. Wenn wir nicht
+wollen, dass der <code>Wrapper</code>-Typ alle Methoden des inneren Typs hat – zum
+Beispiel, um das Verhalten des <code>Wrapper</code>-Typs einzuschränken – müssten
+wir nur die Methoden manuell implementieren, die wir wollen.</p>
+<p>Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
+sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
+Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch19-01-unsafe-rust.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch19-04-advanced-types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch19-01-unsafe-rust.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch19-04-advanced-types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </body>
+</html>

@@ -1,1 +1,527 @@
-# Das Kontrollflusskonstrukt match
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Das Kontrollflusskonstrukt match - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html" class="active"><strong aria-hidden="true">6.2.</strong> Das Kontrollflusskonstrukt match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installieren von Binärdateien mit  cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="das-kontrollflusskonstrukt-match"><a class="header" href="#das-kontrollflusskonstrukt-match">Das Kontrollflusskonstrukt <code>match</code></a></h2>
+<p>Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
+<code>match</code>, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
+abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
+können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
+Dingen zusammensetzen. Kapitel 18 befasst sich mit all den verschiedenen
+Musterarten und wie sie funktionieren. Die Mächtigkeit von <code>match</code> kommt von
+der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
+sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
+<p>Stelle dir einen <code>match</code>-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
+rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
+fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
+durchlaufen die Werte die Muster in einem <code>match</code>-Ausdruck und beim ersten
+„passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
+werden soll.</p>
+<p>Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von <code>match</code>! Wir
+können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
+Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
+sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
+gezeigt.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter,
+}
+
+fn value_in_cents(coin: Coin) -&gt; u8 {
+    match coin {
+        Coin::Penny =&gt; 1,
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter =&gt; 25,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 6-3: Eine Aufzählung und ein <code>match</code>-Ausdruck,
+der die Varianten der Aufzählung als Muster hat</span></p>
+<p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln. 
+Zuerst geben wir das Schlüsselwort <code>match</code> an, gefolgt von einem Ausdruck, der
+in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem Ausdruck sehr ähnlich zu
+sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen Unterschied: Bei
+<code>if</code> muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann ein
+beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in diesem Beispiel
+die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert haben.</p>
+<p>Als nächstes kommen die <code>match</code>-Zweige. Ein Zweig hat zwei Teile: Ein Muster
+und etwas Code. Der erste Zweig hat als Muster den Wert <code>Coin::Penny</code>, dann den
+Operator <code>=&gt;</code>, der das Muster und den auszuführenden Code trennt. Der Code ist
+in diesem Fall nur der Wert <code>1</code>. Jeder Zweig wird durch ein Komma vom nächsten
+getrennt.</p>
+<p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den resultierenden Wert
+mit dem Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum
+Wert passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das
+Muster nicht zum Wert passt, wird die Ausführung beim nächsten Zweig
+fortgesetzt, ähnlich wie bei einer Münzsortiermaschine. Wir können so viele
+Zweige haben, wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck
+vier Zweige.</p>
+<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der resultierende Wert
+des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
+<code>match</code>-Ausdruck zurückgegeben wird. </p>
+<p>Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
+kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
+Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
+geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
+Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
+Methode mit <code>Coin::Penny</code> aufgerufen wird, er gibt aber immer noch den letzten
+Wert <code>1</code> des Blocks zurück:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">enum Coin {
+</span><span class="boring">    Penny,
+</span><span class="boring">    Nickel,
+</span><span class="boring">    Dime,
+</span><span class="boring">    Quarter,
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn value_in_cents(coin: Coin) -&gt; u8 {
+    match coin {
+        Coin::Penny =&gt; {
+            println!(&quot;Glückspfennig!&quot;);
+            1
+        }
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter =&gt; 25,
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<h3 id="muster-die-werte-binden"><a class="header" href="#muster-die-werte-binden">Muster, die Werte binden</a></h3>
+<p>Ein weitere nützliche Funktionalität von <code>match</code>-Zweigen ist, dass sie Teile
+der Werte binden können, die dem Muster entsprechen. Auf diese Weise können wir
+Werte aus Aufzählungsvarianten extrahieren.</p>
+<p>Lass uns als Beispiel eine unserer Aufzählungsvarianten so ändern, dass sie
+Daten enthält. Von 1999 bis 2008 prägten die Vereinigten Staaten 25-Cent-Münzen
+mit unterschiedlichem Aussehen auf einer Seite für jeden der 50 Staaten. Keine
+andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münzen
+diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
+Aufzählung unterbringen, indem wir die Variante <code>Quarter</code> so ändern, dass sie
+einen <code>UsState</code>-Wert enthält, wie in Codeblock 6-4 umgesetzt.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum UsState {
+    Alabama,
+    Alaska,
+    // --abschneiden--
+}
+
+enum Coin {
+    Penny,
+    Nickel,
+    Dime,
+    Quarter(UsState),
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 6-4: Aufzählung <code>Coin</code>, bei der die Variante
+<code>Quarter</code> zusätzlich einen <code>UsState</code>-Wert enthält</span></p>
+<p>Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
+Staaten zu sammeln. Während wir unser Kleingeld nach Münzsorten sortieren,
+geben wir auch den Namen des Staates der 25-Cent-Münze aus, sodass es unser
+Freund in seine Sammlung aufnehmen kann, falls er es nicht hat. Im
+<code>match</code>-Ausdruck für diesen Code fügen wir zum Muster der Variante
+<code>Coin::Quarter</code> eine Variable <code>state</code> hinzu. Wenn der Zweig für <code>Coin::Quarter</code>
+passt, wird die Variable <code>state</code> an den Wert der Eigenschaft der 25-Cent-Münze
+gebunden. Dann können wir <code>state</code> im Code für diesen Zweig etwa so verwenden:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)] // um den Staat mit println! ausgeben zu können
+</span><span class="boring">enum UsState {
+</span><span class="boring">    Alabama,
+</span><span class="boring">    Alaska,
+</span><span class="boring">    // --abschneiden--
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">enum Coin {
+</span><span class="boring">    Penny,
+</span><span class="boring">    Nickel,
+</span><span class="boring">    Dime,
+</span><span class="boring">    Quarter(UsState),
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn value_in_cents(coin: Coin) -&gt; u8 {
+    match coin {
+        Coin::Penny =&gt; 1,
+        Coin::Nickel =&gt; 5,
+        Coin::Dime =&gt; 10,
+        Coin::Quarter(state) =&gt; {
+            println!(&quot;25-Cent-Münze aus {:?}!&quot;, state);
+            25
+        }
+    }
+}
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    value_in_cents(Coin::Quarter(UsState::Alaska));
+</span><span class="boring">}</span></code></pre></pre>
+<p>Wenn wir <code>value_in_cents(Coin::Quarter(UsState::Alaska))</code> aufrufen würden,
+hätte <code>coin</code> den Wert <code>Coin::Quarter(UsState::Alaska)</code>. Gleichen wir den Wert
+mit jedem der <code>match</code>-Zweige ab, passt keiner von ihnen, bis wir
+<code>Coin::Quarter(state)</code> erreichen. An diesem Punkt wird <code>state</code> an den Wert
+<code>UsState::Alaska</code> gebunden. Wir können dann diese Bindung im
+<code>println!</code>-Ausdruck verwenden und so den inneren Zustandswert aus der
+<code>Coin</code>-Aufzählungsvariante für <code>Quarter</code> herausholen.</p>
+<h3 id="abgleich-mit-optiont"><a class="header" href="#abgleich-mit-optiont">Abgleich mit <code>Option&lt;T&gt;</code></a></h3>
+<p>Im vorigen Abschnitt wollten wir den inneren <code>T</code>-Wert aus dem Fall <code>Some</code>
+herausholen, als wir <code>Option&lt;T&gt;</code> verwendet haben. Wir können <code>Option&lt;T&gt;</code> ebenso
+mit <code>match</code> handhaben, wie wir es mit der Aufzählung <code>Coin</code> getan haben! Statt
+Münzen zu vergleichen, werden wir die Varianten von <code>Option&lt;T&gt;</code> vergleichen,
+aber die Art und Weise, wie der <code>match</code>-Ausdruck funktioniert, bleibt die
+gleiche.</p>
+<p>Nehmen wir an, wir wollen eine Funktion schreiben, die eine <code>Option&lt;i32&gt;</code> nimmt
+und, falls ein Wert darin enthalten ist, zu diesem Wert 1 addiert. Wenn darin
+kein Wert enthalten ist, soll die Funktion den Wert <code>None</code> zurückgeben und
+nicht versuchen, irgendwelche Operationen durchzuführen.</p>
+<p>Diese Funktion ist dank <code>match</code> sehr einfach zu schreiben und wird wie in
+Codeblock 6-5 aussehen.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        None =&gt; None,
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 6-5: Eine Funktion, die einen <code>match</code>-Ausdruck
+auf einer <code>Option&lt;i32&gt;</code> verwendet</span></p>
+<p>Lass uns die erste Ausführung von <code>plus_one</code> näher betrachten. Wenn wir
+<code>plus_one(five)</code> aufrufen, wird die Variable <code>x</code> im Rumpf von <code>plus_one</code> den
+Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig.</p>
+<pre><code class="language-rust ignore">None =&gt; None,</code></pre>
+<p>Der Wert <code>Some(5)</code> passt nicht zum Muster <code>None</code>, also fahren wir mit dem
+nächsten Zweig fort.</p>
+<pre><code class="language-rust ignore">Some(i) =&gt; Some(i + 1),</code></pre>
+<p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Aber ja, das tut es! Wir haben die gleiche
+Variante. <code>i</code> bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code>
+annimmt. Dann wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum
+Wert von <code>i</code> hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code>
+darin.</p>
+<p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Codeblock 6-5, wo <code>x</code>
+den Wert <code>None</code> hat. Wir betreten den <code>match</code>-Block und vergleichen mit dem
+ersten Zweig.</p>
+<pre><code class="language-rust ignore">None =&gt; None,</code></pre>
+<p>Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
+den Wert <code>None</code> auf der rechten Seite von <code>=&gt;</code> zurück. Da der erste Zweig
+passt, werden keine anderen Zweige abgeglichen.</p>
+<p>Die Kombination von <code>match</code> und Aufzählungen ist in vielen Situationen
+nützlich. Du wirst dieses Muster häufig in Rust-Code sehen: <code>match</code> mit einer
+Aufzählung, eine Variable an die darin enthaltenen Daten binden und dann
+dazugehörenden Code ausführen. Am Anfang ist es etwas knifflig, aber wenn man
+sich erst einmal daran gewöhnt hat, wird man sich wünschen, es in allen
+Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.</p>
+<h3 id="abgleiche-sind-vollständig"><a class="header" href="#abgleiche-sind-vollständig">Abgleiche sind vollständig</a></h3>
+<p>Es gibt noch einen weiteren Aspekt von <code>match</code>, den wir besprechen müssen: Die
+Muster der Zweige müssen alle Möglichkeiten abdecken. Betrachte folgende
+Version unserer Funktion <code>plus_one</code>, die einen Fehler hat und sich nicht
+kompilieren lässt:</p>
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+    match x {
+        Some(i) =&gt; Some(i + 1),
+    }
+}
+
+let five = Some(5);
+let six = plus_one(five);
+let none = plus_one(None);
+<span class="boring">}</span></code></pre></pre>
+<p>Wir haben den Fall <code>None</code> nicht behandelt, daher wird dieser Code einen Fehler
+verursachen. Glücklicherweise ist es ein Fehler, von dem Rust weiß, wie er
+zu lösen ist. Wenn wir versuchen, diesen Code zu kompilieren, werden wir
+diese Fehlermeldung bekommen:</p>
+<pre><code class="language-console">$ cargo run
+   Compiling enums v0.1.0 (file:///projects/enums)
+error[E0004]: non-exhaustive patterns: `None` not covered
+   --&gt; src/main.rs:3:15
+    |
+3   |         match x {
+    |               ^ pattern `None` not covered
+    |
+    = help: ensure that all possible cases are being handled, possibly by adding wildcards or more match arms
+    = note: the matched value is of type `Option&lt;i32&gt;`
+
+For more information about this error, try `rustc --explain E0004`.
+error: could not compile `enums` due to previous error
+</code></pre>
+<p>Rust weiß, dass wir nicht alle möglichen Fälle abgedeckt haben, und es weiß
+sogar, welches Muster wir vergessen haben! Abgleiche in Rust sind
+<em>vollständig</em>: Wir müssen jede letzte Möglichkeit ausschöpfen, damit der Code
+gültig ist! Speziell im Fall <code>Option&lt;T&gt;</code> schützt uns Rust davor, den Fall
+<code>None</code> zu übersehen, und davon auszugehen, dass wir einen Wert haben, obwohl
+vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
+unmöglich.</p>
+<h3 id="auffangmuster-und-der-platzhalter-_"><a class="header" href="#auffangmuster-und-der-platzhalter-_">Auffangmuster und der Platzhalter <code>_</code></a></h3>
+<p>Mit Aufzählungen können wir auch spezielle Aktionen für ausgewählte Werte
+durchführen und für alle anderen Werte eine Standardaktion. Stell dir vor, wir
+implementieren ein Spiel, bei dem ein Spieler bei einem Würfelwurf von 3 einen
+schicken Hut bekommt anstatt sich zu bewegen. Wenn du eine 7 würfelst, verliert
+dein Spieler einen schicken Hut. Bei allen anderen Werten zieht der Spieler die
+entsprechende Anzahl an Feldern auf dem Spielfeld. Hier ist ein <code>match</code>, das
+diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
+Zufallswerts fest kodiert ist, und alle weiter Logik wird durch Funktionen ohne
+Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
+Rahmen sprengen würde:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    other =&gt; move_player(other),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn move_player(num_spaces: u8) {}
+<span class="boring">}</span></code></pre></pre>
+<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
+letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+<code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
+<code>move_player</code> übergibt.</p>
+<p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte
+aufgelistet haben, die ein <code>u8</code> haben kann, weil das letzte Muster zu allen
+nicht explizit aufgeführten Werte passt. Dieses Auffangmuster (catch-all
+pattern) erfüllt die Anforderung, dass <code>match</code> vollständig sein muss. Beachte,
+dass wir den Auffangzweig an letzter Stelle angeben müssen, da die Muster der
+Reihe nach ausgewertet werden. Wenn wir den Auffangzweig früher einfügen
+würden, würden die anderen Zweige nie ausgeführt werden, also warnt uns Rust,
+wenn wir Zweige nach einem Auffangzweig hinzufügen!</p>
+<p>Rust hat auch ein Muster, das wir verwenden können, wenn wir einen Auffangzweig
+wollen, aber den Wert im Auffangmuster <em>nicht</em> verwenden wollen: <code>_</code> ist ein
+spezielles Muster, das zu jedem Wert passt und nicht an diesen Wert bindet.
+Dies sagt Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht
+vor einer unbenutzten Variable warnt.</p>
+<p>Ändern wir die Spielregeln: Wenn du jetzt etwas anderes als eine 3 oder eine 7
+würfelst, musst du erneut würfeln. Wir brauchen den Auffangwert nicht mehr zu
+verwenden, also können wir unseren Code so ändern, dass wir <code>_</code> anstelle der
+Variable namens <code>other</code> verwenden:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; reroll(),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+fn reroll() {}
+<span class="boring">}</span></code></pre></pre>
+<p>Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
+ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
+vergessen.</p>
+<p>Zu Schluss ändern wir die Spielregeln noch einmal, sodass bei deinem Zug nichts
+anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst. Wir
+können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
+wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
+angeben:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let dice_roll = 9;
+match dice_roll {
+    3 =&gt; add_fancy_hat(),
+    7 =&gt; remove_fancy_hat(),
+    _ =&gt; (),
+}
+
+fn add_fancy_hat() {}
+fn remove_fancy_hat() {}
+<span class="boring">}</span></code></pre></pre>
+<p>Hier teilen wir Rust explizit mit, dass wir keinen anderen Wert verwenden
+werden, der nicht mit einem Muster in einem früheren Zweig übereinstimmt, und
+dass wir in diesem Fall keinen Code ausführen wollen.</p>
+<p>Weitere Informationen zu Mustern und Abgleich findest du in <a href="ch18-00-patterns.html">Kapitel
+18</a>. Für den Moment machen wir mit der <code>if let</code>-Syntax
+weiter, die in Situationen nützlich sein kann, in denen der <code>match</code>-Ausdruck
+etwas wortreich ist.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch06-01-defining-an-enum.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch06-03-if-let.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch06-01-defining-an-enum.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch06-03-if-let.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </body>
+</html>

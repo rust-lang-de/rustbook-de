@@ -1,1 +1,365 @@
-# Charakteristiken objektorientierter Sprachen
+<!DOCTYPE HTML>
+<html lang="de" class="sidebar-visible no-js light">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Charakteristiken objektorientierter Sprachen - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+        
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff" />
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+    </head>
+    <body>
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            var html = document.querySelector('html');
+            html.classList.remove('no-js')
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add('js');
+        </script>
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var html = document.querySelector('html');
+            var sidebar = 'hidden';
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            }
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <div class="sidebar-scrollbox">
+                <ol class="chapter"><li class="chapter-item expanded affix "><a href="title-page.html">Die Programmiersprache Rust</a></li><li class="chapter-item expanded affix "><a href="foreword.html">Vorwort</a></li><li class="chapter-item expanded affix "><a href="ch00-00-introduction.html">Einführung</a></li><li class="chapter-item expanded "><a href="ch01-00-getting-started.html"><strong aria-hidden="true">1.</strong> Erste Schritte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch01-01-installation.html"><strong aria-hidden="true">1.1.</strong> Installation</a></li><li class="chapter-item expanded "><a href="ch01-02-hello-world.html"><strong aria-hidden="true">1.2.</strong> Hallo Welt</a></li><li class="chapter-item expanded "><a href="ch01-03-hello-cargo.html"><strong aria-hidden="true">1.3.</strong> Hallo Cargo</a></li></ol></li><li class="chapter-item expanded "><a href="ch02-00-guessing-game-tutorial.html"><strong aria-hidden="true">2.</strong> Ein Ratespiel programmieren</a></li><li class="chapter-item expanded "><a href="ch03-00-common-programming-concepts.html"><strong aria-hidden="true">3.</strong> Allgemeine Programmierkonzepte</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch03-01-variables-and-mutability.html"><strong aria-hidden="true">3.1.</strong> Variablen und Veränderlichkeit</a></li><li class="chapter-item expanded "><a href="ch03-02-data-types.html"><strong aria-hidden="true">3.2.</strong> Datentypen</a></li><li class="chapter-item expanded "><a href="ch03-03-how-functions-work.html"><strong aria-hidden="true">3.3.</strong> Funktionen</a></li><li class="chapter-item expanded "><a href="ch03-04-comments.html"><strong aria-hidden="true">3.4.</strong> Kommentare</a></li><li class="chapter-item expanded "><a href="ch03-05-control-flow.html"><strong aria-hidden="true">3.5.</strong> Kontrollfluss</a></li></ol></li><li class="chapter-item expanded "><a href="ch04-00-understanding-ownership.html"><strong aria-hidden="true">4.</strong> Eigentümerschaft (ownership) verstehen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch04-01-what-is-ownership.html"><strong aria-hidden="true">4.1.</strong> Was ist Eigentümerschaft (ownership)?</a></li><li class="chapter-item expanded "><a href="ch04-02-references-and-borrowing.html"><strong aria-hidden="true">4.2.</strong> Referenzen und Ausleihen (borrowing)</a></li><li class="chapter-item expanded "><a href="ch04-03-slices.html"><strong aria-hidden="true">4.3.</strong> Der Anteilstyp (slice)</a></li></ol></li><li class="chapter-item expanded "><a href="ch05-00-structs.html"><strong aria-hidden="true">5.</strong> Strukturen (structs) für zusammenhängende Daten verwenden</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch05-01-defining-structs.html"><strong aria-hidden="true">5.1.</strong> Strukturen (structs) definieren und instanziieren</a></li><li class="chapter-item expanded "><a href="ch05-02-example-structs.html"><strong aria-hidden="true">5.2.</strong> Beispielprogramm mit Strukturen (structs)</a></li><li class="chapter-item expanded "><a href="ch05-03-method-syntax.html"><strong aria-hidden="true">5.3.</strong> Methodensyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch06-00-enums.html"><strong aria-hidden="true">6.</strong> Aufzählungen (enums) und Musterabgleich (pattern matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch06-01-defining-an-enum.html"><strong aria-hidden="true">6.1.</strong> Eine Aufzählung (enum) definieren</a></li><li class="chapter-item expanded "><a href="ch06-02-match.html"><strong aria-hidden="true">6.2.</strong> Das Kontrollflusskonstrukt match</a></li><li class="chapter-item expanded "><a href="ch06-03-if-let.html"><strong aria-hidden="true">6.3.</strong> Prägnanter Kontrollfluss mit if let</a></li></ol></li><li class="chapter-item expanded "><a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html"><strong aria-hidden="true">7.</strong> Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch07-01-packages-and-crates.html"><strong aria-hidden="true">7.1.</strong> Pakete (packages) und Kisten (crates)</a></li><li class="chapter-item expanded "><a href="ch07-02-defining-modules-to-control-scope-and-privacy.html"><strong aria-hidden="true">7.2.</strong> Mit Modulen den Kontrollumfang und Datenschutz steuern</a></li><li class="chapter-item expanded "><a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html"><strong aria-hidden="true">7.3.</strong> Mit Pfaden auf ein Element im Modulbaum verweisen</a></li><li class="chapter-item expanded "><a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html"><strong aria-hidden="true">7.4.</strong> Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort use</a></li><li class="chapter-item expanded "><a href="ch07-05-separating-modules-into-different-files.html"><strong aria-hidden="true">7.5.</strong> Module in verschiedene Dateien aufteilen</a></li></ol></li><li class="chapter-item expanded "><a href="ch08-00-common-collections.html"><strong aria-hidden="true">8.</strong> Allgemeine Kollektionen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch08-01-vectors.html"><strong aria-hidden="true">8.1.</strong> Wertlisten in Vektoren ablegen</a></li><li class="chapter-item expanded "><a href="ch08-02-strings.html"><strong aria-hidden="true">8.2.</strong> UTF-8-kodierten Text in Zeichenketten (strings) ablegen</a></li><li class="chapter-item expanded "><a href="ch08-03-hash-maps.html"><strong aria-hidden="true">8.3.</strong> Schlüssel mit zugehörigen Werten in Hashtabellen ablegen</a></li></ol></li><li class="chapter-item expanded "><a href="ch09-00-error-handling.html"><strong aria-hidden="true">9.</strong> Fehlerbehandlung</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch09-01-unrecoverable-errors-with-panic.html"><strong aria-hidden="true">9.1.</strong> Nicht behebbare Fehler mit panic!</a></li><li class="chapter-item expanded "><a href="ch09-02-recoverable-errors-with-result.html"><strong aria-hidden="true">9.2.</strong> Behebbare Fehler mit Result</a></li><li class="chapter-item expanded "><a href="ch09-03-to-panic-or-not-to-panic.html"><strong aria-hidden="true">9.3.</strong> Wann panic! aufrufen und wann nicht?</a></li></ol></li><li class="chapter-item expanded "><a href="ch10-00-generics.html"><strong aria-hidden="true">10.</strong> Generische Typen, Merkmale (traits) und Lebensdauer</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch10-01-syntax.html"><strong aria-hidden="true">10.1.</strong> Generische Datentypen</a></li><li class="chapter-item expanded "><a href="ch10-02-traits.html"><strong aria-hidden="true">10.2.</strong> Merkmale (traits): Gemeinsames Verhalten definieren</a></li><li class="chapter-item expanded "><a href="ch10-03-lifetime-syntax.html"><strong aria-hidden="true">10.3.</strong> Referenzen validieren mit Lebensdauern</a></li></ol></li><li class="chapter-item expanded "><a href="ch11-00-testing.html"><strong aria-hidden="true">11.</strong> Automatisierte Tests schreiben</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch11-01-writing-tests.html"><strong aria-hidden="true">11.1.</strong> Tests schreiben</a></li><li class="chapter-item expanded "><a href="ch11-02-running-tests.html"><strong aria-hidden="true">11.2.</strong> Steuern wie Tests ausgeführt werden</a></li><li class="chapter-item expanded "><a href="ch11-03-test-organization.html"><strong aria-hidden="true">11.3.</strong> Testverwaltung</a></li></ol></li><li class="chapter-item expanded "><a href="ch12-00-an-io-project.html"><strong aria-hidden="true">12.</strong> Ein E/A-Projekt: Ein Kommandozeilenprogramm erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch12-01-accepting-command-line-arguments.html"><strong aria-hidden="true">12.1.</strong> Kommandozeilenargumente entgegennehmen</a></li><li class="chapter-item expanded "><a href="ch12-02-reading-a-file.html"><strong aria-hidden="true">12.2.</strong> Eine Datei einlesen</a></li><li class="chapter-item expanded "><a href="ch12-03-improving-error-handling-and-modularity.html"><strong aria-hidden="true">12.3.</strong> Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></li><li class="chapter-item expanded "><a href="ch12-04-testing-the-librarys-functionality.html"><strong aria-hidden="true">12.4.</strong> Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></li><li class="chapter-item expanded "><a href="ch12-05-working-with-environment-variables.html"><strong aria-hidden="true">12.5.</strong> Mit Umgebungsvariablen arbeiten</a></li><li class="chapter-item expanded "><a href="ch12-06-writing-to-stderr-instead-of-stdout.html"><strong aria-hidden="true">12.6.</strong> Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></li></ol></li><li class="chapter-item expanded "><a href="ch13-00-functional-features.html"><strong aria-hidden="true">13.</strong> Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch13-01-closures.html"><strong aria-hidden="true">13.1.</strong> Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></li><li class="chapter-item expanded "><a href="ch13-02-iterators.html"><strong aria-hidden="true">13.2.</strong> Eine Reihe von Elementen verarbeiten mit Iteratoren</a></li><li class="chapter-item expanded "><a href="ch13-03-improving-our-io-project.html"><strong aria-hidden="true">13.3.</strong> Unser E/A-Projekt verbessern</a></li><li class="chapter-item expanded "><a href="ch13-04-performance.html"><strong aria-hidden="true">13.4.</strong> Performanzvergleich: Schleifen vs. Iteratoren</a></li></ol></li><li class="chapter-item expanded "><a href="ch14-00-more-about-cargo.html"><strong aria-hidden="true">14.</strong> Mehr über Cargo und Crates.io</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch14-01-release-profiles.html"><strong aria-hidden="true">14.1.</strong> Bauvorgang anpassen mit Freigabeprofilen (release profiles)</a></li><li class="chapter-item expanded "><a href="ch14-02-publishing-to-crates-io.html"><strong aria-hidden="true">14.2.</strong> Kisten (crate) auf crates.io veröffentlichen</a></li><li class="chapter-item expanded "><a href="ch14-03-cargo-workspaces.html"><strong aria-hidden="true">14.3.</strong> Cargo-Arbeitsbereiche</a></li><li class="chapter-item expanded "><a href="ch14-04-installing-binaries.html"><strong aria-hidden="true">14.4.</strong> Installieren von Binärdateien mit  cargo install</a></li><li class="chapter-item expanded "><a href="ch14-05-extending-cargo.html"><strong aria-hidden="true">14.5.</strong> Cargo um benutzerdefinierte Befehle erweitern</a></li></ol></li><li class="chapter-item expanded "><a href="ch15-00-smart-pointers.html"><strong aria-hidden="true">15.</strong> Intelligente Zeiger</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch15-01-box.html"><strong aria-hidden="true">15.1.</strong> Mit Box&lt;T&gt; auf Daten im Haldenspeicher zeigen</a></li><li class="chapter-item expanded "><a href="ch15-02-deref.html"><strong aria-hidden="true">15.2.</strong> Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref</a></li><li class="chapter-item expanded "><a href="ch15-03-drop.html"><strong aria-hidden="true">15.3.</strong> Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) Drop</a></li><li class="chapter-item expanded "><a href="ch15-04-rc.html"><strong aria-hidden="true">15.4.</strong> Der referenzzählende intelligente Zeiger Rc&lt;T&gt;</a></li><li class="chapter-item expanded "><a href="ch15-05-interior-mutability.html"><strong aria-hidden="true">15.5.</strong> RefCell&lt;T&gt; und das innere Veränderlichkeitsmuster</a></li><li class="chapter-item expanded "><a href="ch15-06-reference-cycles.html"><strong aria-hidden="true">15.6.</strong> Referenzzyklen können zu einem Speicherleck führen</a></li></ol></li><li class="chapter-item expanded "><a href="ch16-00-concurrency.html"><strong aria-hidden="true">16.</strong> Furchtlose Nebenläufigkeit</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch16-01-threads.html"><strong aria-hidden="true">16.1.</strong> Mit Strängen (threads) Programmcode gleichzeitig ausführen</a></li><li class="chapter-item expanded "><a href="ch16-02-message-passing.html"><strong aria-hidden="true">16.2.</strong> Nachrichtenaustausch zwischen Strängen (threads)</a></li><li class="chapter-item expanded "><a href="ch16-03-shared-state.html"><strong aria-hidden="true">16.3.</strong> Nebenläufigkeit mit gemeinsamem Zustand</a></li><li class="chapter-item expanded "><a href="ch16-04-extensible-concurrency-sync-and-send.html"><strong aria-hidden="true">16.4.</strong> Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send</a></li></ol></li><li class="chapter-item expanded "><a href="ch17-00-oop.html"><strong aria-hidden="true">17.</strong> Objektorientierte Sprachelemente von Rust</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch17-01-what-is-oo.html" class="active"><strong aria-hidden="true">17.1.</strong> Charakteristiken objektorientierter Sprachen</a></li><li class="chapter-item expanded "><a href="ch17-02-trait-objects.html"><strong aria-hidden="true">17.2.</strong> Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></li><li class="chapter-item expanded "><a href="ch17-03-oo-design-patterns.html"><strong aria-hidden="true">17.3.</strong> Ein objektorientiertes Entwurfsmuster implementieren</a></li></ol></li><li class="chapter-item expanded "><a href="ch18-00-patterns.html"><strong aria-hidden="true">18.</strong> Muster (patterns) und Abgleich (matching)</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch18-01-all-the-places-for-patterns.html"><strong aria-hidden="true">18.1.</strong> Alle Stellen an denen Muster (patterns) verwendet werden können</a></li><li class="chapter-item expanded "><a href="ch18-02-refutability.html"><strong aria-hidden="true">18.2.</strong> Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt</a></li><li class="chapter-item expanded "><a href="ch18-03-pattern-syntax.html"><strong aria-hidden="true">18.3.</strong> Mustersyntax</a></li></ol></li><li class="chapter-item expanded "><a href="ch19-00-advanced-features.html"><strong aria-hidden="true">19.</strong> Fortgeschrittene Sprachelemente</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch19-01-unsafe-rust.html"><strong aria-hidden="true">19.1.</strong> Unsicheres (unsafe) Rust</a></li><li class="chapter-item expanded "><a href="ch19-03-advanced-traits.html"><strong aria-hidden="true">19.2.</strong> Fortgeschrittene Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="ch19-04-advanced-types.html"><strong aria-hidden="true">19.3.</strong> Fortgeschrittene Typen</a></li><li class="chapter-item expanded "><a href="ch19-05-advanced-functions-and-closures.html"><strong aria-hidden="true">19.4.</strong> Erweiterte Funktionen und Funktionsabschlüsse (closures)</a></li><li class="chapter-item expanded "><a href="ch19-06-macros.html"><strong aria-hidden="true">19.5.</strong> Makros</a></li></ol></li><li class="chapter-item expanded "><a href="ch20-00-final-project-a-web-server.html"><strong aria-hidden="true">20.</strong> Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="ch20-01-single-threaded.html"><strong aria-hidden="true">20.1.</strong> Einen einsträngigen (single-threaded) Webserver erstellen</a></li><li class="chapter-item expanded "><a href="ch20-02-multithreaded.html"><strong aria-hidden="true">20.2.</strong> Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></li><li class="chapter-item expanded "><a href="ch20-03-graceful-shutdown-and-cleanup.html"><strong aria-hidden="true">20.3.</strong> Kontrolliertes Beenden und Aufräumen</a></li></ol></li><li class="chapter-item expanded "><a href="appendix-00.html"><strong aria-hidden="true">21.</strong> Anhang</a></li><li><ol class="section"><li class="chapter-item expanded "><a href="appendix-01-keywords.html"><strong aria-hidden="true">21.1.</strong> A - Schlüsselwörter</a></li><li class="chapter-item expanded "><a href="appendix-02-operators.html"><strong aria-hidden="true">21.2.</strong> B - Operatoren und Symbole</a></li><li class="chapter-item expanded "><a href="appendix-03-derivable-traits.html"><strong aria-hidden="true">21.3.</strong> C - Ableitbare Merkmale (traits)</a></li><li class="chapter-item expanded "><a href="appendix-04-useful-development-tools.html"><strong aria-hidden="true">21.4.</strong> D - Nützliche Entwicklungswerkzeuge</a></li><li class="chapter-item expanded "><a href="appendix-05-editions.html"><strong aria-hidden="true">21.5.</strong> E - Ausgaben</a></li><li class="chapter-item expanded "><a href="appendix-06-translation.html"><strong aria-hidden="true">21.6.</strong> F - Übersetzungen des Buchs</a></li><li class="chapter-item expanded "><a href="appendix-07-nightly-rust.html"><strong aria-hidden="true">21.7.</strong> G - Wie Rust erstellt wird und „nächtliches Rust“</a></li></ol></li></ol>
+            </div>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle"></div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky bordered">
+                    <div class="left-buttons">
+                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </button>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="charakteristiken-objektorientierter-sprachen"><a class="header" href="#charakteristiken-objektorientierter-sprachen">Charakteristiken objektorientierter Sprachen</a></h2>
+<p>Es gibt in der Programmierergemeinschaft keinen Konsens darüber, welche
+Funktionalitäten eine Sprache haben muss, um als objektorientiert zu gelten.
+Rust wird von vielen Programmierparadigmen beeinflusst, einschließlich OOP; zum
+Beispiel haben wir in Kapitel 13 die Funktionalitäten untersucht, die aus der
+funktionalen Programmierung stammen. Die OOP-Sprachen haben wohl bestimmte
+gemeinsame Charakteristiken, nämlich Objekte, Kapselung (encapsulation) und
+Vererbung (inheritance). Schauen wir uns an, was jedes dieser Charakteristiken
+bedeutet und ob Rust es unterstützt.</p>
+<h3 id="objekte-enthalten-daten-und-verhalten"><a class="header" href="#objekte-enthalten-daten-und-verhalten">Objekte enthalten Daten und Verhalten</a></h3>
+<p>Das Buch <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> von
+Erich Gamma, Richard Helm, Ralph Johnson und John Vlissides (Addison-Wesley
+Professional, 1994), umgangssprachlich als <em>The Gang of Four</em>-Buch bezeichnet,
+ist ein Katalog von objektorientierten Entwurfsmustern. Es definiert OOP auf
+diese Weise:</p>
+<blockquote>
+<p>Objektorientierte Programme setzen sich aus Objekten zusammen. Ein <em>Objekt</em>
+verpackt sowohl Daten als auch Prozeduren, die auf diesen Daten operieren.
+Die Prozeduren werden normalerweise <em>Methoden</em> oder <em>Operationen</em> genannt.</p>
+</blockquote>
+<p>Mit dieser Definition ist Rust objektorientiert: Strukturen (structs) und
+Aufzählungen (enums) haben Daten, und <code>impl</code>-Blöcke stellen Methoden auf
+Strukturen und Aufzählungen zur Verfügung. Auch wenn Strukturen und
+Aufzählungen mit Methoden keine <em>aufgerufenen</em> Objekte sind, bieten sie
+dieselbe Funktionalität gemäß der Definition von Objekten der Gang of Four.</p>
+<h3 id="kapselung-die-implementierungsdetails-verbirgt"><a class="header" href="#kapselung-die-implementierungsdetails-verbirgt">Kapselung, die Implementierungsdetails verbirgt</a></h3>
+<p>Ein weiterer Aspekt, der gemeinhin mit OOP in Verbindung gebracht wird, ist die
+Idee der <em>Kapselung</em> (encapsulation), was bedeutet, dass die
+Implementierungsdetails eines Objekts nicht zugänglich sind für Code, der
+dieses Objekt verwendet. Daher ist die einzige Möglichkeit, mit einem Objekt zu
+interagieren, seine öffentliche API; Code, der das Objekt verwendet, sollte
+nicht in der Lage sein, in die Interna des Objekts einzudringen und Daten oder
+Verhalten direkt zu ändern. Dies ermöglicht es dem Programmierer, die Interna
+eines Objekts zu ändern und umzugestalten, ohne Code ändern zu müssen, der das
+Objekt verwendet.</p>
+<p>Wie man die Kapselung steuert, haben wir in Kapitel 7 besprochen: Wir können
+das Schlüsselwort <code>pub</code> benutzen, um zu entscheiden, welche Module, Typen,
+Funktionen und Methoden in unserem Code öffentlich sein sollen, alles andere
+ist standardmäßig privat. Zum Beispiel können wir eine Struktur
+<code>AveragedCollection</code> definieren, die ein Feld hat, das einen Vektor mit
+<code>i32</code>-Werten enthält. Die Struktur kann auch ein Feld haben, das den Mittelwert
+der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
+Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
+<code>AveragedCollection</code> wird den errechneten Durchschnitt für uns
+zwischenspeichern. Codeblock 17-1 zeigt die Definition der Struktur
+<code>AveragedCollection</code>:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct AveragedCollection {
+    list: Vec&lt;i32&gt;,
+    average: f64,
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-1: Eine Struktur <code>AveragedCollection</code>, die
+eine Liste von ganzen Zahlen und den Durchschnitt der Elemente in der
+Kollektion verwaltet</span></p>
+<p>Die Struktur wird als <code>pub</code> markiert, damit anderer Code sie verwenden kann,
+aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
+wichtig, weil wir sicherstellen wollen, dass immer dann, wenn ein Wert
+hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
+aktualisiert wird. Wir tun dies, indem wir die Methoden <code>add</code>, <code>remove</code> und
+<code>average</code> auf der Struktur implementieren, wie in Codeblock 17-2 gezeigt:</p>
+<p><span class="filename">Dateiname: src/lib.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct AveragedCollection {
+</span><span class="boring">    list: Vec&lt;i32&gt;,
+</span><span class="boring">    average: f64,
+</span><span class="boring">}
+</span><span class="boring">
+</span>impl AveragedCollection {
+    pub fn add(&amp;mut self, value: i32) {
+        self.list.push(value);
+        self.update_average();
+    }
+
+    pub fn remove(&amp;mut self) -&gt; Option&lt;i32&gt; {
+        let result = self.list.pop();
+        match result {
+            Some(value) =&gt; {
+                self.update_average();
+                Some(value)
+            }
+            None =&gt; None,
+        }
+    }
+
+    pub fn average(&amp;self) -&gt; f64 {
+        self.average
+    }
+
+    fn update_average(&amp;mut self) {
+        let total: i32 = self.list.iter().sum();
+        self.average = total as f64 / self.list.len() as f64;
+    }
+}
+<span class="boring">}</span></code></pre></pre>
+<p><span class="caption">Codeblock 17-2: Implementierungen der öffentlichen
+Methoden <code>add</code>, <code>remove</code> und <code>average</code> auf  <code>AveragedCollection</code></span></p>
+<p>Die öffentlichen Methoden <code>add</code>, <code>remove</code> und <code>average</code> sind die einzigen
+Möglichkeiten, auf Daten in einer <code>AveragedCollection</code>-Instanz zuzugreifen oder
+sie zu ändern. Wenn ein Eintrag mit der Methode <code>add</code> zu <code>list</code> hinzugefügt
+oder mit der Methode <code>remove</code> entfernt wird, rufen die Implementierungen der
+einzelnen Methoden die private Methode <code>update_average</code> auf, die auch das
+Aktualisieren des Feldes <code>average</code> übernimmt.</p>
+<p>Wir lassen die Felder <code>list</code> und <code>average</code> privat, sodass es keine Möglichkeit
+für externen Code gibt, Elemente direkt zum Feld <code>list</code> hinzuzufügen oder zu
+entfernen; andernfalls könnte das Feld <code>average</code> inkonsistent werden, wenn sich
+<code>list</code> ändert. Die Methode <code>average</code> gibt den Wert im Feld <code>average</code> zurück,
+sodass externer Code den Wert <code>average</code> lesen, aber nicht verändern kann.</p>
+<p>Da wir die Implementierungsdetails der Struktur <code>AveragedCollection</code> gekapselt
+haben, können wir Aspekte, z.B. die Datenstruktur, in Zukunft leicht ändern.
+Zum Beispiel könnten wir ein <code>HashSet&lt;i32&gt;</code> anstelle eines <code>Vec&lt;i32&gt;</code> für das
+<code>list</code>-Feld verwenden. Solange die Signaturen der öffentlichen Methoden <code>add</code>,
+<code>remove</code> und <code>average</code> gleich bleiben, würde Code, der <code>AveragedCollection</code>
+verwendet, nicht geändert werden müssen. Wenn wir stattdessen <code>list</code> öffentlich
+machen würden, wäre dies nicht unbedingt der Fall: <code>HashSet&lt;i32&gt;</code> und
+<code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum Hinzufügen und Entfernen von
+Elementen, sodass externer Code wahrscheinlich geändert werden müsste, wenn er
+<code>list</code> direkt modifizieren würde.</p>
+<p>Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
+objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.
+Die Möglichkeit, <code>pub</code> für verschiedene Teile des Codes zu verwenden oder auch
+nicht, ermöglicht die Kapselung von Implementierungsdetails.</p>
+<h3 id="vererbung-als-typsystem-und-für-gemeinsamen-code"><a class="header" href="#vererbung-als-typsystem-und-für-gemeinsamen-code">Vererbung als Typsystem und für gemeinsamen Code</a></h3>
+<p><em>Vererbung</em> ist ein Mechanismus, mit dem ein Objekt Elemente von der Definition
+eines anderen Objekts erben kann und so die Daten und das Verhalten des
+übergeordneten Objekts erhält, ohne dass du diese erneut definieren musst.</p>
+<p>Wenn eine Sprache Vererbung haben muss, um eine objektorientierte Sprache zu
+sein, dann ist Rust keine solche. Es gibt keine Möglichkeit, eine Struktur zu
+definieren, die die Felder und Methodenimplementierungen der Elternstruktur
+erbt, ohne ein Makro zu benutzen.</p>
+<p>Wenn du jedoch daran gewöhnt bist, Vererbung in deinem
+Programmierwerkzeugkasten zu haben, kannst du in Rust andere Lösungen
+verwenden, je nachdem, warum du überhaupt zu Vererbung gegriffen hast.</p>
+<p>Du würdest dich aus zwei Hauptgründen für die Vererbung entscheiden. Einer ist
+die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
+implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
+einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
+Rust-Code unter Verwendung von Standard-Merkmalsmethoden-Implementierungen tun,
+was du in Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung
+der Methode <code>summarize</code> für das Merkmal (trait) <code>Summary</code> hinzugefügt haben.
+Jeder Typ, der das Merkmal <code>Summary</code> implementiert, hätte die Methode
+<code>summarize</code> ohne weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit
+einer Elternklasse, die eine Implementierung einer Methode hat, und einer
+erbenden Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir
+können auch die Standard-Implementierung der Methode <code>summarize</code> außer Kraft
+setzen, wenn wir das Markmal <code>Summary</code> implementieren, die einer Kindklasse
+ähnelt, die die Implementierung einer von einer Elternklasse geerbten Methode
+außer Kraft setzt.</p>
+<p>Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
+untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
+verwendet werden können. Dies wird auch <em>Polymorphismus</em> (polymorphism)
+genannt, d.h. du kannst mehrere Objekte zur Laufzeit gegeneinander austauschen,
+wenn sie bestimmte Eigenschaften gemeinsam haben.</p>
+<blockquote>
+<h3 id="polymorphismus"><a class="header" href="#polymorphismus">Polymorphismus</a></h3>
+<p>Für viele Menschen ist Polymorphismus gleichbedeutend mit Vererbung. Aber es
+ist eigentlich ein allgemeinerer Begriff, der sich auf Code bezieht, der mit
+Daten unterschiedlichen Typs arbeiten kann. Für die Vererbung sind diese
+Typen im Allgemeinen Unterklassen.</p>
+<p>Rust verwendet stattdessen generische Datentypen (generics), um über
+verschiedene mögliche Typen und Merkmalsabgrenzungen (trait bounds) zu
+abstrahieren, um Beschränkungen für das aufzuerlegen, was diese Typen bieten
+müssen. Dies wird manchmal als <em>begrenzter parametrischer Polymorphismus</em>
+(bounded parametric polymorphism) bezeichnet.</p>
+</blockquote>
+<p>Die Vererbung ist in letzter Zeit als Lösung für das Programmierdesign in
+vielen Programmiersprachen in Ungnade gefallen, da sie oft das Risiko birgt,
+mehr Code als nötig zu teilen. Unterklassen sollten nicht immer alle
+Charakteristiken ihrer Elternklasse teilen, bei Vererbung tun sie es aber. Dies
+kann den Programmentwurf weniger flexibel machen. Es wird auch die Möglichkeit
+eingeführt, Methoden auf Unterklassen aufzurufen, die keinen Sinn machen oder
+die Fehler verursachen, weil die Methoden nicht auf die Unterklasse zutreffen.
+Darüber hinaus lassen einige Sprachen nur Einfachvererbung zu (d.h. eine
+Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
+Programmdesigns weiter einschränkt.</p>
+<p>Aus diesen Gründen verfolgt Rust den anderen Ansatz durch Verwendung von
+Merkmalsobjekten (trait objects) anstelle der Vererbung. Schauen wir uns an,
+wie Merkmalsobjekte Polymorphismus in Rust ermöglichen.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch17-00-oop.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next" href="ch17-02-trait-objects.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch17-00-oop.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next" href="ch17-02-trait-objects.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </body>
+</html>
