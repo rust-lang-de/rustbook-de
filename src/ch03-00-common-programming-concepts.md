@@ -23,4 +23,4 @@ erhältst du eine starke Basis, auf der du aufbauen kannst.
 > zu Rust hinzugefügt werden könnte. Eine Liste der Schlüsselwörter findest du
 > in [Anhang A][appendix_a].
 
-[appendix_a]: appendix-01-keywords.md
+[appendix_a]: appendix-01-keywords.html

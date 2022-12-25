@@ -478,7 +478,7 @@ und fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
 lesbaren, sicheren Code schreiben kannst, der weder abstürzt noch ungültige
 Speicherzugriffe zulässt.
 
-[appendix_b]: appendix-02-operators.md
+[appendix_b]: appendix-02-operators.html
 [comparing-the-guess-to-the-secret-number]:
 ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [control-flow]: ch03-05-control-flow.html
