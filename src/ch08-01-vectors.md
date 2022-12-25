@@ -193,7 +193,7 @@ auf das erste Element auf einen freigegebenen Speicherplatz verweisen. Die
 Ausleihregeln verhindern, dass Programme in diese Situation geraten.
 
 > Anmerkung: Weitere Einzelheiten zu den Implementierungsdetails des Typs
-> `Vec<T>` findest du in [„Das Rustonomicon“][nomicon].
+> `Vec<T>` findest du in [„Das Rustonomicon“][nomicon1].
 
 ### Iterieren über die Werte in einem Vektor
 
@@ -320,6 +320,6 @@ werden, solange der Vektor selbst gültig ist.
 Lass uns zum nächsten Kollektionstyp übergehen: `String`!
 
 [data-types]: ch03-02-data-types.html
-[nomicon]: https://doc.rust-lang.org/nomicon/vec.html
+[nomicon1]: https://doc.rust-lang.org/nomicon/vec.html
 [vec-api]: https://doc.rust-lang.org/std/vec/struct.Vec.html
 [deref]: ch15-02-deref.html#dem-zeiger-zum-wert-folgen

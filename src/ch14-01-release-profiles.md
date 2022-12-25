@@ -72,8 +72,8 @@ vornehmen als mit Standardeinstellungen, aber weniger als bei einem
 Releasebuild.
 
 Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
-jedes Profil findest du in [Cargos Dokumentation][cargo].
+jedes Profil findest du in [Cargos Dokumentation][cargo1].
 
 [^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
 
-[cargo]: https://doc.rust-lang.org/cargo/reference/profiles.html
+[cargo1]: https://doc.rust-lang.org/cargo/reference/profiles.html

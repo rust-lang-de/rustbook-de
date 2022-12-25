@@ -192,7 +192,7 @@ Merkmal `Deref`.
 
 ### Einen Typ wie eine Referenz behandeln durch Implementieren des `Deref`-Merkmals
 
-Wie im Abschnitt [„Ein Merkmal für einen Typ implementieren“][impl-trait] in
+Wie im Abschnitt [„Ein Merkmal für einen Typ implementieren“][impl-trait1] in
 Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
 Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
 Das von der Standardbibliothek bereitgestellte Merkmal `Deref` erfordert die
@@ -447,5 +447,5 @@ Ausleihregeln garantieren dies nicht.
 Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
 unveränderlichen Referenz in eine veränderbare Referenz möglich ist.
 
-[impl-trait]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
+[impl-trait1]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
 [tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen

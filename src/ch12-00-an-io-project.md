@@ -35,21 +35,21 @@ Unser `grep`-Projekt wird eine Reihe von Konzepten kombinieren, die du bisher
 gelernt hast:
 
 * Code organisieren (unter Verwendung dessen, was du über Module in [Kapitel
-  7][ch7] gelernt hast)
-* Verwenden von Vektoren und Zeichenketten (Kollektionen, [Kapitel 8][ch8])
-* Fehlerbehandlung ([Kapitel 9][ch9])
+  7][chap7] gelernt hast)
+* Verwenden von Vektoren und Zeichenketten (Kollektionen, [Kapitel 8][chap8])
+* Fehlerbehandlung ([Kapitel 9][chap9])
 * Verwenden von Merkmalen (traits) und Lebensdauer (lifetimes) soweit möglich
-  ([Kapitel 10][ch10])
-* Schreiben von Tests ([Kapitel 11][ch11])
+  ([Kapitel 10][chap10])
+* Schreiben von Tests ([Kapitel 11][chap11])
 
 Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
 Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln [13][ch13] und
 [17][ch17] ausführlich behandelt werden.
 
-[ch7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
-[ch8]: ch08-00-common-collections.html
-[ch9]: ch09-00-error-handling.html
-[ch10]: ch10-00-generics.html
-[ch11]: ch11-00-testing.html
-[ch13]: ch13-00-functional-features.html
-[ch17]: ch17-00-oop.html
+[chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
+[chap8]: ch08-00-common-collections.html
+[chap9]: ch09-00-error-handling.html
+[chap10]: ch10-00-generics.html
+[chap11]: ch11-00-testing.html
+[chap13]: ch13-00-functional-features.html
+[chap17]: ch17-00-oop.html
