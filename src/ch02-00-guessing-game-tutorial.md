@@ -495,7 +495,7 @@ möglicherweise nicht.
 
 ```toml
 [dependencies]
-rand = "0.8.3"
+rand = "0.8.5"
 ```
 
 In der Datei *Cargo.toml* ist alles, was nach einer Überschrift folgt, Teil
