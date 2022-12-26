@@ -135,7 +135,8 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
-<p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft</em></p>
+<p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;</em>
+<em>übersetzt ins Deutsche durch die Rust-Gemeinschaft</em></p>
 <p>Diese Version des Textes geht davon aus, dass du Rust 1.61 (veröffentlicht am
 2022-05-10) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
 1</a> zum Installieren und Aktualisieren von Rust.</p>
@@ -145,7 +146,7 @@
 <a href="https://rust-lang-de.github.io/rustbook-de/">https://rust-lang-de.github.io/rustbook-de/</a>
 (deutsche Übersetzung) und offline mit Rust-Installationen, die mit <code>rustup</code>
 erfolgt sind; führe <code>rustup docs --book</code> aus um es zu öffnen.</p>
-<p>Es sind auch mehrere <a href="appendix-06-translation.html">Gemeinschaftsübersetzungen</a> verfügbar.</p>
+<p>Es sind weitere <a href="appendix-06-translation.html">Gemeinschaftsübersetzungen</a> verfügbar.</p>
 <p>Der englische Text ist auch als <a href="https://nostarch.com/rust">Taschenbuch und E-Book bei No Starch
 Press</a> erhältlich.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vorwort"><a class="header" href="#vorwort">Vorwort</a></h1>
@@ -217,7 +218,8 @@ Systemprogrammierung:</p>
 <li>Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
 Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
 Rust-Ökosystem schmerzlos und konsistent.</li>
-<li>Rustfmt gewährleistet einen einheitlichen Codierstil aller Entwickler.</li>
+<li>Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
+den Entwicklern.</li>
 <li>Der Rust Sprachdienst (Language Server) ermöglicht Code-Vervollständigung und
 im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).</li>
 </ul>
@@ -232,20 +234,20 @@ Systemkonzepte mehr Menschen zugänglich machen, insbesondere denen, die neu in
 der Programmierung sind.</p>
 <h3 id="unternehmen"><a class="header" href="#unternehmen">Unternehmen</a></h3>
 <p>Hunderte von Unternehmen, große und kleine, setzen Rust für eine Vielzahl von
-Aufgaben in der Produktion ein. Zu diesen Aufgaben gehören
-Kommandozeilenwerkzeuge, Webdienste, DevOps-Werkzeuge, eingebettete Geräte,
-Audio- und Videoanalyse und -transkodierung, Kryptowährungen, Bioinformatik,
-Suchmaschinen, Anwendungen für das Internet der Dinge, maschinelles Lernen und
-sogar wesentliche Teile des Webbrowsers Firefox.</p>
+Aufgaben in der Produktion ein, dazu gehören Kommandozeilenwerkzeuge,
+Webdienste, DevOps-Werkzeuge, eingebettete Geräte, Audio- und Videoanalyse und
+-transkodierung, Kryptowährungen, Bioinformatik, Suchmaschinen, Anwendungen für
+das Internet der Dinge, maschinelles Lernen und sogar wesentliche Teile des
+Webbrowsers Firefox.</p>
 <h3 id="open-source-entwickler"><a class="header" href="#open-source-entwickler">Open-Source-Entwickler</a></h3>
 <p>Rust ist für Menschen, die die Programmiersprache Rust, die Gemeinschaft,
 Entwickler-Werkzeuge und Bibliotheken aufbauen möchten. Wir würden uns freuen,
 wenn du zur Programmiersprache Rust beiträgst.</p>
 <h3 id="menschen-die-geschwindigkeit-und-stabilität-schätzen"><a class="header" href="#menschen-die-geschwindigkeit-und-stabilität-schätzen">Menschen, die Geschwindigkeit und Stabilität schätzen</a></h3>
-<p>Rust ist für Menschen, die sich nach Schnelligkeit und Stabilität einer Sprache
-sehnen. Unter Geschwindigkeit verstehen wir die Geschwindigkeit der Programme,
-die du mit Rust schreiben kannst, und die Geschwindigkeit, mit der dich Rust
-diese Programme schreiben lässt. Die Prüfungen des Rust-Compilers
+<p>Rust ist für Menschen, die sich nach Geschwindigkeit und Stabilität einer
+Sprache sehnen. Mit Geschwindigkeit meinen wir sowohl die Geschwindigkeit, mit
+der Rust-Code ausgeführt werden kann, als auch die Geschwindigkeit, mit der du
+mit Rust Programme schreiben kannst. Die Prüfungen des Rust-Compilers
 gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
 diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das
@@ -331,7 +333,9 @@ systemnahen, nebenläufigen Webdienst implementieren!</p>
 in einem eher referenzartigen Format. Anhang A enthält die Schlüsselwörter von
 Rust, Anhang B die Operatoren und Symbole von Rust, Anhang C ableitbare
 Merkmalen, die von der Standardbibliothek mitgebracht werden, Anhang D
-nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben.</p>
+nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben. In
+Anhang F findest du Übersetzungen des Buches, und in Anhang G erfährst du, wie
+Rust erstellt wird und was nächtliches (nightly) Rust ist.</p>
 <p>Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn
 du irritiert bist. Aber tue, was immer für dich passt.</p>
@@ -370,8 +374,8 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.</p>
 <blockquote>
 <p>Anmerkung: Falls du <code>rustup</code> aus irgendeinem Grund nicht verwenden möchtest,
-schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">Andere Rust-Installationsmethoden</a> nach
-anderen Möglichkeiten.</p>
+schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">Andere Rust-Installationsmethoden</a>
+nach anderen Möglichkeiten.</p>
 </blockquote>
 <p>Die folgenden Schritte installieren die neueste stabile Version des
 Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
@@ -395,12 +399,12 @@ verwenden.</p>
 <h3 id="die-installation-von-rustup-in-linux-und-macos"><a class="header" href="#die-installation-von-rustup-in-linux-und-macos">Die Installation von <code>rustup</code> in Linux und macOS</a></h3>
 <p>Falls du Linux oder macOS verwendest, öffne ein Konsolenfenster und gib den
 folgenden Befehl ein:</p>
-<pre><code class="language-console">$ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+<pre><code class="language-console">$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 </code></pre>
 <p>Dieser Befehl lädt ein Skript herunter und startet die Installation
 von <code>rustup</code>, welches die neueste stabile Version von Rust installiert.
-Du wirst ggf. aufgefordert, dein Passwort einzugeben. Falls die Installation
-erfolgreich ist, erscheint die folgende Zeile:</p>
+Du wirst ggf. aufgefordert, dein Passwort einzugeben. Nach erfolgreicher
+Installation erscheint folgende Zeile:</p>
 <pre><code class="language-text">Rust is installed now. Great!
 </code></pre>
 <p>Außerdem benötigst su einen Programmbinder (linker), ein Programm, das Rust
@@ -418,15 +422,45 @@ kannst du das Paket <code>build-essential</code> installieren.</p>
 <h3 id="die-installation-von-rustup-in-windows"><a class="header" href="#die-installation-von-rustup-in-windows">Die Installation von <code>rustup</code> in Windows</a></h3>
 <p>Rufe <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a> auf und folge
 den Anweisungen, um Rust in Windows zu installieren. Während der Installation
-wirst du eine Meldung erhalten mit der Aufforderung, ebenfalls die
-C++-Bauwerkzeuge für Visual Studio 2013 oder neuer zu installieren.
-Der leichteste Weg, um an die Bauwerkzeuge zu gelangen, ist die Installation
-der <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Bauwerkzeuge für Visual Studio 2019</a>. Sobald du gefragt
-wirst, welche Komponenten installiert werden sollen, wähle die „C++ build tools“
-und zusätzlich das Windows 10 SDK und das englische Sprachpaket aus.</p>
+wirst du eine Meldung erhalten, dass du auch die MSVC Bauwerkzeuge für Visual
+Studio 2013 oder höher benötigst.</p>
+<p>Um die Bauwerkzeuge zu erhalten, musst du <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2022</a>
+installieren. Wenn du gefragt wirst, welche Komponenten installiert werden
+sollen, gib folgendes an:</p>
+<ul>
+<li>„Desktop Development with C++“</li>
+<li>Das Windows 10 oder 11 SDK</li>
+<li>Das englische Sprachpaket zusammen mit einem beliebigen anderen Sprachpaket
+deiner Wahl.</li>
+</ul>
 <p>Der Rest dieses Buchs verwendet Befehle, die sowohl in <em>cmd.exe</em> als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.</p>
+<h3 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h3>
+<p>Um zu überprüfen, ob du Rust korrekt installiert hast, öffnen eine
+Kommandozeile und gib folgende Zeile ein:</p>
+<pre><code class="language-console">$ rustc --version
+</code></pre>
+<p>Du solltest die Versionsnummer, den Commit-Hash und das Commit-Datum für die
+letzte stabile Version, die veröffentlicht wurde, in folgendem Format sehen:</p>
+<pre><code class="language-text">rustc x.y.z (abcabcabc jjjj-mm-tt)
+</code></pre>
+<p>Wenn du diese Information siehst, hast du Rust erfolgreich installiert! Wenn du
+diese Information nicht siehst, überprüfe, ob Rust in deiner Systemvariable
+<code>%PATH%</code> wie folgt enthalten ist.</p>
+<p>In Windows CMD verwende:</p>
+<pre><code class="language-console">&gt; echo %PATH%
+</code></pre>
+<p>In PowerShell verwende:</p>
+<pre><code class="language-powershell">&gt; echo $env:Path
+</code></pre>
+<p>In Linux und macOS verwende:</p>
+<pre><code class="language-console">$ echo $PATH
+</code></pre>
+<p>Wenn das alles korrekt ist und Rust immer noch nicht funktioniert, gibt es
+mehrere Stellen, an denen du Hilfe bekommen kannst. Wie du mit anderen
+Rust-Entwicklern in Kontakt treten kannst, erfährst du auf der
+<a href="https://www.rust-lang.org/community">Gemeinschafts-Seite</a>.</p>
 <h3 id="aktualisieren-und-deinstallieren"><a class="header" href="#aktualisieren-und-deinstallieren">Aktualisieren und Deinstallieren</a></h3>
 <p>Nachdem du Rust mithilfe von <code>rustup</code> installiert hast, ist es einfach,
 auf die neueste Version zu aktualisieren. Führe folgenden Befehl auf der
@@ -436,23 +470,6 @@ Kommandozeile aus:</p>
 <p>Um Rust und <code>rustup</code> zu deinstallieren, führe folgenden Befehl aus:</p>
 <pre><code class="language-console">$ rustup self uninstall
 </code></pre>
-<h3 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h3>
-<p>Um zu überprüfen, ob du Rust erfolgreich installiert hast, führe folgenden
-Befehl auf der Kommandozeile aus:</p>
-<pre><code class="language-console">$ rustc --version
-</code></pre>
-<p>Du solltest die Versionsnummer, den Hashwert und das Datum der neuesten
-stabilen Version in folgendem Format sehen:</p>
-<pre><code class="language-text">rustc x.y.z (abcabcabc yyyy-mm-dd)
-</code></pre>
-<p>Falls du diese Information sehen kannst, hast du Rust erfolgreich installiert.
-Siehst du sie jedoch nicht und dein Betriebssystem ist Windows, prüfe ob Rust
-in deiner Umgebungsvariable <code>%PATH%</code> eingetragen ist. Ist dies der Fall und Rust
-funktioniert dennoch nicht, dann gibt es einige Orte, wo du Hilfe bekommen kannst.
-Der einfachste ist der Kanal #beginners im <a href="https://discord.gg/rust-lang">offiziellen Rust Discord</a>.
-Dort kannst du mit anderen Rustaceans (ein alberner Spitzname, den wir uns selbst
-gegeben haben) chatten, die dir gerne weiterhelfen. Andere hilfreiche Quellen
-sind <a href="https://users.rust-lang.org/">das Benutzerforum</a> and <a href="https://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>.</p>
 <h3 id="lokale-dokumentation"><a class="header" href="#lokale-dokumentation">Lokale Dokumentation</a></h3>
 <p>Die Rust-Installation enthält auch eine lokale Kopie der Dokumentation, sodass
 du sie ohne Internetverbindung lesen kannst. Führe <code>rustup doc</code> aus, um die
@@ -471,25 +488,25 @@ oder Werkzeuge oder an den Ort, an dem dein Code lebt. Wenn du also lieber
 eine integrierte Entwicklungsumgebung (IDE) statt der Kommandozeile verwenden
 möchtest, kannst du deine bevorzugte IDE verwenden. Viele IDEs bieten
 mittlerweile einen gewissen Grad an Rust-Unterstützung; Einzelheiten findest
-du in der Dokumentation der IDE. In jüngster Zeit hat sich das Rust-Team
-darauf konzentriert, eine großartige IDE-Unterstützung zu ermöglichen, und an
-dieser Front sind schnelle Fortschritte erzielt worden!</p>
+du in der Dokumentation der IDE. Das Rust-Team hat sich darauf konzentriert,
+eine großartige IDE-Unterstützung mittels <code>rust-analyzer</code> zu ermöglichen.
+Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für weitere Details.</p>
 </blockquote>
 <h3 id="erstellen-eines-projektverzeichnisses"><a class="header" href="#erstellen-eines-projektverzeichnisses">Erstellen eines Projektverzeichnisses</a></h3>
 <p>Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.</p>
-<p>Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
+<p>Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
 <em>projects</em> und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses <em>projects</em> zu erstellen.</p>
-<p>Gib dies für Linux, macOS und PowerShell unter Windows ein:</p>
+<p>Gib dies bei Linux, macOS und PowerShell unter Windows ein:</p>
 <pre><code class="language-console">$ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
 $ cd hello_world
 </code></pre>
-<p>Für Windows CMD gib dies ein:</p>
+<p>Bei Windows CMD gib dies ein:</p>
 <pre><code class="language-cmd">&gt; mkdir &quot;%USERPROFILE%\projects&quot;
 &gt; cd /d &quot;%USERPROFILE%\projects&quot;
 &gt; mkdir hello_world
@@ -508,7 +525,7 @@ Codeblock 1-1 ein.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
-<p>Speichere die Datei und gehe zurück zu deinem Terminalfenster. Gib unter Linux
+<p>Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
 oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
@@ -520,8 +537,8 @@ Hallo Welt!
 Hallo Welt!
 </code></pre>
 <p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> auf
-dem Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
+der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
+im Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -532,21 +549,24 @@ passiert ist. Hier ist das erste Teil des Puzzles:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
 
 }</code></pre></pre>
-<p>Diese Zeilen definieren eine Funktion in Rust. Die Funktion <code>main</code> ist eine
-Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
-Rust-Programm ausgeführt wird. Die erste Zeile deklariert eine Funktion namens
-<code>main</code>, die keine Parameter hat und nichts zurückgibt. Wenn es Parameter gäbe,
-würden sie innerhalb der Klammern <code>()</code> stehen.</p>
-<p>Beachte auch, dass der Funktionsrumpf in geschweifte Klammern <code>{}</code> eingehüllt
-ist. Rust erfordert diese um alle Funktionsrümpfe. Es ist guter Stil, die
-öffnende geschweifte Klammer in dieselbe Zeile wie die Funktionsdeklaration zu
-platzieren und dazwischen ein Leerzeichen einzufügen.</p>
-<p>Wenn du dich in allen Rust-Projekten an einen Standardstil halten willst,
-kannst du ein Tool zur automatischen Formatierung namens <code>rustfmt</code> verwenden,
-um deinen Code in einem bestimmten Stil zu formatieren. Das Rust-Team hat
-dieses Tool wie <code>rustc</code> in die Standard-Rust-Distribution aufgenommen, es
-sollte also bereits auf deinem Computer installiert sein! Schaue in die
-Online-Dokumentation für weitere Details.</p>
+<p>Diese Zeilen definieren eine Funktion namens <code>main</code> in Rust. Die Funktion
+<code>main</code> ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
+ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
+Zeile eine Funktion mit dem namen <code>main</code>, die keine Parameter hat und nichts
+zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern <code>()</code>
+stehen.</p>
+<p>Der Funktionsrumpf in geschweifte Klammern <code>{}</code> eingehüllt. Rust erfordert
+diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
+dazwischen ein Leerzeichen einzufügen.</p>
+<blockquote>
+<p>Hinweis: Wenn du einen Standardstil für alle Rust-Projekte verwenden
+möchtest, kannst du ein automatisches Formatierungswerkzeug namens <code>rustfmt</code>
+verwenden, um deinen Code in einem bestimmten Stil zu formatieren (mehr über
+<code>rustfmt</code> im <a href="appendix-04-useful-development-tools.html">Anhang D</a>). Das Rust-Team hat dieses Tool wie <code>rustc</code>
+in die Standard-Rust-Distribution aufgenommen, es sollte also bereits auf
+deinem Computer installiert sein!</p>
+</blockquote>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -562,7 +582,7 @@ Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.</p>
-<p>Drittens siehst du die Zeichenkette &quot;Hallo Welt!&quot;. Wir übergeben diese
+<p>Drittens siehst du die Zeichenkette <code>&quot;Hallo Welt!&quot;</code>. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
 <p>Viertens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
@@ -580,13 +600,13 @@ Quelldatei übergibst, so wie hier:</p>
 ähnlich wie <code>gcc</code> oder <code>clang</code> ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.</p>
 <p>Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst. Unter Linux und
-MacOS siehst du zwei Dateien. Mit PowerShell unter Windows siehst du die
-gleichen drei Dateien, die du mit CMD sehen würdest.</p>
+sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst:</p>
 <pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
-<p>Mit CMD unter Windows würdest du Folgendes eingeben:</p>
+<p>Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
+unter Windows würdest du folgendes eingeben:</p>
 <pre><code class="language-cmd">&gt; dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%
 main.exe
 main.pdb
@@ -600,7 +620,7 @@ aus, so wie hier:</p>
 <pre><code class="language-console">$ ./main # oder .\main.exe unter Windows
 </code></pre>
 <p>Wenn <em>main.rs</em> dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deinem Terminal ausgeben.</p>
+Welt!“ in deiner Konsole ausgeben.</p>
 <p>Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
 getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab
@@ -650,9 +670,9 @@ folgenden Schritte aus:</p>
 <pre><code class="language-console">$ cargo new hello_cargo
 $ cd hello_cargo
 </code></pre>
-<p>Der erste Befehl hat ein neues Verzeichnis namens <em>hello_cargo</em> erstellt. Wir
-haben unser Projekt <em>hello_cargo</em> genannt und Cargo erstellt seine Dateien in
-einem Verzeichnis mit demselben Namen.</p>
+<p>Der erste Befehl erstellt ein neues Verzeichnis und ein Projekt namens
+<em>hello_cargo</em>. Wir haben unser Projekt <em>hello_cargo</em> genannt und Cargo
+erstellt seine Dateien in einem Verzeichnis mit demselben Namen.</p>
 <p>Gehe in das Verzeichnis <em>hello_cargo</em> und liste die Dateien auf. Du wirst
 sehen, dass Cargo zwei Dateien und ein Verzeichnis für uns generiert hat: Eine
 Datei <em>Cargo.toml</em> und ein Verzeichnis <em>src</em> mit einer Datei <em>main.rs</em> darin.</p>
@@ -672,6 +692,9 @@ Code in Codeblock 1-2 aussehen.</p>
 name = &quot;hello_cargo&quot;
 version = &quot;0.1.0&quot;
 edition = &quot;2021&quot;
+
+# Weitere Schlüssel und ihre Definitionen findest du unter
+# https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 </code></pre>
@@ -699,9 +722,9 @@ tun, also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.</p>
 }</code></pre></pre>
 <p>Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
-vorherigen Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher
-darin, dass Cargo den Code im Verzeichnis <em>src</em> abgelegt hat, und wir haben
-eine Konfigurationsdatei <em>Cargo.toml</em> im obersten Verzeichnis.</p>
+Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
+Cargo den Code im Verzeichnis <em>src</em> abgelegt hat, und wir haben eine
+Konfigurationsdatei <em>Cargo.toml</em> im obersten Verzeichnis.</p>
 <p>Cargo erwartet, dass deine Quelldateien innerhalb des <em>src</em>-Verzeichnisses
 liegen. Das Projektverzeichnis der obersten Ebene ist nur für README-Dateien,
 Lizenzinformationen, Konfigurationsdateien und alles andere, was nicht mit
@@ -719,10 +742,11 @@ du dein Projekt, indem du den folgenden Befehl eingibst:</p>
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 </code></pre>
-<p>Dieser Befehl erstellt eine ausführbare Datei in <em>target/debug/hello_cargo</em>
+<p>Dieser Befehl erzeugt eine ausführbare Datei in <em>target/debug/hello_cargo</em>
 (oder <em>target\debug\hello_cargo.exe</em> unter Windows) und nicht in deinem
-aktuellen Verzeichnis. Mit diesem Befehl kannst du die ausführbare Datei
-ausführen:</p>
+aktuellen Verzeichnis. Da standardmäßig für den Debug-Modus gebaut wird, legt
+Cargo die Binärdatei in einem Verzeichnis namens <em>debug</em> ab. Mit diesem Befehl
+kannst du die ausführbare Datei ausführen:</p>
 <pre><code class="language-console">$ ./target/debug/hello_cargo # oder .\target\debug\hello_cargo.exe unter Windows
 Hello, world!
 </code></pre>
@@ -741,11 +765,15 @@ Datei mit einem einzigen Befehl auszuführen:</p>
      Running `target/debug/hello_cargo`
 Hello, world!
 </code></pre>
+<p>Das Verwenden von <code>cargo run</code> ist bequemer, als sich daran erinnern zu müssen,
+<code>cargo build</code> auszuführen und dann den gesamten Pfad zur Binärdatei zu
+verwenden, daher verwenden die meisten Entwickler <code>cargo run</code>.</p>
 <p>Beachte, dass wir diesmal keine Ausgabe gesehen haben, die darauf hinweist,
 dass Cargo <code>hello_cargo</code> kompiliert hat. Cargo fand heraus, dass sich die
-Dateien nicht geändert hatten, also ließ es einfach die Binärdatei laufen. Wenn
-du deinen Quellcode geändert hättest, hätte Cargo das Projekt vor der
-Ausführung neu kompiliert, und du hättest diese Ausgabe gesehen:</p>
+Dateien nicht geändert hatten, also hat es nicht neu gebaut, sondern ließ
+einfach die Binärdatei laufen. Wenn du deinen Quellcode geändert hättest, hätte
+Cargo das Projekt vor der Ausführung neu kompiliert, und du hättest diese
+Ausgabe gesehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
@@ -795,9 +823,9 @@ Laufzeit-Benchmark deines Codes durchführst, stelle sicher, dass du <code>cargo
 <h3 id="cargo-als-konvention"><a class="header" href="#cargo-als-konvention">Cargo als Konvention</a></h3>
 <p>Bei einfachen Projekten bietet Cargo nicht viel mehr Wert als das bloße
 Verwenden von <code>rustc</code>, aber es wird sich in dem Maße bewähren, wie deine
-Programme immer komplizierter werden. Bei komplexen Projekten, die aus mehreren
-Kisten bestehen, ist es viel einfacher, das Bauen von Cargo koordinieren zu
-lassen.</p>
+Programme immer komplizierter werden. Sobald Programme auf mehrere Dateien
+anwachsen oder eine Abhängigkeit benötigen, ist es viel einfacher, Cargo den
+Bauvorgang koordinieren zu lassen.</p>
 <p>Auch wenn das Projekt <code>hello_cargo</code> einfach ist, so verwendet es jetzt einen
 Großteil der realen Werkzeuge, die du im Rest deiner Rust-Karriere verwenden
 wirst. Tatsächlich kannst du, um an bestehenden Projekten zu arbeiten, die
@@ -807,7 +835,8 @@ Verzeichnis dieses Projekts zu wechseln und zu bauen:</p>
 $ cd someproject
 $ cargo build
 </code></pre>
-<p>Weitere Informationen über Cargo findest du unter <a href="https://doc.rust-lang.org/cargo/">seiner Dokumentation</a>.</p>
+<p>Weitere Informationen über Cargo findest du unter seiner
+<a href="https://doc.rust-lang.org/cargo/">Dokumentation</a>.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Du hast deine Rust-Reise bereits gut begonnen! In diesem Kapitel hast du
 gelernt, wie es geht:</p>
@@ -827,9 +856,9 @@ lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.</p>
 <p>Lass uns den Sprung in Rust wagen, indem wir gemeinsam ein praktisches Projekt
 durcharbeiten! Dieses Kapitel führt dich in einige gängige Rust-Konzepte ein,
 indem es dir zeigt, wie du diese in einem realen Programm verwenden kannst. Du
-lernst <code>let</code>, <code>match</code>, Methoden, assoziierte Funktionen, das Verwenden externer
-Kisten (crates) und mehr kennen! In den folgenden Kapiteln werden wir diese
-Ideen ausführlicher behandeln. In diesem Kapitel wirst du die Grundlagen üben.</p>
+lernst <code>let</code>, <code>match</code>, Methoden, assoziierte Funktionen, externe Kisten
+(crates) und mehr kennen! In den folgenden Kapiteln werden wir diese Ideen
+ausführlicher behandeln. In diesem Kapitel wirst du nur die Grundlagen üben.</p>
 <p>Wir werden ein klassisches Programmierproblem für Anfänger implementieren: Ein
 Ratespiel. Und so funktioniert es: Das Programm erzeugt eine zufällige ganze
 Zahl zwischen 1 und 100. Dann wird es den Spieler auffordern, eine Schätzung
@@ -856,7 +885,6 @@ edition = &quot;2021&quot;
 
 [dependencies]
 </code></pre>
-<p>Der Inhalt Deiner Datei sollte ungefähr so aussehen wie hier. Falls es nicht ganz übereinstimmt, liegt das wahrscheinlich daran, dass Du schon eine neuere Version von <code>Cargo</code> verwendest. Wie im vorherigen Kapitel schon erwähnt, kann man den <code>author</code> Tag hinzufügen, muss es aber nicht.</p>
 <p>Wie du in Kapitel 1 gesehen hast, generiert <code>cargo new</code> ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -945,8 +973,8 @@ das Programm:</p>
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
 </span><span class="boring">}</span></code></pre>
-<p>Die Syntax <code>fn</code> deklariert eine neue Funktion, die Klammern <code>()</code> zeigen an,
-dass es keine Parameter gibt, und die geschweifte Klammer <code>{</code> beginnt den Rumpf
+<p>Die Syntax <code>fn</code> deklariert eine neue Funktion; die Klammern <code>()</code> zeigen an,
+dass es keine Parameter gibt; und die geschweifte Klammer <code>{</code> beginnt den Rumpf
 der Funktion.</p>
 <p>Wie du auch in Kapitel 1 gelernt hast, ist <code>println!</code> ein Makro, das eine
 Zeichenkette auf dem Bildschirm ausgibt:</p>
@@ -1043,10 +1071,10 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
 </span><span class="boring">}</span></code></pre>
-<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms importiert,
-könnten wir die Funktion trotzdem verwenden, indem wir den Funktionsaufruf als
-<code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine Instanz von
-<a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
+<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms mit <code>use std::io;</code>
+importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
+Funktionsaufruf als <code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine
+Instanz von <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
 Standardeingaberessource (handle to the standard input) für dein Terminal
 darstellt.</p>
 <p>Die nächste Zeile <code>.read_line(&amp;mut guess)</code> ruft die Methode
@@ -1068,7 +1096,7 @@ fertigzustellen. Im Moment musst du nur wissen, dass Referenzen wie Variablen
 standardmäßig unveränderlich sind. Daher musst du <code>&amp;mut guess</code> anstatt <code>&amp;guess</code>
 schreiben, um sie veränderlich zu machen. (In Kapitel 4 werden Referenzen
 ausführlicher erklärt.)</p>
-<h3 id="behandeln-potentieller-fehler-mit-dem-typ-result"><a class="header" href="#behandeln-potentieller-fehler-mit-dem-typ-result">Behandeln potentieller Fehler mit dem Typ <code>Result</code></a></h3>
+<h3 id="behandeln-potentieller-fehler-mit-result"><a class="header" href="#behandeln-potentieller-fehler-mit-result">Behandeln potentieller Fehler mit <code>Result</code></a></h3>
 <p>Wir arbeiten noch immer an dieser Codezeile. Wir besprechen jetzt eine dritte
 Textzeile, aber beachte, dass sie immer noch Teil einer einzigen logischen
 Codezeile ist. Der nächste Teil ist diese Methode:</p>
@@ -1101,8 +1129,8 @@ zurück.
 kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
 Zuständen annehmen kann.
 Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
-<p>In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
-<code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
+<p>In Kapitel 6 werden <a href="ch06-00-enums.html">Aufzählungen</a> ausführlicher behandelt. Der Zweck
+dieser <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
 <p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
 die Operation erfolgreich war, und der erfolgreich
 generierte Wert innerhalb von <code>Ok</code> steht. 
@@ -1164,19 +1192,22 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen: </p>
 <p>Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
 enthält. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
 Stelle dir <code>{}</code> wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
-halten. Mit geschweiften Klammern kannst du mehr als einen Wert ausgeben: Der
-erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
-Formatierungszeichenkette aufgeführt ist, der zweite Satz enthält den zweiten
-Wert usw. Das Ausgeben mehrerer Werte in einem Aufruf von <code>println!</code> würde
-folgendermaßen aussehen:</p>
+halten. Wenn du den Wert einer Variablen ausgibst, kann der Variablenname
+innerhalb der geschweiften Klammern stehen. Wenn du das Ergebnis der Auswertung
+eines Ausdrucks ausgeben willst, füge leere geschweifte Klammern in die
+Formatierungszeichenkette ein und gib dann nach der Formatierungszeichenkette
+eine durch Komma getrennte Liste von Ausdrücken ein, die in jedem leeren
+geschweiften Klammerplatzhalter in derselben Reihenfolge ausgegeben werden
+sollen. Das Ausgeben einer Variablen und des Ergebnisses eines Ausdrucks in
+einem Aufruf von <code>println!</code> würde wie folgt aussehen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;
 
-println!(&quot;x = {} und y = {}&quot;, x, y);
+println!(&quot;x = {x} und y + 2 = {}&quot;, y + 2);
 <span class="boring">}</span></code></pre></pre>
-<p>Dieser Code würde <code>x = 5 und y = 10</code> ausgeben.</p>
+<p>Dieser Code würde <code>x = 5 und y + 2 = 12</code> ausgeben.</p>
 <h3 id="testen-des-ersten-teils"><a class="header" href="#testen-des-ersten-teils">Testen des ersten Teils</a></h3>
 <p>Testen wir den ersten Teil des Ratespiels. Führe ihn mit <code>cargo run</code> aus:</p>
 <pre><code class="language-console">$ cargo run
@@ -1220,13 +1251,13 @@ dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt <code>[dependencies]</code> teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste <code>rand</code> mit dem semantischen
-Versionsspezifikator <code>0.8.3</code>. Cargo versteht <a href="https://semver.org/lang/de/">semantische
+Versionsspezifikator <code>0.8.5</code>. Cargo versteht <a href="https://semver.org/lang/de/">semantische
 Versionierung</a> (manchmal auch <em>SemVer</em> genannt), was ein Standard zum
-Schreiben von Versionsnummern ist. Die Zahl <code>0.8.3</code> ist eigentlich die
-Abkürzung für <code>^0.8.3</code>, was für alle Versionen ab <code>0.8.3</code> und kleiner als
+Schreiben von Versionsnummern ist. Die Angabe <code>0.8.5</code> ist eigentlich die
+Abkürzung für <code>^0.8.5</code>, was für alle Versionen ab <code>0.8.5</code> und kleiner als
 <code>0.9.0</code> steht.</p>
 <p>Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
-Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
+Version 0.8.5 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version <code>0.9.0</code> ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.</p>
@@ -1234,23 +1265,27 @@ den folgenden Beispielen verwendeten übereinstimmt.</p>
 gezeigt.</p>
 <pre><code class="language-console">$ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.3
-  Downloaded libc v0.2.62
-  Downloaded rand_core v0.2.2
-  Downloaded rand_core v0.3.1
-  Downloaded rand_core v0.4.2
-   Compiling rand_core v0.4.2
-   Compiling libc v0.2.62
-   Compiling rand_core v0.3.1
-   Compiling rand_core v0.2.2
-   Compiling rand v0.8.3
+  Downloaded rand v0.8.5
+  Downloaded libc v0.2.127
+  Downloaded getrandom v0.2.7
+  Downloaded cfg-if v1.0.0
+  Downloaded ppv-lite86 v0.2.16
+  Downloaded rand_chacha v0.3.1
+  Downloaded rand_core v0.6.3
+   Compiling libc v0.2.127
+   Compiling getrandom v0.2.7
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.16
+   Compiling rand_core v0.6.3
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 </code></pre>
 <p><span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von <code>cargo build</code> nach dem Hinzufügen der Kiste rand als Abhängigkeit</span></p>
 <p>Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
-sind sie alle mit dem Code kompatibel!), unterschiedliche Zeilen (je nach
-Betriebssystem) und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
+sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
+Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
 <p>Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
 Versionen von allem was die Abhängigkeit aus der <em>Registry</em> benötigt, was eine
 Kopie der Daten von <a href="https://crates.io/">Crates.io</a> ist. Crates.io ist der Ort, an dem
@@ -1284,7 +1319,7 @@ heruntergeladen und kompiliert hat.</p>
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
 verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
-nächste Woche Version 0.8.4 der Kiste <code>rand</code> herauskommt und eine wichtige
+nächste Woche Version 0.8.6 der Kiste <code>rand</code> herauskommt und eine wichtige
 Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
 dies zu handhaben, erstellt Rust die Datei <em>Cargo.lock</em> beim ersten Mal, wenn
 du <code>cargo build</code> ausführst, die nun im <em>guessing_game</em>-Verzeichnis liegt.</p>
@@ -1294,7 +1329,7 @@ Datei <em>Cargo.lock</em>. Wenn du dein Projekt in der Zukunft baust, wird Cargo
 sehen, dass die Datei <em>Cargo.lock</em> existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
-Worten, dein Projekt bleibt dank der Datei <em>Cargo.lock</em> auf <code>0.8.3</code>, bis du
+Worten, dein Projekt bleibt dank der Datei <em>Cargo.lock</em> auf 0.8.5, bis du
 explizit die Versionsnummer erhöhst. Da die Datei <em>Cargo.lock</em> für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.</p>
@@ -1303,17 +1338,17 @@ Code deines Projekts in die Versionskontrolle eingecheckt.</p>
 der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Cargo schreibt diese
 Versionen dann in die Datei <em>Cargo.lock</em>. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als <code>0.8.3</code> und kleiner als <code>0.9.0</code> suchen. Wenn die
-Kiste <code>rand</code> zwei neue Versionen <code>0.8.4</code> und <code>0.9.0</code> veröffentlicht hat,
-würdest du folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
+Kiste <code>rand</code> zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du
+folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
-    Updating rand v0.8.3 -&gt; v0.8.4
+    Updating rand v0.8.5 -&gt; v0.8.6
 </code></pre>
-<p>Cargo ignoriert die Version <code>0.9.0</code>. An diesem Punkt würdest du auch eine
+<p>Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei <em>Cargo.lock</em> bemerken, die feststellt, dass die
-Version der Kiste <code>rand</code>, die du jetzt benutzt, <code>0.8.4</code> ist. Um die
-<code>rand</code>-Version <code>0.9.0</code> oder irgendeine Version aus der <code>0.9.x</code>-Serie zu
+Version der Kiste <code>rand</code>, die du jetzt benutzt, 0.8.6 ist. Um die
+<code>rand</code>-Version 0.9.0 oder irgendeine Version aus der 0.9.<em>x</em>-Serie zu
 verwenden, müsstest du stattdessen die Datei <em>Cargo.toml</em> anpassen, damit sie
 wie folgt aussieht:</p>
 <pre><code class="language-toml">[dependencies]
@@ -1354,7 +1389,7 @@ fn main() {
 }</code></pre>
 <p><span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span></p>
-<p>Zuerst fügen wir die Zeile <code>use rand::Rng</code> hinzu. Das Merkmal (trait)
+<p>Zuerst fügen wir die Zeile <code>use rand::Rng;</code> hinzu. Das Merkmal (trait)
 <code>Rng</code> definiert Methoden, die Zufallszahlengeneratoren implementieren, und
 dieses Merkmal muss im Gültigkeitsbereich sein, damit wir diese Methoden
 verwenden können. In Kapitel 10 werden Merkmale im Detail behandelt.</p>
@@ -1364,7 +1399,7 @@ Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
 zum aktuellen Ausführungsstrang (thread) ist und vom Betriebssystem
 initialisiert (seeded) wird. Dann rufen wir die Methode <code>gen_range</code> des
 Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal <code>Rng</code>
-definiert, das wir mit der Anweisung <code>use rand::Rng</code> in den Gültigkeitsbereich
+definiert, das wir mit der Anweisung <code>use rand::Rng;</code> in den Gültigkeitsbereich
 gebracht haben. Die Methode <code>gen_range</code> nimmt einen Bereichsausdruck als
 Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
 hat die Form <code>start..=end</code> und er beinhaltet die Untergrenze und die
@@ -1466,18 +1501,19 @@ kannst, auf die dein Code stoßen könnte, und die sicherstellen, dass du sie
 alle behandelst. Diese Funktionalitäten werden ausführlich in Kapitel 6 bzw.
 Kapitel 18 behandelt.</p>
 <p>Gehen wir ein Beispiel dafür durch, was mit dem hier verwendeten
-<code>match</code>-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und die
-zufällig generierte Geheimzahl ist diesmal 38. Wenn der Code 50 mit 38
-vergleicht, gibt die <code>cmp</code>-Methode <code>Ordering::Greater</code> zurück, weil 50 größer
-als 38 ist. Der <code>match</code>-Ausdruck erhält den Wert <code>Ordering::Greater</code> und
-beginnt mit der Überprüfung des Musters jedes Zweigs. Er schaut auf das Muster
-<code>Ordering::Less</code> des ersten Zweigs und sieht, dass der Wert <code>Ordering::Greater</code>
-nicht mit <code>Ordering::Less</code> übereinstimmt, also ignoriert er den Code in diesem
-Zweig und geht zum nächsten Zweig über. Das Muster <code>Ordering::Greater</code> des
-nächsten Zweigs <em>passt</em> zu <code>Ordering::Greater</code>! Der dazugehörige Code in diesem
-Zweig wird ausgeführt und <code>Zu groß!</code> auf den Bildschirm ausgegeben. Der
-<code>match</code>-Ausdruck endet nach der ersten erfolgreichen Übereinstimmung, sodass
-der letzte Zweig in diesem Szenario nicht berücksichtigt wird.</p>
+<code>match</code>-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und
+die zufällig generierte Geheimzahl ist diesmal 38.</p>
+<p>Wenn der Code 50 mit 38 vergleicht, gibt die <code>cmp</code>-Methode <code>Ordering::Greater</code>
+zurück, weil 50 größer als 38 ist. Der <code>match</code>-Ausdruck erhält den Wert
+<code>Ordering::Greater</code> und beginnt mit der Überprüfung des Musters jedes Zweigs.
+Er schaut auf das Muster <code>Ordering::Less</code> des ersten Zweigs und sieht, dass der
+Wert <code>Ordering::Greater</code> nicht mit <code>Ordering::Less</code> übereinstimmt, also
+ignoriert er den Code in diesem Zweig und geht zum nächsten Zweig über. Das
+Muster <code>Ordering::Greater</code> des nächsten Zweigs <em>passt</em> zu <code>Ordering::Greater</code>!
+Der dazugehörige Code in diesem Zweig wird ausgeführt und <code>Zu groß!</code> auf den
+Bildschirm ausgegeben. Der <code>match</code>-Ausdruck endet nach der ersten erfolgreichen
+Übereinstimmung, sodass der letzte Zweig in diesem Szenario nicht
+berücksichtigt wird.</p>
 <p>Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:</p>
 <pre><code class="language-console">$ cargo build
@@ -1550,12 +1586,13 @@ hinzufügen:</p>
 <pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);</code></pre>
 <p>Wir erstellen eine Variable mit dem Namen <code>guess</code>. Aber warte, hat das Programm
 nicht bereits eine Variable namens <code>guess</code>? Ja, aber Rust erlaubt uns, den
-vorherigen Wert von <code>guess</code> mit einem neuen Wert zu <em>beschatten</em> (shadow).
-Diese Funktionalität wird häufig in Situationen verwendet, in denen du einen
-Wert von einem Typ in einen anderen Typ konvertieren möchtest. Durch das
-Beschatten können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt uns
-zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. <code>guess_str</code> und
-<code>guess</code>. (Kapitel 3 behandelt das Beschatten ausführlicher.)</p>
+vorherigen Wert von <code>guess</code> mit einem neuen Wert zu beschatten (shadow). Durch
+das <em>Beschatten</em> können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt
+uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. <code>guess_str</code> und
+<code>guess</code>. Wir werden dies in <a href="ch03-01-variables-and-mutability.html#beschatten-shadowing">Kapitel 3</a> ausführlicher behandeln,
+aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
+wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
+willst.</p>
 <p>Wir binden <code>guess</code> an den Ausdruck <code>guess.trim().parse()</code>. Das <code>guess</code> im
 Ausdruck bezieht sich auf das ursprüngliche <code>guess</code>, das ein <code>String</code> mit der
 Eingabe darin war. Die <code>trim</code>-Methode der <code>String</code>-Instanz wird alle
@@ -1579,26 +1616,26 @@ indem wir <code>let guess: u32</code> verwenden. Der Doppelpunkt (<code>:</code>
 Rust, dass wir den Typ der Variablen annotieren werden. Rust hat ein paar
 eingebaute Zahlentypen; <code>u32</code>, das du hier siehst, ist eine vorzeichenlose
 32-Bit-Ganzzahl. Es ist eine gute Standardwahl für eine kleine positive Zahl.
-Über andere Zahlentypen erfährst du in Kapitel 3. Zusätzlich bedeuten die
-Annotation <code>u32</code> in diesem Beispielprogramm und der Vergleich mit
-<code>secret_number</code>, dass Rust daraus ableiten wird, dass <code>secret_number</code> ebenfalls
-ein <code>u32</code> sein sollte. Nun wird also der Vergleich zwischen zwei Werten
-desselben Typs durchgeführt!</p>
+Über andere Zahlentypen erfährst du in <a href="ch03-02-data-types.html#ganzzahl-typen">Kapitel 3</a>.</p>
+<p>Zusätzlich bedeuten die Annotation <code>u32</code> in diesem Beispielprogramm und der
+Vergleich mit <code>secret_number</code>, dass Rust daraus ableiten wird, dass
+<code>secret_number</code> ebenfalls ein <code>u32</code> sein sollte. Nun wird also der Vergleich
+zwischen zwei Werten desselben Typs durchgeführt!</p>
 <p>Die Methode <code>parse</code> funktioniert nur bei Zeichen, die logisch in Zahlen
 umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel <code>A👍%</code> enthielte, gäbe es keine Möglichkeit, dies in
 eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die <code>parse</code>-Methode
 einen <code>Result</code>-Typ zurück, ähnlich wie die <code>read_line</code>-Methode (weiter oben in
-<a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result">„Behandeln potentieller Fehler mit dem Typ
-<code>Result</code>“</a>). Wir werden
-dieses <code>Result</code> auf die gleiche Weise behandeln, indem wir erneut <code>expect</code>
-verwenden. Wenn <code>parse</code> eine <code>Err</code>-Variante von <code>Result</code> zurückgibt, weil es
-keine Zahl aus der Zeichenkette erzeugen konnte, wird der <code>expect</code>-Aufruf das
-Spiel zum Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn
-<code>parse</code> die Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die
-<code>Ok</code>-Variante von <code>Result</code> zurück, und <code>expect</code> gibt die Zahl zurück, die wir
-vom <code>Ok</code>-Wert erwarten.</p>
-<p>Lassen wir das Programm jetzt laufen!</p>
+<a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
+<code>Result</code>“</a>). Wir werden dieses
+<code>Result</code> auf die gleiche Weise behandeln, indem wir erneut <code>expect</code> verwenden.
+Wenn <code>parse</code> eine <code>Err</code>-Variante von <code>Result</code> zurückgibt, weil es keine Zahl
+aus der Zeichenkette erzeugen konnte, wird der <code>expect</code>-Aufruf das Spiel zum
+Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn <code>parse</code> die
+Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die <code>Ok</code>-Variante
+von <code>Result</code> zurück, und <code>expect</code> gibt die Zahl zurück, die wir vom <code>Ok</code>-Wert
+erwarten.</p>
+<p>Lassen wir das Programm jetzt laufen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
@@ -1878,9 +1915,9 @@ fn main() {
 }</code></pre>
 <p><span class="caption">Codeblock 2-6: Vollständiger Code des
 Ratespiels</span></p>
-<h2 id="zusammenfassung-1"><a class="header" href="#zusammenfassung-1">Zusammenfassung</a></h2>
 <p>An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen
 Glückwunsch!</p>
+<h2 id="zusammenfassung-1"><a class="header" href="#zusammenfassung-1">Zusammenfassung</a></h2>
 <p>Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
 Rust-Konzepten vertraut zu machen: <code>let</code>, <code>match</code>, Funktionen, das Verwenden
 von externen Kisten und mehr. In den nächsten Kapiteln erfährst du mehr über
@@ -8864,7 +8901,7 @@ einen Grund, den man leicht erkennen und darauf reagieren kann. Wenn du
 beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
 fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
 den Vorgang zu beenden.</p>
-<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-dem-typ-result">„Behandeln potentieller Fehler mit dem Typ
+<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit dem Typ
 <code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
 Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -29164,21 +29201,19 @@ Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).</p>
 einer Beschreibung ihrer Funktion.</p>
 <ul>
 <li><code>as</code> – primitive Typen umwandeln; ein spezifisches Merkmal mit einem
-Element eindeutig machen; Elemente in <code>use</code>- und <code>extern crate</code>-Anweisungen
-umbenennen </li>
+Element eindeutig machen; Elemente in <code>use</code>-Anweisungen umbenennen </li>
 <li><code>async</code> – ein <code>Future</code> zurückgeben, anstatt den aktuellen Strang
 (thread) zu blockieren</li>
 <li><code>await</code> – Ausführung anhalten, bis das Ergebnis eines <code>Future</code> vorliegt</li>
 <li><code>break</code> – Schleife sofort verlassen</li>
 <li><code>const</code> – konstante Elemente oder konstante Roh-Referenzen definieren</li>
 <li><code>continue</code> – weiter zur nächsten Schleifeniteration</li>
-<li><code>crate</code> – externe Kiste (crate) oder Makrovariable, die die Kiste
-repräsentiert, in der das Makro definiert ist, verlinken</li>
+<li><code>crate</code> – in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)</li>
 <li><code>dyn</code> – dynamischer Aufruf (dispatch) eines Merkmalsobjekts (trait
 object)</li>
 <li><code>else</code> – Ersatzkontrollflusszweig bei <code>if</code> und <code>if let</code></li>
 <li><code>enum</code> – eine Aufzählung (enumeration) definieren</li>
-<li><code>extern</code> – externe Kiste (crate), Funktion oder Variable verlinken</li>
+<li><code>extern</code> – externe Funktion oder Variable verlinken</li>
 <li><code>false</code> – Boolesches Literal für „falsch“</li>
 <li><code>fn</code> – Funktion oder Funktionsreferenztyp definieren</li>
 <li><code>for</code> – wiederhole über Elemente einer Iteration; ein Merkmal (trait)
@@ -29270,15 +29305,17 @@ fn main() {
 Funktionsnamen in seiner Definition sowie an der Stelle, an der die Funktion in
 <code>main</code> aufgerufen wird.</p>
 <p>Roh-Bezeichner erlauben es dir, jedes beliebige Wort als Bezeichner zu
-verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Darüber
-hinaus ermöglicht dir der Roh-Bezeichner das Verwenden von Bibliotheken, die in
-einer anderen Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum
-Beispiel ist <code>try</code> in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018
-schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
-geschrieben wurde und eine Funktion <code>try</code> hat, musst du die
-Roh-Bezeichner-Syntax verwenden, in diesem Fall <code>r#try</code>, um diese Funktion von
-deinem Code der Ausgabe 2018 aus aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang E</a> für
-weitere Informationen zu Ausgaben.</p>
+verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Dies gibt
+uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
+Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
+Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
+Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
+Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
+<code>try</code> in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018 schon. Wenn du
+auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015 geschrieben wurde und
+eine Funktion <code>try</code> hat, musst du die Roh-Bezeichner-Syntax verwenden, in
+diesem Fall <code>r#try</code>, um diese Funktion von deinem Code der Ausgabe 2018 aus
+aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang E</a> für weitere Informationen zu Ausgaben.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-b-operatoren-und-symbole"><a class="header" href="#anhang-b-operatoren-und-symbole">Anhang B: Operatoren und Symbole</a></h2>
 <p>Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren
 und anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
@@ -29647,9 +29684,9 @@ Codesemantik ändern. Weitere Informationen zu <code>rustfmt</code> findest du i
 Dokumentation</a>.</p>
 <h3 id="korrigiere-deinen-code-mit-rustfix"><a class="header" href="#korrigiere-deinen-code-mit-rustfix">Korrigiere deinen Code mit <code>rustfix</code></a></h3>
 <p>Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-Compiler-Warnungen beheben, die eine Möglichkeit haben, das Problem zu beheben,
-was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du schon einmal
-Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:</p>
+Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das Problem zu
+beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du
+schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn do_something() {}
 
@@ -29714,14 +29751,15 @@ mathematische Konstante wie Pi verwendet, wie dieses Programm es tut:</p>
     println!(&quot;Die Kreisfläche ist {}&quot;, x * r * r);
 }</code></pre></pre>
 <p>Das Ausführen von <code>cargo clippy</code> in diesem Projekt führt zu diesem Fehler:</p>
-<pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found. Consider using it directly
+<pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found
  --&gt; src/main.rs:2:13
   |
 2 |     let x = 3.1415;
   |             ^^^^^^
   |
-  = note: #[deny(clippy::approx_constant)] on by default
-  = help: for further information visit https://rust-lang-nursery.github.io/rust-clippy/master/index.html#approx_constant
+  = note: `#[deny(clippy::approx_constant)]` on by default
+  = help: consider using the constant directly
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
 </code></pre>
 <p>Dieser Fehler weist dich darauf hin, dass in Rust bereits eine präzisere
 Konstante <code>PI</code> definiert ist und dass dein Programm korrekter wäre, wenn du
@@ -29822,7 +29860,7 @@ eine neue Übersetzung zu informieren!</p>
 <li><a href="https://github.com/thecodix/book">Español</a> </li>
 <li><a href="https://github.com/ManRR/rust-book-es">Español</a>
 – <a href="https://doc.rust-lang.ru/book/">HTML-Version</a></li>
-<li><a href="https://github.com/Ciro-Fusco/book_it">Italiano</a></li>
+<li><a href="https://github.com/EmanueleGurini/book_it">Italiano</a></li>
 <li><a href="https://github.com/rust-lang-ru/book">Русский</a>
 – <a href="https://doc.rust-lang.ru/book/">HTML-Version</a></li>
 <li><a href="https://github.com/rinthel/rust-lang-book-ko">한국어</a>
@@ -29841,8 +29879,6 @@ eine neue Übersetzung zu informieren!</p>
 – <a href="https://pouriamokhtari.ir/rust-book-fa/">HTML-Version</a></li>
 <li><a href="https://github.com/rust-lang-de/rustbook-de">Deutsch</a>
 – <a href="https://rust-lang-de.github.io/rustbook-de/">HTML-Version</a></li>
-<li><a href="https://github.com/RustDili/dokuman/tree/master/ceviriler">Turkish</a>
-– <a href="https://rustdili.github.io/">HTML-Version</a></li>
 <li><a href="https://github.com/venkatarun95/rust-book-hindi">हिंदी</a></li>
 <li><a href="https://github.com/rust-lang-th/book-th">ไทย</a></li>
 <li><a href="https://github.com/DanKHansen/book-dk">Danske</a></li>

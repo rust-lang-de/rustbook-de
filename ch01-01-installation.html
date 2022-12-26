@@ -140,8 +140,8 @@ und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Downloa
 benötigen.</p>
 <blockquote>
 <p>Anmerkung: Falls du <code>rustup</code> aus irgendeinem Grund nicht verwenden möchtest,
-schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">Andere Rust-Installationsmethoden</a> nach
-anderen Möglichkeiten.</p>
+schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-installation-methods.html">Andere Rust-Installationsmethoden</a>
+nach anderen Möglichkeiten.</p>
 </blockquote>
 <p>Die folgenden Schritte installieren die neueste stabile Version des
 Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
@@ -165,12 +165,12 @@ verwenden.</p>
 <h3 id="die-installation-von-rustup-in-linux-und-macos"><a class="header" href="#die-installation-von-rustup-in-linux-und-macos">Die Installation von <code>rustup</code> in Linux und macOS</a></h3>
 <p>Falls du Linux oder macOS verwendest, öffne ein Konsolenfenster und gib den
 folgenden Befehl ein:</p>
-<pre><code class="language-console">$ curl --proto '=https' --tlsv1.3 https://sh.rustup.rs -sSf | sh
+<pre><code class="language-console">$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 </code></pre>
 <p>Dieser Befehl lädt ein Skript herunter und startet die Installation
 von <code>rustup</code>, welches die neueste stabile Version von Rust installiert.
-Du wirst ggf. aufgefordert, dein Passwort einzugeben. Falls die Installation
-erfolgreich ist, erscheint die folgende Zeile:</p>
+Du wirst ggf. aufgefordert, dein Passwort einzugeben. Nach erfolgreicher
+Installation erscheint folgende Zeile:</p>
 <pre><code class="language-text">Rust is installed now. Great!
 </code></pre>
 <p>Außerdem benötigst su einen Programmbinder (linker), ein Programm, das Rust
@@ -188,15 +188,45 @@ kannst du das Paket <code>build-essential</code> installieren.</p>
 <h3 id="die-installation-von-rustup-in-windows"><a class="header" href="#die-installation-von-rustup-in-windows">Die Installation von <code>rustup</code> in Windows</a></h3>
 <p>Rufe <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a> auf und folge
 den Anweisungen, um Rust in Windows zu installieren. Während der Installation
-wirst du eine Meldung erhalten mit der Aufforderung, ebenfalls die
-C++-Bauwerkzeuge für Visual Studio 2013 oder neuer zu installieren.
-Der leichteste Weg, um an die Bauwerkzeuge zu gelangen, ist die Installation
-der <a href="https://visualstudio.microsoft.com/visual-cpp-build-tools/">Bauwerkzeuge für Visual Studio 2019</a>. Sobald du gefragt
-wirst, welche Komponenten installiert werden sollen, wähle die „C++ build tools“
-und zusätzlich das Windows 10 SDK und das englische Sprachpaket aus.</p>
+wirst du eine Meldung erhalten, dass du auch die MSVC Bauwerkzeuge für Visual
+Studio 2013 oder höher benötigst.</p>
+<p>Um die Bauwerkzeuge zu erhalten, musst du <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2022</a>
+installieren. Wenn du gefragt wirst, welche Komponenten installiert werden
+sollen, gib folgendes an:</p>
+<ul>
+<li>„Desktop Development with C++“</li>
+<li>Das Windows 10 oder 11 SDK</li>
+<li>Das englische Sprachpaket zusammen mit einem beliebigen anderen Sprachpaket
+deiner Wahl.</li>
+</ul>
 <p>Der Rest dieses Buchs verwendet Befehle, die sowohl in <em>cmd.exe</em> als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.</p>
+<h3 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h3>
+<p>Um zu überprüfen, ob du Rust korrekt installiert hast, öffnen eine
+Kommandozeile und gib folgende Zeile ein:</p>
+<pre><code class="language-console">$ rustc --version
+</code></pre>
+<p>Du solltest die Versionsnummer, den Commit-Hash und das Commit-Datum für die
+letzte stabile Version, die veröffentlicht wurde, in folgendem Format sehen:</p>
+<pre><code class="language-text">rustc x.y.z (abcabcabc jjjj-mm-tt)
+</code></pre>
+<p>Wenn du diese Information siehst, hast du Rust erfolgreich installiert! Wenn du
+diese Information nicht siehst, überprüfe, ob Rust in deiner Systemvariable
+<code>%PATH%</code> wie folgt enthalten ist.</p>
+<p>In Windows CMD verwende:</p>
+<pre><code class="language-console">&gt; echo %PATH%
+</code></pre>
+<p>In PowerShell verwende:</p>
+<pre><code class="language-powershell">&gt; echo $env:Path
+</code></pre>
+<p>In Linux und macOS verwende:</p>
+<pre><code class="language-console">$ echo $PATH
+</code></pre>
+<p>Wenn das alles korrekt ist und Rust immer noch nicht funktioniert, gibt es
+mehrere Stellen, an denen du Hilfe bekommen kannst. Wie du mit anderen
+Rust-Entwicklern in Kontakt treten kannst, erfährst du auf der
+<a href="https://www.rust-lang.org/community">Gemeinschafts-Seite</a>.</p>
 <h3 id="aktualisieren-und-deinstallieren"><a class="header" href="#aktualisieren-und-deinstallieren">Aktualisieren und Deinstallieren</a></h3>
 <p>Nachdem du Rust mithilfe von <code>rustup</code> installiert hast, ist es einfach,
 auf die neueste Version zu aktualisieren. Führe folgenden Befehl auf der
@@ -206,23 +236,6 @@ Kommandozeile aus:</p>
 <p>Um Rust und <code>rustup</code> zu deinstallieren, führe folgenden Befehl aus:</p>
 <pre><code class="language-console">$ rustup self uninstall
 </code></pre>
-<h3 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h3>
-<p>Um zu überprüfen, ob du Rust erfolgreich installiert hast, führe folgenden
-Befehl auf der Kommandozeile aus:</p>
-<pre><code class="language-console">$ rustc --version
-</code></pre>
-<p>Du solltest die Versionsnummer, den Hashwert und das Datum der neuesten
-stabilen Version in folgendem Format sehen:</p>
-<pre><code class="language-text">rustc x.y.z (abcabcabc yyyy-mm-dd)
-</code></pre>
-<p>Falls du diese Information sehen kannst, hast du Rust erfolgreich installiert.
-Siehst du sie jedoch nicht und dein Betriebssystem ist Windows, prüfe ob Rust
-in deiner Umgebungsvariable <code>%PATH%</code> eingetragen ist. Ist dies der Fall und Rust
-funktioniert dennoch nicht, dann gibt es einige Orte, wo du Hilfe bekommen kannst.
-Der einfachste ist der Kanal #beginners im <a href="https://discord.gg/rust-lang">offiziellen Rust Discord</a>.
-Dort kannst du mit anderen Rustaceans (ein alberner Spitzname, den wir uns selbst
-gegeben haben) chatten, die dir gerne weiterhelfen. Andere hilfreiche Quellen
-sind <a href="https://users.rust-lang.org/">das Benutzerforum</a> and <a href="https://stackoverflow.com/questions/tagged/rust">Stack Overflow</a>.</p>
 <h3 id="lokale-dokumentation"><a class="header" href="#lokale-dokumentation">Lokale Dokumentation</a></h3>
 <p>Die Rust-Installation enthält auch eine lokale Kopie der Dokumentation, sodass
 du sie ohne Internetverbindung lesen kannst. Führe <code>rustup doc</code> aus, um die

@@ -167,9 +167,9 @@ folgenden Schritte aus:</p>
 <pre><code class="language-console">$ cargo new hello_cargo
 $ cd hello_cargo
 </code></pre>
-<p>Der erste Befehl hat ein neues Verzeichnis namens <em>hello_cargo</em> erstellt. Wir
-haben unser Projekt <em>hello_cargo</em> genannt und Cargo erstellt seine Dateien in
-einem Verzeichnis mit demselben Namen.</p>
+<p>Der erste Befehl erstellt ein neues Verzeichnis und ein Projekt namens
+<em>hello_cargo</em>. Wir haben unser Projekt <em>hello_cargo</em> genannt und Cargo
+erstellt seine Dateien in einem Verzeichnis mit demselben Namen.</p>
 <p>Gehe in das Verzeichnis <em>hello_cargo</em> und liste die Dateien auf. Du wirst
 sehen, dass Cargo zwei Dateien und ein Verzeichnis für uns generiert hat: Eine
 Datei <em>Cargo.toml</em> und ein Verzeichnis <em>src</em> mit einer Datei <em>main.rs</em> darin.</p>
@@ -189,6 +189,9 @@ Code in Codeblock 1-2 aussehen.</p>
 name = &quot;hello_cargo&quot;
 version = &quot;0.1.0&quot;
 edition = &quot;2021&quot;
+
+# Weitere Schlüssel und ihre Definitionen findest du unter
+# https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 </code></pre>
@@ -216,9 +219,9 @@ tun, also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.</p>
 }</code></pre></pre>
 <p>Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
-vorherigen Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher
-darin, dass Cargo den Code im Verzeichnis <em>src</em> abgelegt hat, und wir haben
-eine Konfigurationsdatei <em>Cargo.toml</em> im obersten Verzeichnis.</p>
+Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
+Cargo den Code im Verzeichnis <em>src</em> abgelegt hat, und wir haben eine
+Konfigurationsdatei <em>Cargo.toml</em> im obersten Verzeichnis.</p>
 <p>Cargo erwartet, dass deine Quelldateien innerhalb des <em>src</em>-Verzeichnisses
 liegen. Das Projektverzeichnis der obersten Ebene ist nur für README-Dateien,
 Lizenzinformationen, Konfigurationsdateien und alles andere, was nicht mit
@@ -236,10 +239,11 @@ du dein Projekt, indem du den folgenden Befehl eingibst:</p>
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 </code></pre>
-<p>Dieser Befehl erstellt eine ausführbare Datei in <em>target/debug/hello_cargo</em>
+<p>Dieser Befehl erzeugt eine ausführbare Datei in <em>target/debug/hello_cargo</em>
 (oder <em>target\debug\hello_cargo.exe</em> unter Windows) und nicht in deinem
-aktuellen Verzeichnis. Mit diesem Befehl kannst du die ausführbare Datei
-ausführen:</p>
+aktuellen Verzeichnis. Da standardmäßig für den Debug-Modus gebaut wird, legt
+Cargo die Binärdatei in einem Verzeichnis namens <em>debug</em> ab. Mit diesem Befehl
+kannst du die ausführbare Datei ausführen:</p>
 <pre><code class="language-console">$ ./target/debug/hello_cargo # oder .\target\debug\hello_cargo.exe unter Windows
 Hello, world!
 </code></pre>
@@ -258,11 +262,15 @@ Datei mit einem einzigen Befehl auszuführen:</p>
      Running `target/debug/hello_cargo`
 Hello, world!
 </code></pre>
+<p>Das Verwenden von <code>cargo run</code> ist bequemer, als sich daran erinnern zu müssen,
+<code>cargo build</code> auszuführen und dann den gesamten Pfad zur Binärdatei zu
+verwenden, daher verwenden die meisten Entwickler <code>cargo run</code>.</p>
 <p>Beachte, dass wir diesmal keine Ausgabe gesehen haben, die darauf hinweist,
 dass Cargo <code>hello_cargo</code> kompiliert hat. Cargo fand heraus, dass sich die
-Dateien nicht geändert hatten, also ließ es einfach die Binärdatei laufen. Wenn
-du deinen Quellcode geändert hättest, hätte Cargo das Projekt vor der
-Ausführung neu kompiliert, und du hättest diese Ausgabe gesehen:</p>
+Dateien nicht geändert hatten, also hat es nicht neu gebaut, sondern ließ
+einfach die Binärdatei laufen. Wenn du deinen Quellcode geändert hättest, hätte
+Cargo das Projekt vor der Ausführung neu kompiliert, und du hättest diese
+Ausgabe gesehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
     Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
@@ -312,9 +320,9 @@ Laufzeit-Benchmark deines Codes durchführst, stelle sicher, dass du <code>cargo
 <h3 id="cargo-als-konvention"><a class="header" href="#cargo-als-konvention">Cargo als Konvention</a></h3>
 <p>Bei einfachen Projekten bietet Cargo nicht viel mehr Wert als das bloße
 Verwenden von <code>rustc</code>, aber es wird sich in dem Maße bewähren, wie deine
-Programme immer komplizierter werden. Bei komplexen Projekten, die aus mehreren
-Kisten bestehen, ist es viel einfacher, das Bauen von Cargo koordinieren zu
-lassen.</p>
+Programme immer komplizierter werden. Sobald Programme auf mehrere Dateien
+anwachsen oder eine Abhängigkeit benötigen, ist es viel einfacher, Cargo den
+Bauvorgang koordinieren zu lassen.</p>
 <p>Auch wenn das Projekt <code>hello_cargo</code> einfach ist, so verwendet es jetzt einen
 Großteil der realen Werkzeuge, die du im Rest deiner Rust-Karriere verwenden
 wirst. Tatsächlich kannst du, um an bestehenden Projekten zu arbeiten, die
@@ -324,7 +332,8 @@ Verzeichnis dieses Projekts zu wechseln und zu bauen:</p>
 $ cd someproject
 $ cargo build
 </code></pre>
-<p>Weitere Informationen über Cargo findest du unter <a href="https://doc.rust-lang.org/cargo/">seiner Dokumentation</a>.</p>
+<p>Weitere Informationen über Cargo findest du unter seiner
+<a href="https://doc.rust-lang.org/cargo/">Dokumentation</a>.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Du hast deine Rust-Reise bereits gut begonnen! In diesem Kapitel hast du
 gelernt, wie es geht:</p>

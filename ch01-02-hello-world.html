@@ -145,25 +145,25 @@ oder Werkzeuge oder an den Ort, an dem dein Code lebt. Wenn du also lieber
 eine integrierte Entwicklungsumgebung (IDE) statt der Kommandozeile verwenden
 möchtest, kannst du deine bevorzugte IDE verwenden. Viele IDEs bieten
 mittlerweile einen gewissen Grad an Rust-Unterstützung; Einzelheiten findest
-du in der Dokumentation der IDE. In jüngster Zeit hat sich das Rust-Team
-darauf konzentriert, eine großartige IDE-Unterstützung zu ermöglichen, und an
-dieser Front sind schnelle Fortschritte erzielt worden!</p>
+du in der Dokumentation der IDE. Das Rust-Team hat sich darauf konzentriert,
+eine großartige IDE-Unterstützung mittels <code>rust-analyzer</code> zu ermöglichen.
+Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für weitere Details.</p>
 </blockquote>
 <h3 id="erstellen-eines-projektverzeichnisses"><a class="header" href="#erstellen-eines-projektverzeichnisses">Erstellen eines Projektverzeichnisses</a></h3>
 <p>Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.</p>
-<p>Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
+<p>Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
 <em>projects</em> und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses <em>projects</em> zu erstellen.</p>
-<p>Gib dies für Linux, macOS und PowerShell unter Windows ein:</p>
+<p>Gib dies bei Linux, macOS und PowerShell unter Windows ein:</p>
 <pre><code class="language-console">$ mkdir ~/projects
 $ cd ~/projects
 $ mkdir hello_world
 $ cd hello_world
 </code></pre>
-<p>Für Windows CMD gib dies ein:</p>
+<p>Bei Windows CMD gib dies ein:</p>
 <pre><code class="language-cmd">&gt; mkdir &quot;%USERPROFILE%\projects&quot;
 &gt; cd /d &quot;%USERPROFILE%\projects&quot;
 &gt; mkdir hello_world
@@ -182,7 +182,7 @@ Codeblock 1-1 ein.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
-<p>Speichere die Datei und gehe zurück zu deinem Terminalfenster. Gib unter Linux
+<p>Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
 oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
@@ -194,8 +194,8 @@ Hallo Welt!
 Hallo Welt!
 </code></pre>
 <p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> auf
-dem Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
+der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
+im Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -206,21 +206,24 @@ passiert ist. Hier ist das erste Teil des Puzzles:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
 
 }</code></pre></pre>
-<p>Diese Zeilen definieren eine Funktion in Rust. Die Funktion <code>main</code> ist eine
-Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
-Rust-Programm ausgeführt wird. Die erste Zeile deklariert eine Funktion namens
-<code>main</code>, die keine Parameter hat und nichts zurückgibt. Wenn es Parameter gäbe,
-würden sie innerhalb der Klammern <code>()</code> stehen.</p>
-<p>Beachte auch, dass der Funktionsrumpf in geschweifte Klammern <code>{}</code> eingehüllt
-ist. Rust erfordert diese um alle Funktionsrümpfe. Es ist guter Stil, die
-öffnende geschweifte Klammer in dieselbe Zeile wie die Funktionsdeklaration zu
-platzieren und dazwischen ein Leerzeichen einzufügen.</p>
-<p>Wenn du dich in allen Rust-Projekten an einen Standardstil halten willst,
-kannst du ein Tool zur automatischen Formatierung namens <code>rustfmt</code> verwenden,
-um deinen Code in einem bestimmten Stil zu formatieren. Das Rust-Team hat
-dieses Tool wie <code>rustc</code> in die Standard-Rust-Distribution aufgenommen, es
-sollte also bereits auf deinem Computer installiert sein! Schaue in die
-Online-Dokumentation für weitere Details.</p>
+<p>Diese Zeilen definieren eine Funktion namens <code>main</code> in Rust. Die Funktion
+<code>main</code> ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
+ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
+Zeile eine Funktion mit dem namen <code>main</code>, die keine Parameter hat und nichts
+zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern <code>()</code>
+stehen.</p>
+<p>Der Funktionsrumpf in geschweifte Klammern <code>{}</code> eingehüllt. Rust erfordert
+diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
+dazwischen ein Leerzeichen einzufügen.</p>
+<blockquote>
+<p>Hinweis: Wenn du einen Standardstil für alle Rust-Projekte verwenden
+möchtest, kannst du ein automatisches Formatierungswerkzeug namens <code>rustfmt</code>
+verwenden, um deinen Code in einem bestimmten Stil zu formatieren (mehr über
+<code>rustfmt</code> im <a href="appendix-04-useful-development-tools.html">Anhang D</a>). Das Rust-Team hat dieses Tool wie <code>rustc</code>
+in die Standard-Rust-Distribution aufgenommen, es sollte also bereits auf
+deinem Computer installiert sein!</p>
+</blockquote>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -236,7 +239,7 @@ Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.</p>
-<p>Drittens siehst du die Zeichenkette &quot;Hallo Welt!&quot;. Wir übergeben diese
+<p>Drittens siehst du die Zeichenkette <code>&quot;Hallo Welt!&quot;</code>. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
 <p>Viertens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
@@ -254,13 +257,13 @@ Quelldatei übergibst, so wie hier:</p>
 ähnlich wie <code>gcc</code> oder <code>clang</code> ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.</p>
 <p>Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst. Unter Linux und
-MacOS siehst du zwei Dateien. Mit PowerShell unter Windows siehst du die
-gleichen drei Dateien, die du mit CMD sehen würdest.</p>
+sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst:</p>
 <pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
-<p>Mit CMD unter Windows würdest du Folgendes eingeben:</p>
+<p>Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
+unter Windows würdest du folgendes eingeben:</p>
 <pre><code class="language-cmd">&gt; dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%
 main.exe
 main.pdb
@@ -274,7 +277,7 @@ aus, so wie hier:</p>
 <pre><code class="language-console">$ ./main # oder .\main.exe unter Windows
 </code></pre>
 <p>Wenn <em>main.rs</em> dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deinem Terminal ausgeben.</p>
+Welt!“ in deiner Konsole ausgeben.</p>
 <p>Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
 getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab

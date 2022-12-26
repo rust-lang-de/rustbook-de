@@ -146,21 +146,19 @@ Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).</p>
 einer Beschreibung ihrer Funktion.</p>
 <ul>
 <li><code>as</code> – primitive Typen umwandeln; ein spezifisches Merkmal mit einem
-Element eindeutig machen; Elemente in <code>use</code>- und <code>extern crate</code>-Anweisungen
-umbenennen </li>
+Element eindeutig machen; Elemente in <code>use</code>-Anweisungen umbenennen </li>
 <li><code>async</code> – ein <code>Future</code> zurückgeben, anstatt den aktuellen Strang
 (thread) zu blockieren</li>
 <li><code>await</code> – Ausführung anhalten, bis das Ergebnis eines <code>Future</code> vorliegt</li>
 <li><code>break</code> – Schleife sofort verlassen</li>
 <li><code>const</code> – konstante Elemente oder konstante Roh-Referenzen definieren</li>
 <li><code>continue</code> – weiter zur nächsten Schleifeniteration</li>
-<li><code>crate</code> – externe Kiste (crate) oder Makrovariable, die die Kiste
-repräsentiert, in der das Makro definiert ist, verlinken</li>
+<li><code>crate</code> – in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)</li>
 <li><code>dyn</code> – dynamischer Aufruf (dispatch) eines Merkmalsobjekts (trait
 object)</li>
 <li><code>else</code> – Ersatzkontrollflusszweig bei <code>if</code> und <code>if let</code></li>
 <li><code>enum</code> – eine Aufzählung (enumeration) definieren</li>
-<li><code>extern</code> – externe Kiste (crate), Funktion oder Variable verlinken</li>
+<li><code>extern</code> – externe Funktion oder Variable verlinken</li>
 <li><code>false</code> – Boolesches Literal für „falsch“</li>
 <li><code>fn</code> – Funktion oder Funktionsreferenztyp definieren</li>
 <li><code>for</code> – wiederhole über Elemente einer Iteration; ein Merkmal (trait)
@@ -252,15 +250,17 @@ fn main() {
 Funktionsnamen in seiner Definition sowie an der Stelle, an der die Funktion in
 <code>main</code> aufgerufen wird.</p>
 <p>Roh-Bezeichner erlauben es dir, jedes beliebige Wort als Bezeichner zu
-verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Darüber
-hinaus ermöglicht dir der Roh-Bezeichner das Verwenden von Bibliotheken, die in
-einer anderen Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum
-Beispiel ist <code>try</code> in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018
-schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
-geschrieben wurde und eine Funktion <code>try</code> hat, musst du die
-Roh-Bezeichner-Syntax verwenden, in diesem Fall <code>r#try</code>, um diese Funktion von
-deinem Code der Ausgabe 2018 aus aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang E</a> für
-weitere Informationen zu Ausgaben.</p>
+verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Dies gibt
+uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
+Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
+Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
+Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
+Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
+<code>try</code> in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018 schon. Wenn du
+auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015 geschrieben wurde und
+eine Funktion <code>try</code> hat, musst du die Roh-Bezeichner-Syntax verwenden, in
+diesem Fall <code>r#try</code>, um diese Funktion von deinem Code der Ausgabe 2018 aus
+aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang E</a> für weitere Informationen zu Ausgaben.</p>
 
                     </main>
 

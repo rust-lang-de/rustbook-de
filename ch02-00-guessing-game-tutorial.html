@@ -137,9 +137,9 @@
 <p>Lass uns den Sprung in Rust wagen, indem wir gemeinsam ein praktisches Projekt
 durcharbeiten! Dieses Kapitel führt dich in einige gängige Rust-Konzepte ein,
 indem es dir zeigt, wie du diese in einem realen Programm verwenden kannst. Du
-lernst <code>let</code>, <code>match</code>, Methoden, assoziierte Funktionen, das Verwenden externer
-Kisten (crates) und mehr kennen! In den folgenden Kapiteln werden wir diese
-Ideen ausführlicher behandeln. In diesem Kapitel wirst du die Grundlagen üben.</p>
+lernst <code>let</code>, <code>match</code>, Methoden, assoziierte Funktionen, externe Kisten
+(crates) und mehr kennen! In den folgenden Kapiteln werden wir diese Ideen
+ausführlicher behandeln. In diesem Kapitel wirst du nur die Grundlagen üben.</p>
 <p>Wir werden ein klassisches Programmierproblem für Anfänger implementieren: Ein
 Ratespiel. Und so funktioniert es: Das Programm erzeugt eine zufällige ganze
 Zahl zwischen 1 und 100. Dann wird es den Spieler auffordern, eine Schätzung
@@ -166,7 +166,6 @@ edition = &quot;2021&quot;
 
 [dependencies]
 </code></pre>
-<p>Der Inhalt Deiner Datei sollte ungefähr so aussehen wie hier. Falls es nicht ganz übereinstimmt, liegt das wahrscheinlich daran, dass Du schon eine neuere Version von <code>Cargo</code> verwendest. Wie im vorherigen Kapitel schon erwähnt, kann man den <code>author</code> Tag hinzufügen, muss es aber nicht.</p>
 <p>Wie du in Kapitel 1 gesehen hast, generiert <code>cargo new</code> ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -255,8 +254,8 @@ das Programm:</p>
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
 </span><span class="boring">}</span></code></pre>
-<p>Die Syntax <code>fn</code> deklariert eine neue Funktion, die Klammern <code>()</code> zeigen an,
-dass es keine Parameter gibt, und die geschweifte Klammer <code>{</code> beginnt den Rumpf
+<p>Die Syntax <code>fn</code> deklariert eine neue Funktion; die Klammern <code>()</code> zeigen an,
+dass es keine Parameter gibt; und die geschweifte Klammer <code>{</code> beginnt den Rumpf
 der Funktion.</p>
 <p>Wie du auch in Kapitel 1 gelernt hast, ist <code>println!</code> ein Makro, das eine
 Zeichenkette auf dem Bildschirm ausgibt:</p>
@@ -353,10 +352,10 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 </span><span class="boring">
 </span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
 </span><span class="boring">}</span></code></pre>
-<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms importiert,
-könnten wir die Funktion trotzdem verwenden, indem wir den Funktionsaufruf als
-<code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine Instanz von
-<a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
+<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms mit <code>use std::io;</code>
+importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
+Funktionsaufruf als <code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine
+Instanz von <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
 Standardeingaberessource (handle to the standard input) für dein Terminal
 darstellt.</p>
 <p>Die nächste Zeile <code>.read_line(&amp;mut guess)</code> ruft die Methode
@@ -378,7 +377,7 @@ fertigzustellen. Im Moment musst du nur wissen, dass Referenzen wie Variablen
 standardmäßig unveränderlich sind. Daher musst du <code>&amp;mut guess</code> anstatt <code>&amp;guess</code>
 schreiben, um sie veränderlich zu machen. (In Kapitel 4 werden Referenzen
 ausführlicher erklärt.)</p>
-<h3 id="behandeln-potentieller-fehler-mit-dem-typ-result"><a class="header" href="#behandeln-potentieller-fehler-mit-dem-typ-result">Behandeln potentieller Fehler mit dem Typ <code>Result</code></a></h3>
+<h3 id="behandeln-potentieller-fehler-mit-result"><a class="header" href="#behandeln-potentieller-fehler-mit-result">Behandeln potentieller Fehler mit <code>Result</code></a></h3>
 <p>Wir arbeiten noch immer an dieser Codezeile. Wir besprechen jetzt eine dritte
 Textzeile, aber beachte, dass sie immer noch Teil einer einzigen logischen
 Codezeile ist. Der nächste Teil ist diese Methode:</p>
@@ -411,8 +410,8 @@ zurück.
 kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
 Zuständen annehmen kann.
 Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
-<p>In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
-<code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
+<p>In Kapitel 6 werden <a href="ch06-00-enums.html">Aufzählungen</a> ausführlicher behandelt. Der Zweck
+dieser <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
 <p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
 die Operation erfolgreich war, und der erfolgreich
 generierte Wert innerhalb von <code>Ok</code> steht. 
@@ -474,19 +473,22 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen: </p>
 <p>Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
 enthält. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
 Stelle dir <code>{}</code> wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
-halten. Mit geschweiften Klammern kannst du mehr als einen Wert ausgeben: Der
-erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
-Formatierungszeichenkette aufgeführt ist, der zweite Satz enthält den zweiten
-Wert usw. Das Ausgeben mehrerer Werte in einem Aufruf von <code>println!</code> würde
-folgendermaßen aussehen:</p>
+halten. Wenn du den Wert einer Variablen ausgibst, kann der Variablenname
+innerhalb der geschweiften Klammern stehen. Wenn du das Ergebnis der Auswertung
+eines Ausdrucks ausgeben willst, füge leere geschweifte Klammern in die
+Formatierungszeichenkette ein und gib dann nach der Formatierungszeichenkette
+eine durch Komma getrennte Liste von Ausdrücken ein, die in jedem leeren
+geschweiften Klammerplatzhalter in derselben Reihenfolge ausgegeben werden
+sollen. Das Ausgeben einer Variablen und des Ergebnisses eines Ausdrucks in
+einem Aufruf von <code>println!</code> würde wie folgt aussehen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;
 
-println!(&quot;x = {} und y = {}&quot;, x, y);
+println!(&quot;x = {x} und y + 2 = {}&quot;, y + 2);
 <span class="boring">}</span></code></pre></pre>
-<p>Dieser Code würde <code>x = 5 und y = 10</code> ausgeben.</p>
+<p>Dieser Code würde <code>x = 5 und y + 2 = 12</code> ausgeben.</p>
 <h3 id="testen-des-ersten-teils"><a class="header" href="#testen-des-ersten-teils">Testen des ersten Teils</a></h3>
 <p>Testen wir den ersten Teil des Ratespiels. Führe ihn mit <code>cargo run</code> aus:</p>
 <pre><code class="language-console">$ cargo run
@@ -530,13 +532,13 @@ dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt <code>[dependencies]</code> teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste <code>rand</code> mit dem semantischen
-Versionsspezifikator <code>0.8.3</code>. Cargo versteht <a href="https://semver.org/lang/de/">semantische
+Versionsspezifikator <code>0.8.5</code>. Cargo versteht <a href="https://semver.org/lang/de/">semantische
 Versionierung</a> (manchmal auch <em>SemVer</em> genannt), was ein Standard zum
-Schreiben von Versionsnummern ist. Die Zahl <code>0.8.3</code> ist eigentlich die
-Abkürzung für <code>^0.8.3</code>, was für alle Versionen ab <code>0.8.3</code> und kleiner als
+Schreiben von Versionsnummern ist. Die Angabe <code>0.8.5</code> ist eigentlich die
+Abkürzung für <code>^0.8.5</code>, was für alle Versionen ab <code>0.8.5</code> und kleiner als
 <code>0.9.0</code> steht.</p>
 <p>Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
-Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
+Version 0.8.5 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version <code>0.9.0</code> ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.</p>
@@ -544,23 +546,27 @@ den folgenden Beispielen verwendeten übereinstimmt.</p>
 gezeigt.</p>
 <pre><code class="language-console">$ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.3
-  Downloaded libc v0.2.62
-  Downloaded rand_core v0.2.2
-  Downloaded rand_core v0.3.1
-  Downloaded rand_core v0.4.2
-   Compiling rand_core v0.4.2
-   Compiling libc v0.2.62
-   Compiling rand_core v0.3.1
-   Compiling rand_core v0.2.2
-   Compiling rand v0.8.3
+  Downloaded rand v0.8.5
+  Downloaded libc v0.2.127
+  Downloaded getrandom v0.2.7
+  Downloaded cfg-if v1.0.0
+  Downloaded ppv-lite86 v0.2.16
+  Downloaded rand_chacha v0.3.1
+  Downloaded rand_core v0.6.3
+   Compiling libc v0.2.127
+   Compiling getrandom v0.2.7
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.16
+   Compiling rand_core v0.6.3
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 </code></pre>
 <p><span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von <code>cargo build</code> nach dem Hinzufügen der Kiste rand als Abhängigkeit</span></p>
 <p>Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
-sind sie alle mit dem Code kompatibel!), unterschiedliche Zeilen (je nach
-Betriebssystem) und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
+sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
+Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
 <p>Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
 Versionen von allem was die Abhängigkeit aus der <em>Registry</em> benötigt, was eine
 Kopie der Daten von <a href="https://crates.io/">Crates.io</a> ist. Crates.io ist der Ort, an dem
@@ -594,7 +600,7 @@ heruntergeladen und kompiliert hat.</p>
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
 verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
-nächste Woche Version 0.8.4 der Kiste <code>rand</code> herauskommt und eine wichtige
+nächste Woche Version 0.8.6 der Kiste <code>rand</code> herauskommt und eine wichtige
 Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
 dies zu handhaben, erstellt Rust die Datei <em>Cargo.lock</em> beim ersten Mal, wenn
 du <code>cargo build</code> ausführst, die nun im <em>guessing_game</em>-Verzeichnis liegt.</p>
@@ -604,7 +610,7 @@ Datei <em>Cargo.lock</em>. Wenn du dein Projekt in der Zukunft baust, wird Cargo
 sehen, dass die Datei <em>Cargo.lock</em> existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
-Worten, dein Projekt bleibt dank der Datei <em>Cargo.lock</em> auf <code>0.8.3</code>, bis du
+Worten, dein Projekt bleibt dank der Datei <em>Cargo.lock</em> auf 0.8.5, bis du
 explizit die Versionsnummer erhöhst. Da die Datei <em>Cargo.lock</em> für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.</p>
@@ -613,17 +619,17 @@ Code deines Projekts in die Versionskontrolle eingecheckt.</p>
 der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Cargo schreibt diese
 Versionen dann in die Datei <em>Cargo.lock</em>. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als <code>0.8.3</code> und kleiner als <code>0.9.0</code> suchen. Wenn die
-Kiste <code>rand</code> zwei neue Versionen <code>0.8.4</code> und <code>0.9.0</code> veröffentlicht hat,
-würdest du folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
+Kiste <code>rand</code> zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du
+folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
-    Updating rand v0.8.3 -&gt; v0.8.4
+    Updating rand v0.8.5 -&gt; v0.8.6
 </code></pre>
-<p>Cargo ignoriert die Version <code>0.9.0</code>. An diesem Punkt würdest du auch eine
+<p>Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei <em>Cargo.lock</em> bemerken, die feststellt, dass die
-Version der Kiste <code>rand</code>, die du jetzt benutzt, <code>0.8.4</code> ist. Um die
-<code>rand</code>-Version <code>0.9.0</code> oder irgendeine Version aus der <code>0.9.x</code>-Serie zu
+Version der Kiste <code>rand</code>, die du jetzt benutzt, 0.8.6 ist. Um die
+<code>rand</code>-Version 0.9.0 oder irgendeine Version aus der 0.9.<em>x</em>-Serie zu
 verwenden, müsstest du stattdessen die Datei <em>Cargo.toml</em> anpassen, damit sie
 wie folgt aussieht:</p>
 <pre><code class="language-toml">[dependencies]
@@ -664,7 +670,7 @@ fn main() {
 }</code></pre>
 <p><span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span></p>
-<p>Zuerst fügen wir die Zeile <code>use rand::Rng</code> hinzu. Das Merkmal (trait)
+<p>Zuerst fügen wir die Zeile <code>use rand::Rng;</code> hinzu. Das Merkmal (trait)
 <code>Rng</code> definiert Methoden, die Zufallszahlengeneratoren implementieren, und
 dieses Merkmal muss im Gültigkeitsbereich sein, damit wir diese Methoden
 verwenden können. In Kapitel 10 werden Merkmale im Detail behandelt.</p>
@@ -674,7 +680,7 @@ Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
 zum aktuellen Ausführungsstrang (thread) ist und vom Betriebssystem
 initialisiert (seeded) wird. Dann rufen wir die Methode <code>gen_range</code> des
 Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal <code>Rng</code>
-definiert, das wir mit der Anweisung <code>use rand::Rng</code> in den Gültigkeitsbereich
+definiert, das wir mit der Anweisung <code>use rand::Rng;</code> in den Gültigkeitsbereich
 gebracht haben. Die Methode <code>gen_range</code> nimmt einen Bereichsausdruck als
 Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
 hat die Form <code>start..=end</code> und er beinhaltet die Untergrenze und die
@@ -776,18 +782,19 @@ kannst, auf die dein Code stoßen könnte, und die sicherstellen, dass du sie
 alle behandelst. Diese Funktionalitäten werden ausführlich in Kapitel 6 bzw.
 Kapitel 18 behandelt.</p>
 <p>Gehen wir ein Beispiel dafür durch, was mit dem hier verwendeten
-<code>match</code>-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und die
-zufällig generierte Geheimzahl ist diesmal 38. Wenn der Code 50 mit 38
-vergleicht, gibt die <code>cmp</code>-Methode <code>Ordering::Greater</code> zurück, weil 50 größer
-als 38 ist. Der <code>match</code>-Ausdruck erhält den Wert <code>Ordering::Greater</code> und
-beginnt mit der Überprüfung des Musters jedes Zweigs. Er schaut auf das Muster
-<code>Ordering::Less</code> des ersten Zweigs und sieht, dass der Wert <code>Ordering::Greater</code>
-nicht mit <code>Ordering::Less</code> übereinstimmt, also ignoriert er den Code in diesem
-Zweig und geht zum nächsten Zweig über. Das Muster <code>Ordering::Greater</code> des
-nächsten Zweigs <em>passt</em> zu <code>Ordering::Greater</code>! Der dazugehörige Code in diesem
-Zweig wird ausgeführt und <code>Zu groß!</code> auf den Bildschirm ausgegeben. Der
-<code>match</code>-Ausdruck endet nach der ersten erfolgreichen Übereinstimmung, sodass
-der letzte Zweig in diesem Szenario nicht berücksichtigt wird.</p>
+<code>match</code>-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und
+die zufällig generierte Geheimzahl ist diesmal 38.</p>
+<p>Wenn der Code 50 mit 38 vergleicht, gibt die <code>cmp</code>-Methode <code>Ordering::Greater</code>
+zurück, weil 50 größer als 38 ist. Der <code>match</code>-Ausdruck erhält den Wert
+<code>Ordering::Greater</code> und beginnt mit der Überprüfung des Musters jedes Zweigs.
+Er schaut auf das Muster <code>Ordering::Less</code> des ersten Zweigs und sieht, dass der
+Wert <code>Ordering::Greater</code> nicht mit <code>Ordering::Less</code> übereinstimmt, also
+ignoriert er den Code in diesem Zweig und geht zum nächsten Zweig über. Das
+Muster <code>Ordering::Greater</code> des nächsten Zweigs <em>passt</em> zu <code>Ordering::Greater</code>!
+Der dazugehörige Code in diesem Zweig wird ausgeführt und <code>Zu groß!</code> auf den
+Bildschirm ausgegeben. Der <code>match</code>-Ausdruck endet nach der ersten erfolgreichen
+Übereinstimmung, sodass der letzte Zweig in diesem Szenario nicht
+berücksichtigt wird.</p>
 <p>Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:</p>
 <pre><code class="language-console">$ cargo build
@@ -860,12 +867,13 @@ hinzufügen:</p>
 <pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);</code></pre>
 <p>Wir erstellen eine Variable mit dem Namen <code>guess</code>. Aber warte, hat das Programm
 nicht bereits eine Variable namens <code>guess</code>? Ja, aber Rust erlaubt uns, den
-vorherigen Wert von <code>guess</code> mit einem neuen Wert zu <em>beschatten</em> (shadow).
-Diese Funktionalität wird häufig in Situationen verwendet, in denen du einen
-Wert von einem Typ in einen anderen Typ konvertieren möchtest. Durch das
-Beschatten können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt uns
-zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. <code>guess_str</code> und
-<code>guess</code>. (Kapitel 3 behandelt das Beschatten ausführlicher.)</p>
+vorherigen Wert von <code>guess</code> mit einem neuen Wert zu beschatten (shadow). Durch
+das <em>Beschatten</em> können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt
+uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. <code>guess_str</code> und
+<code>guess</code>. Wir werden dies in <a href="ch03-01-variables-and-mutability.html#beschatten-shadowing">Kapitel 3</a> ausführlicher behandeln,
+aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
+wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
+willst.</p>
 <p>Wir binden <code>guess</code> an den Ausdruck <code>guess.trim().parse()</code>. Das <code>guess</code> im
 Ausdruck bezieht sich auf das ursprüngliche <code>guess</code>, das ein <code>String</code> mit der
 Eingabe darin war. Die <code>trim</code>-Methode der <code>String</code>-Instanz wird alle
@@ -889,26 +897,26 @@ indem wir <code>let guess: u32</code> verwenden. Der Doppelpunkt (<code>:</code>
 Rust, dass wir den Typ der Variablen annotieren werden. Rust hat ein paar
 eingebaute Zahlentypen; <code>u32</code>, das du hier siehst, ist eine vorzeichenlose
 32-Bit-Ganzzahl. Es ist eine gute Standardwahl für eine kleine positive Zahl.
-Über andere Zahlentypen erfährst du in Kapitel 3. Zusätzlich bedeuten die
-Annotation <code>u32</code> in diesem Beispielprogramm und der Vergleich mit
-<code>secret_number</code>, dass Rust daraus ableiten wird, dass <code>secret_number</code> ebenfalls
-ein <code>u32</code> sein sollte. Nun wird also der Vergleich zwischen zwei Werten
-desselben Typs durchgeführt!</p>
+Über andere Zahlentypen erfährst du in <a href="ch03-02-data-types.html#ganzzahl-typen">Kapitel 3</a>.</p>
+<p>Zusätzlich bedeuten die Annotation <code>u32</code> in diesem Beispielprogramm und der
+Vergleich mit <code>secret_number</code>, dass Rust daraus ableiten wird, dass
+<code>secret_number</code> ebenfalls ein <code>u32</code> sein sollte. Nun wird also der Vergleich
+zwischen zwei Werten desselben Typs durchgeführt!</p>
 <p>Die Methode <code>parse</code> funktioniert nur bei Zeichen, die logisch in Zahlen
 umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel <code>A👍%</code> enthielte, gäbe es keine Möglichkeit, dies in
 eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die <code>parse</code>-Methode
 einen <code>Result</code>-Typ zurück, ähnlich wie die <code>read_line</code>-Methode (weiter oben in
-<a href="#behandeln-potentieller-fehler-mit-dem-typ-result">„Behandeln potentieller Fehler mit dem Typ
-<code>Result</code>“</a>). Wir werden
-dieses <code>Result</code> auf die gleiche Weise behandeln, indem wir erneut <code>expect</code>
-verwenden. Wenn <code>parse</code> eine <code>Err</code>-Variante von <code>Result</code> zurückgibt, weil es
-keine Zahl aus der Zeichenkette erzeugen konnte, wird der <code>expect</code>-Aufruf das
-Spiel zum Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn
-<code>parse</code> die Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die
-<code>Ok</code>-Variante von <code>Result</code> zurück, und <code>expect</code> gibt die Zahl zurück, die wir
-vom <code>Ok</code>-Wert erwarten.</p>
-<p>Lassen wir das Programm jetzt laufen!</p>
+<a href="#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
+<code>Result</code>“</a>). Wir werden dieses
+<code>Result</code> auf die gleiche Weise behandeln, indem wir erneut <code>expect</code> verwenden.
+Wenn <code>parse</code> eine <code>Err</code>-Variante von <code>Result</code> zurückgibt, weil es keine Zahl
+aus der Zeichenkette erzeugen konnte, wird der <code>expect</code>-Aufruf das Spiel zum
+Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn <code>parse</code> die
+Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die <code>Ok</code>-Variante
+von <code>Result</code> zurück, und <code>expect</code> gibt die Zahl zurück, die wir vom <code>Ok</code>-Wert
+erwarten.</p>
+<p>Lassen wir das Programm jetzt laufen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
@@ -1188,9 +1196,9 @@ fn main() {
 }</code></pre>
 <p><span class="caption">Codeblock 2-6: Vollständiger Code des
 Ratespiels</span></p>
-<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen
 Glückwunsch!</p>
+<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
 Rust-Konzepten vertraut zu machen: <code>let</code>, <code>match</code>, Funktionen, das Verwenden
 von externen Kisten und mehr. In den nächsten Kapiteln erfährst du mehr über

@@ -158,9 +158,9 @@ Codesemantik ändern. Weitere Informationen zu <code>rustfmt</code> findest du i
 Dokumentation</a>.</p>
 <h3 id="korrigiere-deinen-code-mit-rustfix"><a class="header" href="#korrigiere-deinen-code-mit-rustfix">Korrigiere deinen Code mit <code>rustfix</code></a></h3>
 <p>Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-Compiler-Warnungen beheben, die eine Möglichkeit haben, das Problem zu beheben,
-was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du schon einmal
-Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:</p>
+Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das Problem zu
+beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du
+schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn do_something() {}
 
@@ -225,14 +225,15 @@ mathematische Konstante wie Pi verwendet, wie dieses Programm es tut:</p>
     println!(&quot;Die Kreisfläche ist {}&quot;, x * r * r);
 }</code></pre></pre>
 <p>Das Ausführen von <code>cargo clippy</code> in diesem Projekt führt zu diesem Fehler:</p>
-<pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found. Consider using it directly
+<pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found
  --&gt; src/main.rs:2:13
   |
 2 |     let x = 3.1415;
   |             ^^^^^^
   |
-  = note: #[deny(clippy::approx_constant)] on by default
-  = help: for further information visit https://rust-lang-nursery.github.io/rust-clippy/master/index.html#approx_constant
+  = note: `#[deny(clippy::approx_constant)]` on by default
+  = help: consider using the constant directly
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
 </code></pre>
 <p>Dieser Fehler weist dich darauf hin, dass in Rust bereits eine präzisere
 Konstante <code>PI</code> definiert ist und dass dein Programm korrekter wäre, wenn du
