@@ -43,9 +43,9 @@ $ cargo new hello_cargo
 $ cd hello_cargo
 ```
 
-Der erste Befehl hat ein neues Verzeichnis namens *hello_cargo* erstellt. Wir
-haben unser Projekt *hello_cargo* genannt und Cargo erstellt seine Dateien in
-einem Verzeichnis mit demselben Namen.
+Der erste Befehl erstellt ein neues Verzeichnis und ein Projekt namens
+*hello_cargo*. Wir haben unser Projekt *hello_cargo* genannt und Cargo
+erstellt seine Dateien in einem Verzeichnis mit demselben Namen.
 
 Gehe in das Verzeichnis *hello_cargo* und liste die Dateien auf. Du wirst
 sehen, dass Cargo zwei Dateien und ein Verzeichnis für uns generiert hat: Eine
@@ -72,13 +72,16 @@ name = "hello_cargo"
 version = "0.1.0"
 edition = "2021"
 
+# Weitere Schlüssel und ihre Definitionen findest du unter
+# https://doc.rust-lang.org/cargo/reference/manifest.html
+
 [dependencies]
 ```
 
 <span class="caption">Codeblock 1-2: Inhalt von *Cargo.toml* erzeugt durch
 `cargo new`</span>
 
-Diese Datei liegt im Format [*TOML*](https://toml.io) (*Tom's Obvious, Minimal
+Diese Datei liegt im Format [*TOML*][toml] (*Tom's Obvious, Minimal
 Language*) vor, welches das Konfigurationsformat von Cargo ist.
 
 Die erste Zeile `[package]` ist eine Abschnittsüberschrift, die anzeigt, dass
@@ -109,9 +112,9 @@ fn main() {
 
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
-vorherigen Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher
-darin, dass Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben
-eine Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.
+Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
+Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben eine
+Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.
 
 Cargo erwartet, dass deine Quelldateien innerhalb des *src*-Verzeichnisses
 liegen. Das Projektverzeichnis der obersten Ebene ist nur für README-Dateien,
@@ -136,10 +139,11 @@ $ cargo build
     Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-Dieser Befehl erstellt eine ausführbare Datei in *target/debug/hello_cargo*
+Dieser Befehl erzeugt eine ausführbare Datei in *target/debug/hello_cargo*
 (oder *target\debug\hello_cargo.exe* unter Windows) und nicht in deinem
-aktuellen Verzeichnis. Mit diesem Befehl kannst du die ausführbare Datei
-ausführen:
+aktuellen Verzeichnis. Da standardmäßig für den Debug-Modus gebaut wird, legt
+Cargo die Binärdatei in einem Verzeichnis namens *debug* ab. Mit diesem Befehl
+kannst du die ausführbare Datei ausführen:
 
 ```console
 $ ./target/debug/hello_cargo # oder .\target\debug\hello_cargo.exe unter Windows
@@ -165,11 +169,16 @@ $ cargo run
 Hello, world!
 ```
 
+Das Verwenden von `cargo run` ist bequemer, als sich daran erinnern zu müssen,
+`cargo build` auszuführen und dann den gesamten Pfad zur Binärdatei zu
+verwenden, daher verwenden die meisten Entwickler `cargo run`.
+
 Beachte, dass wir diesmal keine Ausgabe gesehen haben, die darauf hinweist,
 dass Cargo `hello_cargo` kompiliert hat. Cargo fand heraus, dass sich die
-Dateien nicht geändert hatten, also ließ es einfach die Binärdatei laufen. Wenn
-du deinen Quellcode geändert hättest, hätte Cargo das Projekt vor der
-Ausführung neu kompiliert, und du hättest diese Ausgabe gesehen:
+Dateien nicht geändert hatten, also hat es nicht neu gebaut, sondern ließ
+einfach die Binärdatei laufen. Wenn du deinen Quellcode geändert hättest, hätte
+Cargo das Projekt vor der Ausführung neu kompiliert, und du hättest diese
+Ausgabe gesehen:
 
 ```console
 $ cargo run
@@ -232,9 +241,9 @@ build --release` ausführst und den Benchmark mit der ausführbaren Datei in
 
 Bei einfachen Projekten bietet Cargo nicht viel mehr Wert als das bloße
 Verwenden von `rustc`, aber es wird sich in dem Maße bewähren, wie deine
-Programme immer komplizierter werden. Bei komplexen Projekten, die aus mehreren
-Kisten bestehen, ist es viel einfacher, das Bauen von Cargo koordinieren zu
-lassen.
+Programme immer komplizierter werden. Sobald Programme auf mehrere Dateien
+anwachsen oder eine Abhängigkeit benötigen, ist es viel einfacher, Cargo den
+Bauvorgang koordinieren zu lassen.
 
 Auch wenn das Projekt `hello_cargo` einfach ist, so verwendet es jetzt einen
 Großteil der realen Werkzeuge, die du im Rest deiner Rust-Karriere verwenden
@@ -248,7 +257,8 @@ $ cd someproject
 $ cargo build
 ```
 
-Weitere Informationen über Cargo findest du unter [seiner Dokumentation][cargo-doc].
+Weitere Informationen über Cargo findest du unter seiner
+[Dokumentation][cargo-doc].
 
 ## Zusammenfassung
 
@@ -270,3 +280,4 @@ lies Kapitel 3 und kehre dann zu Kapitel 2 zurück.
 [appendix-e]: appendix-05-editions.html
 [cargo-doc]: https://doc.rust-lang.org/cargo/
 [installation]: ch01-01-installation.html
+[toml]: https://toml.io
