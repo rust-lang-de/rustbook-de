@@ -9,7 +9,7 @@ Rust-Buchs](https://doc.rust-lang.org/book/).
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.4.14"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4.25"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
