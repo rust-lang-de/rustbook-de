@@ -37,9 +37,9 @@ Dokumentation][rustfmt].
 ### Korrigiere deinen Code mit `rustfix`
 
 Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-Compiler-Warnungen beheben, die eine Möglichkeit haben, das Problem zu beheben,
-was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du schon einmal
-Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:
+Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das Problem zu
+beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du
+schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -137,14 +137,15 @@ fn main() {
 Das Ausführen von `cargo clippy` in diesem Projekt führt zu diesem Fehler:
 
 ```text
-error: approximate value of `f{32, 64}::consts::PI` found. Consider using it directly
+error: approximate value of `f{32, 64}::consts::PI` found
  --> src/main.rs:2:13
   |
 2 |     let x = 3.1415;
   |             ^^^^^^
   |
-  = note: #[deny(clippy::approx_constant)] on by default
-  = help: for further information visit https://rust-lang-nursery.github.io/rust-clippy/master/index.html#approx_constant
+  = note: `#[deny(clippy::approx_constant)]` on by default
+  = help: consider using the constant directly
+  = help: for further information visit https://rust-lang.github.io/rust-clippy/master/index.html#approx_constant
 ```
 
 Dieser Fehler weist dich darauf hin, dass in Rust bereits eine präzisere

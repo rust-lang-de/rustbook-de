@@ -3,9 +3,9 @@
 Lass uns den Sprung in Rust wagen, indem wir gemeinsam ein praktisches Projekt
 durcharbeiten! Dieses Kapitel führt dich in einige gängige Rust-Konzepte ein,
 indem es dir zeigt, wie du diese in einem realen Programm verwenden kannst. Du
-lernst `let`, `match`, Methoden, assoziierte Funktionen, das Verwenden externer
-Kisten (crates) und mehr kennen! In den folgenden Kapiteln werden wir diese
-Ideen ausführlicher behandeln. In diesem Kapitel wirst du die Grundlagen üben.
+lernst `let`, `match`, Methoden, assoziierte Funktionen, externe Kisten
+(crates) und mehr kennen! In den folgenden Kapiteln werden wir diese Ideen
+ausführlicher behandeln. In diesem Kapitel wirst du nur die Grundlagen üben.
 
 Wir werden ein klassisches Programmierproblem für Anfänger implementieren: Ein
 Ratespiel. Und so funktioniert es: Das Programm erzeugt eine zufällige ganze
@@ -42,8 +42,6 @@ edition = "2021"
 
 [dependencies]
 ```
-
-Der Inhalt Deiner Datei sollte ungefähr so aussehen wie hier. Falls es nicht ganz übereinstimmt, liegt das wahrscheinlich daran, dass Du schon eine neuere Version von `Cargo` verwendest. Wie im vorherigen Kapitel schon erwähnt, kann man den `author` Tag hinzufügen, muss es aber nicht.
 
 Wie du in Kapitel 1 gesehen hast, generiert `cargo new` ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei *src/main.rs* an:
@@ -160,8 +158,8 @@ fn main() {
 # }
 ```
 
-Die Syntax `fn` deklariert eine neue Funktion, die Klammern `()` zeigen an,
-dass es keine Parameter gibt, und die geschweifte Klammer `{` beginnt den Rumpf
+Die Syntax `fn` deklariert eine neue Funktion; die Klammern `()` zeigen an,
+dass es keine Parameter gibt; und die geschweifte Klammer `{` beginnt den Rumpf
 der Funktion.
 
 Wie du auch in Kapitel 1 gelernt hast, ist `println!` ein Makro, das eine
@@ -283,10 +281,10 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.
 # }
 ```
 
-Hätten wir die Bibliothek `io` nicht am Anfang des Programms importiert,
-könnten wir die Funktion trotzdem verwenden, indem wir den Funktionsaufruf als
-`std::io::stdin` schreiben. Die Funktion `stdin` gibt eine Instanz von
-[`std::io::Stdin`][iostdin] zurück, was ein Typ ist, der eine
+Hätten wir die Bibliothek `io` nicht am Anfang des Programms mit `use std::io;`
+importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
+Funktionsaufruf als `std::io::stdin` schreiben. Die Funktion `stdin` gibt eine
+Instanz von [`std::io::Stdin`][iostdin] zurück, was ein Typ ist, der eine
 Standardeingaberessource (handle to the standard input) für dein Terminal
 darstellt.
 
@@ -311,7 +309,7 @@ standardmäßig unveränderlich sind. Daher musst du `&mut guess` anstatt `&gues
 schreiben, um sie veränderlich zu machen. (In Kapitel 4 werden Referenzen
 ausführlicher erklärt.)
 
-### Behandeln potentieller Fehler mit dem Typ `Result`
+### Behandeln potentieller Fehler mit `Result`
 
 Wir arbeiten noch immer an dieser Codezeile. Wir besprechen jetzt eine dritte
 Textzeile, aber beachte, dass sie immer noch Teil einer einzigen logischen
@@ -355,8 +353,8 @@ kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
 Zuständen annehmen kann.
 Wir nennen jeden möglichen Zustand eine *Variante*.
 
-In Kapitel 6 werden Aufzählungen ausführlicher behandelt. Der Zweck dieser
-`Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
+In Kapitel 6 werden [Aufzählungen][enums] ausführlicher behandelt. Der Zweck
+dieser `Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
 
 Die Varianten von  `Result` sind `Ok` und `Err`. Die Variante `Ok` gibt an, dass
 die Operation erfolgreich war, und der erfolgreich
@@ -431,20 +429,23 @@ hinzugefügten Code nur noch eine weitere Zeile zu besprechen:
 Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
 enthält. Der Satz geschweifte Klammern `{}` ist ein Platzhalter:
 Stelle dir `{}` wie kleine Krebszangen vor, die einen Wert an Ort und Stelle
-halten. Mit geschweiften Klammern kannst du mehr als einen Wert ausgeben: Der
-erste Satz geschweifte Klammern enthält den ersten Wert, der nach der
-Formatierungszeichenkette aufgeführt ist, der zweite Satz enthält den zweiten
-Wert usw. Das Ausgeben mehrerer Werte in einem Aufruf von `println!` würde
-folgendermaßen aussehen:
+halten. Wenn du den Wert einer Variablen ausgibst, kann der Variablenname
+innerhalb der geschweiften Klammern stehen. Wenn du das Ergebnis der Auswertung
+eines Ausdrucks ausgeben willst, füge leere geschweifte Klammern in die
+Formatierungszeichenkette ein und gib dann nach der Formatierungszeichenkette
+eine durch Komma getrennte Liste von Ausdrücken ein, die in jedem leeren
+geschweiften Klammerplatzhalter in derselben Reihenfolge ausgegeben werden
+sollen. Das Ausgeben einer Variablen und des Ergebnisses eines Ausdrucks in
+einem Aufruf von `println!` würde wie folgt aussehen:
 
 ```rust
 let x = 5;
 let y = 10;
 
-println!("x = {} und y = {}", x, y);
+println!("x = {x} und y + 2 = {}", y + 2);
 ```
 
-Dieser Code würde `x = 5 und y = 10` ausgeben.
+Dieser Code würde `x = 5 und y + 2 = 12` ausgeben.
 
 ### Testen des ersten Teils
 
@@ -502,14 +503,14 @@ dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste `rand` mit dem semantischen
-Versionsspezifikator `0.8.3`. Cargo versteht [semantische
+Versionsspezifikator `0.8.5`. Cargo versteht [semantische
 Versionierung][semver] (manchmal auch *SemVer* genannt), was ein Standard zum
-Schreiben von Versionsnummern ist. Die Zahl `0.8.3` ist eigentlich die
-Abkürzung für `^0.8.3`, was für alle Versionen ab `0.8.3` und kleiner als
+Schreiben von Versionsnummern ist. Die Angabe `0.8.5` ist eigentlich die
+Abkürzung für `^0.8.5`, was für alle Versionen ab `0.8.5` und kleiner als
 `0.9.0` steht.
 
 Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
-Version 0.8.3 ist und diese Angabe stellt sicher, dass du die neueste
+Version 0.8.5 ist und diese Angabe stellt sicher, dass du die neueste
 Patch-Version erhältst, die noch mit dem Code in diesem Kapitel kompiliert
 werden kann. Ab Version `0.9.0` ist nicht garantiert, dass die API mit der in
 den folgenden Beispielen verwendeten übereinstimmt.
@@ -520,16 +521,20 @@ gezeigt.
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.3
-  Downloaded libc v0.2.62
-  Downloaded rand_core v0.2.2
-  Downloaded rand_core v0.3.1
-  Downloaded rand_core v0.4.2
-   Compiling rand_core v0.4.2
-   Compiling libc v0.2.62
-   Compiling rand_core v0.3.1
-   Compiling rand_core v0.2.2
-   Compiling rand v0.8.3
+  Downloaded rand v0.8.5
+  Downloaded libc v0.2.127
+  Downloaded getrandom v0.2.7
+  Downloaded cfg-if v1.0.0
+  Downloaded ppv-lite86 v0.2.16
+  Downloaded rand_chacha v0.3.1
+  Downloaded rand_core v0.6.3
+   Compiling libc v0.2.127
+   Compiling getrandom v0.2.7
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.16
+   Compiling rand_core v0.6.3
+   Compiling rand_chacha v0.3.1
+   Compiling rand v0.8.5
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished dev [unoptimized + debuginfo] target(s) in 2.53s
 ```
@@ -538,8 +543,8 @@ $ cargo build
 build` nach dem Hinzufügen der Kiste rand als Abhängigkeit</span>
 
 Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
-sind sie alle mit dem Code kompatibel!), unterschiedliche Zeilen (je nach
-Betriebssystem) und die Zeilen können in einer anderen Reihenfolge erscheinen.
+sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
+Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.
 
 Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
 Versionen von allem was die Abhängigkeit aus der *Registry* benötigt, was eine
@@ -582,7 +587,7 @@ Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wen
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
 verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
-nächste Woche Version 0.8.4 der Kiste `rand` herauskommt und eine wichtige
+nächste Woche Version 0.8.6 der Kiste `rand` herauskommt und eine wichtige
 Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
 dies zu handhaben, erstellt Rust die Datei *Cargo.lock* beim ersten Mal, wenn
 du `cargo build` ausführst, die nun im *guessing_game*-Verzeichnis liegt.
@@ -593,7 +598,7 @@ Datei *Cargo.lock*. Wenn du dein Projekt in der Zukunft baust, wird Cargo
 sehen, dass die Datei *Cargo.lock* existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
-Worten, dein Projekt bleibt dank der Datei *Cargo.lock* auf `0.8.3`, bis du
+Worten, dein Projekt bleibt dank der Datei *Cargo.lock* auf 0.8.5, bis du
 explizit die Versionsnummer erhöhst. Da die Datei *Cargo.lock* für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.
@@ -604,20 +609,20 @@ Wenn du eine Kiste aktualisieren *willst*, bietet Cargo den Befehl `update` an,
 der die Datei *Cargo.lock* ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in *Cargo.toml* herausfindet. Cargo schreibt diese
 Versionen dann in die Datei *Cargo.lock*. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als `0.8.3` und kleiner als `0.9.0` suchen. Wenn die
-Kiste `rand` zwei neue Versionen `0.8.4` und `0.9.0` veröffentlicht hat,
-würdest du folgendes sehen, wenn du `cargo update` ausführst:
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
+Kiste `rand` zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du
+folgendes sehen, wenn du `cargo update` ausführst:
 
 ```console
 $ cargo update
     Updating crates.io index
-    Updating rand v0.8.3 -> v0.8.4
+    Updating rand v0.8.5 -> v0.8.6
 ```
 
-Cargo ignoriert die Version `0.9.0`. An diesem Punkt würdest du auch eine
+Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei *Cargo.lock* bemerken, die feststellt, dass die
-Version der Kiste `rand`, die du jetzt benutzt, `0.8.4` ist. Um die
-`rand`-Version `0.9.0` oder irgendeine Version aus der `0.9.x`-Serie zu
+Version der Kiste `rand`, die du jetzt benutzt, 0.8.6 ist. Um die
+`rand`-Version 0.9.0 oder irgendeine Version aus der 0.9.*x*-Serie zu
 verwenden, müsstest du stattdessen die Datei *Cargo.toml* anpassen, damit sie
 wie folgt aussieht:
 
@@ -670,7 +675,7 @@ fn main() {
 <span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span>
 
-Zuerst fügen wir die Zeile `use rand::Rng` hinzu. Das Merkmal (trait)
+Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Merkmal (trait)
 `Rng` definiert Methoden, die Zufallszahlengeneratoren implementieren, und
 dieses Merkmal muss im Gültigkeitsbereich sein, damit wir diese Methoden
 verwenden können. In Kapitel 10 werden Merkmale im Detail behandelt.
@@ -681,7 +686,7 @@ Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
 zum aktuellen Ausführungsstrang (thread) ist und vom Betriebssystem
 initialisiert (seeded) wird. Dann rufen wir die Methode `gen_range` des
 Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal `Rng`
-definiert, das wir mit der Anweisung `use rand::Rng` in den Gültigkeitsbereich
+definiert, das wir mit der Anweisung `use rand::Rng;` in den Gültigkeitsbereich
 gebracht haben. Die Methode `gen_range` nimmt einen Bereichsausdruck als
 Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
 hat die Form `start..=end` und er beinhaltet die Untergrenze und die
@@ -798,18 +803,20 @@ alle behandelst. Diese Funktionalitäten werden ausführlich in Kapitel 6 bzw.
 Kapitel 18 behandelt.
 
 Gehen wir ein Beispiel dafür durch, was mit dem hier verwendeten
-`match`-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und die
-zufällig generierte Geheimzahl ist diesmal 38. Wenn der Code 50 mit 38
-vergleicht, gibt die `cmp`-Methode `Ordering::Greater` zurück, weil 50 größer
-als 38 ist. Der `match`-Ausdruck erhält den Wert `Ordering::Greater` und
-beginnt mit der Überprüfung des Musters jedes Zweigs. Er schaut auf das Muster
-`Ordering::Less` des ersten Zweigs und sieht, dass der Wert `Ordering::Greater`
-nicht mit `Ordering::Less` übereinstimmt, also ignoriert er den Code in diesem
-Zweig und geht zum nächsten Zweig über. Das Muster `Ordering::Greater` des
-nächsten Zweigs *passt* zu `Ordering::Greater`! Der dazugehörige Code in diesem
-Zweig wird ausgeführt und `Zu groß!` auf den Bildschirm ausgegeben. Der
-`match`-Ausdruck endet nach der ersten erfolgreichen Übereinstimmung, sodass
-der letzte Zweig in diesem Szenario nicht berücksichtigt wird.
+`match`-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und
+die zufällig generierte Geheimzahl ist diesmal 38.
+
+Wenn der Code 50 mit 38 vergleicht, gibt die `cmp`-Methode `Ordering::Greater`
+zurück, weil 50 größer als 38 ist. Der `match`-Ausdruck erhält den Wert
+`Ordering::Greater` und beginnt mit der Überprüfung des Musters jedes Zweigs.
+Er schaut auf das Muster `Ordering::Less` des ersten Zweigs und sieht, dass der
+Wert `Ordering::Greater` nicht mit `Ordering::Less` übereinstimmt, also
+ignoriert er den Code in diesem Zweig und geht zum nächsten Zweig über. Das
+Muster `Ordering::Greater` des nächsten Zweigs *passt* zu `Ordering::Greater`!
+Der dazugehörige Code in diesem Zweig wird ausgeführt und `Zu groß!` auf den
+Bildschirm ausgegeben. Der `match`-Ausdruck endet nach der ersten erfolgreichen
+Übereinstimmung, sodass der letzte Zweig in diesem Szenario nicht
+berücksichtigt wird.
 
 Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:
@@ -896,12 +903,13 @@ let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 
 Wir erstellen eine Variable mit dem Namen `guess`. Aber warte, hat das Programm
 nicht bereits eine Variable namens `guess`? Ja, aber Rust erlaubt uns, den
-vorherigen Wert von `guess` mit einem neuen Wert zu *beschatten* (shadow).
-Diese Funktionalität wird häufig in Situationen verwendet, in denen du einen
-Wert von einem Typ in einen anderen Typ konvertieren möchtest. Durch das
-Beschatten können wir den Variablennamen `guess` wiederverwenden, anstatt uns
-zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. `guess_str` und
-`guess`. (Kapitel 3 behandelt das Beschatten ausführlicher.)
+vorherigen Wert von `guess` mit einem neuen Wert zu beschatten (shadow). Durch
+das *Beschatten* können wir den Variablennamen `guess` wiederverwenden, anstatt
+uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. `guess_str` und
+`guess`. Wir werden dies in [Kapitel 3][shadowing] ausführlicher behandeln,
+aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
+wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
+willst.
 
 Wir binden `guess` an den Ausdruck `guess.trim().parse()`. Das `guess` im
 Ausdruck bezieht sich auf das ursprüngliche `guess`, das ein `String` mit der
@@ -927,28 +935,29 @@ indem wir `let guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt
 Rust, dass wir den Typ der Variablen annotieren werden. Rust hat ein paar
 eingebaute Zahlentypen; `u32`, das du hier siehst, ist eine vorzeichenlose
 32-Bit-Ganzzahl. Es ist eine gute Standardwahl für eine kleine positive Zahl.
-Über andere Zahlentypen erfährst du in Kapitel 3. Zusätzlich bedeuten die
-Annotation `u32` in diesem Beispielprogramm und der Vergleich mit
-`secret_number`, dass Rust daraus ableiten wird, dass `secret_number` ebenfalls
-ein `u32` sein sollte. Nun wird also der Vergleich zwischen zwei Werten
-desselben Typs durchgeführt!
+Über andere Zahlentypen erfährst du in [Kapitel 3][integers].
+
+Zusätzlich bedeuten die Annotation `u32` in diesem Beispielprogramm und der
+Vergleich mit `secret_number`, dass Rust daraus ableiten wird, dass
+`secret_number` ebenfalls ein `u32` sein sollte. Nun wird also der Vergleich
+zwischen zwei Werten desselben Typs durchgeführt!
 
 Die Methode `parse` funktioniert nur bei Zeichen, die logisch in Zahlen
 umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel `A👍%` enthielte, gäbe es keine Möglichkeit, dies in
 eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die `parse`-Methode
 einen `Result`-Typ zurück, ähnlich wie die `read_line`-Methode (weiter oben in
-[„Behandeln potentieller Fehler mit dem Typ
-`Result`“](#behandeln-potentieller-fehler-mit-dem-typ-result)). Wir werden
-dieses `Result` auf die gleiche Weise behandeln, indem wir erneut `expect`
-verwenden. Wenn `parse` eine `Err`-Variante von `Result` zurückgibt, weil es
-keine Zahl aus der Zeichenkette erzeugen konnte, wird der `expect`-Aufruf das
-Spiel zum Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn
-`parse` die Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die
-`Ok`-Variante von `Result` zurück, und `expect` gibt die Zahl zurück, die wir
-vom `Ok`-Wert erwarten.
+[„Behandeln potentieller Fehler mit
+`Result`“](#behandeln-potentieller-fehler-mit-result)). Wir werden dieses
+`Result` auf die gleiche Weise behandeln, indem wir erneut `expect` verwenden.
+Wenn `parse` eine `Err`-Variante von `Result` zurückgibt, weil es keine Zahl
+aus der Zeichenkette erzeugen konnte, wird der `expect`-Aufruf das Spiel zum
+Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn `parse` die
+Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die `Ok`-Variante
+von `Result` zurück, und `expect` gibt die Zahl zurück, die wir vom `Ok`-Wert
+erwarten.
 
-Lassen wir das Programm jetzt laufen!
+Lassen wir das Programm jetzt laufen:
 
 ```console
 $ cargo run
@@ -1270,10 +1279,10 @@ fn main() {
 <span class="caption">Codeblock 2-6: Vollständiger Code des
 Ratespiels</span>
 
-## Zusammenfassung
-
 An diesem Punkt hast du das Ratespiel erfolgreich aufgebaut. Herzlichen
 Glückwunsch!
+
+## Zusammenfassung
 
 Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
 Rust-Konzepten vertraut zu machen: `let`, `match`, Funktionen, das Verwenden
@@ -1290,6 +1299,7 @@ besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert
 [doccratesio]: http://doc.crates.io/crates-io.html
 [enums]: ch06-00-enums.html
 [expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
+[integers]: ch03-02-data-types.html#ganzzahl-typen
 [iostdin]: https://doc.rust-lang.org/std/io/struct.Stdin.html
 [match]: ch06-02-match.html
 [parse]: https://doc.rust-lang.org/std/primitive.str.html#method.parse
@@ -1299,5 +1309,6 @@ besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert
 [recover]: ch09-02-recoverable-errors-with-result.html
 [result]: https://doc.rust-lang.org/std/result/enum.Result.html
 [semver]: https://semver.org/lang/de/
+[shadowing]: ch03-01-variables-and-mutability.html#beschatten-shadowing
 [string]: https://doc.rust-lang.org/std/string/struct.String.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html

@@ -1,6 +1,7 @@
 # Die Programmiersprache Rust
 
-*von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft*
+*von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;*
+*übersetzt ins Deutsche durch die Rust-Gemeinschaft*
 
 Diese Version des Textes geht davon aus, dass du Rust 1.61 (veröffentlicht am
 2022-05-10) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
@@ -13,7 +14,7 @@ Die HTML-Version ist online verfügbar unter
 (deutsche Übersetzung) und offline mit Rust-Installationen, die mit `rustup`
 erfolgt sind; führe `rustup docs --book` aus um es zu öffnen.
 
-Es sind auch mehrere [Gemeinschaftsübersetzungen][translations] verfügbar.
+Es sind weitere [Gemeinschaftsübersetzungen][translations] verfügbar.
 
 Der englische Text ist auch als [Taschenbuch und E-Book bei No Starch
 Press][nsprust] erhältlich.

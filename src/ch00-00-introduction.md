@@ -32,7 +32,8 @@ Systemprogrammierung:
 * Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
   Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
   Rust-Ökosystem schmerzlos und konsistent.
-* Rustfmt gewährleistet einen einheitlichen Codierstil aller Entwickler.
+* Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
+  den Entwicklern.
 * Der Rust Sprachdienst (Language Server) ermöglicht Code-Vervollständigung und
   im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).
 
@@ -51,11 +52,11 @@ der Programmierung sind.
 ### Unternehmen
 
 Hunderte von Unternehmen, große und kleine, setzen Rust für eine Vielzahl von
-Aufgaben in der Produktion ein. Zu diesen Aufgaben gehören
-Kommandozeilenwerkzeuge, Webdienste, DevOps-Werkzeuge, eingebettete Geräte,
-Audio- und Videoanalyse und -transkodierung, Kryptowährungen, Bioinformatik,
-Suchmaschinen, Anwendungen für das Internet der Dinge, maschinelles Lernen und
-sogar wesentliche Teile des Webbrowsers Firefox.
+Aufgaben in der Produktion ein, dazu gehören Kommandozeilenwerkzeuge,
+Webdienste, DevOps-Werkzeuge, eingebettete Geräte, Audio- und Videoanalyse und
+-transkodierung, Kryptowährungen, Bioinformatik, Suchmaschinen, Anwendungen für
+das Internet der Dinge, maschinelles Lernen und sogar wesentliche Teile des
+Webbrowsers Firefox.
 
 ### Open-Source-Entwickler
 
@@ -65,10 +66,10 @@ wenn du zur Programmiersprache Rust beiträgst.
 
 ### Menschen, die Geschwindigkeit und Stabilität schätzen
 
-Rust ist für Menschen, die sich nach Schnelligkeit und Stabilität einer Sprache
-sehnen. Unter Geschwindigkeit verstehen wir die Geschwindigkeit der Programme,
-die du mit Rust schreiben kannst, und die Geschwindigkeit, mit der dich Rust
-diese Programme schreiben lässt. Die Prüfungen des Rust-Compilers
+Rust ist für Menschen, die sich nach Geschwindigkeit und Stabilität einer
+Sprache sehnen. Mit Geschwindigkeit meinen wir sowohl die Geschwindigkeit, mit
+der Rust-Code ausgeführt werden kann, als auch die Geschwindigkeit, mit der du
+mit Rust Programme schreiben kannst. Die Prüfungen des Rust-Compilers
 gewährleisten Stabilität während du neue Funktionen hinzufügst und deinen Code
 änderst. Dies steht im Gegensatz zu brüchigen Code-Altlasten in Sprachen ohne
 diese Prüfungen, die Entwickler sich oft scheuen zu verändern. Durch das
@@ -169,7 +170,9 @@ Schließlich enthalten einige Anhänge nützliche Informationen über die Sprach
 in einem eher referenzartigen Format. Anhang A enthält die Schlüsselwörter von
 Rust, Anhang B die Operatoren und Symbole von Rust, Anhang C ableitbare
 Merkmalen, die von der Standardbibliothek mitgebracht werden, Anhang D
-nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben.
+nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben. In
+Anhang F findest du Übersetzungen des Buches, und in Anhang G erfährst du, wie
+Rust erstellt wird und was nächtliches (nightly) Rust ist.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn

@@ -16,21 +16,19 @@ Nachstehend findest du eine Liste der derzeit verwendeten Schlüsselwörter mit
 einer Beschreibung ihrer Funktion.
 
 * `as` &ndash; primitive Typen umwandeln; ein spezifisches Merkmal mit einem
-  Element eindeutig machen; Elemente in `use`- und `extern crate`-Anweisungen
-  umbenennen 
+  Element eindeutig machen; Elemente in `use`-Anweisungen umbenennen 
 * `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Strang
   (thread) zu blockieren
 * `await` &ndash; Ausführung anhalten, bis das Ergebnis eines `Future` vorliegt
 * `break` &ndash; Schleife sofort verlassen
 * `const` &ndash; konstante Elemente oder konstante Roh-Referenzen definieren
 * `continue` &ndash; weiter zur nächsten Schleifeniteration
-* `crate` &ndash; externe Kiste (crate) oder Makrovariable, die die Kiste
-  repräsentiert, in der das Makro definiert ist, verlinken
+* `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)
 * `dyn` &ndash; dynamischer Aufruf (dispatch) eines Merkmalsobjekts (trait
   object)
 * `else` &ndash; Ersatzkontrollflusszweig bei `if` und `if let`
 * `enum` &ndash; eine Aufzählung (enumeration) definieren
-* `extern` &ndash; externe Kiste (crate), Funktion oder Variable verlinken
+* `extern` &ndash; externe Funktion oder Variable verlinken
 * `false` &ndash; Boolesches Literal für „falsch“
 * `fn` &ndash; Funktion oder Funktionsreferenztyp definieren
 * `for` &ndash; wiederhole über Elemente einer Iteration; ein Merkmal (trait)
@@ -138,14 +136,16 @@ Funktionsnamen in seiner Definition sowie an der Stelle, an der die Funktion in
 `main` aufgerufen wird.
 
 Roh-Bezeichner erlauben es dir, jedes beliebige Wort als Bezeichner zu
-verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Darüber
-hinaus ermöglicht dir der Roh-Bezeichner das Verwenden von Bibliotheken, die in
-einer anderen Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum
-Beispiel ist `try` in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018
-schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
-geschrieben wurde und eine Funktion `try` hat, musst du die
-Roh-Bezeichner-Syntax verwenden, in diesem Fall `r#try`, um diese Funktion von
-deinem Code der Ausgabe 2018 aus aufzurufen. Siehe [Anhang E][appendix-e] für
-weitere Informationen zu Ausgaben.
+verwenden, auch wenn dieses Wort ein reserviertes Schlüsselwort ist. Dies gibt
+uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
+Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
+Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
+Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
+Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
+`try` in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018 schon. Wenn du
+auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015 geschrieben wurde und
+eine Funktion `try` hat, musst du die Roh-Bezeichner-Syntax verwenden, in
+diesem Fall `r#try`, um diese Funktion von deinem Code der Ausgabe 2018 aus
+aufzurufen. Siehe [Anhang E][appendix-e] für weitere Informationen zu Ausgaben.
 
 [appendix-e]: appendix-05-editions.html

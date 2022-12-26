@@ -11,9 +11,9 @@ wir hier das gleiche tun!
 > eine integrierte Entwicklungsumgebung (IDE) statt der Kommandozeile verwenden
 > möchtest, kannst du deine bevorzugte IDE verwenden. Viele IDEs bieten
 > mittlerweile einen gewissen Grad an Rust-Unterstützung; Einzelheiten findest
-> du in der Dokumentation der IDE. In jüngster Zeit hat sich das Rust-Team
-> darauf konzentriert, eine großartige IDE-Unterstützung zu ermöglichen, und an
-> dieser Front sind schnelle Fortschritte erzielt worden!
+> du in der Dokumentation der IDE. Das Rust-Team hat sich darauf konzentriert,
+> eine großartige IDE-Unterstützung mittels `rust-analyzer` zu ermöglichen.
+> Siehe [Anhang D][devtools] für weitere Details.
 
 ### Erstellen eines Projektverzeichnisses
 
@@ -22,11 +22,11 @@ erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis *projects* in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.
 
-Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
+Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
 *projects* und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses *projects* zu erstellen.
 
-Gib dies für Linux, macOS und PowerShell unter Windows ein:
+Gib dies bei Linux, macOS und PowerShell unter Windows ein:
 
 ```console
 $ mkdir ~/projects
@@ -35,7 +35,7 @@ $ mkdir hello_world
 $ cd hello_world
 ```
 
-Für Windows CMD gib dies ein:
+Bei Windows CMD gib dies ein:
 
 ```cmd
 > mkdir "%USERPROFILE%\projects"
@@ -65,7 +65,7 @@ fn main() {
 <span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
-Speichere die Datei und gehe zurück zu deinem Terminalfenster. Gib unter Linux
+Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
 oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:
 
 ```console
@@ -83,8 +83,8 @@ Hallo Welt!
 ```
 
 Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` auf
-dem Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
-Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
+der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
+im Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.
 
 Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
@@ -102,23 +102,24 @@ fn main() {
 }
 ```
 
-Diese Zeilen definieren eine Funktion in Rust. Die Funktion `main` ist eine
-Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
-Rust-Programm ausgeführt wird. Die erste Zeile deklariert eine Funktion namens
-`main`, die keine Parameter hat und nichts zurückgibt. Wenn es Parameter gäbe,
-würden sie innerhalb der Klammern `()` stehen.
+Diese Zeilen definieren eine Funktion namens `main` in Rust. Die Funktion
+`main` ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
+ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
+Zeile eine Funktion mit dem namen `main`, die keine Parameter hat und nichts
+zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()`
+stehen.
 
-Beachte auch, dass der Funktionsrumpf in geschweifte Klammern `{}` eingehüllt
-ist. Rust erfordert diese um alle Funktionsrümpfe. Es ist guter Stil, die
-öffnende geschweifte Klammer in dieselbe Zeile wie die Funktionsdeklaration zu
-platzieren und dazwischen ein Leerzeichen einzufügen.
+Der Funktionsrumpf in geschweifte Klammern `{}` eingehüllt. Rust erfordert
+diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
+Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
+dazwischen ein Leerzeichen einzufügen.
 
-Wenn du dich in allen Rust-Projekten an einen Standardstil halten willst,
-kannst du ein Tool zur automatischen Formatierung namens `rustfmt` verwenden,
-um deinen Code in einem bestimmten Stil zu formatieren. Das Rust-Team hat
-dieses Tool wie `rustc` in die Standard-Rust-Distribution aufgenommen, es
-sollte also bereits auf deinem Computer installiert sein! Schaue in die
-Online-Dokumentation für weitere Details.
+> Hinweis: Wenn du einen Standardstil für alle Rust-Projekte verwenden
+> möchtest, kannst du ein automatisches Formatierungswerkzeug namens `rustfmt`
+> verwenden, um deinen Code in einem bestimmten Stil zu formatieren (mehr über
+> `rustfmt` im [Anhang D][devtools]). Das Rust-Team hat dieses Tool wie `rustc`
+> in die Standard-Rust-Distribution aufgenommen, es sollte also bereits auf
+> deinem Computer installiert sein!
 
 Innerhalb der Funktion `main` befindet sich der folgende Code:
 
@@ -139,7 +140,7 @@ wissen, dass die Verwendung eines `!` bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.
 
-Drittens siehst du die Zeichenkette "Hallo Welt!". Wir übergeben diese
+Drittens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
 Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.
 
@@ -165,16 +166,16 @@ Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 eine ausführbare Binärdatei aus.
 
 Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl `ls` in deiner Konsole eingibst. Unter Linux und
-MacOS siehst du zwei Dateien. Mit PowerShell unter Windows siehst du die
-gleichen drei Dateien, die du mit CMD sehen würdest.
+sehen, indem du den Befehl `ls` in deiner Konsole eingibst:
 
 ```console
 $ ls
 main  main.rs
 ```
 
-Mit CMD unter Windows würdest du Folgendes eingeben:
+Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
+unter Windows würdest du folgendes eingeben:
 
 ```cmd
 > dir /B %= die Option /B bewirkt, dass nur die Dateinamen angezeigt werden =%
@@ -194,7 +195,7 @@ $ ./main # oder .\main.exe unter Windows
 ```
 
 Wenn *main.rs* dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deinem Terminal ausgeben.
+Welt!“ in deiner Konsole ausgeben.
 
 Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
@@ -213,4 +214,5 @@ machen wollen, deinen Code weiterzugeben. Als Nächstes stellen wir dir das
 Cargo-Tool vor, das dir beim Schreiben von Rust-Programmen aus der realen Welt
 helfen wird.
 
+[devtools]: appendix-04-useful-development-tools.md
 [troubleshooting]: ch01-01-installation.html#fehlersuche
