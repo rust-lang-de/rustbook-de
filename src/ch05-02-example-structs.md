@@ -148,7 +148,7 @@ fn area(rectangle: &Rectangle) -> u32 {
 Hier haben wir eine Struktur definiert und sie `Rectangle` genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder `width` und `height` definiert,
 die beide den Typ `u32` haben. Dann erzeugten wir in `main` eine Instanz von
-`Rectangle` mit der Breite 30 und Höhe 50.
+`Rectangle` mit der Breite `30` und Höhe `50`.
 
 Unsere Funktion `area` hat nun einen Parameter, den wir `rectangle` genannt
 haben und dessen Typ eine unveränderliche Ausleihe (immutable borrow) einer
@@ -353,13 +353,12 @@ $ cargo run
 ```
 
 Wir können sehen, dass der erste Teil der Ausgabe von *src/main.rs* Zeile 10
-stammt, wo wir den Ausdruck `30 * scale` debuggen, und der resultierende Wert
-ist 60 (die `Debug`-Formatierung, die für Ganzzahlen implementiert ist, gibt
-nur deren Wert aus). Der `dbg!`-Aufruf in Zeile 14 von *src/main.rs* gibt den
-Wert von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe
-verwendet die hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro
-`dbg!` kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
-Code macht!
+stammt, wo wir den Ausdruck `30 * scale` debuggen, und der Ergebniswert ist
+`60` (die `Debug`-Formatierung, die für Ganzzahlen implementiert ist, gibt nur
+deren Wert aus). Der `dbg!`-Aufruf in Zeile 14 von *src/main.rs* gibt den Wert
+von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe verwendet die
+hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro `dbg!` kann sehr
+hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!
 
 Zusätzlich zum Merkmal `Debug` hat Rust eine Reihe von Merkmalen für uns
 bereitgestellt, die wir mit dem Attribut `derive` verwenden können und die
