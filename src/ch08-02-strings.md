@@ -452,7 +452,7 @@ zuzugreifen:
 
 ```rust
 for c in "Зд".chars() {
-    println!("{}", c);
+    println!("{c}");
 }
 ```
 
@@ -468,7 +468,7 @@ Verwendungszweck benötigt wird:
 
 ```rust
 for b in "Зд".bytes() {
-    println!("{}", b);
+    println!("{b}");
 }
 ```
 
