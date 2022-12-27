@@ -18,16 +18,19 @@ Bezeichnern, die durch doppelte Doppelpunkte (`::`) getrennt sind.
 
 Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
 `add_to_waitlist` aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
-Funktion `add_to_waitlist` ist. In Codeblock 7-3 haben wir unseren Code etwas
-vereinfacht, indem wir einige der Module und Funktionen entfernt haben. Wir
-zeigen zwei Möglichkeiten, wie die Funktion `add_to_waitlist` von einer neuen
-Funktion `eat_at_restaurant` aus aufgerufen werden kann, die in der
-Kistenwurzel definiert ist. Die Funktion `eat_at_restaurant` ist Teil der
-öffentlichen Programmierschnittstelle (API) unserer Bibliothekskiste, daher
-markieren wir sie mit dem Schlüsselwort `pub`. Im Abschnitt [„Pfade mit dem
-Schlüsselwort `pub` öffnen“][pub] gehen wir näher auf `pub` ein. Beachte, dass
-sich dieses Beispiel noch nicht kompilieren lässt; wir werden gleich erklären,
-warum.
+Funktion `add_to_waitlist` ist. Codeblock 7-3 enthält Codeblock 7-1, wobei
+einige Module und Funktionen entfernt wurden.
+
+Wir zeigen zwei Möglichkeiten, wie die Funktion `add_to_waitlist` von einer
+neuen Funktion `eat_at_restaurant` aus aufgerufen werden kann, die in der
+Kistenwurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
+weiteres Problem, das verhindert, dass dieses Beispiel in dieser Form
+kompiliert. Wir werden gleich erklären, warum.
+
+Die Funktion `eat_at_restaurant` ist Teil der öffentlichen
+Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
+sie mit dem Schlüsselwort `pub`. Im Abschnitt [„Pfade mit dem Schlüsselwort
+`pub` öffnen“][pub] gehen wir näher auf `pub` ein.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -313,11 +316,11 @@ Guidelines][api-guidelines].
 Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir `super` am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax `..` beginnen. Dies erlaubt es uns, auf ein Element zu referenzieren,
-von dem wir wissen, dass es sich im übergeordneten Modul befindet, was die
-Neuordnung des Modulbaums erleichtern kann, wenn das Modul eng mit dem
-übergeordneten Modul verwandt ist, aber das übergeordnete Modul eines Tages an
-eine andere Stelle im Modulbaum verschoben werden könnte.
+Syntax `..` beginnen. Das Verwenden von `super` erlaubt es uns, auf ein Element
+zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
+befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
+eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
+eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
