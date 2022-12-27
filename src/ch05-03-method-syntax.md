@@ -124,7 +124,7 @@ Methode für jeden Zweck verwenden. Wenn wir in `main` nach `rect1.width` eine
 Klammer setzen, weiß Rust, dass wir die Methode `width` meinen. Wenn wir keine
 Klammern verwenden, weiß Rust, dass wir das Feld `width` meinen.
 
-Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
+Oft, aber nicht immer, wird eine Methode mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
 Methoden wie diese werden *getters* genannt, und Rust implementiert sie nicht
 automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
