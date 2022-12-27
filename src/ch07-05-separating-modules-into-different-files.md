@@ -102,9 +102,9 @@ Verzeichnisse und Dateien dem Modulbaum besser entsprechen.
 > * *src/front_of_house/hosting/mod.rs* (älterer Stil, noch unterstützter Pfad)
 >
 > Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
-> Compilerfehler. Die Verwendung beider Stile für verschiedene Module im selben
-> Projekt ist zulässig, kann aber für die Benutzer verwirrend sein, die durch
-> dein Projekt navigieren.
+> Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
+> Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
+> sein, die durch dein Projekt navigieren.
 >
 > Der größte Nachteil des Stils, der Dateien mit dem Namen *mod.rs* verwendet,
 > ist, dass dein Projekt am Ende viele Dateien mit dem Namen *mod.rs* haben
