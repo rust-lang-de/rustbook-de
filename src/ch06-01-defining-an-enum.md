@@ -316,7 +316,7 @@ Dieser Abschnitt befasst sich mit einer Fallstudie zu `Option`, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ `Option`
 kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 
-Wenn du zum Beispiel das erste Element einer Liste mit Elementen anforderst,
+Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
 überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
@@ -441,7 +441,7 @@ Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
 Wert verwenden.
 
 Mit anderen Worten musst du eine `Option<T>` in ein `T` konvertieren, bevor du
-`T`-Operationen damit durchführen kannst. Im Allgemeinen hilft dies, eines der
+`T`-Operationen darauf durchführen kannst. Im Allgemeinen hilft dies, eines der
 häufigsten Probleme mit Null abzufangen: Anzunehmen, dass etwas nicht null ist,
 obwohl es tatsächlich null ist.
 
