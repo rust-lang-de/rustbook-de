@@ -407,20 +407,20 @@ Programmierproblem besser geeignet als für ein Nutzungsproblem, [wie in Kapitel
 verwenden, über die du in Kapitel 9 gelernt hast &ndash; [Rückgabe eines
 `Result`][ch9-result] um entweder Erfolg oder einen Fehler anzuzeigen.
 
-#### Zurückgeben eines `Result` von `new`, anstatt `panic!` aufzurufen
+#### Zurückgeben eines `Result` anstatt `panic!` aufzurufen
 
 Wir können stattdessen einen `Result`-Wert zurückgeben, der im erfolgreichen
 Fall eine `Config`-Instanz enthält und im Fehlerfall das Problem beschreibt.
 Wir werden auch den Namen der Funktion von `new` in `build` ändern, weil viele
 Programmierer erwarten, dass `new`-Funktionen niemals fehlschlagen. Wenn
-`Config::new` mit `main` kommuniziert, können wir den `Result`-Typ verwenden,
+`Config::build` mit `main` kommuniziert, können wir den `Result`-Typ verwenden,
 um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir `main`
 ändern, um eine `Err`-Variante in einen praktikableren Fehler für unsere
 Benutzer umzuwandeln, ohne den umgebenden Text über `thread 'main'` und
 `RUST_BACKTRACE`, den ein Aufruf von `panic!` verursacht.
 
 Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
-nun `Config::new` aufruft, und am Funktionsrumpf vornehmen müssen, um ein
+nun `Config::build` aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 `Result` zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
 wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
 
@@ -450,7 +450,7 @@ wir auch `main` aktualisieren, was wir im nächsten Codeblock tun werden.
 # }
 #
 impl Config {
-    fn new(args: &[String]) -> Result<Config, &'static str> {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -466,8 +466,9 @@ impl Config {
 <span class="caption">Codeblock 12-9: Rückgabe eines `Result` von
 `Config::build`</span>
 
-Unsere Funktion `build` liefert jetzt ein `Result` mit einer `Config`-Instanz im
-Erfolgsfall und ein `&str` im Fehlerfall.
+Unsere Funktion `build` liefert ein `Result` mit einer `Config`-Instanz im
+Erfolgsfall und ein `&'static str` im Fehlerfall. Unsere Fehlerwerte werden
+immer Zeichenketten-Literale sein, die eine `'static` Lebensdauer haben.
 
 Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt `panic!`
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
@@ -500,7 +501,7 @@ use std::process;
 fn main() {
     let args: Vec<String> = env::args().collect();
 
-    let config = Config::new(&args).unwrap_or_else(|err| {
+    let config = Config::build(&args).unwrap_or_else(|err| {
         println!("Fehler beim Parsen der Argumente: {err}");
         process::exit(1);
     });
@@ -522,7 +523,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -602,7 +603,7 @@ fn main() {
 
 #     let args: Vec<String> = env::args().collect();
 #
-#     let config = Config::new(&args).unwrap_or_else(|err| {
+#     let config = Config::build(&args).unwrap_or_else(|err| {
 #         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
@@ -628,7 +629,7 @@ fn run(config: Config) {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -672,7 +673,7 @@ use std::error::Error;
 # fn main() {
 #     let args: Vec<String> = env::args().collect();
 #
-#     let config = Config::new(&args).unwrap_or_else(|err| {
+#     let config = Config::build(&args).unwrap_or_else(|err| {
 #         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
@@ -697,7 +698,7 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -757,12 +758,11 @@ warning: unused `Result` that must be used
    = note: this `Result` may be an `Err` variant, which should be handled
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Suche nach the
-In Datei poem.txt
-Mit text:
+Searching for the
+In file poem.txt
+With text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -799,7 +799,7 @@ fn main() {
 
 #     let args: Vec<String> = env::args().collect();
 #
-#     let config = Config::new(&args).unwrap_or_else(|err| {
+#     let config = Config::build(&args).unwrap_or_else(|err| {
 #         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
@@ -828,7 +828,7 @@ fn main() {
 # }
 #
 # impl Config {
-#     fn new(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -884,7 +884,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(args: &[String]) -> Result<Config, &'static str> {
         // --abschneiden--
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
@@ -911,7 +911,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 *src/lib.rs*</span>
 
 Wir haben das Schlüsselwort `pub` großzügig verwendet: Bei `Config`, bei seinen
-Feldern und seiner Methode `new` und bei der Funktion `run`. Wir haben jetzt
+Feldern und seiner Methode `build` und bei der Funktion `run`. Wir haben jetzt
 eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!
 
 Jetzt müssen wir den Code, den wir nach *src/lib.rs* verschoben haben, in den
@@ -930,7 +930,7 @@ fn main() {
     // --abschneiden--
 #     let args: Vec<String> = env::args().collect();
 #
-#     let config = Config::new(&args).unwrap_or_else(|err| {
+#     let config = Config::build(&args).unwrap_or_else(|err| {
 #         println!("Fehler beim Parsen der Argumente: {err}");
 #         process::exit(1);
 #     });
