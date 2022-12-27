@@ -148,10 +148,10 @@ nicht dieselben Unterscheidungen, deshalb wollen wir uns ansehen, was
 Anweisungen und Ausdrücke sind und wie sich ihre Unterschiede auf die
 Funktionsrümpfe auswirken.
 
-Wir haben tatsächlich bereits Anweisungen und Ausdrücke verwendet.
-*Anweisungen* (statements) sind Instruktionen, die eine Aktion ausführen und
-keinen Wert zurückgeben. *Ausdrücke* (expressions) werten zu einem
-resultierenden Wert aus. Sehen wir uns einige Beispiele an.
+* **Anweisungen** (statements) sind Instruktionen, die eine Aktion ausführen
+  und keinen Wert zurückgeben.
+* **Ausdrücke** (expressions) werden zu einem Ergebniswert ausgewertet.
+  Schauen wir uns einige Beispiele an.
 
 Eine Variable zu erstellen und ihr mit dem Schlüsselwort `let` einen Wert
 zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist `let y = 6;` eine
@@ -338,7 +338,7 @@ fn plus_one(x: i32) -> i32 {
 
 Beim Ausführen dieses Codes wird `Der Wert von x ist: 6` ausgegeben. Wenn wir
 aber ein Semikolon an das Ende der Zeile mit `x + 1` setzen und es von einem
-Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler.
+Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -374,11 +374,11 @@ warning: `functions` (bin "functions") generated 1 warning
 error: could not compile `functions` due to 2 previous errors; 1 warning emitted
 ```
 
-Die Hauptfehlermeldung „nicht übereinstimmende Typen“ („mismatched types“)
-offenbart das Kernproblem dieses Codes. Die Definition der Funktion `plus_one`
-besagt, dass sie ein `i32` zurückgibt, aber Anweisungen werden nicht zu einem
-Wert ausgewertet, was durch den Einheitstyp `()` ausgedrückt wird. Daher wird
-nichts zurückgegeben, was der Funktionsdefinition widerspricht und zu einem
-Fehler führt. In dieser Ausgabe gibt Rust eine Meldung aus, die möglicherweise
-helfen kann, dieses Problem zu beheben: Es wird vorgeschlagen, das Semikolon zu
-entfernen, was den Fehler beheben würde.
+Die Hauptfehlermeldung `mismatched types` offenbart das Kernproblem dieses
+Codes. Die Definition der Funktion `plus_one` besagt, dass sie ein `i32`
+zurückgibt, aber Anweisungen werden nicht zu einem Wert ausgewertet, was durch
+den Einheitstyp `()` ausgedrückt wird. Daher wird nichts zurückgegeben, was der
+Funktionsdefinition widerspricht und zu einem Fehler führt. In dieser Ausgabe
+gibt Rust eine Meldung aus, die möglicherweise helfen kann, dieses Problem zu
+beheben: Es wird vorgeschlagen, das Semikolon zu entfernen, was den Fehler
+beheben würde.
