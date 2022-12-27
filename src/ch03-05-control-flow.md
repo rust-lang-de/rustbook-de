@@ -1,10 +1,10 @@
 ## Kontrollfluss
 
-Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
-erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
-erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
-gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
-kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
+Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung `true`
+ist, oder Code wiederholt auszuführen, während eine Bedingung `true` ist, sind
+grundlegende Bausteine der meisten Programmiersprachen. Die gebräuchlichsten
+Konstrukte, mit denen du den Kontrollfluss von Rust-Code kontrollieren kannst,
+sind `if`-Ausdrücke und Schleifen.
 
 ### `if`-Ausdrücke
 
@@ -34,17 +34,18 @@ fn main() {
 Alle `if`-Ausdrücke beginnen mit dem Schlüsselwort `if`, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable `number` einen
 Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
-wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
-Klammern gesetzt. Codeblöcke, die mit den Bedingungen in `if`-Ausdrücken
-verbunden sind, werden manchmal auch als *Zweige* (arms) bezeichnet, genau wie
-die Zweige in `match`-Ausdrücken, die wir im Abschnitt [„Vergleichen der
-Schätzung mit der Geheimzahl“][comparing-the-guess-to-the-secret-number] in
-Kapitel 2 besprochen haben.
+wenn die Bedingung `true` ist, wird unmittelbar nach der Bedingung in
+geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
+`if`-Ausdrücken verbunden sind, werden manchmal auch als *Zweige* (arms)
+bezeichnet, genau wie die Zweige in `match`-Ausdrücken, die wir im Abschnitt
+[„Vergleichen der Schätzung mit der
+Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
+haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
-falls die Bedingung als falsch ausgewertet wird. Wenn du keinen `else`-Ausdruck
-angibst und die Bedingung falsch ist, überspringt das Programm einfach den
+falls die Bedingung zu `false` ausgewertet wird. Wenn du keinen `else`-Ausdruck
+angibst und die Bedingung `false` ist, überspringt das Programm einfach den
 `if`-Block und geht zum nächsten Codeteil über.
 
 Versuche, diesen Code auszuführen; du solltest die folgende Ausgabe sehen:
@@ -171,12 +172,12 @@ Zahl ist durch 3 teilbar
 ```
 
 Wenn dieses Programm ausgeführt wird, prüft es der Reihe nach jeden
-`if`-Ausdruck und führt den ersten Block aus, für den die Bedingung wahr ist. 
-Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die Ausgabe `Zahl ist
-durch 2 teilbar` sehen, noch sehen wir den Text `Zahl ist nicht durch 4, 3 oder
-2 teilbar` aus dem `else`-Block. Das liegt daran, dass Rust den Block nur für
-die erste wahre Bedingung ausführt, und wenn es eine findet, prüft es den Rest
-nicht mehr.
+`if`-Ausdruck und führt den ersten Block aus, für den die Bedingung zu `true`
+ausgewertet wird. Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die
+Ausgabe `Zahl ist durch 2 teilbar` sehen, noch sehen wir den Text `Zahl ist
+nicht durch 4, 3 oder 2 teilbar` aus dem `else`-Block. Das liegt daran, dass
+Rust den Block nur für die erste `true`-Bedingung ausführt, und wenn es eine
+findet, prüft es den Rest nicht mehr.
 
 Das Verwenden von zu vielen `else if`-Ausdrücken kann deinen Code
 unübersichtlich machen. Wenn du also mehr als einen Ausdruck hast, solltest du
@@ -360,9 +361,9 @@ Vor der Schleife deklarieren wir eine Variable namens `counter` und
 initialisieren sie mit `0`. Dann deklarieren wir eine Variable namens `result`,
 die den von der Schleife zurückgegebenen Wert enthält. Bei jeder Iteration der
 Schleife addieren wir `1` zur Variable `counter` und prüfen dann, ob der Zähler
-gleich `10` ist. Wenn dies der Fall ist, verwenden wir das Schlüsselwort
-`break` mit dem Wert `counter * 2`. Nach der Schleife verwenden wir ein
-Semikolon, um die Anweisung zu beenden, die `result` den Wert zuweist.
+in `counter` gleich `10` ist. Wenn dies der Fall ist, verwenden wir das
+Schlüsselwort `break` mit dem Wert `counter * 2`. Nach der Schleife verwenden
+wir ein Semikolon, um die Anweisung zu beenden, die `result` den Wert zuweist.
 Schließlich geben wir den Wert in `result` aus, der in diesem Fall `20`
 beträgt.
 
@@ -425,10 +426,10 @@ Zähler-Endstand = 2
 #### Bedingte Schleifen mit `while`
 
 Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
-haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
-Bedingung nicht mehr wahr ist, ruft das Programm `break` auf und stoppt die
-Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination von
-`loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
+haben. Solange die Bedingung `true` ist, wird die Schleife durchlaufen. Wenn
+die Bedingung nicht mehr `true` ist, ruft das Programm `break` auf und stoppt
+die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
+von `loop`, `if`, `else` und `break` zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
 `while`-Schleife. In Codeblock 3-3 wird `while` verwendet: Das Programm
@@ -456,8 +457,8 @@ auszuführen, solange eine Bedingung wahr ist</span>
 
 Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
 wären, wenn du `loop`, `if`, `else` und `break` verwenden würdest, und es ist
-klarer. Solange eine Bedingung wahr ist, läuft der Code ab; andernfalls wird
-die Schleife verlassen.
+klarer. Solange eine Bedingung zu `true` auswertet, läuft der Code ab;
+andernfalls wird die Schleife verlassen.
 
 #### Wiederholen anhand einer Kollektion mit `for`
 
@@ -485,7 +486,7 @@ Kollektion unter Verwendung einer `while`-Schleife</span>
 
 Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index `0`
 und wiederholt bis er den letzten Index im Array erreicht (d.h. wenn
-`index < 5` nicht mehr wahr ist). Wenn du diesen Code ausführst, wird jedes
+`index < 5` nicht mehr `true` ist). Wenn du diesen Code ausführst, wird jedes
 Element im Array ausgegeben:
 
 ```console
@@ -575,7 +576,7 @@ Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:
 
 * Temperaturen zwischen Fahrenheit und Celsius umrechnen.
-* Die n-te Fibonacci-Zahl berechnen.
+* Die *n*-te Fibonacci-Zahl berechnen.
 * Den Text des Weihnachtsliedes „Die Zwölf Weihnachtstage“ (The Twelve Days of
   Christmas) ausgeben und dabei die Wiederholung im Lied nutzen.
 
