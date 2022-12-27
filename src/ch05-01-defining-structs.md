@@ -257,17 +257,16 @@ in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
 der Strukturdefinition.
 
 Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit `=` ist,
-da sie die Daten verschiebt, wie wir im Abschnitt [„Wege, wie Variablen und
-Daten interagieren: Verschieben (move)“][move] gesehen haben. In diesem
-Beispiel können wir `user1` nicht mehr verwenden, nachdem wir `user2` erzeugt
-haben, weil der `String` im Feld `username` von `user1` in `user2` verschoben
-wurde. Hätten wir `user2` neue `String`-Werte für beide Felder `email` und
-`username` gegeben und somit nur die Werte `active` und `sign_in_count` von
-`user1` verwendet, wäre `user1` auch nach dem Erstellen von `user2` noch
-gültig. Die Typen `active` und `sign_in_count` sind Typen, die das Merkmal
-`Copy` implementieren, sodass das Verhalten, das wir im Abschnitt [„Nur
-Stapelspeicher-Daten: Kopieren (copy)“][copy] besprochen haben, zutreffen
-würde.
+da sie die Daten verschiebt, wie wir im Abschnitt [„Variablen und Daten im
+Zusammenspiel mit Move“][move] gesehen haben. In diesem Beispiel können wir
+`user1` nicht mehr verwenden, nachdem wir `user2` erzeugt haben, weil der
+`String` im Feld `username` von `user1` in `user2` verschoben wurde. Hätten wir
+`user2` neue `String`-Werte für beide Felder `email` und `username` gegeben und
+somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
+`user1` auch nach dem Erstellen von `user2` noch gültig. Die Typen `active` und
+`sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
+Verhalten, das wir im Abschnitt [„Nur Stapelspeicher-Daten: Kopieren
+(copy)“][copy] besprochen haben, zutreffen würde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
@@ -411,5 +410,5 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 > verwenden.
 
 [copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
-[move]: ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move
+[move]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move
 [tuples]: ch03-02-data-types.html#der-tupel-typ
