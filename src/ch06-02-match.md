@@ -4,10 +4,10 @@ Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
 `match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
-Dingen zusammensetzen. Kapitel 18 befasst sich mit all den verschiedenen
-Musterarten und wie sie funktionieren. Die Mächtigkeit von `match` kommt von
-der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
-sicherstellt, dass alle möglichen Fälle behandelt werden.
+Dingen zusammensetzen. [Kapitel 18][ch18-00-patterns] befasst sich mit all den
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
+`match` kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
+Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.
 
 Stelle dir einen `match`-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
@@ -17,10 +17,9 @@ durchlaufen die Werte die Muster in einem `match`-Ausdruck und beim ersten
 werden soll.
 
 Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von `match`! Wir
-können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
-Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
-sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
-gezeigt.
+können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
+wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
+in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.
 
 ```rust
 enum Coin {
@@ -45,11 +44,12 @@ der die Varianten der Aufzählung als Muster hat</span>
 
 Lass uns den `match`-Ausdruck in der Funktion `value_in_cents` aufschlüsseln. 
 Zuerst geben wir das Schlüsselwort `match` an, gefolgt von einem Ausdruck, der
-in diesem Fall der Wert `coin` ist. Dies scheint einem Ausdruck sehr ähnlich zu
-sein, der bei `if` verwendet wird, aber es gibt einen großen Unterschied: Bei
-`if` muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann ein
-beliebiger Typ zurückgegeben werden. Der Typ von `coin` ist in diesem Beispiel
-die Aufzählung `Coin`, die wir in der ersten Zeile definiert haben.
+in diesem Fall der Wert `coin` ist. Dies scheint einem bedingten Ausdruck sehr
+ähnlich zu sein, der bei `if` verwendet wird, aber es gibt einen großen
+Unterschied: Bei `if` muss die Bedingung einen booleschen Wert ergeben, aber
+hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von `coin` ist in
+diesem Beispiel die Aufzählung `Coin`, die wir in der ersten Zeile definiert
+haben.
 
 Als nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert `Coin::Penny`, dann den
@@ -57,16 +57,15 @@ Operator `=>`, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert `1`. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.
 
-Wenn der `match`-Ausdruck ausgeführt wird, gleicht er den resultierenden Wert
-mit dem Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum
-Wert passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das
-Muster nicht zum Wert passt, wird die Ausführung beim nächsten Zweig
-fortgesetzt, ähnlich wie bei einer Münzsortiermaschine. Wir können so viele
-Zweige haben, wie wir brauchen: In Codeblock 6-3 hat unser `match`-Ausdruck
-vier Zweige.
+Wenn der `match`-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
+passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
+nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
+ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
+wie wir brauchen: In Codeblock 6-3 hat unser `match`-Ausdruck vier Zweige.
 
-Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der resultierende Wert
-des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
+Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 `match`-Ausdruck zurückgegeben wird. 
 
 Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
@@ -214,28 +213,27 @@ auf einer `Option<i32>` verwendet</span>
 
 Lass uns die erste Ausführung von `plus_one` näher betrachten. Wenn wir
 `plus_one(five)` aufrufen, wird die Variable `x` im Rumpf von `plus_one` den
-Wert `Some(5)` haben. Dann vergleichen wir das mit jedem `match`-Zweig.
+Wert `Some(5)` haben. Dann vergleichen wir das mit jedem `match`-Zweig:
 
 ```rust,ignore
 None => None,
 ```
 
 Der Wert `Some(5)` passt nicht zum Muster `None`, also fahren wir mit dem
-nächsten Zweig fort.
+nächsten Zweig fort:
 
 ```rust,ignore
 Some(i) => Some(i + 1),
 ```
 
-Passt `Some(5)` zu `Some(i)`? Aber ja, das tut es! Wir haben die gleiche
-Variante. `i` bindet den in `Some` enthaltenen Wert, sodass `i` den Wert `5`
-annimmt. Dann wird der Code im `match`-Zweig ausgeführt, also fügen wir 1 zum
-Wert von `i` hinzu und erzeugen einen neuen `Some`-Wert mit der Summe `6`
-darin.
+Passt `Some(5)` zu `Some(i)`? Das tut es! Wir haben die gleiche Variante. `i`
+bindet den in `Some` enthaltenen Wert, sodass `i` den Wert `5` annimmt. Dann
+wird der Code im `match`-Zweig ausgeführt, also fügen wir 1 zum Wert von `i`
+hinzu und erzeugen einen neuen `Some`-Wert mit der Summe `6` darin.
 
 Betrachten wir nun den zweiten Aufruf von `plus_one` in Codeblock 6-5, wo `x`
 den Wert `None` hat. Wir betreten den `match`-Block und vergleichen mit dem
-ersten Zweig.
+ersten Zweig:
 
 ```rust,ignore
 None => None,
@@ -326,9 +324,9 @@ fn remove_fancy_hat() {}
 fn move_player(num_spaces: u8) {}
 ```
 
-Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
-letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
-Variable die wir als `other` bezeichnet haben. Der Code, der für den
+Bei den ersten beiden Zweigen sind die Muster die literalen Werte `3` und `7`.
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
+die Variable die wir als `other` bezeichnet haben. Der Code, der für den
 `other`-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 `move_player` übergibt.
 
