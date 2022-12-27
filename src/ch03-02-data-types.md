@@ -74,8 +74,7 @@ von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
 einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
 dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
 Vorzeichenbehaftete Zahlen werden unter Verwendung der
-[Zweierkomplementdarstellung](https://de.wikipedia.org/wiki/Zweierkomplement)
-gespeichert.
+[Zweierkomplementdarstellung][twos-complement] gespeichert.
 
 Jede vorzeichenbehaftete Variante kann Zahlen von -(2<sup>n - 1</sup>) bis
 einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei *n* die Anzahl an Bits
@@ -139,14 +138,14 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > Methodenfamilien verwenden, die die Standardbibliothek für primitive
 > numerische Typen bereitstellt:
 > 
-> - Verpacken (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
->  `wrapping_add`
-> - Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
+> * Verpacken (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
+>   `wrapping_add`
+> * Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
 >   `checked_*`-Methode gibt.
-> - Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
+> * Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
 >   Überlauf mit einer `overflowing_*`-Methode stattgefunden hat.
-> - Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
->  `saturating_*`-Methoden.
+> * Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
+>   `saturating_*`-Methoden.
 
 #### Fließkomma-Typen
 
@@ -263,7 +262,7 @@ Rust hat zwei primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).
 
 #### Der Tupel-Typ
 
-Ein Tupel ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
+Ein *Tupel* ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
 Vielzahl von Typen zu einem Verbund-Typ zusammenzufassen. Tupel haben eine
 feste Länge: Einmal deklariert, können sie weder wachsen noch schrumpfen.
 
@@ -353,7 +352,7 @@ Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
 Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
 Haldenspeicher gehen wir in [Kapitel 4][stack-and-heap] näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
-Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
+Array ist jedoch nicht so flexibel wie der Vektortyp. Ein *Vektor* ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
 wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
 sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
@@ -450,15 +449,15 @@ fn main() {
 ```
 
 Dieser Code kompiliert erfolgreich. Wenn du diesen Code mit `cargo run`
-ausführst und 0, 1, 2, 3 oder 4 eingibst, wird das Programm den entsprechenden
-Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine Zahl hinter
-dem Ende des Arrays eingibst, z.B. 10, erhältst du eine Ausgabe wie diese:
+ausführst und `0`, `1`, `2`, `3` oder `4` eingibst, wird das Programm den
+entsprechenden Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine
+Zahl hinter dem Ende des Arrays eingibst, z.B. `10`, erhältst du eine Ausgabe
+wie diese:
 
 ```text
 thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
-
 Das Programm führte zu einem *Laufzeitfehler* an der Stelle, an der ein
 ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
 einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung
@@ -484,6 +483,6 @@ ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzah
 [control-flow]: ch03-05-control-flow.html
 [stack-and-heap]: ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap
 [strings]: ch08-02-strings.html
+[twos-complement]: https://de.wikipedia.org/wiki/Zweierkomplement
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html
 [vectors]: ch08-01-vectors.html
-[wrapping]: https://doc.rust-lang.org/std/num/struct.Wrapping.html
