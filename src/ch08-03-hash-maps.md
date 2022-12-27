@@ -65,7 +65,7 @@ scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Geld"), 50);
 
 let team_name = String::from("Blau");
-let score = scores.get(&team_name);
+let score = scores.get(&team_name).copied().unwrap_or(0);
 ```
 
 <span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
@@ -75,8 +75,9 @@ Hier wird `score` den Wert haben, der mit Team Blau assoziiert ist, und das
 Ergebnis wird `10` sein. Die Methode `get` gibt eine `Option<&V>` zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt `get`
 den Wert `None` zurück. Dieses Programm behandelt die `Option`, indem es
-`unwrap_or` aufruft, um `score` auf Null zu setzen, wenn `scores` keinen
-Eintrag für den Schlüssel hat.
+`copied` aufruft, um eine `Option<i32>` anstelle einer `Option<&i32>` zu
+erhalten, und ruft dann `unwrap_or` auf, um `score` auf Null zu setzen, wenn
+`scores` keinen Eintrag für den Schlüssel hat.
 
 Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
 Weise iterieren wie bei Vektoren, indem wir eine `for`-Schleife verwenden:
@@ -90,7 +91,7 @@ scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Gelb"), 50);
 
 for (key, value) in &scores {
-    println!("{}: {}", key, value);
+    println!("{key}: {value}");
 }
 ```
 
@@ -116,7 +117,7 @@ let field_value = String::from("Blau");
 
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
-// field_name und field_value sind zu diesem Zeitpunkt ungültig.
+// field_name und field_value sind nach diesem Zeitpunkt ungültig.
 // Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
 ```
 
