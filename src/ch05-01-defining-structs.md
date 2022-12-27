@@ -14,6 +14,8 @@ geschweifter Klammern die Namen und Typen der Datenteile, die wir *Felder*
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.
 
+<span class="filename">Dateiname: src/main.rs</span>
+
 ```rust
 struct User {
     active: bool,
@@ -28,7 +30,7 @@ struct User {
 Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine *Instanz* dieser Struktur, indem wir für jedes Feld einen konkreten Wert
 angeben. Wir erzeugen eine Instanz, indem wir den Namen der Struktur angeben
-und dann in geschweiften Klammern die `Schlüssel: Wert`-Paare angeben, wobei
+und dann in geschweiften Klammern die *Schlüssel: Wert*-Paare angeben, wobei
 die Schlüssel die Namen der Felder und die Werte die Daten sind, die wir in
 diesen Feldern speichern wollen. Wir müssen die Felder nicht in der gleichen
 Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
@@ -36,6 +38,8 @@ gesagt ist die Strukturdefinition wie eine allgemeine Typvorlage und Instanzen
 füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 # struct User {
@@ -64,6 +68,8 @@ zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderlich ist,
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
 einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 `email` einer veränderlichen `User`-Instanz geändert werden kann.
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 # struct User {
@@ -95,6 +101,8 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.
 Codeblock 5-4 zeigt eine Funktion `build_user`, die eine `User`-Instanz mit der
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld `active` erhält
 den Wert `true` und das Feld `sign_in_count` den Wert `1`.
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 # struct User {
@@ -130,13 +138,15 @@ Strukturfelder zu geben, jedoch ist das Wiederholen der Feldnamen `email` und
 Wiederholen jedes Namens noch lästiger werden. Glücklicherweise gibt es eine
 praktische Kurznotation!
 
-### Kurznotation der Feld-Initialisierung verwenden, wenn Variablen und Felder den gleichen Namen haben
+### Kurznotation der Feld-Initialisierung verwenden
 
 Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
 haben, können wir die *Kurznotation der Feld-Initialisierung* (field init
 shorthand syntax) verwenden, um die Funktion `build_user` so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne `email` und `username` zu
 wiederholen, siehe Codeblock 5-5.
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 # struct User {
@@ -185,6 +195,8 @@ Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für `email`,
 verwenden aber ansonsten die gleichen Werte von `user1`, die wir in Codeblock
 5-2 erstellt haben.
 
+<span class="filename">Dateiname: src/main.rs</span>
+
 ```rust
 # struct User {
 #     active: bool,
@@ -218,6 +230,8 @@ Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax `..` gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 # struct User {
@@ -259,14 +273,15 @@ der Strukturdefinition.
 Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit `=` ist,
 da sie die Daten verschiebt, wie wir im Abschnitt [„Variablen und Daten im
 Zusammenspiel mit Move“][move] gesehen haben. In diesem Beispiel können wir
-`user1` nicht mehr verwenden, nachdem wir `user2` erzeugt haben, weil der
-`String` im Feld `username` von `user1` in `user2` verschoben wurde. Hätten wir
-`user2` neue `String`-Werte für beide Felder `email` und `username` gegeben und
-somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
-`user1` auch nach dem Erstellen von `user2` noch gültig. Die Typen `active` und
-`sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
-Verhalten, das wir im Abschnitt [„Nur Stapelspeicher-Daten: Kopieren
-(copy)“][copy] besprochen haben, zutreffen würde.
+`user1` nicht mehr als Ganzes verwenden, nachdem wir `user2` erzeugt haben,
+weil der `String` im Feld `username` von `user1` in `user2` verschoben wurde.
+Hätten wir `user2` neue `String`-Werte für beide Felder `email` und `username`
+gegeben und somit nur die Werte `active` und `sign_in_count` von `user1`
+verwendet, wäre `user1` auch nach dem Erstellen von `user2` noch gültig. Die
+Typen `active` und `sign_in_count` sind Typen, die das Merkmal `Copy`
+implementieren, sodass das Verhalten, das wir im Abschnitt [„Nur
+Stapelspeicher-Daten: Kopieren (copy)“][copy] besprochen haben, zutreffen
+würde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
@@ -280,6 +295,8 @@ einer regulären Struktur langatmig oder unnötig wären.
 Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort `struct`,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen `Color` und `Point`:
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 struct Color(i32, i32, i32);
@@ -311,6 +328,8 @@ Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens `AlwaysEqual`:
+
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 struct AlwaysEqual;
@@ -358,9 +377,9 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 >
 > fn main() {
 >     let user1 = User {
->         email: "jemand@example.com",
->         username: "benutzername123",
 >         active: true,
+>         username: "benutzername123",
+>         email: "jemand@example.com",
 >         sign_in_count: 1,
 >     };
 > }
