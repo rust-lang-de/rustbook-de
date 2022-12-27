@@ -76,8 +76,8 @@ Funktion einführen.
 Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
 den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
-wir werden `T` verwenden, weil die Parameternamen gemäß Konvention in Rust kurz
-sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
+wir werden `T` verwenden, weil die Typparameternamen gemäß Konvention in Rust
+kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
 Binnenmajuskel (CamelCase). Als Abkürzung für „Typ“ ist `T` die Standardwahl
 der meisten Rust-Programmierer.
 
@@ -469,8 +469,8 @@ Methode relevant sind.
 
 Du fragst dich vielleicht, ob beim Verwenden generischer Typparameter
 Laufzeitkosten anfallen. Die gute Nachricht ist, dass die Verwendung
-generischer Typen die Ausführung nicht langsamer macht als bei konkreten
-Typen.
+generischer Typen die Ausführung deines Programms nicht langsamer macht als bei
+konkreten Typen.
 
 Rust erreicht dies durch Duplizierung von Code mit generischen Datentypen zur
 Kompilierzeit. *Codeduplizierung* (monomorphization) ist der Vorgang der
