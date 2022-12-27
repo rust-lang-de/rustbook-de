@@ -5,9 +5,10 @@ und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
 und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
-Merkmalsobjektes (trait object), die wir in Kapitel 6 und 17 behandeln)
-definiert werden und ihr erster Parameter stets `self` ist. `self`
-repräsentiert die Instanz der Struktur, zu der die Methode aufgerufen wird.
+Merkmalsobjektes (trait object), die wir in [Kapitel 6][enums] und [Kapitel
+17][trait-objects] behandeln) definiert werden und ihr erster Parameter stets
+`self` ist. `self` repräsentiert die Instanz der Struktur, zu der die Methode
+aufgerufen wird.
 
 ### Definieren von Methoden
 
@@ -131,7 +132,7 @@ nützlich, weil man das Feld als privat, die Methode aber als öffentlich
 kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
 öffentlichen API des Typs erhält. Was öffentlich und privat bedeuten und wie
 man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
-wir in Kapitel 7 behandeln.
+wir in [Kapitel 7][public] behandeln.
 
 > ### Wo ist der Operator `->`?
 >
@@ -233,7 +234,7 @@ Methode aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
 unveränderliche Ausleihe von `rect2` vom Typ `Rectangle`. Das macht Sinn, da
 wir `rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine
 veränderliche Ausleihe bräuchten) und `main` die Eigentümerschaft an `rect2`
-zurückerhalten soll, so dass wir es nach dem Aufruf der Methode `can_hold`
+zurückerhalten soll, sodass wir es nach dem Aufruf der Methode `can_hold`
 weiter verwenden können. Der Rückgabewert von `can_hold` ist ein boolescher
 Wert und die Implementierung prüft, ob Breite und Höhe von `self` jeweils
 größer als von `Rectangle` sind. Fügen wir die neue Methode `can_hold` zum
@@ -335,7 +336,7 @@ Um diese assoziierte Funktion aufzurufen, verwenden wir die Syntax `::` mit dem
 Strukturnamen, z.B. `let sq = Rectangle::square(3);`. Diese Funktion gehört zum
 Namensraum der Struktur: Die Syntax `::` wird sowohl für assoziierte Funktionen
 als auch für Namensräume, die von Modulen erzeugt werden, verwendet. Wir werden
-die Module in Kapitel 7 besprechen.
+die Module in [Kapitel 7][modules] besprechen.
 
 ### Mehrere `impl`-Blöcke
 
@@ -402,3 +403,8 @@ Strukturen festlegen kannst.
 Aber Strukturen sind nicht die einzige Möglichkeit, benutzerdefinierte Typen zu
 definieren: Wenden wir uns der Rust-Funktionalität Aufzählung zu, um ein
 weiteres Werkzeug in deinen Werkzeugkasten zu legen.
+
+[enums]: ch06-00-enums.html
+[modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
+[public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schlüsselwort-pub-öffnen
+[trait-objects]: ch17-02-trait-objects.md
