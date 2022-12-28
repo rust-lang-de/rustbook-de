@@ -101,13 +101,13 @@ fn main() {
 `Box<i32>`</span>
 
 Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
-hier `y` als Instanz eines Feldes festlegen, das auf einen kopierten Wert von
+hier `y` als Instanz einer `Box<T>` festlegen, das auf einen kopierten Wert von
 `x` zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
 Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
-dem Zeiger der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als
-`y` eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere an
-`Box<T>` ist, das es uns ermöglicht, den Dereferenzierungsoperator zu
-verwenden, indem wir unseren eigenen Box-Typ definieren.
+dem Zeiger der `Box<T>` auf die gleiche Weise zu folgen, wie wir es getan
+haben, als `y` eine Referenz war. Als Nächstes werden wir ergründen, was das
+Besondere an `Box<T>` ist, das es uns ermöglicht, den Dereferenzierungsoperator
+zu verwenden, indem wir unseren eigenen Box-Typ definieren.
 
 ### Einen eigenen intelligenten Zeiger definieren
 
