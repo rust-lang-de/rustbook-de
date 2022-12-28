@@ -37,7 +37,10 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.
 
-<img alt="&amp;String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
+<img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
+Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
+zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
+src="img/trpl04-05.svg" class="center" />
 
 <span class="caption">Abbildung 4-5: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
@@ -305,7 +308,11 @@ println!("{}", r3);
 Die Gültigkeitsbereiche der unveränderlichen Referenzen `r1` und `r2` enden
 nach dem `println!`, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
+erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
+mehr verwendet wird.
+
+Die Fähigkeit des
 Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
 Gültigkeitsbereichs nicht mehr verwendet wird, wird als *nicht-lexikalische
 Lebensdauer* (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
@@ -428,5 +435,3 @@ Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
 
 Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
 Anteilstypen (slice).
-
-[nll]: https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html

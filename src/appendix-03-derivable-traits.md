@@ -125,9 +125,9 @@ Sortierreihenfolge der Werte speichert.
 
 Das Merkmal `Clone` erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
 erstellen, und der Vervielfältigungsprozess könnte die Ausführung von
-beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten.
-Siehe den Abschnitt [„Wege, wie Variablen und Daten interagieren: Klonen
-(clone)“][ways-variables-and-data-interact-clone] in Kapitel 4 für weitere
+beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten. Siehe
+den Abschnitt [„Variablen und Daten im Zusammenspiel mit
+Clone“][ways-variables-and-data-interact-clone] in Kapitel 4 für weitere
 Informationen zu `Clone`.
 
 Das Ableiten von `Clone` implementiert die Methode `clone`, die, wenn sie für
@@ -203,4 +203,4 @@ ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-s
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [ways-variables-and-data-interact-clone]:
-ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-klonen-clone
+ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

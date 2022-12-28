@@ -43,5 +43,8 @@ fn main() {
 }
 ```
 
-Rust hat auch Dokumentations-Kommentare, welche im Bereich „Kisten (crate) auf
-crates.io veröffentlichen“ in Kapitel 14 erklärt werden.
+Rust kennt noch eine weitere Kommentarart, nämlich Dokumentationskommentare,
+die wir im Abschnitt ["Kisten (crate) auf crates.io
+veröffentlichen"][publishing] in Kapitel 14 besprechen werden.
+
+[publishing]: ch14-02-publishing-to-crates-io.html

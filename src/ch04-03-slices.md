@@ -45,7 +45,7 @@ Byte-Indexwert zum Parameter `String` zurückgibt</span>
 
 Da wir den `String` Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren `String` mit der Methode
-`as_bytes` in ein Byte-Array um:
+`as_bytes` in ein Byte-Array um.
 
 ```rust
 # fn first_word(s: &String) -> usize {
@@ -96,7 +96,7 @@ wir `&` im Muster.
 Innerhalb der `for`-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 `b' '` nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
-Länge der Zeichenkette zurück, indem wir `s.len()` verwenden:
+Länge der Zeichenkette zurück, indem wir `s.len()` verwenden.
 
 ```rust
 # fn first_word(s: &String) -> usize {
@@ -197,19 +197,23 @@ letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was `ending_index` minus `starting_index` entspricht. Im Fall von `let world =
 &s[6..10];` wäre `world` also ein Anteilstyp, der einen Zeiger auf das Byte bei
-Index 6 von `s` mit einem Längenwert von 4 enthält.
+Index 6 von `s` mit dem Längenwert `4` enthält.
 
-Abbildung 4-6 zeigt dies.
+Abbildung 4-6 stellt dies dar.
 
-<img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
+<img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
+darstellt, die auf das Byte bei Index 0 in einer Tabelle der
+Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
+dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
+der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
 src="img/trpl04-06.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines `String` bezieht</span>
 
-Wenn du mit der Bereichssyntax `..` in Rust beim Index Null beginnen
-willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
-sind diese gleich:
+Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst,
+kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
+gleich:
 
 ```rust
 let s = String::from("Hallo");
@@ -359,7 +363,7 @@ nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
 nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
 von Fehlern zur Kompilierzeit beseitigt!
 
-#### Zeichenkettenliterale sind Anteilstypen
+#### Zeichenkettenliterale als Anteilstypen
 
 Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
@@ -431,10 +435,11 @@ Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 `String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
 nutzt die Vorteile der *automatischen Umwandlung*, eine Funktionalität, die wir
 im Abschnitt [„Implizite automatische Umwandlung mit Funktionen und
-Methoden“][deref-coercions] in Kapitel 15 behandeln. Das Definieren einer
-Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
-`String` entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
-Funktionalität einzubüßen:
+Methoden“][deref-coercions] in Kapitel 15 behandeln.
+
+Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
+Referenz auf einen `String` entgegennimmt, macht unsere API allgemeiner und
+nützlicher, ohne an Funktionalität einzubüßen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

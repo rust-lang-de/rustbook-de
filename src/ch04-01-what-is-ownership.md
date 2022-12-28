@@ -167,7 +167,7 @@ auf diesem Verständnis aufbauen, indem wir den Typ `String` einführen.
 
 Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt [„Datentypen“][data-types] in
-Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben eine bekannte
 Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
 werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
 kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
@@ -288,7 +288,7 @@ Verhalten von Code kann in komplizierteren Situationen unerwartet sein, wenn
 wir wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen
 Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.
 
-#### Wege, wie Variablen und Daten interagieren: Verschieben (move)
+#### Variablen und Daten im Zusammenspiel mit Move
 
 Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
 interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
@@ -327,7 +327,11 @@ Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
 dem Stapelspeicher gespeichert. Auf der rechten Seite ist der Speicherbereich
 im Haldenspeicher, der den Inhalt enthält.
 
-<img alt="String im Arbeitsspeicher" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+<img alt="Zwei Tabellen: Die erste Tabelle enthält die Darstellung von s1 auf
+dem Stapelspeicher, bestehend aus seiner Länge (5), seiner Kapazität (5) und
+einem Zeiger auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle
+enthält die Darstellung der Zeichenkettendaten auf dem Haldenspeicher, Byte für
+Byte." src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-1: Speicherdarstellung eines `String` mit dem
 Wert „Hallo“, gebunden an `s1`</span>
@@ -344,7 +348,10 @@ Stapelspeicher befinden. Wir kopieren nicht die Daten im Haldenspeicher,
 auf die sich der Zeiger bezieht. Die Speicherdarstellung sieht also wie in
 Abbildung 4-2 aus.
 
-<img alt="s1 und s2 zeigen auf denselben Wert" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<img alt="Drei Tabellen: Die Tabellen s1 und s2, die die Zeichenketten auf dem
+Stapelspeicher repräsentieren und beide auf die gleichen Zeichenkettendaten auf
+dem Haldenspeicher verweisen." src="img/trpl04-02.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Abbildung 4-2: Speicherdarstellung der Variable `s2`, die
 eine Kopie des Zeigers, der Länge und der Kapazität von `s1` hat</span>
@@ -355,7 +362,10 @@ kopieren würde. Würde Rust dies tun, könnte die Operation `s2 = s1` bei groß
 Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
 Laufzeitperformanz werden.
 
-<img alt="s1 und s2 als vollständige Kopien" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+<img alt="Vier Tabellen: Zwei Tabellen, die die Stapelspeicher-Daten für s1 und
+s2 darstellen, und jede zeigt auf ihre eigene Kopie der Zeichenketten-Daten auf
+dem Haldenspeicher." src="img/trpl04-03.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
 `s2 = s1` tun könnte, falls Rust auch die Daten im Haldenspeicher
@@ -372,7 +382,7 @@ haben. Das zweimalige Freigeben des Speichers kann zu einer
 Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.
 
 Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile `let s2
-= s1` die Variable `s1` als nicht mehr gültig. Daher braucht Rust nichts
+= s1;` die Variable `s1` als nicht mehr gültig. Daher braucht Rust nichts
 freizugeben, wenn `s1` den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, `s1` zu benutzen, nachdem `s2` erstellt wurde; es
 wird nicht funktionieren:
@@ -415,7 +425,12 @@ ungültig macht, wird es nicht als flache Kopie, sondern als *Verschieben*
 dargestellt.
 
 
-<img alt="s1 moved to s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
+<img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Zeichenketten
+auf dem Stapelspeicher darstellen und beide auf dieselben Zeichenkettendaten
+auf dem Haldenspeicher referenzieren. Die Tabelle s1 ist durchgestrichen, weil
+s1 nicht mehr gültig ist; nur s2 kann für den Zugriff auf die
+Haldenspeicher-Daten verwendet werden." src="img/trpl04-04.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Abbildung 4-4: Speicherdarstellung, nachdem `s1` ungültig
 gemacht wurde</span>
@@ -429,7 +444,7 @@ Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher k
 man davon ausgehen, dass jedes *automatische* Kopieren im Hinblick auf die
 Laufzeitperformanz kostengünstig ist.
 
-#### Wege, wie Variablen und Daten interagieren: Klonen (clone)
+#### Variablen und Daten im Zusammenspiel mit Clone
 
 Wenn wir die Daten von `String` im Haldenspeicher *tief* kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens

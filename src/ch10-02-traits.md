@@ -418,8 +418,9 @@ können wir eine `where`-Klausel wie folgt verwenden:
 
 ```rust,ignore
 fn some_function<T, U>(t: &T, u: &U) -> i32
-    where T: Display + Clone,
-          U: Clone + Debug
+where
+    T: Display + Clone,
+    U: Clone + Debug,
 {
 ```
 

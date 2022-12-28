@@ -17,14 +17,13 @@ Im Einzelnen wird Folgendes behandelt:
 * *Funktionsabschlüsse*, ein Konstrukt, das einer Funktion ähnelt und in einer
   Variable gespeichert werden kann.
 * *Iteratoren*, ein Mechanismus, eine Reihe von Elementen abzuarbeiten.
-* Wie wir diese zwei Möglichkeiten anwenden und damit unser E/A-Projekt aus
-  Kapitel 12 verbessern können.
-* Die Performanz dieser beiden Funktionalitäten (Spoiler-Alarm: Sie sind
-  schneller, als du vielleicht denken magst!)
+* Wie wir Funktionsabschlüsse und Iteratoren einsetzen, um unser E/A-Projekt
+  aus Kapitel 12 zu verbessern
+* Die Performanz von Funktionsabschlüssen und Iteratoren (Spoiler-Alarm: Sie
+  sind schneller, als du vielleicht denken magst!)
 
-Andere Rust-Funktionalitäten wie Aufzählungen (enums) und Musterabgleich
-(pattern matching), die wir bereits in anderen Kapiteln behandelt haben, sind
-ebenfalls vom funktionalen Stil beeinflusst. Das Beherrschen von
-Funktionsabschlüssen und Iteratoren ist ein wichtiger Bestandteil für das 
-Schreiben von idiomatischem, schnellem Rust-Programmcode. Daher wird ihnen
-das gesamte Kapitel gewidmet.
+Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und
+Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen
+Stil beeinflusst sind. Da das Beherrschen von Funktionsabschlüssen und
+Iteratoren ein wichtiger Bestandteil für das Schreiben von idiomatischem,
+schnellem Rust-Programmcode ist, wird ihnen das gesamte Kapitel gewidmet.

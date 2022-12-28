@@ -11,13 +11,13 @@ ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
 manchmal vielleicht davon abweichen möchtest.
 
 Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
-sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
-Projekt namens *variables* in deinem *projects*-Verzeichnis anlegen, indem wir
-`cargo new variables` aufrufen.
+sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
+Projekt namens *variables* in deinem *projects*-Verzeichnis an, indem du
+`cargo new variables` aufrufst.
 
-Öffne dann in deinem neuen *variables*-Verzeichnis die Datei *src/main.rs* und
-ersetze dessen Code durch folgenden Code. Dieser Code lässt sich noch nicht
-kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.
+Öffne dann in deinem neuen Verzeichnis *variables* die Datei *src/main.rs* und
+ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
+lässt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -31,7 +31,8 @@ fn main() {
 ```
 
 Speichere und starte das Programm mit `cargo run`. Du solltest eine
-Fehlermeldung erhalten, wie in dieser Ausgabe gezeigt:
+Fehlermeldung über einen Unveränderlichkeitsfehler erhalten, wie in dieser
+Ausgabe gezeigt:
 
 ```console
 $ cargo run
@@ -58,9 +59,9 @@ sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
 bedeuten *nicht*, dass du kein guter Programmierer bist! Erfahrene
 Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.
 
-Die Fehlermeldung `cannot assign twice to immutable variable x` weist darauf
-hin, dass du versucht hast, der unveränderlichen Variablen `x` einen zweiten
-Wert zuzuweisen.
+Du hast die Fehlermeldung `cannot assign twice to immutable variable x`
+erhalten, weil du versucht hast, der unveränderlichen Variablen `x` einen
+zweiten Wert zuzuweisen.
 
 Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
 einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
@@ -75,11 +76,11 @@ sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 leichter zu durchschauen.
 
 Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
-erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
-Kapitel 2 gemacht hast, kannst du sie veränderlich machen, indem du vor den
-Variablennamen `mut` angibst. Das Hinzufügen von `mut` vermittelt den
-zukünftigen Lesern des Codes die Absicht, dass andere Teile des Codes den Wert
-dieser Variablen ändern werden.
+erleichtern. Obwohl Variablen standardmäßig unveränderlich sind, kannst du sie
+veränderlich machen, indem du vor den Variablennamen `mut` angibst, wie du es
+in [Kapitel 2][storing-values-with-variables] getan hast. Das Hinzufügen von
+`mut` vermittelt den zukünftigen Lesern des Codes die Absicht, dass andere
+Teile des Codes den Wert dieser Variablen ändern werden.
 
 Lass uns zum Beispiel *src/main.rs* wie folgt ändern:
 

@@ -652,7 +652,7 @@ zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich `0`
 zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
 mit dieser Konvention kompatibel zu sein.
 
-Die Funktion `main` kann jeden Typ zurückgeben, der [das Merkmal
+Die Funktion `main` kann jeden Typ zurückgeben, der das [Merkmal
 `std::process::Termination`][termination] implementiert, das eine Funktion
 `report` enthält, die einen `ExitCode` zurückgibt. Weitere Informationen zur
 Implementierung des Merkmals `Termination` für deine eigenen Typen findest du
