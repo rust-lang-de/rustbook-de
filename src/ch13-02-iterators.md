@@ -7,10 +7,10 @@ Durch die Verwendung von Iteratoren ist es nicht notwendig, diese Logik selbst
 neu zu implementieren.
 
 Die Iteratoren in Rust sind *faul* (lazy), das bedeutet, dass sie erst durch
-Methodenaufrufe verbraucht werden müssen, um einen Effekt zu haben. Der Programmcode in
-Codeblock 13-10 erstellt beispielsweise einen Iterator über die Elemente im
-Vektor `v1` indem die in `Vec<T>` definierte Methode `iter` aufgerufen wird.
-Dieser Programmcode macht nichts Sinnvolles.
+Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
+Programmcode in Codeblock 13-10 erstellt beispielsweise einen Iterator über die
+Elemente im Vektor `v1` indem die in `Vec<T>` definierte Methode `iter`
+aufgerufen wird. Dieser Programmcode macht nichts Sinnvolles.
 
 
 ```rust
@@ -21,17 +21,17 @@ let v1_iter = v1.iter();
 
 <span class="caption">Codeblock 13-10: Einen Iterator erstellen</span>
 
-Ein Iterator kann nach Erstellung auf verschiedene Weise verwendet werden. In
-Codeblock 3-5 in Kapitel 3 haben wir Iteratoren mit `for`-Schleifen verwendet,
-um Programmcode für jedes Element auszuführen, wenngleich wir dadurch nur den
-Aufruf von `iter` schöngefärbt haben.
+Der Iterator wird in der Variable `v1_iter` gespeichert. Sobald wir einen
+Iterator erstellt haben, können wir ihn auf verschiedene Weise verwenden.
+In Codeblock 3-5 in Kapitel 3 haben wir über ein Array iteriert, indem wir eine
+`for`-Schleife verwendet haben, um einen Code für jedes Element auszuführen.
+Unter der Haube wird dabei implizit ein Iterator erzeugt und dann konsumiert,
+aber wir haben bis jetzt übersehen, wie das genau funktioniert.
 
 In Codeblock 13-11 wird die Erstellung des Iterators von dessen Verwendung in
-der `for`-Schleife getrennt. Der Iterator wird in der Variable `v1_iter`
-gespeichert und es findet noch keine Iteration statt. Erst wenn die
-`for`-Schleife mit dem Iterator in `v1_iter` aufgerufen wird, wird jedes
-Element von `v1_iter` in einer Iteration der Schleife verwendet, die den
-jeweiligen Wert ausgibt.
+der `for`-Schleife getrennt. Wenn die `for`-Schleife unter Verwendung des
+Iterators in `v1_iter` aufgerufen wird, wird jedes Element des Iterators in
+einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.
 
 ```rust
 let v1 = vec![1, 2, 3];
@@ -39,7 +39,7 @@ let v1 = vec![1, 2, 3];
 let v1_iter = v1.iter();
 
 for val in v1_iter {
-    println!("Erhielt: {}", val);
+    println!("Erhalten: {}", val);
 }
 ```
 <span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
@@ -175,17 +175,15 @@ Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.
 
 ### Methoden die andere Iteratoren erzeugen
 
-Andere Methoden die im `Iterator`-Merkmal definiert sind werden als
-*Iteratoradapter* (iterator adaptors) bezeichnet, sie ermöglichen dir Iteratoren
-in andere Arten von Iteratoren zu ändern. Man kann mehrere Aufrufe von
-Iteratoradaptern verketten und dadurch komplexe Handlungen auf lesbare Art
-ausführen. Da alle Iteratoren jedoch faul sind, ist es notwendig, eine der
-konsumierenden Adapter-Methoden aufzurufen, um Ergebnisse zu erhalten.
+*Iterator-Adaptoren* sind Methoden, die auf dem Merkmal `Iterator` definiert
+sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
+Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.
 
-Codeblock 13-14 zeigt ein Beispiel von einen Aufruf der `map`-Methode, die einen
-Funktionsabschluss auf jedes Element anwendet, um einen neuen Iterator zu
-erstellen. Dieser Funktionsabschluss inkrementiert den Wert jedes Elementes des
-Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:
+Codeblock 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
+`map`, die einen Funktionsabschluss für jedes Element aufruft, während die
+Elemente durchlaufen werden. Die Methode `map` gibt einen neuen Iterator
+zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
+hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -198,7 +196,7 @@ Vektors um 1. Dieser Programmcode erzeugt jedoch eine Warnung:
 <span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters `map` um
 einen neuen Iterator zu erzeugen</span>
 
-Wir erhalten folgende Warnung:
+Dieser Code führt jedoch zu einer Warnung:
 
 ```console
 $ cargo run
@@ -213,7 +211,6 @@ warning: unused `Map` that must be used
   = note: iterators are lazy and do nothing unless consumed
 
 warning: `iterators` (bin "iterators") generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s
      Running `target/debug/iterators`
 ```
@@ -251,16 +248,22 @@ Dies ist ein gutes Beispiel dafür, wie man mit Funktionsabschlüssen ein
 Verhalten anpassen kann, während das vom `Iterator`-Merkmal bereitgestellte 
 Iterationsverhalten wiederverwendet wird.
 
+Du kannst mehrere Aufrufe von Iterator-Adaptoren verketten, um komplexe
+Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
+musst du eine der konsumierenden Adaptermethoden aufrufen, um Ergebnisse aus
+Aufrufen von Iteratoradaptern zu erhalten.
+
 ### Verwendung von Funktionsabschlüssen die ihre Umgebung erfassen
 
-Nun, da wir uns ein wenig mit Iteratoren befasst haben, werden wir anhand
-des `filter`-Iteratoradapters eine häufige Verwendung von Funktionsabschlüssen
-die ihre Umgebung erfassen zeigen. Die `filter`-Methode eines Iterators nimmt
-einen Funktionsabschluss als Argument, der für jedes Element des Iterators
-einen booleschen Wert zurückgibt. Wenn der Funktionsabschluss `true`
-zurückgibt, wird der Wert in den von `filter` erzeugten Iterator aufgenommen,
-wird `false` zurückgegeben, ist der Wert im resultierenden Iterator nicht
-enthalten.
+Viele Iterator-Adapter nehmen Funktionsabschlüsse als Argumente, und in der
+Regel werden diese Funktionsabschlüsse solche sein, die ihre Umgebung erfassen.
+
+In diesem Beispiel verwenden wir die Methode `filter`, die einen
+Funktionsabschluss entgegennimmt. Der Funktionsabschluss holt ein Element aus
+dem Iterator und gibt ein `bool` zurück. Wenn der Funktionsabschluss `true`
+zurückgibt, wird der Wert in die von `filter` erzeugte Iteration aufgenommen.
+Wenn der Funktionsabschluss `false` zurückgibt, wird der Wert nicht
+aufgenommen.
 
 Im Codeblock 13-16 benutzen wir `filter` mit einem Funktionsabschluss, der die
 Variable `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
