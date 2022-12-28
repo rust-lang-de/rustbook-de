@@ -446,7 +446,7 @@ Strang im Vorrat zur Ausführung übergibt.
 
 Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen
 Funktionsabschluss als Parameter zu nehmen. Aus dem Abschnitt [„Verschieben
-erfasster Werte aus dem Funktionsabschluss und die `Fn`-Merkmale“][fn-traits]
+erfasster Werte aus Funktionsabschlüssen und Fn-Merkmalen“][fn-traits]
 in Kapitel 13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit
 drei verschiedenen Merkmalen nehmen können: `Fn`, `FnMut` und `FnOnce`. Wir
 müssen entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir
@@ -1450,4 +1450,4 @@ ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
 [fn-traits]:
-ch13-01-closures.html#verschieben-erfasster-werte-aus-dem-funktionsabschluss-und-die-fn-merkmale
+ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen
