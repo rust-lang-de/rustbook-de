@@ -25,14 +25,14 @@ Dateien gibt. Um `ripgrep` zu installieren, führen wir Folgendes aus:
 ```console
 $ cargo install ripgrep
     Updating crates.io index
-  Downloaded ripgrep v11.0.2
+  Downloaded ripgrep v13.0.0
   Downloaded 1 crate (243.3 KB) in 0.88s
-  Installing ripgrep v11.0.2
---abschneiden--
-   Compiling ripgrep v11.0.2
+  Installing ripgrep v13.0.0
+--snip--
+   Compiling ripgrep v13.0.0
     Finished release [optimized + debuginfo] target(s) in 3m 10s
   Installing ~/.cargo/bin/rg
-   Installed package `ripgrep v11.0.2` (executable `rg`)
+   Installed package `ripgrep v13.0.0` (executable `rg`)
 ```
 
 Die vorletzte Zeile der Ausgabe zeigt den Speicherort und den Namen der

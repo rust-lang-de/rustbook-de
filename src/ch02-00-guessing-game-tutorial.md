@@ -218,16 +218,16 @@ let apples = 5;
 ```
 
 Diese Zeile erzeugt eine neue Variable namens `apples` und bindet sie an den
-Wert 5. In Rust sind Variablen standardmäßig unveränderlich (immutable), das
+Wert 5. In Rust sind Variablen standardmäßig unveränderbar (immutable), das
 heißt, sobald wir der Variablen einen Wert gegeben haben, wird sich der Wert
 nicht mehr ändern. Wir werden dieses Konzept im Abschnitt [„Variablen und
-Veränderlichkeit“][variables-and-mutability] in Kapitel 3 ausführlich
-besprechen. Um eine Variable veränderlich zu machen, ergänzen wir `mut` vor dem
+Veränderbarkeit“][variables-and-mutability] in Kapitel 3 ausführlich
+besprechen. Um eine Variable veränderbar zu machen, ergänzen wir `mut` vor dem
 Variablennamen:
 
 ```rust
-let apples = 5; // unveränderlich
-let mut bananas = 5; // veränderlich
+let apples = 5; // unveränderbar
+let mut bananas = 5; // veränderbar
 ```
 
 > Anmerkung: Die Syntax `//` beginnt einen Kommentar, der bis zum Ende der
@@ -235,7 +235,7 @@ let mut bananas = 5; // veränderlich
 > Kapitel 3 ausführlicher besprochen.
 
 Zurück zum Programm des Ratespiels. Du weißt jetzt, dass `let mut
-guess` eine veränderliche Variable namens `guess` einführt. Das
+guess` eine veränderbare Variable namens `guess` einführt. Das
 Gleichheitszeichen (`=`) sagt Rust, dass wir jetzt etwas an die Variable binden
 wollen. Auf der rechten Seite des Gleichheitszeichens steht der Wert, an den
 `guess` gebunden ist, was das Ergebnis des Aufrufs von `String::new` ist, einer
@@ -251,7 +251,7 @@ Du wirst eine Funktion `new` bei vielen Typen finden, weil es ein
 gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
 erzeugt.
 
-Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderliche
+Insgesamt hat die Zeile `let mut guess = String::new();` eine veränderbare
 Variable erzeugt, die derzeit an eine neue, leere Instanz eines `String`
 gebunden ist. Uff!
 
@@ -295,7 +295,7 @@ Benutzer zu erhalten. Wir übergeben auch das Argument `&mut guess` an
 speichern soll. Die Aufgabe von `read_line` ist es, alles, was der Benutzer in
 die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
 zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
-Zeichenketten-Argument muss veränderlich sein, damit die Methode den Inhalt der
+Zeichenketten-Argument muss veränderbar sein, damit die Methode den Inhalt der
 Zeichenkette ändern kann.
 
 Das `&` zeigt an, dass es sich bei diesem Argument um eine *Referenz* handelt,
@@ -305,8 +305,8 @@ musst. Referenzen sind eine komplexe Funktionalität, und einer der
 Hauptvorteile von Rust ist, wie sicher und einfach es ist, Referenzen zu
 verwenden. Du musst nicht viele dieser Details kennen, um dieses Programm
 fertigzustellen. Im Moment musst du nur wissen, dass Referenzen wie Variablen
-standardmäßig unveränderlich sind. Daher musst du `&mut guess` anstatt `&guess`
-schreiben, um sie veränderlich zu machen. (In Kapitel 4 werden Referenzen
+standardmäßig unveränderbar sind. Daher musst du `&mut guess` anstatt `&guess`
+schreiben, um sie veränderbar zu machen. (In Kapitel 4 werden Referenzen
 ausführlicher erklärt.)
 
 ### Behandeln potentieller Fehler mit `Result`

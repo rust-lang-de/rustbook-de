@@ -221,8 +221,8 @@ Wir werden oft das Schlüsselwort `move` mit Funktionsabschlüssen verwenden, di
 an `thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
 Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
 damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
-überträgt. Im Abschnitt [„Mit Funktionsabschlüssen die Umgebung
-erfassen“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
+überträgt. Im Abschnitt [„Erfassen von Referenzen oder Verschieben der
+Eigentümerschaft“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
 Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
 zwischen `move` und `thread::spawn` konzentrieren.
 
@@ -406,4 +406,4 @@ Eigentumsregeln verstoßen.
 Mit einem grundlegenden Verständnis von Strängen und der Strang-API wollen wir
 uns ansehen, was wir mit Strängen noch machen können.
 
-[capture]: ch13-01-closures.html#mit-funktionsabschlüssen-die-umgebung-erfassen
+[capture]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft

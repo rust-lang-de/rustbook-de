@@ -67,7 +67,7 @@ v.push(8);
 Hinzufügen von Werten zu einem Vektor</span>
 
 Wie bei jeder Variablen müssen wir, wenn wir ihren Wert ändern wollen, sie mit
-dem Schlüsselwort `mut` als veränderlich markieren, wie in Kapitel 3
+dem Schlüsselwort `mut` als veränderbar markieren, wie in Kapitel 3
 besprochen. Die Zahlen, die wir darin platzieren, sind alle vom Typ `i32`, und
 Rust leitet dies aus den Daten ab, sodass wir die Annotation `Vec<i32>` nicht
 benötigen.
@@ -141,9 +141,9 @@ Wenn das Programm über eine gültige Referenz verfügt, stellt der
 Ausleihenprüfer mittels Eigentümerschafts- und Ausleihregeln (siehe Kapitel 4)
 sicher, dass diese Referenz und alle anderen Referenzen auf den Inhalt des
 Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
-veränderlichen und unveränderlichen Referenzen im gleichen Gültigkeitsbereich
+veränderbaren und unveränderbaren Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
-unveränderliche Referenz auf das erste Element in einem Vektor halten und
+unveränderbare Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
 wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:
 
@@ -200,7 +200,7 @@ Ausleihregeln verhindern, dass Programme in diese Situation geraten.
 Um auf die Elemente eines Vektors der Reihe nach zuzugreifen, können wir über
 alle Elemente iterieren, anstatt Indizes zu verwenden, um auf jeweils ein
 Element zur gleichen Zeit zuzugreifen. Codeblock 8-7 zeigt, wie man eine
-`for`-Schleife verwendet, um unveränderliche Referenzen auf die Elemente eines
+`for`-Schleife verwendet, um unveränderbare Referenzen auf die Elemente eines
 Vektors von `i32`-Werten zu erhalten und diese auszugeben.
 
 ```rust
@@ -213,7 +213,7 @@ for i in &v {
 <span class="caption">Codeblock 8-7: Ausgeben aller Elemente eines Vektors
 durch Iterieren über die Elemente mittels `for`-Schleife</span>
 
-Wir können auch über veränderliche Referenzen der Elemente eines veränderlichen
+Wir können auch über veränderbare Referenzen der Elemente eines veränderbaren
 Vektors iterieren, um Änderungen an allen Elementen vorzunehmen. Die
 `for`-Schleife in Codeblock 8-8 addiert zu jedem Element `50`.
 
@@ -224,16 +224,16 @@ for i in &mut v {
 }
 ```
 
-<span class="caption">Codeblock 8-8: Iterieren über veränderliche Referenzen
+<span class="caption">Codeblock 8-8: Iterieren über veränderbare Referenzen
 der Elemente eines Vektors</span>
 
-Um den Wert, auf den sich die veränderliche Referenz bezieht, zu ändern, müssen
+Um den Wert, auf den sich die veränderbare Referenz bezieht, zu ändern, müssen
 wir den Dereferenzierungsoperator (`*`) verwenden, um an den Wert in `i` zu
 kommen, bevor wir den Operator `+=` verwenden können. Wir werden mehr über den
 Dereferenzierungsoperator im Abschnitt [„Dem Zeiger zum Wert folgen“][deref] in
 Kapitel 15 sprechen.
 
-Die Iteration über einen Vektor, ob unveränderlich oder veränderlich, ist
+Die Iteration über einen Vektor, ob unveränderbar oder veränderbar, ist
 aufgrund der Regeln des Ausleihenprüfers sicher. Wenn wir versuchen würden,
 Elemente in den `for`-Schleifenrümpfen in Codeblock 8-7 und Codeblock 8-8
 einzufügen oder zu entfernen, würden wir einen Compilerfehler erhalten, ähnlich

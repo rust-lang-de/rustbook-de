@@ -4,11 +4,13 @@ Das zweite wichtige Merkmal für intelligente Zeiger ist `Drop`, mit dem man
 anpassen kann, was passiert, wenn ein Wert den Gültigkeitsbereich verlässt. Man
 kann eine Implementierung für das Merkmal (trait) `Drop` für jeden Typ
 bereitstellen, und der angegebene Programmcode kann zum Freigeben von
-Ressourcen wie Dateien oder Netzwerkverbindungen verwendet werden. Wir führen
-`Drop` im Kontext von intelligenten Zeigern ein, da die Funktionalität des
-Merkmals `Drop` fast immer bei der Implementierung eines intelligenten Zeigers
-verwendet wird. Wenn beispielsweise eine `Box<T>` aufgeräumt wird, wird der
-Speicherplatz auf dem Haldenspeicher freigegeben, auf den die Box zeigt.
+Ressourcen wie Dateien oder Netzwerkverbindungen verwendet werden.
+
+Wir führen `Drop` im Kontext von intelligenten Zeigern ein, da die
+Funktionalität des Merkmals `Drop` fast immer bei der Implementierung eines
+intelligenten Zeigers verwendet wird. Wenn beispielsweise eine `Box<T>`
+aufgeräumt wird, wird der Speicherplatz auf dem Haldenspeicher freigegeben, auf
+den die Box zeigt.
 
 In einigen Programmiersprachen muss der Programmierer bei jeder Verwendung einer
 Instanz eines intelligenten Zeigers Programmcode aufrufen, um Speicher oder
@@ -24,7 +26,7 @@ Ressourcen verlieren!
 Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals `Drop`. Für das
 Merkmal `Drop` muss man eine Methode `drop` implementieren, die eine 
-veränderliche Referenz auf `self` enthält. Um zu sehen, wann Rust `drop`
+veränderbare Referenz auf `self` enthält. Um zu sehen, wann Rust `drop`
 aufruft, implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 
 Codeblock 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige 

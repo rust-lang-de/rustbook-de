@@ -1,23 +1,23 @@
-## `RefCell<T>` und das innere Veränderlichkeitsmuster
+## `RefCell<T>` und das innere Veränderbarkeitsmuster
 
-*Innere Veränderlichkeit* (interior mutability) ist ein Entwurfsmuster in Rust,
-mit dem man Daten auch dann verändern kann, wenn unveränderliche Referenzen auf
+*Innere Veränderbarkeit* (interior mutability) ist ein Entwurfsmuster in Rust,
+mit dem man Daten auch dann verändern kann, wenn unveränderbare Referenzen auf
 diese Daten vorhanden sind. Normalerweise ist diese Aktion nach den
 Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
 „unsicherer Programmcode“ (`unsafe` code) innerhalb einer Datenstruktur, um
-Rusts übliche Regeln, die Veränderlichkeit und Ausleihen betreffen, zu
+Rusts übliche Regeln, die Veränderbarkeit und Ausleihen betreffen, zu
 verändern. Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell
 überprüfen, anstatt uns darauf zu verlassen, dass der Compiler sie für uns
 überprüft; wir werden unsicheren Code in Kapitel 19 genauer besprechen.
 
-Wir können Typen verwenden, die das innere Veränderlichkeitsmuster verwenden,
+Wir können Typen verwenden, die das innere Veränderbarkeitsmuster verwenden,
 wenn wir sicherstellen können, dass die Ausleihregeln zur Laufzeit eingehalten
 werden, obwohl der Compiler dies nicht garantieren kann. Der betroffene
 unsichere Programmcode wird dann in eine sichere API eingeschlossen und der
-äußere Typ ist immer noch unveränderlich.
+äußere Typ ist immer noch unveränderbar.
 
 Lass uns dieses Konzept untersuchen, indem wir uns den Typ `RefCell<T>` ansehen,
-der dem inneren Veränderlichkeitsmuster folgt.
+der dem inneren Veränderbarkeitsmuster folgt.
 
 ### Mit `RefCell<T>` Ausleihregeln zur Laufzeit durchsetzen
 
@@ -26,8 +26,8 @@ einzige Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unte
 `RefCell<T>` von einem Typ wie `Box<T>`? Erinnere dich an die Ausleihregeln die
 wir im Kapitel 4 gelernt haben:
 
-* Zu jeder Zeit kann man *entweder* eine veränderliche Referenz oder eine
-  beliebige Anzahl unveränderlicher Referenzen haben (nicht aber beides).
+* Zu jeder Zeit kann man *entweder* eine veränderbare Referenz oder eine
+  beliebige Anzahl unveränderbarer Referenzen haben (nicht aber beides).
 * Referenzen müssen immer gültig sein.
 
 Mit Referenzen und `Box<T>` werden die Invarianten der Ausleihregeln beim
@@ -72,23 +72,23 @@ Eine Zusammenfassung der Gründe für die Wahl von `Box<T>`, `Rc<T>` oder
 
 * `Rc<T>` erlaubt mehrere Eigentümer derselben Daten. Mit `Box<T>` und
   `RefCell<T>` haben Daten nur einen Eigentümer.
-* `Box<T>` ermöglicht unveränderliches oder veränderliches Ausleihen, das zur
-  Kompilierzeit überprüft wird. `Rc<T>` erlaubt nur unveränderliches
+* `Box<T>` ermöglicht unveränderbares oder veränderbares Ausleihen, das zur
+  Kompilierzeit überprüft wird. `Rc<T>` erlaubt nur unveränderbares
   Ausleihen, das zur Kompilierzeit geprüft wird und `RefCell<T>`
-  erlaubt unveränderliches oder veränderliches Ausleihen, das zur Laufzeit
+  erlaubt unveränderbares oder veränderbares Ausleihen, das zur Laufzeit
   überprüft wird.
-* Da `RefCell<T>` zur Laufzeit überprüfbares veränderliches Ausleihen zulässt,
+* Da `RefCell<T>` zur Laufzeit überprüfbares veränderbares Ausleihen zulässt,
   kann man den Wert innerhalb von `RefCell<T>` auch dann ändern, wenn
-  `RefCell<T>` unveränderlich ist.
+  `RefCell<T>` unveränderbar ist.
 
-Das Ändern des Werts innerhalb eines unveränderlichen Werts ist das *innere
-Veränderlichkeitsmuster*. Schauen wir uns eine Situation an, in der innere
-Veränderlichkeit nützlich ist, und untersuchen, wie dies möglich ist.
+Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das *innere
+Veränderbarkeitsmuster*. Schauen wir uns eine Situation an, in der innere
+Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.
 
-### Innere Veränderlichkeit: Das veränderliche Ausleihen eines unveränderlichen Wertes
+### Innere Veränderbarkeit: Das veränderbare Ausleihen eines unveränderbaren Wertes
 
-Eine Konsequenz der Ausleihregeln ist, dass man einen unveränderlichen Wert
-nicht veränderlich ausleihen kann. Dieser Programmcode wird beispielsweise nicht
+Eine Konsequenz der Ausleihregeln ist, dass man einen unveränderbaren Wert
+nicht veränderbar ausleihen kann. Dieser Programmcode wird beispielsweise nicht
 kompilieren:
 
 ```rust,does_not_compile
@@ -116,20 +116,20 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `borrowing` due to previous error
 ```
 Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
-seinen Methoden selbst veränderlich ist, aber für einen anderen Programmcode
-unveränderlich erscheint. Programmcode außerhalb der Methoden des Werts kann
+seinen Methoden selbst veränderbar ist, aber für einen anderen Programmcode
+unveränderbar erscheint. Programmcode außerhalb der Methoden des Werts kann
 diesen nicht verändern. Die Verwendung von `RefCell<T>` ist eine Möglichkeit,
-die Fähigkeit zur inneren Veränderlichkeit zu erhalten, allerdings umgeht
+die Fähigkeit zur inneren Veränderbarkeit zu erhalten, allerdings umgeht
 `RefCell<T>` die Ausleihregeln nicht vollständig: Der Ausleihenprüfer (borrow
-checker) im Compiler ermöglicht diese innere Veränderlichkeit, und die
+checker) im Compiler ermöglicht diese innere Veränderbarkeit, und die
 Ausleihregeln werden stattdessen zur Laufzeit überprüft. Wenn man gegen die
 Regeln verstößt wird `panic` anstelle eines Fehlers beim Kompilieren ausgelöst.
 
 Lass uns ein praktisches Beispiel durcharbeiten, in dem wir `RefCell<T>`
-verwenden können, um einen unveränderlichen Wert zu ändern und herauszufinden,
+verwenden können, um einen unveränderbaren Wert zu ändern und herauszufinden,
 warum dies nützlich ist.
 
-#### Ein Anwendungsfall für die innere Veränderlichkeit: Mock-Objekte (Mock Objects)
+#### Ein Anwendungsfall für die innere Veränderbarkeit: Mock-Objekte (Mock Objects)
 
 Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
 anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
@@ -210,7 +210,7 @@ ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span>
 
 Ein wichtiger Teil dieses Programmcodes ist, dass das Merkmal `Messenger` eine
-Methode namens `send` hat, die eine unveränderliche Referenz auf `self` und den
+Methode namens `send` hat, die eine unveränderbare Referenz auf `self` und den
 Text der Nachricht enthält. Dieses Merkmal ist die Schnittstelle, die unser
 Mock-Objekt implementieren muss, damit das Mock-Objekt auf die gleiche Weise
 wie ein reales Objekt verwendet werden kann. Der andere wichtige Teil ist, dass
@@ -352,13 +352,13 @@ error: build failed
 ```
 
 Wir können den `MockMessenger` nicht ändern, um die Nachrichten zu verfolgen, da
-die `send`-Methode eine unveränderliche Referenz auf `self` verwendet. Wir
+die `send`-Methode eine unveränderbare Referenz auf `self` verwendet. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen 
 `&mut self` zu verwenden, da die Signatur von `send`nicht mit der Signatur in 
 der Merkmalsdefinition von `Messenger` übereinstimmt (probiere es gerne aus und
 schau dir die Fehlermeldung an, die dabei ausgegeben wird).
 
-Dies ist eine Situation, in der innere Veränderlichkeit helfen kann! Wir
+Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die `send_messages` in einer `RefCell<T>` und dann kann die
 `send`-Methode `sent_messages` ändern, um Nachrichten zu speichern, die wir
 gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:
@@ -443,23 +443,23 @@ mod tests {
 ```
 
 <span class="caption">Codeblock 15-22: `RefCell<T>` verwenden, um einen inneren
-Wert zu verändern, während der äußere Wert als unveränderlich betrachtet wird</span>
+Wert zu verändern, während der äußere Wert als unveränderbar betrachtet wird</span>
 
 Das Feld `sent_messages` ist jetzt vom Typ `RefCell<Vec<String>>` anstelle von
 `Vec<String>`. In der Funktion `new` erstellen wir eine neue 
 `RefCell<Vec<Sting>>`-Instanz um den leeren Vektor.
 
 Für die Implementierung der `send`-Methode ist der erste Parameter immer noch
-eine unveränderliche Ausleihe von `self`, die der Merkmalsdefinition entspricht.
+eine unveränderbare Ausleihe von `self`, die der Merkmalsdefinition entspricht.
 Wir rufen `borrow_mut` auf der `RefCell<Vec<String>>` in `self.sent_messages` auf,
-um eine veränderliche Referenz auf den Wert in der `RefCell<Vec<String>>` zu
-erhalten, der der Vektor ist. Dann können wir `push` auf der veränderlichen
+um eine veränderbare Referenz auf den Wert in der `RefCell<Vec<String>>` zu
+erhalten, der der Vektor ist. Dann können wir `push` auf der veränderbaren
 Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten zu
 verfolgen.
 
 Die letzte Änderung, die wir vornehmen müssen, betrifft die Behauptung: Um zu
 sehen, wie viele Elemente sich im inneren Vektor befinden, rufen wir in der
-`RefCell<Vec<String>>` `borrow` auf, um eine unveränderliche Referenz auf den
+`RefCell<Vec<String>>` `borrow` auf, um eine unveränderbare Referenz auf den
 Vektor zu erhalten.
 
 Nachdem du nun gesehen hast, wie du `RefCell<T>` verwendest, wollen wir uns mit
@@ -467,7 +467,7 @@ der Funktionsweise befassen.
 
 #### Mit `RefCell<T>` den Überblick über die Ausleihen zur Laufzeit behalten
 
-Beim Erstellen unveränderlicher und veränderlicher Referenzen verwenden wir die
+Beim Erstellen unveränderbarer und veränderbarer Referenzen verwenden wir die
 Syntax `&` bzw. `&mut`. Bei `RefCell<T>` verwenden wir die Methoden `borrow` und
 `borrow_mut`, die Teil der sicheren API sind, die zu `RefCell<T>` gehört. Die
 Methode `borrow` gibt den intelligenten Zeigertyp `Ref<T>` zurück und
@@ -477,17 +477,17 @@ können.
 
 Der `RefCell<T>` verfolgt, wie viele intelligente Zeiger `Ref<T>` und `RefMut<T>`
 derzeit aktiv sind. Jedes Mal, wenn wir `borrow` aufrufen, erhöht `RefCell<T>`
-die Anzahl der aktiven unveränderlichen Ausleihen. Wenn ein `Ref<T>`-Wert
-außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl der unveränderlichen
+die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein `Ref<T>`-Wert
+außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl der unveränderbaren
 Ausleihen um eins. Genau wie bei den Ausleihregeln zur Kompilierzeit können
-wir mit `RefCell<T>` zu jedem Zeitpunkt viele unveränderliche Ausleihen oder eine
-veränderliche Ausleihe haben.
+wir mit `RefCell<T>` zu jedem Zeitpunkt viele unveränderbare Ausleihen oder eine
+veränderbare Ausleihe haben.
 
 Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von
 `RefCell<T>` wird zur Laufzeit abstürzen. Codeblock 15-23 zeigt eine
 Modifikation der Implementierung von `send` in Codeblock 15-22. Wir versuchen
-absichtlich, zwei veränderliche Ausleihen zu erstellen, die für denselben
+absichtlich, zwei veränderbare Ausleihen zu erstellen, die für denselben
 Bereich aktiv sind, um zu veranschaulichen, dass `RefCell<T>` uns daran
 hindert, dies zur Laufzeit zu tun.
 
@@ -571,12 +571,12 @@ hindert, dies zur Laufzeit zu tun.
 #     }
 # }
 ```
-<span class="caption">Codeblock 15-23: Wir erstellen zwei veränderliche Referenzen im
+<span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare Referenzen im
 selben Gültigkeitsbereich, um zu sehen, dass `RefCell<T>` abstürzt</span>
 
 Wir erstellen eine Variable `one_borrow` für den intelligenten Zeiger 
 `RefMut<T>`, der von `borrow_mut` zurückgegeben wird. Dann erstellen wir auf die
-gleiche Weise eine weitere veränderliche Ausleihe in der Variable `two_borrow`.
+gleiche Weise eine weitere veränderbare Ausleihe in der Variable `two_borrow`.
 Dadurch werden zwei veränderbare Referenzen im selben Bereich erstellt, was
 nicht zulässig ist. Wenn wir die Tests für unsere Bibliothek ausführen, wird der
 Programmcode in Codeblock 15-23 fehlerfrei kompiliert, aber der Test schlägt
@@ -618,21 +618,21 @@ Laufzeitperformanz verursachen, da die Ausleihen zur Laufzeit und nicht zur
 Kompilierzeit nachverfolgt werden. Die Verwendung von `RefCell<T>` ermöglicht
 es jedoch, ein Mock-Objekt zu schreiben, das sich selbst ändern kann, um die
 Nachrichten zu verfolgen, die es gesehen hat, während man es in einem Kontext
-verwendet, in dem nur unveränderliche Werte zulässig sind. Man kann
+verwendet, in dem nur unveränderbare Werte zulässig sind. Man kann
 `RefCell<T>` trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.
 
-### Mehrere Eigentümer veränderlicher Daten durch Kombinieren von `Rc<T>` und `RefCell<T>`
+### Mehrere Eigentümer veränderbarer Daten durch Kombinieren von `Rc<T>` und `RefCell<T>`
 
 Eine übliche Methode zur Verwendung von `RefCell<T>` ist die Kombination mit
 `Rc<T>`. Erinnere dich, dass man mit `Rc<T>` mehrere Eigentümer einiger Daten
-haben kann, aber nur unveränderlichen Zugriff auf diese Daten erhält. Wenn
+haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
 man eine `Rc<T>` hat, das eine `RefCell<T>` enthält, kann man einen Wert
-erhalten, der mehrere Eigentümer hat *und* veränderlich ist!
+erhalten, der mehrere Eigentümer hat *und* veränderbar ist!
 
 Erinnern wir uns beispielsweise an das Beispiel für die Cons-Liste in Codeblock
 15-18, in dem wir `Rc<T>` verwendet haben, um mehrere Listen die gemeinsame
-Nutzung einer anderen Liste zu ermöglichen. Da `Rc<T>` nur unveränderliche Werte
+Nutzung einer anderen Liste zu ermöglichen. Da `Rc<T>` nur unveränderbare Werte
 enthält, können wir keinen der Werte in der Liste ändern, sobald wir sie
 erstellt haben. Fügen wir `RefCell<T>` hinzu, um die Werte in den Listen ändern
 zu können. Codeblock 15-24 zeigt, dass wir durch Verwendung einer `RefCell<T>`
@@ -703,9 +703,9 @@ c after = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 ```
 
 Diese Technik ist ziemlich sauber! Durch die Verwendung von `RefCell<T>` haben
-wir einen nach außen unveränderlichen `List`-Wert. Wir können jedoch die
+wir einen nach außen unveränderbaren `List`-Wert. Wir können jedoch die
 Methoden für `RefCell<T>` verwenden, die den Zugriff auf die innere
-Veränderlichkeit ermöglichen, damit wir unsere Daten bei Bedarf ändern können.
+Veränderbarkeit ermöglichen, damit wir unsere Daten bei Bedarf ändern können.
 Die Laufzeitprüfungen der Ausleihregeln schützen uns vor
 Daten-Wettlaufsituationen (data races), und manchmal lohnt es sich, ein wenig
 Geschwindigkeit für diese Flexibilität in unseren Datenstrukturen

@@ -1,4 +1,4 @@
-## Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können
+## Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen
 
 Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
 speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen 
@@ -10,11 +10,11 @@ die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
 
 ### Erfassen der Umgebung mit Funktionsabschlüssen
 
-Der erste Aspekt von Funktionsabschlüssen, den wir untersuchen werden, ist,
-dass Funktionsabschlüsse Werte aus der Umgebung, in der sie definiert sind, zur
-späteren Verwendung erfassen können. Das Szenario sieht folgendermaßen aus:
-Eine T-Shirt-Firma verschenkt in regelmäßigen Abständen ein kostenloses T-Shirt
-an jemanden aus ihrer Mailingliste. Die Personen auf der Mailingliste können
+Wir werden zunächst untersuchen, wie wir Funktionsabschlüsse verwenden können,
+um Werte aus der Umgebung, in der sie definiert sind, zur späteren Verwendung
+zu erfassen. Hier ist das Szenario: Von Zeit zu Zeit verschenkt unsere
+T-Shirt-Firma ein exklusives T-Shirt in limitierter Auflage an jemanden aus
+unserer Mailingliste als Werbeaktion. Die Personen auf der Mailingliste können
 optional ihre Lieblingsfarbe zu ihrem Profil hinzufügen. Wenn die Person, die
 das kostenlose Shirt erhalten soll, ihre Lieblingsfarbe in ihrem Profil
 angegeben hat, erhält sie das Hemd in dieser Farbe. Wenn die Person keine
@@ -23,10 +23,11 @@ derzeit die meisten Exemplare hat.
 
 Es gibt viele Möglichkeiten, dies zu implementieren. Für dieses Beispiel werden
 wir eine Aufzählung namens `ShirtColor` verwenden, die die Varianten `Red` und
-`Blue` hat. Das Inventar des Unternehmens wird durch eine Struktur `Inventory`
+`Blue` hat (der Einfachheit halber wird die Anzahl der verfügbaren Farben
+begrenzt). Das Inventar des Unternehmens wird durch eine Struktur `Inventory`
 repräsentiert, die ein Feld mit dem Namen `shirts` hat, das ein
 `Vec<ShirtColor>` mit den derzeit vorrätigen Hemden enthält. Die Methode
-`shirt_giveaway`, die auf `Inventory` definiert ist, erhält die optionale
+`giveaway`, die auf `Inventory` definiert ist, erhält die optionale
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
 zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:
 
@@ -88,10 +89,35 @@ fn main() {
 ```
 <span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span>
 
-Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt auf
-Lager. Dann ruft er die Methode `giveaway` für einen Benutzer mit einer
-Präferenz für ein rotes Shirt und einen Benutzer ohne Referenz auf. Die
-Ausführung dieses Codes gibt aus:
+Der in `main` definierte `store` hat zwei blaue Shirts und ein rotes Shirt
+übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
+Methode `giveaway` für einen Benutzer mit einer Präferenz für ein rotes Hemd
+und einen Benutzer ohne jegliche Präferenz auf.
+
+Auch dieser Code könnte auf viele Arten implementiert werden. Um uns auf
+Funktionsabschlüsse zu konzentrieren, haben wir uns an die Konzepte gehalten,
+die du bereits gelernt hast, mit Ausnahme des Methodenrumpfs von `giveaway`,
+der einen Funktionsabschluss verwendet. In der Methode `giveaway` erhalten wir
+die Benutzerpräferenz als einen Parameter vom Typ `Option<ShirtColor>` und
+rufen die Methode `unwrap_or_else` auf `user_preference` auf. Die [Methode
+`unwrap_or_else` auf `Option<T>`][unwrap-or-else] ist in der Standardbibliothek
+definiert. Sie nimmt ein Argument entgegen: Einen Funktionsabschluss ohne
+Argument, der einen Wert `T` zurückgibt (denselben Typ, der in der Variante
+`Some` von `Option<T>` gespeichert ist, in diesem Fall `ShirtColor`). Wenn
+`Option<T>` die Variante `Some` ist, gibt `unwrap_or_else` den Wert aus `Some`
+zurück. Wenn `Option<T>` die Variante `None` ist, ruft `unwrap_or_else` den
+Funktionsabschluss auf und gibt den Wert zurück, der vom Funktionsabschluss
+zurückgegeben wurde.
+
+Wir geben den Funktionsabschluss-Ausdruck `|| self.most_stocked()` als Argument
+bei `unwrap_or_else` an. Dies ist ein Funktionsabschluss, die selbst keine
+Parameter hat (wenn der Funktionsabschluss Parameter hätte, würden sie zwischen
+den beiden vertikalen Strichen erscheinen). Der Rumpf des Funktionsabschlusses
+ruft `self.most_stocked()` auf. Wir definieren den Funktionsabschluss hier, und
+die Implementierung von `unwrap_or_else` wird den Funktionsabschluss später
+auswerten, wenn das Ergebnis benötigt wird.
+
+Die Ausführung dieses Codes gibt aus:
 
 ```console
 $ cargo run
@@ -102,40 +128,26 @@ Der Benutzer mit Präferenz Some(Red) erhält Red
 Der Benutzer mit Präferenz None erhält Blue
 ```
 
-Auch dieser Code könnte auf viele Arten implementiert werden, aber dieser Weg
-verwendet Konzepte, die du bereits gelernt hast, mit Ausnahme des Rumpfs der
-Methode `giveaway`, der einen Funktionsabschluss verwendet. Die Methode
-`giveaway` nimmt die Benutzerpräferenz `Option<ShirtColor>` und ruft
-`unwrap_or_else` auf. Die [Methode `unwrap_or_else` auf
-`Option<T>`][unwrap-or-else] ist in der Standardbibliothek definiert. Sie nimmt
-ein Argument: Ein Funktionsabschluss ohne Argumente, der einen Wert `T`
-zurückgibt (den gleichen Typ, der in der `Some`-Variante der `Option<T>`
-gespeichert ist, in diesem Fall eine `ShirtColor`). Wenn `Option<T>` die
-Variante `Some` ist, gibt `unwrap_or_else` den Wert aus `Some` zurück. Wenn
-`Option<T>` die Variante `None` ist, ruft `unwrap_or_else` den
-Funktionsabschluss auf und gibt den vom Funktionsabschluss zurückgegebenen Wert
-zurück.
-
-Das ist interessant, weil wir einen Funktionsabschluss übergeben haben, der
-`self.most_stocked()` für die aktuelle `Inventory`-Instanz aufruft. Die
-Standardbibliothek musste nichts über die von uns definierten Typen `Inventory`
-oder `ShirtColor` oder die Logik, die wir in diesem Szenario verwenden wollen,
-wissen. Der Funktionsabschluss hat eine unveränderliche Referenz auf die
-`self`-Instanz von `Inventory` erfasst und sie mit dem von uns angegebenen Code
-an die Methode `unwrap_or_else` übergeben. Funktionen sind nicht in der Lage,
-ihre Umgebung auf diese Weise zu erfassen.
+Ein interessanter Aspekt ist hier, dass wir einen Funktionsabschluss übergeben
+haben, der `self.most_stocked()` für die aktuelle `Inventory`-Instanz aufruft.
+Die Standardbibliothek musste nichts über die von uns definierten Typen
+`Inventory` oder `ShirtColor` oder die Logik, die wir in diesem Szenario
+verwenden wollen, wissen. Der Funktionsabschluss hat eine unveränderbare
+Referenz auf die `self`-Instanz von `Inventory` erfasst und sie mit dem von uns
+angegebenen Code an die Methode `unwrap_or_else` übergeben. Funktionen sind
+andererseits nicht in der Lage, ihre Umgebung auf diese Weise zu erfassen.
 
 ### Funktionsabschluss-Typinferenz und Annotation
 
 Es gibt weitere Unterschiede zwischen Funktionen und Funktionsabschlüssen. Bei
 Funktionsabschlüssen ist es normalerweise nicht erforderlich, die Typen der
 Parameter oder des Rückgabewertes zu annotieren, wie es bei `fn`-Funktionen der
-Fall ist. Typ-Annotationen sind bei Funktionen erforderlich, weil sie Teil
-einer expliziten Schnittstelle sind, die für deine Benutzer sichtbar ist. Die
-strikte Definition dieser Schnittstelle ist wichtig, um sicherzustellen, dass
-alle Beteiligten sich darüber einig sind, welche Arten von Werten eine Funktion
-verwendet und zurückgibt. Aber Funktionsabschlüsse werden nicht in einer
-exponierten Schnittstelle wie dieser verwendet: Sie werden in Variablen
+Fall ist. Typ-Annotationen sind bei Funktionen erforderlich, weil die Typen
+Teil einer expliziten Schnittstelle sind, die für deine Benutzer sichtbar ist.
+Die strikte Definition dieser Schnittstelle ist wichtig, um sicherzustellen,
+dass alle Beteiligten sich darüber einig sind, welche Arten von Werten eine
+Funktion verwendet und zurückgibt. Funktionsabschlüsse werden hingegen nicht in
+einer offengelegten Schnittstelle wie dieser verwendet: Sie werden in Variablen
 gespeichert und verwendet, ohne sie zu benennen und den Benutzern unserer
 Bibliothek offenzulegen.
 
@@ -149,7 +161,10 @@ benötigt).
 Wie bei Variablen können wir Typ-Annotationen hinzufügen, wenn wir die
 Explizitheit und Klarheit erhöhen wollen, auch wenn wir dafür ausführlicher
 sind als unbedingt nötig. Die Annotation der Typen für einen Funktionsabschluss
-würde wie die in Codeblock 13-2 gezeigte Definition aussehen.
+würde wie die in Codeblock 13-2 gezeigte Definition aussehen. In diesem
+Beispiel definieren wir einen Funktionsabschluss und speichern ihn in einer
+Variablen, anstatt den Funktionsabschluss an der Stelle zu definieren, an der
+wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -191,13 +206,12 @@ würde wie die in Codeblock 13-2 gezeigte Definition aussehen.
 Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
 
 Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
-Syntax einer Funktion. Im Folgenden vergleichen wir die Syntax einer
-Funktionsdefinition, die zu ihrem Parameter den Wert 1 addiert, und die eines
-Funktionsabschlusses mit identischem Verhalten. Zur besseren Darstellung der
-relevanten Teile haben wir einige Leerzeichen eingefügt. Dies zeigt, wie
-ähnlich die Syntax von Funktionen der von Funktionsabschlüssen ist, abgesehen
-von den senkrechten Strichen und der Möglichkeit, einen Teil der Syntax
-wegzulassen:
+Syntax einer Funktion. Hier definieren wir eine Funktion, die zu ihrem
+Parameter den Wert 1 addiert, und zum Vergleich einen Funktionsabschluss mit
+identischem Verhalten. Zur besseren Darstellung der relevanten Teile haben wir
+einige Leerzeichen eingefügt. Dies zeigt, wie ähnlich die Syntax von Funktionen
+der von Funktionsabschlüssen ist, abgesehen von den senkrechten Strichen und
+der Möglichkeit, einen Teil der Syntax wegzulassen:
 
 ```rust,ignore
 fn  add_one_v1   (x: u32) -> u32 { x + 1 }
@@ -213,16 +227,20 @@ und in der vierten Zeile werden die geschweiften Klammern weggelassen, die
 optional sind, da der Funktionsabschlusses-Rumpf nur einen Ausdruck beinhaltet.
 Alle diese Ausdrücke sind gültig und verhalten sich beim Aufruf gleich. Von
 `add_one_v3` und `add_one_v4` wird ein Aufruf zum Kompilieren des Codes
-benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden.
+benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden. Dies
+ist vergleichbar mit `let v = Vec::new();`, bei dem entweder Typ-Annotationen
+oder Werte eines bestimmten Typs in den `Vec` eingefügt werden müssen, damit
+Rust den Typ ableiten kann.
 
 Bei Funktionsabschluss-Definitionen wird für jeden Parameter und für den
-Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-8 zeigt zum Beispiel
+Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-3 zeigt zum Beispiel
 die Definition eines kurzen Funktionsabschlusses, der nur den Wert des
 übergebenen Parameters zurückgibt. Dieser Funktionsabschluss ist außer für
 dieses Beispiel nicht weiter nützlich. Beachte, dass wir der Definition keine
-Datentypangaben hinzugefügt haben: Wenn wir nun versuchen, den
-Funktionsabschluss zweimal aufzurufen, einmal mit `String` und einmal mit
-`u32`, erhalten wir eine Fehlermeldung.
+Datentypangaben hinzugefügt haben. Da es keine Typ-Annotationen gibt, können
+wir den Funktionsabschluss mit einem beliebigen Typ aufrufen, was wir hier mit
+`String` das erste Mal getan haben. Wenn wir dann versuchen, `example_closure`
+mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -234,7 +252,7 @@ let n = example_closure(5);
 ```
 
 <span class="caption">Codeblock 13-3: Versuchter Aufruf eines
-Funktionsabschlusses, dem zwei unterschiedliche Typen zugewiesen wurden</span>
+Funktionsabschlusses, dem zwei unterschiedliche Typen übergeben wurden</span>
 
 Der Compiler gibt diesen Fehler aus:
 
@@ -245,9 +263,16 @@ error[E0308]: mismatched types
  --> src/main.rs:5:29
   |
 5 |     let n = example_closure(5);
-  |                             ^- help: try using a conversion method: `.to_string()`
-  |                             |
-  |                             expected struct `String`, found integer
+  |             --------------- ^- help: try using a conversion method: `.to_string()`
+  |             |               |
+  |             |               expected struct `String`, found integer
+  |             arguments to this function are incorrect
+  |
+note: closure parameter defined here
+ --> src/main.rs:2:28
+  |
+2 |     let example_closure = |x| x;
+  |                            ^
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` due to previous error
@@ -263,19 +288,15 @@ gleichen Funktionsabschluss zu benutzen.
 
 Funktionsabschlüsse können Werte aus ihrer Umgebung auf drei Arten erfassen,
 die direkt den drei Möglichkeiten entsprechen, wie eine Funktion einen
-Parameter aufnehmen kann: Unveränderliche Ausleihen (borrowing immutably),
-veränderliche Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
+Parameter aufnehmen kann: Unveränderbare Ausleihen (borrowing immutably),
+veränderbare Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
 (taking ownership). Der Funktionsabschluss entscheidet, welche dieser
 Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
 erfassten Werten macht.
 
-Codeblock 13-4 definiert einen Funktionsabschluss, der eine unveränderliche
-Ausleihe an den Vektor mit dem Namen `list` erfasst, weil sie nur eine
-unveränderliche Ausleihe benötigt, um den Wert auszugeben. Dieses Beispiel
-veranschaulicht auch, dass eine Variable an eine Funktionsabschluss-Definition
-gebunden werden kann und der Funktionsabschluss später durch Verwendung des
-Variablennamens und Klammern aufgerufen werden kann, als ob der Variablenname
-ein Funktionsname wäre:
+In Codeblock 13-4 definieren wir einen Funktionsabschluss, der eine
+unveränderbare Referenz an den Vektor mit dem Namen `list` erfasst, weil er
+nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -293,13 +314,18 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine unveränderliche Ausleihe erfasst</span>
+Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span>
 
-Der Code vor der Funktionsabschluss-Definition, nach der
-Funktionsabschluss-Definition, aber vor dem Aufruf des Funktionsabschlusses,
-und nach dem Aufruf des Funktionsabschlusses kann immer noch auf `list`
-zugreifen, da wir mehrere unveränderliche Ausleihen von `list` zur gleichen
-Zeit haben können. Dieser Code kompiliert, läuft und gibt folgendes aus:
+Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
+Funktionsabschluss-Definition gebunden werden kann, und wir den
+Funktionsabschluss später aufrufen können, indem wir den Variablennamen und die
+Klammern verwenden, als ob der Variablenname ein Funktionsname wäre.
+
+Da wir mehrere unveränderbare Referenzen auf `list` zur gleichen Zeit haben
+können, ist `list` immer noch vom Code vor der Funktionsabschluss-Definition
+zugreifbar, sowie nach der Funktionsabschluss-Definition und vor dem Aufruf des
+Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
+kompiliert, läuft und gibt folgendes aus:
 
 ```console
 $ cargo run
@@ -313,8 +339,8 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
 ```
 
 In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
-dass eine veränderliche Ausleihe benötigt wird, da der Funktionsabschluss ein
-Element zum Vektor `list` hinzufügt:
+dass er ein Element zum Vektor `list` hinzufügt. Der Funktionsabschluss erfasst
+nun eine veränderbare Referenz:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -331,7 +357,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine veränderliche Ausleihe erfasst</span>
+Funktionsabschlusses, der eine veränderbare Referenz erfasst</span>
 
 Dieser Code kompiliert, läuft und gibt aus:
 
@@ -346,59 +372,107 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
 
 Beachte, dass es kein `println!` mehr zwischen der Definition und dem Aufruf
 des Funktionsabschlusses `borrows_mutably` gibt: Wenn `borrows_mutably`
-definiert ist, erfasst es eine veränderliche Referenz auf `list`. Nachdem der
-Funktionsabschluss aufgerufen wurde, endet die veränderliche Ausleihe, da wir
-den Funktionsabschluss ab diesem Zeitpunkt nicht mehr verwenden. Zwischen der
+definiert ist, erfasst es eine veränderbare Referenz auf `list`. Der
+Funktionsabschluss wird nicht mehr verwendet, nachdem er aufgerufen wurde,
+daher endet die veränderbare Ausleihe. Zwischen der
 Funktionsabschluss-Definition und dem Funktionsabschluss-Aufruf ist eine
-unveränderliche Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
-Ausleihen erlaubt sind, wenn es eine veränderliche Ausleihe gibt. Versuche,
+unveränderbare Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
+Ausleihen erlaubt sind, wenn es eine veränderbare Ausleihe gibt. Versuche,
 dort ein `println!` hinzuzufügen, um zu sehen, welche Fehlermeldung du
 erhältst!
 
 Wenn du den Funktionsabschluss zwingen willst, die Eigentümerschaft der Werte,
 die er in der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des
 Funktionsabschlusses nicht unbedingt Eigentümer sein muss, kannst du das
-Schlüsselwort `move` vor der Parameterliste verwenden. Diese Technik ist vor
+Schlüsselwort `move` vor der Parameterliste verwenden.
+
+Diese Technik ist vor
 allem nützlich, wenn ein Funktionsabschluss an einen neuen Strang (thread)
 übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Strang
-gehören. Wir werden mehr Beispiele für Funktionsabschlüsse mit `move` in
-Kapitel 16 sehen, wenn wir über Nebenläufigkeit (concurrency) sprechen.
+gehören. Wir werden in Kapitel 16, wenn wir über Nebenläufigkeit (concurrency)
+sprechen, detailliert auf Stränge eingehen und erläutern, warum man sie
+verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
+Strangs mithilfe eines Funktionsabschlusses befassen, der das Schlüsselwort
+`move` benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor
+in einem neuen Strang statt im Hauptstrang auszugeben:
 
-### Verschieben erfasster Werte aus dem Funktionsabschluss und die `Fn`-Merkmale
+<span class="filename">Dateiname: src/main.rs</span>
 
-Sobald ein Funktionsabschluss eine Referenz erfasst oder einen Wert in den
-Funktionsabschluss verschoben hat, beeinflusst der Code im Rumpf der Funktion
-auch, was mit den Referenzen oder Werten als Ergebnis des Funktionsaufrufs
-geschieht. Ein Funktionsabschluss-Rumpf kann einen erfassten Wert aus dem
-Funktionsabschluss herausverschieben, den erfassten Wert verändern, den
-erfassten Wert weder verschieben noch verändern oder nichts aus der Umgebung
-erfassen. Die Art und Weise, wie ein Funktionsabschluss Werte aus der Umgebung
-erfasst und verarbeitet, wirkt sich auf die Merkmale (traits) aus, die der
-Funktionsabschluss implementiert. Mit den Merkmalen können Funktionen und
-Strukturen angeben, welche Arten von Funktionsabschlüssen sie verwenden können.
+```rust
+use std::thread;
 
-Funktionsabschlüsse implementieren automatisch eine, zwei oder alle drei dieser
-`Fn`-Merkmale, und zwar in additiver Weise:
+fn main() {
+    let list = vec![1, 2, 3];
+    println!("Before defining closure: {:?}", list);
 
-1. `FnOnce` gilt für Funktionsabschlüsse, die mindestens einmal aufgerufen
-   werden können. Alle Funktionsabschlüsse implementieren dieses Merkmal, weil
-   alle Funktionsabschlüsse aufgerufen werden können. Wenn ein
-   Funktionsabschluss erfasste Werte aus seinem Rumpf herausverschiebt, dann
-   implementiert dieser Funktionsabschluss nur `FnOnce` und keine der anderen
-   `Fn`-Merkmals, weil sie nur einmal aufgerufen werden kann.
+    thread::spawn(move || println!("From thread: {:?}", list))
+        .join()
+        .unwrap();
+}
+```
+
+<span class="caption">Codeblock 13-6: Verwenden von `move`, um den
+Funktionsabschluss des Strangs zu erzwingen, die Eigentümerschaft an `list` zu
+übernehmen</span>
+
+Wir starten einen neuen Strang und geben ihm einen Funktionsabschluss als
+Argument mit. Der Rumps des Funktionsabschlusses gibt die Liste aus. In
+Codeblock 13-4 hat der Funktionsabschluss nur `list` mit einer unveränderbaren
+Referenz erfasst, weil das die kleinste Zugriffmenge auf `list` ist, die
+benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
+Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
+dass `list` in den Funktionsabschluss verschoben werden soll, indem wir das
+Schlüsselwort `move` an den Anfang der Funktionsabschluss-Definition setzen.
+Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
+wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
+die Eigentümerschaft von `list` beibehält, aber vor dem neuen Strang endet und
+`list` aufräumt, wäre die unveränderbare Referenz im Strang ungültig. Daher
+verlangt der Compiler, dass `list` in den Funktionsabschluss im neuen Strang
+verschoben wird, damit die Referenz gültig bleibt. Versuche, das Schlüsselwort
+`move` zu entfernen oder `list` im Hauptstrang zu verwenden, nachdem der
+Funktionsabschluss definiert wurde, um zu sehen, welche Compilerfehler du
+erhältst!
+
+### Verschieben erfasster Werte aus Funktionsabschlüssen und `Fn`-Merkmalen
+
+Sobald ein Funktionsabschluss eine Referenz oder die Eigentümerschaft eines
+Werts aus der Umgebung, in der der Funktionsabschluss definiert ist, erfasst
+hat (und damit beeinflusst, was *in* den Funktionsabschluss verschoben wird),
+definiert der Code im Rumpf des Funktionsabschlusses, was mit den Referenzen
+oder Werten passiert, wenn der Funktionsabschluss später ausgewertet wird (und
+damit beeinflusst, was *aus* dem Funktionsabschluss verschoben wird). Ein
+Funktionsabschluss-Rumpf kann eine der folgenden Aktionen ausführen: Einen
+erfassten Wert aus dem Funktionsabschluss herausbewegen, den erfassten Wert
+verändern, den Wert weder bewegen noch verändern oder zunächst nichts aus der
+Umgebung erfassen.
+
+Die Art und Weise, wie ein Funktionsabschluss Werte aus der Umgebung erfasst
+und verarbeitet, wirkt sich darauf aus, welche Merkmale (traits) der
+Funktionsabschluss implementiert, und mit Hilfe von Merkmalen können Funktionen
+und Strukturen angeben, welche Arten von Funktionsabschlüssen sie verwenden
+können. Funktionsabschlüsse implementieren automatisch eine, zwei oder alle
+drei dieser `Fn`-Merkmale, und zwar in additiver Weise, je nachdem, wie der
+Rumpf des Funktionsabschlusses die Werte behandelt:
+
+1. `FnOnce` gilt für Funktionsabschlüsse, die einmal aufgerufen
+   werden können. Alle Funktionsabschlüsse implementieren zumindest dieses
+   Merkmal, weil alle Funktionsabschlüsse aufgerufen werden können. Ein
+   Funktionsabschluss, der erfasste Werte aus seinem Rumpf herausverschiebt,
+   implementiert nur `FnOnce` und keine der anderen `Fn`-Merkmale, weil er nur
+   einmal aufgerufen werden kann.
 2. `FnMut` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus
    ihrem Rumpf herausverschieben, aber die erfassten Werte möglicherweise
    verändern. Diese Funktionsabschlüsse können mehr als einmal aufgerufen
    werden.
 3. `Fn` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
-   Rumpf herausbewegen und die erfassten Werte nicht verändern. Diese
+   Rumpf herausverschieben und die erfassten Werte nicht verändern, sowie
+   Funktionsabschlüsse, die nichts aus ihrer Umgebung erfassen. Diese
    Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
    Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
-   mehrere Male gleichzeitig aufgerufen wird. Funktionsabschlüsse, die keine
-   Werte aus ihrer Umgebung erfassen, implementieren `Fn`.
+   mehrere Male gleichzeitig aufgerufen wird.
 
 Schauen wir uns die Definition der Methode `unwrap_or_else` auf `Option<T>` an,
-die wir in Codeblock 13-6 verwendet haben:
+die wir in Codeblock 13-1 verwendet haben:
 
 ```rust,ignore
 impl<T> Option<T> {
@@ -419,7 +493,7 @@ Erinnere dich, dass `T` der generische Typ ist, der den Typ des Wertes in der
 Rückgabetyp der Funktion `unwrap_or_else`: Code, der `unwrap_or_else` auf einer
 `Option<String>` aufruft, erhält zum Beispiel einen `String`.
 
-Als Nächstes ist zu beachten, dass die Funktion `unwrap_or_else` einen
+Als Nächstes ist zu beachten, dass die Funktion `unwrap_or_else` den
 zusätzlichen generischen Typ-Parameter `F` hat. Der Typ `F` ist der Typ des
 Parameters namens `f`, der der Funktionsabschluss ist, den wir beim Aufruf von
 `unwrap_or_else` bereitstellen.
@@ -444,15 +518,15 @@ so flexibel wie nur möglich.
 > leeren Vektor zu erhalten, wenn der Wert `None` ist.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
-Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich unterscheidet.
-Sie nimmt einen Funktionsabschluss, die `FnMut` implementiert. Der
-Funktionsabschluss erhält ein Argument, eine Referenz auf das aktuelle Element
-im betrachteten Anteilstyp, und gibt einen Wert vom Typ `K` zurück, der
-geordnet werden kann. Diese Funktion ist nützlich, wenn man einen Anteilstyp
-nach einem bestimmten Attribut der einzelnen Elemente sortieren will. In
-Codeblock 13-7 haben wir eine Liste von `Rectangle`-Instanzen und benutzen
-`sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach hoch zu
-sortieren:
+Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich `unwrap_or_else`
+unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die
+Mermalsabgrenzung verwendet. Der Funktionsabschluss erhält ein Argument, eine
+Referenz auf das aktuelle Element im betrachteten Anteilstyp, und gibt einen
+Wert vom Typ `K` zurück, der geordnet werden kann. Diese Funktion ist nützlich,
+wenn man einen Anteilstyp nach einem bestimmten Attribut der einzelnen Elemente
+sortieren will. In Codeblock 13-7 haben wir eine Liste von
+`Rectangle`-Instanzen und benutzen `sort_by_key`, um sie nach ihrem
+`width`-Attribut von niedrig nach hoch zu sortieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -465,18 +539,9 @@ struct Rectangle {
 
 fn main() {
     let mut list = [
-        Rectangle {
-            width: 10,
-            height: 1,
-        },
-        Rectangle {
-            width: 3,
-            height: 5,
-        },
-        Rectangle {
-            width: 7,
-            height: 12,
-        },
+        Rectangle { width: 10, height: 1 },
+        Rectangle { width: 3, height: 5 },
+        Rectangle { width: 7, height: 12 },
     ];
 
     list.sort_by_key(|r| r.width);
@@ -484,9 +549,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 13-7: Verwendung von `sort_by_key` und eines
-Funktionsabschlusses zum Sortieren einer Liste von `Rectangle`-Instanzen nach
-ihrem `width`-Wert</span>
+<span class="caption">Codeblock 13-7: Verwenden von `sort_by_key` um Rechtecke
+nach ihrer Breite zu sortieren</span>
 
 Dieser Code gibt aus:
 
@@ -518,13 +582,13 @@ r.width` erfasst, verändert oder verschiebt nichts aus seiner Umgebung, sodass
 er die Anforderungen der Merkmalsabgrenzung erfüllt.
 
 Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen
-Funktionsabschluss, die nur `FnOnce` implementiert, weil er einen Wert aus der
-Umgebung verschiebt. Der Compiler lässt uns diesen Funktionsabschluss nicht mit
-`sort_by_key` verwenden:
+Funktionsabschluss, der nur das Merkmal `FnOnce` implementiert, weil er einen
+Wert aus der Umgebung verschiebt. Der Compiler lässt uns diesen
+Funktionsabschluss nicht mit `sort_by_key` verwenden:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 #[derive(Debug)]
 struct Rectangle {
     width: u32,
@@ -539,7 +603,7 @@ fn main() {
     ];
 
     let mut sort_operations = vec![];
-    let value = String::from("by key called");
+    let value = String::from("sort_by_key aufgerufen");
 
     list.sort_by_key(|r| {
         sort_operations.push(value);
@@ -569,33 +633,30 @@ implementieren muss:
 
 ```console
 $ cargo run
-   Compiling rectangles v0.1.0 (file:///projects/rectangles)
+   Compiling playground v0.0.1 (/playground)
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
-  --> src/main.rs:27:30
+  --> src/main.rs:18:30
    |
-24 |       let value = String::from("by key called");
-   |           ----- captured outer variable
-25 | 
-26 |       list.sort_by_key(|r| {
-   |  ______________________-
-27 | |         sort_operations.push(value);
-   | |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
-28 | |         r.width
-29 | |     });
-   | |_____- captured by this `FnMut` closure
+15 |     let value = String::from("sort_by_key aufgerufen");
+   |         ----- captured outer variable
+16 |
+17 |     list.sort_by_key(|r| {
+   |                      --- captured by this `FnMut` closure
+18 |         sort_operations.push(value);
+   |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
 
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `rectangles` due to previous error
+error: could not compile `playground` due to previous error
 ```
 
 Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die `value`
 aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
 Funktionsabschlusses so ändern, dass er keine Werte aus der Umgebung
-verschiebt. Wenn wir daran interessiert sind, wie oft `sort_by_key` aufgerufen
-wird, ist es einfacher, einen Zähler in der Umgebung zu halten und seinen Wert
-im Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
+verschiebt. Um zu zählen, wie oft `sort_by_key` aufgerufen wird, ist es
+einfacher, einen Zähler in der Umgebung zu halten und seinen Wert im
+Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
 Funktionsabschluss in Codeblock 13-9 funktioniert mit `sort_by_key`, weil er
-nur eine veränderliche Referenz auf den `num_sort_operations`-Zähler erfasst
+nur eine veränderbare Referenz auf den `num_sort_operations`-Zähler erfasst
 und daher mehr als einmal aufgerufen werden kann:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -627,9 +688,9 @@ fn main() {
 `FnMut`-Funktionsabschlusses mit `sort_by_key` ist erlaubt</span>
 
 Die `Fn`-Merkmale sind wichtig bei der Definition oder Verwendung von
-Funktionen oder Typen, die Funktionsabschlüsse verwenden. Der nächste Abschnitt
-bespricht Iteratoren, und viele Iterator-Methoden nehmen
-Funktionsabschluss-Argumente entgegen. Behalte diese Details von
-Funktionsabschlüssen im Kopf, wenn wir Iteratoren erforschen!
+Funktionen oder Typen, die Funktionsabschlüsse verwenden. Im nächsten Abschnitt
+besprechen wir Iteratoren. Viele Iterator-Methoden nehmen
+Funktionsabschluss-Argumente entgegen, also behalte diese Details von
+Funktionsabschlüssen im Kopf, wenn wir weitermachen!
 
 [unwrap-or-else]: https://doc.rust-lang.org/std/option/enum.Option.html#method.unwrap_or_else

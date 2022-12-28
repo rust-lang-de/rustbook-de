@@ -187,7 +187,7 @@ error[E0072]: recursive type `List` has infinite size
 help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
   |
 2 |     Cons(i32, Box<List>),
-  |               ^^^^    ^
+  |               ++++    +
 
 error[E0391]: cycle detected when computing drop-check constraints for `List`
  --> src/main.rs:1:1
@@ -260,7 +260,7 @@ hilfreichen Vorschlag aus:
 help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
   |
 2 |     Cons(i32, Box<List>),
-  |               ^^^^    ^
+  |               ++++    +
 ```
 
 In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle

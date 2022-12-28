@@ -14,7 +14,7 @@
 - [Ein Ratespiel programmieren](ch02-00-guessing-game-tutorial.md)
 
 - [Allgemeine Programmierkonzepte](ch03-00-common-programming-concepts.md)
-    - [Variablen und Veränderlichkeit](ch03-01-variables-and-mutability.md)
+    - [Variablen und Veränderbarkeit](ch03-01-variables-and-mutability.md)
     - [Datentypen](ch03-02-data-types.md)
     - [Funktionen](ch03-03-how-functions-work.md)
     - [Kommentare](ch03-04-comments.md)
@@ -75,7 +75,7 @@
 ## Denken in Rust
 
 - [Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)](ch13-00-functional-features.md)
-    - [Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können](ch13-01-closures.md)
+    - [Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen](ch13-01-closures.md)
     - [Eine Reihe von Elementen verarbeiten mit Iteratoren](ch13-02-iterators.md)
     - [Unser E/A-Projekt verbessern](ch13-03-improving-our-io-project.md)
     - [Performanzvergleich: Schleifen vs. Iteratoren](ch13-04-performance.md)
@@ -92,7 +92,7 @@
     - [Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`](ch15-02-deref.md)
     - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
     - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)
-    - [`RefCell<T>` und das innere Veränderlichkeitsmuster](ch15-05-interior-mutability.md)
+    - [`RefCell<T>` und das innere Veränderbarkeitsmuster](ch15-05-interior-mutability.md)
     - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
 
 - [Furchtlose Nebenläufigkeit](ch16-00-concurrency.md)

@@ -139,15 +139,15 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `ownership` due to previous error
 ```
 
-So wie Variablen standardmäßig unveränderlich sind, so sind auch Referenzen
-unveränderlich. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
+So wie Variablen standardmäßig unveränderbar sind, so sind auch Referenzen
+unveränderbar. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
 Referenz haben.
 
-### Veränderliche Referenzen
+### Veränderbare Referenzen
 
 Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
 mit ein paar kleinen Änderungen ändern können, die stattdessen eine
-*veränderliche Referenz* verwenden:
+*veränderbare Referenz* verwenden:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -164,14 +164,14 @@ fn change(some_string: &mut String) {
 ```
 
 Zuerst ändern wir `s`, um `mut` zu sein. Dann erstellen wir eine
-veränderliche Referenz mit `&mut s`, wo wir die Funktion `change`
-aufrufen, und aktualisieren die Funktionssignatur, um eine veränderliche
+veränderbare Referenz mit `&mut s`, wo wir die Funktion `change`
+aufrufen, und aktualisieren die Funktionssignatur, um eine veränderbare
 Referenz mit `some_string: &mut String` entgegenzunehmen. Dies macht deutlich,
 dass die Funktion `change` den Wert, den sie ausleiht, verändert.
 
-Veränderliche Referenzen haben eine große Einschränkung: Wenn du eine
-veränderliche Referenz auf einen Wert hast, kannst du keine andere Referenz auf
-diesen Wert haben. Dieser Code versucht, zwei veränderliche Referenzen auf `s`
+Veränderbare Referenzen haben eine große Einschränkung: Wenn du eine
+veränderbare Referenz auf einen Wert hast, kannst du keine andere Referenz auf
+diesen Wert haben. Dieser Code versucht, zwei veränderbare Referenzen auf `s`
 zu erstellen, und wird fehlschlagen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -206,13 +206,13 @@ error: could not compile `ownership` due to previous error
 ```
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
-als einmal zur gleichen Zeit als veränderlich ausleihen können. Die erste
-veränderliche Ausleihe ist in `r1` und muss beibehalten werden, bis sie in
-`println!` verwendet wird, aber zwischen dem Erstellen dieser veränderlichen
-Referenz und ihrer Verwendung haben wir versucht, eine andere veränderliche
+als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
+veränderbare Ausleihe ist in `r1` und muss beibehalten werden, bis sie in
+`println!` verwendet wird, aber zwischen dem Erstellen dieser veränderbaren
+Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
 
-Die Beschränkung, die mehrere veränderliche Referenz auf dieselben Daten zur
+Die Beschränkung, die mehrere veränderbare Referenz auf dieselben Daten zur
 gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
 kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
 in den meisten Sprachen kann man verändern wann immer man will. Diese
@@ -231,7 +231,7 @@ Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
 Daten-Wettlaufsituationen gar nicht erst kompiliert!
 
 Wie immer können wir geschweifte Klammern verwenden, um einen neuen
-Gültigkeitsbereich zu schaffen, der mehrere veränderliche Verweise erlaubt, nur
+Gültigkeitsbereich zu schaffen, der mehrere veränderbare Verweise erlaubt, nur
 nicht *gleichzeitige*:
 
 ```rust
@@ -245,8 +245,8 @@ let mut s = String::from("Hallo");
 let r2 = &mut s;
 ```
 
-Rust erzwingt eine ähnliche Regel für die Kombination von veränderlichen und
-unveränderlichen Referenzen. Dieser Code führt zu einem Fehler:
+Rust erzwingt eine ähnliche Regel für die Kombination von veränderbaren und
+unveränderbaren Referenzen. Dieser Code führt zu einem Fehler:
 
 ```rust,does_not_compile
 let mut s = String::from("Hallo");
@@ -279,18 +279,18 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` due to previous error
 ```
 
-Puh! Wir können auch keine veränderlichen Referenzen haben, solange wir eine
-unveränderliche haben auf denselben Wert haben.
+Puh! Wir können auch keine veränderbaren Referenzen haben, solange wir eine
+unveränderbare haben auf denselben Wert haben.
 
-Nutzer einer unveränderlichen Referenz erwarten nicht, dass sich die Werte
-dahinter plötzlich ändern! Mehrere unveränderliche Referenzen sind jedoch in
+Nutzer einer unveränderbaren Referenz erwarten nicht, dass sich die Werte
+dahinter plötzlich ändern! Mehrere unveränderbare Referenzen sind jedoch in
 Ordnung, da niemand, der die Daten nur liest, die Möglichkeit hat, das Lesen
 der Daten durch andere zu beeinflussen.
 
 Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
 eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
-unveränderlichen Referenzen in `println!` vor der Einführung der veränderlichen
+unveränderbaren Referenzen in `println!` vor der Einführung der veränderbaren
 Referenz erfolgt:
 
 ```rust,edition2021
@@ -305,9 +305,9 @@ let r3 = &mut s; // kein Problem
 println!("{}", r3);
 ```
 
-Die Gültigkeitsbereiche der unveränderlichen Referenzen `r1` und `r2` enden
+Die Gültigkeitsbereiche der unveränderbaren Referenzen `r1` und `r2` enden
 nach dem `println!`, wo sie zuletzt verwendet werden, d.h. bevor die
-veränderliche Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
+veränderbare Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
 erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
 mehr verwendet wird.
@@ -429,8 +429,8 @@ verschoben, und nichts wird freigegeben.
 
 Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
 
-* Zu jedem beliebigen Zeitpunkt kannst du *entweder* eine veränderliche
-  Referenz *oder* eine beliebige Anzahl unveränderlicher Referenzen haben.
+* Zu jedem beliebigen Zeitpunkt kannst du *entweder* eine veränderbare
+  Referenz *oder* eine beliebige Anzahl unveränderbarer Referenzen haben.
 * Referenzen müssen immer gültig sein.
 
 Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:

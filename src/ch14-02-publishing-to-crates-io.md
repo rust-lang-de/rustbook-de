@@ -564,7 +564,7 @@ folgendes ausführen:
 ```console
 $ cargo yank --vers 1.0.1
     Updating crates.io index
-        Yank guessing_game:1.0.1
+        Yank guessing_game@1.0.1
 ```
 
 Durch Hinzufügen von `--undo`, kann man das Herausziehen rückgängig machen und
@@ -573,7 +573,7 @@ Projekten wieder erlauben von der Version abzuhängen:
 ```console
 $ cargo yank --vers 1.0.1 --undo
     Updating crates.io index
-      Unyank guessing_game_:1.0.1
+      Unyank guessing_game@1.0.1
 ```
 
 Das Herausziehen löscht *keinen* Programmcode. Beispielsweise ist die

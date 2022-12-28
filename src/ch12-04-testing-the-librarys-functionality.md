@@ -398,7 +398,7 @@ Funktionssignatur angegeben haben.
 
 Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
-einen veränderlichen Vektor vor der `for`-Schleife erstellen und die
+einen veränderbaren Vektor vor der `for`-Schleife erstellen und die
 `push`-Methode aufrufen, um eine `line` im Vektor zu speichern. Nach der
 `for`-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
 

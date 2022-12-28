@@ -101,13 +101,13 @@ fn main() {
 `Box<i32>`</span>
 
 Der Hauptunterschied zwischen Codeblock 15-7 und 15-6 besteht darin, dass wir
-hier `y` als Instanz eines Feldes festlegen, das auf einen kopierten Wert von
+hier `y` als Instanz einer `Box<T>` festlegen, das auf einen kopierten Wert von
 `x` zeigt, und nicht als Referenz, die auf den Wert `x` zeigt. In der letzten
 Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
-dem Zeiger der Box auf die gleiche Weise zu folgen, wie wir es getan haben, als
-`y` eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere an
-`Box<T>` ist, das es uns ermöglicht, den Dereferenzierungsoperator zu
-verwenden, indem wir unseren eigenen Box-Typ definieren.
+dem Zeiger der `Box<T>` auf die gleiche Weise zu folgen, wie wir es getan
+haben, als `y` eine Referenz war. Als Nächstes werden wir ergründen, was das
+Besondere an `Box<T>` ist, das es uns ermöglicht, den Dereferenzierungsoperator
+zu verwenden, indem wir unseren eigenen Box-Typ definieren.
 
 ### Einen eigenen intelligenten Zeiger definieren
 
@@ -414,11 +414,11 @@ zu erhalten, die dem Typ des Parameters entspricht. Die Häufigkeit, mit der
 sodass kein Nachteil zur Laufzeit bei der Nutzung der automatischen Umwandlung
 entsteht!
 
-### Wie die automatische Umwandlung mit Veränderlichkeit umgeht
+### Wie die automatische Umwandlung mit Veränderbarkeit umgeht
 
 Ähnlich wie du das Merkmal `Deref` verwendest, um den `*`-Operator bei
-unveränderlichen Referenzen zu überschreiben, kannst du das Merkmal `DerefMut`
-verwenden, um den `*`-Operator bei veränderlichen Referenzen zu überschreiben.
+unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal `DerefMut`
+verwenden, um den `*`-Operator bei veränderbaren Referenzen zu überschreiben.
 
 Rust wendet die automatische Umwandlung an, wenn Typen und
 Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:
@@ -428,24 +428,24 @@ Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:
 * Von `&mutT` zu `&U`, wenn `T:Deref<Target=U>`
 
 Die ersten beiden Fälle sind identisch, mit der Ausnahme, dass der zweite die
-Veränderlichkeit implementiert. Der erste Fall besagt, dass wenn man einen `&T`
+Veränderbarkeit implementiert. Der erste Fall besagt, dass wenn man einen `&T`
 hat und `T` `Deref` für einen Typ `U` implementiert hat, man transparent einen
 `&U` erhalten kann. Der zweite Fall besagt, dass die gleiche automatische
-Umwandlung bei veränderlichen Referenzen erfolgt.
+Umwandlung bei veränderbaren Referenzen erfolgt.
 
-Der dritte Fall ist schwieriger: Rust wird auch eine veränderliche Referenz in
-eine unveränderliche umwandeln. Das Gegenteil ist jedoch *nicht* möglich:
-Unveränderliche Referenzen werden niemals zu veränderlichen gemacht. Wenn man
-eine veränderliche Referenz hat, muss diese veränderliche Referenz aufgrund der
+Der dritte Fall ist schwieriger: Rust wird auch eine veränderbare Referenz in
+eine unveränderbare umwandeln. Das Gegenteil ist jedoch *nicht* möglich:
+Unveränderbare Referenzen werden niemals zu veränderbaren gemacht. Wenn man
+eine veränderbare Referenz hat, muss diese veränderbare Referenz aufgrund der
 Ausleihregeln (borrowing rules) die einzige Referenz auf diese Daten sein
 (anderenfalls würde das Programm nicht kompilieren). Das Konvertieren einer
-veränderlichen Referenz in eine unveränderliche verstößt niemals gegen die
-Ausleihregeln. Das Konvertieren einer unveränderlichen Referenz in eine
-veränderliche Referenz, würde erfordern, dass die ursprüngliche unveränderliche
-Referenz die einzige unveränderliche Referenz auf diese Daten ist, aber die
+veränderbaren Referenz in eine unveränderbare verstößt niemals gegen die
+Ausleihregeln. Das Konvertieren einer unveränderbaren Referenz in eine
+veränderbare Referenz, würde erfordern, dass die ursprüngliche unveränderbare
+Referenz die einzige unveränderbare Referenz auf diese Daten ist, aber die
 Ausleihregeln garantieren dies nicht.
 Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
-unveränderlichen Referenz in eine veränderbare Referenz möglich ist.
+unveränderbaren Referenz in eine veränderbare Referenz möglich ist.
 
 [impl-trait1]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
 [tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen

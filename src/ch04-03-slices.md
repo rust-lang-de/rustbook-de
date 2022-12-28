@@ -353,12 +353,12 @@ error: could not compile `ownership` due to previous error
 ```
 
 Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
-unveränderliche Referenz auf etwas haben, nicht noch eine veränderliche
+unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare
 Referenz anlegen können. Da `clear` den `String` abschneiden muss, muss es
-eine veränderliche Referenz erhalten. Das `println!` nach dem Aufruf von
-`clear` verwendet die Referenz in `word`, sodass die unveränderliche Referenz
+eine veränderbare Referenz erhalten. Das `println!` nach dem Aufruf von
+`clear` verwendet die Referenz in `word`, sodass die unveränderbare Referenz
 zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
-veränderliche Referenz in `clear` und die unveränderliche Referenz in `word`
+veränderbare Referenz in `clear` und die unveränderbare Referenz in `word`
 nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
 nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
 von Fehlern zur Kompilierzeit beseitigt!
@@ -375,7 +375,7 @@ let s = "Hallo Welt!";
 
 Der Typ von `s` hier ist `&str`: Es ist ein Anteilstyp, der auf diesen
 speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
-Zeichenkettenliterale unveränderlich sind; `&str` ist ein unveränderliche
+Zeichenkettenliterale unveränderbar sind; `&str` ist ein unveränderbare
 Referenz.
 
 #### Zeichenkettenanteilstypen als Parameter

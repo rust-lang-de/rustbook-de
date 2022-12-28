@@ -189,7 +189,7 @@ auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 `handle_connection` auf und übergeben ihr den `stream`.
 
 In der Funktion `handle_connection` erstellen wir eine neue
-`BufReader`-Instanz, die eine veränderliche Referenz auf den `stream` enthält.
+`BufReader`-Instanz, die eine veränderbare Referenz auf den `stream` enthält.
 `BufReader` sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden
 von `std::io::Read` für uns verwaltet.
 

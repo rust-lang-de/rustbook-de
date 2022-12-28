@@ -110,6 +110,12 @@ wählen, was der Typ von `Item` sein wird, weil es nur einen `impl Iterator for
 Counter` geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
 `u32`-Werten überall dort haben wollen, wo wir `next` auf `Counter` aufrufen.
 
+Assoziierte Typen werden auch Teil des Merkmal-Vertrags: Implementierer des
+Merkmals müssen einen Typ bereitstellen, der für den Platzhalter des
+assoziierten Typs steht. Assoziierte Typen haben oft einen Namen, der
+beschreibt, wie der Typ verwendet werden soll, und das Dokumentieren des
+assoziierten Typs in der API-Dokumentation ist eine gute Praxis.
+
 ### Standardparameter für generische Typen und Operatorüberladung
 
 Wenn wir generische Typparameter verwenden, können wir einen konkreten

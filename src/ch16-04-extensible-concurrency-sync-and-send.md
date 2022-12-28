@@ -38,7 +38,7 @@ Roh-Zeigern, die wir in Kapitel 19 besprechen werden.
 
 Das Markierungsmerkmal `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
-jeder Typ `T` ist `Sync`, wenn `&T` (eine unveränderliche Referenz auf `T`)
+jeder Typ `T` ist `Sync`, wenn `&T` (eine unveränderbare Referenz auf `T`)
 `Send` ist, was bedeutet, dass die Referenz sicher an einen anderen Strang
 gesendet werden kann. Ähnlich wie bei `Send` sind primitive Typen `Sync` und
 Typen, die vollständig aus Typen bestehen, die `Sync` sind, sind ebenfalls

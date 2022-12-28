@@ -1,16 +1,16 @@
-## Variablen und Veränderlichkeit
+## Variablen und Veränderbarkeit
 
 Wie im Abschnitt [„Speichern von Werten mit
 Variablen“][storing-values-with-variables] erwähnt, sind Variablen
-standardmäßig unveränderlich. Dies ist einer der vielen Stupser, die Rust dir
+standardmäßig unveränderbar. Dies ist einer der vielen Stupser, die Rust dir
 gibt, um deinen Code so zu schreiben, dass du die Vorteile von Sicherheit
 (safety) und einfacher Nebenläufigkeit (easy concurrency) nutzt, die Rust
-bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlich
+bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderbar
 (mutable) zu machen. Lass uns untersuchen, wie und warum Rust dich dazu
-ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
+ermutigt, die Unveränderbarkeit (immutability) zu bevorzugen, und warum du
 manchmal vielleicht davon abweichen möchtest.
 
-Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
+Wenn eine Variable unveränderbar ist, kannst du deren Wert nicht mehr ändern,
 sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
 Projekt namens *variables* in deinem *projects*-Verzeichnis an, indem du
 `cargo new variables` aufrufst.
@@ -31,7 +31,7 @@ fn main() {
 ```
 
 Speichere und starte das Programm mit `cargo run`. Du solltest eine
-Fehlermeldung über einen Unveränderlichkeitsfehler erhalten, wie in dieser
+Fehlermeldung über einen Unveränderbarkeitsfehler erhalten, wie in dieser
 Ausgabe gezeigt:
 
 ```console
@@ -60,11 +60,11 @@ bedeuten *nicht*, dass du kein guter Programmierer bist! Erfahrene
 Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.
 
 Du hast die Fehlermeldung `cannot assign twice to immutable variable x`
-erhalten, weil du versucht hast, der unveränderlichen Variablen `x` einen
+erhalten, weil du versucht hast, der unveränderbaren Variablen `x` einen
 zweiten Wert zuzuweisen.
 
 Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
-einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
+einen Wert zu ändern, der als unveränderbar gekennzeichnet ist, denn genau
 diese Situation kann zu Fehlern führen. Wenn ein Teil unseres Codes von der
 Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer Teil
 unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des Codes
@@ -76,8 +76,8 @@ sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 leichter zu durchschauen.
 
 Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
-erleichtern. Obwohl Variablen standardmäßig unveränderlich sind, kannst du sie
-veränderlich machen, indem du vor den Variablennamen `mut` angibst, wie du es
+erleichtern. Obwohl Variablen standardmäßig unveränderbar sind, kannst du sie
+veränderbar machen, indem du vor den Variablennamen `mut` angibst, wie du es
 in [Kapitel 2][storing-values-with-variables] getan hast. Das Hinzufügen von
 `mut` vermittelt den zukünftigen Lesern des Codes die Absicht, dass andere
 Teile des Codes den Wert dieser Variablen ändern werden.
@@ -107,19 +107,19 @@ Der Wert von x ist: 6
 ```
 
 Wir dürfen den Wert, an den sich `x` bindet, von `5` auf `6` ändern, wenn `mut`
-verwendet wird. Letztendlich ist es deine Entscheidung, ob du Veränderlichkeit
+verwendet wird. Letztendlich ist es deine Entscheidung, ob du Veränderbarkeit
 einsetzen willst oder nicht, und es hängt davon ab, was du in der jeweiligen
 Situation für am sinnvollsten hältst.
 
 ### Konstanten
 
-Wie unveränderliche Variablen sind *Konstanten* Werte, die an einen Namen
+Wie unveränderbare Variablen sind *Konstanten* Werte, die an einen Namen
 gebunden sind und sich nicht ändern dürfen, aber es gibt einige Unterschiede
 zwischen Konstanten und Variablen.
 
 Erstens ist es dir nicht erlaubt, `mut` mit Konstanten zu verwenden. Konstanten
-sind nicht nur von vornherein unveränderlich &ndash; sie sind immer
-unveränderlich. Du deklarierst Konstanten mit dem Schlüsselwort `const`
+sind nicht nur von vornherein unveränderbar &ndash; sie sind immer
+unveränderbar. Du deklarierst Konstanten mit dem Schlüsselwort `const`
 anstelle des Schlüsselworts `let` und der Typ des Wertes *muss* annotiert
 werden. Wir sind dabei, Typen und Typ-Annotationen im nächsten Abschnitt
 [„Datentypen“][data-types] zu behandeln, also mach dir jetzt keine Gedanken
@@ -217,7 +217,7 @@ Beschatten unterscheidet sich vom Markieren einer Variable mit `mut`, weil wir
 einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese
 Variable neu zuzuweisen, ohne das Schlüsselwort `let` zu verwenden. Durch das
 Verwenden von `let` können wir einige wenige Transformationen an einem Wert
-durchführen, aber die Variable ist unveränderlich, nachdem diese
+durchführen, aber die Variable ist unveränderbar, nachdem diese
 Transformationen abgeschlossen sind.
 
 Der andere Unterschied zwischen `mut` und Beschatten besteht darin, dass wir,

@@ -273,13 +273,13 @@ trennen.
 
 Hier sind einige Beispiele: Eine Referenz auf einen `i32` ohne
 Lebensdauer-Parameter, eine Referenz auf einen `i32`, die einen
-Lebensdauer-Parameter namens `'a` hat, und eine veränderlicher Referenz auf
+Lebensdauer-Parameter namens `'a` hat, und eine veränderbarer Referenz auf
 einen `i32`, die ebenfalls die Lebensdauer `'a` hat.
 
 ```rust,ignore
 &i32        // eine Referenz
 &'a i32     // eine Referenz mit expliziter Lebensdauer
-&'a mut i32 // eine veränderliche Referenz mit expliziter Lebensdauer
+&'a mut i32 // eine veränderbare Referenz mit expliziter Lebensdauer
 ```
 
 Eine Lebensdauer-Annotation an sich hat nicht viel Bedeutung, da die

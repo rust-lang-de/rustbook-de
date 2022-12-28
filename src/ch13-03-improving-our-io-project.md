@@ -179,9 +179,10 @@ fn main() {
 }
 ```
 
-Wir werden den Anfang der Funktion `main` von Codeblock 12-24 in den 
-Programmcode im Codeblock 13-28 ändern. Dieser Code wird erst kompilieren,
-wenn wir auch `Config::build` abgeändert haben.
+Wir werden zuerst den Anfang der Funktion `main` von Codeblock 12-24 in den 
+Programmcode im Codeblock 13-18 ändern, der dieses Mal einen Iterator
+verwendet. Dieser Code wird erst kompilieren, wenn wir auch `Config::build`
+abgeändert haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -351,7 +352,7 @@ zurückgibt.
 
 Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
 verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
-Parameters `args` eintragen, um ihn veränderlich (mutable) zu machen.
+Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 
 #### Verwenden von `Iterator`-Merkmalen anstelle von Indizierung
 
@@ -558,10 +559,10 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 aus Codeblock 12-19</span>
 
 Wir können diesen Programmcode durch die Verwendung von Iteratoradaptern
-prägnanter gestalten und vermeiden, einen veränderlichen Vektor `results` für
+prägnanter gestalten und vermeiden, einen veränderbaren Vektor `results` für
 die Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil
-die Menge der veränderlichen Werte reduziert, um den Code übersichtlicher zu
-machen. Das Entfernen des veränderlich-Status kann uns eventuell zukünftige
+die Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu
+machen. Das Entfernen des veränderbar-Status kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
 um die Verwaltung des simultanen Zugriffs auf den Vektor `results` kümmern
 müssen. Codeblock 13-22 zeigt diese Änderung:
@@ -687,6 +688,8 @@ um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true`
 Wir sammeln dann die passenden Zeilen mit `collect` in einen anderen Vektor.
 Viel einfacher! Nimm die gleiche Änderung vor, um Iteratormethoden auch in der
 Funktion `search_case_insensitive` zu nutzen.
+
+### Zwischen Schleifen und Iteratoren wählen
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
 wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21
