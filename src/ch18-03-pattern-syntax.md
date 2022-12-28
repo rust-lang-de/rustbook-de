@@ -261,7 +261,12 @@ sodass er zu jedem anderen `Point` passt und Variablen für die Felder `x` und
 In diesem Beispiel passt der Wert `p` zum zweiten Zweig, da `x` eine 0 enthält,
 sodass dieser Code `Auf der y-Achse bei 7` ausgeben wird.
 
-#### Destrukturieren von Auszählungen
+Denke daran, dass ein `match`-Ausdruck aufhört, weitere Zweige zu prüfen,
+sobald er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn der
+`Point { x: 0, y: 0}` auf der `x`-Achse und der `y`-Achse liegt, würde dieser
+Code nur `Auf der x-Achse bei 0` ausgeben.
+
+#### Destrukturieren von Aufzählungen
 
 Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
 6-5 in Kapitel 6), sind aber noch nicht explizit darauf eingegangen, dass das
