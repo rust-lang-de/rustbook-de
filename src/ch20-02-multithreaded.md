@@ -127,10 +127,11 @@ Punkt erreichen.
 
 Diese Technik ist nur eine von vielen Möglichkeiten, den Durchsatz eines
 Webservers zu verbessern. Weitere Optionen, die du untersuchen könntest, sind
-das *Fork/Join-Modell* und das *asynchrone E/A-Modell mit einem Strang*. Wenn du an
-diesem Thema interessiert bist, kannst du mehr über andere Lösungen lesen und
-versuchen, sie in Rust zu implementieren; mit einer systemnahen Sprache wie
-Rust sind alle diese Optionen möglich.
+das *Fork/Join-Modell*, das *asynchrone E/A-Modell mit einem Strang* und das
+*asynchrone E/A-Modell mit mehreren Strängen*. Wenn du an diesem Thema
+interessiert bist, kannst du mehr über andere Lösungen lesen und versuchen, sie
+in Rust zu implementieren; mit einer systemnahen Sprache wie Rust sind alle
+diese Optionen möglich.
 
 Bevor wir mit der Implementierung eines Strang-Vorrats beginnen, lass uns
 darüber sprechen, wie die Verwendung des Vorrats aussehen sollte. Wenn du
@@ -583,12 +584,12 @@ auszuführen und die Struktur `ThreadPool` anzuklicken, um zu sehen, wie die
 generierte Dokumentation für `new` aussieht!
 
 Anstatt das Makro `assert!` hinzuzufügen, wie wir es hier getan haben, könnten
-wir `new` ein `Result` zurückgeben lassen, wie wir es mit `Config::build` im
-E/A-Projekt in Codeblock 12-9 getan haben. Aber wir haben in diesem Fall
-entschieden, dass der Versuch, einen Strang-Vorrat ohne Stränge zu erstellen,
-ein nicht behebbarer Fehler sein sollte. Wenn du ehrgeizig bist, versuche, eine
-Version von `new` mit der folgenden Signatur zu schreiben, um beide Versionen
-zu vergleichen:
+wir `new` zu `build` ändern und ein `Result` zurückgeben lassen, wie wir es mit
+`Config::build` im E/A-Projekt in Codeblock 12-9 getan haben. Aber wir haben in
+diesem Fall entschieden, dass der Versuch, einen Strang-Vorrat ohne Stränge zu
+erstellen, ein nicht behebbarer Fehler sein sollte. Wenn du ehrgeizig bist,
+versuche, eine Funktion namens `build` mit der folgenden Signatur zu schreiben,
+um sie mit der Funktion `new` zu vergleichen:
 
 ```rust,ignore
 pub fn new(size: usize) -> Result<ThreadPool, PoolCreationError> {
