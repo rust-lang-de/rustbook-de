@@ -12,9 +12,11 @@ Kombination der folgenden Elemente:
 * Wildcards
 * Platzhalter
 
-Diese Komponenten beschreiben die Form der Daten, mit denen wir arbeiten, die
-wir dann mit Werten abgleichen, um festzustellen, ob unser Programm über die
-richtigen Daten verfügt, um ein bestimmtes Stück Code weiter auszuführen.
+Einige Beispielmuster sind `x`, `(a, 3)`, und `Some(Color::Red)`. In den
+Kontexten, in denen Muster gültig sind, beschreiben diese Komponenten die
+Datenform. Unser Programm gleicht dann Werte mit den Mustern ab, um
+festzustellen, ob es die richtige Datenform hat, um ein bestimmtes Stück Code
+weiter auszuführen.
 
 Um ein Muster zu verwenden, vergleichen wir es mit einem Wert. Wenn das Muster
 zum Wert passt, verwenden wir die Wertteile in unserem Code. Erinnere dich an
