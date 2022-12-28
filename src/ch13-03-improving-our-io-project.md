@@ -179,9 +179,10 @@ fn main() {
 }
 ```
 
-Wir werden den Anfang der Funktion `main` von Codeblock 12-24 in den 
-Programmcode im Codeblock 13-28 ändern. Dieser Code wird erst kompilieren,
-wenn wir auch `Config::build` abgeändert haben.
+Wir werden zuerst den Anfang der Funktion `main` von Codeblock 12-24 in den 
+Programmcode im Codeblock 13-18 ändern, der dieses Mal einen Iterator
+verwendet. Dieser Code wird erst kompilieren, wenn wir auch `Config::build`
+abgeändert haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -687,6 +688,8 @@ um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true`
 Wir sammeln dann die passenden Zeilen mit `collect` in einen anderen Vektor.
 Viel einfacher! Nimm die gleiche Änderung vor, um Iteratormethoden auch in der
 Funktion `search_case_insensitive` zu nutzen.
+
+### Zwischen Schleifen und Iteratoren wählen
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
 wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21
