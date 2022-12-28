@@ -73,6 +73,8 @@ Da `Kilometers` und `i32` vom gleichen Typ sind, können wir Werte beider Typen
 addieren und wir können `Kilometers`-Werte an Funktionen übergeben, die
 `i32`-Parameter verwenden. Mit dieser Methode erhalten wir jedoch nicht die
 Vorteile der Typprüfung, die wir vom zuvor besprochenen Newtype-Muster haben.
+Mit anderen Worten, wenn wir irgendwo `Kilometers`- und `i32`-Werte
+verwechseln, wird uns der Compiler keinen Fehler anzeigen.
 
 Der Hauptanwendungsfall für Typ-Synonyme ist das Reduzieren von Wiederholungen.
 Zum Beispiel könnten wir einen längeren Typ wie diesen haben:
