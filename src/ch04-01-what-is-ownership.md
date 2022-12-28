@@ -185,7 +185,7 @@ eingehender behandeln.
 Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
 Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
 sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
-verwenden möchten. Ein Grund dafür ist, dass sie unveränderlich sind. Ein
+verwenden möchten. Ein Grund dafür ist, dass sie unveränderbar sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
@@ -226,12 +226,12 @@ Im Falle eines Zeichenkettenliterals kennen wir den Inhalt zum Zeitpunkt der
 Kompilierung, sodass der Text direkt in die endgültige ausführbare Datei fest
 kodiert wird. Aus diesem Grund sind Zeichenkettenliterale schnell und
 effizient. Allerdings ergeben sich diese Eigenschaften nur aus der
-Unveränderlichkeit des Zeichenkettenliterals. Leider können wir nicht für jedes
+Unveränderbarkeit des Zeichenkettenliterals. Leider können wir nicht für jedes
 Stück Text, dessen Größe zum Zeitpunkt der Kompilierung unbekannt ist und
 dessen Größe sich während der Ausführung des Programms ändern könnte, einen
 Speicherblock in die Binärdatei packen.
 
-Um mit dem Typ `String` einen veränderlichen, größenänderbaren Textabschnitt zu
+Um mit dem Typ `String` einen veränderbaren, größenänderbaren Textabschnitt zu
 unterstützen, müssen wir Speicher im Haldenspeicher allokieren, dessen
 Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:
 

@@ -93,7 +93,7 @@ Sperre zu erhalten, also haben wir uns entschieden, `unwrap` zu benutzen und
 diesen Strang abstürzen zu lassen, wenn wir uns in dieser Situation befinden.
 
 Nachdem wir die Sperre erworben haben, können wir den Rückgabewert, in diesem
-Fall `num` genannt, als veränderliche Referenz auf die darin enthaltenen Daten
+Fall `num` genannt, als veränderbare Referenz auf die darin enthaltenen Daten
 verwenden. Das Typsystem stellt sicher, dass wir eine Sperre erwerben, bevor
 wir den Wert in `m` verwenden. Der Typ von `m` ist `Mutex<i32>`, nicht `i32`,
 also *müssen* wir `lock` aufrufen, um den `i32`-Wert verwenden zu können. Wir
@@ -361,9 +361,9 @@ funktioniert.
 
 ### Ähnlichkeiten zwischen `RefCell<T>`/`Rc<T>` und `Mutex<T>`/`Arc<T>`
 
-Du hast vielleicht bemerkt, dass `counter` unveränderlich (immutable) ist, aber
-wir könnten eine veränderliche (mutable) Referenz auf den Wert in seinem
-Inneren erhalten; das bedeutet, dass `Mutex<T>` innere Veränderlichkeit
+Du hast vielleicht bemerkt, dass `counter` unveränderbar (immutable) ist, aber
+wir könnten eine veränderbare (mutable) Referenz auf den Wert in seinem
+Inneren erhalten; das bedeutet, dass `Mutex<T>` innere Veränderbarkeit
 (interior mutability) bietet, wie es die `Cell`-Familie tut. Auf die gleiche
 Weise, wie wir `RefCell<T>` in Kapitel 15 benutzt haben, um uns zu erlauben,
 Inhalte innerhalb eines `Rc<T>` zu mutieren, benutzen wir `Mutex<T>`, um

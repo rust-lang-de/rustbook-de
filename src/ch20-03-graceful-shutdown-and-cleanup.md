@@ -108,7 +108,7 @@ impl Drop for ThreadPool {
 Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span>
 
 Zuerst iterieren wir über alle `workers` im Strang-Vorrat. Wir verwenden dafür
-`&mut`, weil `self` eine veränderliche Referenz ist und wir auch in der Lage
+`&mut`, weil `self` eine veränderbare Referenz ist und wir auch in der Lage
 sein müssen, `worker` zu verändern. Für jeden `worker` geben wir eine Nachricht
 aus, die besagt, dass dieser bestimmte `worker` heruntergefahren wird, und dann
 rufen wir auf dem Strang `join` auf. Wenn der Aufruf von `join` fehlschlägt,
@@ -134,7 +134,7 @@ error: could not compile `hello` due to previous error
 ```
 
 Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
-veränderliche Ausleihe von jedem `worker` haben und `join` die Eigentümerschaft
+veränderbare Ausleihe von jedem `worker` haben und `join` die Eigentümerschaft
 für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Strang
 `thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Strang
 konsumieren kann. Wir haben dies in Codeblock 17-15 getan: Wenn `Worker`

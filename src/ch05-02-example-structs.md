@@ -151,7 +151,7 @@ die beide den Typ `u32` haben. Dann erzeugten wir in `main` eine Instanz von
 `Rectangle` mit der Breite `30` und Höhe `50`.
 
 Unsere Funktion `area` hat nun einen Parameter, den wir `rectangle` genannt
-haben und dessen Typ eine unveränderliche Ausleihe (immutable borrow) einer
+haben und dessen Typ eine unveränderbare Ausleihe (immutable borrow) einer
 Strukturinstanz `Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die
 Struktur nur ausleihen, nicht aber deren Eigentümerschaft (ownership)
 übernehmen. Auf diese Weise behält `main` seine Eigentümerschaft und kann

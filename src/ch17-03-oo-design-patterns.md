@@ -194,7 +194,7 @@ impl Post {
 <span class="caption">Codeblock 17-13: Implementierung der Methode `add_text`
 zum Hinzufügen von Text zum `content` eines Beitrags</span>
 
-Die Methode `add_text` nimmt eine veränderliche Referenz auf `self`, weil wir
+Die Methode `add_text` nimmt eine veränderbare Referenz auf `self`, weil wir
 die `Post`-Instanz, auf der wir `add_text` aufrufen, ändern. Dann rufen wir
 `push_str` auf den `String` in `content` auf und übergeben das Argument `text`,
 um es zum gespeicherten `content` hinzuzufügen. Dieses Verhalten hängt nicht
@@ -319,7 +319,7 @@ impl State for PendingReview {
 `request_review` für `Post` und des Merkmals `State`</span>
 
 Wir geben `Post` eine öffentliche Methode namens `request_review`, die eine
-veränderliche Referenz auf `self` nimmt. Dann rufen wir eine interne
+veränderbare Referenz auf `self` nimmt. Dann rufen wir eine interne
 `request_review`-Methode über den aktuellen Zustand von `Post` auf und diese
 zweite `request_review`-Methode konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.

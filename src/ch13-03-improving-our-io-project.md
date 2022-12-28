@@ -352,7 +352,7 @@ zurückgibt.
 
 Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
 verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
-Parameters `args` eintragen, um ihn veränderlich (mutable) zu machen.
+Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 
 #### Verwenden von `Iterator`-Merkmalen anstelle von Indizierung
 
@@ -559,10 +559,10 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 aus Codeblock 12-19</span>
 
 Wir können diesen Programmcode durch die Verwendung von Iteratoradaptern
-prägnanter gestalten und vermeiden, einen veränderlichen Vektor `results` für
+prägnanter gestalten und vermeiden, einen veränderbaren Vektor `results` für
 die Zwischenergebnisse zu haben. Bevorzugt wird im funktionalen Programmierstil
-die Menge der veränderlichen Werte reduziert, um den Code übersichtlicher zu
-machen. Das Entfernen des veränderlich-Status kann uns eventuell zukünftige
+die Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu
+machen. Das Entfernen des veränderbar-Status kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
 um die Verwaltung des simultanen Zugriffs auf den Vektor `results` kümmern
 müssen. Codeblock 13-22 zeigt diese Änderung:

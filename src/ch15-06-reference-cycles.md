@@ -170,7 +170,7 @@ ausgeht.
 
 Das Erstellen von Referenzzyklen ist nicht einfach, aber auch nicht unmöglich.
 Wenn man `RefCell<T>`-Werte hat, die `Rc<T>`-Werte oder ähnliche verschachtelte
-Typkombinationen mit innerer Veränderlichkeit und Referenzzählung enthalten,
+Typkombinationen mit innerer Veränderbarkeit und Referenzzählung enthalten,
 muss man sicherstellen, dass man keine Zyklen erstellt. Man kann sich nicht
 darauf verlassen, dass Rust sie feststellen kann. Das Erstellen eines
 Referenzzyklus wäre ein logischer Fehler in deinem Programm, den du mithilfe
@@ -548,8 +548,8 @@ Referenzen in Rust möglich ist. Der Typ `Box<T>` hat eine bekannte Größe und
 zeigt auf Daten die auf dem Haldenspeicher allokiert sind. Der Typ `Rc<T>`
 verfolgt die Anzahl der Referenzen von Daten auf dem Haldenspeicher, sodass
 Daten mehrere Eigentümer haben können. Der Typ `RefCell<T>` mit
-seiner inneren Veränderlichkeit stellt uns einen Typ zur Verfügung, den wir
-verwenden können, wenn wir einen unveränderlichen Typ benötigen, aber einen
+seiner inneren Veränderbarkeit stellt uns einen Typ zur Verfügung, den wir
+verwenden können, wenn wir einen unveränderbaren Typ benötigen, aber einen
 inneren Wert dieses Typs ändern müssen. Außerdem werden die Ausleihregeln zur
 Laufzeit anstatt zur Kompilierzeit durchgesetzt.
 

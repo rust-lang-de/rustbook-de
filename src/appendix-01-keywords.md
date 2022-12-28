@@ -44,7 +44,7 @@ einer Beschreibung ihrer Funktion.
 * `move` &ndash; Funktionsabschluss (closure) übernimmt Eigentümerschaft
   (ownership) all seiner Parameter
 * `mut` &ndash; Referenzen, Roh-Referenzen und Variablenbindungen als
-  veränderlich kennzeichnen
+  veränderbar kennzeichnen
 * `pub` &ndash; Strukturfelder (struct fields), `impl`-Blöcke und Module als
   öffentlich sichtbar kennzeichnen 
 * `ref` &ndash; als Referenz binden

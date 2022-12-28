@@ -30,7 +30,7 @@ gespeichert und sind daher Zeichenkettenanteilstypen.
 
 Der Typ `String`, der von Rusts Standardbibliothek zur Verfügung gestellt wird
 und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,
-veränderlicher, aneigenbarer, UTF-8-kodierter Zeichenkettentyp. Wenn
+veränderbarer, aneigenbarer, UTF-8-kodierter Zeichenkettentyp. Wenn
 Rust-Entwickler von Zeichenketten in Rust sprechen, meinen sie normalerweise
 den Typ `String` sowie den Zeichenkettenanteilstyp `&str`, nicht nur einen
 dieser Typen. Obwohl es in diesem Abschnitt weitgehend um `String` geht, werden

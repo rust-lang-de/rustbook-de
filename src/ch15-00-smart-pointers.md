@@ -61,8 +61,8 @@ behandeln:
     Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierungszeit
     erzwingt.
 
-Darüber hinaus wird das *innere Veränderlichkeitsmuster* (interior mutability pattern)
-behandelt, bei dem ein unveränderlicher Typ eine API zum Verändern eines inneren
+Darüber hinaus wird das *innere Veränderbarkeitsmuster* (interior mutability pattern)
+behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern eines inneren
 Werts verfügbar macht. Wir werden auch *Referenzzyklen* besprechen, wie diese
 Speicherverlust verursachen können und wie das verhindert werden kann.
 

@@ -66,8 +66,8 @@ indem du nur den Namen `self` an der Stelle des ersten Parameters angibst.
 Beachte, dass wir immer noch das `&` vor der Abkürzung `self` verwenden müssen,
 um anzuzeigen, dass diese Methode die Instanz `Self` ausleiht, genau wie in
 `Rechteck: &Rechteck`. Methoden können die Eigentümerschaft von `self`
-übernehmen, `self` unveränderlich ausleihen, wie wir es hier getan haben, oder
-`self` veränderlich ausleihen, so wie bei jedem anderen Parameter auch.
+übernehmen, `self` unveränderbar ausleihen, wie wir es hier getan haben, oder
+`self` veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
 
 Wir haben hier `&self` aus dem gleichen Grund gewählt wie `&Rectangle` in der
 Funktionsvariante: Wir wollen keine Eigentümerschaft übernehmen, wir wollen die
@@ -177,7 +177,7 @@ wir in [Kapitel 7][public] behandeln.
 > Der erste Aufruf sieht viel sauberer aus. Die automatische Referenzierung
 > funktioniert, weil Methoden einen eindeutigen Empfänger haben - den Typ von
 > `self`. Wenn man den Empfänger und den Namen einer Methode angibt, kann Rust
-> eindeutig herausfinden, ob die Methode lesend (`&self`), veränderlich
+> eindeutig herausfinden, ob die Methode lesend (`&self`), veränderbar
 > (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass Rust das
 > Ausleihen für die Methodenempfänger implizit macht, ist ein großer Beitrag
 > zur Ergonomie der Eigentümerschaft in der Praxis.
@@ -228,12 +228,12 @@ Umfasst rect1 rect3? false
 
 Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
 des Blocks `impl Rectangle` liegen. Die Methode wird `can_hold` heißen und sie
-wird einen weiteren Parameter vom Typ `Rectangle` unveränderlich ausleihen. Wir
+wird einen weiteren Parameter vom Typ `Rectangle` unveränderbar ausleihen. Wir
 können den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die
 Methode aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
-unveränderliche Ausleihe von `rect2` vom Typ `Rectangle`. Das macht Sinn, da
+unveränderbare Ausleihe von `rect2` vom Typ `Rectangle`. Das macht Sinn, da
 wir `rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine
-veränderliche Ausleihe bräuchten) und `main` die Eigentümerschaft an `rect2`
+veränderbare Ausleihe bräuchten) und `main` die Eigentümerschaft an `rect2`
 zurückerhalten soll, sodass wir es nach dem Aufruf der Methode `can_hold`
 weiter verwenden können. Der Rückgabewert von `can_hold` ist ein boolescher
 Wert und die Implementierung prüft, ob Breite und Höhe von `self` jeweils

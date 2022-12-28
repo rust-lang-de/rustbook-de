@@ -37,7 +37,7 @@ Superkräften gehören folgende Fähigkeiten:
 
 * Dereferenzieren eines Rohzeigers
 * Aufrufen einer unsicheren Funktion oder Methode
-* Zugreifen auf oder Ändern einer veränderlichen statischen Variablen
+* Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
 * Implementieren eines unsicheren Merkmals (trait)
 * Zugreifen auf Feldern in `union`
 
@@ -82,16 +82,16 @@ In Kapitel 4 haben wir im Abschnitt [„Hängende
 Referenzen“][dangling-references] erwähnt, dass der Compiler sicherstellt,
 dass Referenzen immer gültig sind. Unsicheres Rust hat zwei neue Typen namens
 *Rohzeiger* (raw pointers), die ähnlich wie Referenzen sind. Wie bei Referenzen
-können Rohzeiger unveränderlich oder veränderlich sein und werden als `*const
+können Rohzeiger unveränderbar oder veränderbar sein und werden als `*const
 T` bzw. `*mut T` geschrieben. Das Sternchen ist nicht der
 Dereferenzierungsoperator (dereference operator); es ist Teil des Typnamens. Im
-Zusammenhang mit Rohzeigern bedeutet *unveränderlich* (immutable), dass der
+Zusammenhang mit Rohzeigern bedeutet *unveränderbar* (immutable), dass der
 Zeiger nach der Dereferenzierung nicht direkt zugewiesen werden kann.
 
 Rohzeiger sind anders als Referenzen und intelligente Zeiger:
 
-* Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderliche als
-  auch veränderliche Zeiger oder mehrere veränderliche Zeiger auf die gleiche
+* Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderbare als
+  auch veränderbare Zeiger oder mehrere veränderbare Zeiger auf die gleiche
   Stelle haben.
 * Sie zeigen nicht garantiert auf gültigen Speicher.
 * Sie dürfen null sein.
@@ -102,8 +102,8 @@ lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine
 höhere Performanz oder die Möglichkeit der Interaktion mit einer anderen
 Sprache oder Hardware erhalten, für die die Rust-Garantien nicht gelten.
 
-Codeblock 19-1 zeigt, wie man aus Referenzen einen unveränderlichen und einen
-veränderlichen Rohzeiger erzeugt.
+Codeblock 19-1 zeigt, wie man aus Referenzen einen unveränderbaren und einen
+veränderbaren Rohzeiger erzeugt.
 
 ```rust
 # fn main() {
@@ -122,7 +122,7 @@ Wir können Rohzeiger in sicherem Code erzeugen; wir können nur keine Rohzeiger
 außerhalb eines unsicheren Blocks dereferenzieren, wie du gleich sehen wirst.
 
 Wir haben Rohzeiger erstellt, indem wir `as` angegeben haben, um eine
-unveränderliche und eine veränderliche Referenz in die entsprechenden
+unveränderbare und eine veränderbare Referenz in die entsprechenden
 Rohzeigertypen umzuwandeln (cast). Da wir sie direkt aus Referenzen erstellt
 haben, deren Gültigkeit garantiert ist, wissen wir, dass diese speziellen
 Rohzeiger gültig sind, aber wir können diese Annahme nicht für jeden beliebigen
@@ -176,12 +176,12 @@ Wert zu tun haben.
 Beachte auch, dass wir in Codeblock 19-1 und 19-3 die Rohzeiger `*const i32`
 und `*mut i32` erstellt haben, die beide auf die gleiche Speicherstelle
 zeigten, in der `num` gespeichert ist. Wenn wir stattdessen versucht hätten,
-eine unveränderliche und einen veränderliche Referenz auf `num` zu erstellen,
+eine unveränderbare und einen veränderbare Referenz auf `num` zu erstellen,
 hätte sich der Code nicht kompilieren lassen, weil die Eigentümerschaftsregeln
-von Rust eine veränderliche Referenz nicht gleichzeitig mit unveränderlichen
-Referenzen zulassen. Mit Rohzeigern können wir einen veränderlichen und
-einen unveränderlichen Zeiger auf denselben Ort erstellen und Daten über den
-veränderlichen Zeiger ändern, wodurch möglicherweise eine
+von Rust eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren
+Referenzen zulassen. Mit Rohzeigern können wir einen veränderbaren und
+einen unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
+veränderbaren Zeiger ändern, wodurch möglicherweise eine
 Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!
 
 Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
@@ -252,7 +252,7 @@ die gesamte Funktion als unsicher markieren müssen. Tatsächlich ist das
 Einpacken von unsicherem Codes in eine sichere Funktion eine gängige
 Abstraktion. Als Beispiel betrachten wir die Funktion `split_at_mut` aus der
 Standardbibliothek, die unsicheren Code verwendet. Wir untersuchen, wie wir sie
-implementieren könnten. Diese sichere Methode ist auf veränderlichen
+implementieren könnten. Diese sichere Methode ist auf veränderbaren
 Anteilstypen definiert: Sie nimmt einen Anteilstyp und macht zwei daraus, indem
 sie den Anteilstyp an dem als Argument angegebenen Index teilt. Codeblock 19-4
 zeigt, wie man `split_at_mut` verwendet.
@@ -304,7 +304,7 @@ Zusicherung (assertion) bedeutet, dass die Funktion abstürzt, wenn wir einen
 Index übergeben, der größer als die Länge ist, bei der der Anteilstyp geteilt
 werden soll, bevor sie versucht, diesen Index zu verwenden.
 
-Dann geben wir zwei veränderliche Anteilstypen in einem Tupel zurück: Einen vom
+Dann geben wir zwei veränderbare Anteilstypen in einem Tupel zurück: Einen vom
 Anfang des ursprünglichen Anteilstyps bis zum Index `mid` und einen weiteren
 von `mid` bis zum Ende des Anteilstyps.
 
@@ -373,7 +373,7 @@ Erinnere dich an Abschnitt [„Der Anteilstyp (slice)“][the-slice-type] in
 Kapitel 4, dass Anteilstypen Zeiger auf Daten und die Länge des Anteilstyps
 sind. Wir verwenden die Methode `len`, um die Länge eines Anteilstyps zu
 erhalten, und die Methode `as_mut_ptr`, um auf den Rohzeiger eines Anteilstyps
-zuzugreifen. Da wir in diesem Fall einen veränderlichen Anteilstyp von
+zuzugreifen. Da wir in diesem Fall einen veränderbaren Anteilstyp von
 `i32`-Werten haben, gibt `as_mut_ptr` einen Rohzeiger vom Typ `*mut i32`
 zurück, den wir in der Variable `ptr` gespeichert haben.
 
@@ -496,12 +496,12 @@ Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
 >
 > Diese Verwendung von `extern` erfordert kein `unsafe`.
 
-### Zugreifen oder Ändern einer veränderlichen, statischen Variable
+### Zugreifen oder Ändern einer veränderbaren, statischen Variable
 
 In diesem Buch haben wir noch nicht über *globale Variablen* gesprochen, die
 Rust zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
 problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
-veränderliche, globale Variable zugreifen, kann dies zu einer
+veränderbare, globale Variable zugreifen, kann dies zu einer
 Daten-Wettlaufsituation (data race) führen.
 
 In Rust werden globale Variablen als *statische* Variablen bezeichnet.
@@ -519,7 +519,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 19-9: Definieren und Verwenden einer
-unveränderlichen, statischen Variablen</span>
+unveränderbaren, statischen Variablen</span>
 
 Statische Variablen ähneln Konstanten, die wir im Abschnitt [„Unterschiede
 zwischen Variablen und Konstanten“][differences-between-variables-and-constants]
@@ -527,17 +527,17 @@ in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
 Konvention in `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur
 Referenzen mit der Lebensdauer `'static` speichern, was bedeutet, dass der
 Rust-Compiler die Lebensdauer herausfinden kann, und wir brauchen sie nicht
-explizit anzugeben. Der Zugriff auf eine unveränderliche, statische Variable
+explizit anzugeben. Der Zugriff auf eine unveränderbare, statische Variable
 ist sicher.
 
-Ein feiner Unterschied zwischen Konstanten und unveränderlichen, statischen
+Ein feiner Unterschied zwischen Konstanten und unveränderbaren, statischen
 Variablen besteht darin, dass Werte in einer statischen Variable eine feste
 Adresse im Speicher haben. Beim Verwenden des Wertes wird immer auf die
 gleichen Daten zugegriffen. Konstanten hingegen dürfen ihre Daten duplizieren,
 wann immer sie verwendet werden. Ein weiterer Unterschied besteht darin, dass
-statische Variablen veränderlich sein können. Der Zugriff auf und die Änderung
-von veränderlichen, statischen Variablen ist *unsicher*. Codeblock 19-10 zeigt,
-wie man eine veränderliche, statische Variable namens `COUNTER` deklariert, auf
+statische Variablen veränderbar sein können. Der Zugriff auf und die Änderung
+von veränderbaren, statischen Variablen ist *unsicher*. Codeblock 19-10 zeigt,
+wie man eine veränderbare, statische Variable namens `COUNTER` deklariert, auf
 sie zugreift und sie modifiziert.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -561,18 +561,18 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 19-10: Lesen von und Schreiben in eine
-veränderliche, statische Variable ist unsicher</span>
+veränderbare, statische Variable ist unsicher</span>
 
-Wie bei regulären Variablen spezifizieren wir die Veränderlichkeit mit dem
+Wie bei regulären Variablen spezifizieren wir die Veränderbarkeit mit dem
 Schlüsselwort `mut`. Jeder Code, der `COUNTER` liest oder schreibt, muss
 innerhalb eines `unsafe`-Blocks liegen. Dieser Code kompiliert und gibt
 `COUNTER: 3` so, wie wir es erwarten würden, weil er nur einen einzigen Strang
 hat. Wenn mehrere Stränge auf `COUNTER` zugreifen, würde dies wahrscheinlich zu
 einer Daten-Wettlaufsituation führen.
 
-Bei veränderlichen Daten, die global zugänglich sind, ist es schwierig,
+Bei veränderbaren Daten, die global zugänglich sind, ist es schwierig,
 sicherzustellen, dass es keine Daten-Wettlaufsituationen gibt, weshalb Rust
-veränderliche, statische Variablen als unsicher betrachtet. Wann immer möglich,
+veränderbare, statische Variablen als unsicher betrachtet. Wann immer möglich,
 ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken
 und Strang-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler
 prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.

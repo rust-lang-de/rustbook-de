@@ -132,7 +132,7 @@ Ein interessanter Aspekt ist hier, dass wir einen Funktionsabschluss übergeben
 haben, der `self.most_stocked()` für die aktuelle `Inventory`-Instanz aufruft.
 Die Standardbibliothek musste nichts über die von uns definierten Typen
 `Inventory` oder `ShirtColor` oder die Logik, die wir in diesem Szenario
-verwenden wollen, wissen. Der Funktionsabschluss hat eine unveränderliche
+verwenden wollen, wissen. Der Funktionsabschluss hat eine unveränderbare
 Referenz auf die `self`-Instanz von `Inventory` erfasst und sie mit dem von uns
 angegebenen Code an die Methode `unwrap_or_else` übergeben. Funktionen sind
 andererseits nicht in der Lage, ihre Umgebung auf diese Weise zu erfassen.
@@ -288,15 +288,15 @@ gleichen Funktionsabschluss zu benutzen.
 
 Funktionsabschlüsse können Werte aus ihrer Umgebung auf drei Arten erfassen,
 die direkt den drei Möglichkeiten entsprechen, wie eine Funktion einen
-Parameter aufnehmen kann: Unveränderliche Ausleihen (borrowing immutably),
-veränderliche Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
+Parameter aufnehmen kann: Unveränderbare Ausleihen (borrowing immutably),
+veränderbare Ausleihen (borrowing mutably) und Eigentümerschaft übernehmen
 (taking ownership). Der Funktionsabschluss entscheidet, welche dieser
 Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
 erfassten Werten macht.
 
 In Codeblock 13-4 definieren wir einen Funktionsabschluss, der eine
-unveränderliche Referenz an den Vektor mit dem Namen `list` erfasst, weil er
-nur eine unveränderliche Referenz benötigt, um den Wert auszugeben:
+unveränderbare Referenz an den Vektor mit dem Namen `list` erfasst, weil er
+nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -314,14 +314,14 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine unveränderliche Referenz erfasst</span>
+Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span>
 
 Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
 Funktionsabschluss-Definition gebunden werden kann, und wir den
 Funktionsabschluss später aufrufen können, indem wir den Variablennamen und die
 Klammern verwenden, als ob der Variablenname ein Funktionsname wäre.
 
-Da wir mehrere unveränderliche Referenzen auf `list` zur gleichen Zeit haben
+Da wir mehrere unveränderbare Referenzen auf `list` zur gleichen Zeit haben
 können, ist `list` immer noch vom Code vor der Funktionsabschluss-Definition
 zugreifbar, sowie nach der Funktionsabschluss-Definition und vor dem Aufruf des
 Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
@@ -340,7 +340,7 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
 
 In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
 dass er ein Element zum Vektor `list` hinzufügt. Der Funktionsabschluss erfasst
-nun eine veränderliche Referenz:
+nun eine veränderbare Referenz:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -357,7 +357,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
-Funktionsabschlusses, der eine veränderliche Referenz erfasst</span>
+Funktionsabschlusses, der eine veränderbare Referenz erfasst</span>
 
 Dieser Code kompiliert, läuft und gibt aus:
 
@@ -372,12 +372,12 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
 
 Beachte, dass es kein `println!` mehr zwischen der Definition und dem Aufruf
 des Funktionsabschlusses `borrows_mutably` gibt: Wenn `borrows_mutably`
-definiert ist, erfasst es eine veränderliche Referenz auf `list`. Der
+definiert ist, erfasst es eine veränderbare Referenz auf `list`. Der
 Funktionsabschluss wird nicht mehr verwendet, nachdem er aufgerufen wurde,
-daher endet die veränderliche Ausleihe. Zwischen der
+daher endet die veränderbare Ausleihe. Zwischen der
 Funktionsabschluss-Definition und dem Funktionsabschluss-Aufruf ist eine
-unveränderliche Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
-Ausleihen erlaubt sind, wenn es eine veränderliche Ausleihe gibt. Versuche,
+unveränderbare Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
+Ausleihen erlaubt sind, wenn es eine veränderbare Ausleihe gibt. Versuche,
 dort ein `println!` hinzuzufügen, um zu sehen, welche Fehlermeldung du
 erhältst!
 
@@ -417,16 +417,16 @@ Funktionsabschluss des Strangs zu erzwingen, die Eigentümerschaft an `list` zu
 
 Wir starten einen neuen Strang und geben ihm einen Funktionsabschluss als
 Argument mit. Der Rumps des Funktionsabschlusses gibt die Liste aus. In
-Codeblock 13-4 hat der Funktionsabschluss nur `list` mit einer unveränderlichen
+Codeblock 13-4 hat der Funktionsabschluss nur `list` mit einer unveränderbaren
 Referenz erfasst, weil das die kleinste Zugriffmenge auf `list` ist, die
 benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
-Funktionsabschluss-Rumpf nur eine unveränderliche Referenz benötigt, angeben,
+Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
 dass `list` in den Funktionsabschluss verschoben werden soll, indem wir das
 Schlüsselwort `move` an den Anfang der Funktionsabschluss-Definition setzen.
 Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
 wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
 die Eigentümerschaft von `list` beibehält, aber vor dem neuen Strang endet und
-`list` aufräumt, wäre die unveränderliche Referenz im Strang ungültig. Daher
+`list` aufräumt, wäre die unveränderbare Referenz im Strang ungültig. Daher
 verlangt der Compiler, dass `list` in den Funktionsabschluss im neuen Strang
 verschoben wird, damit die Referenz gültig bleibt. Versuche, das Schlüsselwort
 `move` zu entfernen oder `list` im Hauptstrang zu verwenden, nachdem der
@@ -656,7 +656,7 @@ verschiebt. Um zu zählen, wie oft `sort_by_key` aufgerufen wird, ist es
 einfacher, einen Zähler in der Umgebung zu halten und seinen Wert im
 Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
 Funktionsabschluss in Codeblock 13-9 funktioniert mit `sort_by_key`, weil er
-nur eine veränderliche Referenz auf den `num_sort_operations`-Zähler erfasst
+nur eine veränderbare Referenz auf den `num_sort_operations`-Zähler erfasst
 und daher mehr als einmal aufgerufen werden kann:
 
 <span class="filename">Dateiname: src/main.rs</span>

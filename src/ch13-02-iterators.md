@@ -113,21 +113,21 @@ Vektor erstellten Iterator zurückgegeben werden:
 <span class="caption">Codeblock 13-12: Iterator mit der `next`-Methode
 aufrufen</span>
 
-Beachte, dass wir `v1_iter` veränderlich (mutable) machen mussten: Beim Aufrufen
+Beachte, dass wir `v1_iter` veränderbar (mutable) machen mussten: Beim Aufrufen
 der `next`-Methode auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten *verbraucht* dieser Programmcode den Iterator. Jeder Aufruf
 von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
-benutzten, mussten wir `v1_iter` nicht veränderlich machen, da dies schon hinter
+benutzten, mussten wir `v1_iter` nicht veränderbar machen, da dies schon hinter
 den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
 `v1_iter` übernahm.
 
 Merke auch, dass die Werte, die wir von den Aufrufen von `next` erhalten,
-unveränderliche Referenzen (immutable references) auf die Werte im Vektor sind.
-Die `iter`-Methode erzeugt einen Iterator über unveränderliche Referenzen. Wenn
+unveränderbare Referenzen (immutable references) auf die Werte im Vektor sind.
+Die `iter`-Methode erzeugt einen Iterator über unveränderbare Referenzen. Wenn
 wir einen Iterator erzeugen möchten der die Eigentümerschaft von `v1` übernimmt
 und angeeignete Werte (owned values) zurückgibt, können wir die
-`into_iter`-Methode anstelle von `iter` benutzen, und wenn wir über veränderliche
+`into_iter`-Methode anstelle von `iter` benutzen, und wenn wir über veränderbare
 Referenzen iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
 ### Methoden die den Iterator verbrauchen

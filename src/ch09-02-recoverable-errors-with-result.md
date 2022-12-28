@@ -333,7 +333,7 @@ Der Funktionsrumpf beginnt mit dem Aufruf der Funktion `File::open`. Dann
 behandeln wir den `Result`-Wert, der von `match` zurückgegeben wird, auf
 ähnliche Weise wie bei `match` in Codeblock 9-4. Wenn `File::open` erfolgreich
 ist, erhält die Dateiressource in der Mustervariablen `file` den Wert in der
-veränderlichen Variablen `username_file` und die Funktion wird fortgesetzt. Im
+veränderbaren Variablen `username_file` und die Funktion wird fortgesetzt. Im
 Fall von `Err` verwenden wir das Schlüsselwort `return`, anstatt `panic!`
 aufzurufen, um die Funktion vorzeitig ganz zu verlassen und den Fehlerwert von
 `File::open` in der Mustervariablen `e` als Fehlerwert dieser Funktion an den

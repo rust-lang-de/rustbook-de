@@ -26,7 +26,7 @@ Ressourcen verlieren!
 Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals `Drop`. Für das
 Merkmal `Drop` muss man eine Methode `drop` implementieren, die eine 
-veränderliche Referenz auf `self` enthält. Um zu sehen, wann Rust `drop`
+veränderbare Referenz auf `self` enthält. Um zu sehen, wann Rust `drop`
 aufruft, implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 
 Codeblock 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige 

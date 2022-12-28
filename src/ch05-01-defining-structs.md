@@ -64,10 +64,10 @@ erzeugen</span>
 
 Um auf einen bestimmten Wert in einer Struktur zuzugreifen, verwenden wir die
 Punktnotation. Um beispielsweise auf die E-Mail-Adresse dieses Benutzers
-zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderlich ist,
+zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderbar ist,
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
 einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
-`email` einer veränderlichen `User`-Instanz geändert werden kann.
+`email` einer veränderbaren `User`-Instanz geändert werden kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -93,8 +93,8 @@ fn main() {
 
 <span class="caption">Codeblock 5-3: Wert im Feld `email` einer `User`-Instanz ändern</span>
 
-Beachte, dass die gesamte Instanz veränderlich sein muss. Rust erlaubt es
-nicht, nur einzelne Felder als veränderlich zu markieren. Wie mit jedem
+Beachte, dass die gesamte Instanz veränderbar sein muss. Rust erlaubt es
+nicht, nur einzelne Felder als veränderbar zu markieren. Wie mit jedem
 Ausdruck können wir eine neue Instanz der Struktur als letzten Ausdruck im
 Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.
 
