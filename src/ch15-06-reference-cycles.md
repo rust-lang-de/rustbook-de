@@ -142,14 +142,14 @@ a Rc-Zählung nach Änderung von a = 2
 Der Referenzzähler der `Rc<List>`-Instanzen in `a` und `b` beträgt 2, nachdem
 wir die Liste in `a` so geändert haben, dass sie auf `b` zeigt. Am Ende von
 `main` versucht Rust, zuerst `b` aufzuräumen, wodurch der Zähler der
-`Rc<List>`-Instanz in `b` um 1 verringert wird.
-
-Da `a` jedoch immer noch auf die `Rc<List>` verweist, die sich in `b` befand,
-hat `Rc<List>` einen Zählerwert von 1 anstelle von 0, sodass der Speicher, den
-`Rc<List>` auf dem Haldenspeicher (heap) hat, nicht aufgeräumt wird. Der
-Speicher wird bei einem Zählerwert von 1 einfach bestehen bleiben, für immer.
-Zur Veranschaulichung dieses Referenzzyklus haben wir in Abbildung 15-4 ein
-Diagramm erstellt.
+`Rc<List>`-Instanz in `b` um 1 verringert wird. Der Speicher, den `Rc<List>`
+auf dem Haldenspeicher (heap) hat, wird zu diesem Zeitpunkt nicht aufgeräumt,
+da seine Referenzanzahl 1 und nicht 0 ist. Dann räumt Rust `a` auf, was die
+Referenzanzahl der `Rc<List>`-Instanz in `a` ebenfalls von 2 auf 1 reduziert.
+Der Speicher dieser Instanz kann ebenfalls nicht aufgeräumt werden, weil die
+andere `Rc<List>`-Instanz immer noch auf sie referenziert. Der der Liste
+zugewiesene Speicher bleibt für immer unaufgeräumt. Um diesen Referenzzyklus zu
+veranschaulichen, haben wir in Abbildung 15-4 ein Diagramm erstellt.
 
 <img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 50%;" />
 
