@@ -249,7 +249,7 @@ fn area(rectangle: &amp;Rectangle) -&gt; u32 {
 <p>Hier haben wir eine Struktur definiert und sie <code>Rectangle</code> genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder <code>width</code> und <code>height</code> definiert,
 die beide den Typ <code>u32</code> haben. Dann erzeugten wir in <code>main</code> eine Instanz von
-<code>Rectangle</code> mit der Breite 30 und Höhe 50.</p>
+<code>Rectangle</code> mit der Breite <code>30</code> und Höhe <code>50</code>.</p>
 <p>Unsere Funktion <code>area</code> hat nun einen Parameter, den wir <code>rectangle</code> genannt
 haben und dessen Typ eine unveränderliche Ausleihe (immutable borrow) einer
 Strukturinstanz <code>Rectangle</code> ist. Wie in Kapitel 4 erwähnt, wollen wir die
@@ -412,13 +412,12 @@ Beispiels aus:</p>
 }
 </code></pre>
 <p>Wir können sehen, dass der erste Teil der Ausgabe von <em>src/main.rs</em> Zeile 10
-stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der resultierende Wert
-ist 60 (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt
-nur deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den
-Wert von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe
-verwendet die hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro
-<code>dbg!</code> kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
-Code macht!</p>
+stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der Ergebniswert ist
+<code>60</code> (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt nur
+deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den Wert
+von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe verwendet die
+hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro <code>dbg!</code> kann sehr
+hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!</p>
 <p>Zusätzlich zum Merkmal <code>Debug</code> hat Rust eine Reihe von Merkmalen für uns
 bereitgestellt, die wir mit dem Attribut <code>derive</code> verwenden können und die
 unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese

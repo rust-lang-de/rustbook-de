@@ -476,8 +476,9 @@ nach der Funktionssignatur. Anstatt das hier zu schreiben:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {</code></pre>
 <p>können wir eine <code>where</code>-Klausel wie folgt verwenden:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
-    where T: Display + Clone,
-          U: Clone + Debug
+where
+    T: Display + Clone,
+    U: Clone + Debug,
 {</code></pre>
 <p>Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
 Parameterliste und der Rückgabetyp liegen nahe beieinander, ähnlich wie bei

@@ -134,11 +134,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
-<p>Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
-erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
-erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
-gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
-kontrollieren kannst, sind <code>if</code>-Ausdrücke und Schleifen.</p>
+<p>Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung <code>true</code>
+ist, oder Code wiederholt auszuführen, während eine Bedingung <code>true</code> ist, sind
+grundlegende Bausteine der meisten Programmiersprachen. Die gebräuchlichsten
+Konstrukte, mit denen du den Kontrollfluss von Rust-Code kontrollieren kannst,
+sind <code>if</code>-Ausdrücke und Schleifen.</p>
 <h3 id="if-ausdrücke"><a class="header" href="#if-ausdrücke"><code>if</code>-Ausdrücke</a></h3>
 <p>Ein <code>if</code>-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
@@ -160,16 +160,17 @@ ein:</p>
 <p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen
 Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
-wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
-Klammern gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken
-verbunden sind, werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie
-die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der
-Schätzung mit der Geheimzahl“</a> in
-Kapitel 2 besprochen haben.</p>
+wenn die Bedingung <code>true</code> ist, wird unmittelbar nach der Bedingung in
+geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
+<code>if</code>-Ausdrücken verbunden sind, werden manchmal auch als <em>Zweige</em> (arms)
+bezeichnet, genau wie die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt
+<a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
+Geheimzahl“</a> in Kapitel 2 besprochen
+haben.</p>
 <p>Optional können wir auch einen <code>else</code>-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
-falls die Bedingung als falsch ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
-angibst und die Bedingung falsch ist, überspringt das Programm einfach den
+falls die Bedingung zu <code>false</code> ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
+angibst und die Bedingung <code>false</code> ist, überspringt das Programm einfach den
 <code>if</code>-Block und geht zum nächsten Codeteil über.</p>
 <p>Versuche, diesen Code auszuführen; du solltest die folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
@@ -262,10 +263,11 @@ ausgeführt hast, solltest du folgende Ausgabe sehen:</p>
 Zahl ist durch 3 teilbar
 </code></pre>
 <p>Wenn dieses Programm ausgeführt wird, prüft es der Reihe nach jeden
-<code>if</code>-Ausdruck und führt den ersten Block aus, für den die Bedingung wahr ist. 
-Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die Ausgabe <code>Zahl ist durch 2 teilbar</code> sehen, noch sehen wir den Text <code>Zahl ist nicht durch 4, 3 oder 2 teilbar</code> aus dem <code>else</code>-Block. Das liegt daran, dass Rust den Block nur für
-die erste wahre Bedingung ausführt, und wenn es eine findet, prüft es den Rest
-nicht mehr.</p>
+<code>if</code>-Ausdruck und führt den ersten Block aus, für den die Bedingung zu <code>true</code>
+ausgewertet wird. Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die
+Ausgabe <code>Zahl ist durch 2 teilbar</code> sehen, noch sehen wir den Text <code>Zahl ist nicht durch 4, 3 oder 2 teilbar</code> aus dem <code>else</code>-Block. Das liegt daran, dass
+Rust den Block nur für die erste <code>true</code>-Bedingung ausführt, und wenn es eine
+findet, prüft es den Rest nicht mehr.</p>
 <p>Das Verwenden von zu vielen <code>else if</code>-Ausdrücken kann deinen Code
 unübersichtlich machen. Wenn du also mehr als einen Ausdruck hast, solltest du
 deinen Code vielleicht überarbeiten. Kapitel 6 beschreibt ein leistungsfähiges
@@ -407,9 +409,9 @@ verwenden kannst, wie hier gezeigt:</p>
 initialisieren sie mit <code>0</code>. Dann deklarieren wir eine Variable namens <code>result</code>,
 die den von der Schleife zurückgegebenen Wert enthält. Bei jeder Iteration der
 Schleife addieren wir <code>1</code> zur Variable <code>counter</code> und prüfen dann, ob der Zähler
-gleich <code>10</code> ist. Wenn dies der Fall ist, verwenden wir das Schlüsselwort
-<code>break</code> mit dem Wert <code>counter * 2</code>. Nach der Schleife verwenden wir ein
-Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
+in <code>counter</code> gleich <code>10</code> ist. Wenn dies der Fall ist, verwenden wir das
+Schlüsselwort <code>break</code> mit dem Wert <code>counter * 2</code>. Nach der Schleife verwenden
+wir ein Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
 <h4 id="schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen">Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen</a></h4>
@@ -462,10 +464,10 @@ Zähler-Endstand = 2
 </code></pre>
 <h4 id="bedingte-schleifen-mit-while"><a class="header" href="#bedingte-schleifen-mit-while">Bedingte Schleifen mit <code>while</code></a></h4>
 <p>Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
-haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
-Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und stoppt die
-Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination von
-<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
+haben. Solange die Bedingung <code>true</code> ist, wird die Schleife durchlaufen. Wenn
+die Bedingung nicht mehr <code>true</code> ist, ruft das Programm <code>break</code> auf und stoppt
+die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
+von <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
 <code>while</code>-Schleife. In Codeblock 3-3 wird <code>while</code> verwendet: Das Programm
@@ -487,8 +489,8 @@ nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 auszuführen, solange eine Bedingung wahr ist</span></p>
 <p>Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
 wären, wenn du <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> verwenden würdest, und es ist
-klarer. Solange eine Bedingung wahr ist, läuft der Code ab; andernfalls wird
-die Schleife verlassen.</p>
+klarer. Solange eine Bedingung zu <code>true</code> auswertet, läuft der Code ab;
+andernfalls wird die Schleife verlassen.</p>
 <h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
@@ -508,7 +510,7 @@ gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 Kollektion unter Verwendung einer <code>while</code>-Schleife</span></p>
 <p>Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index <code>0</code>
 und wiederholt bis er den letzten Index im Array erreicht (d.h. wenn
-<code>index &lt; 5</code> nicht mehr wahr ist). Wenn du diesen Code ausführst, wird jedes
+<code>index &lt; 5</code> nicht mehr <code>true</code> ist). Wenn du diesen Code ausführst, wird jedes
 Element im Array ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
@@ -577,7 +579,7 @@ Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:</p>
 <ul>
 <li>Temperaturen zwischen Fahrenheit und Celsius umrechnen.</li>
-<li>Die n-te Fibonacci-Zahl berechnen.</li>
+<li>Die <em>n</em>-te Fibonacci-Zahl berechnen.</li>
 <li>Den Text des Weihnachtsliedes „Die Zwölf Weihnachtstage“ (The Twelve Days of
 Christmas) ausgeben und dabei die Wiederholung im Lied nutzen.</li>
 </ul>

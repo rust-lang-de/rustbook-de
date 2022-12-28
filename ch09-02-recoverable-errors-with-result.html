@@ -675,7 +675,7 @@ Zahlen zurück: Programme, die erfolgreich beendet werden, geben die Zahl <code>
 zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich <code>0</code>
 zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
 mit dieser Konvention kompatibel zu sein.</p>
-<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">das Merkmal
+<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der das <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">Merkmal
 <code>std::process::Termination</code></a> implementiert, das eine Funktion
 <code>report</code> enthält, die einen <code>ExitCode</code> zurückgibt. Weitere Informationen zur
 Implementierung des Merkmals <code>Termination</code> für deine eigenen Typen findest du

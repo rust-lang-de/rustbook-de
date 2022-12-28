@@ -170,7 +170,7 @@ das, wie in Codeblock 4-7 gezeigt.</p>
 Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Methode
-<code>as_bytes</code> in ein Byte-Array um:</p>
+<code>as_bytes</code> in ein Byte-Array um.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
@@ -217,7 +217,7 @@ wir <code>&amp;</code> im Muster.</p>
 <p>Innerhalb der <code>for</code>-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
-Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden:</p>
+Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
@@ -301,15 +301,19 @@ erste Position im Anteilstyp und <code>ending_index</code> eine Position mehr al
 letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
-Index 6 von <code>s</code> mit einem Längenwert von 4 enthält.</p>
-<p>Abbildung 4-6 zeigt dies.</p>
-<p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
+Index 6 von <code>s</code> mit dem Längenwert <code>4</code> enthält.</p>
+<p>Abbildung 4-6 stellt dies dar.</p>
+<p><img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
+darstellt, die auf das Byte bei Index 0 in einer Tabelle der
+Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
+dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
+der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
-<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index Null beginnen
-willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
-sind diese gleich:</p>
+<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
+kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
+gleich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
@@ -440,7 +444,7 @@ veränderliche Referenz in <code>clear</code> und die unveränderliche Referenz 
 nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
 nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
 von Fehlern zur Kompilierzeit beseitigt!</p>
-<h4 id="zeichenkettenliterale-sind-anteilstypen"><a class="header" href="#zeichenkettenliterale-sind-anteilstypen">Zeichenkettenliterale sind Anteilstypen</a></h4>
+<h4 id="zeichenkettenliterale-als-anteilstypen"><a class="header" href="#zeichenkettenliterale-als-anteilstypen">Zeichenkettenliterale als Anteilstypen</a></h4>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
 können wir Zeichenkettenliterale richtig verstehen:</p>
@@ -499,10 +503,10 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</co
 <code>String</code> oder eine Referenz auf den <code>String</code> übergeben. Diese Flexibilität
 nutzt die Vorteile der <em>automatischen Umwandlung</em>, eine Funktionalität, die wir
 im Abschnitt <a href="ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden">„Implizite automatische Umwandlung mit Funktionen und
-Methoden“</a> in Kapitel 15 behandeln. Das Definieren einer
-Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
-<code>String</code> entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
-Funktionalität einzubüßen:</p>
+Methoden“</a> in Kapitel 15 behandeln.</p>
+<p>Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
+Referenz auf einen <code>String</code> entgegennimmt, macht unsere API allgemeiner und
+nützlicher, ohne an Funktionalität einzubüßen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();

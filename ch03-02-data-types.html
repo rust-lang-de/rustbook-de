@@ -197,8 +197,7 @@ von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
 einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
 dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
 Vorzeichenbehaftete Zahlen werden unter Verwendung der
-<a href="https://de.wikipedia.org/wiki/Zweierkomplement">Zweierkomplementdarstellung</a>
-gespeichert.</p>
+<a href="https://de.wikipedia.org/wiki/Zweierkomplement">Zweierkomplementdarstellung</a> gespeichert.</p>
 <p>Jede vorzeichenbehaftete Variante kann Zahlen von -(2<sup>n - 1</sup>) bis
 einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei <em>n</em> die Anzahl an Bits
 ist, die diese Variante benutzt. Ein <code>i8</code> kann also Zahlen von -(2<sup>7</sup>)
@@ -347,7 +346,7 @@ ablegen“</a> in Kapitel 8 im Detail besprechen.</p>
 <p><em>Verbund-Typen</em> (compound types) können mehrere Werte zu einem Typ gruppieren.
 Rust hat zwei primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).</p>
 <h4 id="der-tupel-typ"><a class="header" href="#der-tupel-typ">Der Tupel-Typ</a></h4>
-<p>Ein Tupel ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
+<p>Ein <em>Tupel</em> ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
 Vielzahl von Typen zu einem Verbund-Typ zusammenzufassen. Tupel haben eine
 feste Länge: Einmal deklariert, können sie weder wachsen noch schrumpfen.</p>
 <p>Wir erzeugen ein Tupel, indem wir eine durch Kommata getrennte Liste von Werten
@@ -411,7 +410,7 @@ Klammern:</p>
 Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
 Haldenspeicher gehen wir in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
-Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
+Array ist jedoch nicht so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
 wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
 sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
@@ -489,9 +488,10 @@ fn main() {
         &quot;Der Wert von element beim Index {index} ist: {element}&quot;);
 }</code></pre></pre>
 <p>Dieser Code kompiliert erfolgreich. Wenn du diesen Code mit <code>cargo run</code>
-ausführst und 0, 1, 2, 3 oder 4 eingibst, wird das Programm den entsprechenden
-Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine Zahl hinter
-dem Ende des Arrays eingibst, z.B. 10, erhältst du eine Ausgabe wie diese:</p>
+ausführst und <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> oder <code>4</code> eingibst, wird das Programm den
+entsprechenden Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine
+Zahl hinter dem Ende des Arrays eingibst, z.B. <code>10</code>, erhältst du eine Ausgabe
+wie diese:</p>
 <pre><code class="language-text">thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>

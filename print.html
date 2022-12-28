@@ -1244,7 +1244,7 @@ getan haben, andernfalls funktionieren die Codebeispiele in dieser Anleitung
 möglicherweise nicht.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.8.3&quot;
+rand = &quot;0.8.5&quot;
 </code></pre>
 <p>In der Datei <em>Cargo.toml</em> ist alles, was nach einer Überschrift folgt, Teil
 dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
@@ -1960,12 +1960,12 @@ bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlic
 ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
 manchmal vielleicht davon abweichen möchtest.</p>
 <p>Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
-sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
-Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis anlegen, indem wir
-<code>cargo new variables</code> aufrufen.</p>
-<p>Öffne dann in deinem neuen <em>variables</em>-Verzeichnis die Datei <em>src/main.rs</em> und
-ersetze dessen Code durch folgenden Code. Dieser Code lässt sich noch nicht
-kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</p>
+sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
+Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis an, indem du
+<code>cargo new variables</code> aufrufst.</p>
+<p>Öffne dann in deinem neuen Verzeichnis <em>variables</em> die Datei <em>src/main.rs</em> und
+ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
+lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = 5;
@@ -1974,7 +1974,8 @@ kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</
     println!(&quot;Der Wert von x ist: {x}&quot;);
 }</code></pre></pre>
 <p>Speichere und starte das Programm mit <code>cargo run</code>. Du solltest eine
-Fehlermeldung erhalten, wie in dieser Ausgabe gezeigt:</p>
+Fehlermeldung über einen Unveränderlichkeitsfehler erhalten, wie in dieser
+Ausgabe gezeigt:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
 error[E0384]: cannot assign twice to immutable variable `x`
@@ -1997,9 +1998,9 @@ zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
 sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
 bedeuten <em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene
 Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.</p>
-<p>Die Fehlermeldung <code>cannot assign twice to immutable variable x</code> weist darauf
-hin, dass du versucht hast, der unveränderlichen Variablen <code>x</code> einen zweiten
-Wert zuzuweisen.</p>
+<p>Du hast die Fehlermeldung <code>cannot assign twice to immutable variable x</code>
+erhalten, weil du versucht hast, der unveränderlichen Variablen <code>x</code> einen
+zweiten Wert zuzuweisen.</p>
 <p>Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
 einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
 diese Situation kann zu Fehlern führen. Wenn ein Teil unseres Codes von der
@@ -2012,11 +2013,11 @@ sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
 leichter zu durchschauen.</p>
 <p>Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
-erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
-Kapitel 2 gemacht hast, kannst du sie veränderlich machen, indem du vor den
-Variablennamen <code>mut</code> angibst. Das Hinzufügen von <code>mut</code> vermittelt den
-zukünftigen Lesern des Codes die Absicht, dass andere Teile des Codes den Wert
-dieser Variablen ändern werden.</p>
+erleichtern. Obwohl Variablen standardmäßig unveränderlich sind, kannst du sie
+veränderlich machen, indem du vor den Variablennamen <code>mut</code> angibst, wie du es
+in <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen">Kapitel 2</a> getan hast. Das Hinzufügen von
+<code>mut</code> vermittelt den zukünftigen Lesern des Codes die Absicht, dass andere
+Teile des Codes den Wert dieser Variablen ändern werden.</p>
 <p>Lass uns zum Beispiel <em>src/main.rs</em> wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -2231,8 +2232,7 @@ von Zahlen auf Papier: Wenn das Vorzeichen eine Rolle spielt, wird die Zahl mit
 einem Plus- oder Minuszeichen geschrieben; wenn man jedoch davon ausgehen kann,
 dass die Zahl positiv ist, wird sie ohne Vorzeichen geschrieben.
 Vorzeichenbehaftete Zahlen werden unter Verwendung der
-<a href="https://de.wikipedia.org/wiki/Zweierkomplement">Zweierkomplementdarstellung</a>
-gespeichert.</p>
+<a href="https://de.wikipedia.org/wiki/Zweierkomplement">Zweierkomplementdarstellung</a> gespeichert.</p>
 <p>Jede vorzeichenbehaftete Variante kann Zahlen von -(2<sup>n - 1</sup>) bis
 einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei <em>n</em> die Anzahl an Bits
 ist, die diese Variante benutzt. Ein <code>i8</code> kann also Zahlen von -(2<sup>7</sup>)
@@ -2381,7 +2381,7 @@ ablegen“</a> in Kapitel 8 im Detail besprechen.</p>
 <p><em>Verbund-Typen</em> (compound types) können mehrere Werte zu einem Typ gruppieren.
 Rust hat zwei primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).</p>
 <h4 id="der-tupel-typ"><a class="header" href="#der-tupel-typ">Der Tupel-Typ</a></h4>
-<p>Ein Tupel ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
+<p>Ein <em>Tupel</em> ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
 Vielzahl von Typen zu einem Verbund-Typ zusammenzufassen. Tupel haben eine
 feste Länge: Einmal deklariert, können sie weder wachsen noch schrumpfen.</p>
 <p>Wir erzeugen ein Tupel, indem wir eine durch Kommata getrennte Liste von Werten
@@ -2445,7 +2445,7 @@ Klammern:</p>
 Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
 Haldenspeicher gehen wir in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du
 sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
-Array ist jedoch nicht so flexibel wie der Vektortyp. Ein Vektor ist ein
+Array ist jedoch nicht so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein
 ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
 wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
 sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
@@ -2523,9 +2523,10 @@ fn main() {
         &quot;Der Wert von element beim Index {index} ist: {element}&quot;);
 }</code></pre></pre>
 <p>Dieser Code kompiliert erfolgreich. Wenn du diesen Code mit <code>cargo run</code>
-ausführst und 0, 1, 2, 3 oder 4 eingibst, wird das Programm den entsprechenden
-Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine Zahl hinter
-dem Ende des Arrays eingibst, z.B. 10, erhältst du eine Ausgabe wie diese:</p>
+ausführst und <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> oder <code>4</code> eingibst, wird das Programm den
+entsprechenden Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine
+Zahl hinter dem Ende des Arrays eingibst, z.B. <code>10</code>, erhältst du eine Ausgabe
+wie diese:</p>
 <pre><code class="language-text">thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
@@ -2659,10 +2660,12 @@ eine wichtige Unterscheidung, die es zu verstehen gilt. Andere Sprachen haben
 nicht dieselben Unterscheidungen, deshalb wollen wir uns ansehen, was
 Anweisungen und Ausdrücke sind und wie sich ihre Unterschiede auf die
 Funktionsrümpfe auswirken.</p>
-<p>Wir haben tatsächlich bereits Anweisungen und Ausdrücke verwendet.
-<em>Anweisungen</em> (statements) sind Instruktionen, die eine Aktion ausführen und
-keinen Wert zurückgeben. <em>Ausdrücke</em> (expressions) werten zu einem
-resultierenden Wert aus. Sehen wir uns einige Beispiele an.</p>
+<ul>
+<li><strong>Anweisungen</strong> (statements) sind Instruktionen, die eine Aktion ausführen
+und keinen Wert zurückgeben.</li>
+<li><strong>Ausdrücke</strong> (expressions) werden zu einem Ergebniswert ausgewertet.
+Schauen wir uns einige Beispiele an.</li>
+</ul>
 <p>Eine Variable zu erstellen und ihr mit dem Schlüsselwort <code>let</code> einen Wert
 zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist <code>let y = 6;</code> eine
 Anweisung.</p>
@@ -2806,7 +2809,7 @@ fn plus_one(x: i32) -&gt; i32 {
 }</code></pre></pre>
 <p>Beim Ausführen dieses Codes wird <code>Der Wert von x ist: 6</code> ausgegeben. Wenn wir
 aber ein Semikolon an das Ende der Zeile mit <code>x + 1</code> setzen und es von einem
-Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler.</p>
+Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = plus_one(5);
@@ -2834,14 +2837,14 @@ For more information about this error, try `rustc --explain E0308`.
 warning: `functions` (bin &quot;functions&quot;) generated 1 warning
 error: could not compile `functions` due to 2 previous errors; 1 warning emitted
 </code></pre>
-<p>Die Hauptfehlermeldung „nicht übereinstimmende Typen“ („mismatched types“)
-offenbart das Kernproblem dieses Codes. Die Definition der Funktion <code>plus_one</code>
-besagt, dass sie ein <code>i32</code> zurückgibt, aber Anweisungen werden nicht zu einem
-Wert ausgewertet, was durch den Einheitstyp <code>()</code> ausgedrückt wird. Daher wird
-nichts zurückgegeben, was der Funktionsdefinition widerspricht und zu einem
-Fehler führt. In dieser Ausgabe gibt Rust eine Meldung aus, die möglicherweise
-helfen kann, dieses Problem zu beheben: Es wird vorgeschlagen, das Semikolon zu
-entfernen, was den Fehler beheben würde.</p>
+<p>Die Hauptfehlermeldung <code>mismatched types</code> offenbart das Kernproblem dieses
+Codes. Die Definition der Funktion <code>plus_one</code> besagt, dass sie ein <code>i32</code>
+zurückgibt, aber Anweisungen werden nicht zu einem Wert ausgewertet, was durch
+den Einheitstyp <code>()</code> ausgedrückt wird. Daher wird nichts zurückgegeben, was der
+Funktionsdefinition widerspricht und zu einem Fehler führt. In dieser Ausgabe
+gibt Rust eine Meldung aus, die möglicherweise helfen kann, dieses Problem zu
+beheben: Es wird vorgeschlagen, das Semikolon zu entfernen, was den Fehler
+beheben würde.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kommentare"><a class="header" href="#kommentare">Kommentare</a></h2>
 <p>Alle Programmierer bemühen sich, ihren Code leicht verständlich zu machen, aber
 manchmal sind zusätzliche Erklärungen angebracht. In solchen Fällen versehen
@@ -2873,14 +2876,15 @@ er beschreibt:</p>
     // Heute habe ich Glück
     let lucky_number = 7;
 }</code></pre></pre>
-<p>Rust hat auch Dokumentations-Kommentare, welche im Bereich „Kisten (crate) auf
-crates.io veröffentlichen“ in Kapitel 14 erklärt werden.</p>
+<p>Rust kennt noch eine weitere Kommentarart, nämlich Dokumentationskommentare,
+die wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html">&quot;Kisten (crate) auf crates.io
+veröffentlichen&quot;</a> in Kapitel 14 besprechen werden.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
-<p>Die Fähigkeit, einen Code auszuführen, der davon abhängt, ob eine Bedingung
-erfüllt ist, oder einen Code wiederholt auszuführen, während eine Bedingung
-erfüllt ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
-gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
-kontrollieren kannst, sind <code>if</code>-Ausdrücke und Schleifen.</p>
+<p>Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung <code>true</code>
+ist, oder Code wiederholt auszuführen, während eine Bedingung <code>true</code> ist, sind
+grundlegende Bausteine der meisten Programmiersprachen. Die gebräuchlichsten
+Konstrukte, mit denen du den Kontrollfluss von Rust-Code kontrollieren kannst,
+sind <code>if</code>-Ausdrücke und Schleifen.</p>
 <h3 id="if-ausdrücke"><a class="header" href="#if-ausdrücke"><code>if</code>-Ausdrücke</a></h3>
 <p>Ein <code>if</code>-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
@@ -2902,16 +2906,17 @@ ein:</p>
 <p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable <code>number</code> einen
 Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
-wenn die Bedingung wahr ist, wird unmittelbar nach der Bedingung in geschweifte
-Klammern gesetzt. Codeblöcke, die mit den Bedingungen in <code>if</code>-Ausdrücken
-verbunden sind, werden manchmal auch als <em>Zweige</em> (arms) bezeichnet, genau wie
-die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der
-Schätzung mit der Geheimzahl“</a> in
-Kapitel 2 besprochen haben.</p>
+wenn die Bedingung <code>true</code> ist, wird unmittelbar nach der Bedingung in
+geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
+<code>if</code>-Ausdrücken verbunden sind, werden manchmal auch als <em>Zweige</em> (arms)
+bezeichnet, genau wie die Zweige in <code>match</code>-Ausdrücken, die wir im Abschnitt
+<a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
+Geheimzahl“</a> in Kapitel 2 besprochen
+haben.</p>
 <p>Optional können wir auch einen <code>else</code>-Ausdruck angeben, was wir hier gemacht
 haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
-falls die Bedingung als falsch ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
-angibst und die Bedingung falsch ist, überspringt das Programm einfach den
+falls die Bedingung zu <code>false</code> ausgewertet wird. Wenn du keinen <code>else</code>-Ausdruck
+angibst und die Bedingung <code>false</code> ist, überspringt das Programm einfach den
 <code>if</code>-Block und geht zum nächsten Codeteil über.</p>
 <p>Versuche, diesen Code auszuführen; du solltest die folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
@@ -3004,10 +3009,11 @@ ausgeführt hast, solltest du folgende Ausgabe sehen:</p>
 Zahl ist durch 3 teilbar
 </code></pre>
 <p>Wenn dieses Programm ausgeführt wird, prüft es der Reihe nach jeden
-<code>if</code>-Ausdruck und führt den ersten Block aus, für den die Bedingung wahr ist. 
-Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die Ausgabe <code>Zahl ist durch 2 teilbar</code> sehen, noch sehen wir den Text <code>Zahl ist nicht durch 4, 3 oder 2 teilbar</code> aus dem <code>else</code>-Block. Das liegt daran, dass Rust den Block nur für
-die erste wahre Bedingung ausführt, und wenn es eine findet, prüft es den Rest
-nicht mehr.</p>
+<code>if</code>-Ausdruck und führt den ersten Block aus, für den die Bedingung zu <code>true</code>
+ausgewertet wird. Beachte, dass, obwohl 6 durch 2 teilbar ist, wir weder die
+Ausgabe <code>Zahl ist durch 2 teilbar</code> sehen, noch sehen wir den Text <code>Zahl ist nicht durch 4, 3 oder 2 teilbar</code> aus dem <code>else</code>-Block. Das liegt daran, dass
+Rust den Block nur für die erste <code>true</code>-Bedingung ausführt, und wenn es eine
+findet, prüft es den Rest nicht mehr.</p>
 <p>Das Verwenden von zu vielen <code>else if</code>-Ausdrücken kann deinen Code
 unübersichtlich machen. Wenn du also mehr als einen Ausdruck hast, solltest du
 deinen Code vielleicht überarbeiten. Kapitel 6 beschreibt ein leistungsfähiges
@@ -3149,9 +3155,9 @@ verwenden kannst, wie hier gezeigt:</p>
 initialisieren sie mit <code>0</code>. Dann deklarieren wir eine Variable namens <code>result</code>,
 die den von der Schleife zurückgegebenen Wert enthält. Bei jeder Iteration der
 Schleife addieren wir <code>1</code> zur Variable <code>counter</code> und prüfen dann, ob der Zähler
-gleich <code>10</code> ist. Wenn dies der Fall ist, verwenden wir das Schlüsselwort
-<code>break</code> mit dem Wert <code>counter * 2</code>. Nach der Schleife verwenden wir ein
-Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
+in <code>counter</code> gleich <code>10</code> ist. Wenn dies der Fall ist, verwenden wir das
+Schlüsselwort <code>break</code> mit dem Wert <code>counter * 2</code>. Nach der Schleife verwenden
+wir ein Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
 <h4 id="schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen">Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen</a></h4>
@@ -3204,10 +3210,10 @@ Zähler-Endstand = 2
 </code></pre>
 <h4 id="bedingte-schleifen-mit-while"><a class="header" href="#bedingte-schleifen-mit-while">Bedingte Schleifen mit <code>while</code></a></h4>
 <p>Ein Programm wird oft eine Bedingung innerhalb einer Schleife auszuwerten
-haben. Solange die Bedingung wahr ist, wird die Schleife durchlaufen. Wenn die
-Bedingung nicht mehr wahr ist, ruft das Programm <code>break</code> auf und stoppt die
-Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination von
-<code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
+haben. Solange die Bedingung <code>true</code> ist, wird die Schleife durchlaufen. Wenn
+die Bedingung nicht mehr <code>true</code> ist, ruft das Programm <code>break</code> auf und stoppt
+die Schleife. Es ist möglich, derartiges Verhalten mittels einer Kombination
+von <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> zu implementieren; du kannst das jetzt in
 einem Programm versuchen, wenn du möchtest. Dieses Muster ist jedoch so weit
 verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
 <code>while</code>-Schleife. In Codeblock 3-3 wird <code>while</code> verwendet: Das Programm
@@ -3229,8 +3235,8 @@ nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 auszuführen, solange eine Bedingung wahr ist</span></p>
 <p>Dieses Konstrukt eliminiert eine Menge von Verschachtelungen, die notwendig
 wären, wenn du <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> verwenden würdest, und es ist
-klarer. Solange eine Bedingung wahr ist, läuft der Code ab; andernfalls wird
-die Schleife verlassen.</p>
+klarer. Solange eine Bedingung zu <code>true</code> auswertet, läuft der Code ab;
+andernfalls wird die Schleife verlassen.</p>
 <h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
@@ -3250,7 +3256,7 @@ gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 Kollektion unter Verwendung einer <code>while</code>-Schleife</span></p>
 <p>Hier zählt der Code die Elemente im Array aufwärts. Er beginnt bei Index <code>0</code>
 und wiederholt bis er den letzten Index im Array erreicht (d.h. wenn
-<code>index &lt; 5</code> nicht mehr wahr ist). Wenn du diesen Code ausführst, wird jedes
+<code>index &lt; 5</code> nicht mehr <code>true</code> ist). Wenn du diesen Code ausführst, wird jedes
 Element im Array ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
@@ -3319,7 +3325,7 @@ Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:</p>
 <ul>
 <li>Temperaturen zwischen Fahrenheit und Celsius umrechnen.</li>
-<li>Die n-te Fibonacci-Zahl berechnen.</li>
+<li>Die <em>n</em>-te Fibonacci-Zahl berechnen.</li>
 <li>Den Text des Weihnachtsliedes „Die Zwölf Weihnachtstage“ (The Twelve Days of
 Christmas) ausgeben und dabei die Wiederholung im Lied nutzen.</li>
 </ul>
@@ -3485,7 +3491,7 @@ auf diesem Verständnis aufbauen, indem wir den Typ <code>String</code> einführ
 <h3 id="der-typ-string"><a class="header" href="#der-typ-string">Der Typ <code>String</code></a></h3>
 <p>Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt <a href="ch03-02-data-types.html">„Datentypen“</a> in
-Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben alle eine bekannte
+Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben eine bekannte
 Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
 werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
 kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
@@ -3594,7 +3600,7 @@ Rust-Code geschrieben wird. Es mag im Moment einfach erscheinen, aber das
 Verhalten von Code kann in komplizierteren Situationen unerwartet sein, wenn
 wir wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen
 Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.</p>
-<h4 id="wege-wie-variablen-und-daten-interagieren-verschieben-move"><a class="header" href="#wege-wie-variablen-und-daten-interagieren-verschieben-move">Wege, wie Variablen und Daten interagieren: Verschieben (move)</a></h4>
+<h4 id="variablen-und-daten-im-zusammenspiel-mit-move"><a class="header" href="#variablen-und-daten-im-zusammenspiel-mit-move">Variablen und Daten im Zusammenspiel mit Move</a></h4>
 <p>Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
 interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
 4-2.</p>
@@ -3626,7 +3632,11 @@ dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
 Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
 dem Stapelspeicher gespeichert. Auf der rechten Seite ist der Speicherbereich
 im Haldenspeicher, der den Inhalt enthält.</p>
-<img alt="String im Arbeitsspeicher" src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+<p><img alt="Zwei Tabellen: Die erste Tabelle enthält die Darstellung von s1 auf
+dem Stapelspeicher, bestehend aus seiner Länge (5), seiner Kapazität (5) und
+einem Zeiger auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle
+enthält die Darstellung der Zeichenkettendaten auf dem Haldenspeicher, Byte für
+Byte." src="img/trpl04-01.svg" class="center" style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-1: Speicherdarstellung eines <code>String</code> mit dem
 Wert „Hallo“, gebunden an <code>s1</code></span></p>
 <p>Die Länge gibt an, wie viel Speicherplatz in Bytes der Inhalt der Zeichenkette
@@ -3639,7 +3649,10 @@ kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
 Stapelspeicher befinden. Wir kopieren nicht die Daten im Haldenspeicher,
 auf die sich der Zeiger bezieht. Die Speicherdarstellung sieht also wie in
 Abbildung 4-2 aus.</p>
-<img alt="s1 und s2 zeigen auf denselben Wert" src="img/trpl04-02.svg" class="center" style="width: 50%;" />
+<p><img alt="Drei Tabellen: Die Tabellen s1 und s2, die die Zeichenketten auf dem
+Stapelspeicher repräsentieren und beide auf die gleichen Zeichenkettendaten auf
+dem Haldenspeicher verweisen." src="img/trpl04-02.svg" class="center"
+style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-2: Speicherdarstellung der Variable <code>s2</code>, die
 eine Kopie des Zeigers, der Länge und der Kapazität von <code>s1</code> hat</span></p>
 <p>Die Darstellung sieht <em>nicht</em> wie Abbildung 4-3 aus, so wie der Speicher
@@ -3647,7 +3660,10 @@ aussehen würde, wenn Rust stattdessen auch die Daten im Haldenspeicher
 kopieren würde. Würde Rust dies tun, könnte die Operation <code>s2 = s1</code> bei großen
 Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
 Laufzeitperformanz werden.</p>
-<img alt="s1 und s2 als vollständige Kopien" src="img/trpl04-03.svg" class="center" style="width: 50%;" />
+<p><img alt="Vier Tabellen: Zwei Tabellen, die die Stapelspeicher-Daten für s1 und
+s2 darstellen, und jede zeigt auf ihre eigene Kopie der Zeichenketten-Daten auf
+dem Haldenspeicher." src="img/trpl04-03.svg" class="center"
+style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
 <code>s2 = s1</code> tun könnte, falls Rust auch die Daten im Haldenspeicher
 kopieren würde</span></p>
@@ -3660,7 +3676,7 @@ freizugeben. Dies wird als <em>doppelter Freigabefehler</em> (double free error)
 bezeichnet und ist einer der Speichersicherheitsfehler, die wir zuvor erwähnt
 haben. Das zweimalige Freigeben des Speichers kann zu einer
 Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.</p>
-<p>Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile <code>let s2 = s1</code> die Variable <code>s1</code> als nicht mehr gültig. Daher braucht Rust nichts
+<p>Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile <code>let s2 = s1;</code> die Variable <code>s1</code> als nicht mehr gültig. Daher braucht Rust nichts
 freizugeben, wenn <code>s1</code> den Gültigkeitsbereich verlässt. Schau dir an, was
 passiert, wenn du versuchst, <code>s1</code> zu benutzen, nachdem <code>s2</code> erstellt wurde; es
 wird nicht funktionieren:</p>
@@ -3697,7 +3713,12 @@ ungültig macht, wird es nicht als flache Kopie, sondern als <em>Verschieben</em
 (move) bezeichnet. In diesem Beispiel würden wir sagen, dass <code>s1</code> in <code>s2</code>
 <em>verschoben</em> wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
 dargestellt.</p>
-<img alt="s1 moved to s2" src="img/trpl04-04.svg" class="center" style="width: 50%;" />
+<p><img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Zeichenketten
+auf dem Stapelspeicher darstellen und beide auf dieselben Zeichenkettendaten
+auf dem Haldenspeicher referenzieren. Die Tabelle s1 ist durchgestrichen, weil
+s1 nicht mehr gültig ist; nur s2 kann für den Zugriff auf die
+Haldenspeicher-Daten verwendet werden." src="img/trpl04-04.svg" class="center"
+style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-4: Speicherdarstellung, nachdem <code>s1</code> ungültig
 gemacht wurde</span></p>
 <p>Damit ist unser Problem gelöst! Da nur <code>s2</code> gültig ist, wenn es den
@@ -3707,7 +3728,7 @@ sind fertig.</p>
 Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher kann
 man davon ausgehen, dass jedes <em>automatische</em> Kopieren im Hinblick auf die
 Laufzeitperformanz kostengünstig ist.</p>
-<h4 id="wege-wie-variablen-und-daten-interagieren-klonen-clone"><a class="header" href="#wege-wie-variablen-und-daten-interagieren-klonen-clone">Wege, wie Variablen und Daten interagieren: Klonen (clone)</a></h4>
+<h4 id="variablen-und-daten-im-zusammenspiel-mit-clone"><a class="header" href="#variablen-und-daten-im-zusammenspiel-mit-clone">Variablen und Daten im Zusammenspiel mit Clone</a></h4>
 <p>Wenn wir die Daten von <code>String</code> im Haldenspeicher <em>tief</em> kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
 <code>clone</code> verwenden. Wir werden die Methodensyntax in Kapitel 5 besprechen, aber
@@ -3912,7 +3933,10 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.</p>
-<img alt="&amp;String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
+<p><img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
+Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
+zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
+src="img/trpl04-05.svg" class="center" /></p>
 <p><span class="caption">Abbildung 4-5: Eine Grafik mit <code>&amp;String s</code>, das auf
 <code>String s1</code> zeigt</span></p>
 <blockquote>
@@ -4136,11 +4160,14 @@ println!(&quot;{}&quot;, r3);
 <p>Die Gültigkeitsbereiche der unveränderlichen Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
+erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
+mehr verwendet wird.</p>
+<p>Die Fähigkeit des
 Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
 Gültigkeitsbereichs nicht mehr verwendet wird, wird als <em>nicht-lexikalische
 Lebensdauer</em> (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
-darüber in <a href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a> lesen.</p>
+darüber in [The Edition Guide][nll] lesen.</p>
 <p>Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
@@ -4269,7 +4296,7 @@ das, wie in Codeblock 4-7 gezeigt.</p>
 Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Methode
-<code>as_bytes</code> in ein Byte-Array um:</p>
+<code>as_bytes</code> in ein Byte-Array um.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
@@ -4316,7 +4343,7 @@ wir <code>&amp;</code> im Muster.</p>
 <p>Innerhalb der <code>for</code>-Schleife suchen wir mit Hilfe der Byte-Literal-Syntax
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
-Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden:</p>
+Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
@@ -4400,15 +4427,19 @@ erste Position im Anteilstyp und <code>ending_index</code> eine Position mehr al
 letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
-Index 6 von <code>s</code> mit einem Längenwert von 4 enthält.</p>
-<p>Abbildung 4-6 zeigt dies.</p>
-<p><img alt="world mit einem Zeiger auf das Byte bei Index 6 von String s und einer Länge von 4"
+Index 6 von <code>s</code> mit dem Längenwert <code>4</code> enthält.</p>
+<p>Abbildung 4-6 stellt dies dar.</p>
+<p><img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
+darstellt, die auf das Byte bei Index 0 in einer Tabelle der
+Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
+dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
+der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
 src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
 <p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
-<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index Null beginnen
-willst, kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten
-sind diese gleich:</p>
+<p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
+kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
+gleich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from(&quot;Hallo&quot;);
@@ -4539,7 +4570,7 @@ veränderliche Referenz in <code>clear</code> und die unveränderliche Referenz 
 nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
 nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
 von Fehlern zur Kompilierzeit beseitigt!</p>
-<h4 id="zeichenkettenliterale-sind-anteilstypen"><a class="header" href="#zeichenkettenliterale-sind-anteilstypen">Zeichenkettenliterale sind Anteilstypen</a></h4>
+<h4 id="zeichenkettenliterale-als-anteilstypen"><a class="header" href="#zeichenkettenliterale-als-anteilstypen">Zeichenkettenliterale als Anteilstypen</a></h4>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
 können wir Zeichenkettenliterale richtig verstehen:</p>
@@ -4598,10 +4629,10 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</co
 <code>String</code> oder eine Referenz auf den <code>String</code> übergeben. Diese Flexibilität
 nutzt die Vorteile der <em>automatischen Umwandlung</em>, eine Funktionalität, die wir
 im Abschnitt <a href="ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden">„Implizite automatische Umwandlung mit Funktionen und
-Methoden“</a> in Kapitel 15 behandeln. Das Definieren einer
-Funktion, die einen Zeichenkettenanteilstyp statt einer Referenz auf einen
-<code>String</code> entgegennimmt, macht unsere API allgemeiner und nützlicher, ohne an
-Funktionalität einzubüßen:</p>
+Methoden“</a> in Kapitel 15 behandeln.</p>
+<p>Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
+Referenz auf einen <code>String</code> entgegennimmt, macht unsere API allgemeiner und
+nützlicher, ohne an Funktionalität einzubüßen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();
@@ -4700,6 +4731,7 @@ Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
 geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em>
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct User {
@@ -4713,7 +4745,7 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 <p>Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine <em>Instanz</em> dieser Struktur, indem wir für jedes Feld einen konkreten Wert
 angeben. Wir erzeugen eine Instanz, indem wir den Namen der Struktur angeben
-und dann in geschweiften Klammern die <code>Schlüssel: Wert</code>-Paare angeben, wobei
+und dann in geschweiften Klammern die <em>Schlüssel: Wert</em>-Paare angeben, wobei
 die Schlüssel die Namen der Felder und die Werte die Daten sind, die wir in
 diesen Feldern speichern wollen. Wir müssen die Felder nicht in der gleichen
 Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
@@ -4721,6 +4753,7 @@ gesagt ist die Strukturdefinition wie eine allgemeine Typvorlage und Instanzen
 füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4744,6 +4777,7 @@ zuzugreifen, verwenden wir <code>user1.email</code>. Wenn die Instanz veränderl
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
 einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 <code>email</code> einer veränderlichen <code>User</code>-Instanz geändert werden kann.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4769,6 +4803,7 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
 <p>Codeblock 5-4 zeigt eine Funktion <code>build_user</code>, die eine <code>User</code>-Instanz mit der
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4798,12 +4833,13 @@ Strukturfelder zu geben, jedoch ist das Wiederholen der Feldnamen <code>email</c
 <code>username</code> etwas mühsam. Wenn die Struktur mehr Felder hätte, würde das
 Wiederholen jedes Namens noch lästiger werden. Glücklicherweise gibt es eine
 praktische Kurznotation!</p>
-<h3 id="kurznotation-der-feld-initialisierung-verwenden-wenn-variablen-und-felder-den-gleichen-namen-haben"><a class="header" href="#kurznotation-der-feld-initialisierung-verwenden-wenn-variablen-und-felder-den-gleichen-namen-haben">Kurznotation der Feld-Initialisierung verwenden, wenn Variablen und Felder den gleichen Namen haben</a></h3>
+<h3 id="kurznotation-der-feld-initialisierung-verwenden"><a class="header" href="#kurznotation-der-feld-initialisierung-verwenden">Kurznotation der Feld-Initialisierung verwenden</a></h3>
 <p>Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
 haben, können wir die <em>Kurznotation der Feld-Initialisierung</em> (field init
 shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
 wiederholen, siehe Codeblock 5-5.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4843,6 +4879,7 @@ verwenden.</p>
 Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</code>,
 verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
 5-2 erstellt haben.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4872,6 +4909,7 @@ Verwendung eines Werts von <code>user1</code>.</span></p>
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -4905,15 +4943,15 @@ Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so vi
 in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
 der Strukturdefinition.</p>
 <p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
-da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move">„Wege, wie Variablen und
-Daten interagieren: Verschieben (move)“</a> gesehen haben. In diesem
-Beispiel können wir <code>user1</code> nicht mehr verwenden, nachdem wir <code>user2</code> erzeugt
-haben, weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben
-wurde. Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und
-<code>username</code> gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von
-<code>user1</code> verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch
-gültig. Die Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal
-<code>Copy</code> implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
+da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move">„Variablen und Daten im
+Zusammenspiel mit Move“</a> gesehen haben. In diesem Beispiel können wir
+<code>user1</code> nicht mehr als Ganzes verwenden, nachdem wir <code>user2</code> erzeugt haben,
+weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben wurde.
+Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und <code>username</code>
+gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code>user1</code>
+verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch gültig. Die
+Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code>
+implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
 Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
 würde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
@@ -4926,6 +4964,7 @@ einer regulären Struktur langatmig oder unnötig wären.</p>
 <p>Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort <code>struct</code>,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
@@ -4951,6 +4990,7 @@ Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens <code>AlwaysEqual</code>:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
 
 fn main() {
@@ -4989,9 +5029,9 @@ eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 
 fn main() {
     let user1 = User {
-        email: &quot;jemand@example.com&quot;,
-        username: &quot;benutzername123&quot;,
         active: true,
+        username: &quot;benutzername123&quot;,
+        email: &quot;jemand@example.com&quot;,
         sign_in_count: 1,
     };
 }</code></pre></pre>
@@ -5151,7 +5191,7 @@ fn area(rectangle: &amp;Rectangle) -&gt; u32 {
 <p>Hier haben wir eine Struktur definiert und sie <code>Rectangle</code> genannt. Innerhalb
 der geschweiften Klammern haben wir die Felder <code>width</code> und <code>height</code> definiert,
 die beide den Typ <code>u32</code> haben. Dann erzeugten wir in <code>main</code> eine Instanz von
-<code>Rectangle</code> mit der Breite 30 und Höhe 50.</p>
+<code>Rectangle</code> mit der Breite <code>30</code> und Höhe <code>50</code>.</p>
 <p>Unsere Funktion <code>area</code> hat nun einen Parameter, den wir <code>rectangle</code> genannt
 haben und dessen Typ eine unveränderliche Ausleihe (immutable borrow) einer
 Strukturinstanz <code>Rectangle</code> ist. Wie in Kapitel 4 erwähnt, wollen wir die
@@ -5314,13 +5354,12 @@ Beispiels aus:</p>
 }
 </code></pre>
 <p>Wir können sehen, dass der erste Teil der Ausgabe von <em>src/main.rs</em> Zeile 10
-stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der resultierende Wert
-ist 60 (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt
-nur deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den
-Wert von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe
-verwendet die hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro
-<code>dbg!</code> kann sehr hilfreich sein, wenn du versuchst, herauszufinden, was dein
-Code macht!</p>
+stammt, wo wir den Ausdruck <code>30 * scale</code> debuggen, und der Ergebniswert ist
+<code>60</code> (die <code>Debug</code>-Formatierung, die für Ganzzahlen implementiert ist, gibt nur
+deren Wert aus). Der <code>dbg!</code>-Aufruf in Zeile 14 von <em>src/main.rs</em> gibt den Wert
+von <code>&amp;rect1</code> aus, der die Struktur <code>Rectangle</code> ist. Diese Ausgabe verwendet die
+hübsche <code>Debug</code>-Formatierung des Typs <code>Rectangle</code>. Das Makro <code>dbg!</code> kann sehr
+hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!</p>
 <p>Zusätzlich zum Merkmal <code>Debug</code> hat Rust eine Reihe von Merkmalen für uns
 bereitgestellt, die wir mit dem Attribut <code>derive</code> verwenden können und die
 unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
@@ -5340,9 +5379,10 @@ und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
 und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
-Merkmalsobjektes (trait object), die wir in Kapitel 6 und 17 behandeln)
-definiert werden und ihr erster Parameter stets <code>self</code> ist. <code>self</code>
-repräsentiert die Instanz der Struktur, zu der die Methode aufgerufen wird.</p>
+Merkmalsobjektes (trait object), die wir in <a href="ch06-00-enums.html">Kapitel 6</a> und <a href="ch17-02-trait-objects.html">Kapitel
+17</a> behandeln) definiert werden und ihr erster Parameter stets
+<code>self</code> ist. <code>self</code> repräsentiert die Instanz der Struktur, zu der die Methode
+aufgerufen wird.</p>
 <h3 id="definieren-von-methoden"><a class="header" href="#definieren-von-methoden">Definieren von Methoden</a></h3>
 <p>Lass uns die Funktion <code>area</code>, die eine <code>Rectangle</code>-Instanz als Parameter hat,
 ändern und stattdessen eine Methode <code>area</code> auf der Struktur <code>Rectangle</code>
@@ -5439,7 +5479,7 @@ zurückgibt, wenn der Wert im Feld <code>width</code> der Instanz größer als 0
 Methode für jeden Zweck verwenden. Wenn wir in <code>main</code> nach <code>rect1.width</code> eine
 Klammer setzen, weiß Rust, dass wir die Methode <code>width</code> meinen. Wenn wir keine
 Klammern verwenden, weiß Rust, dass wir das Feld <code>width</code> meinen.</p>
-<p>Oft, aber nicht immer, werden Methoden mit demselben Namen wie ein Feld so
+<p>Oft, aber nicht immer, wird eine Methode mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
 Methoden wie diese werden <em>getters</em> genannt, und Rust implementiert sie nicht
 automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
@@ -5447,7 +5487,7 @@ nützlich, weil man das Feld als privat, die Methode aber als öffentlich
 kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
 öffentlichen API des Typs erhält. Was öffentlich und privat bedeuten und wie
 man ein Feld oder eine Methode als öffentlich oder privat kennzeichnet, werden
-wir in Kapitel 7 behandeln.</p>
+wir in <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffnen">Kapitel 7</a> behandeln.</p>
 <blockquote>
 <h3 id="wo-ist-der-operator--"><a class="header" href="#wo-ist-der-operator--">Wo ist der Operator <code>-&gt;</code>?</a></h3>
 <p>In C und C++ werden zwei verschiedene Operatoren für den Aufruf von Methoden
@@ -5535,7 +5575,7 @@ Methode aufruft: <code>rect1.can_hold(&amp;rect2)</code> nimmt <code>&amp;rect2<
 unveränderliche Ausleihe von <code>rect2</code> vom Typ <code>Rectangle</code>. Das macht Sinn, da
 wir <code>rect2</code> nur lesen müssen (anstatt zu schreiben, wofür wir eine
 veränderliche Ausleihe bräuchten) und <code>main</code> die Eigentümerschaft an <code>rect2</code>
-zurückerhalten soll, so dass wir es nach dem Aufruf der Methode <code>can_hold</code>
+zurückerhalten soll, sodass wir es nach dem Aufruf der Methode <code>can_hold</code>
 weiter verwenden können. Der Rückgabewert von <code>can_hold</code> ist ein boolescher
 Wert und die Implementierung prüft, ob Breite und Höhe von <code>self</code> jeweils
 größer als von <code>Rectangle</code> sind. Fügen wir die neue Methode <code>can_hold</code> zum
@@ -5622,7 +5662,7 @@ für den Typ, der nach dem Schlüsselwort <code>impl</code> steht, in diesem Fal
 Strukturnamen, z.B. <code>let sq = Rectangle::square(3);</code>. Diese Funktion gehört zum
 Namensraum der Struktur: Die Syntax <code>::</code> wird sowohl für assoziierte Funktionen
 als auch für Namensräume, die von Modulen erzeugt werden, verwendet. Wir werden
-die Module in Kapitel 7 besprechen.</p>
+die Module in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">Kapitel 7</a> besprechen.</p>
 <h3 id="mehrere-impl-blöcke"><a class="header" href="#mehrere-impl-blöcke">Mehrere <code>impl</code>-Blöcke</a></h3>
 <p>Jede Struktur darf mehrere <code>impl</code>-Blöcke haben. Beispielsweise entspricht
 Codeblock 5-15 dem in Codeblock 5-16 gezeigten Code, bei dem jede Methode in
@@ -5968,7 +6008,7 @@ verbreitet und hilfreich ist: <code>Option</code></p>
 <p>Dieser Abschnitt befasst sich mit einer Fallstudie zu <code>Option</code>, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ <code>Option</code>
 kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.</p>
-<p>Wenn du zum Beispiel das erste Element einer Liste mit Elementen anforderst,
+<p>Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
 überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
@@ -6079,7 +6119,7 @@ müssen wir befürchten, dass wir möglicherweise keinen Wert haben, und der
 Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
 Wert verwenden.</p>
 <p>Mit anderen Worten musst du eine <code>Option&lt;T&gt;</code> in ein <code>T</code> konvertieren, bevor du
-<code>T</code>-Operationen damit durchführen kannst. Im Allgemeinen hilft dies, eines der
+<code>T</code>-Operationen darauf durchführen kannst. Im Allgemeinen hilft dies, eines der
 häufigsten Probleme mit Null abzufangen: Anzunehmen, dass etwas nicht null ist,
 obwohl es tatsächlich null ist.</p>
 <p>Durch Vermeiden des Risikos, fälschlicherweise einen Nicht-Null-Wert
@@ -6109,10 +6149,10 @@ Wertes verwenden.</p>
 <code>match</code>, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
-Dingen zusammensetzen. Kapitel 18 befasst sich mit all den verschiedenen
-Musterarten und wie sie funktionieren. Die Mächtigkeit von <code>match</code> kommt von
-der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
-sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
+Dingen zusammensetzen. <a href="ch18-00-patterns.html">Kapitel 18</a> befasst sich mit all den
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
+<code>match</code> kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
+Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
 <p>Stelle dir einen <code>match</code>-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
@@ -6120,10 +6160,9 @@ durchlaufen die Werte die Muster in einem <code>match</code>-Ausdruck und beim e
 „passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
 werden soll.</p>
 <p>Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von <code>match</code>! Wir
-können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
-Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
-sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
-gezeigt.</p>
+können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
+wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
+in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Coin {
@@ -6146,25 +6185,25 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
 der die Varianten der Aufzählung als Muster hat</span></p>
 <p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln. 
 Zuerst geben wir das Schlüsselwort <code>match</code> an, gefolgt von einem Ausdruck, der
-in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem Ausdruck sehr ähnlich zu
-sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen Unterschied: Bei
-<code>if</code> muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann ein
-beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in diesem Beispiel
-die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert haben.</p>
+in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem bedingten Ausdruck sehr
+ähnlich zu sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen
+Unterschied: Bei <code>if</code> muss die Bedingung einen booleschen Wert ergeben, aber
+hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in
+diesem Beispiel die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert
+haben.</p>
 <p>Als nächstes kommen die <code>match</code>-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert <code>Coin::Penny</code>, dann den
 Operator <code>=&gt;</code>, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert <code>1</code>. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.</p>
-<p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den resultierenden Wert
-mit dem Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum
-Wert passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das
-Muster nicht zum Wert passt, wird die Ausführung beim nächsten Zweig
-fortgesetzt, ähnlich wie bei einer Münzsortiermaschine. Wir können so viele
-Zweige haben, wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck
-vier Zweige.</p>
-<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der resultierende Wert
-des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
+<p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
+passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
+nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
+ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
+wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck vier Zweige.</p>
+<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 <code>match</code>-Ausdruck zurückgegeben wird. </p>
 <p>Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
@@ -6296,19 +6335,18 @@ let none = plus_one(None);
 auf einer <code>Option&lt;i32&gt;</code> verwendet</span></p>
 <p>Lass uns die erste Ausführung von <code>plus_one</code> näher betrachten. Wenn wir
 <code>plus_one(five)</code> aufrufen, wird die Variable <code>x</code> im Rumpf von <code>plus_one</code> den
-Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig.</p>
+Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig:</p>
 <pre><code class="language-rust ignore">None =&gt; None,</code></pre>
 <p>Der Wert <code>Some(5)</code> passt nicht zum Muster <code>None</code>, also fahren wir mit dem
-nächsten Zweig fort.</p>
+nächsten Zweig fort:</p>
 <pre><code class="language-rust ignore">Some(i) =&gt; Some(i + 1),</code></pre>
-<p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Aber ja, das tut es! Wir haben die gleiche
-Variante. <code>i</code> bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code>
-annimmt. Dann wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum
-Wert von <code>i</code> hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code>
-darin.</p>
+<p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Das tut es! Wir haben die gleiche Variante. <code>i</code>
+bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code> annimmt. Dann
+wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum Wert von <code>i</code>
+hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code> darin.</p>
 <p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Codeblock 6-5, wo <code>x</code>
 den Wert <code>None</code> hat. Wir betreten den <code>match</code>-Block und vergleichen mit dem
-ersten Zweig.</p>
+ersten Zweig:</p>
 <pre><code class="language-rust ignore">None =&gt; None,</code></pre>
 <p>Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert <code>None</code> auf der rechten Seite von <code>=&gt;</code> zurück. Da der erste Zweig
@@ -6385,9 +6423,9 @@ fn add_fancy_hat() {}
 fn remove_fancy_hat() {}
 fn move_player(num_spaces: u8) {}
 <span class="boring">}</span></code></pre></pre>
-<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
-letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
-Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte <code>3</code> und <code>7</code>.
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
+die Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
 <code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 <code>move_player</code> übergibt.</p>
 <p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte
@@ -6881,16 +6919,17 @@ oder einen Bezeichner im aktuellen Modul.</li>
 Bezeichnern, die durch doppelte Doppelpunkte (<code>::</code>) getrennt sind.</p>
 <p>Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
 <code>add_to_waitlist</code> aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
-Funktion <code>add_to_waitlist</code> ist. In Codeblock 7-3 haben wir unseren Code etwas
-vereinfacht, indem wir einige der Module und Funktionen entfernt haben. Wir
-zeigen zwei Möglichkeiten, wie die Funktion <code>add_to_waitlist</code> von einer neuen
-Funktion <code>eat_at_restaurant</code> aus aufgerufen werden kann, die in der
-Kistenwurzel definiert ist. Die Funktion <code>eat_at_restaurant</code> ist Teil der
-öffentlichen Programmierschnittstelle (API) unserer Bibliothekskiste, daher
-markieren wir sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffnen">„Pfade mit dem
-Schlüsselwort <code>pub</code> öffnen“</a> gehen wir näher auf <code>pub</code> ein. Beachte, dass
-sich dieses Beispiel noch nicht kompilieren lässt; wir werden gleich erklären,
-warum.</p>
+Funktion <code>add_to_waitlist</code> ist. Codeblock 7-3 enthält Codeblock 7-1, wobei
+einige Module und Funktionen entfernt wurden.</p>
+<p>Wir zeigen zwei Möglichkeiten, wie die Funktion <code>add_to_waitlist</code> von einer
+neuen Funktion <code>eat_at_restaurant</code> aus aufgerufen werden kann, die in der
+Kistenwurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
+weiteres Problem, das verhindert, dass dieses Beispiel in dieser Form
+kompiliert. Wir werden gleich erklären, warum.</p>
+<p>Die Funktion <code>eat_at_restaurant</code> ist Teil der öffentlichen
+Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
+sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffnen">„Pfade mit dem Schlüsselwort
+<code>pub</code> öffnen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -7140,11 +7179,11 @@ eine Bibliothekskiste enthält.</p>
 <p>Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir <code>super</code> am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax <code>..</code> beginnen. Dies erlaubt es uns, auf ein Element zu referenzieren,
-von dem wir wissen, dass es sich im übergeordneten Modul befindet, was die
-Neuordnung des Modulbaums erleichtern kann, wenn das Modul eng mit dem
-übergeordneten Modul verwandt ist, aber das übergeordnete Modul eines Tages an
-eine andere Stelle im Modulbaum verschoben werden könnte.</p>
+Syntax <code>..</code> beginnen. Das Verwenden von <code>super</code> erlaubt es uns, auf ein Element
+zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
+befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
+eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
+eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.</p>
 <p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
 Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,
@@ -7698,9 +7737,9 @@ Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:</p>
 <li><em>src/front_of_house/hosting/mod.rs</em> (älterer Stil, noch unterstützter Pfad)</li>
 </ul>
 <p>Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
-Compilerfehler. Die Verwendung beider Stile für verschiedene Module im selben
-Projekt ist zulässig, kann aber für die Benutzer verwirrend sein, die durch
-dein Projekt navigieren.</p>
+Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
+Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
+sein, die durch dein Projekt navigieren.</p>
 <p>Der größte Nachteil des Stils, der Dateien mit dem Namen <em>mod.rs</em> verwendet,
 ist, dass dein Projekt am Ende viele Dateien mit dem Namen <em>mod.rs</em> haben
 kann, was verwirrend sein kann, wenn du sie gleichzeitig in deinem Editor
@@ -8407,7 +8446,7 @@ zuzugreifen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for c in &quot;Зд&quot;.chars() {
-    println!(&quot;{}&quot;, c);
+    println!(&quot;{c}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code wird folgendes ausgeben:</p>
@@ -8419,7 +8458,7 @@ Verwendungszweck benötigt wird:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for b in &quot;Зд&quot;.bytes() {
-    println!(&quot;{}&quot;, b);
+    println!(&quot;{b}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:</p>
@@ -8511,7 +8550,7 @@ scores.insert(String::from(&quot;Blau&quot;), 10);
 scores.insert(String::from(&quot;Geld&quot;), 50);
 
 let team_name = String::from(&quot;Blau&quot;);
-let score = scores.get(&amp;team_name);
+let score = scores.get(&amp;team_name).copied().unwrap_or(0);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span></p>
@@ -8519,8 +8558,9 @@ Blau in der Hashtabelle</span></p>
 Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt <code>get</code>
 den Wert <code>None</code> zurück. Dieses Programm behandelt die <code>Option</code>, indem es
-<code>unwrap_or</code> aufruft, um <code>score</code> auf Null zu setzen, wenn <code>scores</code> keinen
-Eintrag für den Schlüssel hat.</p>
+<code>copied</code> aufruft, um eine <code>Option&lt;i32&gt;</code> anstelle einer <code>Option&lt;&amp;i32&gt;</code> zu
+erhalten, und ruft dann <code>unwrap_or</code> auf, um <code>score</code> auf Null zu setzen, wenn
+<code>scores</code> keinen Eintrag für den Schlüssel hat.</p>
 <p>Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
 Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -8533,7 +8573,7 @@ scores.insert(String::from(&quot;Blau&quot;), 10);
 scores.insert(String::from(&quot;Gelb&quot;), 50);
 
 for (key, value) in &amp;scores {
-    println!(&quot;{}: {}&quot;, key, value);
+    println!(&quot;{key}: {value}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:</p>
@@ -8554,7 +8594,7 @@ let field_value = String::from(&quot;Blau&quot;);
 
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
-// field_name und field_value sind zu diesem Zeitpunkt ungültig.
+// field_name und field_value sind nach diesem Zeitpunkt ungültig.
 // Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem
@@ -9436,7 +9476,7 @@ Zahlen zurück: Programme, die erfolgreich beendet werden, geben die Zahl <code>
 zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich <code>0</code>
 zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
 mit dieser Konvention kompatibel zu sein.</p>
-<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">das Merkmal
+<p>Die Funktion <code>main</code> kann jeden Typ zurückgeben, der das <a href="https://doc.rust-lang.org/std/process/trait.Termination.html">Merkmal
 <code>std::process::Termination</code></a> implementiert, das eine Funktion
 <code>report</code> enthält, die einen <code>ExitCode</code> zurückgibt. Weitere Informationen zur
 Implementierung des Merkmals <code>Termination</code> für deine eigenen Typen findest du
@@ -9954,8 +9994,8 @@ Funktion einführen.</p>
 <p>Um die Typen in einer neuen, einzigen Funktion zu parametrisieren, müssen wir
 den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
-wir werden <code>T</code> verwenden, weil die Parameternamen gemäß Konvention in Rust kurz
-sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
+wir werden <code>T</code> verwenden, weil die Typparameternamen gemäß Konvention in Rust
+kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
 Binnenmajuskel (CamelCase). Als Abkürzung für „Typ“ ist <code>T</code> die Standardwahl
 der meisten Rust-Programmierer.</p>
 <p>Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
@@ -10276,8 +10316,8 @@ Methode relevant sind.</p>
 <h3 id="code-performanz-beim-verwenden-generischer-datentypen"><a class="header" href="#code-performanz-beim-verwenden-generischer-datentypen">Code-Performanz beim Verwenden generischer Datentypen</a></h3>
 <p>Du fragst dich vielleicht, ob beim Verwenden generischer Typparameter
 Laufzeitkosten anfallen. Die gute Nachricht ist, dass die Verwendung
-generischer Typen die Ausführung nicht langsamer macht als bei konkreten
-Typen.</p>
+generischer Typen die Ausführung deines Programms nicht langsamer macht als bei
+konkreten Typen.</p>
 <p>Rust erreicht dies durch Duplizierung von Code mit generischen Datentypen zur
 Kompilierzeit. <em>Codeduplizierung</em> (monomorphization) ist der Vorgang der
 Umwandlung von generischem Code in spezifischen Code durch Ausfüllen der
@@ -10667,8 +10707,9 @@ nach der Funktionssignatur. Anstatt das hier zu schreiben:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T: Display + Clone, U: Clone + Debug&gt;(t: &amp;T, u: &amp;U) -&gt; i32 {</code></pre>
 <p>können wir eine <code>where</code>-Klausel wie folgt verwenden:</p>
 <pre><code class="language-rust ignore">fn some_function&lt;T, U&gt;(t: &amp;T, u: &amp;U) -&gt; i32
-    where T: Display + Clone,
-          U: Clone + Debug
+where
+    T: Display + Clone,
+    U: Clone + Debug,
 {</code></pre>
 <p>Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
 Parameterliste und der Rückgabetyp liegen nahe beieinander, ähnlich wie bei
@@ -13879,18 +13920,18 @@ Programmierproblem besser geeignet als für ein Nutzungsproblem, <a href="ch09-0
 9 besprochen</a>. Stattdessen können wir die andere Technik
 verwenden, über die du in Kapitel 9 gelernt hast – <a href="ch09-02-recoverable-errors-with-result.html">Rückgabe eines
 <code>Result</code></a> um entweder Erfolg oder einen Fehler anzuzeigen.</p>
-<h4 id="zurückgeben-eines-result-von-new-anstatt-panic-aufzurufen"><a class="header" href="#zurückgeben-eines-result-von-new-anstatt-panic-aufzurufen">Zurückgeben eines <code>Result</code> von <code>new</code>, anstatt <code>panic!</code> aufzurufen</a></h4>
+<h4 id="zurückgeben-eines-result-anstatt-panic-aufzurufen"><a class="header" href="#zurückgeben-eines-result-anstatt-panic-aufzurufen">Zurückgeben eines <code>Result</code> anstatt <code>panic!</code> aufzurufen</a></h4>
 <p>Wir können stattdessen einen <code>Result</code>-Wert zurückgeben, der im erfolgreichen
 Fall eine <code>Config</code>-Instanz enthält und im Fehlerfall das Problem beschreibt.
 Wir werden auch den Namen der Funktion von <code>new</code> in <code>build</code> ändern, weil viele
 Programmierer erwarten, dass <code>new</code>-Funktionen niemals fehlschlagen. Wenn
-<code>Config::new</code> mit <code>main</code> kommuniziert, können wir den <code>Result</code>-Typ verwenden,
+<code>Config::build</code> mit <code>main</code> kommuniziert, können wir den <code>Result</code>-Typ verwenden,
 um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir <code>main</code>
 ändern, um eine <code>Err</code>-Variante in einen praktikableren Fehler für unsere
 Benutzer umzuwandeln, ohne den umgebenden Text über <code>thread 'main'</code> und
 <code>RUST_BACKTRACE</code>, den ein Aufruf von <code>panic!</code> verursacht.</p>
 <p>Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
-nun <code>Config::new</code> aufruft, und am Funktionsrumpf vornehmen müssen, um ein
+nun <code>Config::build</code> aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 <code>Result</code> zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
 wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -13917,7 +13958,7 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 </span><span class="boring">}
 </span><span class="boring">
 </span>impl Config {
-    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
             return Err(&quot;Nicht genügend Argumente&quot;);
         }
@@ -13930,8 +13971,9 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 }</code></pre>
 <p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
-<p>Unsere Funktion <code>build</code> liefert jetzt ein <code>Result</code> mit einer <code>Config</code>-Instanz im
-Erfolgsfall und ein <code>&amp;str</code> im Fehlerfall.</p>
+<p>Unsere Funktion <code>build</code> liefert ein <code>Result</code> mit einer <code>Config</code>-Instanz im
+Erfolgsfall und ein <code>&amp;'static str</code> im Fehlerfall. Unsere Fehlerwerte werden
+immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
 <p>Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt <code>panic!</code>
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
 einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rückgabewert in ein <code>Ok</code>
@@ -13957,7 +13999,7 @@ Fehlerstatus beendet wurde.</p>
 fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
 
-    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
         println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
         process::exit(1);
     });
@@ -13979,7 +14021,7 @@ fn main() {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14045,7 +14087,7 @@ immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
 
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -14071,7 +14113,7 @@ fn run(config: Config) {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14107,7 +14149,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 <span class="boring">fn main() {
 </span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -14132,7 +14174,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14182,12 +14224,11 @@ warning: unused `Result` that must be used
    = note: this `Result` may be an `Err` variant, which should be handled
 
 warning: `minigrep` (bin &quot;minigrep&quot;) generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Suche nach the
-In Datei poem.txt
-Mit text:
+Searching for the
+In file poem.txt
+With text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -14218,7 +14259,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -14247,7 +14288,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14294,7 +14335,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         // --abschneiden--
 <span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
@@ -14318,7 +14359,7 @@ pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <p><span class="caption">Codeblock 12-13: Verschieben von <code>Config</code> und <code>run</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> großzügig verwendet: Bei <code>Config</code>, bei seinen
-Feldern und seiner Methode <code>new</code> und bei der Funktion <code>run</code>. Wir haben jetzt
+Feldern und seiner Methode <code>build</code> und bei der Funktion <code>run</code>. Wir haben jetzt
 eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!</p>
 <p>Jetzt müssen wir den Code, den wir nach <em>src/lib.rs</em> verschoben haben, in den
 Gültigkeitsbereich der Binärkiste in <em>src/main.rs</em> bringen, wie in Codeblock
@@ -14333,7 +14374,7 @@ fn main() {
     // --abschneiden--
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -15697,17 +15738,16 @@ funktional bezeichnet werden. </p>
 <li><em>Funktionsabschlüsse</em>, ein Konstrukt, das einer Funktion ähnelt und in einer
 Variable gespeichert werden kann.</li>
 <li><em>Iteratoren</em>, ein Mechanismus, eine Reihe von Elementen abzuarbeiten.</li>
-<li>Wie wir diese zwei Möglichkeiten anwenden und damit unser E/A-Projekt aus
-Kapitel 12 verbessern können.</li>
-<li>Die Performanz dieser beiden Funktionalitäten (Spoiler-Alarm: Sie sind
-schneller, als du vielleicht denken magst!)</li>
+<li>Wie wir Funktionsabschlüsse und Iteratoren einsetzen, um unser E/A-Projekt
+aus Kapitel 12 zu verbessern</li>
+<li>Die Performanz von Funktionsabschlüssen und Iteratoren (Spoiler-Alarm: Sie
+sind schneller, als du vielleicht denken magst!)</li>
 </ul>
-<p>Andere Rust-Funktionalitäten wie Aufzählungen (enums) und Musterabgleich
-(pattern matching), die wir bereits in anderen Kapiteln behandelt haben, sind
-ebenfalls vom funktionalen Stil beeinflusst. Das Beherrschen von
-Funktionsabschlüssen und Iteratoren ist ein wichtiger Bestandteil für das 
-Schreiben von idiomatischem, schnellem Rust-Programmcode. Daher wird ihnen
-das gesamte Kapitel gewidmet.</p>
+<p>Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und
+Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen
+Stil beeinflusst sind. Da das Beherrschen von Funktionsabschlüssen und
+Iteratoren ein wichtiger Bestandteil für das Schreiben von idiomatischem,
+schnellem Rust-Programmcode ist, wird ihnen das gesamte Kapitel gewidmet.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen-können"><a class="header" href="#funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen-können">Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen können</a></h2>
 <p>Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
 speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen 
@@ -29602,9 +29642,9 @@ Sortierreihenfolge der Werte speichert.</p>
 <h3 id="clone-und-copy-zum-duplizieren-von-werten"><a class="header" href="#clone-und-copy-zum-duplizieren-von-werten"><code>Clone</code> und <code>Copy</code> zum Duplizieren von Werten</a></h3>
 <p>Das Merkmal <code>Clone</code> erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
 erstellen, und der Vervielfältigungsprozess könnte die Ausführung von
-beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten.
-Siehe den Abschnitt <a href="ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-klonen-clone">„Wege, wie Variablen und Daten interagieren: Klonen
-(clone)“</a> in Kapitel 4 für weitere
+beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten. Siehe
+den Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone">„Variablen und Daten im Zusammenspiel mit
+Clone“</a> in Kapitel 4 für weitere
 Informationen zu <code>Clone</code>.</p>
 <p>Das Ableiten von <code>Clone</code> implementiert die Methode <code>clone</code>, die, wenn sie für
 den gesamten Typ implementiert ist, <code>clone</code> auf jedem der Teile des Typs

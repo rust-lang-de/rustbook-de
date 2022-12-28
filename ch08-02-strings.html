@@ -509,7 +509,7 @@ zuzugreifen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for c in &quot;Зд&quot;.chars() {
-    println!(&quot;{}&quot;, c);
+    println!(&quot;{c}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code wird folgendes ausgeben:</p>
@@ -521,7 +521,7 @@ Verwendungszweck benötigt wird:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for b in &quot;Зд&quot;.bytes() {
-    println!(&quot;{}&quot;, b);
+    println!(&quot;{b}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:</p>

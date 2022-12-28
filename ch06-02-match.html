@@ -138,10 +138,10 @@
 <code>match</code>, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
-Dingen zusammensetzen. Kapitel 18 befasst sich mit all den verschiedenen
-Musterarten und wie sie funktionieren. Die Mächtigkeit von <code>match</code> kommt von
-der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
-sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
+Dingen zusammensetzen. <a href="ch18-00-patterns.html">Kapitel 18</a> befasst sich mit all den
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
+<code>match</code> kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
+Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.</p>
 <p>Stelle dir einen <code>match</code>-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
@@ -149,10 +149,9 @@ durchlaufen die Werte die Muster in einem <code>match</code>-Ausdruck und beim e
 „passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
 werden soll.</p>
 <p>Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von <code>match</code>! Wir
-können eine Funktion schreiben, die eine unbekannte Münze der Vereinigten
-Staaten nimmt und, ähnlich wie die Zählmaschine, bestimmt, um welche Münze es
-sich handelt und ihren Wert in Cent zurückgibt, wie hier in Codeblock 6-3
-gezeigt.</p>
+können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
+wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
+in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Coin {
@@ -175,25 +174,25 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
 der die Varianten der Aufzählung als Muster hat</span></p>
 <p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln. 
 Zuerst geben wir das Schlüsselwort <code>match</code> an, gefolgt von einem Ausdruck, der
-in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem Ausdruck sehr ähnlich zu
-sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen Unterschied: Bei
-<code>if</code> muss der Ausdruck einen booleschen Wert zurückgeben, aber hier kann ein
-beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in diesem Beispiel
-die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert haben.</p>
+in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem bedingten Ausdruck sehr
+ähnlich zu sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen
+Unterschied: Bei <code>if</code> muss die Bedingung einen booleschen Wert ergeben, aber
+hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von <code>coin</code> ist in
+diesem Beispiel die Aufzählung <code>Coin</code>, die wir in der ersten Zeile definiert
+haben.</p>
 <p>Als nächstes kommen die <code>match</code>-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert <code>Coin::Penny</code>, dann den
 Operator <code>=&gt;</code>, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert <code>1</code>. Jeder Zweig wird durch ein Komma vom nächsten
 getrennt.</p>
-<p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den resultierenden Wert
-mit dem Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum
-Wert passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das
-Muster nicht zum Wert passt, wird die Ausführung beim nächsten Zweig
-fortgesetzt, ähnlich wie bei einer Münzsortiermaschine. Wir können so viele
-Zweige haben, wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck
-vier Zweige.</p>
-<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der resultierende Wert
-des Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
+<p>Wenn der <code>match</code>-Ausdruck ausgeführt wird, gleicht er den Ergebniswert mit dem
+Muster jedes Zweigs ab, und zwar der Reihe nach. Wenn ein Muster zum Wert
+passt, wird der zu diesem Muster gehörende Code ausgeführt. Wenn das Muster
+nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
+ähnlich wie bei einer Münzsortiermaschine. Wir können so viele Zweige haben,
+wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck vier Zweige.</p>
+<p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
+Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
 <code>match</code>-Ausdruck zurückgegeben wird. </p>
 <p>Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
@@ -325,19 +324,18 @@ let none = plus_one(None);
 auf einer <code>Option&lt;i32&gt;</code> verwendet</span></p>
 <p>Lass uns die erste Ausführung von <code>plus_one</code> näher betrachten. Wenn wir
 <code>plus_one(five)</code> aufrufen, wird die Variable <code>x</code> im Rumpf von <code>plus_one</code> den
-Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig.</p>
+Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig:</p>
 <pre><code class="language-rust ignore">None =&gt; None,</code></pre>
 <p>Der Wert <code>Some(5)</code> passt nicht zum Muster <code>None</code>, also fahren wir mit dem
-nächsten Zweig fort.</p>
+nächsten Zweig fort:</p>
 <pre><code class="language-rust ignore">Some(i) =&gt; Some(i + 1),</code></pre>
-<p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Aber ja, das tut es! Wir haben die gleiche
-Variante. <code>i</code> bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code>
-annimmt. Dann wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum
-Wert von <code>i</code> hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code>
-darin.</p>
+<p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Das tut es! Wir haben die gleiche Variante. <code>i</code>
+bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code> annimmt. Dann
+wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum Wert von <code>i</code>
+hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</code> darin.</p>
 <p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Codeblock 6-5, wo <code>x</code>
 den Wert <code>None</code> hat. Wir betreten den <code>match</code>-Block und vergleichen mit dem
-ersten Zweig.</p>
+ersten Zweig:</p>
 <pre><code class="language-rust ignore">None =&gt; None,</code></pre>
 <p>Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert <code>None</code> auf der rechten Seite von <code>=&gt;</code> zurück. Da der erste Zweig
@@ -414,9 +412,9 @@ fn add_fancy_hat() {}
 fn remove_fancy_hat() {}
 fn move_player(num_spaces: u8) {}
 <span class="boring">}</span></code></pre></pre>
-<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte 3 und 7. Beim
-letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
-Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
+<p>Bei den ersten beiden Zweigen sind die Muster die literalen Werte <code>3</code> und <code>7</code>.
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
+die Variable die wir als <code>other</code> bezeichnet haben. Der Code, der für den
 <code>other</code>-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 <code>move_player</code> übergibt.</p>
 <p>Dieser Code lässt sich kompilieren, auch wenn wir nicht alle möglichen Werte

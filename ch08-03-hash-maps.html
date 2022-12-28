@@ -191,7 +191,7 @@ scores.insert(String::from(&quot;Blau&quot;), 10);
 scores.insert(String::from(&quot;Geld&quot;), 50);
 
 let team_name = String::from(&quot;Blau&quot;);
-let score = scores.get(&amp;team_name);
+let score = scores.get(&amp;team_name).copied().unwrap_or(0);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
 Blau in der Hashtabelle</span></p>
@@ -199,8 +199,9 @@ Blau in der Hashtabelle</span></p>
 Ergebnis wird <code>10</code> sein. Die Methode <code>get</code> gibt eine <code>Option&lt;&amp;V&gt;</code> zurück;
 wenn es keinen Wert für diesen Schlüssel in der Hashtabelle gibt, gibt <code>get</code>
 den Wert <code>None</code> zurück. Dieses Programm behandelt die <code>Option</code>, indem es
-<code>unwrap_or</code> aufruft, um <code>score</code> auf Null zu setzen, wenn <code>scores</code> keinen
-Eintrag für den Schlüssel hat.</p>
+<code>copied</code> aufruft, um eine <code>Option&lt;i32&gt;</code> anstelle einer <code>Option&lt;&amp;i32&gt;</code> zu
+erhalten, und ruft dann <code>unwrap_or</code> auf, um <code>score</code> auf Null zu setzen, wenn
+<code>scores</code> keinen Eintrag für den Schlüssel hat.</p>
 <p>Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
 Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -213,7 +214,7 @@ scores.insert(String::from(&quot;Blau&quot;), 10);
 scores.insert(String::from(&quot;Gelb&quot;), 50);
 
 for (key, value) in &amp;scores {
-    println!(&quot;{}: {}&quot;, key, value);
+    println!(&quot;{key}: {value}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:</p>
@@ -234,7 +235,7 @@ let field_value = String::from(&quot;Blau&quot;);
 
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
-// field_name und field_value sind zu diesem Zeitpunkt ungültig.
+// field_name und field_value sind nach diesem Zeitpunkt ungültig.
 // Versuche, sie zu benutzen und beobachte, welchen Kompilierfehler du erhältst!
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-22: Zeigt, dass Schlüssel und Werte nach dem

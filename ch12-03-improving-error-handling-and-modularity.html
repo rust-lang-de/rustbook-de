@@ -485,18 +485,18 @@ Programmierproblem besser geeignet als für ein Nutzungsproblem, <a href="ch09-0
 9 besprochen</a>. Stattdessen können wir die andere Technik
 verwenden, über die du in Kapitel 9 gelernt hast – <a href="ch09-02-recoverable-errors-with-result.html">Rückgabe eines
 <code>Result</code></a> um entweder Erfolg oder einen Fehler anzuzeigen.</p>
-<h4 id="zurückgeben-eines-result-von-new-anstatt-panic-aufzurufen"><a class="header" href="#zurückgeben-eines-result-von-new-anstatt-panic-aufzurufen">Zurückgeben eines <code>Result</code> von <code>new</code>, anstatt <code>panic!</code> aufzurufen</a></h4>
+<h4 id="zurückgeben-eines-result-anstatt-panic-aufzurufen"><a class="header" href="#zurückgeben-eines-result-anstatt-panic-aufzurufen">Zurückgeben eines <code>Result</code> anstatt <code>panic!</code> aufzurufen</a></h4>
 <p>Wir können stattdessen einen <code>Result</code>-Wert zurückgeben, der im erfolgreichen
 Fall eine <code>Config</code>-Instanz enthält und im Fehlerfall das Problem beschreibt.
 Wir werden auch den Namen der Funktion von <code>new</code> in <code>build</code> ändern, weil viele
 Programmierer erwarten, dass <code>new</code>-Funktionen niemals fehlschlagen. Wenn
-<code>Config::new</code> mit <code>main</code> kommuniziert, können wir den <code>Result</code>-Typ verwenden,
+<code>Config::build</code> mit <code>main</code> kommuniziert, können wir den <code>Result</code>-Typ verwenden,
 um zu signalisieren, dass ein Problem aufgetreten ist. Dann können wir <code>main</code>
 ändern, um eine <code>Err</code>-Variante in einen praktikableren Fehler für unsere
 Benutzer umzuwandeln, ohne den umgebenden Text über <code>thread 'main'</code> und
 <code>RUST_BACKTRACE</code>, den ein Aufruf von <code>panic!</code> verursacht.</p>
 <p>Codeblock 12-9 zeigt die Änderungen, die wir am Rückgabewert der Funktion, die
-nun <code>Config::new</code> aufruft, und am Funktionsrumpf vornehmen müssen, um ein
+nun <code>Config::build</code> aufruft, und am Funktionsrumpf vornehmen müssen, um ein
 <code>Result</code> zurückzugeben. Beachte, dass dies nicht kompiliert werden kann, bis
 wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -523,7 +523,7 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 </span><span class="boring">}
 </span><span class="boring">
 </span>impl Config {
-    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
             return Err(&quot;Nicht genügend Argumente&quot;);
         }
@@ -536,8 +536,9 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 }</code></pre>
 <p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
-<p>Unsere Funktion <code>build</code> liefert jetzt ein <code>Result</code> mit einer <code>Config</code>-Instanz im
-Erfolgsfall und ein <code>&amp;str</code> im Fehlerfall.</p>
+<p>Unsere Funktion <code>build</code> liefert ein <code>Result</code> mit einer <code>Config</code>-Instanz im
+Erfolgsfall und ein <code>&amp;'static str</code> im Fehlerfall. Unsere Fehlerwerte werden
+immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
 <p>Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt <code>panic!</code>
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
 einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rückgabewert in ein <code>Ok</code>
@@ -563,7 +564,7 @@ Fehlerstatus beendet wurde.</p>
 fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
 
-    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
         println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
         process::exit(1);
     });
@@ -585,7 +586,7 @@ fn main() {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -651,7 +652,7 @@ immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
 
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -677,7 +678,7 @@ fn run(config: Config) {
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -713,7 +714,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 <span class="boring">fn main() {
 </span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -738,7 +739,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -788,12 +789,11 @@ warning: unused `Result` that must be used
    = note: this `Result` may be an `Err` variant, which should be handled
 
 warning: `minigrep` (bin &quot;minigrep&quot;) generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Suche nach the
-In Datei poem.txt
-Mit text:
+Searching for the
+In file poem.txt
+With text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -824,7 +824,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
@@ -853,7 +853,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -900,7 +900,7 @@ pub struct Config {
 }
 
 impl Config {
-    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         // --abschneiden--
 <span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
@@ -924,7 +924,7 @@ pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <p><span class="caption">Codeblock 12-13: Verschieben von <code>Config</code> und <code>run</code> in
 <em>src/lib.rs</em></span></p>
 <p>Wir haben das Schlüsselwort <code>pub</code> großzügig verwendet: Bei <code>Config</code>, bei seinen
-Feldern und seiner Methode <code>new</code> und bei der Funktion <code>run</code>. Wir haben jetzt
+Feldern und seiner Methode <code>build</code> und bei der Funktion <code>run</code>. Wir haben jetzt
 eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!</p>
 <p>Jetzt müssen wir den Code, den wir nach <em>src/lib.rs</em> verschoben haben, in den
 Gültigkeitsbereich der Binärkiste in <em>src/main.rs</em> bringen, wie in Codeblock
@@ -939,7 +939,7 @@ fn main() {
     // --abschneiden--
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
-</span><span class="boring">    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+</span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
 </span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });

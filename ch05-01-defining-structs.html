@@ -146,6 +146,7 @@ Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
 geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em>
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct User {
@@ -159,7 +160,7 @@ nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 <p>Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine <em>Instanz</em> dieser Struktur, indem wir für jedes Feld einen konkreten Wert
 angeben. Wir erzeugen eine Instanz, indem wir den Namen der Struktur angeben
-und dann in geschweiften Klammern die <code>Schlüssel: Wert</code>-Paare angeben, wobei
+und dann in geschweiften Klammern die <em>Schlüssel: Wert</em>-Paare angeben, wobei
 die Schlüssel die Namen der Felder und die Werte die Daten sind, die wir in
 diesen Feldern speichern wollen. Wir müssen die Felder nicht in der gleichen
 Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
@@ -167,6 +168,7 @@ gesagt ist die Strukturdefinition wie eine allgemeine Typvorlage und Instanzen
 füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -190,6 +192,7 @@ zuzugreifen, verwenden wir <code>user1.email</code>. Wenn die Instanz veränderl
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
 einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 <code>email</code> einer veränderlichen <code>User</code>-Instanz geändert werden kann.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -215,6 +218,7 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
 <p>Codeblock 5-4 zeigt eine Funktion <code>build_user</code>, die eine <code>User</code>-Instanz mit der
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -244,12 +248,13 @@ Strukturfelder zu geben, jedoch ist das Wiederholen der Feldnamen <code>email</c
 <code>username</code> etwas mühsam. Wenn die Struktur mehr Felder hätte, würde das
 Wiederholen jedes Namens noch lästiger werden. Glücklicherweise gibt es eine
 praktische Kurznotation!</p>
-<h3 id="kurznotation-der-feld-initialisierung-verwenden-wenn-variablen-und-felder-den-gleichen-namen-haben"><a class="header" href="#kurznotation-der-feld-initialisierung-verwenden-wenn-variablen-und-felder-den-gleichen-namen-haben">Kurznotation der Feld-Initialisierung verwenden, wenn Variablen und Felder den gleichen Namen haben</a></h3>
+<h3 id="kurznotation-der-feld-initialisierung-verwenden"><a class="header" href="#kurznotation-der-feld-initialisierung-verwenden">Kurznotation der Feld-Initialisierung verwenden</a></h3>
 <p>Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
 haben, können wir die <em>Kurznotation der Feld-Initialisierung</em> (field init
 shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
 wiederholen, siehe Codeblock 5-5.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -289,6 +294,7 @@ verwenden.</p>
 Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</code>,
 verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
 5-2 erstellt haben.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -318,6 +324,7 @@ Verwendung eines Werts von <code>user1</code>.</span></p>
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
@@ -351,15 +358,15 @@ Feldern in <code>user1</code> beziehen sollen, aber wir können Werte für so vi
 in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
 der Strukturdefinition.</p>
 <p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
-da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#wege-wie-variablen-und-daten-interagieren-verschieben-move">„Wege, wie Variablen und
-Daten interagieren: Verschieben (move)“</a> gesehen haben. In diesem
-Beispiel können wir <code>user1</code> nicht mehr verwenden, nachdem wir <code>user2</code> erzeugt
-haben, weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben
-wurde. Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und
-<code>username</code> gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von
-<code>user1</code> verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch
-gültig. Die Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal
-<code>Copy</code> implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
+da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move">„Variablen und Daten im
+Zusammenspiel mit Move“</a> gesehen haben. In diesem Beispiel können wir
+<code>user1</code> nicht mehr als Ganzes verwenden, nachdem wir <code>user2</code> erzeugt haben,
+weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben wurde.
+Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und <code>username</code>
+gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code>user1</code>
+verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch gültig. Die
+Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code>
+implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
 Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
 würde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
@@ -372,6 +379,7 @@ einer regulären Struktur langatmig oder unnötig wären.</p>
 <p>Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort <code>struct</code>,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
@@ -397,6 +405,7 @@ Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
 die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens <code>AlwaysEqual</code>:</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
 
 fn main() {
@@ -435,9 +444,9 @@ eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 
 fn main() {
     let user1 = User {
-        email: &quot;jemand@example.com&quot;,
-        username: &quot;benutzername123&quot;,
         active: true,
+        username: &quot;benutzername123&quot;,
+        email: &quot;jemand@example.com&quot;,
         sign_in_count: 1,
     };
 }</code></pre></pre>

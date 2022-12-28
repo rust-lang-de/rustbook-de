@@ -409,7 +409,7 @@ verbreitet und hilfreich ist: <code>Option</code></p>
 <p>Dieser Abschnitt befasst sich mit einer Fallstudie zu <code>Option</code>, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ <code>Option</code>
 kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.</p>
-<p>Wenn du zum Beispiel das erste Element einer Liste mit Elementen anforderst,
+<p>Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
 überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
@@ -520,7 +520,7 @@ müssen wir befürchten, dass wir möglicherweise keinen Wert haben, und der
 Compiler wird sicherstellen, dass wir diesen Fall behandeln, bevor wir den
 Wert verwenden.</p>
 <p>Mit anderen Worten musst du eine <code>Option&lt;T&gt;</code> in ein <code>T</code> konvertieren, bevor du
-<code>T</code>-Operationen damit durchführen kannst. Im Allgemeinen hilft dies, eines der
+<code>T</code>-Operationen darauf durchführen kannst. Im Allgemeinen hilft dies, eines der
 häufigsten Probleme mit Null abzufangen: Anzunehmen, dass etwas nicht null ist,
 obwohl es tatsächlich null ist.</p>
 <p>Durch Vermeiden des Risikos, fälschlicherweise einen Nicht-Null-Wert

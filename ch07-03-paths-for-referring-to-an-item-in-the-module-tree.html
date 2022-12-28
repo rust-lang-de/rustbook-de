@@ -150,16 +150,17 @@ oder einen Bezeichner im aktuellen Modul.</li>
 Bezeichnern, die durch doppelte Doppelpunkte (<code>::</code>) getrennt sind.</p>
 <p>Um zu Codeblock 7-1 zurückzukehren, nehmen wir an, wir wollen die Funktion
 <code>add_to_waitlist</code> aufrufen. Das ist dasselbe wie die Frage, wie der Pfad der
-Funktion <code>add_to_waitlist</code> ist. In Codeblock 7-3 haben wir unseren Code etwas
-vereinfacht, indem wir einige der Module und Funktionen entfernt haben. Wir
-zeigen zwei Möglichkeiten, wie die Funktion <code>add_to_waitlist</code> von einer neuen
-Funktion <code>eat_at_restaurant</code> aus aufgerufen werden kann, die in der
-Kistenwurzel definiert ist. Die Funktion <code>eat_at_restaurant</code> ist Teil der
-öffentlichen Programmierschnittstelle (API) unserer Bibliothekskiste, daher
-markieren wir sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffnen">„Pfade mit dem
-Schlüsselwort <code>pub</code> öffnen“</a> gehen wir näher auf <code>pub</code> ein. Beachte, dass
-sich dieses Beispiel noch nicht kompilieren lässt; wir werden gleich erklären,
-warum.</p>
+Funktion <code>add_to_waitlist</code> ist. Codeblock 7-3 enthält Codeblock 7-1, wobei
+einige Module und Funktionen entfernt wurden.</p>
+<p>Wir zeigen zwei Möglichkeiten, wie die Funktion <code>add_to_waitlist</code> von einer
+neuen Funktion <code>eat_at_restaurant</code> aus aufgerufen werden kann, die in der
+Kistenwurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
+weiteres Problem, das verhindert, dass dieses Beispiel in dieser Form
+kompiliert. Wir werden gleich erklären, warum.</p>
+<p>Die Funktion <code>eat_at_restaurant</code> ist Teil der öffentlichen
+Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
+sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffnen">„Pfade mit dem Schlüsselwort
+<code>pub</code> öffnen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -409,11 +410,11 @@ eine Bibliothekskiste enthält.</p>
 <p>Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir <code>super</code> am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax <code>..</code> beginnen. Dies erlaubt es uns, auf ein Element zu referenzieren,
-von dem wir wissen, dass es sich im übergeordneten Modul befindet, was die
-Neuordnung des Modulbaums erleichtern kann, wenn das Modul eng mit dem
-übergeordneten Modul verwandt ist, aber das übergeordnete Modul eines Tages an
-eine andere Stelle im Modulbaum verschoben werden könnte.</p>
+Syntax <code>..</code> beginnen. Das Verwenden von <code>super</code> erlaubt es uns, auf ein Element
+zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
+befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
+eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
+eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.</p>
 <p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
 Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,

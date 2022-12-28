@@ -164,7 +164,10 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.</p>
-<img alt="&amp;String s zeigt auf String s1" src="img/trpl04-05.svg" class="center" />
+<p><img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
+Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
+zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
+src="img/trpl04-05.svg" class="center" /></p>
 <p><span class="caption">Abbildung 4-5: Eine Grafik mit <code>&amp;String s</code>, das auf
 <code>String s1</code> zeigt</span></p>
 <blockquote>
@@ -388,11 +391,14 @@ println!(&quot;{}&quot;, r3);
 <p>Die Gültigkeitsbereiche der unveränderlichen Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
 veränderliche Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
-überschneiden sich nicht, daher ist dieser Code zulässig. Die Fähigkeit des
+überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
+erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
+mehr verwendet wird.</p>
+<p>Die Fähigkeit des
 Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
 Gültigkeitsbereichs nicht mehr verwendet wird, wird als <em>nicht-lexikalische
 Lebensdauer</em> (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
-darüber in <a href="https://doc.rust-lang.org/edition-guide/rust-2018/ownership-and-lifetimes/non-lexical-lifetimes.html">The Edition Guide</a> lesen.</p>
+darüber in [The Edition Guide][nll] lesen.</p>
 <p>Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo

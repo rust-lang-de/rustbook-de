@@ -144,12 +144,12 @@ bietet. Du hast jedoch immer noch die Möglichkeit, deine Variablen veränderlic
 ermutigt, die Unveränderlichkeit (immutability) zu bevorzugen, und warum du
 manchmal vielleicht davon abweichen möchtest.</p>
 <p>Wenn eine Variable unveränderlich ist, kannst du deren Wert nicht mehr ändern,
-sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lass uns ein neues
-Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis anlegen, indem wir
-<code>cargo new variables</code> aufrufen.</p>
-<p>Öffne dann in deinem neuen <em>variables</em>-Verzeichnis die Datei <em>src/main.rs</em> und
-ersetze dessen Code durch folgenden Code. Dieser Code lässt sich noch nicht
-kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</p>
+sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
+Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis an, indem du
+<code>cargo new variables</code> aufrufst.</p>
+<p>Öffne dann in deinem neuen Verzeichnis <em>variables</em> die Datei <em>src/main.rs</em> und
+ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
+lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = 5;
@@ -158,7 +158,8 @@ kompilieren, wir werden zunächst den Unveränderlichkeits-Fehler untersuchen.</
     println!(&quot;Der Wert von x ist: {x}&quot;);
 }</code></pre></pre>
 <p>Speichere und starte das Programm mit <code>cargo run</code>. Du solltest eine
-Fehlermeldung erhalten, wie in dieser Ausgabe gezeigt:</p>
+Fehlermeldung über einen Unveränderlichkeitsfehler erhalten, wie in dieser
+Ausgabe gezeigt:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
 error[E0384]: cannot assign twice to immutable variable `x`
@@ -181,9 +182,9 @@ zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
 sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
 bedeuten <em>nicht</em>, dass du kein guter Programmierer bist! Erfahrene
 Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.</p>
-<p>Die Fehlermeldung <code>cannot assign twice to immutable variable x</code> weist darauf
-hin, dass du versucht hast, der unveränderlichen Variablen <code>x</code> einen zweiten
-Wert zuzuweisen.</p>
+<p>Du hast die Fehlermeldung <code>cannot assign twice to immutable variable x</code>
+erhalten, weil du versucht hast, der unveränderlichen Variablen <code>x</code> einen
+zweiten Wert zuzuweisen.</p>
 <p>Es ist wichtig, dass wir Kompilierzeitfehler erhalten, wenn wir versuchen,
 einen Wert zu ändern, der als unveränderlich gekennzeichnet ist, denn genau
 diese Situation kann zu Fehlern führen. Wenn ein Teil unseres Codes von der
@@ -196,11 +197,11 @@ sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
 leichter zu durchschauen.</p>
 <p>Veränderbarkeit kann jedoch sehr nützlich sein und das Erstellen von Code
-erleichtern. Variablen sind nur standardmäßig unveränderlich; wie du es in
-Kapitel 2 gemacht hast, kannst du sie veränderlich machen, indem du vor den
-Variablennamen <code>mut</code> angibst. Das Hinzufügen von <code>mut</code> vermittelt den
-zukünftigen Lesern des Codes die Absicht, dass andere Teile des Codes den Wert
-dieser Variablen ändern werden.</p>
+erleichtern. Obwohl Variablen standardmäßig unveränderlich sind, kannst du sie
+veränderlich machen, indem du vor den Variablennamen <code>mut</code> angibst, wie du es
+in <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variablen">Kapitel 2</a> getan hast. Das Hinzufügen von
+<code>mut</code> vermittelt den zukünftigen Lesern des Codes die Absicht, dass andere
+Teile des Codes den Wert dieser Variablen ändern werden.</p>
 <p>Lass uns zum Beispiel <em>src/main.rs</em> wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
