@@ -214,5 +214,5 @@ machen wollen, deinen Code weiterzugeben. Als Nächstes stellen wir dir das
 Cargo-Tool vor, das dir beim Schreiben von Rust-Programmen aus der realen Welt
 helfen wird.
 
-[devtools]: appendix-04-useful-development-tools.md
+[devtools]: appendix-04-useful-development-tools.html
 [troubleshooting]: ch01-01-installation.html#fehlersuche

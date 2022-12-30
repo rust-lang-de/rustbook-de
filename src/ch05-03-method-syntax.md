@@ -407,4 +407,4 @@ weiteres Werkzeug in deinen Werkzeugkasten zu legen.
 [enums]: ch06-00-enums.html
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 [public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schlüsselwort-pub-öffnen
-[trait-objects]: ch17-02-trait-objects.md
+[trait-objects]: ch17-02-trait-objects.html
