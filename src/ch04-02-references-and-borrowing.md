@@ -231,8 +231,8 @@ Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
 Daten-Wettlaufsituationen gar nicht erst kompiliert!
 
 Wie immer können wir geschweifte Klammern verwenden, um einen neuen
-Gültigkeitsbereich zu schaffen, der mehrere veränderbare Verweise erlaubt, nur
-nicht *gleichzeitige*:
+Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
+nur nicht *gleichzeitige*:
 
 ```rust
 let mut s = String::from("Hallo");
