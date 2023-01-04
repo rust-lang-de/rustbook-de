@@ -4163,11 +4163,6 @@ veränderbare Referenz <code>r3</code> erstellt wird. Diese Gültigkeitsbereiche
 überschneiden sich nicht, daher ist dieser Code zulässig: Der Compiler kann
 erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
 mehr verwendet wird.</p>
-<p>Die Fähigkeit des
-Compilers zu erkennen, dass eine Referenz an einem Punkt vor dem Ende des
-Gültigkeitsbereichs nicht mehr verwendet wird, wird als <em>nicht-lexikalische
-Lebensdauer</em> (Non-Lexical Lifetimes, kurz NLL) bezeichnet, und du kannst mehr
-darüber in [The Edition Guide][nll] lesen.</p>
 <p>Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
 daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
 nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
