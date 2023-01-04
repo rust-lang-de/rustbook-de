@@ -322,8 +322,8 @@ schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
 Laufzeit aufzuspüren; Rust verhindert dieses Problem, indem es Code mit
 Daten-Wettlaufsituationen gar nicht erst kompiliert!</p>
 <p>Wie immer können wir geschweifte Klammern verwenden, um einen neuen
-Gültigkeitsbereich zu schaffen, der mehrere veränderbare Verweise erlaubt, nur
-nicht <em>gleichzeitige</em>:</p>
+Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
+nur nicht <em>gleichzeitige</em>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from(&quot;Hallo&quot;);
