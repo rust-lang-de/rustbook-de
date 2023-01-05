@@ -78,7 +78,7 @@ Methode `iter` verwenden:
 # }
 ```
 
-Auf Iteratoren werden wir in [Kapitel 13][ch13] näher eingehen. Fürs Erste
+Auf Iteratoren werden wir in [Kapitel 13][ch13-2] näher eingehen. Fürs Erste
 solltest du wissen, dass `iter` eine Methode ist, die jedes Element in einer
 Kollektion zurückgibt und dass `enumerate` das Ergebnis von `iter` umhüllt und
 stattdessen jedes Element als Teil eines Tupels zurückgibt. Das erste Element
@@ -521,7 +521,7 @@ Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese
 Konzepte sprechen. Lass uns zu Kapitel 5 übergehen und uns das Gruppieren von
 Datenteilen zu einer `struct` ansehen.
 
-[ch13]: ch13-02-iterators.html
+[ch13-2]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#muster-die-werte-binden
 [deref-coercions]:
 ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
