@@ -42,16 +42,16 @@ opt-level = 3
 
 Die Einstellung `opt-level` steuert die Anzahl der Optimierungen, die Rust auf
 den Programmcode anwendet, in einem Bereich 0 bis 3. Das Anwenden zusätzlicher
-Optimierungen verlängert die Kompilierungszeit. Wenn man in der Entwicklung
-häufig den Programmcode kompiliert, wünscht man zumeist weniger Optimierungen,
-um schneller zu kompilieren, auch wenn dadurch der resultierende Programmcode
+Optimierungen verlängert die Kompilierzeit. Wenn man in der Entwicklung häufig
+den Programmcode kompiliert, wünscht man zumeist weniger Optimierungen, um
+schneller zu kompilieren, auch wenn dadurch der resultierende Programmcode
 langsamer ausgeführt wird. Das Standard-`opt-level` für `dev` ist daher `0`.
 Wenn du bereit bist, deinen Programmcode zu veröffentlichen, ist es besser,
 wenn das Kompilieren mehr Zeit benötigt, man wird nur einmal im Releasemodus
 kompilieren, aber das Programm oft ausführen, daher tauscht der Releasemodus
-eine längere Kompilierungszeit gegen Programmcode, der schneller ausgeführt
-wird. Aus diesem Grund ist das standardmäßige `opt-level` für das Profil
-`release` `3`.
+eine längere Kompilierzeit gegen Programmcode, der schneller ausgeführt wird.
+Aus diesem Grund ist das standardmäßige `opt-level` für das Profil `release`
+`3`.
 
 Du kannst eine Standardeinstellung überschreiben, indem du dafür in
 *Cargo.toml* einen anderen Wert hinzufügst. Wenn wir zum Beispiel die
