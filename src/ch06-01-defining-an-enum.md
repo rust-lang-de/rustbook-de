@@ -209,11 +209,11 @@ ein, die für jede Variante unterschiedlich definiert sind:
 
 ```rust
 struct Ipv4Addr {
-    // --snip--
+    // --abschneiden--
 }
 
 struct Ipv6Addr {
-    // --snip--
+    // --abschneiden--
 }
 
 enum IpAddr {

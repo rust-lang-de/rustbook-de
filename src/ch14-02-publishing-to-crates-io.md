@@ -144,7 +144,7 @@ beginnen. Siehe Codeblock 14-2:
 //! calculations more convenient.
 
 /// Adds one to the number given.
-// --snip--
+// --abschneiden--
 #///
 #/// # Examples
 #///
@@ -246,7 +246,7 @@ pub mod utils {
     /// Combines two primary colors in equal amounts to create
     /// a secondary color.
     pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -> SecondaryColor {
-        // --snip--
+        // --abschneiden--
 #        unimplemented!();
     }
 }
@@ -315,7 +315,7 @@ pub use self::kinds::SecondaryColor;
 pub use self::utils::mix;
 
 pub mod kinds {
-   // --snip--
+   // --abschneiden--
 #    /// The primary colors according to the RYB color model.
 #    pub enum PrimaryColor {
 #        Red,
@@ -332,7 +332,7 @@ pub mod kinds {
 }
 
 pub mod utils {
-    // --snip--
+    // --abschneiden--
 #    use crate::kinds::*;
 #
 #    /// Combines two primary colors in equal amounts to create
@@ -368,7 +368,7 @@ use art::mix;
 use art::PrimaryColor;
 
 fn main() {
-    // --snip--
+    // --abschneiden--
 #    let red = PrimaryColor::Red;
 #    let yellow = PrimaryColor::Yellow;
 #    mix(red, yellow);
@@ -443,7 +443,7 @@ $ cargo publish
     Updating crates.io index
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
---snip--
+--abschneiden--
 error: failed to publish to registry at https://crates.io
 
 Caused by:
