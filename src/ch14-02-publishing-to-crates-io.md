@@ -468,16 +468,16 @@ MIT-Lizenz lizenziert hast, füge die `MIT`-Identifikation hinzu:
 name = "guessing_game"
 license = "MIT"
 ```
-Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss man
-den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt aufnehmen
-und dann `license-file` verwenden um den Namen dieser Lizenz zu spezifizieren 
-anstelle der Verwendung des `license`-Schlüssels.
+Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss
+man den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt
+aufnehmen und dann `license-file` verwenden um den Namen dieser Lizenz zu
+spezifizieren anstelle der Verwendung des `license`-Schlüssels.
 
-Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den Rahmen
-dieses Buches hinaus. Viele Leute in der Rust Community lizenzieren ihre Projekte
-genauso wie Rust mit einer Doppellizenz von `MIT OR Apache-2.0`. Diese Übung
-zeigt, dass man durch `OR` auch mehrere Lizenzkennungen getrennt angeben kann,
-um mehrere Lizenzen für ein Projekt zu haben.
+Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den
+Rahmen dieses Buches hinaus. Viele Leute in der Rust-Gemeinschaft lizenzieren
+ihre Projekte genauso wie Rust mit einer Doppellizenz von `MIT OR Apache-2.0`.
+Diese Übung zeigt, dass man durch `OR` auch mehrere Lizenzkennungen getrennt
+angeben kann, um mehrere Lizenzen für ein Projekt zu haben.
 
 Mit einem eindeutigen Namen, der Version, deiner Beschreibung und einer
 hinzugefügten Lizenz könnte die Datei *Cargo.toml* für ein Projekt, das zur
@@ -527,9 +527,9 @@ $ cargo publish
     Finished dev [unoptimized + debuginfo] target(s) in 0.19s
    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
 ```
-Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die Rust-Community
-freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit für sein Projekt
-hinzufügen.
+Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die
+Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
+für sein Projekt hinzufügen.
 
 ### Veröffentlichen einer neuen Version einer vorhandenen Kiste
 

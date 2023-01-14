@@ -23,8 +23,8 @@ Hier ist unser Plan zum Bauen des Webservers:
 
 Bevor wir anfangen, sollten wir ein Detail erwähnen: Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu
-bauen. Community-Mitglieder haben eine Reihe von produktionsreifen Kisten auf
-[crates.io][crates] veröffentlicht, die umfassendere Webserver- und
+bauen. Gemeinschaftsmitglieder haben eine Reihe von produktionsreifen Kisten
+auf [crates.io][crates] veröffentlicht, die umfassendere Webserver- und
 Strang-Vorrats-Implementierungen bereitstellen, als wir sie bauen werden.
 Unsere Absicht in diesem Kapitel ist es jedoch, dir beim Lernen zu helfen, und
 nicht, den einfachen Weg zu gehen. Da es sich bei Rust um eine
