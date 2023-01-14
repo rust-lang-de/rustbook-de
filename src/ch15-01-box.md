@@ -166,7 +166,7 @@ Liste `1, 2, 3` zu speichern</span>
 Der erste `Cons`-Wert enthält `1` und einen anderen `List`-Wert. Dieser
 `List`-Wert ist ein weiterer `Cons`-Wert, der `2` und einen anderen `List`-Wert
 enthält. Dieser `List`-Wert ist ein weiterer `Cons`, der `3` enthält und ein
-`List`, der schliesslich `Nil` ist, die nicht rekursive Variante, die das Ende
+`List`, der schließlich `Nil` ist, die nicht rekursive Variante, die das Ende
 der Liste signalisiert.
 
 
