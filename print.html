@@ -220,7 +220,7 @@ Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
 Rust-Ökosystem schmerzlos und konsistent.</li>
 <li>Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
 den Entwicklern.</li>
-<li>Der Rust Sprachdienst (Language Server) ermöglicht Code-Vervollständigung und
+<li>Der Rust Sprachdienst (Language Server) ermöglicht Codevervollständigung und
 im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).</li>
 </ul>
 <p>Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können
@@ -15946,7 +15946,7 @@ benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden. Die
 ist vergleichbar mit <code>let v = Vec::new();</code>, bei dem entweder Typ-Annotationen
 oder Werte eines bestimmten Typs in den <code>Vec</code> eingefügt werden müssen, damit
 Rust den Typ ableiten kann.</p>
-<p>Bei Funktionsabschluss-Definitionen wird für jeden Parameter und für den
+<p>Bei Funktionsabschlussdefinitionen wird für jeden Parameter und für den
 Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-3 zeigt zum Beispiel
 die Definition eines kurzen Funktionsabschlusses, der nur den Wert des
 übergebenen Parameters zurückgibt. Dieser Funktionsabschluss ist außer für
@@ -16005,7 +16005,7 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let list = vec![1, 2, 3];
-    println!(&quot;Vor der Funktionsabschluss-Definition: {:?}&quot;, list);
+    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
 
     let only_borrows = || println!(&quot;Im Funktionsabschluss: {:?}&quot;, list);
 
@@ -16016,19 +16016,19 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span></p>
 <p>Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
-Funktionsabschluss-Definition gebunden werden kann, und wir den
+Funktionsabschlussdefinition gebunden werden kann, und wir den
 Funktionsabschluss später aufrufen können, indem wir den Variablennamen und die
 Klammern verwenden, als ob der Variablenname ein Funktionsname wäre.</p>
 <p>Da wir mehrere unveränderbare Referenzen auf <code>list</code> zur gleichen Zeit haben
-können, ist <code>list</code> immer noch vom Code vor der Funktionsabschluss-Definition
-zugreifbar, sowie nach der Funktionsabschluss-Definition und vor dem Aufruf des
+können, ist <code>list</code> immer noch vom Code vor der Funktionsabschlussdefinition
+zugreifbar, sowie nach der Funktionsabschlussdefinition und vor dem Aufruf des
 Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
 kompiliert, läuft und gibt folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
 Im Funktionsabschluss: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
@@ -16039,7 +16039,7 @@ nun eine veränderbare Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut list = vec![1, 2, 3];
-    println!(&quot;Vor der Funktionsabschluss-Definition: {:?}&quot;, list);
+    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
 
     let mut borrows_mutably = || list.push(7);
 
@@ -16053,7 +16053,7 @@ Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
 </code></pre>
 <p>Beachte, dass es kein <code>println!</code> mehr zwischen der Definition und dem Aufruf
@@ -16061,7 +16061,7 @@ des Funktionsabschlusses <code>borrows_mutably</code> gibt: Wenn <code>borrows_m
 definiert ist, erfasst es eine veränderbare Referenz auf <code>list</code>. Der
 Funktionsabschluss wird nicht mehr verwendet, nachdem er aufgerufen wurde,
 daher endet die veränderbare Ausleihe. Zwischen der
-Funktionsabschluss-Definition und dem Funktionsabschluss-Aufruf ist eine
+Funktionsabschlussdefinition und dem Funktionsabschluss-Aufruf ist eine
 unveränderbare Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
 Ausleihen erlaubt sind, wenn es eine veränderbare Ausleihe gibt. Versuche,
 dort ein <code>println!</code> hinzuzufügen, um zu sehen, welche Fehlermeldung du
@@ -16100,7 +16100,7 @@ Referenz erfasst, weil das die kleinste Zugriffmenge auf <code>list</code> ist, 
 benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
 Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
 dass <code>list</code> in den Funktionsabschluss verschoben werden soll, indem wir das
-Schlüsselwort <code>move</code> an den Anfang der Funktionsabschluss-Definition setzen.
+Schlüsselwort <code>move</code> an den Anfang der Funktionsabschlussdefinition setzen.
 Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
 wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
 die Eigentümerschaft von <code>list</code> beibehält, aber vor dem neuen Strang endet und
@@ -29526,14 +29526,14 @@ Modulhierarchie eines Elements vorkommen.</p>
 auftreten.</p>
 <p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
-<tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ<br> (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
-<tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ,<br> einer Funktion oder Methode in einem Ausdruck;<br> oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
+<tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
+<tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ, einer Funktion oder Methode in einem Ausdruck; oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
 <tr><td style="text-align: left"><code>fn ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Funktion definieren</td></tr>
 <tr><td style="text-align: left"><code>struct ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Struktur definieren</td></tr>
 <tr><td style="text-align: left"><code>enum ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Aufzählung definieren</td></tr>
 <tr><td style="text-align: left"><code>impl&lt;...&gt; ...</code></td><td style="text-align: left">Generische Implementierung definieren</td></tr>
 <tr><td style="text-align: left"><code>for&lt;...&gt; type</code></td><td style="text-align: left">Höherstufige Lebensdauerbegrenzungen</td></tr>
-<tr><td style="text-align: left"><code>type&lt;ident=type&gt;</code></td><td style="text-align: left">Generischer Typ, bei dem ein oder mehrere assoziierte<br> Typen bestimmte Zuordnungen haben<br> (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
+<tr><td style="text-align: left"><code>type&lt;ident=type&gt;</code></td><td style="text-align: left">Generischer Typ, bei dem ein oder mehrere assoziierte Typen bestimmte Zuordnungen haben (z.B. <code>Iterator&lt;Item=T&gt;</code>)</td></tr>
 </tbody></table>
 </div>
 <p>Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
@@ -29582,7 +29582,7 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>(type,)</code></td><td style="text-align: left">Ein-Element-Tupel-Typ</td></tr>
 <tr><td style="text-align: left"><code>(expr, ...)</code></td><td style="text-align: left">Tupel-Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>(type, ...)</code></td><td style="text-align: left">Tupel-Typ</td></tr>
-<tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von<br> Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
+<tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
 <tr><td style="text-align: left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td style="text-align: left">Tupel-Indexierung</td></tr>
 </tbody></table>
 </div>
@@ -29600,7 +29600,7 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
 <tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
 <tr><td style="text-align: left"><code>expr[expr]</code></td><td style="text-align: left">Sammlungs-Indexierung, ist überladbar (<code>Index</code>, <code>IndexMut</code>)</td></tr>
-<tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht,<br> unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder<br> <code>RangeFull</code> als „Index“</td></tr>
+<tr><td style="text-align: left"><code>expr[..]</code>,<br> <code>expr[a..]</code>,<br> <code>expr[..b]</code>,<br> <code>expr[a..b]</code></td><td style="text-align: left">Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht, unter Verwendung von <code>Range</code>, <code>RangeFrom</code>, <code>RangeTo</code> oder <code>RangeFull</code> als „Index“</td></tr>
 </tbody></table>
 </div><div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-c-ableitbare-merkmale-traits"><a class="header" href="#anhang-c-ableitbare-merkmale-traits">Anhang C: Ableitbare Merkmale (traits)</a></h2>
 <p>An verschiedenen Stellen im Buch haben wir das Attribut <code>derive</code> besprochen,
@@ -29620,7 +29620,7 @@ werden</li>
 <li>Beispiele für Operationen, die dieses Merkmal erfordern</li>
 </ul>
 <p>Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut <code>derive</code>
-bereitgestellt wird, schaue in die <a href="https://doc.rust-lang.org/std/index.html">Standard-Bibliotheksdokumentation</a>
+bereitgestellt wird, schaue in die <a href="https://doc.rust-lang.org/std/index.html">Standardbibliotheksdokumentation</a>
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.</p>
 <p>Diese hier aufgelisteten Merkmale sind die einzigen, die von der
 Standardbibliothek definiert werden und die mit <code>derive</code> in deinen Typen
@@ -29894,7 +29894,7 @@ eingeblendete Fehlermeldungen erhalten.</p>
 in deiner Datei <em>Cargo.toml</em> hinzufügt. Dieser Anhang erläutert, was das
 bedeutet!</p>
 <p>Die Sprache Rust und der Compiler haben einen sechswöchigen
-Veröffentlichungs-Zyklus, was bedeutet, dass die Nutzer einen konstanten Strom
+Veröffentlichungszyklus, was bedeutet, dass die Nutzer einen konstanten Strom
 neuer Funktionen erhalten. Andere Programmiersprachen geben weniger oft größere
 Änderungen heraus; Rust gibt häufiger kleinere Aktualisierungen heraus. Nach
 einer Weile summieren sich all diese kleinen Änderungen. Aber von
