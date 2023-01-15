@@ -445,12 +445,12 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span>    // --snip--
+</span>    // --abschneiden--
     fn new(args: &amp;[String]) -&gt; Config {
         if args.len() &lt; 3 {
             panic!(&quot;Nicht genügend Argumente&quot;);
         }
-        // --snip--
+        // --abschneiden--
 <span class="boring">
 </span><span class="boring">        let query = args[1].clone();
 </span><span class="boring">        let file_path = args[2].clone();

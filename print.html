@@ -2877,8 +2877,8 @@ er beschreibt:</p>
     let lucky_number = 7;
 }</code></pre></pre>
 <p>Rust kennt noch eine weitere Kommentarart, nämlich Dokumentationskommentare,
-die wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html">&quot;Kisten (crate) auf crates.io
-veröffentlichen&quot;</a> in Kapitel 14 besprechen werden.</p>
+die wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html">„Kisten (crate) auf crates.io
+veröffentlichen“</a> in Kapitel 14 besprechen werden.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
 <p>Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung <code>true</code>
 ist, oder Code wiederholt auszuführen, während eine Bedingung <code>true</code> ist, sind
@@ -5910,11 +5910,11 @@ ein, die für jede Variante unterschiedlich definiert sind:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Ipv4Addr {
-    // --snip--
+    // --abschneiden--
 }
 
 struct Ipv6Addr {
-    // --snip--
+    // --abschneiden--
 }
 
 enum IpAddr {
@@ -7688,8 +7688,8 @@ ist.</p>
 Datei Teil des Projekts ist (und weiß, wo im Modulbaum sich der Code befindet,
 weil du die <code>mod</code>-Anweisung eingefügt hast), sollten andere Dateien in deinem
 Projekt auf den Code der geladenen Datei referenzieren, indem sie einen Pfad zu
-der Stelle verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden
-auf ein Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen
+der Stelle verwenden, an der er deklariert wurde, wie im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden
+auf ein Element im Modulbaum verweisen“</a> beschrieben. Mit anderen
 Worten: <code>mod</code> ist <em>keine</em> „include“-Operation, wie du sie vielleicht aus
 anderen Programmiersprachen kennst.</p>
 <p>Als Nächstes extrahieren wir das Modul <code>hosting</code> in seine eigene Datei. Der
@@ -10891,9 +10891,8 @@ einem Typ aufrufen, der die Methode nicht definiert hat. Rust verschiebt diese
 Fehler jedoch in die Kompilierzeit und verlangt damit, dass wir die Probleme
 beheben, bevor unser Code überhaupt lauffähig ist. Außerdem müssen wir keinen
 Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zur
-Kompilierungszeit überprüft haben. Auf diese Weise wird die Performanz
-verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
-müssen.</p>
+Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
+ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="referenzen-validieren-mit-lebensdauern"><a class="header" href="#referenzen-validieren-mit-lebensdauern">Referenzen validieren mit Lebensdauern</a></h2>
 <p><em>Lebensdauer</em> (lifetimes) sind eine weitere generische Funktionalität, die wir
 bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
@@ -13875,12 +13874,12 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span>    // --snip--
+</span>    // --abschneiden--
     fn new(args: &amp;[String]) -&gt; Config {
         if args.len() &lt; 3 {
             panic!(&quot;Nicht genügend Argumente&quot;);
         }
-        // --snip--
+        // --abschneiden--
 <span class="boring">
 </span><span class="boring">        let query = args[1].clone();
 </span><span class="boring">        let file_path = args[2].clone();
@@ -17412,16 +17411,16 @@ opt-level = 3
 </code></pre>
 <p>Die Einstellung <code>opt-level</code> steuert die Anzahl der Optimierungen, die Rust auf
 den Programmcode anwendet, in einem Bereich 0 bis 3. Das Anwenden zusätzlicher
-Optimierungen verlängert die Kompilierungszeit. Wenn man in der Entwicklung
-häufig den Programmcode kompiliert, wünscht man zumeist weniger Optimierungen,
-um schneller zu kompilieren, auch wenn dadurch der resultierende Programmcode
+Optimierungen verlängert die Kompilierzeit. Wenn man in der Entwicklung häufig
+den Programmcode kompiliert, wünscht man zumeist weniger Optimierungen, um
+schneller zu kompilieren, auch wenn dadurch der resultierende Programmcode
 langsamer ausgeführt wird. Das Standard-<code>opt-level</code> für <code>dev</code> ist daher <code>0</code>.
 Wenn du bereit bist, deinen Programmcode zu veröffentlichen, ist es besser,
 wenn das Kompilieren mehr Zeit benötigt, man wird nur einmal im Releasemodus
 kompilieren, aber das Programm oft ausführen, daher tauscht der Releasemodus
-eine längere Kompilierungszeit gegen Programmcode, der schneller ausgeführt
-wird. Aus diesem Grund ist das standardmäßige <code>opt-level</code> für das Profil
-<code>release</code> <code>3</code>.</p>
+eine längere Kompilierzeit gegen Programmcode, der schneller ausgeführt wird.
+Aus diesem Grund ist das standardmäßige <code>opt-level</code> für das Profil <code>release</code>
+<code>3</code>.</p>
 <p>Du kannst eine Standardeinstellung überschreiben, indem du dafür in
 <em>Cargo.toml</em> einen anderen Wert hinzufügst. Wenn wir zum Beispiel die
 Optimierungsstufe 1 im Entwicklungsprofil verwenden möchten, können wir diese
@@ -17559,7 +17558,7 @@ beginnen. Siehe Codeblock 14-2: </p>
 //! calculations more convenient.
 
 /// Adds one to the number given.
-// --snip--
+// --abschneiden--
 <span class="boring">///
 </span><span class="boring">/// # Examples
 </span><span class="boring">///
@@ -17646,7 +17645,7 @@ pub mod utils {
     /// Combines two primary colors in equal amounts to create
     /// a secondary color.
     pub fn mix(c1: PrimaryColor, c2: PrimaryColor) -&gt; SecondaryColor {
-        // --snip--
+        // --abschneiden--
 <span class="boring">       unimplemented!();
 </span>    }
 }</code></pre>
@@ -17698,7 +17697,7 @@ pub use self::kinds::SecondaryColor;
 pub use self::utils::mix;
 
 pub mod kinds {
-   // --snip--
+   // --abschneiden--
 <span class="boring">   /// The primary colors according to the RYB color model.
 </span><span class="boring">   pub enum PrimaryColor {
 </span><span class="boring">       Red,
@@ -17715,7 +17714,7 @@ pub mod kinds {
 </span>}
 
 pub mod utils {
-    // --snip--
+    // --abschneiden--
 <span class="boring">   use crate::kinds::*;
 </span><span class="boring">
 </span><span class="boring">   /// Combines two primary colors in equal amounts to create
@@ -17742,7 +17741,7 @@ Codeblock 14-6 gezeigt wurde:</p>
 use art::PrimaryColor;
 
 fn main() {
-    // --snip--
+    // --abschneiden--
 <span class="boring">   let red = PrimaryColor::Red;
 </span><span class="boring">   let yellow = PrimaryColor::Yellow;
 </span><span class="boring">   mix(red, yellow);
@@ -17800,7 +17799,7 @@ anschließend ein Fehler angezeigt:</p>
     Updating crates.io index
 warning: manifest has no description, license, license-file, documentation, homepage or repository.
 See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for more info.
---snip--
+--abschneiden--
 error: failed to publish to registry at https://crates.io
 
 Caused by:
@@ -17821,15 +17820,15 @@ MIT-Lizenz lizenziert hast, füge die <code>MIT</code>-Identifikation hinzu:</p>
 name = &quot;guessing_game&quot;
 license = &quot;MIT&quot;
 </code></pre>
-<p>Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss man
-den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt aufnehmen
-und dann <code>license-file</code> verwenden um den Namen dieser Lizenz zu spezifizieren 
-anstelle der Verwendung des <code>license</code>-Schlüssels.</p>
-<p>Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den Rahmen
-dieses Buches hinaus. Viele Leute in der Rust Community lizenzieren ihre Projekte
-genauso wie Rust mit einer Doppellizenz von <code>MIT OR Apache-2.0</code>. Diese Übung
-zeigt, dass man durch <code>OR</code> auch mehrere Lizenzkennungen getrennt angeben kann,
-um mehrere Lizenzen für ein Projekt zu haben.</p>
+<p>Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss
+man den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt
+aufnehmen und dann <code>license-file</code> verwenden um den Namen dieser Lizenz zu
+spezifizieren anstelle der Verwendung des <code>license</code>-Schlüssels.</p>
+<p>Die Anleitung, welche Lizenz für dein Projekt geeignet ist, geht über den
+Rahmen dieses Buches hinaus. Viele Leute in der Rust-Gemeinschaft lizenzieren
+ihre Projekte genauso wie Rust mit einer Doppellizenz von <code>MIT OR Apache-2.0</code>.
+Diese Übung zeigt, dass man durch <code>OR</code> auch mehrere Lizenzkennungen getrennt
+angeben kann, um mehrere Lizenzen für ein Projekt zu haben.</p>
 <p>Mit einem eindeutigen Namen, der Version, deiner Beschreibung und einer
 hinzugefügten Lizenz könnte die Datei <em>Cargo.toml</em> für ein Projekt, das zur
 Veröffentlichung bereit ist, folgendermaßen aussehen:</p>
@@ -17868,9 +17867,9 @@ die man veröffentlichen kann, ist jedoch unbegrenzt.</p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.19s
    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
 </code></pre>
-<p>Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die Rust-Community
-freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit für sein Projekt
-hinzufügen.</p>
+<p>Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die
+Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
+für sein Projekt hinzufügen.</p>
 <h3 id="veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste"><a class="header" href="#veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste">Veröffentlichen einer neuen Version einer vorhandenen Kiste</a></h3>
 <p>Wenn du Änderungen an deiner Kiste vorgenommen hast und bereit bist, eine neue
 Version zu veröffentlichen, ändere den in der <em>Cargo.toml</em>-Datei
@@ -18221,7 +18220,7 @@ Dateien gibt. Um <code>ripgrep</code> zu installieren, führen wir Folgendes aus
   Downloaded ripgrep v13.0.0
   Downloaded 1 crate (243.3 KB) in 0.88s
   Installing ripgrep v13.0.0
---snip--
+--abschneiden--
    Compiling ripgrep v13.0.0
     Finished release [optimized + debuginfo] target(s) in 3m 10s
   Installing ~/.cargo/bin/rg
@@ -18303,7 +18302,7 @@ behandeln:</p>
 <li><code>Rc&lt;T&gt;</code>, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
 ermöglicht</li>
 <li><code>Ref&lt;T&gt;</code> und <code>RefMut&lt;T&gt;</code>, Zugriff über <code>RefCell&lt;T&gt;</code>, ein Typ, der das
-Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierungszeit
+Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierzeit
 erzwingt.</li>
 </ul>
 <p>Darüber hinaus wird das <em>innere Veränderbarkeitsmuster</em> (interior mutability pattern)
@@ -18448,7 +18447,7 @@ Liste <code>1, 2, 3</code> zu speichern</span></p>
 <p>Der erste <code>Cons</code>-Wert enthält <code>1</code> und einen anderen <code>List</code>-Wert. Dieser
 <code>List</code>-Wert ist ein weiterer <code>Cons</code>-Wert, der <code>2</code> und einen anderen <code>List</code>-Wert
 enthält. Dieser <code>List</code>-Wert ist ein weiterer <code>Cons</code>, der <code>3</code> enthält und ein
-<code>List</code>, der schliesslich <code>Nil</code> ist, die nicht rekursive Variante, die das Ende
+<code>List</code>, der schließlich <code>Nil</code> ist, die nicht rekursive Variante, die das Ende
 der Liste signalisiert.</p>
 <p>Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
 erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird:</p>
@@ -26505,8 +26504,8 @@ pool).</li>
 </ol>
 <p>Bevor wir anfangen, sollten wir ein Detail erwähnen: Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu
-bauen. Community-Mitglieder haben eine Reihe von produktionsreifen Kisten auf
-<a href="https://crates.io/">crates.io</a> veröffentlicht, die umfassendere Webserver- und
+bauen. Gemeinschaftsmitglieder haben eine Reihe von produktionsreifen Kisten
+auf <a href="https://crates.io/">crates.io</a> veröffentlicht, die umfassendere Webserver- und
 Strang-Vorrats-Implementierungen bereitstellen, als wir sie bauen werden.
 Unsere Absicht in diesem Kapitel ist es jedoch, dir beim Lernen zu helfen, und
 nicht, den einfachen Weg zu gehen. Da es sich bei Rust um eine
@@ -29770,10 +29769,10 @@ schnellen Möglichkeiten zum Beheben von Warnhinweisen, einem Tool zur
 statischen Code-Analyse (linter) und der Integration in integrierte
 Entwicklungsumgebungen (IDEs) befassen.</p>
 <h3 id="automatische-formatierung-mit-rustfmt"><a class="header" href="#automatische-formatierung-mit-rustfmt">Automatische Formatierung mit <code>rustfmt</code></a></h3>
-<p>Das Tool <code>rustfmt</code> formatiert deinen Code entsprechend des Community-Codestils.
-Viele kollaborative Projekte verwenden <code>rustfmt</code>, um Diskussionen zum Stil beim
-Schreiben von Rust zu vermeiden: Jeder formatiert seinen Code mithilfe des
-Tools.</p>
+<p>Das Tool <code>rustfmt</code> formatiert deinen Code entsprechend des
+Gemeinschafts-Codestils. Viele kollaborative Projekte verwenden <code>rustfmt</code>, um
+Diskussionen zum Stil beim Schreiben von Rust zu vermeiden: Jeder formatiert
+seinen Code mithilfe des Tools.</p>
 <p>Um <code>rustfmt</code> zu installieren, gib folgendes ein:</p>
 <pre><code class="language-console">$ rustup component add rustfmt
 </code></pre>
