@@ -18,7 +18,7 @@ umfasst:
 * Beispiele für Operationen, die dieses Merkmal erfordern
 
 Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut `derive`
-bereitgestellt wird, schaue in die [Standard-Bibliotheksdokumentation][std-lib]
+bereitgestellt wird, schaue in die [Standardbibliotheksdokumentation][std-lib]
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.
 
 Diese hier aufgelisteten Merkmale sind die einzigen, die von der

@@ -34,7 +34,7 @@ Systemprogrammierung:
   Rust-Ökosystem schmerzlos und konsistent.
 * Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
   den Entwicklern.
-* Der Rust Sprachdienst (Language Server) ermöglicht Code-Vervollständigung und
+* Der Rust Sprachdienst (Language Server) ermöglicht Codevervollständigung und
   im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).
 
 Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können

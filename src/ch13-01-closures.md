@@ -232,7 +232,7 @@ ist vergleichbar mit `let v = Vec::new();`, bei dem entweder Typ-Annotationen
 oder Werte eines bestimmten Typs in den `Vec` eingefügt werden müssen, damit
 Rust den Typ ableiten kann.
 
-Bei Funktionsabschluss-Definitionen wird für jeden Parameter und für den
+Bei Funktionsabschlussdefinitionen wird für jeden Parameter und für den
 Rückgabewert ein konkreter Typ abgeleitet. Codeblock 13-3 zeigt zum Beispiel
 die Definition eines kurzen Funktionsabschlusses, der nur den Wert des
 übergebenen Parameters zurückgibt. Dieser Funktionsabschluss ist außer für
@@ -303,7 +303,7 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
 ```rust
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschluss-Definition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
 
     let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
 
@@ -317,13 +317,13 @@ fn main() {
 Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span>
 
 Dieses Beispiel veranschaulicht auch, dass eine Variable an eine
-Funktionsabschluss-Definition gebunden werden kann, und wir den
+Funktionsabschlussdefinition gebunden werden kann, und wir den
 Funktionsabschluss später aufrufen können, indem wir den Variablennamen und die
 Klammern verwenden, als ob der Variablenname ein Funktionsname wäre.
 
 Da wir mehrere unveränderbare Referenzen auf `list` zur gleichen Zeit haben
-können, ist `list` immer noch vom Code vor der Funktionsabschluss-Definition
-zugreifbar, sowie nach der Funktionsabschluss-Definition und vor dem Aufruf des
+können, ist `list` immer noch vom Code vor der Funktionsabschlussdefinition
+zugreifbar, sowie nach der Funktionsabschlussdefinition und vor dem Aufruf des
 Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
 kompiliert, läuft und gibt folgendes aus:
 
@@ -332,7 +332,7 @@ $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
 Im Funktionsabschluss: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
@@ -347,7 +347,7 @@ nun eine veränderbare Referenz:
 ```rust
 fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschluss-Definition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
 
     let mut borrows_mutably = || list.push(7);
 
@@ -366,7 +366,7 @@ $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
-Vor der Funktionsabschluss-Definition: [1, 2, 3]
+Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
 ```
 
@@ -375,7 +375,7 @@ des Funktionsabschlusses `borrows_mutably` gibt: Wenn `borrows_mutably`
 definiert ist, erfasst es eine veränderbare Referenz auf `list`. Der
 Funktionsabschluss wird nicht mehr verwendet, nachdem er aufgerufen wurde,
 daher endet die veränderbare Ausleihe. Zwischen der
-Funktionsabschluss-Definition und dem Funktionsabschluss-Aufruf ist eine
+Funktionsabschlussdefinition und dem Funktionsabschluss-Aufruf ist eine
 unveränderbare Ausleihe für die Ausgabe nicht erlaubt, weil keine anderen
 Ausleihen erlaubt sind, wenn es eine veränderbare Ausleihe gibt. Versuche,
 dort ein `println!` hinzuzufügen, um zu sehen, welche Fehlermeldung du
@@ -422,7 +422,7 @@ Referenz erfasst, weil das die kleinste Zugriffmenge auf `list` ist, die
 benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
 Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
 dass `list` in den Funktionsabschluss verschoben werden soll, indem wir das
-Schlüsselwort `move` an den Anfang der Funktionsabschluss-Definition setzen.
+Schlüsselwort `move` an den Anfang der Funktionsabschlussdefinition setzen.
 Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
 wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
 die Eigentümerschaft von `list` beibehält, aber vor dem neuen Strang endet und
