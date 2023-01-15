@@ -151,7 +151,7 @@ andere `Rc<List>`-Instanz immer noch auf sie referenziert. Der der Liste
 zugewiesene Speicher bleibt für immer unaufgeräumt. Um diesen Referenzzyklus zu
 veranschaulichen, haben wir in Abbildung 15-4 ein Diagramm erstellt.
 
-<img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 50%;" />
+<img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 40%;" />
 
 <span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen `a` und `b`,
 die aufeinander zeigen</span>
