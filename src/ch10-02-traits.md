@@ -626,9 +626,8 @@ einem Typ aufrufen, der die Methode nicht definiert hat. Rust verschiebt diese
 Fehler jedoch in die Kompilierzeit und verlangt damit, dass wir die Probleme
 beheben, bevor unser Code überhaupt lauffähig ist. Außerdem müssen wir keinen
 Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zur
-Kompilierungszeit überprüft haben. Auf diese Weise wird die Performanz
-verbessert, ohne die Flexibilität der generischen Datentypen aufgeben zu
-müssen.
+Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
+ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.
 
 [methods]: ch05-03-method-syntax.html#definieren-von-methoden
 [using-trait-objects-that-allow-for-values-of-different-types]:

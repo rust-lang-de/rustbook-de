@@ -58,7 +58,7 @@ behandeln:
 * `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
     ermöglicht
 * `Ref<T>` und `RefMut<T>`, Zugriff über `RefCell<T>`, ein Typ, der das
-    Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierungszeit
+    Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierzeit
     erzwingt.
 
 Darüber hinaus wird das *innere Veränderbarkeitsmuster* (interior mutability pattern)

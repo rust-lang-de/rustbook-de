@@ -8,10 +8,10 @@ Entwicklungsumgebungen (IDEs) befassen.
 
 ### Automatische Formatierung mit `rustfmt`
 
-Das Tool `rustfmt` formatiert deinen Code entsprechend des Community-Codestils.
-Viele kollaborative Projekte verwenden `rustfmt`, um Diskussionen zum Stil beim
-Schreiben von Rust zu vermeiden: Jeder formatiert seinen Code mithilfe des
-Tools.
+Das Tool `rustfmt` formatiert deinen Code entsprechend des
+Gemeinschafts-Codestils. Viele kollaborative Projekte verwenden `rustfmt`, um
+Diskussionen zum Stil beim Schreiben von Rust zu vermeiden: Jeder formatiert
+seinen Code mithilfe des Tools.
 
 Um `rustfmt` zu installieren, gib folgendes ein:
 

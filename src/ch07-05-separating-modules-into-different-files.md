@@ -49,7 +49,7 @@ Datei Teil des Projekts ist (und weiß, wo im Modulbaum sich der Code befindet,
 weil du die `mod`-Anweisung eingefügt hast), sollten andere Dateien in deinem
 Projekt auf den Code der geladenen Datei referenzieren, indem sie einen Pfad zu
 der Stelle verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden
-auf ein Element im Modulbaum verweisen“][Pfade] beschrieben. Mit anderen
+auf ein Element im Modulbaum verweisen“][paths] beschrieben. Mit anderen
 Worten: `mod` ist *keine* „include“-Operation, wie du sie vielleicht aus
 anderen Programmiersprachen kennst.
 
