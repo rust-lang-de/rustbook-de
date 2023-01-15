@@ -5,7 +5,7 @@ in deiner Datei *Cargo.toml* hinzufügt. Dieser Anhang erläutert, was das
 bedeutet!
 
 Die Sprache Rust und der Compiler haben einen sechswöchigen
-Veröffentlichungs-Zyklus, was bedeutet, dass die Nutzer einen konstanten Strom
+Veröffentlichungszyklus, was bedeutet, dass die Nutzer einen konstanten Strom
 neuer Funktionen erhalten. Andere Programmiersprachen geben weniger oft größere
 Änderungen heraus; Rust gibt häufiger kleinere Aktualisierungen heraus. Nach
 einer Weile summieren sich all diese kleinen Änderungen. Aber von
