@@ -32,8 +32,6 @@ Kiste (crate) neu formatiert. Dies sollte nur den Codestil, nicht aber die
 Codesemantik ändern. Weitere Informationen zu `rustfmt` findest du in [seiner
 Dokumentation][rustfmt].
 
-[rustfmt]: https://github.com/rust-lang/rustfmt
-
 ### Korrigiere deinen Code mit `rustfix`
 
 Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
@@ -102,7 +100,7 @@ mehr.
 
 Du kannst den Befehl `cargo fix` auch dazu verwenden, deinen Code zwischen
 verschiedenen Rust-Ausgaben zu konvertieren. Die Ausgaben sind in [Anhang
-E](appendix-05-editions.html) aufgeführt.
+E][appendix-e] aufgeführt.
 
 ### Mehr statische Codeanalyse mit Clippy
 
@@ -166,8 +164,6 @@ fn main() {
 
 Für weitere Informationen über Clippy siehe [seine Dokumentation][clippy].
 
-[clippy]: https://github.com/rust-lang/rust-clippy
-
 ### IDE-Integration mittels `rust-analyzer`
 
 Um die IDE-Integration zu erleichtern, empfiehlt die Rust-Gemeinschaft die
@@ -184,6 +180,9 @@ Sprachserver-Unterstützung in deiner speziellen IDE. Deine IDE wird
 Fähigkeiten wie Autovervollständigung, Sprung zur Definition und im Code
 eingeblendete Fehlermeldungen erhalten.
 
+[appendix-e]: appendix-05-editions.html
+[clippy]: https://github.com/rust-lang/rust-clippy
 [lsp]: http://langserver.org/
+[rustfmt]: https://github.com/rust-lang/rustfmt
 [rust-analyzer]: https://rust-analyzer.github.io
 [vscode]: https://marketplace.visualstudio.com/items?itemName=rust-lang.rust-analyzer
