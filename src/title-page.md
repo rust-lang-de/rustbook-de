@@ -20,5 +20,5 @@ Der englische Text ist auch als [Taschenbuch und E-Book bei No Starch
 Press][nsprust] erhältlich.
 
 [install1]: ch01-01-installation.html
-[nsprust]: https://nostarch.com/rust
+[nsprust]: https://nostarch.com/rust-programming-language-2nd-edition
 [translations]: appendix-06-translation.html

@@ -78,8 +78,8 @@ den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
 wir werden `T` verwenden, weil die Typparameternamen gemäß Konvention in Rust
 kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
-Binnenmajuskel (CamelCase). Als Abkürzung für „Typ“ ist `T` die Standardwahl
-der meisten Rust-Programmierer.
+Binnenmajuskel (UpperCamelCase). Als Abkürzung für „Typ“ ist `T` die
+Standardwahl der meisten Rust-Programmierer.
 
 Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
