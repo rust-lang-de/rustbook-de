@@ -36,7 +36,7 @@ angenehm zu machen &ndash; du wirst später in diesem Buch einfache Beispiele
 dazu finden. Die Arbeit mit Rust ermöglicht es dir, Fähigkeiten zu entwickeln,
 die von einer Domäne auf eine andere übertragen werden können; du kannst Rust
 durch Schreiben einer Webanwendung erlernen und dann diese Fähigkeiten auf
-deinen Raspberry Pi anwenden.
+deinem Raspberry Pi anwenden.
 
 In diesem Buch wird das Potenzial von Rust zur Befähigung seiner Nutzer voll
 ausgeschöpft. Es ist ein freundlicher und zugänglicher Text, der dir helfen
