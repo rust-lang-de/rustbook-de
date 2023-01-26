@@ -279,8 +279,8 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` due to previous error
 ```
 
-Puh! Wir können auch keine veränderbaren Referenzen haben, solange wir eine
-unveränderbare haben auf denselben Wert haben.
+Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
+unveränderbare Referenz auf denselben Wert haben.
 
 Nutzer einer unveränderbaren Referenz erwarten nicht, dass sich die Werte
 dahinter plötzlich ändern! Mehrere unveränderbare Referenzen sind jedoch in
