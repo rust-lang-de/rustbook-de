@@ -367,8 +367,8 @@ Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
 ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
 vergessen.
 
-Zu Schluss ändern wir die Spielregeln noch einmal, sodass bei deinem Zug nichts
-anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst. Wir
+Zum Schluss ändern wir die Spielregeln noch einmal, sodass bei einem Zug nichts
+anderes passiert, wenn etwas anderes als eine 3 oder eine 7 gewürfelt wird. Wir
 können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
 wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt haben) als Code im `_`-Zweig
 angeben:
