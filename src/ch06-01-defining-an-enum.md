@@ -319,7 +319,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.
 
