@@ -307,7 +307,7 @@ schicken Hut bekommt anstatt sich zu bewegen. Wenn du eine 7 würfelst, verliert
 dein Spieler einen schicken Hut. Bei allen anderen Werten zieht der Spieler die
 entsprechende Anzahl an Feldern auf dem Spielfeld. Hier ist ein `match`, das
 diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
-Zufallswerts fest kodiert ist, und alle weiter Logik wird durch Funktionen ohne
+Zufallswerts fest kodiert ist, und alle weitere Logik wird durch Funktionen ohne
 Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
 Rahmen sprengen würde:
 
