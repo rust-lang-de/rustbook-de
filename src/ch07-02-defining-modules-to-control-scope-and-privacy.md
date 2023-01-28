@@ -30,7 +30,7 @@ sich daran zu erinnern, wie Module funktionieren.
       des Semikolons
     - In der Datei *src/garden.rs*
     - In der Datei *src/garden/mod.rs*
-- **Submodulen deklarieren**: In jeder anderen Datei als der Kistenwurzel
+- **Submodule deklarieren**: In jeder anderen Datei als der Kistenwurzel
   kannst du Untermodule deklarieren. Du kannst zum Beispiel `mod vegetables;`
   in *src/garden.rs* deklarieren. Der Compiler sucht den Code des Submoduls in
   dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
