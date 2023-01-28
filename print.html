@@ -4134,8 +4134,8 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` due to previous error
 </code></pre>
-<p>Puh! Wir können auch keine veränderbaren Referenzen haben, solange wir eine
-unveränderbare haben auf denselben Wert haben.</p>
+<p>Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
+unveränderbare Referenz auf denselben Wert haben.</p>
 <p>Nutzer einer unveränderbaren Referenz erwarten nicht, dass sich die Werte
 dahinter plötzlich ändern! Mehrere unveränderbare Referenzen sind jedoch in
 Ordnung, da niemand, der die Daten nur liest, die Möglichkeit hat, das Lesen
@@ -4716,7 +4716,7 @@ ausschöpfen kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="strukturen-structs-definieren-und-instanziieren"><a class="header" href="#strukturen-structs-definieren-und-instanziieren">Strukturen (structs) definieren und instanziieren</a></h2>
 <p>Strukturen (structs) ähneln Tupeln, die im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a>
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
-Typen haben. Anders als bei Tupeln benennst du jedes Teil, damit ist klar, was
+Typen haben. Anders als bei Tupeln benennst du jedes Teil, so dass klar ist, was
 die Werte bedeuten. Durch diese Namen sind Strukturen flexibler als Tupel: Du
 musst dich nicht auf die Reihenfolge der Daten verlassen, um die Werte einer
 Instanz zu spezifizieren oder auf sie zuzugreifen.</p>
@@ -5744,7 +5744,7 @@ die unser Programm stößt, können wir alle möglichen Varianten <em>aufzählen
 woher die Aufzählung ihren Namen hat.</p>
 <p>Jede IP-Adresse kann entweder eine Adresse der Version vier oder der Version
 sechs sein, aber nicht beides gleichzeitig. Diese Eigenschaft der IP-Adressen
-passt zur Aufzählungs-Datenstruktur, da ein Aufzählungswert nur einen seiner
+passt zur Aufzählungs-Datenstruktur, da ein Aufzählungswert nur eine seiner
 Varianten sein kann. Sowohl die Adressen der Version vier als auch der Version
 sechs sind grundsätzlich immer noch IP-Adressen, sodass sie als der gleiche Typ
 behandelt werden sollten, wenn der Code mit Situationen zu tun hat, die für
@@ -5822,7 +5822,7 @@ Beispiel eine Funktion definieren, die jedes <code>IpAddrKind</code> annimmt:</p
 IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den <em>Wert</em> der
 tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche <em>Variante</em> es
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könnten du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
+hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
 Codeblock 6-1.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -6006,7 +6006,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 <p>Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.</p>
 <p>Bei der Entwicklung von Programmiersprachen wird oft überlegt, welche
@@ -6402,7 +6402,7 @@ schicken Hut bekommt anstatt sich zu bewegen. Wenn du eine 7 würfelst, verliert
 dein Spieler einen schicken Hut. Bei allen anderen Werten zieht der Spieler die
 entsprechende Anzahl an Feldern auf dem Spielfeld. Hier ist ein <code>match</code>, das
 diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
-Zufallswerts fest kodiert ist, und alle weiter Logik wird durch Funktionen ohne
+Zufallswerts fest kodiert ist, und alle weitere Logik wird durch Funktionen ohne
 Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
 Rahmen sprengen würde:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -6456,8 +6456,8 @@ fn reroll() {}
 <p>Dieses Beispiel erfüllt auch die Bedingung der Vollständigkeit, weil wir
 ausdrücklich alle anderen Werte im letzten Zweig ignorieren; wir haben nichts
 vergessen.</p>
-<p>Zu Schluss ändern wir die Spielregeln noch einmal, sodass bei deinem Zug nichts
-anderes passiert, wenn du etwas anderes als eine 3 oder eine 7 würfelst. Wir
+<p>Zum Schluss ändern wir die Spielregeln noch einmal, sodass bei einem Zug nichts
+anderes passiert, wenn etwas anderes als eine 3 oder eine 7 gewürfelt wird. Wir
 können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
 wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
 angeben:</p>
@@ -6494,7 +6494,7 @@ match config_max {
     _ =&gt; (),
 }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 6-6: Eine <code>match</code>-Ausdruck, der nur dann Code
+<p><span class="caption">Codeblock 6-6: Ein <code>match</code>-Ausdruck, der nur dann Code
 ausführt, wenn der Wert <code>Some</code> ist</span></p>
 <p>Wenn der Wert <code>Some</code> ist, geben wir den Wert in der Variante <code>Some</code> aus, indem
 wir den Wert an die Variable <code>max</code> im Muster binden. Wir wollen nichts mit dem
@@ -6667,7 +6667,7 @@ sein, die mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten
 sehen werden.</p>
 <p>Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. <em>Binäre
 Kisten</em> (binary crates) sind Programme, die du zu einer ausführbaren Datei
-kompilieren kannst, die du ausführen kannst, z.B. ein Befehlszeilenprogramm
+kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm
 oder einen Server. Jede muss eine Funktion namens <code>main</code> haben, die definiert,
 was passiert, wenn die ausführbare Datei läuft. Alle Kisten, die wir bisher
 erstellt haben, waren binäre Kisten.</p>
@@ -6750,7 +6750,7 @@ des Semikolons</li>
 <li>In der Datei <em>src/garden/mod.rs</em></li>
 </ul>
 </li>
-<li><strong>Submodulen deklarieren</strong>: In jeder anderen Datei als der Kistenwurzel
+<li><strong>Submodule deklarieren</strong>: In jeder anderen Datei als der Kistenwurzel
 kannst du Untermodule deklarieren. Du kannst zum Beispiel <code>mod vegetables;</code>
 in <em>src/garden.rs</em> deklarieren. Der Compiler sucht den Code des Submoduls in
 dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
@@ -7255,7 +7255,7 @@ pub fn eat_at_restaurant() {
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-9: Eine Struktur mit öffentlichen und
-privaten Felder</span></p>
+privaten Feldern</span></p>
 <p>Da das Feld <code>toast</code> in der Struktur <code>back_of_house::Breakfast</code> öffentlich ist,
 können wir in <code>eat_at_restaurant</code> in das Feld <code>toast</code> schreiben und lesen,
 indem wir die Punktnotation verwenden. Beachte, dass wir das Feld
@@ -7660,7 +7660,7 @@ separate Datei verschieben, um die Navigation im Code zu erleichtern.</p>
 Restaurantmodule enthält. Wir verschieben das Modul <code>front_of_house</code> in seine
 eigene Datei <em>src/front_of_house.rs</em>, indem wir die Kistenwurzeldatei so
 ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
-ist die Kistenwurzeldatei <em>src/lib.rs</em>, aber dieses Vorgehensweise funktioniert
+ist die Kistenwurzeldatei <em>src/lib.rs</em>, aber diese Vorgehensweise funktioniert
 auch mit binären Kisten, deren Kistenwurzeldatei <em>src/main.rs</em> ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">mod front_of_house;
