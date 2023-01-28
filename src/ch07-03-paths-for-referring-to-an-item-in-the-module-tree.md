@@ -405,7 +405,7 @@ pub fn eat_at_restaurant() {
 ```
 
 <span class="caption">Codeblock 7-9: Eine Struktur mit öffentlichen und
-privaten Felder</span>
+privaten Feldern</span>
 
 Da das Feld `toast` in der Struktur `back_of_house::Breakfast` öffentlich ist,
 können wir in `eat_at_restaurant` in das Feld `toast` schreiben und lesen,

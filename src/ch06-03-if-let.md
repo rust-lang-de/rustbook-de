@@ -14,7 +14,7 @@ match config_max {
 }
 ```
 
-<span class="caption">Codeblock 6-6: Eine `match`-Ausdruck, der nur dann Code
+<span class="caption">Codeblock 6-6: Ein `match`-Ausdruck, der nur dann Code
 ausführt, wenn der Wert `Some` ist</span>
 
 Wenn der Wert `Some` ist, geben wir den Wert in der Variante `Some` aus, indem

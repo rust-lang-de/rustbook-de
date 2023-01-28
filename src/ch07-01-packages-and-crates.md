@@ -14,7 +14,7 @@ sehen werden.
 
 Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. *Binäre
 Kisten* (binary crates) sind Programme, die du zu einer ausführbaren Datei
-kompilieren kannst, die du ausführen kannst, z.B. ein Befehlszeilenprogramm
+kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm
 oder einen Server. Jede muss eine Funktion namens `main` haben, die definiert,
 was passiert, wenn die ausführbare Datei läuft. Alle Kisten, die wir bisher
 erstellt haben, waren binäre Kisten.

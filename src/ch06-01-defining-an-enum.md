@@ -18,7 +18,7 @@ woher die Aufzählung ihren Namen hat.
 
 Jede IP-Adresse kann entweder eine Adresse der Version vier oder der Version
 sechs sein, aber nicht beides gleichzeitig. Diese Eigenschaft der IP-Adressen
-passt zur Aufzählungs-Datenstruktur, da ein Aufzählungswert nur einen seiner
+passt zur Aufzählungs-Datenstruktur, da ein Aufzählungswert nur eine seiner
 Varianten sein kann. Sowohl die Adressen der Version vier als auch der Version
 sechs sind grundsätzlich immer noch IP-Adressen, sodass sie als der gleiche Typ
 behandelt werden sollten, wenn der Code mit Situationen zu tun hat, die für
@@ -115,7 +115,7 @@ Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
 IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den *Wert* der
 tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche *Variante* es
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
-hast, könnten du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
+hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
 Codeblock 6-1.
 
 ```rust
@@ -319,7 +319,7 @@ kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.
 Wenn du zum Beispiel das erste Element einer nichtleeren Liste anforderst,
 erhältst du einen Wert. Wenn du das erste Element einer leeren Liste abfragst,
 erhältst du nichts. Im Sinne des Typsystems bedeutet das, dass der Compiler
-überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt sollst.
+überprüfen kann, ob du alle Fälle behandelt hast, die du behandelt haben solltest.
 Diese Funktionalität kann Fehler vermeiden, die in anderen Programmiersprachen
 extrem häufig auftreten.
 
