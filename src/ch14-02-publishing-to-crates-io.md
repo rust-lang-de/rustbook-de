@@ -576,10 +576,9 @@ $ cargo yank --vers 1.0.1 --undo
       Unyank guessing_game@1.0.1
 ```
 
-Das Herausziehen löscht *keinen* Programmcode. Beispielsweise ist die
-Herausziehen-Funktion nicht zum Löschen versehentlich hochgeladener Geheimnisse
-gedacht. Falls das passieren sollte musst du diese Geheimnisse sofort
-zurücksetzen.
+Das Herausziehen löscht *keinen* Programmcode. Es kann zum Beispiel keine
+versehentlich hochgeladenen Geheimnisse löschen. Falls das passieren sollte
+musst du diese Geheimnisse sofort zurücksetzen.
 
 [crates]: https://crates.io/
 [semver]: https://semver.org/lang/de/
