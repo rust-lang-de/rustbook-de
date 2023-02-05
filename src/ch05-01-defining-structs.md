@@ -2,7 +2,7 @@
 
 Strukturen (structs) ähneln Tupeln, die im Abschnitt [„Der Tupel-Typ“][tuples]
 besprochen wurden. Wie bei Tupeln können die Teile einer Struktur verschiedene
-Typen haben. Anders als bei Tupeln benennst du jedes Teil, damit ist klar, was
+Typen haben. Anders als bei Tupeln benennst du jedes Teil, so dass klar ist, was
 die Werte bedeuten. Durch diese Namen sind Strukturen flexibler als Tupel: Du
 musst dich nicht auf die Reihenfolge der Daten verlassen, um die Werte einer
 Instanz zu spezifizieren oder auf sie zuzugreifen.

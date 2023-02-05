@@ -234,7 +234,7 @@ let spaces = spaces.len();
 ```
 
 Die erste Variable `spaces` ist ein String-Typ und die zweite Variable `spaces`
-ist ein Zahlentyp ist. Das Beschatten erspart es uns also, uns verschiedene
+ist ein Zahlentyp Integer. Das Beschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. `spaces_str` und `spaces_num`; stattdessen können wir
 den einfacheren Namen `spaces` wiederverwenden. Wenn wir jedoch versuchen,
 dafür `mut` zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:

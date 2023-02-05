@@ -86,7 +86,7 @@ werden wir diese erläutern.
 
 ### Fehlersuche
 
-Um zu überprüfen, ob du Rust korrekt installiert hast, öffnen eine
+Um zu überprüfen, ob du Rust korrekt installiert hast, öffne eine
 Kommandozeile und gib folgende Zeile ein:
 
 ```console
