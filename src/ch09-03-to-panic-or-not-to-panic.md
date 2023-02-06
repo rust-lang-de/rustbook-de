@@ -2,7 +2,7 @@
 
 Wie entscheidest du also, wann du `panic!` aufrufen und wann `Result`
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
-Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation anrufen,
+Fehler zu erholen. Du könntest `panic!` in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
 aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
@@ -82,7 +82,7 @@ einem schlechten Zustand enden könnte. In diesem Zusammenhang ist ein
 *schlechter Zustand* (bad state) dann gegeben, wenn eine Annahme, eine
 Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
-werden &ndash; sowie eine oder mehrere der folgenden Punkte zutreffen:
+werden &ndash; sowie einer oder mehrere der folgenden Punkte zutreffen:
 
 * Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
   wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
@@ -125,7 +125,7 @@ gehört, ist ein häufiges Sicherheitsproblem. Funktionen haben oft *Verträge*
 (contracts): Ihr Verhalten ist nur dann garantiert, wenn die Eingaben bestimmte
 Anforderungen erfüllen. Abzubrechen, wenn der Vertrag verletzt wird, ist
 sinnvoll, weil eine Vertragsverletzung immer auf einen Fehler auf der
-Anruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
+Aufruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
 aufgerufende Code explizit behandeln sollte. Tatsächlich gibt es keinen
 vernünftigen Weg, wie sich der aufrufende Code vom Fehler erholen kann; die
 aufrufenden *Programmierer* müssen den Code reparieren. Verträge zu einer
@@ -259,7 +259,7 @@ einen `i32` enthält. Hier wird die Nummer gespeichert.
 
 Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
 Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
-einen Parameter `value` vom Typ `i32` nimmt und eine `Guess`-Instanz
+einen Parameter `value` vom Typ `i32` entgegen nimmt und eine `Guess`-Instanz
 zurückgibt. Der Code im Funktionsrumpf von `new` testet den Wert in `value`, um
 sicherzustellen, dass er zwischen 1 und 100 liegt. Wenn `value` diesen Test
 nicht besteht, rufen wir `panic!` auf, was den Programmierer des aufrufenden
