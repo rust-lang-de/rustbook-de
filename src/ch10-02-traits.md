@@ -113,8 +113,8 @@ für die Typen `NewsArticle` und `Tweet`</span>
 
 Die Implementierung eines Merkmals für einen Typ ist ähnlich zur
 Implementierung regulärer Methoden. Der Unterschied besteht darin, dass wir
-nach `impl` den Namen des Merkmals schreiben, das wir implementieren wollen,
-dann das Schlüsselwort `for` gefolgt vom Namen des Typs angeben, für den wir
+nach `impl` den Namen des Merkmals schreiben, das wir implementieren wollen
+und dann das Schlüsselwort `for` gefolgt vom Namen des Typs, für den wir
 das Merkmal implementieren wollen. Innerhalb des `impl`-Blocks geben wir die
 Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
