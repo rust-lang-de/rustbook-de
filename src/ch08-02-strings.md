@@ -366,8 +366,8 @@ Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
 *Buchstaben* bezeichnen würden).
 
 Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
-ansehen, wird es als ein Vektor von `u8`-Werten gespeichert, der wie folgt
-aussieht:
+([_Namaste_](https://de.wikipedia.org/wiki/Namaste)) ansehen, wird es als ein 
+Vektor von `u8`-Werten gespeichert, der wie folgt aussieht:
 
 ```text
 [224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,

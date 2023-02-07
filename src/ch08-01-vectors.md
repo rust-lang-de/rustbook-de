@@ -79,7 +79,7 @@ referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
 Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.
 
 Codeblock 8-4 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
-mittels Indexierungssyntax und die Methode `get`.
+mittels Indexierungssyntax und der Methode `get`.
 
 ```rust
 let v = vec![1, 2, 3, 4, 5];
@@ -120,7 +120,7 @@ let does_not_exist = v.get(100);
 <span class="caption">Codeblock 8-5: Versuch, auf das Element mit Index 100 in
 einem Vektor zuzugreifen, der fünf Elemente enthält</span>
 
-Wenn wir diesen Code ausführen, wird die Variante `[]` das Programm abbrechen
+Wenn wir diesen Code ausführen, wird die erste `[]` Variante das Programm abbrechen
 lassen, weil es auf ein nicht existierendes Element verweist. Diese Methode
 wird vorzugsweise verwendet, wenn du dein Programm abstürzen lassen möchtest,
 wenn versucht wird, auf ein Element hinter dem Ende des Vektors zuzugreifen.
