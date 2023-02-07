@@ -7856,7 +7856,7 @@ benötigen.</p>
 referenzieren. In den Beispielen haben wir zur besseren Lesbarkeit die
 Werttypen, die von den Funktionen zurückgegeben werden, mit angegeben.</p>
 <p>Codeblock 8-4 zeigt beide Zugriffsmethoden auf einen Wert in einem Vektor,
-mittels Indexierungssyntax und die Methode <code>get</code>.</p>
+mittels Indexierungssyntax und der Methode <code>get</code>.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
@@ -7892,7 +7892,7 @@ let does_not_exist = v.get(100);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-5: Versuch, auf das Element mit Index 100 in
 einem Vektor zuzugreifen, der fünf Elemente enthält</span></p>
-<p>Wenn wir diesen Code ausführen, wird die Variante <code>[]</code> das Programm abbrechen
+<p>Wenn wir diesen Code ausführen, wird die erste <code>[]</code> Variante das Programm abbrechen
 lassen, weil es auf ein nicht existierendes Element verweist. Diese Methode
 wird vorzugsweise verwendet, wenn du dein Programm abstürzen lassen möchtest,
 wenn versucht wird, auf ein Element hinter dem Ende des Vektors zuzugreifen.</p>
@@ -8374,8 +8374,8 @@ Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
 Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
 <em>Buchstaben</em> bezeichnen würden).</p>
 <p>Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
-ansehen, wird es als ein Vektor von <code>u8</code>-Werten gespeichert, der wie folgt
-aussieht:</p>
+(<a href="https://de.wikipedia.org/wiki/Namaste"><em>Namaste</em></a>) ansehen, wird es als ein 
+Vektor von <code>u8</code>-Werten gespeichert, der wie folgt aussieht:</p>
 <pre><code class="language-text">[224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
 224, 165, 135]
 </code></pre>
@@ -9482,7 +9482,7 @@ entscheiden können, was in welchen Fällen geeignet ist.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="wann-panic-aufrufen-und-wann-nicht"><a class="header" href="#wann-panic-aufrufen-und-wann-nicht">Wann <code>panic!</code> aufrufen und wann nicht?</a></h2>
 <p>Wie entscheidest du also, wann du <code>panic!</code> aufrufen und wann <code>Result</code>
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
-Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation anrufen,
+Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
 aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
@@ -9552,7 +9552,7 @@ einem schlechten Zustand enden könnte. In diesem Zusammenhang ist ein
 <em>schlechter Zustand</em> (bad state) dann gegeben, wenn eine Annahme, eine
 Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
-werden – sowie eine oder mehrere der folgenden Punkte zutreffen:</p>
+werden – sowie einer oder mehrere der folgenden Punkte zutreffen:</p>
 <ul>
 <li>Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
 wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
@@ -9593,7 +9593,7 @@ gehört, ist ein häufiges Sicherheitsproblem. Funktionen haben oft <em>Verträg
 (contracts): Ihr Verhalten ist nur dann garantiert, wenn die Eingaben bestimmte
 Anforderungen erfüllen. Abzubrechen, wenn der Vertrag verletzt wird, ist
 sinnvoll, weil eine Vertragsverletzung immer auf einen Fehler auf der
-Anruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
+Aufruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
 aufgerufende Code explizit behandeln sollte. Tatsächlich gibt es keinen
 vernünftigen Weg, wie sich der aufrufende Code vom Fehler erholen kann; die
 aufrufenden <em>Programmierer</em> müssen den Code reparieren. Verträge zu einer
@@ -9714,7 +9714,7 @@ zwischen 1 und 100 fortsetzt</span></p>
 einen <code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
 <p>Dann implementieren wir die zugehörige Funktion <code>new</code> für <code>Guess</code>, die
 Instanzen von <code>Guess</code> erzeugt. Die Funktion <code>new</code> ist so definiert, dass sie
-einen Parameter <code>value</code> vom Typ <code>i32</code> nimmt und eine <code>Guess</code>-Instanz
+einen Parameter <code>value</code> vom Typ <code>i32</code> entgegen nimmt und eine <code>Guess</code>-Instanz
 zurückgibt. Der Code im Funktionsrumpf von <code>new</code> testet den Wert in <code>value</code>, um
 sicherzustellen, dass er zwischen 1 und 100 liegt. Wenn <code>value</code> diesen Test
 nicht besteht, rufen wir <code>panic!</code> auf, was den Programmierer des aufrufenden
@@ -10460,8 +10460,8 @@ impl Summary for Tweet {
 für die Typen <code>NewsArticle</code> und <code>Tweet</code></span></p>
 <p>Die Implementierung eines Merkmals für einen Typ ist ähnlich zur
 Implementierung regulärer Methoden. Der Unterschied besteht darin, dass wir
-nach <code>impl</code> den Namen des Merkmals schreiben, das wir implementieren wollen,
-dann das Schlüsselwort <code>for</code> gefolgt vom Namen des Typs angeben, für den wir
+nach <code>impl</code> den Namen des Merkmals schreiben, das wir implementieren wollen
+und dann das Schlüsselwort <code>for</code> gefolgt vom Namen des Typs, für den wir
 das Merkmal implementieren wollen. Innerhalb des <code>impl</code>-Blocks geben wir die
 Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den

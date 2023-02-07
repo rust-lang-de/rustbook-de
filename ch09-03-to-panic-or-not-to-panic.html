@@ -136,7 +136,7 @@
                         <h2 id="wann-panic-aufrufen-und-wann-nicht"><a class="header" href="#wann-panic-aufrufen-und-wann-nicht">Wann <code>panic!</code> aufrufen und wann nicht?</a></h2>
 <p>Wie entscheidest du also, wann du <code>panic!</code> aufrufen und wann <code>Result</code>
 zurückgeben sollst? Wenn Code abbricht, gibt es keine Möglichkeit sich vom
-Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation anrufen,
+Fehler zu erholen. Du könntest <code>panic!</code> in jeder Fehlersituation aufrufen,
 unabhängig davon, ob es eine Möglichkeit zur Fehlerbehebung gibt oder nicht,
 aber dann triffst du die Entscheidung für den aufrufenden Code, dass eine
 Situation nicht rettbar ist. Wenn du dich dafür entscheidest, einen
@@ -206,7 +206,7 @@ einem schlechten Zustand enden könnte. In diesem Zusammenhang ist ein
 <em>schlechter Zustand</em> (bad state) dann gegeben, wenn eine Annahme, eine
 Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
-werden – sowie eine oder mehrere der folgenden Punkte zutreffen:</p>
+werden – sowie einer oder mehrere der folgenden Punkte zutreffen:</p>
 <ul>
 <li>Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
 wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
@@ -247,7 +247,7 @@ gehört, ist ein häufiges Sicherheitsproblem. Funktionen haben oft <em>Verträg
 (contracts): Ihr Verhalten ist nur dann garantiert, wenn die Eingaben bestimmte
 Anforderungen erfüllen. Abzubrechen, wenn der Vertrag verletzt wird, ist
 sinnvoll, weil eine Vertragsverletzung immer auf einen Fehler auf der
-Anruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
+Aufruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
 aufgerufende Code explizit behandeln sollte. Tatsächlich gibt es keinen
 vernünftigen Weg, wie sich der aufrufende Code vom Fehler erholen kann; die
 aufrufenden <em>Programmierer</em> müssen den Code reparieren. Verträge zu einer
@@ -368,7 +368,7 @@ zwischen 1 und 100 fortsetzt</span></p>
 einen <code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
 <p>Dann implementieren wir die zugehörige Funktion <code>new</code> für <code>Guess</code>, die
 Instanzen von <code>Guess</code> erzeugt. Die Funktion <code>new</code> ist so definiert, dass sie
-einen Parameter <code>value</code> vom Typ <code>i32</code> nimmt und eine <code>Guess</code>-Instanz
+einen Parameter <code>value</code> vom Typ <code>i32</code> entgegen nimmt und eine <code>Guess</code>-Instanz
 zurückgibt. Der Code im Funktionsrumpf von <code>new</code> testet den Wert in <code>value</code>, um
 sicherzustellen, dass er zwischen 1 und 100 liegt. Wenn <code>value</code> diesen Test
 nicht besteht, rufen wir <code>panic!</code> auf, was den Programmierer des aufrufenden
