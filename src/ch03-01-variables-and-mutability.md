@@ -164,17 +164,17 @@ Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
 Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
 aktualisiert werden müsste.
 
-### Beschatten (shadowing)
+### Verschatten (shadowing)
 
 Wie du in der Anleitung zum Ratespiel in [Kapitel
 2][comparing-the-guess-to-the-secret-number] gesehen hast, kannst du eine neue
 Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
-Rust-Entwickler sagen, dass die erste Variable von der zweiten *beschattet*
+Rust-Entwickler sagen, dass die erste Variable von der zweiten *verschattet*
 (shadowed) wird, was bedeutet, dass die zweite Variable das ist, was der
 Compiler sieht, wenn du den Namen der Variable verwendest. Die zweite Variable
-beschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,
-bis sie entweder selbst beschattet wird oder der Gültigkeitsbereich endet. Wir
-können eine Variable beschatten, indem wir denselben Variablenamen verwenden
+verschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,
+bis sie entweder selbst verschattet wird oder der Gültigkeitsbereich endet. Wir
+können eine Variable verschatten, indem wir denselben Variablenamen verwenden
 und das Schlüsselwort `let` wie folgt wiederholen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -213,14 +213,14 @@ Der Wert von x im inneren Gültigkeitsbereich ist: 12
 Der Wert von x ist: 6
 ```
 
-Beschatten unterscheidet sich vom Markieren einer Variable mit `mut`, weil wir
+Verschatten unterscheidet sich vom Markieren einer Variable mit `mut`, weil wir
 einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese
 Variable neu zuzuweisen, ohne das Schlüsselwort `let` zu verwenden. Durch das
 Verwenden von `let` können wir einige wenige Transformationen an einem Wert
 durchführen, aber die Variable ist unveränderbar, nachdem diese
 Transformationen abgeschlossen sind.
 
-Der andere Unterschied zwischen `mut` und Beschatten besteht darin, dass wir,
+Der andere Unterschied zwischen `mut` und Verschatten besteht darin, dass wir,
 weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
 `let` erneut verwenden, den Typ des Wertes ändern können, aber denselben Namen
 wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
@@ -234,7 +234,7 @@ let spaces = spaces.len();
 ```
 
 Die erste Variable `spaces` ist ein String-Typ und die zweite Variable `spaces`
-ist ein Zahlentyp Integer. Das Beschatten erspart es uns also, uns verschiedene
+ist ein Zahlentyp Integer. Das Verschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. `spaces_str` und `spaces_num`; stattdessen können wir
 den einfacheren Namen `spaces` wiederverwenden. Wenn wir jedoch versuchen,
 dafür `mut` zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:
