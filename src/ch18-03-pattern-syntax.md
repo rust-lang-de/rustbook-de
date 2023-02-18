@@ -31,7 +31,7 @@ jedoch eine Komplikation, wenn du benannte Variablen in `match`-Ausdrücken
 verwendest. Da `match` einen neuen Gültigkeitsbereich beginnt, werden
 Variablen, die als Teil eines Musters innerhalb des `match`-Ausdrucks
 deklariert sind, diejenigen mit dem gleichen Namen außerhalb des
-`match`-Konstrukts beschatten (shadow), wie es bei allen Variablen der Fall
+`match`-Konstrukts verschatten (shadow), wie es bei allen Variablen der Fall
 ist. In Codeblock 18-11 deklarieren wir eine Variable mit dem Namen `x` mit dem
 Wert `Some(5)` und eine Variable `y` mit dem Wert `10`. Dann erzeugen wir einen
 `match`-Ausdruck für den Wert `x`. Sieh dir die Muster in den `match`-Zweigen
@@ -756,7 +756,7 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
 Testen der Gleichheit mit einer äußeren Variablen</span>
 
 Dieser Code gibt nun `Standardfall, x = Some(5)` aus. Das Muster im zweiten
-`match`-Zweig führt keine neue Variable `y` ein, die das äußere `y` beschatten
+`match`-Zweig führt keine neue Variable `y` ein, die das äußere `y` verschatten
 würde, was bedeutet, dass wir das äußere `y` in der Abgleichsbedingung
 verwenden können. Anstatt das Muster mit `Some(y)` zu spezifizieren, was das
 äußere `y` beschattet hätte, spezifizieren wir `Some(n)`. Dies erzeugt eine

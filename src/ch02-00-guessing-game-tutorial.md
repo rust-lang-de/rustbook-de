@@ -903,8 +903,8 @@ let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 
 Wir erstellen eine Variable mit dem Namen `guess`. Aber warte, hat das Programm
 nicht bereits eine Variable namens `guess`? Ja, aber Rust erlaubt uns, den
-vorherigen Wert von `guess` mit einem neuen Wert zu beschatten (shadow). Durch
-das *Beschatten* können wir den Variablennamen `guess` wiederverwenden, anstatt
+vorherigen Wert von `guess` mit einem neuen Wert zu verschatten (shadow). Durch
+das *Verschatten* können wir den Variablennamen `guess` wiederverwenden, anstatt
 uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. `guess_str` und
 `guess`. Wir werden dies in [Kapitel 3][shadowing] ausführlicher behandeln,
 aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
@@ -1309,6 +1309,6 @@ besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert
 [recover]: ch09-02-recoverable-errors-with-result.html
 [result]: https://doc.rust-lang.org/std/result/enum.Result.html
 [semver]: https://semver.org/lang/de/
-[shadowing]: ch03-01-variables-and-mutability.html#beschatten-shadowing
+[shadowing]: ch03-01-variables-and-mutability.html#verschatten-shadowing
 [string]: https://doc.rust-lang.org/std/string/struct.String.html
 [variables-and-mutability]: ch03-01-variables-and-mutability.html
