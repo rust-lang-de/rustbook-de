@@ -104,13 +104,13 @@ Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 `Verwende violett als Hintergrundfarbe` ausgeben.
 
-Du kannst sehen, dass `if let` auch beschattete Variablen (shadowed variables)
+Du kannst sehen, dass `if let` auch verschattete Variablen (shadowed variables)
 auf die gleiche Weise einführen kann wie bei `match`-Zweigen: Die Zeile `if let
-Ok(age) = age` führt eine neue beschattete Variable `age` ein, die den Wert
+Ok(age) = age` führt eine neue verschattete Variable `age` ein, die den Wert
 innerhalb der `Ok`-Variante enthält. Das bedeutet, dass wir die Bedingung `if
 age > 30` innerhalb dieses Blocks platzieren müssen: Wir können diese beiden
 Bedingungen nicht in `if let Ok(age) = age && age > 30` kombinieren. Das
-beschattete `age`, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
+verschattete `age`, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
 neue Gültigkeitsbereich mit der geschweiften Klammer beginnt.
 
 Der Nachteil der Verwendung von `if let`-Ausdrücken ist, dass der Compiler die

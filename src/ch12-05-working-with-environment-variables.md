@@ -232,7 +232,7 @@ pub fn search_case_insensitive<'a>(
 in Kleinbuchstaben umzuwandeln</span>
 
 Zuerst wandeln wir die Zeichenkette `query` in Kleinbuchstaben um und speichern
-ihn in einer beschatteten Variablen mit dem gleichen Namen. Der Aufruf von
+ihn in einer verschatteten Variablen mit dem gleichen Namen. Der Aufruf von
 `to_lowercase` beim Abfragetext ist notwendig, sodass wir unabhängig davon, ob
 die Abfrage des Benutzers `"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die
 Abfrage so behandeln, als ob sie `"rust"` wäre, und die Groß-/Kleinschreibung
