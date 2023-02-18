@@ -161,7 +161,7 @@ jedoch eine Komplikation, wenn du benannte Variablen in <code>match</code>-Ausdr
 verwendest. Da <code>match</code> einen neuen Gültigkeitsbereich beginnt, werden
 Variablen, die als Teil eines Musters innerhalb des <code>match</code>-Ausdrucks
 deklariert sind, diejenigen mit dem gleichen Namen außerhalb des
-<code>match</code>-Konstrukts beschatten (shadow), wie es bei allen Variablen der Fall
+<code>match</code>-Konstrukts verschatten (shadow), wie es bei allen Variablen der Fall
 ist. In Codeblock 18-11 deklarieren wir eine Variable mit dem Namen <code>x</code> mit dem
 Wert <code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10</code>. Dann erzeugen wir einen
 <code>match</code>-Ausdruck für den Wert <code>x</code>. Sieh dir die Muster in den <code>match</code>-Zweigen
@@ -753,7 +753,7 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
 <p><span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
 Testen der Gleichheit mit einer äußeren Variablen</span></p>
 <p>Dieser Code gibt nun <code>Standardfall, x = Some(5)</code> aus. Das Muster im zweiten
-<code>match</code>-Zweig führt keine neue Variable <code>y</code> ein, die das äußere <code>y</code> beschatten
+<code>match</code>-Zweig führt keine neue Variable <code>y</code> ein, die das äußere <code>y</code> verschatten
 würde, was bedeutet, dass wir das äußere <code>y</code> in der Abgleichsbedingung
 verwenden können. Anstatt das Muster mit <code>Some(y)</code> zu spezifizieren, was das
 äußere <code>y</code> beschattet hätte, spezifizieren wir <code>Some(n)</code>. Dies erzeugt eine

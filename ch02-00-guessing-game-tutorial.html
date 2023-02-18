@@ -868,10 +868,10 @@ hinzufügen:</p>
 <pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);</code></pre>
 <p>Wir erstellen eine Variable mit dem Namen <code>guess</code>. Aber warte, hat das Programm
 nicht bereits eine Variable namens <code>guess</code>? Ja, aber Rust erlaubt uns, den
-vorherigen Wert von <code>guess</code> mit einem neuen Wert zu beschatten (shadow). Durch
-das <em>Beschatten</em> können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt
+vorherigen Wert von <code>guess</code> mit einem neuen Wert zu verschatten (shadow). Durch
+das <em>Verschatten</em> können wir den Variablennamen <code>guess</code> wiederverwenden, anstatt
 uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. <code>guess_str</code> und
-<code>guess</code>. Wir werden dies in <a href="ch03-01-variables-and-mutability.html#beschatten-shadowing">Kapitel 3</a> ausführlicher behandeln,
+<code>guess</code>. Wir werden dies in <a href="ch03-01-variables-and-mutability.html#verschatten-shadowing">Kapitel 3</a> ausführlicher behandeln,
 aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
 wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
 willst.</p>

@@ -267,16 +267,16 @@ verwendet werden, ist nützlich, um die Bedeutung dieses Wertes zukünftigen
 Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
 Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
 aktualisiert werden müsste.</p>
-<h3 id="beschatten-shadowing"><a class="header" href="#beschatten-shadowing">Beschatten (shadowing)</a></h3>
+<h3 id="verschatten-shadowing"><a class="header" href="#verschatten-shadowing">Verschatten (shadowing)</a></h3>
 <p>Wie du in der Anleitung zum Ratespiel in <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">Kapitel
 2</a> gesehen hast, kannst du eine neue
 Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
-Rust-Entwickler sagen, dass die erste Variable von der zweiten <em>beschattet</em>
+Rust-Entwickler sagen, dass die erste Variable von der zweiten <em>verschattet</em>
 (shadowed) wird, was bedeutet, dass die zweite Variable das ist, was der
 Compiler sieht, wenn du den Namen der Variable verwendest. Die zweite Variable
-beschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,
-bis sie entweder selbst beschattet wird oder der Gültigkeitsbereich endet. Wir
-können eine Variable beschatten, indem wir denselben Variablenamen verwenden
+verschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,
+bis sie entweder selbst verschattet wird oder der Gültigkeitsbereich endet. Wir
+können eine Variable verschatten, indem wir denselben Variablenamen verwenden
 und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
@@ -307,13 +307,13 @@ wieder zu <code>6</code>. Wenn wir dieses Programm ausführen, wird es folgendes
 Der Wert von x im inneren Gültigkeitsbereich ist: 12
 Der Wert von x ist: 6
 </code></pre>
-<p>Beschatten unterscheidet sich vom Markieren einer Variable mit <code>mut</code>, weil wir
+<p>Verschatten unterscheidet sich vom Markieren einer Variable mit <code>mut</code>, weil wir
 einen Kompilierfehler erhalten, wenn wir versehentlich versuchen, diese
 Variable neu zuzuweisen, ohne das Schlüsselwort <code>let</code> zu verwenden. Durch das
 Verwenden von <code>let</code> können wir einige wenige Transformationen an einem Wert
 durchführen, aber die Variable ist unveränderbar, nachdem diese
 Transformationen abgeschlossen sind.</p>
-<p>Der andere Unterschied zwischen <code>mut</code> und Beschatten besteht darin, dass wir,
+<p>Der andere Unterschied zwischen <code>mut</code> und Verschatten besteht darin, dass wir,
 weil wir effektiv eine neue Variable erstellen, wenn wir das Schlüsselwort
 <code>let</code> erneut verwenden, den Typ des Wertes ändern können, aber denselben Namen
 wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
@@ -326,7 +326,7 @@ speichern:</p>
 let spaces = spaces.len();
 <span class="boring">}</span></code></pre></pre>
 <p>Die erste Variable <code>spaces</code> ist ein String-Typ und die zweite Variable <code>spaces</code>
-ist ein Zahlentyp Integer. Das Beschatten erspart es uns also, uns verschiedene
+ist ein Zahlentyp Integer. Das Verschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
 den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
 dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
