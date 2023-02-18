@@ -958,7 +958,7 @@ Typsystem kodiert.
 Aber wir müssen auch einige kleine Änderungen an `main` vornehmen. Die Methoden
 `request_review` und `approve` geben neue Instanzen zurück, anstatt die
 Struktur, auf der sie aufgerufen werden, zu modifizieren, sodass wir mehr `let
-post =` Beschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
+post =` Verschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
 die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen,
 dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:

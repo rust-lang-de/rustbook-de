@@ -198,10 +198,10 @@ Dieses Programm bindet zunächst `x` an den Wert `5`. Dann wird eine neue
 Variable `x` erzeugt, indem `let x =` wiederholt wird, wobei der ursprüngliche
 Wert genommen und `1` hinzugefügt wird, sodass der Wert von `x` dann `6` ist.
 Innerhalb eines inneren Gültigkeitsbereichs, der durch die geschweiften
-Klammern geschaffen wird, beschattet die dritte `let`-Anweisung dann ebenfalls
+Klammern geschaffen wird, verschattet die dritte `let`-Anweisung dann ebenfalls
 `x` und erzeugt eine neue Variable, wobei der vorherige Wert mit `2`
 multipliziert wird, um `x` einen Wert von `12` zu geben. Wenn dieser
-Gültigkeitsbereich zu Ende ist, endet die innere Beschattung und `x` wird
+Gültigkeitsbereich zu Ende ist, endet die innere Verschattung und `x` wird
 wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
 
 ```console

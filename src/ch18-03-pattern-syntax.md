@@ -54,7 +54,7 @@ wird, bevor du diesen Code ausführst oder weiterliest.
 ```
 
 <span class="caption">Codeblock 18-11: Ein `match`-Ausdruck mit einem Zweig,
-der eine beschattete Variable `y` einführt</span>
+der eine verschattete Variable `y` einführt</span>
 
 Lass uns durchgehen, was passiert, wenn der `match`-Ausdruck ausgeführt wird.
 Das Muster im ersten Zweig passt nicht zum definierten Wert von `x`, also setzt
@@ -73,7 +73,7 @@ Wäre `x` ein `None`-Wert anstelle von `Some(5)` gewesen, hätten die Muster in
 den ersten beiden Zweigen nicht gepasst, sodass der Wert zum Unterstrich
 gepasst hätte. Wir haben die Variable `x` nicht im Muster des
 Unterstrich-Zweigs verwendet, sodass `x` im Ausdruck immer noch das äußere `x`
-ist, das nicht beschattet wurde. In diesem hypothetischen Fall würde `match`
+ist, das nicht verschattet wurde. In diesem hypothetischen Fall würde `match`
 den Text `Standardfall, x = None` ausgeben.
 
 Wenn der `match`-Ausdruck zu Ende ist, endet sein Gültigkeitsbereich und damit
@@ -81,7 +81,7 @@ auch der Gültigkeitsbereich des inneren `y`. Das letzte `println!` gibt `Am
 Ende: x = Some(5), y = 10` aus.
 
 Um einen `match`-Ausdruck zu erstellen, der die Werte der äußeren `x` und `y`
-abgleicht anstatt eine beschattete Variable einzuführen, müssten wir
+abgleicht anstatt eine verschattete Variable einzuführen, müssten wir
 stattdessen eine Abgleichsbedingung (match guard conditional) verwenden. Wir
 werden über Abgleichsbedingungen später im Abschnitt [„Extra-Bedingungen mit
 Abgleichsbedingungen“](#extra-bedingungen-mit-abgleichsbedingungen) sprechen.
@@ -730,7 +730,7 @@ Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
 Abgleichsbedingungs-Ausdrücke beteiligt sind.
 
 In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
-Musterbeschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
+Musterverschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
 verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
 Musters im `match`-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
 `match` zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
@@ -759,12 +759,12 @@ Dieser Code gibt nun `Standardfall, x = Some(5)` aus. Das Muster im zweiten
 `match`-Zweig führt keine neue Variable `y` ein, die das äußere `y` verschatten
 würde, was bedeutet, dass wir das äußere `y` in der Abgleichsbedingung
 verwenden können. Anstatt das Muster mit `Some(y)` zu spezifizieren, was das
-äußere `y` beschattet hätte, spezifizieren wir `Some(n)`. Dies erzeugt eine
-neue Variable `n`, die nichts beschattet, weil es keine Variable `n` außerhalb
+äußere `y` verschattet hätte, spezifizieren wir `Some(n)`. Dies erzeugt eine
+neue Variable `n`, die nichts verschattet, weil es keine Variable `n` außerhalb
 von `match` gibt.
 
 Die Abgleichsbedingung `if n == y` ist kein Muster und führt daher keine neuen
-Variablen ein. Dieses `y` *ist* das äußere `y` und nicht ein neues beschattetes
+Variablen ein. Dieses `y` *ist* das äußere `y` und nicht ein neues verschattetes
 `y`, und wir können nach einem Wert suchen, der den gleichen Wert wie das
 äußere `y` hat, indem wir `n` mit `y` vergleichen.
 
