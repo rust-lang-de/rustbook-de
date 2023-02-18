@@ -295,10 +295,10 @@ und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
 Variable <code>x</code> erzeugt, indem <code>let x =</code> wiederholt wird, wobei der ursprüngliche
 Wert genommen und <code>1</code> hinzugefügt wird, sodass der Wert von <code>x</code> dann <code>6</code> ist.
 Innerhalb eines inneren Gültigkeitsbereichs, der durch die geschweiften
-Klammern geschaffen wird, beschattet die dritte <code>let</code>-Anweisung dann ebenfalls
+Klammern geschaffen wird, verschattet die dritte <code>let</code>-Anweisung dann ebenfalls
 <code>x</code> und erzeugt eine neue Variable, wobei der vorherige Wert mit <code>2</code>
 multipliziert wird, um <code>x</code> einen Wert von <code>12</code> zu geben. Wenn dieser
-Gültigkeitsbereich zu Ende ist, endet die innere Beschattung und <code>x</code> wird
+Gültigkeitsbereich zu Ende ist, endet die innere Verschattung und <code>x</code> wird
 wieder zu <code>6</code>. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)

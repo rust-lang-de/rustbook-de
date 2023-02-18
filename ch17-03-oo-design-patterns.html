@@ -997,7 +997,7 @@ einem <code>DraftPost</code> ist, haben wir jetzt den Blog-Beitrags-Workflow in 
 Typsystem kodiert.</p>
 <p>Aber wir müssen auch einige kleine Änderungen an <code>main</code> vornehmen. Die Methoden
 <code>request_review</code> und <code>approve</code> geben neue Instanzen zurück, anstatt die
-Struktur, auf der sie aufgerufen werden, zu modifizieren, sodass wir mehr <code>let post =</code> Beschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
+Struktur, auf der sie aufgerufen werden, zu modifizieren, sodass wir mehr <code>let post =</code> Verschattungs-Zuweisungen (shadowing assignments) hinzufügen müssen, um
 die zurückgegebenen Instanzen zu speichern. Wir können auch nicht zulassen,
 dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:

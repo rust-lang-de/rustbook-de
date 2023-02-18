@@ -182,7 +182,7 @@ wird, bevor du diesen Code ausführst oder weiterliest.</p>
     println!(&quot;Am Ende: x = {:?}, y = {y}&quot;, x);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-11: Ein <code>match</code>-Ausdruck mit einem Zweig,
-der eine beschattete Variable <code>y</code> einführt</span></p>
+der eine verschattete Variable <code>y</code> einführt</span></p>
 <p>Lass uns durchgehen, was passiert, wenn der <code>match</code>-Ausdruck ausgeführt wird.
 Das Muster im ersten Zweig passt nicht zum definierten Wert von <code>x</code>, also setzt
 der Code fort.</p>
@@ -198,12 +198,12 @@ für diesen Zweig ausgeführt und <code>Passt, y = 5</code> ausgegeben wird.</p>
 den ersten beiden Zweigen nicht gepasst, sodass der Wert zum Unterstrich
 gepasst hätte. Wir haben die Variable <code>x</code> nicht im Muster des
 Unterstrich-Zweigs verwendet, sodass <code>x</code> im Ausdruck immer noch das äußere <code>x</code>
-ist, das nicht beschattet wurde. In diesem hypothetischen Fall würde <code>match</code>
+ist, das nicht verschattet wurde. In diesem hypothetischen Fall würde <code>match</code>
 den Text <code>Standardfall, x = None</code> ausgeben.</p>
 <p>Wenn der <code>match</code>-Ausdruck zu Ende ist, endet sein Gültigkeitsbereich und damit
 auch der Gültigkeitsbereich des inneren <code>y</code>. Das letzte <code>println!</code> gibt <code>Am Ende: x = Some(5), y = 10</code> aus.</p>
 <p>Um einen <code>match</code>-Ausdruck zu erstellen, der die Werte der äußeren <code>x</code> und <code>y</code>
-abgleicht anstatt eine beschattete Variable einzuführen, müssten wir
+abgleicht anstatt eine verschattete Variable einzuführen, müssten wir
 stattdessen eine Abgleichsbedingung (match guard conditional) verwenden. Wir
 werden über Abgleichsbedingungen später im Abschnitt <a href="#extra-bedingungen-mit-abgleichsbedingungen">„Extra-Bedingungen mit
 Abgleichsbedingungen“</a> sprechen.</p>
@@ -730,7 +730,7 @@ anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
 Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
 Abgleichsbedingungs-Ausdrücke beteiligt sind.</p>
 <p>In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
-Musterbeschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
+Musterverschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
 verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
 Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
 <code>match</code> zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
@@ -756,11 +756,11 @@ Testen der Gleichheit mit einer äußeren Variablen</span></p>
 <code>match</code>-Zweig führt keine neue Variable <code>y</code> ein, die das äußere <code>y</code> verschatten
 würde, was bedeutet, dass wir das äußere <code>y</code> in der Abgleichsbedingung
 verwenden können. Anstatt das Muster mit <code>Some(y)</code> zu spezifizieren, was das
-äußere <code>y</code> beschattet hätte, spezifizieren wir <code>Some(n)</code>. Dies erzeugt eine
-neue Variable <code>n</code>, die nichts beschattet, weil es keine Variable <code>n</code> außerhalb
+äußere <code>y</code> verschattet hätte, spezifizieren wir <code>Some(n)</code>. Dies erzeugt eine
+neue Variable <code>n</code>, die nichts verschattet, weil es keine Variable <code>n</code> außerhalb
 von <code>match</code> gibt.</p>
 <p>Die Abgleichsbedingung <code>if n == y</code> ist kein Muster und führt daher keine neuen
-Variablen ein. Dieses <code>y</code> <em>ist</em> das äußere <code>y</code> und nicht ein neues beschattetes
+Variablen ein. Dieses <code>y</code> <em>ist</em> das äußere <code>y</code> und nicht ein neues verschattetes
 <code>y</code>, und wir können nach einem Wert suchen, der den gleichen Wert wie das
 äußere <code>y</code> hat, indem wir <code>n</code> mit <code>y</code> vergleichen.</p>
 <p>Du kannst auch den <em>oder</em>-Operator <code>|</code> in einer Abgleichsbedingung verwenden,

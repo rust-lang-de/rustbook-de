@@ -214,11 +214,11 @@ dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.</p>
 <p>Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 <code>Verwende violett als Hintergrundfarbe</code> ausgeben.</p>
-<p>Du kannst sehen, dass <code>if let</code> auch beschattete Variablen (shadowed variables)
-auf die gleiche Weise einführen kann wie bei <code>match</code>-Zweigen: Die Zeile <code>if let Ok(age) = age</code> führt eine neue beschattete Variable <code>age</code> ein, die den Wert
+<p>Du kannst sehen, dass <code>if let</code> auch verschattete Variablen (shadowed variables)
+auf die gleiche Weise einführen kann wie bei <code>match</code>-Zweigen: Die Zeile <code>if let Ok(age) = age</code> führt eine neue verschattete Variable <code>age</code> ein, die den Wert
 innerhalb der <code>Ok</code>-Variante enthält. Das bedeutet, dass wir die Bedingung <code>if age &gt; 30</code> innerhalb dieses Blocks platzieren müssen: Wir können diese beiden
 Bedingungen nicht in <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> kombinieren. Das
-beschattete <code>age</code>, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
+verschattete <code>age</code>, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
 neue Gültigkeitsbereich mit der geschweiften Klammer beginnt.</p>
 <p>Der Nachteil der Verwendung von <code>if let</code>-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei <code>match</code>-Ausdrücken tut. Wenn
