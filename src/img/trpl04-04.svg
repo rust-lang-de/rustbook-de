@@ -41,7 +41,7 @@
   </font>
  </defs>
  <defs class="TextShapeIndex">
-  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8"/>
+  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7 id8 id9"/>
  </defs>
  <defs class="EmbeddedBulletChars">
   <g id="bullet-char-template-57356" transform="scale(0.00048828125,-0.00048828125)">
@@ -86,6 +86,12 @@
    <g id="container-id1">
     <g id="id1" class="Slide" clip-path="url(#presentation_clip_path)">
      <g class="Page">
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id3">
+        <rect class="BoundingBox" stroke="none" fill="none" x="0" y="0" width="15001" height="12501"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 7500,12500 L 0,12500 0,0 15000,0 15000,12500 7500,12500 Z"/>
+       </g>
+      </g>
       <g class="com.sun.star.drawing.TableShape">
        <g>
         <rect class="BoundingBox" stroke="none" fill="none" x="500" y="1160" width="6018" height="4005"/>
@@ -115,7 +121,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.TextShape">
-       <g id="id3">
+       <g id="id4">
         <rect class="BoundingBox" stroke="none" fill="none" x="2923" y="0" width="1172" height="963"/>
         <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3173" y="701"><tspan fill="rgb(0,0,0)" stroke="none">s1</tspan></tspan></tspan></text>
        </g>
@@ -160,7 +166,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.OpenBezierShape">
-       <g id="id4">
+       <g id="id5">
         <rect class="BoundingBox" stroke="none" fill="none" x="5153" y="2505" width="4350" height="2059"/>
         <path fill="none" stroke="rgb(0,0,0)" stroke-width="100" stroke-linejoin="round" d="M 5432,2780 C 6146,3347 7297,3982 8869,4348"/>
         <path fill="rgb(0,0,0)" stroke="none" d="M 5432,2821 L 5404,2838 5371,2850 5335,2856 5299,2853 5265,2843 5236,2828 5209,2808 5189,2784 5171,2755 5159,2722 5154,2687 5157,2651 5167,2617 5181,2587 5201,2561 5225,2540 5255,2523 5287,2511 5323,2506 5358,2508 5392,2518 5422,2534 5448,2552 5469,2577 5486,2606 5498,2639 5504,2675 5501,2711 5491,2744 5476,2774 5457,2799 5432,2821 Z"/>
@@ -196,13 +202,13 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.TextShape">
-       <g id="id5">
+       <g id="id6">
         <rect class="BoundingBox" stroke="none" fill="none" x="2924" y="7002" width="1172" height="963"/>
         <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3174" y="7703"><tspan fill="rgb(0,0,0)" stroke="none">s2</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.OpenBezierShape">
-       <g id="id6">
+       <g id="id7">
         <rect class="BoundingBox" stroke="none" fill="none" x="5117" y="4860" width="4385" height="5028"/>
         <path fill="none" stroke="rgb(0,0,0)" stroke-width="100" stroke-linejoin="round" d="M 5373,9583 C 6036,8479 7330,6037 8913,5095"/>
         <path fill="rgb(0,0,0)" stroke="none" d="M 5410,9584 L 5432,9608 5450,9638 5463,9672 5467,9708 5464,9743 5455,9775 5441,9805 5421,9829 5397,9852 5367,9871 5333,9883 5297,9887 5262,9883 5230,9876 5200,9861 5175,9842 5153,9816 5135,9787 5122,9753 5118,9717 5121,9682 5130,9650 5144,9621 5164,9595 5188,9573 5218,9554 5252,9542 5289,9538 5323,9540 5355,9550 5384,9563 5410,9584 Z"/>
@@ -210,13 +216,13 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
-       <g id="id7">
+       <g id="id8">
         <rect class="BoundingBox" stroke="none" fill="none" x="451" y="111" width="6101" height="6101"/>
         <path fill="none" stroke="rgb(227,59,38)" stroke-width="100" stroke-linejoin="round" d="M 501,161 L 6501,6161"/>
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
-       <g id="id8">
+       <g id="id9">
         <rect class="BoundingBox" stroke="none" fill="none" x="451" y="111" width="6101" height="6101"/>
         <path fill="none" stroke="rgb(227,59,38)" stroke-width="100" stroke-linejoin="round" d="M 6501,161 L 501,6161"/>
        </g>

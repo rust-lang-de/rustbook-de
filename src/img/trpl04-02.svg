@@ -41,7 +41,7 @@
   </font>
  </defs>
  <defs class="TextShapeIndex">
-  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6"/>
+  <g ooo:slide="id1" ooo:id-list="id3 id4 id5 id6 id7"/>
  </defs>
  <defs class="EmbeddedBulletChars">
   <g id="bullet-char-template-57356" transform="scale(0.00048828125,-0.00048828125)">
@@ -86,6 +86,12 @@
    <g id="container-id1">
     <g id="id1" class="Slide" clip-path="url(#presentation_clip_path)">
      <g class="Page">
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id3">
+        <rect class="BoundingBox" stroke="none" fill="none" x="0" y="0" width="15001" height="12501"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 7500,12500 L 0,12500 0,0 15000,0 15000,12500 7500,12500 Z"/>
+       </g>
+      </g>
       <g class="com.sun.star.drawing.TableShape">
        <g>
         <rect class="BoundingBox" stroke="none" fill="none" x="498" y="1160" width="6018" height="4005"/>
@@ -115,7 +121,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.TextShape">
-       <g id="id3">
+       <g id="id4">
         <rect class="BoundingBox" stroke="none" fill="none" x="2921" y="0" width="1172" height="963"/>
         <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3171" y="701"><tspan fill="rgb(0,0,0)" stroke="none">s1</tspan></tspan></tspan></text>
        </g>
@@ -160,7 +166,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.OpenBezierShape">
-       <g id="id4">
+       <g id="id5">
         <rect class="BoundingBox" stroke="none" fill="none" x="5151" y="2505" width="4350" height="2059"/>
         <path fill="none" stroke="rgb(0,0,0)" stroke-width="100" stroke-linejoin="round" d="M 5430,2780 C 6144,3347 7295,3982 8867,4348"/>
         <path fill="rgb(0,0,0)" stroke="none" d="M 5430,2821 L 5402,2838 5369,2850 5333,2856 5297,2853 5263,2843 5234,2828 5207,2808 5187,2784 5169,2755 5157,2722 5152,2687 5155,2651 5165,2617 5179,2587 5199,2561 5223,2540 5253,2523 5285,2511 5321,2506 5356,2508 5390,2518 5420,2534 5446,2552 5467,2577 5484,2606 5496,2639 5502,2675 5499,2711 5489,2744 5474,2774 5455,2799 5430,2821 Z"/>
@@ -196,13 +202,13 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.TextShape">
-       <g id="id5">
+       <g id="id6">
         <rect class="BoundingBox" stroke="none" fill="none" x="2922" y="7002" width="1172" height="963"/>
         <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3172" y="7703"><tspan fill="rgb(0,0,0)" stroke="none">s2</tspan></tspan></tspan></text>
        </g>
       </g>
       <g class="com.sun.star.drawing.OpenBezierShape">
-       <g id="id6">
+       <g id="id7">
         <rect class="BoundingBox" stroke="none" fill="none" x="5115" y="4860" width="4385" height="5028"/>
         <path fill="none" stroke="rgb(0,0,0)" stroke-width="100" stroke-linejoin="round" d="M 5371,9583 C 6034,8479 7328,6037 8911,5095"/>
         <path fill="rgb(0,0,0)" stroke="none" d="M 5408,9584 L 5430,9608 5448,9638 5461,9672 5465,9708 5462,9743 5453,9775 5439,9805 5419,9829 5395,9852 5365,9871 5331,9883 5295,9887 5260,9883 5228,9876 5198,9861 5173,9842 5151,9816 5133,9787 5120,9753 5116,9717 5119,9682 5128,9650 5142,9621 5162,9595 5186,9573 5216,9554 5250,9542 5287,9538 5321,9540 5353,9550 5382,9563 5408,9584 Z"/>

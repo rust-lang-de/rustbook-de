@@ -41,7 +41,7 @@
   </font>
  </defs>
  <defs class="TextShapeIndex">
-  <g ooo:slide="id1" ooo:id-list="id3 id4"/>
+  <g ooo:slide="id1" ooo:id-list="id3 id4 id5"/>
  </defs>
  <defs class="EmbeddedBulletChars">
   <g id="bullet-char-template-57356" transform="scale(0.00048828125,-0.00048828125)">
@@ -86,6 +86,12 @@
    <g id="container-id1">
     <g id="id1" class="Slide" clip-path="url(#presentation_clip_path)">
      <g class="Page">
+      <g class="com.sun.star.drawing.CustomShape">
+       <g id="id3">
+        <rect class="BoundingBox" stroke="none" fill="none" x="0" y="0" width="15001" height="7501"/>
+        <path fill="rgb(255,255,255)" stroke="none" d="M 7500,7500 L 0,7500 0,0 15000,0 15000,7500 7500,7500 Z"/>
+       </g>
+      </g>
       <g class="com.sun.star.drawing.TableShape">
        <g>
         <rect class="BoundingBox" stroke="none" fill="none" x="498" y="1160" width="6018" height="4005"/>
@@ -115,7 +121,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.TextShape">
-       <g id="id3">
+       <g id="id4">
         <rect class="BoundingBox" stroke="none" fill="none" x="2921" y="0" width="1172" height="963"/>
         <text class="TextShape"><tspan class="TextParagraph" font-family="Liberation Sans, sans-serif" font-size="635px" font-weight="400"><tspan class="TextPosition" x="3171" y="701"><tspan fill="rgb(0,0,0)" stroke="none">s1</tspan></tspan></tspan></text>
        </g>
@@ -160,7 +166,7 @@
        </g>
       </g>
       <g class="com.sun.star.drawing.LineShape">
-       <g id="id4">
+       <g id="id5">
         <rect class="BoundingBox" stroke="none" fill="none" x="5100" y="2437" width="4401" height="451"/>
         <path fill="none" stroke="rgb(0,0,0)" stroke-width="100" stroke-linejoin="round" d="M 5427,2662 L 8855,2662"/>
         <path fill="rgb(0,0,0)" stroke="none" d="M 5446,2694 L 5437,2726 5421,2757 5399,2786 5370,2808 5339,2824 5307,2833 5275,2837 5243,2833 5210,2824 5179,2808 5151,2786 5129,2757 5113,2726 5103,2694 5100,2661 5103,2630 5113,2597 5129,2567 5151,2538 5179,2516 5210,2500 5243,2491 5275,2487 5307,2491 5339,2500 5370,2516 5399,2538 5421,2567 5437,2597 5446,2630 5450,2661 5446,2694 Z"/>
