@@ -143,7 +143,7 @@ um Werte so lange auszugeben, wie `stack.pop()` ein `Some` zurückgibt</span>
 
 Dieses Beispiel gibt 3, 2 und 1 aus. Die `pop`-Methode nimmt das letzte Element
 aus dem Vektor und gibt `Some(value)` zurück. Wenn der Vektor leer ist, gibt
-`pop` den Wert `None` zurück. Die `while`-Schleife fährt den Code in ihrem
+`pop` den Wert `None` zurück. Die `while`-Schleife führt den Code in ihrem
 Block so lange aus, wie `pop` ein `Some` zurückgibt. Wenn `pop` den Wert `None`
 zurückgibt, stoppt die Schleife. Wir können `while let` benutzen, um jedes
 Element von unserem Stapel zu holen.
@@ -195,7 +195,7 @@ diese einfache Variablenzuweisung mit `let`:
 let x = 5;
 ```
 
-Jedes Mal, wenn di eine `let`-Anweisung wie diese verwendet hast, hast du
+Jedes Mal, wenn die eine `let`-Anweisung wie diese verwendet hast, hast du
 Muster verwendet, auch wenn du es vielleicht nicht bemerkt hast! Formal sieht
 eine `let`-Anweisung wie folgt aus:
 
