@@ -195,7 +195,7 @@ diese einfache Variablenzuweisung mit `let`:
 let x = 5;
 ```
 
-Jedes Mal, wenn die eine `let`-Anweisung wie diese verwendet hast, hast du
+Jedes Mal, wenn du eine `let`-Anweisung wie diese verwendet hast, hast du
 Muster verwendet, auch wenn du es vielleicht nicht bemerkt hast! Formal sieht
 eine `let`-Anweisung wie folgt aus:
 
