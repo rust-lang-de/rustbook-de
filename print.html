@@ -73,10 +73,12 @@
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
             var html = document.querySelector('html');
-            var sidebar = 'hidden';
+            var sidebar = null;
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
             }
             html.classList.remove('sidebar-visible');
             html.classList.add("sidebar-" + sidebar);
@@ -4576,7 +4578,7 @@ können wir Zeichenkettenliterale richtig verstehen:</p>
 <span class="boring">}</span></code></pre></pre>
 <p>Der Typ von <code>s</code> hier ist <code>&amp;str</code>: Es ist ein Anteilstyp, der auf diesen
 speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
-Zeichenkettenliterale unveränderbar sind; <code>&amp;str</code> ist ein unveränderbare
+Zeichenkettenliterale unveränderbar sind; <code>&amp;str</code> ist eine unveränderbare
 Referenz.</p>
 <h4 id="zeichenkettenanteilstypen-als-parameter"><a class="header" href="#zeichenkettenanteilstypen-als-parameter">Zeichenkettenanteilstypen als Parameter</a></h4>
 <p>Das Wissen, dass man Anteilstypen von Literalen und <code>String</code>-Werten erstellen
