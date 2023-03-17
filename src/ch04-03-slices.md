@@ -375,7 +375,7 @@ let s = "Hallo Welt!";
 
 Der Typ von `s` hier ist `&str`: Es ist ein Anteilstyp, der auf diesen
 speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
-Zeichenkettenliterale unveränderbar sind; `&str` ist ein unveränderbare
+Zeichenkettenliterale unveränderbar sind; `&str` ist eine unveränderbare
 Referenz.
 
 #### Zeichenkettenanteilstypen als Parameter
