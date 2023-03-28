@@ -5,6 +5,9 @@ Rust-Buchs](https://doc.rust-lang.org/book/).
 
 ## [> Hier lesen <](https://rust-lang-de.github.io/rustbook-de)
 
+Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
+[rust-lernen.de](https://rust-lernen.de/)
+
 ## Bauen und Anschauen
 
 Schritte zum Bauen und Anschauen des Buchs:
