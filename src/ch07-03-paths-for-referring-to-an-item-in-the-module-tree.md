@@ -261,7 +261,7 @@ an.
 
 Auf dem absoluten Pfad beginnen wir mit `crate`, der Wurzel des Modulbaums
 unserer Kiste. Dann wird das Modul `front_of_house` in der Kistenwurzel
-definiert. Da das Modul `front_of_house` ist nicht öffentlich, weil die
+definiert. Während das Modul `front_of_house` nicht öffentlich ist, weil die
 `eat_at_restaurant`-Funktion im gleichen Modul wie `front_of_house` definiert
 ist (d.h. `eat_at_restaurant` und `front_of_house` sind Geschwister), können
 wir auf `front_of_house` von `eat_at_restaurant` aus zugreifen. Als nächstes
