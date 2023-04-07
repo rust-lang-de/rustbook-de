@@ -286,7 +286,7 @@ verursachen würden. Das Verwenden einer Aufzählung zusammen mit einem
 mögliche Fall behandelt wird, wie in Kapitel 6 besprochen.
 
 Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
-speichern kann, funktioniert die Aufzählungsansatz nicht. Stattdessen kannst du
+speichern kann, funktioniert der Aufzählungsansatz nicht. Stattdessen kannst du
 ein Merkmalsobjekt (trait object) verwenden, das wir in Kapitel 17 behandeln
 werden.
 
