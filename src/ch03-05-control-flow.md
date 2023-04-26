@@ -507,7 +507,7 @@ einen sechsten Wert aus dem Array zu holen.
 
 Aber dieser Ansatz ist fehleranfällig; wir könnten das Programm zum Abstürzen
 bringen, wenn der Indexwert oder die Testbedingung falsch ist. Wenn du zum
-Beispiel die Definition des Arrays `a` so ändest, dass es vier Elemente hat,
+Beispiel die Definition des Arrays `a` so änderst, dass es vier Elemente hat,
 aber vergisst, die Bedingung `while index < 4` zu aktualisieren, würde der Code
 abstürzen. Er ist zudem langsam, weil der Compiler Laufzeitcode erzeugt, der
 die Bedingungsprüfung, ob der Index innerhalb der Arraygrenzen liegt, bei jeder
