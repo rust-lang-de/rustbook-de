@@ -316,7 +316,7 @@ Wert zweimal angeben zu müssen:
 #
 impl Rectangle {
     fn square(size: u32) -> Self {
-        Rectangle {
+        Self {
             width: size,
             height: size,
         }
