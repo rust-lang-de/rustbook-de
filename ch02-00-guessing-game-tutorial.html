@@ -818,9 +818,9 @@ error[E0308]: mismatched types
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` due to previous error
 </code></pre>
-<p>Der Kernbotschaft besagt, dass es <em>nicht übereinstimmende Typen</em> (mismatched
-types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch auch
-eine Typ-Inferenz. Als wir <code>let mut guess = String::new()</code> schrieben, konnte
+<p>Die Kernbotschaft des Fehlers besagt, dass es <em>nicht übereinstimmende Typen</em> 
+(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch 
+auch eine Typ-Inferenz. Als wir <code>let mut guess = String::new()</code> schrieben, konnte
 Rust daraus schließen, dass <code>guess</code> ein <code>String</code> sein sollte, und zwang uns
 nicht, den Typ anzugeben. Die <code>secret_number</code> hingegen ist ein Zahlentyp.
 Einige Zahlentypen können einen Wert zwischen 1 und 100 haben: <code>i32</code>, eine
