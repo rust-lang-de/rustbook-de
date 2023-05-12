@@ -1129,7 +1129,7 @@ erzeugt und in den <code>Ok</code>-Wert eingefügt wurde. Diese Zahl wird in der
 umzuwandeln, gibt es einen <code>Err</code>-Wert zurück, der mehr Informationen über den
 Fehler enthält. Der <code>Err</code>-Wert stimmt nicht mit dem <code>Ok(num)</code>-Muster im ersten
 <code>match</code>-Zweig überein, aber er stimmt mit dem <code>Err(_)</code>-Muster im zweiten Zweig
-überein. Der Unterstrich <code>_</code> ist ein Sammelbehälter; in diesem Beispiel sagen
+überein. Der Unterstrich <code>_</code> ist ein Auffangwert; in diesem Beispiel sagen
 wir, dass alle <code>Err</code>-Werte übereinstimmen sollen, egal welche Informationen sie
 enthalten. Das Programm wird also den Code <code>continue</code> des zweiten Zweigs
 ausführen, der das Programm anweist, zur nächsten <code>loop</code>-Iteration zu gehen und
