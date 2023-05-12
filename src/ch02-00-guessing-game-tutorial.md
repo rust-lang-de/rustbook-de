@@ -1199,7 +1199,7 @@ Wenn `parse` *nicht* in der Lage ist, die Zeichenkette in eine Zahl
 umzuwandeln, gibt es einen `Err`-Wert zurück, der mehr Informationen über den
 Fehler enthält. Der `Err`-Wert stimmt nicht mit dem `Ok(num)`-Muster im ersten
 `match`-Zweig überein, aber er stimmt mit dem `Err(_)`-Muster im zweiten Zweig
-überein. Der Unterstrich `_` ist ein Sammelbehälter; in diesem Beispiel sagen
+überein. Der Unterstrich `_` ist ein Auffangwert; in diesem Beispiel sagen
 wir, dass alle `Err`-Werte übereinstimmen sollen, egal welche Informationen sie
 enthalten. Das Programm wird also den Code `continue` des zweiten Zweigs
 ausführen, der das Programm anweist, zur nächsten `loop`-Iteration zu gehen und
