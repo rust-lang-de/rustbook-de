@@ -51,7 +51,7 @@ ganze Zahl in Kapitel 2, den Typ `u32`. Diese Typdeklaration gibt an, dass der
 Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 (vorzeichenbehaftete Ganzzahl-Typen beginnen mit `i` anstatt `u`). Tabelle 3-1
 zeigt die in Rust eingebauten Ganzzahl-Typen. Wir können jede dieser Varianten
-verwenden, um den den Typ eines ganzzahligen Wertes zu deklarieren.
+verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.
 
 <span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span>
 
