@@ -11,15 +11,12 @@ jobs:
         uses: actions/checkout@v3
 
       - name: Install Rust
-        uses: actions-rs/toolchain@v1
+        uses: dtolnay/rust-toolchain@v1
         with:
           toolchain: stable
 
       - name: Install mdbook
-        uses: actions-rs/cargo@v1
-        with:
-          command: install
-          args: mdbook --vers "^0.4.25" --no-default-features
+        run: cargo install mdbook --vers "^0.4.25" --no-default-features
 
       - name: Build Book
         run: mdbook build
