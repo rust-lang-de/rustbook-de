@@ -65,8 +65,9 @@ fn main() {
 <span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
-Speichere die Datei und gehe zurück zu deinem Terminalfenster. Gib unter Linux
-oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:
+Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
+*~/projects/hello_world*. Gib unter Linux oder MacOS die folgenden Befehle ein,
+um die Datei zu kompilieren und auszuführen:
 
 ```console
 $ rustc main.rs
