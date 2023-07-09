@@ -1,18 +1,16 @@
 ## Was ist Eigentümerschaft (ownership)?
 
 *Eigentümerschaft* ist eine Reihe von Regeln, die bestimmen, wie ein
-Rust-Programm den Speicher verwaltet.
-
-Alle Programme müssen den Arbeitsspeicher eines Rechners verwalten, während sie
-ausgeführt werden. Einige Sprachen verfügen über eine automatische
-Speicherbereinigung, die während der Programmausführung ständig nach nicht mehr
-genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
-den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
-Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
-von Regeln verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt
-wird, lässt sich das Programm nicht kompilieren. Keine der
-Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
-läuft.
+Rust-Programm den Speicher verwaltet. Alle Programme müssen den Arbeitsspeicher
+eines Rechners verwalten, während sie ausgeführt werden. Einige Sprachen
+verfügen über eine automatische Speicherbereinigung, die während der
+Programmausführung ständig nach nicht mehr genutztem Speicher sucht. Bei
+anderen Sprachen muss der Programmierer selbst den Speicher explizit
+reservieren und freigeben. Rust verwendet einen dritten Ansatz: Der Speicher
+wird durch ein System aus Eigentümerschaft und einer Reihe von Regeln
+verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt wird,
+lässt sich das Programm nicht kompilieren. Keine der
+Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es läuft.
 
 Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
@@ -112,8 +110,7 @@ Lass uns zunächst einen Blick auf die Eigentumsregeln (ownership rules) werfen.
 Behalte diese Regeln im Hinterkopf, während wir veranschaulichende Beispiele
 durcharbeiten:
 
-* Jeder Wert in Rust hat eine Variable, die als sein *Eigentümer* bezeichnet
-  wird.
+* Jeder Wert in Rust hat einen *Eigentümer* (owner).
 * Es kann immer nur einen Eigentümer zur gleichen Zeit geben.
 * Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
   aufgeräumt.
@@ -407,9 +404,15 @@ error[E0382]: borrow of moved value: `s1`
   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
 3 |     let s2 = s1;
   |              -- value moved here
-4 | 
+4 |
 5 |     println!("{} Welt!", s1);
   |                          ^^ value borrowed here after move
+  |
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     let s2 = s1.clone();
+  |                ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `ownership` due to previous error
