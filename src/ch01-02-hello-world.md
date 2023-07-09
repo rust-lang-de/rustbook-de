@@ -65,7 +65,7 @@ fn main() {
 <span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
-Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
+Speichere die Datei und gehe zurück zu deinem Terminalfenster. Gib unter Linux
 oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:
 
 ```console
@@ -166,7 +166,7 @@ Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 eine ausführbare Binärdatei aus.
 
 Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl `ls` in deiner Konsole eingibst:
+sehen, indem du den Befehl `ls` in deinem Terminal eingibst:
 
 ```console
 $ ls
@@ -195,7 +195,7 @@ $ ./main # oder .\main.exe unter Windows
 ```
 
 Wenn *main.rs* dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deiner Konsole ausgeben.
+Welt!“ in deinem Terminal ausgeben.
 
 Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in

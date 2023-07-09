@@ -10,19 +10,18 @@ benötigen.
 > nach anderen Möglichkeiten.
 
 Die folgenden Schritte installieren die neueste stabile Version des
-Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
-dass alle kompilierbaren Beispiele in diesem Buch auch mit neueren
-Rust-Versionen kompilierbar bleiben werden. Die Konsolenausgabe
-der Beispiele kann sich zwischen Versionen leicht unterscheiden,
-weil Rust oft Fehlermeldungen und Warnungen verbessert.
-Anders ausgedrückt, jede neuere stabile Version von Rust, die du
-mithilfe dieser Schritte installierst, sollte wie erwartet mit dem
-Inhalt dieses Buches funktionieren.
+Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher, dass alle
+kompilierbaren Beispiele in diesem Buch auch mit neueren Rust-Versionen
+kompilierbar bleiben werden. Die Ausgabe der Beispiele kann sich zwischen
+Versionen leicht unterscheiden, weil Rust oft Fehlermeldungen und Warnungen
+verbessert. Anders ausgedrückt, jede neuere stabile Version von Rust, die du
+mithilfe dieser Schritte installierst, sollte wie erwartet mit dem Inhalt
+dieses Buchs funktionieren.
 
 > ### Kommandozeilen-Schreibweise
 >
-> In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf der
-> Konsole zeigen. Alle Zeilen, die du in die Konsole eingeben sollst,
+> In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf dem
+> Terminal zeigen. Alle Zeilen, die du in das Terminal eingeben sollst,
 > beginnen mit `$`. Du brauchst das `$`-Zeichen nicht einzugeben;
 > es weist nur auf den Beginn jedes Befehls hin. Zeilen, die nicht mit
 > `$` beginnen, zeigen normalerweise die Ausgabe eines vorherigen Befehls.
@@ -31,7 +30,7 @@ Inhalt dieses Buches funktionieren.
 
 ### Die Installation von `rustup` in Linux und macOS
 
-Falls du Linux oder macOS verwendest, öffne ein Konsolenfenster und gib den
+Falls du Linux oder macOS verwendest, öffne ein Terminalfenster und gib den
 folgenden Befehl ein:
 
 ```console

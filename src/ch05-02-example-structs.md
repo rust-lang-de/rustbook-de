@@ -305,9 +305,9 @@ Zeilennummer, in der der `dbg!`-Makroaufruf in deinem Code vorkommt, zusammen
 mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
 Wert zurückgibt.
 
-> Hinweis: Der Aufruf des Makros `dbg!` schreibt in den
-> Standard-Fehler-Konsolenstrom (`stderr`), im Gegensatz zu `println!`, das in
-> den Standard-Ausgabe-Konsolenstrom (`stdout`) schreibt. Wir werden mehr über
+> Hinweis: Der Aufruf des Makros `dbg!` schreibt in die
+> Standardfehlerausgabe (`stderr`), im Gegensatz zu `println!`, das in
+> die Standardausgabe (`stdout`) schreibt. Wir werden mehr über
 > `stderr` und `stdout` im Abschnitt [„Fehlermeldungen in die
 > Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
 > 12][err] erfahren.
