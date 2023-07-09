@@ -16,7 +16,7 @@ Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.4.25"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4.31"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
