@@ -85,8 +85,8 @@ werden wir diese erläutern.
 
 ### Fehlersuche
 
-Um zu überprüfen, ob du Rust korrekt installiert hast, öffne eine
-Kommandozeile und gib folgende Zeile ein:
+Um zu überprüfen, ob du Rust korrekt installiert hast, öffne ein
+Terminal und gib folgende Zeile ein:
 
 ```console
 $ rustc --version
@@ -128,9 +128,8 @@ Rust-Entwicklern in Kontakt treten kannst, erfährst du auf der
 
 ### Aktualisieren und Deinstallieren
 
-Nachdem du Rust mithilfe von `rustup` installiert hast, ist es einfach,
-auf die neueste Version zu aktualisieren. Führe folgenden Befehl auf der
-Kommandozeile aus:
+Nachdem du Rust mithilfe von `rustup` installiert hast, ist es einfach, auf die
+neueste Version zu aktualisieren. Führe folgenden Befehl im Terminal aus:
 
 ```console
 $ rustup update

@@ -3,8 +3,8 @@
 Dieses Kapitel ist eine Zusammenfassung der vielen Fähigkeiten, die du bisher
 gelernt hast, und eine Erkundung einiger weiterer
 Standard-Bibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
-erstellen, das mit Datei- und Kommandozeilen-Ein- und -Ausgabe interagiert, um
-einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
+erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert,
+um einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
 
 Rusts Geschwindigkeit, Sicherheit, Ausgabe in eine einzelne Binärdatei und
 plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum

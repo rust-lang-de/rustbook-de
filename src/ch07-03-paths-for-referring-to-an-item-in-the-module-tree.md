@@ -62,7 +62,7 @@ erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
 Wir würden den Pfad `/front_of_house/hosting/add_to_waitlist` angeben, um das
 Programm `add_to_waitlist` auszuführen; das Verwenden des Namens `crate`, um
 von der Kistenwurzel aus zu beginnen, ist analog zu `/`, um vom
-Dateisystem-Wurzelverzeichnis in deiner Eingabeaufforderung aus zu beginnen.
+Dateisystem-Wurzelverzeichnis in deinem Terminal aus zu beginnen.
 
 Beim zweiten Aufruf von `add_to_waitlist` in `eat_at_restaurant` verwenden wir
 einen relativen Pfad. Der Pfad beginnt mit `front_of_house`, dem Namen des

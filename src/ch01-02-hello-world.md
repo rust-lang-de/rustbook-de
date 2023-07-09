@@ -22,7 +22,7 @@ erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis *projects* in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.
 
-Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
+Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
 *projects* und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses *projects* zu erstellen.
 
@@ -82,9 +82,9 @@ Unter Windows gib den Befehl `.\main.exe` anstelle von `./main` ein:
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` auf
-der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
-im Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
+Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` im
+Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
+Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.
 
 Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell

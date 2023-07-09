@@ -4,8 +4,8 @@ Jetzt, da wir die Logik nach *src/lib.rs* extrahiert haben und die
 Argumentkollektion und Fehlerbehandlung in *src/main.rs* belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
 Wir können Funktionen direkt mit verschiedenen Argumenten aufrufen und
-Rückgabewerte überprüfen, ohne unsere Binärdatei von der Kommandozeile aus
-aufrufen zu müssen.
+Rückgabewerte überprüfen, ohne unsere Binärdatei Terminal aus aufrufen zu
+müssen.
 
 In diesem Abschnitt fügen wir dem `minigrep`-Programm die Suchlogik hinzu,
 indem wir die Methode der testgetriebenen Entwicklung (TDD) verwenden. Diese
