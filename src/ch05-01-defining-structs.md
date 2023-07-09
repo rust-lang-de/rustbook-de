@@ -51,9 +51,9 @@ Codeblock 5-2 zu sehen ist.
 #
 fn main() {
     let user1 = User {
-        email: String::from("jemand@example.com"),
-        username: String::from("benutzername123"),
         active: true,
+        username: String::from("benutzername123"),
+        email: String::from("jemand@example.com"),
         sign_in_count: 1,
     };
 }
@@ -81,9 +81,9 @@ einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 #
 fn main() {
     let mut user1 = User {
-        email: String::from("jemand@example.com"),
-        username: String::from("benutzername123"),
         active: true,
+        username: String::from("benutzername123"),
+        email: String::from("jemand@example.com"),
         sign_in_count: 1,
     };
 
@@ -114,9 +114,9 @@ den Wert `true` und das Feld `sign_in_count` den Wert `1`.
 #
 fn build_user(email: String, username: String) -> User {
     User {
-        email: email,
-        username: username,
         active: true,
+        username: username,
+        email: email,
         sign_in_count: 1,
     }
 }
@@ -158,9 +158,9 @@ wiederholen, siehe Codeblock 5-5.
 #
 fn build_user(email: String, username: String) -> User {
     User {
-        email,
-        username,
         active: true,
+        username,
+        email,
         sign_in_count: 1,
     }
 }
@@ -389,38 +389,36 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 >
 > ```console
 > $ cargo run
->    Compiling playground v0.0.1 (/playground)
+>    Compiling structs v0.1.0 (file:///projects/structs)
 > error[E0106]: missing lifetime specifier
->  --> src/main.rs:2:15
+>  --> src/main.rs:3:15
 >   |
-> 2 |     username: &str,
+> 3 |     username: &str,
 >   |               ^ expected named lifetime parameter
 >   |
 > help: consider introducing a named lifetime parameter
 >   |
-> 1 | struct User<'a> {
-> 2 |     username: &'a str,
+> 1 ~ struct User<'a> {
+> 2 |     active: bool,
+> 3 ~     username: &'a str,
 >   |
 >
 > error[E0106]: missing lifetime specifier
->  --> src/main.rs:3:12
+>  --> src/main.rs:4:12
 >   |
-> 3 |     email: &str,
+> 4 |     email: &str,
 >   |            ^ expected named lifetime parameter
 >   |
 > help: consider introducing a named lifetime parameter
 >   |
-> 1 | struct User<'a> {
-> 2 |     username: &str,
-> 3 |     email: &'a str,
+> 1 ~ struct User<'a> {
+> 2 |     active: bool,
+> 3 |     username: &str,
+> 4 ~     email: &'a str,
 >   |
 >
-> error: aborting due to 2 previous errors
-> 
 > For more information about this error, try `rustc --explain E0106`.
-> error: could not compile `playground`
->
-> To learn more, run the command again with --verbose.
+> error: could not compile `structs` due to 2 previous errors
 > ```
 >
 > In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen
