@@ -3,8 +3,8 @@
 *von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;*
 *übersetzt ins Deutsche durch die Rust-Gemeinschaft*
 
-Diese Version des Textes geht davon aus, dass du Rust 1.65 (veröffentlicht am
-2022-11-03) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
+Diese Version des Textes geht davon aus, dass du Rust 1.67.1 (veröffentlicht am
+2023-02-09) oder später verwendest. Siehe [Abschnitt „Installation“ in Kapitel
 1][install1] zum Installieren und Aktualisieren von Rust.
 
 Die HTML-Version ist online verfügbar unter
