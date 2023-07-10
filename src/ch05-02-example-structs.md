@@ -7,10 +7,8 @@ einsetzen.
 
 Legen wir mit Cargo ein neues Binärprojekt namens *rectangles* an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
-Rechtecks berechnet.
-
-Codeblock 5-8 zeigt ein kurzes Programm, das genau das in *src/main.rs* unseres
-Projekts macht.
+Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
+*src/main.rs* unseres Projekts macht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
