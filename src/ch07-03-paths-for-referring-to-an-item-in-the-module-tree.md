@@ -42,10 +42,10 @@ mod front_of_house {
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Pfad
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }
 ```
@@ -148,7 +148,7 @@ den äußeren Code zu brechen. Rust gibt dir jedoch die Möglichkeit, innere Tei
 des Codes von Kindmodulen für äußere Vorgängermodule offenzulegen, indem du das
 Schlüsselwort `pub` verwendest, um ein Element öffentlich zu machen.
 
-### Pfade mit dem Schlüsselwort `pub` öffnen
+### Pfade mit dem Schlüsselwort `pub` öffentlich machen
 
 Kehren wir zum Fehler in Codeblock 7-4 zurück, der uns sagte, das Modul
 `hosting` sei privat. Wir wollen, dass die Funktion `eat_at_restaurant` im
@@ -166,7 +166,7 @@ mod front_of_house {
 }
 
 pub fn eat_at_restaurant() {
-    // Absolutet Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
     // Relativer Pfad
@@ -242,10 +242,10 @@ mod front_of_house {
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Path
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Path
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }
 ```
@@ -285,7 +285,7 @@ Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
 verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
-du an diesem Thema interessiert bist, lies [The Rust API
+du an diesem Thema interessiert bist, lies die [Rust API
 Guidelines][api-guidelines].
 
 > #### Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek
