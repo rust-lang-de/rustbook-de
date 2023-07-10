@@ -74,12 +74,6 @@ nicht mehr gilt:
 ```console
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
-  --> src/lib.rs:11:9
-   |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of undeclared crate or module `hosting`
-
 warning: unused import: `crate::front_of_house::hosting`
  --> src/lib.rs:7:5
   |
@@ -87,6 +81,12 @@ warning: unused import: `crate::front_of_house::hosting`
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
+
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --> src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
 
 For more information about this error, try `rustc --explain E0433`.
 warning: `restaurant` (lib) generated 1 warning
@@ -282,7 +282,7 @@ Projekt zu verwenden, fügten wir diese Zeile zu *Cargo.toml* hinzu:
 <span class="filename">Dateiname: Cargo.toml</span>
 
 ```toml
-rand = "0.8.3"
+rand = "0.8.5"
 ```
 
 Das Hinzufügen von `rand` als Abhängigkeit in *Cargo.toml* weist Cargo an, das
