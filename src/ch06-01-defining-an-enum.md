@@ -426,6 +426,11 @@ error[E0277]: cannot add `Option<i8>` to `i8`
   |                 ^ no implementation for `i8 + Option<i8>`
   |
   = help: the trait `Add<Option<i8>>` is not implemented for `i8`
+  = help: the following other types implement trait `Add<Rhs>`:
+            <&'a i8 as Add<i8>>
+            <&i8 as Add<&i8>>
+            <i8 as Add<&i8>>
+            <i8 as Add>
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `enums` due to previous error
