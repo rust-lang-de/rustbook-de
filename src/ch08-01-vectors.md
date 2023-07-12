@@ -85,11 +85,11 @@ mittels Indexierungssyntax und der Methode `get`.
 let v = vec![1, 2, 3, 4, 5];
 
 let third: &i32 = &v[2];
-println!("Das dritte Element ist {}", third);
+println!("Das dritte Element ist {third}");
 
 let third: Option<&i32> = v.get(2);
 match third {
-    Some(third) => println!("Das dritte Element ist {}", third),
+    Some(third) => println!("Das dritte Element ist {third}"),
     None => println!("Es gibt kein drittes Element."),
 }
 ```
@@ -154,7 +154,7 @@ let first = &v[0];
 
 v.push(6);
 
-println!("Das erste Element ist: {}", first);
+println!("Das erste Element ist: {first}");
 ```
 
 <span class="caption">Codeblock 8-6: Versuch, ein Element zu einem Vektor
@@ -174,8 +174,8 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
 6 |     v.push(6);
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
-8 |     println!("Das erste Element ist: {}", first);
-  |                                           ----- immutable borrow later used here
+8 |     println!("Das erste Element ist: {first}");
+  |                                       ----- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
@@ -206,7 +206,7 @@ Vektors von `i32`-Werten zu erhalten und diese auszugeben.
 ```rust
 let v = vec![100, 32, 57];
 for i in &v {
-    println!("{}", i);
+    println!("{i}");
 }
 ```
 
