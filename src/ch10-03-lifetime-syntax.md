@@ -34,16 +34,14 @@ Gültigkeitsbereich hat.
 
 ```rust,does_not_compile
 fn main() {
+    let r;
+
     {
-        let r;
-
-        {
-            let x = 5;
-            r = &x;
-        }
-
-        println!("r: {}", r);
+        let x = 5;
+        r = &x;
     }
+
+    println!("r: {}", r);
 }
 ```
 
@@ -69,15 +67,15 @@ versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0597]: `x` does not live long enough
-  --> src/main.rs:7:17
-   |
-7  |             r = &x;
-   |                 ^^ borrowed value does not live long enough
-8  |         }
-   |         - `x` dropped here while still borrowed
-9  | 
-10 |         println!("r: {}", r);
-   |                           - borrow later used here
+ --> src/main.rs:6:13
+  |
+6 |         r = &x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!("r: {}", r);
+  |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` due to previous error
@@ -101,18 +99,16 @@ sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
 
 ```rust,does_not_compile
-# fn main() {
-    {
-        let r;                // ---------+-- 'a
-                              //          |
-        {                     //          |
-            let x = 5;        // -+-- 'b  |
-            r = &x;           //  |       |
-        }                     // -+       |
-                              //          |
-        println!("r: {}", r); //          |
-    }                         // ---------+
-# }
+fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!("r: {}", r); //          |
+}                         // ---------+
 ```
 
 <span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von `r`
@@ -131,15 +127,13 @@ Referenz hat und fehlerfrei kompiliert werden kann.
 
 ```rust
 fn main() {
-    {
-        let x = 5;            // ----------+-- 'b
-                              //           |
-        let r = &x;           // --+-- 'a  |
-                              //   |       |
-        println!("r: {}", r); //   |       |
-                              // --+       |
-    }                         // ----------+
-}
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &x;           // --+-- 'a  |
+                          //   |       |
+    println!("r: {}", r); //   |       |
+                          // --+       |
+}                         // ----------+
 ```
 
 <span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
@@ -218,7 +212,6 @@ Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:
 
 ```console
 $ cargo run
-$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0106]: missing lifetime specifier
  --> src/main.rs:9:33
@@ -230,7 +223,7 @@ error[E0106]: missing lifetime specifier
 help: consider introducing a named lifetime parameter
   |
 9 | fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
-  |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
+  |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `chapter10` due to previous error
