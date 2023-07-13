@@ -17,7 +17,7 @@ Programm mit `cargo run`, einer zu suchenden Zeichenkette und einem Pfad zu
 einer Datei, in der gesucht werden soll, auszuführen:
 
 ```console
-$ cargo run searchstring example-filename.txt
+$ cargo run -- searchstring example-filename.txt
 ```
 
 Im Moment kann das von `cargo new` generierte Programm die Argumente, die wir
