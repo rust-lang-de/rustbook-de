@@ -263,25 +263,25 @@ Warten wir ab, ob diese Implementierung die Tests besteht:
 $ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 1.33s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 2 tests
 test tests::case_insensitive ... ok
 test tests::case_sensitive ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running target/debug/deps/minigrep-caf9dbee196c78b9
+     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests minigrep
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Großartig! Sie haben bestanden. Lass uns nun die neue Funktion
@@ -535,7 +535,7 @@ impl Config {
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let case_sensitive = env::var("CASE_INSENSITIVE").is_err();
+        let case_sensitive = env::var("IGNORE_CASE").is_err();
 
         Ok(Config {
             query,
@@ -686,9 +686,6 @@ Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
 könnten:
 
 ```console
-$ CASE_INSENSITIVE=1 cargo run to poem.txt
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep to poem.txt`
 Are you nobody, too?
 How dreary to be somebody!
 To tell your name the livelong day
