@@ -133,7 +133,7 @@ adder
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
-│   └── lib.rs
+│   └── lib.rs
 └── tests
     └── integration_test.rs
 ```
@@ -167,26 +167,26 @@ Dateien in diesem Verzeichnis nur dann, wenn wir `cargo test` ausführen. Führe
 ```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
-    Finished test [unoptimized + debuginfo] target(s) in 0.73s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+    Finished test [unoptimized + debuginfo] target(s) in 1.31s
+     Running unittests src/lib.rs (target/debug/deps/adder-1082c4b063a8fbe6)
 
 running 1 test
 test tests::internal ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-1082c4b063a8fbe6)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Die drei Abschnitte der Ausgabe umfassen die Modultests, den Integrationstest
@@ -219,12 +219,12 @@ Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden bei
 $ cargo test --test integration_test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.64s
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-82e7799c1bc62298)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Dieses Kommando führt nur die Tests in der Datei *tests/integration_test.rs*
@@ -270,31 +270,31 @@ aufgerufen haben:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.89s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::internal ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/common-7064e1b6d2e271be)
+     Running tests/common.rs (target/debug/deps/common-92948b65e88960b4)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-92948b65e88960b4)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Dass in den Testergebnissen `common` erscheint und dabei `running 0 tests`
@@ -309,10 +309,10 @@ Projektverzeichnis sieht nun wie folgt aus:
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
-│   └── lib.rs
+│   └── lib.rs
 └── tests
     ├── common
-    │   └── mod.rs
+    │   └── mod.rs
     └── integration_test.rs
 ```
 
