@@ -169,7 +169,6 @@ enthält. Dieser `List`-Wert ist ein weiterer `Cons`, der `3` enthält und ein
 `List`, der schließlich `Nil` ist, die nicht rekursive Variante, die das Ende
 der Liste signalisiert.
 
-
 Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
 erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird:
 
@@ -180,27 +179,17 @@ error[E0072]: recursive type `List` has infinite size
  --> src/main.rs:1:1
   |
 1 | enum List {
-  | ^^^^^^^^^ recursive type has infinite size
+  | ^^^^^^^^^
 2 |     Cons(i32, List),
   |               ---- recursive without indirection
   |
-help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
   |
 2 |     Cons(i32, Box<List>),
   |               ++++    +
 
-error[E0391]: cycle detected when computing drop-check constraints for `List`
- --> src/main.rs:1:1
-  |
-1 | enum List {
-  | ^^^^^^^^^
-  |
-  = note: ...which again requires computing drop-check constraints for `List`, completing the cycle
-  = note: cycle used when computing dropck types for `Canonical { max_universe: U0, variables: [], value: ParamEnvAnd { param_env: ParamEnv { caller_bounds: [], reveal: UserFacing }, value: List } }`
-
-Some errors have detailed explanations: E0072, E0391.
-For more information about an error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to 2 previous errors
+For more information about this error, try `rustc --explain E0072`.
+error: could not compile `cons-list` due to previous error
 ```
 
 <span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
