@@ -83,18 +83,18 @@ Codeblock 11-2 zu sehen ist.
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.57s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 <span class="caption">Codeblock 11-2: Ergebnis der Ausführung des automatisch
@@ -156,18 +156,18 @@ anstelle von `it_works`:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.59s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::exploration ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Fügen wir einen weiteren Test hinzu, aber dieses Mal machen wir einen Test, der
@@ -207,7 +207,7 @@ Codeblock 11-4 aussehen, was zeigt, dass unser Test `exploration` bestanden und
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.72s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::another ... FAILED
@@ -216,15 +216,16 @@ test tests::exploration ... ok
 failures:
 
 ---- tests::another stdout ----
-thread 'main' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
+thread 'tests::another' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::another
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 <span class="caption">Codeblock 11-4: Testergebnisse, wenn ein Test bestanden
@@ -350,18 +351,18 @@ also sollte unser Test erfolgreich sein. Lass es uns herausfinden!
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 1 test
 test tests::larger_can_hold_smaller ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests rectangle
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Es funktioniert! Fügen wir noch einen weiteren Test hinzu, diesmal mit der
@@ -426,19 +427,19 @@ Rückgabewert `false` hat:
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... ok
 test tests::smaller_cannot_hold_larger ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests rectangle
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Zwei Tests, die erfolgreich sind! Nun wollen wir sehen, was mit unseren
@@ -501,7 +502,7 @@ Das Ausführen der Tests ergibt nun Folgendes:
 $ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... FAILED
@@ -510,16 +511,16 @@ test tests::smaller_cannot_hold_larger ... ok
 failures:
 
 ---- tests::larger_can_hold_smaller stdout ----
-thread 'main' panicked at 'assertion failed: larger.can_hold(&smaller)', src/lib.rs:28:9
+thread 'tests::larger_can_hold_smaller' panicked at 'assertion failed: larger.can_hold(&smaller)', src/lib.rs:28:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
     tests::larger_can_hold_smaller
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich 8 ist und
@@ -572,18 +573,18 @@ Lass uns prüfen, ob sie den Test besteht!
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Wir übergeben `4` als Argument an `assert_eq!`, was identisch mit dem Ergebnis
@@ -617,7 +618,7 @@ Führe die Tests erneut aus:
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... FAILED
@@ -625,17 +626,18 @@ test tests::it_adds_two ... FAILED
 failures:
 
 ---- tests::it_adds_two stdout ----
-thread 'main' panicked at 'assertion failed: `(left == right)`
+thread 'tests::it_adds_two' panicked at 'assertion failed: `(left == right)`
   left: `4`,
  right: `5`', src/lib.rs:11:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::it_adds_two
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl und die
@@ -750,7 +752,7 @@ Das Ausführen dieses Tests führt zu folgender Ausgabe:
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
-     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
+     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -758,15 +760,16 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'main' panicked at 'assertion failed: result.contains("Carol")', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Carol\")', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::greeting_contains_name
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Dieses Ergebnis zeigt nur an, dass die Zusicherung fehlgeschlagen ist und in
@@ -804,7 +807,7 @@ Fehlermeldung:
 $ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.93s
-     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
+     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -812,15 +815,16 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'main' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::greeting_contains_name
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Wir können den Wert, den wir tatsächlich erhalten haben, in der Testausgabe
@@ -885,18 +889,18 @@ wenn dieser Test bestanden ist:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests guessing_game
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
@@ -937,7 +941,7 @@ Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... FAILED
@@ -950,9 +954,9 @@ note: test did not panic as expected
 failures:
     tests::greater_than_100
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Wir erhalten in diesem Fall keine sehr hilfreiche Meldung, aber wenn wir uns
@@ -995,7 +999,7 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic(expected = "Schätzwert muss kleiner oder gleich 100 sein")]
+    #[should_panic(expected = "kleiner oder gleich 100")]
     fn greater_than_100() {
         Guess::new(200);
     }
@@ -1044,7 +1048,7 @@ vertauschen:
 #     use super::*;
 #
 #     #[test]
-#     #[should_panic(expected = "Guess value must be less than or equal to 100")]
+#     #[should_panic(expected = "kleiner oder gleich 100")]
 #     fn greater_than_100() {
 #         Guess::new(200);
 #     }
@@ -1057,7 +1061,7 @@ Wenn wir diesmal den `should_panic`-Test ausführen, wird er fehlschlagen:
 $ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... FAILED
@@ -1065,18 +1069,18 @@ test tests::greater_than_100 - should panic ... FAILED
 failures:
 
 ---- tests::greater_than_100 stdout ----
-thread 'main' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
+thread 'tests::greater_than_100' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
       panic message: `"Schätzwert muss größer oder gleich 1 sein, ist 200."`,
- expected substring: `"Schätzwert muss kleiner oder gleich 100 sein"`
+ expected substring: `"kleiner oder gleich 100"`
 
 failures:
     tests::greater_than_100
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
