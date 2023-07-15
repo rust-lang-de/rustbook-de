@@ -375,18 +375,16 @@ machen die Typen `s1` und `s2` zu einem `&str` anstatt zu einem `str`. Erinnere
 dich, dass wir im Abschnitt [„Zeichenkettenanteilstypen
 (string slices)“][string-slices] in Kapitel 4 gesagt haben, dass die
 Anteilstypen-Datenstruktur die Startposition und die Länge des Anteilstyps
-speichert.
-
-Obwohl also `&T` ein einzelner Wert ist, der die Speicheradresse des Ortes
-speichert, an dem sich `T` befindet, hat `&str` *zwei* Werte: Die Adresse von
-`str` und seine Länge. Als solches können wir die Größe eines `&str`-Wertes zur
-Kompilierzeit kennen: Er ist doppelt so lang wie ein `usize`. Das heißt, wir
-wissen immer die Größe einer `&str`, egal wie lang die Zeichenkette ist, auf
-die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer Größe
-auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten, das die
-Größe der dynamischen Information speichert. Die goldene Regel für Typen
-dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe immer
-hinter eine Art Zeiger stellen müssen.
+speichert. Obwohl also `&T` ein einzelner Wert ist, der die Speicheradresse des
+Ortes speichert, an dem sich `T` befindet, hat `&str` *zwei* Werte: Die Adresse
+von `str` und seine Länge. Als solches können wir die Größe eines `&str`-Wertes
+zur Kompilierzeit kennen: Er ist doppelt so lang wie ein `usize`. Das heißt,
+wir wissen immer die Größe einer `&str`, egal wie lang die Zeichenkette ist,
+auf die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer
+Größe auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten,
+das die Größe der dynamischen Information speichert. Die goldene Regel für
+Typen dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe
+immer hinter eine Art Zeiger stellen müssen.
 
 Wir können `str` mit allen Arten von Zeigern kombinieren: Zum Beispiel
 `Box<str>` oder `Rc<str>`. Tatsächlich hast du das schon einmal gesehen, aber
