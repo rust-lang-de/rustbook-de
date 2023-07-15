@@ -293,15 +293,11 @@ fn main() {
             println!("Die Quit-Variante hat keine Daten zu destrukturieren.")
         }
         Message::Move { x, y } => {
-            println!(
-                "Bewege in x-Richtung {} und in y-Richtung {}",
-                x, y
-            );
+            println!("Bewege in x-Richtung {x} und in y-Richtung {y}");
         }
         Message::Write(text) => println!("Textnachricht: {}", text),
         Message::ChangeColor(r, g, b) => println!(
-            "Ändere die Farbe in rot {}, grün {} und blau {}",
-            r, g, b
+            "Ändere die Farbe in rot {r}, grün {g} und blau {b}"
         ),
     }
 }
@@ -356,14 +352,12 @@ fn main() {
     let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
 
     match msg {
-        Message::ChangeColor(Color::Rgb(r, g, b)) => println!(
-            "Ändere die Farbe in rot {}, grün {} und blau {}",
-            r, g, b
-        ),
-        Message::ChangeColor(Color::Hsv(h, s, v)) => println!(
-            "Ändere die Farbe in Farbwert {}, Sättigung {} und Hellwert {}",
-            h, s, v
-        ),
+        Message::ChangeColor(Color::Rgb(r, g, b)) => {
+            println!("Ändere die Farbe in rot {r}, grün {g} und blau {b}");
+        }
+        Message::ChangeColor(Color::Hsv(h, s, v)) => {
+            println!("Ändere die Farbe in Farbwert {h}, Sättigung {s} und Hellwert {v}")
+        }
         _ => (),
     }
 }
