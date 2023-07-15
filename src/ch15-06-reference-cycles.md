@@ -211,12 +211,6 @@ verwendet `weak_count`, um den Überblick zu behalten wie viele
 Unterschied besteht darin, dass `weak_count` nicht 0 sein muss, damit die
 `Rc<T>`-Instanz aufgeräumt wird.
 
-Mit starken Referenzen kann man die Eigentümerschaft einer `Rc<T>`-Instanz
-teilen, schwache Referenzen drücken hingegen keine Eigentümerschafts-Beziehung
-aus. Sie verursachen keinen Referenzzyklus, da jeder Zyklus mit schwachen
-Referenzen unterbrochen wird, sobald die starke Referenzanzahl der beteiligten
-Werte 0 beträgt.
-
 Da der Wert, auf den `Weak<T>` referenziert, möglicherweise aufgeräumt wurde, musst
 du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
 tun, auf den ein `Weak<T>` zeigt. Ruft man dazu die Methode `upgrade` für eine
