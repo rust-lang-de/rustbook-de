@@ -217,12 +217,6 @@ Gültigkeitsbereich, in dem sie steht</span></p>
 nicht mehr gilt:</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
-  --&gt; src/lib.rs:11:9
-   |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of undeclared crate or module `hosting`
-
 warning: unused import: `crate::front_of_house::hosting`
  --&gt; src/lib.rs:7:5
   |
@@ -230,6 +224,12 @@ warning: unused import: `crate::front_of_house::hosting`
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
+
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --&gt; src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
 
 For more information about this error, try `rustc --explain E0433`.
 warning: `restaurant` (lib) generated 1 warning
@@ -384,7 +384,7 @@ auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
-<pre><code class="language-toml">rand = &quot;0.8.3&quot;
+<pre><code class="language-toml">rand = &quot;0.8.5&quot;
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>

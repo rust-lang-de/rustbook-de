@@ -396,15 +396,11 @@ fn main() {
             println!(&quot;Die Quit-Variante hat keine Daten zu destrukturieren.&quot;)
         }
         Message::Move { x, y } =&gt; {
-            println!(
-                &quot;Bewege in x-Richtung {} und in y-Richtung {}&quot;,
-                x, y
-            );
+            println!(&quot;Bewege in x-Richtung {x} und in y-Richtung {y}&quot;);
         }
         Message::Write(text) =&gt; println!(&quot;Textnachricht: {}&quot;, text),
         Message::ChangeColor(r, g, b) =&gt; println!(
-            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
-            r, g, b
+            &quot;Ändere die Farbe in rot {r}, grün {g} und blau {b}&quot;
         ),
     }
 }</code></pre></pre>
@@ -449,14 +445,12 @@ fn main() {
     let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
 
     match msg {
-        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; println!(
-            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
-            r, g, b
-        ),
-        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
-            &quot;Ändere die Farbe in Farbwert {}, Sättigung {} und Hellwert {}&quot;,
-            h, s, v
-        ),
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
+            println!(&quot;Ändere die Farbe in rot {r}, grün {g} und blau {b}&quot;);
+        }
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!(&quot;Ändere die Farbe in Farbwert {h}, Sättigung {s} und Hellwert {v}&quot;)
+        }
         _ =&gt; (),
     }
 }</code></pre></pre>

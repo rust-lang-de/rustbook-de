@@ -500,9 +500,9 @@ in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!(&quot;Before defining closure: {:?}&quot;, list);
+    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
 
-    thread::spawn(move || println!(&quot;From thread: {:?}&quot;, list))
+    thread::spawn(move || println!(&quot;Im Strang: {:?}&quot;, list))
         .join()
         .unwrap();
 }</code></pre></pre>

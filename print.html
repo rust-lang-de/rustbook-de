@@ -162,18 +162,19 @@
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;</em>
 <em>übersetzt ins Deutsche durch die Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.65 (veröffentlicht am
-2022-11-03) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.67.1 (veröffentlicht am
+2023-02-09) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
 1</a> zum Installieren und Aktualisieren von Rust.</p>
 <p>Die HTML-Version ist online verfügbar unter
 <a href="https://doc.rust-lang.org/stable/book/">https://doc.rust-lang.org/stable/book/</a>
 (englisches Original) und unter
 <a href="https://rust-lang-de.github.io/rustbook-de/">https://rust-lang-de.github.io/rustbook-de/</a>
-(deutsche Übersetzung) und offline mit Rust-Installationen, die mit <code>rustup</code>
+(deutsche Übersetzung) sowie offline in Rust-Installationen, die mit <code>rustup</code>
 erfolgt sind; führe <code>rustup docs --book</code> aus um es zu öffnen.</p>
 <p>Es sind weitere <a href="appendix-06-translation.html">Gemeinschaftsübersetzungen</a> verfügbar.</p>
-<p>Der englische Text ist auch als <a href="https://nostarch.com/rust-programming-language-2nd-edition">Taschenbuch und E-Book bei No Starch
-Press</a> erhältlich.</p>
+<p>Der englische Text ist als <a href="https://nostarch.com/rust-programming-language-2nd-edition">Taschenbuch und E-Book bei No Starch
+Press</a> erhältlich, den deutschen Text gibt es ebenfalls als
+<a href="https://rust-lernen.de/">Taschenbuch und E-Book</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="vorwort"><a class="header" href="#vorwort">Vorwort</a></h1>
 <p>Es war nicht immer so klar, aber bei der Programmiersprache Rust geht es im
 Grunde um <em>Befähigung</em>: Egal, welche Art von Code du jetzt schreibst, Rust
@@ -383,7 +384,7 @@ dir einen Hinweis bei Code, der nicht funktionieren soll:</p>
 Codeversion, wenn er sich nicht kompilieren lässt.</p>
 <h2 id="quellcode"><a class="header" href="#quellcode">Quellcode</a></h2>
 <p>Die Quelldateien, aus denen dieses Buch generiert wird, findest du unter
-<a href="https://github.com/rust-lang-de/rustbook-de/tree/master/src">GitHub</a>.</p>
+<a href="https://github.com/rust-lang-de/rustbook-de/">GitHub</a>.</p>
 <div style="break-before: page; page-break-before: always;"></div><h1 id="erste-schritte"><a class="header" href="#erste-schritte">Erste Schritte</a></h1>
 <p>Lass uns mit Rust loslegen! Es gibt viel zu lernen, aber irgendwo muss man
 bekanntlich anfangen. In diesem Kapitel geht es um folgende Themen:</p>
@@ -403,18 +404,17 @@ schaue bitte auf der Seite <a href="https://forge.rust-lang.org/infra/other-inst
 nach anderen Möglichkeiten.</p>
 </blockquote>
 <p>Die folgenden Schritte installieren die neueste stabile Version des
-Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher,
-dass alle kompilierbaren Beispiele in diesem Buch auch mit neueren
-Rust-Versionen kompilierbar bleiben werden. Die Konsolenausgabe
-der Beispiele kann sich zwischen Versionen leicht unterscheiden,
-weil Rust oft Fehlermeldungen und Warnungen verbessert.
-Anders ausgedrückt, jede neuere stabile Version von Rust, die du
-mithilfe dieser Schritte installierst, sollte wie erwartet mit dem
-Inhalt dieses Buches funktionieren.</p>
+Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher, dass alle
+kompilierbaren Beispiele in diesem Buch auch mit neueren Rust-Versionen
+kompilierbar bleiben werden. Die Ausgabe der Beispiele kann sich zwischen
+Versionen leicht unterscheiden, weil Rust oft Fehlermeldungen und Warnungen
+verbessert. Anders ausgedrückt, jede neuere stabile Version von Rust, die du
+mithilfe dieser Schritte installierst, sollte wie erwartet mit dem Inhalt
+dieses Buchs funktionieren.</p>
 <blockquote>
 <h3 id="kommandozeilen-schreibweise"><a class="header" href="#kommandozeilen-schreibweise">Kommandozeilen-Schreibweise</a></h3>
-<p>In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf der
-Konsole zeigen. Alle Zeilen, die du in die Konsole eingeben sollst,
+<p>In diesem Kapitel und im ganzen Buch werden wir einige Befehle auf dem
+Terminal zeigen. Alle Zeilen, die du in das Terminal eingeben sollst,
 beginnen mit <code>$</code>. Du brauchst das <code>$</code>-Zeichen nicht einzugeben;
 es weist nur auf den Beginn jedes Befehls hin. Zeilen, die nicht mit
 <code>$</code> beginnen, zeigen normalerweise die Ausgabe eines vorherigen Befehls.
@@ -422,7 +422,7 @@ PowerShell-spezifische Beispiele werden außerdem <code>&gt;</code> anstelle von
 verwenden.</p>
 </blockquote>
 <h3 id="die-installation-von-rustup-in-linux-und-macos"><a class="header" href="#die-installation-von-rustup-in-linux-und-macos">Die Installation von <code>rustup</code> in Linux und macOS</a></h3>
-<p>Falls du Linux oder macOS verwendest, öffne ein Konsolenfenster und gib den
+<p>Falls du Linux oder macOS verwendest, öffne ein Terminalfenster und gib den
 folgenden Befehl ein:</p>
 <pre><code class="language-console">$ curl --proto '=https' --tlsv1.2 https://sh.rustup.rs -sSf | sh
 </code></pre>
@@ -462,8 +462,8 @@ deiner Wahl.</li>
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.</p>
 <h3 id="fehlersuche"><a class="header" href="#fehlersuche">Fehlersuche</a></h3>
-<p>Um zu überprüfen, ob du Rust korrekt installiert hast, öffne eine
-Kommandozeile und gib folgende Zeile ein:</p>
+<p>Um zu überprüfen, ob du Rust korrekt installiert hast, öffne ein
+Terminal und gib folgende Zeile ein:</p>
 <pre><code class="language-console">$ rustc --version
 </code></pre>
 <p>Du solltest die Versionsnummer, den Commit-Hash und das Commit-Datum für die
@@ -487,9 +487,8 @@ mehrere Stellen, an denen du Hilfe bekommen kannst. Wie du mit anderen
 Rust-Entwicklern in Kontakt treten kannst, erfährst du auf der
 <a href="https://www.rust-lang.org/community">Gemeinschafts-Seite</a>.</p>
 <h3 id="aktualisieren-und-deinstallieren"><a class="header" href="#aktualisieren-und-deinstallieren">Aktualisieren und Deinstallieren</a></h3>
-<p>Nachdem du Rust mithilfe von <code>rustup</code> installiert hast, ist es einfach,
-auf die neueste Version zu aktualisieren. Führe folgenden Befehl auf der
-Kommandozeile aus:</p>
+<p>Nachdem du Rust mithilfe von <code>rustup</code> installiert hast, ist es einfach, auf die
+neueste Version zu aktualisieren. Führe folgenden Befehl im Terminal aus:</p>
 <pre><code class="language-console">$ rustup update
 </code></pre>
 <p>Um Rust und <code>rustup</code> zu deinstallieren, führe folgenden Befehl aus:</p>
@@ -522,7 +521,7 @@ Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für weit
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.</p>
-<p>Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
+<p>Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
 <em>projects</em> und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses <em>projects</em> zu erstellen.</p>
 <p>Gib dies bei Linux, macOS und PowerShell unter Windows ein:</p>
@@ -550,8 +549,9 @@ Codeblock 1-1 ein.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
-<p>Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
-oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:</p>
+<p>Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
+<em>~/projects/hello_world</em>. Gib unter Linux oder MacOS die folgenden Befehle ein,
+um die Datei zu kompilieren und auszuführen:</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
 Hallo Welt!
@@ -561,9 +561,9 @@ Hallo Welt!
 &gt; .\main.exe
 Hallo Welt!
 </code></pre>
-<p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> auf
-der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
-im Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
+<p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> im
+Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
+Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -625,7 +625,7 @@ Quelldatei übergibst, so wie hier:</p>
 ähnlich wie <code>gcc</code> oder <code>clang</code> ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.</p>
 <p>Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst:</p>
+sehen, indem du den Befehl <code>ls</code> in deinem Terminal eingibst:</p>
 <pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
@@ -645,7 +645,7 @@ aus, so wie hier:</p>
 <pre><code class="language-console">$ ./main # oder .\main.exe unter Windows
 </code></pre>
 <p>Wenn <em>main.rs</em> dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deiner Konsole ausgeben.</p>
+Welt!“ in deinem Terminal ausgeben.</p>
 <p>Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
 getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab
@@ -1542,19 +1542,26 @@ berücksichtigt wird.</p>
 <p>Der Code in Codeblock 2-4 lässt sich jedoch noch nicht kompilieren. Lass es uns
 versuchen:</p>
 <pre><code class="language-console">$ cargo build
-   Compiling libc v0.2.51
-   Compiling rand_core v0.4.0
-   Compiling rand_core v0.3.1
-   Compiling rand v0.5.6
+   Compiling libc v0.2.86
+   Compiling getrandom v0.2.2
+   Compiling cfg-if v1.0.0
+   Compiling ppv-lite86 v0.2.10
+   Compiling rand_core v0.6.2
+   Compiling rand_chacha v0.3.0
+   Compiling rand v0.8.5
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
 error[E0308]: mismatched types
   --&gt; src/main.rs:22:21
    |
 22 |     match guess.cmp(&amp;secret_number) {
-   |                     ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 --- ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 |
+   |                 arguments to this function are incorrect
    |
    = note: expected reference `&amp;String`
               found reference `&amp;{integer}`
+note: associated function defined here
+  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/cmp.rs:783:8
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` due to previous error
@@ -2219,7 +2226,12 @@ error[E0282]: type annotations needed
  --&gt; src/main.rs:2:9
   |
 2 |     let guess = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
-  |         ^^^^^ consider giving `guess` a type
+  |         ^^^^^
+  |
+help: consider giving `guess` an explicit type
+  |
+2 |     let guess: _ = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
+  |              +++
 
 For more information about this error, try `rustc --explain E0282`.
 error: could not compile `no_type_annotations` due to previous error
@@ -2358,7 +2370,7 @@ verwenden würdest:</p>
 
     // Division
     let quotient = 56.7 / 32.2;
-    let floored = 2 / 3; // Ergibt 0
+    let truncated = -5 / 3; // Ergibt -1
 
     // Restberechnung
     let remainder = 43 % 5;
@@ -2712,15 +2724,12 @@ einen Fehler erhalten:</p>
 </code></pre></pre>
 <p>Wenn du dieses Programm ausführst, wirst du in etwa folgenden Fehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling playground v0.0.1 (/playground)
-error[E0658]: `let` expressions in this position are experimental
+   Compiling functions v0.1.0 (file:///projects/functions)
+error: expected expression, found `let` statement
  --&gt; src/main.rs:2:14
   |
 2 |     let x = (let y = 6);
-  |              ^^^^^^^^^
-  |
-  = note: see issue #53667 &lt;https://github.com/rust-lang/rust/issues/53667&gt; for more information
-  = help: you can write `matches!(&lt;expr&gt;, &lt;pattern&gt;)` instead of `let &lt;pattern&gt; = &lt;expr&gt;`
+  |              ^^^
 
 error: expected expression, found statement (`let`)
  --&gt; src/main.rs:2:14
@@ -2730,20 +2739,30 @@ error: expected expression, found statement (`let`)
   |
   = note: variable declaration using `let` is a statement
 
+error[E0658]: `let` expressions in this position are unstable
+ --&gt; src/main.rs:2:14
+  |
+2 |     let x = (let y = 6);
+  |              ^^^^^^^^^
+  |
+  = note: see issue #53667 &lt;https://github.com/rust-lang/rust/issues/53667&gt; for more information
+
 warning: unnecessary parentheses around assigned value
  --&gt; src/main.rs:2:13
   |
 2 |     let x = (let y = 6);
-  |             ^^^^^^^^^^^ help: remove these parentheses
+  |             ^         ^
   |
   = note: `#[warn(unused_parens)]` on by default
-
-error: aborting due to 2 previous errors; 1 warning emitted
+help: remove these parentheses
+  |
+2 -     let x = (let y = 6);
+2 +     let x = let y = 6;
+  |
 
 For more information about this error, try `rustc --explain E0658`.
-error: could not compile `playground`
-
-To learn more, run the command again with --verbose.
+warning: `functions` (bin &quot;functions&quot;) generated 1 warning
+error: could not compile `functions` due to 3 previous errors; 1 warning emitted
 </code></pre>
 <p>Die Anweisung <code>let y = 6</code> gibt keinen Wert zurück, also gibt es für <code>x</code> nichts,
 woran <code>x</code> gebunden werden kann. Dies unterscheidet sich von dem, was in anderen
@@ -3368,17 +3387,16 @@ Funktionalitäten ansehen: Ausleihen (borrowing), Anteilstypen (slices) und wie
 Rust Daten im Speicher anordnet.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="was-ist-eigentümerschaft-ownership"><a class="header" href="#was-ist-eigentümerschaft-ownership">Was ist Eigentümerschaft (ownership)?</a></h2>
 <p><em>Eigentümerschaft</em> ist eine Reihe von Regeln, die bestimmen, wie ein
-Rust-Programm den Speicher verwaltet.</p>
-<p>Alle Programme müssen den Arbeitsspeicher eines Rechners verwalten, während sie
-ausgeführt werden. Einige Sprachen verfügen über eine automatische
-Speicherbereinigung, die während der Programmausführung ständig nach nicht mehr
-genutztem Speicher sucht. Bei anderen Sprachen muss der Programmierer selbst
-den Speicher explizit reservieren und freigeben. Rust verwendet einen dritten
-Ansatz: Der Speicher wird durch ein System aus Eigentümerschaft und einer Reihe
-von Regeln verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt
-wird, lässt sich das Programm nicht kompilieren. Keine der
-Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es
-läuft.</p>
+Rust-Programm den Speicher verwaltet. Alle Programme müssen den Arbeitsspeicher
+eines Rechners verwalten, während sie ausgeführt werden. Einige Sprachen
+verfügen über eine automatische Speicherbereinigung, die während der
+Programmausführung ständig nach nicht mehr genutztem Speicher sucht. Bei
+anderen Sprachen muss der Programmierer selbst den Speicher explizit
+reservieren und freigeben. Rust verwendet einen dritten Ansatz: Der Speicher
+wird durch ein System aus Eigentümerschaft und einer Reihe von Regeln
+verwaltet, die der Compiler überprüft. Wenn eine der Regeln verletzt wird,
+lässt sich das Programm nicht kompilieren. Keine der
+Eigentümerschaftsfunktionalitäten verlangsamt dein Programm, während es läuft.</p>
 <p>Da die Eigentümerschaft für viele Programmierer ein neues Konzept ist, braucht
 es etwas Zeit, sich daran zu gewöhnen. Die gute Nachricht ist, je mehr
 Erfahrung du mit Rust und den Regeln der Eigentümerschaft gesammelt hast, desto
@@ -3468,8 +3486,7 @@ funktioniert, wie es funktioniert.</p>
 Behalte diese Regeln im Hinterkopf, während wir veranschaulichende Beispiele
 durcharbeiten:</p>
 <ul>
-<li>Jeder Wert in Rust hat eine Variable, die als sein <em>Eigentümer</em> bezeichnet
-wird.</li>
+<li>Jeder Wert in Rust hat einen <em>Eigentümer</em> (owner).</li>
 <li>Es kann immer nur einen Eigentümer zur gleichen Zeit geben.</li>
 <li>Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
 aufgeräumt.</li>
@@ -3723,9 +3740,15 @@ error[E0382]: borrow of moved value: `s1`
   |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
 3 |     let s2 = s1;
   |              -- value moved here
-4 | 
+4 |
 5 |     println!(&quot;{} Welt!&quot;, s1);
   |                          ^^ value borrowed here after move
+  |
+  = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+  |
+3 |     let s2 = s1.clone();
+  |                ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `ownership` due to previous error
@@ -4034,7 +4057,7 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&amp;`
 7 | fn change(some_string: &amp;String) {
   |                        ------- help: consider changing this to be a mutable reference: `&amp;mut String`
 8 |     some_string.push_str(&quot; Welt&quot;);
-  |     ^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `ownership` due to previous error
@@ -4227,7 +4250,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error
@@ -4783,9 +4806,9 @@ Codeblock 5-2 zu sehen ist.</p>
 </span><span class="boring">
 </span>fn main() {
     let user1 = User {
-        email: String::from(&quot;jemand@example.com&quot;),
-        username: String::from(&quot;benutzername123&quot;),
         active: true,
+        username: String::from(&quot;benutzername123&quot;),
+        email: String::from(&quot;jemand@example.com&quot;),
         sign_in_count: 1,
     };
 }</code></pre></pre>
@@ -4807,9 +4830,9 @@ einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 </span><span class="boring">
 </span>fn main() {
     let mut user1 = User {
-        email: String::from(&quot;jemand@example.com&quot;),
-        username: String::from(&quot;benutzername123&quot;),
         active: true,
+        username: String::from(&quot;benutzername123&quot;),
+        email: String::from(&quot;jemand@example.com&quot;),
         sign_in_count: 1,
     };
 
@@ -4833,9 +4856,9 @@ den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <cod
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
     User {
-        email: email,
-        username: username,
         active: true,
+        username: username,
+        email: email,
         sign_in_count: 1,
     }
 }
@@ -4869,9 +4892,9 @@ wiederholen, siehe Codeblock 5-5.</p>
 </span><span class="boring">
 </span>fn build_user(email: String, username: String) -&gt; User {
     User {
-        email,
-        username,
         active: true,
+        username,
+        email,
         sign_in_count: 1,
     }
 }
@@ -5057,38 +5080,36 @@ fn main() {
 }</code></pre></pre>
 <p>Der Compiler wird sich beschweren, dass die Lebensdauer nicht angegeben ist:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling playground v0.0.1 (/playground)
+   Compiling structs v0.1.0 (file:///projects/structs)
 error[E0106]: missing lifetime specifier
- --&gt; src/main.rs:2:15
+ --&gt; src/main.rs:3:15
   |
-2 |     username: &amp;str,
+3 |     username: &amp;str,
   |               ^ expected named lifetime parameter
   |
 help: consider introducing a named lifetime parameter
   |
-1 | struct User&lt;'a&gt; {
-2 |     username: &amp;'a str,
+1 ~ struct User&lt;'a&gt; {
+2 |     active: bool,
+3 ~     username: &amp;'a str,
   |
 
 error[E0106]: missing lifetime specifier
- --&gt; src/main.rs:3:12
+ --&gt; src/main.rs:4:12
   |
-3 |     email: &amp;str,
+4 |     email: &amp;str,
   |            ^ expected named lifetime parameter
   |
 help: consider introducing a named lifetime parameter
   |
-1 | struct User&lt;'a&gt; {
-2 |     username: &amp;str,
-3 |     email: &amp;'a str,
+1 ~ struct User&lt;'a&gt; {
+2 |     active: bool,
+3 |     username: &amp;str,
+4 ~     email: &amp;'a str,
   |
 
-error: aborting due to 2 previous errors
-
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `playground`
-
-To learn more, run the command again with --verbose.
+error: could not compile `structs` due to 2 previous errors
 </code></pre>
 <p>In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen
 in Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
@@ -5102,9 +5123,8 @@ Variablen und schreiben das Programm dann um, bis wir stattdessen Strukturen
 einsetzen.</p>
 <p>Legen wir mit Cargo ein neues Binärprojekt namens <em>rectangles</em> an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
-Rechtecks berechnet.</p>
-<p>Codeblock 5-8 zeigt ein kurzes Programm, das genau das in <em>src/main.rs</em> unseres
-Projekts macht.</p>
+Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
+<em>src/main.rs</em> unseres Projekts macht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let width1 = 30;
@@ -5333,9 +5353,9 @@ Zeilennummer, in der der <code>dbg!</code>-Makroaufruf in deinem Code vorkommt, 
 mit dem resultierenden Wert des Ausdrucks ausgibt und die Eigentümerschaft am
 Wert zurückgibt.</p>
 <blockquote>
-<p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in den
-Standard-Fehler-Konsolenstrom (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
-den Standard-Ausgabe-Konsolenstrom (<code>stdout</code>) schreibt. Wir werden mehr über
+<p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in die
+Standardfehlerausgabe (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
+die Standardausgabe (<code>stdout</code>) schreibt. Wir werden mehr über
 <code>stderr</code> und <code>stdout</code> im Abschnitt <a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die
 Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
 12</a> erfahren.</p>
@@ -6126,6 +6146,11 @@ error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`
   |                 ^ no implementation for `i8 + Option&lt;i8&gt;`
   |
   = help: the trait `Add&lt;Option&lt;i8&gt;&gt;` is not implemented for `i8`
+  = help: the following other types implement trait `Add&lt;Rhs&gt;`:
+            &lt;&amp;'a i8 as Add&lt;i8&gt;&gt;
+            &lt;&amp;i8 as Add&lt;&amp;i8&gt;&gt;
+            &lt;i8 as Add&lt;&amp;i8&gt;&gt;
+            &lt;i8 as Add&gt;
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `enums` due to previous error
@@ -6389,11 +6414,11 @@ kompilieren lässt:</p>
         Some(i) =&gt; Some(i + 1),
     }
 }
-
-let five = Some(5);
-let six = plus_one(five);
-let none = plus_one(None);
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">let five = Some(5);
+</span><span class="boring">let six = plus_one(five);
+</span><span class="boring">let none = plus_one(None);
+</span><span class="boring">}</span></code></pre></pre>
 <p>Wir haben den Fall <code>None</code> nicht behandelt, daher wird dieser Code einen Fehler
 verursachen. Glücklicherweise ist es ein Fehler, von dem Rust weiß, wie er
 zu lösen ist. Wenn wir versuchen, diesen Code zu kompilieren, werden wir
@@ -6401,13 +6426,22 @@ diese Fehlermeldung bekommen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling enums v0.1.0 (file:///projects/enums)
 error[E0004]: non-exhaustive patterns: `None` not covered
-   --&gt; src/main.rs:3:15
-    |
-3   |         match x {
-    |               ^ pattern `None` not covered
-    |
-    = help: ensure that all possible cases are being handled, possibly by adding wildcards or more match arms
-    = note: the matched value is of type `Option&lt;i32&gt;`
+ --&gt; src/main.rs:3:15
+  |
+3 |         match x {
+  |               ^ pattern `None` not covered
+  |
+note: `Option&lt;i32&gt;` defined here
+ --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
+  |
+  = note: 
+/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
+  = note: the matched value is of type `Option&lt;i32&gt;`
+help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
+  |
+4 ~             Some(i) =&gt; Some(i + 1),
+5 ~             None =&gt; todo!(),
+  |
 
 For more information about this error, try `rustc --explain E0004`.
 error: could not compile `enums` due to previous error
@@ -6790,8 +6824,8 @@ anstelle des Semikolons</li>
 <li><strong>Pfade zum Code in Modulen</strong>: Sobald ein Modul Teil deiner Kiste ist, kannst
 du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
 referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
-zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> im
-Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
+zum Code verwendest. Zum Beispiel würde ein Typ <code>Asparagus</code> (engl. Spargel)
+im Gartengemüse-Modul unter <code>crate::garden::vegetables::Asparagus</code> zu finden
 sein.</li>
 <li><strong>Privat vs. öffentlich</strong>: Der Code innerhalb eines Moduls ist standardmäßig
 für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
@@ -6960,10 +6994,10 @@ sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="ch07-03-paths
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Pfad
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }
 <span class="boring">}</span></code></pre></pre>
@@ -6978,7 +7012,7 @@ erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
 Wir würden den Pfad <code>/front_of_house/hosting/add_to_waitlist</code> angeben, um das
 Programm <code>add_to_waitlist</code> auszuführen; das Verwenden des Namens <code>crate</code>, um
 von der Kistenwurzel aus zu beginnen, ist analog zu <code>/</code>, um vom
-Dateisystem-Wurzelverzeichnis in deiner Eingabeaufforderung aus zu beginnen.</p>
+Dateisystem-Wurzelverzeichnis in deinem Terminal aus zu beginnen.</p>
 <p>Beim zweiten Aufruf von <code>add_to_waitlist</code> in <code>eat_at_restaurant</code> verwenden wir
 einen relativen Pfad. Der Pfad beginnt mit <code>front_of_house</code>, dem Namen des
 Moduls, das auf der gleichen Ebene des Modulbaums definiert ist wie
@@ -7054,7 +7088,7 @@ Auf diese Weise weißt du, welche Teile des inneren Codes du ändern kannst, ohn
 den äußeren Code zu brechen. Rust gibt dir jedoch die Möglichkeit, innere Teile
 des Codes von Kindmodulen für äußere Vorgängermodule offenzulegen, indem du das
 Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen.</p>
-<h3 id="pfade-mit-dem-schlüsselwort-pub-öffnen"><a class="header" href="#pfade-mit-dem-schlüsselwort-pub-öffnen">Pfade mit dem Schlüsselwort <code>pub</code> öffnen</a></h3>
+<h3 id="pfade-mit-dem-schlüsselwort-pub-öffentlich-machen"><a class="header" href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">Pfade mit dem Schlüsselwort <code>pub</code> öffentlich machen</a></h3>
 <p>Kehren wir zum Fehler in Codeblock 7-4 zurück, der uns sagte, das Modul
 <code>hosting</code> sei privat. Wir wollen, dass die Funktion <code>eat_at_restaurant</code> im
 übergeordneten Modul Zugriff auf die Funktion <code>add_to_waitlist</code> im
@@ -7070,7 +7104,7 @@ Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
 }
 
 pub fn eat_at_restaurant() {
-    // Absolutet Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
     // Relativer Pfad
@@ -7135,10 +7169,10 @@ Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Codebloc
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Path
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Path
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }</code></pre>
 <p><span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts <code>pub</code> zu
@@ -7172,7 +7206,7 @@ Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
 verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
-du an diesem Thema interessiert bist, lies <a href="https://rust-lang.github.io/api-guidelines/">The Rust API
+du an diesem Thema interessiert bist, lies die <a href="https://rust-lang.github.io/api-guidelines/">Rust API
 Guidelines</a>.</p>
 <blockquote>
 <h4 id="bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek"><a class="header" href="#bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek">Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek</a></h4>
@@ -7385,12 +7419,6 @@ Gültigkeitsbereich, in dem sie steht</span></p>
 nicht mehr gilt:</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
-error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
-  --&gt; src/lib.rs:11:9
-   |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of undeclared crate or module `hosting`
-
 warning: unused import: `crate::front_of_house::hosting`
  --&gt; src/lib.rs:7:5
   |
@@ -7398,6 +7426,12 @@ warning: unused import: `crate::front_of_house::hosting`
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
   |
   = note: `#[warn(unused_imports)]` on by default
+
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --&gt; src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
 
 For more information about this error, try `rustc --explain E0433`.
 warning: `restaurant` (lib) generated 1 warning
@@ -7552,7 +7586,7 @@ auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
-<pre><code class="language-toml">rand = &quot;0.8.3&quot;
+<pre><code class="language-toml">rand = &quot;0.8.5&quot;
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
@@ -7687,6 +7721,12 @@ eigene Datei <em>src/front_of_house.rs</em>, indem wir die Kistenwurzeldatei so
 ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
 ist die Kistenwurzeldatei <em>src/lib.rs</em>, aber diese Vorgehensweise funktioniert
 auch mit binären Kisten, deren Kistenwurzeldatei <em>src/main.rs</em> ist.</p>
+<p>Zuerst extrahieren wir das Modul <code>front_of_house</code> in eine eigene Datei.
+Entferne den Code innerhalb der geschweiften Klammern des Moduls
+<code>front_of_house</code> und lasse nur die Deklaration <code>mod front_of_house;</code> übrig,
+sodass <em>src/lib.rs</em> den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+dies nicht kompiliert und wir noch die Datei <em>src/front_of_house.rs</em> in
+Codeblock 7-22 erstellen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">mod front_of_house;
 
@@ -7887,11 +7927,11 @@ mittels Indexierungssyntax und der Methode <code>get</code>.</p>
 </span>let v = vec![1, 2, 3, 4, 5];
 
 let third: &amp;i32 = &amp;v[2];
-println!(&quot;Das dritte Element ist {}&quot;, third);
+println!(&quot;Das dritte Element ist {third}&quot;);
 
 let third: Option&lt;&amp;i32&gt; = v.get(2);
 match third {
-    Some(third) =&gt; println!(&quot;Das dritte Element ist {}&quot;, third),
+    Some(third) =&gt; println!(&quot;Das dritte Element ist {third}&quot;),
     None =&gt; println!(&quot;Es gibt kein drittes Element.&quot;),
 }
 <span class="boring">}</span></code></pre></pre>
@@ -7949,7 +7989,7 @@ let first = &amp;v[0];
 
 v.push(6);
 
-println!(&quot;Das erste Element ist: {}&quot;, first);
+println!(&quot;Das erste Element ist: {first}&quot;);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-6: Versuch, ein Element zu einem Vektor
 hinzuzufügen, während eine Referenz auf ein Element gehalten wird</span></p>
@@ -7965,8 +8005,8 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
 6 |     v.push(6);
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
-8 |     println!(&quot;Das erste Element ist: {}&quot;, first);
-  |                                           ----- immutable borrow later used here
+8 |     println!(&quot;Das erste Element ist: {first}&quot;);
+  |                                       ----- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
@@ -7995,7 +8035,7 @@ Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
 </span><span class="boring">fn main() {
 </span>let v = vec![100, 32, 57];
 for i in &amp;v {
-    println!(&quot;{}&quot;, i);
+    println!(&quot;{i}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-7: Ausgeben aller Elemente eines Vektors
@@ -8123,17 +8163,6 @@ den Typ <code>String</code> sowie den Zeichenkettenanteilstyp <code>&amp;str</co
 dieser Typen. Obwohl es in diesem Abschnitt weitgehend um <code>String</code> geht, werden
 beide Typen in Rusts Standardbibliothek stark verwendet, und sowohl <code>String</code>
 als auch Zeichenkettenanteilstypen sind UTF-8-kodiert.</p>
-<p>Die Standardbibliothek von Rust enthält auch eine Reihe anderer
-Zeichenkettentypen wie <code>OsString</code>, <code>OsStr</code>, <code>CString</code> und <code>CStr</code>.
-Bibliothekskisten (library crates) können noch weitere Möglichkeiten zum
-Speichern von Zeichenkettendaten bieten. Fällt dir auf, dass diese Namen alle
-auf <code>String</code> oder <code>Str</code> enden? Sie beziehen sich auf aneigenbare und
-ausgeliehene Varianten, genau wie die Typen <code>String</code> und <code>str</code>, die du zuvor
-gesehen hast. Diese Zeichenkettentypen können z.B. Text in verschiedenen
-Kodierungen speichern oder unterschiedliche Speicherdarstellungen haben. Diese
-anderen Zeichenkettentypen werden in diesem Kapitel nicht besprochen; in ihrer
-API-Dokumentation erfährst du mehr darüber, wie sie zu verwenden sind und wozu
-jeder einzelne geeignet ist.</p>
 <h3 id="erstellen-einer-neuen-zeichenkette"><a class="header" href="#erstellen-einer-neuen-zeichenkette">Erstellen einer neuen Zeichenkette</a></h3>
 <p>Viele der gleichen Operationen, die mit <code>Vec&lt;T&gt;</code> verfügbar sind, sind auch mit
 <code>String</code> verfügbar, weil <code>String</code> eigentlich als Hülle um einen Vektor von
@@ -8164,7 +8193,7 @@ let s = &quot;initialer Inhalt&quot;.to_string();
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-12: Verwenden der Methode <code>to_string</code> zum
 Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
-<p>Dieser Code erzeugt eine Zeichenkette mit dem Inhalt <code>initialer Inhalt</code>.</p>
+<p>Dieser Code erzeugt eine Zeichenkette, die <code>initialer Inhalt</code> enthält.</p>
 <p>Wir können auch die Funktion <code>String::from</code> verwenden, um einen <code>String</code> aus
 einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
 äquivalent zum Code in Codeblock 8-12, der <code>to_string</code> verwendet.</p>
@@ -8226,7 +8255,7 @@ Inhalt an <code>s1</code> angehängt haben.</p>
 </span>let mut s1 = String::from(&quot;foo&quot;);
 let s2 = &quot;bar&quot;;
 s1.push_str(s2);
-println!(&quot;s2 ist {}&quot;, s2);
+println!(&quot;s2 ist {s2}&quot;);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-16: Verwenden eines Zeichenkettenanteilstyps
 nach dem Anhängen seines Inhalts an eine Zeichenkette</span></p>
@@ -8309,7 +8338,7 @@ String-Kombinationen können wir stattdessen das Makro <code>format!</code> verw
 let s2 = String::from(&quot;tac&quot;);
 let s3 = String::from(&quot;toe&quot;);
 
-let s = format!(&quot;{}-{}-{}&quot;, s1, s2, s3);
+let s = format!(&quot;{s1}-{s2}-{s3}&quot;);
 <span class="boring">}</span></code></pre></pre>
 <p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
 funktioniert wie <code>println!</code>, aber anstatt das Ergebnis auf den Bildschirm
@@ -8327,8 +8356,6 @@ ungültigen Code in Codeblock 8-19.</p>
 </span><span class="boring">fn main() {
 </span>let s1 = String::from(&quot;Hallo&quot;);
 let h = s1[0];
-
-
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
 Zeichenkette zu verwenden</span></p>
@@ -8342,6 +8369,13 @@ error[E0277]: the type `String` cannot be indexed by `{integer}`
   |             ^^^^^ `String` cannot be indexed by `{integer}`
   |
   = help: the trait `Index&lt;{integer}&gt;` is not implemented for `String`
+  = help: the following other types implement trait `Index&lt;Idx&gt;`:
+            &lt;String as Index&lt;RangeFrom&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeFull&gt;&gt;
+            &lt;String as Index&lt;RangeInclusive&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeTo&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeToInclusive&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;std::ops::Range&lt;usize&gt;&gt;&gt;
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` due to previous error
@@ -8361,7 +8395,7 @@ diese:</p>
 der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
 Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
 jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
-Großbuchstaben „Ze“ beginnt, nicht mit der arabischen Zahl 3.)</p>
+Großbuchstaben „Ze“ beginnt, nicht mit der Zahl 3.)</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from(&quot;Здравствуйте&quot;);
@@ -8376,8 +8410,6 @@ Um das zu erläutern, betrachte diesen ungültigen Rust-Code:</p>
 </span><span class="boring">fn main() {
 </span>let hello = &quot;Здравствуйте&quot;;
 let answer = &amp;hello[0];
-
-
 <span class="boring">}</span></code></pre></pre>
 <p>Du weißt bereits, dass <code>answer</code> nicht <code>З</code>, der erste Buchstabe, sein wird. In
 der UTF-8-Kodierung von <code>З</code> ist das erste Byte <code>208</code> und das zweite <code>151</code>,
@@ -8419,12 +8451,13 @@ Hindi-Wort besteht:</p>
 <p>Rust bietet verschiedene Möglichkeiten zur Interpretation von rohen
 Zeichenkettendaten, die von Computern gespeichert werden, sodass jedes Programm
 die Interpretation wählen kann, die es benötigt, unabhängig davon, in welcher
-menschlichen Sprache die Daten vorliegen. Ein letzter Grund, warum Rust uns
-nicht erlaubt, eine Zeichenkette zu indexieren, um ein Zeichen zu erhalten,
-ist, dass von Indexoperationen erwartet wird, dass sie immer in konstanter Zeit
-(O(1)) erfolgen. Es ist jedoch nicht möglich, diese Zeitgarantie bei einem
-<code>String</code> einzuhalten, da Rust den Inhalt von Anfang an bis zum Index durchgehen
-müsste, um festzustellen, wie viele gültige Zeichen es gibt.</p>
+menschlichen Sprache die Daten vorliegen.</p>
+<p>Ein letzter Grund, warum Rust uns nicht erlaubt, eine Zeichenkette zu
+indexieren, um ein Zeichen zu erhalten, ist, dass von Indexoperationen erwartet
+wird, dass sie immer in konstanter Zeit (O(1)) erfolgen. Es ist jedoch nicht
+möglich, diese Zeitgarantie bei einem <code>String</code> einzuhalten, da Rust den Inhalt
+von Anfang an bis zum Index durchgehen müsste, um festzustellen, wie viele
+gültige Zeichen es gibt.</p>
 <h3 id="anteilige-zeichenketten"><a class="header" href="#anteilige-zeichenketten">Anteilige Zeichenketten</a></h3>
 <p>Die Indexierung einer Zeichenkette ist oft eine schlechte Idee, weil nicht klar
 ist, was der Rückgabetyp der Zeichenketten-Indexoperation sein soll: Ein
@@ -8520,12 +8553,13 @@ wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
 Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
 (dictionary) oder assoziatives Array (associative array), um nur einige zu
-nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über
-einen Index nachschlagen willst, sondern über einen Schlüssel, der ein
-beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
-Spielstand jedes Teams in einer Hashtabelle vermerken, in der die Schlüssel den
-Teamnamen und die Werte den Spielstand des jeweiligen Teams darstellen. Wenn du
-den Namen eines Teams angibst, kannst du seine Punktzahl abrufen.</p>
+nennen.</p>
+<p>Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
+Index nachschlagen willst, sondern über einen Schlüssel, der ein beliebiger Typ
+sein kann. Beispielsweise könntest du in einem Spiel den Spielstand jedes Teams
+in einer Hashtabelle vermerken, in der die Schlüssel den Teamnamen und die
+Werte den Spielstand des jeweiligen Teams darstellen. Wenn du den Namen eines
+Teams angibst, kannst du seine Punktzahl abrufen.</p>
 <p>In diesem Abschnitt gehen wir die grundlegende Programmierschnittstelle (API)
 von Hashtabellen durch, aber viele weitere Leckerbissen verbergen sich in den
 Funktionen, die in der Standardbibliothek für <code>HashMap&lt;K, V&gt;</code> definiert sind.
@@ -8660,7 +8694,7 @@ println!(&quot;{:?}&quot;, scores);
 einen bestimmten Schlüssel</span></p>
 <p>Dieser Code wird <code>{&quot;Blau&quot;: 25}</code> ausgeben. Der ursprüngliche Wert <code>10</code> wurde
 überschrieben.</p>
-<h4 id="nur-einen-schlüssel-und-wert-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist"><a class="header" href="#nur-einen-schlüssel-und-wert-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist">Nur einen Schlüssel und Wert einfügen, wenn der Schlüssel nicht vorhanden ist</a></h4>
+<h4 id="einen-schlüssel-und-wert-nur-dann-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist"><a class="header" href="#einen-schlüssel-und-wert-nur-dann-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist">Einen Schlüssel und Wert nur dann einfügen, wenn der Schlüssel nicht vorhanden ist</a></h4>
 <p>Es ist üblich, zu prüfen, ob ein bestimmter Schlüssel bereits in der
 Hashtabelle mit einem Wert vorhanden ist, und dann folgende Maßnahmen zu
 ergreifen: Wenn der Schlüssel in der Hashtabelle vorhanden ist, sollte der
@@ -9154,7 +9188,8 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;).expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
+    let greeting_file = File::open(&quot;hallo.txt&quot;)
+        .expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
 }</code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
 zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung, die
@@ -9253,9 +9288,9 @@ Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
 von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
 Informationen darüber, was der aufrufende Code tatsächlich versucht, also
 propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
-angemessen behandelt werden. Dieses Muster der Fehlerweitergabe ist in Rust so
-verbreitet, dass Rust den Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu
-erleichtern.</p>
+angemessen behandelt werden.</p>
+<p>Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
+Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
 <h4 id="abkürzung-zum-weitergeben-von-fehlern-der-operator-"><a class="header" href="#abkürzung-zum-weitergeben-von-fehlern-der-operator-">Abkürzung zum Weitergeben von Fehlern: Der Operator <code>?</code></a></h4>
 <p>Codeblock 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
@@ -9382,15 +9417,14 @@ kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
-   --&gt; src/main.rs:4:48
-    |
-3   | / fn main() {
-4   | |     let f = File::open(&quot;hallo.txt&quot;)?;
-    | |                                    ^ cannot use the `?` operator in a function that returns `()`
-5   | | }
-    | |_- this function should return `Result` or `Option` to accept `?`
-    |
-    = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
+ --&gt; src/main.rs:4:48
+  |
+3 | fn main() {
+  | --------- this function should return `Result` or `Option` to accept `?`
+4 |     let greeting_file = File::open(&quot;hallo.txt&quot;)?;
+  |                                                ^ cannot use the `?` operator in a function that returns `()`
+  |
+  = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `error-handling` due to previous error
@@ -10076,7 +10110,7 @@ error[E0369]: binary operation `&gt;` cannot be applied to type `&amp;T`
 help: consider restricting type parameter `T`
   |
 1 | fn largest&lt;T: std::cmp::PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
-  |             ^^^^^^^^^^^^^^^^^^^^^^
+  |             ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` due to previous error
@@ -10566,7 +10600,7 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span>    let article = NewsArticle {
-        headline: String::from(&quot;Pinguine gewinnen die Stanley-Cup-Meisterschaft!&quot;),
+        headline: String::from(&quot;Penguins gewinnen die Stanley-Cup-Meisterschaft!&quot;),
         location: String::from(&quot;Pittsburgh, PA, USA&quot;),
         author: String::from(&quot;Iceburgh&quot;),
         content: String::from(&quot;Die Pittsburgh Penguins sind erneut die beste \
@@ -10818,7 +10852,7 @@ funktionieren:</p>
     if switch {
         NewsArticle {
             headline: String::from(
-                &quot;Pinguine gewinnen die Stanley-Cup-Meisterschaft!&quot;,
+                &quot;Penguins gewinnen die Stanley-Cup-Meisterschaft!&quot;,
             ),
             location: String::from(&quot;Pittsburgh, PA, USA&quot;),
             author: String::from(&quot;Iceburgh&quot;),
@@ -10947,16 +10981,14 @@ Daten referenziert als die, auf die es referenzieren soll. Betrachte das
 Programm in Codeblock 10-16, das einen äußeren und einen inneren
 Gültigkeitsbereich hat.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+    let r;
+
     {
-        let r;
-
-        {
-            let x = 5;
-            r = &amp;x;
-        }
-
-        println!(&quot;r: {}&quot;, r);
+        let x = 5;
+        r = &amp;x;
     }
+
+    println!(&quot;r: {}&quot;, r);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
@@ -10978,15 +11010,15 @@ versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0597]: `x` does not live long enough
-  --&gt; src/main.rs:7:17
-   |
-7  |             r = &amp;x;
-   |                 ^^ borrowed value does not live long enough
-8  |         }
-   |         - `x` dropped here while still borrowed
-9  | 
-10 |         println!(&quot;r: {}&quot;, r);
-   |                           - borrow later used here
+ --&gt; src/main.rs:6:13
+  |
+6 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!(&quot;r: {}&quot;, r);
+  |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` due to previous error
@@ -11005,18 +11037,16 @@ checker).</p>
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
 sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
-</span>    {
-        let r;                // ---------+-- 'a
-                              //          |
-        {                     //          |
-            let x = 5;        // -+-- 'b  |
-            r = &amp;x;           //  |       |
-        }                     // -+       |
-                              //          |
-        println!(&quot;r: {}&quot;, r); //          |
-    }                         // ---------+
-<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!(&quot;r: {}&quot;, r); //          |
+}                         // ---------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
 <p>Hier haben wir die Lebensdauer von <code>r</code> mit <code>'a</code> und die Lebensdauer von <code>x</code> mit
@@ -11029,15 +11059,13 @@ nicht so lange wie die Referenz selbst.</p>
 <p>Mit Codeblock 10-18 wird der Code so korrigiert, dass er keine hängende
 Referenz hat und fehlerfrei kompiliert werden kann.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    {
-        let x = 5;            // ----------+-- 'b
-                              //           |
-        let r = &amp;x;           // --+-- 'a  |
-                              //   |       |
-        println!(&quot;r: {}&quot;, r); //   |       |
-                              // --+       |
-    }                         // ----------+
-}</code></pre></pre>
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &amp;x;           // --+-- 'a  |
+                          //   |       |
+    println!(&quot;r: {}&quot;, r); //   |       |
+                          // --+       |
+}                         // ----------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
 längere Lebensdauer als die Referenz haben</span></p>
 <p>Hier hat <code>x</code> die Lebensdauer <code>'b</code>, die in diesem Fall größer ist als <code>'a</code>. Das
@@ -11094,7 +11122,6 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
 noch nicht kompiliert</span></p>
 <p>Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:</p>
 <pre><code class="language-console">$ cargo run
-$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0106]: missing lifetime specifier
  --&gt; src/main.rs:9:33
@@ -11106,7 +11133,7 @@ error[E0106]: missing lifetime specifier
 help: consider introducing a named lifetime parameter
   |
 9 | fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
-  |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
+  |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `chapter10` due to previous error
@@ -11796,18 +11823,18 @@ Codeblock 11-2 zu sehen ist.</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.57s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p><span class="caption">Codeblock 11-2: Ergebnis der Ausführung des automatisch
 generierten Tests</span></p>
@@ -11856,18 +11883,18 @@ anstelle von <code>it_works</code>:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.59s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::exploration ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Fügen wir einen weiteren Test hinzu, aber dieses Mal machen wir einen Test, der
 fehlschlägt! Tests schlagen fehl, wenn etwas die Testfunktion zum Abbrechen
@@ -11898,7 +11925,7 @@ Codeblock 11-4 aussehen, was zeigt, dass unser Test <code>exploration</code> bes
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.72s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::another ... FAILED
@@ -11907,15 +11934,16 @@ test tests::exploration ... ok
 failures:
 
 ---- tests::another stdout ----
-thread 'main' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
+thread 'tests::another' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::another
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p><span class="caption">Codeblock 11-4: Testergebnisse, wenn ein Test bestanden
 und ein Test nicht bestanden wird</span></p>
@@ -12019,18 +12047,18 @@ also sollte unser Test erfolgreich sein. Lass es uns herausfinden!</p>
 <pre><code class="language-console">$ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 1 test
 test tests::larger_can_hold_smaller ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests rectangle
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Es funktioniert! Fügen wir noch einen weiteren Test hinzu, diesmal mit der
 Zusicherung, dass ein kleineres Rechteck nicht in ein größeres Rechteck passt:</p>
@@ -12087,19 +12115,19 @@ Rückgabewert <code>false</code> hat:</p>
 <pre><code class="language-console">$ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... ok
 test tests::smaller_cannot_hold_larger ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests rectangle
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Zwei Tests, die erfolgreich sind! Nun wollen wir sehen, was mit unseren
 Testergebnissen passiert, wenn wir einen Fehler in unseren Code einbringen.
@@ -12155,7 +12183,7 @@ impl Rectangle {
 <pre><code class="language-console">$ cargo test
    Compiling rectangle v0.1.0 (file:///projects/rectangle)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/rectangle-6584c4561e48942e)
+     Running unittests src/lib.rs (target/debug/deps/rectangle-6584c4561e48942e)
 
 running 2 tests
 test tests::larger_can_hold_smaller ... FAILED
@@ -12164,16 +12192,16 @@ test tests::smaller_cannot_hold_larger ... ok
 failures:
 
 ---- tests::larger_can_hold_smaller stdout ----
-thread 'main' panicked at 'assertion failed: larger.can_hold(&amp;smaller)', src/lib.rs:28:9
+thread 'tests::larger_can_hold_smaller' panicked at 'assertion failed: larger.can_hold(&amp;smaller)', src/lib.rs:28:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
 failures:
     tests::larger_can_hold_smaller
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich 8 ist und
 <code>smaller.width</code> gleich 5, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
@@ -12214,18 +12242,18 @@ Makro <code>assert_eq!</code></span></p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Wir übergeben <code>4</code> als Argument an <code>assert_eq!</code>, was identisch mit dem Ergebnis
 des Aufrufs <code>add_two(2)</code> ist. Die Zeile für diesen Test
@@ -12251,7 +12279,7 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::it_adds_two ... FAILED
@@ -12259,17 +12287,18 @@ test tests::it_adds_two ... FAILED
 failures:
 
 ---- tests::it_adds_two stdout ----
-thread 'main' panicked at 'assertion failed: `(left == right)`
+thread 'tests::it_adds_two' panicked at 'assertion failed: `(left == right)`
   left: `4`,
  right: `5`', src/lib.rs:11:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::it_adds_two
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl und die
 Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion failed: `(left == right)` </code> war und welche Werte <code>left</code> und <code>right</code> hatten. Diese
@@ -12364,7 +12393,7 @@ Standard-Testversagen aussieht:</p>
 <pre><code class="language-console">$ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
-     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
+     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -12372,15 +12401,16 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'main' panicked at 'assertion failed: result.contains(&quot;Carol&quot;)', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\&quot;Carol\&quot;)', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::greeting_contains_name
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Dieses Ergebnis zeigt nur an, dass die Zusicherung fehlgeschlagen ist und in
 welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
@@ -12414,7 +12444,7 @@ Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo test
    Compiling greeter v0.1.0 (file:///projects/greeter)
     Finished test [unoptimized + debuginfo] target(s) in 0.93s
-     Running unittests (target/debug/deps/greeter-170b942eb5bf5e3a)
+     Running unittests src/lib.rs (target/debug/deps/greeter-170b942eb5bf5e3a)
 
 running 1 test
 test tests::greeting_contains_name ... FAILED
@@ -12422,15 +12452,16 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'main' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::greeting_contains_name
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Wir können den Wert, den wir tatsächlich erhalten haben, in der Testausgabe
 sehen, was uns helfen wird, das zu debuggen, was passiert ist, anstatt das,
@@ -12482,18 +12513,18 @@ wenn dieser Test bestanden ist:</p>
 <pre><code class="language-console">$ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests guessing_game
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion <code>new</code> das Programm abbricht, wenn
@@ -12527,7 +12558,7 @@ impl Guess {
 <pre><code class="language-console">$ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... FAILED
@@ -12540,9 +12571,9 @@ note: test did not panic as expected
 failures:
     tests::greater_than_100
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Wir erhalten in diesem Fall keine sehr hilfreiche Meldung, aber wenn wir uns
 die Testfunktion ansehen, sehen wir, dass sie mit <code>#[should_panic]</code> annotiert
@@ -12580,7 +12611,7 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic(expected = &quot;Schätzwert muss kleiner oder gleich 100 sein&quot;)]
+    #[should_panic(expected = &quot;kleiner oder gleich 100&quot;)]
     fn greater_than_100() {
         Guess::new(200);
     }
@@ -12625,7 +12656,7 @@ vertauschen:</p>
 </span><span class="boring">    use super::*;
 </span><span class="boring">
 </span><span class="boring">    #[test]
-</span><span class="boring">    #[should_panic(expected = &quot;Guess value must be less than or equal to 100&quot;)]
+</span><span class="boring">    #[should_panic(expected = &quot;kleiner oder gleich 100&quot;)]
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
@@ -12635,7 +12666,7 @@ vertauschen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
     Finished test [unoptimized + debuginfo] target(s) in 0.66s
-     Running unittests (target/debug/deps/guessing_game-57d70c3acb738f4d)
+     Running unittests src/lib.rs (target/debug/deps/guessing_game-57d70c3acb738f4d)
 
 running 1 test
 test tests::greater_than_100 - should panic ... FAILED
@@ -12643,18 +12674,18 @@ test tests::greater_than_100 - should panic ... FAILED
 failures:
 
 ---- tests::greater_than_100 stdout ----
-thread 'main' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
+thread 'tests::greater_than_100' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
       panic message: `&quot;Schätzwert muss größer oder gleich 1 sein, ist 200.&quot;`,
- expected substring: `&quot;Schätzwert muss kleiner oder gleich 100 sein&quot;`
+ expected substring: `&quot;kleiner oder gleich 100&quot;`
 
 failures:
     tests::greater_than_100
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
@@ -12781,7 +12812,7 @@ sehen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
+     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -12790,18 +12821,19 @@ test tests::this_test_will_pass ... ok
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-Ich habe den Wert 8 erhalten.
-thread 'main' panicked at 'assertion failed: `(left == right)`
+I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::this_test_will_fail
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Beachte, dass wir nirgendwo in dieser Ausgabe <code>Ich habe den Wert 4 erhalten.</code>
 sehen, was beim erfolgreichen Testlauf ausgegeben wird. Diese Ausgabe wurde
@@ -12818,7 +12850,7 @@ ausführen, sehen wir folgende Ausgabe:</p>
 <pre><code class="language-console">$ cargo test -- --show-output
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
+     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -12829,24 +12861,26 @@ successes:
 ---- tests::this_test_will_pass stdout ----
 Ich habe den Wert 4 erhalten.
 
+
 successes:
     tests::this_test_will_pass
 
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-Ich habe den Wert 8 erhalten.
-thread 'main' panicked at 'assertion failed: `(left == right)`
+I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::this_test_will_fail
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <h3 id="ausführen-einer-test-teilmenge-mittels-name"><a class="header" href="#ausführen-einer-test-teilmenge-mittels-name">Ausführen einer Test-Teilmenge mittels Name</a></h3>
 <p>Manchmal kann die Ausführung einer vollständigen Testsammlung sehr lange
@@ -12891,20 +12925,20 @@ Tests parallel laufen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 3 tests
 test tests::add_three_and_two ... ok
 test tests::add_two_and_two ... ok
 test tests::one_hundred ... ok
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <h4 id="ausführen-einzelner-tests"><a class="header" href="#ausführen-einzelner-tests">Ausführen einzelner Tests</a></h4>
 <p>Wir können den Namen einer beliebigen Testfunktion an <code>cargo test</code> übergeben,
@@ -12912,12 +12946,12 @@ um nur diesen Test auszuführen:</p>
 <pre><code class="language-console">$ cargo test one_hundred
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.69s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::one_hundred ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
 </code></pre>
 <p>Nur der Test mit dem Namen <code>one_hundred</code> lief; die beiden anderen Tests passten
 nicht zu diesem Namen. Die Testausgabe lässt uns wissen, dass wir mehrere Tests
@@ -12934,13 +12968,13 @@ Tests <code>add</code> enthalten, können wir diese beiden Tests ausführen, ind
 <pre><code class="language-console">$ cargo test add
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::add_three_and_two ... ok
 test tests::add_two_and_two ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
 </code></pre>
 <p>Dieser Befehl führte alle Tests mit <code>add</code> im Namen aus und filterte den Test
 mit dem Namen <code>one_hundred</code> heraus. Beachte auch, dass das Modul, in dem sich
@@ -12969,19 +13003,19 @@ aber <code>expensive_test</code> nicht:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test expensive_test ... ignored
 test it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Die Funktion <code>expensive_test</code> wird als <code>ignored</code> aufgeführt. Wenn wir nur die
 ignorierten Tests ausführen wollen, können wir <code>cargo test -- --ignored</code>
@@ -12989,18 +13023,18 @@ angeben:</p>
 <pre><code class="language-console">$ cargo test -- --ignored
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test expensive_test ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Indem du kontrollierst, welche Tests durchgeführt werden, kannst du
 sicherstellen, dass dein <code>cargo test</code>-Aufruf schnell zu Ergebnissen führt. Wenn
@@ -13116,7 +13150,7 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 ├── Cargo.lock
 ├── Cargo.toml
 ├── src
-│   └── lib.rs
+│   └── lib.rs
 └── tests
     └── integration_test.rs
 </code></pre>
@@ -13140,26 +13174,26 @@ Dateien in diesem Verzeichnis nur dann, wenn wir <code>cargo test</code> ausfüh
 <code>cargo test</code> jetzt aus:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
-    Finished test [unoptimized + debuginfo] target(s) in 0.73s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+    Finished test [unoptimized + debuginfo] target(s) in 1.31s
+     Running unittests src/lib.rs (target/debug/deps/adder-1082c4b063a8fbe6)
 
 running 1 test
 test tests::internal ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-1082c4b063a8fbe6)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Die drei Abschnitte der Ausgabe umfassen die Modultests, den Integrationstest
 und die Dokumentationstests. Beachte, wenn ein Test in einem Abschnitt
@@ -13184,12 +13218,12 @@ Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden bei
 <pre><code class="language-console">$ cargo test --test integration_test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.64s
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-82e7799c1bc62298)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Dieses Kommando führt nur die Tests in der Datei <em>tests/integration_test.rs</em>
 aus.</p>
@@ -13224,31 +13258,31 @@ aufgerufen haben:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.89s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::internal ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/common-7064e1b6d2e271be)
+     Running tests/common.rs (target/debug/deps/common-92948b65e88960b4)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running unittests (target/debug/deps/integration_test-82e7799c1bc62298)
+     Running tests/integration_test.rs (target/debug/deps/integration_test-92948b65e88960b4)
 
 running 1 test
 test it_adds_two ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Dass in den Testergebnissen <code>common</code> erscheint und dabei <code>running 0 tests</code>
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
@@ -13259,10 +13293,10 @@ Projektverzeichnis sieht nun wie folgt aus:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── src
-│   └── lib.rs
+│   └── lib.rs
 └── tests
     ├── common
-    │   └── mod.rs
+    │   └── mod.rs
     └── integration_test.rs
 </code></pre>
 <p>Dies ist die ältere Namenskonvention, die auch Rust versteht, die wir im
@@ -13323,8 +13357,8 @@ gelernt hast, für die Arbeit an einem Projekt einsetzen!</p>
 <p>Dieses Kapitel ist eine Zusammenfassung der vielen Fähigkeiten, die du bisher
 gelernt hast, und eine Erkundung einiger weiterer
 Standard-Bibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
-erstellen, das mit Datei- und Kommandozeilen-Ein- und -Ausgabe interagiert, um
-einige der Rust-Konzepte zu üben, die du bereits gelernt hast.</p>
+erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert,
+um einige der Rust-Konzepte zu üben, die du bereits gelernt hast.</p>
 <p>Rusts Geschwindigkeit, Sicherheit, Ausgabe in eine einzelne Binärdatei und
 plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum
 Erstellen von Kommandozeilenwerkzeugen. Für unser Projekt werden wir daher eine
@@ -13359,8 +13393,8 @@ gelernt hast:</p>
 <li>Schreiben von Tests (<a href="ch11-00-testing.html">Kapitel 11</a>)</li>
 </ul>
 <p>Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln [13][ch13] und
-[17][ch17] ausführlich behandelt werden.</p>
+Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln <a href="ch13-00-functional-features.html">13</a>
+und <a href="ch17-00-oop.html">17</a> ausführlich behandelt werden.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kommandozeilenargumente-entgegennehmen"><a class="header" href="#kommandozeilenargumente-entgegennehmen">Kommandozeilenargumente entgegennehmen</a></h2>
 <p>Lass uns ein neues Projekt, wie immer, mit <code>cargo new</code> erstellen. Wir werden
 unser Projekt <code>minigrep</code> nennen, um es vom <code>grep</code>-Werkzeug zu unterscheiden,
@@ -13374,7 +13408,7 @@ Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
 nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
 Programm mit <code>cargo run</code>, einer zu suchenden Zeichenkette und einem Pfad zu
 einer Datei, in der gesucht werden soll, auszuführen:</p>
-<pre><code class="language-console">$ cargo run searchstring example-filename.txt
+<pre><code class="language-console">$ cargo run -- searchstring example-filename.txt
 </code></pre>
 <p>Im Moment kann das von <code>cargo new</code> generierte Programm die Argumente, die wir
 ihm geben, nicht verarbeiten. Einige vorhandene Bibliotheken auf
@@ -13560,7 +13594,7 @@ wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.</p>
 <p>Lassen wir diesen Code mit einer beliebigen Zeichenkette als erstes
 Kommandozeilenargument laufen (weil wir den Suchteil noch nicht implementiert
 haben) und die Datei <em>poem.txt</em> als zweites Argument:</p>
-<pre><code class="language-console">$ cargo run the poem.txt
+<pre><code class="language-console">$ cargo run -- the poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep the poem.txt`
@@ -13589,8 +13623,8 @@ beginnen, wenn man ein Programm entwickelt, denn es ist viel einfacher,
 kleinere Code-Mengen umzuformen. Das werden wir als Nächstes tun.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
 <p>Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
-Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.</p>
-<p>Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
+Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
+Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
 und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion <code>main</code> weiter ausbauen,
 wird die Anzahl der einzelnen Aufgaben, die die Funktion <code>main</code> bearbeitet,
@@ -14237,17 +14271,17 @@ warning: unused `Result` that must be used
   --&gt; src/main.rs:19:5
    |
 19 |     run(config);
-   |     ^^^^^^^^^^^^
+   |     ^^^^^^^^^^^
    |
-   = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
 
 warning: `minigrep` (bin &quot;minigrep&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Searching for the
-In file poem.txt
-With text:
+Suche nach the
+In Datei poem.txt
+Mit text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -14426,8 +14460,8 @@ schreiben ein paar Tests!</p>
 Argumentkollektion und Fehlerbehandlung in <em>src/main.rs</em> belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
 Wir können Funktionen direkt mit verschiedenen Argumenten aufrufen und
-Rückgabewerte überprüfen, ohne unsere Binärdatei von der Kommandozeile aus
-aufrufen zu müssen.</p>
+Rückgabewerte überprüfen, ohne unsere Binärdatei Terminal aus aufrufen zu
+müssen.</p>
 <p>In diesem Abschnitt fügen wir dem <code>minigrep</code>-Programm die Suchlogik hinzu,
 indem wir die Methode der testgetriebenen Entwicklung (TDD) verwenden. Diese
 Softwareentwicklungstechnik folgt diesen Schritten:</p>
@@ -14618,7 +14652,7 @@ in Kapitel 10.</p>
 <pre><code class="language-console">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 0.97s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 1 test
 test tests::one_result ... FAILED
@@ -14626,17 +14660,18 @@ test tests::one_result ... FAILED
 failures:
 
 ---- tests::one_result stdout ----
-thread 'main' panicked at 'assertion failed: `(left == right)`
-  left: `[&quot;safe, fast, productive.&quot;]`,
+thread 'tests::one_result' panicked at 'assertion failed: `(left == right)`
+  left: `[&quot;sicher, schnell, produktiv.&quot;]`,
  right: `[]`', src/lib.rs:44:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::one_result
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Toll, der Test schlägt fehl, genau wie wir erwartet haben. Bringen wir den Test
 zum Bestehen!</p>
@@ -14852,24 +14887,24 @@ enthalten, und unser Test sollte erfolgreich sein. Lass uns den Test ausführen:
 <pre><code class="language-console">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 1.22s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 1 test
 test tests::one_result ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running target/debug/deps/minigrep-caf9dbee196c78b9
+     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests minigrep
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Unser Test war erfolgreich, also wissen wir, dass es funktioniert!</p>
 <p>An diesem Punkt könnten wir Möglichkeiten für eine Refaktorierung der
@@ -15223,25 +15258,25 @@ die Groß-/Kleinschreibung der Abfrage ist.</p>
 <pre><code class="language-console">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 1.33s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 2 tests
 test tests::case_insensitive ... ok
 test tests::case_sensitive ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running target/debug/deps/minigrep-caf9dbee196c78b9
+     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests minigrep
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Großartig! Sie haben bestanden. Lass uns nun die neue Funktion
 <code>search_case_insensitive</code> von der Funktion <code>run</code> aufrufen. Zuerst fügen wir
@@ -15486,7 +15521,7 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let case_sensitive = env::var(&quot;CASE_INSENSITIVE&quot;).is_err();
+        let case_sensitive = env::var(&quot;IGNORE_CASE&quot;).is_err();
 
         Ok(Config {
             query,
@@ -15617,10 +15652,7 @@ kann mit <code>Remove-Item</code> zurückgesetzt werden:</p>
 </code></pre>
 <p>Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
 könnten:</p>
-<pre><code class="language-console">$ CASE_INSENSITIVE=1 cargo run to poem.txt
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
-     Running `target/debug/minigrep to poem.txt`
-Are you nobody, too?
+<pre><code class="language-console">Are you nobody, too?
 How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
@@ -16109,9 +16141,9 @@ in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!(&quot;Before defining closure: {:?}&quot;, list);
+    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
 
-    thread::spawn(move || println!(&quot;From thread: {:?}&quot;, list))
+    thread::spawn(move || println!(&quot;Im Strang: {:?}&quot;, list))
         .join()
         .unwrap();
 }</code></pre></pre>
@@ -16530,10 +16562,10 @@ warning: unused `Map` that must be used
  --&gt; src/main.rs:4:5
   |
 4 |     v1.iter().map(|x| x + 1);
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^
   |
-  = note: `#[warn(unused_must_use)]` on by default
   = note: iterators are lazy and do nothing unless consumed
+  = note: `#[warn(unused_must_use)]` on by default
 
 warning: `iterators` (bin &quot;iterators&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s
@@ -17800,6 +17832,10 @@ API-Schlüssel. Rufe anschließend das Kommando <code>cargo login</code> mit dei
 API-Schlüssel auf:</p>
 <pre><code class="language-console">$ cargo login abcdefghijklmnopqrstuvwxyz012345
 </code></pre>
+<p>Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
+<em>~/.cargo/credentials</em>. Beachte, dass dieses Token ein <em>Geheimnis</em> ist: Gib es
+nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem teilst,
+solltest du es widerrufen und ein neues Token auf <a href="https://crates.io/">crates.io</a> erzeugen.</p>
 <h3 id="metadaten-zu-einer-neuen-kiste-hinzufügen"><a class="header" href="#metadaten-zu-einer-neuen-kiste-hinzufügen">Metadaten zu einer neuen Kiste hinzufügen</a></h3>
 <p>Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem
 Veröffentlichen musst du deiner Kiste einige Metadaten im Abschnitt <code>[package]</code>
@@ -18051,11 +18087,7 @@ aufzurufen, siehe Codeblock 14-7.</p>
 
 fn main() {
     let num = 10;
-    println!(
-        &quot;Hello, world! {} plus one is {}!&quot;,
-        num,
-        add_one::add_one(num)
-    );
+    println!(&quot;Hello, world! {num} plus one is {}!&quot;, add_one::add_one(num));
 }</code></pre>
 <p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste aus der 
 <code>adder</code>-Kiste verwenden</span></p>
@@ -18089,7 +18121,7 @@ uns die <code>rand</code>-Kiste in der Datei <em>add_one/Cargo.toml</em> zum Abs
 verwenden können:</p>
 <p><span class="filename">Dateiname: add_one/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.8.3&quot;
+rand = &quot;0.8.5&quot;
 </code></pre>
 <p>Wir können nun <code>use rand;</code> zur Datei <em>add_one/src/lib.rs</em> hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von <code>cargo build</code> im Verzeichnis
@@ -18169,19 +18201,19 @@ strukturiert ist, führt die Tests für alle Kisten im Arbeitsbereich aus:</p>
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
      Running unittests src/main.rs (target/debug/deps/adder-49979ff40686fa8e)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests add_one
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Der erste Abschnitt der Ausgabe zeigt, dass der Test <code>it_works</code> in der
 <code>add_one</code>-Kiste bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
@@ -18197,13 +18229,13 @@ den Namen der Kiste angeben, die wir testen möchten:</p>
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests add_one
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Die Ausgabe zeigt, dass <code>cargo test</code> nur die Tests für die Kiste <code>add_one</code> aber
 nicht die <code>adder</code>-Tests ausgeführt hat.</p>
@@ -18481,27 +18513,17 @@ error[E0072]: recursive type `List` has infinite size
  --&gt; src/main.rs:1:1
   |
 1 | enum List {
-  | ^^^^^^^^^ recursive type has infinite size
+  | ^^^^^^^^^
 2 |     Cons(i32, List),
   |               ---- recursive without indirection
   |
-help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cycle
   |
 2 |     Cons(i32, Box&lt;List&gt;),
   |               ++++    +
 
-error[E0391]: cycle detected when computing drop-check constraints for `List`
- --&gt; src/main.rs:1:1
-  |
-1 | enum List {
-  | ^^^^^^^^^
-  |
-  = note: ...which again requires computing drop-check constraints for `List`, completing the cycle
-  = note: cycle used when computing dropck types for `Canonical { max_universe: U0, variables: [], value: ParamEnvAnd { param_env: ParamEnv { caller_bounds: [], reveal: UserFacing }, value: List } }`
-
-Some errors have detailed explanations: E0072, E0391.
-For more information about an error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to 2 previous errors
+For more information about this error, try `rustc --explain E0072`.
+error: could not compile `cons-list` due to previous error
 </code></pre>
 <p><span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span></p>
@@ -18662,10 +18684,20 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
  --&gt; src/main.rs:6:5
   |
 6 |     assert_eq!(5, y);
-  |     ^^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
+  |     ^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
-  = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z external-macro-backtrace for more info)
+  = help: the following other types implement trait `PartialEq&lt;Rhs&gt;`:
+            f32
+            f64
+            i128
+            i16
+            i32
+            i64
+            i8
+            isize
+          and 6 others
+  = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` due to previous error
@@ -19011,7 +19043,7 @@ verlässt, um zu zeigen, wann Rust die <code>drop</code>-Funktion ausführt.</p>
 
 impl Drop for CustomSmartPointer {
     fn drop(&amp;mut self) {
-        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
     }
 }
 
@@ -19046,8 +19078,8 @@ mussten.</p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.60s
      Running `target/debug/drop-example`
 CustomSmartPointers erzeugt.
-CustomSmartPointer und Daten aufräumen: `andere Sachen`!
-CustomSmartPointer und Daten aufräumen: `meine Sache`!
+CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
+CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 </code></pre>
 <p>Rust hat für uns automatisch <code>drop</code> und den von uns angegebenen Programmcode 
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben. 
@@ -19078,7 +19110,7 @@ indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -19134,7 +19166,7 @@ Funktion befindet sich im Präludium, daher können wir <code>main</code> in Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -19154,10 +19186,10 @@ explizit aufzuräumen bevor er den Gültigkeitsbereich verlässt</span></p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/drop-example`
 CustomSmartPointer erzeugt.
-CustomSmartPointer und Daten aufräumen: `Daten`!
+CustomSmartPointer mit Daten aufräumen: `Daten`!
 CustomSmartPointer vor dem Ende von main aufgeräumt.
 </code></pre>
-<p>Der Text <code>CustomSmartPointer und Daten aufräumen: `Daten`!</code> wird zwischen
+<p>Der Text <code>CustomSmartPointer mit Daten aufräumen: `Daten`!</code> wird zwischen
 <code>CustomSmartPointer erzeugt</code> und <code>CustomSmartPointer vor dem Ende von main aufgeräumt.</code> ausgegeben und zeigt, dass der <code>drop</code>-Methodencode aufgerufen wird
 um <code>c</code> an diesem Punkt aufzuräumen.</p>
 <p>Du kannst den Programmcode, der in einer Implementierung des <code>Drop</code>-Merkmals
@@ -19329,7 +19361,8 @@ den Gültigkeitsbereich verlässt.</p>
         let c = Cons(4, Rc::clone(&amp;a));
         println!(&quot;Zähler nach der Erstellung von c = {}&quot;, Rc::strong_count(&amp;a));
     }
-    println!(&quot;Zahler nachdem c den Gültigkeitsbereich verlässt = {}&quot;, Rc::strong_count(&amp;a));
+    println!(&quot;Zahler nachdem c den Gültigkeitsbereich verlässt = {}&quot;,
+             Rc::strong_count(&amp;a));
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-19: Den Referenzzähler ausgeben</span></p>
 <p>An jeden Punkt im Programm, an dem sich der Referenzzähler ändert, geben wir
@@ -19679,13 +19712,11 @@ error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `
    |             ----- help: consider changing that to be a mutable reference: `&amp;mut self`
 ...
 58 |             self.sent_messages.push(String::from(message));
-   |             ^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` due to previous error
-
 warning: build failed, waiting for other jobs to finish...
-error: build failed
 </code></pre>
 <p>Wir können den <code>MockMessenger</code> nicht ändern, um die Nachrichten zu verfolgen, da
 die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
@@ -19912,7 +19943,7 @@ test tests::it_sends_an_over_75_percent_warning_message ... FAILED
 failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
-thread 'main' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
+thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -19921,7 +19952,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Beachte, dass der Programmcode mit der Meldung <code>already borrowed: BorrowMutError</code> abstürzt. Auf diese Weise behandelt <code>RefCell&lt;T&gt;</code> zur
 Laufzeit Verstöße gegen die Ausleihregel.</p>
@@ -19971,9 +20002,9 @@ fn main() {
 
     *value.borrow_mut() += 10;
 
-    println!(&quot;a after = {:?}&quot;, a);
-    println!(&quot;b after = {:?}&quot;, b);
-    println!(&quot;c after = {:?}&quot;, c);
+    println!(&quot;a nachher = {:?}&quot;, a);
+    println!(&quot;b nachher = {:?}&quot;, b);
+    println!(&quot;c nachher = {:?}&quot;, c);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-24: Verwendung von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> um <code>List</code>
 zu erstellen, die wir verändern können</span></p>
@@ -19999,9 +20030,9 @@ veränderten Wert 15 anstelle von 5 haben:</p>
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
     Finished dev [unoptimized + debuginfo] target(s) in 0.63s
      Running `target/debug/cons-list`
-a after = Cons(RefCell { value: 15 }, Nil)
-b after = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
-c after = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
+a nachher = Cons(RefCell { value: 15 }, Nil)
+b nachher = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
+c nachher = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 </code></pre>
 <p>Diese Technik ist ziemlich sauber! Durch die Verwendung von <code>RefCell&lt;T&gt;</code> haben
 wir einen nach außen unveränderbaren <code>List</code>-Wert. Wir können jedoch die
@@ -20194,11 +20225,6 @@ verwendet <code>weak_count</code>, um den Überblick zu behalten wie viele
 <code>Weak&lt;T&gt;</code>-Referenzen existieren, ähnlich wie bei <code>strong_count</code>. Der
 Unterschied besteht darin, dass <code>weak_count</code> nicht 0 sein muss, damit die
 <code>Rc&lt;T&gt;</code>-Instanz aufgeräumt wird.</p>
-<p>Mit starken Referenzen kann man die Eigentümerschaft einer <code>Rc&lt;T&gt;</code>-Instanz
-teilen, schwache Referenzen drücken hingegen keine Eigentümerschafts-Beziehung
-aus. Sie verursachen keinen Referenzzyklus, da jeder Zyklus mit schwachen
-Referenzen unterbrochen wird, sobald die starke Referenzanzahl der beteiligten
-Werte 0 beträgt.</p>
 <p>Da der Wert, auf den <code>Weak&lt;T&gt;</code> referenziert, möglicherweise aufgeräumt wurde, musst
 du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
 tun, auf den ein <code>Weak&lt;T&gt;</code> zeigt. Ruft man dazu die Methode <code>upgrade</code> für eine
@@ -20787,7 +20813,7 @@ note: function requires argument type to outlive `'static`
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
   |
 6 |     let handle = thread::spawn(move || {
-  |                                ^^^^^^^
+  |                                ++++
 
 For more information about this error, try `rustc --explain E0373`.
 error: could not compile `threads` due to previous error
@@ -21066,6 +21092,8 @@ error[E0382]: borrow of moved value: `val`
    |                 --- value moved here
 10 |         println!(&quot;val ist {}&quot;, val);
    |                                ^^^ value borrowed here after move
+   |
+   = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `message-passing` due to previous error
@@ -21404,20 +21432,30 @@ lehrt uns eine Menge.</p>
 <pre><code class="language-console">$ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
 error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-   --&gt; src/main.rs:11:22
-    |
-11  |           let handle = thread::spawn(move || {
-    |  ______________________^^^^^^^^^^^^^_-
-    | |                      |
-    | |                      `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-12  | |             let mut num = counter.lock().unwrap();
-13  | |
-14  | |             *num += 1;
-15  | |         });
-    | |_________- within this `[closure@src/main.rs:11:36: 15:10]`
-    |
-    = help: within `[closure@src/main.rs:11:36: 15:10]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
-    = note: required because it appears within the type `[closure@src/main.rs:11:36: 15:10]`
+  --&gt; src/main.rs:11:36
+   |
+11 |           let handle = thread::spawn(move || {
+   |                        ------------- ^------
+   |                        |             |
+   |  ______________________|_____________within this `[closure@src/main.rs:11:36: 11:43]`
+   | |                      |
+   | |                      required by a bound introduced by this call
+12 | |             let mut num = counter.lock().unwrap();
+13 | |
+14 | |             *num += 1;
+15 | |         });
+   | |_________^ `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+   |
+   = help: within `[closure@src/main.rs:11:36: 11:43]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+note: required because it's used within this closure
+  --&gt; src/main.rs:11:36
+   |
+11 |         let handle = thread::spawn(move || {
+   |                                    ^^^^^^^
+note: required by a bound in `spawn`
+  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:704:8
+   |
+   = note: required by this bound in `spawn`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `shared-state` due to previous error
@@ -23412,19 +23450,27 @@ abweisbares Muster zu verwenden, wo ein unabweisbares Muster erforderlich ist:</
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
 error[E0005]: refutable pattern in local binding: `None` not covered
-   --&gt; src/main.rs:3:9
-    |
-3   |     let Some(x) = some_option_value;
-    |         ^^^^^^^ pattern `None` not covered
-    |
-    = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
-    = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
+ --&gt; src/main.rs:3:9
+  |
+3 |     let Some(x) = some_option_value;
+  |         ^^^^^^^ pattern `None` not covered
+  |
+  = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
+  = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
 note: `Option&lt;i32&gt;` defined here
-    = note: the matched value is of type `Option&lt;i32&gt;`
+ --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
+  |
+  = note: 
+/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
+  = note: the matched value is of type `Option&lt;i32&gt;`
 help: you might want to use `if let` to ignore the variant that isn't matched
-    |
-3   |     let x = if let Some(x) = some_option_value { x } else { todo!() };
-    |     ++++++++++                                 ++++++++++++++++++++++
+  |
+3 |     let x = if let Some(x) = some_option_value { x } else { todo!() };
+  |     ++++++++++                                 ++++++++++++++++++++++
+help: alternatively, you might want to use let else to handle the variant that isn't matched
+  |
+3 |     let Some(x) = some_option_value else { todo!() };
+  |                                     ++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
 error: could not compile `patterns` due to previous error
@@ -23466,9 +23512,9 @@ warning: irrefutable `if let` pattern
 2 |     if let x = 5 {
   |        ^^^^^^^^^
   |
-  = note: `#[warn(irrefutable_let_patterns)]` on by default
   = note: this pattern will always match, so the `if let` is useless
   = help: consider replacing the `if let` with a `let`
+  = note: `#[warn(irrefutable_let_patterns)]` on by default
 
 warning: `patterns` (bin &quot;patterns&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.39s
@@ -23722,15 +23768,11 @@ fn main() {
             println!(&quot;Die Quit-Variante hat keine Daten zu destrukturieren.&quot;)
         }
         Message::Move { x, y } =&gt; {
-            println!(
-                &quot;Bewege in x-Richtung {} und in y-Richtung {}&quot;,
-                x, y
-            );
+            println!(&quot;Bewege in x-Richtung {x} und in y-Richtung {y}&quot;);
         }
         Message::Write(text) =&gt; println!(&quot;Textnachricht: {}&quot;, text),
         Message::ChangeColor(r, g, b) =&gt; println!(
-            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
-            r, g, b
+            &quot;Ändere die Farbe in rot {r}, grün {g} und blau {b}&quot;
         ),
     }
 }</code></pre></pre>
@@ -23775,14 +23817,12 @@ fn main() {
     let msg = Message::ChangeColor(Color::Hsv(0, 160, 255));
 
     match msg {
-        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; println!(
-            &quot;Ändere die Farbe in rot {}, grün {} und blau {}&quot;,
-            r, g, b
-        ),
-        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; println!(
-            &quot;Ändere die Farbe in Farbwert {}, Sättigung {} und Hellwert {}&quot;,
-            h, s, v
-        ),
+        Message::ChangeColor(Color::Rgb(r, g, b)) =&gt; {
+            println!(&quot;Ändere die Farbe in rot {r}, grün {g} und blau {b}&quot;);
+        }
+        Message::ChangeColor(Color::Hsv(h, s, v)) =&gt; {
+            println!(&quot;Ändere die Farbe in Farbwert {h}, Sättigung {s} und Hellwert {v}&quot;)
+        }
         _ =&gt; (),
     }
 }</code></pre></pre>
@@ -25204,15 +25244,21 @@ welche Implementierung von <code>Animal::baby_name</code> wir wollen. Wir werden
 Kompilierfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-error[E0283]: type annotations needed
+error[E0790]: cannot call associated function on trait without specifying the corresponding `impl` type
   --&gt; src/main.rs:20:43
    |
-20 |     println!(&quot;A baby dog is called a {}&quot;, Animal::baby_name());
-   |                                           ^^^^^^^^^^^^^^^^^ cannot infer type
+2  |     fn baby_name() -&gt; String;
+   |     ------------------------- `Animal::baby_name` defined here
+...
+20 |     println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Animal::baby_name());
+   |                                                ^^^^^^^^^^^^^^^^^ cannot call associated function of trait
    |
-   = note: cannot satisfy `_: Animal`
+help: use the fully-qualified path to the only available implementation
+   |
+20 |     println!(&quot;Ein Hundebaby wird {} genannt.&quot;, &lt;Dog as Animal&gt;::baby_name());
+   |                                                +++++++       +
 
-For more information about this error, try `rustc --explain E0283`.
+For more information about this error, try `rustc --explain E0790`.
 error: could not compile `traits-example` due to previous error
 </code></pre>
 <p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
@@ -25789,17 +25835,16 @@ machen die Typen <code>s1</code> und <code>s2</code> zu einem <code>&amp;str</co
 dich, dass wir im Abschnitt <a href="ch04-03-slices.html#zeichenkettenanteilstypen-string-slices">„Zeichenkettenanteilstypen
 (string slices)“</a> in Kapitel 4 gesagt haben, dass die
 Anteilstypen-Datenstruktur die Startposition und die Länge des Anteilstyps
-speichert.</p>
-<p>Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die Speicheradresse des Ortes
-speichert, an dem sich <code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse von
-<code>str</code> und seine Länge. Als solches können wir die Größe eines <code>&amp;str</code>-Wertes zur
-Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt, wir
-wissen immer die Größe einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist, auf
-die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer Größe
-auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten, das die
-Größe der dynamischen Information speichert. Die goldene Regel für Typen
-dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe immer
-hinter eine Art Zeiger stellen müssen.</p>
+speichert. Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die Speicheradresse des
+Ortes speichert, an dem sich <code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse
+von <code>str</code> und seine Länge. Als solches können wir die Größe eines <code>&amp;str</code>-Wertes
+zur Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt,
+wir wissen immer die Größe einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist,
+auf die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer
+Größe auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten,
+das die Größe der dynamischen Information speichert. Die goldene Regel für
+Typen dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe
+immer hinter eine Art Zeiger stellen müssen.</p>
 <p>Wir können <code>str</code> mit allen Arten von Zeigern kombinieren: Zum Beispiel
 <code>Box&lt;str&gt;</code> oder <code>Rc&lt;str&gt;</code>. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
@@ -26873,14 +26918,14 @@ dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
 wir <code>handle_connection</code> wie in Codeblock 20-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::fs;
+<pre><pre class="playground"><code class="language-rust no_run">use std::{
+    fs,
+    io::{prelude::*, BufReader},
+    net::{TcpListener, TcpStream},
+};
 // --abschneiden--
 
-<span class="boring">use std::io::prelude::*;
-</span><span class="boring">use std::net::TcpListener;
-</span><span class="boring">use std::net::TcpStream;
-</span><span class="boring">
-</span><span class="boring">fn main() {
+<span class="boring">fn main() {
 </span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
@@ -26891,19 +26936,21 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&amp;mut buffer).unwrap();
+    let buf_reader = BufReader::new(&amp;mut stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
 
+    let status_line = &quot;HTTP/1.1 200 OK&quot;;
     let contents = fs::read_to_string(&quot;hello.html&quot;).unwrap();
+    let length = contents.len();
 
-    let response = format!(
-        &quot;HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}&quot;,
-        contents.len(),
-        contents
-    );
+    let response =
+        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
 
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-5: Senden des Inhalts von <em>hello.html</em> als
 Rumpf der Antwort</span></p>
@@ -27503,10 +27550,10 @@ werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0599]: no method named `execute` found for struct `ThreadPool` in the current scope
-  --&gt; src/bin/main.rs:16:14
+  --&gt; src/main.rs:17:14
    |
-16 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `hello::ThreadPool`
+17 |         pool.execute(|| {
+   |              ^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` due to previous error
@@ -27821,6 +27868,16 @@ und ihre Funktion <code>new</code> privat. Die Funktion <code>Worker::new</code>
 die wir ihr geben, und speichert eine <code>JoinHandle&lt;()&gt;</code>-Instanz, die durch das
 Erzeugen eines neuen Strangs unter Verwendung eines leeren Funktionsabschlusses
 erzeugt wird.</p>
+<blockquote>
+<p>Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
+genügend Systemressourcen vorhanden sind, bringt <code>thread::spawn</code> das Programm
+zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
+die Erstellung einiger Stränge erfolgreich wäre. Der Einfachheit halber
+lassen wir es bei diesem Verhalten, aber in einer produktiven
+Strang-Pool-Implementierung würdest du wahrscheinlich
+<a href="https://doc.rust-lang.org/std/thread/struct.Builder.html"><code>std::thread::Builder</code></a> mit der Methode <a href="https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn"><code>spawn</code></a>
+verwenden wollen, die stattdessen <code>Result</code> zurückgibt.</p>
+</blockquote>
 <p>Dieser Code kompiliert und speichert die Anzahl der <code>Worker</code>-Instanzen, die wir
 als Argument für <code>ThreadPool::new</code> angegeben haben. Aber wir <em>verarbeiten</em> noch
 nicht den Funktionsabschluss, den wir in <code>execute</code> erhalten. Schauen wir uns
@@ -28522,14 +28579,15 @@ benutzen wir <code>unwrap</code>, um das Programm abstürzen zu lassen.</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0507]: cannot move out of `worker.thread` which is behind a mutable reference
-    --&gt; src/lib.rs:52:13
-     |
-52   |             worker.thread.join().unwrap();
-     |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
-     |             |
-     |             move occurs because `worker.thread` has type `JoinHandle&lt;()&gt;`, which does not implement the `Copy` trait
-     |
+  --&gt; src/lib.rs:52:13
+   |
+52 |             worker.thread.join().unwrap();
+   |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
+   |             |
+   |             move occurs because `worker.thread` has type `JoinHandle&lt;()&gt;`, which does not implement the `Copy` trait
+   |
 note: this function takes ownership of the receiver `self`, which moves `worker.thread`
+  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:17
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `hello` due to previous error
@@ -28634,6 +28692,13 @@ error[E0599]: no method named `join` found for enum `Option` in the current scop
    |
 52 |             worker.thread.join().unwrap();
    |                           ^^^^ method not found in `Option&lt;JoinHandle&lt;()&gt;&gt;`
+   |
+note: the method `join` exists on the type `JoinHandle&lt;()&gt;`
+  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:5
+help: consider using `Option::expect` to unwrap the `JoinHandle&lt;()&gt;` value, panicking if the value is an `Option::None`
+   |
+52 |             worker.thread.expect(&quot;REASON&quot;).join().unwrap();
+   |                          +++++++++++++++++
 
 error[E0308]: mismatched types
   --&gt; src/lib.rs:72:22
@@ -30116,12 +30181,13 @@ ermöglicht, neue Funktionen praktisch zu nutzen, bevor wir sie für immer für
 stabil erklären. Diejenigen, die sich für das Allerneueste entscheiden wollen,
 können dies tun, und diejenigen, die eine felsenfeste Erfahrung machen wollen,
 können bei der stabilen Version bleiben und wissen, dass ihr Code nicht brechen
-wird. Stabilität ohne Stillstand. Dieses Buch enthält nur Informationen über
-stabile Funktionalitäten, da sich in Entwicklung befindliche Funktionalitäten
-noch ändern, und sicherlich werden sie sich zwischen dem Zeitpunkt, an dem
-dieses Buch geschrieben wurde, und dem Zeitpunkt, an dem sie in stabilen
-Versionen aktiviert werden, unterscheiden. Die Dokumentation für die nur
-nächtlich verfügbaren Funktionalitäten findest du online.</p>
+wird. Stabilität ohne Stillstand.</p>
+<p>Dieses Buch enthält nur Informationen über stabile Funktionalitäten, da sich in
+Entwicklung befindliche Funktionalitäten noch ändern, und sicherlich werden sie
+sich zwischen dem Zeitpunkt, an dem dieses Buch geschrieben wurde, und dem
+Zeitpunkt, an dem sie in stabilen Versionen aktiviert werden, unterscheiden.
+Die Dokumentation für die nur nächtlich verfügbaren Funktionalitäten findest du
+online.</p>
 <h3 id="rustup-und-die-rolle-des-nächtlichen-rust"><a class="header" href="#rustup-und-die-rolle-des-nächtlichen-rust">Rustup und die Rolle des nächtlichen Rust</a></h3>
 <p>Rustup macht es einfach, zwischen verschiedenen Veröffentlichungskanälen von
 Rust zu wechseln, auf globaler oder projektbezogener Basis. Standardmäßig hast

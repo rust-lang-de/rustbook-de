@@ -179,7 +179,7 @@ Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für weit
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.</p>
-<p>Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
+<p>Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
 <em>projects</em> und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses <em>projects</em> zu erstellen.</p>
 <p>Gib dies bei Linux, macOS und PowerShell unter Windows ein:</p>
@@ -207,8 +207,9 @@ Codeblock 1-1 ein.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
-<p>Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
-oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:</p>
+<p>Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
+<em>~/projects/hello_world</em>. Gib unter Linux oder MacOS die folgenden Befehle ein,
+um die Datei zu kompilieren und auszuführen:</p>
 <pre><code class="language-console">$ rustc main.rs
 $ ./main
 Hallo Welt!
@@ -218,9 +219,9 @@ Hallo Welt!
 &gt; .\main.exe
 Hallo Welt!
 </code></pre>
-<p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> auf
-der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
-im Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
+<p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> im
+Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
+Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
@@ -282,7 +283,7 @@ Quelldatei übergibst, so wie hier:</p>
 ähnlich wie <code>gcc</code> oder <code>clang</code> ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.</p>
 <p>Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl <code>ls</code> in deiner Konsole eingibst:</p>
+sehen, indem du den Befehl <code>ls</code> in deinem Terminal eingibst:</p>
 <pre><code class="language-console">$ ls
 main  main.rs
 </code></pre>
@@ -302,7 +303,7 @@ aus, so wie hier:</p>
 <pre><code class="language-console">$ ./main # oder .\main.exe unter Windows
 </code></pre>
 <p>Wenn <em>main.rs</em> dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deiner Konsole ausgeben.</p>
+Welt!“ in deinem Terminal ausgeben.</p>
 <p>Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
 getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab

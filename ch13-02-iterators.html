@@ -329,10 +329,10 @@ warning: unused `Map` that must be used
  --&gt; src/main.rs:4:5
   |
 4 |     v1.iter().map(|x| x + 1);
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^
   |
-  = note: `#[warn(unused_must_use)]` on by default
   = note: iterators are lazy and do nothing unless consumed
+  = note: `#[warn(unused_must_use)]` on by default
 
 warning: `iterators` (bin &quot;iterators&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s

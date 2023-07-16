@@ -313,7 +313,8 @@ den Gültigkeitsbereich verlässt.</p>
         let c = Cons(4, Rc::clone(&amp;a));
         println!(&quot;Zähler nach der Erstellung von c = {}&quot;, Rc::strong_count(&amp;a));
     }
-    println!(&quot;Zahler nachdem c den Gültigkeitsbereich verlässt = {}&quot;, Rc::strong_count(&amp;a));
+    println!(&quot;Zahler nachdem c den Gültigkeitsbereich verlässt = {}&quot;,
+             Rc::strong_count(&amp;a));
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-19: Den Referenzzähler ausgeben</span></p>
 <p>An jeden Punkt im Programm, an dem sich der Referenzzähler ändert, geben wir

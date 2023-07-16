@@ -171,7 +171,7 @@ Kommandozeilenargumente entgegennehmen: Den Dateipfad und eine Zeichenkette,
 nach der gesucht werden soll. Das heißt, wir wollen in der Lage sein, unser
 Programm mit <code>cargo run</code>, einer zu suchenden Zeichenkette und einem Pfad zu
 einer Datei, in der gesucht werden soll, auszuführen:</p>
-<pre><code class="language-console">$ cargo run searchstring example-filename.txt
+<pre><code class="language-console">$ cargo run -- searchstring example-filename.txt
 </code></pre>
 <p>Im Moment kann das von <code>cargo new</code> generierte Programm die Argumente, die wir
 ihm geben, nicht verarbeiten. Einige vorhandene Bibliotheken auf

@@ -194,7 +194,7 @@ verlässt, um zu zeigen, wann Rust die <code>drop</code>-Funktion ausführt.</p>
 
 impl Drop for CustomSmartPointer {
     fn drop(&amp;mut self) {
-        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
     }
 }
 
@@ -229,8 +229,8 @@ mussten.</p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.60s
      Running `target/debug/drop-example`
 CustomSmartPointers erzeugt.
-CustomSmartPointer und Daten aufräumen: `andere Sachen`!
-CustomSmartPointer und Daten aufräumen: `meine Sache`!
+CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
+CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 </code></pre>
 <p>Rust hat für uns automatisch <code>drop</code> und den von uns angegebenen Programmcode 
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben. 
@@ -261,7 +261,7 @@ indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -317,7 +317,7 @@ Funktion befindet sich im Präludium, daher können wir <code>main</code> in Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer und Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -337,10 +337,10 @@ explizit aufzuräumen bevor er den Gültigkeitsbereich verlässt</span></p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/drop-example`
 CustomSmartPointer erzeugt.
-CustomSmartPointer und Daten aufräumen: `Daten`!
+CustomSmartPointer mit Daten aufräumen: `Daten`!
 CustomSmartPointer vor dem Ende von main aufgeräumt.
 </code></pre>
-<p>Der Text <code>CustomSmartPointer und Daten aufräumen: `Daten`!</code> wird zwischen
+<p>Der Text <code>CustomSmartPointer mit Daten aufräumen: `Daten`!</code> wird zwischen
 <code>CustomSmartPointer erzeugt</code> und <code>CustomSmartPointer vor dem Ende von main aufgeräumt.</code> ausgegeben und zeigt, dass der <code>drop</code>-Methodencode aufgerufen wird
 um <code>c</code> an diesem Punkt aufzuräumen.</p>
 <p>Du kannst den Programmcode, der in einer Implementierung des <code>Drop</code>-Merkmals

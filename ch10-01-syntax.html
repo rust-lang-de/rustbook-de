@@ -287,7 +287,7 @@ error[E0369]: binary operation `&gt;` cannot be applied to type `&amp;T`
 help: consider restricting type parameter `T`
   |
 1 | fn largest&lt;T: std::cmp::PartialOrd&gt;(list: &amp;[T]) -&gt; &amp;T {
-  |             ^^^^^^^^^^^^^^^^^^^^^^
+  |             ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` due to previous error

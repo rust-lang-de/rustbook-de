@@ -187,16 +187,14 @@ Daten referenziert als die, auf die es referenzieren soll. Betrachte das
 Programm in Codeblock 10-16, das einen äußeren und einen inneren
 Gültigkeitsbereich hat.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+    let r;
+
     {
-        let r;
-
-        {
-            let x = 5;
-            r = &amp;x;
-        }
-
-        println!(&quot;r: {}&quot;, r);
+        let x = 5;
+        r = &amp;x;
     }
+
+    println!(&quot;r: {}&quot;, r);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
@@ -218,15 +216,15 @@ versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0597]: `x` does not live long enough
-  --&gt; src/main.rs:7:17
-   |
-7  |             r = &amp;x;
-   |                 ^^ borrowed value does not live long enough
-8  |         }
-   |         - `x` dropped here while still borrowed
-9  | 
-10 |         println!(&quot;r: {}&quot;, r);
-   |                           - borrow later used here
+ --&gt; src/main.rs:6:13
+  |
+6 |         r = &amp;x;
+  |             ^^ borrowed value does not live long enough
+7 |     }
+  |     - `x` dropped here while still borrowed
+8 |
+9 |     println!(&quot;r: {}&quot;, r);
+  |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` due to previous error
@@ -245,18 +243,16 @@ checker).</p>
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
 sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
-</span>    {
-        let r;                // ---------+-- 'a
-                              //          |
-        {                     //          |
-            let x = 5;        // -+-- 'b  |
-            r = &amp;x;           //  |       |
-        }                     // -+       |
-                              //          |
-        println!(&quot;r: {}&quot;, r); //          |
-    }                         // ---------+
-<span class="boring">}</span></code></pre></pre>
+<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+    let r;                // ---------+-- 'a
+                          //          |
+    {                     //          |
+        let x = 5;        // -+-- 'b  |
+        r = &amp;x;           //  |       |
+    }                     // -+       |
+                          //          |
+    println!(&quot;r: {}&quot;, r); //          |
+}                         // ---------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
 <p>Hier haben wir die Lebensdauer von <code>r</code> mit <code>'a</code> und die Lebensdauer von <code>x</code> mit
@@ -269,15 +265,13 @@ nicht so lange wie die Referenz selbst.</p>
 <p>Mit Codeblock 10-18 wird der Code so korrigiert, dass er keine hängende
 Referenz hat und fehlerfrei kompiliert werden kann.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    {
-        let x = 5;            // ----------+-- 'b
-                              //           |
-        let r = &amp;x;           // --+-- 'a  |
-                              //   |       |
-        println!(&quot;r: {}&quot;, r); //   |       |
-                              // --+       |
-    }                         // ----------+
-}</code></pre></pre>
+    let x = 5;            // ----------+-- 'b
+                          //           |
+    let r = &amp;x;           // --+-- 'a  |
+                          //   |       |
+    println!(&quot;r: {}&quot;, r); //   |       |
+                          // --+       |
+}                         // ----------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
 längere Lebensdauer als die Referenz haben</span></p>
 <p>Hier hat <code>x</code> die Lebensdauer <code>'b</code>, die in diesem Fall größer ist als <code>'a</code>. Das
@@ -334,7 +328,6 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
 noch nicht kompiliert</span></p>
 <p>Stattdessen erhalten wir folgenden Fehler, der von Lebensdauern spricht:</p>
 <pre><code class="language-console">$ cargo run
-$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
 error[E0106]: missing lifetime specifier
  --&gt; src/main.rs:9:33
@@ -346,7 +339,7 @@ error[E0106]: missing lifetime specifier
 help: consider introducing a named lifetime parameter
   |
 9 | fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
-  |           ^^^^    ^^^^^^^     ^^^^^^^     ^^^
+  |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `chapter10` due to previous error

@@ -230,11 +230,11 @@ mittels Indexierungssyntax und der Methode <code>get</code>.</p>
 </span>let v = vec![1, 2, 3, 4, 5];
 
 let third: &amp;i32 = &amp;v[2];
-println!(&quot;Das dritte Element ist {}&quot;, third);
+println!(&quot;Das dritte Element ist {third}&quot;);
 
 let third: Option&lt;&amp;i32&gt; = v.get(2);
 match third {
-    Some(third) =&gt; println!(&quot;Das dritte Element ist {}&quot;, third),
+    Some(third) =&gt; println!(&quot;Das dritte Element ist {third}&quot;),
     None =&gt; println!(&quot;Es gibt kein drittes Element.&quot;),
 }
 <span class="boring">}</span></code></pre></pre>
@@ -292,7 +292,7 @@ let first = &amp;v[0];
 
 v.push(6);
 
-println!(&quot;Das erste Element ist: {}&quot;, first);
+println!(&quot;Das erste Element ist: {first}&quot;);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-6: Versuch, ein Element zu einem Vektor
 hinzuzufügen, während eine Referenz auf ein Element gehalten wird</span></p>
@@ -308,8 +308,8 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
 6 |     v.push(6);
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
-8 |     println!(&quot;Das erste Element ist: {}&quot;, first);
-  |                                           ----- immutable borrow later used here
+8 |     println!(&quot;Das erste Element ist: {first}&quot;);
+  |                                       ----- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `collections` due to previous error
@@ -338,7 +338,7 @@ Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
 </span><span class="boring">fn main() {
 </span>let v = vec![100, 32, 57];
 for i in &amp;v {
-    println!(&quot;{}&quot;, i);
+    println!(&quot;{i}&quot;);
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-7: Ausgeben aller Elemente eines Vektors

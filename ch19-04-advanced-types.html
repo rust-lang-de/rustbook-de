@@ -483,17 +483,16 @@ machen die Typen <code>s1</code> und <code>s2</code> zu einem <code>&amp;str</co
 dich, dass wir im Abschnitt <a href="ch04-03-slices.html#zeichenkettenanteilstypen-string-slices">„Zeichenkettenanteilstypen
 (string slices)“</a> in Kapitel 4 gesagt haben, dass die
 Anteilstypen-Datenstruktur die Startposition und die Länge des Anteilstyps
-speichert.</p>
-<p>Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die Speicheradresse des Ortes
-speichert, an dem sich <code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse von
-<code>str</code> und seine Länge. Als solches können wir die Größe eines <code>&amp;str</code>-Wertes zur
-Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt, wir
-wissen immer die Größe einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist, auf
-die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer Größe
-auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten, das die
-Größe der dynamischen Information speichert. Die goldene Regel für Typen
-dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe immer
-hinter eine Art Zeiger stellen müssen.</p>
+speichert. Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die Speicheradresse des
+Ortes speichert, an dem sich <code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse
+von <code>str</code> und seine Länge. Als solches können wir die Größe eines <code>&amp;str</code>-Wertes
+zur Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt,
+wir wissen immer die Größe einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist,
+auf die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer
+Größe auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten,
+das die Größe der dynamischen Information speichert. Die goldene Regel für
+Typen dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe
+immer hinter eine Art Zeiger stellen müssen.</p>
 <p>Wir können <code>str</code> mit allen Arten von Zeigern kombinieren: Zum Beispiel
 <code>Box&lt;str&gt;</code> oder <code>Rc&lt;str&gt;</code>. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist

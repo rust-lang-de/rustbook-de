@@ -358,7 +358,8 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;).expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
+    let greeting_file = File::open(&quot;hallo.txt&quot;)
+        .expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
 }</code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
 zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung, die
@@ -457,9 +458,9 @@ Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
 von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
 Informationen darüber, was der aufrufende Code tatsächlich versucht, also
 propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
-angemessen behandelt werden. Dieses Muster der Fehlerweitergabe ist in Rust so
-verbreitet, dass Rust den Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu
-erleichtern.</p>
+angemessen behandelt werden.</p>
+<p>Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
+Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
 <h4 id="abkürzung-zum-weitergeben-von-fehlern-der-operator-"><a class="header" href="#abkürzung-zum-weitergeben-von-fehlern-der-operator-">Abkürzung zum Weitergeben von Fehlern: Der Operator <code>?</code></a></h4>
 <p>Codeblock 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
@@ -586,15 +587,14 @@ kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
-   --&gt; src/main.rs:4:48
-    |
-3   | / fn main() {
-4   | |     let f = File::open(&quot;hallo.txt&quot;)?;
-    | |                                    ^ cannot use the `?` operator in a function that returns `()`
-5   | | }
-    | |_- this function should return `Result` or `Option` to accept `?`
-    |
-    = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
+ --&gt; src/main.rs:4:48
+  |
+3 | fn main() {
+  | --------- this function should return `Result` or `Option` to accept `?`
+4 |     let greeting_file = File::open(&quot;hallo.txt&quot;)?;
+  |                                                ^ cannot use the `?` operator in a function that returns `()`
+  |
+  = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `error-handling` due to previous error

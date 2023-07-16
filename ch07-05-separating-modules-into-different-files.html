@@ -168,6 +168,12 @@ eigene Datei <em>src/front_of_house.rs</em>, indem wir die Kistenwurzeldatei so
 ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
 ist die Kistenwurzeldatei <em>src/lib.rs</em>, aber diese Vorgehensweise funktioniert
 auch mit binären Kisten, deren Kistenwurzeldatei <em>src/main.rs</em> ist.</p>
+<p>Zuerst extrahieren wir das Modul <code>front_of_house</code> in eine eigene Datei.
+Entferne den Code innerhalb der geschweiften Klammern des Moduls
+<code>front_of_house</code> und lasse nur die Deklaration <code>mod front_of_house;</code> übrig,
+sodass <em>src/lib.rs</em> den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+dies nicht kompiliert und wir noch die Datei <em>src/front_of_house.rs</em> in
+Codeblock 7-22 erstellen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">mod front_of_house;
 

@@ -196,10 +196,10 @@ sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-de
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Pfad
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }
 <span class="boring">}</span></code></pre></pre>
@@ -214,7 +214,7 @@ erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
 Wir würden den Pfad <code>/front_of_house/hosting/add_to_waitlist</code> angeben, um das
 Programm <code>add_to_waitlist</code> auszuführen; das Verwenden des Namens <code>crate</code>, um
 von der Kistenwurzel aus zu beginnen, ist analog zu <code>/</code>, um vom
-Dateisystem-Wurzelverzeichnis in deiner Eingabeaufforderung aus zu beginnen.</p>
+Dateisystem-Wurzelverzeichnis in deinem Terminal aus zu beginnen.</p>
 <p>Beim zweiten Aufruf von <code>add_to_waitlist</code> in <code>eat_at_restaurant</code> verwenden wir
 einen relativen Pfad. Der Pfad beginnt mit <code>front_of_house</code>, dem Namen des
 Moduls, das auf der gleichen Ebene des Modulbaums definiert ist wie
@@ -290,7 +290,7 @@ Auf diese Weise weißt du, welche Teile des inneren Codes du ändern kannst, ohn
 den äußeren Code zu brechen. Rust gibt dir jedoch die Möglichkeit, innere Teile
 des Codes von Kindmodulen für äußere Vorgängermodule offenzulegen, indem du das
 Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen.</p>
-<h3 id="pfade-mit-dem-schlüsselwort-pub-öffnen"><a class="header" href="#pfade-mit-dem-schlüsselwort-pub-öffnen">Pfade mit dem Schlüsselwort <code>pub</code> öffnen</a></h3>
+<h3 id="pfade-mit-dem-schlüsselwort-pub-öffentlich-machen"><a class="header" href="#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen">Pfade mit dem Schlüsselwort <code>pub</code> öffentlich machen</a></h3>
 <p>Kehren wir zum Fehler in Codeblock 7-4 zurück, der uns sagte, das Modul
 <code>hosting</code> sei privat. Wir wollen, dass die Funktion <code>eat_at_restaurant</code> im
 übergeordneten Modul Zugriff auf die Funktion <code>add_to_waitlist</code> im
@@ -306,7 +306,7 @@ Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
 }
 
 pub fn eat_at_restaurant() {
-    // Absolutet Pfad
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
     // Relativer Pfad
@@ -371,10 +371,10 @@ Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Codebloc
 }
 
 pub fn eat_at_restaurant() {
-    // absoluter Path
+    // Absoluter Pfad
     crate::front_of_house::hosting::add_to_waitlist();
 
-    // relativer Path
+    // Relativer Pfad
     front_of_house::hosting::add_to_waitlist();
 }</code></pre>
 <p><span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts <code>pub</code> zu
@@ -408,7 +408,7 @@ Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
 verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
-du an diesem Thema interessiert bist, lies <a href="https://rust-lang.github.io/api-guidelines/">The Rust API
+du an diesem Thema interessiert bist, lies die <a href="https://rust-lang.github.io/api-guidelines/">Rust API
 Guidelines</a>.</p>
 <blockquote>
 <h4 id="bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek"><a class="header" href="#bewährte-praktiken-für-pakete-mit-einer-binärdatei-und-einer-bibliothek">Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek</a></h4>

@@ -339,11 +339,6 @@ verwendet <code>weak_count</code>, um den Überblick zu behalten wie viele
 <code>Weak&lt;T&gt;</code>-Referenzen existieren, ähnlich wie bei <code>strong_count</code>. Der
 Unterschied besteht darin, dass <code>weak_count</code> nicht 0 sein muss, damit die
 <code>Rc&lt;T&gt;</code>-Instanz aufgeräumt wird.</p>
-<p>Mit starken Referenzen kann man die Eigentümerschaft einer <code>Rc&lt;T&gt;</code>-Instanz
-teilen, schwache Referenzen drücken hingegen keine Eigentümerschafts-Beziehung
-aus. Sie verursachen keinen Referenzzyklus, da jeder Zyklus mit schwachen
-Referenzen unterbrochen wird, sobald die starke Referenzanzahl der beteiligten
-Werte 0 beträgt.</p>
 <p>Da der Wert, auf den <code>Weak&lt;T&gt;</code> referenziert, möglicherweise aufgeräumt wurde, musst
 du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
 tun, auf den ein <code>Weak&lt;T&gt;</code> zeigt. Ruft man dazu die Methode <code>upgrade</code> für eine

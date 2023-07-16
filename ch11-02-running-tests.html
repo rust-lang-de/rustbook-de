@@ -244,7 +244,7 @@ sehen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.58s
-     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
+     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -253,18 +253,19 @@ test tests::this_test_will_pass ... ok
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-Ich habe den Wert 8 erhalten.
-thread 'main' panicked at 'assertion failed: `(left == right)`
+I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::this_test_will_fail
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Beachte, dass wir nirgendwo in dieser Ausgabe <code>Ich habe den Wert 4 erhalten.</code>
 sehen, was beim erfolgreichen Testlauf ausgegeben wird. Diese Ausgabe wurde
@@ -281,7 +282,7 @@ ausführen, sehen wir folgende Ausgabe:</p>
 <pre><code class="language-console">$ cargo test -- --show-output
    Compiling silly-function v0.1.0 (file:///projects/silly-function)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests (target/debug/deps/silly_function-160869f38cff9166)
+     Running unittests src/lib.rs (target/debug/deps/silly_function-160869f38cff9166)
 
 running 2 tests
 test tests::this_test_will_fail ... FAILED
@@ -292,24 +293,26 @@ successes:
 ---- tests::this_test_will_pass stdout ----
 Ich habe den Wert 4 erhalten.
 
+
 successes:
     tests::this_test_will_pass
 
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-Ich habe den Wert 8 erhalten.
-thread 'main' panicked at 'assertion failed: `(left == right)`
+I got the value 8
+thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
   left: `5`,
  right: `10`', src/lib.rs:19:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
+
 failures:
     tests::this_test_will_fail
 
-test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 </code></pre>
 <h3 id="ausführen-einer-test-teilmenge-mittels-name"><a class="header" href="#ausführen-einer-test-teilmenge-mittels-name">Ausführen einer Test-Teilmenge mittels Name</a></h3>
 <p>Manchmal kann die Ausführung einer vollständigen Testsammlung sehr lange
@@ -354,20 +357,20 @@ Tests parallel laufen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.62s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 3 tests
 test tests::add_three_and_two ... ok
 test tests::add_two_and_two ... ok
 test tests::one_hundred ... ok
 
-test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 3 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <h4 id="ausführen-einzelner-tests"><a class="header" href="#ausführen-einzelner-tests">Ausführen einzelner Tests</a></h4>
 <p>Wir können den Namen einer beliebigen Testfunktion an <code>cargo test</code> übergeben,
@@ -375,12 +378,12 @@ um nur diesen Test auszuführen:</p>
 <pre><code class="language-console">$ cargo test one_hundred
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.69s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test tests::one_hundred ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 2 filtered out; finished in 0.00s
 </code></pre>
 <p>Nur der Test mit dem Namen <code>one_hundred</code> lief; die beiden anderen Tests passten
 nicht zu diesem Namen. Die Testausgabe lässt uns wissen, dass wir mehrere Tests
@@ -397,13 +400,13 @@ Tests <code>add</code> enthalten, können wir diese beiden Tests ausführen, ind
 <pre><code class="language-console">$ cargo test add
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test tests::add_three_and_two ... ok
 test tests::add_two_and_two ... ok
 
-test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+test result: ok. 2 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
 </code></pre>
 <p>Dieser Befehl führte alle Tests mit <code>add</code> im Namen aus und filterte den Test
 mit dem Namen <code>one_hundred</code> heraus. Beachte auch, dass das Modul, in dem sich
@@ -432,19 +435,19 @@ aber <code>expensive_test</code> nicht:</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.60s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 2 tests
 test expensive_test ... ignored
 test it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 1 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Die Funktion <code>expensive_test</code> wird als <code>ignored</code> aufgeführt. Wenn wir nur die
 ignorierten Tests ausführen wollen, können wir <code>cargo test -- --ignored</code>
@@ -452,18 +455,18 @@ angeben:</p>
 <pre><code class="language-console">$ cargo test -- --ignored
    Compiling adder v0.1.0 (file:///projects/adder)
     Finished test [unoptimized + debuginfo] target(s) in 0.61s
-     Running unittests (target/debug/deps/adder-92948b65e88960b4)
+     Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
 test expensive_test ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 1 filtered out; finished in 0.00s
 
    Doc-tests adder
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Indem du kontrollierst, welche Tests durchgeführt werden, kannst du
 sicherstellen, dass dein <code>cargo test</code>-Aufruf schnell zu Ergebnissen führt. Wenn

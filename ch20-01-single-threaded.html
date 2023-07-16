@@ -492,14 +492,14 @@ dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
 wir <code>handle_connection</code> wie in Codeblock 20-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::fs;
+<pre><pre class="playground"><code class="language-rust no_run">use std::{
+    fs,
+    io::{prelude::*, BufReader},
+    net::{TcpListener, TcpStream},
+};
 // --abschneiden--
 
-<span class="boring">use std::io::prelude::*;
-</span><span class="boring">use std::net::TcpListener;
-</span><span class="boring">use std::net::TcpStream;
-</span><span class="boring">
-</span><span class="boring">fn main() {
+<span class="boring">fn main() {
 </span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
@@ -510,19 +510,21 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&amp;mut buffer).unwrap();
+    let buf_reader = BufReader::new(&amp;mut stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
 
+    let status_line = &quot;HTTP/1.1 200 OK&quot;;
     let contents = fs::read_to_string(&quot;hello.html&quot;).unwrap();
+    let length = contents.len();
 
-    let response = format!(
-        &quot;HTTP/1.1 200 OK\r\nContent-Length: {}\r\n\r\n{}&quot;,
-        contents.len(),
-        contents
-    );
+    let response =
+        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
 
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-5: Senden des Inhalts von <em>hello.html</em> als
 Rumpf der Antwort</span></p>

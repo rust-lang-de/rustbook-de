@@ -160,8 +160,8 @@
                     <main>
                         <h2 id="refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern"><a class="header" href="#refaktorierung-um-die-modularität-und-fehlerbehandlung-zu-verbessern">Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern</a></h2>
 <p>Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
-Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.</p>
-<p>Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
+Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
+Erstens erfüllt unsere Funktion <code>main</code> jetzt zwei Aufgaben: Sie parst Argumente
 und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion <code>main</code> weiter ausbauen,
 wird die Anzahl der einzelnen Aufgaben, die die Funktion <code>main</code> bearbeitet,
@@ -808,17 +808,17 @@ warning: unused `Result` that must be used
   --&gt; src/main.rs:19:5
    |
 19 |     run(config);
-   |     ^^^^^^^^^^^^
+   |     ^^^^^^^^^^^
    |
-   = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
 
 warning: `minigrep` (bin &quot;minigrep&quot;) generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Searching for the
-In file poem.txt
-With text:
+Suche nach the
+In Datei poem.txt
+Mit text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!

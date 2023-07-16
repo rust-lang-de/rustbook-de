@@ -525,10 +525,10 @@ werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0599]: no method named `execute` found for struct `ThreadPool` in the current scope
-  --&gt; src/bin/main.rs:16:14
+  --&gt; src/main.rs:17:14
    |
-16 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `hello::ThreadPool`
+17 |         pool.execute(|| {
+   |              ^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` due to previous error
@@ -843,6 +843,16 @@ und ihre Funktion <code>new</code> privat. Die Funktion <code>Worker::new</code>
 die wir ihr geben, und speichert eine <code>JoinHandle&lt;()&gt;</code>-Instanz, die durch das
 Erzeugen eines neuen Strangs unter Verwendung eines leeren Funktionsabschlusses
 erzeugt wird.</p>
+<blockquote>
+<p>Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
+genügend Systemressourcen vorhanden sind, bringt <code>thread::spawn</code> das Programm
+zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
+die Erstellung einiger Stränge erfolgreich wäre. Der Einfachheit halber
+lassen wir es bei diesem Verhalten, aber in einer produktiven
+Strang-Pool-Implementierung würdest du wahrscheinlich
+<a href="https://doc.rust-lang.org/std/thread/struct.Builder.html"><code>std::thread::Builder</code></a> mit der Methode <a href="https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn"><code>spawn</code></a>
+verwenden wollen, die stattdessen <code>Result</code> zurückgibt.</p>
+</blockquote>
 <p>Dieser Code kompiliert und speichert die Anzahl der <code>Worker</code>-Instanzen, die wir
 als Argument für <code>ThreadPool::new</code> angegeben haben. Aber wir <em>verarbeiten</em> noch
 nicht den Funktionsabschluss, den wir in <code>execute</code> erhalten. Schauen wir uns

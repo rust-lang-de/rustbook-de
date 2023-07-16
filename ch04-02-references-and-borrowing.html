@@ -265,7 +265,7 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&amp;`
 7 | fn change(some_string: &amp;String) {
   |                        ------- help: consider changing this to be a mutable reference: `&amp;mut String`
 8 |     some_string.push_str(&quot; Welt&quot;);
-  |     ^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `ownership` due to previous error
@@ -458,7 +458,7 @@ error[E0106]: missing lifetime specifier
 help: consider using the `'static` lifetime
   |
 5 | fn dangle() -&gt; &amp;'static String {
-  |                ~~~~~~~~
+  |                 +++++++
 
 For more information about this error, try `rustc --explain E0106`.
 error: could not compile `ownership` due to previous error
