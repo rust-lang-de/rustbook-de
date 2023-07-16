@@ -120,14 +120,15 @@ Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0507]: cannot move out of `worker.thread` which is behind a mutable reference
-    --> src/lib.rs:52:13
-     |
-52   |             worker.thread.join().unwrap();
-     |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
-     |             |
-     |             move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
-     |
+  --> src/lib.rs:52:13
+   |
+52 |             worker.thread.join().unwrap();
+   |             ^^^^^^^^^^^^^ ------ `worker.thread` moved due to this method call
+   |             |
+   |             move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
+   |
 note: this function takes ownership of the receiver `self`, which moves `worker.thread`
+  --> /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:17
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `hello` due to previous error
@@ -238,6 +239,13 @@ error[E0599]: no method named `join` found for enum `Option` in the current scop
    |
 52 |             worker.thread.join().unwrap();
    |                           ^^^^ method not found in `Option<JoinHandle<()>>`
+   |
+note: the method `join` exists on the type `JoinHandle<()>`
+  --> /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:5
+help: consider using `Option::expect` to unwrap the `JoinHandle<()>` value, panicking if the value is an `Option::None`
+   |
+52 |             worker.thread.expect("REASON").join().unwrap();
+   |                          +++++++++++++++++
 
 error[E0308]: mismatched types
   --> src/lib.rs:72:22

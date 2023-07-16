@@ -212,7 +212,7 @@ Infolgedessen können wir immer noch die Methode `summarize` einer
 #
 # fn main() {
     let article = NewsArticle {
-        headline: String::from("Pinguine gewinnen die Stanley-Cup-Meisterschaft!"),
+        headline: String::from("Penguins gewinnen die Stanley-Cup-Meisterschaft!"),
         location: String::from("Pittsburgh, PA, USA"),
         author: String::from("Iceburgh"),
         content: String::from("Die Pittsburgh Penguins sind erneut die beste \
@@ -516,7 +516,7 @@ fn returns_summarizable(switch: bool) -> impl Summary {
     if switch {
         NewsArticle {
             headline: String::from(
-                "Pinguine gewinnen die Stanley-Cup-Meisterschaft!",
+                "Penguins gewinnen die Stanley-Cup-Meisterschaft!",
             ),
             location: String::from("Pittsburgh, PA, USA"),
             author: String::from("Iceburgh"),

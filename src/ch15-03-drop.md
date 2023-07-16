@@ -43,7 +43,7 @@ struct CustomSmartPointer {
 
 impl Drop for CustomSmartPointer {
     fn drop(&mut self) {
-        println!("CustomSmartPointer und Daten aufräumen: `{}`!", self.data);
+        println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
     }
 }
 
@@ -84,8 +84,8 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.60s
      Running `target/debug/drop-example`
 CustomSmartPointers erzeugt.
-CustomSmartPointer und Daten aufräumen: `andere Sachen`!
-CustomSmartPointer und Daten aufräumen: `meine Sache`!
+CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
+CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 ```
 Rust hat für uns automatisch `drop` und den von uns angegebenen Programmcode 
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben. 
@@ -122,7 +122,7 @@ indem wir die `main`-Funktion aus Codeblock 15-14 ändern, wie im Codeblock
 #
 # impl Drop for CustomSmartPointer {
 #     fn drop(&mut self) {
-#         println!("CustomSmartPointer und Daten aufräumen: `{}`!", self.data);
+#         println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
 #     }
 # }
 #
@@ -189,7 +189,7 @@ Funktion befindet sich im Präludium, daher können wir `main` in Codeblock 15-1
 # 
 # impl Drop for CustomSmartPointer {
 #     fn drop(&mut self) {
-#         println!("CustomSmartPointer und Daten aufräumen: `{}`!", self.data);
+#         println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
 #     }
 # }
 # 
@@ -214,11 +214,11 @@ $ cargo run
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/drop-example`
 CustomSmartPointer erzeugt.
-CustomSmartPointer und Daten aufräumen: `Daten`!
+CustomSmartPointer mit Daten aufräumen: `Daten`!
 CustomSmartPointer vor dem Ende von main aufgeräumt.
 ```
 
-Der Text ```CustomSmartPointer und Daten aufräumen: `Daten`!``` wird zwischen
+Der Text ```CustomSmartPointer mit Daten aufräumen: `Daten`!``` wird zwischen
 `CustomSmartPointer erzeugt` und `CustomSmartPointer vor dem Ende von main
 aufgeräumt.` ausgegeben und zeigt, dass der `drop`-Methodencode aufgerufen wird
 um `c` an diesem Punkt aufzuräumen.

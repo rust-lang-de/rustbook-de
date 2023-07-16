@@ -22,7 +22,7 @@ erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis *projects* in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.
 
-Öffne eine Kommandozeile und gib die folgenden Befehle ein, um ein Verzeichnis
+Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
 *projects* und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
 Verzeichnisses *projects* zu erstellen.
 
@@ -65,8 +65,9 @@ fn main() {
 <span class="caption">Codeblock 1-1: Ein Programm, das `Hallo Welt!`
 ausgibt</span>
 
-Speichere die Datei und gehe zurück zu deinem Konsolenfenster. Gib unter Linux
-oder MacOS die folgenden Befehle ein, um die Datei zu kompilieren und auszuführen:
+Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
+*~/projects/hello_world*. Gib unter Linux oder MacOS die folgenden Befehle ein,
+um die Datei zu kompilieren und auszuführen:
 
 ```console
 $ rustc main.rs
@@ -82,9 +83,9 @@ Unter Windows gib den Befehl `.\main.exe` anstelle von `./main` ein:
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` auf
-der Kommandozeile ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies
-im Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
+Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` im
+Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
+Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.
 
 Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
@@ -166,7 +167,7 @@ Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 eine ausführbare Binärdatei aus.
 
 Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
-sehen, indem du den Befehl `ls` in deiner Konsole eingibst:
+sehen, indem du den Befehl `ls` in deinem Terminal eingibst:
 
 ```console
 $ ls
@@ -195,7 +196,7 @@ $ ./main # oder .\main.exe unter Windows
 ```
 
 Wenn *main.rs* dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
-Welt!“ in deiner Konsole ausgeben.
+Welt!“ in deinem Terminal ausgeben.
 
 Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in

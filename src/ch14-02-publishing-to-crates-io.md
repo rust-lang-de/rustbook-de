@@ -412,6 +412,12 @@ API-Schlüssel auf:
 ```console
 $ cargo login abcdefghijklmnopqrstuvwxyz012345
 ```
+
+Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
+*~/.cargo/credentials*. Beachte, dass dieses Token ein *Geheimnis* ist: Gib es
+nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem teilst,
+solltest du es widerrufen und ein neues Token auf [crates.io][crates] erzeugen.
+
 ### Metadaten zu einer neuen Kiste hinzufügen
 
 Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem

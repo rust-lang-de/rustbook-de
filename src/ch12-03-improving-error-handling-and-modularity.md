@@ -2,7 +2,6 @@
 
 Um unser Programm zu verbessern, werden wir vier Probleme beheben, die mit der
 Struktur des Programms und dem Umgang mit potenziellen Fehlern zu tun haben.
-
 Erstens erfüllt unsere Funktion `main` jetzt zwei Aufgaben: Sie parst Argumente
 und liest Dateien. Für eine so kleine Funktion ist dies kein großes Problem.
 Wenn wir jedoch unser Programm innerhalb der Funktion `main` weiter ausbauen,
@@ -752,17 +751,17 @@ warning: unused `Result` that must be used
   --> src/main.rs:19:5
    |
 19 |     run(config);
-   |     ^^^^^^^^^^^^
+   |     ^^^^^^^^^^^
    |
-   = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
-Searching for the
-In file poem.txt
-With text:
+Suche nach the
+In Datei poem.txt
+Mit text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!

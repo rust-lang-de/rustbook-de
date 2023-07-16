@@ -42,8 +42,8 @@ sich daran zu erinnern, wie Module funktionieren.
 - **Pfade zum Code in Modulen**: Sobald ein Modul Teil deiner Kiste ist, kannst
   du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
   referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
-  zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` im
-  Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
+  zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (engl. Spargel)
+  im Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
   sein.
 - **Privat vs. öffentlich**: Der Code innerhalb eines Moduls ist standardmäßig
   für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu

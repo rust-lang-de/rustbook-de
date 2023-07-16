@@ -342,13 +342,11 @@ error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `
    |             ----- help: consider changing that to be a mutable reference: `&mut self`
 ...
 58 |             self.sent_messages.push(String::from(message));
-   |             ^^^^^^^^^^^^^^^^^^ `self` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `self` is a `&` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` due to previous error
-
 warning: build failed, waiting for other jobs to finish...
-error: build failed
 ```
 
 Wir können den `MockMessenger` nicht ändern, um die Nachrichten zu verfolgen, da
@@ -594,7 +592,7 @@ test tests::it_sends_an_over_75_percent_warning_message ... FAILED
 failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
-thread 'main' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
+thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -603,7 +601,7 @@ failures:
 
 test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 Beachte, dass der Programmcode mit der Meldung `already borrowed:
 BorrowMutError` abstürzt. Auf diese Weise behandelt `RefCell<T>` zur
@@ -661,9 +659,9 @@ fn main() {
 
     *value.borrow_mut() += 10;
 
-    println!("a after = {:?}", a);
-    println!("b after = {:?}", b);
-    println!("c after = {:?}", c);
+    println!("a nachher = {:?}", a);
+    println!("b nachher = {:?}", b);
+    println!("c nachher = {:?}", c);
 }
 ```
 
@@ -697,9 +695,9 @@ $ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
     Finished dev [unoptimized + debuginfo] target(s) in 0.63s
      Running `target/debug/cons-list`
-a after = Cons(RefCell { value: 15 }, Nil)
-b after = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
-c after = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
+a nachher = Cons(RefCell { value: 15 }, Nil)
+b nachher = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
+c nachher = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 ```
 
 Diese Technik ist ziemlich sauber! Durch die Verwendung von `RefCell<T>` haben

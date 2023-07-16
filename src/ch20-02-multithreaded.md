@@ -428,10 +428,10 @@ Lass uns den Code noch einmal überprüfen:
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0599]: no method named `execute` found for struct `ThreadPool` in the current scope
-  --> src/bin/main.rs:16:14
+  --> src/main.rs:17:14
    |
-16 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `hello::ThreadPool`
+17 |         pool.execute(|| {
+   |              ^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` due to previous error
@@ -798,6 +798,15 @@ und ihre Funktion `new` privat. Die Funktion `Worker::new` verwendet die `id`,
 die wir ihr geben, und speichert eine `JoinHandle<()>`-Instanz, die durch das
 Erzeugen eines neuen Strangs unter Verwendung eines leeren Funktionsabschlusses
 erzeugt wird.
+
+> Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
+> genügend Systemressourcen vorhanden sind, bringt `thread::spawn` das Programm
+> zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
+> die Erstellung einiger Stränge erfolgreich wäre. Der Einfachheit halber
+> lassen wir es bei diesem Verhalten, aber in einer produktiven
+> Strang-Pool-Implementierung würdest du wahrscheinlich
+> [`std::thread::Builder`][builder] mit der Methode [`spawn`][builder-spawn]
+> verwenden wollen, die stattdessen `Result` zurückgibt.
 
 Dieser Code kompiliert und speichert die Anzahl der `Worker`-Instanzen, die wir
 als Argument für `ThreadPool::new` angegeben haben. Aber wir *verarbeiten* noch
@@ -1446,9 +1455,9 @@ temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 20-21
 bleibt die Sperre für die Dauer des Aufrufs von `job()` erhalten, was bedeutet,
 dass andere `Worker` keine Aufträge erhalten können.
 
-[type-synonyms]:
-ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias
+[builder]: https://doc.rust-lang.org/std/thread/struct.Builder.html
+[builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
+[fn-traits]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
-[fn-traits]:
-ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen
+[type-synonyms]: ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias

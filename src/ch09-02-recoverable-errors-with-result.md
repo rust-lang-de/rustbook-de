@@ -248,7 +248,8 @@ der Fehlerursache erleichtern. Die Syntax von `expect` sieht wie folgt aus:
 use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open("hallo.txt").expect("Problem beim Öffnen von hallo.txt");
+    let greeting_file = File::open("hallo.txt")
+        .expect("Problem beim Öffnen von hallo.txt");
 }
 ```
 
@@ -362,9 +363,10 @@ Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
 von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
 Informationen darüber, was der aufrufende Code tatsächlich versucht, also
 propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
-angemessen behandelt werden. Dieses Muster der Fehlerweitergabe ist in Rust so
-verbreitet, dass Rust den Fragezeichen-Operator `?` bereitstellt, um dies zu
-erleichtern.
+angemessen behandelt werden.
+
+Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
+Fragezeichen-Operator `?` bereitstellt, um dies zu erleichtern.
 
 #### Abkürzung zum Weitergeben von Fehlern: Der Operator `?`
 
@@ -518,15 +520,14 @@ kompilieren, erhalten wir folgende Fehlermeldung:
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
-   --> src/main.rs:4:48
-    |
-3   | / fn main() {
-4   | |     let f = File::open("hallo.txt")?;
-    | |                                    ^ cannot use the `?` operator in a function that returns `()`
-5   | | }
-    | |_- this function should return `Result` or `Option` to accept `?`
-    |
-    = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
+ --> src/main.rs:4:48
+  |
+3 | fn main() {
+  | --------- this function should return `Result` or `Option` to accept `?`
+4 |     let greeting_file = File::open("hallo.txt")?;
+  |                                                ^ cannot use the `?` operator in a function that returns `()`
+  |
+  = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `error-handling` due to previous error

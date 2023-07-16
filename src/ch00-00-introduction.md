@@ -203,4 +203,4 @@ Codeversion, wenn er sich nicht kompilieren lässt.
 Die Quelldateien, aus denen dieses Buch generiert wird, findest du unter
 [GitHub][book-de].
 
-[book-de]: https://github.com/rust-lang-de/rustbook-de/tree/master/src
+[book-de]: https://github.com/rust-lang-de/rustbook-de/

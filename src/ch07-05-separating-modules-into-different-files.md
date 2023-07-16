@@ -11,6 +11,13 @@ eigene Datei *src/front_of_house.rs*, indem wir die Kistenwurzeldatei so
 ist die Kistenwurzeldatei *src/lib.rs*, aber diese Vorgehensweise funktioniert
 auch mit binären Kisten, deren Kistenwurzeldatei *src/main.rs* ist.
 
+Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
+Entferne den Code innerhalb der geschweiften Klammern des Moduls
+`front_of_house` und lasse nur die Deklaration `mod front_of_house;` übrig,
+sodass *src/lib.rs* den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+dies nicht kompiliert und wir noch die Datei *src/front_of_house.rs* in
+Codeblock 7-22 erstellen müssen.
+
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore

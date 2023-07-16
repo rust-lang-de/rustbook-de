@@ -4,8 +4,8 @@ Jetzt, da wir die Logik nach *src/lib.rs* extrahiert haben und die
 Argumentkollektion und Fehlerbehandlung in *src/main.rs* belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
 Wir können Funktionen direkt mit verschiedenen Argumenten aufrufen und
-Rückgabewerte überprüfen, ohne unsere Binärdatei von der Kommandozeile aus
-aufrufen zu müssen.
+Rückgabewerte überprüfen, ohne unsere Binärdatei Terminal aus aufrufen zu
+müssen.
 
 In diesem Abschnitt fügen wir dem `minigrep`-Programm die Suchlogik hinzu,
 indem wir die Methode der testgetriebenen Entwicklung (TDD) verwenden. Diese
@@ -217,7 +217,7 @@ Lass uns jetzt den Test ausführen:
 $ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 0.97s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 1 test
 test tests::one_result ... FAILED
@@ -225,17 +225,18 @@ test tests::one_result ... FAILED
 failures:
 
 ---- tests::one_result stdout ----
-thread 'main' panicked at 'assertion failed: `(left == right)`
-  left: `["safe, fast, productive."]`,
+thread 'tests::one_result' panicked at 'assertion failed: `(left == right)`
+  left: `["sicher, schnell, produktiv."]`,
  right: `[]`', src/lib.rs:44:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
+
 
 failures:
     tests::one_result
 
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out
+test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-error: test failed, to rerun pass '--lib'
+error: test failed, to rerun pass `--lib`
 ```
 
 Toll, der Test schlägt fehl, genau wie wir erwartet haben. Bringen wir den Test
@@ -471,24 +472,24 @@ enthalten, und unser Test sollte erfolgreich sein. Lass uns den Test ausführen:
 $ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished test [unoptimized + debuginfo] target(s) in 1.22s
-     Running target/debug/deps/minigrep-4672b652f7794785
+     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 1 test
 test tests::one_result ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
-     Running target/debug/deps/minigrep-caf9dbee196c78b9
+     Running unittests src/main.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests minigrep
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Unser Test war erfolgreich, also wissen wir, dass es funktioniert!

@@ -154,11 +154,7 @@ use add_one;
 
 fn main() {
     let num = 10;
-    println!(
-        "Hello, world! {} plus one is {}!",
-        num,
-        add_one::add_one(num)
-    );
+    println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
 }
 ```
 
@@ -206,7 +202,7 @@ verwenden können:
 
 ```toml
 [dependencies]
-rand = "0.8.3"
+rand = "0.8.5"
 ```
 
 Wir können nun `use rand;` zur Datei *add_one/src/lib.rs* hinzufügen, und wenn
@@ -300,19 +296,19 @@ $ cargo test
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
      Running unittests src/main.rs (target/debug/deps/adder-49979ff40686fa8e)
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests add_one
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Der erste Abschnitt der Ausgabe zeigt, dass der Test `it_works` in der
@@ -332,13 +328,13 @@ $ cargo test -p add_one
 running 1 test
 test tests::it_works ... ok
 
-test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 
    Doc-tests add_one
 
 running 0 tests
 
-test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out
+test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
 Die Ausgabe zeigt, dass `cargo test` nur die Tests für die Kiste `add_one` aber

@@ -29,7 +29,12 @@ error[E0282]: type annotations needed
  --> src/main.rs:2:9
   |
 2 |     let guess = "42".parse().expect("Keine Zahl!");
-  |         ^^^^^ consider giving `guess` a type
+  |         ^^^^^
+  |
+help: consider giving `guess` an explicit type
+  |
+2 |     let guess: _ = "42".parse().expect("Keine Zahl!");
+  |              +++
 
 For more information about this error, try `rustc --explain E0282`.
 error: could not compile `no_type_annotations` due to previous error
@@ -194,7 +199,7 @@ fn main() {
 
     // Division
     let quotient = 56.7 / 32.2;
-    let floored = 2 / 3; // Ergibt 0
+    let truncated = -5 / 3; // Ergibt -1
 
     // Restberechnung
     let remainder = 43 % 5;

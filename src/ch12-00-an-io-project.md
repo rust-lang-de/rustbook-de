@@ -3,8 +3,8 @@
 Dieses Kapitel ist eine Zusammenfassung der vielen Fähigkeiten, die du bisher
 gelernt hast, und eine Erkundung einiger weiterer
 Standard-Bibliotheks-Funktionalitäten. Wir werden ein Kommandozeilenwerkzeug
-erstellen, das mit Datei- und Kommandozeilen-Ein- und -Ausgabe interagiert, um
-einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
+erstellen, das mit der Datei- und der Terminal-Ein- und -Ausgabe interagiert,
+um einige der Rust-Konzepte zu üben, die du bereits gelernt hast.
 
 Rusts Geschwindigkeit, Sicherheit, Ausgabe in eine einzelne Binärdatei und
 plattformübergreifende Unterstützung machen es zu einer idealen Sprache zum
@@ -43,8 +43,8 @@ gelernt hast:
 * Schreiben von Tests ([Kapitel 11][chap11])
 
 Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln [13][ch13] und
-[17][ch17] ausführlich behandelt werden.
+Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln [13][chap13]
+und [17][chap17] ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [chap8]: ch08-00-common-collections.html

@@ -145,12 +145,14 @@ ermöglicht, neue Funktionen praktisch zu nutzen, bevor wir sie für immer für
 stabil erklären. Diejenigen, die sich für das Allerneueste entscheiden wollen,
 können dies tun, und diejenigen, die eine felsenfeste Erfahrung machen wollen,
 können bei der stabilen Version bleiben und wissen, dass ihr Code nicht brechen
-wird. Stabilität ohne Stillstand. Dieses Buch enthält nur Informationen über
-stabile Funktionalitäten, da sich in Entwicklung befindliche Funktionalitäten
-noch ändern, und sicherlich werden sie sich zwischen dem Zeitpunkt, an dem
-dieses Buch geschrieben wurde, und dem Zeitpunkt, an dem sie in stabilen
-Versionen aktiviert werden, unterscheiden. Die Dokumentation für die nur
-nächtlich verfügbaren Funktionalitäten findest du online.
+wird. Stabilität ohne Stillstand.
+
+Dieses Buch enthält nur Informationen über stabile Funktionalitäten, da sich in
+Entwicklung befindliche Funktionalitäten noch ändern, und sicherlich werden sie
+sich zwischen dem Zeitpunkt, an dem dieses Buch geschrieben wurde, und dem
+Zeitpunkt, an dem sie in stabilen Versionen aktiviert werden, unterscheiden.
+Die Dokumentation für die nur nächtlich verfügbaren Funktionalitäten findest du
+online.
 
 ### Rustup und die Rolle des nächtlichen Rust
 

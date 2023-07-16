@@ -7,12 +7,14 @@ wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
 Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
 (dictionary) oder assoziatives Array (associative array), um nur einige zu
-nennen. Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über
-einen Index nachschlagen willst, sondern über einen Schlüssel, der ein
-beliebiger Typ sein kann. Beispielsweise könntest du in einem Spiel den
-Spielstand jedes Teams in einer Hashtabelle vermerken, in der die Schlüssel den
-Teamnamen und die Werte den Spielstand des jeweiligen Teams darstellen. Wenn du
-den Namen eines Teams angibst, kannst du seine Punktzahl abrufen.
+nennen.
+
+Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
+Index nachschlagen willst, sondern über einen Schlüssel, der ein beliebiger Typ
+sein kann. Beispielsweise könntest du in einem Spiel den Spielstand jedes Teams
+in einer Hashtabelle vermerken, in der die Schlüssel den Teamnamen und die
+Werte den Spielstand des jeweiligen Teams darstellen. Wenn du den Namen eines
+Teams angibst, kannst du seine Punktzahl abrufen.
 
 In diesem Abschnitt gehen wir die grundlegende Programmierschnittstelle (API)
 von Hashtabellen durch, aber viele weitere Leckerbissen verbergen sich in den
@@ -174,7 +176,7 @@ einen bestimmten Schlüssel</span>
 Dieser Code wird `{"Blau": 25}` ausgeben. Der ursprüngliche Wert `10` wurde
 überschrieben.
 
-#### Nur einen Schlüssel und Wert einfügen, wenn der Schlüssel nicht vorhanden ist
+#### Einen Schlüssel und Wert nur dann einfügen, wenn der Schlüssel nicht vorhanden ist
 
 Es ist üblich, zu prüfen, ob ein bestimmter Schlüssel bereits in der
 Hashtabelle mit einem Wert vorhanden ist, und dann folgende Maßnahmen zu

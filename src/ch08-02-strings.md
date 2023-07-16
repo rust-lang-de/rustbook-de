@@ -37,18 +37,6 @@ dieser Typen. Obwohl es in diesem Abschnitt weitgehend um `String` geht, werden
 beide Typen in Rusts Standardbibliothek stark verwendet, und sowohl `String`
 als auch Zeichenkettenanteilstypen sind UTF-8-kodiert.
 
-Die Standardbibliothek von Rust enthält auch eine Reihe anderer
-Zeichenkettentypen wie `OsString`, `OsStr`, `CString` und `CStr`.
-Bibliothekskisten (library crates) können noch weitere Möglichkeiten zum
-Speichern von Zeichenkettendaten bieten. Fällt dir auf, dass diese Namen alle
-auf `String` oder `Str` enden? Sie beziehen sich auf aneigenbare und
-ausgeliehene Varianten, genau wie die Typen `String` und `str`, die du zuvor
-gesehen hast. Diese Zeichenkettentypen können z.B. Text in verschiedenen
-Kodierungen speichern oder unterschiedliche Speicherdarstellungen haben. Diese
-anderen Zeichenkettentypen werden in diesem Kapitel nicht besprochen; in ihrer
-API-Dokumentation erfährst du mehr darüber, wie sie zu verwenden sind und wozu
-jeder einzelne geeignet ist.
-
 ### Erstellen einer neuen Zeichenkette
 
 Viele der gleichen Operationen, die mit `Vec<T>` verfügbar sind, sind auch mit
@@ -84,7 +72,7 @@ let s = "initialer Inhalt".to_string();
 <span class="caption">Codeblock 8-12: Verwenden der Methode `to_string` zum
 Erzeugen eines `String` aus einem Zeichenkettenliteral</span>
 
-Dieser Code erzeugt eine Zeichenkette mit dem Inhalt `initialer Inhalt`.
+Dieser Code erzeugt eine Zeichenkette, die `initialer Inhalt` enthält.
 
 Wir können auch die Funktion `String::from` verwenden, um einen `String` aus
 einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
@@ -158,7 +146,7 @@ Inhalt an `s1` angehängt haben.
 let mut s1 = String::from("foo");
 let s2 = "bar";
 s1.push_str(s2);
-println!("s2 ist {}", s2);
+println!("s2 ist {s2}");
 ```
 
 <span class="caption">Codeblock 8-16: Verwenden eines Zeichenkettenanteilstyps
@@ -259,7 +247,7 @@ let s1 = String::from("tic");
 let s2 = String::from("tac");
 let s3 = String::from("toe");
 
-let s = format!("{}-{}-{}", s1, s2, s3);
+let s = format!("{s1}-{s2}-{s3}");
 ```
 
 Auch bei diesem Code wird `s` den Wert `tic-tac-toe` haben. Das Makro `format!`
@@ -280,8 +268,6 @@ ungültigen Code in Codeblock 8-19.
 ```rust,does_not_compile
 let s1 = String::from("Hallo");
 let h = s1[0];
-
-
 ```
 
 <span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
@@ -299,6 +285,13 @@ error[E0277]: the type `String` cannot be indexed by `{integer}`
   |             ^^^^^ `String` cannot be indexed by `{integer}`
   |
   = help: the trait `Index<{integer}>` is not implemented for `String`
+  = help: the following other types implement trait `Index<Idx>`:
+            <String as Index<RangeFrom<usize>>>
+            <String as Index<RangeFull>>
+            <String as Index<RangeInclusive<usize>>>
+            <String as Index<RangeTo<usize>>>
+            <String as Index<RangeToInclusive<usize>>>
+            <String as Index<std::ops::Range<usize>>>
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` due to previous error
@@ -322,7 +315,7 @@ In diesem Fall wird `hello.len()` gleich 4 sein, was bedeutet, dass der Vektor,
 der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
 Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
 jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
-Großbuchstaben „Ze“ beginnt, nicht mit der arabischen Zahl 3.)
+Großbuchstaben „Ze“ beginnt, nicht mit der Zahl 3.)
 
 ```rust
 let hello = String::from("Здравствуйте");
@@ -338,8 +331,6 @@ Um das zu erläutern, betrachte diesen ungültigen Rust-Code:
 ```rust,does_not_compile
 let hello = "Здравствуйте";
 let answer = &hello[0];
-
-
 ```
 
 Du weißt bereits, dass `answer` nicht `З`, der erste Buchstabe, sein wird. In
@@ -395,12 +386,14 @@ Hindi-Wort besteht:
 Rust bietet verschiedene Möglichkeiten zur Interpretation von rohen
 Zeichenkettendaten, die von Computern gespeichert werden, sodass jedes Programm
 die Interpretation wählen kann, die es benötigt, unabhängig davon, in welcher
-menschlichen Sprache die Daten vorliegen. Ein letzter Grund, warum Rust uns
-nicht erlaubt, eine Zeichenkette zu indexieren, um ein Zeichen zu erhalten,
-ist, dass von Indexoperationen erwartet wird, dass sie immer in konstanter Zeit
-(O(1)) erfolgen. Es ist jedoch nicht möglich, diese Zeitgarantie bei einem
-`String` einzuhalten, da Rust den Inhalt von Anfang an bis zum Index durchgehen
-müsste, um festzustellen, wie viele gültige Zeichen es gibt.
+menschlichen Sprache die Daten vorliegen.
+
+Ein letzter Grund, warum Rust uns nicht erlaubt, eine Zeichenkette zu
+indexieren, um ein Zeichen zu erhalten, ist, dass von Indexoperationen erwartet
+wird, dass sie immer in konstanter Zeit (O(1)) erfolgen. Es ist jedoch nicht
+möglich, diese Zeitgarantie bei einem `String` einzuhalten, da Rust den Inhalt
+von Anfang an bis zum Index durchgehen müsste, um festzustellen, wie viele
+gültige Zeichen es gibt.
 
 ### Anteilige Zeichenketten
 
