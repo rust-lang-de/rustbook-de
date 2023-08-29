@@ -1,16 +1,14 @@
 # Die Programmiersprache Rust
 
-Dies ist eine deutsche Gemeinschafts-Übersetzung des [offiziellen
-Rust-Buchs](https://doc.rust-lang.org/book/).
+Das Buch „Die Programmiersprache Rust“ ist eine deutsche Gemeinschafts-Übersetzung
+des [offiziellen Rust-Buchs][rustbook-en].
+Es enthält alle Änderungen des englischen Originals bis einschließlich zum **29.06.2023**.
 
-## [📖 > Hier lesen < 📖](https://rust-lang-de.github.io/rustbook-de)
+## [📖 > Hier online lesen < 📖][rustbook-de]
 
 Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
 
 [![Taschenbuch und E-Book][printbook-image]][printbook-url]
-
-[printbook-image]: https://rust-lernen.de/media/rust-printbook-95x130.png
-[printbook-url]: https://rust-lernen.de/
 
 ## Bauen und Anschauen
 
@@ -30,10 +28,18 @@ mdbook build
 
 ## Mithelfen
 
-Vorschläge und Korrekturen oder gar Übersetzungen sind natürlich gerne gewünscht.
-Falls du helfen möchtest, dann am besten via Pull Request oder Issue.
+Vorschläge und Korrekturen oder gar Übersetzungen sind jederzeit gerne
+gewünscht. Falls du helfen möchtest, dann am besten per Pull Request oder
+Issue. Bitte beachte die [Übersetzungskonventionen][konventionen].
 
-Das Buch wurde mittlerweile komplett übersetzt und enthält alle Änderungen des
-englischen Originals bis einschließlich zum **29.06.2023**.
+Für jeden Beitrag zu diesem Buch gibt es das aktuelle E-Book kostenlos für den
+persönlichen Gebrauch. Bei Interesse bitte eine E-Mail an [damoasda][damoasda]
+senden, dann schicke ich den Download-Link. Das Angebot gilt sogar rückwirkend
+für alle, die zum Buch beigetragen haben.
 
-Bitte beachte auch die [Übersetzungskonventionen](https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen).
+[damoasda]: https://github.com/damoasda
+[konventionen]: https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen
+[printbook-image]: https://rust-lernen.de/media/rust-printbook-95x130.png
+[printbook-url]: https://rust-lernen.de/
+[rustbook-de]: https://rust-lang-de.github.io/rustbook-de
+[rustbook-en]: https://doc.rust-lang.org/book/
