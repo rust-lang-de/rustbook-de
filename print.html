@@ -26712,9 +26712,10 @@ Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
 dass er wie Codeblock 20-2 aussieht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::io::prelude::*;
-use std::net::TcpListener;
-use std::net::TcpStream;
+<pre><pre class="playground"><code class="language-rust no_run">use std::{
+    io::{prelude::*, BufReader},
+    net::{TcpListener, TcpStream},
+};
 
 fn main() {
     let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
@@ -26727,11 +26728,14 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
+    let buf_reader = BufReader::new(&amp;mut stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
 
-    stream.read(&amp;mut buffer).unwrap();
-
-    println!(&quot;Request: {}&quot;, String::from_utf8_lossy(&amp;buffer[..]));
+    println!(&quot;Request: {:#?}&quot;, http_request);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
