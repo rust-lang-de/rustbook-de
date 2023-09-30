@@ -1,17 +1,17 @@
 <!DOCTYPE HTML>
-<html lang="de" class="sidebar-visible no-js light">
+<html lang="de" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
         <title>Die Programmiersprache Rust</title>
-        <meta name="robots" content="noindex" />
+        <meta name="robots" content="noindex">
 
 
         <!-- Custom HTML head -->
         
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -34,7 +34,7 @@
         <link rel="stylesheet" href="theme/2018-edition.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -64,24 +64,29 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -119,9 +124,9 @@
                                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -26858,9 +26863,10 @@ Anfrage in den Strom schreiben! Entferne aus der Funktion <code>handle_connectio
 das <code>println!</code>, das die Anfragedaten ausgegeben hat, und ersetze es durch den
 Code in Codeblock 20-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::io::prelude::*;
-</span><span class="boring">use std::net::TcpListener;
-</span><span class="boring">use std::net::TcpStream;
+<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+</span><span class="boring">    io::{prelude::*, BufReader},
+</span><span class="boring">    net::{TcpListener, TcpStream},
+</span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
@@ -26873,14 +26879,16 @@ Code in Codeblock 20-3.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-
-    stream.read(&amp;mut buffer).unwrap();
+    let buf_reader = BufReader::new(&amp;mut stream);
+    let http_request: Vec&lt;_&gt; = buf_reader
+        .lines()
+        .map(|result| result.unwrap())
+        .take_while(|line| !line.is_empty())
+        .collect();
 
     let response = &quot;HTTP/1.1 200 OK\r\n\r\n&quot;;
 
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-3: Schreiben einer kleinen erfolgreichen
 HTTP-Antwort in den Strom</span></p>
@@ -27601,9 +27609,7 @@ Strangs dauern wird. Lass uns eine Methode <code>execute</code> auf <code>Thread
 erstellen, die einen generischen Parameter vom Typ <code>F</code> mit diesen Abgrenzungen
 annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     // --abschneiden--
@@ -27616,8 +27622,7 @@ annimmt:</p>
         F: FnOnce() + Send + 'static,
     {
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen
 Funktionsabschluss darstellt, der keine Parameter benötigt und den Einheitstyp
 <code>()</code> zurückgibt. Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in
@@ -27706,7 +27711,7 @@ Signatur von <code>Thread::spawn</code>:</p>
     where
         F: FnOnce() -&gt; T,
         F: Send + 'static,
-        T: Send + 'static</code></pre>
+        T: Send + 'static,</code></pre>
 <p>Die Funktion <code>spawn</code> gibt einen <code>JoinHandle&lt;T&gt;</code> zurück, wobei <code>T</code> der Typ ist,
 den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch <code>JoinHandle</code> zu
 benutzen und sehen, was passiert. In unserem Fall werden die
@@ -28044,12 +28049,12 @@ Funktionsabschlusses.</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0382]: use of moved value: `receiver`
-  --&gt; src/lib.rs:27:42
+  --&gt; src/lib.rs:26:42
    |
-22 |         let (sender, receiver) = mpsc::channel();
+21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver&lt;Job&gt;`, which does not implement the `Copy` trait
 ...
-27 |             workers.push(Worker::new(id, receiver));
+26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
 
 For more information about this error, try `rustc --explain E0382`.
@@ -28194,8 +28199,8 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        ThreadPool { workers, sender }
 </span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn execute&lt;F&gt;(&amp;self, f: F)
+</span>
+    pub fn execute&lt;F&gt;(&amp;self, f: F)
     where
         F: FnOnce() + Send + 'static,
     {

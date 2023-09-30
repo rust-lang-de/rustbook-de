@@ -1,5 +1,5 @@
 <!DOCTYPE HTML>
-<html lang="de" class="sidebar-visible no-js light">
+<html lang="de" class="light" dir="ltr">
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
@@ -10,7 +10,7 @@
         
         <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <meta name="theme-color" content="#ffffff" />
+        <meta name="theme-color" content="#ffffff">
 
         <link rel="icon" href="favicon.svg">
         <link rel="shortcut icon" href="favicon.png">
@@ -33,7 +33,7 @@
         <link rel="stylesheet" href="theme/2018-edition.css">
 
     </head>
-    <body>
+    <body class="sidebar-visible no-js">
     <div id="body-container">
         <!-- Provide site root to javascript -->
         <script>
@@ -63,24 +63,29 @@
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             var html = document.querySelector('html');
-            html.classList.remove('no-js')
             html.classList.remove('light')
             html.classList.add(theme);
-            html.classList.add('js');
+            var body = document.querySelector('body');
+            body.classList.remove('no-js')
+            body.classList.add('js');
         </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var html = document.querySelector('html');
+            var body = document.querySelector('body');
             var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
             }
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            sidebar_toggle.checked = sidebar === 'visible';
+            body.classList.remove('sidebar-visible');
+            body.classList.add("sidebar-" + sidebar);
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -118,9 +123,9 @@
                                 <div id="menu-bar-hover-placeholder"></div>
                 <div id="menu-bar" class="menu-bar sticky">
                     <div class="left-buttons">
-                        <button id="sidebar-toggle" class="icon-button" type="button" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
                             <i class="fa fa-bars"></i>
-                        </button>
+                        </label>
                         <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
                             <i class="fa fa-paint-brush"></i>
                         </button>
@@ -572,9 +577,7 @@ Strangs dauern wird. Lass uns eine Methode <code>execute</code> auf <code>Thread
 erstellen, die einen generischen Parameter vom Typ <code>F</code> mit diesen Abgrenzungen
 annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">pub struct ThreadPool;
+<pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     // --abschneiden--
@@ -587,8 +590,7 @@ annimmt:</p>
         F: FnOnce() + Send + 'static,
     {
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen
 Funktionsabschluss darstellt, der keine Parameter benötigt und den Einheitstyp
 <code>()</code> zurückgibt. Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in
@@ -677,7 +679,7 @@ Signatur von <code>Thread::spawn</code>:</p>
     where
         F: FnOnce() -&gt; T,
         F: Send + 'static,
-        T: Send + 'static</code></pre>
+        T: Send + 'static,</code></pre>
 <p>Die Funktion <code>spawn</code> gibt einen <code>JoinHandle&lt;T&gt;</code> zurück, wobei <code>T</code> der Typ ist,
 den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch <code>JoinHandle</code> zu
 benutzen und sehen, was passiert. In unserem Fall werden die
@@ -1015,12 +1017,12 @@ Funktionsabschlusses.</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0382]: use of moved value: `receiver`
-  --&gt; src/lib.rs:27:42
+  --&gt; src/lib.rs:26:42
    |
-22 |         let (sender, receiver) = mpsc::channel();
+21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver&lt;Job&gt;`, which does not implement the `Copy` trait
 ...
-27 |             workers.push(Worker::new(id, receiver));
+26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
 
 For more information about this error, try `rustc --explain E0382`.
@@ -1165,8 +1167,8 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        ThreadPool { workers, sender }
 </span><span class="boring">    }
-</span><span class="boring">
-</span>    pub fn execute&lt;F&gt;(&amp;self, f: F)
+</span>
+    pub fn execute&lt;F&gt;(&amp;self, f: F)
     where
         F: FnOnce() + Send + 'static,
     {
@@ -1451,7 +1453,7 @@ dass andere <code>Worker</code> keine Aufträge erhalten können.</p>
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next" href="ch20-03-graceful-shutdown-and-cleanup.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-03-graceful-shutdown-and-cleanup.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -1465,7 +1467,7 @@ dass andere <code>Worker</code> keine Aufträge erhalten können.</p>
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next" href="ch20-03-graceful-shutdown-and-cleanup.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-03-graceful-shutdown-and-cleanup.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>
