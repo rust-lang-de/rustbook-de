@@ -484,7 +484,7 @@ annimmt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,noplayground
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -608,7 +608,7 @@ pub fn spawn<F, T>(f: F) -> JoinHandle<T>
     where
         F: FnOnce() -> T,
         F: Send + 'static,
-        T: Send + 'static
+        T: Send + 'static,
 ```
 
 Die Funktion `spawn` gibt einen `JoinHandle<T>` zurück, wobei `T` der Typ ist,
@@ -990,12 +990,12 @@ Wenn wir versuchen, diesen Code zu überprüfen, erhalten wir diesen Fehler:
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
 error[E0382]: use of moved value: `receiver`
-  --> src/lib.rs:27:42
+  --> src/lib.rs:26:42
    |
-22 |         let (sender, receiver) = mpsc::channel();
+21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver<Job>`, which does not implement the `Copy` trait
 ...
-27 |             workers.push(Worker::new(id, receiver));
+26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
 
 For more information about this error, try `rustc --explain E0382`.
@@ -1155,7 +1155,7 @@ impl ThreadPool {
 #
 #         ThreadPool { workers, sender }
 #     }
-#
+
     pub fn execute<F>(&self, f: F)
     where
         F: FnOnce() + Send + 'static,
