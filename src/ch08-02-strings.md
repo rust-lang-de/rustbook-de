@@ -252,9 +252,9 @@ let s = format!("{s1}-{s2}-{s3}");
 
 Auch bei diesem Code wird `s` den Wert `tic-tac-toe` haben. Das Makro `format!`
 funktioniert wie `println!`, aber anstatt das Ergebnis auf den Bildschirm
-auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die Codevariante, die
-`format!` verwendet, ist viel leichter zu lesen, und der durch das Makro
-`format!` erzeugte Code verwendet Referenzen sodass dieser Aufruf keine
+auszugeben, gibt es einen `String` mit dem Inhalt zurück. Die Codevariante mit
+`format!` ist viel leichter lesbar, und der durch das Makro
+`format!` erzeugte Code verwendet Referenzen, sodass dieser Aufruf keine
 Eigentümerschaft seiner Parameter übernimmt.
 
 ### Indexierung von Zeichenketten
