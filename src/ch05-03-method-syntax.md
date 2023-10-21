@@ -65,7 +65,7 @@ vom Typ `Self` als ihren ersten Parameter haben, Rust lässt dich dies abkürzen
 indem du nur den Namen `self` an der Stelle des ersten Parameters angibst.
 Beachte, dass wir immer noch das `&` vor der Abkürzung `self` verwenden müssen,
 um anzuzeigen, dass diese Methode die Instanz `Self` ausleiht, genau wie in
-`Rechteck: &Rechteck`. Methoden können die Eigentümerschaft von `self`
+`rectangle: &Rectangle`. Methoden können die Eigentümerschaft von `self`
 übernehmen, `self` unveränderbar ausleihen, wie wir es hier getan haben, oder
 `self` veränderbar ausleihen, so wie bei jedem anderen Parameter auch.
 
