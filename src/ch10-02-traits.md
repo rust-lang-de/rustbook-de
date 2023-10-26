@@ -320,7 +320,7 @@ verwenden, etwa so:
 #     fn summarize(&self) -> String;
 # }
 #
-pub fn notify(item: impl Summary) {
+pub fn notify(item: &impl Summary) {
     println!("Eilmeldung! {}", item.summarize());
 }
 ```
