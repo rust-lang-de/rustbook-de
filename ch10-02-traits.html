@@ -440,7 +440,7 @@ verwenden, etwa so:</p>
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
-</span>pub fn notify(item: impl Summary) {
+</span>pub fn notify(item: &amp;impl Summary) {
     println!(&quot;Eilmeldung! {}&quot;, item.summarize());
 }
 <span class="boring">}</span></code></pre></pre>
