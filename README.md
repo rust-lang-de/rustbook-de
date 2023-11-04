@@ -2,7 +2,7 @@
 
 Das Buch „Die Programmiersprache Rust“ ist eine deutsche Gemeinschafts-Übersetzung
 des [offiziellen Rust-Buchs][rustbook-en].
-Es enthält alle Änderungen des englischen Originals bis einschließlich zum **29.06.2023**.
+Es enthält alle Änderungen des englischen Originals bis einschließlich zum **01.11.2023**.
 
 ## [📖 > Hier online lesen < 📖][rustbook-de]
 
