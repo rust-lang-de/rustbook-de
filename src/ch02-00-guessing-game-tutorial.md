@@ -1302,8 +1302,8 @@ unterscheidet. In Kapitel 5 werden Strukturen (structs) und die Methodensyntax
 besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert.
 
 [cratesio]: https://crates.io/
-[doccargo]: http://doc.crates.io
-[doccratesio]: http://doc.crates.io/crates-io.html
+[doccargo]: https://doc.rust-lang.org/cargo/
+[doccratesio]: https://doc.rust-lang.org/cargo/reference/publishing.html
 [enums]: ch06-00-enums.html
 [expect]: https://doc.rust-lang.org/std/result/enum.Result.html#method.expect
 [integers]: ch03-02-data-types.html#ganzzahl-typen
