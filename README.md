@@ -14,17 +14,11 @@ Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.4.31"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4.35"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
 Änderungen am Buch werden dabei sofort übernommen und im Browser nachgeladen.
-
-Wenn man das Buch lediglich bauen möchte reicht:
-
-```bash
-mdbook build
-```
 
 ## Mithelfen
 
