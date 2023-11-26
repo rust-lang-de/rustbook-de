@@ -41,7 +41,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #
@@ -51,7 +51,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -265,7 +265,7 @@ Beachte, dass dies noch nicht kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #
@@ -275,7 +275,7 @@ Beachte, dass dies noch nicht kompiliert.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -335,7 +335,7 @@ dies noch nicht kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #
@@ -345,7 +345,7 @@ dies noch nicht kompiliert werden kann.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -405,7 +405,7 @@ einen veränderbaren Vektor vor der `for`-Schleife erstellen und die
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # use std::error::Error;
 # use std::fs;
 #
@@ -415,7 +415,7 @@ einen veränderbaren Vektor vor der `for`-Schleife erstellen und die
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -511,7 +511,7 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 # use std::error::Error;
 # use std::fs;
 #
@@ -521,7 +521,7 @@ den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
