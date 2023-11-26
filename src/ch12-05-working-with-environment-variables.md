@@ -32,7 +32,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -144,7 +144,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 # }
 #
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -293,18 +293,18 @@ nirgendwo initialisiert haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #
 pub struct Config {
     pub query: String,
     pub file_path: String,
-    pub case_sensitive: bool,
+    pub ignore_case: bool,
 }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -319,10 +319,10 @@ pub struct Config {
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
-#     let results = if config.case_sensitive {
-#         search(&config.query, &contents)
-#     } else {
+#     let results = if config.ignore_case {
 #         search_case_insensitive(&config.query, &contents)
+#     } else {
+#         search(&config.query, &contents)
 #     };
 #
 #     for line in results {
@@ -401,18 +401,18 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,does_not_compile
+```rust,ignore,does_not_compile
 # use std::error::Error;
 # use std::fs;
 #
 # pub struct Config {
 #     pub query: String,
 #     pub file_path: String,
-#     pub case_sensitive: bool,
+#     pub ignore_case: bool,
 # }
 # 
 # impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -427,10 +427,10 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    let results = if config.case_sensitive {
-        search(&config.query, &contents)
-    } else {
+    let results = if config.ignore_case {
         search_case_insensitive(&config.query, &contents)
+    } else {
+        search(&config.query, &contents)
     };
 
     for line in results {
@@ -523,11 +523,11 @@ use std::env;
 # pub struct Config {
 #     pub query: String,
 #     pub file_path: String,
-#     pub case_sensitive: bool,
+#     pub ignore_case: bool,
 # }
 #
 impl Config {
-    pub fn new(args: &[String]) -> Result<Config, &'static str> {
+    pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -535,12 +535,12 @@ impl Config {
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let case_sensitive = env::var("IGNORE_CASE").is_err();
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
 
         Ok(Config {
             query,
             file_path,
-            case_sensitive,
+            ignore_case,
         })
     }
 }
@@ -548,10 +548,10 @@ impl Config {
 # pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
-#     let results = if config.case_sensitive {
-#         search(&config.query, &contents)
-#     } else {
+#     let results = if config.ignore_case {
 #         search_case_insensitive(&config.query, &contents)
+#     } else {
+#         search(&config.query, &contents)
 #     };
 #
 #     for line in results {
@@ -692,7 +692,7 @@ To tell your name the livelong day
 To an admiring bog!
 ```
 
-Ausgezeichnet, wir haben auch Zeilen mit „to“! Unser `minigrep`-Programm kann
+Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser `minigrep`-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.
