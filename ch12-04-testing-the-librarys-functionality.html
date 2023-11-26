@@ -199,9 +199,7 @@ Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
 und gibt nur die Zeilen aus dem Text zurück, die die Suchabfrage enthalten.
 Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -210,7 +208,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -242,8 +240,7 @@ Nimm drei.&quot;;
 
         assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
 <p>Dieser Test sucht nach der Zeichenkette <code>&quot;dukt&quot;</code>. Der Text, den wir
@@ -401,9 +398,7 @@ Zeilen.</p>
 bequemerweise <code>lines</code> genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -412,7 +407,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -450,8 +445,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
 <code>contents</code></span></p>
 <p>Die Methode <code>lines</code> gibt einen Iterator zurück. Wir werden in <a href="ch13-02-iterators.html">Kapitel
@@ -466,9 +460,7 @@ enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
 in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -477,7 +469,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -517,8 +509,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
 sehen, ob die Zeile die Zeichenkette in <code>query</code> enthält</span></p>
 <p>Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
@@ -531,9 +522,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 <code>push</code>-Methode aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der
 <code>for</code>-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -542,7 +531,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -586,8 +575,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span></p>
 <p>Jetzt sollte die Funktion <code>search</code> nur noch die Zeilen zurückgeben, die <code>query</code>
@@ -628,9 +616,7 @@ von unserer Funktion <code>run</code> aus aufrufen. Wir müssen den Wert <code>c
 den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die Funktion <code>search</code>
 übergeben. Dann wird <code>run</code> jede von <code>search</code> zurückgegebene Zeile ausgeben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -639,7 +625,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -687,8 +673,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wir benutzen immer noch eine <code>for</code>-Schleife, um jede Zeile von <code>search</code>
 zurückzugeben und auszugeben.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,

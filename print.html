@@ -14496,9 +14496,7 @@ Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
 und gibt nur die Zeilen aus dem Text zurück, die die Suchabfrage enthalten.
 Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -14507,7 +14505,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14539,8 +14537,7 @@ Nimm drei.&quot;;
 
         assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
 <p>Dieser Test sucht nach der Zeichenkette <code>&quot;dukt&quot;</code>. Der Text, den wir
@@ -14698,9 +14695,7 @@ Zeilen.</p>
 bequemerweise <code>lines</code> genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -14709,7 +14704,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14747,8 +14742,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
 <code>contents</code></span></p>
 <p>Die Methode <code>lines</code> gibt einen Iterator zurück. Wir werden in <a href="ch13-02-iterators.html">Kapitel
@@ -14763,9 +14757,7 @@ enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
 in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -14774,7 +14766,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14814,8 +14806,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
 sehen, ob die Zeile die Zeichenkette in <code>query</code> enthält</span></p>
 <p>Im Moment bauen wir die Funktionalität auf. Damit sie kompiliert werden kann,
@@ -14828,9 +14819,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 <code>push</code>-Methode aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der
 <code>for</code>-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -14839,7 +14828,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14883,8 +14872,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span></p>
 <p>Jetzt sollte die Funktion <code>search</code> nur noch die Zeilen zurückgeben, die <code>query</code>
@@ -14925,9 +14913,7 @@ von unserer Funktion <code>run</code> aus aufrufen. Wir müssen den Wert <code>c
 den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die Funktion <code>search</code>
 übergeben. Dann wird <code>run</code> jede von <code>search</code> zurückgegebene Zeile ausgeben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
@@ -14936,7 +14922,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -14984,8 +14970,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wir benutzen immer noch eine <code>for</code>-Schleife, um jede Zeile von <code>search</code>
 zurückzugeben und auszugeben.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
@@ -15049,7 +15034,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -15152,7 +15137,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -15290,19 +15275,17 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>pub struct Config {
     pub query: String,
     pub file_path: String,
-    pub case_sensitive: bool,
+    pub ignore_case: bool,
 }
 <span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -15317,10 +15300,10 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    let results = if config.case_sensitive {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
+</span><span class="boring">    let results = if config.ignore_case {
 </span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
@@ -15388,27 +15371,24 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wir haben das Feld <code>ignore_case</code> hinzugefügt, das ein Boolean enthält. Als
 Nächstes benötigen wir die Funktion <code>run</code>, um den Wert des Feldes <code>ignore_case</code>
 auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion <code>search</code>
 oder die Funktion <code>search_case_insensitive</code> aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
 </span><span class="boring">    pub query: String,
 </span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub case_sensitive: bool,
+</span><span class="boring">    pub ignore_case: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -15423,10 +15403,10 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let contents = fs::read_to_string(config.file_path)?;
 
-    let results = if config.case_sensitive {
-        search(&amp;config.query, &amp;contents)
-    } else {
+    let results = if config.ignore_case {
         search_case_insensitive(&amp;config.query, &amp;contents)
+    } else {
+        search(&amp;config.query, &amp;contents)
     };
 
     for line in results {
@@ -15494,8 +15474,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-22: Aufruf von entweder <code>search</code> oder
 <code>search_case_insensitive</code> basierend auf dem Wert in <code>config.ignore_case</code></span></p>
 <p>Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
@@ -15514,11 +15493,11 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">pub struct Config {
 </span><span class="boring">    pub query: String,
 </span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub case_sensitive: bool,
+</span><span class="boring">    pub ignore_case: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>impl Config {
-    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
             return Err(&quot;Nicht genügend Argumente&quot;);
         }
@@ -15526,12 +15505,12 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let case_sensitive = env::var(&quot;IGNORE_CASE&quot;).is_err();
+        let ignore_case = env::var(&quot;IGNORE_CASE&quot;).is_ok();
 
         Ok(Config {
             query,
             file_path,
-            case_sensitive,
+            ignore_case,
         })
     }
 }
@@ -15539,10 +15518,10 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    let results = if config.case_sensitive {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
+</span><span class="boring">    let results = if config.ignore_case {
 </span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
@@ -15662,7 +15641,7 @@ How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
 </code></pre>
-<p>Ausgezeichnet, wir haben auch Zeilen mit „to“! Unser <code>minigrep</code>-Programm kann
+<p>Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser <code>minigrep</code>-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.</p>
@@ -15733,14 +15712,13 @@ stattdessen <code>eprintln!</code> verwenden.</p>
 </span>fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
 
-    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
         eprintln!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
         process::exit(1);
     });
 
     if let Err(e) = minigrep::run(config) {
         eprintln!(&quot;Anwendungsfehler: {e}&quot;);
-
         process::exit(1);
     }
 }</code></pre>

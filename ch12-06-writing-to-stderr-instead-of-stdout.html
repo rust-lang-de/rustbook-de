@@ -220,14 +220,13 @@ stattdessen <code>eprintln!</code> verwenden.</p>
 </span>fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
 
-    let config = Config::new(&amp;args).unwrap_or_else(|err| {
+    let config = Config::build(&amp;args).unwrap_or_else(|err| {
         eprintln!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
         process::exit(1);
     });
 
     if let Err(e) = minigrep::run(config) {
         eprintln!(&quot;Anwendungsfehler: {e}&quot;);
-
         process::exit(1);
     }
 }</code></pre>

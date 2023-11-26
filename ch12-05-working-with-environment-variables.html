@@ -191,7 +191,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -294,7 +294,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -432,19 +432,17 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>pub struct Config {
     pub query: String,
     pub file_path: String,
-    pub case_sensitive: bool,
+    pub ignore_case: bool,
 }
 <span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -459,10 +457,10 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    let results = if config.case_sensitive {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
+</span><span class="boring">    let results = if config.ignore_case {
 </span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
@@ -530,27 +528,24 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p>Wir haben das Feld <code>ignore_case</code> hinzugefügt, das ein Boolean enthält. Als
 Nächstes benötigen wir die Funktion <code>run</code>, um den Wert des Feldes <code>ignore_case</code>
 auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion <code>search</code>
 oder die Funktion <code>search_case_insensitive</code> aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">pub struct Config {
 </span><span class="boring">    pub query: String,
 </span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub case_sensitive: bool,
+</span><span class="boring">    pub ignore_case: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
 </span><span class="boring">        }
@@ -565,10 +560,10 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let contents = fs::read_to_string(config.file_path)?;
 
-    let results = if config.case_sensitive {
-        search(&amp;config.query, &amp;contents)
-    } else {
+    let results = if config.ignore_case {
         search_case_insensitive(&amp;config.query, &amp;contents)
+    } else {
+        search(&amp;config.query, &amp;contents)
     };
 
     for line in results {
@@ -636,8 +631,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-22: Aufruf von entweder <code>search</code> oder
 <code>search_case_insensitive</code> basierend auf dem Wert in <code>config.ignore_case</code></span></p>
 <p>Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
@@ -656,11 +650,11 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">pub struct Config {
 </span><span class="boring">    pub query: String,
 </span><span class="boring">    pub file_path: String,
-</span><span class="boring">    pub case_sensitive: bool,
+</span><span class="boring">    pub ignore_case: bool,
 </span><span class="boring">}
 </span><span class="boring">
 </span>impl Config {
-    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
             return Err(&quot;Nicht genügend Argumente&quot;);
         }
@@ -668,12 +662,12 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let case_sensitive = env::var(&quot;IGNORE_CASE&quot;).is_err();
+        let ignore_case = env::var(&quot;IGNORE_CASE&quot;).is_ok();
 
         Ok(Config {
             query,
             file_path,
-            case_sensitive,
+            ignore_case,
         })
     }
 }
@@ -681,10 +675,10 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    let results = if config.case_sensitive {
-</span><span class="boring">        search(&amp;config.query, &amp;contents)
-</span><span class="boring">    } else {
+</span><span class="boring">    let results = if config.ignore_case {
 </span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
@@ -804,7 +798,7 @@ How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
 </code></pre>
-<p>Ausgezeichnet, wir haben auch Zeilen mit „to“! Unser <code>minigrep</code>-Programm kann
+<p>Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser <code>minigrep</code>-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.</p>
