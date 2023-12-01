@@ -518,7 +518,7 @@ so flexibel wie nur möglich.
 > leeren Vektor zu erhalten, wenn der Wert `None` ist.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
-Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich `unwrap_or_else`
+Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von `unwrap_or_else`
 unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die
 Mermalsabgrenzung verwendet. Der Funktionsabschluss erhält ein Argument, eine
 Referenz auf das aktuelle Element im betrachteten Anteilstyp, und gibt einen
