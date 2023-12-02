@@ -96,14 +96,14 @@ impl Config {
 #
 #     #[test]
 #     fn case_sensitive() {
-#         let query = "duct";
+#         let query = "dukt";
 #         let contents = "\
 # Rust:
-# safe, fast, productive.
-# Pick three.
-# Duct tape.";
+# sicher, schnell, produktiv.
+# Nimm drei.
+# PRODUKTION.";
 #
-#         assert_eq!(vec!["safe, fast, productive."], search(query, contents));
+#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 #     }
 #
 #     #[test]
@@ -111,8 +111,8 @@ impl Config {
 #         let query = "rUsT";
 #         let contents = "\
 # Rust:
-# safe, fast, productive.
-# Pick three.
+# sicher, schnell, produktiv.
+# Nimm drei.
 # Trust me.";
 #
 #         assert_eq!(
@@ -156,10 +156,10 @@ aufzurufen und eine neue Zuweisung vorzunehmen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-#use std::env;
-#use std::process;
+# use std::env;
+# use std::process;
 #
-#use minigrep::Config;
+# use minigrep::Config;
 #
 fn main() {
     let args: Vec<String> = env::args().collect();
@@ -173,7 +173,6 @@ fn main() {
 #
 #    if let Err(e) = minigrep::run(config) {
 #        eprintln!("Anwendungsfehler: {e}");
-#
 #        process::exit(1);
 #    }
 }
@@ -186,11 +185,11 @@ abgeändert haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore
-#use std::env;
-#use std::process;
+```rust,ignore,does_not_compile
+# use std::env;
+# use std::process;
 #
-#use minigrep::Config;
+# use minigrep::Config;
 #
 fn main() {
     let config = Config::build(env::args()).unwrap_or_else(|err| {
@@ -203,7 +202,6 @@ fn main() {
 #
 #    if let Err(e) = minigrep::run(config) {
 #        eprintln!("Anwendungsfehler: {e}");
-#
 #        process::exit(1);
 #    }
 }
@@ -224,39 +222,38 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.
 
 <span class="filename">Dateiname src/lib.rs</span>
 
-```rust,ignore
-#use std::env;
-#use std::error::Error;
-#use std::fs;
+```rust,ignore,does_not_compile
+# use std::env;
+# use std::error::Error;
+# use std::fs;
 #
-#pub struct Config {
-#    pub query: String,
-#    pub file_path: String,
-#    pub ignore_case: bool,
-#}
+# pub struct Config {
+#     pub query: String,
+#     pub file_path: String,
+#     pub ignore_case: bool,
+# }
 #
 impl Config {
     pub fn build(
         mut args: impl Iterator<Item = String>,
     ) -> Result<Config, &'static str> {
-        // --abschneiden--
-#      
-#        if args.len() < 3 {
-#            return Err("nicht genügend Argumente");
-#        }
+       // --abschneiden--
+#         if args.len() < 3 {
+#             return Err("Nicht genügend Argumente");
+#         }
 #
-#        let query = args[1].clone();
-#        let file_path = args[2].clone();
+#         let query = args[1].clone();
+#         let file_path = args[2].clone();
 #
-#        let ignore_case = env::var("IGNORE_CASE").is_ok();
+#         let ignore_case = env::var("IGNORE_CASE").is_ok();
 #
-#        Ok(Config {
-#            query,
-#            file_path,
-#            ignore_case,
-#        })
-#    }
-#}
+#         Ok(Config {
+#             query,
+#             file_path,
+#             ignore_case,
+#         })
+#     }
+# }
 #
 #pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #    let contents = fs::read_to_string(config.file_path)?;
@@ -303,36 +300,36 @@ impl Config {
 #}
 #
 # #[cfg(test)]
-#mod tests {
-#    use super::*;
+# mod tests {
+#     use super::*;
 #
-#    #[test]
-#    fn case_sensitive() {
-#        let query = "duct";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Duct tape.";
+#     #[test]
+#     fn case_sensitive() {
+#         let query = "dukt";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# PRODUKTION.";
 #
-#        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-#    }
+#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
+#     }
 #
-#    #[test]
-#    fn case_insensitive() {
-#        let query = "rUsT";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Trust me.";
+#     #[test]
+#     fn case_insensitive() {
+#         let query = "rUsT";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# Trust me.";
 #
-#        assert_eq!(
-#            vec!["Rust:", "Trust me."],
-#            search_case_insensitive(query, contents)
-#        );
-#    }
-#}
+#         assert_eq!(
+#             vec!["Rust:", "Trust me."],
+#             search_case_insensitive(query, contents)
+#         );
+#     }
+# }
 ```
 
 <span class="caption">Codeblock 13-19: Aktualisieren der Funktion
@@ -363,16 +360,16 @@ Codeblock 12-23, um die `next`-Methode zu verwenden:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
-#use std::env;
-#use std::error::Error;
-#use std::fs;
+```rust,ignore
+# use std::env;
+# use std::error::Error;
+# use std::fs;
 #
-#pub struct Config {
-#    pub query: String,
-#    pub file_path: String,
-#    pub ignore_case: bool,
-#}
+# pub struct Config {
+#     pub query: String,
+#     pub file_path: String,
+#     pub ignore_case: bool,
+# }
 #
 impl Config {
     pub fn build(
@@ -400,81 +397,81 @@ impl Config {
     }
 }
 #
-#pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#    let contents = fs::read_to_string(config.file_path)?;
+# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#    let results = if config.ignore_case {
-#        search_case_insensitive(&config.query, &contents)
-#    } else {
-#        search(&config.query, &contents)
-#    };
+#     let results = if config.ignore_case {
+#         search_case_insensitive(&config.query, &contents)
+#     } else {
+#         search(&config.query, &contents)
+#     };
 #
-#    for line in results {
-#        println!("{line}");
-#    }
+#     for line in results {
+#         println!("{line}");
+#     }
 #
-#    Ok(())
-#}
+#     Ok(())
+# }
 #
-#pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#    let mut results = Vec::new();
+# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+#     let mut results = Vec::new();
 #
-#    for line in contents.lines() {
-#        if line.contains(query) {
-#            results.push(line);
-#        }
-#    }
+#     for line in contents.lines() {
+#         if line.contains(query) {
+#             results.push(line);
+#         }
+#     }
 #
-#    results
-#}
+#     results
+# }
 #
-#pub fn search_case_insensitive<'a>(
-#    query: &str,
-#    contents: &'a str,
-#) -> Vec<&'a str> {
-#    let query = query.to_lowercase();
-#    let mut results = Vec::new();
+# pub fn search_case_insensitive<'a>(
+#     query: &str,
+#     contents: &'a str,
+# ) -> Vec<&'a str> {
+#     let query = query.to_lowercase();
+#     let mut results = Vec::new();
 #
-#    for line in contents.lines() {
-#        if line.to_lowercase().contains(&query) {
-#            results.push(line);
-#        }
-#    }
+#     for line in contents.lines() {
+#         if line.to_lowercase().contains(&query) {
+#             results.push(line);
+#         }
+#     }
 #
-#    results
-#}
+#     results
+# }
 #
 # #[cfg(test)]
-#mod tests {
-#    use super::*;
+# mod tests {
+#     use super::*;
 #
-#    #[test]
-#    fn case_sensitive() {
-#        let query = "duct";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Duct tape.";
+#     #[test]
+#     fn case_sensitive() {
+#         let query = "dukt";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# PRODUKTION.";
 #
-#        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-#    }
+#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
+#     }
 #
-#    #[test]
-#    fn case_insensitive() {
-#        let query = "rUsT";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Trust me.";
+#     #[test]
+#     fn case_insensitive() {
+#         let query = "rUsT";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# Trust me.";
 #
-#        assert_eq!(
-#            vec!["Rust:", "Trust me."],
-#            search_case_insensitive(query, contents)
-#        );
-#    }
-#}
+#         assert_eq!(
+#             vec!["Rust:", "Trust me."],
+#             search_case_insensitive(query, contents)
+#         );
+#     }
+# }
 ```
 
 <span class="caption">Codeblock 13-20: Ändern des Rumpfes von `Config::build` um
@@ -499,32 +496,32 @@ Codeblock 12-19:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore
-#use std::error::Error;
-#use std::fs;
+# use std::error::Error;
+# use std::fs;
 #
-#pub struct Config {
-#    pub query: String,
-#    pub file_path: String,
-#}
+# pub struct Config {
+#     pub query: String,
+#     pub file_path: String,
+# }
 #
-#impl Config {
-#    pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#        if args.len() < 3 {
-#            return Err("nicht genügend Argumente");
-#        }
+# impl Config {
+#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
+#         if args.len() < 3 {
+#             return Err("Nicht genügend Argumente");
+#         }
 #
-#        let query = args[1].clone();
-#        let file_path = args[2].clone();
+#         let query = args[1].clone();
+#         let file_path = args[2].clone();
 #
-#        Ok(Config { query, file_path })
-#    }
-#}
+#         Ok(Config { query, file_path })
+#     }
+# }
 #
-#pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#    let contents = fs::read_to_string(config.file_path)?;
+# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#    Ok(())
-#}
+#     Ok(())
+# }
 #
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results = Vec::new();
@@ -539,20 +536,20 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 }
 #
 # #[cfg(test)]
-#mod tests {
-#    use super::*;
+# mod tests {
+#     use super::*;
 #
-#    #[test]
-#    fn one_result() {
-#        let query = "duct";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.";
+#     #[test]
+#     fn one_result() {
+#         let query = "dukt";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.";
 #
-#        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-#    }
-#}
+#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
+#     }
+# }
 ```
 
 <span class="caption">Codeblock 13-21: Implementierung der Funktion `search`
@@ -571,57 +568,57 @@ müssen. Codeblock 13-22 zeigt diese Änderung:
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore
-#use std::env;
-#use std::error::Error;
-#use std::fs;
+# use std::env;
+# use std::error::Error;
+# use std::fs;
 #
-#pub struct Config {
-#    pub query: String,
-#    pub file_path: String,
-#    pub ignore_case: bool,
-#}
+# pub struct Config {
+#     pub query: String,
+#     pub file_path: String,
+#     pub ignore_case: bool,
+# }
 #
-#impl Config {
-#    pub fn build(
-#        mut args: impl Iterator<Item = String>,
-#    ) -> Result<Config, &'static str> {
-#        args.next();
+# impl Config {
+#     pub fn build(
+#         mut args: impl Iterator<Item = String>,
+#     ) -> Result<Config, &'static str> {
+#         args.next();
 #
-#        let query = match args.next() {
-#            Some(arg) => arg,
-#            None => return Err("Keine Abfragezeichenkette erhalten"),
-#        };
+#         let query = match args.next() {
+#             Some(arg) => arg,
+#             None => return Err("Keine Abfragezeichenkette erhalten"),
+#         };
 #
-#        let file_path = match args.next() {
-#            Some(arg) => arg,
-#            None => return Err("Keinen Dateinamen erhalten"),
-#        };
+#         let file_path = match args.next() {
+#             Some(arg) => arg,
+#             None => return Err("Keinen Dateinamen erhalten"),
+#         };
 #
-#        let ignore_case = env::var("IGNORE_CASE").is_ok();
+#         let ignore_case = env::var("IGNORE_CASE").is_ok();
 #
-#        Ok(Config {
-#            query,
-#            file_path,
-#            ignore_case,
-#        })
-#    }
-#}
+#         Ok(Config {
+#             query,
+#             file_path,
+#             ignore_case,
+#         })
+#     }
+# }
 #
-#pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#    let contents = fs::read_to_string(config.file_path)?;
+# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#    let results = if config.ignore_case {
-#        search_case_insensitive(&config.query, &contents)
-#    } else {
-#        search(&config.query, &contents)
-#    };
+#     let results = if config.ignore_case {
+#         search_case_insensitive(&config.query, &contents)
+#     } else {
+#         search(&config.query, &contents)
+#     };
 #
-#    for line in results {
-#        println!("{line}");
-#    }
+#     for line in results {
+#         println!("{line}");
+#     }
 #
-#    Ok(())
-#}
+#     Ok(())
+# }
 #
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     contents
@@ -630,53 +627,53 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
         .collect()
 }
 #
-#pub fn search_case_insensitive<'a>(
-#    query: &str,
-#    contents: &'a str,
-#) -> Vec<&'a str> {
-#    let query = query.to_lowercase();
-#    let mut results = Vec::new();
+# pub fn search_case_insensitive<'a>(
+#     query: &str,
+#     contents: &'a str,
+# ) -> Vec<&'a str> {
+#     let query = query.to_lowercase();
+#     let mut results = Vec::new();
 #
-#    for line in contents.lines() {
-#        if line.to_lowercase().contains(&query) {
-#            results.push(line);
-#        }
-#    }
+#     for line in contents.lines() {
+#         if line.to_lowercase().contains(&query) {
+#             results.push(line);
+#         }
+#     }
 #
-#    results
-#}
+#     results
+# }
 #
 # #[cfg(test)]
-#mod tests {
-#    use super::*;
+# mod tests {
+#     use super::*;
 #
-#    #[test]
-#    fn case_sensitive() {
-#        let query = "duct";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Duct tape.";
+#     #[test]
+#     fn case_sensitive() {
+#         let query = "dukt";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# PRODUKTION.";
 #
-#        assert_eq!(vec!["safe, fast, productive."], search(query, contents));
-#    }
+#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
+#     }
 #
-#    #[test]
-#    fn case_insensitive() {
-#        let query = "rUsT";
-#        let contents = "\
-#Rust:
-#safe, fast, productive.
-#Pick three.
-#Trust me.";
+#     #[test]
+#     fn case_insensitive() {
+#         let query = "rUsT";
+#         let contents = "\
+# Rust:
+# sicher, schnell, produktiv.
+# Nimm drei.
+# Trust me.";
 #
-#        assert_eq!(
-#            vec!["Rust:", "Trust me."],
-#            search_case_insensitive(query, contents)
-#        );
-#    }
-#}
+#         assert_eq!(
+#             vec!["Rust:", "Trust me."],
+#             search_case_insensitive(query, contents)
+#         );
+#     }
+# }
 ```
 <span class="caption">Codeblock 13-22: Verwendung von Iteratoradapter-Methoden
 bei der Implementierung der Funktion `search`</span>
