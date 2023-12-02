@@ -30,13 +30,13 @@ wie sie im Codeblock 12-23 aussah:
 impl Config {
     pub fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
-            return Err("nicht genügend Argumente");
+            return Err("Nicht genügend Argumente");
         }
 
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let ignore_case = env::var("IGNORE_CASE").is_err();
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
 
         Ok(Config {
             query,
@@ -131,7 +131,7 @@ ineffizienten `clone`-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
 entfernt werden. Jetzt ist es an der Zeit, dass wir uns darum kümmern!
 
 Wir haben `clone` benutzt, da wir einen Anteilstyp mit `String`-Elementen im
-Parameter `args` haben, ab die Funktion `build` besitzt `args` nicht. Um die
+Parameter `args` haben, aber die Funktion `build` besitzt `args` nicht. Um die
 Eigentümerschaft einer `Config`-Instanz zurückzugeben, mussten wir die Werte
 aus den Feldern `query` und `file_path` von `Config` klonen, damit die
 `Config`-Instanz ihre Werte besitzen kann.
@@ -248,7 +248,7 @@ impl Config {
 #        let query = args[1].clone();
 #        let file_path = args[2].clone();
 #
-#        let ignore_case = env::var("IGNORE_CASE").is_err();
+#        let ignore_case = env::var("IGNORE_CASE").is_ok();
 #
 #        Ok(Config {
 #            query,
@@ -390,7 +390,7 @@ impl Config {
             None => return Err("Keinen Dateinamen erhalten"),
         };
 
-        let ignore_case = env::var("IGNORE_CASE").is_err();
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
 
         Ok(Config {
             query,
@@ -493,7 +493,7 @@ vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert `file_path`
 
 
 Wir können die Vorteile der Iteratoren auch in der Funktion `search` unseres
-E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben, ist wie im
+E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben ist, wie im
 Codeblock 12-19:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -597,7 +597,7 @@ müssen. Codeblock 13-22 zeigt diese Änderung:
 #            None => return Err("Keinen Dateinamen erhalten"),
 #        };
 #
-#        let ignore_case = env::var("IGNORE_CASE").is_err();
+#        let ignore_case = env::var("IGNORE_CASE").is_ok();
 #
 #        Ok(Config {
 #            query,
