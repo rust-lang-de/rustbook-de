@@ -462,4 +462,4 @@ und `use` kombiniert.
 
 [api-guidelines]: https://rust-lang.github.io/api-guidelines/
 [ch12]: ch12-00-an-io-project.html
-[pub]: #pfade-mit-dem-schlüsselwort-pub-öffnen
+[pub]: #pfade-mit-dem-schlüsselwort-pub-öffentlich-machen
