@@ -143,7 +143,7 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > Methodenfamilien verwenden, die die Standardbibliothek für primitive
 > numerische Typen bereitstellt:
 > 
-> * Verpacken (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
+> * Umbrechen (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
 >   `wrapping_add`
 > * Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
 >   `checked_*`-Methode gibt.
