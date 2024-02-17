@@ -222,7 +222,7 @@ einer Liste findet.</p>
         }
     }
 
-    println!(&quot;Die größte Zahl ist {}&quot;, largest);
+    println!("Die größte Zahl ist {}", largest);
 <span class="boring">    assert_eq!(largest, 100);
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-1: Finden der größten Zahl in einer Liste
@@ -251,7 +251,7 @@ verwenden, wie in Codeblock 10-2 gezeigt.</p>
         }
     }
 
-    println!(&quot;Die größte Zahl ist {}&quot;, largest);
+    println!("Die größte Zahl ist {}", largest);
 
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
@@ -263,7 +263,7 @@ verwenden, wie in Codeblock 10-2 gezeigt.</p>
         }
     }
 
-    println!(&quot;Die größte Zahl ist {}&quot;, largest);
+    println!("Die größte Zahl ist {}", largest);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
 <em>zwei</em> Zahlenlisten</span></p>
@@ -297,13 +297,13 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest(&amp;number_list);
-    println!(&quot;Die größte Zahl ist {}&quot;, result);
+    println!("Die größte Zahl ist {}", result);
 <span class="boring">    assert_eq!(result, 100);
 </span>
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
     let result = largest(&amp;number_list);
-    println!(&quot;Die größte Zahl ist {}&quot;, result);
+    println!("Die größte Zahl ist {}", result);
 <span class="boring">    assert_eq!(result, 6000);
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-3: Abstrahierter Code, um die größte Zahl in

@@ -208,7 +208,7 @@ Datei <em>Cargo.toml</em> und ein Verzeichnis <em>src</em> mit einer Datei <em>m
 <p>Es hat auch ein neues Git-Repository zusammen mit einer Datei <em>.gitignore</em>
 initialisiert. Git-Dateien werden nicht erzeugt, wenn du <code>cargo new</code> innerhalb
 eines existierenden Git-Repositories ausführst; du kannst dieses Verhalten
-überschreiben, indem du <code>cargo new --vcs=git</code> verwendest. </p>
+überschreiben, indem du <code>cargo new --vcs=git</code> verwendest.</p>
 <blockquote>
 <p>Hinweis: Git ist ein gebräuchliches Versionskontrollsystem. Du kannst <code>cargo new</code> anpassen, um ein anderes Versionskontrollsystem oder kein
 Versionskontrollsystem zu verwenden, indem du das Flag <code>--vcs</code> verwendest.
@@ -218,9 +218,9 @@ Führe <code>cargo new --help</code> aus, um die verfügbaren Optionen zu sehen.
 Code in Codeblock 1-2 aussehen.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[package]
-name = &quot;hello_cargo&quot;
-version = &quot;0.1.0&quot;
-edition = &quot;2021&quot;
+name = "hello_cargo"
+version = "0.1.0"
+edition = "2021"
 
 # Weitere Schlüssel und ihre Definitionen findest du unter
 # https://doc.rust-lang.org/cargo/reference/manifest.html
@@ -236,7 +236,7 @@ die folgenden Anweisungen ein Paket konfigurieren. Wenn wir weitere
 Informationen zu dieser Datei hinzufügen, werden wir weitere Abschnitte
 hinzufügen.</p>
 <p>Die nächsten drei Zeilen legen die Konfigurationsinformationen fest, die Cargo
-benötigt, um dein Programm zu kompilieren: Den Namen, die Version und die zu 
+benötigt, um dein Programm zu kompilieren: Den Namen, die Version und die zu
 verwendende Rust-Ausgabe. Über den Schlüssel <code>edition</code> sprechen wir in <a href="appendix-05-editions.html">Anhang
 E</a>.</p>
 <p>Die letzte Zeile <code>[dependencies]</code> ist der Anfang eines Abschnitts, in dem du
@@ -247,7 +247,7 @@ tun, also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.</p>
 <p>Öffne nun <em>src/main.rs</em> und wirf einen Blick darauf:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
+    println!("Hello, world!");
 }</code></pre></pre>
 <p>Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem

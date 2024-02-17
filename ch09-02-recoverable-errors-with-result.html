@@ -198,7 +198,7 @@ Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 <pre><pre class="playground"><code class="language-rust">use std::fs::File;
 
 fn main() {
-    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open("hallo.txt");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-3: Eine Datei öffnen</span></p>
 <p>Der Rückgabetyp von <code>File::open</code> ist <code>Result&lt;T, E&gt;</code>. Der generische Parameter
@@ -225,11 +225,11 @@ Möglichkeit, <code>Result</code> mit Hilfe eines grundlegenden Werkzeugs, dem A
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open("hallo.txt");
 
     let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
-        Err(error) =&gt; panic!(&quot;Problem beim Öffnen der Datei: {:?}&quot;, error),
+        Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {:?}", error),
     };
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-4: Verwenden eines <code>match</code>-Ausdrucks zum
@@ -239,7 +239,7 @@ Gültigkeitsbereich verfügbar sind, genau wie bei der Aufzählung <code>Option<
 sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vor den Varianten <code>Ok</code>
 und <code>Err</code> angeben müssen.</p>
 <p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
-<code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen 
+<code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen
 <code>greeting_file </code> zu.
 Nach dem <code>match</code> können wir die Dateiressource zum Lesen und Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
@@ -251,7 +251,7 @@ folgende Ausgabe des Makros <code>panic!</code>:</p>
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }', src/main.rs:8:23
+thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
@@ -270,17 +270,17 @@ Codeblock 9-5 gezeigt.</p>
 use std::io::ErrorKind;
 
 fn main() {
-    let greeting_file_result = File::open(&quot;hallo.txt&quot;);
+    let greeting_file_result = File::open("hallo.txt");
 
     let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
         Err(error) =&gt; match error.kind() {
-            ErrorKind::NotFound =&gt; match File::create(&quot;hallo.txt&quot;) {
+            ErrorKind::NotFound =&gt; match File::create("hallo.txt") {
                 Ok(fc) =&gt; fc,
-                Err(e) =&gt; panic!(&quot;Problem beim Erstellen der Datei: {:?}&quot;, e),
+                Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {:?}", e),
             },
             other_error =&gt; {
-                panic!(&quot;Problem beim Öffnen der Datei: {:?}&quot;, other_error)
+                panic!("Problem beim Öffnen der Datei: {:?}", other_error)
             }
         },
     };
@@ -319,13 +319,13 @@ und der Methode <code>unwrap_or_else</code>:</p>
 use std::io::ErrorKind;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;).unwrap_or_else(|error| {
+    let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
-            File::create(&quot;hallo.txt&quot;).unwrap_or_else(|error| {
-                panic!(&quot;Problem beim Erstellen der Datei: {:?}&quot;, error);
+            File::create("hallo.txt").unwrap_or_else(|error| {
+                panic!("Problem beim Erstellen der Datei: {:?}", error);
             })
         } else {
-            panic!(&quot;Problem beim Öffnen der Datei: {:?}&quot;, error);
+            panic!("Problem beim Öffnen der Datei: {:?}", error);
         }
     });
 }</code></pre></pre>
@@ -349,12 +349,12 @@ ein Beispiel für <code>unwrap</code> im Einsatz:</p>
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;).unwrap();
+    let greeting_file = File::open("hallo.txt").unwrap();
 }</code></pre></pre>
 <p>Wenn wir diesen Code ohne eine Datei <em>hallo.txt</em> ausführen, werden wir die
 Fehlermeldung des <code>panic!</code>-Aufrufs sehen, den die Methode <code>unwrap</code> macht:</p>
 <pre><code class="language-console">thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
-code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }',
+code: 2, kind: NotFound, message: "No such file or directory" }',
 src/main.rs:4:49
 </code></pre>
 <p>In ähnlicher Weise können wir bei der Methode <code>expect</code> auch die Fehlermeldung
@@ -365,8 +365,8 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 <pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;)
-        .expect(&quot;Problem beim Öffnen von hallo.txt&quot;);
+    let greeting_file = File::open("hallo.txt")
+        .expect("Problem beim Öffnen von hallo.txt");
 }</code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
 zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung, die
@@ -374,7 +374,7 @@ zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung,
 übergeben, anstelle der standardmäßigen <code>panic!</code>-Nachricht, die <code>unwrap</code>
 verwendet. So sieht sie aus:</p>
 <pre><code class="language-text">thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
-code: 2, kind: NotFound, message: &quot;No such file or directory&quot; }',
+code: 2, kind: NotFound, message: "No such file or directory" }',
 src/main.rs:5:10
 </code></pre>
 <p>In produktivem Code wählen die meisten Rust-Entwickler <code>expect</code> statt
@@ -401,7 +401,7 @@ aufgerufen hat.</p>
 use std::io::{self, Read};
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let username_file_result = File::open(&quot;hallo.txt&quot;);
+    let username_file_result = File::open("hallo.txt");
 
     let mut username_file = match username_file_result  {
         Ok(file) =&gt; file,
@@ -480,7 +480,7 @@ use std::io;
 use std::io::Read;
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    let mut username_file = File::open(&quot;hallo.txt&quot;)?;
+    let mut username_file = File::open("hallo.txt")?;
     let mut username = String::new();
     username_file.read_to_string(&amp;mut username )?;
     Ok(username)
@@ -530,7 +530,7 @@ use std::io::Read;
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
     let mut username = String::new();
 
-    File::open(&quot;hallo.txt&quot;)?.read_to_string(&amp;mut username)?;
+    File::open("hallo.txt")?.read_to_string(&amp;mut username)?;
 
     Ok(username)
 }
@@ -540,7 +540,7 @@ fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
 <p>Wir haben das Erstellen des neuen <code>String</code> in <code>username</code> an den Anfang der
 Funktion verlegt; dieser Teil hat sich nicht geändert. Anstatt eine Variable
 <code>username_file</code> zu erzeugen, haben wir den Aufruf von <code>read_to_string</code> direkt
-an das Ergebnis von <code>File::open(&quot;hallo.txt&quot;)?</code> gehängt. Wir haben immer noch
+an das Ergebnis von <code>File::open("hallo.txt")?</code> gehängt. Wir haben immer noch
 ein <code>?</code> am Ende des Aufrufs von <code>read_to_string</code>, und wir geben immer noch
 einen <code>Ok</code>-Wert zurück, der <code>username</code> enthält, wenn sowohl <code>File::open</code> als
 auch <code>read_to_string</code> erfolgreich sind, anstatt Fehler zurückzugeben. Die
@@ -555,7 +555,7 @@ machen.</p>
 use std::io;
 
 fn read_username_from_file() -&gt; Result&lt;String, io::Error&gt; {
-    fs::read_to_string(&quot;hallo.txt&quot;)
+    fs::read_to_string("hallo.txt")
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 9-9: Verwenden von <code>fs::read_to_string</code>,
@@ -577,12 +577,12 @@ der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabet
 Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
 <p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
 in einer <code>main</code>-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
-Wertes, für den wir &quot;?&quot; verwenden, kompatibel ist:</p>
+Wertes, für den wir "?" verwenden, kompatibel ist:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
 fn main() {
-    let greeting_file = File::open(&quot;hallo.txt&quot;)?;
+    let greeting_file = File::open("hallo.txt")?;
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
 <code>main</code>-Funktion zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht
@@ -598,7 +598,7 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |
 3 | fn main() {
   | --------- this function should return `Result` or `Option` to accept `?`
-4 |     let greeting_file = File::open(&quot;hallo.txt&quot;)?;
+4 |     let greeting_file = File::open("hallo.txt")?;
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
@@ -631,12 +631,12 @@ gegebenen Text findet:</p>
 <span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    assert_eq!(
-</span><span class="boring">        last_char_of_first_line(&quot;Hallo Welt\nWie geht es dir heute?&quot;),
+</span><span class="boring">        last_char_of_first_line("Hallo Welt\nWie geht es dir heute?"),
 </span><span class="boring">        Some('t')
 </span><span class="boring">    );
 </span><span class="boring">
-</span><span class="boring">    assert_eq!(last_char_of_first_line(&quot;&quot;), None);
-</span><span class="boring">    assert_eq!(last_char_of_first_line(&quot;\nhi&quot;), None);
+</span><span class="boring">    assert_eq!(last_char_of_first_line(""), None);
+</span><span class="boring">    assert_eq!(last_char_of_first_line("\nhi"), None);
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 9-11: Verwenden des <code>?</code>-Operators auf einem
 <code>Option&lt;T&gt;</code>-Wert</span></p>
@@ -657,7 +657,7 @@ erhalten. Wir sind am letzten Zeichen in dieser ersten Zeile interessiert, also
 rufen wir <code>last</code> auf, um das letzte Element im Iterator über die Zeichen
 zurückzugeben. Dies ist eine <code>Option</code>, weil die erste Zeile die leere
 Zeichenkette sein kann, wenn <code>text</code> mit einer Leerzeile beginnt, aber Zeichen
-in anderen Zeilen enthält, wie in <code>&quot;\nhi&quot;</code>. Wenn es jedoch ein letztes Zeichen
+in anderen Zeilen enthält, wie in <code>"\nhi"</code>. Wenn es jedoch ein letztes Zeichen
 in der ersten Zeile gibt, wird es in der Variante <code>Some</code> zurückgegeben. Der
 <code>?</code>-Operator in der Mitte gibt uns eine prägnante Möglichkeit, diese Logik
 auszudrücken, und diese Funktion kann in einer Zeile implementiert werden. Wenn
@@ -683,7 +683,7 @@ verhalten.</p>
 use std::fs::File;
 
 fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-    let greeting_file = File::open(&quot;hallo.txt&quot;)?;
+    let greeting_file = File::open("hallo.txt")?;
 
     Ok(())
 }</code></pre>

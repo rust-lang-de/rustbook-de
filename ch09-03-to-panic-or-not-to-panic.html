@@ -217,9 +217,9 @@ Beispiel:</p>
 </span><span class="boring">fn main() {
 </span>use std::net::IpAddr;
 
-let home: IpAddr = &quot;127.0.0.1&quot;
+let home: IpAddr = "127.0.0.1"
     .parse()
-    .expect(&quot;Fest programmierte IP-Adresse sollte gültig sein&quot;);
+    .expect("Fest programmierte IP-Adresse sollte gültig sein");
 <span class="boring">}</span></code></pre></pre>
 <p>Wir erstellen eine <code>IpAddr</code>-Instanz, indem wir eine hartkodierte Zeichenkette
 parsen. Wir können sehen, dass <code>127.0.0.1</code> eine gültige IP-Adresse ist, sodass
@@ -321,20 +321,20 @@ Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate eine Zahl!&quot;);
+</span><span class="boring">    println!("Rate eine Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
 </span><span class="boring">
 </span>    loop {
         // --abschneiden--
 
-<span class="boring">        println!(&quot;Bitte gib deine Vermutung ein.&quot;);
+<span class="boring">        println!("Bitte gib deine Vermutung ein.");
 </span><span class="boring">
 </span><span class="boring">        let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">        io::stdin()
 </span><span class="boring">            .read_line(&amp;mut guess)
-</span><span class="boring">            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">            .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
 </span>        let guess: i32 = match guess.trim().parse() {
             Ok(num) =&gt; num,
@@ -342,16 +342,16 @@ Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
         };
 
         if guess &lt; 1 || guess &gt; 100 {
-            println!(&quot;Die geheime Zahl wird zwischen 1 und 100 liegen.&quot;);
+            println!("Die geheime Zahl wird zwischen 1 und 100 liegen.");
             continue;
         }
 
         match guess.cmp(&amp;secret_number) {
             // --abschneiden--
-<span class="boring">            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-</span><span class="boring">            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+<span class="boring">            Ordering::Less =&gt; println!("Zu klein!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Zu groß!"),
 </span><span class="boring">            Ordering::Equal =&gt; {
-</span><span class="boring">                println!(&quot;Du hast gewonnen!&quot;);
+</span><span class="boring">                println!("Du hast gewonnen!");
 </span><span class="boring">                break;
 </span><span class="boring">            }
 </span><span class="boring">        }
@@ -382,7 +382,7 @@ Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 || value &gt; 100 {
-            panic!(&quot;Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {}.&quot;,
+            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {}.",
                    value);
         }
 
@@ -410,7 +410,7 @@ den Vertrag verletzen, auf den sich <code>Guess::new</code> verlässt. Die Bedin
 unter denen <code>Guess::new</code> das Programm abbricht, sollten in der öffentlich
 zugänglichen API-Dokumentation genannt werden; wir werden die
 Dokumentationskonventionen, die auf die Möglichkeit eines <code>panic!</code>-Aufrufs
-hinweisen, in der API-Dokumentation behandeln, die du in Kapitel 14 erstellst. 
+hinweisen, in der API-Dokumentation behandeln, die du in Kapitel 14 erstellst.
 Wenn <code>value</code> den Test besteht, erstellen wir eine neue <code>Guess</code>-Instanz, deren
 Feld <code>value</code> den Parameterwert <code>value</code> erhält, und geben die Instanz zurück.</p>
 <p>Als nächstes implementieren wir eine Methode namens <code>value</code>, die <code>self</code>

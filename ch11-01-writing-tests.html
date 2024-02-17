@@ -325,7 +325,7 @@ mod tests {
 
     #[test]
     fn another() {
-        panic!(&quot;Lasse diesen Test fehlschlagen&quot;);
+        panic!("Lasse diesen Test fehlschlagen");
     }
 }</code></pre>
 <p><span class="caption">Codeblock 11-3: Hinzufügen eines zweiten Tests, der
@@ -764,7 +764,7 @@ begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergebe
 in der Ausgabe auftaucht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">pub fn greeting(name: &amp;str) -&gt; String {
-    format!(&quot;Hallo {}!&quot;, name)
+    format!("Hallo {}!", name)
 }
 
 #[cfg(test)]
@@ -773,8 +773,8 @@ mod tests {
 
     #[test]
     fn greeting_contains_name() {
-        let result = greeting(&quot;Carol&quot;);
-        assert!(result.contains(&quot;Carol&quot;));
+        let result = greeting("Carol");
+        assert!(result.contains("Carol"));
     }
 }</code></pre>
 <p>Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
@@ -787,7 +787,7 @@ einfach sicher, dass die Ausgabe den Text des Eingabeparameters enthält.</p>
 ändern, dass <code>name</code> nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:</p>
 <pre><code class="language-rust not_desired_behavior noplayground">pub fn greeting(name: &amp;str) -&gt; String {
-    String::from(&quot;Hallo!&quot;)
+    String::from("Hallo!")
 }
 
 <span class="boring">#[cfg(test)]
@@ -796,8 +796,8 @@ Standard-Testversagen aussieht:</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn greeting_contains_name() {
-</span><span class="boring">        let result = greeting(&quot;Carol&quot;);
-</span><span class="boring">        assert!(result.contains(&quot;Carol&quot;));
+</span><span class="boring">        let result = greeting("Carol");
+</span><span class="boring">        assert!(result.contains("Carol"));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Das Ausführen dieses Tests führt zu folgender Ausgabe:</p>
@@ -812,7 +812,7 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\&quot;Carol\&quot;)', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Carol\")', src/lib.rs:12:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -832,7 +832,7 @@ gefüllt ist:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub fn greeting(name: &amp;str) -&gt; String {
-</span><span class="boring">    String::from(&quot;Hallo!&quot;)
+</span><span class="boring">    String::from("Hallo!")
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">#[cfg(test)]
@@ -841,10 +841,10 @@ gefüllt ist:</p>
 </span><span class="boring">
 </span>    #[test]
     fn greeting_contains_name() {
-        let result = greeting(&quot;Carol&quot;);
+        let result = greeting("Carol");
         assert!(
-            result.contains(&quot;Carol&quot;),
-            &quot;Begrüßung enthielt nicht den Namen, Wert war `{}`&quot;,
+            result.contains("Carol"),
+            "Begrüßung enthielt nicht den Namen, Wert war `{}`",
             result
         );
     }
@@ -899,7 +899,7 @@ abbricht.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 || value &gt; 100 {
-            panic!(&quot;Schätzwert muss zwischen 1 und 100 liegen, ist {}.&quot;, value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
         }
 
         Guess { value }
@@ -948,7 +948,7 @@ der Wert größer als 100 ist:</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 {
-            panic!(&quot;Schätzwert muss zwischen 1 und 100 liegen, ist {}.&quot;, value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
         }
 
         Guess { value }
@@ -1008,9 +1008,9 @@ nachdem, ob der Wert zu klein oder zu groß ist.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 {
-            panic!(&quot;Schätzwert muss größer oder gleich 1 sein, ist {}.&quot;, value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.", value);
         } else if value &gt; 100 {
-            panic!(&quot;Schätzwert muss kleiner oder gleich 100 sein, ist {}.&quot;, value);
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.", value);
         }
 
         Guess { value }
@@ -1022,7 +1022,7 @@ mod tests {
     use super::*;
 
     #[test]
-    #[should_panic(expected = &quot;kleiner oder gleich 100&quot;)]
+    #[should_panic(expected = "kleiner oder gleich 100")]
     fn greater_than_100() {
         Guess::new(200);
     }
@@ -1051,10 +1051,10 @@ vertauschen:</p>
 </span><span class="boring">impl Guess {
 </span><span class="boring">    pub fn new(value: i32) -&gt; Guess {
 </span>        if value &lt; 1 {
-            panic!(&quot;Schätzwert muss kleiner oder gleich 100 sein, ist {}.&quot;,
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.",
                    value);
         } else if value &gt; 100 {
-            panic!(&quot;Schätzwert muss größer oder gleich 1 sein, ist {}.&quot;,
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.",
                    value);
         }
 <span class="boring">
@@ -1067,7 +1067,7 @@ vertauschen:</p>
 </span><span class="boring">    use super::*;
 </span><span class="boring">
 </span><span class="boring">    #[test]
-</span><span class="boring">    #[should_panic(expected = &quot;kleiner oder gleich 100&quot;)]
+</span><span class="boring">    #[should_panic(expected = "kleiner oder gleich 100")]
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
@@ -1088,8 +1088,8 @@ failures:
 thread 'tests::greater_than_100' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
-      panic message: `&quot;Schätzwert muss größer oder gleich 1 sein, ist 200.&quot;`,
- expected substring: `&quot;kleiner oder gleich 100&quot;`
+      panic message: `"Schätzwert muss größer oder gleich 1 sein, ist 200."`,
+ expected substring: `"kleiner oder gleich 100"`
 
 failures:
     tests::greater_than_100
@@ -1118,7 +1118,7 @@ mod tests {
         if 2 + 2 == 4 {
             Ok(())
         } else {
-            Err(String::from(&quot;zwei plus zwei ist nicht gleich vier&quot;))
+            Err(String::from("zwei plus zwei ist nicht gleich vier"))
         }
     }
 }</code></pre>

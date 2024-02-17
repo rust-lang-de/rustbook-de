@@ -200,14 +200,14 @@ einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.</p>
 let v1_iter = v1.iter();
 
 for val in v1_iter {
-    println!(&quot;Erhalten: {}&quot;, val);
+    println!("Erhalten: {}", val);
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
 <code>for</code>-Schleife</span></p>
 <p>In Sprachen, deren Standardbibliotheken Iteratoren nicht bereitstellen, würde
 man diese Funktionalität bereitstellen, indem man eine Variable bei Index 0
-startet und diese zum Indizieren im Vektor verwendet und den Wert der 
+startet und diese zum Indizieren im Vektor verwendet und den Wert der
 Indexvariable bei jedem Schleifendurchlauf erhöht bis die Gesamtzahl der
 Elemente im Vektor erreicht ist.</p>
 <p>Iteratoren übernehmen derartige Logik für dich und reduzieren dadurch sich
@@ -231,7 +231,7 @@ aus:</p>
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
-<code>Self::Item</code> die einen <em>zugeordneten Typ</em> (associated type) mit diesem Merkmal 
+<code>Self::Item</code> die einen <em>zugeordneten Typ</em> (associated type) mit diesem Merkmal
 definieren. Wir werden zugeordnete Typen im Kapitel 19 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des <code>Iterator</code>-Merkmals erfordert, dass du auch einen <code>Item</code>-Typ definierst und
@@ -341,7 +341,7 @@ warning: unused `Map` that must be used
   = note: iterators are lazy and do nothing unless consumed
   = note: `#[warn(unused_must_use)]` on by default
 
-warning: `iterators` (bin &quot;iterators&quot;) generated 1 warning
+warning: `iterators` (bin "iterators") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s
      Running `target/debug/iterators`
 </code></pre>
@@ -370,7 +370,7 @@ Iterator zu verbrauchen und einen Vektor zu erzeugen</span></p>
 <p>Da <code>map</code> einen Funktionsabschluss als Parameter annimmt, können wir eine
 beliebige Operation spezifizieren, die wir auf jedes Element anwenden wollen.
 Dies ist ein gutes Beispiel dafür, wie man mit Funktionsabschlüssen ein
-Verhalten anpassen kann, während das vom <code>Iterator</code>-Merkmal bereitgestellte 
+Verhalten anpassen kann, während das vom <code>Iterator</code>-Merkmal bereitgestellte
 Iterationsverhalten wiederverwendet wird.</p>
 <p>Du kannst mehrere Aufrufe von Iterator-Adaptoren verketten, um komplexe
 Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
@@ -409,15 +409,15 @@ mod tests {
         let shoes = vec![
             Shoe {
                 size: 10,
-                style: String::from(&quot;sneaker&quot;),
+                style: String::from("sneaker"),
             },
             Shoe {
                 size: 13,
-                style: String::from(&quot;sandal&quot;),
+                style: String::from("sandal"),
             },
             Shoe {
                 size: 10,
-                style: String::from(&quot;boot&quot;),
+                style: String::from("boot"),
             },
         ];
 
@@ -428,11 +428,11 @@ mod tests {
             vec![
                 Shoe {
                     size: 10,
-                    style: String::from(&quot;sneaker&quot;)
+                    style: String::from("sneaker")
                 },
                 Shoe {
                     size: 10,
-                    style: String::from(&quot;boot&quot;)
+                    style: String::from("boot")
                 },
             ]
         );

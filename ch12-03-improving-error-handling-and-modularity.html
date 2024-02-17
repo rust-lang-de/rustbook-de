@@ -249,13 +249,13 @@ wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, file_path);
+</span><span class="boring">    println!("Suche nach {}", query);
+</span><span class="boring">    println!("In Datei {}", file_path);
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(file_path)
-</span><span class="boring">        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+</span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span>}
 
 fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
@@ -305,15 +305,15 @@ verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.</p>
 
     let config = parse_config(&amp;args);
 
-    println!(&quot;Suche nach {}&quot;, config.query);
-    println!(&quot;In Datei {}&quot;, config.file_path);
+    println!("Suche nach {}", config.query);
+    println!("In Datei {}", config.file_path);
 
     let contents = fs::read_to_string(config.file_path)
-        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+        .expect("Etwas ging beim Lesen der Datei schief");
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span>}
 
 struct Config {
@@ -398,13 +398,13 @@ Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> er
 
     let config = Config::new(&amp;args);
 
-<span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+<span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
-</span><span class="boring">        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+</span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">
 </span>    // --abschneiden--
 }
@@ -462,13 +462,13 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">
 </span><span class="boring">    let config = Config::new(&amp;args);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+</span><span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
-</span><span class="boring">        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+</span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -480,7 +480,7 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span>    // --abschneiden--
     fn new(args: &amp;[String]) -&gt; Config {
         if args.len() &lt; 3 {
-            panic!(&quot;Nicht genügend Argumente&quot;);
+            panic!("Nicht genügend Argumente");
         }
         // --abschneiden--
 <span class="boring">
@@ -540,13 +540,13 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 </span><span class="boring">
 </span><span class="boring">    let config = Config::new(&amp;args);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+</span><span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
-</span><span class="boring">        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+</span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -557,7 +557,7 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 </span>impl Config {
     fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
-            return Err(&quot;Nicht genügend Argumente&quot;);
+            return Err("Nicht genügend Argumente");
         }
 
         let query = args[1].clone();
@@ -597,19 +597,19 @@ fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
 
     let config = Config::build(&amp;args).unwrap_or_else(|err| {
-        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+        println!("Fehler beim Parsen der Argumente: {err}");
         process::exit(1);
     });
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+</span><span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)
-</span><span class="boring">        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+</span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">struct Config {
@@ -620,7 +620,7 @@ fn main() {
 </span><span class="boring">impl Config {
 </span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -685,21 +685,21 @@ immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
 </span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-</span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+</span><span class="boring">        println!("Fehler beim Parsen der Argumente: {err}");
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
 </span><span class="boring">
-</span>    println!(&quot;Suche nach {}&quot;, config.query);
-    println!(&quot;In Datei {}&quot;, config.file_path);
+</span>    println!("Suche nach {}", config.query);
+    println!("In Datei {}", config.file_path);
 
     run(config);
 }
 
 fn run(config: Config) {
     let contents = fs::read_to_string(config.file_path)
-        .expect(&quot;Etwas ging beim Lesen der Datei schief&quot;);
+        .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!(&quot;Mit text:\n{contents}&quot;);
+    println!("Mit text:\n{contents}");
 }
 
 // --abschneiden--
@@ -712,7 +712,7 @@ fn run(config: Config) {
 </span><span class="boring">impl Config {
 </span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -747,12 +747,12 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
 </span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-</span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+</span><span class="boring">        println!("Fehler beim Parsen der Argumente: {err}");
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+</span><span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span><span class="boring">    run(config);
 </span><span class="boring">}
@@ -760,7 +760,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span>fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!(&quot;Mit text:\n{contents}&quot;);
+    println!("Mit text:\n{contents}");
 
     Ok(())
 }
@@ -773,7 +773,7 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 </span><span class="boring">impl Config {
 </span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -820,7 +820,7 @@ warning: unused `Result` that must be used
    = note: this `Result` may be an `Err` variant, which should be handled
    = note: `#[warn(unused_must_use)]` on by default
 
-warning: `minigrep` (bin &quot;minigrep&quot;) generated 1 warning
+warning: `minigrep` (bin "minigrep") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
@@ -857,15 +857,15 @@ haben, aber mit einem kleinen Unterschied:</p>
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
 </span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-</span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+</span><span class="boring">        println!("Fehler beim Parsen der Argumente: {err}");
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
 </span><span class="boring">
-</span>    println!(&quot;Suche nach {}&quot;, config.query);
-    println!(&quot;In Datei {}&quot;, config.file_path);
+</span>    println!("Suche nach {}", config.query);
+    println!("In Datei {}", config.file_path);
 
     if let Err(e) = run(config) {
-        println!(&quot;Anwendungsfehler: {e}&quot;);
+        println!("Anwendungsfehler: {e}");
 
         process::exit(1);
     }
@@ -874,7 +874,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span><span class="boring">}
@@ -887,7 +887,7 @@ haben, aber mit einem kleinen Unterschied:</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -935,7 +935,7 @@ impl Config {
     pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         // --abschneiden--
 <span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -949,7 +949,7 @@ pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
     // --abschneiden--
 <span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Mit text:\n{contents}&quot;);
+</span><span class="boring">    println!("Mit text:\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    Ok(())
 </span>}</code></pre>
@@ -972,16 +972,16 @@ fn main() {
 <span class="boring">    let args: Vec&lt;String&gt; = env::args().collect();
 </span><span class="boring">
 </span><span class="boring">    let config = Config::build(&amp;args).unwrap_or_else(|err| {
-</span><span class="boring">        println!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+</span><span class="boring">        println!("Fehler beim Parsen der Argumente: {err}");
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Suche nach {}&quot;, config.query);
-</span><span class="boring">    println!(&quot;In Datei {}&quot;, config.file_path);
+</span><span class="boring">    println!("Suche nach {}", config.query);
+</span><span class="boring">    println!("In Datei {}", config.file_path);
 </span><span class="boring">
 </span>    if let Err(e) = minigrep::run(config) {
         // --abschneiden--
-<span class="boring">        println!(&quot;Anwendungsfehler: {e}&quot;);
+<span class="boring">        println!("Anwendungsfehler: {e}");
 </span><span class="boring">
 </span><span class="boring">        process::exit(1);
 </span>    }

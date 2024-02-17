@@ -219,20 +219,20 @@ von Benutzereingaben erhalten könnte.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let favorite_color: Option&lt;&amp;str&gt; = None;
     let is_tuesday = false;
-    let age: Result&lt;u8, _&gt; = &quot;34&quot;.parse();
+    let age: Result&lt;u8, _&gt; = "34".parse();
 
     if let Some(color) = favorite_color {
-        println!(&quot;Verwende deine Lieblingsfarbe {color} als Hintergrund&quot;);
+        println!("Verwende deine Lieblingsfarbe {color} als Hintergrund");
     } else if is_tuesday {
-        println!(&quot;Dienstag ist grüner Tag!&quot;);
+        println!("Dienstag ist grüner Tag!");
     } else if let Ok(age) = age {
         if age &gt; 30 {
-            println!(&quot;Verwende violett als Hintergrundfarbe&quot;);
+            println!("Verwende violett als Hintergrundfarbe");
         } else {
-            println!(&quot;Verwende orange als Hintergrundfarbe&quot;);
+            println!("Verwende orange als Hintergrundfarbe");
         }
     } else {
-        println!(&quot;Verwende blau als Hintergrundfarbe&quot;);
+        println!("Verwende blau als Hintergrundfarbe");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 18-1: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
@@ -270,7 +270,7 @@ Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
     stack.push(3);
 
     while let Some(top) = stack.pop() {
-        println!(&quot;{}&quot;, top);
+        println!("{}", top);
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-2: Das Verwenden einer <code>while let</code>-Schleife,
@@ -291,7 +291,7 @@ ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerl
 </span>    let v = vec!['a', 'b', 'c'];
 
     for (index, value) in v.iter().enumerate() {
-        println!(&quot;{} ist beim Index {}&quot;, value, index);
+        println!("{} ist beim Index {}", value, index);
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-3: Verwenden eines Musters in einer
@@ -395,7 +395,7 @@ in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 18-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
-    println!(&quot;Aktuelle Position: ({}, {})&quot;, x, y);
+    println!("Aktuelle Position: ({}, {})", x, y);
 }
 
 fn main() {

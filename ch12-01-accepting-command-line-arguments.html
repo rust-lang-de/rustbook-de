@@ -244,7 +244,7 @@ Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:</p>
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
 [src/main.rs:5] args = [
-    &quot;target/debug/minigrep&quot;,
+    "target/debug/minigrep",
 ]
 </code></pre>
 <pre><code class="language-console">$ cargo run -- Nadel Heuhaufen
@@ -252,12 +252,12 @@ Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:</p>
     Finished dev [unoptimized + debuginfo] target(s) in 1.57s
      Running `target/debug/minigrep needle haystack`
 [src/main.rs:5] args = [
-    &quot;target/debug/minigrep&quot;,
-    &quot;Nadel&quot;,
-    &quot;Heuhaufen&quot;,
+    "target/debug/minigrep",
+    "Nadel",
+    "Heuhaufen",
 ]
 </code></pre>
-<p>Beachte, dass der erste Wert im Vektor <code>&quot;target/debug/minigrep&quot;</code> ist, was der
+<p>Beachte, dass der erste Wert im Vektor <code>"target/debug/minigrep"</code> ist, was der
 Name unserer Binärdatei ist. Dies entspricht dem Verhalten der Argumentliste in
 C, sodass Programme bei ihrer Ausführung den Namen verwenden können, unter dem
 sie aufgerufen wurden. Es ist oft praktisch, Zugriff auf den Programmnamen zu
@@ -279,8 +279,8 @@ fn main() {
     let query = &amp;args[1];
     let file_path = &amp;args[2];
 
-    println!(&quot;Suche nach {}&quot;, query);
-    println!(&quot;In Datei {}&quot;, file_path);
+    println!("Suche nach {}", query);
+    println!("In Datei {}", file_path);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>

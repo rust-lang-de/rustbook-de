@@ -188,10 +188,10 @@ mit dem eine Instanz eines bestimmten Typs fertig ist, man wird dennoch keine
 Ressourcen verlieren!</p>
 <p>Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals <code>Drop</code>. Für das
-Merkmal <code>Drop</code> muss man eine Methode <code>drop</code> implementieren, die eine 
+Merkmal <code>Drop</code> muss man eine Methode <code>drop</code> implementieren, die eine
 veränderbare Referenz auf <code>self</code> enthält. Um zu sehen, wann Rust <code>drop</code>
 aufruft, implementieren wir <code>drop</code> zunächst mit <code>println!</code>-Anweisungen.</p>
-<p>Codeblock 15-14 zeigt eine Struktur (struct) <code>CustomSmartPointer</code>, deren einzige 
+<p>Codeblock 15-14 zeigt eine Struktur (struct) <code>CustomSmartPointer</code>, deren einzige
 benutzerdefinierte Funktionalität darin besteht, dass <code>Lösche CustomSmartPointer!</code> ausgegeben wird, wenn die Instanz den Gültigkeitsbereich
 verlässt, um zu zeigen, wann Rust die <code>drop</code>-Funktion ausführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -201,18 +201,18 @@ verlässt, um zu zeigen, wann Rust die <code>drop</code>-Funktion ausführt.</p>
 
 impl Drop for CustomSmartPointer {
     fn drop(&amp;mut self) {
-        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
+        println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
     }
 }
 
 fn main() {
     let c = CustomSmartPointer {
-        data: String::from(&quot;meine Sache&quot;),
+        data: String::from("meine Sache"),
     };
     let d = CustomSmartPointer {
-        data: String::from(&quot;andere Sachen&quot;),
+        data: String::from("andere Sachen"),
     };
-    println!(&quot;CustomSmartPointers erzeugt.&quot;);
+    println!("CustomSmartPointers erzeugt.");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-14: Eine Struktur <code>CustomSmartPointer</code> die
 das <code>Drop</code>-Merkmal implementiert wo wir unseren Programmcode für das
@@ -224,7 +224,7 @@ bereit, die <code>println!</code> aufruft. Im Hauptteil der <code>drop</code>-Fu
 Logik platzieren, die du ausführen möchtest, wenn eine Instanz deines Typs
 ihren Gültigkeitsbereich verlässt. Wir geben hier einen Text aus, um visuell zu
 zeigen, wann Rust <code>drop</code> aufruft.</p>
-<p>In <code>main</code> erstellen wir zwei Instanzen von <code>CustomSmartPointer</code> und geben dann 
+<p>In <code>main</code> erstellen wir zwei Instanzen von <code>CustomSmartPointer</code> und geben dann
 <code>CustomSmartPointers erzeugt</code> aus. Am Ende von <code>main</code> werden unsere Instanzen
 von <code>CustomSmartPointer</code> nicht mehr gültig sein, und Rust ruft den Programmcode
 auf, den wir in der <code>drop</code>-Methode angegeben haben, und gibt unsere endgültige
@@ -239,8 +239,8 @@ CustomSmartPointers erzeugt.
 CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
 CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 </code></pre>
-<p>Rust hat für uns automatisch <code>drop</code> und den von uns angegebenen Programmcode 
-aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben. 
+<p>Rust hat für uns automatisch <code>drop</code> und den von uns angegebenen Programmcode
+aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben.
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
 wurde <code>d</code> vor <code>c</code> aufgeräumt. Der Zweck dieses Beispiels ist, dir eine visuelle
 Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise gibst
@@ -268,19 +268,19 @@ indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
     let c = CustomSmartPointer {
-        data: String::from(&quot;Daten&quot;),
+        data: String::from("Daten"),
     };
-    println!(&quot;CustomSmartPointer erzeugt.&quot;);
+    println!("CustomSmartPointer erzeugt.");
     c.drop();
-    println!(&quot;CustomSmartPointer vor dem Ende von main aufgeräumt.&quot;);
+    println!("CustomSmartPointer vor dem Ende von main aufgeräumt.");
 }</code></pre></pre>
-<p><span class="caption">Codeblock 15-15: Der Versuch, die <code>drop</code>-Methode 
+<p><span class="caption">Codeblock 15-15: Der Versuch, die <code>drop</code>-Methode
 des <code>Drop</code>-Merkmals manuell aufzurufen, um frühzeitig zu bereinigen</span></p>
 <p>Wenn wir versuchen, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung ausgegeben:</p>
@@ -324,17 +324,17 @@ Funktion befindet sich im Präludium, daher können wir <code>main</code> in Cod
 </span><span class="boring">
 </span><span class="boring">impl Drop for CustomSmartPointer {
 </span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        println!(&quot;CustomSmartPointer mit Daten aufräumen: `{}`!&quot;, self.data);
+</span><span class="boring">        println!("CustomSmartPointer mit Daten aufräumen: `{}`!", self.data);
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
     let c = CustomSmartPointer {
-        data: String::from(&quot;Daten&quot;),
+        data: String::from("Daten"),
     };
-    println!(&quot;CustomSmartPointer erzeugt.&quot;);
+    println!("CustomSmartPointer erzeugt.");
     drop(c);
-    println!(&quot;CustomSmartPointer vor dem Ende von main aufgeräumt.&quot;);
+    println!("CustomSmartPointer vor dem Ende von main aufgeräumt.");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-16: <code>std::mem::drop</code> aufrufen um einen Wert
 explizit aufzuräumen bevor er den Gültigkeitsbereich verlässt</span></p>

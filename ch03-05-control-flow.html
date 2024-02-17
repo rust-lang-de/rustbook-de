@@ -184,9 +184,9 @@ ein:</p>
     let number = 3;
 
     if number &lt; 5 {
-        println!(&quot;Bedingung war wahr&quot;);
+        println!("Bedingung war wahr");
     } else {
-        println!(&quot;Bedingung war falsch&quot;);
+        println!("Bedingung war falsch");
     }
 }</code></pre></pre>
 <p>Alle <code>if</code>-Ausdrücke beginnen mit dem Schlüsselwort <code>if</code>, gefolgt von einer
@@ -217,9 +217,9 @@ Bedingung <code>falsch</code> macht, um zu sehen, was passiert:</p>
 </span>    let number = 7;
 <span class="boring">
 </span><span class="boring">    if number &lt; 5 {
-</span><span class="boring">        println!(&quot;Bedingung war wahr&quot;);
+</span><span class="boring">        println!("Bedingung war wahr");
 </span><span class="boring">    } else {
-</span><span class="boring">        println!(&quot;Bedingung war falsch&quot;);
+</span><span class="boring">        println!("Bedingung war falsch");
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre></pre>
 <p>Führe das Programm erneut aus und sieh dir die Ausgabe an:</p>
@@ -237,7 +237,7 @@ zum Beispiel, den folgenden Code auszuführen:</p>
     let number = 3;
 
     if number {
-        println!(&quot;Zahl war drei&quot;);
+        println!("Zahl war drei");
     }
 }</code></pre></pre>
 <p>Die <code>if</code>-Bedingung wird diesmal zum Wert <code>3</code> ausgewertet und Rust wirft einen
@@ -264,7 +264,7 @@ wenn eine Zahl ungleich <code>0</code> ist, können wir den <code>if</code>-Ausd
     let number = 3;
 
     if number != 0 {
-        println!(&quot;Zahl war etwas anderes als Null&quot;);
+        println!("Zahl war etwas anderes als Null");
     }
 }</code></pre></pre>
 <p>Wenn du diesen Code ausführst, wird <code>Zahl war etwas anderes als Null</code>
@@ -277,13 +277,13 @@ ausgegeben.</p>
     let number = 6;
 
     if number % 4 == 0 {
-        println!(&quot;Zahl ist durch 4 teilbar&quot;);
+        println!("Zahl ist durch 4 teilbar");
     } else if number % 3 == 0 {
-        println!(&quot;Zahl ist durch 3 teilbar&quot;);
+        println!("Zahl ist durch 3 teilbar");
     } else if number % 2 == 0 {
-        println!(&quot;Zahl ist durch 2 teilbar&quot;);
+        println!("Zahl ist durch 2 teilbar");
     } else {
-        println!(&quot;Zahl ist nicht durch 4, 3 oder 2 teilbar&quot;);
+        println!("Zahl ist nicht durch 4, 3 oder 2 teilbar");
     }
 }</code></pre></pre>
 <p>Dieses Programm hat vier mögliche Wege, die es nehmen kann. Nachdem du es
@@ -313,7 +313,7 @@ Codeblock 3-2.</p>
     let condition = true;
     let number = if condition { 5 } else { 6 };
 
-    println!(&quot;Der Wert der Zahl ist: {number}&quot;);
+    println!("Der Wert der Zahl ist: {number}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 3-2: Zuweisen des Ergebnisses eines
 <code>if</code>-Ausdrucks an eine Variable</span></p>
@@ -337,9 +337,9 @@ Fehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let condition = true;
 
-    let number = if condition { 5 } else { &quot;sechs&quot; };
+    let number = if condition { 5 } else { "sechs" };
 
-    println!(&quot;Der Wert der Zahl ist: {number}&quot;);
+    println!("Der Wert der Zahl ist: {number}");
 }</code></pre></pre>
 <p>Wenn wir versuchen, diesen Code zu kompilieren, erhalten wir einen Fehler. Die
 <code>if</code>- und <code>else</code>-Zweige haben Werttypen, die inkompatibel sind, und Rust zeigt
@@ -349,7 +349,7 @@ genau an, wo das Problem im Programm zu finden ist:</p>
 error[E0308]: `if` and `else` have incompatible types
  --&gt; src/main.rs:4:44
   |
-4 |     let number = if condition { 5 } else { &quot;sechs&quot; };
+4 |     let number = if condition { 5 } else { "sechs" };
   |                                 -          ^^^^^^^ expected integer, found `&amp;str`
   |                                 |
   |                                 expected because of this
@@ -383,7 +383,7 @@ so, dass sie wie folgt aussieht:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
     loop {
-        println!(&quot;nochmal!&quot;);
+        println!("nochmal!");
     }
 }</code></pre>
 <p>Wenn wir dieses Programm ausführen, werden wir sehen, dass es immer und immer
@@ -435,7 +435,7 @@ verwenden kannst, wie hier gezeigt:</p>
         }
     };
 
-    println!(&quot;Das Ergebnis ist {result}&quot;);
+    println!("Das Ergebnis ist {result}");
 }</code></pre></pre>
 <p>Vor der Schleife deklarieren wir eine Variable namens <code>counter</code> und
 initialisieren sie mit <code>0</code>. Dann deklarieren wir eine Variable namens <code>result</code>,
@@ -457,11 +457,11 @@ beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut count = 0;
     'counting_up: loop {
-        println!(&quot;Zähler = {count}&quot;);
+        println!("Zähler = {count}");
         let mut remaining = 10;
 
         loop {
-            println!(&quot;Restliche = {remaining}&quot;);
+            println!("Restliche = {remaining}");
             if remaining == 9 {
                 break;
             }
@@ -473,7 +473,7 @@ beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:</p>
 
         count += 1;
     }
-    println!(&quot;Zähler-Endstand = {count}&quot;);
+    println!("Zähler-Endstand = {count}");
 }</code></pre></pre>
 <p>Die äußere Schleife hat das Label <code>'counting_up</code> und zählt von 0 bis 2
 aufwärts. Die innere Schleife ohne Label zählt von 10 bis 9 herunter. Das erste
@@ -510,12 +510,12 @@ nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
     let mut number = 3;
 
     while number != 0 {
-        println!(&quot;{number}!&quot;);
+        println!("{number}!");
 
         number -= 1;
     }
 
-    println!(&quot;ABHEBEN!!!&quot;);
+    println!("ABHEBEN!!!");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 3-3: Verwenden einer <code>while</code>-Schleife, um Code
 auszuführen, solange eine Bedingung wahr ist</span></p>
@@ -533,7 +533,7 @@ gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
     let mut index = 0;
 
     while index &lt; 5 {
-        println!(&quot;Der Wert ist: {}&quot;, a[index]);
+        println!("Der Wert ist: {}", a[index]);
 
         index += 1;
     }
@@ -572,7 +572,7 @@ wie der Code in Codeblock 3-5 aus.</p>
     let a = [10, 20, 30, 40, 50];
 
     for element in a {
-        println!(&quot;Der Wert ist: {element}&quot;);
+        println!("Der Wert ist: {element}");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 3-5: Wiederholen anhand aller Elemente einer
@@ -599,9 +599,9 @@ verwenden würde:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     for number in (1..4).rev() {
-        println!(&quot;{number}!&quot;);
+        println!("{number}!");
     }
-    println!(&quot;ABHEBEN!!!&quot;);
+    println!("ABHEBEN!!!");
 }</code></pre></pre>
 <p>Dieser Code ist ein bisschen schöner, nicht wahr?</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>

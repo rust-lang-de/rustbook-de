@@ -242,10 +242,10 @@ Stellen gültig sind.</p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>'ident</code></td><td style="text-align: left">Benannte Lebensdauer oder Schleifenbeschriftung</td></tr>
 <tr><td style="text-align: left"><code>...u8</code>,<br> <code>...i32</code>,<br> <code>...f64</code>,<br> <code>...usize</code><br> usw.</td><td style="text-align: left">Numerisches Literal eines bestimmten Typs</td></tr>
-<tr><td style="text-align: left"><code>&quot;...&quot;</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
-<tr><td style="text-align: left"><code>r&quot;...&quot;</code>,<br> <code>r#&quot;...&quot;#</code>,<br> <code>r##&quot;...&quot;##</code><br> usw.</td><td style="text-align: left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
-<tr><td style="text-align: left"><code>b&quot;...&quot;</code></td><td style="text-align: left">Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette</td></tr>
-<tr><td style="text-align: left"><code>br&quot;...&quot;</code>,<br> <code>br#&quot;...&quot;#</code>,<br> <code>br##&quot;...&quot;##</code><br> usw.</td><td style="text-align: left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
+<tr><td style="text-align: left"><code>"..."</code></td><td style="text-align: left">Zeichenketten-Literal</td></tr>
+<tr><td style="text-align: left"><code>r"..."</code>,<br> <code>r#"..."#</code>,<br> <code>r##"..."##</code><br> usw.</td><td style="text-align: left">Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet</td></tr>
+<tr><td style="text-align: left"><code>b"..."</code></td><td style="text-align: left">Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette</td></tr>
+<tr><td style="text-align: left"><code>br"..."</code>,<br> <code>br#"..."#</code>,<br> <code>br##"..."##</code><br> usw.</td><td style="text-align: left">Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral</td></tr>
 <tr><td style="text-align: left"><code>'...'</code></td><td style="text-align: left">Zeichen-Literal</td></tr>
 <tr><td style="text-align: left"><code>b'...'</code></td><td style="text-align: left">ASCII-Byte-Literal</td></tr>
 <tr><td style="text-align: left"><code>|...| expr</code></td><td style="text-align: left">Funktionsabschluss (closure)</td></tr>
@@ -273,7 +273,7 @@ auftreten.</p>
 <p><span class="caption">Tabelle B-4: Generische Datentypen</span></p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>path&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zum generischen Typ in einem Typ (z.B. <code>Vec&lt;u8&gt;</code>)</td></tr>
-<tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ, einer Funktion oder Methode in einem Ausdruck; oft als „turbofish“ bezeichnet (z.B. <code>&quot;42&quot;.parse::&lt;i32&gt;()</code>)</td></tr>
+<tr><td style="text-align: left"><code>path::&lt;...&gt;</code>,<br> <code>method::&lt;...&gt;</code></td><td style="text-align: left">Spezifiziert Parameter zu einem generischen Typ, einer Funktion oder Methode in einem Ausdruck; oft als „turbofish“ bezeichnet (z.B. <code>"42".parse::&lt;i32&gt;()</code>)</td></tr>
 <tr><td style="text-align: left"><code>fn ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Funktion definieren</td></tr>
 <tr><td style="text-align: left"><code>struct ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Struktur definieren</td></tr>
 <tr><td style="text-align: left"><code>enum ident&lt;...&gt; ...</code></td><td style="text-align: left">Generische Aufzählung definieren</td></tr>

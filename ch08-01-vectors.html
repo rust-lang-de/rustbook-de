@@ -237,12 +237,12 @@ mittels Indexierungssyntax und der Methode <code>get</code>.</p>
 </span>let v = vec![1, 2, 3, 4, 5];
 
 let third: &amp;i32 = &amp;v[2];
-println!(&quot;Das dritte Element ist {third}&quot;);
+println!("Das dritte Element ist {third}");
 
 let third: Option&lt;&amp;i32&gt; = v.get(2);
 match third {
-    Some(third) =&gt; println!(&quot;Das dritte Element ist {third}&quot;),
-    None =&gt; println!(&quot;Es gibt kein drittes Element.&quot;),
+    Some(third) =&gt; println!("Das dritte Element ist {third}"),
+    None =&gt; println!("Es gibt kein drittes Element."),
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-4: Verwenden der Indexierungssyntax und der
@@ -299,7 +299,7 @@ let first = &amp;v[0];
 
 v.push(6);
 
-println!(&quot;Das erste Element ist: {first}&quot;);
+println!("Das erste Element ist: {first}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-6: Versuch, ein Element zu einem Vektor
 hinzuzufügen, während eine Referenz auf ein Element gehalten wird</span></p>
@@ -315,7 +315,7 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
 6 |     v.push(6);
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
-8 |     println!(&quot;Das erste Element ist: {first}&quot;);
+8 |     println!("Das erste Element ist: {first}");
   |                                       ----- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
@@ -345,7 +345,7 @@ Vektors von <code>i32</code>-Werten zu erhalten und diese auszugeben.</p>
 </span><span class="boring">fn main() {
 </span>let v = vec![100, 32, 57];
 for i in &amp;v {
-    println!(&quot;{i}&quot;);
+    println!("{i}");
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-7: Ausgeben aller Elemente eines Vektors
@@ -398,7 +398,7 @@ Wir haben dies in Codeblock 8-9 demonstriert.</p>
 
 let row = vec![
     SpreadsheetCell::Int(3),
-    SpreadsheetCell::Text(String::from(&quot;blau&quot;)),
+    SpreadsheetCell::Text(String::from("blau")),
     SpreadsheetCell::Float(10.12),
 ];
 <span class="boring">}</span></code></pre></pre>

@@ -197,7 +197,7 @@ lautet dieser Pfad <em>adder</em>:</p>
 <pre><code class="language-toml">[workspace]
 
 members = [
-    &quot;adder&quot;,
+    "adder",
 ]
 </code></pre>
 <p>Als nächstes erstellen wir die Binärkiste <code>adder</code>, indem wir <code>cargo new</code> im
@@ -207,7 +207,7 @@ Verzeichnis <em>add</em> ausführen:</p>
 </code></pre>
 <p>An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir <code>cargo build</code>
 ausführen. Die Dateien in deinem <em>add</em>-Verzeichnis sollten folgendermaßen
-aussehen: </p>
+aussehen:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── adder
@@ -216,7 +216,7 @@ aussehen: </p>
 │       └── main.rs
 └── target
 </code></pre>
-<p>Der Arbeitsbereich verfügt auf der obersten Ebene über ein <em>Zielverzeichnis</em> 
+<p>Der Arbeitsbereich verfügt auf der obersten Ebene über ein <em>Zielverzeichnis</em>
 (target), in das die kompilierten Artefakte abgelegt werden; das Paket
 <code>adder</code> hat kein eigenes <em>Zielverzeichnis</em>. Selbst wenn wir <code>cargo build</code> aus
 dem Verzeichnis <em>adder</em> heraus ausführen würden, landen die kompilierten
@@ -235,8 +235,8 @@ und nennen es <code>add_one</code>. Ändere die auf der obersten Ebene befindlic
 <pre><code class="language-toml">[workspace]
 
 members = [
-    &quot;adder&quot;,
-    &quot;add_one&quot;,
+    "adder",
+    "add_one",
 ]
 </code></pre>
 <p>Dann erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
@@ -270,7 +270,7 @@ einen Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: adder/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
 
-add_one = { path = &quot;../add_one&quot; }
+add_one = { path = "../add_one" }
 </code></pre>
 <p>Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.</p>
@@ -284,9 +284,9 @@ aufzurufen, siehe Codeblock 14-7.</p>
 
 fn main() {
     let num = 10;
-    println!(&quot;Hello, world! {num} plus one is {}!&quot;, add_one::add_one(num));
+    println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
 }</code></pre>
-<p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste aus der 
+<p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste aus der
 <code>adder</code>-Kiste verwenden</span></p>
 <p>Erstellen wir den Arbeitsbereich, indem wir <code>cargo build</code> im obersten
 Verzeichnis <em>add</em> ausführen!</p>
@@ -318,7 +318,7 @@ uns die <code>rand</code>-Kiste in der Datei <em>add_one/Cargo.toml</em> zum Abs
 verwenden können:</p>
 <p><span class="filename">Dateiname: add_one/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.8.5&quot;
+rand = "0.8.5"
 </code></pre>
 <p>Wir können nun <code>use rand;</code> zur Datei <em>add_one/src/lib.rs</em> hinzufügen, und wenn
 du den gesamten Arbeitsbereich durch Ausführen von <code>cargo build</code> im Verzeichnis

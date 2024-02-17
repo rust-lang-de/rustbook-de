@@ -212,13 +212,13 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest_i32(&amp;number_list);
-    println!(&quot;Die größte Zahl ist {}&quot;, result);
+    println!("Die größte Zahl ist {}", result);
 <span class="boring">    assert_eq!(result, 100);
 </span>
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest_char(&amp;char_list);
-    println!(&quot;Das größte Zeichen ist {}&quot;, result);
+    println!("Das größte Zeichen ist {}", result);
 <span class="boring">    assert_eq!(result, 'y');
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-4: Zwei Funktionen, die sich nur in ihren
@@ -271,12 +271,12 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest(&amp;number_list);
-    println!(&quot;Die größte Zahl ist {}&quot;, result);
+    println!("Die größte Zahl ist {}", result);
 
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest(&amp;char_list);
-    println!(&quot;Das größte Zeichen ist {}&quot;, result);
+    println!("Das größte Zeichen ist {}", result);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-5: Die Funktion <code>largest</code> mit generischen
 Typparametern; diese kompiliert aber noch nicht</span></p>
@@ -451,7 +451,7 @@ impl&lt;T&gt; Point&lt;T&gt; {
 fn main() {
     let p = Point { x: 5, y: 10 };
 
-    println!(&quot;p.x = {}&quot;, p.x());
+    println!("p.x = {}", p.x());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-9: Implementierung einer Methode <code>x</code> auf der
 Struktur <code>Point&lt;T&gt;</code>, die eine Referenz auf das Feld <code>x</code> vom Typ <code>T</code>
@@ -494,7 +494,7 @@ konkreten Typ <code>f32</code>, d.h. wir deklarieren keinen Typ hinter <code>imp
 </span><span class="boring">fn main() {
 </span><span class="boring">    let p = Point { x: 5, y: 10 };
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;p.x = {}&quot;, p.x());
+</span><span class="boring">    println!("p.x = {}", p.x());
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 10-10: Ein <code>impl</code>-Block, der nur für eine
 Struktur mit einem bestimmten konkreten Typ für den generischen Typparameter
@@ -529,18 +529,18 @@ impl&lt;X1, Y1&gt; Point&lt;X1, Y1&gt; {
 
 fn main() {
     let p1 = Point { x: 5, y: 10.4 };
-    let p2 = Point { x: &quot;Hallo&quot;, y: 'c' };
+    let p2 = Point { x: "Hallo", y: 'c' };
 
     let p3 = p1.mixup(p2);
 
-    println!(&quot;p3.x = {}, p3.y = {}&quot;, p3.x, p3.y);
+    println!("p3.x = {}, p3.y = {}", p3.x, p3.y);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-11: Eine Methode, die generische Typen aus
 der Definition ihrer Struktur anders verwendet</span></p>
 <p>In <code>main</code> haben wir einen <code>Point</code> definiert, bei dem <code>x</code> den Typ <code>i32</code> (mit dem
 Wert <code>5</code>) und <code>y</code> den Typ <code>f64</code> (mit dem Wert <code>10.4</code>) hat. Die Variable <code>p2</code>
 ist eine Struktur <code>Point</code>, bei der <code>x</code> einen Zeichenkettenanteilstyp (mit dem
-Wert <code>&quot;Hallo&quot;</code>) und <code>y</code> den Typ <code>char</code> (mit dem Wert <code>c</code>) hat. Wenn wir <code>mixup</code>
+Wert <code>"Hallo"</code>) und <code>y</code> den Typ <code>char</code> (mit dem Wert <code>c</code>) hat. Wenn wir <code>mixup</code>
 auf <code>p1</code> mit dem Argument <code>p2</code> aufrufen, erhalten wir <code>p3</code>, das ein <code>i32</code> für
 <code>x</code> haben wird, weil <code>x</code> von <code>p1</code> kam. Die Variable <code>p3</code> wird ein <code>char</code> für
 <code>y</code> haben, weil <code>y</code> von <code>p2</code> stammt. Der Makroaufruf <code>println!</code> gibt

@@ -238,7 +238,7 @@ fn main() {
     let (tx, rx) = mpsc::channel();
 
     thread::spawn(move || {
-        let val = String::from(&quot;hallo&quot;);
+        let val = String::from("hallo");
         tx.send(val).unwrap();
     });
 }</code></pre></pre>
@@ -266,12 +266,12 @@ fn main() {
     let (tx, rx) = mpsc::channel();
 
     thread::spawn(move || {
-        let val = String::from(&quot;hallo&quot;);
+        let val = String::from("hallo");
         tx.send(val).unwrap();
     });
 
     let received = rx.recv().unwrap();
-    println!(&quot;Erhalten: {}&quot;, received);
+    println!("Erhalten: {}", received);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-8: Empfangen des Wertes „hallo“ im
 Hauptstrang und Ausgeben des Wertes</span></p>
@@ -315,13 +315,13 @@ fn main() {
     let (tx, rx) = mpsc::channel();
 
     thread::spawn(move || {
-        let val = String::from(&quot;hallo&quot;);
+        let val = String::from("hallo");
         tx.send(val).unwrap();
-        println!(&quot;val ist {}&quot;, val);
+        println!("val ist {}", val);
     });
 
     let received = rx.recv().unwrap();
-    println!(&quot;Erhalten: {}&quot;, received);
+    println!("Erhalten: {}", received);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-9: Versuch, <code>val</code> zu benutzen, nachdem wir
 es in den Kanal geschickt haben</span></p>
@@ -337,11 +337,11 @@ uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu kompi
 error[E0382]: borrow of moved value: `val`
   --&gt; src/main.rs:10:31
    |
-8  |         let val = String::from(&quot;hallo&quot;);
+8  |         let val = String::from("hallo");
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
 9  |         tx.send(val).unwrap();
    |                 --- value moved here
-10 |         println!(&quot;val ist {}&quot;, val);
+10 |         println!("val ist {}", val);
    |                                ^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
@@ -371,10 +371,10 @@ fn main() {
 
     thread::spawn(move || {
         let vals = vec![
-            String::from(&quot;hallo&quot;),
-            String::from(&quot;aus&quot;),
-            String::from(&quot;dem&quot;),
-            String::from(&quot;Strang&quot;),
+            String::from("hallo"),
+            String::from("aus"),
+            String::from("dem"),
+            String::from("Strang"),
         ];
 
         for val in vals {
@@ -384,7 +384,7 @@ fn main() {
     });
 
     for received in rx {
-        println!(&quot;Erhalten: {}&quot;, received);
+        println!("Erhalten: {}", received);
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten und
@@ -425,10 +425,10 @@ Codeblock 16-11 gezeigt:</p>
     let tx1 = tx.clone();
     thread::spawn(move || {
         let vals = vec![
-            String::from(&quot;hallo&quot;),
-            String::from(&quot;aus&quot;),
-            String::from(&quot;dem&quot;),
-            String::from(&quot;Strang&quot;),
+            String::from("hallo"),
+            String::from("aus"),
+            String::from("dem"),
+            String::from("Strang"),
         ];
 
         for val in vals {
@@ -439,10 +439,10 @@ Codeblock 16-11 gezeigt:</p>
 
     thread::spawn(move || {
         let vals = vec![
-            String::from(&quot;mehr&quot;),
-            String::from(&quot;Nachrichten&quot;),
-            String::from(&quot;für&quot;),
-            String::from(&quot;dich&quot;),
+            String::from("mehr"),
+            String::from("Nachrichten"),
+            String::from("für"),
+            String::from("dich"),
         ];
 
         for val in vals {
@@ -452,7 +452,7 @@ Codeblock 16-11 gezeigt:</p>
     });
 
     for received in rx {
-        println!(&quot;Erhalten: {}&quot;, received);
+        println!("Erhalten: {}", received);
     }
 
     // --abschneiden--

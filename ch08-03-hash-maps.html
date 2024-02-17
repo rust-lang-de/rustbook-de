@@ -196,8 +196,8 @@ Punkten, das Team Gelb mit 50 Punkten.</p>
 
 let mut scores = HashMap::new();
 
-scores.insert(String::from(&quot;Blau&quot;), 10);
-scores.insert(String::from(&quot;Gelb&quot;), 50);
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Gelb"), 50);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-20: Erstellen einer neuen Hashtabelle und
 Einfügen einiger Schlüssel und Werte</span></p>
@@ -207,7 +207,7 @@ wird diese am seltensten verwendet, sodass sie nicht zu den Funktionalitäten
 gehört, die automatisch in den Gültigkeitsbereich aufgenommen werden.
 Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.</p>
-<p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
+<p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher.
 Obige <code>HashMap</code> hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>.
 Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
 haben und alle Werte müssen denselben Typ haben.</p>
@@ -220,10 +220,10 @@ haben und alle Werte müssen denselben Typ haben.</p>
 
 let mut scores = HashMap::new();
 
-scores.insert(String::from(&quot;Blau&quot;), 10);
-scores.insert(String::from(&quot;Geld&quot;), 50);
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Geld"), 50);
 
-let team_name = String::from(&quot;Blau&quot;);
+let team_name = String::from("Blau");
 let score = scores.get(&amp;team_name).copied().unwrap_or(0);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-21: Zugreifen auf den Spielstand von Team
@@ -243,11 +243,11 @@ Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwe
 
 let mut scores = HashMap::new();
 
-scores.insert(String::from(&quot;Blau&quot;), 10);
-scores.insert(String::from(&quot;Gelb&quot;), 50);
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Gelb"), 50);
 
 for (key, value) in &amp;scores {
-    println!(&quot;{key}: {value}&quot;);
+    println!("{key}: {value}");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt alle Paare in einer beliebigen Reihenfolge aus:</p>
@@ -263,8 +263,8 @@ verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
-let field_name = String::from(&quot;Lieblingsfarbe&quot;);
-let field_value = String::from(&quot;Blau&quot;);
+let field_name = String::from("Lieblingsfarbe");
+let field_value = String::from("Blau");
 
 let mut map = HashMap::new();
 map.insert(field_name, field_value);
@@ -305,14 +305,14 @@ einfügen.</p>
 
 let mut scores = HashMap::new();
 
-scores.insert(String::from(&quot;Blau&quot;), 10);
-scores.insert(String::from(&quot;Blau&quot;), 25);
+scores.insert(String::from("Blau"), 10);
+scores.insert(String::from("Blau"), 25);
 
-println!(&quot;{:?}&quot;, scores);
+println!("{:?}", scores);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span></p>
-<p>Dieser Code wird <code>{&quot;Blau&quot;: 25}</code> ausgeben. Der ursprüngliche Wert <code>10</code> wurde
+<p>Dieser Code wird <code>{"Blau": 25}</code> ausgeben. Der ursprüngliche Wert <code>10</code> wurde
 überschrieben.</p>
 <h4 id="einen-schlüssel-und-wert-nur-dann-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist"><a class="header" href="#einen-schlüssel-und-wert-nur-dann-einfügen-wenn-der-schlüssel-nicht-vorhanden-ist">Einen Schlüssel und Wert nur dann einfügen, wenn der Schlüssel nicht vorhanden ist</a></h4>
 <p>Es ist üblich, zu prüfen, ob ein bestimmter Schlüssel bereits in der
@@ -332,12 +332,12 @@ Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-
 </span>use std::collections::HashMap;
 
 let mut scores = HashMap::new();
-scores.insert(String::from(&quot;Blau&quot;), 10);
+scores.insert(String::from("Blau"), 10);
 
-scores.entry(String::from(&quot;Gelb&quot;)).or_insert(50);
-scores.entry(String::from(&quot;Blau&quot;)).or_insert(50);
+scores.entry(String::from("Gelb")).or_insert(50);
+scores.entry(String::from("Blau")).or_insert(50);
 
-println!(&quot;{:?}&quot;, scores);
+println!("{:?}", scores);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-24: Verwenden der Methode <code>entry</code> zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span></p>
@@ -347,7 +347,7 @@ zurückgibt, wenn dieser Schlüssel existiert, andernfalls fügt sie den Paramet
 als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
 auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
 selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.</p>
-<p>Der Code in Codeblock 8-24 gibt <code>{&quot;Gelb&quot;: 50, &quot;Blau&quot;: 10}</code> aus. Beim ersten
+<p>Der Code in Codeblock 8-24 gibt <code>{"Gelb": 50, "Blau": 10}</code> aus. Beim ersten
 Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
 da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code> wird die
 Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.</p>
@@ -363,7 +363,7 @@ Wort sehen, fügen wir zuerst den Wert 0 ein.</p>
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
-let text = &quot;Hallo Welt wunderbare Welt&quot;;
+let text = "Hallo Welt wunderbare Welt";
 
 let mut map = HashMap::new();
 
@@ -372,11 +372,11 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 
-println!(&quot;{:?}&quot;, map);
+println!("{:?}", map);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
-<p>Dieser Code gibt <code>{&quot;Welt&quot;: 2, &quot;wunderbare&quot;: 1, &quot;Hallo&quot;: 1}</code> aus. Es kann sein,
+<p>Dieser Code gibt <code>{"Welt": 2, "wunderbare": 1, "Hallo": 1}</code> aus. Es kann sein,
 dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
 werden: Du erinnerst dich an den Abschnitt <a href="#zugreifen-auf-werte-in-einer-hashtabelle">„Zugreifen auf Werte in einer
 Hashtabelle“</a>, dass die Iteration über eine Hashtabelle in beliebiger

@@ -229,7 +229,7 @@ fn main() {
         *num = 6;
     }
 
-    println!(&quot;m = {:?}&quot;, m);
+    println!("m = {:?}", m);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-12: Untersuchen der API von <code>Mutex&lt;T&gt;</code> in
 einem einsträngigen Kontext zur Vereinfachung</span></p>
@@ -289,7 +289,7 @@ fn main() {
         handle.join().unwrap();
     }
 
-    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+    println!("Ergebnis: {}", *counter.lock().unwrap());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-13: Zehn Stränge inkrementieren jeweils
 einen Zähler, der durch einen <code>Mutex&lt;T&gt;</code> geschützt ist</span></p>
@@ -358,7 +358,7 @@ fn main() {
         handle.join().unwrap();
     }
 
-    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+    println!("Ergebnis: {}", *counter.lock().unwrap());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-14: Versuch, <code>Rc&lt;T&gt;</code> zu verwenden, um
 mehreren Strängen zu erlauben, den <code>Mutex&lt;T&gt;</code> zu besitzen</span></p>
@@ -455,7 +455,7 @@ fn main() {
         handle.join().unwrap();
     }
 
-    println!(&quot;Ergebnis: {}&quot;, *counter.lock().unwrap());
+    println!("Ergebnis: {}", *counter.lock().unwrap());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-15: Verwenden von <code>Arc&lt;T&gt;</code>, um den <code>Mutex&lt;T&gt;</code>
 einzupacken, um die Eigentümerschaft mit mehreren Strängen teilen zu

@@ -223,12 +223,12 @@ stattdessen <code>eprintln!</code> verwenden.</p>
     let args: Vec&lt;String&gt; = env::args().collect();
 
     let config = Config::build(&amp;args).unwrap_or_else(|err| {
-        eprintln!(&quot;Fehler beim Parsen der Argumente: {err}&quot;);
+        eprintln!("Fehler beim Parsen der Argumente: {err}");
         process::exit(1);
     });
 
     if let Err(e) = minigrep::run(config) {
-        eprintln!(&quot;Anwendungsfehler: {e}&quot;);
+        eprintln!("Anwendungsfehler: {e}");
         process::exit(1);
     }
 }</code></pre>

@@ -167,9 +167,9 @@
                     <main>
                         <h2 id="funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen"><a class="header" href="#funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen">Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen</a></h2>
 <p>Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
-speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen 
+speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen
 Funktionsabschluss erstellen und dann in einem anderen Zusammenhang aufrufen
-und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte 
+und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte
 (values) im Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden.
 Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
 die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.</p>
@@ -235,14 +235,14 @@ fn main() {
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
     println!(
-        &quot;Der Benutzer mit Präferenz {:?} erhält {:?}&quot;,
+        "Der Benutzer mit Präferenz {:?} erhält {:?}",
         user_pref1, giveaway1
     );
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
     println!(
-        &quot;Der Benutzer mit Präferenz {:?} erhält {:?}&quot;,
+        "Der Benutzer mit Präferenz {:?} erhält {:?}",
         user_pref2, giveaway2
     );
 }</code></pre>
@@ -319,20 +319,20 @@ wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.</p>
 </span><span class="boring">
 </span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {
 </span>    let expensive_closure = |num: u32| -&gt; u32 {
-        println!(&quot;rechnet langsam...&quot;);
+        println!("rechnet langsam...");
         thread::sleep(Duration::from_secs(2));
         num
     };
 <span class="boring">
 </span><span class="boring">    if intensity &lt; 25 {
-</span><span class="boring">        println!(&quot;Mach heute {} Liegestütze!&quot;, expensive_closure(intensity));
-</span><span class="boring">        println!(&quot;Als nächstes {} Sit-ups!&quot;, expensive_closure(intensity));
+</span><span class="boring">        println!("Mach heute {} Liegestütze!", expensive_closure(intensity));
+</span><span class="boring">        println!("Als nächstes {} Sit-ups!", expensive_closure(intensity));
 </span><span class="boring">    } else {
 </span><span class="boring">        if random_number == 3 {
-</span><span class="boring">            println!(&quot;Mach heute eine Pause! Denk daran, ausreichend zu trinken!&quot;);
+</span><span class="boring">            println!("Mach heute eine Pause! Denk daran, ausreichend zu trinken!");
 </span><span class="boring">        } else {
 </span><span class="boring">            println!(
-</span><span class="boring">                &quot;Heute, {} Minuten Lauftraining!&quot;,
+</span><span class="boring">                "Heute, {} Minuten Lauftraining!",
 </span><span class="boring">                expensive_closure(intensity)
 </span><span class="boring">            );
 </span><span class="boring">        }
@@ -383,7 +383,7 @@ mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.</p>
 </span><span class="boring">fn main() {
 </span>let example_closure = |x| x;
 
-let s = example_closure(String::from(&quot;hallo&quot;));
+let s = example_closure(String::from("hallo"));
 let n = example_closure(5);
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-3: Versuchter Aufruf eines
@@ -428,13 +428,13 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let list = vec![1, 2, 3];
-    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
+    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
 
-    let only_borrows = || println!(&quot;Im Funktionsabschluss: {:?}&quot;, list);
+    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
 
-    println!(&quot;Vor dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
+    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
     only_borrows();
-    println!(&quot;Nach dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span></p>
@@ -462,12 +462,12 @@ nun eine veränderbare Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut list = vec![1, 2, 3];
-    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
+    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!(&quot;Nach dem Funktionsabschluss-Aufruf: {:?}&quot;, list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
@@ -507,9 +507,9 @@ in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!(&quot;Vor der Funktionsabschlussdefinition: {:?}&quot;, list);
+    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
 
-    thread::spawn(move || println!(&quot;Im Strang: {:?}&quot;, list))
+    thread::spawn(move || println!("Im Strang: {:?}", list))
         .join()
         .unwrap();
 }</code></pre></pre>
@@ -633,7 +633,7 @@ fn main() {
     ];
 
     list.sort_by_key(|r| r.width);
-    println!(&quot;{:#?}&quot;, list);
+    println!("{:#?}", list);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-7: Verwenden von <code>sort_by_key</code> um Rechtecke
 nach ihrer Breite zu sortieren</span></p>
@@ -680,13 +680,13 @@ fn main() {
     ];
 
     let mut sort_operations = vec![];
-    let value = String::from(&quot;sort_by_key aufgerufen&quot;);
+    let value = String::from("sort_by_key aufgerufen");
 
     list.sort_by_key(|r| {
         sort_operations.push(value);
         r.width
     });
-    println!(&quot;{:#?}&quot;, list);
+    println!("{:#?}", list);
 }</code></pre></pre>
 <p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
 mit <code>sort_by_key</code> zu verwenden</span></p>
@@ -709,7 +709,7 @@ implementieren muss:</p>
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --&gt; src/main.rs:18:30
    |
-15 |     let value = String::from(&quot;sort_by_key aufgerufen&quot;);
+15 |     let value = String::from("sort_by_key aufgerufen");
    |         ----- captured outer variable
 16 |
 17 |     list.sort_by_key(|r| {
@@ -748,7 +748,7 @@ fn main() {
         num_sort_operations += 1;
         r.width
     });
-    println!(&quot;{:#?}, sortiert in {num_sort_operations} Operationen&quot;, list);
+    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
 }</code></pre></pre>
 <p><span class="caption">Listing 13-9: Verwenden eines
 <code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>

@@ -254,7 +254,7 @@ mathematische Konstante wie Pi verwendet, wie dieses Programm es tut:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = 3.1415;
     let r = 8.0;
-    println!(&quot;Die Kreisfläche ist {}&quot;, x * r * r);
+    println!("Die Kreisfläche ist {}", x * r * r);
 }</code></pre></pre>
 <p>Das Ausführen von <code>cargo clippy</code> in diesem Projekt führt zu diesem Fehler:</p>
 <pre><code class="language-text">error: approximate value of `f{32, 64}::consts::PI` found
@@ -276,7 +276,7 @@ Fehlern oder Warnungen von Clippy:</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = std::f64::consts::PI;
     let r = 8.0;
-    println!(&quot;Die Kreisfläche ist {}&quot;, x * r * r);
+    println!("Die Kreisfläche ist {}", x * r * r);
 }</code></pre></pre>
 <p>Für weitere Informationen über Clippy siehe <a href="https://github.com/rust-lang/rust-clippy">seine Dokumentation</a>.</p>
 <h3 id="ide-integration-mittels-rust-analyzer"><a class="header" href="#ide-integration-mittels-rust-analyzer">IDE-Integration mittels <code>rust-analyzer</code></a></h3>

@@ -211,8 +211,8 @@ Codeblock 5-2 zu sehen ist.</p>
 </span>fn main() {
     let user1 = User {
         active: true,
-        username: String::from(&quot;benutzername123&quot;),
-        email: String::from(&quot;jemand@example.com&quot;),
+        username: String::from("benutzername123"),
+        email: String::from("jemand@example.com"),
         sign_in_count: 1,
     };
 }</code></pre></pre>
@@ -235,12 +235,12 @@ einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 </span>fn main() {
     let mut user1 = User {
         active: true,
-        username: String::from(&quot;benutzername123&quot;),
-        email: String::from(&quot;jemand@example.com&quot;),
+        username: String::from("benutzername123"),
+        email: String::from("jemand@example.com"),
         sign_in_count: 1,
     };
 
-    user1.email = String::from(&quot;andere-email@example.com&quot;);
+    user1.email = String::from("andere-email@example.com");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-3: Wert im Feld <code>email</code> einer <code>User</code>-Instanz ändern</span></p>
 <p>Beachte, dass die gesamte Instanz veränderbar sein muss. Rust erlaubt es
@@ -269,8 +269,8 @@ den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <cod
 <span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    let user1 = build_user(
-</span><span class="boring">        String::from(&quot;jemand@example.com&quot;),
-</span><span class="boring">        String::from(&quot;benutzername123&quot;),
+</span><span class="boring">        String::from("jemand@example.com"),
+</span><span class="boring">        String::from("benutzername123"),
 </span><span class="boring">    );
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-4: Funktion <code>build_user</code>, die eine E-Mail und
@@ -305,8 +305,8 @@ wiederholen, siehe Codeblock 5-5.</p>
 <span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    let user1 = build_user(
-</span><span class="boring">        String::from(&quot;jemand@example.com&quot;),
-</span><span class="boring">        String::from(&quot;benutzername123&quot;),
+</span><span class="boring">        String::from("jemand@example.com"),
+</span><span class="boring">        String::from("benutzername123"),
 </span><span class="boring">    );
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-5: Funktion <code>build_user</code> mit Kurznotation der
@@ -337,8 +337,8 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
 </span>fn main() {
     // --abschneiden--
 <span class="boring">    let user1 = User {
-</span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
-</span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
+</span><span class="boring">        email: String::from("jemand@example.com"),
+</span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
@@ -346,7 +346,7 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
     let user2 = User {
         active: user1.active,
         username: user1.username,
-        email: String::from(&quot;andere@example.com&quot;),
+        email: String::from("andere@example.com"),
         sign_in_count: user1.sign_in_count,
     };
 }</code></pre></pre>
@@ -367,14 +367,14 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span>fn main() {
     // --abschneiden--
 <span class="boring">    let user1 = User {
-</span><span class="boring">        email: String::from(&quot;jemand@example.com&quot;),
-</span><span class="boring">        username: String::from(&quot;benutzername123&quot;),
+</span><span class="boring">        email: String::from("jemand@example.com"),
+</span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,
 </span><span class="boring">        sign_in_count: 1,
 </span><span class="boring">    };
 </span>
     let user2 = User {
-        email: String::from(&quot;andere@example.com&quot;),
+        email: String::from("andere@example.com"),
         ..user1
     };
 }</code></pre></pre>
@@ -477,8 +477,8 @@ eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 fn main() {
     let user1 = User {
         active: true,
-        username: &quot;benutzername123&quot;,
-        email: &quot;jemand@example.com&quot;,
+        username: "benutzername123",
+        email: "jemand@example.com",
         sign_in_count: 1,
     };
 }</code></pre></pre>

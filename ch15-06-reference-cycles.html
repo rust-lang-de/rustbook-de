@@ -238,25 +238,25 @@ Referenzzähler an verschiedenen Punkten in diesem Prozess sind.</p>
 </span>fn main() {
     let a = Rc::new(Cons(5, RefCell::new(Rc::new(Nil))));
 
-    println!(&quot;a anfängliche Rc-Zählung = {}&quot;, Rc::strong_count(&amp;a));
-    println!(&quot;a nächstes Element = {:?}&quot;, a.tail());
+    println!("a anfängliche Rc-Zählung = {}", Rc::strong_count(&amp;a));
+    println!("a nächstes Element = {:?}", a.tail());
 
     let b = Rc::new(Cons(10, RefCell::new(Rc::clone(&amp;a))));
 
-    println!(&quot;a Rc-Zählung nach Erstellen von b = {}&quot;, Rc::strong_count(&amp;a));
-    println!(&quot;b anfängliche Rc-Zählung = {}&quot;, Rc::strong_count(&amp;b));
-    println!(&quot;b nächstes Element = {:?}&quot;, b.tail());
+    println!("a Rc-Zählung nach Erstellen von b = {}", Rc::strong_count(&amp;a));
+    println!("b anfängliche Rc-Zählung = {}", Rc::strong_count(&amp;b));
+    println!("b nächstes Element = {:?}", b.tail());
 
     if let Some(link) = a.tail() {
         *link.borrow_mut() = Rc::clone(&amp;b);
     }
 
-    println!(&quot;b Rc-Zählung nach Änderung von a = {}&quot;, Rc::strong_count(&amp;b));
-    println!(&quot;a Rc-Zählung nach Änderung von a = {}&quot;, Rc::strong_count(&amp;a));
+    println!("b Rc-Zählung nach Änderung von a = {}", Rc::strong_count(&amp;b));
+    println!("a Rc-Zählung nach Änderung von a = {}", Rc::strong_count(&amp;a));
 
     // Kommentiere die nächste Zeile aus, um zu sehen, dass wir einen Zyklus haben;
     // es wird den Stapelspeicher überlaufen lassen
-    // println!(&quot;a nächstes Element = {:?}&quot;, a.tail());
+    // println!("a nächstes Element = {:?}", a.tail());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-26: Erstellen eines Referenzzyklus aus zwei
 aufeinanderzeigenden Listenwerten</span></p>
@@ -428,7 +428,7 @@ machen, müssen wir unserer Strukturdefinition <code>Node</code> ein <code>paren
 hinzufügen. Das Problem besteht darin, zu entscheiden, welcher Typ <code>parent</code> sein
 soll. Wir wissen, dass es keinen <code>Rc&lt;T&gt;</code> enthalten kann, da dies einen
 Referenzzyklus erzeugen würde, bei dem <code>leaf.parent</code> auf <code>branch</code> und
-<code>branch.children</code> auf <code>leaf</code> zeigt, was dazu führen würde das die 
+<code>branch.children</code> auf <code>leaf</code> zeigt, was dazu führen würde das die
 <code>strong_count</code>-Werte niemals 0 sein würden.</p>
 <p>Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
 die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten
@@ -457,7 +457,7 @@ struct Node {
 </span><span class="boring">        children: RefCell::new(vec![]),
 </span><span class="boring">    });
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
+</span><span class="boring">    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
 </span><span class="boring">
 </span><span class="boring">    let branch = Rc::new(Node {
 </span><span class="boring">        value: 5,
@@ -467,7 +467,7 @@ struct Node {
 </span><span class="boring">
 </span><span class="boring">    *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
+</span><span class="boring">    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
 </span><span class="boring">}</span></code></pre></pre>
 <p>Ein Knoten kann auf seinen Eltern-Knoten referenzieren, besitzt ihn jedoch
 nicht. In Codeblock 15-28 aktualisieren wir <code>main</code>, um diese neue Definition
@@ -491,7 +491,7 @@ referenzieren kann:</p>
         children: RefCell::new(vec![]),
     });
 
-    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
 
     let branch = Rc::new(Node {
         value: 5,
@@ -501,7 +501,7 @@ referenzieren kann:</p>
 
     *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
 
-    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-28: Ein <code>leaf</code>-Knoten mit einer schwachen
 Referenz auf seinen Eltern-Knoten <code>branch</code></span></p>
@@ -559,7 +559,7 @@ sind in Codeblock 15-29 aufgeführt:</p>
     });
 
     println!(
-        &quot;leaf strong = {}, weak = {}&quot;,
+        "leaf strong = {}, weak = {}",
         Rc::strong_count(&amp;leaf),
         Rc::weak_count(&amp;leaf),
     );
@@ -574,21 +574,21 @@ sind in Codeblock 15-29 aufgeführt:</p>
         *leaf.parent.borrow_mut() = Rc::downgrade(&amp;branch);
 
         println!(
-            &quot;branch strong = {}, weak = {}&quot;,
+            "branch strong = {}, weak = {}",
             Rc::strong_count(&amp;branch),
             Rc::weak_count(&amp;branch),
         );
 
         println!(
-            &quot;leaf strong = {}, weak = {}&quot;,
+            "leaf strong = {}, weak = {}",
             Rc::strong_count(&amp;leaf),
             Rc::weak_count(&amp;leaf),
         );
     }
 
-    println!(&quot;leaf parent = {:?}&quot;, leaf.parent.borrow().upgrade());
+    println!("leaf parent = {:?}", leaf.parent.borrow().upgrade());
     println!(
-        &quot;leaf strong = {}, weak = {}&quot;,
+        "leaf strong = {}, weak = {}",
         Rc::strong_count(&amp;leaf),
         Rc::weak_count(&amp;leaf),
     );

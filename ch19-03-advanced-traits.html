@@ -410,19 +410,19 @@ struct Human;
 
 impl Pilot for Human {
     fn fly(&amp;self) {
-        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+        println!("Hier spricht Ihr Kapitän.");
     }
 }
 
 impl Wizard for Human {
     fn fly(&amp;self) {
-        println!(&quot;Hoch!&quot;);
+        println!("Hoch!");
     }
 }
 
 impl Human {
     fn fly(&amp;self) {
-        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+        println!("*Wütend mit den Armen wedeln*");
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -445,19 +445,19 @@ Codeblock 19-17 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">impl Pilot for Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+</span><span class="boring">        println!("Hier spricht Ihr Kapitän.");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Wizard for Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;Hoch!&quot;);
+</span><span class="boring">        println!("Hoch!");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+</span><span class="boring">        println!("*Wütend mit den Armen wedeln*");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -486,19 +486,19 @@ Methode <code>fly</code> wir meinen. Codeblock 19-18 demonstriert diese Syntax.<
 </span><span class="boring">
 </span><span class="boring">impl Pilot for Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;Hier spricht Ihr Kapitän.&quot;);
+</span><span class="boring">        println!("Hier spricht Ihr Kapitän.");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Wizard for Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;Hoch!&quot;);
+</span><span class="boring">        println!("Hoch!");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Human {
 </span><span class="boring">    fn fly(&amp;self) {
-</span><span class="boring">        println!(&quot;*Wütend mit den Armen wedeln*&quot;);
+</span><span class="boring">        println!("*Wütend mit den Armen wedeln*");
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -547,18 +547,18 @@ struct Dog;
 
 impl Dog {
     fn baby_name() -&gt; String {
-        String::from(&quot;Spot&quot;)
+        String::from("Spot")
     }
 }
 
 impl Animal for Dog {
     fn baby_name() -&gt; String {
-        String::from(&quot;Welpe&quot;)
+        String::from("Welpe")
     }
 }
 
 fn main() {
-    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Dog::baby_name());
+    println!("Ein Hundebaby wird {} genannt.", Dog::baby_name());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-19: Ein Merkmal mit einer assoziierten
 Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
@@ -593,18 +593,18 @@ Codeblock 19-20 ändern, erhalten wir einen Kompilierfehler.</p>
 </span><span class="boring">
 </span><span class="boring">impl Dog {
 </span><span class="boring">    fn baby_name() -&gt; String {
-</span><span class="boring">        String::from(&quot;Spot&quot;)
+</span><span class="boring">        String::from("Spot")
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Animal for Dog {
 </span><span class="boring">    fn baby_name() -&gt; String {
-</span><span class="boring">        String::from(&quot;Welpe&quot;)
+</span><span class="boring">        String::from("Welpe")
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Animal::baby_name());
+    println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
 }
 </code></pre></pre>
 <p><span class="caption">Codeblock 19-20: Versuch, die Funktion <code>baby_name</code> des
@@ -622,12 +622,12 @@ error[E0790]: cannot call associated function on trait without specifying the co
 2  |     fn baby_name() -&gt; String;
    |     ------------------------- `Animal::baby_name` defined here
 ...
-20 |     println!(&quot;Ein Hundebaby wird {} genannt.&quot;, Animal::baby_name());
+20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
    |                                                ^^^^^^^^^^^^^^^^^ cannot call associated function of trait
    |
 help: use the fully-qualified path to the only available implementation
    |
-20 |     println!(&quot;Ein Hundebaby wird {} genannt.&quot;, &lt;Dog as Animal&gt;::baby_name());
+20 |     println!("Ein Hundebaby wird {} genannt.", &lt;Dog as Animal&gt;::baby_name());
    |                                                +++++++       +
 
 For more information about this error, try `rustc --explain E0790`.
@@ -647,18 +647,18 @@ verwendet.</p>
 </span><span class="boring">
 </span><span class="boring">impl Dog {
 </span><span class="boring">    fn baby_name() -&gt; String {
-</span><span class="boring">        String::from(&quot;Spot&quot;)
+</span><span class="boring">        String::from("Spot")
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Animal for Dog {
 </span><span class="boring">    fn baby_name() -&gt; String {
-</span><span class="boring">        String::from(&quot;Welpe&quot;)
+</span><span class="boring">        String::from("Welpe")
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    println!(&quot;Ein Hundebaby wird {} genannt.&quot;, &lt;Dog as Animal&gt;::baby_name());
+    println!("Ein Hundebaby wird {} genannt.", &lt;Dog as Animal&gt;::baby_name());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-21: Verwenden einer vollständig
 qualifizierten Syntax, um anzugeben, dass wir die Funktion <code>baby_name</code> des
@@ -720,11 +720,11 @@ trait OutlinePrint: fmt::Display {
     fn outline_print(&amp;self) {
         let output = self.to_string();
         let len = output.len();
-        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
-        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-        println!(&quot;* {} *&quot;, output);
-        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+        println!("{}", "*".repeat(len + 4));
+        println!("*{}*", " ".repeat(len + 2));
+        println!("* {} *", output);
+        println!("*{}*", " ".repeat(len + 2));
+        println!("{}", "*".repeat(len + 4));
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -747,11 +747,11 @@ zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Strukt
 </span><span class="boring">    fn outline_print(&amp;self) {
 </span><span class="boring">        let output = self.to_string();
 </span><span class="boring">        let len = output.len();
-</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
-</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-</span><span class="boring">        println!(&quot;* {} *&quot;, output);
-</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">        println!("{}", "*".repeat(len + 4));
+</span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
+</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
+</span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -794,11 +794,11 @@ Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
 </span><span class="boring">    fn outline_print(&amp;self) {
 </span><span class="boring">        let output = self.to_string();
 </span><span class="boring">        let len = output.len();
-</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
-</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-</span><span class="boring">        println!(&quot;* {} *&quot;, output);
-</span><span class="boring">        println!(&quot;*{}*&quot;, &quot; &quot;.repeat(len + 2));
-</span><span class="boring">        println!(&quot;{}&quot;, &quot;*&quot;.repeat(len + 4));
+</span><span class="boring">        println!("{}", "*".repeat(len + 4));
+</span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
+</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
+</span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -813,7 +813,7 @@ Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
 
 impl fmt::Display for Point {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;({}, {})&quot;, self.x, self.y)
+        write!(f, "({}, {})", self.x, self.y)
     }
 }
 <span class="boring">
@@ -853,13 +853,13 @@ struct Wrapper(Vec&lt;String&gt;);
 
 impl fmt::Display for Wrapper {
     fn fmt(&amp;self, f: &amp;mut fmt::Formatter) -&gt; fmt::Result {
-        write!(f, &quot;[{}]&quot;, self.0.join(&quot;, &quot;))
+        write!(f, "[{}]", self.0.join(", "))
     }
 }
 
 fn main() {
-    let w = Wrapper(vec![String::from(&quot;Hallo&quot;), String::from(&quot;Welt&quot;)]);
-    println!(&quot;w = {}&quot;, w);
+    let w = Wrapper(vec![String::from("Hallo"), String::from("Welt")]);
+    println!("w = {}", w);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-23: Erstellen eines Typs <code>Wrapper</code> um
 <code>Vec&lt;String&gt;</code> zur Implementierung von <code>Display</code></span></p>

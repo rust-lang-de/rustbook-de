@@ -285,11 +285,11 @@ Codeblock 4-7 verwendet.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    let mut s = String::from(&quot;Hallo Welt&quot;);
+    let mut s = String::from("Hallo Welt");
 
     let word = first_word(&amp;s); // word erhält den Wert 5
 
-    s.clear(); // leert die Zeichenkette und macht sie gleich &quot;&quot;
+    s.clear(); // leert die Zeichenkette und macht sie gleich ""
 
     // word hat noch immer den Wert 5, aber es gibt keine Zeichenkette mehr,
     // mit der wir den Wert 5 sinnvoll verwenden könnten.
@@ -320,7 +320,7 @@ Zeichenkettenanteilstypen</p>
 eines <code>String</code>, und er sieht so aus:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = String::from(&quot;Hallo Welt&quot;);
+</span>let s = String::from("Hallo Welt");
 
 let hello = &amp;s[0..5];
 let world = &amp;s[6..10];
@@ -348,7 +348,7 @@ kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
 gleich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = String::from(&quot;Hallo&quot;);
+</span>let s = String::from("Hallo");
 
 let slice = &amp;s[0..2];
 let slice = &amp;s[..2];
@@ -357,7 +357,7 @@ let slice = &amp;s[..2];
 des <code>String</code> enthält. Das bedeutet, dass diese gleich sind:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = String::from(&quot;Hallo&quot;);
+</span>let s = String::from("Hallo");
 
 let len = s.len();
 
@@ -368,7 +368,7 @@ let slice = &amp;s[3..];
 Zeichenkette zu beschreiben. Diese sind also gleichwertig:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = String::from(&quot;Hallo&quot;);
+</span>let s = String::from("Hallo");
 
 let len = s.len();
 
@@ -440,13 +440,13 @@ Kompilierfehler:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    let mut s = String::from(&quot;Hallo Welt&quot;);
+    let mut s = String::from("Hallo Welt");
 
     let word = first_word(&amp;s);
 
     s.clear(); // Fehler!
 
-    println!(&quot;Das erste Wort ist: {}&quot;, word);
+    println!("Das erste Wort ist: {}", word);
 }</code></pre></pre>
 <p>Hier ist der Kompilierfehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -460,7 +460,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 18 |     s.clear(); // Fehler!
    |     ^^^^^^^^^ mutable borrow occurs here
 19 | 
-20 |     println!(&quot;Das erste Wort ist: {}&quot;, word);
+20 |     println!("Das erste Wort ist: {}", word);
    |                                        ---- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
@@ -482,7 +482,7 @@ Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen
 können wir Zeichenkettenliterale richtig verstehen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = &quot;Hallo Welt!&quot;;
+</span>let s = "Hallo Welt!";
 <span class="boring">}</span></code></pre></pre>
 <p>Der Typ von <code>s</code> hier ist <code>&amp;str</code>: Es ist ein Anteilstyp, der auf diesen
 speziellen Punkt der Binärdatei zeigt. Das ist auch der Grund, warum
@@ -509,7 +509,7 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let my_string = String::from(&quot;Hallo Welt&quot;);
+</span><span class="boring">    let my_string = String::from("Hallo Welt");
 </span><span class="boring">
 </span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
 </span><span class="boring">    let word = first_word(&amp;my_string[0..6]);
@@ -518,7 +518,7 @@ auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzu
 </span><span class="boring">    // äquivalent zu ganzen Anteilstypen von `String` sind
 </span><span class="boring">    let word = first_word(&amp;my_string);
 </span><span class="boring">
-</span><span class="boring">    let my_string_literal = &quot;Hallo Welt&quot;;
+</span><span class="boring">    let my_string_literal = "Hallo Welt";
 </span><span class="boring">
 </span><span class="boring">    // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
 </span><span class="boring">    let word = first_word(&amp;my_string_literal[0..6]);
@@ -553,7 +553,7 @@ nützlicher, ohne an Funktionalität einzubüßen:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    let my_string = String::from(&quot;Hallo Welt&quot;);
+    let my_string = String::from("Hallo Welt");
 
     // `first_word` funktioniert mit Anteilstypen von `String`, ob teilweise oder ganz
     let word = first_word(&amp;my_string[0..6]);
@@ -562,7 +562,7 @@ nützlicher, ohne an Funktionalität einzubüßen:</p>
     // äquivalent zu ganzen Anteilstypen von `String` sind
     let word = first_word(&amp;my_string);
 
-    let my_string_literal = &quot;Hallo Welt&quot;;
+    let my_string_literal = "Hallo Welt";
 
     // `first_word` funktioniert mit Anteilstypen von Zeichenkettenliteralen, ob teilweise oder ganz
     let word = first_word(&amp;my_string_literal[0..6]);

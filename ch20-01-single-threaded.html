@@ -202,12 +202,12 @@ TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
 <pre><pre class="playground"><code class="language-rust no_run">use std::net::TcpListener;
 
 fn main() {
-    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
 
-        println!(&quot;Verbindung hergestellt!&quot;);
+        println!("Verbindung hergestellt!");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-1: Warten auf eingehende Ströme und Ausgeben
@@ -299,7 +299,7 @@ dass er wie Codeblock 20-2 aussieht.</p>
 };
 
 fn main() {
-    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
@@ -316,7 +316,7 @@ fn handle_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
 
-    println!(&quot;Request: {:#?}&quot;, http_request);
+    println!("Request: {:#?}", http_request);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
@@ -358,20 +358,20 @@ Browser erhalten, aber die Ausgabe unseres Programms im Terminal wird nun
     Finished dev [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/hello`
 Request: [
-    &quot;GET / HTTP/1.1&quot;,
-    &quot;Host: 127.0.0.1:7878&quot;,
-    &quot;User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0&quot;,
-    &quot;Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8&quot;,
-    &quot;Accept-Language: en-US,en;q=0.5&quot;,
-    &quot;Accept-Encoding: gzip, deflate, br&quot;,
-    &quot;DNT: 1&quot;,
-    &quot;Connection: keep-alive&quot;,
-    &quot;Upgrade-Insecure-Requests: 1&quot;,
-    &quot;Sec-Fetch-Dest: document&quot;,
-    &quot;Sec-Fetch-Mode: navigate&quot;,
-    &quot;Sec-Fetch-Site: none&quot;,
-    &quot;Sec-Fetch-User: ?1&quot;,
-    &quot;Cache-Control: max-age=0&quot;,
+    "GET / HTTP/1.1",
+    "Host: 127.0.0.1:7878",
+    "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept-Language: en-US,en;q=0.5",
+    "Accept-Encoding: gzip, deflate, br",
+    "DNT: 1",
+    "Connection: keep-alive",
+    "Upgrade-Insecure-Requests: 1",
+    "Sec-Fetch-Dest: document",
+    "Sec-Fetch-Mode: navigate",
+    "Sec-Fetch-Site: none",
+    "Sec-Fetch-User: ?1",
+    "Cache-Control: max-age=0",
 ]
 </code></pre>
 <p>Je nach Browser erhältst du möglicherweise eine etwas andere Ausgabe. Jetzt, wo
@@ -445,7 +445,7 @@ Code in Codeblock 20-3.</p>
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -462,7 +462,7 @@ Code in Codeblock 20-3.</p>
         .take_while(|line| !line.is_empty())
         .collect();
 
-    let response = &quot;HTTP/1.1 200 OK\r\n\r\n&quot;;
+    let response = "HTTP/1.1 200 OK\r\n\r\n";
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
@@ -488,9 +488,9 @@ Projektverzeichnisses, nicht im Verzeichnis <em>src</em>. Du kannst beliebiges H
 eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.</p>
 <p><span class="filename">Dateiname: hello.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
   &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta charset="utf-8"&gt;
     &lt;title&gt;Hallo!&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
@@ -514,7 +514,7 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 // --abschneiden--
 
 <span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -531,12 +531,12 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
         .take_while(|line| !line.is_empty())
         .collect();
 
-    let status_line = &quot;HTTP/1.1 200 OK&quot;;
-    let contents = fs::read_to_string(&quot;hello.html&quot;).unwrap();
+    let status_line = "HTTP/1.1 200 OK";
+    let contents = fs::read_to_string("hello.html").unwrap();
     let length = contents.len();
 
     let response =
-        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
@@ -550,7 +550,7 @@ E/A-Projekt in Codeblock 12-4 gelesen haben.</p>
 <p>Als Nächstes verwenden wir <code>format!</code>, um den Inhalt der Datei als Rumpf der
 Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,
 fügen wir den Header <code>Content-Length</code> hinzu, der auf die Größe unseres
-Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von <code>hello.html</code>. </p>
+Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von <code>hello.html</code>.</p>
 <p>Führe diesen Code mit <code>cargo run</code> aus und lade <em>127.0.0.1:7878</em> im Browser; du
 solltest dein HTML gerendert sehen!</p>
 <p>Gegenwärtig ignorieren wir die Anfragedaten in <code>http_request</code> und senden
@@ -577,7 +577,7 @@ zu behandeln.</p>
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -592,13 +592,13 @@ fn handle_connection(mut stream: TcpStream) {
     let buf_reader = BufReader::new(&amp;mut stream);
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    if request_line == &quot;GET / HTTP/1.1&quot; {
-        let status_line = &quot;HTTP/1.1 200 OK&quot;;
-        let contents = fs::read_to_string(&quot;hello.html&quot;).unwrap();
+    if request_line == "GET / HTTP/1.1" {
+        let status_line = "HTTP/1.1 200 OK";
+        let contents = fs::read_to_string("hello.html").unwrap();
         let length = contents.len();
 
         let response = format!(
-            &quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
         );
 
         stream.write_all(response.as_bytes()).unwrap();
@@ -637,7 +637,7 @@ anzuzeigen.</p>
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -650,24 +650,24 @@ anzuzeigen.</p>
 </span><span class="boring">    let buf_reader = BufReader::new(&amp;mut stream);
 </span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
-</span><span class="boring">    if request_line == &quot;GET / HTTP/1.1&quot; {
-</span><span class="boring">        let status_line = &quot;HTTP/1.1 200 OK&quot;;
-</span><span class="boring">        let contents = fs::read_to_string(&quot;hello.html&quot;).unwrap();
+</span><span class="boring">    if request_line == "GET / HTTP/1.1" {
+</span><span class="boring">        let status_line = "HTTP/1.1 200 OK";
+</span><span class="boring">        let contents = fs::read_to_string("hello.html").unwrap();
 </span><span class="boring">        let length = contents.len();
 </span><span class="boring">
 </span><span class="boring">        let response = format!(
-</span><span class="boring">            &quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;
+</span><span class="boring">            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
 </span><span class="boring">        );
 </span><span class="boring">
 </span><span class="boring">        stream.write_all(response.as_bytes()).unwrap();
 </span>    // --abschneiden--
     } else {
-        let status_line = &quot;HTTP/1.1 404 NOT FOUND&quot;;
-        let contents = fs::read_to_string(&quot;404.html&quot;).unwrap();
+        let status_line = "HTTP/1.1 404 NOT FOUND";
+        let contents = fs::read_to_string("404.html").unwrap();
         let length = contents.len();
 
         let response = format!(
-            &quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;
+            "{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}"
         );
 
         stream.write_all(response.as_bytes()).unwrap();
@@ -682,9 +682,9 @@ HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hallo.html</em> ein
 HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
 <p><span class="filename">Dateiname: 404.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang=&quot;en&quot;&gt;
+&lt;html lang="en"&gt;
   &lt;head&gt;
-    &lt;meta charset=&quot;utf-8&quot;&gt;
+    &lt;meta charset="utf-8"&gt;
     &lt;title&gt;Hallo!&lt;/title&gt;
   &lt;/head&gt;
   &lt;body&gt;
@@ -717,7 +717,7 @@ zeigt den resultierenden Code nach dem Ersetzen der großen <code>if</code>- und
 </span><span class="boring">};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -734,17 +734,17 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="boring">    let buf_reader = BufReader::new(&amp;mut stream);
 </span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
-</span>    let (status_line, filename) = if request_line == &quot;GET / HTTP/1.1&quot; {
-        (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+</span>    let (status_line, filename) = if request_line == "GET / HTTP/1.1" {
+        ("HTTP/1.1 200 OK", "hello.html")
     } else {
-        (&quot;HTTP/1.1 404 NOT FOUND&quot;, &quot;404.html&quot;)
+        ("HTTP/1.1 404 NOT FOUND", "404.html")
     };
 
     let contents = fs::read_to_string(filename).unwrap();
     let length = contents.len();
 
     let response =
-        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>

@@ -204,7 +204,7 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 6-3: Eine Aufzählung und ein <code>match</code>-Ausdruck,
 der die Varianten der Aufzählung als Muster hat</span></p>
-<p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln. 
+<p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln.
 Zuerst geben wir das Schlüsselwort <code>match</code> an, gefolgt von einem Ausdruck, der
 in diesem Fall der Wert <code>coin</code> ist. Dies scheint einem bedingten Ausdruck sehr
 ähnlich zu sein, der bei <code>if</code> verwendet wird, aber es gibt einen großen
@@ -225,7 +225,7 @@ nicht zum Wert passt, wird die Ausführung beim nächsten Zweig fortgesetzt,
 wie wir brauchen: In Codeblock 6-3 hat unser <code>match</code>-Ausdruck vier Zweige.</p>
 <p>Der zu jedem Zweig gehörende Code ist ein Ausdruck, und der Ergebniswert des
 Ausdrucks im zugehörenden Zweig ist der Wert, der für den gesamten
-<code>match</code>-Ausdruck zurückgegeben wird. </p>
+<code>match</code>-Ausdruck zurückgegeben wird.</p>
 <p>Wir verwenden üblicherweise keine geschweiften Klammern, wenn der Zweig-Code
 kurz ist, so wie in Codeblock 6-3, wo jeder Zweig nur einen Wert zurückgibt.
 Wenn du mehrere Codezeilen in einem Zweig ausführen möchtest, musst du
@@ -245,7 +245,7 @@ Wert <code>1</code> des Blocks zurück:</p>
 </span>fn value_in_cents(coin: Coin) -&gt; u8 {
     match coin {
         Coin::Penny =&gt; {
-            println!(&quot;Glückspfennig!&quot;);
+            println!("Glückspfennig!");
             1
         }
         Coin::Nickel =&gt; 5,
@@ -310,7 +310,7 @@ gebunden. Dann können wir <code>state</code> im Code für diesen Zweig etwa so 
         Coin::Nickel =&gt; 5,
         Coin::Dime =&gt; 10,
         Coin::Quarter(state) =&gt; {
-            println!(&quot;25-Cent-Münze aus {:?}!&quot;, state);
+            println!("25-Cent-Münze aus {:?}!", state);
             25
         }
     }

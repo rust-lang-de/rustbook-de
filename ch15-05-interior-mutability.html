@@ -222,7 +222,7 @@ garantieren kann.</p>
 <p>Ähnlich wie <code>Rc&lt;T&gt;</code> ist <code>RefCell&lt;T&gt;</code> nur für die Verwendung in einsträngigen
 (single-threaded) Szenarien vorgesehen und gibt einen Fehler beim Kompilieren
 aus, wenn man versucht, es in einem mehrsträngigen (multi-threaded) Kontext zu
-verwenden. Wir werden in Kapitel 16 darüber sprechen, wie man die Funktionalität 
+verwenden. Wir werden in Kapitel 16 darüber sprechen, wie man die Funktionalität
 von <code>RefCell&lt;T&gt;</code> in einem mehrsträngigen Programm erhält.</p>
 <p>Eine Zusammenfassung der Gründe für die Wahl von <code>Box&lt;T&gt;</code>, <code>Rc&lt;T&gt;</code> oder
 <code>RefCell&lt;T&gt;</code>:</p>
@@ -335,13 +335,13 @@ where
         let percentage_of_max = self.value as f64 / self.max as f64;
 
         if percentage_of_max &gt;= 1.0 {
-            self.messenger.send(&quot;Fehler: Du hast dein Kontingent überschritten!&quot;);
+            self.messenger.send("Fehler: Du hast dein Kontingent überschritten!");
         } else if percentage_of_max &gt;= 0.9 {
             self.messenger
-                .send(&quot;Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!&quot;);
+                .send("Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!");
         } else if percentage_of_max &gt;= 0.75 {
             self.messenger
-                .send(&quot;Warnung: Du hast über 75% deines Kontingents verbraucht!&quot;);
+                .send("Warnung: Du hast über 75% deines Kontingents verbraucht!");
         }
     }
 }
@@ -400,13 +400,13 @@ Ausleihenprüfer erlaubt dies nicht:</p>
 </span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
 </span><span class="boring">
 </span><span class="boring">        if percentage_of_max &gt;= 1.0 {
-</span><span class="boring">            self.messenger.send(&quot;Fehler: Du hast dein Kontingent überschritten!&quot;);
+</span><span class="boring">            self.messenger.send("Fehler: Du hast dein Kontingent überschritten!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Warnung: Du hast über 50% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Warnung: Du hast über 50% deines Kontingents verbraucht!");
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -482,8 +482,8 @@ warning: build failed, waiting for other jobs to finish...
 </code></pre>
 <p>Wir können den <code>MockMessenger</code> nicht ändern, um die Nachrichten zu verfolgen, da
 die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
-können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen 
-<code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code>nicht mit der Signatur in 
+können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen
+<code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code>nicht mit der Signatur in
 der Merkmalsdefinition von <code>Messenger</code> übereinstimmt (probiere es gerne aus und
 schau dir die Fehlermeldung an, die dabei ausgegeben wird).</p>
 <p>Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
@@ -519,13 +519,13 @@ gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:</p>
 </span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
 </span><span class="boring">
 </span><span class="boring">        if percentage_of_max &gt;= 1.0 {
-</span><span class="boring">            self.messenger.send(&quot;Fehler: Du hast dein Kontingent überschritten!&quot;);
+</span><span class="boring">            self.messenger.send("Fehler: Du hast dein Kontingent überschritten!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Warnung: Du hast über 50% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Warnung: Du hast über 50% deines Kontingents verbraucht!");
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -568,7 +568,7 @@ mod tests {
 <p><span class="caption">Codeblock 15-22: <code>RefCell&lt;T&gt;</code> verwenden, um einen inneren
 Wert zu verändern, während der äußere Wert als unveränderbar betrachtet wird</span></p>
 <p>Das Feld <code>sent_messages</code> ist jetzt vom Typ <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> anstelle von
-<code>Vec&lt;String&gt;</code>. In der Funktion <code>new</code> erstellen wir eine neue 
+<code>Vec&lt;String&gt;</code>. In der Funktion <code>new</code> erstellen wir eine neue
 <code>RefCell&lt;Vec&lt;Sting&gt;&gt;</code>-Instanz um den leeren Vektor.</p>
 <p>Für die Implementierung der <code>send</code>-Methode ist der erste Parameter immer noch
 eine unveränderbare Ausleihe von <code>self</code>, die der Merkmalsdefinition entspricht.
@@ -636,13 +636,13 @@ hindert, dies zur Laufzeit zu tun.</p>
 </span><span class="boring">        let percentage_of_max = self.value as f64 / self.max as f64;
 </span><span class="boring">
 </span><span class="boring">        if percentage_of_max &gt;= 1.0 {
-</span><span class="boring">            self.messenger.send(&quot;Fehler: Du hast dein Kontingent überschritten!&quot;);
+</span><span class="boring">            self.messenger.send("Fehler: Du hast dein Kontingent überschritten!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.9 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Dringliche Warnung: Du hast über 90% deines Kontingents verbraucht!");
 </span><span class="boring">        } else if percentage_of_max &gt;= 0.75 {
 </span><span class="boring">            self.messenger
-</span><span class="boring">                .send(&quot;Warnung: Du hast über 50% deines Kontingents verbraucht!&quot;);
+</span><span class="boring">                .send("Warnung: Du hast über 50% deines Kontingents verbraucht!");
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -687,13 +687,13 @@ hindert, dies zur Laufzeit zu tun.</p>
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare Referenzen im
 selben Gültigkeitsbereich, um zu sehen, dass <code>RefCell&lt;T&gt;</code> abstürzt</span></p>
-<p>Wir erstellen eine Variable <code>one_borrow</code> für den intelligenten Zeiger 
+<p>Wir erstellen eine Variable <code>one_borrow</code> für den intelligenten Zeiger
 <code>RefMut&lt;T&gt;</code>, der von <code>borrow_mut</code> zurückgegeben wird. Dann erstellen wir auf die
 gleiche Weise eine weitere veränderbare Ausleihe in der Variable <code>two_borrow</code>.
 Dadurch werden zwei veränderbare Referenzen im selben Bereich erstellt, was
 nicht zulässig ist. Wenn wir die Tests für unsere Bibliothek ausführen, wird der
 Programmcode in Codeblock 15-23 fehlerfrei kompiliert, aber der Test schlägt
-fehl: </p>
+fehl:</p>
 <pre><code class="language-console">$ cargo test
    Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
@@ -764,16 +764,16 @@ fn main() {
 
     *value.borrow_mut() += 10;
 
-    println!(&quot;a nachher = {:?}&quot;, a);
-    println!(&quot;b nachher = {:?}&quot;, b);
-    println!(&quot;c nachher = {:?}&quot;, c);
+    println!("a nachher = {:?}", a);
+    println!("b nachher = {:?}", b);
+    println!("c nachher = {:?}", c);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-24: Verwendung von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> um <code>List</code>
 zu erstellen, die wir verändern können</span></p>
 <p>Wir erstellen einen Wert, der eine Instanz von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> ist, und
 speichern ihn dann in einer Variable mit dem Namen <code>value</code>, damit wir später
 direkt darauf zugreifen können. Dann erstellen wir eine Liste in <code>a</code> mit einer
-<code>Cons</code>-Variante, die <code>value</code> enthält. Wir müssen <code>value</code> klonen, damit sowohl 
+<code>Cons</code>-Variante, die <code>value</code> enthält. Wir müssen <code>value</code> klonen, damit sowohl
 <code>a</code> als auch <code>value</code> Eigentümerschaft am inneren Wert <code>5</code> haben, anstatt das
 Eigentum von <code>value</code> auf <code>a</code> zu übertragen oder <code>a</code> von <code>value</code> auszuleihen.</p>
 <p>Wir wickeln die Liste <code>a</code> in ein <code>Rc&lt;T&gt;</code> ein. Wenn wir also die Listen <code>b</code> und

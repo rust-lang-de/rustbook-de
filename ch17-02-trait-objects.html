@@ -426,15 +426,15 @@ fn main() {
                 width: 75,
                 height: 10,
                 options: vec![
-                    String::from(&quot;Ja&quot;),
-                    String::from(&quot;Vielleicht&quot;),
-                    String::from(&quot;Nein&quot;),
+                    String::from("Ja"),
+                    String::from("Vielleicht"),
+                    String::from("Nein"),
                 ],
             }),
             Box::new(Button {
                 width: 50,
                 height: 10,
-                label: String::from(&quot;OK&quot;),
+                label: String::from("OK"),
             }),
         ],
     };
@@ -474,7 +474,7 @@ implementieren, die die Merkmalsobjekte benötigen.</p>
 
 fn main() {
     let screen = Screen {
-        components: vec![Box::new(String::from(&quot;Hallo&quot;))],
+        components: vec![Box::new(String::from("Hallo"))],
     };
 
     screen.run();
@@ -488,7 +488,7 @@ implementiert:</p>
 error[E0277]: the trait bound `String: Draw` is not satisfied
  --&gt; src/main.rs:5:26
   |
-5 |         components: vec![Box::new(String::from(&quot;Hallo&quot;))],
+5 |         components: vec![Box::new(String::from("Hallo"))],
   |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
   = note: required for the cast to the object type `dyn Draw`

@@ -299,8 +299,8 @@ Rohzeiger an, was einen <code>unsafe</code>-Block erfordert.</p>
     let r2 = &amp;mut num as *mut i32;
 
     unsafe {
-        println!(&quot;r1 ist: {}&quot;, *r1);
-        println!(&quot;r2 ist: {}&quot;, *r2);
+        println!("r1 ist: {}", *r1);
+        println!("r2 ist: {}", *r2);
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-3: Dereferenzieren von Rohzeigern innerhalb
@@ -532,23 +532,23 @@ dafür ist, dass andere Sprachen die Regeln und Garantien von Rust nicht
 erzwingen und Rust sie nicht überprüfen kann, sodass die Verantwortung für die
 Sicherheit beim Programmierer liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">extern &quot;C&quot; {
+<pre><pre class="playground"><code class="language-rust">extern "C" {
     fn abs(input: i32) -&gt; i32;
 }
 
 fn main() {
     unsafe {
-        println!(&quot;Absolutwert von -3 gemäß C: {}&quot;, abs(-3));
+        println!("Absolutwert von -3 gemäß C: {}", abs(-3));
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-8: Deklarieren und Aufrufen einer
 <code>extern</code>-Funktion, die in einer anderen Sprache definiert wurde</span></p>
-<p>Innerhalb des Blocks <code>extern &quot;C&quot;</code> listen wir die Namen und Signaturen von
+<p>Innerhalb des Blocks <code>extern "C"</code> listen wir die Namen und Signaturen von
 externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen. Der
-Teil <code>&quot;C&quot;</code> definiert, welche <em>Binärschnittstelle</em> (application binary
+Teil <code>"C"</code> definiert, welche <em>Binärschnittstelle</em> (application binary
 interface, kurz ABI) die externe Funktion benutzt: Die ABI definiert, wie die
 Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
-<code>&quot;C&quot;</code> ist die gebräuchlichste und folgt der ABI der Programmiersprache C.</p>
+<code>"C"</code> ist die gebräuchlichste und folgt der ABI der Programmiersprache C.</p>
 <blockquote>
 <h4 id="aufrufen-von-rust-funktionen-aus-anderen-sprachen"><a class="header" href="#aufrufen-von-rust-funktionen-aus-anderen-sprachen">Aufrufen von Rust-Funktionen aus anderen Sprachen</a></h4>
 <p>Wir können auch <code>extern</code> verwenden, um eine Schnittstelle zu schaffen, die es
@@ -569,8 +569,8 @@ gelinkt wurde:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[no_mangle]
-pub extern &quot;C&quot; fn call_from_c() {
-    println!(&quot;Rust-Funktion von C aufgerufen!&quot;);
+pub extern "C" fn call_from_c() {
+    println!("Rust-Funktion von C aufgerufen!");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Diese Verwendung von <code>extern</code> erfordert kein <code>unsafe</code>.</p>
@@ -585,10 +585,10 @@ Daten-Wettlaufsituation (data race) führen.</p>
 Codeblock 19-9 zeigt ein Beispiel für die Deklaration und Verwendung einer
 statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = &quot;Hallo Welt!&quot;;
+<pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = "Hallo Welt!";
 
 fn main() {
-    println!(&quot;Name ist: {}&quot;, HELLO_WORLD);
+    println!("Name ist: {}", HELLO_WORLD);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-9: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span></p>
@@ -622,7 +622,7 @@ fn main() {
     add_to_count(3);
 
     unsafe {
-        println!(&quot;COUNTER: {}&quot;, COUNTER);
+        println!("COUNTER: {}", COUNTER);
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-10: Lesen von und Schreiben in eine

@@ -172,7 +172,7 @@ einzelner Wert mehrere Eigentümer haben kann. In Diagrammdatenstrukturen (graph
 data structures) können beispielsweise mehrere Kanten auf denselben Knoten
 verweisen, und dieser Knoten gehört konzeptionell allen Kanten, die darauf
 verweisen. Ein Knoten sollte nur aufgeräumt werden, wenn keine Kanten darauf
-zeigen und daher keine Eigentümer hat.</p>
+zeigen und er daher keine Eigentümer hat.</p>
 <p>Du musst die mehrfache Eigentümerschaft explizit aktivieren, indem du den
 Rust-Typ <code>Rc&lt;T&gt;</code> verwendest, was eine Kurzform für <em>Referenzzählung</em> (reference
 counting) ist. Der Typ <code>Rc&lt;T&gt;</code> zählt die Anzahl der Referenzen auf einen
@@ -202,7 +202,7 @@ wir zwei Listen, die beide gemeinsam eine dritte Liste besitzen. Konzeptionell
 sieht dies ähnlich aus wie in Abbildung 15-3:</p>
 <p><img alt="Zwei Listen die sich die Eigentümerschaft einer dritten Liste teilen" 
 src="img/trpl15-03.svg" class="center" /></p>
-<p><span class="caption">Abbildung 15-3: Zwei Listen <code>b</code> und <code>c</code> teilen sich 
+<p><span class="caption">Abbildung 15-3: Zwei Listen <code>b</code> und <code>c</code> teilen sich
 die Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
 <p>Wir erstellen eine Liste <code>a</code>, die 5 und dann 10 enthält. Dann erstellen wir zwei
 weitere Listen: <code>b</code>, die mit 3 beginnt, und <code>c</code>, die mit 4 beginnt. Sowohl
@@ -313,14 +313,14 @@ den Gültigkeitsbereich verlässt.</p>
 </span><span class="boring">
 </span>fn main() {
     let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
-    println!(&quot;Zähler nach der Erstellung von a = {}&quot;, Rc::strong_count(&amp;a));
+    println!("Zähler nach der Erstellung von a = {}", Rc::strong_count(&amp;a));
     let b = Cons(3, Rc::clone(&amp;a));
-    println!(&quot;Zähler nach der Erstellung von b = {}&quot;, Rc::strong_count(&amp;a));
+    println!("Zähler nach der Erstellung von b = {}", Rc::strong_count(&amp;a));
     {
         let c = Cons(4, Rc::clone(&amp;a));
-        println!(&quot;Zähler nach der Erstellung von c = {}&quot;, Rc::strong_count(&amp;a));
+        println!("Zähler nach der Erstellung von c = {}", Rc::strong_count(&amp;a));
     }
-    println!(&quot;Zahler nachdem c den Gültigkeitsbereich verlässt = {}&quot;,
+    println!("Zahler nachdem c den Gültigkeitsbereich verlässt = {}",
              Rc::strong_count(&amp;a));
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-19: Den Referenzzähler ausgeben</span></p>

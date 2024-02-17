@@ -224,7 +224,7 @@ einen Test, der fehlschlägt.</p>
 <pre><code class="language-rust panics noplayground"><span class="boring">fn main() {}
 </span><span class="boring">
 </span>fn prints_and_returns_10(a: i32) -&gt; i32 {
-    println!(&quot;Ich habe den Wert {} erhalten.&quot;, a);
+    println!("Ich habe den Wert {} erhalten.", a);
     10
 }
 
@@ -424,7 +424,7 @@ Modul ausführen können, indem wir nach dem Namen des Moduls filtern.</p>
 sein, sodass du diese bei den meisten <code>cargo test</code>-Aufrufen ausschließen
 solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
-<code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt: </p>
+<code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">#[test]
 fn it_works() {

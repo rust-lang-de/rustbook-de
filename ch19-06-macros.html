@@ -194,8 +194,8 @@ schreiben und pflegen musst, was auch eine der Aufgaben von Funktionen ist.
 Makros haben jedoch einige zusätzliche Fähigkeiten, die Funktionen nicht haben.</p>
 <p>Eine Funktionssignatur muss die Anzahl und den Typ der Parameter deklarieren,
 die die Funktion hat. Makros hingegen können eine variable Anzahl von
-Parametern entgegennehmen: Wir können <code>println!(&quot;Hallo&quot;)</code> mit einem Argument
-oder <code>println!(&quot;Hallo {}&quot;, name)</code> mit zwei Argumenten aufrufen. Außerdem werden
+Parametern entgegennehmen: Wir können <code>println!("Hallo")</code> mit einem Argument
+oder <code>println!("Hallo {}", name)</code> mit zwei Argumenten aufrufen. Außerdem werden
 Makros expandiert, bevor der Compiler die Bedeutung des Codes interpretiert,
 sodass ein Makro beispielsweise ein Merkmal auf einen bestimmten Typ
 implementieren kann. Eine Funktion kann das nicht, weil sie zur Laufzeit
@@ -258,7 +258,7 @@ Makrodefinition <code>vec!</code></span></p>
 <blockquote>
 <p>Hinweis: Die eigentliche Definition des Makros <code>vec!</code> in der
 Standardbibliothek enthält Code zum Vorbelegen der korrekten Speichermenge.
-Dieser Code ist eine Optimierung, die wir hier zur Vereinfachung des 
+Dieser Code ist eine Optimierung, die wir hier zur Vereinfachung des
 Beispiels nicht darstellen.</p>
 </blockquote>
 <p>Die Annotation <code>#[macro_export]</code> gibt an, dass dieses Makro immer dann zur
@@ -299,7 +299,7 @@ dreimal zu den drei Ausdrücken <code>1</code>, <code>2</code> und <code>3</code
 Codes: <code>temp_vec.push()</code> innerhalb von <code>$()*</code> wird für jeden Teil erzeugt, der
 keinmal oder mehrmals mit <code>$()</code> im Muster übereinstimmt, je nachdem, wie oft
 das Muster passt. Das <code>$x</code> wird durch jeden passenden Ausdruck ersetzt. Wenn
-wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird durch diesen Aufruf 
+wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird durch diesen Aufruf
 folgender Code generierte:</p>
 <pre><code class="language-rust ignore">{
     let mut temp_vec = Vec::new();
@@ -309,7 +309,7 @@ folgender Code generierte:</p>
     temp_vec
 }</code></pre>
 <p>Wir haben ein Makro definiert, das eine beliebige Anzahl von Argumenten
-beliebigen Typs aufnehmen und Code zur Erstellung eines Vektors erzeugen 
+beliebigen Typs aufnehmen und Code zur Erstellung eines Vektors erzeugen
 kann, der die angegebenen Elemente enthält.</p>
 <p>Um mehr darüber zu erfahren, wie man Makros schreibt, konsultiere die
 Online-Dokumentation oder andere Ressourcen, wie zum Beispiel <a href="https://veykril.github.io/tlborm/">„The Little Book
@@ -394,7 +394,7 @@ struct Pancakes;
 
 impl HelloMacro for Pancakes {
     fn hello_macro() {
-        println!(&quot;Hallo Makro! Mein Name ist Pancakes!&quot;);
+        println!("Hallo Makro! Mein Name ist Pancakes!");
     }
 }
 
@@ -440,8 +440,8 @@ Füge das Folgende zur Datei <em>Cargo.toml</em> für <code>hello_macro_derive</
 proc-macro = true
 
 [dependencies]
-syn = &quot;1.0&quot;
-quote = &quot;1.0&quot;
+syn = "1.0"
+quote = "1.0"
 </code></pre>
 <p>Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code
 in Codeblock 19-31 in deine Datei <em>src/lib.rs</em> der Kiste <code>hello_macro_derive</code>.
@@ -502,7 +502,7 @@ Zeichenkette <code>struct Pancakes;</code> erhalten:</p>
     // --abschneiden--
 
     ident: Ident {
-        ident: &quot;Pancakes&quot;,
+        ident: "Pancakes",
         span: #0 bytes(95..103)
     },
     data: Struct(
@@ -565,7 +565,7 @@ Codeblock 19-33 gezeigt.</p>
     let gen = quote! {
         impl HelloMacro for #name {
             fn hello_macro() {
-                println!(&quot;Hallo Makro! Mein Name ist {}!&quot;, stringify!(#name));
+                println!("Hallo Makro! Mein Name ist {}!", stringify!(#name));
             }
         }
     };
@@ -577,8 +577,8 @@ Codeblock 19-33 gezeigt.</p>
 annotierten Typs enthält, indem wir <code>ast.ident</code> verwenden. Die Struktur in
 Codeblock 19-32 zeigt, dass, wenn wir die Funktion <code>impl_hello_macro</code> auf den
 Code in Codeblock 19-30 anwenden, das erhaltene <code>ident</code> ein Feld <code>ident</code> mit
-dem Wert <code>&quot;Pancakes&quot;</code> enthält. So wird die Variable <code>name</code> in Codeblock 19-33
-eine Instanz der Struktur <code>Ident</code> enthalten, die die Zeichenkette <code>&quot;Pancakes&quot;</code>
+dem Wert <code>"Pancakes"</code> enthält. So wird die Variable <code>name</code> in Codeblock 19-33
+eine Instanz der Struktur <code>Ident</code> enthalten, die die Zeichenkette <code>"Pancakes"</code>
 ausgibt, der Name der Struktur in Codeblock 19-30.</p>
 <p>Mit dem Makro <code>quote!</code> können wir den Rust-Code definieren, den wir zurückgeben
 wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
@@ -599,7 +599,7 @@ stellen wollen: Ausgeben von <code>Hallo Makro! Mein Name ist</code> und dann de
 annotierten Typs.</p>
 <p>Das hier verwendete Makro <code>stringify!</code> ist in Rust eingebaut. Es nimmt einen
 Rust-Ausdruck, z.B. <code>1 + 2</code>, und verwandelt diesen zur Kompilierzeit in ein
-Zeichenketten-Literal, z.B. <code>&quot;1 + 2&quot;</code>. Dies unterscheidet sich von <code>format!</code>
+Zeichenketten-Literal, z.B. <code>"1 + 2"</code>. Dies unterscheidet sich von <code>format!</code>
 oder <code>println!</code>; Makros, die den Ausdruck auswerten und dann das Ergebnis in
 einen <code>String</code> umwandeln. Es besteht die Möglichkeit, dass die Eingabe <code>#Name</code>
 ein Ausdruck ist, der literal auszugeben ist, also verwenden wir <code>stringify!</code>.
@@ -614,8 +614,8 @@ Abhängigkeiten in der Datei <em>Cargo.toml</em> der Kiste <code>pancakes</code>
 du deine Versionen von <code>hello_macro</code> und <code>hello_macro_derive</code> in
 <a href="https://crates.io/">crates.io</a> veröffentlichst, wären das reguläre Abhängigkeiten; wenn
 nicht, kannst du sie wie folgt als <code>path</code>-Abhängigkeiten angeben:</p>
-<pre><code class="language-toml">hello_macro = { path = &quot;../hello_macro&quot; }
-hello_macro_derive = { path = &quot;../hello_macro/hello_macro_derive&quot; }
+<pre><code class="language-toml">hello_macro = { path = "../hello_macro" }
+hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 </code></pre>
 <p>Gib den Code in Codeblock 19-30 in <em>src/main.rs</em> ein und rufe <code>cargo run</code> auf:
 Es sollte <code>Hallo Makro! Mein Name ist Pancakes!</code> ausgeben. Die Implementierung
@@ -632,7 +632,7 @@ Strukturen und Aufzählungen; Attribute können auch auf andere Elemente, z.B.
 Funktionen, angewendet werden. Hier ist ein Beispiel für die Verwendung eines
 Attribut-ähnlichen Makros: Nehmen wir an, du hast ein Attribut namens <code>route</code>,
 das Funktionen annotiert, wenn du ein Webapplikations-Framework verwendest:</p>
-<pre><code class="language-rust ignore">#[route(GET, &quot;/&quot;)]
+<pre><code class="language-rust ignore">#[route(GET, "/")]
 fn index() {</code></pre>
 <p>Dieses Attribut <code>#[route]</code> würde durch das Framework als prozedurales Makro
 definiert werden. Die Signatur der Makrodefinitionsfunktion würde wie folgt
@@ -640,7 +640,7 @@ aussehen:</p>
 <pre><code class="language-rust ignore">#[proc_macro_attribute]
 pub fn route(attr: TokenStream, item: TokenStream) -&gt; TokenStream {</code></pre>
 <p>Hier haben wir zwei Parameter vom Typ <code>TokenStream</code>. Der erste ist für die
-Inhalte <code>GET, &quot;/&quot;</code> des Attributs. Der zweite ist für den Rumpf des Elements, an
+Inhalte <code>GET, "/"</code> des Attributs. Der zweite ist für den Rumpf des Elements, an
 den das Attribut angehängt ist: In diesem Fall <code>fn index() {}</code> und der Rest des
 Funktionsrumpfs.</p>
 <p>Abgesehen davon funktionieren Attribut-ähnliche Makros auf die gleiche Weise

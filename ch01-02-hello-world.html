@@ -196,8 +196,8 @@ $ mkdir hello_world
 $ cd hello_world
 </code></pre>
 <p>Bei Windows CMD gib dies ein:</p>
-<pre><code class="language-cmd">&gt; mkdir &quot;%USERPROFILE%\projects&quot;
-&gt; cd /d &quot;%USERPROFILE%\projects&quot;
+<pre><code class="language-cmd">&gt; mkdir "%USERPROFILE%\projects"
+&gt; cd /d "%USERPROFILE%\projects"
 &gt; mkdir hello_world
 &gt; cd hello_world
 </code></pre>
@@ -210,7 +210,7 @@ Verwende zum Beispiel <em>hello_world.rs</em> statt <em>helloworld.rs</em>.</p>
 Codeblock 1-1 ein.</p>
 <p><span class="filename">Dateiname: main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    println!(&quot;Hallo Welt!&quot;);
+    println!("Hallo Welt!");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
 ausgibt</span></p>
@@ -260,7 +260,7 @@ deinem Computer installiert sein!</p>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    println!(&quot;Hallo Welt!&quot;);
+</span>    println!("Hallo Welt!");
 <span class="boring">}</span></code></pre></pre>
 <p>Diese Zeile erledigt die ganze Arbeit in diesem kleinen Programm: Sie gibt Text
 auf dem Bildschirm aus. Hier gibt es vier wichtige Details zu beachten.</p>
@@ -272,7 +272,7 @@ Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.</p>
-<p>Drittens siehst du die Zeichenkette <code>&quot;Hallo Welt!&quot;</code>. Wir übergeben diese
+<p>Drittens siehst du die Zeichenkette <code>"Hallo Welt!"</code>. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
 <p>Viertens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass

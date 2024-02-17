@@ -180,11 +180,11 @@ verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
 die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let s1 = String::from(&quot;Hallo&quot;);
+    let s1 = String::from("Hallo");
 
     let len = calculate_length(&amp;s1);
 
-    println!(&quot;Die Länge von '{}' ist {}.&quot;, s1, len);
+    println!("Die Länge von '{}' ist {}.", s1, len);
 }
 
 fn calculate_length(s: &amp;String) -&gt; usize {
@@ -210,11 +210,11 @@ sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.</p>
 </blockquote>
 <p>Schauen wir uns den Funktionsaufruf hier genauer an:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span>    let s1 = String::from(&quot;Hallo&quot;);
+</span>    let s1 = String::from("Hallo");
 
     let len = calculate_length(&amp;s1);
 <span class="boring">
-</span><span class="boring">    println!(&quot;Die Länge von '{}' ist {}.&quot;, s1, len);
+</span><span class="boring">    println!("Die Länge von '{}' ist {}.", s1, len);
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn calculate_length(s: &amp;String) -&gt; usize {
@@ -228,11 +228,11 @@ benutzt wird.</p>
 der Typ des Parameters <code>s</code> eine Referenz ist. Lass uns einige erklärende
 Anmerkungen ergänzen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span><span class="boring">    let s1 = String::from(&quot;Hallo&quot;);
+</span><span class="boring">    let s1 = String::from("Hallo");
 </span><span class="boring">
 </span><span class="boring">    let len = calculate_length(&amp;s1);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Länge von '{}' ist {}.&quot;, s1, len);
+</span><span class="boring">    println!("Die Länge von '{}' ist {}.", s1, len);
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn calculate_length(s: &amp;String) -&gt; usize { // s ist eine Referenz
@@ -253,13 +253,13 @@ ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.<
 ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
-    let s = String::from(&quot;Hallo&quot;);
+    let s = String::from("Hallo");
 
     change(&amp;s);
 }
 
 fn change(some_string: &amp;String) {
-    some_string.push_str(&quot; Welt&quot;);
+    some_string.push_str(" Welt");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 4-6: Versuch, einen ausgeliehenen Wert zu
 verändern</span></p>
@@ -271,7 +271,7 @@ error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&amp;`
   |
 7 | fn change(some_string: &amp;String) {
   |                        ------- help: consider changing this to be a mutable reference: `&amp;mut String`
-8 |     some_string.push_str(&quot; Welt&quot;);
+8 |     some_string.push_str(" Welt");
   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
 
 For more information about this error, try `rustc --explain E0596`.
@@ -286,13 +286,13 @@ mit ein paar kleinen Änderungen ändern können, die stattdessen eine
 <em>veränderbare Referenz</em> verwenden:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let mut s = String::from(&quot;Hallo&quot;);
+    let mut s = String::from("Hallo");
 
     change(&amp;mut s);
 }
 
 fn change(some_string: &amp;mut String) {
-    some_string.push_str(&quot; Welt&quot;);
+    some_string.push_str(" Welt");
 }</code></pre></pre>
 <p>Zuerst ändern wir <code>s</code>, um <code>mut</code> zu sein. Dann erstellen wir eine
 veränderbare Referenz mit <code>&amp;mut s</code>, wo wir die Funktion <code>change</code>
@@ -306,12 +306,12 @@ zu erstellen, und wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;Hallo&quot;);
+</span>let mut s = String::from("Hallo");
 
 let r1 = &amp;mut s;
 let r2 = &amp;mut s;
 
-println!(&quot;{}, {}&quot;, r1, r2);
+println!("{}, {}", r1, r2);
 <span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
@@ -324,7 +324,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
 5 |     let r2 = &amp;mut s;
   |              ^^^^^^ second mutable borrow occurs here
 6 | 
-7 |     println!(&quot;{}, {}&quot;, r1, r2);
+7 |     println!("{}, {}", r1, r2);
   |                        -- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
@@ -358,7 +358,7 @@ Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
 nur nicht <em>gleichzeitige</em>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;Hallo&quot;);
+</span>let mut s = String::from("Hallo");
 
 {
     let r1 = &amp;mut s;
@@ -371,13 +371,13 @@ let r2 = &amp;mut s;
 unveränderbaren Referenzen. Dieser Code führt zu einem Fehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;Hallo&quot;);
+</span>let mut s = String::from("Hallo");
 
 let r1 = &amp;s;     // kein Problem
 let r2 = &amp;s;     // kein Problem
 let r3 = &amp;mut s; // GROSSES PROBLEM
 
-println!(&quot;{}, {} und {}&quot;, r1, r2, r3);
+println!("{}, {} und {}", r1, r2, r3);
 <span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
@@ -391,7 +391,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 6 |     let r3 = &amp;mut s; // GROSSES PROBLEM
   |              ^^^^^^ mutable borrow occurs here
 7 | 
-8 |     println!(&quot;{}, {} und {}&quot;, r1, r2, r3);
+8 |     println!("{}, {} und {}", r1, r2, r3);
   |                               -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
@@ -404,21 +404,21 @@ dahinter plötzlich ändern! Mehrere unveränderbare Referenzen sind jedoch in
 Ordnung, da niemand, der die Daten nur liest, die Möglichkeit hat, das Lesen
 der Daten durch andere zu beeinflussen.</p>
 <p>Beachte, dass der Gültigkeitsbereich einer Referenz dort beginnt, wo sie
-eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt. 
+eingeführt wird, und sich bis zur letzten Verwendung dieser Referenz fortsetzt.
 Zum Beispiel kompiliert dieser Code, weil die letzte Verwendung der
 unveränderbaren Referenzen in <code>println!</code> vor der Einführung der veränderbaren
 Referenz erfolgt:</p>
 <pre><pre class="playground"><code class="language-rust edition2021"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;Hallo&quot;);
+</span>let mut s = String::from("Hallo");
 
 let r1 = &amp;s; // kein Problem
 let r2 = &amp;s; // kein Problem
-println!(&quot;{} und {}&quot;, r1, r2);
+println!("{} und {}", r1, r2);
 // r1 und r2 werden nach dieser Stelle nicht mehr verwendet
 
 let r3 = &amp;mut s; // kein Problem
-println!(&quot;{}&quot;, r3);
+println!("{}", r3);
 <span class="boring">}</span></code></pre></pre>
 <p>Die Gültigkeitsbereiche der unveränderbaren Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
@@ -448,7 +448,7 @@ mit einem Kompilierfehler verhindert:</p>
 }
 
 fn dangle() -&gt; &amp;String {
-    let s = String::from(&quot;Hallo&quot;);
+    let s = String::from("Hallo");
 
     &amp;s
 }</code></pre></pre>
@@ -487,7 +487,7 @@ for it to be borrowed from
 </span>fn dangle() -&gt; &amp;String { // dangle gibt eine Referenz
                          // auf eine Zeichenkette zurück
 
-    let s = String::from(&quot;Hallo&quot;); // s ist eine neue Zeichenkette
+    let s = String::from("Hallo"); // s ist eine neue Zeichenkette
 
     &amp;s // wir geben einen Verweis auf die Zeichenkette s zurück
 } // Hier verlässt s den Gültigkeitsbereich und wird verworfen.
@@ -502,7 +502,7 @@ verweisen. Das ist nicht gut! Rust lässt uns das nicht tun.</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn no_dangle() -&gt; String {
-    let s = String::from(&quot;Hallo&quot;);
+    let s = String::from("Hallo");
 
     s
 }</code></pre></pre>

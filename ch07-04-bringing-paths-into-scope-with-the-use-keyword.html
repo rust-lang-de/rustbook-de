@@ -391,7 +391,7 @@ auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
 Projekt zu verwenden, fügten wir diese Zeile zu <em>Cargo.toml</em> hinzu:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
-<pre><code class="language-toml">rand = &quot;0.8.5&quot;
+<pre><code class="language-toml">rand = "0.8.5"
 </code></pre>
 <p>Das Hinzufügen von <code>rand</code> als Abhängigkeit in <em>Cargo.toml</em> weist Cargo an, das
 Paket <code>rand</code> und alle Abhängigkeiten von <a href="https://crates.io/">crates.io</a>
@@ -407,21 +407,21 @@ haben:</p>
 </span>use rand::Rng;
 
 fn main() {
-<span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+<span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span>    let secret_number = rand::thread_rng().gen_range(1..=100);
 <span class="boring">
-</span><span class="boring">    println!(&quot;Die geheime Zahl ist: {}&quot;, secret_number);
+</span><span class="boring">    println!("Die geheime Zahl ist: {}", secret_number);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Vermutung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Vermutung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen einer Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen einer Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geraten: {}&quot;, guess);
+</span><span class="boring">    println!("Du hast geraten: {}", guess);
 </span>}</code></pre></pre>
 <p>Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 <a href="https://crates.io/">crates.io</a> zur Verfügung gestellt und wenn du eines davon

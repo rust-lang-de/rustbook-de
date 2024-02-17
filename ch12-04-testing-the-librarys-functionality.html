@@ -212,7 +212,7 @@ Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -234,19 +234,19 @@ mod tests {
 
     #[test]
     fn one_result() {
-        let query = &quot;dukt&quot;;
-        let contents = &quot;\
+        let query = "dukt";
+        let contents = "\
 Rust:
 sicher, schnell, produktiv.
-Nimm drei.&quot;;
+Nimm drei.";
 
-        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
     }
 }</code></pre>
 <p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
-<p>Dieser Test sucht nach der Zeichenkette <code>&quot;dukt&quot;</code>. Der Text, den wir
-durchsuchen, besteht aus drei Zeilen, von denen nur eine <code>&quot;dukt&quot;</code> enthält.
+<p>Dieser Test sucht nach der Zeichenkette <code>"dukt"</code>. Der Text, den wir
+durchsuchen, besteht aus drei Zeilen, von denen nur eine <code>"dukt"</code> enthält.
 (Beachte, dass der Backslash nach dem öffnenden doppelten Anführungszeichen
 Rust anweist, keinen Zeilenumbruch an den Anfang des Zeichenkettenliterals zu
 setzen.) Wir verlangen, dass der von der Funktion <code>search</code> zurückgegebene Wert
@@ -258,7 +258,7 @@ jetzt gerade genug Code hinzufügen, um den Test zum Kompilieren und Ausführen
 zu bringen, indem wir eine Definition der Funktion <code>search</code> hinzufügen, die
 immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
-Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>&quot;sicher, schnell, produktiv.&quot;</code> enthält.</p>
+Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schnell, produktiv."</code> enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -273,7 +273,7 @@ Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>&quot;sicher, 
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -299,13 +299,13 @@ Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>&quot;sicher, 
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.&quot;;
+</span><span class="boring">Nimm drei.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
@@ -368,7 +368,7 @@ failures:
 
 ---- tests::one_result stdout ----
 thread 'tests::one_result' panicked at 'assertion failed: `(left == right)`
-  left: `[&quot;sicher, schnell, produktiv.&quot;]`,
+  left: `["sicher, schnell, produktiv."]`,
  right: `[]`', src/lib.rs:44:9
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
@@ -411,7 +411,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -439,13 +439,13 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.&quot;;
+</span><span class="boring">Nimm drei.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
@@ -473,7 +473,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -503,13 +503,13 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.&quot;;
+</span><span class="boring">Nimm drei.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
@@ -535,7 +535,7 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -569,13 +569,13 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.&quot;;
+</span><span class="boring">Nimm drei.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
@@ -629,7 +629,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -643,7 +643,7 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
     let contents = fs::read_to_string(config.file_path)?;
 
     for line in search(&amp;config.query, &amp;contents) {
-        println!(&quot;{line}&quot;);
+        println!("{line}");
     }
 
     Ok(())
@@ -667,13 +667,13 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.&quot;;
+</span><span class="boring">Nimm drei.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Wir benutzen immer noch eine <code>for</code>-Schleife, um jede Zeile von <code>search</code>

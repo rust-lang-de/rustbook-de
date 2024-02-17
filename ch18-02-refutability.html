@@ -173,7 +173,7 @@ alles passt und daher nicht fehlschlagen kann. Muster, die für irgendeinen
 möglichen Wert nicht passen können, sind <em>abweisbar</em>. Ein Beispiel wäre
 <code>Some(x)</code> im Ausdruck <code>if let Some(x) = a_value</code>, denn wenn der Wert in der
 Variablen <code>a_value</code> eher <code>None</code> als <code>Some</code> ist, wird das Muster <code>Some(x)</code> nicht
-passen. </p>
+passen.</p>
 <p>Funktionsparameter, <code>let</code>-Anweisungen und <code>for</code>-Schleifen können nur
 unabweisbare Muster akzeptieren, da das Programm nichts Sinnvolles tun kann,
 wenn die Werte nicht passen. Die Ausdrücke <code>if let</code> und <code>while let</code> akzeptieren
@@ -213,7 +213,7 @@ error[E0005]: refutable pattern in local binding: `None` not covered
 3 |     let Some(x) = some_option_value;
   |         ^^^^^^^ pattern `None` not covered
   |
-  = note: `let` bindings require an &quot;irrefutable pattern&quot;, like a `struct` or an `enum` with only one variant
+  = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
   = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
 note: `Option&lt;i32&gt;` defined here
  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
@@ -244,7 +244,7 @@ Codeblock 18-8 zu korrigieren ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
 </span>    if let Some(x) = some_option_value {
-        println!(&quot;{}&quot;, x);
+        println!("{}", x);
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-9: Verwenden von <code>if let</code> und eines Blocks
@@ -255,7 +255,7 @@ Fehler zu erhalten. Wenn wir <code>if let</code> ein Muster geben, das immer pas
 z.B. <code>x</code>, wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    if let x = 5 {
-        println!(&quot;{}&quot;, x);
+        println!("{}", x);
     };
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-10: Der Versuch, ein unabweisbares Muster
@@ -274,7 +274,7 @@ warning: irrefutable `if let` pattern
   = help: consider replacing the `if let` with a `let`
   = note: `#[warn(irrefutable_let_patterns)]` on by default
 
-warning: `patterns` (bin &quot;patterns&quot;) generated 1 warning
+warning: `patterns` (bin "patterns") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.39s
      Running `target/debug/patterns`
 5

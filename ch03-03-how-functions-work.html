@@ -176,13 +176,13 @@ und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    println!(&quot;Hallo Welt!&quot;);
+    println!("Hallo Welt!");
 
     another_function();
 }
 
 fn another_function() {
-    println!(&quot;Eine andere Funktion.&quot;);
+    println!("Eine andere Funktion.");
 }</code></pre></pre>
 <p>Wir definieren eine Funktion in Rust durch die Eingabe von <code>fn</code>, gefolgt von
 einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
@@ -223,7 +223,7 @@ synonym zu verwenden.</p>
 }
 
 fn another_function(x: i32) {
-    println!(&quot;Der Wert von x ist: {x}&quot;);
+    println!("Der Wert von x ist: {x}");
 }</code></pre></pre>
 <p>Versuche, dieses Programm auszuführen; du solltest die folgende Ausgabe
 erhalten:</p>
@@ -252,7 +252,7 @@ mit Kommas, so wie hier:</p>
 }
 
 fn print_labeled_measurement(value: i32, unit_label: char) {
-    println!(&quot;Das Maß ist: {value}{unit_label}&quot;);
+    println!("Das Maß ist: {value}{unit_label}");
 }</code></pre></pre>
 <p>Dieses Beispiel erzeugt eine Funktion namens <code>print_labeled_measurement</code> mit
 zwei Parametern. Der erste Parameter heißt <code>value</code> und ist ein <code>i32</code>. Der
@@ -342,7 +342,7 @@ help: remove these parentheses
   |
 
 For more information about this error, try `rustc --explain E0658`.
-warning: `functions` (bin &quot;functions&quot;) generated 1 warning
+warning: `functions` (bin "functions") generated 1 warning
 error: could not compile `functions` due to 3 previous errors; 1 warning emitted
 </code></pre>
 <p>Die Anweisung <code>let y = 6</code> gibt keinen Wert zurück, also gibt es für <code>x</code> nichts,
@@ -365,7 +365,7 @@ ist ein Ausdruck, zum Beispiel:</p>
         x + 1
     };
 
-    println!(&quot;Der Wert von y ist: {y}&quot;);
+    println!("Der Wert von y ist: {y}");
 }</code></pre></pre>
 <p>Der Ausdruck</p>
 <pre><code class="language-rust ignore">{
@@ -396,7 +396,7 @@ zurückgibt:</p>
 fn main() {
     let x = five();
 
-    println!(&quot;Der Wert von x ist: {x}&quot;);
+    println!("Der Wert von x ist: {x}");
 }</code></pre></pre>
 <p>Es gibt keine Funktionsaufrufe, Makros oder gar <code>let</code>-Anweisungen in der
 <code>five</code>-Funktion – nur die Zahl <code>5</code> selbst. Das ist eine vollkommen
@@ -426,7 +426,7 @@ weil es ein Ausdruck ist, dessen Wert wir zurückgeben wollen.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let x = plus_one(5);
 
-    println!(&quot;Der Wert von x ist: {x}&quot;);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -&gt; i32 {
@@ -439,7 +439,7 @@ Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = plus_one(5);
 
-    println!(&quot;Der Wert von x ist: {x}&quot;);
+    println!("Der Wert von x ist: {x}");
 }
 
 fn plus_one(x: i32) -&gt; i32 {
@@ -459,7 +459,7 @@ error[E0308]: mismatched types
   |          - help: consider removing this semicolon
 
 For more information about this error, try `rustc --explain E0308`.
-warning: `functions` (bin &quot;functions&quot;) generated 1 warning
+warning: `functions` (bin "functions") generated 1 warning
 error: could not compile `functions` due to 2 previous errors; 1 warning emitted
 </code></pre>
 <p>Die Hauptfehlermeldung <code>mismatched types</code> offenbart das Kernproblem dieses

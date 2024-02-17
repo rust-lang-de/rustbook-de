@@ -245,7 +245,7 @@ Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
 
 impl Summary for NewsArticle {
     fn summarize(&amp;self) -&gt; String {
-        format!(&quot;{}, von {} ({})&quot;, self.headline, self.author, self.location)
+        format!("{}, von {} ({})", self.headline, self.author, self.location)
     }
 }
 
@@ -258,7 +258,7 @@ pub struct Tweet {
 
 impl Summary for Tweet {
     fn summarize(&amp;self) -&gt; String {
-        format!(&quot;{}: {}&quot;, self.username, self.content)
+        format!("{}: {}", self.username, self.content)
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -284,15 +284,15 @@ wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span>    let tweet = Tweet {
-        username: String::from(&quot;horse_ebooks&quot;),
+        username: String::from("horse_ebooks"),
         content: String::from(
-            &quot;natürlich, wie du wahrscheinlich schon weißt&quot;,
+            "natürlich, wie du wahrscheinlich schon weißt",
         ),
         reply: false,
         retweet: false,
     };
 
-    println!(&quot;1 neue Kurznachricht: {}&quot;, tweet.summarize());
+    println!("1 neue Kurznachricht: {}", tweet.summarize());
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
@@ -330,7 +330,7 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 </span><span class="boring">fn main() {
 </span>pub trait Summary {
     fn summarize(&amp;self) -&gt; String {
-        String::from(&quot;(Lies mehr ...)&quot;)
+        String::from("(Lies mehr ...)")
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -347,15 +347,15 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span>    let article = NewsArticle {
-        headline: String::from(&quot;Penguins gewinnen die Stanley-Cup-Meisterschaft!&quot;),
-        location: String::from(&quot;Pittsburgh, PA, USA&quot;),
-        author: String::from(&quot;Iceburgh&quot;),
-        content: String::from(&quot;Die Pittsburgh Penguins sind erneut die beste \
-                               Eishockeymannschaft in der NHL.&quot;,
+        headline: String::from("Penguins gewinnen die Stanley-Cup-Meisterschaft!"),
+        location: String::from("Pittsburgh, PA, USA"),
+        author: String::from("Iceburgh"),
+        content: String::from("Die Pittsburgh Penguins sind erneut die beste \
+                               Eishockeymannschaft in der NHL.",
         ),
     };
 
-    println!(&quot;Neuer Artikel verfügbar! {}&quot;, article.summarize());
+    println!("Neuer Artikel verfügbar! {}", article.summarize());
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>Neuer Artikel verfügbar! (Lies mehr ...)</code> aus.</p>
 <p>Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
@@ -377,7 +377,7 @@ Methode <code>summarize_author</code> aufruft:</p>
     fn summarize_author(&amp;self) -&gt; String;
 
     fn summarize(&amp;self) -&gt; String {
-        format!(&quot;(Lies mehr von {}...)&quot;, self.summarize_author())
+        format!("(Lies mehr von {}...)", self.summarize_author())
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -389,7 +389,7 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String;
 </span><span class="boring">
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!(&quot;(Lies mehr von {}...)&quot;, self.summarize_author())
+</span><span class="boring">        format!("(Lies mehr von {}...)", self.summarize_author())
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -402,7 +402,7 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 </span><span class="boring">
 </span>impl Summary for Tweet {
     fn summarize_author(&amp;self) -&gt; String {
-        format!(&quot;@{}&quot;, self.username)
+        format!("@{}", self.username)
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -411,18 +411,18 @@ Instanzen der <code>Tweet</code>-Struktur aufrufen, und die Standard-Implementie
 <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
 bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
 das Merkmal <code>Summary</code> das Verhalten der <code>summarize</code>-Methode mitgeliefert, ohne
-dass wir weiteren Code schreiben müssen. </p>
+dass wir weiteren Code schreiben müssen.</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span>    let tweet = Tweet {
-        username: String::from(&quot;horse_ebooks&quot;),
-        content: String::from(&quot;natürlich, wie du wahrscheinlich schon weißt&quot;),
+        username: String::from("horse_ebooks"),
+        content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
         retweet: false,
     };
 
-    println!(&quot;1 neue Kurznachricht: {}&quot;, tweet.summarize());
+    println!("1 neue Kurznachricht: {}", tweet.summarize());
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: (Lies mehr von @horse_ebooks...)</code> aus.</p>
 <p>Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
@@ -443,7 +443,7 @@ verwenden, etwa so:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify(item: &amp;impl Summary) {
-    println!(&quot;Eilmeldung! {}&quot;, item.summarize());
+    println!("Eilmeldung! {}", item.summarize());
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Anstelle eines konkreten Typs für den Parameter <code>item</code> geben wir das
@@ -465,7 +465,7 @@ bound) genannt wird; sie sieht so aus:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify&lt;T: Summary&gt;(item: &amp;T) {
-    println!(&quot;Eilmeldung! {}&quot;, item.summarize());
+    println!("Eilmeldung! {}", item.summarize());
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Diese längere Form entspricht dem Beispiel im vorigen Abschnitt, ist aber
@@ -533,14 +533,14 @@ gezeigt:</p>
 </span><span class="boring">
 </span><span class="boring">impl Summary for Tweet {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!(&quot;{}: {}&quot;, self.username, self.content)
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn returns_summarizable() -&gt; impl Summary {
     Tweet {
-        username: String::from(&quot;horse_ebooks&quot;),
-        content: String::from(&quot;natürlich, wie du wahrscheinlich schon weißt&quot;),
+        username: String::from("horse_ebooks"),
+        content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
         retweet: false,
     }
@@ -578,7 +578,7 @@ funktionieren:</p>
 </span><span class="boring">
 </span><span class="boring">impl Summary for NewsArticle {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!(&quot;{}, von {} ({})&quot;, self.headline, self.author, self.location)
+</span><span class="boring">        format!("{}, von {} ({})", self.headline, self.author, self.location)
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -591,7 +591,7 @@ funktionieren:</p>
 </span><span class="boring">
 </span><span class="boring">impl Summary for Tweet {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
-</span><span class="boring">        format!(&quot;{}: {}&quot;, self.username, self.content)
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
@@ -599,20 +599,20 @@ funktionieren:</p>
     if switch {
         NewsArticle {
             headline: String::from(
-                &quot;Penguins gewinnen die Stanley-Cup-Meisterschaft!&quot;,
+                "Penguins gewinnen die Stanley-Cup-Meisterschaft!",
             ),
-            location: String::from(&quot;Pittsburgh, PA, USA&quot;),
-            author: String::from(&quot;Iceburgh&quot;),
+            location: String::from("Pittsburgh, PA, USA"),
+            author: String::from("Iceburgh"),
             content: String::from(
-                &quot;Die Pittsburgh Penguins sind erneut die beste \
-                 Eishockeymannschaft in der NHL.&quot;,
+                "Die Pittsburgh Penguins sind erneut die beste \
+                 Eishockeymannschaft in der NHL.",
             ),
         }
     } else {
         Tweet {
-            username: String::from(&quot;horse_ebooks&quot;),
+            username: String::from("horse_ebooks"),
             content: String::from(
-                &quot;natürlich, wie du wahrscheinlich schon weißt&quot;,
+                "natürlich, wie du wahrscheinlich schon weißt",
             ),
             reply: false,
             retweet: false,
@@ -656,9 +656,9 @@ impl&lt;T&gt; Pair&lt;T&gt; {
 impl&lt;T: Display + PartialOrd&gt; Pair&lt;T&gt; {
     fn cmp_display(&amp;self) {
         if self.x &gt;= self.y {
-            println!(&quot;Das größte Element ist x = {}&quot;, self.x);
+            println!("Das größte Element ist x = {}", self.x);
         } else {
-            println!(&quot;Das größte Element ist y = {}&quot;, self.y);
+            println!("Das größte Element ist y = {}", self.y);
         }
     }
 }

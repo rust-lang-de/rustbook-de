@@ -219,12 +219,12 @@ es bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei
 Beispiele.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let data = &quot;initialer Inhalt&quot;;
+</span>let data = "initialer Inhalt";
 
 let s = data.to_string();
 
 // die Methode funktioniert auch direkt für ein Literal:
-let s = &quot;initialer Inhalt&quot;.to_string();
+let s = "initialer Inhalt".to_string();
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-12: Verwenden der Methode <code>to_string</code> zum
 Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
@@ -234,7 +234,7 @@ einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
 äquivalent zum Code in Codeblock 8-12, der <code>to_string</code> verwendet.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s = String::from(&quot;initialer Inhalt&quot;);
+</span>let s = String::from("initialer Inhalt");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-13: Verwenden der Funktion <code>String::from</code> zum
 Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
@@ -248,18 +248,18 @@ Stils und der Lesbarkeit.</p>
 ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let hello = String::from(&quot;السلام عليكم&quot;);
-let hello = String::from(&quot;Dobrý den&quot;);
-let hello = String::from(&quot;Hallo&quot;);
-let hello = String::from(&quot;Hello&quot;);
-let hello = String::from(&quot;שָׁלוֹם&quot;);
-let hello = String::from(&quot;नमस्ते&quot;);
-let hello = String::from(&quot;こんにちは&quot;);
-let hello = String::from(&quot;안녕하세요&quot;);
-let hello = String::from(&quot;你好&quot;);
-let hello = String::from(&quot;Olá&quot;);
-let hello = String::from(&quot;Здравствуйте&quot;);
-let hello = String::from(&quot;Hola&quot;);
+</span>let hello = String::from("السلام عليكم");
+let hello = String::from("Dobrý den");
+let hello = String::from("Hallo");
+let hello = String::from("Hello");
+let hello = String::from("שָׁלוֹם");
+let hello = String::from("नमस्ते");
+let hello = String::from("こんにちは");
+let hello = String::from("안녕하세요");
+let hello = String::from("你好");
+let hello = String::from("Olá");
+let hello = String::from("Здравствуйте");
+let hello = String::from("Hola");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-14: Speichern von Begrüßungstexten in
 verschiedenen Sprachen in Zeichenketten</span></p>
@@ -275,8 +275,8 @@ verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
 zu sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;foo&quot;);
-s.push_str(&quot;bar&quot;);
+</span>let mut s = String::from("foo");
+s.push_str("bar");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-15: Anhängen eines Zeichenkettenanteilstyps
 an einen <code>String</code> mit der Methode <code>push_str</code></span></p>
@@ -287,10 +287,10 @@ Code in Codeblock 8-16 in der Lage sein, <code>s2</code> zu verwenden, nachdem w
 Inhalt an <code>s1</code> angehängt haben.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s1 = String::from(&quot;foo&quot;);
-let s2 = &quot;bar&quot;;
+</span>let mut s1 = String::from("foo");
+let s2 = "bar";
 s1.push_str(s2);
-println!(&quot;s2 ist {s2}&quot;);
+println!("s2 ist {s2}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-16: Verwenden eines Zeichenkettenanteilstyps
 nach dem Anhängen seines Inhalts an eine Zeichenkette</span></p>
@@ -302,7 +302,7 @@ funktioniert jedoch wie erwartet!</p>
 zu einem <code>String</code> hinzu.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let mut s = String::from(&quot;lo&quot;);
+</span>let mut s = String::from("lo");
 s.push('l');
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
@@ -313,8 +313,8 @@ s.push('l');
 das zu tun ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;Hallo &quot;);
-let s2 = String::from(&quot;Welt!&quot;);
+</span>let s1 = String::from("Hallo ");
+let s2 = String::from("Welt!");
 let s3 = s1 + &amp;s2; // Beachte, s1 wurde hierher verschoben und
                    // kann nicht mehr verwendet werden
 <span class="boring">}</span></code></pre></pre>
@@ -358,22 +358,22 @@ so; die Implementierung ist effizienter als Kopieren.</p>
 Operators <code>+</code> unhandlich:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;tic&quot;);
-let s2 = String::from(&quot;tac&quot;);
-let s3 = String::from(&quot;toe&quot;);
+</span>let s1 = String::from("tic");
+let s2 = String::from("tac");
+let s3 = String::from("toe");
 
-let s = s1 + &quot;-&quot; + &amp;s2 + &quot;-&quot; + &amp;s3;
+let s = s1 + "-" + &amp;s2 + "-" + &amp;s3;
 <span class="boring">}</span></code></pre></pre>
 <p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
-und <code>&quot;</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
+und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
 String-Kombinationen können wir stattdessen das Makro <code>format!</code> verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;tic&quot;);
-let s2 = String::from(&quot;tac&quot;);
-let s3 = String::from(&quot;toe&quot;);
+</span>let s1 = String::from("tic");
+let s2 = String::from("tac");
+let s3 = String::from("toe");
 
-let s = format!(&quot;{s1}-{s2}-{s3}&quot;);
+let s = format!("{s1}-{s2}-{s3}");
 <span class="boring">}</span></code></pre></pre>
 <p>Auch bei diesem Code wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Das Makro <code>format!</code>
 funktioniert wie <code>println!</code>, aber anstatt das Ergebnis auf den Bildschirm
@@ -389,7 +389,7 @@ Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
 ungültigen Code in Codeblock 8-19.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s1 = String::from(&quot;Hallo&quot;);
+</span>let s1 = String::from("Hallo");
 let h = s1[0];
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
@@ -424,7 +424,7 @@ korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
 diese:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let hello = String::from(&quot;Hola&quot;);
+</span>let hello = String::from("Hola");
 <span class="boring">}</span></code></pre></pre>
 <p>In diesem Fall wird <code>hello.len()</code> gleich 4 sein, was bedeutet, dass der Vektor,
 der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
@@ -433,7 +433,7 @@ jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
 Großbuchstaben „Ze“ beginnt, nicht mit der Zahl 3.)</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let hello = String::from(&quot;Здравствуйте&quot;);
+</span>let hello = String::from("Здравствуйте");
 <span class="boring">}</span></code></pre></pre>
 <p>Auf die Frage, wie lang die Zeichenkette ist, könnte man sagen: 12. Die Antwort
 von Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
@@ -443,7 +443,7 @@ der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
 Um das zu erläutern, betrachte diesen ungültigen Rust-Code:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let hello = &quot;Здравствуйте&quot;;
+</span>let hello = "Здравствуйте";
 let answer = &amp;hello[0];
 <span class="boring">}</span></code></pre></pre>
 <p>Du weißt bereits, dass <code>answer</code> nicht <code>З</code>, der erste Buchstabe, sein wird. In
@@ -454,7 +454,7 @@ Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
 fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
 Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
 selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
-<code>&amp;&quot;hallo&quot;[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
+<code>&amp;"hallo"[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
 zurückgeben, nicht <code>h</code>.</p>
 <p>Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
 Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
@@ -466,7 +466,7 @@ Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
 Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
 <em>Buchstaben</em> bezeichnen würden).</p>
 <p>Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
-(<a href="https://de.wikipedia.org/wiki/Namaste"><em>Namaste</em></a>) ansehen, wird es als ein 
+(<a href="https://de.wikipedia.org/wiki/Namaste"><em>Namaste</em></a>) ansehen, wird es als ein
 Vektor von <code>u8</code>-Werten gespeichert, der wie folgt aussieht:</p>
 <pre><code class="language-text">[224, 164, 168, 224, 164, 174, 224, 164, 184, 224, 165, 141, 224, 164, 164,
 224, 165, 135]
@@ -481,7 +481,7 @@ Buchstaben: Sie sind diakritische Zeichen, die für sich allein genommen keinen
 Sinn ergeben. Wenn wir sie schließlich als Graphemgruppen betrachten, erhalten
 wir das, was eine Person die vier Buchstaben nennen würde, aus denen das
 Hindi-Wort besteht:</p>
-<pre><code class="language-text">[&quot;न&quot;, &quot;म&quot;, &quot;स्&quot;, &quot;ते&quot;]
+<pre><code class="language-text">["न", "म", "स्", "ते"]
 </code></pre>
 <p>Rust bietet verschiedene Möglichkeiten zur Interpretation von rohen
 Zeichenkettendaten, die von Computern gespeichert werden, sodass jedes Programm
@@ -504,7 +504,7 @@ Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
 Bytes enthält:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let hello = &quot;Здравствуйте&quot;;
+</span>let hello = "Здравствуйте";
 
 let s = &amp;hello[0..4];
 <span class="boring">}</span></code></pre></pre>
@@ -533,8 +533,8 @@ zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
 zuzugreifen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>for c in &quot;Зд&quot;.chars() {
-    println!(&quot;{c}&quot;);
+</span>for c in "Зд".chars() {
+    println!("{c}");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code wird folgendes ausgeben:</p>
@@ -545,8 +545,8 @@ zuzugreifen:</p>
 Verwendungszweck benötigt wird:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>for b in &quot;Зд&quot;.bytes() {
-    println!(&quot;{b}&quot;);
+</span>for b in "Зд".bytes() {
+    println!("{b}");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:</p>

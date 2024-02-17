@@ -211,14 +211,14 @@ lassen, da wir die Kiste (crate) <code>blog</code> noch nicht implementiert habe
 fn main() {
     let mut post = Post::new();
 
-    post.add_text(&quot;Ich habe heute Mittag einen Salat gegessen&quot;);
-    assert_eq!(&quot;&quot;, post.content());
+    post.add_text("Ich habe heute Mittag einen Salat gegessen");
+    assert_eq!("", post.content());
 
     post.request_review();
-    assert_eq!(&quot;&quot;, post.content());
+    assert_eq!("", post.content());
 
     post.approve();
-    assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
+    assert_eq!("Ich habe heute Mittag einen Salat gegessen", post.content());
 }</code></pre>
 <p><span class="caption">Codeblock 17-11: Code, der das gewünschte Verhalten
 demonstriert, das wir für unsere Kiste <code>blog</code> haben wollen</span></p>
@@ -371,7 +371,7 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    pub fn content(&amp;self) -&gt; &amp;str {
-        &quot;&quot;
+        ""
     }
 }
 <span class="boring">
@@ -409,7 +409,7 @@ eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        &quot;&quot;
+</span><span class="boring">        ""
 </span><span class="boring">    }
 </span><span class="boring">
 </span>    pub fn request_review(&amp;mut self) {
@@ -507,7 +507,7 @@ sollte, wie in Codeblock 17-16 gezeigt:</p>
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    pub fn content(&amp;self) -&gt; &amp;str {
-</span><span class="boring">        &quot;&quot;
+</span><span class="boring">        ""
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    pub fn request_review(&amp;mut self) {
@@ -733,7 +733,7 @@ Codeblock 17-18 gezeigt wird:</p>
 </span><span class="boring">    fn approve(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt;;
 </span><span class="boring">
 </span>    fn content&lt;'a&gt;(&amp;self, post: &amp;'a Post) -&gt; &amp;'a str {
-        &quot;&quot;
+        ""
     }
 }
 
@@ -883,14 +883,14 @@ wird.</p>
 </span>fn main() {
     let mut post = Post::new();
 
-    post.add_text(&quot;Ich habe heute Mittag einen Salat gegessen&quot;);
-    assert_eq!(&quot;&quot;, post.content());
+    post.add_text("Ich habe heute Mittag einen Salat gegessen");
+    assert_eq!("", post.content());
 <span class="boring">
 </span><span class="boring">    post.request_review();
-</span><span class="boring">    assert_eq!(&quot;&quot;, post.content());
+</span><span class="boring">    assert_eq!("", post.content());
 </span><span class="boring">
 </span><span class="boring">    post.approve();
-</span><span class="boring">    assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
+</span><span class="boring">    assert_eq!("Ich habe heute Mittag einen Salat gegessen", post.content());
 </span>}</code></pre>
 <p>Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von <code>Post::new</code> und der Möglichkeit, dem Inhalt des Beitrags
@@ -1041,13 +1041,13 @@ Codeblock 17-21 aufgeführt:</p>
 fn main() {
     let mut post = Post::new();
 
-    post.add_text(&quot;Ich habe heute Mittag einen Salat gegessen&quot;);
+    post.add_text("Ich habe heute Mittag einen Salat gegessen");
 
     let post = post.request_review();
 
     let post = post.approve();
 
-    assert_eq!(&quot;Ich habe heute Mittag einen Salat gegessen&quot;, post.content());
+    assert_eq!("Ich habe heute Mittag einen Salat gegessen", post.content());
 }</code></pre>
 <p><span class="caption">Codeblock 17-21: Änderungen an <code>main</code>, um die neue
 Implementierung des Blog-Beitrags-Workflows zu nutzen</span></p>

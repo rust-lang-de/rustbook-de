@@ -276,12 +276,12 @@ struct IpAddr {
 
 let home = IpAddr {
     kind: IpAddrKind::V4,
-    address: String::from(&quot;127.0.0.1&quot;),
+    address: String::from("127.0.0.1"),
 };
 
 let loopback = IpAddr {
     kind: IpAddrKind::V6,
-    address: String::from(&quot;::1&quot;),
+    address: String::from("::1"),
 };
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 6-1: Speichern des Wertes und der
@@ -306,9 +306,9 @@ zugehörige <code>String</code>-Werte haben:</p>
     V6(String),
 }
 
-let home = IpAddr::V4(String::from(&quot;127.0.0.1&quot;));
+let home = IpAddr::V4(String::from("127.0.0.1"));
 
-let loopback = IpAddr::V6(String::from(&quot;::1&quot;));
+let loopback = IpAddr::V6(String::from("::1"));
 <span class="boring">}</span></code></pre></pre>
 <p>Wir hängen die Daten direkt an jede Variante der Aufzählung an, so dass keine
 zusätzliche Struktur erforderlich ist. Hier ist es auch einfacher, ein weiteres
@@ -334,7 +334,7 @@ Aufzählungen lösen diesen Fall ganz einfach:</p>
 
 let home = IpAddr::V4(127, 0, 0, 1);
 
-let loopback = IpAddr::V6(String::from(&quot;::1&quot;));
+let loopback = IpAddr::V6(String::from("::1"));
 <span class="boring">}</span></code></pre></pre>
 <p>Wir haben verschiedene Möglichkeiten zur Definition von Datenstrukturen
 gezeigt, die Version vier und sechs einer IP-Adresse speichern können.
@@ -427,12 +427,12 @@ wir für unsere Aufzählung <code>Message</code> definieren könnten:</p>
         }
     }
 
-    let m = Message::Write(String::from(&quot;hallo&quot;));
+    let m = Message::Write(String::from("hallo"));
     m.call();
 <span class="boring">}</span></code></pre></pre>
 <p>Der Methodenrumpf würde <code>self</code> benutzen, um den Wert zu erhalten, auf den wir
 die Methode aufgerufen haben. In diesem Beispiel haben wir eine Variable <code>m</code>
-erstellt, die den Wert <code>Message::Write(String::from(&quot;hallo&quot;))</code> hat. Genau
+erstellt, die den Wert <code>Message::Write(String::from("hallo"))</code> hat. Genau
 diesen Wert wird <code>self</code> im Rumpf der Methode <code>call</code> haben, wenn <code>m.call()</code>
 ausgeführt wird.</p>
 <p>Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr

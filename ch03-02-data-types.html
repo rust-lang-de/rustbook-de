@@ -180,7 +180,7 @@ Zeichenkette (<code>String</code>) mittels <code>parse</code> zu einem numerisch
 müssen wir eine Typ-Annotation ergänzen, wie hier:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let guess: u32 = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
+</span>let guess: u32 = "42".parse().expect("Keine Zahl!");
 <span class="boring">}</span></code></pre></pre>
 <p>Wenn wir diese Typ-Annotation nicht angeben, zeigt Rust den folgenden Fehler
 an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
@@ -190,12 +190,12 @@ zu wissen welchen Typ wir verwenden wollen:</p>
 error[E0282]: type annotations needed
  --&gt; src/main.rs:2:9
   |
-2 |     let guess = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
+2 |     let guess = "42".parse().expect("Keine Zahl!");
   |         ^^^^^
   |
 help: consider giving `guess` an explicit type
   |
-2 |     let guess: _ = &quot;42&quot;.parse().expect(&quot;Keine Zahl!&quot;);
+2 |     let guess: _ = "42".parse().expect("Keine Zahl!");
   |              +++
 
 For more information about this error, try `rustc --explain E0282`.
@@ -404,7 +404,7 @@ zu destrukturieren, etwa so:</p>
 
     let (x, y, z) = tup;
 
-    println!(&quot;Der Wert von y ist: {y}&quot;);
+    println!("Der Wert von y ist: {y}");
 }</code></pre></pre>
 <p>Dieses Programm erzeugt zunächst ein Tupel und bindet es an die Variable <code>tup</code>.
 Dann benutzt es ein Muster mit <code>let</code>, um <code>tup</code> zu nehmen und in drei separate
@@ -459,8 +459,8 @@ verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
 verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let months = [&quot;Januar&quot;, &quot;Februar&quot;, &quot;März&quot;, &quot;April&quot;, &quot;Mai&quot;, &quot;Juni&quot;, &quot;Juli&quot;,
-              &quot;August&quot;, &quot;September&quot;, &quot;Oktober&quot;, &quot;November&quot;, &quot;Dezember&quot;];
+</span>let months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
+              "August", "September", "Oktober", "November", "Dezember"];
 <span class="boring">}</span></code></pre></pre>
 <p>Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
 Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
@@ -506,23 +506,23 @@ Array-Index vom Benutzer zu erhalten:</p>
 fn main() {
     let a = [1, 2, 3, 4, 5];
 
-    println!(&quot;Bitte gib einen Array-Index ein.&quot;);
+    println!("Bitte gib einen Array-Index ein.");
 
     let mut index = String::new();
 
     io::stdin()
         .read_line(&amp;mut index)
-        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+        .expect("Fehler beim Lesen der Zeile");
 
     let index: usize = index
         .trim()
         .parse()
-        .expect(&quot;Eingegebener Index war keine Zahl&quot;);
+        .expect("Eingegebener Index war keine Zahl");
 
     let element = a[index];
 
     println!(
-        &quot;Der Wert von element beim Index {index} ist: {element}&quot;);
+        "Der Wert von element beim Index {index} ist: {element}");
 }</code></pre></pre>
 <p>Dieser Code kompiliert erfolgreich. Wenn du diesen Code mit <code>cargo run</code>
 ausführst und <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> oder <code>4</code> eingibst, wird das Programm den

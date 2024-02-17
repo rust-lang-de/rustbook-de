@@ -191,7 +191,7 @@ zu schlafen, bevor er antwortet.</p>
 // --abschneiden--
 
 <span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
 </span><span class="boring">        let stream = stream.unwrap();
@@ -207,12 +207,12 @@ zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
 </span>    let (status_line, filename) = match &amp;request_line[..] {
-        &quot;GET / HTTP/1.1&quot; =&gt; (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;),
-        &quot;GET /sleep HTTP/1.1&quot; =&gt; {
+        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+        "GET /sleep HTTP/1.1" =&gt; {
             thread::sleep(Duration::from_secs(5));
-            (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+            ("HTTP/1.1 200 OK", "hello.html")
         }
-        _ =&gt; (&quot;HTTP/1.1 404 NOT FOUND&quot;, &quot;404.html&quot;),
+        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
     };
 
     // --abschneiden--
@@ -220,7 +220,7 @@ zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">    let length = contents.len();
 </span><span class="boring">
 </span><span class="boring">    let response =
-</span><span class="boring">        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span>}</code></pre></pre>
@@ -315,7 +315,7 @@ innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 </span><span class="boring">};
 </span><span class="boring">
 </span>fn main() {
-    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 
     for stream in listener.incoming() {
         let stream = stream.unwrap();
@@ -331,19 +331,19 @@ innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 </span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
 </span><span class="boring">    let (status_line, filename) = match &amp;request_line[..] {
-</span><span class="boring">        &quot;GET / HTTP/1.1&quot; =&gt; (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;),
-</span><span class="boring">        &quot;GET /sleep HTTP/1.1&quot; =&gt; {
+</span><span class="boring">        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+</span><span class="boring">        "GET /sleep HTTP/1.1" =&gt; {
 </span><span class="boring">            thread::sleep(Duration::from_secs(5));
-</span><span class="boring">            (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+</span><span class="boring">            ("HTTP/1.1 200 OK", "hello.html")
 </span><span class="boring">        }
-</span><span class="boring">        _ =&gt; (&quot;HTTP/1.1 404 NOT FOUND&quot;, &quot;404.html&quot;),
+</span><span class="boring">        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
 </span><span class="boring">    let length = contents.len();
 </span><span class="boring">
 </span><span class="boring">    let response =
-</span><span class="boring">        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre></pre>
@@ -372,7 +372,7 @@ wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 </span><span class="boring">};
 </span><span class="boring">
 </span>fn main() {
-    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let pool = ThreadPool::new(4);
 
     for stream in listener.incoming() {
@@ -389,19 +389,19 @@ wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 </span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
 </span><span class="boring">    let (status_line, filename) = match &amp;request_line[..] {
-</span><span class="boring">        &quot;GET / HTTP/1.1&quot; =&gt; (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;),
-</span><span class="boring">        &quot;GET /sleep HTTP/1.1&quot; =&gt; {
+</span><span class="boring">        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+</span><span class="boring">        "GET /sleep HTTP/1.1" =&gt; {
 </span><span class="boring">            thread::sleep(Duration::from_secs(5));
-</span><span class="boring">            (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+</span><span class="boring">            ("HTTP/1.1 200 OK", "hello.html")
 </span><span class="boring">        }
-</span><span class="boring">        _ =&gt; (&quot;HTTP/1.1 404 NOT FOUND&quot;, &quot;404.html&quot;),
+</span><span class="boring">        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
 </span><span class="boring">    let length = contents.len();
 </span><span class="boring">
 </span><span class="boring">    let response =
-</span><span class="boring">        format!(&quot;{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}&quot;);
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
@@ -457,7 +457,7 @@ der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let listener = TcpListener::bind(&quot;127.0.0.1:7878&quot;).unwrap();
+</span><span class="boring">    let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
 </span><span class="boring">    let pool = ThreadPool::new(4);
 </span><span class="boring">
 </span><span class="boring">    for stream in listener.incoming() {
@@ -473,22 +473,22 @@ der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
 </span><span class="boring">    let mut buffer = [0; 1024];
 </span><span class="boring">    stream.read(&amp;mut buffer).unwrap();
 </span><span class="boring">
-</span><span class="boring">    let get = b&quot;GET / HTTP/1.1\r\n&quot;;
-</span><span class="boring">    let sleep = b&quot;GET /sleep HTTP/1.1\r\n&quot;;
+</span><span class="boring">    let get = b"GET / HTTP/1.1\r\n";
+</span><span class="boring">    let sleep = b"GET /sleep HTTP/1.1\r\n";
 </span><span class="boring">
 </span><span class="boring">    let (status_line, filename) = if buffer.starts_with(get) {
-</span><span class="boring">        (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
 </span><span class="boring">    } else if buffer.starts_with(sleep) {
 </span><span class="boring">        thread::sleep(Duration::from_secs(5));
-</span><span class="boring">        (&quot;HTTP/1.1 200 OK&quot;, &quot;hello.html&quot;)
+</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
 </span><span class="boring">    } else {
-</span><span class="boring">        (&quot;HTTP/1.1 404 NOT FOUND&quot;, &quot;404.html&quot;)
+</span><span class="boring">        ("HTTP/1.1 404 NOT FOUND", "404.html")
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
 </span><span class="boring">
 </span><span class="boring">    let response = format!(
-</span><span class="boring">        &quot;{}\r\nContent-Length: {}\r\n\r\n{}&quot;,
+</span><span class="boring">        "{}\r\nContent-Length: {}\r\n\r\n{}",
 </span><span class="boring">        status_line,
 </span><span class="boring">        contents.len(),
 </span><span class="boring">        contents
@@ -1277,7 +1277,7 @@ impl Worker {
         let thread = thread::spawn(move || loop {
             let job = receiver.lock().unwrap().recv().unwrap();
 
-            println!(&quot;Worker {id} hat einen Auftrag erhalten; führe ihn aus.&quot;);
+            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
             job();
         });
@@ -1416,7 +1416,7 @@ impl Worker {
     fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
         let thread = thread::spawn(move || {
             while let Ok(job) = receiver.lock().unwrap().recv() {
-                println!(&quot;Worker {id} hat einen Auftrag erhalten; führe ihn aus.&quot;);
+                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
                 job();
             }
@@ -1438,7 +1438,7 @@ durchsetzen, dass auf eine von einem <code>Mutex</code> bewachte Ressource nicht
 zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
 Implementierung kann aber auch dazu führen, dass die Sperre länger als
 beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
-<code>MutexGuard&lt;T&gt;</code> nachdenken. </p>
+<code>MutexGuard&lt;T&gt;</code> nachdenken.</p>
 <p>Der Code in Codeblock 20-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
 <code>let</code> alle temporären Werte, die in dem Ausdruck auf der rechten Seite des
 Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die

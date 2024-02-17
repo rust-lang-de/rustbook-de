@@ -207,7 +207,7 @@ Haldenspeicher speichert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let b = Box::new(5);
-    println!(&quot;b = {}&quot;, b);
+    println!("b = {}", b);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
 im Haldenspeicher</span></p>
@@ -297,7 +297,7 @@ Siehe Codeblock 15-3:</p>
 fn main() {
     let list = Cons(1, Cons(2, Cons(3, Nil)));
 }</code></pre></pre>
-<p><span class="caption">Codeblock 15-3: Verwendung der <code>List</code>-Aufzählung um die 
+<p><span class="caption">Codeblock 15-3: Verwendung der <code>List</code>-Aufzählung um die
 Liste <code>1, 2, 3</code> zu speichern</span></p>
 <p>Der erste <code>Cons</code>-Wert enthält <code>1</code> und einen anderen <code>List</code>-Wert. Dieser
 <code>List</code>-Wert ist ein weiterer <code>Cons</code>-Wert, der <code>2</code> und einen anderen <code>List</code>-Wert
@@ -362,7 +362,7 @@ betrachtet der Compiler die Varianten, beginnend mit der Variante <code>Cons</co
 Variante <code>Cons</code> enthält einen Typ <code>i32</code> und einen Wert vom Typ <code>List</code>. Dieser
 Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
-<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus unendlichen 
+<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus unendlichen
 <code>Cons</code>-Varianten besteht</span></p>
 <h4 id="verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten"><a class="header" href="#verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten">Verwenden von <code>Box&lt;T&gt;</code>, um einen rekursiven Typ mit einer bekannten Größe zu erhalten</a></h4>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
@@ -404,14 +404,14 @@ fn main() {
 um eine bekannte Größe zu haben</span></p>
 <p>Die <code>Cons</code>-Variante benötigt die Größe eines <code>i32</code> plus Platz zum Speichern der
 Zeigerdaten der Box. Die <code>Nil</code>-Variante speichert keine Werte und benötigt daher
-weniger Speicher als die <code>Cons</code>-Variante. Wir wissen nun, dass jeder <code>List</code>-Wert 
+weniger Speicher als die <code>Cons</code>-Variante. Wir wissen nun, dass jeder <code>List</code>-Wert
 die Größe eines <code>i32</code> plus die Größe der Zeigerdaten einer Box annimmt. Durch
 Verwenden einer Box haben wir die unendliche, rekursive Kette unterbrochen,
 sodass der Compiler die Größe ermitteln kann, die zum Speichern eines
 Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante <code>Cons</code>
 jetzt aussieht.</p>
 <img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" style="width: 20%;" />
-<p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ der keine unendliche Größe 
+<p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ der keine unendliche Größe
 hat da <code>Cons</code> eine <code>Box</code> enthält</span></p>
 <p>Boxen bieten nur die Dereferenzierung und Zuordnung am Haldenspeicher, haben
 aber sonst keine speziellen Funktionalitäten, wie wir sie bei anderen

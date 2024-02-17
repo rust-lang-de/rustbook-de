@@ -195,7 +195,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -209,7 +209,7 @@ beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.</p>
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
 </span><span class="boring">    for line in search(&amp;config.query, &amp;contents) {
-</span><span class="boring">        println!(&quot;{line}&quot;);
+</span><span class="boring">        println!("{line}");
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    Ok(())
@@ -233,27 +233,27 @@ mod tests {
 
     #[test]
     fn case_sensitive() {
-        let query = &quot;dukt&quot;;
-        let contents = &quot;\
+        let query = "dukt";
+        let contents = "\
 Rust:
 sicher, schnell, produktiv.
 Nimm drei.
-PRODUKTION.&quot;;
+PRODUKTION.";
 
-        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
     }
 
     #[test]
     fn case_insensitive() {
-        let query = &quot;rUsT&quot;;
-        let contents = &quot;\
+        let query = "rUsT";
+        let contents = "\
 Rust:
 sicher, schnell, produktiv.
 Nimm drei.
-Trust me.&quot;;
+Trust me.";
 
         assert_eq!(
-            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+            vec!["Rust:", "Trust me."],
             search_case_insensitive(query, contents)
         );
     }
@@ -262,18 +262,18 @@ Trust me.&quot;;
 Tests für die Funktion <code>search_case_insensitive</code>, die wir gleich hinzufügen
 werden</span></p>
 <p>Beachte, dass wir auch den Inhalt des alten Tests bearbeitet haben. Wir haben
-eine neue Zeile mit dem Text <code>&quot;PRODUKTION.&quot;</code> in Großbuchstaben hinzugefügt,
-die nicht mit dem Abfragetext <code>&quot;dukt&quot;</code> übereinstimmen sollte, wenn wir bei der
+eine neue Zeile mit dem Text <code>"PRODUKTION."</code> in Großbuchstaben hinzugefügt,
+die nicht mit dem Abfragetext <code>"dukt"</code> übereinstimmen sollte, wenn wir bei der
 Suche die Groß-/Kleinschreibung beachten. Wenn wir den alten Test auf diese
 Weise ändern, stellen wir sicher, dass wir nicht versehentlich die bereits
 implementierte Suchfunktionalität unter Berücksichtigung der
 Groß-/Kleinschreibung kaputt machen. Dieser Test sollte jetzt erfolgreich sein
 und er sollte es auch bleiben, während wir an der Suche unabhängig von der
 Groß-/Kleinschreibung arbeiten.</p>
-<p>Der neue Test <code>case_insensitive</code> verwendet <code>&quot;rUsT&quot;</code> als Suchabfrage. In der
+<p>Der neue Test <code>case_insensitive</code> verwendet <code>"rUsT"</code> als Suchabfrage. In der
 Funktion <code>search_case_insensitive</code>, die wir gerade hinzufügen wollen, sollte
-der Abfragetext <code>&quot;rUsT&quot;</code> zur Zeile, die <code>&quot;Rust:&quot;</code> mit einem großen R enthält,
-passen und zur Zeile <code>&quot;Trust me.&quot;</code>, obwohl beide eine andere Schreibweise haben
+der Abfragetext <code>"rUsT"</code> zur Zeile, die <code>"Rust:"</code> mit einem großen R enthält,
+passen und zur Zeile <code>"Trust me."</code>, obwohl beide eine andere Schreibweise haben
 als der Abfragetext. Dies ist unser fehlschlagender Test und er wird sich nicht
 kompilieren lassen, weil wir die Funktion <code>search_case_insensitive</code> noch nicht
 definiert haben. Es steht dir frei, eine Skelett-Implementierung hinzuzufügen,
@@ -298,7 +298,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -312,7 +312,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
 </span><span class="boring">    for line in search(&amp;config.query, &amp;contents) {
-</span><span class="boring">        println!(&quot;{line}&quot;);
+</span><span class="boring">        println!("{line}");
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    Ok(())
@@ -352,27 +352,27 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_sensitive() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">PRODUKTION.&quot;;
+</span><span class="boring">PRODUKTION.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_insensitive() {
-</span><span class="boring">        let query = &quot;rUsT&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "rUsT";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">Trust me.&quot;;
+</span><span class="boring">Trust me.";
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(
-</span><span class="boring">            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+</span><span class="boring">            vec!["Rust:", "Trust me."],
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -383,8 +383,8 @@ in Kleinbuchstaben umzuwandeln</span></p>
 <p>Zuerst wandeln wir die Zeichenkette <code>query</code> in Kleinbuchstaben um und speichern
 ihn in einer verschatteten Variablen mit dem gleichen Namen. Der Aufruf von
 <code>to_lowercase</code> beim Abfragetext ist notwendig, sodass wir unabhängig davon, ob
-die Abfrage des Benutzers <code>&quot;rust&quot;</code>, <code>&quot;RUST&quot;</code>, <code>&quot;RUST&quot;</code> oder <code>&quot;rUsT&quot;</code> ist, die
-Abfrage so behandeln, als ob sie <code>&quot;rust&quot;</code> wäre, und die Groß-/Kleinschreibung
+die Abfrage des Benutzers <code>"rust"</code>, <code>"RUST"</code>, <code>"RUST"</code> oder <code>"rUsT"</code> ist, die
+Abfrage so behandeln, als ob sie <code>"rust"</code> wäre, und die Groß-/Kleinschreibung
 nicht beachten. Obwohl <code>to_lowercase</code> mit einfachem Unicode umgehen kann, wird
 es nicht 100% genau sein. Wenn wir eine echte Anwendung schreiben würden,
 würden wir hier etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt
@@ -393,9 +393,9 @@ dabei.</p>
 <p>Beachte, dass <code>query</code> jetzt ein <code>String</code> und nicht mehr ein
 Zeichenkettenanteilstyp ist, weil der Aufruf von <code>to_lowercase</code> neue Daten
 erzeugt, anstatt auf bestehende Daten zu referenzieren. Nehmen wir als Beispiel
-an, der Abfragetext sei <code>&quot;rUsT&quot;</code>, dieser Zeichenkettenanteilstyp enthält kein
+an, der Abfragetext sei <code>"rUsT"</code>, dieser Zeichenkettenanteilstyp enthält kein
 kleingeschriebenes <code>u</code> oder <code>t</code>, das wir verwenden könnten, also müssen wir
-einen neuen <code>String</code> zuweisen, der <code>&quot;rust&quot;</code> enthält. Wenn wir nun <code>query</code> als
+einen neuen <code>String</code> zuweisen, der <code>"rust"</code> enthält. Wenn wir nun <code>query</code> als
 Argument an die <code>contains</code>-Methode übergeben, müssen wir ein <code>&amp;</code>-Zeichen
 angeben, weil die Signatur von <code>contains</code> so definiert ist, dass sie einen
 Zeichenkettenanteilstyp nimmt.</p>
@@ -446,7 +446,7 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -466,7 +466,7 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
-</span><span class="boring">        println!(&quot;{line}&quot;);
+</span><span class="boring">        println!("{line}");
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    Ok(())
@@ -506,27 +506,27 @@ nirgendwo initialisiert haben:</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_sensitive() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">PRODUKTION.&quot;;
+</span><span class="boring">PRODUKTION.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_insensitive() {
-</span><span class="boring">        let query = &quot;rUsT&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "rUsT";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">Trust me.&quot;;
+</span><span class="boring">Trust me.";
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(
-</span><span class="boring">            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+</span><span class="boring">            vec!["Rust:", "Trust me."],
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -549,7 +549,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span><span class="boring">impl Config {
 </span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
 </span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err(&quot;Nicht genügend Argumente&quot;);
+</span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
 </span><span class="boring">
 </span><span class="boring">        let query = args[1].clone();
@@ -569,7 +569,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
     };
 
     for line in results {
-        println!(&quot;{line}&quot;);
+        println!("{line}");
     }
 
     Ok(())
@@ -609,27 +609,27 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_sensitive() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">PRODUKTION.&quot;;
+</span><span class="boring">PRODUKTION.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_insensitive() {
-</span><span class="boring">        let query = &quot;rUsT&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "rUsT";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">Trust me.&quot;;
+</span><span class="boring">Trust me.";
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(
-</span><span class="boring">            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+</span><span class="boring">            vec!["Rust:", "Trust me."],
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }
@@ -658,13 +658,13 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span>impl Config {
     pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
         if args.len() &lt; 3 {
-            return Err(&quot;Nicht genügend Argumente&quot;);
+            return Err("Nicht genügend Argumente");
         }
 
         let query = args[1].clone();
         let file_path = args[2].clone();
 
-        let ignore_case = env::var(&quot;IGNORE_CASE&quot;).is_ok();
+        let ignore_case = env::var("IGNORE_CASE").is_ok();
 
         Ok(Config {
             query,
@@ -684,7 +684,7 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    for line in results {
-</span><span class="boring">        println!(&quot;{line}&quot;);
+</span><span class="boring">        println!("{line}");
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    Ok(())
@@ -724,27 +724,27 @@ einen Wert hat, wie in Codeblock 12-23 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_sensitive() {
-</span><span class="boring">        let query = &quot;dukt&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "dukt";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">PRODUKTION.&quot;;
+</span><span class="boring">PRODUKTION.";
 </span><span class="boring">
-</span><span class="boring">        assert_eq!(vec![&quot;sicher, schnell, produktiv.&quot;], search(query, contents));
+</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn case_insensitive() {
-</span><span class="boring">        let query = &quot;rUsT&quot;;
-</span><span class="boring">        let contents = &quot;\
+</span><span class="boring">        let query = "rUsT";
+</span><span class="boring">        let contents = "\
 </span><span class="boring">Rust:
 </span><span class="boring">sicher, schnell, produktiv.
 </span><span class="boring">Nimm drei.
-</span><span class="boring">Trust me.&quot;;
+</span><span class="boring">Trust me.";
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(
-</span><span class="boring">            vec![&quot;Rust:&quot;, &quot;Trust me.&quot;],
+</span><span class="boring">            vec!["Rust:", "Trust me."],
 </span><span class="boring">            search_case_insensitive(query, contents)
 </span><span class="boring">        );
 </span><span class="boring">    }

@@ -212,7 +212,7 @@ so anlegen:</p>
 </span><span class="boring">    let x: i32 = 5;
 </span><span class="boring">    let y: Kilometers = 5;
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;x + y = {}&quot;, x + y);
+</span><span class="boring">    println!("x + y = {}", x + y);
 </span><span class="boring">}</span></code></pre></pre>
 <p>Der Alias <code>Kilometers</code> ist ein <em>Synonym</em> für <code>i32</code>; im Gegensatz zu den Typen
 <code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 19-15 erstellt haben, ist
@@ -225,7 +225,7 @@ werden genauso behandelt wie Werte des Typs <code>i32</code>:</p>
     let x: i32 = 5;
     let y: Kilometers = 5;
 
-    println!(&quot;x + y = {}&quot;, x + y);
+    println!("x + y = {}", x + y);
 <span class="boring">}</span></code></pre></pre>
 <p>Da <code>Kilometers</code> und <code>i32</code> vom gleichen Typ sind, können wir Werte beider Typen
 addieren und wir können <code>Kilometers</code>-Werte an Funktionen übergeben, die
@@ -241,7 +241,7 @@ Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stell
 dir vor, du hättest ein Projekt voller Code wie das in Codeblock 19-24.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!(&quot;hallo&quot;));
+</span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!("hallo"));
 
     fn takes_long_type(f: Box&lt;dyn Fn() + Send + 'static&gt;) {
         // --abschneiden--
@@ -262,7 +262,7 @@ kürzeren Alias <code>Thunk</code> ersetzen.</p>
 </span><span class="boring">fn main() {
 </span>    type Thunk = Box&lt;dyn Fn() + Send + 'static&gt;;
 
-    let f: Thunk = Box::new(|| println!(&quot;hallo&quot;));
+    let f: Thunk = Box::new(|| println!("hallo"));
 
     fn takes_long_type(f: Thunk) {
         // --abschneiden--
@@ -356,14 +356,14 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Geheimzahl ist: {}&quot;, secret_number);
+</span><span class="boring">    println!("Die Geheimzahl ist: {}", secret_number);
 </span><span class="boring">
 </span><span class="boring">    loop {
-</span><span class="boring">        println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">        println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">        let mut guess = String::new();
 </span><span class="boring">
@@ -371,22 +371,22 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 </span><span class="boring">
 </span><span class="boring">        io::stdin()
 </span><span class="boring">            .read_line(&amp;mut guess)
-</span><span class="boring">            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">            .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
 </span>        let guess: u32 = match guess.trim().parse() {
             Ok(num) =&gt; num,
             Err(_) =&gt; continue,
         };
 <span class="boring">
-</span><span class="boring">        println!(&quot;Du hast geschätzt: {}&quot;, guess);
+</span><span class="boring">        println!("Du hast geschätzt: {}", guess);
 </span><span class="boring">
 </span><span class="boring">        // --abschneiden--
 </span><span class="boring">
 </span><span class="boring">        match guess.cmp(&amp;secret_number) {
-</span><span class="boring">            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-</span><span class="boring">            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+</span><span class="boring">            Ordering::Less =&gt; println!("Zu klein!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Zu groß!"),
 </span><span class="boring">            Ordering::Equal =&gt; {
-</span><span class="boring">                println!(&quot;Du hast gewonnen!&quot;);
+</span><span class="boring">                println!("Du hast gewonnen!");
 </span><span class="boring">                break;
 </span><span class="boring">            }
 </span><span class="boring">        }
@@ -400,10 +400,10 @@ erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktionier
 zum Beispiel der folgende Code nicht:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">    let guess = &quot;3&quot;;
+</span><span class="boring">    let guess = "3";
 </span>    let guess = match guess.trim().parse() {
         Ok(_) =&gt; 5,
-        Err(_) =&gt; &quot;hallo&quot;,
+        Err(_) =&gt; "hallo",
     };
 <span class="boring">}</span></code></pre></pre>
 <p>Der Typ von <code>guess</code> in diesem Code müsste eine ganze Zahl <em>und</em> eine
@@ -437,7 +437,7 @@ erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
     pub fn unwrap(self) -&gt; T {
         match self {
             Some(val) =&gt; val,
-            None =&gt; panic!(&quot;Aufruf von `Option::unwrap()` auf einem `None`-Wert&quot;),
+            None =&gt; panic!("Aufruf von `Option::unwrap()` auf einem `None`-Wert"),
         }
     }
 }
@@ -450,10 +450,10 @@ keinen Wert von <code>unwrap</code> zurück, also ist dieser Code gültig.</p>
 <p>Ein letzter Ausdruck, der den Typ <code>!</code> hat, ist <code>loop</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    print!(&quot;für immer &quot;);
+</span>    print!("für immer ");
 
     loop {
-        print!(&quot;und ewig &quot;);
+        print!("und ewig ");
     }
 <span class="boring">}</span></code></pre></pre>
 <p>Hier endet die Schleife nie, also ist <code>!</code> der Typ des Ausdrucks. Dies wäre
@@ -474,8 +474,8 @@ können wir ein Argument vom Typ <code>str</code> nehmen. Betrachte den folgende
 nicht funktioniert:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let s1: str = &quot;Guten Tag!&quot;;
-    let s2: str = &quot;Wie geht es dir?&quot;;
+</span>    let s1: str = "Guten Tag!";
+    let s2: str = "Wie geht es dir?";
 
 <span class="boring">}</span></code></pre></pre>
 <p>Rust muss wissen, wie viel Speicher jedem Wert eines bestimmten Typs zuzuweisen

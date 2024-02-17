@@ -180,7 +180,7 @@ Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
     let height1 = 50;
 
     println!(
-        &quot;Die Fläche des Rechtecks ist {} Quadratpixel.&quot;,
+        "Die Fläche des Rechtecks ist {} Quadratpixel.",
         area(width1, height1)
     );
 }
@@ -206,7 +206,7 @@ tun, um diesen Code klar und lesbar zu machen.</p>
 </span><span class="boring">    let height1 = 50;
 </span><span class="boring">
 </span><span class="boring">    println!(
-</span><span class="boring">        &quot;Die Fläche des Rechtecks ist {} Quadratpixel.&quot;,
+</span><span class="boring">        "Die Fläche des Rechtecks ist {} Quadratpixel.",
 </span><span class="boring">        area(width1, height1)
 </span><span class="boring">    );
 </span><span class="boring">}
@@ -228,7 +228,7 @@ verwendet.</p>
     let rect1 = (30, 50);
 
     println!(
-        &quot;Die Fläche des Rechtecks ist {} Quadratpixel.&quot;,
+        "Die Fläche des Rechtecks ist {} Quadratpixel.",
         area(rect1)
     );
 }
@@ -268,7 +268,7 @@ fn main() {
     };
 
     println!(
-        &quot;Die Fläche des Rechtecks ist {} Quadratpixel.&quot;,
+        "Die Fläche des Rechtecks ist {} Quadratpixel.",
         area(&amp;rect1)
     );
 }
@@ -313,7 +313,7 @@ fn main() {
         height: 50,
     };
 
-    println!(&quot;rect1 ist {}&quot;, rect1);
+    println!("rect1 ist {}", rect1);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-11: Versuch, eine <code>Rectangle</code>-Instanz
 auszugeben</span></p>
@@ -338,7 +338,7 @@ finden:</p>
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
 </code></pre>
 <p>Lass es uns versuchen! Der Makroaufruf <code>println!</code> wird geändert in
-<code>println!(&quot;rect1 ist {:?}&quot;, rect1);</code>. Wenn wir das Symbol <code>:?</code> innerhalb der
+<code>println!("rect1 ist {:?}", rect1);</code>. Wenn wir das Symbol <code>:?</code> innerhalb der
 geschweiften Klammern angeben, teilen wir <code>println!</code> mit, dass wir das
 Ausgabeformat <code>Debug</code> verwenden wollen. Das Merkmal <code>Debug</code> ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
@@ -368,7 +368,7 @@ fn main() {
         height: 50,
     };
 
-    println!(&quot;rect1 ist {:?}&quot;, rect1);
+    println!("rect1 ist {:?}", rect1);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
 <code>Debug</code> und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>

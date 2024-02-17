@@ -190,9 +190,9 @@ Projekts.</p>
 <p>Schaue dir die generierte Datei <em>Cargo.toml</em> an:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[package]
-name = &quot;guessing_game&quot;
-version = &quot;0.1.0&quot;
-edition = &quot;2021&quot;
+name = "guessing_game"
+version = "0.1.0"
+edition = "2021"
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
@@ -202,7 +202,7 @@ edition = &quot;2021&quot;
 world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    println!(&quot;Hello, world!&quot;);
+    println!("Hello, world!");
 }</code></pre></pre>
 <p>Kompilieren wir nun dieses „Hello, world!“-Programm und führen es im gleichen
 Schritt aus mit dem Befehl <code>cargo run</code>:</p>
@@ -226,17 +226,17 @@ den Code aus Codeblock 2-1 in <em>src/main.rs</em> ein.</p>
 <pre><code class="language-rust ignore">use std::io;
 
 fn main() {
-    println!(&quot;Rate die Zahl!&quot;);
+    println!("Rate die Zahl!");
 
-    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+    println!("Bitte gib deine Schätzung ein.");
 
     let mut guess = String::new();
 
     io::stdin()
         .read_line(&amp;mut guess)
-        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+        .expect("Fehler beim Lesen der Zeile");
 
-    println!(&quot;Du hast geschätzt: {guess}&quot;);
+    println!("Du hast geschätzt: {guess}");
 }</code></pre>
 <p><span class="caption">Codeblock 2-1: Code, der eine Schätzung vom Benutzer
 erhält und ausgibt</span></p>
@@ -248,17 +248,17 @@ Standardbibliothek, bekannt als <code>std</code>:</p>
 <pre><code class="language-rust ignore">use std::io;
 <span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert,
 die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
@@ -274,17 +274,17 @@ das Programm:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span>fn main() {
-<span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+<span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Die Syntax <code>fn</code> deklariert eine neue Funktion; die Klammern <code>()</code> zeigen an,
 dass es keine Parameter gibt; und die geschweifte Klammer <code>{</code> beginnt den Rumpf
@@ -294,17 +294,17 @@ Zeichenkette auf dem Bildschirm ausgibt:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span>    println!(&quot;Rate die Zahl!&quot;);
+</span>    println!("Rate die Zahl!");
 
-    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+    println!("Bitte gib deine Schätzung ein.");
 <span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Dieser Code gibt eine Eingabeaufforderung aus, die angibt, um was für ein Spiel
 es sich handelt, und den Benutzer zur Eingabe auffordert.</p>
@@ -314,17 +314,17 @@ speichern, wie hier:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span>    let mut guess = String::new();
 <span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Jetzt wird das Programm interessant! Es ist viel los in dieser kleinen Zeile.
 Wir verwenden eine <code>let</code>-Anweisung, um eine Variable zu erzeugen. Hier ist ein
@@ -372,17 +372,17 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span>    io::stdin()
         .read_line(&amp;mut guess)
-<span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+<span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms mit <code>use std::io;</code>
 importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
@@ -416,26 +416,26 @@ Codezeile ist. Der nächste Teil ist diese Methode:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span>        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span>        .expect("Fehler beim Lesen der Zeile");
 <span class="boring">
-</span><span class="boring">    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
 <p>Wir hätten diesen Code auch so schreiben können:</p>
-<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect(&quot;Fehler beim Lesen der Zeile&quot;);</code></pre>
+<pre><code class="language-rust ignore">io::stdin().read_line(&amp;mut guess).expect("Fehler beim Lesen der Zeile");</code></pre>
 <p>Eine lange Zeile ist jedoch schwer zu lesen, daher ist es am besten, sie
 aufzuteilen. Es ist oft ratsam, einen Zeilenumbruch und andere Leerzeichen
 einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax <code>.method_name()</code> aufrufst. Lass uns nun besprechen, was diese Zeile
-bewirkt. </p>
-<p>Wie bereits erwähnt, schreibt <code>read_line</code> die Benutzereingabe in die übergebene 
+bewirkt.</p>
+<p>Wie bereits erwähnt, schreibt <code>read_line</code> die Benutzereingabe in die übergebene
 String-Variable, gibt aber darüber hinaus auch einen <code>Result</code>-Wert
 zurück.
 <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
@@ -446,7 +446,7 @@ Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
 dieser <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
 <p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
 die Operation erfolgreich war, und der erfolgreich
-generierte Wert innerhalb von <code>Ok</code> steht. 
+generierte Wert innerhalb von <code>Ok</code> steht.
 Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
 ist, und <code>Err</code> enthält Informationen darüber, wie oder warum die Operation
 fehlgeschlagen ist.</p>
@@ -473,7 +473,7 @@ warning: unused `Result` that must be used
    = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
 
-warning: `guessing_game` (bin &quot;guessing_game&quot;) generated 1 warning
+warning: `guessing_game` (bin "guessing_game") generated 1 warning
 
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
@@ -486,21 +486,21 @@ wenn ein Problem auftritt, können wir <code>expect</code> verwenden. In <a href
 9</a> erfährst du, wie man sich von Fehlern erholt.</p>
 <h3 id="ausgeben-von-werten-mit-println-platzhaltern"><a class="header" href="#ausgeben-von-werten-mit-println-platzhaltern">Ausgeben von Werten mit <code>println!</code>-Platzhaltern</a></h3>
 <p>Abgesehen von der schließenden geschweiften Klammer gibt es in dem bisher
-hinzugefügten Code nur noch eine weitere Zeile zu besprechen: </p>
+hinzugefügten Code nur noch eine weitere Zeile zu besprechen:</p>
 <pre><code class="language-rust ignore"><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span>    println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span>    println!("Du hast geschätzt: {guess}");
 <span class="boring">}</span></code></pre>
 <p>Diese Zeile gibt die Zeichenkette aus, die jetzt die Eingabe des Benutzers
 enthält. Der Satz geschweifte Klammern <code>{}</code> ist ein Platzhalter:
@@ -518,7 +518,7 @@ einem Aufruf von <code>println!</code> würde wie folgt aussehen:</p>
 </span>let x = 5;
 let y = 10;
 
-println!(&quot;x = {x} und y + 2 = {}&quot;, y + 2);
+println!("x = {x} und y + 2 = {}", y + 2);
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code würde <code>x = 5 und y + 2 = 12</code> ausgeben.</p>
 <h3 id="testen-des-ersten-teils"><a class="header" href="#testen-des-ersten-teils">Testen des ersten Teils</a></h3>
@@ -535,7 +535,7 @@ Du hast geschätzt: 6
 <p>An diesem Punkt ist der erste Teil des Spiels abgeschlossen: Wir erhalten
 eine Eingabe über die Tastatur und geben sie dann aus.</p>
 <h2 id="generieren-einer-geheimzahl"><a class="header" href="#generieren-einer-geheimzahl">Generieren einer Geheimzahl</a></h2>
-<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht 
+<p>Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht
 zu erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
@@ -544,7 +544,7 @@ jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> 
 Verfügung.</p>
 <h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste, um mehr Funktionalität zu erhalten</a></h3>
 <p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
-Projekt &quot;Ratespiel&quot; ist eine <em>binäre Kiste</em> (binary crate), die eine
+Projekt "Ratespiel" ist eine <em>binäre Kiste</em> (binary crate), die eine
 ausführbare Datei ist. Die Kiste <code>rand</code> ist eine <em>Bibliotheks-Kiste</em> (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.</p>
 <p>Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
@@ -557,7 +557,7 @@ getan haben, andernfalls funktionieren die Codebeispiele in dieser Anleitung
 möglicherweise nicht.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.8.5&quot;
+rand = "0.8.5"
 </code></pre>
 <p>In der Datei <em>Cargo.toml</em> ist alles, was nach einer Überschrift folgt, Teil
 dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
@@ -665,7 +665,7 @@ Version der Kiste <code>rand</code>, die du jetzt benutzt, 0.8.6 ist. Um die
 verwenden, müsstest du stattdessen die Datei <em>Cargo.toml</em> anpassen, damit sie
 wie folgt aussieht:</p>
 <pre><code class="language-toml">[dependencies]
-rand = &quot;0.9.0&quot;
+rand = "0.9.0"
 </code></pre>
 <p>Wenn du das nächste Mal <code>cargo build</code> ausführst, wird Cargo die Registry der
 verfügbaren Kisten aktualisieren und deine <code>rand</code>-Anforderungen entsprechend
@@ -684,21 +684,21 @@ Schritt ist <em>src/main.rs</em> zu ändern, wie in Codeblock 2-3 gezeigt.</p>
 use rand::Rng;
 
 fn main() {
-    println!(&quot;Rate die Zahl!&quot;);
+    println!("Rate die Zahl!");
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
-    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+    println!("Die Geheimzahl ist: {secret_number}");
 
-    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+    println!("Bitte gib deine Schätzung ein.");
 
     let mut guess = String::new();
 
     io::stdin()
         .read_line(&amp;mut guess)
-        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+        .expect("Fehler beim Lesen der Zeile");
 
-    println!(&quot;Du hast geschätzt: {guess}&quot;);
+    println!("Du hast geschätzt: {guess}");
 }</code></pre>
 <p><span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span></p>
@@ -766,26 +766,26 @@ use std::io;
 
 fn main() {
     // --abschneiden--
-<span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+<span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">    let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">    io::stdin()
 </span><span class="boring">        .read_line(&amp;mut guess)
-</span><span class="boring">        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">        .expect("Fehler beim Lesen der Zeile");
 </span>
-    println!(&quot;Du hast geschätzt: {guess}&quot;);
+    println!("Du hast geschätzt: {guess}");
 
     match guess.cmp(&amp;secret_number) {
-        Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-        Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
-        Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
+        Ordering::Less =&gt; println!("Zu klein!"),
+        Ordering::Greater =&gt; println!("Zu groß!"),
+        Ordering::Equal =&gt; println!("Du hast gewonnen!"),
     }
 }</code></pre>
 <p><span class="caption">Codeblock 2-4: Behandeln der möglichen Rückgabewerte beim
@@ -854,8 +854,8 @@ note: associated function defined here
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` due to previous error
 </code></pre>
-<p>Die Kernbotschaft des Fehlers besagt, dass es <em>nicht übereinstimmende Typen</em> 
-(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch 
+<p>Die Kernbotschaft des Fehlers besagt, dass es <em>nicht übereinstimmende Typen</em>
+(mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch
 auch eine Typ-Inferenz. Als wir <code>let mut guess = String::new()</code> schrieben, konnte
 Rust daraus schließen, dass <code>guess</code> ein <code>String</code> sein sollte, und zwang uns
 nicht, den Typ anzugeben. Die <code>secret_number</code> hingegen ist ein Zahlentyp.
@@ -876,13 +876,13 @@ hinzufügen:</p>
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">    println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span>    // --abschneiden--
 
@@ -890,20 +890,20 @@ hinzufügen:</p>
 
     io::stdin()
         .read_line(&amp;mut guess)
-        .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+        .expect("Fehler beim Lesen der Zeile");
 
-    let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);
+    let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 
-    println!(&quot;Du hast geschätzt: {guess}&quot;);
+    println!("Du hast geschätzt: {guess}");
 
     match guess.cmp(&amp;secret_number) {
-        Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-        Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
-        Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
+        Ordering::Less =&gt; println!("Zu klein!"),
+        Ordering::Greater =&gt; println!("Zu groß!"),
+        Ordering::Equal =&gt; println!("Du hast gewonnen!"),
     }
 }</code></pre>
 <p>Die Zeile lautet:</p>
-<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);</code></pre>
+<pre><code class="language-rust ignore">let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");</code></pre>
 <p>Wir erstellen eine Variable mit dem Namen <code>guess</code>. Aber warte, hat das Programm
 nicht bereits eine Variable namens <code>guess</code>? Ja, aber Rust erlaubt uns, den
 vorherigen Wert von <code>guess</code> mit einem neuen Wert zu verschatten (shadow). Durch
@@ -983,16 +983,16 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
 </span>    // --abschneiden--
 
-    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+    println!("Die Geheimzahl ist: {secret_number}");
 
     loop {
-        println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+        println!("Bitte gib deine Schätzung ein.");
 
         // --abschneiden--
 
@@ -1000,16 +1000,16 @@ Schleife hinzu, um den Benutzern mehr Chancen zu geben, die Zahl zu erraten:</p>
 </span><span class="boring">
 </span><span class="boring">        io::stdin()
 </span><span class="boring">            .read_line(&amp;mut guess)
-</span><span class="boring">            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">            .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">        let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 </span><span class="boring">
-</span><span class="boring">        println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">        println!("Du hast geschätzt: {guess}");
 </span><span class="boring">
 </span>        match guess.cmp(&amp;secret_number) {
-            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
-            Ordering::Equal =&gt; println!(&quot;Du hast gewonnen!&quot;),
+            Ordering::Less =&gt; println!("Zu klein!"),
+            Ordering::Greater =&gt; println!("Zu groß!"),
+            Ordering::Equal =&gt; println!("Du hast gewonnen!"),
         }
     }
 }</code></pre>
@@ -1063,32 +1063,32 @@ gewinnt, indem wir eine <code>break</code>-Anweisung hinzufügen:</p>
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    loop {
-</span><span class="boring">        println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">        println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">        let mut guess = String::new();
 </span><span class="boring">
 </span><span class="boring">        io::stdin()
 </span><span class="boring">            .read_line(&amp;mut guess)
-</span><span class="boring">            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+</span><span class="boring">            .expect("Fehler beim Lesen der Zeile");
 </span><span class="boring">
-</span><span class="boring">        let guess: u32 = guess.trim().parse().expect(&quot;Bitte gib eine Zahl ein!&quot;);
+</span><span class="boring">        let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 </span><span class="boring">
-</span><span class="boring">        println!(&quot;Du hast geschätzt: {guess}&quot;);
+</span><span class="boring">        println!("Du hast geschätzt: {guess}");
 </span><span class="boring">
 </span>        // --abschneiden--
 
         match guess.cmp(&amp;secret_number) {
-            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+            Ordering::Less =&gt; println!("Zu klein!"),
+            Ordering::Greater =&gt; println!("Zu groß!"),
             Ordering::Equal =&gt; {
-                println!(&quot;Du hast gewonnen!&quot;);
+                println!("Du hast gewonnen!");
                 break;
             }
         }
@@ -1110,14 +1110,14 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 </span><span class="boring">use std::io;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    println!(&quot;Rate die Zahl!&quot;);
+</span><span class="boring">    println!("Rate die Zahl!");
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1..=100);
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Die Geheimzahl ist: {secret_number}&quot;);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    loop {
-</span><span class="boring">        println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+</span><span class="boring">        println!("Bitte gib deine Schätzung ein.");
 </span><span class="boring">
 </span><span class="boring">        let mut guess = String::new();
 </span><span class="boring">
@@ -1125,22 +1125,22 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 
         io::stdin()
             .read_line(&amp;mut guess)
-            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+            .expect("Fehler beim Lesen der Zeile");
 
         let guess: u32 = match guess.trim().parse() {
             Ok(num) =&gt; num,
             Err(_) =&gt; continue,
         };
 
-        println!(&quot;Du hast geschätzt: {guess}&quot;);
+        println!("Du hast geschätzt: {guess}");
 
         // --abschneiden--
 <span class="boring">
 </span><span class="boring">        match guess.cmp(&amp;secret_number) {
-</span><span class="boring">            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-</span><span class="boring">            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+</span><span class="boring">            Ordering::Less =&gt; println!("Zu klein!"),
+</span><span class="boring">            Ordering::Greater =&gt; println!("Zu groß!"),
 </span><span class="boring">            Ordering::Equal =&gt; {
-</span><span class="boring">                println!(&quot;Du hast gewonnen!&quot;);
+</span><span class="boring">                println!("Du hast gewonnen!");
 </span><span class="boring">                break;
 </span><span class="boring">            }
 </span><span class="boring">        }
@@ -1203,31 +1203,31 @@ use std::cmp::Ordering;
 use std::io;
 
 fn main() {
-    println!(&quot;Rate die Zahl!&quot;);
+    println!("Rate die Zahl!");
 
     let secret_number = rand::thread_rng().gen_range(1..=100);
 
     loop {
-        println!(&quot;Bitte gib deine Schätzung ein.&quot;);
+        println!("Bitte gib deine Schätzung ein.");
 
         let mut guess = String::new();
 
         io::stdin()
             .read_line(&amp;mut guess)
-            .expect(&quot;Fehler beim Lesen der Zeile&quot;);
+            .expect("Fehler beim Lesen der Zeile");
 
         let guess: u32 = match guess.trim().parse() {
             Ok(num) =&gt; num,
             Err(_) =&gt; continue,
         };
 
-        println!(&quot;Du hast geschätzt: {guess}&quot;);
+        println!("Du hast geschätzt: {guess}");
 
         match guess.cmp(&amp;secret_number) {
-            Ordering::Less =&gt; println!(&quot;Zu klein!&quot;),
-            Ordering::Greater =&gt; println!(&quot;Zu groß!&quot;),
+            Ordering::Less =&gt; println!("Zu klein!"),
+            Ordering::Greater =&gt; println!("Zu groß!"),
             Ordering::Equal =&gt; {
-                println!(&quot;Du hast gewonnen!&quot;);
+                println!("Du hast gewonnen!");
                 break;
             }
         }

@@ -503,7 +503,7 @@ bekommen.</p>
         pub fn summer(toast: &amp;str) -&gt; Breakfast {
             Breakfast {
                 toast: String::from(toast),
-                seasonal_fruit: String::from(&quot;Pfirsiche&quot;),
+                seasonal_fruit: String::from("Pfirsiche"),
             }
         }
     }
@@ -511,15 +511,15 @@ bekommen.</p>
 
 pub fn eat_at_restaurant() {
     // Bestelle im Sommer ein Frühstück mit Roggentoast
-    let mut meal = back_of_house::Breakfast::summer(&quot;Roggen&quot;);
+    let mut meal = back_of_house::Breakfast::summer("Roggen");
     // Ändere unsere Meinung darüber, welche Brotsorte wir gerne hätten
-    meal.toast = String::from(&quot;Weizen&quot;);
-    println!(&quot;Ich möchte {}-Toast&quot;, meal.toast);
+    meal.toast = String::from("Weizen");
+    println!("Ich möchte {}-Toast", meal.toast);
 
     // Die nächste Zeile lässt sich nicht kompilieren, wenn wir sie nicht
     // auskommentieren; wir dürfen die Früchte der Saison, die wir mit der
     // Mahlzeit bekommen, weder sehen noch verändern.
-    // meal.seasonal_fruit = String::from(&quot;Heidelbeeren&quot;);
+    // meal.seasonal_fruit = String::from("Heidelbeeren");
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-9: Eine Struktur mit öffentlichen und

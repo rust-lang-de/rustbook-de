@@ -168,7 +168,7 @@
                         <h2 id="methodensyntax"><a class="header" href="#methodensyntax">Methodensyntax</a></h2>
 <p><em>Methoden</em> sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort <code>fn</code>
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
-und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
+und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
 Merkmalsobjektes (trait object), die wir in <a href="ch06-00-enums.html">Kapitel 6</a> und <a href="ch17-02-trait-objects.html">Kapitel
@@ -199,7 +199,7 @@ fn main() {
     };
 
     println!(
-        &quot;Die Fläche des Rechtecks ist {} Quadratpixel.&quot;,
+        "Die Fläche des Rechtecks ist {} Quadratpixel.",
         rect1.area()
     );
 }</code></pre></pre>
@@ -262,7 +262,7 @@ fn main() {
     };
 
     if rect1.width() {
-        println!(&quot;Das Rechteck hat eine Breite ungleich Null; sie ist {}&quot;, rect1.width);
+        println!("Das Rechteck hat eine Breite ungleich Null; sie ist {}", rect1.width);
     }
 }</code></pre></pre>
 <p>Hier entscheiden wir uns dafür, dass die Methode <code>width</code> den Wert <code>true</code>
@@ -348,8 +348,8 @@ Codeblock 5-14 gezeigte Programm zu schreiben.</p>
         height: 45,
     };
 
-    println!(&quot;Umfasst rect1 rect2? {}&quot;, rect1.can_hold(&amp;rect2));
-    println!(&quot;Umfasst rect1 rect3? {}&quot;, rect1.can_hold(&amp;rect3));
+    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
+    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
 }</code></pre>
 <p><span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
 Methode <code>can_hold</code></span></p>
@@ -403,8 +403,8 @@ Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Umfasst rect1 rect2? {}&quot;, rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!(&quot;Umfasst rect1 rect3? {}&quot;, rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-15: Implementierung der Methode <code>can_hold</code>
 auf <code>Rectangle</code>, die eine weitere <code>Rectangle</code>-Instanz als Parameter hat</span></p>
@@ -491,8 +491,8 @@ impl Rectangle {
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!(&quot;Umfasst rect1 rect2? {}&quot;, rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!(&quot;Umfasst rect1 rect3? {}&quot;, rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
 Verwendung mehrerer <code>impl</code>-Blöcke</span></p>

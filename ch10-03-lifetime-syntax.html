@@ -201,7 +201,7 @@ Gültigkeitsbereich hat.</p>
         r = &amp;x;
     }
 
-    println!(&quot;r: {}&quot;, r);
+    println!("r: {}", r);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
@@ -230,7 +230,7 @@ error[E0597]: `x` does not live long enough
 7 |     }
   |     - `x` dropped here while still borrowed
 8 |
-9 |     println!(&quot;r: {}&quot;, r);
+9 |     println!("r: {}", r);
   |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
@@ -258,7 +258,7 @@ Annotationen, die die Lebensdauer der Variablen angeben.</p>
         r = &amp;x;           //  |       |
     }                     // -+       |
                           //          |
-    println!(&quot;r: {}&quot;, r); //          |
+    println!("r: {}", r); //          |
 }                         // ---------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
@@ -276,7 +276,7 @@ Referenz hat und fehlerfrei kompiliert werden kann.</p>
                           //           |
     let r = &amp;x;           // --+-- 'a  |
                           //   |       |
-    println!(&quot;r: {}&quot;, r); //   |       |
+    println!("r: {}", r); //   |       |
                           // --+       |
 }                         // ----------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
@@ -296,11 +296,11 @@ Zeichenkettenanteilstyp zurück. Nachdem wir die Funktion <code>longest</code>
 implementiert haben, sollte der Code in Codeblock 10-19 <code>Die längere Zeichenkette ist abcd</code> ausgeben.</p>
 <p><span class="filename">Datei: src/main.rs</span></p>
 <pre><code class="language-rust ignore">fn main() {
-    let string1 = String::from(&quot;abcd&quot;);
-    let string2 = &quot;xyz&quot;;
+    let string1 = String::from("abcd");
+    let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+    println!("Die längere Zeichenkette ist {}", result);
 }</code></pre>
 <p><span class="caption">Codeblock 10-19: Eine Funktion <code>main</code>, die die Funktion
 <code>longest</code> aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
@@ -316,11 +316,11 @@ uns gewünschten sind.</p>
 implementieren, wird sie sich nicht kompilieren lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
-</span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
-</span><span class="boring">    let string2 = &quot;xyz&quot;;
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
@@ -405,11 +405,11 @@ Rückgabewerts. Wir nennen die Lebensdauer <code>'a</code> und fügen sie dann j
 Referenz hinzu, wie in Codeblock 10-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
-</span><span class="boring">    let string2 = &quot;xyz&quot;;
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -464,12 +464,12 @@ beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
 übergeben. Codeblock 10-22 ist ein einfaches Beispiel.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
-    let string1 = String::from(&quot;lange Zeichenkette ist lang&quot;);
+    let string1 = String::from("lange Zeichenkette ist lang");
 
     {
-        let string2 = String::from(&quot;xyz&quot;);
+        let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+        println!("Die längere Zeichenkette ist {}", result);
     }
 }
 <span class="boring">
@@ -489,7 +489,7 @@ gültig, <code>string2</code> ist bis zum Ende des inneren Gültigkeitsbereichs 
 Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
 der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt <code>Die längere Zeichenkette ist lange Zeichenkette ist lang</code> aus.</p>
 <p>Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
-Referenz in <code>result</code> die kürzere Lebensdauer der beiden Argumente sein muss. 
+Referenz in <code>result</code> die kürzere Lebensdauer der beiden Argumente sein muss.
 Wir verschieben die Deklaration der Variable <code>result</code> oberhalb des inneren
 Gültigkeitsbereichs, lassen aber die Zuweisung des Wertes an die Variable
 <code>result</code> innerhalb des Gültigkeitsbereichs mit <code>string2</code>. Dann verschieben wir
@@ -497,13 +497,13 @@ Gültigkeitsbereichs, lassen aber die Zuweisung des Wertes an die Variable
 Der Code in Codeblock 10-23 lässt sich nicht kompilieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
-    let string1 = String::from(&quot;lange Zeichenkette ist lang&quot;);
+    let string1 = String::from("lange Zeichenkette ist lang");
     let result;
     {
-        let string2 = String::from(&quot;xyz&quot;);
+        let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+    println!("Die längere Zeichenkette ist {}", result);
 }
 <span class="boring">
 </span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -525,14 +525,14 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+8 |     println!("Die längere Zeichenkette ist {}", result);
   |                                                 ------ borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` due to previous error
 </code></pre>
 <p>Der Fehler zeigt, dass <code>string2</code> bis zum Ende des äußeren Gültigkeitsbereichs
-gültig sein müsste, damit <code>result</code> in der Anweisung <code>println!</code> noch gültig ist. 
+gültig sein müsste, damit <code>result</code> in der Anweisung <code>println!</code> noch gültig ist.
 Rust weiß das, weil wir die Lebensdauer der Funktionsparameter und
 Rückgabewerte mit dem gleichen Lebensdauerparameter <code>'a</code> annotiert haben.</p>
 <p>Als Menschen können wir uns diesen Code ansehen und erkennen, dass <code>string1</code>
@@ -558,11 +558,11 @@ Lebensdauer für den Parameter <code>y</code> anzugeben. Der folgende Code wird
 kompilieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
-</span><span class="boring">    let string2 = &quot;efghijklmnopqrstuvwxyz&quot;;
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
@@ -581,15 +581,15 @@ Funktion den Gültigkeitsbereich verlässt. Betrachte diesen Versuch einer
 Implementierung der Funktion <code>longest</code>, die sich nicht kompilieren lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
-</span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
-</span><span class="boring">    let string2 = &quot;xyz&quot;;
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
-    let result = String::from(&quot;wirklich lange Zeichenkette&quot;);
+    let result = String::from("wirklich lange Zeichenkette");
     result.as_str()
 }</code></pre></pre>
 <p>Auch wenn wir hier einen Lebensdauer-Parameter <code>'a</code> für den Rückgabetyp
@@ -632,8 +632,8 @@ Strukturdefinition angeben. Codeblock 10-24 hat eine Struktur namens
 }
 
 fn main() {
-    let novel = String::from(&quot;Nennen Sie mich Ishmael. Vor einigen Jahren ...&quot;);
-    let first_sentence = novel.split('.').next().expect(&quot;Konnte keinen '.' finden.&quot;);
+    let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
+    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
     let i = ImportantExcerpt {
         part: first_sentence,
     };
@@ -674,12 +674,12 @@ Lebensdauer-Annotationen kompiliert.</p>
 }
 <span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let my_string = String::from(&quot;Hallo Welt&quot;);
+</span><span class="boring">    let my_string = String::from("Hallo Welt");
 </span><span class="boring">
 </span><span class="boring">    // first_word funktioniert mit Anteilstypen von `String`
 </span><span class="boring">    let word = first_word(&amp;my_string[..]);
 </span><span class="boring">
-</span><span class="boring">    let my_string_literal = &quot;Hallo Welt&quot;;
+</span><span class="boring">    let my_string_literal = "Hallo Welt";
 </span><span class="boring">
 </span><span class="boring">    // first_word funktioniert mit Anteilstypen von Zeichenkettenliteralen
 </span><span class="boring">    let word = first_word(&amp;my_string_literal[..]);
@@ -808,14 +808,14 @@ was keine Referenz ist:</p>
 <span class="boring">
 </span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
 </span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-</span><span class="boring">        println!(&quot;Bitte um Aufmerksamkeit: {}&quot;, announcement);
+</span><span class="boring">        println!("Bitte um Aufmerksamkeit: {}", announcement);
 </span><span class="boring">        self.part
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let novel = String::from(&quot;Nennen Sie mich Ishmael. Vor einigen Jahren ...&quot;);
-</span><span class="boring">    let first_sentence = novel.split('.').next().expect(&quot;Konnte keinen '.' finden.&quot;);
+</span><span class="boring">    let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
 </span><span class="boring">    let i = ImportantExcerpt {
 </span><span class="boring">        part: first_sentence,
 </span><span class="boring">    };
@@ -836,14 +836,14 @@ Referenz auf <code>self</code> wegen der ersten Elisionsregel zu annotieren.</p>
 </span><span class="boring">
 </span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
     fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-        println!(&quot;Bitte um Aufmerksamkeit: {}&quot;, announcement);
+        println!("Bitte um Aufmerksamkeit: {}", announcement);
         self.part
     }
 }
 <span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    let novel = String::from(&quot;Nennen Sie mich Ishmael. Vor einigen Jahren ...&quot;);
-</span><span class="boring">    let first_sentence = novel.split('.').next().expect(&quot;Konnte keinen '.' finden.&quot;);
+</span><span class="boring">    let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
+</span><span class="boring">    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
 </span><span class="boring">    let i = ImportantExcerpt {
 </span><span class="boring">        part: first_sentence,
 </span><span class="boring">    };
@@ -860,7 +860,7 @@ kann. Alle Zeichenkettenliterale haben die Lebensdauer <code>'static</code>. Sie
 folgt annotiert:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>let s: &amp;'static str = &quot;Ich habe eine statische Lebensdauer.&quot;;
+</span>let s: &amp;'static str = "Ich habe eine statische Lebensdauer.";
 <span class="boring">}</span></code></pre></pre>
 <p>Der Text dieser Zeichenkette wird direkt in der Binärdatei des Programms
 gespeichert, die immer verfügbar ist. Daher ist die Lebensdauer aller
@@ -878,15 +878,15 @@ als <code>'static</code> festzulegen.</p>
 <p>Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
 Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span><span class="boring">    let string1 = String::from(&quot;abcd&quot;);
-</span><span class="boring">    let string2 = &quot;xyz&quot;;
+</span><span class="boring">    let string1 = String::from("abcd");
+</span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest_with_an_announcement(
 </span><span class="boring">        string1.as_str(),
 </span><span class="boring">        string2,
-</span><span class="boring">        &quot;Heute hat jemand Geburtstag!&quot;,
+</span><span class="boring">        "Heute hat jemand Geburtstag!",
 </span><span class="boring">    );
-</span><span class="boring">    println!(&quot;Die längere Zeichenkette ist {}&quot;, result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
 </span><span class="boring">}
 </span><span class="boring">
 </span>use std::fmt::Display;
@@ -899,7 +899,7 @@ fn longest_with_an_announcement&lt;'a, T&gt;(
 where
     T: Display,
 {
-    println!(&quot;Bekanntmachung! {}&quot;, ann);
+    println!("Bekanntmachung! {}", ann);
     if x.len() &gt; y.len() {
         x
     } else {

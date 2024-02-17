@@ -288,7 +288,7 @@ impl&lt;T&gt; MyBox&lt;T&gt; {
 <p>Wir definieren eine Struktur mit dem Namen <code>MyBox</code> und deklarieren einen
 generischen Parameter <code>T</code>, da unser Typ Werte eines beliebigen Typs enthalten
 soll. Der Typ <code>MyBox</code> ist eine Tupelstruktur mit einem Element vom Typ <code>T</code>. Die
-Funktion <code>MyBox::new</code> verwendet einen Parameter vom Typ <code>T</code> und gibt eine 
+Funktion <code>MyBox::new</code> verwendet einen Parameter vom Typ <code>T</code> und gibt eine
 <code>MyBox</code>-Instanz zurück, die den übergebenen Wert enthält.</p>
 <p>Versuchen wir, die <code>main</code>-Funktion in Codeblock 15-7 zu Codeblock 15-8
 hinzuzufügen und sie so zu ändern, dass der von uns definierte Typ <code>MyBox&lt;T&gt;</code>
@@ -395,7 +395,7 @@ Dereferenzierungsoperator verwenden, wollen wir, so wie auch in diesem Fall,
 nicht die Eigentümerschaft des inneren Wertes von <code>MyBox&lt;T&gt;</code> übernehmen.</p>
 <p>Beachte, dass der <code>*</code>-Operator durch einen Aufruf der <code>deref</code>-Methode und dann
 nur einmal durch einen Aufruf des <code>*</code>-Operators ersetzt wird, jedes Mal, wenn
-wir ein <code>*</code> in unserem Programmcode verwenden. Da die Ersetzung des 
+wir ein <code>*</code> in unserem Programmcode verwenden. Da die Ersetzung des
 <code>*</code>-Operator nicht unendlich rekursiv ist, erhalten wir Daten vom Typ
 <code>i32</code>, die mit der <code>5</code> in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
 <h3 id="implizite-automatische-umwandlung-mit-funktionen-und-methoden"><a class="header" href="#implizite-automatische-umwandlung-mit-funktionen-und-methoden">Implizite automatische Umwandlung mit Funktionen und Methoden</a></h3>
@@ -424,13 +424,13 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn hello(name: &amp;str) {
-    println!(&quot;Hallo {name}!&quot;);
+    println!("Hallo {name}!");
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-11: Eine <code>hello</code>-Funktion mit dem Parameter
 <code>name</code> vom Typ <code>&amp;str</code></span></p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument
-aufrufen, wie zum Beispiel <code>hello(&quot;Rust&quot;);</code>. Die automatischer Umwandlung ermöglicht es,
+aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatischer Umwandlung ermöglicht es,
 <code>hello</code> mit einer Referenz auf einen Wert vom Typ <code>MyBox&lt;String&gt;</code> aufzurufen,
 wie es in Codeblock 15-12 gezeigt wird:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -453,11 +453,11 @@ wie es in Codeblock 15-12 gezeigt wird:</p>
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn hello(name: &amp;str) {
-</span><span class="boring">    println!(&quot;Hallo {name}!&quot;);
+</span><span class="boring">    println!("Hallo {name}!");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    let m = MyBox::new(String::from(&quot;Rust&quot;));
+    let m = MyBox::new(String::from("Rust"));
     hello(&amp;m);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-12: <code>hello</code> mit einer Referenz auf einen
@@ -493,11 +493,11 @@ um <code>hello</code> mit einem Wert vom Typ <code>&amp;MyBox&lt;String&gt;</cod
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn hello(name: &amp;str) {
-</span><span class="boring">    println!(&quot;Hallo {name}!&quot;);
+</span><span class="boring">    println!("Hallo {name}!");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn main() {
-    let m = MyBox::new(String::from(&quot;Rust&quot;));
+    let m = MyBox::new(String::from("Rust"));
     hello(&amp;(*m)[..]);
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-13: Programmcode den wir schreiben
