@@ -95,7 +95,7 @@ Rohzeiger sind anders als Referenzen und intelligente Zeiger:
   Stelle haben.
 * Sie zeigen nicht garantiert auf gültigen Speicher.
 * Sie dürfen null sein.
-* Sie implementieren keine automatische Bereinigung.
+* Sie implementieren kein automatisches Aufräumen.
 
 Wenn du dich dagegen entscheidest, diese Garantien von Rust erzwingen zu
 lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine

@@ -12,16 +12,15 @@ intelligenten Zeigers verwendet wird. Wenn beispielsweise eine `Box<T>`
 aufgeräumt wird, wird der Speicherplatz auf dem Haldenspeicher freigegeben, auf
 den die Box zeigt.
 
-In einigen Programmiersprachen muss der Programmierer bei jeder Verwendung einer
-Instanz eines intelligenten Zeigers Programmcode aufrufen, um Speicher oder
-Ressourcen freizugeben. Beispiele hierfür sind Dateiressurcen, Sockets oder
-Sperren. Wenn sie es vergessen, kann das System überlastet werden und
-abstürzen. In Rust kann man festlegen, dass ein bestimmter Programmcode
-ausgeführt wird, wenn ein Wert seinen Gültigkeitsbereich verlässt, und der
-Compiler fügt diesen Programmcode automatisch ein. Infolgedessen muss man nicht
-vorsichtig sein, wenn man Bereinigungscode überall in einem Programm platziert,
-mit dem eine Instanz eines bestimmten Typs fertig ist, man wird dennoch keine
-Ressourcen verlieren!
+In einigen Programmiersprachen muss der Programmierer für manche Datentypen
+den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
+Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
+Sockets oder Sperren. Wenn er das vergisst, kann das System überlastet werden
+und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
+ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
+Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
+sich nicht darum kümmern, an allen relevanten Stellen Aufräumcode zu
+platzieren, und verschwendet trotzdem keine Ressourcen!
 
 Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals `Drop`. Für das
@@ -91,8 +90,8 @@ Rust hat für uns automatisch `drop` und den von uns angegebenen Programmcode
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben. 
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
 wurde `d` vor `c` aufgeräumt. Der Zweck dieses Beispiels ist, dir eine visuelle
-Anleitung zur Funktionsweise der `drop`-Methode zu geben. Normalerweise gibst
-du den Bereinigungscode an, den dein Typ ausführen muss, anstatt einen Text
+Anleitung zur Funktionsweise der `drop`-Methode zu geben. Normalerweise
+schreibst du den Aufräumcode, den dein Typ ausführen muss, anstatt einen Text
 auszugeben.
 
 ### Einen Wert mit `std::mem::drop` frühzeitig aufräumen
@@ -100,7 +99,7 @@ auszugeben.
 Unglücklicherweise ist es nicht einfach, die automatische `drop`-Funktionalität
 zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des `Drop`-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
-möchte man jedoch möglicherweise einen Wert frühzeitig bereinigen. Ein Beispiel
+möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du die `drop`-Methode dazu zwingen, die Sperre freizugegeben,
 damit anderer Programmcode im selben Gültigkeitsbereich die Sperre erhalten
@@ -137,7 +136,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 15-15: Der Versuch, die `drop`-Methode 
-des `Drop`-Merkmals manuell aufzurufen, um frühzeitig zu bereinigen</span>
+des `Drop`-Merkmals manuell aufzurufen, um frühzeitig aufzuräumen</span>
 
 Wenn wir versuchen, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung ausgegeben:
@@ -163,7 +162,7 @@ error: could not compile `drop-example` (bin "drop-example") due to 1 previous e
 Diese Fehlermeldung besagt, dass wir `drop` nicht explizit aufrufen dürfen. Die
 Fehlermeldung verwendet den Begriff *Destruktor* (destructor), der der
 allgemeine Programmierbegriff für eine Funktion ist, die eine Instanz
-bereinigt. Ein *Destruktor* ist analog zu einem *Konstruktor* (constructor),
+aufräumt. Ein *Destruktor* ist analog zu einem *Konstruktor* (constructor),
 der eine Instanz erstellt. Die `drop`-Funktion in Rust ist ein bestimmter
 *Destruktor*.
 
@@ -227,14 +226,14 @@ aufgeräumt.` ausgegeben und zeigt, dass der `drop`-Methodencode aufgerufen wird
 um `c` an diesem Punkt aufzuräumen.
 
 Du kannst den Programmcode, der in einer Implementierung des `Drop`-Merkmals
-angegeben ist, auf viele Arten verwenden, um die Bereinigung bequem und sicher
-zu gestalten, du kannst ihn beispielsweise dazu verwnden, um deinen eigenen
-Speicher-Allokator (memory allocator) zu erstellen! Mit dem Merkmal `Drop` und
-dem Eigentümerschaftssystem von Rust musst du nicht daran denken den
-Programmcode zu bereinigen, da Rust dies automatisch tut.
+angegeben ist, auf viele Arten verwenden, um das Aufräumen bequem und sicher
+zu gestalten. Du kannst ihn beispielsweise dazu verwenden, deine eigene
+Speicherverwaltung (memory allocator) zu erstellen! Mit dem Merkmal `Drop` und
+dem Eigentümerschaftssystem von Rust musst du nicht ans Aufräumen denken, da
+Rust dies automatisch tut.
 
-Man muss sich auch keine Sorgen über Probleme machen, die sich aus der
-versehentlichen Bereinigung noch verwendeter Werte ergeben: Das
+Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
+versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
 Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
 stellt auch sicher, dass `drop` nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.

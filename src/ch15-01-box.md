@@ -252,10 +252,9 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
   |               ++++    +
 ```
 
-In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle
-eines direkten Speicherns des Wertes die Datenstruktur geändert werden soll, um
-den Wert indirekt zu speichern, indem stattdessen ein Zeiger auf den Wert
-gespeichert wird.
+In diesem Hinweis bedeutet „indirection“ (Umweg), dass die Datenstruktur den
+Wert nicht direkt speichern soll, sondern indirekt, indem stattdessen ein
+Zeiger auf den Wert gespeichert wird.
 
 Da eine `Box<T>` ein Zeiger ist, weiß Rust immer, wie viel Platz eine `Box<T>`
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
@@ -315,7 +314,7 @@ Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
 implementiert, mit dem `Box<T>` Werte wie Referenzen behandelt werden können.
 Wenn ein `Box<T>`-Wert den Gültigkeitsbereich verlässt, werden die Daten am
 Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-Merkmals `Drop` ebenfalls bereinigt. Diese beiden Merkmale sind für die
+Merkmals `Drop` ebenfalls aufgeräumt. Diese beiden Merkmale sind für die
 Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
 Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
 untersuchen.

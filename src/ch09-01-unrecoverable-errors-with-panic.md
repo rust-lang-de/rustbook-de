@@ -15,10 +15,9 @@ aufspüren kannst.
 >
 > Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
 > *Abwickeln*, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
-> und die Daten von jeder Funktion, auf die es trifft, bereinigt. Allerdings
-> ist dieses Zurückgehen und Aufräumen eine Menge Arbeit. Rust bietet dir als
-> Alternative daher an, das Programm sofort *abzubrechen*, wobei das Programm
-> beendet wird, ohne aufzuräumen.
+> und die Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
+> Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
+> Programm sofort *abzubrechen*, also das Programm ohne Aufräumen zu beenden.
 >
 > Der Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
 > aufgeräumt werden. Wenn du in deinem Projekt die resultierende Binärdatei so
