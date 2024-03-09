@@ -187,19 +187,20 @@ an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
 zu wissen welchen Typ wir verwenden wollen:</p>
 <pre><code class="language-console">$ cargo build
    Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
-error[E0282]: type annotations needed
+error[E0284]: type annotations needed
  --&gt; src/main.rs:2:9
   |
 2 |     let guess = "42".parse().expect("Keine Zahl!");
-  |         ^^^^^
+  |         ^^^^^        ----- type must be known at this point
   |
+  = note: cannot satisfy `&lt;_ as FromStr&gt;::Err == _`
 help: consider giving `guess` an explicit type
   |
-2 |     let guess: _ = "42".parse().expect("Keine Zahl!");
-  |              +++
+2 |     let guess: /* Type */ = "42".parse().expect("Keine Zahl!");
+  |              ++++++++++++
 
-For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations` due to previous error
+For more information about this error, try `rustc --explain E0284`.
+error: could not compile `no_type_annotations` (bin "no_type_annotations") due to 1 previous error
 </code></pre>
 <p>Für andere Datentypen wirst du andere Typ-Annotationen sehen.</p>
 <h3 id="skalare-typen"><a class="header" href="#skalare-typen">Skalare Typen</a></h3>
@@ -529,7 +530,8 @@ ausführst und <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> od
 entsprechenden Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine
 Zahl hinter dem Ende des Arrays eingibst, z.B. <code>10</code>, erhältst du eine Ausgabe
 wie diese:</p>
-<pre><code class="language-text">thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
+<pre><code class="language-text">thread 'main' panicked at src/main.rs:19:19:
+index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Das Programm führte zu einem <em>Laufzeitfehler</em> an der Stelle, an der ein

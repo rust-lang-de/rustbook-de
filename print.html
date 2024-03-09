@@ -169,8 +169,8 @@
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;</em>
 <em>übersetzt ins Deutsche durch die Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.67.1 (veröffentlicht am
-2023-02-09) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.76.0 (veröffentlicht am
+2024-02-08) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
 1</a> zum Installieren und Aktualisieren von Rust.</p>
 <p>Die HTML-Version ist online verfügbar unter
 <a href="https://doc.rust-lang.org/stable/book/">https://doc.rust-lang.org/stable/book/</a>
@@ -1187,13 +1187,16 @@ warning: unused `Result` that must be used
   --&gt; src/main.rs:10:5
    |
 10 |     io::stdin().read_line(&amp;mut guess);
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    |
-   = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+10 |     let _ = io::stdin().read_line(&amp;mut guess);
+   |     +++++++
 
 warning: `guessing_game` (bin "guessing_game") generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
 <p>Rust warnt, dass du den von <code>read_line</code> zurückgegebenen <code>Result</code>-Wert nicht
@@ -1561,17 +1564,17 @@ error[E0308]: mismatched types
   --&gt; src/main.rs:22:21
    |
 22 |     match guess.cmp(&amp;secret_number) {
-   |                 --- ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 --- ^^^^^^^^^^^^^^ expected `&amp;String`, found `&amp;{integer}`
    |                 |
-   |                 arguments to this function are incorrect
+   |                 arguments to this method are incorrect
    |
    = note: expected reference `&amp;String`
               found reference `&amp;{integer}`
-note: associated function defined here
-  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/cmp.rs:783:8
+note: method defined here
+  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/cmp.rs:814:8
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `guessing_game` due to previous error
+error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 </code></pre>
 <p>Die Kernbotschaft des Fehlers besagt, dass es <em>nicht übereinstimmende Typen</em>
 (mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch
@@ -2030,7 +2033,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
   |     ^^^^^ cannot assign twice to immutable variable
 
 For more information about this error, try `rustc --explain E0384`.
-error: could not compile `variables` due to previous error
+error: could not compile `variables` (bin "variables") due to 1 previous error
 </code></pre>
 <p>Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
 zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
@@ -2201,9 +2204,15 @@ error[E0308]: mismatched types
   |                      ----- expected due to this value
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&amp;str`, found `usize`
+  |
+help: try removing the method call
+  |
+3 -     spaces = spaces.len();
+3 +     spaces = spaces;
+  |
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `variables` due to previous error
+error: could not compile `variables` (bin "variables") due to 1 previous error
 </code></pre>
 <p>Nachdem wir nun untersucht haben, wie Variablen funktionieren, wollen wir uns
 weitere Datentypen ansehen, die sie haben können.</p>
@@ -2229,19 +2238,20 @@ an, was bedeutet, dass der Compiler mehr Informationen von uns benötigt, um
 zu wissen welchen Typ wir verwenden wollen:</p>
 <pre><code class="language-console">$ cargo build
    Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
-error[E0282]: type annotations needed
+error[E0284]: type annotations needed
  --&gt; src/main.rs:2:9
   |
 2 |     let guess = "42".parse().expect("Keine Zahl!");
-  |         ^^^^^
+  |         ^^^^^        ----- type must be known at this point
   |
+  = note: cannot satisfy `&lt;_ as FromStr&gt;::Err == _`
 help: consider giving `guess` an explicit type
   |
-2 |     let guess: _ = "42".parse().expect("Keine Zahl!");
-  |              +++
+2 |     let guess: /* Type */ = "42".parse().expect("Keine Zahl!");
+  |              ++++++++++++
 
-For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations` due to previous error
+For more information about this error, try `rustc --explain E0284`.
+error: could not compile `no_type_annotations` (bin "no_type_annotations") due to 1 previous error
 </code></pre>
 <p>Für andere Datentypen wirst du andere Typ-Annotationen sehen.</p>
 <h3 id="skalare-typen"><a class="header" href="#skalare-typen">Skalare Typen</a></h3>
@@ -2571,7 +2581,8 @@ ausführst und <code>0</code>, <code>1</code>, <code>2</code>, <code>3</code> od
 entsprechenden Wert an diesem Index im Array ausgeben. Wenn du stattdessen eine
 Zahl hinter dem Ende des Arrays eingibst, z.B. <code>10</code>, erhältst du eine Ausgabe
 wie diese:</p>
-<pre><code class="language-text">thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
+<pre><code class="language-text">thread 'main' panicked at src/main.rs:19:19:
+index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Das Programm führte zu einem <em>Laufzeitfehler</em> an der Stelle, an der ein
@@ -2727,8 +2738,7 @@ einen Fehler erhalten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
     let x = (let y = 6);
-}
-</code></pre></pre>
+}</code></pre></pre>
 <p>Wenn du dieses Programm ausführst, wirst du in etwa folgenden Fehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
@@ -2737,22 +2747,8 @@ error: expected expression, found `let` statement
   |
 2 |     let x = (let y = 6);
   |              ^^^
-
-error: expected expression, found statement (`let`)
- --&gt; src/main.rs:2:14
   |
-2 |     let x = (let y = 6);
-  |              ^^^^^^^^^
-  |
-  = note: variable declaration using `let` is a statement
-
-error[E0658]: `let` expressions in this position are unstable
- --&gt; src/main.rs:2:14
-  |
-2 |     let x = (let y = 6);
-  |              ^^^^^^^^^
-  |
-  = note: see issue #53667 &lt;https://github.com/rust-lang/rust/issues/53667&gt; for more information
+  = note: only supported directly in conditions of `if` and `while` expressions
 
 warning: unnecessary parentheses around assigned value
  --&gt; src/main.rs:2:13
@@ -2767,9 +2763,8 @@ help: remove these parentheses
 2 +     let x = let y = 6;
   |
 
-For more information about this error, try `rustc --explain E0658`.
 warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` due to 3 previous errors; 1 warning emitted
+error: could not compile `functions` (bin "functions") due to 1 previous error; 1 warning emitted
 </code></pre>
 <p>Die Anweisung <code>let y = 6</code> gibt keinen Wert zurück, also gibt es für <code>x</code> nichts,
 woran <code>x</code> gebunden werden kann. Dies unterscheidet sich von dem, was in anderen
@@ -2882,11 +2877,10 @@ error[E0308]: mismatched types
   |    |
   |    implicitly returns `()` as its body has no tail or `return` expression
 8 |     x + 1;
-  |          - help: consider removing this semicolon
+  |          - help: remove this semicolon to return this value
 
 For more information about this error, try `rustc --explain E0308`.
-warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` due to 2 previous errors; 1 warning emitted
+error: could not compile `functions` (bin "functions") due to 1 previous error
 </code></pre>
 <p>Die Hauptfehlermeldung <code>mismatched types</code> offenbart das Kernproblem dieses
 Codes. Die Definition der Funktion <code>plus_one</code> besagt, dass sie ein <code>i32</code>
@@ -3016,7 +3010,7 @@ error[E0308]: mismatched types
   |        ^^^^^^ expected `bool`, found integer
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches` due to previous error
+error: could not compile `branches` (bin "branches") due to 1 previous error
 </code></pre>
 <p>Der Fehler gibt an, dass Rust ein <code>bool</code> erwartet, aber eine ganze Zahl
 erhalten hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
@@ -3120,7 +3114,7 @@ error[E0308]: `if` and `else` have incompatible types
   |                                 expected because of this
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `branches` due to previous error
+error: could not compile `branches` (bin "branches") due to 1 previous error
 </code></pre>
 <p>Der Ausdruck im <code>if</code>-Block wird zu einer ganzen Zahl und der Ausdruck im
 <code>else</code>-Block zu einer Zeichenkette ausgewertet. Dies wird nicht funktionieren,
@@ -3758,7 +3752,7 @@ help: consider cloning the value if the performance cost is acceptable
   |                ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe <em>flache
 Kopie</em> (shallow copy) und <em>tiefe Kopie</em> (deep copy) gehört hast, hört sich das
@@ -4061,13 +4055,16 @@ verändern</span></p>
 error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&amp;` reference
  --&gt; src/main.rs:8:5
   |
-7 | fn change(some_string: &amp;String) {
-  |                        ------- help: consider changing this to be a mutable reference: `&amp;mut String`
 8 |     some_string.push_str(" Welt");
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+  |     ^^^^^^^^^^^ `some_string` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+  |
+help: consider changing this to be a mutable reference
+  |
+7 | fn change(some_string: &amp;mut String) {
+  |                         +++
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>So wie Variablen standardmäßig unveränderbar sind, so sind auch Referenzen
 unveränderbar. Es ist uns nicht erlaubt, etwas zu verändern, auf das wir eine
@@ -4120,7 +4117,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |                        -- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir <code>s</code> nicht mehr
 als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
@@ -4187,7 +4184,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
   |                               -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
 unveränderbare Referenz auf denselben Wert haben.</p>
@@ -4254,13 +4251,18 @@ error[E0106]: missing lifetime specifier
   |                ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
-help: consider using the `'static` lifetime
+help: consider using the `'static` lifetime, but this is uncommon unless you're returning a borrowed value from a `const` or a `static`
   |
 5 | fn dangle() -&gt; &amp;'static String {
   |                 +++++++
+help: instead, you are more likely to want to return an owned value
+  |
+5 - fn dangle() -&gt; &amp;String {
+5 + fn dangle() -&gt; String {
+  |
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht
 behandelt haben: Die Lebensdauer. Wir werden die Lebensdauer in Kapitel 10 im
@@ -4608,7 +4610,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
    |                                        ---- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
 unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare
@@ -5116,7 +5118,7 @@ help: consider introducing a named lifetime parameter
   |
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `structs` due to 2 previous errors
+error: could not compile `structs` (bin "structs") due to 2 previous errors
 </code></pre>
 <p>In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen
 in Strukturen speichern kann. Aber für den Moment werden wir Fehler wie diese
@@ -5394,8 +5396,8 @@ Beispiels aus:</p>
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/rectangles`
-[src/main.rs:10] 30 * scale = 60
-[src/main.rs:14] &amp;rect1 = Rectangle {
+[src/main.rs:10:16] 30 * scale = 60
+[src/main.rs:14:5] &amp;rect1 = Rectangle {
     width: 60,
     height: 50,
 }
@@ -6154,13 +6156,13 @@ error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`
   |
   = help: the trait `Add&lt;Option&lt;i8&gt;&gt;` is not implemented for `i8`
   = help: the following other types implement trait `Add&lt;Rhs&gt;`:
+            &lt;i8 as Add&gt;
+            &lt;i8 as Add&lt;&amp;i8&gt;&gt;
             &lt;&amp;'a i8 as Add&lt;i8&gt;&gt;
             &lt;&amp;i8 as Add&lt;&amp;i8&gt;&gt;
-            &lt;i8 as Add&lt;&amp;i8&gt;&gt;
-            &lt;i8 as Add&gt;
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `enums` due to previous error
+error: could not compile `enums` (bin "enums") due to 1 previous error
 </code></pre>
 <p>Stark! Tatsächlich bedeutet diese Fehlermeldung, dass Rust nicht versteht, wie
 man ein <code>i8</code> und eine <code>Option&lt;i8&gt;</code> addiert, da es sich um unterschiedliche Typen
@@ -6439,10 +6441,10 @@ error[E0004]: non-exhaustive patterns: `None` not covered
   |               ^ pattern `None` not covered
   |
 note: `Option&lt;i32&gt;` defined here
- --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
+ --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/option.rs:570:1
+ ::: /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/option.rs:574:5
   |
-  = note: 
-/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
+  = note: not covered
   = note: the matched value is of type `Option&lt;i32&gt;`
 help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
   |
@@ -6451,7 +6453,7 @@ help: ensure that all possible cases are being handled by adding a match arm wit
   |
 
 For more information about this error, try `rustc --explain E0004`.
-error: could not compile `enums` due to previous error
+error: could not compile `enums` (bin "enums") due to 1 previous error
 </code></pre>
 <p>Rust weiß, dass wir nicht alle möglichen Fälle abgedeckt haben, und es weiß
 sogar, welches Muster wir vergessen haben! Abgleiche in Rust sind
@@ -7048,7 +7050,9 @@ error[E0603]: module `hosting` is private
  --&gt; src/lib.rs:9:28
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                            ^^^^^^^ private module
+  |                            ^^^^^^^  --------------- function `add_to_waitlist` is not publicly re-exported
+  |                            |
+  |                            private module
   |
 note: the module `hosting` is defined here
  --&gt; src/lib.rs:2:5
@@ -7060,7 +7064,9 @@ error[E0603]: module `hosting` is private
   --&gt; src/lib.rs:12:21
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                     ^^^^^^^ private module
+   |                     ^^^^^^^  --------------- function `add_to_waitlist` is not publicly re-exported
+   |                     |
+   |                     private module
    |
 note: the module `hosting` is defined here
   --&gt; src/lib.rs:2:5
@@ -7069,7 +7075,7 @@ note: the module `hosting` is defined here
    |     ^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant` due to 2 previous errors
+error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
 <p><span class="caption">Codeblock 7-4: Kompilierfehler im Code in Codeblock
 7-3</span></p>
@@ -7149,7 +7155,7 @@ note: the function `add_to_waitlist` is defined here
    |         ^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant` due to 2 previous errors
+error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
 <p><span class="caption">Codeblock 7-6: Kompilierfehler im Code in Codeblock
 7-5</span></p>
@@ -7426,6 +7432,17 @@ Gültigkeitsbereich, in dem sie steht</span></p>
 nicht mehr gilt:</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
+error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
+  --&gt; src/lib.rs:11:9
+   |
+11 |         hosting::add_to_waitlist();
+   |         ^^^^^^^ use of undeclared crate or module `hosting`
+   |
+help: consider importing this module through its public re-export
+   |
+10 +     use crate::hosting;
+   |
+
 warning: unused import: `crate::front_of_house::hosting`
  --&gt; src/lib.rs:7:5
   |
@@ -7434,15 +7451,9 @@ warning: unused import: `crate::front_of_house::hosting`
   |
   = note: `#[warn(unused_imports)]` on by default
 
-error[E0433]: failed to resolve: use of undeclared crate or module `hosting`
-  --&gt; src/lib.rs:11:9
-   |
-11 |         hosting::add_to_waitlist();
-   |         ^^^^^^^ use of undeclared crate or module `hosting`
-
 For more information about this error, try `rustc --explain E0433`.
 warning: `restaurant` (lib) generated 1 warning
-error: could not compile `restaurant` due to previous error; 1 warning emitted
+error: could not compile `restaurant` (lib) due to 1 previous error; 1 warning emitted
 </code></pre>
 <p>Beachte, dass es auch eine Warnung gibt, dass <code>use</code> nicht mehr in seinem
 Gültigkeitsbereich verwendet wird! Um dieses Problem zu beheben, verschiebe
@@ -8013,10 +8024,10 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
 8 |     println!("Das erste Element ist: {first}");
-  |                                       ----- immutable borrow later used here
+  |                                      ------- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `collections` due to previous error
+error: could not compile `collections` (bin "collections") due to 1 previous error
 </code></pre>
 <p>Der Code in Codeblock 8-6 sieht so aus, als könnte er funktionieren: Warum
 sollte sich eine Referenz auf das erste Element darum kümmern, was sich am
@@ -8370,22 +8381,22 @@ Zeichenkette zu verwenden</span></p>
 <pre><code class="language-console">$ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
 error[E0277]: the type `String` cannot be indexed by `{integer}`
- --&gt; src/main.rs:3:13
+ --&gt; src/main.rs:3:16
   |
 3 |     let h = s1[0];
-  |             ^^^^^ `String` cannot be indexed by `{integer}`
+  |                ^ `String` cannot be indexed by `{integer}`
   |
   = help: the trait `Index&lt;{integer}&gt;` is not implemented for `String`
   = help: the following other types implement trait `Index&lt;Idx&gt;`:
-            &lt;String as Index&lt;RangeFrom&lt;usize&gt;&gt;&gt;
             &lt;String as Index&lt;RangeFull&gt;&gt;
-            &lt;String as Index&lt;RangeInclusive&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeTo&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeToInclusive&lt;usize&gt;&gt;&gt;
             &lt;String as Index&lt;std::ops::Range&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeFrom&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeTo&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeInclusive&lt;usize&gt;&gt;&gt;
+            &lt;String as Index&lt;RangeToInclusive&lt;usize&gt;&gt;&gt;
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `collections` due to previous error
+error: could not compile `collections` (bin "collections") due to 1 previous error
 </code></pre>
 <p>Die Fehlermeldung und der Hinweis erzählen die Geschichte: Zeichenketten in
 Rust unterstützen keine Indexierung. Aber warum nicht? Um diese Frage zu
@@ -8491,7 +8502,8 @@ zugegriffen würde:</p>
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
-thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/libcore/str/mod.rs:2069:5
+thread 'main' panicked at src/main.rs:4:19:
+byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
@@ -8859,10 +8871,9 @@ aufspüren kannst.</p>
 <h3 id="auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion"><a class="header" href="#auflösen-des-stapelspeichers-oder-abbrechen-als-fehlerreaktion">Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion</a></h3>
 <p>Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
 <em>Abwickeln</em>, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
-und die Daten von jeder Funktion, auf die es trifft, bereinigt. Allerdings
-ist dieses Zurückgehen und Aufräumen eine Menge Arbeit. Rust bietet dir als
-Alternative daher an, das Programm sofort <em>abzubrechen</em>, wobei das Programm
-beendet wird, ohne aufzuräumen.</p>
+und die Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
+Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
+Programm sofort <em>abzubrechen</em>, also das Programm ohne Aufräumen zu beenden.</p>
 <p>Der Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
 aufgeräumt werden. Wenn du in deinem Projekt die resultierende Binärdatei so
 klein wie möglich machen willst, kannst du für ein vorzeitiges Programmende
@@ -8884,7 +8895,8 @@ panic = 'abort'
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished dev [unoptimized + debuginfo] target(s) in 0.25s
      Running `target/debug/panic`
-thread 'main' panicked at 'abstürzen und verbrennen', src/main.rs:2:5
+thread 'main' panicked at src/main.rs:2:5:
+abstürzen und verbrennen
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Der Aufruf von <code>panic!</code> verursacht die in den letzten beiden Zeilen enthaltene
@@ -8936,7 +8948,8 @@ was passiert:</p>
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished dev [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/panic`
-thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', /rustc/5e1a799842ba6ed4a57e91f7ab9435947482f7d8/src/libcore/slice/mod.rs:2806:10
+thread 'main' panicked at src/main.rs:4:6:
+index out of bounds: the len is 3 but the index is 99
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Dieser Fehler weist auf Zeile 4 in unserer <code>main.rs</code> hin, wo wir versuchen, auf
@@ -8954,24 +8967,25 @@ enthalten, die du verwendest. Versuchen wir, einen Backtrace zu erhalten, indem
 wir die Umgebungsvariable <code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer 0
 setzen. Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
 <pre><code class="language-console">$ RUST_BACKTRACE=1 cargo run
-thread 'main' panicked at 'index out of bounds: the len is 3 but the index is 99', src/main.rs:4:5
+thread 'main' panicked at src/main.rs:4:6:
+index out of bounds: the len is 3 but the index is 99
 stack backtrace:
    0: rust_begin_unwind
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/std/src/panicking.rs:483
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/panicking.rs:645:5
    1: core::panicking::panic_fmt
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:85
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/panicking.rs:72:14
    2: core::panicking::panic_bounds_check
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/panicking.rs:62
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/panicking.rs:208:5
    3: &lt;usize as core::slice::index::SliceIndex&lt;[T]&gt;&gt;::index
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:255
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/slice/index.rs:255:10
    4: core::slice::index::&lt;impl core::ops::index::Index&lt;I&gt; for [T]&gt;::index
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/slice/index.rs:15
-   5: &lt;alloc::vec::Vec&lt;T&gt; as core::ops::index::Index&lt;I&gt;&gt;::index
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/alloc/src/vec.rs:1982
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/slice/index.rs:18:9
+   5: &lt;alloc::vec::Vec&lt;T,A&gt; as core::ops::index::Index&lt;I&gt;&gt;::index
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/alloc/src/vec/mod.rs:2770:9
    6: panic::main
-             at ./src/main.rs:4
+             at ./src/main.rs:4:6
    7: core::ops::function::FnOnce::call_once
-             at /rustc/7eac88abb2e57e752f3302f02be5f3ce3d7adfb4/library/core/src/ops/function.rs:227
+             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/ops/function.rs:250:5
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 </code></pre>
 <p><span class="caption">Codeblock 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
@@ -9070,8 +9084,8 @@ sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vo
 und <code>Err</code> angeben müssen.</p>
 <p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
 <code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen
-<code>greeting_file </code> zu.
-Nach dem <code>match</code> können wir die Dateiressource zum Lesen und Schreiben verwenden.</p>
+<code>greeting_file </code> zu. Nach dem <code>match</code> können wir die Dateiressource zum Lesen
+und Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
 <code>File::open</code> erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
 Makro <code>panic!</code> aufzurufen. Wenn es keine Datei namens <em>hallo.txt</em> in unserem
@@ -9081,7 +9095,8 @@ folgende Ausgabe des Makros <code>panic!</code>:</p>
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
+thread 'main' panicked at src/main.rs:8:23:
+Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
@@ -9135,8 +9150,8 @@ brauchen wir einen zweiten Zweig im inneren <code>match</code>-Ausdruck. Wenn di
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
-<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
 <blockquote>
+<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
 sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
 (closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
@@ -9183,9 +9198,8 @@ fn main() {
 }</code></pre></pre>
 <p>Wenn wir diesen Code ohne eine Datei <em>hallo.txt</em> ausführen, werden wir die
 Fehlermeldung des <code>panic!</code>-Aufrufs sehen, den die Methode <code>unwrap</code> macht:</p>
-<pre><code class="language-console">thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:4:49
+<pre><code class="language-console">thread 'main' panicked at src/main.rs:4:49:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 </code></pre>
 <p>In ähnlicher Weise können wir bei der Methode <code>expect</code> auch die Fehlermeldung
 von <code>panic!</code> angeben. Das Verwenden von <code>expect</code> anstelle von <code>unwrap</code> und das
@@ -9196,16 +9210,15 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 
 fn main() {
     let greeting_file = File::open("hallo.txt")
-        .expect("Problem beim Öffnen von hallo.txt");
+        .expect("hallo.txt sollte in dieses Projekt aufgenommen werden");
 }</code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
 zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung, die
 <code>expect</code> beim Aufruf von <code>panic!</code> mitgibt, wird als Parameter an <code>expect</code>
 übergeben, anstelle der standardmäßigen <code>panic!</code>-Nachricht, die <code>unwrap</code>
 verwendet. So sieht sie aus:</p>
-<pre><code class="language-text">thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:5:10
+<pre><code class="language-text">thread 'main' panicked at src/main.rs:5:10:
+hallo.txt sollte in dieses Projekt aufgenommen werden: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 </code></pre>
 <p>In produktivem Code wählen die meisten Rust-Entwickler <code>expect</code> statt
 <code>unwrap</code> und geben mehr Kontext darüber an, warum die Operation voraussichtlich
@@ -9434,7 +9447,7 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` due to previous error
+error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der
@@ -10120,7 +10133,7 @@ help: consider restricting type parameter `T`
   |             ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein <em>Merkmal</em> (trait) ist,
 und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
@@ -10187,7 +10200,7 @@ error[E0308]: mismatched types
   |                                      ^^^ expected integer, found floating-point number
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Um eine Struktur <code>Point</code> zu definieren, bei der <code>x</code> und <code>y</code> generische, aber
 unterschiedliche, Typen haben können, können wir mehrere generische
@@ -11019,6 +11032,8 @@ versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:</p>
 error[E0597]: `x` does not live long enough
  --&gt; src/main.rs:6:13
   |
+5 |         let x = 5;
+  |             - binding `x` declared here
 6 |         r = &amp;x;
   |             ^^ borrowed value does not live long enough
 7 |     }
@@ -11028,7 +11043,7 @@ error[E0597]: `x` does not live long enough
   |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Die Variable <code>x</code> lebt nicht „lange genug“. Der Grund dafür ist, dass <code>x</code> den
 Gültigkeitsbereich verlässt, da der innere Gültigkeitsbereich bei Zeile 7
@@ -11143,7 +11158,7 @@ help: consider introducing a named lifetime parameter
   |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Aus dem Hilfetext geht hervor, dass der Rückgabetyp einen generischen
 Lebensdauer-Parameter benötigt, da Rust nicht sagen kann, ob sich die
@@ -11315,15 +11330,17 @@ nachdem <code>string2</code> den Gültigkeitsbereich verlassen hat</span></p>
 error[E0597]: `string2` does not live long enough
  --&gt; src/main.rs:6:44
   |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
 6 |         result = longest(string1.as_str(), string2.as_str());
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
 8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                                 ------ borrow later used here
+  |                                          ------ borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Der Fehler zeigt, dass <code>string2</code> bis zum Ende des äußeren Gültigkeitsbereichs
 gültig sein müsste, damit <code>result</code> in der Anweisung <code>println!</code> noch gültig ist.
@@ -11392,14 +11409,17 @@ Lebensdauer des Rückgabewerts überhaupt nicht mit der Lebensdauer der Paramete
 zusammenhängt. Hier ist die Fehlermeldung, die wir erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0515]: cannot return reference to local variable `result`
+error[E0515]: cannot return value referencing local variable `result`
   --&gt; src/main.rs:11:5
    |
 11 |     result.as_str()
-   |     ^^^^^^^^^^^^^^^ returns a reference to data owned by the current function
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
 
 For more information about this error, try `rustc --explain E0515`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Das Problem ist, dass <code>result</code> den Gültigkeitsbereich verlässt und am Ende der
 Funktion <code>longest</code> aufgeräumt wird. Wir versuchen auch, eine Referenz auf den
@@ -11803,11 +11823,17 @@ Codeblock 11-1 aussehen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>#[cfg(test)]
+</span>pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
 }
@@ -11941,7 +11967,8 @@ test tests::exploration ... ok
 failures:
 
 ---- tests::another stdout ----
-thread 'tests::another' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
+thread 'tests::another' panicked at src/lib.rs:10:9:
+Lasse diesen Test fehlschlagen
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12199,7 +12226,8 @@ test tests::smaller_cannot_hold_larger ... ok
 failures:
 
 ---- tests::larger_can_hold_smaller stdout ----
-thread 'tests::larger_can_hold_smaller' panicked at 'assertion failed: larger.can_hold(&amp;smaller)', src/lib.rs:28:9
+thread 'tests::larger_can_hold_smaller' panicked at src/lib.rs:28:9:
+assertion failed: larger.can_hold(&amp;smaller)
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12294,9 +12322,10 @@ test tests::it_adds_two ... FAILED
 failures:
 
 ---- tests::it_adds_two stdout ----
-thread 'tests::it_adds_two' panicked at 'assertion failed: `(left == right)`
-  left: `4`,
- right: `5`', src/lib.rs:11:9
+thread 'tests::it_adds_two' panicked at src/lib.rs:11:9:
+assertion `left == right` failed
+  left: 4
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12308,10 +12337,10 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion failed: `(left == right)` </code> war und welche Werte <code>left</code> und <code>right</code> hatten. Diese
-Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> war
-<code>4</code>, aber das Argument <code>right</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>. Du
-kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
+Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion `left == right` failed</code> war und welche Werte <code>left</code> und <code>right</code> hatten. Diese Nachricht
+hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> war <code>4</code>, aber
+das Argument <code>right</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>. Du kannst dir
+vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
 durchführen.</p>
 <p>Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung <code>expected</code> und <code>actual</code> genannt werden und deren
@@ -12408,7 +12437,8 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Carol\")', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at src/lib.rs:12:9:
+assertion failed: result.contains("Carol")
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12459,7 +12489,8 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at src/lib.rs:12:9:
+Begrüßung enthielt nicht den Namen, Wert war `Hallo!`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12681,7 +12712,8 @@ test tests::greater_than_100 - should panic ... FAILED
 failures:
 
 ---- tests::greater_than_100 stdout ----
-thread 'tests::greater_than_100' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
+thread 'tests::greater_than_100' panicked at src/lib.rs:13:13:
+Schätzwert muss größer oder gleich 1 sein, ist 200.
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
       panic message: `"Schätzwert muss größer oder gleich 1 sein, ist 200."`,
@@ -12828,10 +12860,11 @@ test tests::this_test_will_pass ... ok
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
+Ich habe den Wert 8 erhalten.
+thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
+assertion `left == right` failed
+  left: 5
+ right: 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12875,10 +12908,11 @@ successes:
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
+Ich habe den Wert 8 erhalten.
+thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
+assertion `left == right` failed
+  left: 5
+ right: 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -13480,15 +13514,15 @@ Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:</p>
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
-[src/main.rs:5] args = [
+[src/main.rs:5:5] args = [
     "target/debug/minigrep",
 ]
 </code></pre>
 <pre><code class="language-console">$ cargo run -- Nadel Heuhaufen
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 1.57s
-     Running `target/debug/minigrep needle haystack`
-[src/main.rs:5] args = [
+     Running `target/debug/minigrep Nadel Heuhaufen`
+[src/main.rs:5:5] args = [
     "target/debug/minigrep",
     "Nadel",
     "Heuhaufen",
@@ -13904,7 +13938,8 @@ Argumente laufen zu lassen; es wird so aussehen:</p>
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
-thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', src/main.rs:27:21
+thread 'main' panicked at src/main.rs:27:21:
+index out of bounds: the len is 1 but the index is 1
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Die Zeile <code>index out of bounds: the len is 1 but the index is 1</code> ist eine für
@@ -13969,7 +14004,8 @@ ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
-thread 'main' panicked at 'Nicht genügend Argumente', src/main.rs:26:13
+thread 'main' panicked at src/main.rs:26:13:
+Nicht genügend Argumente
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Diese Ausgabe ist besser: Wir haben jetzt eine vernünftige Fehlermeldung. Wir
@@ -14282,6 +14318,10 @@ warning: unused `Result` that must be used
    |
    = note: this `Result` may be an `Err` variant, which should be handled
    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+19 |     let _ = run(config);
+   |     +++++++
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s
@@ -14640,7 +14680,7 @@ help: consider introducing a named lifetime parameter
    |              ++++         ++                 ++              ++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `minigrep` due to previous error
+error: could not compile `minigrep` (lib) due to 1 previous error
 </code></pre>
 <p>Rust kann unmöglich wissen, welches der beiden Argumente wir brauchen, also
 müssen wir es ihm explizit sagen. Da <code>contents</code> das Argument ist, das unseren
@@ -14664,9 +14704,10 @@ test tests::one_result ... FAILED
 failures:
 
 ---- tests::one_result stdout ----
-thread 'tests::one_result' panicked at 'assertion failed: `(left == right)`
-  left: `["sicher, schnell, produktiv."]`,
- right: `[]`', src/lib.rs:44:9
+thread 'tests::one_result' panicked at src/lib.rs:44:9:
+assertion `left == right` failed
+  left: ["sicher, schnell, produktiv."]
+ right: []
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -16016,9 +16057,16 @@ error[E0308]: mismatched types
 5 |     let n = example_closure(5);
   |             --------------- ^- help: try using a conversion method: `.to_string()`
   |             |               |
-  |             |               expected struct `String`, found integer
+  |             |               expected `String`, found integer
   |             arguments to this function are incorrect
   |
+note: expected because the closure was earlier called with an argument of type `String`
+ --&gt; src/main.rs:4:29
+  |
+4 |     let s = example_closure(String::from("hello"));
+  |             --------------- ^^^^^^^^^^^^^^^^^^^^^ expected because this argument is of type `String`
+  |             |
+  |             in this closure call
 note: closure parameter defined here
  --&gt; src/main.rs:2:28
   |
@@ -16026,7 +16074,7 @@ note: closure parameter defined here
   |                            ^
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `closure-example` due to previous error
+error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
 </code></pre>
 <p>Beim ersten Aufruf von <code>example_closure</code> wird dem Typ von <code>x</code> und dem
 Rückgabewert des Funktionsabschlusses der Typ <code>String</code> zugewiesen. Diese Typen
@@ -16337,7 +16385,7 @@ error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` clos
    |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
 
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `playground` due to previous error
+error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
 </code></pre>
 <p>Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die <code>value</code>
 aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
@@ -16551,6 +16599,10 @@ warning: unused `Map` that must be used
   |
   = note: iterators are lazy and do nothing unless consumed
   = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+  |
+4 |     let _ = v1.iter().map(|x| x + 1);
+  |     +++++++
 
 warning: `iterators` (bin "iterators") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.47s
@@ -18040,12 +18092,9 @@ members = [
 </code></pre>
 <p>Lass uns in der Datei <em>add_one/src/lib.rs</em>, eine Funktion <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_one(x: i32) -&gt; i32 {
     x + 1
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>Nun können wir das <code>adder</code>-Paket von unserem <code>add_one</code>-Paket, das unsere
 Bibliothek enthält, abhängig machen. Zuerst müssen wir <em>adder/Cargo.toml</em>
 einen Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>
@@ -18502,7 +18551,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cyc
   |               ++++    +
 
 For more information about this error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to previous error
+error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
 </code></pre>
 <p><span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span></p>
@@ -18548,15 +18597,14 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
 Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
 hilfreichen Vorschlag aus:</p>
-<pre><code class="language-text">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
+<pre><code class="language-text">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cycle
   |
 2 |     Cons(i32, Box&lt;List&gt;),
   |               ++++    +
 </code></pre>
-<p>In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle
-eines direkten Speicherns des Wertes die Datenstruktur geändert werden soll, um
-den Wert indirekt zu speichern, indem stattdessen ein Zeiger auf den Wert
-gespeichert wird.</p>
+<p>In diesem Hinweis bedeutet „indirection“ (Umweg), dass die Datenstruktur den
+Wert nicht direkt speichern soll, sondern indirekt, indem stattdessen ein
+Zeiger auf den Wert gespeichert wird.</p>
 <p>Da eine <code>Box&lt;T&gt;</code> ein Zeiger ist, weiß Rust immer, wie viel Platz eine <code>Box&lt;T&gt;</code>
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
 Datenmenge, auf die er zeigt. Dies bedeutet, dass wir anstelle eines anderen
@@ -18604,7 +18652,7 @@ Anwendungsfälle für Boxen werden wir uns in Kapitel 17 ansehen.</p>
 implementiert, mit dem <code>Box&lt;T&gt;</code> Werte wie Referenzen behandelt werden können.
 Wenn ein <code>Box&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt, werden die Daten am
 Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-Merkmals <code>Drop</code> ebenfalls bereinigt. Diese beiden Merkmale sind für die
+Merkmals <code>Drop</code> ebenfalls aufgeräumt. Diese beiden Merkmale sind für die
 Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
 Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
 untersuchen.</p>
@@ -18667,19 +18715,19 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
   = help: the following other types implement trait `PartialEq&lt;Rhs&gt;`:
-            f32
-            f64
-            i128
+            isize
+            i8
             i16
             i32
             i64
-            i8
-            isize
+            i128
+            usize
+            u8
           and 6 others
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `deref-example` due to previous error
+error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
 </code></pre>
 <p>Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
 da es sich um verschiedene Typen handelt. Wir müssen den Dereferenzierungsoperator
@@ -18765,7 +18813,7 @@ error[E0614]: type `MyBox&lt;{integer}&gt;` cannot be dereferenced
    |                   ^^
 
 For more information about this error, try `rustc --explain E0614`.
-error: could not compile `deref-example` due to previous error
+error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
 </code></pre>
 <p>Unser Typ <code>MyBox&lt;T&gt;</code> kann nicht dereferenziert werden, da wir diese
 Fähigkeit für unseren Typ nicht implementiert haben. Um eine
@@ -18997,16 +19045,15 @@ Funktionalität des Merkmals <code>Drop</code> fast immer bei der Implementierun
 intelligenten Zeigers verwendet wird. Wenn beispielsweise eine <code>Box&lt;T&gt;</code>
 aufgeräumt wird, wird der Speicherplatz auf dem Haldenspeicher freigegeben, auf
 den die Box zeigt.</p>
-<p>In einigen Programmiersprachen muss der Programmierer bei jeder Verwendung einer
-Instanz eines intelligenten Zeigers Programmcode aufrufen, um Speicher oder
-Ressourcen freizugeben. Beispiele hierfür sind Dateiressurcen, Sockets oder
-Sperren. Wenn sie es vergessen, kann das System überlastet werden und
-abstürzen. In Rust kann man festlegen, dass ein bestimmter Programmcode
-ausgeführt wird, wenn ein Wert seinen Gültigkeitsbereich verlässt, und der
-Compiler fügt diesen Programmcode automatisch ein. Infolgedessen muss man nicht
-vorsichtig sein, wenn man Bereinigungscode überall in einem Programm platziert,
-mit dem eine Instanz eines bestimmten Typs fertig ist, man wird dennoch keine
-Ressourcen verlieren!</p>
+<p>In einigen Programmiersprachen muss der Programmierer für manche Datentypen
+den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
+Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
+Sockets oder Sperren. Wenn er das vergisst, kann das System überlastet werden
+und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
+ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
+Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
+sich nicht darum kümmern, an allen relevanten Stellen Aufräumcode zu
+platzieren, und verschwendet trotzdem keine Ressourcen!</p>
 <p>Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals <code>Drop</code>. Für das
 Merkmal <code>Drop</code> muss man eine Methode <code>drop</code> implementieren, die eine
@@ -19064,14 +19111,14 @@ CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben.
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
 wurde <code>d</code> vor <code>c</code> aufgeräumt. Der Zweck dieses Beispiels ist, dir eine visuelle
-Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise gibst
-du den Bereinigungscode an, den dein Typ ausführen muss, anstatt einen Text
+Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise
+schreibst du den Aufräumcode, den dein Typ ausführen muss, anstatt einen Text
 auszugeben.</p>
 <h3 id="einen-wert-mit-stdmemdrop-frühzeitig-aufräumen"><a class="header" href="#einen-wert-mit-stdmemdrop-frühzeitig-aufräumen">Einen Wert mit <code>std::mem::drop</code> frühzeitig aufräumen</a></h3>
 <p>Unglücklicherweise ist es nicht einfach, die automatische <code>drop</code>-Funktionalität
 zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des <code>Drop</code>-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
-möchte man jedoch möglicherweise einen Wert frühzeitig bereinigen. Ein Beispiel
+möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du die <code>drop</code>-Methode dazu zwingen, die Sperre freizugegeben,
 damit anderer Programmcode im selben Gültigkeitsbereich die Sperre erhalten
@@ -19102,7 +19149,7 @@ indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Cod
     println!("CustomSmartPointer vor dem Ende von main aufgeräumt.");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-15: Der Versuch, die <code>drop</code>-Methode
-des <code>Drop</code>-Merkmals manuell aufzurufen, um frühzeitig zu bereinigen</span></p>
+des <code>Drop</code>-Merkmals manuell aufzurufen, um frühzeitig aufzuräumen</span></p>
 <p>Wenn wir versuchen, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
@@ -19111,18 +19158,20 @@ error[E0040]: explicit use of destructor method
   --&gt; src/main.rs:16:7
    |
 16 |     c.drop();
-   |     --^^^^--
-   |     | |
-   |     | explicit destructor calls not allowed
-   |     help: consider using `drop` function: `drop(c)`
+   |       ^^^^ explicit destructor calls not allowed
+   |
+help: consider using `drop` function
+   |
+16 |     drop(c);
+   |     +++++ ~
 
 For more information about this error, try `rustc --explain E0040`.
-error: could not compile `drop-example` due to previous error
+error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
 </code></pre>
 <p>Diese Fehlermeldung besagt, dass wir <code>drop</code> nicht explizit aufrufen dürfen. Die
 Fehlermeldung verwendet den Begriff <em>Destruktor</em> (destructor), der der
 allgemeine Programmierbegriff für eine Funktion ist, die eine Instanz
-bereinigt. Ein <em>Destruktor</em> ist analog zu einem <em>Konstruktor</em> (constructor),
+aufräumt. Ein <em>Destruktor</em> ist analog zu einem <em>Konstruktor</em> (constructor),
 der eine Instanz erstellt. Die <code>drop</code>-Funktion in Rust ist ein bestimmter
 <em>Destruktor</em>.</p>
 <p>Rust lässt uns <code>drop</code> nicht explizit aufrufen, da Rust immer noch automatisch
@@ -19172,13 +19221,13 @@ CustomSmartPointer vor dem Ende von main aufgeräumt.
 <code>CustomSmartPointer erzeugt</code> und <code>CustomSmartPointer vor dem Ende von main aufgeräumt.</code> ausgegeben und zeigt, dass der <code>drop</code>-Methodencode aufgerufen wird
 um <code>c</code> an diesem Punkt aufzuräumen.</p>
 <p>Du kannst den Programmcode, der in einer Implementierung des <code>Drop</code>-Merkmals
-angegeben ist, auf viele Arten verwenden, um die Bereinigung bequem und sicher
-zu gestalten, du kannst ihn beispielsweise dazu verwnden, um deinen eigenen
-Speicher-Allokator (memory allocator) zu erstellen! Mit dem Merkmal <code>Drop</code> und
-dem Eigentümerschaftssystem von Rust musst du nicht daran denken den
-Programmcode zu bereinigen, da Rust dies automatisch tut.</p>
-<p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus der
-versehentlichen Bereinigung noch verwendeter Werte ergeben: Das
+angegeben ist, auf viele Arten verwenden, um das Aufräumen bequem und sicher
+zu gestalten. Du kannst ihn beispielsweise dazu verwenden, deine eigene
+Speicherverwaltung (memory allocator) zu erstellen! Mit dem Merkmal <code>Drop</code> und
+dem Eigentümerschaftssystem von Rust musst du nicht ans Aufräumen denken, da
+Rust dies automatisch tut.</p>
+<p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
+versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
 Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
 stellt auch sicher, dass <code>drop</code> nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.</p>
@@ -19261,7 +19310,7 @@ error[E0382]: use of moved value: `a`
    |                              ^ value used here after move
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `cons-list` due to 2 previous errors
+error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
 </code></pre>
 <p>Die <code>Cons</code>-Varianten besitzen die Daten, die sie enthalten. Wenn wir also die
 <code>b</code>-Liste erstellen, wird <code>a</code> in <code>b</code> verschoben und <code>b</code> besitzt <code>a</code>. Wenn wir
@@ -19473,13 +19522,16 @@ Fehlermeldung angezeigt:</p>
 error[E0596]: cannot borrow `x` as mutable, as it is not declared as mutable
  --&gt; src/main.rs:3:13
   |
-2 |     let x = 5;
-  |         - help: consider changing this to be mutable: `mut x`
 3 |     let y = &amp;mut x;
   |             ^^^^^^ cannot borrow as mutable
+  |
+help: consider changing this to be mutable
+  |
+2 |     let mut x = 5;
+  |         +++
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `borrowing` due to previous error
+error: could not compile `borrowing` (bin "borrowing") due to 1 previous error
 </code></pre>
 <p>Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
 seinen Methoden selbst veränderbar ist, aber für einen anderen Programmcode
@@ -19687,20 +19739,21 @@ enthalten sollte.</p>
 error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `&amp;` reference
   --&gt; src/lib.rs:58:13
    |
-2  |     fn send(&amp;self, msg: &amp;str);
-   |             ----- help: consider changing that to be a mutable reference: `&amp;mut self`
-...
 58 |             self.sent_messages.push(String::from(message));
-   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+   |             ^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
+   |
+help: consider changing this to be a mutable reference
+   |
+2  |     fn send(&amp;mut self, msg: &amp;str);
+   |             ~~~~~~~~~
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `limit-tracker` due to previous error
-warning: build failed, waiting for other jobs to finish...
+error: could not compile `limit-tracker` (lib test) due to 1 previous error
 </code></pre>
 <p>Wir können den <code>MockMessenger</code> nicht ändern, um die Nachrichten zu verfolgen, da
 die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen
-<code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code>nicht mit der Signatur in
+<code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code> nicht mit der Signatur in
 der Merkmalsdefinition von <code>Messenger</code> übereinstimmt (probiere es gerne aus und
 schau dir die Fehlermeldung an, die dabei ausgegeben wird).</p>
 <p>Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
@@ -19922,7 +19975,8 @@ test tests::it_sends_an_over_75_percent_warning_message ... FAILED
 failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
-thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
+thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at src/lib.rs:60:53:
+already borrowed: BorrowMutError
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -20795,7 +20849,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 
 For more information about this error, try `rustc --explain E0373`.
-error: could not compile `threads` due to previous error
+error: could not compile `threads` (bin "threads") due to 1 previous error
 </code></pre>
 <p>Rust <em>folgert</em>, wie man <code>v</code> erfasst, und weil <code>println!</code> nur eine Referenz auf
 <code>v</code> benötigt, versucht der Funktionsabschluss, <code>v</code> auszuleihen. Es gibt jedoch
@@ -20879,7 +20933,7 @@ error[E0382]: use of moved value: `v`
    |          ^ value used here after move
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `threads` due to previous error
+error: could not compile `threads` (bin "threads") due to 1 previous error
 </code></pre>
 <p>Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
 Fehler im Code in Codeblock 16-3 erhalten, weil Rust konservativ war und nur
@@ -21073,9 +21127,13 @@ error[E0382]: borrow of moved value: `val`
    |                                ^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider cloning the value if the performance cost is acceptable
+   |
+9  |         tx.send(val.clone()).unwrap();
+   |                    ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `message-passing` due to previous error
+error: could not compile `message-passing` (bin "message-passing") due to 1 previous error
 </code></pre>
 <p>Unser Nebenläufigkeitsfehler hat einen Kompilierzeitfehler verursacht. Die
 Funktion <code>send</code> übernimmt die Eigentümerschaft an ihrem Parameter und wenn der
@@ -21354,19 +21412,20 @@ Sperre und gibt das Ergebnis dieses Programms aus.</p>
 wollen wir herausfinden, warum!</p>
 <pre><code class="language-console">$ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0382]: use of moved value: `counter`
-  --&gt; src/main.rs:9:36
+error[E0382]: borrow of moved value: `counter`
+  --&gt; src/main.rs:21:29
    |
 5  |     let counter = Mutex::new(0);
    |         ------- move occurs because `counter` has type `Mutex&lt;i32&gt;`, which does not implement the `Copy` trait
 ...
 9  |         let handle = thread::spawn(move || {
-   |                                    ^^^^^^^ value moved into closure here, in previous iteration of loop
-10 |             let mut num = counter.lock().unwrap();
-   |                           ------- use occurs due to use in closure
+   |                                    ------- value moved into closure here, in previous iteration of loop
+...
+21 |     println!("Result: {}", *counter.lock().unwrap());
+   |                             ^^^^^^^ value borrowed here after move
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state` due to previous error
+error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 </code></pre>
 <p>Die Fehlermeldung besagt, dass der Wert <code>counter</code> in der vorherigen Iteration
 der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft der
@@ -21416,7 +21475,7 @@ error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
 11 |           let handle = thread::spawn(move || {
    |                        ------------- ^------
    |                        |             |
-   |  ______________________|_____________within this `[closure@src/main.rs:11:36: 11:43]`
+   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
    | |                      |
    | |                      required by a bound introduced by this call
 12 | |             let mut num = counter.lock().unwrap();
@@ -21425,19 +21484,17 @@ error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
 15 | |         });
    | |_________^ `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
    |
-   = help: within `[closure@src/main.rs:11:36: 11:43]`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
 note: required because it's used within this closure
   --&gt; src/main.rs:11:36
    |
 11 |         let handle = thread::spawn(move || {
    |                                    ^^^^^^^
 note: required by a bound in `spawn`
-  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:704:8
-   |
-   = note: required by this bound in `spawn`
+  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:678:1
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state` due to previous error
+error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 </code></pre>
 <p>Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
 den wir uns konzentrieren müssen: <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> kann nicht sicher zwischen
@@ -22148,12 +22205,13 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
  --&gt; src/main.rs:5:26
   |
 5 |         components: vec![Box::new(String::from("Hallo"))],
-  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
-  = note: required for the cast to the object type `dyn Draw`
+  = help: the trait `Draw` is implemented for `Button`
+  = note: required for the cast from `Box&lt;String&gt;` to `Box&lt;dyn Draw&gt;`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `gui` due to previous error
+error: could not compile `gui` (bin "gui") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler lässt uns wissen, dass wir entweder etwas an <code>Screen</code> übergeben,
 das wir nicht übergeben wollten und einen anderen Typ übergeben sollten, oder
@@ -23343,7 +23401,7 @@ error[E0308]: mismatched types
              found tuple `(_, _)`
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Um den Fehler zu beheben, könnten wir einen oder mehrere der Werte im Tupel
 mittels <code>_</code> oder <code>..</code> ignorieren, wie du im Abschnitt <a href="ch18-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten
@@ -23428,7 +23486,7 @@ Kompilierzeit wird sich Rust beschweren, dass wir versucht haben, ein
 abweisbares Muster zu verwenden, wo ein unabweisbares Muster erforderlich ist:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0005]: refutable pattern in local binding: `None` not covered
+error[E0005]: refutable pattern in local binding
  --&gt; src/main.rs:3:9
   |
 3 |     let Some(x) = some_option_value;
@@ -23436,23 +23494,14 @@ error[E0005]: refutable pattern in local binding: `None` not covered
   |
   = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
   = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
-note: `Option&lt;i32&gt;` defined here
- --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
-  |
-  = note: 
-/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
   = note: the matched value is of type `Option&lt;i32&gt;`
-help: you might want to use `if let` to ignore the variant that isn't matched
-  |
-3 |     let x = if let Some(x) = some_option_value { x } else { todo!() };
-  |     ++++++++++                                 ++++++++++++++++++++++
-help: alternatively, you might want to use let else to handle the variant that isn't matched
+help: you might want to use `let else` to handle the variant that isn't matched
   |
 3 |     let Some(x) = some_option_value else { todo!() };
   |                                     ++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Da wir nicht jeden gültigen Wert mit dem Muster <code>Some(x)</code> abgedeckt haben (und
 auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.</p>
@@ -24052,7 +24101,7 @@ error: `..` can only be used once per tuple pattern
   |          |
   |          previously used here
 
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Es ist für Rust unmöglich zu bestimmen, wie viele Werte im Tupel zu ignorieren
 sind, bevor ein Wert zu <code>second</code> passt, und wie viele weitere Werte danach zu
@@ -24335,7 +24384,7 @@ auch veränderbare Zeiger oder mehrere veränderbare Zeiger auf die gleiche
 Stelle haben.</li>
 <li>Sie zeigen nicht garantiert auf gültigen Speicher.</li>
 <li>Sie dürfen null sein.</li>
-<li>Sie implementieren keine automatische Bereinigung.</li>
+<li>Sie implementieren kein automatisches Aufräumen.</li>
 </ul>
 <p>Wenn du dich dagegen entscheidest, diese Garantien von Rust erzwingen zu
 lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine
@@ -24445,7 +24494,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function or 
   = note: consult the function's documentation for information on how to avoid undefined behavior
 
 For more information about this error, try `rustc --explain E0133`.
-error: could not compile `unsafe-example` due to previous error
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
 </code></pre>
 <p>Mit dem <code>unsafe</code>-Block versichern wir Rust, dass wir die Dokumentation der
 Funktion gelesen haben, dass wir verstehen, wie sie richtig zu benutzen ist,
@@ -24521,7 +24570,7 @@ error[E0499]: cannot borrow `*values` as mutable more than once at a time
   |     returning this value requires that `*values` is borrowed for `'1`
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `unsafe-example` due to previous error
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
 </code></pre>
 <p>Der Ausleihenprüfer von Rust kann nicht verstehen, dass wir verschiedene Teile
 des Anteilstyps ausleihen; er weiß nur, dass wir zweimal vom selben Anteilstyp
@@ -25238,7 +25287,7 @@ help: use the fully-qualified path to the only available implementation
    |                                                +++++++       +
 
 For more information about this error, try `rustc --explain E0790`.
-error: could not compile `traits-example` due to previous error
+error: could not compile `traits-example` (bin "traits-example") due to 1 previous error
 </code></pre>
 <p>Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
 <code>Animal</code> für <code>Dog</code> verwenden wollen und nicht die Implementierung von <code>Animal</code>
@@ -25378,10 +25427,10 @@ implementiert ist:</p>
 <pre><code class="language-console">$ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
 error[E0277]: `Point` doesn't implement `std::fmt::Display`
-  --&gt; src/main.rs:20:6
+  --&gt; src/main.rs:20:23
    |
 20 | impl OutlinePrint for Point {}
-   |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
+   |                       ^^^^^ `Point` cannot be formatted with the default formatter
    |
    = help: the trait `std::fmt::Display` is not implemented for `Point`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
@@ -25392,7 +25441,7 @@ note: required by a bound in `OutlinePrint`
    |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `traits-example` due to previous error
+error: could not compile `traits-example` (bin "traits-example") due to 1 previous error
 </code></pre>
 <p>Um dies zu beheben, implementieren wir <code>Display</code> auf <code>Point</code> und erfüllen die
 Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
@@ -25997,14 +26046,18 @@ error[E0746]: return type cannot have an unboxed trait object
 1 | fn returns_closure() -&gt; dyn Fn(i32) -&gt; i32 {
   |                         ^^^^^^^^^^^^^^^^^^ doesn't have a size known at compile-time
   |
-  = note: for information on `impl Trait`, see &lt;https://doc.rust-lang.org/book/ch10-02-traits.html#returning-types-that-implement-traits&gt;
-help: use `impl Fn(i32) -&gt; i32` as the return type, as all return paths are of type `[closure@src/lib.rs:2:5: 2:14]`, which implements `Fn(i32) -&gt; i32`
+help: return an `impl Trait` instead of a `dyn Trait`, if all returned values are the same type
   |
 1 | fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
-  |                         ~~~~~~~~~~~~~~~~~~~
+  |                         ~~~~
+help: box the return type, and wrap all of the returned values in `Box::new`
+  |
+1 ~ fn returns_closure() -&gt; Box&lt;dyn Fn(i32) -&gt; i32&gt; {
+2 ~     Box::new(|x| x + 1)
+  |
 
 For more information about this error, try `rustc --explain E0746`.
-error: could not compile `functions-example` due to previous error
+error: could not compile `functions-example` (lib) due to 1 previous error
 </code></pre>
 <p>Der Fehler bezieht sich wieder auf das Merkmal <code>Sized</code>! Rust weiß nicht, wie
 viel Platz benötigt wird, um den Funktionsabschluss zu speichern. Wir haben
@@ -27433,7 +27486,7 @@ error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 For more information about this error, try `rustc --explain E0433`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 <code>ThreadPool</code> benötigen, also werden wir jetzt eines bauen. Unsere
@@ -27512,7 +27565,7 @@ error[E0599]: no function or associated item named `new` found for struct `Threa
    |                            ^^^ function or associated item not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler deutet darauf hin, dass wir als Nächstes eine zugehörige Funktion
 namens <code>new</code> für <code>ThreadPool</code> erstellen müssen. Wir wissen auch, dass <code>new</code>
@@ -27539,10 +27592,10 @@ error[E0599]: no method named `execute` found for struct `ThreadPool` in the cur
   --&gt; src/main.rs:17:14
    |
 17 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `ThreadPool`
+   |         -----^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Der Fehler tritt jetzt auf, weil wir keine Methode <code>execute</code> auf <code>ThreadPool</code>
 haben. Erinnere dich an den Abschnitt <a href="ch20-02-multithreaded.html#erstellen-einer-endliche-anzahl-von-str%C3%A4ngen">„Erstellen einer endlichen Anzahl von
@@ -28028,11 +28081,19 @@ error[E0382]: use of moved value: `receiver`
 21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver&lt;Job&gt;`, which does not implement the `Copy` trait
 ...
+25 |         for id in 0..size {
+   |         ----------------- inside of this loop
 26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
+   |
+note: consider changing this parameter type in method `new` to borrow instead if owning the value isn't necessary
+  --&gt; src/lib.rs:47:33
+   |
+47 |     fn new(id: usize, receiver: mpsc::Receiver&lt;Job&gt;) -&gt; Worker {
+   |        --- in this method       ^^^^^^^^^^^^^^^^^^^ this parameter takes ownership of the value
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (lib) due to 1 previous error
 </code></pre>
 <p>Der Code versucht, <code>receiver</code> an mehrere <code>Worker</code>-Instanzen weiterzugeben. Das
 wird nicht funktionieren, wie du dich aus Kapitel 16 erinnern wirst: Die
@@ -28569,11 +28630,11 @@ error[E0507]: cannot move out of `worker.thread` which is behind a mutable refer
    |             |
    |             move occurs because `worker.thread` has type `JoinHandle&lt;()&gt;`, which does not implement the `Copy` trait
    |
-note: this function takes ownership of the receiver `self`, which moves `worker.thread`
-  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:17
+note: `JoinHandle::&lt;T&gt;::join` takes ownership of the receiver `self`, which moves `worker.thread`
+  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:1649:17
 
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (lib) due to 1 previous error
 </code></pre>
 <p>Der Fehler sagt uns, dass wir <code>join</code> nicht aufrufen können, weil wir nur eine
 veränderbare Ausleihe von jedem <code>worker</code> haben und <code>join</code> die Eigentümerschaft
@@ -28677,7 +28738,7 @@ error[E0599]: no method named `join` found for enum `Option` in the current scop
    |                           ^^^^ method not found in `Option&lt;JoinHandle&lt;()&gt;&gt;`
    |
 note: the method `join` exists on the type `JoinHandle&lt;()&gt;`
-  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:1581:5
+  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:1649:5
 help: consider using `Option::expect` to unwrap the `JoinHandle&lt;()&gt;` value, panicking if the value is an `Option::None`
    |
 52 |             worker.thread.expect("REASON").join().unwrap();
@@ -28687,7 +28748,7 @@ error[E0308]: mismatched types
   --&gt; src/lib.rs:72:22
    |
 72 |         Worker { id, thread }
-   |                      ^^^^^^ expected enum `Option`, found struct `JoinHandle`
+   |                      ^^^^^^ expected `Option&lt;JoinHandle&lt;()&gt;&gt;`, found `JoinHandle&lt;_&gt;`
    |
    = note: expected enum `Option&lt;JoinHandle&lt;()&gt;&gt;`
             found struct `JoinHandle&lt;_&gt;`
@@ -28698,7 +28759,7 @@ help: try wrapping the expression in `Some`
 
 Some errors have detailed explanations: E0308, E0599.
 For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello` due to 2 previous errors
+error: could not compile `hello` (lib) due to 2 previous errors
 </code></pre>
 <p>Lass uns den zweiten Fehler beheben, der auf den Code am Ende von <code>Worker::new</code>
 verweist; wir müssen den Wert <code>thread</code> in <code>Some</code> einpacken, wenn wir einen

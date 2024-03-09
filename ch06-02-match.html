@@ -408,10 +408,10 @@ error[E0004]: non-exhaustive patterns: `None` not covered
   |               ^ pattern `None` not covered
   |
 note: `Option&lt;i32&gt;` defined here
- --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
+ --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/option.rs:570:1
+ ::: /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/option.rs:574:5
   |
-  = note: 
-/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
+  = note: not covered
   = note: the matched value is of type `Option&lt;i32&gt;`
 help: ensure that all possible cases are being handled by adding a match arm with a wildcard pattern or an explicit pattern as shown
   |
@@ -420,7 +420,7 @@ help: ensure that all possible cases are being handled by adding a match arm wit
   |
 
 For more information about this error, try `rustc --explain E0004`.
-error: could not compile `enums` due to previous error
+error: could not compile `enums` (bin "enums") due to 1 previous error
 </code></pre>
 <p>Rust weiß, dass wir nicht alle möglichen Fälle abgedeckt haben, und es weiß
 sogar, welches Muster wir vergessen haben! Abgleiche in Rust sind

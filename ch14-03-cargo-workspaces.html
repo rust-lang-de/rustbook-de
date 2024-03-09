@@ -258,12 +258,9 @@ members = [
 </code></pre>
 <p>Lass uns in der Datei <em>add_one/src/lib.rs</em>, eine Funktion <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_one(x: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_one(x: i32) -&gt; i32 {
     x + 1
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p>Nun können wir das <code>adder</code>-Paket von unserem <code>add_one</code>-Paket, das unsere
 Bibliothek enthält, abhängig machen. Zuerst müssen wir <em>adder/Cargo.toml</em>
 einen Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>

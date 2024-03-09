@@ -468,13 +468,16 @@ warning: unused `Result` that must be used
   --&gt; src/main.rs:10:5
    |
 10 |     io::stdin().read_line(&amp;mut guess);
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
    |
-   = note: `#[warn(unused_must_use)]` on by default
    = note: this `Result` may be an `Err` variant, which should be handled
+   = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+10 |     let _ = io::stdin().read_line(&amp;mut guess);
+   |     +++++++
 
 warning: `guessing_game` (bin "guessing_game") generated 1 warning
-
     Finished dev [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
 <p>Rust warnt, dass du den von <code>read_line</code> zurückgegebenen <code>Result</code>-Wert nicht
@@ -842,17 +845,17 @@ error[E0308]: mismatched types
   --&gt; src/main.rs:22:21
    |
 22 |     match guess.cmp(&amp;secret_number) {
-   |                 --- ^^^^^^^^^^^^^^ expected struct `String`, found integer
+   |                 --- ^^^^^^^^^^^^^^ expected `&amp;String`, found `&amp;{integer}`
    |                 |
-   |                 arguments to this function are incorrect
+   |                 arguments to this method are incorrect
    |
    = note: expected reference `&amp;String`
               found reference `&amp;{integer}`
-note: associated function defined here
-  --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/cmp.rs:783:8
+note: method defined here
+  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/cmp.rs:814:8
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `guessing_game` due to previous error
+error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 </code></pre>
 <p>Die Kernbotschaft des Fehlers besagt, dass es <em>nicht übereinstimmende Typen</em>
 (mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch

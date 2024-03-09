@@ -240,8 +240,8 @@ sodass wir in den <code>match</code>-Zweigen nicht mehr <code>Result::</code> vo
 und <code>Err</code> angeben müssen.</p>
 <p>Wenn das Ergebnis <code>Ok</code> ist, gibt dieser Code den inneren <code>file</code>-Wert aus der
 <code>Ok</code>-Variante zurück, und wir weisen diese Dateiressource der Variablen
-<code>greeting_file </code> zu.
-Nach dem <code>match</code> können wir die Dateiressource zum Lesen und Schreiben verwenden.</p>
+<code>greeting_file </code> zu. Nach dem <code>match</code> können wir die Dateiressource zum Lesen
+und Schreiben verwenden.</p>
 <p>Der andere Zweig von <code>match</code> behandelt den Fall, dass wir einen <code>Err</code>-Wert von
 <code>File::open</code> erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
 Makro <code>panic!</code> aufzurufen. Wenn es keine Datei namens <em>hallo.txt</em> in unserem
@@ -251,7 +251,8 @@ folgende Ausgabe des Makros <code>panic!</code>:</p>
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
+thread 'main' panicked at src/main.rs:8:23:
+Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.</p>
@@ -305,8 +306,8 @@ brauchen wir einen zweiten Zweig im inneren <code>match</code>-Ausdruck. Wenn di
 nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
-<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
 <blockquote>
+<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
 sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
 (closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
@@ -353,9 +354,8 @@ fn main() {
 }</code></pre></pre>
 <p>Wenn wir diesen Code ohne eine Datei <em>hallo.txt</em> ausführen, werden wir die
 Fehlermeldung des <code>panic!</code>-Aufrufs sehen, den die Methode <code>unwrap</code> macht:</p>
-<pre><code class="language-console">thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:4:49
+<pre><code class="language-console">thread 'main' panicked at src/main.rs:4:49:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 </code></pre>
 <p>In ähnlicher Weise können wir bei der Methode <code>expect</code> auch die Fehlermeldung
 von <code>panic!</code> angeben. Das Verwenden von <code>expect</code> anstelle von <code>unwrap</code> und das
@@ -366,16 +366,15 @@ der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folg
 
 fn main() {
     let greeting_file = File::open("hallo.txt")
-        .expect("Problem beim Öffnen von hallo.txt");
+        .expect("hallo.txt sollte in dieses Projekt aufgenommen werden");
 }</code></pre></pre>
 <p>Wir benutzen <code>expect</code> auf die gleiche Weise wie <code>unwrap</code>: Um die Dateiressource
 zurückzugeben oder das Makro <code>panic!</code> aufzurufen. Die Fehlermeldung, die
 <code>expect</code> beim Aufruf von <code>panic!</code> mitgibt, wird als Parameter an <code>expect</code>
 übergeben, anstelle der standardmäßigen <code>panic!</code>-Nachricht, die <code>unwrap</code>
 verwendet. So sieht sie aus:</p>
-<pre><code class="language-text">thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:5:10
+<pre><code class="language-text">thread 'main' panicked at src/main.rs:5:10:
+hallo.txt sollte in dieses Projekt aufgenommen werden: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 </code></pre>
 <p>In produktivem Code wählen die meisten Rust-Entwickler <code>expect</code> statt
 <code>unwrap</code> und geben mehr Kontext darüber an, warum die Operation voraussichtlich
@@ -604,7 +603,7 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` due to previous error
+error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der

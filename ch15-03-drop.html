@@ -176,16 +176,15 @@ Funktionalität des Merkmals <code>Drop</code> fast immer bei der Implementierun
 intelligenten Zeigers verwendet wird. Wenn beispielsweise eine <code>Box&lt;T&gt;</code>
 aufgeräumt wird, wird der Speicherplatz auf dem Haldenspeicher freigegeben, auf
 den die Box zeigt.</p>
-<p>In einigen Programmiersprachen muss der Programmierer bei jeder Verwendung einer
-Instanz eines intelligenten Zeigers Programmcode aufrufen, um Speicher oder
-Ressourcen freizugeben. Beispiele hierfür sind Dateiressurcen, Sockets oder
-Sperren. Wenn sie es vergessen, kann das System überlastet werden und
-abstürzen. In Rust kann man festlegen, dass ein bestimmter Programmcode
-ausgeführt wird, wenn ein Wert seinen Gültigkeitsbereich verlässt, und der
-Compiler fügt diesen Programmcode automatisch ein. Infolgedessen muss man nicht
-vorsichtig sein, wenn man Bereinigungscode überall in einem Programm platziert,
-mit dem eine Instanz eines bestimmten Typs fertig ist, man wird dennoch keine
-Ressourcen verlieren!</p>
+<p>In einigen Programmiersprachen muss der Programmierer für manche Datentypen
+den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
+Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
+Sockets oder Sperren. Wenn er das vergisst, kann das System überlastet werden
+und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
+ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
+Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
+sich nicht darum kümmern, an allen relevanten Stellen Aufräumcode zu
+platzieren, und verschwendet trotzdem keine Ressourcen!</p>
 <p>Du schreibst den Programmcode der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals <code>Drop</code>. Für das
 Merkmal <code>Drop</code> muss man eine Methode <code>drop</code> implementieren, die eine
@@ -243,14 +242,14 @@ CustomSmartPointer mit Daten aufräumen: `meine Sache`!
 aufgerufen, sobald unsere Instanzen den Gültigkeitsbereich verlassen haben.
 Variablen werden in umgekehrter Reihenfolge ihrer Erstellung aufgeräumt, daher
 wurde <code>d</code> vor <code>c</code> aufgeräumt. Der Zweck dieses Beispiels ist, dir eine visuelle
-Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise gibst
-du den Bereinigungscode an, den dein Typ ausführen muss, anstatt einen Text
+Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise
+schreibst du den Aufräumcode, den dein Typ ausführen muss, anstatt einen Text
 auszugeben.</p>
 <h3 id="einen-wert-mit-stdmemdrop-frühzeitig-aufräumen"><a class="header" href="#einen-wert-mit-stdmemdrop-frühzeitig-aufräumen">Einen Wert mit <code>std::mem::drop</code> frühzeitig aufräumen</a></h3>
 <p>Unglücklicherweise ist es nicht einfach, die automatische <code>drop</code>-Funktionalität
 zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des <code>Drop</code>-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
-möchte man jedoch möglicherweise einen Wert frühzeitig bereinigen. Ein Beispiel
+möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du die <code>drop</code>-Methode dazu zwingen, die Sperre freizugegeben,
 damit anderer Programmcode im selben Gültigkeitsbereich die Sperre erhalten
@@ -281,7 +280,7 @@ indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Cod
     println!("CustomSmartPointer vor dem Ende von main aufgeräumt.");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-15: Der Versuch, die <code>drop</code>-Methode
-des <code>Drop</code>-Merkmals manuell aufzurufen, um frühzeitig zu bereinigen</span></p>
+des <code>Drop</code>-Merkmals manuell aufzurufen, um frühzeitig aufzuräumen</span></p>
 <p>Wenn wir versuchen, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
@@ -290,18 +289,20 @@ error[E0040]: explicit use of destructor method
   --&gt; src/main.rs:16:7
    |
 16 |     c.drop();
-   |     --^^^^--
-   |     | |
-   |     | explicit destructor calls not allowed
-   |     help: consider using `drop` function: `drop(c)`
+   |       ^^^^ explicit destructor calls not allowed
+   |
+help: consider using `drop` function
+   |
+16 |     drop(c);
+   |     +++++ ~
 
 For more information about this error, try `rustc --explain E0040`.
-error: could not compile `drop-example` due to previous error
+error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
 </code></pre>
 <p>Diese Fehlermeldung besagt, dass wir <code>drop</code> nicht explizit aufrufen dürfen. Die
 Fehlermeldung verwendet den Begriff <em>Destruktor</em> (destructor), der der
 allgemeine Programmierbegriff für eine Funktion ist, die eine Instanz
-bereinigt. Ein <em>Destruktor</em> ist analog zu einem <em>Konstruktor</em> (constructor),
+aufräumt. Ein <em>Destruktor</em> ist analog zu einem <em>Konstruktor</em> (constructor),
 der eine Instanz erstellt. Die <code>drop</code>-Funktion in Rust ist ein bestimmter
 <em>Destruktor</em>.</p>
 <p>Rust lässt uns <code>drop</code> nicht explizit aufrufen, da Rust immer noch automatisch
@@ -351,13 +352,13 @@ CustomSmartPointer vor dem Ende von main aufgeräumt.
 <code>CustomSmartPointer erzeugt</code> und <code>CustomSmartPointer vor dem Ende von main aufgeräumt.</code> ausgegeben und zeigt, dass der <code>drop</code>-Methodencode aufgerufen wird
 um <code>c</code> an diesem Punkt aufzuräumen.</p>
 <p>Du kannst den Programmcode, der in einer Implementierung des <code>Drop</code>-Merkmals
-angegeben ist, auf viele Arten verwenden, um die Bereinigung bequem und sicher
-zu gestalten, du kannst ihn beispielsweise dazu verwnden, um deinen eigenen
-Speicher-Allokator (memory allocator) zu erstellen! Mit dem Merkmal <code>Drop</code> und
-dem Eigentümerschaftssystem von Rust musst du nicht daran denken den
-Programmcode zu bereinigen, da Rust dies automatisch tut.</p>
-<p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus der
-versehentlichen Bereinigung noch verwendeter Werte ergeben: Das
+angegeben ist, auf viele Arten verwenden, um das Aufräumen bequem und sicher
+zu gestalten. Du kannst ihn beispielsweise dazu verwenden, deine eigene
+Speicherverwaltung (memory allocator) zu erstellen! Mit dem Merkmal <code>Drop</code> und
+dem Eigentümerschaftssystem von Rust musst du nicht ans Aufräumen denken, da
+Rust dies automatisch tut.</p>
+<p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
+versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
 Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
 stellt auch sicher, dass <code>drop</code> nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.</p>

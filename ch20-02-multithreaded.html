@@ -429,7 +429,7 @@ error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 For more information about this error, try `rustc --explain E0433`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 <code>ThreadPool</code> benötigen, also werden wir jetzt eines bauen. Unsere
@@ -508,7 +508,7 @@ error[E0599]: no function or associated item named `new` found for struct `Threa
    |                            ^^^ function or associated item not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler deutet darauf hin, dass wir als Nächstes eine zugehörige Funktion
 namens <code>new</code> für <code>ThreadPool</code> erstellen müssen. Wir wissen auch, dass <code>new</code>
@@ -535,10 +535,10 @@ error[E0599]: no method named `execute` found for struct `ThreadPool` in the cur
   --&gt; src/main.rs:17:14
    |
 17 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `ThreadPool`
+   |         -----^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Der Fehler tritt jetzt auf, weil wir keine Methode <code>execute</code> auf <code>ThreadPool</code>
 haben. Erinnere dich an den Abschnitt <a href="#erstellen-einer-endliche-anzahl-von-str%C3%A4ngen">„Erstellen einer endlichen Anzahl von
@@ -1024,11 +1024,19 @@ error[E0382]: use of moved value: `receiver`
 21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver&lt;Job&gt;`, which does not implement the `Copy` trait
 ...
+25 |         for id in 0..size {
+   |         ----------------- inside of this loop
 26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
+   |
+note: consider changing this parameter type in method `new` to borrow instead if owning the value isn't necessary
+  --&gt; src/lib.rs:47:33
+   |
+47 |     fn new(id: usize, receiver: mpsc::Receiver&lt;Job&gt;) -&gt; Worker {
+   |        --- in this method       ^^^^^^^^^^^^^^^^^^^ this parameter takes ownership of the value
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (lib) due to 1 previous error
 </code></pre>
 <p>Der Code versucht, <code>receiver</code> an mehrere <code>Worker</code>-Instanzen weiterzugeben. Das
 wird nicht funktionieren, wie du dich aus Kapitel 16 erinnern wirst: Die

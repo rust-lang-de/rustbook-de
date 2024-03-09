@@ -207,7 +207,7 @@ Kompilierzeit wird sich Rust beschweren, dass wir versucht haben, ein
 abweisbares Muster zu verwenden, wo ein unabweisbares Muster erforderlich ist:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0005]: refutable pattern in local binding: `None` not covered
+error[E0005]: refutable pattern in local binding
  --&gt; src/main.rs:3:9
   |
 3 |     let Some(x) = some_option_value;
@@ -215,23 +215,14 @@ error[E0005]: refutable pattern in local binding: `None` not covered
   |
   = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
   = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
-note: `Option&lt;i32&gt;` defined here
- --&gt; /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:518:1
-  |
-  = note: 
-/rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/core/src/option.rs:522:5: not covered
   = note: the matched value is of type `Option&lt;i32&gt;`
-help: you might want to use `if let` to ignore the variant that isn't matched
-  |
-3 |     let x = if let Some(x) = some_option_value { x } else { todo!() };
-  |     ++++++++++                                 ++++++++++++++++++++++
-help: alternatively, you might want to use let else to handle the variant that isn't matched
+help: you might want to use `let else` to handle the variant that isn't matched
   |
 3 |     let Some(x) = some_option_value else { todo!() };
   |                                     ++++++++++++++++
 
 For more information about this error, try `rustc --explain E0005`.
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Da wir nicht jeden gültigen Wert mit dem Muster <code>Some(x)</code> abgedeckt haben (und
 auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.</p>

@@ -225,6 +225,8 @@ versuchen, ihn zu verwenden. Hier ist die Fehlermeldung:</p>
 error[E0597]: `x` does not live long enough
  --&gt; src/main.rs:6:13
   |
+5 |         let x = 5;
+  |             - binding `x` declared here
 6 |         r = &amp;x;
   |             ^^ borrowed value does not live long enough
 7 |     }
@@ -234,7 +236,7 @@ error[E0597]: `x` does not live long enough
   |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Die Variable <code>x</code> lebt nicht „lange genug“. Der Grund dafür ist, dass <code>x</code> den
 Gültigkeitsbereich verlässt, da der innere Gültigkeitsbereich bei Zeile 7
@@ -349,7 +351,7 @@ help: consider introducing a named lifetime parameter
   |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Aus dem Hilfetext geht hervor, dass der Rückgabetyp einen generischen
 Lebensdauer-Parameter benötigt, da Rust nicht sagen kann, ob sich die
@@ -521,15 +523,17 @@ nachdem <code>string2</code> den Gültigkeitsbereich verlassen hat</span></p>
 error[E0597]: `string2` does not live long enough
  --&gt; src/main.rs:6:44
   |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
 6 |         result = longest(string1.as_str(), string2.as_str());
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
 8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                                 ------ borrow later used here
+  |                                          ------ borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Der Fehler zeigt, dass <code>string2</code> bis zum Ende des äußeren Gültigkeitsbereichs
 gültig sein müsste, damit <code>result</code> in der Anweisung <code>println!</code> noch gültig ist.
@@ -598,14 +602,17 @@ Lebensdauer des Rückgabewerts überhaupt nicht mit der Lebensdauer der Paramete
 zusammenhängt. Hier ist die Fehlermeldung, die wir erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0515]: cannot return reference to local variable `result`
+error[E0515]: cannot return value referencing local variable `result`
   --&gt; src/main.rs:11:5
    |
 11 |     result.as_str()
-   |     ^^^^^^^^^^^^^^^ returns a reference to data owned by the current function
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
 
 For more information about this error, try `rustc --explain E0515`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Das Problem ist, dass <code>result</code> den Gültigkeitsbereich verlässt und am Ende der
 Funktion <code>longest</code> aufgeräumt wird. Wir versuchen auch, eine Referenz auf den

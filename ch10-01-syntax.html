@@ -297,7 +297,7 @@ help: consider restricting type parameter `T`
   |             ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein <em>Merkmal</em> (trait) ist,
 und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
@@ -364,7 +364,7 @@ error[E0308]: mismatched types
   |                                      ^^^ expected integer, found floating-point number
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
 <p>Um eine Struktur <code>Point</code> zu definieren, bei der <code>x</code> und <code>y</code> generische, aber
 unterschiedliche, Typen haben können, können wir mehrere generische

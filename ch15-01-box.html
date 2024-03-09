@@ -322,7 +322,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cyc
   |               ++++    +
 
 For more information about this error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to previous error
+error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
 </code></pre>
 <p><span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span></p>
@@ -368,15 +368,14 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
 Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
 hilfreichen Vorschlag aus:</p>
-<pre><code class="language-text">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to make `List` representable
+<pre><code class="language-text">help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cycle
   |
 2 |     Cons(i32, Box&lt;List&gt;),
   |               ++++    +
 </code></pre>
-<p>In diesem Hinweis bedeutet „indirection“ (Dereferenzierung), dass anstelle
-eines direkten Speicherns des Wertes die Datenstruktur geändert werden soll, um
-den Wert indirekt zu speichern, indem stattdessen ein Zeiger auf den Wert
-gespeichert wird.</p>
+<p>In diesem Hinweis bedeutet „indirection“ (Umweg), dass die Datenstruktur den
+Wert nicht direkt speichern soll, sondern indirekt, indem stattdessen ein
+Zeiger auf den Wert gespeichert wird.</p>
 <p>Da eine <code>Box&lt;T&gt;</code> ein Zeiger ist, weiß Rust immer, wie viel Platz eine <code>Box&lt;T&gt;</code>
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
 Datenmenge, auf die er zeigt. Dies bedeutet, dass wir anstelle eines anderen
@@ -424,7 +423,7 @@ Anwendungsfälle für Boxen werden wir uns in Kapitel 17 ansehen.</p>
 implementiert, mit dem <code>Box&lt;T&gt;</code> Werte wie Referenzen behandelt werden können.
 Wenn ein <code>Box&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt, werden die Daten am
 Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-Merkmals <code>Drop</code> ebenfalls bereinigt. Diese beiden Merkmale sind für die
+Merkmals <code>Drop</code> ebenfalls aufgeräumt. Diese beiden Merkmale sind für die
 Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
 Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
 untersuchen.</p>

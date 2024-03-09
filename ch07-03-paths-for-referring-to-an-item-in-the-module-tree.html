@@ -250,7 +250,9 @@ error[E0603]: module `hosting` is private
  --&gt; src/lib.rs:9:28
   |
 9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                            ^^^^^^^ private module
+  |                            ^^^^^^^  --------------- function `add_to_waitlist` is not publicly re-exported
+  |                            |
+  |                            private module
   |
 note: the module `hosting` is defined here
  --&gt; src/lib.rs:2:5
@@ -262,7 +264,9 @@ error[E0603]: module `hosting` is private
   --&gt; src/lib.rs:12:21
    |
 12 |     front_of_house::hosting::add_to_waitlist();
-   |                     ^^^^^^^ private module
+   |                     ^^^^^^^  --------------- function `add_to_waitlist` is not publicly re-exported
+   |                     |
+   |                     private module
    |
 note: the module `hosting` is defined here
   --&gt; src/lib.rs:2:5
@@ -271,7 +275,7 @@ note: the module `hosting` is defined here
    |     ^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant` due to 2 previous errors
+error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
 <p><span class="caption">Codeblock 7-4: Kompilierfehler im Code in Codeblock
 7-3</span></p>
@@ -351,7 +355,7 @@ note: the function `add_to_waitlist` is defined here
    |         ^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
-error: could not compile `restaurant` due to 2 previous errors
+error: could not compile `restaurant` (lib) due to 2 previous errors
 </code></pre>
 <p><span class="caption">Codeblock 7-6: Kompilierfehler im Code in Codeblock
 7-5</span></p>
