@@ -316,7 +316,8 @@ $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
-thread 'main' panicked at 'index out of bounds: the len is 1 but the index is 1', src/main.rs:27:21
+thread 'main' panicked at src/main.rs:27:21:
+index out of bounds: the len is 1 but the index is 1
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -393,7 +394,8 @@ $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
-thread 'main' panicked at 'Nicht genügend Argumente', src/main.rs:26:13
+thread 'main' panicked at src/main.rs:26:13:
+Nicht genügend Argumente
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -755,6 +757,10 @@ warning: unused `Result` that must be used
    |
    = note: this `Result` may be an `Err` variant, which should be handled
    = note: `#[warn(unused_must_use)]` on by default
+help: use `let _ = ...` to ignore the resulting value
+   |
+19 |     let _ = run(config);
+   |     +++++++
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
     Finished dev [unoptimized + debuginfo] target(s) in 0.71s

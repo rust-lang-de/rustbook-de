@@ -198,6 +198,7 @@ Wenn wir diesen Code kompilieren, erhalten wir folgende Fehlermeldung:
 ```text
 error[E0277]: `Rectangle` doesn't implement `std::fmt::Display`
 ```
+
 Das Makro `println!` kann diverse Formatierungen vornehmen. Die geschweiften
 Klammern weisen `println!` an, die Formatierung `Display` zu verwenden, bei der
 die Ausgabe direkt für den Endbenutzer bestimmt ist. Die primitiven Typen, die
@@ -343,8 +344,8 @@ $ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/rectangles`
-[src/main.rs:10] 30 * scale = 60
-[src/main.rs:14] &rect1 = Rectangle {
+[src/main.rs:10:16] 30 * scale = 60
+[src/main.rs:14:5] &rect1 = Rectangle {
     width: 60,
     height: 50,
 }

@@ -668,7 +668,7 @@ error: `..` can only be used once per tuple pattern
   |          |
   |          previously used here
 
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 ```
 
 Es ist für Rust unmöglich zu bestimmen, wie viele Werte im Tupel zu ignorieren

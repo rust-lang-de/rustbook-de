@@ -181,7 +181,6 @@ einen Fehler erhalten:
 fn main() {
     let x = (let y = 6);
 }
-
 ```
 
 Wenn du dieses Programm ausführst, wirst du in etwa folgenden Fehler erhalten:
@@ -194,22 +193,8 @@ error: expected expression, found `let` statement
   |
 2 |     let x = (let y = 6);
   |              ^^^
-
-error: expected expression, found statement (`let`)
- --> src/main.rs:2:14
   |
-2 |     let x = (let y = 6);
-  |              ^^^^^^^^^
-  |
-  = note: variable declaration using `let` is a statement
-
-error[E0658]: `let` expressions in this position are unstable
- --> src/main.rs:2:14
-  |
-2 |     let x = (let y = 6);
-  |              ^^^^^^^^^
-  |
-  = note: see issue #53667 <https://github.com/rust-lang/rust/issues/53667> for more information
+  = note: only supported directly in conditions of `if` and `while` expressions
 
 warning: unnecessary parentheses around assigned value
  --> src/main.rs:2:13
@@ -224,9 +209,8 @@ help: remove these parentheses
 2 +     let x = let y = 6;
   |
 
-For more information about this error, try `rustc --explain E0658`.
 warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` due to 3 previous errors; 1 warning emitted
+error: could not compile `functions` (bin "functions") due to 1 previous error; 1 warning emitted
 ```
 
 Die Anweisung `let y = 6` gibt keinen Wert zurück, also gibt es für `x` nichts,
@@ -374,11 +358,10 @@ error[E0308]: mismatched types
   |    |
   |    implicitly returns `()` as its body has no tail or `return` expression
 8 |     x + 1;
-  |          - help: consider removing this semicolon
+  |          - help: remove this semicolon to return this value
 
 For more information about this error, try `rustc --explain E0308`.
-warning: `functions` (bin "functions") generated 1 warning
-error: could not compile `functions` due to 2 previous errors; 1 warning emitted
+error: could not compile `functions` (bin "functions") due to 1 previous error
 ```
 
 Die Hauptfehlermeldung `mismatched types` offenbart das Kernproblem dieses

@@ -107,14 +107,18 @@ $ cargo run
 error[E0596]: cannot borrow `x` as mutable, as it is not declared as mutable
  --> src/main.rs:3:13
   |
-2 |     let x = 5;
-  |         - help: consider changing this to be mutable: `mut x`
 3 |     let y = &mut x;
   |             ^^^^^^ cannot borrow as mutable
+  |
+help: consider changing this to be mutable
+  |
+2 |     let mut x = 5;
+  |         +++
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `borrowing` due to previous error
+error: could not compile `borrowing` (bin "borrowing") due to 1 previous error
 ```
+
 Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
 seinen Methoden selbst veränderbar ist, aber für einen anderen Programmcode
 unveränderbar erscheint. Programmcode außerhalb der Methoden des Werts kann
@@ -338,21 +342,22 @@ $ cargo test
 error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `&` reference
   --> src/lib.rs:58:13
    |
-2  |     fn send(&self, msg: &str);
-   |             ----- help: consider changing that to be a mutable reference: `&mut self`
-...
 58 |             self.sent_messages.push(String::from(message));
-   |             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `self` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+   |             ^^^^^^^^^^^^^^^^^^ `self` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+   |
+help: consider changing this to be a mutable reference
+   |
+2  |     fn send(&mut self, msg: &str);
+   |             ~~~~~~~~~
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `limit-tracker` due to previous error
-warning: build failed, waiting for other jobs to finish...
+error: could not compile `limit-tracker` (lib test) due to 1 previous error
 ```
 
 Wir können den `MockMessenger` nicht ändern, um die Nachrichten zu verfolgen, da
 die `send`-Methode eine unveränderbare Referenz auf `self` verwendet. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen 
-`&mut self` zu verwenden, da die Signatur von `send`nicht mit der Signatur in 
+`&mut self` zu verwenden, da die Signatur von `send` nicht mit der Signatur in 
 der Merkmalsdefinition von `Messenger` übereinstimmt (probiere es gerne aus und
 schau dir die Fehlermeldung an, die dabei ausgegeben wird).
 
@@ -592,7 +597,8 @@ test tests::it_sends_an_over_75_percent_warning_message ... FAILED
 failures:
 
 ---- tests::it_sends_an_over_75_percent_warning_message stdout ----
-thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at 'already borrowed: BorrowMutError', src/lib.rs:60:53
+thread 'tests::it_sends_an_over_75_percent_warning_message' panicked at src/lib.rs:60:53:
+already borrowed: BorrowMutError
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 

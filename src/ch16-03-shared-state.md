@@ -174,19 +174,20 @@ wollen wir herausfinden, warum!
 ```console
 $ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0382]: use of moved value: `counter`
-  --> src/main.rs:9:36
+error[E0382]: borrow of moved value: `counter`
+  --> src/main.rs:21:29
    |
 5  |     let counter = Mutex::new(0);
    |         ------- move occurs because `counter` has type `Mutex<i32>`, which does not implement the `Copy` trait
 ...
 9  |         let handle = thread::spawn(move || {
-   |                                    ^^^^^^^ value moved into closure here, in previous iteration of loop
-10 |             let mut num = counter.lock().unwrap();
-   |                           ------- use occurs due to use in closure
+   |                                    ------- value moved into closure here, in previous iteration of loop
+...
+21 |     println!("Result: {}", *counter.lock().unwrap());
+   |                             ^^^^^^^ value borrowed here after move
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `shared-state` due to previous error
+error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
@@ -247,7 +248,7 @@ error[E0277]: `Rc<Mutex<i32>>` cannot be sent between threads safely
 11 |           let handle = thread::spawn(move || {
    |                        ------------- ^------
    |                        |             |
-   |  ______________________|_____________within this `[closure@src/main.rs:11:36: 11:43]`
+   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
    | |                      |
    | |                      required by a bound introduced by this call
 12 | |             let mut num = counter.lock().unwrap();
@@ -256,19 +257,17 @@ error[E0277]: `Rc<Mutex<i32>>` cannot be sent between threads safely
 15 | |         });
    | |_________^ `Rc<Mutex<i32>>` cannot be sent between threads safely
    |
-   = help: within `[closure@src/main.rs:11:36: 11:43]`, the trait `Send` is not implemented for `Rc<Mutex<i32>>`
+   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc<Mutex<i32>>`
 note: required because it's used within this closure
   --> src/main.rs:11:36
    |
 11 |         let handle = thread::spawn(move || {
    |                                    ^^^^^^^
 note: required by a bound in `spawn`
-  --> /rustc/d5a82bbd26e1ad8b7401f6a718a9c57c96905483/library/std/src/thread/mod.rs:704:8
-   |
-   = note: required by this bound in `spawn`
+  --> /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:678:1
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `shared-state` due to previous error
+error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 ```
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf

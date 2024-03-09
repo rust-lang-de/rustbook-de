@@ -285,7 +285,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 
 For more information about this error, try `rustc --explain E0373`.
-error: could not compile `threads` due to previous error
+error: could not compile `threads` (bin "threads") due to 1 previous error
 ```
 
 Rust *folgert*, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
@@ -389,7 +389,7 @@ error[E0382]: use of moved value: `v`
    |          ^ value used here after move
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `threads` due to previous error
+error: could not compile `threads` (bin "threads") due to 1 previous error
 ```
 
 Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen

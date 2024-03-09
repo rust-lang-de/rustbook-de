@@ -279,22 +279,22 @@ Dieser Code führt zu folgendem Fehler:
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
 error[E0277]: the type `String` cannot be indexed by `{integer}`
- --> src/main.rs:3:13
+ --> src/main.rs:3:16
   |
 3 |     let h = s1[0];
-  |             ^^^^^ `String` cannot be indexed by `{integer}`
+  |                ^ `String` cannot be indexed by `{integer}`
   |
   = help: the trait `Index<{integer}>` is not implemented for `String`
   = help: the following other types implement trait `Index<Idx>`:
-            <String as Index<RangeFrom<usize>>>
             <String as Index<RangeFull>>
-            <String as Index<RangeInclusive<usize>>>
-            <String as Index<RangeTo<usize>>>
-            <String as Index<RangeToInclusive<usize>>>
             <String as Index<std::ops::Range<usize>>>
+            <String as Index<RangeFrom<usize>>>
+            <String as Index<RangeTo<usize>>>
+            <String as Index<RangeInclusive<usize>>>
+            <String as Index<RangeToInclusive<usize>>>
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `collections` due to previous error
+error: could not compile `collections` (bin "collections") due to 1 previous error
 ```
 
 Die Fehlermeldung und der Hinweis erzählen die Geschichte: Zeichenketten in
@@ -427,7 +427,8 @@ $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished dev [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
-thread 'main' panicked at 'byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`', src/libcore/str/mod.rs:2069:5
+thread 'main' panicked at src/main.rs:4:19:
+byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 

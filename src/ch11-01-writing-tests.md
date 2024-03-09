@@ -50,11 +50,17 @@ Codeblock 11-1 aussehen.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
 }
@@ -216,7 +222,8 @@ test tests::exploration ... ok
 failures:
 
 ---- tests::another stdout ----
-thread 'tests::another' panicked at 'Lasse diesen Test fehlschlagen', src/lib.rs:10:9
+thread 'tests::another' panicked at src/lib.rs:10:9:
+Lasse diesen Test fehlschlagen
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -511,7 +518,8 @@ test tests::smaller_cannot_hold_larger ... ok
 failures:
 
 ---- tests::larger_can_hold_smaller stdout ----
-thread 'tests::larger_can_hold_smaller' panicked at 'assertion failed: larger.can_hold(&smaller)', src/lib.rs:28:9
+thread 'tests::larger_can_hold_smaller' panicked at src/lib.rs:28:9:
+assertion failed: larger.can_hold(&smaller)
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -626,9 +634,10 @@ test tests::it_adds_two ... FAILED
 failures:
 
 ---- tests::it_adds_two stdout ----
-thread 'tests::it_adds_two' panicked at 'assertion failed: `(left == right)`
-  left: `4`,
- right: `5`', src/lib.rs:11:9
+thread 'tests::it_adds_two' panicked at src/lib.rs:11:9:
+assertion `left == right` failed
+  left: 4
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -641,11 +650,11 @@ error: test failed, to rerun pass `--lib`
 ```
 
 Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion failed:
-`(left == right)` `` war und welche Werte `left` und `right` hatten. Diese
-Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` war
-`4`, aber das Argument `right` mit dem Ergebnis von `add_two(2)` war `5`. Du
-kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
+Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion `left ==
+right` failed`` war und welche Werte `left` und `right` hatten. Diese Nachricht
+hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` war `4`, aber
+das Argument `right` mit dem Ergebnis von `add_two(2)` war `5`. Du kannst dir
+vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
 durchführen.
 
 Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
@@ -760,7 +769,8 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'assertion failed: result.contains(\"Carol\")', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at src/lib.rs:12:9:
+assertion failed: result.contains("Carol")
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -815,7 +825,8 @@ test tests::greeting_contains_name ... FAILED
 failures:
 
 ---- tests::greeting_contains_name stdout ----
-thread 'tests::greeting_contains_name' panicked at 'Begrüßung enthielt nicht den Namen, Wert war `Hallo!`', src/lib.rs:12:9
+thread 'tests::greeting_contains_name' panicked at src/lib.rs:12:9:
+Begrüßung enthielt nicht den Namen, Wert war `Hallo!`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -1069,7 +1080,8 @@ test tests::greater_than_100 - should panic ... FAILED
 failures:
 
 ---- tests::greater_than_100 stdout ----
-thread 'tests::greater_than_100' panicked at 'Schätzwert muss größer oder gleich 1 sein, ist 200.', src/lib.rs:13:13
+thread 'tests::greater_than_100' panicked at src/lib.rs:13:13:
+Schätzwert muss größer oder gleich 1 sein, ist 200.
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 note: panic did not contain expected string
       panic message: `"Schätzwert muss größer oder gleich 1 sein, ist 200."`,

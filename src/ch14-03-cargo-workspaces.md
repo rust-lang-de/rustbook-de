@@ -120,7 +120,7 @@ Lass uns in der Datei *add_one/src/lib.rs*, eine Funktion `add_one` hinzufügen.
 
 <span class="filename">Dateiname: add_one/src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add_one(x: i32) -> i32 {
     x + 1
 }

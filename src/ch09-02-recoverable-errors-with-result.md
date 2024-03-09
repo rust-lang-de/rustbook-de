@@ -91,9 +91,9 @@ sodass wir in den `match`-Zweigen nicht mehr `Result::` vor den Varianten `Ok`
 und `Err` angeben müssen.
 
 Wenn das Ergebnis `Ok` ist, gibt dieser Code den inneren `file`-Wert aus der
-`Ok`-Variante zurück, und wir weisen diese Dateiressource der Variablen 
-`greeting_file ` zu.
-Nach dem `match` können wir die Dateiressource zum Lesen und Schreiben verwenden.
+`Ok`-Variante zurück, und wir weisen diese Dateiressource der Variablen
+`greeting_file ` zu. Nach dem `match` können wir die Dateiressource zum Lesen
+und Schreiben verwenden.
 
 Der andere Zweig von `match` behandelt den Fall, dass wir einen `Err`-Wert von
 `File::open` erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
@@ -106,7 +106,8 @@ $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished dev [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
-thread 'main' panicked at 'Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }', src/main.rs:8:23
+thread 'main' panicked at src/main.rs:8:23:
+Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -171,8 +172,8 @@ nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren `match` bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 
-### Alternativen zur Verwendung von `match` mit `Result<T, E>`
-
+> ### Alternativen zur Verwendung von `match` mit `Result<T, E>`
+>
 > Das sind viele `match`! Der Ausdruck `match` ist sehr nützlich, aber auch
 > sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
 > (closures) lernen, die mit vielen der auf `Result<T, E>` definierten Methoden
@@ -232,9 +233,8 @@ Wenn wir diesen Code ohne eine Datei *hallo.txt* ausführen, werden wir die
 Fehlermeldung des `panic!`-Aufrufs sehen, den die Methode `unwrap` macht:
 
 ```console
-thread 'main' panicked at 'called `Result::unwrap()` on an `Err` value: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:4:49
+thread 'main' panicked at src/main.rs:4:49:
+called `Result::unwrap()` on an `Err` value: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 ```
 
 In ähnlicher Weise können wir bei der Methode `expect` auch die Fehlermeldung
@@ -249,7 +249,7 @@ use std::fs::File;
 
 fn main() {
     let greeting_file = File::open("hallo.txt")
-        .expect("Problem beim Öffnen von hallo.txt");
+        .expect("hallo.txt sollte in dieses Projekt aufgenommen werden");
 }
 ```
 
@@ -260,9 +260,8 @@ zurückzugeben oder das Makro `panic!` aufzurufen. Die Fehlermeldung, die
 verwendet. So sieht sie aus:
 
 ```text
-thread 'main' panicked at 'Problem beim Öffnen von hallo.txt: Os {
-code: 2, kind: NotFound, message: "No such file or directory" }',
-src/main.rs:5:10
+thread 'main' panicked at src/main.rs:5:10:
+hallo.txt sollte in dieses Projekt aufgenommen werden: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 ```
 
 In produktivem Code wählen die meisten Rust-Entwickler `expect` statt
@@ -530,7 +529,7 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` due to previous error
+error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
 ```
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion

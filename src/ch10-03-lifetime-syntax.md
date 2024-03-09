@@ -69,6 +69,8 @@ $ cargo run
 error[E0597]: `x` does not live long enough
  --> src/main.rs:6:13
   |
+5 |         let x = 5;
+  |             - binding `x` declared here
 6 |         r = &x;
   |             ^^ borrowed value does not live long enough
 7 |     }
@@ -78,7 +80,7 @@ error[E0597]: `x` does not live long enough
   |                       - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Die Variable `x` lebt nicht „lange genug“. Der Grund dafür ist, dass `x` den
@@ -226,7 +228,7 @@ help: consider introducing a named lifetime parameter
   |           ++++     ++          ++          ++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Aus dem Hilfetext geht hervor, dass der Rückgabetyp einen generischen
@@ -438,15 +440,17 @@ $ cargo run
 error[E0597]: `string2` does not live long enough
  --> src/main.rs:6:44
   |
+5 |         let string2 = String::from("xyz");
+  |             ------- binding `string2` declared here
 6 |         result = longest(string1.as_str(), string2.as_str());
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
 8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                                 ------ borrow later used here
+  |                                          ------ borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Der Fehler zeigt, dass `string2` bis zum Ende des äußeren Gültigkeitsbereichs
@@ -533,14 +537,17 @@ zusammenhängt. Hier ist die Fehlermeldung, die wir erhalten:
 ```console
 $ cargo run
    Compiling chapter10 v0.1.0 (file:///projects/chapter10)
-error[E0515]: cannot return reference to local variable `result`
+error[E0515]: cannot return value referencing local variable `result`
   --> src/main.rs:11:5
    |
 11 |     result.as_str()
-   |     ^^^^^^^^^^^^^^^ returns a reference to data owned by the current function
+   |     ------^^^^^^^^^
+   |     |
+   |     returns a value referencing data owned by the current function
+   |     `result` is borrowed here
 
 For more information about this error, try `rustc --explain E0515`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Das Problem ist, dass `result` den Gültigkeitsbereich verlässt und am Ende der

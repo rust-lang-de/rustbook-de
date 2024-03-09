@@ -265,9 +265,16 @@ error[E0308]: mismatched types
 5 |     let n = example_closure(5);
   |             --------------- ^- help: try using a conversion method: `.to_string()`
   |             |               |
-  |             |               expected struct `String`, found integer
+  |             |               expected `String`, found integer
   |             arguments to this function are incorrect
   |
+note: expected because the closure was earlier called with an argument of type `String`
+ --> src/main.rs:4:29
+  |
+4 |     let s = example_closure(String::from("hello"));
+  |             --------------- ^^^^^^^^^^^^^^^^^^^^^ expected because this argument is of type `String`
+  |             |
+  |             in this closure call
 note: closure parameter defined here
  --> src/main.rs:2:28
   |
@@ -275,7 +282,7 @@ note: closure parameter defined here
   |                            ^
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `closure-example` due to previous error
+error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
 ```
 
 Beim ersten Aufruf von `example_closure` wird dem Typ von `x` und dem
@@ -646,7 +653,7 @@ error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` clos
    |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
 
 For more information about this error, try `rustc --explain E0507`.
-error: could not compile `playground` due to previous error
+error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
 ```
 
 Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die `value`

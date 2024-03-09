@@ -149,14 +149,17 @@ error[E0040]: explicit use of destructor method
   --> src/main.rs:16:7
    |
 16 |     c.drop();
-   |     --^^^^--
-   |     | |
-   |     | explicit destructor calls not allowed
-   |     help: consider using `drop` function: `drop(c)`
+   |       ^^^^ explicit destructor calls not allowed
+   |
+help: consider using `drop` function
+   |
+16 |     drop(c);
+   |     +++++ ~
 
 For more information about this error, try `rustc --explain E0040`.
-error: could not compile `drop-example` due to previous error
+error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
 ```
+
 Diese Fehlermeldung besagt, dass wir `drop` nicht explizit aufrufen dürfen. Die
 Fehlermeldung verwendet den Begriff *Destruktor* (destructor), der der
 allgemeine Programmierbegriff für eine Funktion ist, die eine Instanz

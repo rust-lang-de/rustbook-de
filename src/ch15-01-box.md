@@ -189,7 +189,7 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
   |               ++++    +
 
 For more information about this error, try `rustc --explain E0072`.
-error: could not compile `cons-list` due to previous error
+error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
 ```
 
 <span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
@@ -246,7 +246,7 @@ Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
 hilfreichen Vorschlag aus:
 
 ```text
-help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to make `List` representable
+help: insert some indirection (e.g., a `Box`, `Rc`, or `&`) to break the cycle
   |
 2 |     Cons(i32, Box<List>),
   |               ++++    +

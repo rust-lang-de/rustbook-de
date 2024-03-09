@@ -196,7 +196,7 @@ help: consider introducing a named lifetime parameter
    |              ++++         ++                 ++              ++
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `minigrep` due to previous error
+error: could not compile `minigrep` (lib) due to 1 previous error
 ```
 
 Rust kann unmöglich wissen, welches der beiden Argumente wir brauchen, also
@@ -225,9 +225,10 @@ test tests::one_result ... FAILED
 failures:
 
 ---- tests::one_result stdout ----
-thread 'tests::one_result' panicked at 'assertion failed: `(left == right)`
-  left: `["sicher, schnell, produktiv."]`,
- right: `[]`', src/lib.rs:44:9
+thread 'tests::one_result' panicked at src/lib.rs:44:9:
+assertion `left == right` failed
+  left: ["sicher, schnell, produktiv."]
+ right: []
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 

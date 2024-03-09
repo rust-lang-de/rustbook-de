@@ -50,7 +50,7 @@ error[E0384]: cannot assign twice to immutable variable `x`
   |     ^^^^^ cannot assign twice to immutable variable
 
 For more information about this error, try `rustc --explain E0384`.
-error: could not compile `variables` due to previous error
+error: could not compile `variables` (bin "variables") due to 1 previous error
 ```
 
 Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
@@ -258,9 +258,15 @@ error[E0308]: mismatched types
   |                      ----- expected due to this value
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&str`, found `usize`
+  |
+help: try removing the method call
+  |
+3 -     spaces = spaces.len();
+3 +     spaces = spaces;
+  |
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `variables` due to previous error
+error: could not compile `variables` (bin "variables") due to 1 previous error
 ```
 
 Nachdem wir nun untersucht haben, wie Variablen funktionieren, wollen wir uns

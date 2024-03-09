@@ -155,7 +155,7 @@ help: consider restricting type parameter `T`
   |             ++++++++++++++++++++++
 
 For more information about this error, try `rustc --explain E0369`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein *Merkmal* (trait) ist,
@@ -240,7 +240,7 @@ error[E0308]: mismatched types
   |                                      ^^^ expected integer, found floating-point number
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `chapter10` due to previous error
+error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
 Um eine Struktur `Point` zu definieren, bei der `x` und `y` generische, aber

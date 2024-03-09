@@ -427,13 +427,13 @@ error[E0277]: cannot add `Option<i8>` to `i8`
   |
   = help: the trait `Add<Option<i8>>` is not implemented for `i8`
   = help: the following other types implement trait `Add<Rhs>`:
+            <i8 as Add>
+            <i8 as Add<&i8>>
             <&'a i8 as Add<i8>>
             <&i8 as Add<&i8>>
-            <i8 as Add<&i8>>
-            <i8 as Add>
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `enums` due to previous error
+error: could not compile `enums` (bin "enums") due to 1 previous error
 ```
 
 Stark! Tatsächlich bedeutet diese Fehlermeldung, dass Rust nicht versteht, wie
