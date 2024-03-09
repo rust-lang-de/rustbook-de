@@ -130,13 +130,16 @@ $ cargo run
 error[E0596]: cannot borrow `*some_string` as mutable, as it is behind a `&` reference
  --> src/main.rs:8:5
   |
-7 | fn change(some_string: &String) {
-  |                        ------- help: consider changing this to be a mutable reference: `&mut String`
 8 |     some_string.push_str(" Welt");
-  |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+  |     ^^^^^^^^^^^ `some_string` is a `&` reference, so the data it refers to cannot be borrowed as mutable
+  |
+help: consider changing this to be a mutable reference
+  |
+7 | fn change(some_string: &mut String) {
+  |                         +++
 
 For more information about this error, try `rustc --explain E0596`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
 So wie Variablen standardmäßig unveränderbar sind, so sind auch Referenzen
@@ -202,7 +205,7 @@ error[E0499]: cannot borrow `s` as mutable more than once at a time
   |                        -- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
@@ -276,7 +279,7 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
   |                               -- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
 Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
@@ -358,13 +361,18 @@ error[E0106]: missing lifetime specifier
   |                ^ expected named lifetime parameter
   |
   = help: this function's return type contains a borrowed value, but there is no value for it to be borrowed from
-help: consider using the `'static` lifetime
+help: consider using the `'static` lifetime, but this is uncommon unless you're returning a borrowed value from a `const` or a `static`
   |
 5 | fn dangle() -> &'static String {
   |                 +++++++
+help: instead, you are more likely to want to return an owned value
+  |
+5 - fn dangle() -> &String {
+5 + fn dangle() -> String {
+  |
 
 For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
 Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht

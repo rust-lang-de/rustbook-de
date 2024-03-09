@@ -376,12 +376,13 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
  --> src/main.rs:5:26
   |
 5 |         components: vec![Box::new(String::from("Hallo"))],
-  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
-  = note: required for the cast to the object type `dyn Draw`
+  = help: the trait `Draw` is implemented for `Button`
+  = note: required for the cast from `Box<String>` to `Box<dyn Draw>`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `gui` due to previous error
+error: could not compile `gui` (bin "gui") due to 1 previous error
 ```
 
 Dieser Fehler lässt uns wissen, dass wir entweder etwas an `Screen` übergeben,

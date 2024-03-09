@@ -25,19 +25,20 @@ zu wissen welchen Typ wir verwenden wollen:
 ```console
 $ cargo build
    Compiling no_type_annotations v0.1.0 (file:///projects/no_type_annotations)
-error[E0282]: type annotations needed
+error[E0284]: type annotations needed
  --> src/main.rs:2:9
   |
 2 |     let guess = "42".parse().expect("Keine Zahl!");
-  |         ^^^^^
+  |         ^^^^^        ----- type must be known at this point
   |
+  = note: cannot satisfy `<_ as FromStr>::Err == _`
 help: consider giving `guess` an explicit type
   |
-2 |     let guess: _ = "42".parse().expect("Keine Zahl!");
-  |              +++
+2 |     let guess: /* Type */ = "42".parse().expect("Keine Zahl!");
+  |              ++++++++++++
 
-For more information about this error, try `rustc --explain E0282`.
-error: could not compile `no_type_annotations` due to previous error
+For more information about this error, try `rustc --explain E0284`.
+error: could not compile `no_type_annotations` (bin "no_type_annotations") due to 1 previous error
 ```
 
 Für andere Datentypen wirst du andere Typ-Annotationen sehen.
@@ -460,9 +461,11 @@ Zahl hinter dem Ende des Arrays eingibst, z.B. `10`, erhältst du eine Ausgabe
 wie diese:
 
 ```text
-thread 'main' panicked at 'index out of bounds: the len is 5 but the index is 10', src/main.rs:19:19
+thread 'main' panicked at src/main.rs:19:19:
+index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
+
 Das Programm führte zu einem *Laufzeitfehler* an der Stelle, an der ein
 ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
 einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung

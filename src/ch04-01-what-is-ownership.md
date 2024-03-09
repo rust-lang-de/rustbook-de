@@ -415,7 +415,7 @@ help: consider cloning the value if the performance cost is acceptable
   |                ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `ownership` due to previous error
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
 Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe *flache

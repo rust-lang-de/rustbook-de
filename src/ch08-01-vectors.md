@@ -175,10 +175,10 @@ error[E0502]: cannot borrow `v` as mutable because it is also borrowed as immuta
   |     ^^^^^^^^^ mutable borrow occurs here
 7 | 
 8 |     println!("Das erste Element ist: {first}");
-  |                                       ----- immutable borrow later used here
+  |                                      ------- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `collections` due to previous error
+error: could not compile `collections` (bin "collections") due to 1 previous error
 ```
 
 Der Code in Codeblock 8-6 sieht so aus, als könnte er funktionieren: Warum

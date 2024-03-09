@@ -95,7 +95,7 @@ Rohzeiger sind anders als Referenzen und intelligente Zeiger:
   Stelle haben.
 * Sie zeigen nicht garantiert auf gültigen Speicher.
 * Sie dürfen null sein.
-* Sie implementieren keine automatische Bereinigung.
+* Sie implementieren kein automatisches Aufräumen.
 
 Wenn du dich dagegen entscheidest, diese Garantien von Rust erzwingen zu
 lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine
@@ -234,7 +234,7 @@ error[E0133]: call to unsafe function is unsafe and requires unsafe function or 
   = note: consult the function's documentation for information on how to avoid undefined behavior
 
 For more information about this error, try `rustc --explain E0133`.
-error: could not compile `unsafe-example` due to previous error
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
 ```
 
 Mit dem `unsafe`-Block versichern wir Rust, dass wir die Dokumentation der
@@ -328,7 +328,7 @@ error[E0499]: cannot borrow `*values` as mutable more than once at a time
   |     returning this value requires that `*values` is borrowed for `'1`
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `unsafe-example` due to previous error
+error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
 ```
 
 Der Ausleihenprüfer von Rust kann nicht verstehen, dass wir verschiedene Teile

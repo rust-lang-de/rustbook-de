@@ -96,7 +96,7 @@ $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
-[src/main.rs:5] args = [
+[src/main.rs:5:5] args = [
     "target/debug/minigrep",
 ]
 ```
@@ -105,8 +105,8 @@ $ cargo run
 $ cargo run -- Nadel Heuhaufen
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 1.57s
-     Running `target/debug/minigrep needle haystack`
-[src/main.rs:5] args = [
+     Running `target/debug/minigrep Nadel Heuhaufen`
+[src/main.rs:5:5] args = [
     "target/debug/minigrep",
     "Nadel",
     "Heuhaufen",

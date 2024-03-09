@@ -540,7 +540,7 @@ help: use the fully-qualified path to the only available implementation
    |                                                +++++++       +
 
 For more information about this error, try `rustc --explain E0790`.
-error: could not compile `traits-example` due to previous error
+error: could not compile `traits-example` (bin "traits-example") due to 1 previous error
 ```
 
 Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
@@ -711,10 +711,10 @@ implementiert ist:
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
 error[E0277]: `Point` doesn't implement `std::fmt::Display`
-  --> src/main.rs:20:6
+  --> src/main.rs:20:23
    |
 20 | impl OutlinePrint for Point {}
-   |      ^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
+   |                       ^^^^^ `Point` cannot be formatted with the default formatter
    |
    = help: the trait `std::fmt::Display` is not implemented for `Point`
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
@@ -725,7 +725,7 @@ note: required by a bound in `OutlinePrint`
    |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `traits-example` due to previous error
+error: could not compile `traits-example` (bin "traits-example") due to 1 previous error
 ```
 
 Um dies zu beheben, implementieren wir `Display` auf `Point` und erfüllen die

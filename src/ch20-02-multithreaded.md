@@ -302,7 +302,7 @@ error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 For more information about this error, try `rustc --explain E0433`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 ```
 
 Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
@@ -395,7 +395,7 @@ error[E0599]: no function or associated item named `new` found for struct `Threa
    |                            ^^^ function or associated item not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 ```
 
 Dieser Fehler deutet darauf hin, dass wir als Nächstes eine zugehörige Funktion
@@ -431,10 +431,10 @@ error[E0599]: no method named `execute` found for struct `ThreadPool` in the cur
   --> src/main.rs:17:14
    |
 17 |         pool.execute(|| {
-   |              ^^^^^^^ method not found in `ThreadPool`
+   |         -----^^^^^^^ method not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (bin "hello") due to 1 previous error
 ```
 
 Der Fehler tritt jetzt auf, weil wir keine Methode `execute` auf `ThreadPool`
@@ -995,11 +995,19 @@ error[E0382]: use of moved value: `receiver`
 21 |         let (sender, receiver) = mpsc::channel();
    |                      -------- move occurs because `receiver` has type `std::sync::mpsc::Receiver<Job>`, which does not implement the `Copy` trait
 ...
+25 |         for id in 0..size {
+   |         ----------------- inside of this loop
 26 |             workers.push(Worker::new(id, receiver));
    |                                          ^^^^^^^^ value moved here, in previous iteration of loop
+   |
+note: consider changing this parameter type in method `new` to borrow instead if owning the value isn't necessary
+  --> src/lib.rs:47:33
+   |
+47 |     fn new(id: usize, receiver: mpsc::Receiver<Job>) -> Worker {
+   |        --- in this method       ^^^^^^^^^^^^^^^^^^^ this parameter takes ownership of the value
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `hello` due to previous error
+error: could not compile `hello` (lib) due to 1 previous error
 ```
 
 Der Code versucht, `receiver` an mehrere `Worker`-Instanzen weiterzugeben. Das

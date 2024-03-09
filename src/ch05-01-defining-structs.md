@@ -418,7 +418,7 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 >   |
 >
 > For more information about this error, try `rustc --explain E0106`.
-> error: could not compile `structs` due to 2 previous errors
+> error: could not compile `structs` (bin "structs") due to 2 previous errors
 > ```
 >
 > In Kapitel 10 werden wir klären, wie man diese Fehler behebt und Referenzen

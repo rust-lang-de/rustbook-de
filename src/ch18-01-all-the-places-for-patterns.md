@@ -259,7 +259,7 @@ error[E0308]: mismatched types
              found tuple `(_, _)`
 
 For more information about this error, try `rustc --explain E0308`.
-error: could not compile `patterns` due to previous error
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
 ```
 
 Um den Fehler zu beheben, könnten wir einen oder mehrere der Werte im Tupel

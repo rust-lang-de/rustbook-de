@@ -114,10 +114,11 @@ test tests::this_test_will_pass ... ok
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
+Ich habe den Wert 8 erhalten.
+thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
+assertion `left == right` failed
+  left: 5
+ right: 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -168,10 +169,11 @@ successes:
 failures:
 
 ---- tests::this_test_will_fail stdout ----
-I got the value 8
-thread 'tests::this_test_will_fail' panicked at 'assertion failed: `(left == right)`
-  left: `5`,
- right: `10`', src/lib.rs:19:9
+Ich habe den Wert 8 erhalten.
+thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
+assertion `left == right` failed
+  left: 5
+ right: 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
