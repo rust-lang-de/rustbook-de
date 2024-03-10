@@ -588,8 +588,9 @@ fn main() {
 
     let s2 = String::from("Hallo");     // s2 kommt in den Gültigkeitsbereich
 
-    let s3 = takes_and_gives_back(s2);  // s2 wird in takes_and_gives_back verschoben
-                                        // und der Rückgabewert wird in s3 verschoben
+    let s3 = takes_and_gives_back(s2);  // s2 wird in takes_and_gives_back
+                                        // verschoben und der Rückgabewert
+                                        // wird in s3 verschoben
 
 } // Hier verlässt s3 den Gültigkeitsbereich und wird aufgeräumt.
   // s2 wurde verschoben, es passiert also nichts.
@@ -602,7 +603,8 @@ fn gives_ownership() -> String {        // gives_ownership verschiebt seinen
                                              // Gültigkeitsbereich
 
     some_string                         // some_string wird zurückgegeben und
-                                        // wird an die aufrufende Funktion verschoben
+                                        // wird an die aufrufende Funktion
+                                        // verschoben
 }
 
 // Diese Funktion nimmt einen String entgegen und gibt einen zurück
