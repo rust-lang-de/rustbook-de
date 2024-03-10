@@ -306,7 +306,7 @@ Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.
     let v = vec![1, 2, 3, 4];
 
     // mache etwas mit v
-} // <- v verlässt den Gültigkeitsbereich und wird hier freigegeben
+} // <- v verlässt den Gültigkeitsbereich und wird hier aufgeräumt
 ```
 
 <span class="caption">Codeblock 8-10: Zeigt, wo der Vektor und seine Elemente
