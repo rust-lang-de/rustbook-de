@@ -280,21 +280,21 @@ thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
 stack backtrace:
    0: rust_begin_unwind
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/panicking.rs:645:5
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/std/src/panicking.rs:645:5
    1: core::panicking::panic_fmt
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/panicking.rs:72:14
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/panicking.rs:72:14
    2: core::panicking::panic_bounds_check
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/panicking.rs:208:5
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/panicking.rs:208:5
    3: &lt;usize as core::slice::index::SliceIndex&lt;[T]&gt;&gt;::index
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/slice/index.rs:255:10
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/slice/index.rs:255:10
    4: core::slice::index::&lt;impl core::ops::index::Index&lt;I&gt; for [T]&gt;::index
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/slice/index.rs:18:9
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/slice/index.rs:18:9
    5: &lt;alloc::vec::Vec&lt;T,A&gt; as core::ops::index::Index&lt;I&gt;&gt;::index
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/alloc/src/vec/mod.rs:2770:9
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/alloc/src/vec/mod.rs:2770:9
    6: panic::main
              at ./src/main.rs:4:6
    7: core::ops::function::FnOnce::call_once
-             at /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/core/src/ops/function.rs:250:5
+             at /rustc/07dca489ac2d933c78d3c5158e3f43/library/core/src/ops/function.rs:250:5
 note: Some details are omitted, run with `RUST_BACKTRACE=full` for a verbose backtrace.
 </code></pre>
 <p><span class="caption">Codeblock 9-2: Aufrufhistorie, erzeugt durch einen Aufruf
