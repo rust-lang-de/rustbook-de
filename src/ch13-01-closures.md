@@ -222,10 +222,10 @@ let add_one_v4 = |x|               x + 1  ;
 
 Die erste Zeile zeigt eine Funktionsdefinition und die zweite eine Definition
 eines Funktionsabschlusses mit allen Datentypangaben. In der dritten Zeile
-werden die Datentypangaben aus der Funktionsabschlusses-Definition entfernt,
+werden die Datentypangaben aus der Funktionsabschluss-Definition entfernt,
 und in der vierten Zeile werden die geschweiften Klammern weggelassen, die
-optional sind, da der Funktionsabschlusses-Rumpf nur einen Ausdruck beinhaltet.
-Alle diese Ausdrücke sind gültig und verhalten sich beim Aufruf gleich. Von
+optional sind, da der Funktionsabschluss-Rumpf nur einen Ausdruck beinhaltet.
+All diese Ausdrücke sind gültig und verhalten sich beim Aufruf gleich. Von
 `add_one_v3` und `add_one_v4` wird ein Aufruf zum Kompilieren des Codes
 benötigt, da hier die Typen abhängig von der Verwendung abgeleitet werden. Dies
 ist vergleichbar mit `let v = Vec::new();`, bei dem entweder Typ-Annotationen
