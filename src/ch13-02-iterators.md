@@ -271,7 +271,7 @@ aufgenommen.
 
 Im Codeblock 13-16 benutzen wir `filter` mit einem Funktionsabschluss, der die
 Variable `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
-`shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
+`Shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
 
 <span class="filename">Dateiname: src/lib.rs</span>

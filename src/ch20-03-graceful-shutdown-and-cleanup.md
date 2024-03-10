@@ -128,7 +128,7 @@ error[E0507]: cannot move out of `worker.thread` which is behind a mutable refer
    |             move occurs because `worker.thread` has type `JoinHandle<()>`, which does not implement the `Copy` trait
    |
 note: `JoinHandle::<T>::join` takes ownership of the receiver `self`, which moves `worker.thread`
-  --> /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:1649:17
+  --> /rustc/07dca489ac2d933c78d3c5158e3f43be/library/std/src/thread/mod.rs:1649:17
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `hello` (lib) due to 1 previous error
@@ -241,7 +241,7 @@ error[E0599]: no method named `join` found for enum `Option` in the current scop
    |                           ^^^^ method not found in `Option<JoinHandle<()>>`
    |
 note: the method `join` exists on the type `JoinHandle<()>`
-  --> /rustc/07dca489ac2d933c78d3c5158e3f43beefeb02ce/library/std/src/thread/mod.rs:1649:5
+  --> /rustc/07dca489ac2d933c78d3c5158e3f43be/library/std/src/thread/mod.rs:1649:5
 help: consider using `Option::expect` to unwrap the `JoinHandle<()>` value, panicking if the value is an `Option::None`
    |
 52 |             worker.thread.expect("REASON").join().unwrap();
