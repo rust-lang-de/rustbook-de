@@ -1,4 +1,4 @@
-## Anhang D - Nützliche Entwicklungswerkzeuge
+## Anhang D: Nützliche Entwicklungswerkzeuge
 
 In diesem Anhang sprechen wir über einige nützliche Entwicklungswerkzeuge, die
 das Rust-Projekt bietet. Wir werden uns mit automatischer Formatierung,
