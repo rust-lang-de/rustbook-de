@@ -1,4 +1,4 @@
-## Anhang E - Ausgaben
+## Anhang E: Ausgaben
 
 In Kapitel 1 hast du gesehen, dass `cargo new` Metadaten zur Ausgabe (edition)
 in deiner Datei *Cargo.toml* hinzufügt. Dieser Anhang erläutert, was das

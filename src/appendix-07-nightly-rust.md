@@ -1,4 +1,4 @@
-## Anhang G - Wie Rust erstellt wird und „nächtliches Rust“
+## Anhang G: Wie Rust erstellt wird und „nächtliches Rust“
 
 In diesem Anhang geht es darum, wie Rust erstellt wird und wie sich das auf
 dich als Rust-Entwickler auswirkt.
