@@ -539,26 +539,29 @@ hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.
 fn main() {
     let s = String::from("Hallo");  // s kommt in den Gültigkeitsbereich
 
-    takes_ownership(s);             // Der Wert von s wird in die Funktion verschoben,
-                                    // und ist daher hier nicht mehr gültig.
+    takes_ownership(s);             // Der Wert von s wird in die Funktion
+                                    // verschoben und ist daher hier nicht
+                                    // mehr gültig.
 
     let x = 5;                      // x kommt in den Gültigkeitsbereich
 
     makes_copy(x);                  // x würde in die Funktion verschoben werden,
-                                    // aber i32 erlaubt Copy, also ist es in Ordnung,
-                                    // danach immer noch x zu verwenden,
+                                    // aber i32 erlaubt Copy, also ist es in
+                                    // Ordnung, danach immer noch x zu verwenden.
 
-} // Hier verlässt x den Gültigkeitsbereich, dann s.
+} // Hier verlassen s und x den Gültigkeitsbereich.
   // Aber weil der Wert von s verschoben wurde, passiert nichts Besonderes.
 
-fn takes_ownership(some_string: String) { // some_string kommt in den Gültigkeitsbereich
+fn takes_ownership(some_string: String) { // some_string kommt in den
+                                          // Gültigkeitsbereich
     println!("{}", some_string);
 } // Hier verlässt some_string den Gültigkeitsbereich und `drop` wird aufgerufen.
   // Der zugehörige Speicherplatz wird freigegeben.
 
 fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbereich
     println!("{}", some_integer);
-} // Hier verlässt some_integer den Gültigkeitsbereich. Es passiert nichts Besonderes.
+} // Hier verlässt some_integer den Gültigkeitsbereich.
+  // Es passiert nichts Besonderes.
 ```
 
 <span class="caption">Codeblock 4-3: Funktionen mit kommentierter
