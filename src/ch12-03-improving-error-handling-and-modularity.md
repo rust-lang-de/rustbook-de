@@ -738,7 +738,7 @@ Funktion zurück, den der Aufrufer behandeln muss.
 Drittens gibt die Funktion `run` jetzt im Erfolgsfall einen `Ok`-Wert zurück.
 Wir haben den Erfolgstyp der Funktion `run` mit `()` in der Signatur
 deklariert, was bedeutet, dass wir den Wert des Einheitstyps in den Wert `Ok`
-einpacken müssen. Diese Syntax `Ok((())` mag zunächst etwas merkwürdig
+einpacken müssen. Diese Syntax `Ok(())` mag zunächst etwas merkwürdig
 aussehen, aber wenn wir `()` so verwenden, ist das der idiomatische Weg, um
 anzuzeigen, dass wir `run` nur wegen seiner Nebenwirkungen aufrufen; es gibt
 keinen Wert zurück, den wir brauchen.
