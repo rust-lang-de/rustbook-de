@@ -805,7 +805,7 @@ Funktion zurück, den der Aufrufer behandeln muss.</p>
 <p>Drittens gibt die Funktion <code>run</code> jetzt im Erfolgsfall einen <code>Ok</code>-Wert zurück.
 Wir haben den Erfolgstyp der Funktion <code>run</code> mit <code>()</code> in der Signatur
 deklariert, was bedeutet, dass wir den Wert des Einheitstyps in den Wert <code>Ok</code>
-einpacken müssen. Diese Syntax <code>Ok((())</code> mag zunächst etwas merkwürdig
+einpacken müssen. Diese Syntax <code>Ok(())</code> mag zunächst etwas merkwürdig
 aussehen, aber wenn wir <code>()</code> so verwenden, ist das der idiomatische Weg, um
 anzuzeigen, dass wir <code>run</code> nur wegen seiner Nebenwirkungen aufrufen; es gibt
 keinen Wert zurück, den wir brauchen.</p>
