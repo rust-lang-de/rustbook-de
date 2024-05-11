@@ -64,7 +64,7 @@ Als Nächstes extrahieren wir das Modul `hosting` in seine eigene Datei. Der
 Prozess ist ein bisschen anders, weil `hosting` ein untergeordnetes Modul von
 `front_of_house` ist, nicht vom Stammmodul. Wir legen die Datei für `hosting`
 in einem neuen Verzeichnis ab, das nach seinen Vorgängern im Modulbaum benannt
-wird, in diesem Fall *src/front_of_house/*.
+wird, in diesem Fall *src/front_of_house*.
 
 Um mit dem Verschieben von `hosting` zu beginnen, ändern wir
 *src/front_of_house.rs* so, dass es nur die Deklaration des `hosting`-Moduls

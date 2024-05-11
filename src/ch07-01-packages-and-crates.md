@@ -41,12 +41,13 @@ Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können vo
 der Cargo-Bibliothekskiste abhängen, um die gleiche Logik wie das
 Cargo-Befehlszeilenwerkzeug zu verwenden.
 
-Ein Paket kann beliebig viele Binärkisten enthalten, aber höchstens eine
+Es gibt zwei Arten von Kisten: Binärkisten und Bibliothekskisten. Ein Paket
+kann beliebig viele Binärkisten enthalten, aber höchstens eine
 Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
 davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.
 
 Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
-wir den Befehl `cargo new` ein:
+wir den Befehl `cargo new my-project` ein:
 
 ```console
 $ cargo new my-project
@@ -58,16 +59,16 @@ $ ls my-project/src
 main.rs
 ```
 
-Nachdem wir `cargo new` ausgeführt haben, verwenden wir `ls`, um zu sehen, was
-Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei *Cargo.toml*, die uns
-ein Paket gibt. Es gibt auch ein Verzeichnis *src*, das *main.rs* enthält.
-Öffne *Cargo.toml* in deinem Texteditor und beachte, dass *src/main.rs* nicht
-erwähnt wird. Cargo folgt der Konvention, dass *src/main.rs* die Kistenwurzel
-einer binären Kiste mit dem gleichen Namen wie das Paket ist. Ebenso weiß
-Cargo, dass, wenn das Paketverzeichnis *src/lib.rs* enthält, das Paket eine
-Bibliothekskiste mit dem gleichen Namen wie das Paket enthält, und *src/lib.rs*
-deren Kistenstamm ist. Cargo übergibt die Kistenwurzel-Dateien an `rustc`, um
-die Bibliothek oder Binärdatei zu bauen.
+Nachdem wir `cargo new my-project` ausgeführt haben, verwenden wir `ls`, um zu
+sehen, was Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei
+*Cargo.toml*, die uns ein Paket gibt. Es gibt auch ein Verzeichnis *src*, das
+*main.rs* enthält. Öffne *Cargo.toml* in deinem Texteditor und beachte, dass
+*src/main.rs* nicht erwähnt wird. Cargo folgt der Konvention, dass
+*src/main.rs* die Kistenwurzel einer binären Kiste mit dem gleichen Namen wie
+das Paket ist. Ebenso weiß Cargo, dass, wenn das Paketverzeichnis *src/lib.rs*
+enthält, das Paket eine Bibliothekskiste mit dem gleichen Namen wie das Paket
+enthält, und *src/lib.rs* deren Kistenstamm ist. Cargo übergibt die
+Kistenwurzel-Dateien an `rustc`, um die Bibliothek oder Binärdatei zu bauen.
 
 Hier haben wir ein Paket, das nur *src/main.rs* enthält, d.h. es enthält nur
 eine binäre Kiste mit dem Namen `my-project`. Wenn ein Paket *src/main.rs* und
