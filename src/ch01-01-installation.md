@@ -67,17 +67,10 @@ kannst du das Paket `build-essential` installieren.
 
 Rufe [https://www.rust-lang.org/tools/install][install] auf und folge
 den Anweisungen, um Rust in Windows zu installieren. Während der Installation
-wirst du eine Meldung erhalten, dass du auch die MSVC Bauwerkzeuge für Visual
-Studio 2013 oder höher benötigst.
-
-Um die Bauwerkzeuge zu erhalten, musst du [Visual Studio 2022][visualstudio]
-installieren. Wenn du gefragt wirst, welche Komponenten installiert werden
-sollen, gib folgendes an:
-
-* „Desktop Development with C++“
-* Das Windows 10 oder 11 SDK
-* Das englische Sprachpaket zusammen mit einem beliebigen anderen Sprachpaket
-  deiner Wahl.
+wirst du aufgefordert, Visual Studio zu installieren. Dieses enthält einen
+Linker und die nativen Bibliotheken, die zum Kompilieren von Programmen
+benötigt werden. Wenn du an dieser Stelle weitere Hilfe brauchst, geht zu
+[https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc].
 
 Der Rest dieses Buchs verwendet Befehle, die sowohl in *cmd.exe* als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
@@ -152,5 +145,5 @@ Standardbibliothek verwenden sollst, dann schau in der API-Dokumentation nach!
 
 [community]: https://www.rust-lang.org/community
 [install]: https://www.rust-lang.org/tools/install
+[msvc]: https://rust-lang.github.io/rustup/installation/windows-msvc.html
 [otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
-[visualstudio]: https://visualstudio.microsoft.com/downloads/
