@@ -611,10 +611,10 @@ Code deines Projekts in die Versionskontrolle eingecheckt.
 Wenn du eine Kiste aktualisieren *willst*, bietet Cargo den Befehl `update` an,
 der die Datei *Cargo.lock* ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in *Cargo.toml* herausfindet. Cargo schreibt diese
-Versionen dann in die Datei *Cargo.lock*. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
-Kiste `rand` zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du
-folgendes sehen, wenn du `cargo update` ausführst:
+Versionen dann in die Datei *Cargo.lock*. In diesem Fall wird Cargo nur nach
+Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Kiste `rand`
+zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
+sehen, wenn du `cargo update` ausführst:
 
 ```console
 $ cargo update
@@ -865,7 +865,7 @@ numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass Rust
 eine Zeichenkette und einen Zahlentyp nicht vergleichen kann.
 
 Letztendlich wollen wir den `String`, den das Programm als Eingabe liest, in
-einen echten Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
+einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
 vergleichen können. Das tun wir, indem wir folgendes zum `main`-Funktionsrumpf
 hinzufügen:
 
