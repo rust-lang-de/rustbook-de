@@ -192,10 +192,10 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 >     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
 >         if error.kind() == ErrorKind::NotFound {
 >             File::create("hallo.txt").unwrap_or_else(|error| {
->                 panic!("Problem beim Erstellen der Datei: {:?}", error);
+>                 panic!("Problem beim Erstellen der Datei: {error:?}");
 >             })
 >         } else {
->             panic!("Problem beim Öffnen der Datei: {:?}", error);
+>             panic!("Problem beim Öffnen der Datei: {error:?}");
 >         }
 >     });
 > }
