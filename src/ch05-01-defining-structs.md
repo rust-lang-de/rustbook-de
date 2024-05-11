@@ -224,7 +224,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 5-6: Erstellen einer neuen `User`-Instanz unter
-Verwendung eines Werts von `user1`.</span>
+Verwendung aller Werte von `user1` bis auf einen.</span>
 
 Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax `..` gibt an,
