@@ -127,6 +127,13 @@ melden und sie vor der nächsten stabilen Version korrigieren lassen! Ein Bruch
 in einer Beta-Version ist relativ selten, aber `rustc` ist immer noch ein Stück
 Software und es gibt Fehler.
 
+### Wartungsdauer
+
+Das Rust-Projekt unterstützt die neueste stabile Version. Wenn eine neue
+stabile Version veröffentlicht wird, erreicht die alte Version ihr
+Lebensende (engl. end of life, EOL). Das bedeutet, dass jede Version
+sechs Wochen lang unterstützt wird.
+
 ### Instabile Funktionalitäten
 
 Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: Instabile
