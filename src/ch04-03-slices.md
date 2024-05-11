@@ -1,8 +1,9 @@
 ## Der Anteilstyp (slice)
 
 Mit *Anteilstypen* kannst du auf eine zusammenhängende Folge von Elementen in
-einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
-Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.
+einer [Kollektion][collection] referenzieren anstatt auf die gesamte
+Kollektion. Ein Anteilstyp ist eine Art Referenz und hat daher keine
+Eigentümerschaft.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
@@ -523,6 +524,6 @@ Datenteilen zu einer `struct` ansehen.
 
 [ch13-2]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#muster-die-werte-binden
-[deref-coercions]:
-ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
+[collection]: ch08-00-common-collections.md
+[deref-coercions]: ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
 [strings]: ch08-02-strings.html
