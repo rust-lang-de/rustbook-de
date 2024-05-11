@@ -239,8 +239,9 @@ let s = s1 + "-" + &s2 + "-" + &s3;
 ```
 
 An diesem Punkt wird `s` den Wert `tic-tac-toe` haben. Bei all den Zeichen `+`
-und `"` ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
-String-Kombinationen können wir stattdessen das Makro `format!` verwenden:
+und `"` ist es schwer zu erkennen, was vor sich geht. Um Zeichenketten auf
+kompliziertere Weise zu kombinieren, können wir stattdessen das Makro `format!`
+verwenden:
 
 ```rust
 let s1 = String::from("tic");
@@ -413,9 +414,9 @@ let hello = "Здравствуйте";
 let s = &hello[0..4];
 ```
 
-Hier wird `s` ein `&str` sein, das die ersten 4 Bytes der Zeichenkette enthält.
-Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
-was bedeutet, dass `s` gleich `Зд` ist.
+Hier wird `s` ein `&str` sein, das die ersten vier Bytes der Zeichenkette
+enthält. Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen zwei Bytes
+lang ist, was bedeutet, dass `s` gleich `Зд` ist.
 
 Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
 wie `&hello[0..1]` zu zerschneiden, würde Rust das Programm zur Laufzeit
@@ -475,8 +476,8 @@ Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:
 180
 ```
 
-Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
-können.
+Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als ein Byte
+bestehen können.
 
 Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
