@@ -9,7 +9,7 @@ Code ausführen soll, wenn der Wert die `Some`-Variante ist.
 ```rust
 let config_max = Some(3u8);
 match config_max {
-    Some(max) => println!("Das Maximum ist mit {} konfiguriert", max),
+    Some(max) => println!("Das Maximum ist mit {max} konfiguriert"),
     _ => (),
 }
 ```
@@ -30,7 +30,7 @@ Codeblock 6-6:
 ```rust
 let config_max = Some(3u8);
 if let Some(max) = config_max {
-    println!("Das Maximum ist mit {} konfiguriert", max);
+    println!("Das Maximum ist mit {max} konfiguriert");
 }
 ```
 
@@ -79,7 +79,7 @@ diesem tun:
 #     let coin = Coin::Penny;
     let mut count = 0;
     match coin {
-        Coin::Quarter(state) => println!("25-Cent-Münze aus {:?}!", state),
+        Coin::Quarter(state) => println!("25-Cent-Münze aus {state:?}!"),
         _ => count += 1,
     }
 # }
@@ -106,7 +106,7 @@ Oder wir könnten einen Ausdruck mit `if let` und `else` wie diesen verwenden:
 #     let coin = Coin::Penny;
     let mut count = 0;
     if let Coin::Quarter(state) = coin {
-        println!("25-Cent-Münze aus {:?}!", state);
+        println!("25-Cent-Münze aus {state:?}!");
     } else {
         count += 1;
     }

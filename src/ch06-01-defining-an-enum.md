@@ -242,6 +242,8 @@ enum Message {
     Write(String),
     ChangeColor(i32, i32, i32),
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 6-2: Eine Aufzählung `Message`, deren Varianten
@@ -268,6 +270,8 @@ struct MoveMessage {
 }
 struct WriteMessage(String); // Tupelstruktur
 struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
+#
+# fn main() {}
 ```
 
 Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
