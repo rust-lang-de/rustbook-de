@@ -22,7 +22,7 @@ fn main() {
 
     let len = calculate_length(&s1);
 
-    println!("Die Länge von '{}' ist {}.", s1, len);
+    println!("Die Länge von '{s1}' ist {len}.");
 }
 
 fn calculate_length(s: &String) -> usize {
@@ -185,27 +185,27 @@ let mut s = String::from("Hallo");
 let r1 = &mut s;
 let r2 = &mut s;
 
-println!("{}, {}", r1, r2);
+println!("{r1}, {r2}");
 ```
 
 Hier ist die Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0499]: cannot borrow `s` as mutable more than once at a time
- --> src/main.rs:5:14
+ --> src/main.rs:6:10
   |
-4 |     let r1 = &mut s;
-  |              ------ first mutable borrow occurs here
-5 |     let r2 = &mut s;
-  |              ^^^^^^ second mutable borrow occurs here
-6 | 
-7 |     println!("{}, {}", r1, r2);
-  |                        -- first borrow later used here
+5 | let r1 = &mut s;
+  |          ------ first mutable borrow occurs here
+6 | let r2 = &mut s;
+  |          ^^^^^^ second mutable borrow occurs here
+7 |
+8 | println!("{r1}, {r2}");
+  |           ---- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
@@ -258,28 +258,28 @@ let r1 = &s;     // kein Problem
 let r2 = &s;     // kein Problem
 let r3 = &mut s; // GROSSES PROBLEM
 
-println!("{}, {} und {}", r1, r2, r3);
+println!("{r1}, {r2} und {r3}");
 ```
 
 Hier ist die Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --> src/main.rs:6:14
+ --> src/main.rs:7:10
   |
-4 |     let r1 = &s;     // kein Problem
-  |              -- immutable borrow occurs here
-5 |     let r2 = &s;     // kein Problem
-6 |     let r3 = &mut s; // GROSSES PROBLEM
-  |              ^^^^^^ mutable borrow occurs here
-7 | 
-8 |     println!("{}, {} und {}", r1, r2, r3);
-  |                               -- immutable borrow later used here
+5 | let r1 = &s;     // kein Problem
+  |          -- immutable borrow occurs here
+6 | let r2 = &s;     // kein Problem
+7 | let r3 = &mut s; // GROSSES PROBLEM
+  |          ^^^^^^ mutable borrow occurs here
+8 |
+9 | println!("{r1}, {r2} und {r3}");
+  |           ---- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
@@ -301,11 +301,11 @@ let mut s = String::from("Hallo");
 
 let r1 = &s; // kein Problem
 let r2 = &s; // kein Problem
-println!("{} und {}", r1, r2);
+println!("{r1} und {r2}");
 // r1 und r2 werden nach dieser Stelle nicht mehr verwendet
 
 let r3 = &mut s; // kein Problem
-println!("{}", r3);
+println!("{r3}");
 ```
 
 Die Gültigkeitsbereiche der unveränderbaren Referenzen `r1` und `r2` enden
