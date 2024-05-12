@@ -33,7 +33,7 @@ zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,noplayground
+```rust
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
@@ -74,17 +74,11 @@ fn main() {
 
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref1, giveaway1
-    );
+    println!("Der Benutzer mit Präferenz {user_pref1:?} erhält {giveaway1:?}");
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref2, giveaway2
-    );
+    println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
 }
 ```
 <span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span>
@@ -310,13 +304,13 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
 ```rust
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
+    let only_borrows = || println!("Im Funktionsabschluss: {list:?}");
 
-    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Vor dem Funktionsabschluss-Aufruf: {list:?}");
     only_borrows();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }
 ```
 
@@ -354,12 +348,12 @@ nun eine veränderbare Referenz:
 ```rust
 fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }
 ```
 
@@ -410,9 +404,9 @@ use std::thread;
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {:?}", list))
+    thread::spawn(move || println!("Im Strang: {list:?}"))
         .join()
         .unwrap();
 }
@@ -552,7 +546,7 @@ fn main() {
     ];
 
     list.sort_by_key(|r| r.width);
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }
 ```
 
@@ -616,7 +610,7 @@ fn main() {
         sort_operations.push(value);
         r.width
     });
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }
 ```
 
@@ -687,7 +681,7 @@ fn main() {
         num_sort_operations += 1;
         r.width
     });
-    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
+    println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }
 ```
 
