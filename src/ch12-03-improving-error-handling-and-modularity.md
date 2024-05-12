@@ -29,15 +29,15 @@ wir haben keine Berechtigung, sie zu öffnen. Im Moment würden wir unabhängig
 von der Situation die Fehlermeldung „Etwas ging beim Lesen der Datei schief“
 ausgeben, die dem Benutzer keinerlei Informationen geben würde!
 
-Viertens verwenden wir `expect` erneut, um verschiedene Fehler zu behandeln,
-und wenn der Benutzer unser Programm ausführt, ohne genügend Argumente
-anzugeben, erhält er einen `Index out of bounds`-Fehler von Rust, der das
-Problem nicht eindeutig erklärt. Am besten wäre es, wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befände, sodass zukünftige Betreuer nur
-eine Stelle im Code konsultieren bräuchten, falls sich die
-Fehlerbehandlungslogik ändern sollte. Wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befindet, wird auch sichergestellt, dass
-wir Meldungen ausgeben, die für unsere Endbenutzer aussagekräftig sind.
+Viertens verwenden wir `expect` erneut, um einen Fehler zu behandeln, und wenn
+der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
+er einen `Index out of bounds`-Fehler von Rust, der das Problem nicht eindeutig
+erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
+einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
+Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
+sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
+aussagekräftig sind.
 
 Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.
 
