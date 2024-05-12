@@ -81,7 +81,7 @@ pub mod garden;
 
 fn main() {
     let plant = Asparagus {};
-    println!("Ich baue {:?} an!", plant);
+    println!("Ich baue {plant:?} an!");
 }
 ```
 

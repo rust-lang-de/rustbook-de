@@ -312,7 +312,7 @@ fn main() {
 #
     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die geheime Zahl ist: {}", secret_number);
+#     println!("Die geheime Zahl ist: {secret_number}");
 #
 #     println!("Bitte gib deine Vermutung ein.");
 #
@@ -322,7 +322,7 @@ fn main() {
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen einer Zeile");
 #
-#     println!("Du hast geraten: {}", guess);
+#     println!("Du hast geraten: {guess}");
 }
 ```
 
