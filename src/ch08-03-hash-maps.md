@@ -167,7 +167,7 @@ let mut scores = HashMap::new();
 scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Blau"), 25);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 ```
 
 <span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
@@ -202,7 +202,7 @@ scores.insert(String::from("Blau"), 10);
 scores.entry(String::from("Gelb")).or_insert(50);
 scores.entry(String::from("Blau")).or_insert(50);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 ```
 
 <span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
@@ -243,7 +243,7 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 
-println!("{:?}", map);
+println!("{map:?}");
 ```
 
 <span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
