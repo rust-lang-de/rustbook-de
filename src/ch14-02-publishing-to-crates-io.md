@@ -410,7 +410,8 @@ API-Schlüssel. Rufe anschließend das Kommando `cargo login` mit deinem
 API-Schlüssel auf:
 
 ```console
-$ cargo login abcdefghijklmnopqrstuvwxyz012345
+$ cargo login
+abcdefghijklmnopqrstuvwxyz012345
 ```
 
 Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in

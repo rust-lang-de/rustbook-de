@@ -254,10 +254,14 @@ Um dies zu beheben, bearbeiten wir die Datei *Cargo.toml* für das Paket `adder`
 und geben an, dass `rand` auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets `adder` wird `rand` zur Liste der Abhängigkeiten für `adder` in
 *Cargo.lock* hinzugefügt, es werden jedoch keine zusätzlichen Kopien von `rand`
-heruntergeladen. Cargo hat dafür gesorgt, dass jede Kiste in jedem Paket im
+heruntergeladen. Cargo stellt sicher, dass jede Kiste in jedem Paket im
 Arbeitsbereich, das das `rand`-Paket verwendet, die gleiche Version verwendet,
-was uns Platz spart und sicherstellt, dass die Kisten im Arbeitsbereich
-miteinander kompatibel sind.
+solange sie kompatible Versionen von `rand` angeben, was uns Platz spart und
+sicherstellt, dass die Kisten im Arbeitsbereich miteinander kompatibel sind.
+
+Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
+angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
+Versionen wie möglich aufzulösen.
 
 #### Hinzufügen eines Tests zu einem Arbeitsbereich
 
