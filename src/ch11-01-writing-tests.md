@@ -69,13 +69,12 @@ mod tests {
 <span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von `cargo new` generiert werden</span>
 
-Ignorieren wir vorerst die beiden oberen Zeilen und konzentrieren uns auf die
-Funktion. Beachte die Annotation `#[test]`: Dieses Attribut zeigt an, dass es
-sich um eine Testfunktion handelt, sodass die Testausführung weiß, dass es
-diese Funktion als einen Test behandeln soll. Wir könnten auch
-Nicht-Test-Funktionen im Modul `tests` haben, um gängige Szenarien aufzusetzen
-oder gängige Operationen durchzuführen, daher müssen wir immer angeben, welche
-Funktionen Tests sind.
+Konzentrieren wir uns zunächst nur auf die Funktion `it_works()`. Beachte die
+Annotation `#[test]`: Dieses Attribut zeigt an, dass es sich um eine
+Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
+als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
+`tests` haben, um gängige Szenarien aufzusetzen oder gängige Operationen
+durchzuführen, daher müssen wir immer angeben, welche Funktionen Tests sind.
 
 Der Beispiel-Funktionsrumpf verwendet das Makro `assert_eq!`, um
 sicherzustellen, dass 2 + 2 gleich 4 ist. Diese Prüfung dient als Beispiel für
@@ -1097,10 +1096,9 @@ error: test failed, to rerun pass `--lib`
 
 Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenfolge `'Schätzwert muss kleiner oder gleich 100 sein'`. Die
-Abbruchsmeldung, die wir in diesem Fall erhielten, lautete: `Schätzwert muss
-größer oder gleich 1 sein, ist 200.` Jetzt können wir anfangen herauszufinden,
-wo unser Fehler liegt!
+Zeichenfolge `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
+diesem Fall erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, ist
+200.` Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!
 
 ### Verwenden von `Result<T, E>` in Tests
 

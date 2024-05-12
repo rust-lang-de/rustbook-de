@@ -98,7 +98,7 @@ sind einfach nur Rust-Code, und das Modul `tests` ist nur ein weiteres Modul.
 Wie im Abschnitt [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths]
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
-`test` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
+`tests` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
 `internal_adder` aufrufen. Wenn du der Meinung bist, dass private Funktionen
 nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
 würde.
@@ -156,8 +156,8 @@ Kiste `adder`</span>
 
 Jede Datei im Verzeichnis `tests` ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir `use adder` am Anfang des Codes hinzu, was wir in den
-Modultests nicht brauchten.
+diesem Grund fügen wir `use adder::add_two` am Anfang des Codes hinzu, was wir
+in den Modultests nicht brauchten.
 
 Wir brauchen den Code in *tests/integration_test.rs* nicht mit `#[cfg(test)]`
 zu annotieren. Cargo behandelt das Verzeichnis `tests` speziell und kompiliert
