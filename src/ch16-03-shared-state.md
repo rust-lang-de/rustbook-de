@@ -74,7 +74,7 @@ fn main() {
         *num = 6;
     }
 
-    println!("m = {:?}", m);
+    println!("m = {m:?}");
 }
 ```
 
