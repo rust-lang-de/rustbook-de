@@ -513,8 +513,8 @@ keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
 `unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f`
 nicht aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal
 aufgerufen. Da alle Funktionsabschlüsse `FnOnce` implementieren, akzeptiert
-`unwrap_or_else` die unterschiedlichsten Arten von Funktionsabschlüssen und ist
-so flexibel wie nur möglich.
+`unwrap_or_else` alle drei Arten von Funktionsabschlüssen und ist so flexibel
+wie nur möglich.
 
 > Anmerkung: Funktionen können auch alle drei `Fn`-Merkmale implementieren.
 > Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
@@ -623,20 +623,20 @@ fn main() {
 <span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
 mit `sort_by_key` zu verwenden</span>
 
-Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
-versuchen, die Anzahl der Aufrufe von `sort_by_key` beim Sortieren von `list`
-zu zählen. Dieser Code versucht, diese Zählung durchzuführen, indem er `value`,
-einen `String` aus der Umgebung des Funktionsabschlusses, in den
-`sort_operations`-Vektor schiebt. Der Funktionsabschluss erfasst `value` und
-verschiebt dann `value` aus dem Funktionsabschluss heraus, indem er die
-Eigentümerschaft von `value` an den Vektor `sort_operations` überträgt. Dieser
-Funktionsabschluss kann einmal aufgerufen werden; ein zweiter Aufruf würde nicht
-funktionieren, da `value` nicht mehr in der Umgebung wäre, um erneut in
-`sort_operations` verschoben zu werden! Daher implementiert dieser
-Funktionsabschluss nur `FnOnce`. Wenn wir versuchen, diesen Code zu
-kompilieren, erhalten wir die Fehlermeldung, dass `value` nicht aus dem
-Funktionsabschluss verschoben werden kann, weil der Funktionsabschluss `FnMut`
-implementieren muss:
+Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
+versucht die Anzahl der Aufrufe des Funktionsabschlusses durch `sort_by_key`
+beim Sortieren von `list` zu zählen. Dieser Code versucht diese Zählung
+durchzuführen, indem er den `String` `value` aus der Umgebung des
+Funktionsabschlusses in den Vektor `sort_operations` verschiebt. Der
+Funktionsabschluss erfasst `value` und verschiebt dann `value` aus dem
+Funktionsabschluss heraus, indem er die Eigentümerschaft von `value` an den
+Vektor `sort_operations` überträgt. Dieser Funktionsabschluss kann einmal
+aufgerufen werden; ein zweiter Aufruf würde nicht funktionieren, da `value`
+nicht mehr in der Umgebung wäre, um erneut in `sort_operations` verschoben zu
+werden! Daher implementiert dieser Funktionsabschluss nur `FnOnce`. Wenn wir
+versuchen, diesen Code zu kompilieren, erhalten wir die Fehlermeldung, dass
+`value` nicht aus dem Funktionsabschluss verschoben werden kann, weil der
+Funktionsabschluss `FnMut` implementieren muss:
 
 ```console
 $ cargo run
