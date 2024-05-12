@@ -711,7 +711,7 @@ einfacher, den Unterschied zwischen den beiden Fällen zu erkennen, und es
 bedeutet, dass wir nur einen Ort haben, an dem wir den Code aktualisieren
 müssen, wenn wir ändern wollen, wie das Lesen der Datei und das Schreiben der
 Antwort funktionieren. Das Verhalten des Codes in Codeblock 20-9 ist dasselbe
-wie in Codeblock 20-8.
+wie in Codeblock 20-7.
 
 Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
