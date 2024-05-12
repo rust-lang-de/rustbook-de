@@ -638,5 +638,5 @@ die Praxis umsetzen und ein weiteres Projekt durchführen!
 [quote-crates]: https://crates.io/crates/quote
 [quote-docs]: https://docs.rs/quote
 [syn-crates]: https://crates.io/crates/syn
-[syn-docs]: https://docs.rs/syn/1.0/syn/struct.DeriveInput.html
+[syn-docs]: https://docs.rs/syn/2.0/syn/struct.DeriveInput.html
 [tlborm]: https://veykril.github.io/tlborm/
