@@ -367,6 +367,9 @@ wir ein Semikolon, um die Anweisung zu beenden, die `result` den Wert zuweist.
 Schließlich geben wir den Wert in `result` aus, der in diesem Fall `20`
 beträgt.
 
+Du kannst auch innerhalb einer Schleife `return` aufrufen. Während `break` nur
+die aktuelle Schleife verlässt, verlässt `return` immer die aktuelle Funktion.
+
 #### Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen
 
 Wenn du Schleifen innerhalb von Schleifen hast, gelten `break` und `continue`
@@ -460,7 +463,7 @@ wären, wenn du `loop`, `if`, `else` und `break` verwenden würdest, und es ist
 klarer. Solange eine Bedingung zu `true` auswertet, läuft der Code ab;
 andernfalls wird die Schleife verlassen.
 
-#### Wiederholen anhand einer Kollektion mit `for`
+#### Durchlaufen einer Kollektion mit `for`
 
 Du kannst das `while`-Konstrukt verwenden, um die Elemente einer Kollektion,
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4

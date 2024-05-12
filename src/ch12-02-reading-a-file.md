@@ -31,7 +31,7 @@ Datei hinzu, wie in Codeblock 12-4 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,should_panic
+```rust,noplayground
 use std::env;
 use std::fs;
 
@@ -42,8 +42,8 @@ fn main() {
 #     let query = &args[1];
 #     let file_path = &args[2];
 #
-#     println!("Suche nach {}", query);
-    println!("In Datei {}", file_path);
+#     println!("Suche nach {query}");
+    println!("In Datei {file_path}");
 
     let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");

@@ -142,6 +142,8 @@ impl<T> MyBox<T> {
         MyBox(x)
     }
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-8: Einen `MyBox<T>`-Typ definieren</span>
@@ -319,6 +321,8 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:
 fn hello(name: &str) {
     println!("Hallo {name}!");
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-11: Eine `hello`-Funktion mit dem Parameter

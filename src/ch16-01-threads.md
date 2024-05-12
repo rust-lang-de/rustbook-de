@@ -50,13 +50,13 @@ use std::time::Duration;
 fn main() {
     thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 }
@@ -121,13 +121,13 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 
@@ -178,7 +178,7 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
@@ -186,7 +186,7 @@ fn main() {
     handle.join().unwrap();
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 }
@@ -244,7 +244,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(|| {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     handle.join().unwrap();
@@ -268,15 +268,15 @@ error[E0373]: closure may outlive the current function, but it borrows `v`, whic
   |
 6 |     let handle = thread::spawn(|| {
   |                                ^^ may outlive borrowed value `v`
-7 |         println!("Hier ist ein Vektor: {:?}", v);
-  |                                               - `v` is borrowed here
+7 |         println!("Hier ist ein Vektor: {v:?}");
+  |                                         - `v` is borrowed here
   |
 note: function requires argument type to outlive `'static`
  --> src/main.rs:6:18
   |
 6 |       let handle = thread::spawn(|| {
   |  __________________^
-7 | |         println!("Hier ist ein Vektor: {:?}", v);
+7 | |         println!("Hier ist ein Vektor: {v:?}");
 8 | |     });
   | |______^
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
@@ -285,7 +285,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 
 For more information about this error, try `rustc --explain E0373`.
-error: could not compile `threads` (bin "threads") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Rust *folgert*, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
@@ -305,7 +305,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(|| {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     drop(v); // Oh nein!
@@ -351,7 +351,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(move || {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     handle.join().unwrap();
@@ -382,8 +382,8 @@ error[E0382]: use of moved value: `v`
 5  | 
 6  |     let handle = thread::spawn(move || {
    |                                ------- value moved into closure here
-7  |         println!("Hier ist ein Vektor: {:?}", v);
-   |                                               - variable moved due to use in closure
+7  |         println!("Hier ist ein Vektor: {v:?}");
+   |                                         - variable moved due to use in closure
 ...
 10 |     drop(v); // Oh nein!
    |          ^ value used here after move

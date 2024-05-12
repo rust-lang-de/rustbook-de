@@ -45,7 +45,7 @@ Beachte, dass `use` nur die Verknüpfung für den jeweiligen Gültigkeitsbereich
 erstellt, in dem `use` vorkommt. Codeblock 7-12 verschiebt die Funktion
 `eat_at_restaurant` in ein neues untergeordnetes Modul namens `customer`, das
 dann einen anderen Gültigkeitsbereich als die `use`-Anweisung hat, sodass der
-Funktionsrumpf nicht kompiliert werden kann:
+Funktionsrumpf nicht kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -261,10 +261,11 @@ pub fn eat_at_restaurant() {
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit `pub use`</span>
 
 Vor dieser Änderung musste externer Code die Funktion `add_to_waitlist` mit dem
-Pfad `restaurant::front_of_house::hosting::add_to_waitlist()` aufrufen. Nun, da
-`pub use` das Modul `hosting` aus dem Wurzel-Modul re-exportiert hat, kann
-externer Code nun stattdessen den Pfad `restaurant::hosting::add_to_waitlist()`
-verwenden.
+Pfad `restaurant::front_of_house::hosting::add_to_waitlist()` aufrufen, was
+zudem erfordert hätte, dass das Modul `front_of_house` als `pub` gekennzeichnet
+ist. Da aber `pub use` das Modul `hosting` aus dem Wurzel-Modul re-exportiert
+hat, kann externer Code nun stattdessen den Pfad
+`restaurant::hosting::add_to_waitlist()` verwenden.
 
 Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
 dem unterscheidet, wie Programmierer, die deinen Code
@@ -311,7 +312,7 @@ fn main() {
 #
     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
-#     println!("Die geheime Zahl ist: {}", secret_number);
+#     println!("Die geheime Zahl ist: {secret_number}");
 #
 #     println!("Bitte gib deine Vermutung ein.");
 #
@@ -321,7 +322,7 @@ fn main() {
 #         .read_line(&mut guess)
 #         .expect("Fehler beim Lesen einer Zeile");
 #
-#     println!("Du hast geraten: {}", guess);
+#     println!("Du hast geraten: {guess}");
 }
 ```
 

@@ -344,8 +344,8 @@ Parameter `args` einen generischen Typ mit den Merkmalsabgrenzungen `impl
 Iterator<Item = String>` anstelle von `&[String]` hat. Diese Verwendung der
 Syntax `impl Trait`, die wir im Abschnitt [„Merkmale als
 Parameter“][impl-trait] in Kapitel 10 besprochen haben, bedeutet, dass `args`
-jeder Typ sein kann, der den Typ `Iterator` implementiert und `String`-Elemente
-zurückgibt.
+jeder Typ sein kann, der das Merkmal `Iterator` implementiert und
+`String`-Elemente zurückgibt.
 
 Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
 verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des

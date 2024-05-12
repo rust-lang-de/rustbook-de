@@ -23,7 +23,7 @@ eine neue Übersetzung zu informieren!
 - [Esperanto](https://github.com/psychoslave/Rust-libro)
 - [ελληνική](https://github.com/TChatzigiannakis/rust-book-greek)
 - [Svenska](https://github.com/sebras/book)
-- [Farsi](https://github.com/pomokhtari/rust-book-fa)
+- [Farsi](https://github.com/RustFarsi/book)
 - [Deutsch](https://github.com/rust-lang-de/rustbook-de)
 - [हिंदी](https://github.com/venkatarun95/rust-book-hindi)
 - [ไทย](https://github.com/rust-lang-th/book-th)

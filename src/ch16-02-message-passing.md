@@ -128,7 +128,7 @@ fn main() {
     });
 
     let received = rx.recv().unwrap();
-    println!("Erhalten: {}", received);
+    println!("Erhalten: {received}");
 }
 ```
 
@@ -188,11 +188,11 @@ fn main() {
     thread::spawn(move || {
         let val = String::from("hallo");
         tx.send(val).unwrap();
-        println!("val ist {}", val);
+        println!("val ist {val}");
     });
 
     let received = rx.recv().unwrap();
-    println!("Erhalten: {}", received);
+    println!("Erhalten: {received}");
 }
 ```
 
@@ -217,8 +217,8 @@ error[E0382]: borrow of moved value: `val`
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
 9  |         tx.send(val).unwrap();
    |                 --- value moved here
-10 |         println!("val ist {}", val);
-   |                                ^^^ value borrowed here after move
+10 |         println!("val ist {val}");
+   |                           ^^^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 help: consider cloning the value if the performance cost is acceptable
@@ -270,7 +270,7 @@ fn main() {
     });
 
     for received in rx {
-        println!("Erhalten: {}", received);
+        println!("Erhalten: {received}");
     }
 }
 ```
@@ -351,7 +351,7 @@ Codeblock 16-11 gezeigt:
     });
 
     for received in rx {
-        println!("Erhalten: {}", received);
+        println!("Erhalten: {received}");
     }
 
     // --abschneiden--

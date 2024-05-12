@@ -39,7 +39,7 @@ let v1 = vec![1, 2, 3];
 let v1_iter = v1.iter();
 
 for val in v1_iter {
-    println!("Erhalten: {}", val);
+    println!("Erhalten: {val}");
 }
 ```
 <span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer

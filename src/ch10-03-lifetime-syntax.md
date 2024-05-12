@@ -41,7 +41,7 @@ fn main() {
         r = &x;
     }
 
-    println!("r: {}", r);
+    println!("r: {r}");
 }
 ```
 
@@ -76,8 +76,8 @@ error[E0597]: `x` does not live long enough
 7 |     }
   |     - `x` dropped here while still borrowed
 8 |
-9 |     println!("r: {}", r);
-  |                       - borrow later used here
+9 |     println!("r: {r}");
+  |                  --- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -109,7 +109,7 @@ fn main() {
         r = &x;           //  |       |
     }                     // -+       |
                           //          |
-    println!("r: {}", r); //          |
+    println!("r: {r}");   //          |
 }                         // ---------+
 ```
 
@@ -133,7 +133,7 @@ fn main() {
                           //           |
     let r = &x;           // --+-- 'a  |
                           //   |       |
-    println!("r: {}", r); //   |       |
+    println!("r: {r}");   //   |       |
                           // --+       |
 }                         // ----------+
 ```
@@ -167,7 +167,7 @@ fn main() {
     let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }
 ```
 
@@ -194,7 +194,7 @@ implementieren, wird sie sich nicht kompilieren lassen.
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {}", result);
+#     println!("Die längere Zeichenkette ist {result}");
 # }
 #
 fn longest(x: &str, y: &str) -> &str {
@@ -304,7 +304,7 @@ Referenz hinzu, wie in Codeblock 10-21 gezeigt.
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {}", result);
+#     println!("Die längere Zeichenkette ist {result}");
 # }
 #
 fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -375,7 +375,7 @@ fn main() {
     {
         let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!("Die längere Zeichenkette ist {}", result);
+        println!("Die längere Zeichenkette ist {result}");
     }
 }
 #
@@ -417,7 +417,7 @@ fn main() {
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }
 #
 # fn longest<'a>(x: &'a str, y: &'a str) -> &'a str {
@@ -446,8 +446,8 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                          ------ borrow later used here
+8 |     println!("Die längere Zeichenkette ist {result}");
+  |                                            -------- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -491,7 +491,7 @@ kompilieren:
 #     let string2 = "efghijklmnopqrstuvwxyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {}", result);
+#     println!("Die längere Zeichenkette ist {result}");
 # }
 #
 fn longest<'a>(x: &'a str, y: &str) -> &'a str {
@@ -520,7 +520,7 @@ Implementierung der Funktion `longest`, die sich nicht kompilieren lässt:
 #     let string2 = "xyz";
 #
 #     let result = longest(string1.as_str(), string2);
-#     println!("Die längere Zeichenkette ist {}", result);
+#     println!("Die längere Zeichenkette ist {result}");
 # }
 #
 fn longest<'a>(x: &str, y: &str) -> &'a str {
@@ -812,7 +812,7 @@ impl<'a> ImportantExcerpt<'a> {
 #
 # impl<'a> ImportantExcerpt<'a> {
 #     fn announce_and_return_part(&self, announcement: &str) -> &str {
-#         println!("Bitte um Aufmerksamkeit: {}", announcement);
+#         println!("Bitte um Aufmerksamkeit: {announcement}");
 #         self.part
 #     }
 # }
@@ -845,7 +845,7 @@ Hier ist ein Beispiel, bei dem die dritte Lebensdauer-Elisionsregel gilt:
 #
 impl<'a> ImportantExcerpt<'a> {
     fn announce_and_return_part(&self, announcement: &str) -> &str {
-        println!("Bitte um Aufmerksamkeit: {}", announcement);
+        println!("Bitte um Aufmerksamkeit: {announcement}");
         self.part
     }
 }
@@ -905,7 +905,7 @@ Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!
 #         string2,
 #         "Heute hat jemand Geburtstag!",
 #     );
-#     println!("Die längere Zeichenkette ist {}", result);
+#     println!("Die längere Zeichenkette ist {result}");
 # }
 #
 use std::fmt::Display;
@@ -918,7 +918,7 @@ fn longest_with_an_announcement<'a, T>(
 where
     T: Display,
 {
-    println!("Bekanntmachung! {}", ann);
+    println!("Bekanntmachung! {ann}");
     if x.len() > y.len() {
         x
     } else {
@@ -931,9 +931,9 @@ Dies ist die Funktion `longest` aus Codeblock 10-21, die die längere von zwei
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens `ann` vom generischen Typ `T`, der jeder beliebige Typ sein
 kann, der das Merkmal `Display` implementiert, wie in der `where`-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von `{}`
-ausgegeben, weshalb die Merkmalsabgrenzung `Display` erforderlich ist. Da die
-Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
+spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
+`{ann}` ausgegeben, weshalb die Merkmalsabgrenzung `Display` erforderlich ist.
+Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
 Lebensdauer-Parameters `'a` und des generischen Typ-Parameters `T` in der
 gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.
 

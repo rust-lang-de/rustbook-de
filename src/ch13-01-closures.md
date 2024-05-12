@@ -33,7 +33,7 @@ zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,noplayground
+```rust
 #[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
@@ -74,17 +74,11 @@ fn main() {
 
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref1, giveaway1
-    );
+    println!("Der Benutzer mit Präferenz {user_pref1:?} erhält {giveaway1:?}");
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref2, giveaway2
-    );
+    println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
 }
 ```
 <span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span>
@@ -310,13 +304,13 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
 ```rust
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
+    let only_borrows = || println!("Im Funktionsabschluss: {list:?}");
 
-    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Vor dem Funktionsabschluss-Aufruf: {list:?}");
     only_borrows();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }
 ```
 
@@ -354,12 +348,12 @@ nun eine veränderbare Referenz:
 ```rust
 fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }
 ```
 
@@ -410,9 +404,9 @@ use std::thread;
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {:?}", list))
+    thread::spawn(move || println!("Im Strang: {list:?}"))
         .join()
         .unwrap();
 }
@@ -513,8 +507,8 @@ keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
 `unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f`
 nicht aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal
 aufgerufen. Da alle Funktionsabschlüsse `FnOnce` implementieren, akzeptiert
-`unwrap_or_else` die unterschiedlichsten Arten von Funktionsabschlüssen und ist
-so flexibel wie nur möglich.
+`unwrap_or_else` alle drei Arten von Funktionsabschlüssen und ist so flexibel
+wie nur möglich.
 
 > Anmerkung: Funktionen können auch alle drei `Fn`-Merkmale implementieren.
 > Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
@@ -552,7 +546,7 @@ fn main() {
     ];
 
     list.sort_by_key(|r| r.width);
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }
 ```
 
@@ -616,27 +610,27 @@ fn main() {
         sort_operations.push(value);
         r.width
     });
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }
 ```
 
 <span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
 mit `sort_by_key` zu verwenden</span>
 
-Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
-versuchen, die Anzahl der Aufrufe von `sort_by_key` beim Sortieren von `list`
-zu zählen. Dieser Code versucht, diese Zählung durchzuführen, indem er `value`,
-einen `String` aus der Umgebung des Funktionsabschlusses, in den
-`sort_operations`-Vektor schiebt. Der Funktionsabschluss erfasst `value` und
-verschiebt dann `value` aus dem Funktionsabschluss heraus, indem er die
-Eigentümerschaft von `value` an den Vektor `sort_operations` überträgt. Dieser
-Funktionsabschluss kann einmal aufgerufen werden; ein zweiter Aufruf würde nicht
-funktionieren, da `value` nicht mehr in der Umgebung wäre, um erneut in
-`sort_operations` verschoben zu werden! Daher implementiert dieser
-Funktionsabschluss nur `FnOnce`. Wenn wir versuchen, diesen Code zu
-kompilieren, erhalten wir die Fehlermeldung, dass `value` nicht aus dem
-Funktionsabschluss verschoben werden kann, weil der Funktionsabschluss `FnMut`
-implementieren muss:
+Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
+versucht die Anzahl der Aufrufe des Funktionsabschlusses durch `sort_by_key`
+beim Sortieren von `list` zu zählen. Dieser Code versucht diese Zählung
+durchzuführen, indem er den `String` `value` aus der Umgebung des
+Funktionsabschlusses in den Vektor `sort_operations` verschiebt. Der
+Funktionsabschluss erfasst `value` und verschiebt dann `value` aus dem
+Funktionsabschluss heraus, indem er die Eigentümerschaft von `value` an den
+Vektor `sort_operations` überträgt. Dieser Funktionsabschluss kann einmal
+aufgerufen werden; ein zweiter Aufruf würde nicht funktionieren, da `value`
+nicht mehr in der Umgebung wäre, um erneut in `sort_operations` verschoben zu
+werden! Daher implementiert dieser Funktionsabschluss nur `FnOnce`. Wenn wir
+versuchen, diesen Code zu kompilieren, erhalten wir die Fehlermeldung, dass
+`value` nicht aus dem Funktionsabschluss verschoben werden kann, weil der
+Funktionsabschluss `FnMut` implementieren muss:
 
 ```console
 $ cargo run
@@ -687,7 +681,7 @@ fn main() {
         num_sort_operations += 1;
         r.width
     });
-    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
+    println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }
 ```
 

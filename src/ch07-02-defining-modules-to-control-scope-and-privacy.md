@@ -7,17 +7,14 @@ Schlüsselwort `pub`, um Elemente öffentlich zu machen. Wir werden auch das
 Schlüsselwort `as`, externe Pakete und den Stern-Operator (glob operator)
 besprechen.
 
-Zunächst werden wir mit einer Liste von Regeln beginnen, damit du bei der
-künftigen Organisation deines Codes leicht nachschlagen kannst. Dann werden wir
-jede der Regeln im Detail erklären.
-
 ### Spickzettel für Module
 
-Hier bieten wir eine Kurzreferenz darüber, wie Module, Pfade, das Schlüsselwort
-`use` und das Schlüsselwort `pub` im Compiler funktionieren und wie die meisten
-Entwickler ihren Code organisieren. Wir werden im Laufe dieses Kapitels
-Beispiele für jede dieser Regeln durchgehen, aber dies ist ein guter Ort, um
-sich daran zu erinnern, wie Module funktionieren.
+Bevor wir zu den Details von Modulen und Pfaden kommen, stellen wir hier eine
+kurze Referenz zusammen, wie Module, Pfade, das Schlüsselwort `use` und das
+Schlüsselwort `pub` im Compiler funktionieren und wie die meisten Entwickler
+ihren Code organisieren. Wir werden im Laufe dieses Kapitels Beispiele für jede
+dieser Regeln durchgehen, aber dies ist ein guter Ort, um sich daran zu
+erinnern, wie Module funktionieren.
 
 - **Beginne bei der Kistenwurzel (crate root)**: Beim Kompilieren einer Kiste
   sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
@@ -84,7 +81,7 @@ pub mod garden;
 
 fn main() {
     let plant = Asparagus {};
-    println!("Ich baue {:?} an!", plant);
+    println!("Ich baue {plant:?} an!");
 }
 ```
 
@@ -132,7 +129,7 @@ der Küche, Geschirrspüler waschen ab und Manager erledigen Verwaltungsarbeiten
 
 Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
-`restaurant`, indem du `cargo new --lib restaurant` ausführst; gib dann den
+`restaurant`, indem du `cargo new --lib restaurant` ausführst. Gib dann den
 Code in Codeblock 7-1 in *src/lib.rs* ein, um einige Module und
 Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:
 
@@ -196,9 +193,9 @@ crate
 <span class="caption">Codeblock 7-2: Modulbaum für den Code in Codeblock
 7-1</span>
 
-Dieser Baum zeigt, wie einige der Module ineinander verschachtelt sind; z.B.
-ist `hosting` innerhalb von `front_of_house`. Der Baum zeigt auch, dass einige
-Module *Geschwister* voneinander sind, was bedeutet, dass sie im selben Modul
+Dieser Baum zeigt, wie einige Module in anderen Modulen verschachtelt sind;
+z.B. ist `hosting` innerhalb von `front_of_house`. Der Baum zeigt auch, dass
+einige Module *Geschwister* sind, was bedeutet, dass sie im selben Modul
 definiert sind; `hosting` und `serving` sind Geschwister, die innerhalb von
 `front_of_house` definiert sind. Wenn Modul A innerhalb von Modul B enthalten
 ist, sagen wir, dass Modul A das *Kind* (child) von Modul B ist und dass Modul

@@ -77,7 +77,7 @@ fn main() {
 
     let greeting_file = match greeting_file_result {
         Ok(file) => file,
-        Err(error) => panic!("Problem beim Öffnen der Datei: {:?}", error),
+        Err(error) => panic!("Problem beim Öffnen der Datei: {error:?}"),
     };
 }
 ```
@@ -139,10 +139,10 @@ fn main() {
         Err(error) => match error.kind() {
             ErrorKind::NotFound => match File::create("hallo.txt") {
                 Ok(fc) => fc,
-                Err(e) => panic!("Problem beim Erstellen der Datei: {:?}", e),
+                Err(e) => panic!("Problem beim Erstellen der Datei: {e:?}"),
             },
             other_error => {
-                panic!("Problem beim Öffnen der Datei: {:?}", other_error)
+                panic!("Problem beim Öffnen der Datei: {other_error:?}")
             }
         },
     };
@@ -192,10 +192,10 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 >     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
 >         if error.kind() == ErrorKind::NotFound {
 >             File::create("hallo.txt").unwrap_or_else(|error| {
->                 panic!("Problem beim Erstellen der Datei: {:?}", error);
+>                 panic!("Problem beim Erstellen der Datei: {error:?}");
 >             })
 >         } else {
->             panic!("Problem beim Öffnen der Datei: {:?}", error);
+>             panic!("Problem beim Öffnen der Datei: {error:?}");
 >         }
 >     });
 > }

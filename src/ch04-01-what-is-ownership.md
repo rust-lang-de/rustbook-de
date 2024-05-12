@@ -210,7 +210,7 @@ let mut s = String::from("Hallo");
 
 s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenfolge an
 
-println!("{}", s);    // Gibt `Hallo Welt!` aus
+println!("{s}"); // Gibt `Hallo Welt!` aus
 ```
 
 Was ist hier nun der Unterschied? Warum kann `String` verändert werden,
@@ -388,34 +388,33 @@ wird nicht funktionieren:
 let s1 = String::from("Hallo");
 let s2 = s1;
 
-println!("{} Welt!", s1);
+println!("{s1} Welt!");
 ```
 
 Du erhältst eine Fehlermeldung wie diese, wodurch Rust dich daran hindert, die
 ungültige Referenz zu verwenden:
 
 ```console
-$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0382]: borrow of moved value: `s1`
- --> src/main.rs:5:28
+ --> src/main.rs:6:11
   |
-2 |     let s1 = String::from("Hallo");
-  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
-3 |     let s2 = s1;
-  |              -- value moved here
-4 |
-5 |     println!("{} Welt!", s1);
-  |                          ^^ value borrowed here after move
+3 | let s1 = String::from("Hallo");
+  |     -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+4 | let s2 = s1;
+  |          -- value moved here
+5 |
+6 | println!("{s1} Welt!");
+  |           ^^^^ value borrowed here after move
   |
   = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 help: consider cloning the value if the performance cost is acceptable
   |
-3 |     let s2 = s1.clone();
-  |                ++++++++
+4 | let s2 = s1.clone();
+  |            ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe *flache
@@ -461,7 +460,7 @@ Hier ist ein Beispiel für die Methode `clone`:
 let s1 = String::from("Hallo");
 let s2 = s1.clone();
 
-println!("s1 = {}, s2 = {}", s1, s2);
+println!("s1 = {s1}, s2 = {s2}");
 ```
 
 Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
@@ -481,7 +480,7 @@ funktioniert und ist gültig:
 let x = 5;
 let y = x;
 
-println!("x = {}, y = {}", x, y);
+println!("x = {x}, y = {y}");
 ```
 
 Aber dieser Code scheint dem zu widersprechen, was wir gerade gelernt haben:
@@ -554,12 +553,12 @@ fn main() {
 
 fn takes_ownership(some_string: String) { // some_string kommt in den
                                           // Gültigkeitsbereich
-    println!("{}", some_string);
+    println!("{some_string}");
 } // Hier verlässt some_string den Gültigkeitsbereich und `drop` wird aufgerufen.
   // Der zugehörige Speicherplatz wird freigegeben.
 
 fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbereich
-    println!("{}", some_integer);
+    println!("{some_integer}");
 } // Hier verlässt some_integer den Gültigkeitsbereich.
   // Es passiert nichts Besonderes.
 ```
@@ -643,7 +642,7 @@ fn main() {
 
     let (s2, len) = calculate_length(s1);
 
-    println!("Die Länge von '{}' ist {}.", s2, len);
+    println!("Die Länge von '{s2}' ist {len}.");
 }
 
 fn calculate_length(s: String) -> (String, usize) {

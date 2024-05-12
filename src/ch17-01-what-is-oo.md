@@ -128,11 +128,11 @@ haben, können wir Aspekte, z.B. die Datenstruktur, in Zukunft leicht ändern.
 Zum Beispiel könnten wir ein `HashSet<i32>` anstelle eines `Vec<i32>` für das
 `list`-Feld verwenden. Solange die Signaturen der öffentlichen Methoden `add`,
 `remove` und `average` gleich bleiben, würde Code, der `AveragedCollection`
-verwendet, nicht geändert werden müssen. Wenn wir stattdessen `list` öffentlich
-machen würden, wäre dies nicht unbedingt der Fall: `HashSet<i32>` und
-`Vec<i32>` haben unterschiedliche Methoden zum Hinzufügen und Entfernen von
-Elementen, sodass externer Code wahrscheinlich geändert werden müsste, wenn er
-`list` direkt modifizieren würde.
+verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
+stattdessen `list` öffentlich machen würden, wäre dies nicht unbedingt der
+Fall: `HashSet<i32>` und `Vec<i32>` haben unterschiedliche Methoden zum
+Hinzufügen und Entfernen von Elementen, sodass externer Code wahrscheinlich
+geändert werden müsste, wenn er `list` direkt modifizieren würde.
 
 Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
 objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.

@@ -40,12 +40,18 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
 }
@@ -71,7 +77,7 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub fn add_two(a: i32) -> i32 {
     internal_adder(a, 2)
 }
@@ -98,7 +104,7 @@ sind einfach nur Rust-Code, und das Modul `tests` ist nur ein weiteres Modul.
 Wie im Abschnitt [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths]
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
-`test` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
+`tests` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
 `internal_adder` aufrufen. Wenn du der Meinung bist, dass private Funktionen
 nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
 würde.
@@ -143,11 +149,11 @@ Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein:
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
-use adder;
+use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, adder::add_two(2));
+    assert_eq!(4, add_two(2));
 }
 ```
 
@@ -156,8 +162,8 @@ Kiste `adder`</span>
 
 Jede Datei im Verzeichnis `tests` ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir `use adder` am Anfang des Codes hinzu, was wir in den
-Modultests nicht brauchten.
+diesem Grund fügen wir `use adder::add_two` am Anfang des Codes hinzu, was wir
+in den Modultests nicht brauchten.
 
 Wir brauchen den Code in *tests/integration_test.rs* nicht mit `#[cfg(test)]`
 zu annotieren. Cargo behandelt das Verzeichnis `tests` speziell und kompiliert

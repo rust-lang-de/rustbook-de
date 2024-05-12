@@ -130,20 +130,18 @@ die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
 
 ```rust,ignore
-# use aggregator::{self, Summary, Tweet};
-#
-# fn main() {
+use aggregator::{self, Summary, Tweet};
+
+fn main() {
     let tweet = Tweet {
         username: String::from("horse_ebooks"),
-        content: String::from(
-            "natürlich, wie du wahrscheinlich schon weißt",
-        ),
+        content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
         retweet: false,
     };
 
     println!("1 neue Kurznachricht: {}", tweet.summarize());
-# }
+}
 ```
 
 Dieser Code gibt `1 neue Kurznachricht: horse_ebooks: natürlich, wie du
@@ -192,6 +190,28 @@ pub trait Summary {
         String::from("(Lies mehr ...)")
     }
 }
+#
+# pub struct NewsArticle {
+#     pub headline: String,
+#     pub location: String,
+#     pub author: String,
+#     pub content: String,
+# }
+#
+# impl Summary for NewsArticle {}
+#
+# pub struct Tweet {
+#     pub username: String,
+#     pub content: String,
+#     pub reply: bool,
+#     pub retweet: bool,
+# }
+#
+# impl Summary for Tweet {
+#     fn summarize(&self) -> String {
+#         format!("{}: {}", self.username, self.content)
+#     }
+# }
 ```
 
 <span class="caption">Codeblock 10-14: Definieren eines Merkmals `Summary` mit
@@ -249,6 +269,19 @@ pub trait Summary {
         format!("(Lies mehr von {}...)", self.summarize_author())
     }
 }
+#
+# pub struct Tweet {
+#     pub username: String,
+#     pub content: String,
+#     pub reply: bool,
+#     pub retweet: bool,
+# }
+#
+# impl Summary for Tweet {
+#     fn summarize_author(&self) -> String {
+#         format!("@{}", self.username)
+#     }
+# }
 ```
 
 Um diese Version von `Summary` zu verwenden, müssen wir `summarize_author` nur
@@ -318,6 +351,32 @@ verwenden, etwa so:
 ```rust
 # pub trait Summary {
 #     fn summarize(&self) -> String;
+# }
+#
+# pub struct NewsArticle {
+#     pub headline: String,
+#     pub location: String,
+#     pub author: String,
+#     pub content: String,
+# }
+#
+# impl Summary for NewsArticle {
+#     fn summarize(&self) -> String {
+#         format!("{}, von {} ({})", self.headline, self.author, self.location)
+#     }
+# }
+#
+# pub struct Tweet {
+#     pub username: String,
+#     pub content: String,
+#     pub reply: bool,
+#     pub retweet: bool,
+# }
+#
+# impl Summary for Tweet {
+#     fn summarize(&self) -> String {
+#         format!("{}: {}", self.username, self.content)
+#     }
 # }
 #
 pub fn notify(item: &impl Summary) {
@@ -422,6 +481,8 @@ where
     T: Display + Clone,
     U: Clone + Debug,
 {
+#     unimplemented!()
+# }
 ```
 
 Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
@@ -436,6 +497,19 @@ gezeigt:
 ```rust
 # pub trait Summary {
 #     fn summarize(&self) -> String;
+# }
+#
+# pub struct NewsArticle {
+#     pub headline: String,
+#     pub location: String,
+#     pub author: String,
+#     pub content: String,
+# }
+#
+# impl Summary for NewsArticle {
+#     fn summarize(&self) -> String {
+#         format!("{}, von {} ({})", self.headline, self.author, self.location)
+#     }
 # }
 #
 # pub struct Tweet {
@@ -528,9 +602,7 @@ fn returns_summarizable(switch: bool) -> impl Summary {
     } else {
         Tweet {
             username: String::from("horse_ebooks"),
-            content: String::from(
-                "natürlich, wie du wahrscheinlich schon weißt",
-            ),
+            content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
             reply: false,
             retweet: false,
         }

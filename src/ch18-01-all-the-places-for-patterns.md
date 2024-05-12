@@ -134,7 +134,7 @@ Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.
     stack.push(3);
 
     while let Some(top) = stack.pop() {
-        println!("{}", top);
+        println!("{top}");
     }
 ```
 
@@ -159,7 +159,7 @@ ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
     let v = vec!['a', 'b', 'c'];
 
     for (index, value) in v.iter().enumerate() {
-        println!("{} ist beim Index {}", value, index);
+        println!("{value} ist beim Index {index}");
     }
 ```
 
@@ -294,7 +294,7 @@ Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.
 
 ```rust
 fn print_coordinates(&(x, y): &(i32, i32)) {
-    println!("Aktuelle Position: ({}, {})", x, y);
+    println!("Aktuelle Position: ({x}, {y})");
 }
 
 fn main() {

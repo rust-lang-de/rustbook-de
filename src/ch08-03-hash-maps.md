@@ -5,9 +5,9 @@ Der Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
 Werten vom Typ `V` mittels einer *Hashfunktion* (hash function), die bestimmt,
 wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
-Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
-(dictionary) oder assoziatives Array (associative array), um nur einige zu
-nennen.
+Namen wie *Hash*, *Abbildung* (map), *Objekt*, *Hashtabelle* (hash table),
+*Wörterbuch* (dictionary) oder *assoziatives Array* (associative array), um nur
+einige zu nennen.
 
 Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
 Index nachschlagen willst, sondern über einen Schlüssel, der ein beliebiger Typ
@@ -50,7 +50,7 @@ gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.
 
 Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
 Obige `HashMap` hat Schlüssel vom Typ `String` und Werte vom Typ `i32`.
-Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
+Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
 haben und alle Werte müssen denselben Typ haben.
 
 ### Zugreifen auf Werte in einer Hashtabelle
@@ -140,7 +140,7 @@ Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10 sprechen.
 Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
 eindeutigen Schlüssel jeweils nur ein Wert zugeordnet werden (aber nicht
 umgekehrt: Zum Beispiel könnten sowohl das blaue Team als auch das gelbe Team
-den Wert 10 in der Hashtabelle `scores` gespeichert haben).
+den Wert `10` in der Hashtabelle `scores` gespeichert haben).
 
 Wenn du die Daten in einer Hashtabelle ändern willst, musst du entscheiden, wie
 der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
@@ -167,7 +167,7 @@ let mut scores = HashMap::new();
 scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Blau"), 25);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 ```
 
 <span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
@@ -189,8 +189,9 @@ Hashtabellen haben dafür eine spezielle Programmierschnittstelle (API) namens
 Rückgabewert der Methode `entry` ist eine Aufzählung (enum) namens `Entry`, die
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
-nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
-Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-24 aus.
+nicht der Fall ist, wollen wir den Wert `50` einfügen, und dasselbe gilt für
+das Team Blau. Bei Verwendung von `entry` sieht der Code wie Codeblock 8-24
+aus.
 
 ```rust
 use std::collections::HashMap;
@@ -201,7 +202,7 @@ scores.insert(String::from("Blau"), 10);
 scores.entry(String::from("Gelb")).or_insert(50);
 scores.entry(String::from("Blau")).or_insert(50);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 ```
 
 <span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
@@ -215,9 +216,10 @@ auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
 selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.
 
 Der Code in Codeblock 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
-Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
-da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von `entry` wird die
-Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.
+Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert `50`
+eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von `entry`
+wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert `10`
+hat.
 
 #### Aktualisieren eines Wertes auf Basis des alten Wertes
 
@@ -227,7 +229,7 @@ aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
-Wort sehen, fügen wir zuerst den Wert 0 ein.
+Wort sehen, fügen wir zuerst den Wert `0` ein.
 
 ```rust
 use std::collections::HashMap;
@@ -241,7 +243,7 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 
-println!("{:?}", map);
+println!("{map:?}");
 ```
 
 <span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
@@ -272,9 +274,9 @@ Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
 *Hash-Funktion* ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
-werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
-nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
-[crates.io](https://crates.io/) verfügt über Bibliotheken, die von anderen
+werden in [Kapitel 10][traits] über Merkmale und ihre Implementierung sprechen.
+Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
+implementieren; [crates.io][crates] verfügt über Bibliotheken, die von anderen
 Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.
 
@@ -287,21 +289,21 @@ Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
 darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
 Lösung du jetzt gerüstet sein solltest:
 
-* Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
-  Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
-  der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
-  zurück.
-* Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
-  jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
-  sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
-  beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
-  „ansehen-hay“). Beachte die Details zur UTF-8-Kodierung!
-* Erstelle mit Hilfe einer Hashtabelle und Vektoren eine Textschnittstelle, die
-  es einem Benutzer ermöglicht, Mitarbeiternamen zu einer Abteilung in einem
-  Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
-  „Amir zum Vertrieb hinzufügen“. Lass den Benutzer dann eine alphabetisch
-  sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
-  Firma nach Abteilung ausgeben.
+1. Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
+   Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
+   der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
+   zurück.
+2. Wandle Zeichenketten in Schweinelatein (pig latin) um. Der erste Konsonant
+   jedes Wortes wird an das Ende des Wortes verschoben und „ay“ angehängt,
+   sodass „zuerst“ zu „uerst-zay“ wird. Bei Wörtern, die mit einem Vokal
+   beginnen, wird stattdessen „hay“ an das Ende angefügt („ansehen“ wird zu
+   „ansehen-hay“). Beachte die Details zur UTF-8-Kodierung!
+3. Erstelle mit Hilfe einer Hashtabelle und Vektoren eine Textschnittstelle, die
+   es einem Benutzer ermöglicht, Mitarbeiternamen zu einer Abteilung in einem
+   Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
+   „Amir zum Vertrieb hinzufügen“. Lass den Benutzer dann eine alphabetisch
+   sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
+   Firma nach Abteilung ausgeben.
 
 Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
 Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!
@@ -311,5 +313,6 @@ können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
 einzugehen. Das werden wir als nächstes tun!
 
 [access]: #zugreifen-auf-werte-in-einer-hashtabelle
-[validating-references-with-lifetimes]:
-ch10-03-lifetime-syntax.html
+[crates]: https://crates.io/
+[validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html
+[traits]: ch10-02-traits.html

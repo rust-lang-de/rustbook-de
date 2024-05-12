@@ -86,7 +86,7 @@ wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.
 
 Lass uns versuchen, Codeblock 7-3 zu kompilieren, und herausfinden, warum er
-sich noch nicht kompilieren lässt! Der Fehler, den wir erhalten, ist in
+sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
 Codeblock 7-4 zu sehen.
 
 ```console
@@ -181,7 +181,7 @@ pub fn eat_at_restaurant() {
 <span class="caption">Codeblock 7-5: Deklarieren des Moduls `hosting` als
 `pub`, um es von `eat_at_restaurant` aus zu benutzen</span>
 
-Leider führt der Code in Codeblock 7-5 immer noch zu einem Fehler, wie
+Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
 Codeblock 7-6 zeigt.
 
 ```console
@@ -259,7 +259,7 @@ pub fn eat_at_restaurant() {
 `eat_at_restaurant` aufrufen</span>
 
 Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
-`pub` uns erlaubt, diese Pfade in `add_to_waitlist` im Hinblick auf die
+`pub` uns erlaubt, diese Pfade in `eat_at_restaurant` im Hinblick auf die
 Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
 an.
 

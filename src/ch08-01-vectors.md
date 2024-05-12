@@ -103,12 +103,12 @@ werden. Mit `&` und `[]` erhalten wir eine Referenz auf das Element mit dem
 Indexwert. Wenn wir die Methode `get` mit dem Index als Argument verwenden,
 erhalten wir eine `Option<&T>`, die wir mit `match` verwenden können.
 
-Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
-referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
-verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
-vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
-Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
-Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.
+Rust bietet diese beide Möglichkeiten, um auf ein Element zu referenzieren. Du
+kannst nun ausprobieren, wie sich das Programm verhält, wenn du einen Indexwert
+außerhalb des Bereichs der vorhandenen Elemente zu verwendest. Als Beispiel
+wollen wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen
+versuchen, auf ein Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu
+sehen ist.
 
 ```rust,should_panic,panics
 let v = vec![1, 2, 3, 4, 5];
@@ -145,7 +145,7 @@ veränderbaren und unveränderbaren Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderbare Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
-wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:
+wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.
 
 ```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];

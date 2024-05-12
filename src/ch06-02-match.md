@@ -37,6 +37,8 @@ fn value_in_cents(coin: Coin) -> u8 {
         Coin::Quarter => 25,
     }
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 6-3: Eine Aufzählung und ein `match`-Ausdruck,
@@ -95,6 +97,8 @@ fn value_in_cents(coin: Coin) -> u8 {
         Coin::Quarter => 25,
     }
 }
+#
+# fn main() {}
 ```
 
 ### Muster, die Werte binden
@@ -124,6 +128,8 @@ enum Coin {
     Dime,
     Quarter(UsState),
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 6-4: Aufzählung `Coin`, bei der die Variante
@@ -139,7 +145,7 @@ passt, wird die Variable `state` an den Wert der Eigenschaft der 25-Cent-Münze
 gebunden. Dann können wir `state` im Code für diesen Zweig etwa so verwenden:
 
 ```rust
-# #[derive(Debug)] // um den Staat mit println! ausgeben zu können
+# #[derive(Debug)]
 # enum UsState {
 #     Alabama,
 #     Alaska,
@@ -159,7 +165,7 @@ fn value_in_cents(coin: Coin) -> u8 {
         Coin::Nickel => 5,
         Coin::Dime => 10,
         Coin::Quarter(state) => {
-            println!("25-Cent-Münze aus {:?}!", state);
+            println!("25-Cent-Münze aus {state:?}!");
             25
         }
     }
@@ -216,14 +222,32 @@ Lass uns die erste Ausführung von `plus_one` näher betrachten. Wenn wir
 Wert `Some(5)` haben. Dann vergleichen wir das mit jedem `match`-Zweig:
 
 ```rust,ignore
-None => None,
+# fn plus_one(x: Option<i32>) -> Option<i32> {
+#     match x {
+        None => None,
+#         Some(i) => Some(i + 1),
+#     }
+# }
+#
+# let five = Some(5);
+# let six = plus_one(five);
+# let none = plus_one(None);
 ```
 
 Der Wert `Some(5)` passt nicht zum Muster `None`, also fahren wir mit dem
 nächsten Zweig fort:
 
 ```rust,ignore
-Some(i) => Some(i + 1),
+# fn plus_one(x: Option<i32>) -> Option<i32> {
+#     match x {
+#         None => None,
+        Some(i) => Some(i + 1),
+#     }
+# }
+#
+# let five = Some(5);
+# let six = plus_one(five);
+# let none = plus_one(None);
 ```
 
 Passt `Some(5)` zu `Some(i)`? Das tut es! Wir haben die gleiche Variante. `i`
@@ -236,7 +260,16 @@ den Wert `None` hat. Wir betreten den `match`-Block und vergleichen mit dem
 ersten Zweig:
 
 ```rust,ignore
-None => None,
+# fn plus_one(x: Option<i32>) -> Option<i32> {
+#     match x {
+        None => None,
+#         Some(i) => Some(i + 1),
+#     }
+# }
+#
+# let five = Some(5);
+# let six = plus_one(five);
+# let none = plus_one(None);
 ```
 
 Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt

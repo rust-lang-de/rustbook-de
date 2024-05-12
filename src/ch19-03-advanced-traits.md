@@ -296,6 +296,8 @@ impl Human {
         println!("*Wütend mit den Armen wedeln*");
     }
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
@@ -652,11 +654,13 @@ trait OutlinePrint: fmt::Display {
         let len = output.len();
         println!("{}", "*".repeat(len + 4));
         println!("*{}*", " ".repeat(len + 2));
-        println!("* {} *", output);
+        println!("* {output} *");
         println!("*{}*", " ".repeat(len + 2));
         println!("{}", "*".repeat(len + 4));
     }
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 19-22: Implementieren des Merkmals
@@ -685,7 +689,7 @@ zu implementieren, der `Display` nicht implementiert, z.B. die Struktur
 #         let len = output.len();
 #         println!("{}", "*".repeat(len + 4));
 #         println!("*{}*", " ".repeat(len + 2));
-#         println!("* {} *", output);
+#         println!("* {output} *");
 #         println!("*{}*", " ".repeat(len + 2));
 #         println!("{}", "*".repeat(len + 4));
 #     }
@@ -740,7 +744,7 @@ Bedingung, die `OutlinePrint` erfordert, in etwa so:
 #         let len = output.len();
 #         println!("{}", "*".repeat(len + 4));
 #         println!("*{}*", " ".repeat(len + 2));
-#         println!("* {} *", output);
+#         println!("* {output} *");
 #         println!("*{}*", " ".repeat(len + 2));
 #         println!("{}", "*".repeat(len + 4));
 #     }
@@ -811,7 +815,7 @@ impl fmt::Display for Wrapper {
 
 fn main() {
     let w = Wrapper(vec![String::from("Hallo"), String::from("Welt")]);
-    println!("w = {}", w);
+    println!("w = {w}");
 }
 ```
 
