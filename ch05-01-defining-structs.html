@@ -179,15 +179,14 @@ geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct User {
+<pre><pre class="playground"><code class="language-rust">struct User {
     active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-1: Definition der Struktur <code>User</code></span></p>
 <p>Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine <em>Instanz</em> dieser Struktur, indem wir für jedes Feld einen konkreten Wert
@@ -336,7 +335,8 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
 </span><span class="boring">
 </span>fn main() {
     // --abschneiden--
-<span class="boring">    let user1 = User {
+<span class="boring">
+</span><span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from("jemand@example.com"),
 </span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,
@@ -351,7 +351,7 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
     };
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
-Verwendung eines Werts von <code>user1</code>.</span></p>
+Verwendung aller Werte von <code>user1</code> bis auf einen.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
@@ -366,7 +366,8 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">
 </span>fn main() {
     // --abschneiden--
-<span class="boring">    let user1 = User {
+<span class="boring">
+</span><span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from("jemand@example.com"),
 </span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,

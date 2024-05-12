@@ -171,9 +171,9 @@ Der Typ <code>HashMap&lt;K, V&gt;</code> speichert eine Zuordnung von Schlüssel
 Werten vom Typ <code>V</code> mittels einer <em>Hashfunktion</em> (hash function), die bestimmt,
 wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
-Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
-(dictionary) oder assoziatives Array (associative array), um nur einige zu
-nennen.</p>
+Namen wie <em>Hash</em>, <em>Abbildung</em> (map), <em>Objekt</em>, <em>Hashtabelle</em> (hash table),
+<em>Wörterbuch</em> (dictionary) oder <em>assoziatives Array</em> (associative array), um nur
+einige zu nennen.</p>
 <p>Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
 Index nachschlagen willst, sondern über einen Schlüssel, der ein beliebiger Typ
 sein kann. Beispielsweise könntest du in einem Spiel den Spielstand jedes Teams
@@ -209,7 +209,7 @@ Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.</p>
 <p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher.
 Obige <code>HashMap</code> hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>.
-Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
+Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
 haben und alle Werte müssen denselben Typ haben.</p>
 <h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
 <p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
@@ -284,7 +284,7 @@ Lebensdauern“</a> in Kapitel 10 sprechen.</p>
 <p>Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
 eindeutigen Schlüssel jeweils nur ein Wert zugeordnet werden (aber nicht
 umgekehrt: Zum Beispiel könnten sowohl das blaue Team als auch das gelbe Team
-den Wert 10 in der Hashtabelle <code>scores</code> gespeichert haben).</p>
+den Wert <code>10</code> in der Hashtabelle <code>scores</code> gespeichert haben).</p>
 <p>Wenn du die Daten in einer Hashtabelle ändern willst, musst du entscheiden, wie
 der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
 wurde. Du kannst den alten Wert durch den neuen ersetzen und dabei den alten
@@ -308,7 +308,7 @@ let mut scores = HashMap::new();
 scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Blau"), 25);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span></p>
@@ -325,8 +325,9 @@ füge ihn und einen Wert für ihn ein.</p>
 Rückgabewert der Methode <code>entry</code> ist eine Aufzählung (enum) namens <code>Entry</code>, die
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
-nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
-Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24 aus.</p>
+nicht der Fall ist, wollen wir den Wert <code>50</code> einfügen, und dasselbe gilt für
+das Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24
+aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -337,7 +338,7 @@ scores.insert(String::from("Blau"), 10);
 scores.entry(String::from("Gelb")).or_insert(50);
 scores.entry(String::from("Blau")).or_insert(50);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-24: Verwenden der Methode <code>entry</code> zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span></p>
@@ -348,9 +349,10 @@ als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
 auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
 selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.</p>
 <p>Der Code in Codeblock 8-24 gibt <code>{"Gelb": 50, "Blau": 10}</code> aus. Beim ersten
-Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
-da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code> wird die
-Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.</p>
+Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert <code>50</code>
+eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code>
+wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert <code>10</code>
+hat.</p>
 <h4 id="aktualisieren-eines-wertes-auf-basis-des-alten-wertes"><a class="header" href="#aktualisieren-eines-wertes-auf-basis-des-alten-wertes">Aktualisieren eines Wertes auf Basis des alten Wertes</a></h4>
 <p>Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
@@ -358,7 +360,7 @@ aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
-Wort sehen, fügen wir zuerst den Wert 0 ein.</p>
+Wort sehen, fügen wir zuerst den Wert <code>0</code> ein.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -372,7 +374,7 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 
-println!("{:?}", map);
+println!("{map:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
@@ -398,9 +400,9 @@ Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
 <em>Hash-Funktion</em> ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
-werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
-nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
-<a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
+werden in <a href="ch10-02-traits.html">Kapitel 10</a> über Merkmale und ihre Implementierung sprechen.
+Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
+implementieren; <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
 Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.</p>
 <div class="footnote-definition" id="siphash"><sup class="footnote-definition-label">1</sup>
@@ -411,7 +413,7 @@ implementieren.</p>
 Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
 darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
 Lösung du jetzt gerüstet sein solltest:</p>
-<ul>
+<ol>
 <li>Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
 Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
 der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
@@ -427,7 +429,7 @@ Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
 „Amir zum Vertrieb hinzufügen“. Lass den Benutzer dann eine alphabetisch
 sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
 Firma nach Abteilung ausgeben.</li>
-</ul>
+</ol>
 <p>Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
 Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
 <p>Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen

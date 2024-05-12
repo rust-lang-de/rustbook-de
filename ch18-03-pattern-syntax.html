@@ -207,10 +207,10 @@ wird, bevor du diesen Code ausführst oder weiterliest.</p>
     match x {
         Some(50) =&gt; println!("Habe 50 erhalten"),
         Some(y) =&gt; println!("Passt, y = {y}"),
-        _ =&gt; println!("Standardfall, x = {:?}", x),
+        _ =&gt; println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-11: Ein <code>match</code>-Ausdruck mit einem Zweig,
 der eine verschattete Variable <code>y</code> einführt</span></p>
@@ -358,9 +358,9 @@ wenn <code>y = 0</code>), auf der <code>y</code>-Achse liegen (<code>x = 0</code
     let p = Point { x: 0, y: 7 };
 
     match p {
-        Point { x, y: 0 } =&gt; println!("Auf der x-Achse bei {}", x),
-        Point { x: 0, y } =&gt; println!("Auf der y-Achse bei {}", y),
-        Point { x, y } =&gt; println!("Auf keiner Achse: ({}, {})", x, y),
+        Point { x, y: 0 } =&gt; println!("Auf der x-Achse bei {x}"),
+        Point { x: 0, y } =&gt; println!("Auf der y-Achse bei {y}"),
+        Point { x, y } =&gt; println!("Auf keiner Achse: ({x}, {y})"),
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 18-14: Destrukturieren und Abgleichen literaler
@@ -405,7 +405,7 @@ fn main() {
         Message::Move { x, y } =&gt; {
             println!("Bewege in x-Richtung {x} und in y-Richtung {y}");
         }
-        Message::Write(text) =&gt; println!("Textnachricht: {}", text),
+        Message::Write(text) =&gt; println!("Textnachricht: {text}"),
         Message::ChangeColor(r, g, b) =&gt; println!(
             "Ändere die Farbe in rot {r}, grün {g} und blau {b}"
         ),
@@ -505,7 +505,7 @@ letzter Zweig in einem <code>match</code>-Ausdruck ist, aber wir können es in j
 verwenden, einschließlich Funktionsparameter, wie in Codeblock 18-17 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn foo(_: i32, y: i32) {
-    println!("Dieser Code verwendet nur den Parameter y: {}", y);
+    println!("Dieser Code verwendet nur den Parameter y: {y}");
 }
 
 fn main() {
@@ -547,7 +547,7 @@ einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
         }
     }
 
-    println!("Einstellung ist {:?}", setting_value);
+    println!("Einstellung ist {setting_value:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-18: Das Verwenden eines Unterstrichs
 innerhalb von Mustern, die zu <code>Some</code>-Varianten passen, wenn wir den Wert
@@ -612,7 +612,7 @@ wird uns Codeblock 18-21 einen Fehler liefern.</p>
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-21: Eine unbenutzte Variable, die mit einem
 Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
@@ -629,7 +629,7 @@ ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben 
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-22: Das Verwenden eines Unterstrichs bindet
 den Wert nicht</span></p>
@@ -655,7 +655,7 @@ wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den 
     let origin = Point { x: 0, y: 0, z: 0 };
 
     match origin {
-        Point { x, .. } =&gt; println!("x ist {}", x),
+        Point { x, .. } =&gt; println!("x ist {x}"),
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-23: Ignorieren aller Felder eines <code>Point</code>
@@ -691,7 +691,7 @@ Verwendung von <code>..</code>, sodass es sich nicht kompilieren lässt.</p>
 
     match numbers {
         (.., second, ..) =&gt; {
-            println!("Einige Zahlen: {}", second)
+            println!("Einige Zahlen: {second}")
         },
     }
 <span class="boring">}</span></code></pre></pre>
@@ -733,8 +733,8 @@ ist) hat.</p>
 </span>    let num = Some(4);
 
     match num {
-        Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {} ist gerade", x),
-        Some(x) =&gt; println!("Die Zahl {} ist ungerade", x),
+        Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {x} ist gerade"),
+        Some(x) =&gt; println!("Die Zahl {x} ist ungerade"),
         None =&gt; (),
     }
 <span class="boring">}</span></code></pre></pre>
@@ -770,10 +770,10 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
     match x {
         Some(50) =&gt; println!("Habe 50 erhalten"),
         Some(n) if n == y =&gt; println!("Passt, n = {n}"),
-        _ =&gt; println!("Standardfall, x = {:?}", x),
+        _ =&gt; println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
 Testen der Gleichheit mit einer äußeren Variablen</span></p>
@@ -844,11 +844,11 @@ einen anderen Namen verwenden.</p>
     match msg {
         Message::Hello {
             id: id_variable @ 3..=7,
-        } =&gt; println!("id im Bereich gefunden: {}", id_variable),
+        } =&gt; println!("id im Bereich gefunden: {id_variable}"),
         Message::Hello { id: 10..=12 } =&gt; {
             println!("id in einem anderen Bereich gefunden")
         }
-        Message::Hello { id } =&gt; println!("Eine andere id gefunden: {}", id),
+        Message::Hello { id } =&gt; println!("Eine andere id gefunden: {id}"),
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-29: Verwenden von <code>@</code>, um an einen Wert in

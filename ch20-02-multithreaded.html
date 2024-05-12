@@ -470,32 +470,25 @@ der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn handle_connection(mut stream: TcpStream) {
-</span><span class="boring">    let mut buffer = [0; 1024];
-</span><span class="boring">    stream.read(&amp;mut buffer).unwrap();
+</span><span class="boring">    let buf_reader = BufReader::new(&amp;mut stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
-</span><span class="boring">    let get = b"GET / HTTP/1.1\r\n";
-</span><span class="boring">    let sleep = b"GET /sleep HTTP/1.1\r\n";
-</span><span class="boring">
-</span><span class="boring">    let (status_line, filename) = if buffer.starts_with(get) {
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else if buffer.starts_with(sleep) {
-</span><span class="boring">        thread::sleep(Duration::from_secs(5));
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else {
-</span><span class="boring">        ("HTTP/1.1 404 NOT FOUND", "404.html")
+</span><span class="boring">    let (status_line, filename) = match &amp;request_line[..] {
+</span><span class="boring">        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+</span><span class="boring">        "GET /sleep HTTP/1.1" =&gt; {
+</span><span class="boring">            thread::sleep(Duration::from_secs(5));
+</span><span class="boring">            ("HTTP/1.1 200 OK", "hello.html")
+</span><span class="boring">        }
+</span><span class="boring">        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
+</span><span class="boring">    let length = contents.len();
 </span><span class="boring">
-</span><span class="boring">    let response = format!(
-</span><span class="boring">        "{}\r\nContent-Length: {}\r\n\r\n{}",
-</span><span class="boring">        status_line,
-</span><span class="boring">        contents.len(),
-</span><span class="boring">        contents
-</span><span class="boring">    );
+</span><span class="boring">    let response =
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
-</span><span class="boring">    stream.write(response.as_bytes()).unwrap();
-</span><span class="boring">    stream.flush().unwrap();
+</span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
 <p>Dieser Code wird immer noch nicht funktionieren, aber lass uns ihn noch einmal
 überprüfen, um den nächsten Fehler zu erhalten, den wir beheben müssen:</p>
@@ -516,13 +509,16 @@ einen Parameter haben muss, der <code>4</code> als Argument akzeptieren kann und
 <code>ThreadPool</code>-Instanz zurückgeben sollte. Lass uns die einfachste Funktion <code>new</code>
 implementieren, die diese Eigenschaften haben wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub struct ThreadPool;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ThreadPool;
 
 impl ThreadPool {
     pub fn new(size: usize) -&gt; ThreadPool {
         ThreadPool
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
 eine negative Anzahl von Strängen keinen Sinn macht. Wir wissen auch, dass wir
 diese 4 als die Anzahl der Elemente in einer Kollektion von Strängen verwenden

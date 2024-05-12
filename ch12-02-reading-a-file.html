@@ -190,7 +190,7 @@ guter Testfall</span></p>
 <p>Wenn der Text vorhanden ist, editiere <em>src/main.rs</em> und füge Code zum Lesen der
 Datei hinzu, wie in Codeblock 12-4 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::env;
+<pre><code class="language-rust noplayground">use std::env;
 use std::fs;
 
 fn main() {
@@ -200,14 +200,14 @@ fn main() {
 </span><span class="boring">    let query = &amp;args[1];
 </span><span class="boring">    let file_path = &amp;args[2];
 </span><span class="boring">
-</span><span class="boring">    println!("Suche nach {}", query);
-</span>    println!("In Datei {}", file_path);
+</span><span class="boring">    println!("Suche nach {query}");
+</span>    println!("In Datei {file_path}");
 
     let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
     println!("Mit text:\n{contents}");
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-4: Lesen des Inhalts der Datei, die durch
 das zweite Argument angegeben wurde</span></p>
 <p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, um einen relevanten Teil

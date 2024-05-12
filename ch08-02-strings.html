@@ -365,8 +365,9 @@ let s3 = String::from("toe");
 let s = s1 + "-" + &amp;s2 + "-" + &amp;s3;
 <span class="boring">}</span></code></pre></pre>
 <p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
-und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
-String-Kombinationen können wir stattdessen das Makro <code>format!</code> verwenden:</p>
+und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Um Zeichenketten auf
+kompliziertere Weise zu kombinieren, können wir stattdessen das Makro <code>format!</code>
+verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("tic");
@@ -508,9 +509,9 @@ Bytes enthält:</p>
 
 let s = &amp;hello[0..4];
 <span class="boring">}</span></code></pre></pre>
-<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten 4 Bytes der Zeichenkette enthält.
-Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
-was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
+<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten vier Bytes der Zeichenkette
+enthält. Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen zwei Bytes
+lang ist, was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
 <p>Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
 wie <code>&amp;hello[0..1]</code> zu zerschneiden, würde Rust das Programm zur Laufzeit
 abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
@@ -556,8 +557,8 @@ Verwendungszweck benötigt wird:</p>
 208
 180
 </code></pre>
-<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
-können.</p>
+<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als ein Byte
+bestehen können.</p>
 <p>Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
 Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter

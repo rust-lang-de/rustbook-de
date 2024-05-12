@@ -477,8 +477,8 @@ implementiert das Merkmal <code>Iterator</code> und gibt <code>String</code>-Wer
 Parameter <code>args</code> einen generischen Typ mit den Merkmalsabgrenzungen <code>impl Iterator&lt;Item = String&gt;</code> anstelle von <code>&amp;[String]</code> hat. Diese Verwendung der
 Syntax <code>impl Trait</code>, die wir im Abschnitt <a href="ch10-02-traits.html#merkmale-als-parameter">„Merkmale als
 Parameter“</a> in Kapitel 10 besprochen haben, bedeutet, dass <code>args</code>
-jeder Typ sein kann, der den Typ <code>Iterator</code> implementiert und <code>String</code>-Elemente
-zurückgibt.</p>
+jeder Typ sein kann, der das Merkmal <code>Iterator</code> implementiert und
+<code>String</code>-Elemente zurückgibt.</p>
 <p>Da wir die Eigentümerschaft von <code>args</code> übernehmen und <code>args</code> beim Iterieren
 verändern werden, können wir das Schlüsselwort <code>mut</code> in die Spezifikation des
 Parameters <code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.</p>

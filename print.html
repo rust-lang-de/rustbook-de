@@ -253,8 +253,8 @@ Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
 Rust-Ökosystem schmerzlos und konsistent.</li>
 <li>Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei
 den Entwicklern.</li>
-<li>Der Rust Sprachdienst (Language Server) ermöglicht Codevervollständigung und
-im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).</li>
+<li>Der rust-analyzer ermöglicht Codevervollständigung und im Code angezeigte
+Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).</li>
 </ul>
 <p>Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können
 Entwickler produktiv arbeiten, während sie Code auf Systemebene schreiben.</p>
@@ -454,17 +454,10 @@ kannst du das Paket <code>build-essential</code> installieren.</p>
 <h3 id="die-installation-von-rustup-in-windows"><a class="header" href="#die-installation-von-rustup-in-windows">Die Installation von <code>rustup</code> in Windows</a></h3>
 <p>Rufe <a href="https://www.rust-lang.org/tools/install">https://www.rust-lang.org/tools/install</a> auf und folge
 den Anweisungen, um Rust in Windows zu installieren. Während der Installation
-wirst du eine Meldung erhalten, dass du auch die MSVC Bauwerkzeuge für Visual
-Studio 2013 oder höher benötigst.</p>
-<p>Um die Bauwerkzeuge zu erhalten, musst du <a href="https://visualstudio.microsoft.com/downloads/">Visual Studio 2022</a>
-installieren. Wenn du gefragt wirst, welche Komponenten installiert werden
-sollen, gib folgendes an:</p>
-<ul>
-<li>„Desktop Development with C++“</li>
-<li>Das Windows 10 oder 11 SDK</li>
-<li>Das englische Sprachpaket zusammen mit einem beliebigen anderen Sprachpaket
-deiner Wahl.</li>
-</ul>
+wirst du aufgefordert, Visual Studio zu installieren. Dieses enthält einen
+Linker und die nativen Bibliotheken, die zum Kompilieren von Programmen
+benötigt werden. Wenn du an dieser Stelle weitere Hilfe brauchst, geht zu
+<a href="https://rust-lang.github.io/rustup/installation/windows-msvc.html">https://rust-lang.github.io/rustup/installation/windows-msvc.html</a>.</p>
 <p>Der Rest dieses Buchs verwendet Befehle, die sowohl in <em>cmd.exe</em> als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.</p>
@@ -725,8 +718,7 @@ name = "hello_cargo"
 version = "0.1.0"
 edition = "2021"
 
-# Weitere Schlüssel und ihre Definitionen findest du unter
-# https://doc.rust-lang.org/cargo/reference/manifest.html
+# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 
 [dependencies]
 </code></pre>
@@ -1372,10 +1364,10 @@ Code deines Projekts in die Versionskontrolle eingecheckt.</p>
 <p>Wenn du eine Kiste aktualisieren <em>willst</em>, bietet Cargo den Befehl <code>update</code> an,
 der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Cargo schreibt diese
-Versionen dann in die Datei <em>Cargo.lock</em>. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
-Kiste <code>rand</code> zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du
-folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
+Versionen dann in die Datei <em>Cargo.lock</em>. In diesem Fall wird Cargo nur nach
+Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Kiste <code>rand</code>
+zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
+sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
     Updating rand v0.8.5 -&gt; v0.8.6
@@ -1589,7 +1581,7 @@ Stelle Typinformationen hinzu, die Rust veranlassen würden, auf einen anderen
 numerischen Typ zu schließen. Der Grund für den Fehler liegt darin, dass Rust
 eine Zeichenkette und einen Zahlentyp nicht vergleichen kann.</p>
 <p>Letztendlich wollen wir den <code>String</code>, den das Programm als Eingabe liest, in
-einen echten Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
+einen Zahlentyp umwandeln, damit wir ihn numerisch mit der Geheimzahl
 vergleichen können. Das tun wir, indem wir folgendes zum <code>main</code>-Funktionsrumpf
 hinzufügen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -3205,6 +3197,8 @@ Schlüsselwort <code>break</code> mit dem Wert <code>counter * 2</code>. Nach de
 wir ein Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
+<p>Du kannst auch innerhalb einer Schleife <code>return</code> aufrufen. Während <code>break</code> nur
+die aktuelle Schleife verlässt, verlässt <code>return</code> immer die aktuelle Funktion.</p>
 <h4 id="schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen">Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen</a></h4>
 <p>Wenn du Schleifen innerhalb von Schleifen hast, gelten <code>break</code> und <code>continue</code>
 für die innerste Schleife an diesem Punkt. Du kannst optional ein
@@ -3282,7 +3276,7 @@ auszuführen, solange eine Bedingung wahr ist</span></p>
 wären, wenn du <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> verwenden würdest, und es ist
 klarer. Solange eine Bedingung zu <code>true</code> auswertet, läuft der Code ab;
 andernfalls wird die Schleife verlassen.</p>
-<h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
+<h4 id="durchlaufen-einer-kollektion-mit-for"><a class="header" href="#durchlaufen-einer-kollektion-mit-for">Durchlaufen einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
 gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
@@ -3576,7 +3570,7 @@ verweisen“</a> über den Namensraum mit Modulen sprechen.</p>
 
 s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenfolge an
 
-println!("{}", s);    // Gibt `Hallo Welt!` aus
+println!("{s}"); // Gibt `Hallo Welt!` aus
 <span class="boring">}</span></code></pre></pre>
 <p>Was ist hier nun der Unterschied? Warum kann <code>String</code> verändert werden,
 Literale jedoch nicht? Der Unterschied liegt darin, wie diese beiden Typen mit
@@ -3728,31 +3722,30 @@ wird nicht funktionieren:</p>
 </span>let s1 = String::from("Hallo");
 let s2 = s1;
 
-println!("{} Welt!", s1);
+println!("{s1} Welt!");
 <span class="boring">}</span></code></pre></pre>
 <p>Du erhältst eine Fehlermeldung wie diese, wodurch Rust dich daran hindert, die
 ungültige Referenz zu verwenden:</p>
-<pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+<pre><code class="language-console">   Compiling playground v0.0.1 (/playground)
 error[E0382]: borrow of moved value: `s1`
- --&gt; src/main.rs:5:28
+ --&gt; src/main.rs:6:11
   |
-2 |     let s1 = String::from("Hallo");
-  |         -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
-3 |     let s2 = s1;
-  |              -- value moved here
-4 |
-5 |     println!("{} Welt!", s1);
-  |                          ^^ value borrowed here after move
+3 | let s1 = String::from("Hallo");
+  |     -- move occurs because `s1` has type `String`, which does not implement the `Copy` trait
+4 | let s2 = s1;
+  |          -- value moved here
+5 |
+6 | println!("{s1} Welt!");
+  |           ^^^^ value borrowed here after move
   |
   = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 help: consider cloning the value if the performance cost is acceptable
   |
-3 |     let s2 = s1.clone();
-  |                ++++++++
+4 | let s2 = s1.clone();
+  |            ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe <em>flache
 Kopie</em> (shallow copy) und <em>tiefe Kopie</em> (deep copy) gehört hast, hört sich das
@@ -3789,7 +3782,7 @@ du sie wahrscheinlich schon einmal gesehen.</p>
 </span>let s1 = String::from("Hallo");
 let s2 = s1.clone();
 
-println!("s1 = {}, s2 = {}", s1, s2);
+println!("s1 = {s1}, s2 = {s2}");
 <span class="boring">}</span></code></pre></pre>
 <p>Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
 Verhalten, bei dem die Daten im Haldenspeicher <em>kopiert</em> werden.</p>
@@ -3805,7 +3798,7 @@ funktioniert und ist gültig:</p>
 </span>let x = 5;
 let y = x;
 
-println!("x = {}, y = {}", x, y);
+println!("x = {x}, y = {y}");
 <span class="boring">}</span></code></pre></pre>
 <p>Aber dieser Code scheint dem zu widersprechen, was wir gerade gelernt haben:
 Wir haben keinen Aufruf von <code>clone</code>, aber <code>x</code> ist immer noch gültig und wurde
@@ -3869,12 +3862,12 @@ hervorgeht, wo Variablen in den Gültigkeitsbereich fallen und wo nicht.</p>
 
 fn takes_ownership(some_string: String) { // some_string kommt in den
                                           // Gültigkeitsbereich
-    println!("{}", some_string);
+    println!("{some_string}");
 } // Hier verlässt some_string den Gültigkeitsbereich und `drop` wird aufgerufen.
   // Der zugehörige Speicherplatz wird freigegeben.
 
 fn makes_copy(some_integer: i32) { // some_integer kommt in den Gültigkeitsbereich
-    println!("{}", some_integer);
+    println!("{some_integer}");
 } // Hier verlässt some_integer den Gültigkeitsbereich.
   // Es passiert nichts Besonderes.</code></pre></pre>
 <p><span class="caption">Codeblock 4-3: Funktionen mit kommentierter
@@ -3942,7 +3935,7 @@ wie in Codeblock 4-5 gezeigt.</p>
 
     let (s2, len) = calculate_length(s1);
 
-    println!("Die Länge von '{}' ist {}.", s2, len);
+    println!("Die Länge von '{s2}' ist {len}.");
 }
 
 fn calculate_length(s: String) -&gt; (String, usize) {
@@ -3975,7 +3968,7 @@ die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
 
     let len = calculate_length(&amp;s1);
 
-    println!("Die Länge von '{}' ist {}.", s1, len);
+    println!("Die Länge von '{s1}' ist {len}.");
 }
 
 fn calculate_length(s: &amp;String) -&gt; usize {
@@ -4105,24 +4098,24 @@ zu erstellen, und wird fehlschlagen:</p>
 let r1 = &amp;mut s;
 let r2 = &amp;mut s;
 
-println!("{}, {}", r1, r2);
+println!("{r1}, {r2}");
 <span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0499]: cannot borrow `s` as mutable more than once at a time
- --&gt; src/main.rs:5:14
+ --&gt; src/main.rs:6:10
   |
-4 |     let r1 = &amp;mut s;
-  |              ------ first mutable borrow occurs here
-5 |     let r2 = &amp;mut s;
-  |              ^^^^^^ second mutable borrow occurs here
-6 | 
-7 |     println!("{}, {}", r1, r2);
-  |                        -- first borrow later used here
+5 | let r1 = &amp;mut s;
+  |          ------ first mutable borrow occurs here
+6 | let r2 = &amp;mut s;
+  |          ^^^^^^ second mutable borrow occurs here
+7 |
+8 | println!("{r1}, {r2}");
+  |           ---- first borrow later used here
 
 For more information about this error, try `rustc --explain E0499`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir <code>s</code> nicht mehr
 als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
@@ -4171,25 +4164,25 @@ let r1 = &amp;s;     // kein Problem
 let r2 = &amp;s;     // kein Problem
 let r3 = &amp;mut s; // GROSSES PROBLEM
 
-println!("{}, {} und {}", r1, r2, r3);
+println!("{r1}, {r2} und {r3}");
 <span class="boring">}</span></code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immutable
- --&gt; src/main.rs:6:14
+ --&gt; src/main.rs:7:10
   |
-4 |     let r1 = &amp;s;     // kein Problem
-  |              -- immutable borrow occurs here
-5 |     let r2 = &amp;s;     // kein Problem
-6 |     let r3 = &amp;mut s; // GROSSES PROBLEM
-  |              ^^^^^^ mutable borrow occurs here
-7 | 
-8 |     println!("{}, {} und {}", r1, r2, r3);
-  |                               -- immutable borrow later used here
+5 | let r1 = &amp;s;     // kein Problem
+  |          -- immutable borrow occurs here
+6 | let r2 = &amp;s;     // kein Problem
+7 | let r3 = &amp;mut s; // GROSSES PROBLEM
+  |          ^^^^^^ mutable borrow occurs here
+8 |
+9 | println!("{r1}, {r2} und {r3}");
+  |           ---- immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Puh! Wir können auch keine veränderbaren Referenzen verwenden, solange wir eine
 unveränderbare Referenz auf denselben Wert haben.</p>
@@ -4208,11 +4201,11 @@ Referenz erfolgt:</p>
 
 let r1 = &amp;s; // kein Problem
 let r2 = &amp;s; // kein Problem
-println!("{} und {}", r1, r2);
+println!("{r1} und {r2}");
 // r1 und r2 werden nach dieser Stelle nicht mehr verwendet
 
 let r3 = &amp;mut s; // kein Problem
-println!("{}", r3);
+println!("{r3}");
 <span class="boring">}</span></code></pre></pre>
 <p>Die Gültigkeitsbereiche der unveränderbaren Referenzen <code>r1</code> und <code>r2</code> enden
 nach dem <code>println!</code>, wo sie zuletzt verwendet werden, d.h. bevor die
@@ -4318,8 +4311,9 @@ Referenz <em>oder</em> eine beliebige Anzahl unveränderbarer Referenzen haben.<
 Anteilstypen (slice).</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="der-anteilstyp-slice"><a class="header" href="#der-anteilstyp-slice">Der Anteilstyp (slice)</a></h2>
 <p>Mit <em>Anteilstypen</em> kannst du auf eine zusammenhängende Folge von Elementen in
-einer Kollektion referenzieren anstatt auf die gesamte Kollektion. Ein
-Anteilstyp ist eine Art Referenz und hat daher keine Eigentümerschaft.</p>
+einer <a href="ch08-00-common-collections.html">Kollektion</a> referenzieren anstatt auf die gesamte
+Kollektion. Ein Anteilstyp ist eine Art Referenz und hat daher keine
+Eigentümerschaft.</p>
 <p>Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
 erste Wort zurückgibt, das sie in dieser Zeichenkette findet. Wenn die Funktion
@@ -4335,9 +4329,7 @@ haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenk
 sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
 das, wie in Codeblock 4-7 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {
     let bytes = s.as_bytes();
 
     for (i, &amp;item) in bytes.iter().enumerate() {
@@ -4348,15 +4340,14 @@ das, wie in Codeblock 4-7 gezeigt.</p>
 
     s.len()
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 4-7: Die Funktion <code>first_word</code>, die einen
 Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Methode
 <code>as_bytes</code> in ein Byte-Array um.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span>    let bytes = s.as_bytes();
 <span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -4367,12 +4358,11 @@ Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Method
 </span><span class="boring">
 </span><span class="boring">    s.len()
 </span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
 Methode <code>iter</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span>    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -4383,7 +4373,8 @@ Methode <code>iter</code> verwenden:</p>
 </span><span class="boring">
 </span><span class="boring">    s.len()
 </span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Auf Iteratoren werden wir in <a href="ch13-02-iterators.html">Kapitel 13</a> näher eingehen. Fürs Erste
 solltest du wissen, dass <code>iter</code> eine Methode ist, die jedes Element in einer
 Kollektion zurückgibt und dass <code>enumerate</code> das Ergebnis von <code>iter</code> umhüllt und
@@ -4401,9 +4392,7 @@ wir <code>&amp;</code> im Muster.</p>
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
 Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -4414,7 +4403,8 @@ Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden.</p>
 
     s.len()
 <span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
+</span><span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Wir haben jetzt eine Möglichkeit, den Index des ersten Wortendes in der
 Zeichenkette herauszufinden, aber es gibt ein Problem. Wir geben ein <code>usize</code>
 für sich allein zurück, aber die Zahl ist nur aussagekräftig im Kontext des
@@ -4540,9 +4530,7 @@ Kapitel 8.</p>
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
 „Zeichenkettenanteilstyp“ wird <code>&amp;str</code> geschrieben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn first_word(s: &amp;String) -&gt; &amp;str {
+<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; &amp;str {
     let bytes = s.as_bytes();
 
     for (i, &amp;item) in bytes.iter().enumerate() {
@@ -4553,7 +4541,8 @@ dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
 
     &amp;s[..]
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Den Index für das Wortende erhalten wir auf die gleiche Weise wie in Codeblock
 4-7, indem wir nach dem ersten Vorkommen eines Leerzeichens suchen. Wenn wir
 ein Leerzeichen finden, geben wir einen Zeichenkettenanteilstyp zurück, wobei
@@ -4597,7 +4586,7 @@ Kompilierfehler:</p>
 
     s.clear(); // Fehler!
 
-    println!("Das erste Wort ist: {}", word);
+    println!("Das erste Wort ist: {word}");
 }</code></pre></pre>
 <p>Hier ist der Kompilierfehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -4611,8 +4600,8 @@ error[E0502]: cannot borrow `s` as mutable because it is also borrowed as immuta
 18 |     s.clear(); // Fehler!
    |     ^^^^^^^^^ mutable borrow occurs here
 19 | 
-20 |     println!("Das erste Wort ist: {}", word);
-   |                                        ---- immutable borrow later used here
+20 |     println!("Das erste Wort ist: {word}");
+   |                                   ------ immutable borrow later used here
 
 For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` (bin "ownership") due to 1 previous error
@@ -4789,15 +4778,14 @@ geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct User {
+<pre><pre class="playground"><code class="language-rust">struct User {
     active: bool,
     username: String,
     email: String,
     sign_in_count: u64,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-1: Definition der Struktur <code>User</code></span></p>
 <p>Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
 eine <em>Instanz</em> dieser Struktur, indem wir für jedes Feld einen konkreten Wert
@@ -4946,7 +4934,8 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
 </span><span class="boring">
 </span>fn main() {
     // --abschneiden--
-<span class="boring">    let user1 = User {
+<span class="boring">
+</span><span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from("jemand@example.com"),
 </span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,
@@ -4961,7 +4950,7 @@ verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in C
     };
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-6: Erstellen einer neuen <code>User</code>-Instanz unter
-Verwendung eines Werts von <code>user1</code>.</span></p>
+Verwendung aller Werte von <code>user1</code> bis auf einen.</span></p>
 <p>Durch Verwenden der Strukturaktualisierungssyntax können wir dasselbe Ergebnis
 mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> gibt an,
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
@@ -4976,7 +4965,8 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 </span><span class="boring">
 </span>fn main() {
     // --abschneiden--
-<span class="boring">    let user1 = User {
+<span class="boring">
+</span><span class="boring">    let user1 = User {
 </span><span class="boring">        email: String::from("jemand@example.com"),
 </span><span class="boring">        username: String::from("benutzername123"),
 </span><span class="boring">        active: true,
@@ -5278,7 +5268,7 @@ fn main() {
         height: 50,
     };
 
-    println!("rect1 ist {}", rect1);
+    println!("rect1 ist {rect1}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-11: Versuch, eine <code>Rectangle</code>-Instanz
 auszugeben</span></p>
@@ -5303,7 +5293,7 @@ finden:</p>
    = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
 </code></pre>
 <p>Lass es uns versuchen! Der Makroaufruf <code>println!</code> wird geändert in
-<code>println!("rect1 ist {:?}", rect1);</code>. Wenn wir das Symbol <code>:?</code> innerhalb der
+<code>println!("rect1 ist {rect1:?}");</code>. Wenn wir den Bezeichner <code>:?</code> innerhalb der
 geschweiften Klammern angeben, teilen wir <code>println!</code> mit, dass wir das
 Ausgabeformat <code>Debug</code> verwenden wollen. Das Merkmal <code>Debug</code> ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
@@ -5333,7 +5323,7 @@ fn main() {
         height: 50,
     };
 
-    println!("rect1 ist {:?}", rect1);
+    println!("rect1 ist {rect1:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
 <code>Debug</code> und Ausgeben der Instanz <code>Rectangle</code> mittels Debug-Formatierung</span></p>
@@ -5992,15 +5982,14 @@ nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
 mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.</p>
 <p>Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Message {
+<pre><pre class="playground"><code class="language-rust">enum Message {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
     ChangeColor(i32, i32, i32),
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 6-2: Eine Aufzählung <code>Message</code>, deren Varianten
 jeweils eine unterschiedliche Anzahl an Werttypen speichern</span></p>
 <p>Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:</p>
@@ -6015,16 +6004,15 @@ zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort <code>struct</code> verwendet und alle Varianten unter
 dem Typ <code>Message</code> zusammengefasst sind. Die folgenden Strukturen könnten die
 gleichen Daten aufnehmen wie die vorhergehenden Aufzählungsvarianten:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct QuitMessage; // leere Struktur
+<pre><pre class="playground"><code class="language-rust">struct QuitMessage; // leere Struktur
 struct MoveMessage {
     x: i32,
     y: i32,
 }
 struct WriteMessage(String); // Tupelstruktur
 struct ChangeColorMessage(i32, i32, i32); // Tupelstruktur
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Aber wenn wir die verschiedenen Strukturen verwenden würden, die jeweils ein
 eigener Typ sind, könnten wir nicht so einfach eine Funktion definieren, die
 eine dieser Nachrichtenarten entgegennimmt, wie wir es mit der in Codeblock 6-2
@@ -6222,9 +6210,7 @@ werden soll.</p>
 können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
 wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
 in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Coin {
+<pre><pre class="playground"><code class="language-rust">enum Coin {
     Penny,
     Nickel,
     Dime,
@@ -6239,7 +6225,8 @@ fn value_in_cents(coin: Coin) -&gt; u8 {
         Coin::Quarter =&gt; 25,
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 6-3: Eine Aufzählung und ein <code>match</code>-Ausdruck,
 der die Varianten der Aufzählung als Muster hat</span></p>
 <p>Lass uns den <code>match</code>-Ausdruck in der Funktion <code>value_in_cents</code> aufschlüsseln.
@@ -6271,9 +6258,7 @@ geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
 Methode mit <code>Coin::Penny</code> aufgerufen wird, er gibt aber immer noch den letzten
 Wert <code>1</code> des Blocks zurück:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">enum Coin {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">enum Coin {
 </span><span class="boring">    Penny,
 </span><span class="boring">    Nickel,
 </span><span class="boring">    Dime,
@@ -6291,7 +6276,8 @@ Wert <code>1</code> des Blocks zurück:</p>
         Coin::Quarter =&gt; 25,
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <h3 id="muster-die-werte-binden"><a class="header" href="#muster-die-werte-binden">Muster, die Werte binden</a></h3>
 <p>Ein weitere nützliche Funktionalität von <code>match</code>-Zweigen ist, dass sie Teile
 der Werte binden können, die dem Muster entsprechen. Auf diese Weise können wir
@@ -6303,9 +6289,7 @@ andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münze
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante <code>Quarter</code> so ändern, dass sie
 einen <code>UsState</code>-Wert enthält, wie in Codeblock 6-4 umgesetzt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum UsState {
+<pre><pre class="playground"><code class="language-rust">enum UsState {
     Alabama,
     Alaska,
     // --abschneiden--
@@ -6317,7 +6301,8 @@ enum Coin {
     Dime,
     Quarter(UsState),
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 6-4: Aufzählung <code>Coin</code>, bei der die Variante
 <code>Quarter</code> zusätzlich einen <code>UsState</code>-Wert enthält</span></p>
 <p>Stellen wir uns vor, dass ein Freund versucht, 25-Cent-Münzen aller 50
@@ -6328,7 +6313,7 @@ Freund in seine Sammlung aufnehmen kann, falls er es nicht hat. Im
 <code>Coin::Quarter</code> eine Variable <code>state</code> hinzu. Wenn der Zweig für <code>Coin::Quarter</code>
 passt, wird die Variable <code>state</code> an den Wert der Eigenschaft der 25-Cent-Münze
 gebunden. Dann können wir <code>state</code> im Code für diesen Zweig etwa so verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)] // um den Staat mit println! ausgeben zu können
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -6348,7 +6333,7 @@ gebunden. Dann können wir <code>state</code> im Code für diesen Zweig etwa so 
         Coin::Nickel =&gt; 5,
         Coin::Dime =&gt; 10,
         Coin::Quarter(state) =&gt; {
-            println!("25-Cent-Münze aus {:?}!", state);
+            println!("25-Cent-Münze aus {state:?}!");
             25
         }
     }
@@ -6395,10 +6380,28 @@ auf einer <code>Option&lt;i32&gt;</code> verwendet</span></p>
 <p>Lass uns die erste Ausführung von <code>plus_one</code> näher betrachten. Wenn wir
 <code>plus_one(five)</code> aufrufen, wird die Variable <code>x</code> im Rumpf von <code>plus_one</code> den
 Wert <code>Some(5)</code> haben. Dann vergleichen wir das mit jedem <code>match</code>-Zweig:</p>
-<pre><code class="language-rust ignore">None =&gt; None,</code></pre>
+<pre><code class="language-rust ignore"><span class="boring">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+</span><span class="boring">    match x {
+</span>        None =&gt; None,
+<span class="boring">        Some(i) =&gt; Some(i + 1),
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">let five = Some(5);
+</span><span class="boring">let six = plus_one(five);
+</span><span class="boring">let none = plus_one(None);</span></code></pre>
 <p>Der Wert <code>Some(5)</code> passt nicht zum Muster <code>None</code>, also fahren wir mit dem
 nächsten Zweig fort:</p>
-<pre><code class="language-rust ignore">Some(i) =&gt; Some(i + 1),</code></pre>
+<pre><code class="language-rust ignore"><span class="boring">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+</span><span class="boring">    match x {
+</span><span class="boring">        None =&gt; None,
+</span>        Some(i) =&gt; Some(i + 1),
+<span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">let five = Some(5);
+</span><span class="boring">let six = plus_one(five);
+</span><span class="boring">let none = plus_one(None);</span></code></pre>
 <p>Passt <code>Some(5)</code> zu <code>Some(i)</code>? Das tut es! Wir haben die gleiche Variante. <code>i</code>
 bindet den in <code>Some</code> enthaltenen Wert, sodass <code>i</code> den Wert <code>5</code> annimmt. Dann
 wird der Code im <code>match</code>-Zweig ausgeführt, also fügen wir 1 zum Wert von <code>i</code>
@@ -6406,7 +6409,16 @@ hinzu und erzeugen einen neuen <code>Some</code>-Wert mit der Summe <code>6</cod
 <p>Betrachten wir nun den zweiten Aufruf von <code>plus_one</code> in Codeblock 6-5, wo <code>x</code>
 den Wert <code>None</code> hat. Wir betreten den <code>match</code>-Block und vergleichen mit dem
 ersten Zweig:</p>
-<pre><code class="language-rust ignore">None =&gt; None,</code></pre>
+<pre><code class="language-rust ignore"><span class="boring">fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
+</span><span class="boring">    match x {
+</span>        None =&gt; None,
+<span class="boring">        Some(i) =&gt; Some(i + 1),
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">let five = Some(5);
+</span><span class="boring">let six = plus_one(five);
+</span><span class="boring">let none = plus_one(None);</span></code></pre>
 <p>Er passt! Es gibt keinen Wert zum Hinzufügen, also stoppt das Programm und gibt
 den Wert <code>None</code> auf der rechten Seite von <code>=&gt;</code> zurück. Da der erste Zweig
 passt, werden keine anderen Zweige abgeglichen.</p>
@@ -6563,7 +6575,7 @@ Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 match config_max {
-    Some(max) =&gt; println!("Das Maximum ist mit {} konfiguriert", max),
+    Some(max) =&gt; println!("Das Maximum ist mit {max} konfiguriert"),
     _ =&gt; (),
 }
 <span class="boring">}</span></code></pre></pre>
@@ -6581,7 +6593,7 @@ Codeblock 6-6:</p>
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 if let Some(max) = config_max {
-    println!("Das Maximum ist mit {} konfiguriert", max);
+    println!("Das Maximum ist mit {max} konfiguriert");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Die Syntax <code>if let</code> nimmt ein Muster und einen Ausdruck, getrennt durch ein
@@ -6624,7 +6636,7 @@ diesem tun:</p>
 </span><span class="boring">    let coin = Coin::Penny;
 </span>    let mut count = 0;
     match coin {
-        Coin::Quarter(state) =&gt; println!("25-Cent-Münze aus {:?}!", state),
+        Coin::Quarter(state) =&gt; println!("25-Cent-Münze aus {state:?}!"),
         _ =&gt; count += 1,
     }
 <span class="boring">}</span></code></pre></pre>
@@ -6647,7 +6659,7 @@ diesem tun:</p>
 </span><span class="boring">    let coin = Coin::Penny;
 </span>    let mut count = 0;
     if let Coin::Quarter(state) = coin {
-        println!("25-Cent-Münze aus {:?}!", state);
+        println!("25-Cent-Münze aus {state:?}!");
     } else {
         count += 1;
     }
@@ -6763,11 +6775,12 @@ deines Codes verwendet hast. Das Cargo-Paket enthält auch eine
 Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können von
 der Cargo-Bibliothekskiste abhängen, um die gleiche Logik wie das
 Cargo-Befehlszeilenwerkzeug zu verwenden.</p>
-<p>Ein Paket kann beliebig viele Binärkisten enthalten, aber höchstens eine
+<p>Es gibt zwei Arten von Kisten: Binärkisten und Bibliothekskisten. Ein Paket
+kann beliebig viele Binärkisten enthalten, aber höchstens eine
 Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
 davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.</p>
 <p>Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
-wir den Befehl <code>cargo new</code> ein:</p>
+wir den Befehl <code>cargo new my-project</code> ein:</p>
 <pre><code class="language-console">$ cargo new my-project
      Created binary (application) `my-project` package
 $ ls my-project
@@ -6776,16 +6789,16 @@ src
 $ ls my-project/src
 main.rs
 </code></pre>
-<p>Nachdem wir <code>cargo new</code> ausgeführt haben, verwenden wir <code>ls</code>, um zu sehen, was
-Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei <em>Cargo.toml</em>, die uns
-ein Paket gibt. Es gibt auch ein Verzeichnis <em>src</em>, das <em>main.rs</em> enthält.
-Öffne <em>Cargo.toml</em> in deinem Texteditor und beachte, dass <em>src/main.rs</em> nicht
-erwähnt wird. Cargo folgt der Konvention, dass <em>src/main.rs</em> die Kistenwurzel
-einer binären Kiste mit dem gleichen Namen wie das Paket ist. Ebenso weiß
-Cargo, dass, wenn das Paketverzeichnis <em>src/lib.rs</em> enthält, das Paket eine
-Bibliothekskiste mit dem gleichen Namen wie das Paket enthält, und <em>src/lib.rs</em>
-deren Kistenstamm ist. Cargo übergibt die Kistenwurzel-Dateien an <code>rustc</code>, um
-die Bibliothek oder Binärdatei zu bauen.</p>
+<p>Nachdem wir <code>cargo new my-project</code> ausgeführt haben, verwenden wir <code>ls</code>, um zu
+sehen, was Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei
+<em>Cargo.toml</em>, die uns ein Paket gibt. Es gibt auch ein Verzeichnis <em>src</em>, das
+<em>main.rs</em> enthält. Öffne <em>Cargo.toml</em> in deinem Texteditor und beachte, dass
+<em>src/main.rs</em> nicht erwähnt wird. Cargo folgt der Konvention, dass
+<em>src/main.rs</em> die Kistenwurzel einer binären Kiste mit dem gleichen Namen wie
+das Paket ist. Ebenso weiß Cargo, dass, wenn das Paketverzeichnis <em>src/lib.rs</em>
+enthält, das Paket eine Bibliothekskiste mit dem gleichen Namen wie das Paket
+enthält, und <em>src/lib.rs</em> deren Kistenstamm ist. Cargo übergibt die
+Kistenwurzel-Dateien an <code>rustc</code>, um die Bibliothek oder Binärdatei zu bauen.</p>
 <p>Hier haben wir ein Paket, das nur <em>src/main.rs</em> enthält, d.h. es enthält nur
 eine binäre Kiste mit dem Namen <code>my-project</code>. Wenn ein Paket <em>src/main.rs</em> und
 <em>src/lib.rs</em> enthält, hat es zwei Kisten: Eine binäre und eine Bibliothek,
@@ -6799,15 +6812,13 @@ Schlüsselwort <code>use</code>, das einen Pfad in den Gültigkeitsbereich bring
 Schlüsselwort <code>pub</code>, um Elemente öffentlich zu machen. Wir werden auch das
 Schlüsselwort <code>as</code>, externe Pakete und den Stern-Operator (glob operator)
 besprechen.</p>
-<p>Zunächst werden wir mit einer Liste von Regeln beginnen, damit du bei der
-künftigen Organisation deines Codes leicht nachschlagen kannst. Dann werden wir
-jede der Regeln im Detail erklären.</p>
 <h3 id="spickzettel-für-module"><a class="header" href="#spickzettel-für-module">Spickzettel für Module</a></h3>
-<p>Hier bieten wir eine Kurzreferenz darüber, wie Module, Pfade, das Schlüsselwort
-<code>use</code> und das Schlüsselwort <code>pub</code> im Compiler funktionieren und wie die meisten
-Entwickler ihren Code organisieren. Wir werden im Laufe dieses Kapitels
-Beispiele für jede dieser Regeln durchgehen, aber dies ist ein guter Ort, um
-sich daran zu erinnern, wie Module funktionieren.</p>
+<p>Bevor wir zu den Details von Modulen und Pfaden kommen, stellen wir hier eine
+kurze Referenz zusammen, wie Module, Pfade, das Schlüsselwort <code>use</code> und das
+Schlüsselwort <code>pub</code> im Compiler funktionieren und wie die meisten Entwickler
+ihren Code organisieren. Wir werden im Laufe dieses Kapitels Beispiele für jede
+dieser Regeln durchgehen, aber dies ist ein guter Ort, um sich daran zu
+erinnern, wie Module funktionieren.</p>
 <ul>
 <li><strong>Beginne bei der Kistenwurzel (crate root)</strong>: Beim Kompilieren einer Kiste
 sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
@@ -6874,7 +6885,7 @@ pub mod garden;
 
 fn main() {
     let plant = Asparagus {};
-    println!("Ich baue {:?} an!", plant);
+    println!("Ich baue {plant:?} an!");
 }</code></pre>
 <p>Die Zeile <code>pub mod garden;</code> weist den Compiler an, den Code einzubinden, den er
 in <em>src/garden.rs</em> findet, nämlich:</p>
@@ -6906,7 +6917,7 @@ Getränke. Auf der Hinterseite des Hauses arbeiten die Küchenchefs und Köche i
 der Küche, Geschirrspüler waschen ab und Manager erledigen Verwaltungsarbeiten.</p>
 <p>Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
-<code>restaurant</code>, indem du <code>cargo new --lib restaurant</code> ausführst; gib dann den
+<code>restaurant</code>, indem du <code>cargo new --lib restaurant</code> ausführst. Gib dann den
 Code in Codeblock 7-1 in <em>src/lib.rs</em> ein, um einige Module und
 Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -6957,9 +6968,9 @@ bilden, die als <em>Modulbaum</em> bekannt ist.</p>
 </code></pre>
 <p><span class="caption">Codeblock 7-2: Modulbaum für den Code in Codeblock
 7-1</span></p>
-<p>Dieser Baum zeigt, wie einige der Module ineinander verschachtelt sind; z.B.
-ist <code>hosting</code> innerhalb von <code>front_of_house</code>. Der Baum zeigt auch, dass einige
-Module <em>Geschwister</em> voneinander sind, was bedeutet, dass sie im selben Modul
+<p>Dieser Baum zeigt, wie einige Module in anderen Modulen verschachtelt sind;
+z.B. ist <code>hosting</code> innerhalb von <code>front_of_house</code>. Der Baum zeigt auch, dass
+einige Module <em>Geschwister</em> sind, was bedeutet, dass sie im selben Modul
 definiert sind; <code>hosting</code> und <code>serving</code> sind Geschwister, die innerhalb von
 <code>front_of_house</code> definiert sind. Wenn Modul A innerhalb von Modul B enthalten
 ist, sagen wir, dass Modul A das <em>Kind</em> (child) von Modul B ist und dass Modul
@@ -7047,7 +7058,7 @@ werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.</p>
 <p>Lass uns versuchen, Codeblock 7-3 zu kompilieren, und herausfinden, warum er
-sich noch nicht kompilieren lässt! Der Fehler, den wir erhalten, ist in
+sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
 Codeblock 7-4 zu sehen.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
@@ -7131,7 +7142,7 @@ pub fn eat_at_restaurant() {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
-<p>Leider führt der Code in Codeblock 7-5 immer noch zu einem Fehler, wie
+<p>Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
 Codeblock 7-6 zeigt.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
@@ -7197,7 +7208,7 @@ pub fn eat_at_restaurant() {
 <code>mod hosting</code> und <code>fn add_to_waitlist</code> lässt uns die Funktion in
 <code>eat_at_restaurant</code> aufrufen</span></p>
 <p>Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
-<code>pub</code> uns erlaubt, diese Pfade in <code>add_to_waitlist</code> im Hinblick auf die
+<code>pub</code> uns erlaubt, diese Pfade in <code>eat_at_restaurant</code> im Hinblick auf die
 Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
 an.</p>
 <p>Auf dem absoluten Pfad beginnen wir mit <code>crate</code>, der Wurzel des Modulbaums
@@ -7416,7 +7427,7 @@ Privatsphäre.</p>
 erstellt, in dem <code>use</code> vorkommt. Codeblock 7-12 verschiebt die Funktion
 <code>eat_at_restaurant</code> in ein neues untergeordnetes Modul namens <code>customer</code>, das
 dann einen anderen Gültigkeitsbereich als die <code>use</code>-Anweisung hat, sodass der
-Funktionsrumpf nicht kompiliert werden kann:</p>
+Funktionsrumpf nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness does_not_compile">mod front_of_house {
     pub mod hosting {
@@ -7589,10 +7600,11 @@ pub fn eat_at_restaurant() {
 <p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
 <p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
-Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen. Nun, da
-<code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert hat, kann
-externer Code nun stattdessen den Pfad <code>restaurant::hosting::add_to_waitlist()</code>
-verwenden.</p>
+Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen, was
+zudem erfordert hätte, dass das Modul <code>front_of_house</code> als <code>pub</code> gekennzeichnet
+ist. Da aber <code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert
+hat, kann externer Code nun stattdessen den Pfad
+<code>restaurant::hosting::add_to_waitlist()</code> verwenden.</p>
 <p>Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
 dem unterscheidet, wie Programmierer, die deinen Code
 aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
@@ -7629,7 +7641,7 @@ fn main() {
 </span><span class="boring">
 </span>    let secret_number = rand::thread_rng().gen_range(1..=100);
 <span class="boring">
-</span><span class="boring">    println!("Die geheime Zahl ist: {}", secret_number);
+</span><span class="boring">    println!("Die geheime Zahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    println!("Bitte gib deine Vermutung ein.");
 </span><span class="boring">
@@ -7639,7 +7651,7 @@ fn main() {
 </span><span class="boring">        .read_line(&amp;mut guess)
 </span><span class="boring">        .expect("Fehler beim Lesen einer Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!("Du hast geraten: {}", guess);
+</span><span class="boring">    println!("Du hast geraten: {guess}");
 </span>}</code></pre></pre>
 <p>Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 <a href="https://crates.io/">crates.io</a> zur Verfügung gestellt und wenn du eines davon
@@ -7784,7 +7796,7 @@ anderen Programmiersprachen kennst.</p>
 Prozess ist ein bisschen anders, weil <code>hosting</code> ein untergeordnetes Modul von
 <code>front_of_house</code> ist, nicht vom Stammmodul. Wir legen die Datei für <code>hosting</code>
 in einem neuen Verzeichnis ab, das nach seinen Vorgängern im Modulbaum benannt
-wird, in diesem Fall <em>src/front_of_house/</em>.</p>
+wird, in diesem Fall <em>src/front_of_house</em>.</p>
 <p>Um mit dem Verschieben von <code>hosting</code> zu beginnen, ändern wir
 <em>src/front_of_house.rs</em> so, dass es nur die Deklaration des <code>hosting</code>-Moduls
 enthält:</p>
@@ -7965,12 +7977,12 @@ Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
 werden. Mit <code>&amp;</code> und <code>[]</code> erhalten wir eine Referenz auf das Element mit dem
 Indexwert. Wenn wir die Methode <code>get</code> mit dem Index als Argument verwenden,
 erhalten wir eine <code>Option&lt;&amp;T&gt;</code>, die wir mit <code>match</code> verwenden können.</p>
-<p>Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
-referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
-verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
-vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
-Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
-Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.</p>
+<p>Rust bietet diese beide Möglichkeiten, um auf ein Element zu referenzieren. Du
+kannst nun ausprobieren, wie sich das Programm verhält, wenn du einen Indexwert
+außerhalb des Bereichs der vorhandenen Elemente zu verwendest. Als Beispiel
+wollen wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen
+versuchen, auf ein Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu
+sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust should_panic panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
@@ -8003,7 +8015,7 @@ veränderbaren und unveränderbaren Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderbare Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
-wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:</p>
+wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![1, 2, 3, 4, 5];
@@ -8353,8 +8365,9 @@ let s3 = String::from("toe");
 let s = s1 + "-" + &amp;s2 + "-" + &amp;s3;
 <span class="boring">}</span></code></pre></pre>
 <p>An diesem Punkt wird <code>s</code> den Wert <code>tic-tac-toe</code> haben. Bei all den Zeichen <code>+</code>
-und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Für kompliziertere
-String-Kombinationen können wir stattdessen das Makro <code>format!</code> verwenden:</p>
+und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Um Zeichenketten auf
+kompliziertere Weise zu kombinieren, können wir stattdessen das Makro <code>format!</code>
+verwenden:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("tic");
@@ -8496,9 +8509,9 @@ Bytes enthält:</p>
 
 let s = &amp;hello[0..4];
 <span class="boring">}</span></code></pre></pre>
-<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten 4 Bytes der Zeichenkette enthält.
-Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
-was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
+<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten vier Bytes der Zeichenkette
+enthält. Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen zwei Bytes
+lang ist, was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
 <p>Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
 wie <code>&amp;hello[0..1]</code> zu zerschneiden, würde Rust das Programm zur Laufzeit
 abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
@@ -8544,8 +8557,8 @@ Verwendungszweck benötigt wird:</p>
 208
 180
 </code></pre>
-<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
-können.</p>
+<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als ein Byte
+bestehen können.</p>
 <p>Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
 Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter
@@ -8575,9 +8588,9 @@ Der Typ <code>HashMap&lt;K, V&gt;</code> speichert eine Zuordnung von Schlüssel
 Werten vom Typ <code>V</code> mittels einer <em>Hashfunktion</em> (hash function), die bestimmt,
 wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
-Namen, z.B. Hash, Abbildung (map), Objekt, Hashtabelle (hash table), Wörterbuch
-(dictionary) oder assoziatives Array (associative array), um nur einige zu
-nennen.</p>
+Namen wie <em>Hash</em>, <em>Abbildung</em> (map), <em>Objekt</em>, <em>Hashtabelle</em> (hash table),
+<em>Wörterbuch</em> (dictionary) oder <em>assoziatives Array</em> (associative array), um nur
+einige zu nennen.</p>
 <p>Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
 Index nachschlagen willst, sondern über einen Schlüssel, der ein beliebiger Typ
 sein kann. Beispielsweise könntest du in einem Spiel den Spielstand jedes Teams
@@ -8613,7 +8626,7 @@ Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.</p>
 <p>Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher.
 Obige <code>HashMap</code> hat Schlüssel vom Typ <code>String</code> und Werte vom Typ <code>i32</code>.
-Hashtabellen sind wie Vektoren homogen: Alle Schlüssel müssen denselben Typ
+Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
 haben und alle Werte müssen denselben Typ haben.</p>
 <h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
 <p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
@@ -8688,7 +8701,7 @@ Lebensdauern“</a> in Kapitel 10 sprechen.</p>
 <p>Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
 eindeutigen Schlüssel jeweils nur ein Wert zugeordnet werden (aber nicht
 umgekehrt: Zum Beispiel könnten sowohl das blaue Team als auch das gelbe Team
-den Wert 10 in der Hashtabelle <code>scores</code> gespeichert haben).</p>
+den Wert <code>10</code> in der Hashtabelle <code>scores</code> gespeichert haben).</p>
 <p>Wenn du die Daten in einer Hashtabelle ändern willst, musst du entscheiden, wie
 der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
 wurde. Du kannst den alten Wert durch den neuen ersetzen und dabei den alten
@@ -8712,7 +8725,7 @@ let mut scores = HashMap::new();
 scores.insert(String::from("Blau"), 10);
 scores.insert(String::from("Blau"), 25);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-23: Ersetzen eines gespeicherten Wertes für
 einen bestimmten Schlüssel</span></p>
@@ -8729,8 +8742,9 @@ füge ihn und einen Wert für ihn ein.</p>
 Rückgabewert der Methode <code>entry</code> ist eine Aufzählung (enum) namens <code>Entry</code>, die
 einen Wert repräsentiert, der existieren könnte oder auch nicht. Nehmen wir an,
 wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn das
-nicht der Fall ist, wollen wir den Wert 50 einfügen, und dasselbe gilt für das
-Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24 aus.</p>
+nicht der Fall ist, wollen wir den Wert <code>50</code> einfügen, und dasselbe gilt für
+das Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24
+aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -8741,7 +8755,7 @@ scores.insert(String::from("Blau"), 10);
 scores.entry(String::from("Gelb")).or_insert(50);
 scores.entry(String::from("Blau")).or_insert(50);
 
-println!("{:?}", scores);
+println!("{scores:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-24: Verwenden der Methode <code>entry</code> zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span></p>
@@ -8752,9 +8766,10 @@ als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
 auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
 selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.</p>
 <p>Der Code in Codeblock 8-24 gibt <code>{"Gelb": 50, "Blau": 10}</code> aus. Beim ersten
-Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert 50 eingefügt,
-da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code> wird die
-Hashtabelle nicht verändern, da das Team Blau bereits den Wert 10 hat.</p>
+Aufruf von <code>entry</code> wird der Schlüssel von Team Gelb mit dem Wert <code>50</code>
+eingefügt, da das Team Gelb noch keinen Wert hat. Der zweite Aufruf von <code>entry</code>
+wird die Hashtabelle nicht verändern, da das Team Blau bereits den Wert <code>10</code>
+hat.</p>
 <h4 id="aktualisieren-eines-wertes-auf-basis-des-alten-wertes"><a class="header" href="#aktualisieren-eines-wertes-auf-basis-des-alten-wertes">Aktualisieren eines Wertes auf Basis des alten Wertes</a></h4>
 <p>Ein weiterer gängiger Anwendungsfall für Hashtabellen besteht darin, den Wert
 eines Schlüssels nachzuschlagen und ihn dann auf Basis des alten Wertes zu
@@ -8762,7 +8777,7 @@ aktualisieren. Beispielsweise zeigt Codeblock 8-25 einen Code, der zählt, wie
 oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
-Wort sehen, fügen wir zuerst den Wert 0 ein.</p>
+Wort sehen, fügen wir zuerst den Wert <code>0</code> ein.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
@@ -8776,7 +8791,7 @@ for word in text.split_whitespace() {
     *count += 1;
 }
 
-println!("{:?}", map);
+println!("{map:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 8-25: Zählen des Vorkommens von Wörtern mit
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
@@ -8802,9 +8817,9 @@ Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
 <em>Hash-Funktion</em> ist ein Typ, der das Merkmal <code>BuildHasher</code> implementiert. Wir
-werden in Kapitel 10 über Merkmale und ihre Implementierung sprechen. Du musst
-nicht unbedingt deine eigene Hash-Funktion von Grund auf implementieren;
-<a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
+werden in <a href="ch10-02-traits.html">Kapitel 10</a> über Merkmale und ihre Implementierung sprechen.
+Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
+implementieren; <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
 Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.</p>
 <div class="footnote-definition" id="siphash"><sup class="footnote-definition-label">1</sup>
@@ -8815,7 +8830,7 @@ implementieren.</p>
 Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
 darauf zugreifen und sie verändern willst. Hier sind einige Übungen, für deren
 Lösung du jetzt gerüstet sein solltest:</p>
-<ul>
+<ol>
 <li>Verwende bei einer Liste von ganzen Zahlen einen Vektor und gib den
 Median (wenn sortiert, den Wert in der Mitte) und den Modus (den Wert,
 der am häufigsten vorkommt; eine Hashtabelle ist hier hilfreich) der Liste
@@ -8831,7 +8846,7 @@ Unternehmen hinzuzufügen. Zum Beispiel „Sally zur Technik hinzufügen“ oder
 „Amir zum Vertrieb hinzufügen“. Lass den Benutzer dann eine alphabetisch
 sortierte Liste aller Personen in einer Abteilung oder aller Personen in der
 Firma nach Abteilung ausgeben.</li>
-</ul>
+</ol>
 <p>Die API-Dokumentation der Standard-Bibliothek beschreibt Methoden für Vektoren,
 Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
 <p>Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
@@ -9078,7 +9093,7 @@ fn main() {
 
     let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
-        Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {:?}", error),
+        Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {error:?}"),
     };
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-4: Verwenden eines <code>match</code>-Ausdrucks zum
@@ -9127,10 +9142,10 @@ fn main() {
         Err(error) =&gt; match error.kind() {
             ErrorKind::NotFound =&gt; match File::create("hallo.txt") {
                 Ok(fc) =&gt; fc,
-                Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {:?}", e),
+                Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {e:?}"),
             },
             other_error =&gt; {
-                panic!("Problem beim Öffnen der Datei: {:?}", other_error)
+                panic!("Problem beim Öffnen der Datei: {other_error:?}")
             }
         },
     };
@@ -9172,10 +9187,10 @@ fn main() {
     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             File::create("hallo.txt").unwrap_or_else(|error| {
-                panic!("Problem beim Erstellen der Datei: {:?}", error);
+                panic!("Problem beim Erstellen der Datei: {error:?}");
             })
         } else {
-            panic!("Problem beim Öffnen der Datei: {:?}", error);
+            panic!("Problem beim Öffnen der Datei: {error:?}");
         }
     });
 }</code></pre></pre>
@@ -9780,8 +9795,7 @@ Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 || value &gt; 100 {
-            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {}.",
-                   value);
+            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {value}.");
         }
 
         Guess { value }
@@ -9891,16 +9905,16 @@ einer Liste findet.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
-    let mut largest = number_list[0];
+    let mut largest = &amp;number_list[0];
 
-    for number in number_list {
+    for number in &amp;number_list {
         if number &gt; largest {
             largest = number;
         }
     }
 
-    println!("Die größte Zahl ist {}", largest);
-<span class="boring">    assert_eq!(largest, 100);
+    println!("Die größte Zahl ist {largest}");
+<span class="boring">    assert_eq!(*largest, 100);
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-1: Finden der größten Zahl in einer Liste
 von Zahlen</span></p>
@@ -9920,27 +9934,27 @@ verwenden, wie in Codeblock 10-2 gezeigt.</p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
-    let mut largest = number_list[0];
+    let mut largest = &amp;number_list[0];
 
-    for number in number_list {
+    for number in &amp;number_list {
         if number &gt; largest {
             largest = number;
         }
     }
 
-    println!("Die größte Zahl ist {}", largest);
+    println!("Die größte Zahl ist {largest}");
 
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
-    let mut largest = number_list[0];
+    let mut largest = &amp;number_list[0];
 
-    for number in number_list {
+    for number in &amp;number_list {
         if number &gt; largest {
             largest = number;
         }
     }
 
-    println!("Die größte Zahl ist {}", largest);
+    println!("Die größte Zahl ist {largest}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
 <em>zwei</em> Zahlenlisten</span></p>
@@ -9958,10 +9972,10 @@ in den beiden Listen aus Codeblock 10-2 zu finden. Wir könnten die Funktion
 auch auf jede andere Liste von <code>i32</code>-Werten anwenden, die wir in Zukunft haben
 könnten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn largest(list: &amp;[i32]) -&gt; i32 {
-    let mut largest = list[0];
+<pre><pre class="playground"><code class="language-rust">fn largest(list: &amp;[i32]) -&gt; &amp;i32 {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
@@ -9974,14 +9988,14 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
-<span class="boring">    assert_eq!(result, 100);
+    println!("Die größte Zahl ist {result}");
+<span class="boring">    assert_eq!(*result, 100);
 </span>
     let number_list = vec![102, 34, 6000, 89, 54, 2, 43, 8];
 
     let result = largest(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
-<span class="boring">    assert_eq!(result, 6000);
+    println!("Die größte Zahl ist {result}");
+<span class="boring">    assert_eq!(*result, 6000);
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-3: Abstrahierter Code, um die größte Zahl in
 zwei Listen zu finden</span></p>
@@ -10025,10 +10039,10 @@ Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
 diese dann in einer einzigen Funktion kombinieren, die generische Typen
 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn largest_i32(list: &amp;[i32]) -&gt; i32 {
-    let mut largest = list[0];
+<pre><pre class="playground"><code class="language-rust">fn largest_i32(list: &amp;[i32]) -&gt; &amp;i32 {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
@@ -10037,10 +10051,10 @@ verwendet.</p>
     largest
 }
 
-fn largest_char(list: &amp;[char]) -&gt; char {
-    let mut largest = list[0];
+fn largest_char(list: &amp;[char]) -&gt; &amp;char {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
@@ -10053,14 +10067,14 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest_i32(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
-<span class="boring">    assert_eq!(result, 100);
+    println!("Die größte Zahl ist {result}");
+<span class="boring">    assert_eq!(*result, 100);
 </span>
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest_char(&amp;char_list);
-    println!("Das größte Zeichen ist {}", result);
-<span class="boring">    assert_eq!(result, 'y');
+    println!("Das größte Zeichen ist {result}");
+<span class="boring">    assert_eq!(*result, 'y');
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-4: Zwei Funktionen, die sich nur in ihren
 Namen und den Typen in ihren Signaturen unterscheiden</span></p>
@@ -10112,12 +10126,12 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
+    println!("Die größte Zahl ist {result}");
 
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest(&amp;char_list);
-    println!("Das größte Zeichen ist {}", result);
+    println!("Das größte Zeichen ist {result}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-5: Die Funktion <code>largest</code> mit generischen
 Typparametern; diese kompiliert aber noch nicht</span></p>
@@ -10558,20 +10572,18 @@ reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
 Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
-<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let tweet = Tweet {
+<pre><code class="language-rust ignore">use aggregator::{self, Summary, Tweet};
+
+fn main() {
+    let tweet = Tweet {
         username: String::from("horse_ebooks"),
-        content: String::from(
-            "natürlich, wie du wahrscheinlich schon weißt",
-        ),
+        content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
         retweet: false,
     };
 
     println!("1 neue Kurznachricht: {}", tweet.summarize());
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
@@ -10611,7 +10623,29 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
         String::from("(Lies mehr ...)")
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {}
+</span><span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 10-14: Definieren eines Merkmals <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
 <p>Um eine Standard-Implementierung zu verwenden, um Instanzen von <code>NewsArticle</code>
@@ -10658,7 +10692,20 @@ Methode <code>summarize_author</code> aufruft:</p>
         format!("(Lies mehr von {}...)", self.summarize_author())
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
+</span><span class="boring">        format!("@{}", self.username)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -10718,6 +10765,32 @@ verwenden, etwa so:</p>
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, von {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify(item: &amp;impl Summary) {
@@ -10789,7 +10862,9 @@ nach der Funktionssignatur. Anstatt das hier zu schreiben:</p>
 where
     T: Display + Clone,
     U: Clone + Debug,
-{</code></pre>
+{
+<span class="boring">    unimplemented!()
+</span><span class="boring">}</span></code></pre>
 <p>Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
 Parameterliste und der Rückgabetyp liegen nahe beieinander, ähnlich wie bei
 einer Funktion ohne viele Merkmalsabgrenzungen.</p>
@@ -10800,6 +10875,19 @@ gezeigt:</p>
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, von {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">pub struct Tweet {
@@ -10889,9 +10977,7 @@ funktionieren:</p>
     } else {
         Tweet {
             username: String::from("horse_ebooks"),
-            content: String::from(
-                "natürlich, wie du wahrscheinlich schon weißt",
-            ),
+            content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
             reply: false,
             retweet: false,
         }
@@ -11013,7 +11099,7 @@ Gültigkeitsbereich hat.</p>
         r = &amp;x;
     }
 
-    println!("r: {}", r);
+    println!("r: {r}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
@@ -11044,8 +11130,8 @@ error[E0597]: `x` does not live long enough
 7 |     }
   |     - `x` dropped here while still borrowed
 8 |
-9 |     println!("r: {}", r);
-  |                       - borrow later used here
+9 |     println!("r: {r}");
+  |                  --- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -11072,7 +11158,7 @@ Annotationen, die die Lebensdauer der Variablen angeben.</p>
         r = &amp;x;           //  |       |
     }                     // -+       |
                           //          |
-    println!("r: {}", r); //          |
+    println!("r: {r}");   //          |
 }                         // ---------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
@@ -11090,7 +11176,7 @@ Referenz hat und fehlerfrei kompiliert werden kann.</p>
                           //           |
     let r = &amp;x;           // --+-- 'a  |
                           //   |       |
-    println!("r: {}", r); //   |       |
+    println!("r: {r}");   //   |       |
                           // --+       |
 }                         // ----------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
@@ -11114,7 +11200,7 @@ implementiert haben, sollte der Code in Codeblock 10-19 <code>Die längere Zeich
     let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }</code></pre>
 <p><span class="caption">Codeblock 10-19: Eine Funktion <code>main</code>, die die Funktion
 <code>longest</code> aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
@@ -11134,7 +11220,7 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
@@ -11223,7 +11309,7 @@ Referenz hinzu, wie in Codeblock 10-21 gezeigt.</p>
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -11283,7 +11369,7 @@ beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
     {
         let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!("Die längere Zeichenkette ist {}", result);
+        println!("Die längere Zeichenkette ist {result}");
     }
 }
 <span class="boring">
@@ -11317,7 +11403,7 @@ Der Code in Codeblock 10-23 lässt sich nicht kompilieren.</p>
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }
 <span class="boring">
 </span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -11341,8 +11427,8 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                          ------ borrow later used here
+8 |     println!("Die längere Zeichenkette ist {result}");
+  |                                            -------- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -11378,7 +11464,7 @@ kompilieren:</p>
 </span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
@@ -11401,7 +11487,7 @@ Implementierung der Funktion <code>longest</code>, die sich nicht kompilieren l�
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
@@ -11627,7 +11713,7 @@ was keine Referenz ist:</p>
 <span class="boring">
 </span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
 </span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-</span><span class="boring">        println!("Bitte um Aufmerksamkeit: {}", announcement);
+</span><span class="boring">        println!("Bitte um Aufmerksamkeit: {announcement}");
 </span><span class="boring">        self.part
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -11655,7 +11741,7 @@ Referenz auf <code>self</code> wegen der ersten Elisionsregel zu annotieren.</p>
 </span><span class="boring">
 </span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
     fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-        println!("Bitte um Aufmerksamkeit: {}", announcement);
+        println!("Bitte um Aufmerksamkeit: {announcement}");
         self.part
     }
 }
@@ -11705,7 +11791,7 @@ Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
 </span><span class="boring">        string2,
 </span><span class="boring">        "Heute hat jemand Geburtstag!",
 </span><span class="boring">    );
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>use std::fmt::Display;
@@ -11718,7 +11804,7 @@ fn longest_with_an_announcement&lt;'a, T&gt;(
 where
     T: Display,
 {
-    println!("Bekanntmachung! {}", ann);
+    println!("Bekanntmachung! {ann}");
     if x.len() &gt; y.len() {
         x
     } else {
@@ -11729,9 +11815,9 @@ where
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens <code>ann</code> vom generischen Typ <code>T</code>, der jeder beliebige Typ sein
 kann, der das Merkmal <code>Display</code> implementiert, wie in der <code>where</code>-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von <code>{}</code>
-ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist. Da die
-Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
+spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
+<code>{ann}</code> ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist.
+Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
 Lebensdauer-Parameters <code>'a</code> und des generischen Typ-Parameters <code>T</code> in der
 gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.</p>
 <h2 id="zusammenfassung-9"><a class="header" href="#zusammenfassung-9">Zusammenfassung</a></h2>
@@ -11845,13 +11931,12 @@ mod tests {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
-<p>Ignorieren wir vorerst die beiden oberen Zeilen und konzentrieren uns auf die
-Funktion. Beachte die Annotation <code>#[test]</code>: Dieses Attribut zeigt an, dass es
-sich um eine Testfunktion handelt, sodass die Testausführung weiß, dass es
-diese Funktion als einen Test behandeln soll. Wir könnten auch
-Nicht-Test-Funktionen im Modul <code>tests</code> haben, um gängige Szenarien aufzusetzen
-oder gängige Operationen durchzuführen, daher müssen wir immer angeben, welche
-Funktionen Tests sind.</p>
+<p>Konzentrieren wir uns zunächst nur auf die Funktion <code>it_works()</code>. Beachte die
+Annotation <code>#[test]</code>: Dieses Attribut zeigt an, dass es sich um eine
+Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
+als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
+<code>tests</code> haben, um gängige Szenarien aufzusetzen oder gängige Operationen
+durchzuführen, daher müssen wir immer angeben, welche Funktionen Tests sind.</p>
 <p>Der Beispiel-Funktionsrumpf verwendet das Makro <code>assert_eq!</code>, um
 sicherzustellen, dass 2 + 2 gleich 4 ist. Diese Prüfung dient als Beispiel für
 den Aufbau eines typischen Tests. Lassen wir ihn laufen, um zu sehen, dass
@@ -11909,11 +11994,18 @@ Vorerst ignorieren wir die Ausgabe von <code>Doc-tests</code>.</p>
 zunächst den Namen der Funktion <code>it_works</code> in einen anderen Namen, z.B.
 <code>exploration</code>, wie folgt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[cfg(test)]
+<pre><code class="language-rust noplayground">pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn exploration() {
-        assert_eq!(2 + 2, 4);
+        let result = add(2, 2);
+        assert_eq!(result, 4);
     }
 }</code></pre>
 <p>Dann führe <code>cargo test</code> erneut aus. Die Ausgabe zeigt nun <code>exploration</code>
@@ -11943,11 +12035,16 @@ Programm abzubrechen, sprachen wir in Kapitel 9, und zwar durch den Aufruf des
 Makros <code>panic!</code>. Erstelle einen neuen Test <code>another</code>, sodass deine Datei
 <em>src/lib.rs</em> wie in Codeblock 11-3 aussieht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust panics noplayground">#[cfg(test)]
+<pre><code class="language-rust panics noplayground">pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
 mod tests {
     #[test]
     fn exploration() {
-        assert_eq!(2 + 2, 4);
+        let result = add(2, 2);
+        assert_eq!(result, 4);
     }
 
     #[test]
@@ -12394,7 +12491,7 @@ begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergebe
 in der Ausgabe auftaucht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">pub fn greeting(name: &amp;str) -&gt; String {
-    format!("Hallo {}!", name)
+    format!("Hallo {name}!")
 }
 
 #[cfg(test)]
@@ -12475,8 +12572,7 @@ gefüllt ist:</p>
         let result = greeting("Carol");
         assert!(
             result.contains("Carol"),
-            "Begrüßung enthielt nicht den Namen, Wert war `{}`",
-            result
+            "Begrüßung enthielt nicht den Namen, Wert war `{result}`"
         );
     }
 <span class="boring">}
@@ -12531,7 +12627,7 @@ abbricht.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 || value &gt; 100 {
-            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {value}.");
         }
 
         Guess { value }
@@ -12580,7 +12676,7 @@ der Wert größer als 100 ist:</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 {
-            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {value}.");
         }
 
         Guess { value }
@@ -12640,9 +12736,9 @@ nachdem, ob der Wert zu klein oder zu groß ist.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 {
-            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.", value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {value}.");
         } else if value &gt; 100 {
-            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.", value);
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {value}.");
         }
 
         Guess { value }
@@ -12683,11 +12779,9 @@ vertauschen:</p>
 </span><span class="boring">impl Guess {
 </span><span class="boring">    pub fn new(value: i32) -&gt; Guess {
 </span>        if value &lt; 1 {
-            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.",
-                   value);
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {value}.");
         } else if value &gt; 100 {
-            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.",
-                   value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {value}.");
         }
 <span class="boring">
 </span><span class="boring">        Guess { value }
@@ -12733,9 +12827,8 @@ error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenfolge <code>'Schätzwert muss kleiner oder gleich 100 sein'</code>. Die
-Abbruchsmeldung, die wir in diesem Fall erhielten, lautete: <code>Schätzwert muss größer oder gleich 1 sein, ist 200.</code> Jetzt können wir anfangen herauszufinden,
-wo unser Fehler liegt!</p>
+Zeichenfolge <code>"kleiner oder gleich 100"</code>. Die Abbruchsmeldung, die wir in
+diesem Fall erhielten, lautete: <code>Schätzwert muss größer oder gleich 1 sein, ist 200.</code> Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!</p>
 <h3 id="verwenden-von-resultt-e-in-tests"><a class="header" href="#verwenden-von-resultt-e-in-tests">Verwenden von <code>Result&lt;T, E&gt;</code> in Tests</a></h3>
 <p>Bei unseren bisherigen Tests sind alle abgebrochen, wenn sie fehlgeschlagen
 sind. Wir können auch Tests schreiben, die <code>Result&lt;T, E&gt;</code> verwenden! Hier ist
@@ -12826,9 +12919,7 @@ Standardausgabe ausgegeben wurde, mit dem Rest der Fehlermeldung.</p>
 Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust panics noplayground"><span class="boring">fn main() {}
-</span><span class="boring">
-</span>fn prints_and_returns_10(a: i32) -&gt; i32 {
+<pre><code class="language-rust panics noplayground">fn prints_and_returns_10(a: i32) -&gt; i32 {
     println!("Ich habe den Wert {} erhalten.", a);
     10
 }
@@ -13121,14 +13212,23 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[cfg(test)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Dieser Code ist das automatisch generierte Testmodul. Das Attribut <code>cfg</code> steht
 für <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
@@ -13145,7 +13245,9 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub fn add_two(a: i32) -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add_two(a: i32) -&gt; i32 {
     internal_adder(a, 2)
 }
 
@@ -13161,14 +13263,15 @@ mod tests {
     fn internal() {
         assert_eq!(4, internal_adder(2, 2));
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
 Wie im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
-<code>test</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
+<code>tests</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
 <code>internal_adder</code> aufrufen. Wenn du der Meinung bist, dass private Funktionen
 nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
 würde.</p>
@@ -13202,18 +13305,18 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 </code></pre>
 <p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein:</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
-<pre><code class="language-rust ignore">use adder;
+<pre><code class="language-rust ignore">use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, adder::add_two(2));
+    assert_eq!(4, add_two(2));
 }</code></pre>
 <p><span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
 Kiste <code>adder</code></span></p>
 <p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir <code>use adder</code> am Anfang des Codes hinzu, was wir in den
-Modultests nicht brauchten.</p>
+diesem Grund fügen wir <code>use adder::add_two</code> am Anfang des Codes hinzu, was wir
+in den Modultests nicht brauchten.</p>
 <p>Wir brauchen den Code in <em>tests/integration_test.rs</em> nicht mit <code>#[cfg(test)]</code>
 zu annotieren. Cargo behandelt das Verzeichnis <code>tests</code> speziell und kompiliert
 Dateien in diesem Verzeichnis nur dann, wenn wir <code>cargo test</code> ausführen. Führe
@@ -13547,7 +13650,7 @@ angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
 in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
 können. Das tun wir in Codeblock 12-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::env;
+<pre><code class="language-rust noplayground">use std::env;
 
 fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
@@ -13557,7 +13660,7 @@ fn main() {
 
     println!("Suche nach {}", query);
     println!("In Datei {}", file_path);
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>
 <p>Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der
@@ -13608,7 +13711,7 @@ guter Testfall</span></p>
 <p>Wenn der Text vorhanden ist, editiere <em>src/main.rs</em> und füge Code zum Lesen der
 Datei hinzu, wie in Codeblock 12-4 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::env;
+<pre><code class="language-rust noplayground">use std::env;
 use std::fs;
 
 fn main() {
@@ -13618,14 +13721,14 @@ fn main() {
 </span><span class="boring">    let query = &amp;args[1];
 </span><span class="boring">    let file_path = &amp;args[2];
 </span><span class="boring">
-</span><span class="boring">    println!("Suche nach {}", query);
-</span>    println!("In Datei {}", file_path);
+</span><span class="boring">    println!("Suche nach {query}");
+</span>    println!("In Datei {file_path}");
 
     let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
     println!("Mit text:\n{contents}");
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-4: Lesen des Inhalts der Datei, die durch
 das zweite Argument angegeben wurde</span></p>
 <p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, um einen relevanten Teil
@@ -13694,15 +13797,15 @@ auf verschiedene Arten fehlschlagen: Zum Beispiel könnte die Datei fehlen oder
 wir haben keine Berechtigung, sie zu öffnen. Im Moment würden wir unabhängig
 von der Situation die Fehlermeldung „Etwas ging beim Lesen der Datei schief“
 ausgeben, die dem Benutzer keinerlei Informationen geben würde!</p>
-<p>Viertens verwenden wir <code>expect</code> erneut, um verschiedene Fehler zu behandeln,
-und wenn der Benutzer unser Programm ausführt, ohne genügend Argumente
-anzugeben, erhält er einen <code>Index out of bounds</code>-Fehler von Rust, der das
-Problem nicht eindeutig erklärt. Am besten wäre es, wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befände, sodass zukünftige Betreuer nur
-eine Stelle im Code konsultieren bräuchten, falls sich die
-Fehlerbehandlungslogik ändern sollte. Wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befindet, wird auch sichergestellt, dass
-wir Meldungen ausgeben, die für unsere Endbenutzer aussagekräftig sind.</p>
+<p>Viertens verwenden wir <code>expect</code> erneut, um einen Fehler zu behandeln, und wenn
+der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
+er einen <code>Index out of bounds</code>-Fehler von Rust, der das Problem nicht eindeutig
+erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
+einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
+Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
+sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
+aussagekräftig sind.</p>
 <p>Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.</p>
 <h3 id="trennen-der-zuständigkeiten-bei-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-bei-binärprojekten">Trennen der Zuständigkeiten bei Binärprojekten</a></h3>
 <p>Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
@@ -13741,7 +13844,7 @@ Kommandozeilen-Parselogik nach <em>src/lib.rs</em> vorzubereiten. Codeblock 12-5
 den neuen Anfang von <code>main</code>, der eine neue Funktion <code>parse_config</code> aufruft, die
 wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><code class="language-rust noplayground"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>fn main() {
@@ -13751,8 +13854,8 @@ wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!("Suche nach {}", query);
-</span><span class="boring">    println!("In Datei {}", file_path);
+</span><span class="boring">    println!("Suche nach {query}");
+</span><span class="boring">    println!("In Datei {file_path}");
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
@@ -13765,7 +13868,7 @@ fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
     let file_path = &amp;args[2];
 
     (query, file_path)
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-5: Extrahieren einer Funktion <code>parse_config</code>
 aus <code>main</code></span></p>
 <p>Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
@@ -14431,7 +14534,7 @@ haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
 Beachte, dass dies nicht kompiliert werden kann, bis wir <em>src/main.rs</em> in
 Codeblock 12-14 modifiziert haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile">use std::error::Error;
 use std::fs;
 
 pub struct Config {
@@ -15859,7 +15962,7 @@ repräsentiert, die ein Feld mit dem Namen <code>shirts</code> hat, das ein
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
 zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust noplayground">#[derive(Debug, PartialEq, Copy, Clone)]
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
     Blue,
@@ -15899,18 +16002,12 @@ fn main() {
 
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref1, giveaway1
-    );
+    println!("Der Benutzer mit Präferenz {user_pref1:?} erhält {giveaway1:?}");
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref2, giveaway2
-    );
-}</code></pre>
+    println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
+}</code></pre></pre>
 <p><span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span></p>
 <p>Der in <code>main</code> definierte <code>store</code> hat zwei blaue Shirts und ein rotes Shirt
 übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
@@ -16100,13 +16197,13 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
+    let only_borrows = || println!("Im Funktionsabschluss: {list:?}");
 
-    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Vor dem Funktionsabschluss-Aufruf: {list:?}");
     only_borrows();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span></p>
@@ -16134,12 +16231,12 @@ nun eine veränderbare Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
@@ -16179,9 +16276,9 @@ in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {:?}", list))
+    thread::spawn(move || println!("Im Strang: {list:?}"))
         .join()
         .unwrap();
 }</code></pre></pre>
@@ -16269,8 +16366,8 @@ keine Argumente annimmt und ein <code>T</code> zurückgeben muss. Die Verwendung
 <code>unwrap_or_else</code> können wir sehen, dass, wenn die <code>Option</code> <code>Some</code> ist, <code>f</code>
 nicht aufgerufen wird. Wenn die <code>Option</code> <code>None</code> ist, wird <code>f</code> einmal
 aufgerufen. Da alle Funktionsabschlüsse <code>FnOnce</code> implementieren, akzeptiert
-<code>unwrap_or_else</code> die unterschiedlichsten Arten von Funktionsabschlüssen und ist
-so flexibel wie nur möglich.</p>
+<code>unwrap_or_else</code> alle drei Arten von Funktionsabschlüssen und ist so flexibel
+wie nur möglich.</p>
 <blockquote>
 <p>Anmerkung: Funktionen können auch alle drei <code>Fn</code>-Merkmale implementieren.
 Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
@@ -16305,7 +16402,7 @@ fn main() {
     ];
 
     list.sort_by_key(|r| r.width);
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-7: Verwenden von <code>sort_by_key</code> um Rechtecke
 nach ihrer Breite zu sortieren</span></p>
@@ -16358,24 +16455,24 @@ fn main() {
         sort_operations.push(value);
         r.width
     });
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }</code></pre></pre>
 <p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
 mit <code>sort_by_key</code> zu verwenden</span></p>
-<p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
-versuchen, die Anzahl der Aufrufe von <code>sort_by_key</code> beim Sortieren von <code>list</code>
-zu zählen. Dieser Code versucht, diese Zählung durchzuführen, indem er <code>value</code>,
-einen <code>String</code> aus der Umgebung des Funktionsabschlusses, in den
-<code>sort_operations</code>-Vektor schiebt. Der Funktionsabschluss erfasst <code>value</code> und
-verschiebt dann <code>value</code> aus dem Funktionsabschluss heraus, indem er die
-Eigentümerschaft von <code>value</code> an den Vektor <code>sort_operations</code> überträgt. Dieser
-Funktionsabschluss kann einmal aufgerufen werden; ein zweiter Aufruf würde nicht
-funktionieren, da <code>value</code> nicht mehr in der Umgebung wäre, um erneut in
-<code>sort_operations</code> verschoben zu werden! Daher implementiert dieser
-Funktionsabschluss nur <code>FnOnce</code>. Wenn wir versuchen, diesen Code zu
-kompilieren, erhalten wir die Fehlermeldung, dass <code>value</code> nicht aus dem
-Funktionsabschluss verschoben werden kann, weil der Funktionsabschluss <code>FnMut</code>
-implementieren muss:</p>
+<p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
+versucht die Anzahl der Aufrufe des Funktionsabschlusses durch <code>sort_by_key</code>
+beim Sortieren von <code>list</code> zu zählen. Dieser Code versucht diese Zählung
+durchzuführen, indem er den <code>String</code> <code>value</code> aus der Umgebung des
+Funktionsabschlusses in den Vektor <code>sort_operations</code> verschiebt. Der
+Funktionsabschluss erfasst <code>value</code> und verschiebt dann <code>value</code> aus dem
+Funktionsabschluss heraus, indem er die Eigentümerschaft von <code>value</code> an den
+Vektor <code>sort_operations</code> überträgt. Dieser Funktionsabschluss kann einmal
+aufgerufen werden; ein zweiter Aufruf würde nicht funktionieren, da <code>value</code>
+nicht mehr in der Umgebung wäre, um erneut in <code>sort_operations</code> verschoben zu
+werden! Daher implementiert dieser Funktionsabschluss nur <code>FnOnce</code>. Wenn wir
+versuchen, diesen Code zu kompilieren, erhalten wir die Fehlermeldung, dass
+<code>value</code> nicht aus dem Funktionsabschluss verschoben werden kann, weil der
+Funktionsabschluss <code>FnMut</code> implementieren muss:</p>
 <pre><code class="language-console">$ cargo run
    Compiling playground v0.0.1 (/playground)
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
@@ -16420,7 +16517,7 @@ fn main() {
         num_sort_operations += 1;
         r.width
     });
-    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
+    println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }</code></pre></pre>
 <p><span class="caption">Listing 13-9: Verwenden eines
 <code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>
@@ -16464,7 +16561,7 @@ einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.</p>
 let v1_iter = v1.iter();
 
 for val in v1_iter {
-    println!("Erhalten: {}", val);
+    println!("Erhalten: {val}");
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 13-11: Verwendung eines Iterators in einer
@@ -17034,8 +17131,8 @@ implementiert das Merkmal <code>Iterator</code> und gibt <code>String</code>-Wer
 Parameter <code>args</code> einen generischen Typ mit den Merkmalsabgrenzungen <code>impl Iterator&lt;Item = String&gt;</code> anstelle von <code>&amp;[String]</code> hat. Diese Verwendung der
 Syntax <code>impl Trait</code>, die wir im Abschnitt <a href="ch10-02-traits.html#merkmale-als-parameter">„Merkmale als
 Parameter“</a> in Kapitel 10 besprochen haben, bedeutet, dass <code>args</code>
-jeder Typ sein kann, der den Typ <code>Iterator</code> implementiert und <code>String</code>-Elemente
-zurückgibt.</p>
+jeder Typ sein kann, der das Merkmal <code>Iterator</code> implementiert und
+<code>String</code>-Elemente zurückgibt.</p>
 <p>Da wir die Eigentümerschaft von <code>args</code> übernehmen und <code>args</code> beim Iterieren
 verändern werden, können wir das Schlüsselwort <code>mut</code> in die Spezifikation des
 Parameters <code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.</p>
@@ -17866,7 +17963,8 @@ Kontoeinstellungen (account settings) auf
 <a href="https://crates.io/me/">https://crates.io/me/</a> und erhalte deinen
 API-Schlüssel. Rufe anschließend das Kommando <code>cargo login</code> mit deinem
 API-Schlüssel auf:</p>
-<pre><code class="language-console">$ cargo login abcdefghijklmnopqrstuvwxyz012345
+<pre><code class="language-console">$ cargo login
+abcdefghijklmnopqrstuvwxyz012345
 </code></pre>
 <p>Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
 <em>~/.cargo/credentials</em>. Beachte, dass dieses Token ein <em>Geheimnis</em> ist: Gib es
@@ -18198,10 +18296,13 @@ error[E0432]: unresolved import `rand`
 und geben an, dass <code>rand</code> auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets <code>adder</code> wird <code>rand</code> zur Liste der Abhängigkeiten für <code>adder</code> in
 <em>Cargo.lock</em> hinzugefügt, es werden jedoch keine zusätzlichen Kopien von <code>rand</code>
-heruntergeladen. Cargo hat dafür gesorgt, dass jede Kiste in jedem Paket im
+heruntergeladen. Cargo stellt sicher, dass jede Kiste in jedem Paket im
 Arbeitsbereich, das das <code>rand</code>-Paket verwendet, die gleiche Version verwendet,
-was uns Platz spart und sicherstellt, dass die Kisten im Arbeitsbereich
-miteinander kompatibel sind.</p>
+solange sie kompatible Versionen von <code>rand</code> angeben, was uns Platz spart und
+sicherstellt, dass die Kisten im Arbeitsbereich miteinander kompatibel sind.</p>
+<p>Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
+angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
+Versionen wie möglich aufzulösen.</p>
 <h4 id="hinzufügen-eines-tests-zu-einem-arbeitsbereich"><a class="header" href="#hinzufügen-eines-tests-zu-einem-arbeitsbereich">Hinzufügen eines Tests zu einem Arbeitsbereich</a></h4>
 <p>Füge für eine weitere Verbesserung innerhalb der <code>add_one</code>-Kiste einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
@@ -18441,7 +18542,7 @@ Haldenspeicher speichert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let b = Box::new(5);
-    println!("b = {}", b);
+    println!("b = {b}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
 im Haldenspeicher</span></p>
@@ -18503,13 +18604,12 @@ zu definieren.</p>
 dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine bekannte
 Grösse hat, was wir zeigen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum List {
+<pre><pre class="playground"><code class="language-rust does_not_compile">enum List {
     Cons(i32, List),
     Nil,
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
 definieren, um eine Datenstruktur der Cons-Liste von <code>i32</code>-Werten darzustellen</span></p>
 <blockquote>
@@ -18570,15 +18670,14 @@ nicht rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
 <p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>enum Message {
+<pre><pre class="playground"><code class="language-rust">enum Message {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
     ChangeColor(i32, i32, i32),
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Um zu bestimmen, wie viel Speicherplatz für einen <code>Message</code>-Wert zugewiesen
 werden soll, durchläuft Rust jede der Varianten, um festzustellen, welche
 Variante den meisten Speicherplatz benötigt. Rust sieht, dass <code>Message::Quit</code>
@@ -18770,16 +18869,15 @@ Element definiert, sodass Codeblock 15-8 einen Typ <code>MyBox&lt;T&gt;</code> a
 Weise definiert. Wir werden auch eine <code>new</code>-Funktion definieren, die mit der in
 der <code>Box&lt;T&gt;</code> definierten übereinstimmt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct MyBox&lt;T&gt;(T);
+<pre><pre class="playground"><code class="language-rust">struct MyBox&lt;T&gt;(T);
 
 impl&lt;T&gt; MyBox&lt;T&gt; {
     fn new(x: T) -&gt; MyBox&lt;T&gt; {
         MyBox(x)
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-8: Einen <code>MyBox&lt;T&gt;</code>-Typ definieren</span></p>
 <p>Wir definieren eine Struktur mit dem Namen <code>MyBox</code> und deklarieren einen
 generischen Parameter <code>T</code>, da unser Typ Werte eines beliebigen Typs enthalten
@@ -18917,12 +19015,11 @@ definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von <code>
 Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
 Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn hello(name: &amp;str) {
+<pre><pre class="playground"><code class="language-rust">fn hello(name: &amp;str) {
     println!("Hallo {name}!");
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-11: Eine <code>hello</code>-Funktion mit dem Parameter
 <code>name</code> vom Typ <code>&amp;str</code></span></p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument
@@ -19755,7 +19852,7 @@ help: consider changing this to be a mutable reference
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` (lib test) due to 1 previous error
 </code></pre>
-<p>Wir können den <code>MockMessenger</code> nicht ändern, um die Nachrichten zu verfolgen, da
+<p>Wir können <code>MockMessenger</code> nicht so ändern, um die Nachrichten zu verfolgen, da
 die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen
 <code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code> nicht mit der Signatur in
@@ -20040,9 +20137,9 @@ fn main() {
 
     *value.borrow_mut() += 10;
 
-    println!("a nachher = {:?}", a);
-    println!("b nachher = {:?}", b);
-    println!("c nachher = {:?}", c);
+    println!("a nachher = {a:?}");
+    println!("b nachher = {b:?}");
+    println!("c nachher = {c:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-24: Verwendung von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> um <code>List</code>
 zu erstellen, die wir verändern können</span></p>
@@ -20658,13 +20755,13 @@ use std::time::Duration;
 fn main() {
     thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 }</code></pre></pre>
@@ -20716,13 +20813,13 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 
@@ -20763,7 +20860,7 @@ use std::time::Duration;
 fn main() {
     let handle = thread::spawn(|| {
         for i in 1..10 {
-            println!("Hallo Zahl {} aus dem erzeugten Strang!", i);
+            println!("Hallo Zahl {i} aus dem erzeugten Strang!");
             thread::sleep(Duration::from_millis(1));
         }
     });
@@ -20771,7 +20868,7 @@ fn main() {
     handle.join().unwrap();
 
     for i in 1..5 {
-        println!("Hallo Zahl {} aus dem Hauptstrang!", i);
+        println!("Hallo Zahl {i} aus dem Hauptstrang!");
         thread::sleep(Duration::from_millis(1));
     }
 }</code></pre></pre>
@@ -20818,7 +20915,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(|| {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     handle.join().unwrap();
@@ -20837,15 +20934,15 @@ error[E0373]: closure may outlive the current function, but it borrows `v`, whic
   |
 6 |     let handle = thread::spawn(|| {
   |                                ^^ may outlive borrowed value `v`
-7 |         println!("Hier ist ein Vektor: {:?}", v);
-  |                                               - `v` is borrowed here
+7 |         println!("Hier ist ein Vektor: {v:?}");
+  |                                         - `v` is borrowed here
   |
 note: function requires argument type to outlive `'static`
  --&gt; src/main.rs:6:18
   |
 6 |       let handle = thread::spawn(|| {
   |  __________________^
-7 | |         println!("Hier ist ein Vektor: {:?}", v);
+7 | |         println!("Hier ist ein Vektor: {v:?}");
 8 | |     });
   | |______^
 help: to force the closure to take ownership of `v` (and any other referenced variables), use the `move` keyword
@@ -20854,7 +20951,7 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 
 For more information about this error, try `rustc --explain E0373`.
-error: could not compile `threads` (bin "threads") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Rust <em>folgert</em>, wie man <code>v</code> erfasst, und weil <code>println!</code> nur eine Referenz auf
 <code>v</code> benötigt, versucht der Funktionsabschluss, <code>v</code> auszuleihen. Es gibt jedoch
@@ -20869,7 +20966,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(|| {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     drop(v); // Oh nein!
@@ -20905,7 +21002,7 @@ fn main() {
     let v = vec![1, 2, 3];
 
     let handle = thread::spawn(move || {
-        println!("Hier ist ein Vektor: {:?}", v);
+        println!("Hier ist ein Vektor: {v:?}");
     });
 
     handle.join().unwrap();
@@ -20931,8 +21028,8 @@ error[E0382]: use of moved value: `v`
 5  | 
 6  |     let handle = thread::spawn(move || {
    |                                ------- value moved into closure here
-7  |         println!("Hier ist ein Vektor: {:?}", v);
-   |                                               - variable moved due to use in closure
+7  |         println!("Hier ist ein Vektor: {v:?}");
+   |                                         - variable moved due to use in closure
 ...
 10 |     drop(v); // Oh nein!
    |          ^ value used here after move
@@ -21058,7 +21155,7 @@ fn main() {
     });
 
     let received = rx.recv().unwrap();
-    println!("Erhalten: {}", received);
+    println!("Erhalten: {received}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-8: Empfangen des Wertes „hallo“ im
 Hauptstrang und Ausgeben des Wertes</span></p>
@@ -21104,11 +21201,11 @@ fn main() {
     thread::spawn(move || {
         let val = String::from("hallo");
         tx.send(val).unwrap();
-        println!("val ist {}", val);
+        println!("val ist {val}");
     });
 
     let received = rx.recv().unwrap();
-    println!("Erhalten: {}", received);
+    println!("Erhalten: {received}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-9: Versuch, <code>val</code> zu benutzen, nachdem wir
 es in den Kanal geschickt haben</span></p>
@@ -21128,8 +21225,8 @@ error[E0382]: borrow of moved value: `val`
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
 9  |         tx.send(val).unwrap();
    |                 --- value moved here
-10 |         println!("val ist {}", val);
-   |                                ^^^ value borrowed here after move
+10 |         println!("val ist {val}");
+   |                           ^^^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 help: consider cloning the value if the performance cost is acceptable
@@ -21175,7 +21272,7 @@ fn main() {
     });
 
     for received in rx {
-        println!("Erhalten: {}", received);
+        println!("Erhalten: {received}");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten und
@@ -21243,7 +21340,7 @@ Codeblock 16-11 gezeigt:</p>
     });
 
     for received in rx {
-        println!("Erhalten: {}", received);
+        println!("Erhalten: {received}");
     }
 
     // --abschneiden--
@@ -21336,7 +21433,7 @@ fn main() {
         *num = 6;
     }
 
-    println!("m = {:?}", m);
+    println!("m = {m:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-12: Untersuchen der API von <code>Mutex&lt;T&gt;</code> in
 einem einsträngigen Kontext zur Vereinfachung</span></p>
@@ -21433,8 +21530,8 @@ For more information about this error, try `rustc --explain E0382`.
 error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 </code></pre>
 <p>Die Fehlermeldung besagt, dass der Wert <code>counter</code> in der vorherigen Iteration
-der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft der
-Sperre <code>counter</code> nicht in mehrere Stränge verschieben können. Lass uns den
+der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
+<code>counter</code> nicht in mehrere Stränge verschieben können. Lass uns den
 Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 15 besprochen haben.</p>
 <h4 id="mehrfacheigentum-mit-mehreren-strängen"><a class="header" href="#mehrfacheigentum-mit-mehreren-strängen">Mehrfacheigentum mit mehreren Strängen</a></h4>
@@ -21821,11 +21918,11 @@ haben, können wir Aspekte, z.B. die Datenstruktur, in Zukunft leicht ändern.
 Zum Beispiel könnten wir ein <code>HashSet&lt;i32&gt;</code> anstelle eines <code>Vec&lt;i32&gt;</code> für das
 <code>list</code>-Feld verwenden. Solange die Signaturen der öffentlichen Methoden <code>add</code>,
 <code>remove</code> und <code>average</code> gleich bleiben, würde Code, der <code>AveragedCollection</code>
-verwendet, nicht geändert werden müssen. Wenn wir stattdessen <code>list</code> öffentlich
-machen würden, wäre dies nicht unbedingt der Fall: <code>HashSet&lt;i32&gt;</code> und
-<code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum Hinzufügen und Entfernen von
-Elementen, sodass externer Code wahrscheinlich geändert werden müsste, wenn er
-<code>list</code> direkt modifizieren würde.</p>
+verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
+stattdessen <code>list</code> öffentlich machen würden, wäre dies nicht unbedingt der
+Fall: <code>HashSet&lt;i32&gt;</code> und <code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum
+Hinzufügen und Entfernen von Elementen, sodass externer Code wahrscheinlich
+geändert werden müsste, wenn er <code>list</code> direkt modifizieren würde.</p>
 <p>Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
 objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.
 Die Möglichkeit, <code>pub</code> für verschiedene Teile des Codes zu verwenden oder auch
@@ -22114,7 +22211,9 @@ impl Draw for SelectBox {
     fn draw(&amp;self) {
         // Code zum tatsächlichen Zeichnen eines Auswahlfeldes
     }
-}</code></pre>
+}
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre>
 <p><span class="caption">Codeblock 17-8: Eine weitere Kiste, die <code>gui</code> verwendet
 und das Merkmal <code>Draw</code> auf einer <code>SelectBox</code>-Struktur implementiert</span></p>
 <p>Der Benutzer unserer Bibliothek kann nun seine Funktion <code>main</code> schreiben, um
@@ -22388,7 +22487,9 @@ Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> is
 also lass uns die Implementierung in Codeblock 17-13 zum Block <code>impl Post</code>
 hinzufügen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -22411,7 +22512,8 @@ hinzufügen:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}</span></code></pre>
+</span><span class="boring">impl State for Draft {}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderbare Referenz auf <code>self</code>, weil wir
@@ -22434,7 +22536,9 @@ damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
 Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -22461,7 +22565,8 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}</span></code></pre>
+</span><span class="boring">impl State for Draft {}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-14: Hinzufügen einer
 Platzhalter-Implementierung für die <code>content</code>-Methode auf <code>Post</code>, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
@@ -22472,7 +22577,9 @@ bis hin zu Zeile 7 wie beabsichtigt.</p>
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
 ändern sollte. Codeblock 17-15 zeigt diesen Code:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -22519,7 +22626,8 @@ impl State for PendingReview {
     fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-15: Implementierung der Methoden
 <code>request_review</code> für <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
@@ -23305,7 +23413,7 @@ Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
     stack.push(3);
 
     while let Some(top) = stack.pop() {
-        println!("{}", top);
+        println!("{top}");
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-2: Das Verwenden einer <code>while let</code>-Schleife,
@@ -23326,7 +23434,7 @@ ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerl
 </span>    let v = vec!['a', 'b', 'c'];
 
     for (index, value) in v.iter().enumerate() {
-        println!("{} ist beim Index {}", value, index);
+        println!("{value} ist beim Index {index}");
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-3: Verwenden eines Musters in einer
@@ -23430,7 +23538,7 @@ in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 18-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
-    println!("Aktuelle Position: ({}, {})", x, y);
+    println!("Aktuelle Position: ({x}, {y})");
 }
 
 fn main() {
@@ -23519,18 +23627,17 @@ Codeblock 18-8 zu korrigieren ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
 </span>    if let Some(x) = some_option_value {
-        println!("{}", x);
+        println!("{x}");
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-9: Verwenden von <code>if let</code> und eines Blocks
 mit abweisbaren Mustern anstelle von <code>let</code></span></p>
-<p>Wir haben den Code repariert! Dieser Code ist vollkommen gültig, obwohl er
-bedeutet, dass wir kein unabweisbares Muster verwenden können, ohne einen
-Fehler zu erhalten. Wenn wir <code>if let</code> ein Muster geben, das immer passen wird,
-z.B. <code>x</code>, wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
+<p>Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
+<code>if let</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B. <code>x</code>,
+wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    if let x = 5 {
-        println!("{}", x);
+        println!("{x}");
     };
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-10: Der Versuch, ein unabweisbares Muster
@@ -23605,10 +23712,10 @@ wird, bevor du diesen Code ausführst oder weiterliest.</p>
     match x {
         Some(50) =&gt; println!("Habe 50 erhalten"),
         Some(y) =&gt; println!("Passt, y = {y}"),
-        _ =&gt; println!("Standardfall, x = {:?}", x),
+        _ =&gt; println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-11: Ein <code>match</code>-Ausdruck mit einem Zweig,
 der eine verschattete Variable <code>y</code> einführt</span></p>
@@ -23756,9 +23863,9 @@ wenn <code>y = 0</code>), auf der <code>y</code>-Achse liegen (<code>x = 0</code
     let p = Point { x: 0, y: 7 };
 
     match p {
-        Point { x, y: 0 } =&gt; println!("Auf der x-Achse bei {}", x),
-        Point { x: 0, y } =&gt; println!("Auf der y-Achse bei {}", y),
-        Point { x, y } =&gt; println!("Auf keiner Achse: ({}, {})", x, y),
+        Point { x, y: 0 } =&gt; println!("Auf der x-Achse bei {x}"),
+        Point { x: 0, y } =&gt; println!("Auf der y-Achse bei {y}"),
+        Point { x, y } =&gt; println!("Auf keiner Achse: ({x}, {y})"),
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 18-14: Destrukturieren und Abgleichen literaler
@@ -23803,7 +23910,7 @@ fn main() {
         Message::Move { x, y } =&gt; {
             println!("Bewege in x-Richtung {x} und in y-Richtung {y}");
         }
-        Message::Write(text) =&gt; println!("Textnachricht: {}", text),
+        Message::Write(text) =&gt; println!("Textnachricht: {text}"),
         Message::ChangeColor(r, g, b) =&gt; println!(
             "Ändere die Farbe in rot {r}, grün {g} und blau {b}"
         ),
@@ -23903,7 +24010,7 @@ letzter Zweig in einem <code>match</code>-Ausdruck ist, aber wir können es in j
 verwenden, einschließlich Funktionsparameter, wie in Codeblock 18-17 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn foo(_: i32, y: i32) {
-    println!("Dieser Code verwendet nur den Parameter y: {}", y);
+    println!("Dieser Code verwendet nur den Parameter y: {y}");
 }
 
 fn main() {
@@ -23945,7 +24052,7 @@ einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
         }
     }
 
-    println!("Einstellung ist {:?}", setting_value);
+    println!("Einstellung ist {setting_value:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-18: Das Verwenden eines Unterstrichs
 innerhalb von Mustern, die zu <code>Some</code>-Varianten passen, wenn wir den Wert
@@ -24010,7 +24117,7 @@ wird uns Codeblock 18-21 einen Fehler liefern.</p>
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-21: Eine unbenutzte Variable, die mit einem
 Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
@@ -24027,7 +24134,7 @@ ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben 
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-22: Das Verwenden eines Unterstrichs bindet
 den Wert nicht</span></p>
@@ -24053,7 +24160,7 @@ wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den 
     let origin = Point { x: 0, y: 0, z: 0 };
 
     match origin {
-        Point { x, .. } =&gt; println!("x ist {}", x),
+        Point { x, .. } =&gt; println!("x ist {x}"),
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-23: Ignorieren aller Felder eines <code>Point</code>
@@ -24089,7 +24196,7 @@ Verwendung von <code>..</code>, sodass es sich nicht kompilieren lässt.</p>
 
     match numbers {
         (.., second, ..) =&gt; {
-            println!("Einige Zahlen: {}", second)
+            println!("Einige Zahlen: {second}")
         },
     }
 <span class="boring">}</span></code></pre></pre>
@@ -24131,8 +24238,8 @@ ist) hat.</p>
 </span>    let num = Some(4);
 
     match num {
-        Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {} ist gerade", x),
-        Some(x) =&gt; println!("Die Zahl {} ist ungerade", x),
+        Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {x} ist gerade"),
+        Some(x) =&gt; println!("Die Zahl {x} ist ungerade"),
         None =&gt; (),
     }
 <span class="boring">}</span></code></pre></pre>
@@ -24168,10 +24275,10 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
     match x {
         Some(50) =&gt; println!("Habe 50 erhalten"),
         Some(n) if n == y =&gt; println!("Passt, n = {n}"),
-        _ =&gt; println!("Standardfall, x = {:?}", x),
+        _ =&gt; println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
 Testen der Gleichheit mit einer äußeren Variablen</span></p>
@@ -24242,11 +24349,11 @@ einen anderen Namen verwenden.</p>
     match msg {
         Message::Hello {
             id: id_variable @ 3..=7,
-        } =&gt; println!("id im Bereich gefunden: {}", id_variable),
+        } =&gt; println!("id im Bereich gefunden: {id_variable}"),
         Message::Hello { id: 10..=12 } =&gt; {
             println!("id in einem anderen Bereich gefunden")
         }
-        Message::Hello { id } =&gt; println!("Eine andere id gefunden: {}", id),
+        Message::Hello { id } =&gt; println!("Eine andere id gefunden: {id}"),
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-29: Verwenden von <code>@</code>, um an einen Wert in
@@ -24728,7 +24835,7 @@ statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.</p>
 <pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = "Hallo Welt!";
 
 fn main() {
-    println!("Name ist: {}", HELLO_WORLD);
+    println!("Name ist: {HELLO_WORLD}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-9: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span></p>
@@ -24762,7 +24869,7 @@ fn main() {
     add_to_count(3);
 
     unsafe {
-        println!("COUNTER: {}", COUNTER);
+        println!("COUNTER: {COUNTER}");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-10: Lesen von und Schreiben in eine
@@ -25057,9 +25164,7 @@ Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide e
 bereits eine Methode namens <code>fly</code> implementiert hat. Jede <code>fly</code>-Methode macht
 etwas anderes.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Pilot {
+<pre><pre class="playground"><code class="language-rust">trait Pilot {
     fn fly(&amp;self);
 }
 
@@ -25086,7 +25191,8 @@ impl Human {
         println!("*Wütend mit den Armen wedeln*");
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
 sie eine Methode <code>fly</code> haben und auf dem Typ <code>Human</code> implementiert sind, und
 eine Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implementiert</span></p>
@@ -25373,9 +25479,7 @@ angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
 bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
 Merkmals <code>OutlinePrint</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt;
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
 
 trait OutlinePrint: fmt::Display {
     fn outline_print(&amp;self) {
@@ -25383,12 +25487,13 @@ trait OutlinePrint: fmt::Display {
         let len = output.len();
         println!("{}", "*".repeat(len + 4));
         println!("*{}*", " ".repeat(len + 2));
-        println!("* {} *", output);
+        println!("* {output} *");
         println!("*{}*", " ".repeat(len + 2));
         println!("{}", "*".repeat(len + 4));
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-22: Implementieren des Merkmals
 <code>OutlinePrint</code>, das die Funktionalität von <code>Display</code> erfordert</span></p>
 <p>Da wir festgelegt haben, dass <code>OutlinePrint</code> das Merkmal <code>Display</code> erfordert,
@@ -25410,7 +25515,7 @@ zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Strukt
 </span><span class="boring">        let len = output.len();
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
-</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("* {output} *");
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
@@ -25457,7 +25562,7 @@ Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
 </span><span class="boring">        let len = output.len();
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
-</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("* {output} *");
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
@@ -25520,7 +25625,7 @@ impl fmt::Display for Wrapper {
 
 fn main() {
     let w = Wrapper(vec![String::from("Hallo"), String::from("Welt")]);
-    println!("w = {}", w);
+    println!("w = {w}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-23: Erstellen eines Typs <code>Wrapper</code> um
 <code>Vec&lt;String&gt;</code> zur Implementierung von <code>Display</code></span></p>
@@ -25738,7 +25843,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
 </span><span class="boring">
-</span><span class="boring">    println!("Die Geheimzahl ist: {}", secret_number);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    loop {
 </span><span class="boring">        println!("Bitte gib deine Schätzung ein.");
@@ -25756,7 +25861,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
             Err(_) =&gt; continue,
         };
 <span class="boring">
-</span><span class="boring">        println!("Du hast geschätzt: {}", guess);
+</span><span class="boring">        println!("Du hast geschätzt: {guess}");
 </span><span class="boring">
 </span><span class="boring">        // --abschneiden--
 </span><span class="boring">
@@ -25957,7 +26062,7 @@ fn do_twice(f: fn(i32) -&gt; i32, arg: i32) -&gt; i32 {
 fn main() {
     let answer = do_twice(add_one, 5);
 
-    println!("Die Antwort ist: {}", answer);
+    println!("Die Antwort ist: {answer}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-27: Verwenden des Typs <code>fn</code> zum
 Entgegennehmen eines Funktionszeigers als Argument</span></p>
@@ -26213,7 +26318,7 @@ Codes: <code>temp_vec.push()</code> innerhalb von <code>$()*</code> wird für je
 keinmal oder mehrmals mit <code>$()</code> im Muster übereinstimmt, je nachdem, wie oft
 das Muster passt. Das <code>$x</code> wird durch jeden passenden Ausdruck ersetzt. Wenn
 wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird durch diesen Aufruf
-folgender Code generierte:</p>
+folgender Code generiert:</p>
 <pre><code class="language-rust ignore">{
     let mut temp_vec = Vec::new();
     temp_vec.push(1);
@@ -26353,7 +26458,7 @@ Füge das Folgende zur Datei <em>Cargo.toml</em> für <code>hello_macro_derive</
 proc-macro = true
 
 [dependencies]
-syn = "1.0"
+syn = "2.0"
 quote = "1.0"
 </code></pre>
 <p>Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code
@@ -26435,7 +26540,7 @@ hat</span></p>
 eine Einheitsstruktur (unit struct) mit dem <code>ident</code> (identifier, engl.
 Bezeichner, d.h. dem Namen) von <code>Pancakes</code> ist. Es gibt weitere Felder in
 dieser Struktur zur Beschreibung aller Arten von Rust-Code; weitere
-Informationen findest du in der <a href="https://docs.rs/syn/1.0/syn/struct.DeriveInput.html"><code>syn</code>-Dokumentation für
+Informationen findest du in der <a href="https://docs.rs/syn/2.0/syn/struct.DeriveInput.html"><code>syn</code>-Dokumentation für
 <code>DeriveInput</code></a>.</p>
 <p>Bald werden wir die Funktion <code>impl_hello_macro</code> definieren, wo wir den neuen
 Rust-Code bauen werden, den wir einbinden wollen. Aber bevor wir das tun,
@@ -26772,7 +26877,7 @@ fn handle_connection(mut stream: TcpStream) {
         .take_while(|line| !line.is_empty())
         .collect();
 
-    println!("Request: {:#?}", http_request);
+    println!("Request: {http_request:#?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 20-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
@@ -27218,7 +27323,7 @@ einfacher, den Unterschied zwischen den beiden Fällen zu erkennen, und es
 bedeutet, dass wir nur einen Ort haben, an dem wir den Code aktualisieren
 müssen, wenn wir ändern wollen, wie das Lesen der Datei und das Schreiben der
 Antwort funktionieren. Das Verhalten des Codes in Codeblock 20-9 ist dasselbe
-wie in Codeblock 20-8.</p>
+wie in Codeblock 20-7.</p>
 <p>Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
 anderen Anfragen mit einer 404-Antwort.</p>
@@ -27532,32 +27637,25 @@ der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">fn handle_connection(mut stream: TcpStream) {
-</span><span class="boring">    let mut buffer = [0; 1024];
-</span><span class="boring">    stream.read(&amp;mut buffer).unwrap();
+</span><span class="boring">    let buf_reader = BufReader::new(&amp;mut stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
-</span><span class="boring">    let get = b"GET / HTTP/1.1\r\n";
-</span><span class="boring">    let sleep = b"GET /sleep HTTP/1.1\r\n";
-</span><span class="boring">
-</span><span class="boring">    let (status_line, filename) = if buffer.starts_with(get) {
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else if buffer.starts_with(sleep) {
-</span><span class="boring">        thread::sleep(Duration::from_secs(5));
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else {
-</span><span class="boring">        ("HTTP/1.1 404 NOT FOUND", "404.html")
+</span><span class="boring">    let (status_line, filename) = match &amp;request_line[..] {
+</span><span class="boring">        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+</span><span class="boring">        "GET /sleep HTTP/1.1" =&gt; {
+</span><span class="boring">            thread::sleep(Duration::from_secs(5));
+</span><span class="boring">            ("HTTP/1.1 200 OK", "hello.html")
+</span><span class="boring">        }
+</span><span class="boring">        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
+</span><span class="boring">    let length = contents.len();
 </span><span class="boring">
-</span><span class="boring">    let response = format!(
-</span><span class="boring">        "{}\r\nContent-Length: {}\r\n\r\n{}",
-</span><span class="boring">        status_line,
-</span><span class="boring">        contents.len(),
-</span><span class="boring">        contents
-</span><span class="boring">    );
+</span><span class="boring">    let response =
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
-</span><span class="boring">    stream.write(response.as_bytes()).unwrap();
-</span><span class="boring">    stream.flush().unwrap();
+</span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
 <p>Dieser Code wird immer noch nicht funktionieren, aber lass uns ihn noch einmal
 überprüfen, um den nächsten Fehler zu erhalten, den wir beheben müssen:</p>
@@ -27578,13 +27676,16 @@ einen Parameter haben muss, der <code>4</code> als Argument akzeptieren kann und
 <code>ThreadPool</code>-Instanz zurückgeben sollte. Lass uns die einfachste Funktion <code>new</code>
 implementieren, die diese Eigenschaften haben wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub struct ThreadPool;
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct ThreadPool;
 
 impl ThreadPool {
     pub fn new(size: usize) -&gt; ThreadPool {
         ThreadPool
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
 eine negative Anzahl von Strängen keinen Sinn macht. Wir wissen auch, dass wir
 diese 4 als die Anzahl der Elemente in einer Kollektion von Strängen verwenden
@@ -29178,32 +29279,25 @@ wird, wie in Codeblock 20-25 gezeigt.</p>
 }
 <span class="boring">
 </span><span class="boring">fn handle_connection(mut stream: TcpStream) {
-</span><span class="boring">    let mut buffer = [0; 1024];
-</span><span class="boring">    stream.read(&amp;mut buffer).unwrap();
+</span><span class="boring">    let buf_reader = BufReader::new(&amp;mut stream);
+</span><span class="boring">    let request_line = buf_reader.lines().next().unwrap().unwrap();
 </span><span class="boring">
-</span><span class="boring">    let get = b"GET / HTTP/1.1\r\n";
-</span><span class="boring">    let sleep = b"GET /sleep HTTP/1.1\r\n";
-</span><span class="boring">
-</span><span class="boring">    let (status_line, filename) = if buffer.starts_with(get) {
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else if buffer.starts_with(sleep) {
-</span><span class="boring">        thread::sleep(Duration::from_secs(5));
-</span><span class="boring">        ("HTTP/1.1 200 OK", "hello.html")
-</span><span class="boring">    } else {
-</span><span class="boring">        ("HTTP/1.1 404 NOT FOUND", "404.html")
+</span><span class="boring">    let (status_line, filename) = match &amp;request_line[..] {
+</span><span class="boring">        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+</span><span class="boring">        "GET /sleep HTTP/1.1" =&gt; {
+</span><span class="boring">            thread::sleep(Duration::from_secs(5));
+</span><span class="boring">            ("HTTP/1.1 200 OK", "hello.html")
+</span><span class="boring">        }
+</span><span class="boring">        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
 </span><span class="boring">    };
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(filename).unwrap();
+</span><span class="boring">    let length = contents.len();
 </span><span class="boring">
-</span><span class="boring">    let response = format!(
-</span><span class="boring">        "{}\r\nContent-Length: {}\r\n\r\n{}",
-</span><span class="boring">        status_line,
-</span><span class="boring">        contents.len(),
-</span><span class="boring">        contents
-</span><span class="boring">    );
+</span><span class="boring">    let response =
+</span><span class="boring">        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 </span><span class="boring">
-</span><span class="boring">    stream.write(response.as_bytes()).unwrap();
-</span><span class="boring">    stream.flush().unwrap();
+</span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 20-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span></p>
@@ -29282,32 +29376,25 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    let mut buffer = [0; 1024];
-    stream.read(&amp;mut buffer).unwrap();
+    let buf_reader = BufReader::new(&amp;mut stream);
+    let request_line = buf_reader.lines().next().unwrap().unwrap();
 
-    let get = b"GET / HTTP/1.1\r\n";
-    let sleep = b"GET /sleep HTTP/1.1\r\n";
-
-    let (status_line, filename) = if buffer.starts_with(get) {
-        ("HTTP/1.1 200 OK", "hello.html")
-    } else if buffer.starts_with(sleep) {
-        thread::sleep(Duration::from_secs(5));
-        ("HTTP/1.1 200 OK", "hello.html")
-    } else {
-        ("HTTP/1.1 404 NOT FOUND", "404.html")
+    let (status_line, filename) = match &amp;request_line[..] {
+        "GET / HTTP/1.1" =&gt; ("HTTP/1.1 200 OK", "hello.html"),
+        "GET /sleep HTTP/1.1" =&gt; {
+            thread::sleep(Duration::from_secs(5));
+            ("HTTP/1.1 200 OK", "hello.html")
+        }
+        _ =&gt; ("HTTP/1.1 404 NOT FOUND", "404.html"),
     };
 
     let contents = fs::read_to_string(filename).unwrap();
+    let length = contents.len();
 
-    let response = format!(
-        "{}\r\nContent-Length: {}\r\n\r\n{}",
-        status_line,
-        contents.len(),
-        contents
-    );
+    let response =
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
 
-    stream.write(response.as_bytes()).unwrap();
-    stream.flush().unwrap();
+    stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -29387,12 +29474,12 @@ impl Worker {
 
             match message {
                 Ok(job) =&gt; {
-                    println!("Worker {} hat einen Auftrag erhalten; führe ihn aus.", id);
+                    println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 
                     job();
                 }
                 Err(_) =&gt; {
-                    println!("Worker {} nicht mehr verbunden, wird beendet.", id);
+                    println!("Worker {id} nicht mehr verbunden, wird beendet.");
                     break;
                 }
             }
@@ -30107,7 +30194,7 @@ eine neue Übersetzung zu informieren!</p>
 <li><a href="https://github.com/psychoslave/Rust-libro">Esperanto</a></li>
 <li><a href="https://github.com/TChatzigiannakis/rust-book-greek">ελληνική</a></li>
 <li><a href="https://github.com/sebras/book">Svenska</a></li>
-<li><a href="https://github.com/pomokhtari/rust-book-fa">Farsi</a></li>
+<li><a href="https://github.com/RustFarsi/book">Farsi</a></li>
 <li><a href="https://github.com/rust-lang-de/rustbook-de">Deutsch</a></li>
 <li><a href="https://github.com/venkatarun95/rust-book-hindi">हिंदी</a></li>
 <li><a href="https://github.com/rust-lang-th/book-th">ไทย</a></li>
@@ -30214,6 +30301,11 @@ eine Beta-Version nicht wie erwartet funktioniert, kannst du dies dem Team
 melden und sie vor der nächsten stabilen Version korrigieren lassen! Ein Bruch
 in einer Beta-Version ist relativ selten, aber <code>rustc</code> ist immer noch ein Stück
 Software und es gibt Fehler.</p>
+<h3 id="wartungsdauer"><a class="header" href="#wartungsdauer">Wartungsdauer</a></h3>
+<p>Das Rust-Projekt unterstützt die neueste stabile Version. Wenn eine neue
+stabile Version veröffentlicht wird, erreicht die alte Version ihr
+Lebensende (engl. end of life, EOL). Das bedeutet, dass jede Version
+sechs Wochen lang unterstützt wird.</p>
 <h3 id="instabile-funktionalitäten"><a class="header" href="#instabile-funktionalitäten">Instabile Funktionalitäten</a></h3>
 <p>Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: Instabile
 Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalter“

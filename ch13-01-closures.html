@@ -194,7 +194,7 @@ repräsentiert, die ein Feld mit dem Namen <code>shirts</code> hat, das ein
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
 zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust noplayground">#[derive(Debug, PartialEq, Copy, Clone)]
+<pre><pre class="playground"><code class="language-rust">#[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
     Blue,
@@ -234,18 +234,12 @@ fn main() {
 
     let user_pref1 = Some(ShirtColor::Red);
     let giveaway1 = store.giveaway(user_pref1);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref1, giveaway1
-    );
+    println!("Der Benutzer mit Präferenz {user_pref1:?} erhält {giveaway1:?}");
 
     let user_pref2 = None;
     let giveaway2 = store.giveaway(user_pref2);
-    println!(
-        "Der Benutzer mit Präferenz {:?} erhält {:?}",
-        user_pref2, giveaway2
-    );
-}</code></pre>
+    println!("Der Benutzer mit Präferenz {user_pref2:?} erhält {giveaway2:?}");
+}</code></pre></pre>
 <p><span class="caption">Codeblock 13-1: Werbegeschenk der Shirtfirma</span></p>
 <p>Der in <code>main</code> definierte <code>store</code> hat zwei blaue Shirts und ein rotes Shirt
 übrig, die für diese limitierte Aktion verteilt werden sollen. Wir rufen die
@@ -435,13 +429,13 @@ nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    let only_borrows = || println!("Im Funktionsabschluss: {:?}", list);
+    let only_borrows = || println!("Im Funktionsabschluss: {list:?}");
 
-    println!("Vor dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Vor dem Funktionsabschluss-Aufruf: {list:?}");
     only_borrows();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-4: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine unveränderbare Referenz erfasst</span></p>
@@ -469,12 +463,12 @@ nun eine veränderbare Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let mut list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
     let mut borrows_mutably = || list.push(7);
 
     borrows_mutably();
-    println!("Nach dem Funktionsabschluss-Aufruf: {:?}", list);
+    println!("Nach dem Funktionsabschluss-Aufruf: {list:?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-5: Definieren und Aufrufen eines
 Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
@@ -514,9 +508,9 @@ in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 
 fn main() {
     let list = vec![1, 2, 3];
-    println!("Vor der Funktionsabschlussdefinition: {:?}", list);
+    println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {:?}", list))
+    thread::spawn(move || println!("Im Strang: {list:?}"))
         .join()
         .unwrap();
 }</code></pre></pre>
@@ -604,8 +598,8 @@ keine Argumente annimmt und ein <code>T</code> zurückgeben muss. Die Verwendung
 <code>unwrap_or_else</code> können wir sehen, dass, wenn die <code>Option</code> <code>Some</code> ist, <code>f</code>
 nicht aufgerufen wird. Wenn die <code>Option</code> <code>None</code> ist, wird <code>f</code> einmal
 aufgerufen. Da alle Funktionsabschlüsse <code>FnOnce</code> implementieren, akzeptiert
-<code>unwrap_or_else</code> die unterschiedlichsten Arten von Funktionsabschlüssen und ist
-so flexibel wie nur möglich.</p>
+<code>unwrap_or_else</code> alle drei Arten von Funktionsabschlüssen und ist so flexibel
+wie nur möglich.</p>
 <blockquote>
 <p>Anmerkung: Funktionen können auch alle drei <code>Fn</code>-Merkmale implementieren.
 Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
@@ -640,7 +634,7 @@ fn main() {
     ];
 
     list.sort_by_key(|r| r.width);
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 13-7: Verwenden von <code>sort_by_key</code> um Rechtecke
 nach ihrer Breite zu sortieren</span></p>
@@ -693,24 +687,24 @@ fn main() {
         sort_operations.push(value);
         r.width
     });
-    println!("{:#?}", list);
+    println!("{list:#?}");
 }</code></pre></pre>
 <p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
 mit <code>sort_by_key</code> zu verwenden</span></p>
-<p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), um zu
-versuchen, die Anzahl der Aufrufe von <code>sort_by_key</code> beim Sortieren von <code>list</code>
-zu zählen. Dieser Code versucht, diese Zählung durchzuführen, indem er <code>value</code>,
-einen <code>String</code> aus der Umgebung des Funktionsabschlusses, in den
-<code>sort_operations</code>-Vektor schiebt. Der Funktionsabschluss erfasst <code>value</code> und
-verschiebt dann <code>value</code> aus dem Funktionsabschluss heraus, indem er die
-Eigentümerschaft von <code>value</code> an den Vektor <code>sort_operations</code> überträgt. Dieser
-Funktionsabschluss kann einmal aufgerufen werden; ein zweiter Aufruf würde nicht
-funktionieren, da <code>value</code> nicht mehr in der Umgebung wäre, um erneut in
-<code>sort_operations</code> verschoben zu werden! Daher implementiert dieser
-Funktionsabschluss nur <code>FnOnce</code>. Wenn wir versuchen, diesen Code zu
-kompilieren, erhalten wir die Fehlermeldung, dass <code>value</code> nicht aus dem
-Funktionsabschluss verschoben werden kann, weil der Funktionsabschluss <code>FnMut</code>
-implementieren muss:</p>
+<p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
+versucht die Anzahl der Aufrufe des Funktionsabschlusses durch <code>sort_by_key</code>
+beim Sortieren von <code>list</code> zu zählen. Dieser Code versucht diese Zählung
+durchzuführen, indem er den <code>String</code> <code>value</code> aus der Umgebung des
+Funktionsabschlusses in den Vektor <code>sort_operations</code> verschiebt. Der
+Funktionsabschluss erfasst <code>value</code> und verschiebt dann <code>value</code> aus dem
+Funktionsabschluss heraus, indem er die Eigentümerschaft von <code>value</code> an den
+Vektor <code>sort_operations</code> überträgt. Dieser Funktionsabschluss kann einmal
+aufgerufen werden; ein zweiter Aufruf würde nicht funktionieren, da <code>value</code>
+nicht mehr in der Umgebung wäre, um erneut in <code>sort_operations</code> verschoben zu
+werden! Daher implementiert dieser Funktionsabschluss nur <code>FnOnce</code>. Wenn wir
+versuchen, diesen Code zu kompilieren, erhalten wir die Fehlermeldung, dass
+<code>value</code> nicht aus dem Funktionsabschluss verschoben werden kann, weil der
+Funktionsabschluss <code>FnMut</code> implementieren muss:</p>
 <pre><code class="language-console">$ cargo run
    Compiling playground v0.0.1 (/playground)
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
@@ -755,7 +749,7 @@ fn main() {
         num_sort_operations += 1;
         r.width
     });
-    println!("{:#?}, sortiert in {num_sort_operations} Operationen", list);
+    println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }</code></pre></pre>
 <p><span class="caption">Listing 13-9: Verwenden eines
 <code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>

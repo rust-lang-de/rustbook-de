@@ -359,10 +359,13 @@ error[E0432]: unresolved import `rand`
 und geben an, dass <code>rand</code> auch eine Abhängigkeit davon ist. Durch das Erstellen
 des Pakets <code>adder</code> wird <code>rand</code> zur Liste der Abhängigkeiten für <code>adder</code> in
 <em>Cargo.lock</em> hinzugefügt, es werden jedoch keine zusätzlichen Kopien von <code>rand</code>
-heruntergeladen. Cargo hat dafür gesorgt, dass jede Kiste in jedem Paket im
+heruntergeladen. Cargo stellt sicher, dass jede Kiste in jedem Paket im
 Arbeitsbereich, das das <code>rand</code>-Paket verwendet, die gleiche Version verwendet,
-was uns Platz spart und sicherstellt, dass die Kisten im Arbeitsbereich
-miteinander kompatibel sind.</p>
+solange sie kompatible Versionen von <code>rand</code> angeben, was uns Platz spart und
+sicherstellt, dass die Kisten im Arbeitsbereich miteinander kompatibel sind.</p>
+<p>Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
+angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
+Versionen wie möglich aufzulösen.</p>
 <h4 id="hinzufügen-eines-tests-zu-einem-arbeitsbereich"><a class="header" href="#hinzufügen-eines-tests-zu-einem-arbeitsbereich">Hinzufügen eines Tests zu einem Arbeitsbereich</a></h4>
 <p>Füge für eine weitere Verbesserung innerhalb der <code>add_one</code>-Kiste einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>

@@ -235,18 +235,17 @@ Codeblock 18-8 zu korrigieren ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
 </span>    if let Some(x) = some_option_value {
-        println!("{}", x);
+        println!("{x}");
     }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-9: Verwenden von <code>if let</code> und eines Blocks
 mit abweisbaren Mustern anstelle von <code>let</code></span></p>
-<p>Wir haben den Code repariert! Dieser Code ist vollkommen gültig, obwohl er
-bedeutet, dass wir kein unabweisbares Muster verwenden können, ohne einen
-Fehler zu erhalten. Wenn wir <code>if let</code> ein Muster geben, das immer passen wird,
-z.B. <code>x</code>, wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
+<p>Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
+<code>if let</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B. <code>x</code>,
+wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span>    if let x = 5 {
-        println!("{}", x);
+        println!("{x}");
     };
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-10: Der Versuch, ein unabweisbares Muster

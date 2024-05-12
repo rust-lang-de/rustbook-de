@@ -382,8 +382,7 @@ Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 impl Guess {
     pub fn new(value: i32) -&gt; Guess {
         if value &lt; 1 || value &gt; 100 {
-            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {}.",
-                   value);
+            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {value}.");
         }
 
         Guess { value }

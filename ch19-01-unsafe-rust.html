@@ -588,7 +588,7 @@ statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.</p>
 <pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = "Hallo Welt!";
 
 fn main() {
-    println!("Name ist: {}", HELLO_WORLD);
+    println!("Name ist: {HELLO_WORLD}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-9: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span></p>
@@ -622,7 +622,7 @@ fn main() {
     add_to_count(3);
 
     unsafe {
-        println!("COUNTER: {}", COUNTER);
+        println!("COUNTER: {COUNTER}");
     }
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-10: Lesen von und Schreiben in eine

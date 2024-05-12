@@ -184,10 +184,10 @@ Funktionen, die beide den größten Wert in einem Anteilstyp finden. Wir werden
 diese dann in einer einzigen Funktion kombinieren, die generische Typen
 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn largest_i32(list: &amp;[i32]) -&gt; i32 {
-    let mut largest = list[0];
+<pre><pre class="playground"><code class="language-rust">fn largest_i32(list: &amp;[i32]) -&gt; &amp;i32 {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
@@ -196,10 +196,10 @@ verwendet.</p>
     largest
 }
 
-fn largest_char(list: &amp;[char]) -&gt; char {
-    let mut largest = list[0];
+fn largest_char(list: &amp;[char]) -&gt; &amp;char {
+    let mut largest = &amp;list[0];
 
-    for &amp;item in list {
+    for item in list {
         if item &gt; largest {
             largest = item;
         }
@@ -212,14 +212,14 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest_i32(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
-<span class="boring">    assert_eq!(result, 100);
+    println!("Die größte Zahl ist {result}");
+<span class="boring">    assert_eq!(*result, 100);
 </span>
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest_char(&amp;char_list);
-    println!("Das größte Zeichen ist {}", result);
-<span class="boring">    assert_eq!(result, 'y');
+    println!("Das größte Zeichen ist {result}");
+<span class="boring">    assert_eq!(*result, 'y');
 </span>}</code></pre></pre>
 <p><span class="caption">Codeblock 10-4: Zwei Funktionen, die sich nur in ihren
 Namen und den Typen in ihren Signaturen unterscheiden</span></p>
@@ -271,12 +271,12 @@ fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let result = largest(&amp;number_list);
-    println!("Die größte Zahl ist {}", result);
+    println!("Die größte Zahl ist {result}");
 
     let char_list = vec!['y', 'm', 'a', 'q'];
 
     let result = largest(&amp;char_list);
-    println!("Das größte Zeichen ist {}", result);
+    println!("Das größte Zeichen ist {result}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-5: Die Funktion <code>largest</code> mit generischen
 Typparametern; diese kompiliert aber noch nicht</span></p>

@@ -201,7 +201,7 @@ Gültigkeitsbereich hat.</p>
         r = &amp;x;
     }
 
-    println!("r: {}", r);
+    println!("r: {r}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 10-16: Ein Versuch, eine Referenz zu verwenden,
 deren Wert außerhalb des Gültigkeitsbereichs liegt</span></p>
@@ -232,8 +232,8 @@ error[E0597]: `x` does not live long enough
 7 |     }
   |     - `x` dropped here while still borrowed
 8 |
-9 |     println!("r: {}", r);
-  |                       - borrow later used here
+9 |     println!("r: {r}");
+  |                  --- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -260,7 +260,7 @@ Annotationen, die die Lebensdauer der Variablen angeben.</p>
         r = &amp;x;           //  |       |
     }                     // -+       |
                           //          |
-    println!("r: {}", r); //          |
+    println!("r: {r}");   //          |
 }                         // ---------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-17: Annotationen der Lebensdauern von <code>r</code>
 und <code>x</code>, genannt <code>'a</code> bzw. <code>'b</code></span></p>
@@ -278,7 +278,7 @@ Referenz hat und fehlerfrei kompiliert werden kann.</p>
                           //           |
     let r = &amp;x;           // --+-- 'a  |
                           //   |       |
-    println!("r: {}", r); //   |       |
+    println!("r: {r}");   //   |       |
                           // --+       |
 }                         // ----------+</code></pre></pre>
 <p><span class="caption">Codeblock 10-18: Eine gültige Referenz, da die Daten eine
@@ -302,7 +302,7 @@ implementiert haben, sollte der Code in Codeblock 10-19 <code>Die längere Zeich
     let string2 = "xyz";
 
     let result = longest(string1.as_str(), string2);
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }</code></pre>
 <p><span class="caption">Codeblock 10-19: Eine Funktion <code>main</code>, die die Funktion
 <code>longest</code> aufruft, um die längere von zwei Zeichenkettenanteilstypen zu
@@ -322,7 +322,7 @@ implementieren, wird sie sich nicht kompilieren lassen.</p>
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest(x: &amp;str, y: &amp;str) -&gt; &amp;str {
@@ -411,7 +411,7 @@ Referenz hinzu, wie in Codeblock 10-21 gezeigt.</p>
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -471,7 +471,7 @@ beschränken, indem wir Referenzen mit unterschiedlichen konkreten Lebensdauern
     {
         let string2 = String::from("xyz");
         let result = longest(string1.as_str(), string2.as_str());
-        println!("Die längere Zeichenkette ist {}", result);
+        println!("Die längere Zeichenkette ist {result}");
     }
 }
 <span class="boring">
@@ -505,7 +505,7 @@ Der Code in Codeblock 10-23 lässt sich nicht kompilieren.</p>
         let string2 = String::from("xyz");
         result = longest(string1.as_str(), string2.as_str());
     }
-    println!("Die längere Zeichenkette ist {}", result);
+    println!("Die längere Zeichenkette ist {result}");
 }
 <span class="boring">
 </span><span class="boring">fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;'a str) -&gt; &amp;'a str {
@@ -529,8 +529,8 @@ error[E0597]: `string2` does not live long enough
   |                                            ^^^^^^^ borrowed value does not live long enough
 7 |     }
   |     - `string2` dropped here while still borrowed
-8 |     println!("Die längere Zeichenkette ist {}", result);
-  |                                          ------ borrow later used here
+8 |     println!("Die längere Zeichenkette ist {result}");
+  |                                            -------- borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -566,7 +566,7 @@ kompilieren:</p>
 </span><span class="boring">    let string2 = "efghijklmnopqrstuvwxyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;'a str, y: &amp;str) -&gt; &amp;'a str {
@@ -589,7 +589,7 @@ Implementierung der Funktion <code>longest</code>, die sich nicht kompilieren l�
 </span><span class="boring">    let string2 = "xyz";
 </span><span class="boring">
 </span><span class="boring">    let result = longest(string1.as_str(), string2);
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn longest&lt;'a&gt;(x: &amp;str, y: &amp;str) -&gt; &amp;'a str {
@@ -815,7 +815,7 @@ was keine Referenz ist:</p>
 <span class="boring">
 </span><span class="boring">impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
 </span><span class="boring">    fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-</span><span class="boring">        println!("Bitte um Aufmerksamkeit: {}", announcement);
+</span><span class="boring">        println!("Bitte um Aufmerksamkeit: {announcement}");
 </span><span class="boring">        self.part
 </span><span class="boring">    }
 </span><span class="boring">}
@@ -843,7 +843,7 @@ Referenz auf <code>self</code> wegen der ersten Elisionsregel zu annotieren.</p>
 </span><span class="boring">
 </span>impl&lt;'a&gt; ImportantExcerpt&lt;'a&gt; {
     fn announce_and_return_part(&amp;self, announcement: &amp;str) -&gt; &amp;str {
-        println!("Bitte um Aufmerksamkeit: {}", announcement);
+        println!("Bitte um Aufmerksamkeit: {announcement}");
         self.part
     }
 }
@@ -893,7 +893,7 @@ Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
 </span><span class="boring">        string2,
 </span><span class="boring">        "Heute hat jemand Geburtstag!",
 </span><span class="boring">    );
-</span><span class="boring">    println!("Die längere Zeichenkette ist {}", result);
+</span><span class="boring">    println!("Die längere Zeichenkette ist {result}");
 </span><span class="boring">}
 </span><span class="boring">
 </span>use std::fmt::Display;
@@ -906,7 +906,7 @@ fn longest_with_an_announcement&lt;'a, T&gt;(
 where
     T: Display,
 {
-    println!("Bekanntmachung! {}", ann);
+    println!("Bekanntmachung! {ann}");
     if x.len() &gt; y.len() {
         x
     } else {
@@ -917,9 +917,9 @@ where
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens <code>ann</code> vom generischen Typ <code>T</code>, der jeder beliebige Typ sein
 kann, der das Merkmal <code>Display</code> implementiert, wie in der <code>where</code>-Klausel
-spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von <code>{}</code>
-ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist. Da die
-Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
+spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
+<code>{ann}</code> ausgegeben, weshalb die Merkmalsabgrenzung <code>Display</code> erforderlich ist.
+Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
 Lebensdauer-Parameters <code>'a</code> und des generischen Typ-Parameters <code>T</code> in der
 gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>

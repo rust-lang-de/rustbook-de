@@ -281,11 +281,11 @@ haben, können wir Aspekte, z.B. die Datenstruktur, in Zukunft leicht ändern.
 Zum Beispiel könnten wir ein <code>HashSet&lt;i32&gt;</code> anstelle eines <code>Vec&lt;i32&gt;</code> für das
 <code>list</code>-Feld verwenden. Solange die Signaturen der öffentlichen Methoden <code>add</code>,
 <code>remove</code> und <code>average</code> gleich bleiben, würde Code, der <code>AveragedCollection</code>
-verwendet, nicht geändert werden müssen. Wenn wir stattdessen <code>list</code> öffentlich
-machen würden, wäre dies nicht unbedingt der Fall: <code>HashSet&lt;i32&gt;</code> und
-<code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum Hinzufügen und Entfernen von
-Elementen, sodass externer Code wahrscheinlich geändert werden müsste, wenn er
-<code>list</code> direkt modifizieren würde.</p>
+verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
+stattdessen <code>list</code> öffentlich machen würden, wäre dies nicht unbedingt der
+Fall: <code>HashSet&lt;i32&gt;</code> und <code>Vec&lt;i32&gt;</code> haben unterschiedliche Methoden zum
+Hinzufügen und Entfernen von Elementen, sodass externer Code wahrscheinlich
+geändert werden müsste, wenn er <code>list</code> direkt modifizieren würde.</p>
 <p>Wenn die Kapselung ein erforderlicher Aspekt ist, damit eine Sprache als
 objektorientiert betrachtet werden kann, dann erfüllt Rust diese Anforderung.
 Die Möglichkeit, <code>pub</code> für verschiedene Teile des Codes zu verwenden oder auch

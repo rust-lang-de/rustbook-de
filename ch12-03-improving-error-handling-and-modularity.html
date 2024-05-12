@@ -192,15 +192,15 @@ auf verschiedene Arten fehlschlagen: Zum Beispiel könnte die Datei fehlen oder
 wir haben keine Berechtigung, sie zu öffnen. Im Moment würden wir unabhängig
 von der Situation die Fehlermeldung „Etwas ging beim Lesen der Datei schief“
 ausgeben, die dem Benutzer keinerlei Informationen geben würde!</p>
-<p>Viertens verwenden wir <code>expect</code> erneut, um verschiedene Fehler zu behandeln,
-und wenn der Benutzer unser Programm ausführt, ohne genügend Argumente
-anzugeben, erhält er einen <code>Index out of bounds</code>-Fehler von Rust, der das
-Problem nicht eindeutig erklärt. Am besten wäre es, wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befände, sodass zukünftige Betreuer nur
-eine Stelle im Code konsultieren bräuchten, falls sich die
-Fehlerbehandlungslogik ändern sollte. Wenn sich der gesamte
-Fehlerbehandlungscode an einer Stelle befindet, wird auch sichergestellt, dass
-wir Meldungen ausgeben, die für unsere Endbenutzer aussagekräftig sind.</p>
+<p>Viertens verwenden wir <code>expect</code> erneut, um einen Fehler zu behandeln, und wenn
+der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
+er einen <code>Index out of bounds</code>-Fehler von Rust, der das Problem nicht eindeutig
+erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
+einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
+Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
+sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
+aussagekräftig sind.</p>
 <p>Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.</p>
 <h3 id="trennen-der-zuständigkeiten-bei-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-bei-binärprojekten">Trennen der Zuständigkeiten bei Binärprojekten</a></h3>
 <p>Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
@@ -239,7 +239,7 @@ Kommandozeilen-Parselogik nach <em>src/lib.rs</em> vorzubereiten. Codeblock 12-5
 den neuen Anfang von <code>main</code>, der eine neue Funktion <code>parse_config</code> aufruft, die
 wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><code class="language-rust noplayground"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>fn main() {
@@ -249,8 +249,8 @@ wir vorerst in <em>src/main.rs</em> definieren werden.</p>
 
     // --abschneiden--
 <span class="boring">
-</span><span class="boring">    println!("Suche nach {}", query);
-</span><span class="boring">    println!("In Datei {}", file_path);
+</span><span class="boring">    println!("Suche nach {query}");
+</span><span class="boring">    println!("In Datei {file_path}");
 </span><span class="boring">
 </span><span class="boring">    let contents = fs::read_to_string(file_path)
 </span><span class="boring">        .expect("Etwas ging beim Lesen der Datei schief");
@@ -263,7 +263,7 @@ fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
     let file_path = &amp;args[2];
 
     (query, file_path)
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-5: Extrahieren einer Funktion <code>parse_config</code>
 aus <code>main</code></span></p>
 <p>Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
@@ -929,7 +929,7 @@ haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
 Beachte, dass dies nicht kompiliert werden kann, bis wir <em>src/main.rs</em> in
 Codeblock 12-14 modifiziert haben.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore">use std::error::Error;
+<pre><code class="language-rust ignore does_not_compile">use std::error::Error;
 use std::fs;
 
 pub struct Config {

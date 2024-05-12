@@ -396,9 +396,7 @@ Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide e
 bereits eine Methode namens <code>fly</code> implementiert hat. Jede <code>fly</code>-Methode macht
 etwas anderes.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>trait Pilot {
+<pre><pre class="playground"><code class="language-rust">trait Pilot {
     fn fly(&amp;self);
 }
 
@@ -425,7 +423,8 @@ impl Human {
         println!("*Wütend mit den Armen wedeln*");
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
 sie eine Methode <code>fly</code> haben und auf dem Typ <code>Human</code> implementiert sind, und
 eine Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implementiert</span></p>
@@ -712,9 +711,7 @@ angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
 bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
 Merkmals <code>OutlinePrint</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>use std::fmt;
+<pre><pre class="playground"><code class="language-rust">use std::fmt;
 
 trait OutlinePrint: fmt::Display {
     fn outline_print(&amp;self) {
@@ -722,12 +719,13 @@ trait OutlinePrint: fmt::Display {
         let len = output.len();
         println!("{}", "*".repeat(len + 4));
         println!("*{}*", " ".repeat(len + 2));
-        println!("* {} *", output);
+        println!("* {output} *");
         println!("*{}*", " ".repeat(len + 2));
         println!("{}", "*".repeat(len + 4));
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-22: Implementieren des Merkmals
 <code>OutlinePrint</code>, das die Funktionalität von <code>Display</code> erfordert</span></p>
 <p>Da wir festgelegt haben, dass <code>OutlinePrint</code> das Merkmal <code>Display</code> erfordert,
@@ -749,7 +747,7 @@ zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Strukt
 </span><span class="boring">        let len = output.len();
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
-</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("* {output} *");
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
@@ -796,7 +794,7 @@ Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
 </span><span class="boring">        let len = output.len();
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
-</span><span class="boring">        println!("* {} *", output);
+</span><span class="boring">        println!("* {output} *");
 </span><span class="boring">        println!("*{}*", " ".repeat(len + 2));
 </span><span class="boring">        println!("{}", "*".repeat(len + 4));
 </span><span class="boring">    }
@@ -859,7 +857,7 @@ impl fmt::Display for Wrapper {
 
 fn main() {
     let w = Wrapper(vec![String::from("Hallo"), String::from("Welt")]);
-    println!("w = {}", w);
+    println!("w = {w}");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 19-23: Erstellen eines Typs <code>Wrapper</code> um
 <code>Vec&lt;String&gt;</code> zur Implementierung von <code>Display</code></span></p>

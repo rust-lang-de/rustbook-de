@@ -280,20 +280,18 @@ reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
 Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
 wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
-<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span>    let tweet = Tweet {
+<pre><code class="language-rust ignore">use aggregator::{self, Summary, Tweet};
+
+fn main() {
+    let tweet = Tweet {
         username: String::from("horse_ebooks"),
-        content: String::from(
-            "natürlich, wie du wahrscheinlich schon weißt",
-        ),
+        content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
         retweet: false,
     };
 
     println!("1 neue Kurznachricht: {}", tweet.summarize());
-<span class="boring">}</span></code></pre>
+}</code></pre>
 <p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
@@ -333,7 +331,29 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
         String::from("(Lies mehr ...)")
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {}
+</span><span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 10-14: Definieren eines Merkmals <code>Summary</code> mit
 einer Standard-Implementierung der Methode <code>summarize</code></span></p>
 <p>Um eine Standard-Implementierung zu verwenden, um Instanzen von <code>NewsArticle</code>
@@ -380,7 +400,20 @@ Methode <code>summarize_author</code> aufruft:</p>
         format!("(Lies mehr von {}...)", self.summarize_author())
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
+</span><span class="boring">        format!("@{}", self.username)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre></pre>
 <p>Um diese Version von <code>Summary</code> zu verwenden, müssen wir <code>summarize_author</code> nur
 dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -440,6 +473,32 @@ verwenden, etwa so:</p>
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, von {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct Tweet {
+</span><span class="boring">    pub username: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">    pub reply: bool,
+</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}: {}", self.username, self.content)
+</span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>pub fn notify(item: &amp;impl Summary) {
@@ -511,7 +570,9 @@ nach der Funktionssignatur. Anstatt das hier zu schreiben:</p>
 where
     T: Display + Clone,
     U: Clone + Debug,
-{</code></pre>
+{
+<span class="boring">    unimplemented!()
+</span><span class="boring">}</span></code></pre>
 <p>Die Signatur dieser Funktion ist übersichtlicher: Der Funktionsname, die
 Parameterliste und der Rückgabetyp liegen nahe beieinander, ähnlich wie bei
 einer Funktion ohne viele Merkmalsabgrenzungen.</p>
@@ -522,6 +583,19 @@ gezeigt:</p>
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String;
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">pub struct NewsArticle {
+</span><span class="boring">    pub headline: String,
+</span><span class="boring">    pub location: String,
+</span><span class="boring">    pub author: String,
+</span><span class="boring">    pub content: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Summary for NewsArticle {
+</span><span class="boring">    fn summarize(&amp;self) -&gt; String {
+</span><span class="boring">        format!("{}, von {} ({})", self.headline, self.author, self.location)
+</span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">pub struct Tweet {
@@ -611,9 +685,7 @@ funktionieren:</p>
     } else {
         Tweet {
             username: String::from("horse_ebooks"),
-            content: String::from(
-                "natürlich, wie du wahrscheinlich schon weißt",
-            ),
+            content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
             reply: false,
             retweet: false,
         }

@@ -198,14 +198,23 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[cfg(test)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add(left: usize, right: usize) -&gt; usize {
+    left + right
+}
+
+#[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p>Dieser Code ist das automatisch generierte Testmodul. Das Attribut <code>cfg</code> steht
 für <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
@@ -222,7 +231,9 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub fn add_two(a: i32) -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add_two(a: i32) -&gt; i32 {
     internal_adder(a, 2)
 }
 
@@ -238,14 +249,15 @@ mod tests {
     fn internal() {
         assert_eq!(4, internal_adder(2, 2));
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
 Wie im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
-<code>test</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
+<code>tests</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
 <code>internal_adder</code> aufrufen. Wenn du der Meinung bist, dass private Funktionen
 nicht getestet werden sollten, gibt es in Rust nichts, was dich dazu zwingen
 würde.</p>
@@ -279,18 +291,18 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 </code></pre>
 <p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein:</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
-<pre><code class="language-rust ignore">use adder;
+<pre><code class="language-rust ignore">use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, adder::add_two(2));
+    assert_eq!(4, add_two(2));
 }</code></pre>
 <p><span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
 Kiste <code>adder</code></span></p>
 <p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir <code>use adder</code> am Anfang des Codes hinzu, was wir in den
-Modultests nicht brauchten.</p>
+diesem Grund fügen wir <code>use adder::add_two</code> am Anfang des Codes hinzu, was wir
+in den Modultests nicht brauchten.</p>
 <p>Wir brauchen den Code in <em>tests/integration_test.rs</em> nicht mit <code>#[cfg(test)]</code>
 zu annotieren. Cargo behandelt das Verzeichnis <code>tests</code> speziell und kompiliert
 Dateien in diesem Verzeichnis nur dann, wenn wir <code>cargo test</code> ausführen. Führe

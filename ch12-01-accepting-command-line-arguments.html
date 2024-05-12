@@ -271,7 +271,7 @@ angegebenen Werte zuzugreifen. Jetzt müssen wir die Werte der beiden Argumente
 in Variablen speichern, damit wir die Werte im restlichen Programm verwenden
 können. Das tun wir in Codeblock 12-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::env;
+<pre><code class="language-rust noplayground">use std::env;
 
 fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
@@ -281,7 +281,7 @@ fn main() {
 
     println!("Suche nach {}", query);
     println!("In Datei {}", file_path);
-}</code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>
 <p>Wie wir gesehen haben, als wir den Vektor ausgegeben haben, nimmt der

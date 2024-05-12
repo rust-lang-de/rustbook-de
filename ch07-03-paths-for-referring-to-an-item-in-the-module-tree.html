@@ -242,7 +242,7 @@ werden. Wir bevorzugen generell die Angabe absoluter Pfade, da es
 wahrscheinlicher ist, dass Codedefinitionen und Elementaufrufe unabhängig
 voneinander verschoben werden.</p>
 <p>Lass uns versuchen, Codeblock 7-3 zu kompilieren, und herausfinden, warum er
-sich noch nicht kompilieren lässt! Der Fehler, den wir erhalten, ist in
+sich noch nicht kompilieren lässt! Die Fehler, die wir erhalten, sind in
 Codeblock 7-4 zu sehen.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
@@ -326,7 +326,7 @@ pub fn eat_at_restaurant() {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
-<p>Leider führt der Code in Codeblock 7-5 immer noch zu einem Fehler, wie
+<p>Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
 Codeblock 7-6 zeigt.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
@@ -392,7 +392,7 @@ pub fn eat_at_restaurant() {
 <code>mod hosting</code> und <code>fn add_to_waitlist</code> lässt uns die Funktion in
 <code>eat_at_restaurant</code> aufrufen</span></p>
 <p>Jetzt kompiliert der Code! Um zu sehen, warum das Hinzufügen des Schlüsselworts
-<code>pub</code> uns erlaubt, diese Pfade in <code>add_to_waitlist</code> im Hinblick auf die
+<code>pub</code> uns erlaubt, diese Pfade in <code>eat_at_restaurant</code> im Hinblick auf die
 Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
 an.</p>
 <p>Auf dem absoluten Pfad beginnen wir mit <code>crate</code>, der Wurzel des Modulbaums

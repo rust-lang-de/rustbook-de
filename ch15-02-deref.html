@@ -274,16 +274,15 @@ Element definiert, sodass Codeblock 15-8 einen Typ <code>MyBox&lt;T&gt;</code> a
 Weise definiert. Wir werden auch eine <code>new</code>-Funktion definieren, die mit der in
 der <code>Box&lt;T&gt;</code> definierten übereinstimmt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>struct MyBox&lt;T&gt;(T);
+<pre><pre class="playground"><code class="language-rust">struct MyBox&lt;T&gt;(T);
 
 impl&lt;T&gt; MyBox&lt;T&gt; {
     fn new(x: T) -&gt; MyBox&lt;T&gt; {
         MyBox(x)
     }
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-8: Einen <code>MyBox&lt;T&gt;</code>-Typ definieren</span></p>
 <p>Wir definieren eine Struktur mit dem Namen <code>MyBox</code> und deklarieren einen
 generischen Parameter <code>T</code>, da unser Typ Werte eines beliebigen Typs enthalten
@@ -421,12 +420,11 @@ definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von <code>
 Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
 Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>fn hello(name: &amp;str) {
+<pre><pre class="playground"><code class="language-rust">fn hello(name: &amp;str) {
     println!("Hallo {name}!");
 }
-<span class="boring">}</span></code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-11: Eine <code>hello</code>-Funktion mit dem Parameter
 <code>name</code> vom Typ <code>&amp;str</code></span></p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument

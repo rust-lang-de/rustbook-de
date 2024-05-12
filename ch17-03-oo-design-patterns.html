@@ -306,7 +306,9 @@ Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> is
 also lass uns die Implementierung in Codeblock 17-13 zum Block <code>impl Post</code>
 hinzufügen:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -329,7 +331,8 @@ hinzufügen:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}</span></code></pre>
+</span><span class="boring">impl State for Draft {}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-13: Implementierung der Methode <code>add_text</code>
 zum Hinzufügen von Text zum <code>content</code> eines Beitrags</span></p>
 <p>Die Methode <code>add_text</code> nimmt eine veränderbare Referenz auf <code>self</code>, weil wir
@@ -352,7 +355,9 @@ damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
 Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -379,7 +384,8 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:</p>
 </span><span class="boring">
 </span><span class="boring">struct Draft {}
 </span><span class="boring">
-</span><span class="boring">impl State for Draft {}</span></code></pre>
+</span><span class="boring">impl State for Draft {}
+</span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-14: Hinzufügen einer
 Platzhalter-Implementierung für die <code>content</code>-Methode auf <code>Post</code>, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
@@ -390,7 +396,9 @@ bis hin zu Zeile 7 wie beabsichtigt.</p>
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
 ändern sollte. Codeblock 17-15 zeigt diesen Code:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Post {
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Post {
 </span><span class="boring">    state: Option&lt;Box&lt;dyn State&gt;&gt;,
 </span><span class="boring">    content: String,
 </span><span class="boring">}
@@ -437,7 +445,8 @@ impl State for PendingReview {
     fn request_review(self: Box&lt;Self&gt;) -&gt; Box&lt;dyn State&gt; {
         self
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-15: Implementierung der Methoden
 <code>request_review</code> für <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine

@@ -252,12 +252,12 @@ Element zu erhalten, da Vektoren mit Zahlen beginnend bei null indiziert
 werden. Mit <code>&amp;</code> und <code>[]</code> erhalten wir eine Referenz auf das Element mit dem
 Indexwert. Wenn wir die Methode <code>get</code> mit dem Index als Argument verwenden,
 erhalten wir eine <code>Option&lt;&amp;T&gt;</code>, die wir mit <code>match</code> verwenden können.</p>
-<p>Der Grund, warum Rust diese beiden Möglichkeiten, auf ein Element zu
-referenzieren, bietet ist, dass du wählen kannst, wie sich das Programm
-verhält, wenn du versuchst, einen Indexwert außerhalb des Bereichs der
-vorhandenen Elemente zu verwenden. Als Beispiel wollen wir sehen, was ein
-Programm tut, wenn wir bei einem Vektor mit fünf Elementen versuchen, auf ein
-Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu sehen ist.</p>
+<p>Rust bietet diese beide Möglichkeiten, um auf ein Element zu referenzieren. Du
+kannst nun ausprobieren, wie sich das Programm verhält, wenn du einen Indexwert
+außerhalb des Bereichs der vorhandenen Elemente zu verwendest. Als Beispiel
+wollen wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen
+versuchen, auf ein Element mit Index 100 zuzugreifen, wie in Codeblock 8-5 zu
+sehen ist.</p>
 <pre><pre class="playground"><code class="language-rust should_panic panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v = vec![1, 2, 3, 4, 5];
@@ -290,7 +290,7 @@ veränderbaren und unveränderbaren Referenzen im gleichen Gültigkeitsbereich
 haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
 unveränderbare Referenz auf das erste Element in einem Vektor halten und
 versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
-wir später in der Funktion versuchen auch auf dieses Element zuzugreifen:</p>
+wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut v = vec![1, 2, 3, 4, 5];

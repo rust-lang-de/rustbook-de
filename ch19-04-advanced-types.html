@@ -360,7 +360,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 </span><span class="boring">
 </span><span class="boring">    let secret_number = rand::thread_rng().gen_range(1, 101);
 </span><span class="boring">
-</span><span class="boring">    println!("Die Geheimzahl ist: {}", secret_number);
+</span><span class="boring">    println!("Die Geheimzahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    loop {
 </span><span class="boring">        println!("Bitte gib deine Schätzung ein.");
@@ -378,7 +378,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
             Err(_) =&gt; continue,
         };
 <span class="boring">
-</span><span class="boring">        println!("Du hast geschätzt: {}", guess);
+</span><span class="boring">        println!("Du hast geschätzt: {guess}");
 </span><span class="boring">
 </span><span class="boring">        // --abschneiden--
 </span><span class="boring">

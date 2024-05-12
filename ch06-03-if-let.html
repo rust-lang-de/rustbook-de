@@ -175,7 +175,7 @@ Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 match config_max {
-    Some(max) =&gt; println!("Das Maximum ist mit {} konfiguriert", max),
+    Some(max) =&gt; println!("Das Maximum ist mit {max} konfiguriert"),
     _ =&gt; (),
 }
 <span class="boring">}</span></code></pre></pre>
@@ -193,7 +193,7 @@ Codeblock 6-6:</p>
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 if let Some(max) = config_max {
-    println!("Das Maximum ist mit {} konfiguriert", max);
+    println!("Das Maximum ist mit {max} konfiguriert");
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Die Syntax <code>if let</code> nimmt ein Muster und einen Ausdruck, getrennt durch ein
@@ -236,7 +236,7 @@ diesem tun:</p>
 </span><span class="boring">    let coin = Coin::Penny;
 </span>    let mut count = 0;
     match coin {
-        Coin::Quarter(state) =&gt; println!("25-Cent-Münze aus {:?}!", state),
+        Coin::Quarter(state) =&gt; println!("25-Cent-Münze aus {state:?}!"),
         _ =&gt; count += 1,
     }
 <span class="boring">}</span></code></pre></pre>
@@ -259,7 +259,7 @@ diesem tun:</p>
 </span><span class="boring">    let coin = Coin::Penny;
 </span>    let mut count = 0;
     if let Coin::Quarter(state) = coin {
-        println!("25-Cent-Münze aus {:?}!", state);
+        println!("25-Cent-Münze aus {state:?}!");
     } else {
         count += 1;
     }

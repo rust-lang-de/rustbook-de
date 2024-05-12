@@ -300,7 +300,7 @@ Codes: <code>temp_vec.push()</code> innerhalb von <code>$()*</code> wird für je
 keinmal oder mehrmals mit <code>$()</code> im Muster übereinstimmt, je nachdem, wie oft
 das Muster passt. Das <code>$x</code> wird durch jeden passenden Ausdruck ersetzt. Wenn
 wir dieses Makro mit <code>vec![1, 2, 3];</code> aufrufen, wird durch diesen Aufruf
-folgender Code generierte:</p>
+folgender Code generiert:</p>
 <pre><code class="language-rust ignore">{
     let mut temp_vec = Vec::new();
     temp_vec.push(1);
@@ -440,7 +440,7 @@ Füge das Folgende zur Datei <em>Cargo.toml</em> für <code>hello_macro_derive</
 proc-macro = true
 
 [dependencies]
-syn = "1.0"
+syn = "2.0"
 quote = "1.0"
 </code></pre>
 <p>Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code
@@ -522,7 +522,7 @@ hat</span></p>
 eine Einheitsstruktur (unit struct) mit dem <code>ident</code> (identifier, engl.
 Bezeichner, d.h. dem Namen) von <code>Pancakes</code> ist. Es gibt weitere Felder in
 dieser Struktur zur Beschreibung aller Arten von Rust-Code; weitere
-Informationen findest du in der <a href="https://docs.rs/syn/1.0/syn/struct.DeriveInput.html"><code>syn</code>-Dokumentation für
+Informationen findest du in der <a href="https://docs.rs/syn/2.0/syn/struct.DeriveInput.html"><code>syn</code>-Dokumentation für
 <code>DeriveInput</code></a>.</p>
 <p>Bald werden wir die Funktion <code>impl_hello_macro</code> definieren, wo wir den neuen
 Rust-Code bauen werden, den wir einbinden wollen. Aber bevor wir das tun,

@@ -446,6 +446,8 @@ Schlüsselwort <code>break</code> mit dem Wert <code>counter * 2</code>. Nach de
 wir ein Semikolon, um die Anweisung zu beenden, die <code>result</code> den Wert zuweist.
 Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <code>20</code>
 beträgt.</p>
+<p>Du kannst auch innerhalb einer Schleife <code>return</code> aufrufen. Während <code>break</code> nur
+die aktuelle Schleife verlässt, verlässt <code>return</code> immer die aktuelle Funktion.</p>
 <h4 id="schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen">Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen</a></h4>
 <p>Wenn du Schleifen innerhalb von Schleifen hast, gelten <code>break</code> und <code>continue</code>
 für die innerste Schleife an diesem Punkt. Du kannst optional ein
@@ -523,7 +525,7 @@ auszuführen, solange eine Bedingung wahr ist</span></p>
 wären, wenn du <code>loop</code>, <code>if</code>, <code>else</code> und <code>break</code> verwenden würdest, und es ist
 klarer. Solange eine Bedingung zu <code>true</code> auswertet, läuft der Code ab;
 andernfalls wird die Schleife verlassen.</p>
-<h4 id="wiederholen-anhand-einer-kollektion-mit-for"><a class="header" href="#wiederholen-anhand-einer-kollektion-mit-for">Wiederholen anhand einer Kollektion mit <code>for</code></a></h4>
+<h4 id="durchlaufen-einer-kollektion-mit-for"><a class="header" href="#durchlaufen-einer-kollektion-mit-for">Durchlaufen einer Kollektion mit <code>for</code></a></h4>
 <p>Du kannst das <code>while</code>-Konstrukt verwenden, um die Elemente einer Kollektion,
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
 gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>

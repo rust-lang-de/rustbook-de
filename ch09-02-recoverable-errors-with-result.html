@@ -229,7 +229,7 @@ fn main() {
 
     let greeting_file = match greeting_file_result {
         Ok(file) =&gt; file,
-        Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {:?}", error),
+        Err(error) =&gt; panic!("Problem beim Öffnen der Datei: {error:?}"),
     };
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-4: Verwenden eines <code>match</code>-Ausdrucks zum
@@ -278,10 +278,10 @@ fn main() {
         Err(error) =&gt; match error.kind() {
             ErrorKind::NotFound =&gt; match File::create("hallo.txt") {
                 Ok(fc) =&gt; fc,
-                Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {:?}", e),
+                Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {e:?}"),
             },
             other_error =&gt; {
-                panic!("Problem beim Öffnen der Datei: {:?}", other_error)
+                panic!("Problem beim Öffnen der Datei: {other_error:?}")
             }
         },
     };
@@ -323,10 +323,10 @@ fn main() {
     let greeting_file = File::open("hallo.txt").unwrap_or_else(|error| {
         if error.kind() == ErrorKind::NotFound {
             File::create("hallo.txt").unwrap_or_else(|error| {
-                panic!("Problem beim Erstellen der Datei: {:?}", error);
+                panic!("Problem beim Erstellen der Datei: {error:?}");
             })
         } else {
-            panic!("Problem beim Öffnen der Datei: {:?}", error);
+            panic!("Problem beim Öffnen der Datei: {error:?}");
         }
     });
 }</code></pre></pre>

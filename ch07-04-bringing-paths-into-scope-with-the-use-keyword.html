@@ -203,7 +203,7 @@ Privatsphäre.</p>
 erstellt, in dem <code>use</code> vorkommt. Codeblock 7-12 verschiebt die Funktion
 <code>eat_at_restaurant</code> in ein neues untergeordnetes Modul namens <code>customer</code>, das
 dann einen anderen Gültigkeitsbereich als die <code>use</code>-Anweisung hat, sodass der
-Funktionsrumpf nicht kompiliert werden kann:</p>
+Funktionsrumpf nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness does_not_compile">mod front_of_house {
     pub mod hosting {
@@ -376,10 +376,11 @@ pub fn eat_at_restaurant() {
 <p><span class="caption">Codeblock 7-17: Bereitstellen eines Namens für externen
 Code zum Verwenden in einem neuen Gültigkeitsbereich mit <code>pub use</code></span></p>
 <p>Vor dieser Änderung musste externer Code die Funktion <code>add_to_waitlist</code> mit dem
-Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen. Nun, da
-<code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert hat, kann
-externer Code nun stattdessen den Pfad <code>restaurant::hosting::add_to_waitlist()</code>
-verwenden.</p>
+Pfad <code>restaurant::front_of_house::hosting::add_to_waitlist()</code> aufrufen, was
+zudem erfordert hätte, dass das Modul <code>front_of_house</code> als <code>pub</code> gekennzeichnet
+ist. Da aber <code>pub use</code> das Modul <code>hosting</code> aus dem Wurzel-Modul re-exportiert
+hat, kann externer Code nun stattdessen den Pfad
+<code>restaurant::hosting::add_to_waitlist()</code> verwenden.</p>
 <p>Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
 dem unterscheidet, wie Programmierer, die deinen Code
 aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
@@ -416,7 +417,7 @@ fn main() {
 </span><span class="boring">
 </span>    let secret_number = rand::thread_rng().gen_range(1..=100);
 <span class="boring">
-</span><span class="boring">    println!("Die geheime Zahl ist: {}", secret_number);
+</span><span class="boring">    println!("Die geheime Zahl ist: {secret_number}");
 </span><span class="boring">
 </span><span class="boring">    println!("Bitte gib deine Vermutung ein.");
 </span><span class="boring">
@@ -426,7 +427,7 @@ fn main() {
 </span><span class="boring">        .read_line(&amp;mut guess)
 </span><span class="boring">        .expect("Fehler beim Lesen einer Zeile");
 </span><span class="boring">
-</span><span class="boring">    println!("Du hast geraten: {}", guess);
+</span><span class="boring">    println!("Du hast geraten: {guess}");
 </span>}</code></pre></pre>
 <p>Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 <a href="https://crates.io/">crates.io</a> zur Verfügung gestellt und wenn du eines davon
