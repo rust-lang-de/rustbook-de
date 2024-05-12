@@ -354,7 +354,7 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` (lib test) due to 1 previous error
 ```
 
-Wir können den `MockMessenger` nicht ändern, um die Nachrichten zu verfolgen, da
+Wir können `MockMessenger` nicht so ändern, um die Nachrichten zu verfolgen, da
 die `send`-Methode eine unveränderbare Referenz auf `self` verwendet. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen 
 `&mut self` zu verwenden, da die Signatur von `send` nicht mit der Signatur in 
