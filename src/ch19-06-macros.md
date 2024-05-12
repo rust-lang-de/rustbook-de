@@ -155,7 +155,7 @@ Codes: `temp_vec.push()` innerhalb von `$()*` wird für jeden Teil erzeugt, der
 keinmal oder mehrmals mit `$()` im Muster übereinstimmt, je nachdem, wie oft
 das Muster passt. Das `$x` wird durch jeden passenden Ausdruck ersetzt. Wenn
 wir dieses Makro mit `vec![1, 2, 3];` aufrufen, wird durch diesen Aufruf 
-folgender Code generierte:
+folgender Code generiert:
 
 ```rust,ignore
 {
@@ -336,7 +336,7 @@ Füge das Folgende zur Datei *Cargo.toml* für `hello_macro_derive` hinzu:
 proc-macro = true
 
 [dependencies]
-syn = "1.0"
+syn = "2.0"
 quote = "1.0"
 ```
 

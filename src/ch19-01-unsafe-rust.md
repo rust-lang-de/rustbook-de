@@ -514,7 +514,7 @@ statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.
 static HELLO_WORLD: &str = "Hallo Welt!";
 
 fn main() {
-    println!("Name ist: {}", HELLO_WORLD);
+    println!("Name ist: {HELLO_WORLD}");
 }
 ```
 
@@ -555,7 +555,7 @@ fn main() {
     add_to_count(3);
 
     unsafe {
-        println!("COUNTER: {}", COUNTER);
+        println!("COUNTER: {COUNTER}");
     }
 }
 ```

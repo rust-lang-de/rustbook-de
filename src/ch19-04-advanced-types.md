@@ -230,7 +230,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.
 #
 #     let secret_number = rand::thread_rng().gen_range(1, 101);
 #
-#     println!("Die Geheimzahl ist: {}", secret_number);
+#     println!("Die Geheimzahl ist: {secret_number}");
 #
 #     loop {
 #         println!("Bitte gib deine Schätzung ein.");
@@ -248,7 +248,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.
             Err(_) => continue,
         };
 #
-#         println!("Du hast geschätzt: {}", guess);
+#         println!("Du hast geschätzt: {guess}");
 #
 #         // --abschneiden--
 #
