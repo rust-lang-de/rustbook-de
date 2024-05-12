@@ -261,6 +261,8 @@ impl Draw for SelectBox {
         // Code zum tatsächlichen Zeichnen eines Auswahlfeldes
     }
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 17-8: Eine weitere Kiste, die `gui` verwendet

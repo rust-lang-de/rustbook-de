@@ -164,7 +164,7 @@ hinzufügen:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -218,7 +218,7 @@ Codeblock 17-14 zeigt diese Platzhalter-Implementierung:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
@@ -264,7 +264,7 @@ eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct Post {
 #     state: Option<Box<dyn State>>,
 #     content: String,
