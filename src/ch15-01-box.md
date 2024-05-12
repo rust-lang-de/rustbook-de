@@ -48,7 +48,7 @@ Haldenspeicher speichert:
 ```rust
 fn main() {
     let b = Box::new(5);
-    println!("b = {}", b);
+    println!("b = {b}");
 }
 ```
 
@@ -132,6 +132,8 @@ enum List {
     Cons(i32, List),
     Nil,
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
@@ -215,6 +217,8 @@ enum Message {
     Write(String),
     ChangeColor(i32, i32, i32),
 }
+#
+# fn main() {}
 ```
 Um zu bestimmen, wie viel Speicherplatz für einen `Message`-Wert zugewiesen
 werden soll, durchläuft Rust jede der Varianten, um festzustellen, welche

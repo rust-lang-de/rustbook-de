@@ -665,9 +665,9 @@ fn main() {
 
     *value.borrow_mut() += 10;
 
-    println!("a nachher = {:?}", a);
-    println!("b nachher = {:?}", b);
-    println!("c nachher = {:?}", c);
+    println!("a nachher = {a:?}");
+    println!("b nachher = {b:?}");
+    println!("c nachher = {c:?}");
 }
 ```
 
