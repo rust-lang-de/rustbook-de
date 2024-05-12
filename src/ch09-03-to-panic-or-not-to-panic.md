@@ -238,8 +238,7 @@ pub struct Guess {
 impl Guess {
     pub fn new(value: i32) -> Guess {
         if value < 1 || value > 100 {
-            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {}.",
-                   value);
+            panic!("Der Schätzwert muss zwischen 1 und 100 liegen, ist jedoch {value}.");
         }
 
         Guess { value }
