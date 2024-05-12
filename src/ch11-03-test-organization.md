@@ -40,12 +40,18 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn it_works() {
-        let result = 2 + 2;
+        let result = add(2, 2);
         assert_eq!(result, 4);
     }
 }
@@ -71,7 +77,7 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub fn add_two(a: i32) -> i32 {
     internal_adder(a, 2)
 }
@@ -143,11 +149,11 @@ Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein:
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
-use adder;
+use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, adder::add_two(2));
+    assert_eq!(4, add_two(2));
 }
 ```
 

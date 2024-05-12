@@ -145,11 +145,18 @@ zunächst den Namen der Funktion `it_works` in einen anderen Namen, z.B.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 #[cfg(test)]
 mod tests {
+    use super::*;
+
     #[test]
     fn exploration() {
-        assert_eq!(2 + 2, 4);
+        let result = add(2, 2);
+        assert_eq!(result, 4);
     }
 }
 ```
@@ -187,11 +194,16 @@ Makros `panic!`. Erstelle einen neuen Test `another`, sodass deine Datei
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,panics,noplayground
+pub fn add(left: usize, right: usize) -> usize {
+    left + right
+}
+
 #[cfg(test)]
 mod tests {
     #[test]
     fn exploration() {
-        assert_eq!(2 + 2, 4);
+        let result = add(2, 2);
+        assert_eq!(result, 4);
     }
 
     #[test]
@@ -711,7 +723,7 @@ in der Ausgabe auftaucht:
 
 ```rust,noplayground
 pub fn greeting(name: &str) -> String {
-    format!("Hallo {}!", name)
+    format!("Hallo {name}!")
 }
 
 #[cfg(test)]
@@ -802,8 +814,7 @@ gefüllt ist:
         let result = greeting("Carol");
         assert!(
             result.contains("Carol"),
-            "Begrüßung enthielt nicht den Namen, Wert war `{}`",
-            result
+            "Begrüßung enthielt nicht den Namen, Wert war `{result}`"
         );
     }
 # }
@@ -869,7 +880,7 @@ pub struct Guess {
 impl Guess {
     pub fn new(value: i32) -> Guess {
         if value < 1 || value > 100 {
-            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {value}.");
         }
 
         Guess { value }
@@ -926,7 +937,7 @@ der Wert größer als 100 ist:
 impl Guess {
     pub fn new(value: i32) -> Guess {
         if value < 1 {
-            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {}.", value);
+            panic!("Schätzwert muss zwischen 1 und 100 liegen, ist {value}.");
         }
 
         Guess { value }
@@ -995,9 +1006,9 @@ nachdem, ob der Wert zu klein oder zu groß ist.
 impl Guess {
     pub fn new(value: i32) -> Guess {
         if value < 1 {
-            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.", value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {value}.");
         } else if value > 100 {
-            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.", value);
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {value}.");
         }
 
         Guess { value }
@@ -1042,11 +1053,9 @@ vertauschen:
 # impl Guess {
 #     pub fn new(value: i32) -> Guess {
         if value < 1 {
-            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {}.",
-                   value);
+            panic!("Schätzwert muss kleiner oder gleich 100 sein, ist {value}.");
         } else if value > 100 {
-            panic!("Schätzwert muss größer oder gleich 1 sein, ist {}.",
-                   value);
+            panic!("Schätzwert muss größer oder gleich 1 sein, ist {value}.");
         }
 #
 #         Guess { value }
