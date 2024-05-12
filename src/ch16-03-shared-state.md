@@ -191,8 +191,8 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 ```
 
 Die Fehlermeldung besagt, dass der Wert `counter` in der vorherigen Iteration
-der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft der
-Sperre `counter` nicht in mehrere Stränge verschieben können. Lass uns den
+der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
+`counter` nicht in mehrere Stränge verschieben können. Lass uns den
 Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 15 besprochen haben.
 
