@@ -23,6 +23,8 @@ struct User {
     email: String,
     sign_in_count: u64,
 }
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 5-1: Definition der Struktur `User`</span>
@@ -207,6 +209,7 @@ verwenden aber ansonsten die gleichen Werte von `user1`, die wir in Codeblock
 #
 fn main() {
     // --abschneiden--
+#
 #     let user1 = User {
 #         email: String::from("jemand@example.com"),
 #         username: String::from("benutzername123"),
@@ -243,6 +246,7 @@ Wert haben sollen wie die Felder in der gegebenen Instanz.
 #
 fn main() {
     // --abschneiden--
+#
 #     let user1 = User {
 #         email: String::from("jemand@example.com"),
 #         username: String::from("benutzername123"),

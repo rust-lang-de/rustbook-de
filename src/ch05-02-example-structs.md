@@ -186,7 +186,7 @@ fn main() {
         height: 50,
     };
 
-    println!("rect1 ist {}", rect1);
+    println!("rect1 ist {rect1}");
 }
 ```
 
@@ -221,7 +221,7 @@ finden:
 ```
 
 Lass es uns versuchen! Der Makroaufruf `println!` wird geändert in
-`println!("rect1 ist {:?}", rect1);`. Wenn wir das Symbol `:?` innerhalb der
+`println!("rect1 ist {rect1:?}");`. Wenn wir den Bezeichner `:?` innerhalb der
 geschweiften Klammern angeben, teilen wir `println!` mit, dass wir das
 Ausgabeformat `Debug` verwenden wollen. Das Merkmal `Debug` ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
@@ -261,7 +261,7 @@ fn main() {
         height: 50,
     };
 
-    println!("rect1 ist {:?}", rect1);
+    println!("rect1 ist {rect1:?}");
 }
 ```
 
