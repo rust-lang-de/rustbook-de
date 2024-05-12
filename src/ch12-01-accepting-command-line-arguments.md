@@ -131,7 +131,7 @@ können. Das tun wir in Codeblock 12-2.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust,should_panic
+```rust,noplayground
 use std::env;
 
 fn main() {

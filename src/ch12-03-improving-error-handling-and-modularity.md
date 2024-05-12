@@ -83,7 +83,7 @@ wir vorerst in *src/main.rs* definieren werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,noplayground
 # use std::env;
 # use std::fs;
 #
@@ -94,8 +94,8 @@ fn main() {
 
     // --abschneiden--
 #
-#     println!("Suche nach {}", query);
-#     println!("In Datei {}", file_path);
+#     println!("Suche nach {query}");
+#     println!("In Datei {file_path}");
 #
 #     let contents = fs::read_to_string(file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
@@ -879,7 +879,7 @@ Codeblock 12-14 modifiziert haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore
+```rust,ignore,does_not_compile
 use std::error::Error;
 use std::fs;
 
