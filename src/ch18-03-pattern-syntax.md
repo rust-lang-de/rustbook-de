@@ -47,10 +47,10 @@ wird, bevor du diesen Code ausführst oder weiterliest.
     match x {
         Some(50) => println!("Habe 50 erhalten"),
         Some(y) => println!("Passt, y = {y}"),
-        _ => println!("Standardfall, x = {:?}", x),
+        _ => println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
 <span class="caption">Codeblock 18-11: Ein `match`-Ausdruck mit einem Zweig,
@@ -237,9 +237,9 @@ fn main() {
     let p = Point { x: 0, y: 7 };
 
     match p {
-        Point { x, y: 0 } => println!("Auf der x-Achse bei {}", x),
-        Point { x: 0, y } => println!("Auf der y-Achse bei {}", y),
-        Point { x, y } => println!("Auf keiner Achse: ({}, {})", x, y),
+        Point { x, y: 0 } => println!("Auf der x-Achse bei {x}"),
+        Point { x: 0, y } => println!("Auf der y-Achse bei {y}"),
+        Point { x, y } => println!("Auf keiner Achse: ({x}, {y})"),
     }
 }
 ```
@@ -295,7 +295,7 @@ fn main() {
         Message::Move { x, y } => {
             println!("Bewege in x-Richtung {x} und in y-Richtung {y}");
         }
-        Message::Write(text) => println!("Textnachricht: {}", text),
+        Message::Write(text) => println!("Textnachricht: {text}"),
         Message::ChangeColor(r, g, b) => println!(
             "Ändere die Farbe in rot {r}, grün {g} und blau {b}"
         ),
@@ -422,7 +422,7 @@ verwenden, einschließlich Funktionsparameter, wie in Codeblock 18-17 gezeigt.
 
 ```rust
 fn foo(_: i32, y: i32) {
-    println!("Dieser Code verwendet nur den Parameter y: {}", y);
+    println!("Dieser Code verwendet nur den Parameter y: {y}");
 }
 
 fn main() {
@@ -470,7 +470,7 @@ einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.
         }
     }
 
-    println!("Einstellung ist {:?}", setting_value);
+    println!("Einstellung ist {setting_value:?}");
 ```
 
 <span class="caption">Codeblock 18-18: Das Verwenden eines Unterstrichs
@@ -551,7 +551,7 @@ wird uns Codeblock 18-21 einen Fehler liefern.
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 ```
 
 <span class="caption">Codeblock 18-21: Eine unbenutzte Variable, die mit einem
@@ -570,7 +570,7 @@ ohne Fehler kompilieren, weil `s` nicht in `_` verschoben wird.
         println!("Zeichenkette gefunden");
     }
 
-    println!("{:?}", s);
+    println!("{s:?}");
 ```
 
 <span class="caption">Codeblock 18-22: Das Verwenden eines Unterstrichs bindet
@@ -600,7 +600,7 @@ wollen wir nur mit der Koordinate `x` operieren und die Werte in den Feldern
     let origin = Point { x: 0, y: 0, z: 0 };
 
     match origin {
-        Point { x, .. } => println!("x ist {}", x),
+        Point { x, .. } => println!("x ist {x}"),
     }
 ```
 
@@ -646,7 +646,7 @@ Verwendung von `..`, sodass es sich nicht kompilieren lässt.
 
     match numbers {
         (.., second, ..) => {
-            println!("Einige Zahlen: {}", second)
+            println!("Einige Zahlen: {second}")
         },
     }
 # }
@@ -697,8 +697,8 @@ ist) hat.
     let num = Some(4);
 
     match num {
-        Some(x) if x % 2 == 0 => println!("Die Zahl {} ist gerade", x),
-        Some(x) => println!("Die Zahl {} ist ungerade", x),
+        Some(x) if x % 2 == 0 => println!("Die Zahl {x} ist gerade"),
+        Some(x) => println!("Die Zahl {x} ist ungerade"),
         None => (),
     }
 ```
@@ -740,10 +740,10 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
     match x {
         Some(50) => println!("Habe 50 erhalten"),
         Some(n) if n == y => println!("Passt, n = {n}"),
-        _ => println!("Standardfall, x = {:?}", x),
+        _ => println!("Standardfall, x = {x:?}"),
     }
 
-    println!("Am Ende: x = {:?}, y = {y}", x);
+    println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
 <span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
@@ -828,11 +828,11 @@ einen anderen Namen verwenden.
     match msg {
         Message::Hello {
             id: id_variable @ 3..=7,
-        } => println!("id im Bereich gefunden: {}", id_variable),
+        } => println!("id im Bereich gefunden: {id_variable}"),
         Message::Hello { id: 10..=12 } => {
             println!("id in einem anderen Bereich gefunden")
         }
-        Message::Hello { id } => println!("Eine andere id gefunden: {}", id),
+        Message::Hello { id } => println!("Eine andere id gefunden: {id}"),
     }
 ```
 

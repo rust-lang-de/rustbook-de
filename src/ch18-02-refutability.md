@@ -83,7 +83,7 @@ Codeblock 18-8 zu korrigieren ist.
 # fn main() {
 #     let some_option_value: Option<i32> = None;
     if let Some(x) = some_option_value {
-        println!("{}", x);
+        println!("{x}");
     }
 # }
 ```
