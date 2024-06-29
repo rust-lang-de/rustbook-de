@@ -584,8 +584,8 @@ Binärprojekten“](#trennen-der-zuständigkeiten-bei-binärprojekten) erklärt
 haben, werden wir eine Funktion namens `run` extrahieren, die die gesamte Logik
 enthält, die sich derzeit in der Funktion `main` befindet und nicht mit dem
 Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
-fertig sind, wird `main` prägnant und leicht durch Inspektion zu verifizieren
-sein, und wir werden in der Lage sein, Tests für all die andere Logik zu
+fertig sind, wird die Funktion `main` übersichtlich und leicht zu verifizieren
+sein. Zudem werden wir in der Lage sein, Tests für all die andere Logik zu
 schreiben.
 
 Codeblock 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
