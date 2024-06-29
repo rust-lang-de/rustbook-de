@@ -158,11 +158,10 @@ nützliche Wahl für Werte in deiner Anwendungsdomäne, über die mehrere Teile 
 Programms Bescheid wissen müssen, z.B. die maximale Punktzahl, die jeder
 Spieler eines Spiels erhalten darf, oder die Lichtgeschwindigkeit.
 
-Das Benennen von hartkodierten Werten, die im gesamten Programm als Konstanten
-verwendet werden, ist nützlich, um die Bedeutung dieses Wertes zukünftigen
-Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
-Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
-aktualisiert werden müsste.
+Hartkodierte Werte, die im gesamten Programm als Konstanten verwendet werden,
+sollten benannt werden, damit zukünftigen Entwicklern die Bedeutung dieses
+Wertes vermittelt wird. Zudem ist es hilfreich, nur eine Codestelle ändern zu
+müssen, sollte der hartkodierte Wert irgendwann zu ändern sein.
 
 ### Verschatten (shadowing)
 

@@ -33,7 +33,7 @@ Viertens verwenden wir `expect` erneut, um einen Fehler zu behandeln, und wenn
 der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
 er einen `Index out of bounds`-Fehler von Rust, der das Problem nicht eindeutig
 erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
-einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+einer Stelle befände, sodass zukünftige Entwickler nur eine Stelle im Code
 konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
 Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
@@ -141,12 +141,12 @@ dass wir vielleicht noch nicht die richtige Abstraktion haben.
 Ein weiterer Indikator, der zeigt, dass es Raum für Verbesserungen gibt, ist
 der `config`-Teil von `parse_config`, der impliziert, dass die beiden von uns
 zurückgegebenen Werte miteinander in Beziehung stehen und beide Teil eines
-Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit in der
-Struktur der Daten nur durch die Gruppierung der beiden Werte in einem Tupel;
-wir werden stattdessen die beiden Werte in eine Struktur setzen und jedem der
-Strukturfelder einen aussagekräftigen Namen geben. Auf diese Weise wird es
-künftigen Betreuern dieses Codes leichter fallen, zu verstehen, wie die
-verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.
+Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit nur durch die
+Gruppierung der beiden Werte in einem Tupel. Geben wir daher die beiden Werte
+in einer Struktur an und geben jedem der Strukturfelder einen aussagekräftigen
+Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
+fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
+stehen und was ihr Zweck ist.
                                                    
 Codeblock 12-6 zeigt die Verbesserungen der Funktion `parse_config`.
 
