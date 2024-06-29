@@ -2111,11 +2111,10 @@ Gültigkeitsbereich gültig, in dem sie deklariert wurden. Damit sind sie eine
 nützliche Wahl für Werte in deiner Anwendungsdomäne, über die mehrere Teile des
 Programms Bescheid wissen müssen, z.B. die maximale Punktzahl, die jeder
 Spieler eines Spiels erhalten darf, oder die Lichtgeschwindigkeit.</p>
-<p>Das Benennen von hartkodierten Werten, die im gesamten Programm als Konstanten
-verwendet werden, ist nützlich, um die Bedeutung dieses Wertes zukünftigen
-Code-Betreuern zu vermitteln. Es ist auch hilfreich, nur eine Stelle in deinem
-Code zu haben, die du ändern musst, wenn der hartkodierte Wert in Zukunft
-aktualisiert werden müsste.</p>
+<p>Hartkodierte Werte, die im gesamten Programm als Konstanten verwendet werden,
+sollten benannt werden, damit zukünftigen Entwicklern die Bedeutung dieses
+Wertes vermittelt wird. Zudem ist es hilfreich, nur eine Codestelle ändern zu
+müssen, sollte der hartkodierte Wert irgendwann zu ändern sein.</p>
 <h3 id="verschatten-shadowing"><a class="header" href="#verschatten-shadowing">Verschatten (shadowing)</a></h3>
 <p>Wie du in der Anleitung zum Ratespiel in <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">Kapitel
 2</a> gesehen hast, kannst du eine neue
@@ -13801,7 +13800,7 @@ ausgeben, die dem Benutzer keinerlei Informationen geben würde!</p>
 der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
 er einen <code>Index out of bounds</code>-Fehler von Rust, der das Problem nicht eindeutig
 erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
-einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+einer Stelle befände, sodass zukünftige Entwickler nur eine Stelle im Code
 konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
 Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
@@ -13894,12 +13893,12 @@ dass wir vielleicht noch nicht die richtige Abstraktion haben.</p>
 <p>Ein weiterer Indikator, der zeigt, dass es Raum für Verbesserungen gibt, ist
 der <code>config</code>-Teil von <code>parse_config</code>, der impliziert, dass die beiden von uns
 zurückgegebenen Werte miteinander in Beziehung stehen und beide Teil eines
-Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit in der
-Struktur der Daten nur durch die Gruppierung der beiden Werte in einem Tupel;
-wir werden stattdessen die beiden Werte in eine Struktur setzen und jedem der
-Strukturfelder einen aussagekräftigen Namen geben. Auf diese Weise wird es
-künftigen Betreuern dieses Codes leichter fallen, zu verstehen, wie die
-verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.</p>
+Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit nur durch die
+Gruppierung der beiden Werte in einem Tupel. Geben wir daher die beiden Werte
+in einer Struktur an und geben jedem der Strukturfelder einen aussagekräftigen
+Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
+fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
+stehen und was ihr Zweck ist.</p>
 <p>Codeblock 12-6 zeigt die Verbesserungen der Funktion <code>parse_config</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic"><span class="boring">use std::env;

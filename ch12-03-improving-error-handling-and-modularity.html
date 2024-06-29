@@ -196,7 +196,7 @@ ausgeben, die dem Benutzer keinerlei Informationen geben würde!</p>
 der Benutzer unser Programm ausführt, ohne genügend Argumente anzugeben, erhält
 er einen <code>Index out of bounds</code>-Fehler von Rust, der das Problem nicht eindeutig
 erklärt. Am besten wäre es, wenn sich der gesamte Fehlerbehandlungscode an
-einer Stelle befände, sodass zukünftige Betreuer nur eine Stelle im Code
+einer Stelle befände, sodass zukünftige Entwickler nur eine Stelle im Code
 konsultieren bräuchten, falls sich die Fehlerbehandlungslogik ändern sollte.
 Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
@@ -289,12 +289,12 @@ dass wir vielleicht noch nicht die richtige Abstraktion haben.</p>
 <p>Ein weiterer Indikator, der zeigt, dass es Raum für Verbesserungen gibt, ist
 der <code>config</code>-Teil von <code>parse_config</code>, der impliziert, dass die beiden von uns
 zurückgegebenen Werte miteinander in Beziehung stehen und beide Teil eines
-Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit in der
-Struktur der Daten nur durch die Gruppierung der beiden Werte in einem Tupel;
-wir werden stattdessen die beiden Werte in eine Struktur setzen und jedem der
-Strukturfelder einen aussagekräftigen Namen geben. Auf diese Weise wird es
-künftigen Betreuern dieses Codes leichter fallen, zu verstehen, wie die
-verschiedenen Werte miteinander in Beziehung stehen und was ihr Zweck ist.</p>
+Konfigurationswertes sind. Diese Bedeutung vermitteln wir derzeit nur durch die
+Gruppierung der beiden Werte in einem Tupel. Geben wir daher die beiden Werte
+in einer Struktur an und geben jedem der Strukturfelder einen aussagekräftigen
+Namen. Auf diese Weise wird es künftigen Entwicklern dieses Codes leichter
+fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
+stehen und was ihr Zweck ist.</p>
 <p>Codeblock 12-6 zeigt die Verbesserungen der Funktion <code>parse_config</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic"><span class="boring">use std::env;
