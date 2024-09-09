@@ -13586,16 +13586,16 @@ fn main() {
 <p><span class="caption">Codeblock 12-1: Sammeln der Befehlszeilenargumente in
 einem Vektor und Ausgeben dieser Werte</span></p>
 <p>Zuerst bringen wir das Modul <code>std::env</code> mit einer <code>use</code>-Anweisung in den
-Gültigkeitsbereich, damit wir seine <code>args</code>-Funktion verwenden können. Beachte,
+Gültigkeitsbereich, damit wir seine Funktion <code>args</code> verwenden können. Beachte,
 dass die Funktion <code>std::env::args</code> in zwei Modulebenen verschachtelt ist. Wie
 wir in <a href="ch07-04-bringing-paths-into-scope-with-the-use-keyword.html#idiomatische-use-pfade-erstellen">Kapitel 7</a> besprochen haben, haben wir in Fällen, in
-denen die gewünschte Funktion in mehr als einem Modul verschachtelt ist,
-das übergeordnete Modul in den Gültigkeitsbereich gebracht, anstatt nur die
-Funktion. Auf diese Weise können wir leicht andere Funktionen aus <code>std::env</code>
-verwenden. Es ist auch weniger mehrdeutig als das Hinzufügen von
-<code>use std::env::args</code> und dem anschließenden Aufrufen der Funktion nur mit
-<code>args</code>, weil <code>args</code> leicht mit einer Funktion verwechselt werden könnte, die im
-aktuellen Modul definiert ist.</p>
+denen die gewünschte Funktion in mehreren Modulebenen verschachtelt ist, das
+die Funktion enthaltende Modul in den Gültigkeitsbereich gebracht, anstatt nur
+die Funktion selbst zu importieren. Auf diese Weise können wir leicht andere
+Funktionen aus <code>std::env</code> verwenden. Es ist auch nicht so vieldeutig wie beim
+Importieren von <code>use std::env::args</code> und dem anschließenden Aufrufen der
+Funktion nur mit <code>args</code>, weil <code>args</code> leicht mit einer Funktion verwechselt
+werden könnte, die im aktuellen Modul definiert ist.</p>
 <blockquote>
 <h3 id="die-args-funktion-und-ungültiger-unicode"><a class="header" href="#die-args-funktion-und-ungültiger-unicode">Die <code>args</code>-Funktion und ungültiger Unicode</a></h3>
 <p>Beachte, dass <code>std::env::args</code> abstürzt, wenn ein Argument einen ungültigen
