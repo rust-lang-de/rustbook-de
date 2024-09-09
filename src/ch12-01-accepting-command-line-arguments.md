@@ -57,16 +57,16 @@ fn main() {
 einem Vektor und Ausgeben dieser Werte</span>
 
 Zuerst bringen wir das Modul `std::env` mit einer `use`-Anweisung in den
-Gültigkeitsbereich, damit wir seine `args`-Funktion verwenden können. Beachte,
+Gültigkeitsbereich, damit wir seine Funktion `args` verwenden können. Beachte,
 dass die Funktion `std::env::args` in zwei Modulebenen verschachtelt ist. Wie
 wir in [Kapitel 7][ch7-idiomatic-use] besprochen haben, haben wir in Fällen, in
-denen die gewünschte Funktion in mehr als einem Modul verschachtelt ist,
-das übergeordnete Modul in den Gültigkeitsbereich gebracht, anstatt nur die
-Funktion. Auf diese Weise können wir leicht andere Funktionen aus `std::env`
-verwenden. Es ist auch weniger mehrdeutig als das Hinzufügen von
-`use std::env::args` und dem anschließenden Aufrufen der Funktion nur mit
-`args`, weil `args` leicht mit einer Funktion verwechselt werden könnte, die im
-aktuellen Modul definiert ist.
+denen die gewünschte Funktion in mehreren Modulebenen verschachtelt ist, das
+die Funktion enthaltende Modul in den Gültigkeitsbereich gebracht, anstatt nur
+die Funktion selbst zu importieren. Auf diese Weise können wir leicht andere
+Funktionen aus `std::env` verwenden. Es ist auch nicht so vieldeutig wie beim
+Importieren von `use std::env::args` und dem anschließenden Aufrufen der
+Funktion nur mit `args`, weil `args` leicht mit einer Funktion verwechselt
+werden könnte, die im aktuellen Modul definiert ist.
 
 > ### Die `args`-Funktion und ungültiger Unicode
 >
