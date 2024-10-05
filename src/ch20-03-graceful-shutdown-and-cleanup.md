@@ -4,10 +4,9 @@ Der Code in Codeblock 20-20 antwortet auf Anfragen asynchron durch die
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder `workers`, `id` und `thread`, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
-wir die weniger elegante Methode <span class="keystroke">Strg+c</span>
-verwenden, um den Hauptstrang (main thread) anzuhalten, werden auch alle
-anderen Stränge sofort gestoppt, selbst wenn sie gerade dabei sind, eine
-Anfrage zu bedienen.
+wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
+Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
+gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.
 
 Als Nächstes werden wir das Merkmal (trait) `Drop` implementieren, um `join`
 für jeden der Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen

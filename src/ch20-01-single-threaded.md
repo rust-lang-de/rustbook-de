@@ -136,11 +136,11 @@ Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
 versuchen, weil das Problem möglicherweise nur vorübergehend ist. Der wichtige
 Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!
 
-Denke daran, das Programm durch Drücken von <span
-class="keystroke">Strg+c</span> zu beenden, wenn du mit der Ausführung einer
-bestimmten Version des Codes fertig bist. Starte dann das Programm neu, indem
-du den Befehl `cargo run` aufrufst, nachdem du die einzelnen Codeänderungen
-vorgenommen hast, um sicherzustellen, dass du den neuesten Code ausführst.
+Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
+beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
+bist. Starte dann das Programm neu, indem du den Befehl `cargo run` aufrufst,
+nachdem du die einzelnen Codeänderungen vorgenommen hast, um sicherzustellen,
+dass du den neuesten Code ausführst.
 
 ### Lesen der Anfrage
 
