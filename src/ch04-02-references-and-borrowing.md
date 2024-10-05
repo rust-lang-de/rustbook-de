@@ -35,14 +35,14 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 `&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
 `String` steht. Das `&`-Zeichen steht für eine *Referenz*, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.
+übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
 Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
 zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
-src="img/trpl04-05.svg" class="center" />
+src="img/trpl04-06.svg" class="center" />
 
-<span class="caption">Abbildung 4-5: Eine Grafik mit `&String s`, das auf
+<span class="caption">Abbildung 4-6: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
 
 > Anmerkung: Das Gegenteil der Referenzierung durch `&` ist die
