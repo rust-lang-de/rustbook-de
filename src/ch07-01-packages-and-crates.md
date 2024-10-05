@@ -38,13 +38,11 @@ beschreibt, wie diese Kisten zu bauen sind. Cargo ist eigentlich ein Paket, das
 die Binärkiste für das Kommandozeilenwerkzeug enthält, das du zum Erstellen
 deines Codes verwendet hast. Das Cargo-Paket enthält auch eine
 Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können von
-der Cargo-Bibliothekskiste abhängen, um die gleiche Logik wie das
-Cargo-Befehlszeilenwerkzeug zu verwenden.
-
-Es gibt zwei Arten von Kisten: Binärkisten und Bibliothekskisten. Ein Paket
-kann beliebig viele Binärkisten enthalten, aber höchstens eine
-Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
-davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.
+der Bibliothekskiste Cargo abhängen, um die gleiche Logik wie das
+Befehlszeilenwerkzeug Cargo zu verwenden. Ein Paket kann beliebig viele
+Binärkisten enthalten, aber höchstens eine Bibliothekskiste. Ein Paket muss
+mindestens eine Kiste enthalten, unabhängig davon, ob es sich um eine
+Bibliothek oder eine binäre Kiste handelt.
 
 Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
 wir den Befehl `cargo new my-project` ein:
