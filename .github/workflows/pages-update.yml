@@ -16,7 +16,7 @@ jobs:
           toolchain: stable
 
       - name: Install mdbook
-        run: cargo install mdbook --vers "^0.4.37" --no-default-features
+        run: cargo install mdbook --vers "^0.4.40" --no-default-features
 
       - name: Build Book
         run: mdbook build
