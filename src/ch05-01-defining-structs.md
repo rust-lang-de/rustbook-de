@@ -285,7 +285,8 @@ verwendet, wäre `user1` auch nach dem Erstellen von `user2` noch gültig. Die
 Typen `active` und `sign_in_count` sind Typen, die das Merkmal `Copy`
 implementieren, sodass das Verhalten, das wir im Abschnitt [„Nur
 Stapelspeicher-Daten: Kopieren (copy)“][copy] besprochen haben, zutreffen
-würde.
+würde. Wir können in diesem Beispiel immer noch `user1.email` verwenden, da
+sein Wert _nicht_ verschoben wurde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
