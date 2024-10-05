@@ -297,9 +297,9 @@ fn main() {
 
 Wenn wir dieses Programm ausführen, werden wir sehen, dass es immer und immer
 wieder `nochmal!` ausgibt, bis wir das Programm manuell stoppen. Die meisten
-Terminals unterstützen das Tastaturkürzel <span
-class="keystroke">Strg+c</span>, um ein Programm zu unterbrechen, das in einer
-Endlosschleife feststeckt. Probiere es aus:
+Terminals unterstützen das Tastaturkürzel <kbd>Strg</kbd>+<kbd>c</kbd>, um ein
+Programm zu unterbrechen, das in einer Endlosschleife feststeckt. Probiere es
+aus:
 
 ```console
 $ cargo run
@@ -313,10 +313,10 @@ nochmal!
 ^Cnochmal!
 ```
 
-Das Symbol `^C` steht für die Stelle, an der du <span
-class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
-der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
-dem `^C` das Wort `nochmal!` oder nicht.
+Das Symbol `^C` steht für die Stelle, an der du <kbd>Strg</kbd>+<kbd>c</kbd>
+gedrückt hast. Je nachdem, wo sich der Code in der Schleife befand, als er das
+Unterbrechungssignal empfing, siehst du nach dem `^C` das Wort `nochmal!` oder
+nicht.
 
 Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
 mittels Code auszubrechen. Du kannst das Schlüsselwort `break` innerhalb der
