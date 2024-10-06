@@ -140,7 +140,7 @@ Methoden rufen in ihrer Definition die `next`-Methode auf, daher musst du die
 `next`-Methode bei der Implementierung des `Iterator`-Merkmals einbauen.
 
 Methoden die `next` aufrufen werden als *konsumierende Adapter* (consuming
-adaptors) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
+adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
 die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
