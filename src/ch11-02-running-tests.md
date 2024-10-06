@@ -136,7 +136,7 @@ Testfehlers anzeigt.
 
 Wenn wir auch die ausgegebenen Werte der bestandenen Tests sehen wollen, können
 wir Rust mit `--show-output` anweisen, die Ausgabe erfolgreicher Tests mit
-anzuzeigen.
+anzuzeigen:
 
 ```console
 $ cargo test -- --show-output
@@ -369,9 +369,9 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 ```
 
 Indem du kontrollierst, welche Tests durchgeführt werden, kannst du
-sicherstellen, dass dein `cargo test`-Aufruf schnell zu Ergebnissen führt. Wenn
-du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse der
-`ignored`-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu warten,
-kannst du stattdessen `cargo test -- --ignored` ausführen. Wenn du alle Tests
-ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du `cargo
-test -- --include-ignored` ausführen.
+sicherstellen, dass dein Aufruf von `cargo test` schnell Ergebnisse zurückgibt.
+Wenn du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse
+der `ignored`-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu
+warten, kannst du stattdessen `cargo test -- --ignored` ausführen. Wenn du alle
+Tests ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du
+`cargo test -- --include-ignored` ausführen.

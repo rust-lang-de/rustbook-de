@@ -4,9 +4,9 @@ Tests sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
 erwarteten Weise funktioniert. Der Rumpf von Testfunktionen führt in der Regel
 diese drei Aktionen aus:
 
-1. Bereite die benötigten Daten und Zustände vor.
-2. Führe den Code aus, den du testen möchtest.
-3. Stelle sicher, dass die Ergebnisse das sind, was du erwartest.
+* Bereite die benötigten Daten und Zustände vor.
+* Führe den Code aus, den du testen möchtest.
+* Stelle sicher, dass die Ergebnisse die sind, was du erwartest.
 
 Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
@@ -69,7 +69,7 @@ mod tests {
 <span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von `cargo new` generiert werden</span>
 
-Konzentrieren wir uns zunächst nur auf die Funktion `it_works()`. Beachte die
+Konzentrieren wir uns zunächst nur auf die Funktion `it_works`. Beachte die
 Annotation `#[test]`: Dieses Attribut zeigt an, dass es sich um eine
 Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
 als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
@@ -107,8 +107,8 @@ generierten Tests</span>
 
 Cargo hat den Test kompiliert und ausgeführt. Nach den Zeilen `Compiling`,
 `Finished` und `Running` folgt die Zeile `running 1 test`. Die nächste Zeile
-zeigt den Namen der generierten Testfunktion `it_works` und das Ergebnis der
-Testausführung: `ok`. Als nächstes wird die Gesamtzusammenfassung der
+zeigt den Namen der generierten Testfunktion `tests::it_works` und das Ergebnis
+der Testausführung: `ok`. Als nächstes wird die Gesamtzusammenfassung der
 Testausführung angegeben. Der Text `test result: ok.` bedeutet, dass alle Tests
 bestanden wurden, und der Teil `1 passed; 0 failed` gibt die Anzahl der Tests
 an, die bestanden oder nicht bestanden wurden.
@@ -117,17 +117,19 @@ Es ist möglich, einen Test als ignoriert zu markieren, sodass er in einer
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt [„Tests
 ignorieren, die nicht ausdrücklich verlangt werden“][ignoring] später in
 diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
-Zusammenfassung `0 ignored`. Wir können auch ein Argument an den Befehl
-`cargo test` übergeben, um nur Tests auszuführen, deren Name mit einer
-Zeichenkette übereinstimmt; dies wird *Filtern* genannt und wir werden dies im
-Abschnitt [„Ausführen einer Test-Teilmenge mittels Name“][subset] behandeln.
-Außerdem haben wir die durchgeführten Tests nicht gefiltert, sodass am Ende der
-Zusammenfassung `0 filtered out` steht.
+Zusammenfassung `0 ignored`.
 
 Die Statistik `0 measured` ist für Benchmark-Tests, die die Performanz messen.
 Benchmark-Tests sind zum Zeitpunkt, als dieser Text verfasst wurde, nur im
 nächtlichen (nightly) Rust verfügbar. Siehe [„Dokumentation über
 Benchmark-Tests“][bench], um mehr zu erfahren.
+
+Wir können auch ein Argument an den Befehl `cargo test` übergeben, um nur
+Tests auszuführen, deren Name mit einer Zeichenkette übereinstimmt; dies wird
+*Filtern* genannt und wir werden dies im Abschnitt [„Ausführen einer
+Test-Teilmenge mittels Name“][subset] behandeln. Außerdem haben wir die
+durchgeführten Tests nicht gefiltert, sodass am Ende der Zusammenfassung `0
+ filtered out` steht.
 
 Der nächste Teil der Testausgabe, der mit `Doc-tests adder` beginnt, ist für
 die Ergebnisse von Dokumentationstests. Wir haben noch keine
@@ -253,7 +255,7 @@ Statt `ok` zeigt die Zeile `test tests::another` das Ergebnis `FAILED`.
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
 Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
 Test an. In diesem Fall erhalten wir Details, dass `another` scheiterte mit der
-Meldung `panicked at 'Lasse diesen Test fehlschlagen'` in Zeile 10 der Datei
+Meldung `panicked at 'Lasse diesen Test fehlschlagen'` in Zeile 17 der Datei
 *src/lib.rs*. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -349,10 +351,9 @@ mod tests {
 <span class="caption">Codeblock 11-6: Ein Test für `can_hold`, der prüft, ob in
 ein größeres Rechteck tatsächlich ein kleineres Rechteck passt</span>
 
-Beachte, dass wir eine neue Zeile innerhalb des Moduls `tests` hinzugefügt
-haben: `use super::*;`. Das Modul `tests` ist ein reguläres Modul, das den
-üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel 7 im Abschnitt [„Mit
-Pfaden auf ein Element im Modulbaum
+Beachte die Zeile `use super::*;` im Modul `tests`. Das Modul `tests` ist ein
+reguläres Modul, das den üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel
+7 im Abschnitt [„Mit Pfaden auf ein Element im Modulbaum
 verweisen“][paths-for-referring-to-an-item-in-the-module-tree] behandelt haben.
 Da das Modul `tests` ein inneres Modul ist, müssen wir den Code, der im äußeren
 Modul getestet wird, in den Gültigkeitsbereich des inneren Moduls bringen. Wir
@@ -542,9 +543,9 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich 8 ist und
-`smaller.width` gleich 5, ergibt der Vergleich der Breiten in `can_hold` jetzt
-`false`: 8 ist nicht weniger als 5.
+Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich `8` ist und
+`smaller.width` gleich `5`, ergibt der Vergleich der Breiten in `can_hold` jetzt
+`false`: 8 ist nicht kleiner als 5.
 
 ### Prüfung auf Gleichheit mit den Makros `assert_eq!` und `assert_ne!`
 
@@ -578,7 +579,8 @@ mod tests {
 
     #[test]
     fn it_adds_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 }
 ```
@@ -606,10 +608,10 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Wir übergeben `4` als Argument an `assert_eq!`, was identisch mit dem Ergebnis
-des Aufrufs `add_two(2)` ist. Die Zeile für diesen Test
-lautet `test tests::it_adds_two ... ok`, und der Text `ok` zeigt an, dass unser
-Test bestanden wurde!
+Wir erstellen eine Variable namens `result`, die das Ergebnis des Aufrufs von
+`add_two(2)` enthält. Dann übergeben wir `result` und `4` als Argumente an
+`assert_eq!`. Die Ausgabezeile für diesen Test lautet `test tests::it_adds_two
+ ... ok`, und das Wort `ok` gibt an, dass unser Test bestanden wurde!
 
 Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie `assert_eq!`
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
@@ -626,7 +628,8 @@ pub fn add_two(a: i32) -> i32 {
 #
 #     #[test]
 #     fn it_adds_two() {
-#         assert_eq!(4, add_two(2));
+#         let result = add_two(2);
+#         assert_eq!(result, 4);
 #     }
 # }
 ```
@@ -647,8 +650,8 @@ failures:
 ---- tests::it_adds_two stdout ----
 thread 'tests::it_adds_two' panicked at src/lib.rs:11:9:
 assertion `left == right` failed
-  left: 4
- right: 5
+  left: 5
+ right: 4
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -660,20 +663,19 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion `left ==
-right` failed`` war und welche Werte `left` und `right` hatten. Diese Nachricht
-hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` war `4`, aber
-das Argument `right` mit dem Ergebnis von `add_two(2)` war `5`. Du kannst dir
-vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
-durchführen.
+Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl mit der
+Meldung ``assertion `left == right` failed`` und den Werten für `left` und
+`right`. Diese Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das
+Argument `left` mit dem Ergebnis von `add_two(2)` war `5`, aber das Argument
+`right` war `4`. Du kannst dir vorstellen, dass dies besonders hilfreich ist,
+wenn wir viele Tests durchführen.
 
 Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung `expected` und `actual` genannt werden und deren
 Reihenfolge wichtig ist. In Rust werden sie jedoch `left` und `right` genannt
 und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
 produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
-diesem Test als `assert_eq!(add_two(2), 4)` schreiben, was zur gleichen
+diesem Test als `assert_eq!(4, result)` schreiben, was zur selben
 Fehlermeldung ``assertion failed: `(left == right)` `` führen würde.
 
 Das Makro `assert_ne!` prüft, ob die beiden Werte, die wir ihm übergeben,

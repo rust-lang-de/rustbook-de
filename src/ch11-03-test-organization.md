@@ -57,8 +57,8 @@ mod tests {
 }
 ```
 
-Dieser Code ist das automatisch generierte Testmodul. Das Attribut `cfg` steht
-für *Konfiguration* und teilt Rust mit, dass das folgende Element nur bei einer
+Im automatisch generierten Modul `tests` steht das Attribut `cfg` für
+*Konfiguration* und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
 Konfigurationsoption `test`, die von Rust beim Kompilieren und Ausführen von
 Tests verwendet wird. Durch das Verwenden des Attributs `cfg` kompiliert Cargo
@@ -144,7 +144,7 @@ adder
     └── integration_test.rs
 ```
 
-Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein:
+Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein.
 
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
@@ -162,7 +162,7 @@ Kiste `adder`</span>
 
 Jede Datei im Verzeichnis `tests` ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir `use adder::add_two` am Anfang des Codes hinzu, was wir
+diesem Grund fügen wir `use adder::add_two;` am Anfang des Codes hinzu, was wir
 in den Modultests nicht brauchten.
 
 Wir brauchen den Code in *tests/integration_test.rs* nicht mit `#[cfg(test)]`
@@ -305,11 +305,10 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 Dass in den Testergebnissen `common` erscheint und dabei `running 0 tests`
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
-den anderen Integrationstestdateien teilen.
-
-Um zu vermeiden, dass `common` in der Testausgabe erscheint, werden wir statt
-*tests/common.rs* die Datei *tests/common/mod.rs* erstellen. Das
-Projektverzeichnis sieht nun wie folgt aus:
+den anderen Integrationstestdateien teilen. Um zu vermeiden, dass `common` in
+der Testausgabe erscheint, werden wir statt *tests/common.rs* die Datei
+*tests/common/mod.rs* erstellen. Das Projektverzeichnis sieht nun wie folgt
+aus:
 
 ```text
 ├── Cargo.lock
