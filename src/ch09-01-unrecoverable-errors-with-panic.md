@@ -65,18 +65,16 @@ diese Zeile ansehen, sehen wir den Makroaufruf `panic!`. In anderen Fällen
 könnte der Aufruf von `panic!` in Code erfolgen, den unser Code aufruft, und
 der Dateiname und die Zeilennummer in der Fehlermeldung gehören zu Code von
 jemand anderen, der das Makro `panic!` aufruft, nicht zu unserem Code, der
-schließlich zum Aufruf von `panic!` geführt hat. Wir können die Aufrufhistorie
-(backtrace) der Funktionen, von der der `panic!`-Aufruf kam, nutzen, um den
-Codeteil zu ermitteln, der das Problem verursacht. Wir werden Aufrufhistorien
-im nächsten Abschnitt ausführlicher besprechen.
+schließlich zum Aufruf von `panic!` geführt hat.
 
-### Verwenden einer `panic!`-Aufrufhistorie
-
-Sehen wir uns ein weiteres Beispiel an, bei dem der `panic!`-Aufruf von einer
-Bibliothek kommt, weil wir einen Fehler in unserem Code haben, anstatt das
-Makro direkt aufzurufen. Codeblock 9-1 enthält einen Code, der versucht, auf
-einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs gültiger
-Indizes liegt.
+Wir können die Aufrufhistorie (backtrace) der Funktionen, von der der
+`panic!`-Aufruf kam, nutzen, um den Codeteil zu ermitteln, der das Problem
+verursacht. Um zu verstehen, wie man eine `panic!`-Aufrufhistorie liest, lass
+uns ein anderes Beispiel betrachten, bei dem ein `panic!`-Aufruf aufgrund eines
+Fehlers in unserem Code von einer Bibliothek kommt, anstatt von unserem Code,
+der das Makro direkt aufruft. Codeblock 9-1 enthält einen Code, der versucht,
+auf einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs
+gültiger Indizes liegt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -93,9 +91,9 @@ Endes eines Vektors zuzugreifen, was einen Aufruf von `panic!` auslöst</span>
 
 Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei
 Index 99 liegt, weil die Indexierung bei Null beginnt), der Vektor hat aber nur
-3 Elemente. In dieser Situation wird Rust das Programm abbrechen. Das Verwenden
-von `[]` soll ein Element zurückgeben, aber wenn du einen ungültigen Index
-übergibst, gibt es kein Element, das Rust hier korrekterweise zurückgeben
+drei Elemente. In dieser Situation wird Rust das Programm abbrechen. Das
+Verwenden von `[]` soll ein Element zurückgeben, aber wenn du einen ungültigen
+Index übergibst, gibt es kein Element, das Rust hier korrekterweise zurückgeben
 könnte.
 
 In C ist der Versuch, über das Ende einer Datenstruktur hinaus zu lesen, ein
@@ -122,19 +120,21 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Dieser Fehler weist auf Zeile 4 in unserer `main.rs` hin, wo wir versuchen, auf
-den Index 99 zuzugreifen. Die nächste Hinweiszeile sagt uns, dass wir die
-Umgebungsvariable `RUST_BACKTRACE` setzen können, um einen Backtrace zu
-erhalten, was genau passiert ist, das den Fehler verursacht hat. Ein
-*Backtrace* ist eine Liste aller Funktionen, die aufgerufen wurden, um an
-diesen Punkt zu gelangen. Backtraces in Rust funktionieren wie in anderen
-Sprachen: Der Schlüssel zum Lesen des Backtraces ist, von oben zu beginnen und
-zu lesen, bis du Dateien siehst, die du geschrieben hast. Das ist die Stelle,
-an der das Problem entstanden ist. Die Zeilen darüber sind Code, den dein Code
-aufgerufen hat; die Zeilen darunter sind Code, der deinen Code aufgerufen hat.
-Diese Zeilen können Core-Rust-Code, Code der Standardbibliothek oder Kisten,
-enthalten, die du verwendest. Versuchen wir, einen Backtrace zu erhalten, indem
-wir die Umgebungsvariable `RUST_BACKTRACE` auf einen beliebigen Wert außer 0
-setzen. Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.
+den Index `99` des Vektors in `v` zuzugreifen.
+
+Die Zeile `note:` sagt uns, dass wir die Umgebungsvariable `RUST_BACKTRACE`
+setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
+den Fehler verursacht hat. Eine *Aufrufhistorie* ist eine Liste aller
+Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
+Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel
+zum Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du
+Dateien siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
+entstanden ist. Die Zeilen darüber sind Code, den dein Code aufgerufen hat; die
+Zeilen darunter sind Code, der deinen Code aufgerufen hat. Diese Zeilen können
+Core-Rust-Code, Code der Standardbibliothek oder Kisten, enthalten, die du
+verwendest. Versuchen wir, eine Aufrufhistorie zu erhalten, indem wir die
+Umgebungsvariable `RUST_BACKTRACE` auf einen beliebigen Wert außer `0` setzen.
+Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.
 
 ```console
 $ RUST_BACKTRACE=1 cargo run
