@@ -355,15 +355,16 @@ fn main() {
 ```
 
 Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
-Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
-Haldenspeicher gehen wir in [Kapitel 4][stack-and-heap] näher ein) oder wenn du
-sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
-Array ist jedoch nicht so flexibel wie der Vektortyp. Ein *Vektor* ist ein
-ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
-wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
-sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
-wahrscheinlich, dass du einen Vektor verwenden solltest. In [Kapitel
-8][vectors] werden Vektoren ausführlicher besprochen.
+Haldenspeicher abgelegt haben möchtest, wie bei den anderen Typen, die wir
+bisher gesehen haben, (auf den Stapelspeicher und den Haldenspeicher gehen wir
+in [Kapitel 4][stack-and-heap] näher ein) oder wenn du sicherstellen willst,
+dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
+so flexibel wie der Vektortyp. Ein *Vektor* ist ein ähnlicher Kollektionstyp,
+der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
+Größe wachsen oder schrumpfen kann. Wenn du dir nicht sicher bist, ob du ein
+Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du einen
+Vektor verwenden solltest. In [Kapitel 8][vectors] werden Vektoren
+ausführlicher besprochen.
 
 Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm

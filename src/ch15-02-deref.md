@@ -68,20 +68,11 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
   |     ^^^^^^^^^^^^^^^^ no implementation for `{integer} == &{integer}`
   |
   = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
-  = help: the following other types implement trait `PartialEq<Rhs>`:
-            isize
-            i8
-            i16
-            i32
-            i64
-            i128
-            usize
-            u8
-          and 6 others
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
+
 ```
 
 Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,

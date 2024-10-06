@@ -40,7 +40,7 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
@@ -57,8 +57,8 @@ mod tests {
 }
 ```
 
-Dieser Code ist das automatisch generierte Testmodul. Das Attribut `cfg` steht
-für *Konfiguration* und teilt Rust mit, dass das folgende Element nur bei einer
+Im automatisch generierten Modul `tests` steht das Attribut `cfg` für
+*Konfiguration* und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
 Konfigurationsoption `test`, die von Rust beim Kompilieren und Ausführen von
 Tests verwendet wird. Durch das Verwenden des Attributs `cfg` kompiliert Cargo
@@ -77,13 +77,13 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
-pub fn add_two(a: i32) -> i32 {
+```rust,ignore
+pub fn add_two(a: usize) -> usize {
     internal_adder(a, 2)
 }
 
-fn internal_adder(a: i32, b: i32) -> i32 {
-    a + b
+fn internal_adder(left: usize, right: usize) -> usize {
+    left + right
 }
 
 #[cfg(test)]
@@ -92,7 +92,8 @@ mod tests {
 
     #[test]
     fn internal() {
-        assert_eq!(4, internal_adder(2, 2));
+        let result = internal_adder(2, 2);
+        assert_eq!(result, 4);
     }
 }
 ```
@@ -144,7 +145,7 @@ adder
     └── integration_test.rs
 ```
 
-Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein:
+Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein.
 
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
@@ -153,7 +154,8 @@ use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, add_two(2));
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }
 ```
 
@@ -162,7 +164,7 @@ Kiste `adder`</span>
 
 Jede Datei im Verzeichnis `tests` ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir `use adder::add_two` am Anfang des Codes hinzu, was wir
+diesem Grund fügen wir `use adder::add_two;` am Anfang des Codes hinzu, was wir
 in den Modultests nicht brauchten.
 
 Wir brauchen den Code in *tests/integration_test.rs* nicht mit `#[cfg(test)]`
@@ -305,11 +307,10 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 
 Dass in den Testergebnissen `common` erscheint und dabei `running 0 tests`
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
-den anderen Integrationstestdateien teilen.
-
-Um zu vermeiden, dass `common` in der Testausgabe erscheint, werden wir statt
-*tests/common.rs* die Datei *tests/common/mod.rs* erstellen. Das
-Projektverzeichnis sieht nun wie folgt aus:
+den anderen Integrationstestdateien teilen. Um zu vermeiden, dass `common` in
+der Testausgabe erscheint, werden wir statt *tests/common.rs* die Datei
+*tests/common/mod.rs* erstellen. Das Projektverzeichnis sieht nun wie folgt
+aus:
 
 ```text
 ├── Cargo.lock
@@ -339,14 +340,16 @@ Aufruf der Funktion `setup` aus dem Test `it_adds_two` in
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
-use adder;
+use adder::add_two;
 
 mod common;
 
 #[test]
 fn it_adds_two() {
     common::setup();
-    assert_eq!(4, adder::add_two(2));
+
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }
 ```
 

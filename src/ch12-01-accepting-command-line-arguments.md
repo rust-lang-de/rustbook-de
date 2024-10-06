@@ -84,7 +84,7 @@ sofort `collect`, um den Iterator in einen Vektor zu verwandeln, der alle vom
 Iterator erzeugten Werte enthält. Wir können die Funktion `collect` verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
 Typ von `args`, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl wir in Rust nur sehr selten Typen mit Annotationen versehen müssen, ist
+Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
 `collect` eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
 nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.
 
@@ -140,8 +140,8 @@ fn main() {
     let query = &args[1];
     let file_path = &args[2];
 
-    println!("Suche nach {}", query);
-    println!("In Datei {}", file_path);
+    println!("Suche nach {query}");
+    println!("In Datei {file_path}");
 }
 ```
 

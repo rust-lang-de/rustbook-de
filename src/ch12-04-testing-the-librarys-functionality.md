@@ -207,9 +207,9 @@ Rückgabewert unter Verwendung der Lebensdauer-Syntax verbunden werden sollte.
 
 Bei anderen Programmiersprachen ist es nicht erforderlich, Argumente zu
 verbinden, um Werte in der Signatur zurückzugeben, aber dieses Vorgehen wird
-mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit dem Abschnitt
-[„Referenzen validieren mit Lebensdauern“][validating-references-with-lifetimes]
-in Kapitel 10.
+mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit den Beispielen im
+Abschnitt [„Referenzen validieren mit
+Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10.
 
 Lass uns jetzt den Test ausführen:
 
@@ -249,11 +249,11 @@ Derzeit scheitert unser Test, weil wir immer einen leeren Vektor zurückgeben.
 Um dies zu korrigieren und `search` zu implementieren, muss unser Programm die
 folgenden Schritte befolgen:
 
-* Iteriere über jede Zeile des Inhalts.
-* Prüfe, ob die Zeile unseren Abfragetext enthält.
-* Wenn ja, füge sie der Liste der Werte hinzu, die wir zurückgeben.
-* Wenn nicht, tue nichts.
-* Gib die Liste der passenden Ergebnisse zurück.
+1. Iteriere über jede Zeile des Inhalts.
+2. Prüfe, ob die Zeile unseren Abfragetext enthält.
+3. Wenn ja, füge sie der Liste der Werte hinzu, die wir zurückgeben.
+4. Wenn nicht, tue nichts.
+5. Gib die Liste der passenden Ergebnisse zurück.
 
 Lass uns jeden Schritt durcharbeiten, beginnend mit dem Iterieren über die
 Zeilen.
@@ -578,7 +578,7 @@ zurückzugeben und auszugeben.
 
 Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
-wiedergeben sollte: „frog“
+wiedergeben sollte: *frog*
 
 ```console
 $ cargo run frog poem.txt
@@ -588,7 +588,7 @@ $ cargo run frog poem.txt
 How public, like a frog
 ```
 
-Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie „body“:
+Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie *body*:
 
 ```console
 $ cargo run body poem.txt
@@ -602,7 +602,7 @@ How dreary to be somebody!
 
 Und schließlich sollten wir sicherstellen, dass wir keine Zeilen bekommen, wenn
 wir nach einem Wort suchen, das nirgendwo im Gedicht vorkommt, zum Beispiel
-„monomorphization“:
+*monomorphization*:
 
 ```console
 $ cargo run monomorphization poem.txt

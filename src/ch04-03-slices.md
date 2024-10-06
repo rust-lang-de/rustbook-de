@@ -208,16 +208,16 @@ was `ending_index` minus `starting_index` entspricht. Im Fall von `let world =
 &s[6..10];` wäre `world` also ein Anteilstyp, der einen Zeiger auf das Byte bei
 Index 6 von `s` mit dem Längenwert `4` enthält.
 
-Abbildung 4-6 stellt dies dar.
+Abbildung 4-7 stellt dies dar.
 
 <img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
 darstellt, die auf das Byte bei Index 0 in einer Tabelle der
 Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
 dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
 der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
-src="img/trpl04-06.svg" class="center" style="width: 50%;" />
+src="img/trpl04-07.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
+<span class="caption">Abbildung 4-7: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines `String` bezieht</span>
 
 Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst,

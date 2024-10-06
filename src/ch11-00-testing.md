@@ -30,10 +30,10 @@ können diese Tests immer dann durchführen, wenn wir Änderungen an unserem Cod
 vornehmen, um sicherzustellen, dass sich ein bestehendes korrektes Verhalten
  nicht geändert hat.
 
-Testen ist eine komplexe Fähigkeit: Obwohl wir nicht jedes Detail darüber, wie
-man gute Tests schreibt, in einem Kapitel behandeln können, werden wir die
-Mechanismen der Rust-Testmöglichkeiten besprechen. Wir werden über Annotationen
-und Makros sprechen, die dir beim Schreiben deiner Tests zur Verfügung stehen,
-über das Standardverhalten und die Optionen, die es bei der Ausführung deiner
-Tests gibt, und darüber, wie du Tests in Modultests (unit tests) und
-Integrationstests organisieren kannst.
+Testen ist eine komplexe Fähigkeit: Obwohl wir in einem Kapitel nicht jedes
+Detail, wie man gute Tests schreibt, behandeln können, werden wir in diesem
+Kapitel die Mechanismen der Rust-Testmöglichkeiten besprechen. Wir werden über
+Annotationen und Makros sprechen, die dir beim Schreiben deiner Tests zur
+Verfügung stehen, über das Standardverhalten und die Optionen, die es bei der
+Ausführung deiner Tests gibt, und darüber, wie du Tests in Modultests (unit
+tests) und Integrationstests organisieren kannst.

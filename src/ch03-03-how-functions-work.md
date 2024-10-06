@@ -169,7 +169,8 @@ fn main() {
 Anweisung enthält</span>
 
 Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
-ist eine Anweisung für sich.
+ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
+*Aufruf* einer Funktion keine Anweisung.)
 
 Anweisungen geben keine Werte zurück. Daher kannst du keine `let`-Anweisung
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst

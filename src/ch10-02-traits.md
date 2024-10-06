@@ -1,10 +1,10 @@
 ## Merkmale (traits): Gemeinsames Verhalten definieren
 
-Ein *Merkmal* (trait) definiert Funktionalität, den ein bestimmter Typ hat und
-mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
-Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
-(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
-kann, der ein bestimmtes Verhalten aufweist.
+Ein *Merkmal* (trait) definiert die Funktionalität, den ein bestimmter Typ hat
+und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
+gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
+Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
+generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.
 
 > Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 > Sprachen oft *Schnittstelle* (interface) genannt wird, wenn auch mit einigen
@@ -46,8 +46,8 @@ pub trait Summary {
 aus der Methode `summarize` besteht</span>
 
 Hier deklarieren wir ein Merkmal mit dem Schlüsselwort `trait` und dann den
-Namen des Merkmals, der in diesem Fall `Summary` lautet. Wir haben das Merkmal
-auch als `pub` deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Namen des Merkmals, der in diesem Fall `Summary` lautet. Wir deklarieren das
+Merkmal auch als `pub`, sodass Kisten, die von dieser Kiste abhängen, dieses
 Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
 Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
 das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
@@ -150,7 +150,7 @@ wahrscheinlich schon weißt` aus.
 Andere Kisten, die von der `aggregator`-Kiste abhängen, können auch das Merkmal
 `Summary` in den Gültigkeitsbereich bringen, um `Summary` auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
-Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
 lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
 Standard-Bibliotheksmerkmale wie `Display` auf einem benutzerdefinierten Typ
 wie `Tweet` als Teil unserer `aggregator`-Kistenfunktionalität implementieren,
@@ -315,7 +315,7 @@ Instanzen der `Tweet`-Struktur aufrufen, und die Standard-Implementierung von
 `summarize` wird die Definition von `summarize_author` aufrufen, die wir
 bereitgestellt haben. Da wir `summarize_author` implementiert haben, hat uns
 das Merkmal `Summary` das Verhalten der `summarize`-Methode mitgeliefert, ohne
-dass wir weiteren Code schreiben müssen. 
+dass wir weiteren Code schreiben müssen. Das sieht dann so aus:
 
 ```rust,ignore
 # use aggregator::{self, Summary, Tweet};

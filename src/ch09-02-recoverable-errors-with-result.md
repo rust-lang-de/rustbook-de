@@ -117,7 +117,7 @@ Wie üblich sagt uns diese Ausgabe genau, was schiefgelaufen ist.
 
 Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund `File::open`
 fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
-unterschiedliche Maßnahmen ergreifen: Wenn `File::open` fehlgeschlagen ist,
+unterschiedliche Maßnahmen ergreifen. Wenn `File::open` fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn `File::open` aus irgendeinem
 anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
@@ -172,7 +172,7 @@ nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren `match` bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 
-> ### Alternativen zur Verwendung von `match` mit `Result<T, E>`
+> #### Alternativen zur Verwendung von `match` mit `Result<T, E>`
 >
 > Das sind viele `match`! Der Ausdruck `match` ist sehr nützlich, aber auch
 > sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
@@ -208,7 +208,7 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 > dieser Methoden können große, verschachtelte `match`-Ausdrücke vermeiden,
 > wenn du mit Fehlern zu tun hast.
 
-### Abkürzungen zum Abbrechen im Fehlerfall: `unwrap` und `expect`
+#### Abkürzungen zum Abbrechen im Fehlerfall: `unwrap` und `expect`
 
 Das Verwenden von `match` funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ `Result<T, E>` bietet
@@ -494,7 +494,7 @@ Funktion muss ein `Result` sein, damit er mit `return` kompatibel ist.
 
 Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den `?`-Operator
 in einer `main`-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
-Wertes, für den wir "?" verwenden, kompatibel ist:
+Wertes, für den wir `?` verwenden, kompatibel ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -508,7 +508,7 @@ fn main() {
 
 <span class="caption">Codeblock 9-10: Der Versuch, das `?` in der
 `main`-Funktion zu verwenden, die `()` zurückgibt, lässt sich nicht
-kompilieren</span>
+kompilieren.</span>
 
 Dieser Code öffnet eine Datei, was fehlschlagen kann. Der `?`-Operator folgt
 dem `Result`-Wert, der von `File::open` zurückgegeben wird, aber diese
@@ -517,7 +517,7 @@ kompilieren, erhalten wir folgende Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+   Compiling playground v0.0.1 (/playground)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --> src/main.rs:4:48
   |
@@ -527,9 +527,17 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
+help: consider adding return type
+  |
+3 ~ fn main() -> Result<(), Box<dyn std::error::Error>> {
+4 |     let greeting_file = File::open("hallo.txt")?;
+5 + 
+6 +     Ok(())
+7 + }
+  |
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion
@@ -552,7 +560,7 @@ dem Verhalten, wenn er auf ein `Result<T, E>` aufgerufen wird: Wenn der Wert
 Wenn der Wert `Some` ist, ist der Wert innerhalb von `Some` der resultierende
 Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
 Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
-gegebenen Text findet:
+gegebenen Text findet.
 
 ```rust
 fn last_char_of_first_line(text: &str) -> Option<char> {
@@ -617,6 +625,8 @@ Glücklicherweise kann `main` auch ein `Result<(), E>` zurückgeben. Codeblock
 `main` in `Result<(), Box<dyn Error>>` geändert und am Ende einen Rückgabewert
 `Ok(())` hinzugefügt. Dieser Code wird nun kompilieren:
 
+<span class="filename">Filename: src/main.rs</span>
+
 ```rust,ignore
 use std::error::Error;
 use std::fs::File;
@@ -630,7 +640,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 <span class="caption">Codeblock 9-12: Die Änderung von `main` zur Rückgabe von
 `Result<(), E>` erlaubt die Verwendung des `?`-Operators für
-`Result`-Werte</span>
+`Result`-Werte.</span>
 
 Der Typ `Box<dyn Error>` ist ein *Merkmalsobjekt* (trait object), über das wir
 im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher

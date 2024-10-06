@@ -124,7 +124,8 @@ organisieren. Es gibt einen Platz für alles und alles ist an seinem Platz.
 Wenn du ein Projekt begonnen hast, das Cargo nicht verwendet, wie wir es mit
 dem Projekt „Hallo Welt!“ getan haben, kannst du es in ein Projekt umwandeln,
 das Cargo verwendet. Verschiebe den Projektcode in das Verzeichnis *src* und
-erstelle eine entsprechende *Cargo.toml*-Datei.
+erstelle eine entsprechende *Cargo.toml*-Datei. Eine einfache Möglichkeit, die
+Datei *Cargo.toml* zu erstellen, besteht darin, `cargo init` auszuführen.
 
 ### Bauen und Ausführen eines Cargo-Projekts
 

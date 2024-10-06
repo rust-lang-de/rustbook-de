@@ -604,7 +604,7 @@ fn main() {
     ];
 
     let mut sort_operations = vec![];
-    let value = String::from("sort_by_key aufgerufen");
+    let value = String::from("Funktionsabschluss aufgerufen");
 
     list.sort_by_key(|r| {
         sort_operations.push(value);
@@ -638,7 +638,7 @@ $ cargo run
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --> src/main.rs:18:30
    |
-15 |     let value = String::from("sort_by_key aufgerufen");
+15 |     let value = String::from("Funktionsabschluss aufgerufen");
    |         ----- captured outer variable
 16 |
 17 |     list.sort_by_key(|r| {

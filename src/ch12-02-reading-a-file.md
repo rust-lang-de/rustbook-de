@@ -59,9 +59,9 @@ Zuerst fügen wir eine weitere `use`-Anweisung hinzu, um einen relevanten Teil
 der Standardbibliothek einzubringen: Wir brauchen `std::fs`, um Dateien zu
 verwenden.
 
-In `main` haben wir eine neue Anweisung hinzugefügt: `fs::read_to_string` nimmt
-den `file_path`, öffnet diese Datei und gibt ein `Result<String>` mit dem
-Inhalt der Datei zurück.
+In `main` nimmt die neue Anweisung `fs::read_to_string` den `file_path`, öffnet
+diese Datei und gibt einen Wert von Typ `Result<String>` zurück, der den Inhalt
+der Datei enthält.
 
 Nach dieser Anweisung haben wir wieder eine temporäre `println!`-Anweisung
 hinzugefügt, die den Wert von `contents` ausgibt, nachdem die Datei eingelesen

@@ -237,8 +237,8 @@ error[E0277]: `Rectangle` doesn't implement `Debug`
 Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:
 
 ```text
-   = help: the trait `std::fmt::Debug` is not implemented for `Rectangle`
-   = note: add `#[derive(Debug)]` or manually implement `std::fmt::Debug`
+   = help: the trait `Debug` is not implemented for `Rectangle`
+   = note: add `#[derive(Debug)]` to `Rectangle` or manually `impl Debug for Rectangle`
 ```
 
 Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,

@@ -49,8 +49,8 @@ Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
 einzelnen Aufgaben eines Binärprogramms entwickelt, wenn die Funktion `main`
 groß wird. Dieser Prozess umfasst die folgenden Schritte:
 
-* Teile dein Programm in eine *main.rs* und eine *lib.rs* auf und verschiebe
-  die Logik deines Programms in die *lib.rs*.
+* Teile dein Programm in die Dateien *main.rs* und *lib.rs* auf und verschiebe
+  die Logik deines Programms in *lib.rs*.
 * Solange deine Kommandozeilen-Parselogik klein ist, kann sie in *main.rs*
   bleiben.
 * Wenn die Kommandozeilen-Parselogik anfängt, kompliziert zu werden, extrahiere
@@ -329,7 +329,7 @@ korrigieren.
 #### Verbessern der Fehlermeldung
 
 In Codeblock 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und 2
+überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
 ab und zeigt eine bessere Fehlermeldung an.
 
@@ -381,10 +381,10 @@ Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Codeblock
 9-13][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
 wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args`
-mindestens 3 beträgt und der Rest der Funktion unter der Annahme arbeiten kann,
-dass diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente hat,
-ist diese Bedingung wahr und wir rufen das Makro `panic!` auf, um das Programm
-sofort zu beenden.
+mindestens `3` beträgt und der Rest der Funktion unter der Annahme arbeiten
+kann, dass diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente
+hat, wird diese Bedingung `true` und wir rufen das Makro `panic!` auf, um das
+Programm sofort zu beenden.
 
 Mit diesen zusätzlichen wenigen Zeilen Code in `new` lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:
@@ -468,8 +468,8 @@ impl Config {
 `Config::build`</span>
 
 Unsere Funktion `build` liefert ein `Result` mit einer `Config`-Instanz im
-Erfolgsfall und ein `&'static str` im Fehlerfall. Unsere Fehlerwerte werden
-immer Zeichenketten-Literale sein, die eine `'static` Lebensdauer haben.
+Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
+werden immer Zeichenketten-Literale sein, die eine `'static` Lebensdauer haben.
 
 Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt `panic!`
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
@@ -728,7 +728,7 @@ am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
-können. Das Schlüsselwort `dyn` ist die Abkürzung für „dynamisch“.
+können. Das Schlüsselwort `dyn` ist die Abkürzung für *dynamisch*.
 
 Zweitens haben wir den Aufruf von `expect` zugunsten des `?`-Operators
 entfernt, wie wir in [Kapitel 9][ch9-question-mark] besprochen haben. Statt
@@ -814,7 +814,6 @@ fn main() {
 
     if let Err(e) = run(config) {
         println!("Anwendungsfehler: {e}");
-
         process::exit(1);
     }
 }
@@ -864,8 +863,8 @@ Unser `minigrep`-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
 diese Weise können wir den Code testen und haben eine Datei *src/main.rs* mit
 weniger Verantwortlichkeiten.
 
-Lass uns den ganzen Code, der nicht die Funktion `main` ist, von *src/main.rs*
-nach *src/lib.rs* verschieben:
+Lass uns den ganzen Code, der nicht in der Funktion `main` ist, von
+*src/main.rs* nach *src/lib.rs* verschieben:
 
 * Die Definition der Funktion `run`
 * Die relevanten `use`-Anweisungen
@@ -946,7 +945,6 @@ fn main() {
     if let Err(e) = minigrep::run(config) {
         // --abschneiden--
 #         println!("Anwendungsfehler: {e}");
-#
 #         process::exit(1);
     }
 }

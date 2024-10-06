@@ -35,14 +35,14 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 `&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
 `String` steht. Das `&`-Zeichen steht für eine *Referenz*, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.
+übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
 Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
 zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
-src="img/trpl04-05.svg" class="center" />
+src="img/trpl04-06.svg" class="center" />
 
-<span class="caption">Abbildung 4-5: Eine Grafik mit `&String s`, das auf
+<span class="caption">Abbildung 4-6: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>
 
 > Anmerkung: Das Gegenteil der Referenzierung durch `&` ist die
@@ -353,7 +353,7 @@ Hier ist die Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0106]: missing lifetime specifier
  --> src/main.rs:5:16
   |
@@ -371,8 +371,15 @@ help: instead, you are more likely to want to return an owned value
 5 + fn dangle() -> String {
   |
 
-For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error[E0515]: cannot return reference to local variable `s`
+ --> src/main.rs:8:5
+  |
+8 |     &s
+  |     ^^ returns a reference to data owned by the current function
+
+Some errors have detailed explanations: E0106, E0515.
+For more information about an error, try `rustc --explain E0106`.
+error: could not compile `playground` (bin "playground") due to 2 previous errors; 1 warning emitted
 ```
 
 Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht

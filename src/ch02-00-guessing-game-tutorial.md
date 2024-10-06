@@ -1043,8 +1043,8 @@ erneut auszuführen. Beachte, dass es ein neues Problem gibt, weil das Programm
 genau das tut, was wir ihm gesagt haben: Frage für immer nach einer weiteren
 Schätzung! Es sieht nicht so aus, als könne der Benutzer das Programm beenden!
 
-Der Benutzer könnte das Programm jederzeit mit dem Tastaturkürzel <span
-class="keystroke">Strg+c</span> unterbrechen. Aber es gibt noch eine andere
+Der Benutzer könnte das Programm jederzeit mit dem Tastaturkürzel
+<kbd>Strg</kbd>+<kbd>c</kbd> unterbrechen. Aber es gibt noch eine andere
 Möglichkeit, diesem unersättlichen Monster zu entkommen, wie in der
 `parse`-Diskussion in [„Vergleichen der Schätzung mit der
 Geheimzahl“](#vergleichen-der-schätzung-mit-der-geheimzahl) erwähnt: Wenn der
