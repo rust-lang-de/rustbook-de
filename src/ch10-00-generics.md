@@ -9,13 +9,12 @@ Datentypen ausdrücken, ohne zu wissen, was an ihrer Stelle beim Kompilieren und
 Ausführen des Codes stehen wird.
 
 Funktionen können Parameter eines generischen Typs anstelle eines konkreten
-Typs wie `i32` oder `String` annehmen, so wie eine Funktion Parameter mit
-unbekannten Werten annimmt, um denselben Code auf mehrere konkrete Werte
-anzuwenden. Tatsächlich haben wir generische Datentypen bereits in Kapitel 6
-mit `Option<T>`, in Kapitel 8 mit `Vec<T>` und `HashMap<K, V>` und in Kapitel
-9 mit `Result<T, E>` verwendet. In diesem Kapitel erfährst du, wie du deine
-eigenen Typen, Funktionen und Methoden mit generischen Datentypen definieren
-kannst!
+Typs wie `i32` oder `String` annehmen, so wie sie Parameter mit unbekannten
+Werten annehmen, um denselben Code auf mehrere konkrete Werte anzuwenden.
+Tatsächlich haben wir generische Datentypen bereits in Kapitel 6 mit
+`Option<T>`, in Kapitel 8 mit `Vec<T>` und `HashMap<K, V>` und in Kapitel 9 mit
+`Result<T, E>` verwendet. In diesem Kapitel erfährst du, wie du deine eigenen
+Typen, Funktionen und Methoden mit generischen Datentypen definieren kannst!
 
 Zunächst werden wir uns anschauen, wie eine Funktion extrahiert werden kann, um
 Code-Duplizierung zu reduzieren. Danach verwenden wir dieselbe Technik, um aus
@@ -41,16 +40,16 @@ ohne unsere Hilfe könnte.
 Mit Hilfe von generischen Typen können wir spezifische Typen durch einen
 Platzhalter ersetzen, der mehrere Typen repräsentiert, um Code-Duplizierung zu
 vermeiden. Bevor wir uns mit der generischen Syntax befassen, wollen wir uns
-zunächst ansehen, wie man Duplikate auf eine Weise entfernt, die keine
-generischen Typen erfordert, indem man eine Funktion extrahiert, die
-spezifische Werte durch einen Platzhalter ersetzt, der mehrere Werte
-repräsentiert. Dann wenden wir die gleiche Technik an, um eine generische
-Funktion zu extrahieren! Wenn du dir ansiehst, wie du doppelten Code
-erkennst, den du in eine Funktion extrahieren kannst, wirst du beginnen,
-doppelten Code zu erkennen, der generische Typen verwenden kann.
+ansehen, wie man Duplikate auf eine Weise entfernt, die keine generischen Typen
+erfordert, indem man eine Funktion extrahiert, die spezifische Werte durch
+einen Platzhalter ersetzt, der mehrere Werte repräsentiert. Dann wenden wir die
+gleiche Technik an, um eine generische Funktion zu extrahieren! Wenn du dir
+ansiehst, wie du doppelten Code erkennst, den du in eine Funktion extrahieren
+kannst, wirst du beginnen, doppelten Code zu erkennen, der generische Typen
+verwenden kann.
 
-Wir beginnen mit dem kurzen Programm in Codeblock 10-1, das die größte Zahl in
-einer Liste findet.
+Wir werden mit dem kurzen Programm in Codeblock 10-1 beginnen, das die größte
+Zahl in einer Liste findet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

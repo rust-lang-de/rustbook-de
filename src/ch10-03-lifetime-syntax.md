@@ -10,8 +10,8 @@ Ein Detail, das wir im Abschnitt [„Referenzen und Ausleihen
 dass jede Referenz in Rust eine *Lebensdauer* (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
-Typen abgeleitet werden. Wir müssen Typen mit Annotationen versehen, wenn
-mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
+Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
+wenn mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
 annotieren, wenn die Lebensdauern von Referenzen auf verschiedene Weise
 miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
@@ -83,15 +83,15 @@ For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
-Die Variable `x` lebt nicht „lange genug“. Der Grund dafür ist, dass `x` den
-Gültigkeitsbereich verlässt, da der innere Gültigkeitsbereich bei Zeile 7
-endet. Aber `r` ist im äußeren Gültigkeitsbereich immer noch gültig; da sein
-Gültigkeitsbereich größer ist, sagen wir, dass es „länger lebt“. Wenn Rust
-diesen Code funktionieren ließe, würde `r` auf Speicher verweisen, der
-freigegeben wurde, als `x` den Gültigkeitsbereich verlassen hat, und alles, was
-wir mit `r` tun würden, würde nicht korrekt funktionieren. Wie stellt Rust also
-fest, dass dieser Code ungültig ist? Es verwendet einen Ausleihenprüfer (borrow
-checker).
+Die Fehlermeldung besagt, dass die Variable `x` „nicht lange genug lebt“. Der
+Grund dafür ist, dass `x` den Gültigkeitsbereich verlässt, da der innere
+Gültigkeitsbereich bei Zeile 7 endet. Aber `r` ist im äußeren
+Gültigkeitsbereich immer noch gültig; da sein Gültigkeitsbereich größer ist,
+sagen wir, dass es „länger lebt“. Wenn Rust diesen Code funktionieren ließe,
+würde `r` auf Speicher verweisen, der freigegeben wurde, als `x` den
+Gültigkeitsbereich verlassen hat, und alles, was wir mit `r` tun würden, würde
+nicht korrekt funktionieren. Wie stellt Rust also fest, dass dieser Code
+ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).
 
 ### Der Ausleihenprüfer
 
