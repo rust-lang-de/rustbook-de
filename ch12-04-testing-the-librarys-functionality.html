@@ -352,9 +352,9 @@ wollen, die passen, wissen wir, dass <code>contents</code> das Argument ist, das
 Rückgabewert unter Verwendung der Lebensdauer-Syntax verbunden werden sollte.</p>
 <p>Bei anderen Programmiersprachen ist es nicht erforderlich, Argumente zu
 verbinden, um Werte in der Signatur zurückzugeben, aber dieses Vorgehen wird
-mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit dem Abschnitt
-<a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit Lebensdauern“</a>
-in Kapitel 10.</p>
+mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit den Beispielen im
+Abschnitt <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
+Lebensdauern“</a> in Kapitel 10.</p>
 <p>Lass uns jetzt den Test ausführen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
@@ -387,13 +387,13 @@ zum Bestehen!</p>
 <p>Derzeit scheitert unser Test, weil wir immer einen leeren Vektor zurückgeben.
 Um dies zu korrigieren und <code>search</code> zu implementieren, muss unser Programm die
 folgenden Schritte befolgen:</p>
-<ul>
+<ol>
 <li>Iteriere über jede Zeile des Inhalts.</li>
 <li>Prüfe, ob die Zeile unseren Abfragetext enthält.</li>
 <li>Wenn ja, füge sie der Liste der Werte hinzu, die wir zurückgeben.</li>
 <li>Wenn nicht, tue nichts.</li>
 <li>Gib die Liste der passenden Ergebnisse zurück.</li>
-</ul>
+</ol>
 <p>Lass uns jeden Schritt durcharbeiten, beginnend mit dem Iterieren über die
 Zeilen.</p>
 <h4 id="iterieren-über-zeilen-mit-der-methode-lines"><a class="header" href="#iterieren-über-zeilen-mit-der-methode-lines">Iterieren über Zeilen mit der Methode <code>lines</code></a></h4>
@@ -681,14 +681,14 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 zurückzugeben und auszugeben.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
-wiedergeben sollte: „frog“</p>
+wiedergeben sollte: <em>frog</em></p>
 <pre><code class="language-console">$ cargo run frog poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.38s
      Running `target/debug/minigrep frog poem.txt`
 How public, like a frog
 </code></pre>
-<p>Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie „body“:</p>
+<p>Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie <em>body</em>:</p>
 <pre><code class="language-console">$ cargo run body poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
@@ -699,7 +699,7 @@ How dreary to be somebody!
 </code></pre>
 <p>Und schließlich sollten wir sicherstellen, dass wir keine Zeilen bekommen, wenn
 wir nach einem Wort suchen, das nirgendwo im Gedicht vorkommt, zum Beispiel
-„monomorphization“:</p>
+<em>monomorphization</em>:</p>
 <pre><code class="language-console">$ cargo run monomorphization poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s

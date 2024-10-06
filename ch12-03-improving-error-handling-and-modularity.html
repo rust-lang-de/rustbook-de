@@ -209,8 +209,8 @@ Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
 einzelnen Aufgaben eines Binärprogramms entwickelt, wenn die Funktion <code>main</code>
 groß wird. Dieser Prozess umfasst die folgenden Schritte:</p>
 <ul>
-<li>Teile dein Programm in eine <em>main.rs</em> und eine <em>lib.rs</em> auf und verschiebe
-die Logik deines Programms in die <em>lib.rs</em>.</li>
+<li>Teile dein Programm in die Dateien <em>main.rs</em> und <em>lib.rs</em> auf und verschiebe
+die Logik deines Programms in <em>lib.rs</em>.</li>
 <li>Solange deine Kommandozeilen-Parselogik klein ist, kann sie in <em>main.rs</em>
 bleiben.</li>
 <li>Wenn die Kommandozeilen-Parselogik anfängt, kompliziert zu werden, extrahiere
@@ -451,7 +451,7 @@ helfen zu verstehen, was sie stattdessen tun sollten. Lass uns das jetzt
 korrigieren.</p>
 <h4 id="verbessern-der-fehlermeldung"><a class="header" href="#verbessern-der-fehlermeldung">Verbessern der Fehlermeldung</a></h4>
 <p>In Codeblock 12-8 fügen wir eine Prüfung in der Funktion <code>new</code> hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und 2
+überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
 ab und zeigt eine bessere Fehlermeldung an.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -497,10 +497,10 @@ der Argumente</span></p>
 9-13</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
 wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code>
-mindestens 3 beträgt und der Rest der Funktion unter der Annahme arbeiten kann,
-dass diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente hat,
-ist diese Bedingung wahr und wir rufen das Makro <code>panic!</code> auf, um das Programm
-sofort zu beenden.</p>
+mindestens <code>3</code> beträgt und der Rest der Funktion unter der Annahme arbeiten
+kann, dass diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente
+hat, wird diese Bedingung <code>true</code> und wir rufen das Makro <code>panic!</code> auf, um das
+Programm sofort zu beenden.</p>
 <p>Mit diesen zusätzlichen wenigen Zeilen Code in <code>new</code> lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
 <pre><code class="language-console">$ cargo run
@@ -571,8 +571,8 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 <p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
 <p>Unsere Funktion <code>build</code> liefert ein <code>Result</code> mit einer <code>Config</code>-Instanz im
-Erfolgsfall und ein <code>&amp;'static str</code> im Fehlerfall. Unsere Fehlerwerte werden
-immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
+Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
+werden immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
 <p>Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt <code>panic!</code>
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
 einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rückgabewert in ein <code>Ok</code>
@@ -797,7 +797,7 @@ am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 Merkmal <code>Error</code> implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
-können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für „dynamisch“.</p>
+können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für <em>dynamisch</em>.</p>
 <p>Zweitens haben wir den Aufruf von <code>expect</code> zugunsten des <code>?</code>-Operators
 entfernt, wie wir in <a href="ch09-02-recoverable-errors-with-result.html#abk%C3%BCrzung-zum-weitergeben-von-fehlern-der-operator-">Kapitel 9</a> besprochen haben. Statt
 <code>panic!</code> bei einem Fehler aufzurufen gibt <code>?</code> den Fehlerwert aus der aktuellen
@@ -872,7 +872,6 @@ haben, aber mit einem kleinen Unterschied:</p>
 
     if let Err(e) = run(config) {
         println!("Anwendungsfehler: {e}");
-
         process::exit(1);
     }
 }
@@ -916,8 +915,8 @@ Fällen gleich: Wir geben den Fehler aus und beenden.</p>
 <em>src/main.rs</em> auf und fügen etwas Code in die Datei <em>src/lib.rs</em> ein. Auf
 diese Weise können wir den Code testen und haben eine Datei <em>src/main.rs</em> mit
 weniger Verantwortlichkeiten.</p>
-<p>Lass uns den ganzen Code, der nicht die Funktion <code>main</code> ist, von <em>src/main.rs</em>
-nach <em>src/lib.rs</em> verschieben:</p>
+<p>Lass uns den ganzen Code, der nicht in der Funktion <code>main</code> ist, von
+<em>src/main.rs</em> nach <em>src/lib.rs</em> verschieben:</p>
 <ul>
 <li>Die Definition der Funktion <code>run</code></li>
 <li>Die relevanten <code>use</code>-Anweisungen</li>
@@ -988,7 +987,6 @@ fn main() {
 </span>    if let Err(e) = minigrep::run(config) {
         // --abschneiden--
 <span class="boring">        println!("Anwendungsfehler: {e}");
-</span><span class="boring">
 </span><span class="boring">        process::exit(1);
 </span>    }
 }</code></pre>

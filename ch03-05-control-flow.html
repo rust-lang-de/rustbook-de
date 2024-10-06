@@ -388,9 +388,9 @@ so, dass sie wie folgt aussieht:</p>
 }</code></pre>
 <p>Wenn wir dieses Programm ausführen, werden wir sehen, dass es immer und immer
 wieder <code>nochmal!</code> ausgibt, bis wir das Programm manuell stoppen. Die meisten
-Terminals unterstützen das Tastaturkürzel <span
-class="keystroke">Strg+c</span>, um ein Programm zu unterbrechen, das in einer
-Endlosschleife feststeckt. Probiere es aus:</p>
+Terminals unterstützen das Tastaturkürzel <kbd>Strg</kbd>+<kbd>c</kbd>, um ein
+Programm zu unterbrechen, das in einer Endlosschleife feststeckt. Probiere es
+aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.29s
@@ -401,10 +401,10 @@ nochmal!
 nochmal!
 ^Cnochmal!
 </code></pre>
-<p>Das Symbol <code>^C</code> steht für die Stelle, an der du <span
-class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
-der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
-dem <code>^C</code> das Wort <code>nochmal!</code> oder nicht.</p>
+<p>Das Symbol <code>^C</code> steht für die Stelle, an der du <kbd>Strg</kbd>+<kbd>c</kbd>
+gedrückt hast. Je nachdem, wo sich der Code in der Schleife befand, als er das
+Unterbrechungssignal empfing, siehst du nach dem <code>^C</code> das Wort <code>nochmal!</code> oder
+nicht.</p>
 <p>Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
 mittels Code auszubrechen. Du kannst das Schlüsselwort <code>break</code> innerhalb der
 Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der

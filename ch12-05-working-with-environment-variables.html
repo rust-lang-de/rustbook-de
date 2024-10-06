@@ -760,8 +760,8 @@ die Variante <code>Err</code> zurück, wenn die Umgebungsvariable nicht gesetzt 
 <p>Wir benutzen die Methode <code>is_ok</code> auf <code>Result</code>, um zu prüfen, ob die
 Umgebungsvariable gesetzt ist, was bedeutet, dass das Programm die Suche
 ohne Berücksichtigung der Groß-/Kleinschreibung durchführen soll. Wenn
-die Umgebungsvariable <code>IGNORE_CASE</code> keinen Wert hat, gibt <code>is_ok</code> false zurück
-und das Programm führt eine Suche mit Berücksichtigung der
+die Umgebungsvariable <code>IGNORE_CASE</code> keinen Wert hat, gibt <code>is_ok</code> den Wert
+<code>false</code> zurück und das Programm führt eine Suche mit Berücksichtigung der
 Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den <em>Wert</em> der
 Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also prüfen wir
 mit <code>is_ok</code>, anstatt mit <code>unwrap</code>, <code>expect</code> oder einer der anderen Methoden,
@@ -772,7 +772,7 @@ kann, ob sie <code>search_case_insensitive</code> oder <code>search</code> aufru
 in Codeblock 12-22 implementiert haben.</p>
 <p>Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
 Umgebungsvariable und mit dem Abfragetext <code>to</code> aus, die zu den Zeilen passen
-sollte, die das Wort <code>to</code> in Kleinbuchstaben enthalten:</p>
+sollte, die das Wort <em>to</em> in Kleinbuchstaben enthalten:</p>
 <pre><code class="language-console">$ cargo run to poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
@@ -782,7 +782,7 @@ How dreary to be somebody!
 </code></pre>
 <p>Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 <code>IGNORE_CASE</code> auf <code>1</code> gesetzt ausführen, aber mit dem gleichen Abfragetext
-<code>to</code>.</p>
+<em>to</em>.</p>
 <pre><code class="language-console">$ IGNORE_CASE=1 cargo run -- to poem.txt
 </code></pre>
 <p>Wenn du die PowerShell verwendest, sind das Setzen der Umgebungsvariable und
@@ -793,14 +793,14 @@ das Ausführen des Programms separate Befehle:</p>
 kann mit <code>Remove-Item</code> zurückgesetzt werden:</p>
 <pre><code class="language-console">PS&gt; Remove-Item Env:IGNORE_CASE
 </code></pre>
-<p>Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
+<p>Wir sollten Zeilen erhalten, die <em>to</em> enthalten, die Großbuchstaben haben
 könnten:</p>
 <pre><code class="language-console">Are you nobody, too?
 How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
 </code></pre>
-<p>Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser <code>minigrep</code>-Programm kann
+<p>Ausgezeichnet, wir haben auch Zeilen mit <em>To</em>! Unser <code>minigrep</code>-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.</p>

@@ -170,10 +170,9 @@
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
-wir die weniger elegante Methode <span class="keystroke">Strg+c</span>
-verwenden, um den Hauptstrang (main thread) anzuhalten, werden auch alle
-anderen Stränge sofort gestoppt, selbst wenn sie gerade dabei sind, eine
-Anfrage zu bedienen.</p>
+wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
+Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
+gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.</p>
 <p>Als Nächstes werden wir das Merkmal (trait) <code>Drop</code> implementieren, um <code>join</code>
 für jeden der Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen
 sie arbeiten, vor dem Schließen beenden können. Dann werden wir einen Weg

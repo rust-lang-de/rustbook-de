@@ -213,9 +213,9 @@ das zweite Argument angegeben wurde</span></p>
 <p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, um einen relevanten Teil
 der Standardbibliothek einzubringen: Wir brauchen <code>std::fs</code>, um Dateien zu
 verwenden.</p>
-<p>In <code>main</code> haben wir eine neue Anweisung hinzugefügt: <code>fs::read_to_string</code> nimmt
-den <code>file_path</code>, öffnet diese Datei und gibt ein <code>Result&lt;String&gt;</code> mit dem
-Inhalt der Datei zurück.</p>
+<p>In <code>main</code> nimmt die neue Anweisung <code>fs::read_to_string</code> den <code>file_path</code>, öffnet
+diese Datei und gibt einen Wert von Typ <code>Result&lt;String&gt;</code> zurück, der den Inhalt
+der Datei enthält.</p>
 <p>Nach dieser Anweisung haben wir wieder eine temporäre <code>println!</code>-Anweisung
 hinzugefügt, die den Wert von <code>contents</code> ausgibt, nachdem die Datei eingelesen
 wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.</p>

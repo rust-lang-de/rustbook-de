@@ -166,11 +166,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="merkmale-traits-gemeinsames-verhalten-definieren"><a class="header" href="#merkmale-traits-gemeinsames-verhalten-definieren">Merkmale (traits): Gemeinsames Verhalten definieren</a></h2>
-<p>Ein <em>Merkmal</em> (trait) definiert Funktionalität, den ein bestimmter Typ hat und
-mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
-Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
-(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
-kann, der ein bestimmtes Verhalten aufweist.</p>
+<p>Ein <em>Merkmal</em> (trait) definiert die Funktionalität, den ein bestimmter Typ hat
+und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
+gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
+Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
+generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.</p>
 <blockquote>
 <p>Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 Sprachen oft <em>Schnittstelle</em> (interface) genannt wird, wenn auch mit einigen
@@ -206,8 +206,8 @@ dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="caption">Codeblock 10-12: Ein Merkmal <code>Summary</code>, dessen Verhalten
 aus der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Merkmal mit dem Schlüsselwort <code>trait</code> und dann den
-Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir haben das Merkmal
-auch als <code>pub</code> deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir deklarieren das
+Merkmal auch als <code>pub</code>, sodass Kisten, die von dieser Kiste abhängen, dieses
 Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
 Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
 das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
@@ -296,7 +296,7 @@ fn main() {
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
-Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
 lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
 Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
 wie <code>Tweet</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität implementieren,
@@ -444,7 +444,7 @@ Instanzen der <code>Tweet</code>-Struktur aufrufen, und die Standard-Implementie
 <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
 bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
 das Merkmal <code>Summary</code> das Verhalten der <code>summarize</code>-Methode mitgeliefert, ohne
-dass wir weiteren Code schreiben müssen.</p>
+dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
 </span><span class="boring">
 </span><span class="boring">fn main() {

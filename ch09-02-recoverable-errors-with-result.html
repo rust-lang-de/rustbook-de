@@ -259,7 +259,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <h3 id="abgleich-verschiedener-fehler"><a class="header" href="#abgleich-verschiedener-fehler">Abgleich verschiedener Fehler</a></h3>
 <p>Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
 fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
-unterschiedliche Maßnahmen ergreifen: Wenn <code>File::open</code> fehlgeschlagen ist,
+unterschiedliche Maßnahmen ergreifen. Wenn <code>File::open</code> fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code> aus irgendeinem
 anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
@@ -307,7 +307,7 @@ nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
 <blockquote>
-<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
+<h4 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h4>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
 sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
 (closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
@@ -337,7 +337,7 @@ zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden,
 wenn du mit Fehlern zu tun hast.</p>
 </blockquote>
-<h3 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h3>
+<h4 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h4>
 <p>Das Verwenden von <code>match</code> funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
@@ -576,7 +576,7 @@ der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabet
 Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
 <p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
 in einer <code>main</code>-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
-Wertes, für den wir "?" verwenden, kompatibel ist:</p>
+Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
@@ -585,13 +585,13 @@ fn main() {
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
 <code>main</code>-Funktion zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht
-kompilieren</span></p>
+kompilieren.</span></p>
 <p>Dieser Code öffnet eine Datei, was fehlschlagen kann. Der <code>?</code>-Operator folgt
 dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese
 <code>main</code>-Funktion hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
 kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+   Compiling playground v0.0.1 (/playground)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --&gt; src/main.rs:4:48
   |
@@ -601,9 +601,17 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
+help: consider adding return type
+  |
+3 ~ fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+4 |     let greeting_file = File::open("hallo.txt")?;
+5 + 
+6 +     Ok(())
+7 + }
+  |
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der
@@ -623,7 +631,7 @@ dem Verhalten, wenn er auf ein <code>Result&lt;T, E&gt;</code> aufgerufen wird: 
 Wenn der Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code> der resultierende
 Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
 Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
-gegebenen Text findet:</p>
+gegebenen Text findet.</p>
 <pre><pre class="playground"><code class="language-rust">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
     text.lines().next()?.chars().last()
 }
@@ -678,6 +686,7 @@ verhalten.</p>
 9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
 <code>main</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert und am Ende einen Rückgabewert
 <code>Ok(())</code> hinzugefügt. Dieser Code wird nun kompilieren:</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use std::error::Error;
 use std::fs::File;
 
@@ -688,7 +697,7 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 }</code></pre>
 <p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
-<code>Result</code>-Werte</span></p>
+<code>Result</code>-Werte.</span></p>
 <p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
 im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“</a> in Kapitel 17 sprechen werden. Vorerst kannst

@@ -279,11 +279,11 @@ wird, wird die Verbindung als Teil der <code>drop</code>-Implementierung geschlo
 Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
 versuchen, weil das Problem möglicherweise nur vorübergehend ist. Der wichtige
 Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!</p>
-<p>Denke daran, das Programm durch Drücken von <span
-class="keystroke">Strg+c</span> zu beenden, wenn du mit der Ausführung einer
-bestimmten Version des Codes fertig bist. Starte dann das Programm neu, indem
-du den Befehl <code>cargo run</code> aufrufst, nachdem du die einzelnen Codeänderungen
-vorgenommen hast, um sicherzustellen, dass du den neuesten Code ausführst.</p>
+<p>Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
+beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
+bist. Starte dann das Programm neu, indem du den Befehl <code>cargo run</code> aufrufst,
+nachdem du die einzelnen Codeänderungen vorgenommen hast, um sicherzustellen,
+dass du den neuesten Code ausführst.</p>
 <h3 id="lesen-der-anfrage"><a class="header" href="#lesen-der-anfrage">Lesen der Anfrage</a></h3>
 <p>Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren!
 Um die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen
@@ -327,9 +327,9 @@ der <code>for</code>-Schleife in der Funktion <code>main</code> rufen wir jetzt,
 auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 <code>handle_connection</code> auf und übergeben ihr den <code>stream</code>.</p>
 <p>In der Funktion <code>handle_connection</code> erstellen wir eine neue
-<code>BufReader</code>-Instanz, die eine veränderbare Referenz auf den <code>stream</code> enthält.
-<code>BufReader</code> sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden
-von <code>std::io::Read</code> für uns verwaltet.</p>
+<code>BufReader</code>-Instanz, die eine Referenz auf den <code>stream</code> enthält. <code>BufReader</code>
+sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden von
+<code>std::io::Read</code> für uns verwaltet.</p>
 <p>Wir erstellen eine Variable namens <code>http_request</code>, um die Zeilen der Anfrage zu
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
 diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation

@@ -331,14 +331,14 @@ letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
 Index 6 von <code>s</code> mit dem Längenwert <code>4</code> enthält.</p>
-<p>Abbildung 4-6 stellt dies dar.</p>
+<p>Abbildung 4-7 stellt dies dar.</p>
 <p><img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
 darstellt, die auf das Byte bei Index 0 in einer Tabelle der
 Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
 dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
 der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
-src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
-<p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
+src="img/trpl04-07.svg" class="center" style="width: 50%;" /></p>
+<p><span class="caption">Abbildung 4-7: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
 <p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
 kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese

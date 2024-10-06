@@ -169,11 +169,11 @@
 <p>Tests sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
 erwarteten Weise funktioniert. Der Rumpf von Testfunktionen führt in der Regel
 diese drei Aktionen aus:</p>
-<ol>
+<ul>
 <li>Bereite die benötigten Daten und Zustände vor.</li>
 <li>Führe den Code aus, den du testen möchtest.</li>
-<li>Stelle sicher, dass die Ergebnisse das sind, was du erwartest.</li>
-</ol>
+<li>Stelle sicher, dass die Ergebnisse die sind, was du erwartest.</li>
+</ul>
 <p>Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
 <code>test</code>, einige Makros und das Attribut <code>should_panic</code>.</p>
@@ -224,7 +224,7 @@ mod tests {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
-<p>Konzentrieren wir uns zunächst nur auf die Funktion <code>it_works()</code>. Beachte die
+<p>Konzentrieren wir uns zunächst nur auf die Funktion <code>it_works</code>. Beachte die
 Annotation <code>#[test]</code>: Dieses Attribut zeigt an, dass es sich um eine
 Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
 als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
@@ -256,8 +256,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 generierten Tests</span></p>
 <p>Cargo hat den Test kompiliert und ausgeführt. Nach den Zeilen <code>Compiling</code>,
 <code>Finished</code> und <code>Running</code> folgt die Zeile <code>running 1 test</code>. Die nächste Zeile
-zeigt den Namen der generierten Testfunktion <code>it_works</code> und das Ergebnis der
-Testausführung: <code>ok</code>. Als nächstes wird die Gesamtzusammenfassung der
+zeigt den Namen der generierten Testfunktion <code>tests::it_works</code> und das Ergebnis
+der Testausführung: <code>ok</code>. Als nächstes wird die Gesamtzusammenfassung der
 Testausführung angegeben. Der Text <code>test result: ok.</code> bedeutet, dass alle Tests
 bestanden wurden, und der Teil <code>1 passed; 0 failed</code> gibt die Anzahl der Tests
 an, die bestanden oder nicht bestanden wurden.</p>
@@ -265,16 +265,16 @@ an, die bestanden oder nicht bestanden wurden.</p>
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt <a href="ch11-02-running-tests.html#tests-ignorieren-die-nicht-ausdr%C3%BCcklich-verlangt-werden">„Tests
 ignorieren, die nicht ausdrücklich verlangt werden“</a> später in
 diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
-Zusammenfassung <code>0 ignored</code>. Wir können auch ein Argument an den Befehl
-<code>cargo test</code> übergeben, um nur Tests auszuführen, deren Name mit einer
-Zeichenkette übereinstimmt; dies wird <em>Filtern</em> genannt und wir werden dies im
-Abschnitt <a href="ch11-02-running-tests.html#ausf%C3%BChren-einer-test-teilmenge-mittels-name">„Ausführen einer Test-Teilmenge mittels Name“</a> behandeln.
-Außerdem haben wir die durchgeführten Tests nicht gefiltert, sodass am Ende der
-Zusammenfassung <code>0 filtered out</code> steht.</p>
+Zusammenfassung <code>0 ignored</code>.</p>
 <p>Die Statistik <code>0 measured</code> ist für Benchmark-Tests, die die Performanz messen.
 Benchmark-Tests sind zum Zeitpunkt, als dieser Text verfasst wurde, nur im
 nächtlichen (nightly) Rust verfügbar. Siehe <a href="https://doc.rust-lang.org/unstable-book/library-features/test.html">„Dokumentation über
 Benchmark-Tests“</a>, um mehr zu erfahren.</p>
+<p>Wir können auch ein Argument an den Befehl <code>cargo test</code> übergeben, um nur
+Tests auszuführen, deren Name mit einer Zeichenkette übereinstimmt; dies wird
+<em>Filtern</em> genannt und wir werden dies im Abschnitt <a href="ch11-02-running-tests.html#ausf%C3%BChren-einer-test-teilmenge-mittels-name">„Ausführen einer
+Test-Teilmenge mittels Name“</a> behandeln. Außerdem haben wir die
+durchgeführten Tests nicht gefiltert, sodass am Ende der Zusammenfassung <code>0  filtered out</code> steht.</p>
 <p>Der nächste Teil der Testausgabe, der mit <code>Doc-tests adder</code> beginnt, ist für
 die Ergebnisse von Dokumentationstests. Wir haben noch keine
 Dokumentationstests, aber Rust kann alle Code-Beispiele kompilieren, die in
@@ -380,7 +380,7 @@ und ein Test nicht bestanden wird</span></p>
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
 Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
 Test an. In diesem Fall erhalten wir Details, dass <code>another</code> scheiterte mit der
-Meldung <code>panicked at 'Lasse diesen Test fehlschlagen'</code> in Zeile 10 der Datei
+Meldung <code>panicked at 'Lasse diesen Test fehlschlagen'</code> in Zeile 17 der Datei
 <em>src/lib.rs</em>. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -459,10 +459,9 @@ mod tests {
 }</code></pre>
 <p><span class="caption">Codeblock 11-6: Ein Test für <code>can_hold</code>, der prüft, ob in
 ein größeres Rechteck tatsächlich ein kleineres Rechteck passt</span></p>
-<p>Beachte, dass wir eine neue Zeile innerhalb des Moduls <code>tests</code> hinzugefügt
-haben: <code>use super::*;</code>. Das Modul <code>tests</code> ist ein reguläres Modul, das den
-üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel 7 im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit
-Pfaden auf ein Element im Modulbaum
+<p>Beachte die Zeile <code>use super::*;</code> im Modul <code>tests</code>. Das Modul <code>tests</code> ist ein
+reguläres Modul, das den üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel
+7 im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
 verweisen“</a> behandelt haben.
 Da das Modul <code>tests</code> ein inneres Modul ist, müssen wir den Code, der im äußeren
 Modul getestet wird, in den Gültigkeitsbereich des inneren Moduls bringen. Wir
@@ -633,9 +632,9 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 
 error: test failed, to rerun pass `--lib`
 </code></pre>
-<p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich 8 ist und
-<code>smaller.width</code> gleich 5, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
-<code>false</code>: 8 ist nicht weniger als 5.</p>
+<p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich <code>8</code> ist und
+<code>smaller.width</code> gleich <code>5</code>, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
+<code>false</code>: 8 ist nicht kleiner als 5.</p>
 <h3 id="prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne"><a class="header" href="#prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne">Prüfung auf Gleichheit mit den Makros <code>assert_eq!</code> und <code>assert_ne!</code></a></h3>
 <p>Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
 Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
@@ -663,7 +662,8 @@ mod tests {
 
     #[test]
     fn it_adds_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 }</code></pre>
 <p><span class="caption">Codeblock 11-7: Testen der Funktion <code>add_two</code> mit dem
@@ -685,10 +685,9 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Wir übergeben <code>4</code> als Argument an <code>assert_eq!</code>, was identisch mit dem Ergebnis
-des Aufrufs <code>add_two(2)</code> ist. Die Zeile für diesen Test
-lautet <code>test tests::it_adds_two ... ok</code>, und der Text <code>ok</code> zeigt an, dass unser
-Test bestanden wurde!</p>
+<p>Wir erstellen eine Variable namens <code>result</code>, die das Ergebnis des Aufrufs von
+<code>add_two(2)</code> enthält. Dann übergeben wir <code>result</code> und <code>4</code> als Argumente an
+<code>assert_eq!</code>. Die Ausgabezeile für diesen Test lautet <code>test tests::it_adds_two  ... ok</code>, und das Wort <code>ok</code> gibt an, dass unser Test bestanden wurde!</p>
 <p>Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie <code>assert_eq!</code>
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <code>add_two</code>, sodass sie stattdessen <code>3</code> addiert:</p>
@@ -702,7 +701,8 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn it_adds_two() {
-</span><span class="boring">        assert_eq!(4, add_two(2));
+</span><span class="boring">        let result = add_two(2);
+</span><span class="boring">        assert_eq!(result, 4);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
@@ -719,8 +719,8 @@ failures:
 ---- tests::it_adds_two stdout ----
 thread 'tests::it_adds_two' panicked at src/lib.rs:11:9:
 assertion `left == right` failed
-  left: 4
- right: 5
+  left: 5
+ right: 4
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -731,18 +731,18 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 
 error: test failed, to rerun pass `--lib`
 </code></pre>
-<p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion `left == right` failed</code> war und welche Werte <code>left</code> und <code>right</code> hatten. Diese Nachricht
-hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> war <code>4</code>, aber
-das Argument <code>right</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>. Du kannst dir
-vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
-durchführen.</p>
+<p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl mit der
+Meldung <code>assertion `left == right` failed</code> und den Werten für <code>left</code> und
+<code>right</code>. Diese Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das
+Argument <code>left</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>, aber das Argument
+<code>right</code> war <code>4</code>. Du kannst dir vorstellen, dass dies besonders hilfreich ist,
+wenn wir viele Tests durchführen.</p>
 <p>Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung <code>expected</code> und <code>actual</code> genannt werden und deren
 Reihenfolge wichtig ist. In Rust werden sie jedoch <code>left</code> und <code>right</code> genannt
 und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
 produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
-diesem Test als <code>assert_eq!(add_two(2), 4)</code> schreiben, was zur gleichen
+diesem Test als <code>assert_eq!(4, result)</code> schreiben, was zur selben
 Fehlermeldung <code>assertion failed: `(left == right)` </code> führen würde.</p>
 <p>Das Makro <code>assert_ne!</code> prüft, ob die beiden Werte, die wir ihm übergeben,
 ungleich sind und scheitert, wenn sie gleich sind. Dieses Makro ist am

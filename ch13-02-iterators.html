@@ -285,7 +285,7 @@ library API documentation) nach dem <code>Iterator</code>-Merkmal suchst. Einige
 Methoden rufen in ihrer Definition die <code>next</code>-Methode auf, daher musst du die
 <code>next</code>-Methode bei der Implementierung des <code>Iterator</code>-Merkmals einbauen.</p>
 <p>Methoden die <code>next</code> aufrufen werden als <em>konsumierende Adapter</em> (consuming
-adaptors) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
+adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
 die Methode <code>sum</code>, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von <code>next</code>, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer

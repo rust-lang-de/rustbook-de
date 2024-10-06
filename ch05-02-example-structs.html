@@ -348,8 +348,8 @@ einen Fehler:</p>
 <pre><code class="language-text">error[E0277]: `Rectangle` doesn't implement `Debug`
 </code></pre>
 <p>Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:</p>
-<pre><code class="language-text">   = help: the trait `std::fmt::Debug` is not implemented for `Rectangle`
-   = note: add `#[derive(Debug)]` or manually implement `std::fmt::Debug`
+<pre><code class="language-text">   = help: the trait `Debug` is not implemented for `Rectangle`
+   = note: add `#[derive(Debug)]` to `Rectangle` or manually `impl Debug for Rectangle`
 </code></pre>
 <p>Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir

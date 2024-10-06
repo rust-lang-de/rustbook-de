@@ -310,12 +310,13 @@ unserer Geheimzahl verglichen haben; wir haben nur überprüft, ob die Schätzun
 richtig war. In diesem Fall waren die Folgen nicht sehr gravierend: Unsere
 Ausgabe von „zu groß“ oder „zu klein“ wäre immer noch richtig. Aber es wäre
 eine nützliche Erweiterung, um den Benutzer zu gültigen Rateversuchen zu führen
-und ein unterschiedliches Verhalten zu zeigen, wenn ein Benutzer eine Zahl
-eingibt, die außerhalb des Bereichs liegt, als wenn ein Benutzer stattdessen
+und ein unterschiedliches Verhalten zu zeigen, wenn der Benutzer eine Zahl
+eingibt, die außerhalb des Bereichs liegt, als wenn der Benutzer stattdessen
 z.B. Buchstaben eingibt.</p>
 <p>Eine Möglichkeit, dies zu tun, wäre, die Eingabe als <code>i32</code> statt nur als <code>u32</code>
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
+<p><span class="Dateiname">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
 </span><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
@@ -373,6 +374,7 @@ neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
 bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
 Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
+<p><span class="Dateiname">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Guess {

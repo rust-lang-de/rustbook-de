@@ -198,9 +198,7 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore">pub fn add(left: usize, right: usize) -&gt; usize {
     left + right
 }
 
@@ -213,10 +211,9 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>Dieser Code ist das automatisch generierte Testmodul. Das Attribut <code>cfg</code> steht
-für <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
+}</code></pre>
+<p>Im automatisch generierten Modul <code>tests</code> steht das Attribut <code>cfg</code> für
+<em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
 Konfigurationsoption <code>test</code>, die von Rust beim Kompilieren und Ausführen von
 Tests verwendet wird. Durch das Verwenden des Attributs <code>cfg</code> kompiliert Cargo
@@ -231,14 +228,12 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_two(a: usize) -&gt; usize {
     internal_adder(a, 2)
 }
 
-fn internal_adder(a: i32, b: i32) -&gt; i32 {
-    a + b
+fn internal_adder(left: usize, right: usize) -&gt; usize {
+    left + right
 }
 
 #[cfg(test)]
@@ -247,10 +242,10 @@ mod tests {
 
     #[test]
     fn internal() {
-        assert_eq!(4, internal_adder(2, 2));
+        let result = internal_adder(2, 2);
+        assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
@@ -289,19 +284,20 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 └── tests
     └── integration_test.rs
 </code></pre>
-<p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein:</p>
+<p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein.</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
 <pre><code class="language-rust ignore">use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, add_two(2));
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }</code></pre>
 <p><span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
 Kiste <code>adder</code></span></p>
 <p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir <code>use adder::add_two</code> am Anfang des Codes hinzu, was wir
+diesem Grund fügen wir <code>use adder::add_two;</code> am Anfang des Codes hinzu, was wir
 in den Modultests nicht brauchten.</p>
 <p>Wir brauchen den Code in <em>tests/integration_test.rs</em> nicht mit <code>#[cfg(test)]</code>
 zu annotieren. Cargo behandelt das Verzeichnis <code>tests</code> speziell und kompiliert
@@ -421,10 +417,10 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 </code></pre>
 <p>Dass in den Testergebnissen <code>common</code> erscheint und dabei <code>running 0 tests</code>
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
-den anderen Integrationstestdateien teilen.</p>
-<p>Um zu vermeiden, dass <code>common</code> in der Testausgabe erscheint, werden wir statt
-<em>tests/common.rs</em> die Datei <em>tests/common/mod.rs</em> erstellen. Das
-Projektverzeichnis sieht nun wie folgt aus:</p>
+den anderen Integrationstestdateien teilen. Um zu vermeiden, dass <code>common</code> in
+der Testausgabe erscheint, werden wir statt <em>tests/common.rs</em> die Datei
+<em>tests/common/mod.rs</em> erstellen. Das Projektverzeichnis sieht nun wie folgt
+aus:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── src
@@ -447,14 +443,16 @@ Integrationstestdateien als Modul verwenden. Hier ist ein Beispiel für den
 Aufruf der Funktion <code>setup</code> aus dem Test <code>it_adds_two</code> in
 <em>tests/integration_test.rs</em>:</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
-<pre><code class="language-rust ignore">use adder;
+<pre><code class="language-rust ignore">use adder::add_two;
 
 mod common;
 
 #[test]
 fn it_adds_two() {
     common::setup();
-    assert_eq!(4, adder::add_two(2));
+
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }</code></pre>
 <p>Beachte, dass die Deklaration <code>mod common;</code> die gleiche ist wie die
 Moduldeklaration, die wir in Codeblock 7-21 gezeigt haben. In der Testfunktion

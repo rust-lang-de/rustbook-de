@@ -348,16 +348,16 @@ Codeblock 5-14 gezeigte Programm zu schreiben.</p>
         height: 45,
     };
 
-    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 }</code></pre>
 <p><span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
 Methode <code>can_hold</code></span></p>
 <p>Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
 <code>rect2</code> kleiner als die Dimensionen von <code>rect1</code> sind, aber <code>rect3</code> breiter als
 <code>rect1</code> ist:</p>
-<pre><code class="language-text">Umfasst rect1 rect2? true
-Umfasst rect1 rect3? false
+<pre><code class="language-text">rect1 umfasst rect2? true
+rect1 umfasst rect3? false
 </code></pre>
 <p>Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
 des Blocks <code>impl Rectangle</code> liegen. Die Methode wird <code>can_hold</code> heißen und sie
@@ -403,8 +403,8 @@ Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-15: Implementierung der Methode <code>can_hold</code>
 auf <code>Rectangle</code>, die eine weitere <code>Rectangle</code>-Instanz als Parameter hat</span></p>
@@ -491,8 +491,8 @@ impl Rectangle {
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
 Verwendung mehrerer <code>impl</code>-Blöcke</span></p>

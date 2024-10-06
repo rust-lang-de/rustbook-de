@@ -234,7 +234,7 @@ sofort <code>collect</code>, um den Iterator in einen Vektor zu verwandeln, der 
 Iterator erzeugten Werte enthält. Wir können die Funktion <code>collect</code> verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
 Typ von <code>args</code>, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl wir in Rust nur sehr selten Typen mit Annotationen versehen müssen, ist
+Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
 <code>collect</code> eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
 nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.</p>
 <p>Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
@@ -279,8 +279,8 @@ fn main() {
     let query = &amp;args[1];
     let file_path = &amp;args[2];
 
-    println!("Suche nach {}", query);
-    println!("In Datei {}", file_path);
+    println!("Suche nach {query}");
+    println!("In Datei {file_path}");
 }</code></pre>
 <p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>

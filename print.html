@@ -169,8 +169,8 @@
                         <h1 id="die-programmiersprache-rust"><a class="header" href="#die-programmiersprache-rust">Die Programmiersprache Rust</a></h1>
 <p><em>von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;</em>
 <em>übersetzt ins Deutsche durch die Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.76.0 (veröffentlicht am
-2024-02-08) oder später verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.81.0 (veröffentlicht am
+2024-09-04) oder neuer verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
 1</a> zum Installieren und Aktualisieren von Rust.</p>
 <p>Die HTML-Version ist online verfügbar unter
 <a href="https://doc.rust-lang.org/stable/book/">https://doc.rust-lang.org/stable/book/</a>
@@ -757,7 +757,8 @@ organisieren. Es gibt einen Platz für alles und alles ist an seinem Platz.</p>
 <p>Wenn du ein Projekt begonnen hast, das Cargo nicht verwendet, wie wir es mit
 dem Projekt „Hallo Welt!“ getan haben, kannst du es in ein Projekt umwandeln,
 das Cargo verwendet. Verschiebe den Projektcode in das Verzeichnis <em>src</em> und
-erstelle eine entsprechende <em>Cargo.toml</em>-Datei.</p>
+erstelle eine entsprechende <em>Cargo.toml</em>-Datei. Eine einfache Möglichkeit, die
+Datei <em>Cargo.toml</em> zu erstellen, besteht darin, <code>cargo init</code> auszuführen.</p>
 <h3 id="bauen-und-ausführen-eines-cargo-projekts"><a class="header" href="#bauen-und-ausführen-eines-cargo-projekts">Bauen und Ausführen eines Cargo-Projekts</a></h3>
 <p>Schauen wir uns nun an, was anders ist, wenn wir das „Hello, world!“-Programm
 mit Cargo bauen und ausführen. Von deinem <em>hello_cargo</em>-Verzeichnis aus baust
@@ -1733,8 +1734,8 @@ Schleife jeweils um weitere vier Leerzeichen einzurücken und das Programm
 erneut auszuführen. Beachte, dass es ein neues Problem gibt, weil das Programm
 genau das tut, was wir ihm gesagt haben: Frage für immer nach einer weiteren
 Schätzung! Es sieht nicht so aus, als könne der Benutzer das Programm beenden!</p>
-<p>Der Benutzer könnte das Programm jederzeit mit dem Tastaturkürzel <span
-class="keystroke">Strg+c</span> unterbrechen. Aber es gibt noch eine andere
+<p>Der Benutzer könnte das Programm jederzeit mit dem Tastaturkürzel
+<kbd>Strg</kbd>+<kbd>c</kbd> unterbrechen. Aber es gibt noch eine andere
 Möglichkeit, diesem unersättlichen Monster zu entkommen, wie in der
 <code>parse</code>-Diskussion in <a href="ch02-00-guessing-game-tutorial.html#vergleichen-der-sch%C3%A4tzung-mit-der-geheimzahl">„Vergleichen der Schätzung mit der
 Geheimzahl“</a> erwähnt: Wenn der
@@ -2016,13 +2017,15 @@ error[E0384]: cannot assign twice to immutable variable `x`
  --&gt; src/main.rs:4:5
   |
 2 |     let x = 5;
-  |         -
-  |         |
-  |         first assignment to `x`
-  |         help: consider making this binding mutable: `mut x`
-3 |     println!("Der Wert von x ist: {}", x);
+  |         - first assignment to `x`
+3 |     println!("Der Wert von x ist: {x}");
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
+  |
+help: consider making this binding mutable
+  |
+2 |     let mut x = 5;
+  |         +++
 
 For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
@@ -2195,12 +2198,6 @@ error[E0308]: mismatched types
   |                      ----- expected due to this value
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&amp;str`, found `usize`
-  |
-help: try removing the method call
-  |
-3 -     spaces = spaces.len();
-3 +     spaces = spaces;
-  |
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
@@ -2487,15 +2484,16 @@ Klammern:</p>
     let a = [1, 2, 3, 4, 5];
 }</code></pre></pre>
 <p>Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
-Haldenspeicher abgelegt haben möchtest (auf den Stapelspeicher und den
-Haldenspeicher gehen wir in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du
-sicherstellen willst, dass du immer eine feste Anzahl von Elementen hast. Ein
-Array ist jedoch nicht so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein
-ähnlicher Kollektionstyp, der von der Standardbibliothek zur Verfügung gestellt
-wird und der in seiner Größe wachsen oder schrumpfen kann. Wenn du dir nicht
-sicher bist, ob du ein Array oder einen Vektor verwenden sollst, ist es
-wahrscheinlich, dass du einen Vektor verwenden solltest. In <a href="ch08-01-vectors.html">Kapitel
-8</a> werden Vektoren ausführlicher besprochen.</p>
+Haldenspeicher abgelegt haben möchtest, wie bei den anderen Typen, die wir
+bisher gesehen haben, (auf den Stapelspeicher und den Haldenspeicher gehen wir
+in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap">Kapitel 4</a> näher ein) oder wenn du sicherstellen willst,
+dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
+so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein ähnlicher Kollektionstyp,
+der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
+Größe wachsen oder schrumpfen kann. Wenn du dir nicht sicher bist, ob du ein
+Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du einen
+Vektor verwenden solltest. In <a href="ch08-01-vectors.html">Kapitel 8</a> werden Vektoren
+ausführlicher besprochen.</p>
 <p>Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
@@ -2722,7 +2720,8 @@ Anweisung.</p>
 <p><span class="caption">Codeblock 3-1: Eine Funktionsdeklaration <code>main</code>, die eine
 Anweisung enthält</span></p>
 <p>Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
-ist eine Anweisung für sich.</p>
+ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
+<em>Aufruf</em> einer Funktion keine Anweisung.)</p>
 <p>Anweisungen geben keine Werte zurück. Daher kannst du keine <code>let</code>-Anweisung
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst
 einen Fehler erhalten:</p>
@@ -3138,9 +3137,9 @@ so, dass sie wie folgt aussieht:</p>
 }</code></pre>
 <p>Wenn wir dieses Programm ausführen, werden wir sehen, dass es immer und immer
 wieder <code>nochmal!</code> ausgibt, bis wir das Programm manuell stoppen. Die meisten
-Terminals unterstützen das Tastaturkürzel <span
-class="keystroke">Strg+c</span>, um ein Programm zu unterbrechen, das in einer
-Endlosschleife feststeckt. Probiere es aus:</p>
+Terminals unterstützen das Tastaturkürzel <kbd>Strg</kbd>+<kbd>c</kbd>, um ein
+Programm zu unterbrechen, das in einer Endlosschleife feststeckt. Probiere es
+aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
     Finished dev [unoptimized + debuginfo] target(s) in 0.29s
@@ -3151,10 +3150,10 @@ nochmal!
 nochmal!
 ^Cnochmal!
 </code></pre>
-<p>Das Symbol <code>^C</code> steht für die Stelle, an der du <span
-class="keystroke">Strg+c</span> gedrückt hast. Je nachdem, wo sich der Code in
-der Schleife befand, als er das Unterbrechungssignal empfing, siehst du nach
-dem <code>^C</code> das Wort <code>nochmal!</code> oder nicht.</p>
+<p>Das Symbol <code>^C</code> steht für die Stelle, an der du <kbd>Strg</kbd>+<kbd>c</kbd>
+gedrückt hast. Je nachdem, wo sich der Code in der Schleife befand, als er das
+Unterbrechungssignal empfing, siehst du nach dem <code>^C</code> das Wort <code>nochmal!</code> oder
+nicht.</p>
 <p>Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
 mittels Code auszubrechen. Du kannst das Schlüsselwort <code>break</code> innerhalb der
 Schleife platzieren, um dem Programm mitzuteilen, wann es die Ausführung der
@@ -3425,21 +3424,22 @@ Daten nennt man <em>auf den Stapel legen</em>, und das Entfernen von Daten nennt
 bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
 Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
 Haldenspeicher gespeichert werden.</p>
-<p>Der Haldenspeicher ist weniger organisiert: Wenn du
-Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
-Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
-Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
-Benutzung und gibt einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser
-Stelle ist. Dieser Vorgang wird als <em>Allokieren im Haldenspeicher</em>
-bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt (Das Legen von Werten auf
-den Stapelspeicher gilt nicht als Allokieren). Da es sich beim Zeiger um eine
-bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
-legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
-folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
-gibst du die Anzahl der Personen deiner Gruppe an, und das Personal findet
-einen leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand
-aus deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt,
-um euch zu finden.</p>
+<p>Der Haldenspeicher ist weniger organisiert: Wenn du Daten in den
+Haldenspeicher legst, forderst du eine bestimmte Menge an Speicherplatz an.
+Der Speicher-Allokator (memory allocator) sucht eine leere Stelle im
+Haldenspeicher, die groß genug ist, markiert sie als in Benutzung und gibt
+einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser Stelle ist. Dieser
+Vorgang wird als <em>Allokieren im Haldenspeicher</em> bezeichnet und manchmal mit
+<em>Allokieren</em> abgekürzt. (Das Legen von Werten auf den Stapelspeicher gilt
+nicht als Allokieren.) Da es sich beim Zeiger um eine bekannte, feste Größe
+handelt, kannst du den Zeiger auf den Stapelspeicher legen, aber wenn du die
+eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
+eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
+sitzt in einem Restaurant. Wenn du hineingehst, gibst du die Anzahl der
+Personen deiner Gruppe an, und der Restaurantbesitzer findet einen leeren,
+ausreichend großen Tisch und führt euch dorthin. Wenn jemand aus deiner
+Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um euch zu
+finden.</p>
 <p>Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
 Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
 neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
@@ -3518,8 +3518,8 @@ die zeigen wo die Variable <code>s</code> gültig ist.</p>
 gültig ist</span></p>
 <p>Mit anderen Worten, es gibt hier zwei wichtige Zeitpunkte:</p>
 <ul>
-<li>Wenn <code>s</code> <em>in den Gültigkeitsbereich</em> kommt, ist es gültig.</li>
-<li>Es bleibt gültig, bis es <em>den Gültigkeitsbereich</em> verlässt.</li>
+<li>Wenn <code>s</code> <em>in den Gültigkeitsbereich kommt</em>, ist es gültig.</li>
+<li>Es bleibt gültig, bis es <em>den Gültigkeitsbereich verlässt</em>.</li>
 </ul>
 <p>An diesem Punkt ist die Beziehung zwischen Gültigkeitsbereichen und wann
 Variablen gültig sind ähnlich zu anderen Programmiersprachen. Nun werden wir
@@ -3769,6 +3769,32 @@ sind fertig.</p>
 Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher kann
 man davon ausgehen, dass jedes <em>automatische</em> Kopieren im Hinblick auf die
 Laufzeitperformanz kostengünstig ist.</p>
+<h4 id="gültigkeitsbereich-und-zuweisung"><a class="header" href="#gültigkeitsbereich-und-zuweisung">Gültigkeitsbereich und Zuweisung</a></h4>
+<p>Umgekehrt gilt dies auch für die Beziehung zwischen Gültigkeitsbereich,
+Eigentümerschaft und Speicherfreigabe durch die Funktion <code>drop</code>. Wenn du einer
+bestehenden Variablen einen völlig neuen Wert zuweist, ruft Rust die Funktion
+<code>drop</code> auf und gibt den Speicher des ursprünglichen Wertes sofort frei.
+Betrachte zum Beispiel diesen Code:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from("Hallo");
+    s = String::from("Ahoi");
+
+    println!("{s} Welt!");
+<span class="boring">}</span></code></pre></pre>
+<p>Wir deklarieren zunächst eine Variable <code>s</code> und binden sie an einen <code>String</code> mit
+dem Wert <code>„Hallo“</code>. Danach erstellen wir eine neue Zeichenkette mit dem Wert
+„Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
+nichts mehr auf den ursprünglichen Wert im Haldenspeicher.</p>
+<p><img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Haldenspeicher dar
+und zeigt auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem
+Haldenspeicher, wobei die ursprünglichen Zeichenketten-Daten (Hallo)
+durchgestrichen sind, weil auf sie nicht mehr zugegriffen werden kann."
+src="img/trpl04-05.svg" class="center" style="width: 50%;" /></p>
+<p><span class="caption">Figure 4-5: Darstellung im Speicher, nachdem der
+ursprüngliche Wert vollständig ersetzt worden ist.</span></p>
+<p>Die ursprüngliche Zeichenkette verlässt damit sofort den Geltungsbereich. Rust
+führt die Funktion <code>drop</code> aus und ihr Speicher wird sofort freigegeben. Wenn
+wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.</p>
 <h4 id="variablen-und-daten-im-zusammenspiel-mit-clone"><a class="header" href="#variablen-und-daten-im-zusammenspiel-mit-clone">Variablen und Daten im Zusammenspiel mit Clone</a></h4>
 <p>Wenn wir die Daten von <code>String</code> im Haldenspeicher <em>tief</em> kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
@@ -3978,12 +4004,12 @@ Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>&amp;s1</code> an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
 <code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
-übernehmen. Abbildung 4-5 zeigt die Speicherdarstellung.</p>
+übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.</p>
 <p><img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
 Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
 zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
-src="img/trpl04-05.svg" class="center" /></p>
-<p><span class="caption">Abbildung 4-5: Eine Grafik mit <code>&amp;String s</code>, das auf
+src="img/trpl04-06.svg" class="center" /></p>
+<p><span class="caption">Abbildung 4-6: Eine Grafik mit <code>&amp;String s</code>, das auf
 <code>String s1</code> zeigt</span></p>
 <blockquote>
 <p>Anmerkung: Das Gegenteil der Referenzierung durch <code>&amp;</code> ist die
@@ -4240,7 +4266,7 @@ fn dangle() -&gt; &amp;String {
 }</code></pre></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0106]: missing lifetime specifier
  --&gt; src/main.rs:5:16
   |
@@ -4258,8 +4284,15 @@ help: instead, you are more likely to want to return an owned value
 5 + fn dangle() -&gt; String {
   |
 
-For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error[E0515]: cannot return reference to local variable `s`
+ --&gt; src/main.rs:8:5
+  |
+8 |     &amp;s
+  |     ^^ returns a reference to data owned by the current function
+
+Some errors have detailed explanations: E0106, E0515.
+For more information about an error, try `rustc --explain E0106`.
+error: could not compile `playground` (bin "playground") due to 2 previous errors; 1 warning emitted
 </code></pre>
 <p>Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht
 behandelt haben: Die Lebensdauer. Wir werden die Lebensdauer in Kapitel 10 im
@@ -4474,14 +4507,14 @@ letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei
 Index 6 von <code>s</code> mit dem Längenwert <code>4</code> enthält.</p>
-<p>Abbildung 4-6 stellt dies dar.</p>
+<p>Abbildung 4-7 stellt dies dar.</p>
 <p><img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
 darstellt, die auf das Byte bei Index 0 in einer Tabelle der
 Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
 dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
 der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
-src="img/trpl04-06.svg" class="center" style="width: 50%;" /></p>
-<p><span class="caption">Abbildung 4-6: Zeichenkettenanteilstyp, der sich auf einen
+src="img/trpl04-07.svg" class="center" style="width: 50%;" /></p>
+<p><span class="caption">Abbildung 4-7: Zeichenkettenanteilstyp, der sich auf einen
 Teil eines <code>String</code> bezieht</span></p>
 <p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
 kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
@@ -4999,7 +5032,8 @@ verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</cod
 Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code>
 implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
 Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
-würde.</p>
+würde. Wir können in diesem Beispiel immer noch <code>user1.email</code> verwenden, da
+sein Wert <em>nicht</em> verschoben wurde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
 <p>Du kannst auch Strukturen definieren, die wie Tupel aussehen, sogenannte
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen sind Strukturen, die
@@ -5302,8 +5336,8 @@ einen Fehler:</p>
 <pre><code class="language-text">error[E0277]: `Rectangle` doesn't implement `Debug`
 </code></pre>
 <p>Aber auch hier gibt uns der Compiler einen hilfreichen Hinweis:</p>
-<pre><code class="language-text">   = help: the trait `std::fmt::Debug` is not implemented for `Rectangle`
-   = note: add `#[derive(Debug)]` or manually implement `std::fmt::Debug`
+<pre><code class="language-text">   = help: the trait `Debug` is not implemented for `Rectangle`
+   = note: add `#[derive(Debug)]` to `Rectangle` or manually `impl Debug for Rectangle`
 </code></pre>
 <p>Rust enthält durchaus eine Funktionalität zum Ausgeben von Debug-Informationen,
 aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
@@ -5599,16 +5633,16 @@ Codeblock 5-14 gezeigte Programm zu schreiben.</p>
         height: 45,
     };
 
-    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 }</code></pre>
 <p><span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
 Methode <code>can_hold</code></span></p>
 <p>Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
 <code>rect2</code> kleiner als die Dimensionen von <code>rect1</code> sind, aber <code>rect3</code> breiter als
 <code>rect1</code> ist:</p>
-<pre><code class="language-text">Umfasst rect1 rect2? true
-Umfasst rect1 rect3? false
+<pre><code class="language-text">rect1 umfasst rect2? true
+rect1 umfasst rect3? false
 </code></pre>
 <p>Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
 des Blocks <code>impl Rectangle</code> liegen. Die Methode wird <code>can_hold</code> heißen und sie
@@ -5654,8 +5688,8 @@ Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-15: Implementierung der Methode <code>can_hold</code>
 auf <code>Rectangle</code>, die eine weitere <code>Rectangle</code>-Instanz als Parameter hat</span></p>
@@ -5742,8 +5776,8 @@ impl Rectangle {
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
 Verwendung mehrerer <code>impl</code>-Blöcke</span></p>
@@ -6772,12 +6806,11 @@ beschreibt, wie diese Kisten zu bauen sind. Cargo ist eigentlich ein Paket, das
 die Binärkiste für das Kommandozeilenwerkzeug enthält, das du zum Erstellen
 deines Codes verwendet hast. Das Cargo-Paket enthält auch eine
 Bibliothekskiste, von der die binäre Kiste abhängt. Andere Projekte können von
-der Cargo-Bibliothekskiste abhängen, um die gleiche Logik wie das
-Cargo-Befehlszeilenwerkzeug zu verwenden.</p>
-<p>Es gibt zwei Arten von Kisten: Binärkisten und Bibliothekskisten. Ein Paket
-kann beliebig viele Binärkisten enthalten, aber höchstens eine
-Bibliothekskiste. Ein Paket muss mindestens eine Kiste enthalten, unabhängig
-davon, ob es sich um eine Bibliothek oder eine binäre Kiste handelt.</p>
+der Bibliothekskiste Cargo abhängen, um die gleiche Logik wie das
+Befehlszeilenwerkzeug Cargo zu verwenden. Ein Paket kann beliebig viele
+Binärkisten enthalten, aber höchstens eine Bibliothekskiste. Ein Paket muss
+mindestens eine Kiste enthalten, unabhängig davon, ob es sich um eine
+Bibliothek oder eine binäre Kiste handelt.</p>
 <p>Lass uns durchgehen, was passiert, wenn wir ein Paket erstellen. Zuerst geben
 wir den Befehl <code>cargo new my-project</code> ein:</p>
 <pre><code class="language-console">$ cargo new my-project
@@ -8928,16 +8961,15 @@ diese Zeile ansehen, sehen wir den Makroaufruf <code>panic!</code>. In anderen F
 könnte der Aufruf von <code>panic!</code> in Code erfolgen, den unser Code aufruft, und
 der Dateiname und die Zeilennummer in der Fehlermeldung gehören zu Code von
 jemand anderen, der das Makro <code>panic!</code> aufruft, nicht zu unserem Code, der
-schließlich zum Aufruf von <code>panic!</code> geführt hat. Wir können die Aufrufhistorie
-(backtrace) der Funktionen, von der der <code>panic!</code>-Aufruf kam, nutzen, um den
-Codeteil zu ermitteln, der das Problem verursacht. Wir werden Aufrufhistorien
-im nächsten Abschnitt ausführlicher besprechen.</p>
-<h3 id="verwenden-einer-panic-aufrufhistorie"><a class="header" href="#verwenden-einer-panic-aufrufhistorie">Verwenden einer <code>panic!</code>-Aufrufhistorie</a></h3>
-<p>Sehen wir uns ein weiteres Beispiel an, bei dem der <code>panic!</code>-Aufruf von einer
-Bibliothek kommt, weil wir einen Fehler in unserem Code haben, anstatt das
-Makro direkt aufzurufen. Codeblock 9-1 enthält einen Code, der versucht, auf
-einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs gültiger
-Indizes liegt.</p>
+schließlich zum Aufruf von <code>panic!</code> geführt hat.</p>
+<p>Wir können die Aufrufhistorie (backtrace) der Funktionen, von der der
+<code>panic!</code>-Aufruf kam, nutzen, um den Codeteil zu ermitteln, der das Problem
+verursacht. Um zu verstehen, wie man eine <code>panic!</code>-Aufrufhistorie liest, lass
+uns ein anderes Beispiel betrachten, bei dem ein <code>panic!</code>-Aufruf aufgrund eines
+Fehlers in unserem Code von einer Bibliothek kommt, anstatt von unserem Code,
+der das Makro direkt aufruft. Codeblock 9-1 enthält einen Code, der versucht,
+auf einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs
+gültiger Indizes liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust should_panic panics">fn main() {
     let v = vec![1, 2, 3];
@@ -8948,9 +8980,9 @@ Indizes liegt.</p>
 Endes eines Vektors zuzugreifen, was einen Aufruf von <code>panic!</code> auslöst</span></p>
 <p>Hier versuchen wir, auf das 100. Element unseres Vektors zuzugreifen (das bei
 Index 99 liegt, weil die Indexierung bei Null beginnt), der Vektor hat aber nur
-3 Elemente. In dieser Situation wird Rust das Programm abbrechen. Das Verwenden
-von <code>[]</code> soll ein Element zurückgeben, aber wenn du einen ungültigen Index
-übergibst, gibt es kein Element, das Rust hier korrekterweise zurückgeben
+drei Elemente. In dieser Situation wird Rust das Programm abbrechen. Das
+Verwenden von <code>[]</code> soll ein Element zurückgeben, aber wenn du einen ungültigen
+Index übergibst, gibt es kein Element, das Rust hier korrekterweise zurückgeben
 könnte.</p>
 <p>In C ist der Versuch, über das Ende einer Datenstruktur hinaus zu lesen, ein
 undefiniertes Verhalten. Möglicherweise erhältst du den Wert im Speicher an der
@@ -8972,19 +9004,20 @@ index out of bounds: the len is 3 but the index is 99
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Dieser Fehler weist auf Zeile 4 in unserer <code>main.rs</code> hin, wo wir versuchen, auf
-den Index 99 zuzugreifen. Die nächste Hinweiszeile sagt uns, dass wir die
-Umgebungsvariable <code>RUST_BACKTRACE</code> setzen können, um einen Backtrace zu
-erhalten, was genau passiert ist, das den Fehler verursacht hat. Ein
-<em>Backtrace</em> ist eine Liste aller Funktionen, die aufgerufen wurden, um an
-diesen Punkt zu gelangen. Backtraces in Rust funktionieren wie in anderen
-Sprachen: Der Schlüssel zum Lesen des Backtraces ist, von oben zu beginnen und
-zu lesen, bis du Dateien siehst, die du geschrieben hast. Das ist die Stelle,
-an der das Problem entstanden ist. Die Zeilen darüber sind Code, den dein Code
-aufgerufen hat; die Zeilen darunter sind Code, der deinen Code aufgerufen hat.
-Diese Zeilen können Core-Rust-Code, Code der Standardbibliothek oder Kisten,
-enthalten, die du verwendest. Versuchen wir, einen Backtrace zu erhalten, indem
-wir die Umgebungsvariable <code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer 0
-setzen. Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
+den Index <code>99</code> des Vektors in <code>v</code> zuzugreifen.</p>
+<p>Die Zeile <code>note:</code> sagt uns, dass wir die Umgebungsvariable <code>RUST_BACKTRACE</code>
+setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
+den Fehler verursacht hat. Eine <em>Aufrufhistorie</em> ist eine Liste aller
+Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
+Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel
+zum Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du
+Dateien siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
+entstanden ist. Die Zeilen darüber sind Code, den dein Code aufgerufen hat; die
+Zeilen darunter sind Code, der deinen Code aufgerufen hat. Diese Zeilen können
+Core-Rust-Code, Code der Standardbibliothek oder Kisten, enthalten, die du
+verwendest. Versuchen wir, eine Aufrufhistorie zu erhalten, indem wir die
+Umgebungsvariable <code>RUST_BACKTRACE</code> auf einen beliebigen Wert außer <code>0</code> setzen.
+Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.</p>
 <pre><code class="language-console">$ RUST_BACKTRACE=1 cargo run
 thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
@@ -9122,7 +9155,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 <h3 id="abgleich-verschiedener-fehler"><a class="header" href="#abgleich-verschiedener-fehler">Abgleich verschiedener Fehler</a></h3>
 <p>Der Code in Codeblock 9-4 wird abbrechen, egal aus welchem Grund <code>File::open</code>
 fehlschlug. Nun wollen wir jedoch bei verschiedenen Fehlerursachen
-unterschiedliche Maßnahmen ergreifen: Wenn <code>File::open</code> fehlgeschlagen ist,
+unterschiedliche Maßnahmen ergreifen. Wenn <code>File::open</code> fehlgeschlagen ist,
 weil die Datei nicht existiert, wollen wir die Datei erstellen und die
 Dateiressource der neuen Datei zurückgeben. Wenn <code>File::open</code> aus irgendeinem
 anderen Grund fehlschlug, z.B. weil wir keine Berechtigung zum Öffnen der Datei
@@ -9170,7 +9203,7 @@ nicht erstellt werden kann, wird eine andere Fehlermeldung ausgegeben. Der
 zweite Zweig des äußeren <code>match</code> bleibt gleich, sodass das Programm bei jedem
 Fehler, außer dem Fehler der fehlenden Datei, abbricht.</p>
 <blockquote>
-<h3 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h3>
+<h4 id="alternativen-zur-verwendung-von-match-mit-resultt-e"><a class="header" href="#alternativen-zur-verwendung-von-match-mit-resultt-e">Alternativen zur Verwendung von <code>match</code> mit <code>Result&lt;T, E&gt;</code></a></h4>
 <p>Das sind viele <code>match</code>! Der Ausdruck <code>match</code> ist sehr nützlich, aber auch
 sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
 (closures) lernen, die mit vielen der auf <code>Result&lt;T, E&gt;</code> definierten Methoden
@@ -9200,7 +9233,7 @@ zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden,
 wenn du mit Fehlern zu tun hast.</p>
 </blockquote>
-<h3 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h3>
+<h4 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h4>
 <p>Das Verwenden von <code>match</code> funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
@@ -9439,7 +9472,7 @@ der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabet
 Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
 <p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
 in einer <code>main</code>-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
-Wertes, für den wir "?" verwenden, kompatibel ist:</p>
+Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
 
@@ -9448,13 +9481,13 @@ fn main() {
 }</code></pre></pre>
 <p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
 <code>main</code>-Funktion zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht
-kompilieren</span></p>
+kompilieren.</span></p>
 <p>Dieser Code öffnet eine Datei, was fehlschlagen kann. Der <code>?</code>-Operator folgt
 dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese
 <code>main</code>-Funktion hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
 kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+   Compiling playground v0.0.1 (/playground)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --&gt; src/main.rs:4:48
   |
@@ -9464,9 +9497,17 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
+help: consider adding return type
+  |
+3 ~ fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
+4 |     let greeting_file = File::open("hallo.txt")?;
+5 + 
+6 +     Ok(())
+7 + }
+  |
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
 <p>Dieser Fehler weist darauf hin, dass wir den <code>?</code>-Operator nur in einer Funktion
 verwenden dürfen, die <code>Result</code> oder <code>Option</code> oder einen anderen Typ, der
@@ -9486,7 +9527,7 @@ dem Verhalten, wenn er auf ein <code>Result&lt;T, E&gt;</code> aufgerufen wird: 
 Wenn der Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code> der resultierende
 Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
 Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
-gegebenen Text findet:</p>
+gegebenen Text findet.</p>
 <pre><pre class="playground"><code class="language-rust">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
     text.lines().next()?.chars().last()
 }
@@ -9541,6 +9582,7 @@ verhalten.</p>
 9-12 enthält den Code aus Codeblock 9-10, aber wir haben den Rückgabetyp von
 <code>main</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert und am Ende einen Rückgabewert
 <code>Ok(())</code> hinzugefügt. Dieser Code wird nun kompilieren:</p>
+<p><span class="filename">Filename: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use std::error::Error;
 use std::fs::File;
 
@@ -9551,7 +9593,7 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 }</code></pre>
 <p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
-<code>Result</code>-Werte</span></p>
+<code>Result</code>-Werte.</span></p>
 <p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
 im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“</a> in Kapitel 17 sprechen werden. Vorerst kannst
@@ -9722,12 +9764,13 @@ unserer Geheimzahl verglichen haben; wir haben nur überprüft, ob die Schätzun
 richtig war. In diesem Fall waren die Folgen nicht sehr gravierend: Unsere
 Ausgabe von „zu groß“ oder „zu klein“ wäre immer noch richtig. Aber es wäre
 eine nützliche Erweiterung, um den Benutzer zu gültigen Rateversuchen zu führen
-und ein unterschiedliches Verhalten zu zeigen, wenn ein Benutzer eine Zahl
-eingibt, die außerhalb des Bereichs liegt, als wenn ein Benutzer stattdessen
+und ein unterschiedliches Verhalten zu zeigen, wenn der Benutzer eine Zahl
+eingibt, die außerhalb des Bereichs liegt, als wenn der Benutzer stattdessen
 z.B. Buchstaben eingibt.</p>
 <p>Eine Möglichkeit, dies zu tun, wäre, die Eingabe als <code>i32</code> statt nur als <code>u32</code>
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:</p>
+<p><span class="Dateiname">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
 </span><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
@@ -9785,6 +9828,7 @@ neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
 bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
 <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
 Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
+<p><span class="Dateiname">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct Guess {
@@ -9864,13 +9908,12 @@ Verhalten generischer Datentypen oder ihre Beziehung zu anderen generischen
 Datentypen ausdrücken, ohne zu wissen, was an ihrer Stelle beim Kompilieren und
 Ausführen des Codes stehen wird.</p>
 <p>Funktionen können Parameter eines generischen Typs anstelle eines konkreten
-Typs wie <code>i32</code> oder <code>String</code> annehmen, so wie eine Funktion Parameter mit
-unbekannten Werten annimmt, um denselben Code auf mehrere konkrete Werte
-anzuwenden. Tatsächlich haben wir generische Datentypen bereits in Kapitel 6
-mit <code>Option&lt;T&gt;</code>, in Kapitel 8 mit <code>Vec&lt;T&gt;</code> und <code>HashMap&lt;K, V&gt;</code> und in Kapitel
-9 mit <code>Result&lt;T, E&gt;</code> verwendet. In diesem Kapitel erfährst du, wie du deine
-eigenen Typen, Funktionen und Methoden mit generischen Datentypen definieren
-kannst!</p>
+Typs wie <code>i32</code> oder <code>String</code> annehmen, so wie sie Parameter mit unbekannten
+Werten annehmen, um denselben Code auf mehrere konkrete Werte anzuwenden.
+Tatsächlich haben wir generische Datentypen bereits in Kapitel 6 mit
+<code>Option&lt;T&gt;</code>, in Kapitel 8 mit <code>Vec&lt;T&gt;</code> und <code>HashMap&lt;K, V&gt;</code> und in Kapitel 9 mit
+<code>Result&lt;T, E&gt;</code> verwendet. In diesem Kapitel erfährst du, wie du deine eigenen
+Typen, Funktionen und Methoden mit generischen Datentypen definieren kannst!</p>
 <p>Zunächst werden wir uns anschauen, wie eine Funktion extrahiert werden kann, um
 Code-Duplizierung zu reduzieren. Danach verwenden wir dieselbe Technik, um aus
 zwei Funktionen, die sich nur im Datentyp ihrer Parameter unterscheiden, eine
@@ -9891,15 +9934,15 @@ ohne unsere Hilfe könnte.</p>
 <p>Mit Hilfe von generischen Typen können wir spezifische Typen durch einen
 Platzhalter ersetzen, der mehrere Typen repräsentiert, um Code-Duplizierung zu
 vermeiden. Bevor wir uns mit der generischen Syntax befassen, wollen wir uns
-zunächst ansehen, wie man Duplikate auf eine Weise entfernt, die keine
-generischen Typen erfordert, indem man eine Funktion extrahiert, die
-spezifische Werte durch einen Platzhalter ersetzt, der mehrere Werte
-repräsentiert. Dann wenden wir die gleiche Technik an, um eine generische
-Funktion zu extrahieren! Wenn du dir ansiehst, wie du doppelten Code
-erkennst, den du in eine Funktion extrahieren kannst, wirst du beginnen,
-doppelten Code zu erkennen, der generische Typen verwenden kann.</p>
-<p>Wir beginnen mit dem kurzen Programm in Codeblock 10-1, das die größte Zahl in
-einer Liste findet.</p>
+ansehen, wie man Duplikate auf eine Weise entfernt, die keine generischen Typen
+erfordert, indem man eine Funktion extrahiert, die spezifische Werte durch
+einen Platzhalter ersetzt, der mehrere Werte repräsentiert. Dann wenden wir die
+gleiche Technik an, um eine generische Funktion zu extrahieren! Wenn du dir
+ansiehst, wie du doppelten Code erkennst, den du in eine Funktion extrahieren
+kannst, wirst du beginnen, doppelten Code zu erkennen, der generische Typen
+verwenden kann.</p>
+<p>Wir werden mit dem kurzen Programm in Codeblock 10-1 beginnen, das die größte
+Zahl in einer Liste findet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
@@ -10457,11 +10500,11 @@ genauso, wie wenn wir jede Definition von Hand dupliziert hätten. Der Vorgang
 der Codeduplizierung macht Rusts generische Datentypen zur Laufzeit äußerst
 effizient.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="merkmale-traits-gemeinsames-verhalten-definieren"><a class="header" href="#merkmale-traits-gemeinsames-verhalten-definieren">Merkmale (traits): Gemeinsames Verhalten definieren</a></h2>
-<p>Ein <em>Merkmal</em> (trait) definiert Funktionalität, den ein bestimmter Typ hat und
-mit anderen Typen teilen kann. Wir können Merkmale verwenden, um gemeinsames
-Verhalten auf abstrakte Weise zu definieren. Wir können Merkmalsabgrenzungen
-(trait bounds) verwenden, um anzugeben, dass ein generischer Typ jeder Typ sein
-kann, der ein bestimmtes Verhalten aufweist.</p>
+<p>Ein <em>Merkmal</em> (trait) definiert die Funktionalität, den ein bestimmter Typ hat
+und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
+gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
+Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
+generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.</p>
 <blockquote>
 <p>Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
 Sprachen oft <em>Schnittstelle</em> (interface) genannt wird, wenn auch mit einigen
@@ -10497,8 +10540,8 @@ dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="caption">Codeblock 10-12: Ein Merkmal <code>Summary</code>, dessen Verhalten
 aus der Methode <code>summarize</code> besteht</span></p>
 <p>Hier deklarieren wir ein Merkmal mit dem Schlüsselwort <code>trait</code> und dann den
-Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir haben das Merkmal
-auch als <code>pub</code> deklariert, sodass Kisten, die von dieser Kiste abhängen, dieses
+Namen des Merkmals, der in diesem Fall <code>Summary</code> lautet. Wir deklarieren das
+Merkmal auch als <code>pub</code>, sodass Kisten, die von dieser Kiste abhängen, dieses
 Merkmal ebenfalls nutzen können, wie wir in einigen Beispielen sehen werden.
 Innerhalb der geschweiften Klammern deklarieren wir die Methodensignaturen, die
 das Verhalten der Typen beschreiben, die dieses Merkmal implementieren, was in
@@ -10587,7 +10630,7 @@ fn main() {
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
-Typ nur dann implementieren können, wenn entweder das Merkmal oder der Typ
+Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
 lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
 Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
 wie <code>Tweet</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität implementieren,
@@ -10735,7 +10778,7 @@ Instanzen der <code>Tweet</code>-Struktur aufrufen, und die Standard-Implementie
 <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
 bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
 das Merkmal <code>Summary</code> das Verhalten der <code>summarize</code>-Methode mitgeliefert, ohne
-dass wir weiteren Code schreiben müssen.</p>
+dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -11072,8 +11115,8 @@ Referenzen so lange gültig sind, wie wir sie brauchen.</p>
 dass jede Referenz in Rust eine <em>Lebensdauer</em> (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
-Typen abgeleitet werden. Wir müssen Typen mit Annotationen versehen, wenn
-mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
+Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
+wenn mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
 annotieren, wenn die Lebensdauern von Referenzen auf verschiedene Weise
 miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
@@ -11135,15 +11178,15 @@ error[E0597]: `x` does not live long enough
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
-<p>Die Variable <code>x</code> lebt nicht „lange genug“. Der Grund dafür ist, dass <code>x</code> den
-Gültigkeitsbereich verlässt, da der innere Gültigkeitsbereich bei Zeile 7
-endet. Aber <code>r</code> ist im äußeren Gültigkeitsbereich immer noch gültig; da sein
-Gültigkeitsbereich größer ist, sagen wir, dass es „länger lebt“. Wenn Rust
-diesen Code funktionieren ließe, würde <code>r</code> auf Speicher verweisen, der
-freigegeben wurde, als <code>x</code> den Gültigkeitsbereich verlassen hat, und alles, was
-wir mit <code>r</code> tun würden, würde nicht korrekt funktionieren. Wie stellt Rust also
-fest, dass dieser Code ungültig ist? Es verwendet einen Ausleihenprüfer (borrow
-checker).</p>
+<p>Die Fehlermeldung besagt, dass die Variable <code>x</code> „nicht lange genug lebt“. Der
+Grund dafür ist, dass <code>x</code> den Gültigkeitsbereich verlässt, da der innere
+Gültigkeitsbereich bei Zeile 7 endet. Aber <code>r</code> ist im äußeren
+Gültigkeitsbereich immer noch gültig; da sein Gültigkeitsbereich größer ist,
+sagen wir, dass es „länger lebt“. Wenn Rust diesen Code funktionieren ließe,
+würde <code>r</code> auf Speicher verweisen, der freigegeben wurde, als <code>x</code> den
+Gültigkeitsbereich verlassen hat, und alles, was wir mit <code>r</code> tun würden, würde
+nicht korrekt funktionieren. Wie stellt Rust also fest, dass dieser Code
+ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).</p>
 <h3 id="der-ausleihenprüfer"><a class="header" href="#der-ausleihenprüfer">Der Ausleihenprüfer</a></h3>
 <p>Der Rust-Compiler verfügt über einen <em>Ausleihenprüfer</em> (borrow checker), der
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
@@ -11537,7 +11580,7 @@ Strukturdefinition angeben. Codeblock 10-24 hat eine Struktur namens
 
 fn main() {
     let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
-    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
+    let first_sentence = novel.split('.').next().unwrap();
     let i = ImportantExcerpt {
         part: first_sentence,
     };
@@ -11864,22 +11907,22 @@ Rückgabewert <code>5</code> ist, wenn wir <code>3</code> an die Funktion <code>
 können diese Tests immer dann durchführen, wenn wir Änderungen an unserem Code
 vornehmen, um sicherzustellen, dass sich ein bestehendes korrektes Verhalten
 nicht geändert hat.</p>
-<p>Testen ist eine komplexe Fähigkeit: Obwohl wir nicht jedes Detail darüber, wie
-man gute Tests schreibt, in einem Kapitel behandeln können, werden wir die
-Mechanismen der Rust-Testmöglichkeiten besprechen. Wir werden über Annotationen
-und Makros sprechen, die dir beim Schreiben deiner Tests zur Verfügung stehen,
-über das Standardverhalten und die Optionen, die es bei der Ausführung deiner
-Tests gibt, und darüber, wie du Tests in Modultests (unit tests) und
-Integrationstests organisieren kannst.</p>
+<p>Testen ist eine komplexe Fähigkeit: Obwohl wir in einem Kapitel nicht jedes
+Detail, wie man gute Tests schreibt, behandeln können, werden wir in diesem
+Kapitel die Mechanismen der Rust-Testmöglichkeiten besprechen. Wir werden über
+Annotationen und Makros sprechen, die dir beim Schreiben deiner Tests zur
+Verfügung stehen, über das Standardverhalten und die Optionen, die es bei der
+Ausführung deiner Tests gibt, und darüber, wie du Tests in Modultests (unit
+tests) und Integrationstests organisieren kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="tests-schreiben"><a class="header" href="#tests-schreiben">Tests schreiben</a></h2>
 <p>Tests sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
 erwarteten Weise funktioniert. Der Rumpf von Testfunktionen führt in der Regel
 diese drei Aktionen aus:</p>
-<ol>
+<ul>
 <li>Bereite die benötigten Daten und Zustände vor.</li>
 <li>Führe den Code aus, den du testen möchtest.</li>
-<li>Stelle sicher, dass die Ergebnisse das sind, was du erwartest.</li>
-</ol>
+<li>Stelle sicher, dass die Ergebnisse die sind, was du erwartest.</li>
+</ul>
 <p>Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
 <code>test</code>, einige Makros und das Attribut <code>should_panic</code>.</p>
@@ -11930,7 +11973,7 @@ mod tests {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 11-1: Das Testmodul und die Funktion, die
 automatisch von <code>cargo new</code> generiert werden</span></p>
-<p>Konzentrieren wir uns zunächst nur auf die Funktion <code>it_works()</code>. Beachte die
+<p>Konzentrieren wir uns zunächst nur auf die Funktion <code>it_works</code>. Beachte die
 Annotation <code>#[test]</code>: Dieses Attribut zeigt an, dass es sich um eine
 Testfunktion handelt, sodass die Testausführung weiß, dass es diese Funktion
 als einen Test behandeln soll. Wir könnten auch Nicht-Test-Funktionen im Modul
@@ -11962,8 +12005,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 generierten Tests</span></p>
 <p>Cargo hat den Test kompiliert und ausgeführt. Nach den Zeilen <code>Compiling</code>,
 <code>Finished</code> und <code>Running</code> folgt die Zeile <code>running 1 test</code>. Die nächste Zeile
-zeigt den Namen der generierten Testfunktion <code>it_works</code> und das Ergebnis der
-Testausführung: <code>ok</code>. Als nächstes wird die Gesamtzusammenfassung der
+zeigt den Namen der generierten Testfunktion <code>tests::it_works</code> und das Ergebnis
+der Testausführung: <code>ok</code>. Als nächstes wird die Gesamtzusammenfassung der
 Testausführung angegeben. Der Text <code>test result: ok.</code> bedeutet, dass alle Tests
 bestanden wurden, und der Teil <code>1 passed; 0 failed</code> gibt die Anzahl der Tests
 an, die bestanden oder nicht bestanden wurden.</p>
@@ -11971,16 +12014,16 @@ an, die bestanden oder nicht bestanden wurden.</p>
 bestimmten Instanz nicht ausgeführt wird; wir werden dies im Abschnitt <a href="ch11-02-running-tests.html#tests-ignorieren-die-nicht-ausdr%C3%BCcklich-verlangt-werden">„Tests
 ignorieren, die nicht ausdrücklich verlangt werden“</a> später in
 diesem Kapitel behandeln. Da wir das hier nicht getan haben, zeigt die
-Zusammenfassung <code>0 ignored</code>. Wir können auch ein Argument an den Befehl
-<code>cargo test</code> übergeben, um nur Tests auszuführen, deren Name mit einer
-Zeichenkette übereinstimmt; dies wird <em>Filtern</em> genannt und wir werden dies im
-Abschnitt <a href="ch11-02-running-tests.html#ausf%C3%BChren-einer-test-teilmenge-mittels-name">„Ausführen einer Test-Teilmenge mittels Name“</a> behandeln.
-Außerdem haben wir die durchgeführten Tests nicht gefiltert, sodass am Ende der
-Zusammenfassung <code>0 filtered out</code> steht.</p>
+Zusammenfassung <code>0 ignored</code>.</p>
 <p>Die Statistik <code>0 measured</code> ist für Benchmark-Tests, die die Performanz messen.
 Benchmark-Tests sind zum Zeitpunkt, als dieser Text verfasst wurde, nur im
 nächtlichen (nightly) Rust verfügbar. Siehe <a href="https://doc.rust-lang.org/unstable-book/library-features/test.html">„Dokumentation über
 Benchmark-Tests“</a>, um mehr zu erfahren.</p>
+<p>Wir können auch ein Argument an den Befehl <code>cargo test</code> übergeben, um nur
+Tests auszuführen, deren Name mit einer Zeichenkette übereinstimmt; dies wird
+<em>Filtern</em> genannt und wir werden dies im Abschnitt <a href="ch11-02-running-tests.html#ausf%C3%BChren-einer-test-teilmenge-mittels-name">„Ausführen einer
+Test-Teilmenge mittels Name“</a> behandeln. Außerdem haben wir die
+durchgeführten Tests nicht gefiltert, sodass am Ende der Zusammenfassung <code>0  filtered out</code> steht.</p>
 <p>Der nächste Teil der Testausgabe, der mit <code>Doc-tests adder</code> beginnt, ist für
 die Ergebnisse von Dokumentationstests. Wir haben noch keine
 Dokumentationstests, aber Rust kann alle Code-Beispiele kompilieren, die in
@@ -12086,7 +12129,7 @@ und ein Test nicht bestanden wird</span></p>
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
 Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
 Test an. In diesem Fall erhalten wir Details, dass <code>another</code> scheiterte mit der
-Meldung <code>panicked at 'Lasse diesen Test fehlschlagen'</code> in Zeile 10 der Datei
+Meldung <code>panicked at 'Lasse diesen Test fehlschlagen'</code> in Zeile 17 der Datei
 <em>src/lib.rs</em>. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -12165,10 +12208,9 @@ mod tests {
 }</code></pre>
 <p><span class="caption">Codeblock 11-6: Ein Test für <code>can_hold</code>, der prüft, ob in
 ein größeres Rechteck tatsächlich ein kleineres Rechteck passt</span></p>
-<p>Beachte, dass wir eine neue Zeile innerhalb des Moduls <code>tests</code> hinzugefügt
-haben: <code>use super::*;</code>. Das Modul <code>tests</code> ist ein reguläres Modul, das den
-üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel 7 im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit
-Pfaden auf ein Element im Modulbaum
+<p>Beachte die Zeile <code>use super::*;</code> im Modul <code>tests</code>. Das Modul <code>tests</code> ist ein
+reguläres Modul, das den üblichen Sichtbarkeitsregeln folgt, die wir in Kapitel
+7 im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
 verweisen“</a> behandelt haben.
 Da das Modul <code>tests</code> ein inneres Modul ist, müssen wir den Code, der im äußeren
 Modul getestet wird, in den Gültigkeitsbereich des inneren Moduls bringen. Wir
@@ -12339,9 +12381,9 @@ test result: FAILED. 1 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 
 error: test failed, to rerun pass `--lib`
 </code></pre>
-<p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich 8 ist und
-<code>smaller.width</code> gleich 5, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
-<code>false</code>: 8 ist nicht weniger als 5.</p>
+<p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich <code>8</code> ist und
+<code>smaller.width</code> gleich <code>5</code>, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
+<code>false</code>: 8 ist nicht kleiner als 5.</p>
 <h3 id="prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne"><a class="header" href="#prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne">Prüfung auf Gleichheit mit den Makros <code>assert_eq!</code> und <code>assert_ne!</code></a></h3>
 <p>Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
 Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
@@ -12369,7 +12411,8 @@ mod tests {
 
     #[test]
     fn it_adds_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 }</code></pre>
 <p><span class="caption">Codeblock 11-7: Testen der Funktion <code>add_two</code> mit dem
@@ -12391,10 +12434,9 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Wir übergeben <code>4</code> als Argument an <code>assert_eq!</code>, was identisch mit dem Ergebnis
-des Aufrufs <code>add_two(2)</code> ist. Die Zeile für diesen Test
-lautet <code>test tests::it_adds_two ... ok</code>, und der Text <code>ok</code> zeigt an, dass unser
-Test bestanden wurde!</p>
+<p>Wir erstellen eine Variable namens <code>result</code>, die das Ergebnis des Aufrufs von
+<code>add_two(2)</code> enthält. Dann übergeben wir <code>result</code> und <code>4</code> als Argumente an
+<code>assert_eq!</code>. Die Ausgabezeile für diesen Test lautet <code>test tests::it_adds_two  ... ok</code>, und das Wort <code>ok</code> gibt an, dass unser Test bestanden wurde!</p>
 <p>Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie <code>assert_eq!</code>
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <code>add_two</code>, sodass sie stattdessen <code>3</code> addiert:</p>
@@ -12408,7 +12450,8 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">
 </span><span class="boring">    #[test]
 </span><span class="boring">    fn it_adds_two() {
-</span><span class="boring">        assert_eq!(4, add_two(2));
+</span><span class="boring">        let result = add_two(2);
+</span><span class="boring">        assert_eq!(result, 4);
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
@@ -12425,8 +12468,8 @@ failures:
 ---- tests::it_adds_two stdout ----
 thread 'tests::it_adds_two' panicked at src/lib.rs:11:9:
 assertion `left == right` failed
-  left: 4
- right: 5
+  left: 5
+ right: 4
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12437,18 +12480,18 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 
 error: test failed, to rerun pass `--lib`
 </code></pre>
-<p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion `left == right` failed</code> war und welche Werte <code>left</code> und <code>right</code> hatten. Diese Nachricht
-hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> war <code>4</code>, aber
-das Argument <code>right</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>. Du kannst dir
-vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
-durchführen.</p>
+<p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl mit der
+Meldung <code>assertion `left == right` failed</code> und den Werten für <code>left</code> und
+<code>right</code>. Diese Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das
+Argument <code>left</code> mit dem Ergebnis von <code>add_two(2)</code> war <code>5</code>, aber das Argument
+<code>right</code> war <code>4</code>. Du kannst dir vorstellen, dass dies besonders hilfreich ist,
+wenn wir viele Tests durchführen.</p>
 <p>Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung <code>expected</code> und <code>actual</code> genannt werden und deren
 Reihenfolge wichtig ist. In Rust werden sie jedoch <code>left</code> und <code>right</code> genannt
 und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
 produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
-diesem Test als <code>assert_eq!(add_two(2), 4)</code> schreiben, was zur gleichen
+diesem Test als <code>assert_eq!(4, result)</code> schreiben, was zur selben
 Fehlermeldung <code>assertion failed: `(left == right)` </code> führen würde.</p>
 <p>Das Makro <code>assert_ne!</code> prüft, ob die beiden Werte, die wir ihm übergeben,
 ungleich sind und scheitert, wenn sie gleich sind. Dieses Makro ist am
@@ -12919,7 +12962,7 @@ Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust panics noplayground">fn prints_and_returns_10(a: i32) -&gt; i32 {
-    println!("Ich habe den Wert {} erhalten.", a);
+    println!("Ich habe den Wert {a} erhalten.");
     10
 }
 
@@ -12930,13 +12973,13 @@ mod tests {
     #[test]
     fn this_test_will_pass() {
         let value = prints_and_returns_10(4);
-        assert_eq!(10, value);
+        assert_eq!(value, 10);
     }
 
     #[test]
     fn this_test_will_fail() {
         let value = prints_and_returns_10(8);
-        assert_eq!(5, value);
+        assert_eq!(value, 5);
     }
 }</code></pre>
 <p><span class="caption">Codebock 11-10: Tests einer Funktion, die <code>println!</code>
@@ -12958,8 +13001,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -12977,7 +13020,7 @@ Tests erscheint im Abschnitt der Testzusammenfassung, der auch die Ursache des
 Testfehlers anzeigt.</p>
 <p>Wenn wir auch die ausgegebenen Werte der bestandenen Tests sehen wollen, können
 wir Rust mit <code>--show-output</code> anweisen, die Ausgabe erfolgreicher Tests mit
-anzuzeigen.</p>
+anzuzeigen:</p>
 <pre><code class="language-console">$ cargo test -- --show-output
 </code></pre>
 <p>Wenn wir die Tests in Codeblock 11-10 mit dem Schalter <code>--show-output</code> erneut
@@ -13006,8 +13049,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -13030,7 +13073,7 @@ zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Co
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_two(a: i32) -&gt; i32 {
+</span>pub fn add_two(a: usize) -&gt; usize {
     a + 2
 }
 
@@ -13040,17 +13083,20 @@ mod tests {
 
     #[test]
     fn add_two_and_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 
     #[test]
     fn add_three_and_two() {
-        assert_eq!(5, add_two(3));
+        let result = add_two(3);
+        assert_eq!(result, 5);
     }
 
     #[test]
     fn one_hundred() {
-        assert_eq!(102, add_two(100));
+        let result = add_two(100);
+        assert_eq!(result, 102);
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -13123,15 +13169,25 @@ solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[test]
-fn it_works() {
-    assert_eq!(2 + 2, 4);
-}
+<pre><code class="language-rust noplayground"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+</span><span class="boring">    left + right
+</span><span class="boring">}
+</span><span class="boring">
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-#[ignore]
-fn expensive_test() {
-    // Code, dessen Ausführung eine Stunde dauert
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+        // code that takes an hour to run
+    }
 }</code></pre>
 <p>Unterhalb <code>#[test]</code> fügen wir die Zeile <code>#[ignore]</code> beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft <code>it_works</code>,
@@ -13173,11 +13229,12 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Indem du kontrollierst, welche Tests durchgeführt werden, kannst du
-sicherstellen, dass dein <code>cargo test</code>-Aufruf schnell zu Ergebnissen führt. Wenn
-du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse der
-<code>ignored</code>-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu warten,
-kannst du stattdessen <code>cargo test -- --ignored</code> ausführen. Wenn du alle Tests
-ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du <code>cargo test -- --include-ignored</code> ausführen.</p>
+sicherstellen, dass dein Aufruf von <code>cargo test</code> schnell Ergebnisse zurückgibt.
+Wenn du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse
+der <code>ignored</code>-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu
+warten, kannst du stattdessen <code>cargo test -- --ignored</code> ausführen. Wenn du alle
+Tests ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du
+<code>cargo test -- --include-ignored</code> ausführen.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="testverwaltung"><a class="header" href="#testverwaltung">Testverwaltung</a></h2>
 <p>Wie zu Beginn des Kapitels erwähnt, ist das Testen eine komplexe Disziplin, und
 verschiedene Personen verwenden unterschiedliche Terminologien und
@@ -13211,9 +13268,7 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add(left: usize, right: usize) -&gt; usize {
+<pre><code class="language-rust ignore">pub fn add(left: usize, right: usize) -&gt; usize {
     left + right
 }
 
@@ -13226,10 +13281,9 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre></pre>
-<p>Dieser Code ist das automatisch generierte Testmodul. Das Attribut <code>cfg</code> steht
-für <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
+}</code></pre>
+<p>Im automatisch generierten Modul <code>tests</code> steht das Attribut <code>cfg</code> für
+<em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
 Konfigurationsoption <code>test</code>, die von Rust beim Kompilieren und Ausführen von
 Tests verwendet wird. Durch das Verwenden des Attributs <code>cfg</code> kompiliert Cargo
@@ -13244,14 +13298,12 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span>pub fn add_two(a: i32) -&gt; i32 {
+<pre><code class="language-rust ignore">pub fn add_two(a: usize) -&gt; usize {
     internal_adder(a, 2)
 }
 
-fn internal_adder(a: i32, b: i32) -&gt; i32 {
-    a + b
+fn internal_adder(left: usize, right: usize) -&gt; usize {
+    left + right
 }
 
 #[cfg(test)]
@@ -13260,10 +13312,10 @@ mod tests {
 
     #[test]
     fn internal() {
-        assert_eq!(4, internal_adder(2, 2));
+        let result = internal_adder(2, 2);
+        assert_eq!(result, 4);
     }
-}
-<span class="boring">}</span></code></pre></pre>
+}</code></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
@@ -13302,19 +13354,20 @@ Verzeichnisstruktur sollte folgendermaßen aussehen:</p>
 └── tests
     └── integration_test.rs
 </code></pre>
-<p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein:</p>
+<p>Gib den Code in Codeblock 11-13 in die Datei <em>tests/integration_test.rs</em> ein.</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
 <pre><code class="language-rust ignore">use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, add_two(2));
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }</code></pre>
 <p><span class="caption">Codeblock 11-13: Integrationstest einer Funktion in der
 Kiste <code>adder</code></span></p>
 <p>Jede Datei im Verzeichnis <code>tests</code> ist eine separate Kiste, also müssen wir
 unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
-diesem Grund fügen wir <code>use adder::add_two</code> am Anfang des Codes hinzu, was wir
+diesem Grund fügen wir <code>use adder::add_two;</code> am Anfang des Codes hinzu, was wir
 in den Modultests nicht brauchten.</p>
 <p>Wir brauchen den Code in <em>tests/integration_test.rs</em> nicht mit <code>#[cfg(test)]</code>
 zu annotieren. Cargo behandelt das Verzeichnis <code>tests</code> speziell und kompiliert
@@ -13434,10 +13487,10 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 </code></pre>
 <p>Dass in den Testergebnissen <code>common</code> erscheint und dabei <code>running 0 tests</code>
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
-den anderen Integrationstestdateien teilen.</p>
-<p>Um zu vermeiden, dass <code>common</code> in der Testausgabe erscheint, werden wir statt
-<em>tests/common.rs</em> die Datei <em>tests/common/mod.rs</em> erstellen. Das
-Projektverzeichnis sieht nun wie folgt aus:</p>
+den anderen Integrationstestdateien teilen. Um zu vermeiden, dass <code>common</code> in
+der Testausgabe erscheint, werden wir statt <em>tests/common.rs</em> die Datei
+<em>tests/common/mod.rs</em> erstellen. Das Projektverzeichnis sieht nun wie folgt
+aus:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── src
@@ -13460,14 +13513,16 @@ Integrationstestdateien als Modul verwenden. Hier ist ein Beispiel für den
 Aufruf der Funktion <code>setup</code> aus dem Test <code>it_adds_two</code> in
 <em>tests/integration_test.rs</em>:</p>
 <p><span class="filename">Dateiname: tests/integration_test.rs</span></p>
-<pre><code class="language-rust ignore">use adder;
+<pre><code class="language-rust ignore">use adder::add_two;
 
 mod common;
 
 #[test]
 fn it_adds_two() {
     common::setup();
-    assert_eq!(4, adder::add_two(2));
+
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }</code></pre>
 <p>Beachte, dass die Deklaration <code>mod common;</code> die gleiche ist wie die
 Moduldeklaration, die wir in Codeblock 7-21 gezeigt haben. In der Testfunktion
@@ -13532,17 +13587,16 @@ benötigst, um ein reales Projekt wie <code>ripgrep</code> zu verstehen.</p>
 <p>Unser <code>grep</code>-Projekt wird eine Reihe von Konzepten kombinieren, die du bisher
 gelernt hast:</p>
 <ul>
-<li>Code organisieren (unter Verwendung dessen, was du über Module in <a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">Kapitel
-7</a> gelernt hast)</li>
-<li>Verwenden von Vektoren und Zeichenketten (Kollektionen, <a href="ch08-00-common-collections.html">Kapitel 8</a>)</li>
+<li>Code organisieren (<a href="ch07-00-managing-growing-projects-with-packages-crates-and-modules.html">Kapitel 7</a>)</li>
+<li>Verwenden von Vektoren und Zeichenketten (<a href="ch08-00-common-collections.html">Kapitel 8</a>)</li>
 <li>Fehlerbehandlung (<a href="ch09-00-error-handling.html">Kapitel 9</a>)</li>
 <li>Verwenden von Merkmalen (traits) und Lebensdauer (lifetimes) soweit möglich
 (<a href="ch10-00-generics.html">Kapitel 10</a>)</li>
 <li>Schreiben von Tests (<a href="ch11-00-testing.html">Kapitel 11</a>)</li>
 </ul>
 <p>Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln <a href="ch13-00-functional-features.html">13</a>
-und <a href="ch17-00-oop.html">17</a> ausführlich behandelt werden.</p>
+Merkmalsobjekte (trait objects) vorstellen, die in den <a href="ch13-00-functional-features.html">Kapitel 13</a>
+und <a href="ch17-00-oop.html">Kapitel 17</a> ausführlich behandelt werden.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kommandozeilenargumente-entgegennehmen"><a class="header" href="#kommandozeilenargumente-entgegennehmen">Kommandozeilenargumente entgegennehmen</a></h2>
 <p>Lass uns ein neues Projekt, wie immer, mit <code>cargo new</code> erstellen. Wir werden
 unser Projekt <code>minigrep</code> nennen, um es vom <code>grep</code>-Werkzeug zu unterscheiden,
@@ -13612,7 +13666,7 @@ sofort <code>collect</code>, um den Iterator in einen Vektor zu verwandeln, der 
 Iterator erzeugten Werte enthält. Wir können die Funktion <code>collect</code> verwenden,
 um viele Arten von Kollektionen zu erstellen, also vermerken wir explizit den
 Typ von <code>args</code>, um anzugeben, dass wir einen Vektor mit Zeichenketten wollen.
-Obwohl wir in Rust nur sehr selten Typen mit Annotationen versehen müssen, ist
+Obwohl du in Rust nur sehr selten Typen mit Annotationen versehen musst, ist
 <code>collect</code> eine Funktion, die du häufig mit Annotationen versehen musst, da Rust
 nicht in der Lage ist, auf die Art der gewünschten Kollektion zu schließen.</p>
 <p>Zum Schluss geben wir den Vektor mit dem Debug-Makro aus. Versuchen wir, den
@@ -13657,8 +13711,8 @@ fn main() {
     let query = &amp;args[1];
     let file_path = &amp;args[2];
 
-    println!("Suche nach {}", query);
-    println!("In Datei {}", file_path);
+    println!("Suche nach {query}");
+    println!("In Datei {file_path}");
 }</code></pre>
 <p><span class="caption">Codeblock 12-2: Erstellen von Variablen zur Aufnahme des
 Such-Arguments und des Dateipfad-Arguments</span></p>
@@ -13733,9 +13787,9 @@ das zweite Argument angegeben wurde</span></p>
 <p>Zuerst fügen wir eine weitere <code>use</code>-Anweisung hinzu, um einen relevanten Teil
 der Standardbibliothek einzubringen: Wir brauchen <code>std::fs</code>, um Dateien zu
 verwenden.</p>
-<p>In <code>main</code> haben wir eine neue Anweisung hinzugefügt: <code>fs::read_to_string</code> nimmt
-den <code>file_path</code>, öffnet diese Datei und gibt ein <code>Result&lt;String&gt;</code> mit dem
-Inhalt der Datei zurück.</p>
+<p>In <code>main</code> nimmt die neue Anweisung <code>fs::read_to_string</code> den <code>file_path</code>, öffnet
+diese Datei und gibt einen Wert von Typ <code>Result&lt;String&gt;</code> zurück, der den Inhalt
+der Datei enthält.</p>
 <p>Nach dieser Anweisung haben wir wieder eine temporäre <code>println!</code>-Anweisung
 hinzugefügt, die den Wert von <code>contents</code> ausgibt, nachdem die Datei eingelesen
 wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.</p>
@@ -13813,8 +13867,8 @@ Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
 einzelnen Aufgaben eines Binärprogramms entwickelt, wenn die Funktion <code>main</code>
 groß wird. Dieser Prozess umfasst die folgenden Schritte:</p>
 <ul>
-<li>Teile dein Programm in eine <em>main.rs</em> und eine <em>lib.rs</em> auf und verschiebe
-die Logik deines Programms in die <em>lib.rs</em>.</li>
+<li>Teile dein Programm in die Dateien <em>main.rs</em> und <em>lib.rs</em> auf und verschiebe
+die Logik deines Programms in <em>lib.rs</em>.</li>
 <li>Solange deine Kommandozeilen-Parselogik klein ist, kann sie in <em>main.rs</em>
 bleiben.</li>
 <li>Wenn die Kommandozeilen-Parselogik anfängt, kompliziert zu werden, extrahiere
@@ -14055,7 +14109,7 @@ helfen zu verstehen, was sie stattdessen tun sollten. Lass uns das jetzt
 korrigieren.</p>
 <h4 id="verbessern-der-fehlermeldung"><a class="header" href="#verbessern-der-fehlermeldung">Verbessern der Fehlermeldung</a></h4>
 <p>In Codeblock 12-8 fügen wir eine Prüfung in der Funktion <code>new</code> hinzu, die
-überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und 2
+überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
 ab und zeigt eine bessere Fehlermeldung an.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -14101,10 +14155,10 @@ der Argumente</span></p>
 9-13</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
 wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code>
-mindestens 3 beträgt und der Rest der Funktion unter der Annahme arbeiten kann,
-dass diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente hat,
-ist diese Bedingung wahr und wir rufen das Makro <code>panic!</code> auf, um das Programm
-sofort zu beenden.</p>
+mindestens <code>3</code> beträgt und der Rest der Funktion unter der Annahme arbeiten
+kann, dass diese Bedingung erfüllt ist. Wenn <code>args</code> weniger als drei Elemente
+hat, wird diese Bedingung <code>true</code> und wir rufen das Makro <code>panic!</code> auf, um das
+Programm sofort zu beenden.</p>
 <p>Mit diesen zusätzlichen wenigen Zeilen Code in <code>new</code> lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
 <pre><code class="language-console">$ cargo run
@@ -14175,8 +14229,8 @@ wir auch <code>main</code> aktualisieren, was wir im nächsten Codeblock tun wer
 <p><span class="caption">Codeblock 12-9: Rückgabe eines <code>Result</code> von
 <code>Config::build</code></span></p>
 <p>Unsere Funktion <code>build</code> liefert ein <code>Result</code> mit einer <code>Config</code>-Instanz im
-Erfolgsfall und ein <code>&amp;'static str</code> im Fehlerfall. Unsere Fehlerwerte werden
-immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
+Erfolgsfall und ein Zeichenkettenliteral im Fehlerfall. Unsere Fehlerwerte
+werden immer Zeichenketten-Literale sein, die eine <code>'static</code> Lebensdauer haben.</p>
 <p>Wir haben zwei Änderungen im Rumpf der Funktion vorgenommen: Anstatt <code>panic!</code>
 aufzurufen, wenn der Benutzer nicht genug Argumente übergibt, geben wir jetzt
 einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rückgabewert in ein <code>Ok</code>
@@ -14401,7 +14455,7 @@ am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 Merkmal <code>Error</code> implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
-können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für „dynamisch“.</p>
+können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für <em>dynamisch</em>.</p>
 <p>Zweitens haben wir den Aufruf von <code>expect</code> zugunsten des <code>?</code>-Operators
 entfernt, wie wir in <a href="ch09-02-recoverable-errors-with-result.html#abk%C3%BCrzung-zum-weitergeben-von-fehlern-der-operator-">Kapitel 9</a> besprochen haben. Statt
 <code>panic!</code> bei einem Fehler aufzurufen gibt <code>?</code> den Fehlerwert aus der aktuellen
@@ -14476,7 +14530,6 @@ haben, aber mit einem kleinen Unterschied:</p>
 
     if let Err(e) = run(config) {
         println!("Anwendungsfehler: {e}");
-
         process::exit(1);
     }
 }
@@ -14520,8 +14573,8 @@ Fällen gleich: Wir geben den Fehler aus und beenden.</p>
 <em>src/main.rs</em> auf und fügen etwas Code in die Datei <em>src/lib.rs</em> ein. Auf
 diese Weise können wir den Code testen und haben eine Datei <em>src/main.rs</em> mit
 weniger Verantwortlichkeiten.</p>
-<p>Lass uns den ganzen Code, der nicht die Funktion <code>main</code> ist, von <em>src/main.rs</em>
-nach <em>src/lib.rs</em> verschieben:</p>
+<p>Lass uns den ganzen Code, der nicht in der Funktion <code>main</code> ist, von
+<em>src/main.rs</em> nach <em>src/lib.rs</em> verschieben:</p>
 <ul>
 <li>Die Definition der Funktion <code>run</code></li>
 <li>Die relevanten <code>use</code>-Anweisungen</li>
@@ -14592,7 +14645,6 @@ fn main() {
 </span>    if let Err(e) = minigrep::run(config) {
         // --abschneiden--
 <span class="boring">        println!("Anwendungsfehler: {e}");
-</span><span class="boring">
 </span><span class="boring">        process::exit(1);
 </span>    }
 }</code></pre>
@@ -14796,9 +14848,9 @@ wollen, die passen, wissen wir, dass <code>contents</code> das Argument ist, das
 Rückgabewert unter Verwendung der Lebensdauer-Syntax verbunden werden sollte.</p>
 <p>Bei anderen Programmiersprachen ist es nicht erforderlich, Argumente zu
 verbinden, um Werte in der Signatur zurückzugeben, aber dieses Vorgehen wird
-mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit dem Abschnitt
-<a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit Lebensdauern“</a>
-in Kapitel 10.</p>
+mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit den Beispielen im
+Abschnitt <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
+Lebensdauern“</a> in Kapitel 10.</p>
 <p>Lass uns jetzt den Test ausführen:</p>
 <pre><code class="language-console">$ cargo test
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
@@ -14831,13 +14883,13 @@ zum Bestehen!</p>
 <p>Derzeit scheitert unser Test, weil wir immer einen leeren Vektor zurückgeben.
 Um dies zu korrigieren und <code>search</code> zu implementieren, muss unser Programm die
 folgenden Schritte befolgen:</p>
-<ul>
+<ol>
 <li>Iteriere über jede Zeile des Inhalts.</li>
 <li>Prüfe, ob die Zeile unseren Abfragetext enthält.</li>
 <li>Wenn ja, füge sie der Liste der Werte hinzu, die wir zurückgeben.</li>
 <li>Wenn nicht, tue nichts.</li>
 <li>Gib die Liste der passenden Ergebnisse zurück.</li>
-</ul>
+</ol>
 <p>Lass uns jeden Schritt durcharbeiten, beginnend mit dem Iterieren über die
 Zeilen.</p>
 <h4 id="iterieren-über-zeilen-mit-der-methode-lines"><a class="header" href="#iterieren-über-zeilen-mit-der-methode-lines">Iterieren über Zeilen mit der Methode <code>lines</code></a></h4>
@@ -15125,14 +15177,14 @@ den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die
 zurückzugeben und auszugeben.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
-wiedergeben sollte: „frog“</p>
+wiedergeben sollte: <em>frog</em></p>
 <pre><code class="language-console">$ cargo run frog poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.38s
      Running `target/debug/minigrep frog poem.txt`
 How public, like a frog
 </code></pre>
-<p>Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie „body“:</p>
+<p>Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie <em>body</em>:</p>
 <pre><code class="language-console">$ cargo run body poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
@@ -15143,7 +15195,7 @@ How dreary to be somebody!
 </code></pre>
 <p>Und schließlich sollten wir sicherstellen, dass wir keine Zeilen bekommen, wenn
 wir nach einem Wort suchen, das nirgendwo im Gedicht vorkommt, zum Beispiel
-„monomorphization“:</p>
+<em>monomorphization</em>:</p>
 <pre><code class="language-console">$ cargo run monomorphization poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
@@ -15751,8 +15803,8 @@ die Variante <code>Err</code> zurück, wenn die Umgebungsvariable nicht gesetzt 
 <p>Wir benutzen die Methode <code>is_ok</code> auf <code>Result</code>, um zu prüfen, ob die
 Umgebungsvariable gesetzt ist, was bedeutet, dass das Programm die Suche
 ohne Berücksichtigung der Groß-/Kleinschreibung durchführen soll. Wenn
-die Umgebungsvariable <code>IGNORE_CASE</code> keinen Wert hat, gibt <code>is_ok</code> false zurück
-und das Programm führt eine Suche mit Berücksichtigung der
+die Umgebungsvariable <code>IGNORE_CASE</code> keinen Wert hat, gibt <code>is_ok</code> den Wert
+<code>false</code> zurück und das Programm führt eine Suche mit Berücksichtigung der
 Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den <em>Wert</em> der
 Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also prüfen wir
 mit <code>is_ok</code>, anstatt mit <code>unwrap</code>, <code>expect</code> oder einer der anderen Methoden,
@@ -15763,7 +15815,7 @@ kann, ob sie <code>search_case_insensitive</code> oder <code>search</code> aufru
 in Codeblock 12-22 implementiert haben.</p>
 <p>Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
 Umgebungsvariable und mit dem Abfragetext <code>to</code> aus, die zu den Zeilen passen
-sollte, die das Wort <code>to</code> in Kleinbuchstaben enthalten:</p>
+sollte, die das Wort <em>to</em> in Kleinbuchstaben enthalten:</p>
 <pre><code class="language-console">$ cargo run to poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished dev [unoptimized + debuginfo] target(s) in 0.0s
@@ -15773,7 +15825,7 @@ How dreary to be somebody!
 </code></pre>
 <p>Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 <code>IGNORE_CASE</code> auf <code>1</code> gesetzt ausführen, aber mit dem gleichen Abfragetext
-<code>to</code>.</p>
+<em>to</em>.</p>
 <pre><code class="language-console">$ IGNORE_CASE=1 cargo run -- to poem.txt
 </code></pre>
 <p>Wenn du die PowerShell verwendest, sind das Setzen der Umgebungsvariable und
@@ -15784,14 +15836,14 @@ das Ausführen des Programms separate Befehle:</p>
 kann mit <code>Remove-Item</code> zurückgesetzt werden:</p>
 <pre><code class="language-console">PS&gt; Remove-Item Env:IGNORE_CASE
 </code></pre>
-<p>Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
+<p>Wir sollten Zeilen erhalten, die <em>to</em> enthalten, die Großbuchstaben haben
 könnten:</p>
 <pre><code class="language-console">Are you nobody, too?
 How dreary to be somebody!
 To tell your name the livelong day
 To an admiring bog!
 </code></pre>
-<p>Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser <code>minigrep</code>-Programm kann
+<p>Ausgezeichnet, wir haben auch Zeilen mit <em>To</em>! Unser <code>minigrep</code>-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.</p>
@@ -16448,7 +16500,7 @@ fn main() {
     ];
 
     let mut sort_operations = vec![];
-    let value = String::from("sort_by_key aufgerufen");
+    let value = String::from("Funktionsabschluss aufgerufen");
 
     list.sort_by_key(|r| {
         sort_operations.push(value);
@@ -16477,7 +16529,7 @@ Funktionsabschluss <code>FnMut</code> implementieren muss:</p>
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --&gt; src/main.rs:18:30
    |
-15 |     let value = String::from("sort_by_key aufgerufen");
+15 |     let value = String::from("Funktionsabschluss aufgerufen");
    |         ----- captured outer variable
 16 |
 17 |     list.sort_by_key(|r| {
@@ -16645,7 +16697,7 @@ library API documentation) nach dem <code>Iterator</code>-Merkmal suchst. Einige
 Methoden rufen in ihrer Definition die <code>next</code>-Methode auf, daher musst du die
 <code>next</code>-Methode bei der Implementierung des <code>Iterator</code>-Merkmals einbauen.</p>
 <p>Methoden die <code>next</code> aufrufen werden als <em>konsumierende Adapter</em> (consuming
-adaptors) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
+adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
 die Methode <code>sum</code>, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von <code>next</code>, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
@@ -18654,8 +18706,19 @@ help: insert some indirection (e.g., a `Box`, `Rc`, or `&amp;`) to break the cyc
 2 |     Cons(i32, Box&lt;List&gt;),
   |               ++++    +
 
-For more information about this error, try `rustc --explain E0072`.
-error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
+error[E0391]: cycle detected when computing when `List` needs drop
+ --&gt; src/main.rs:1:1
+  |
+1 | enum List {
+  | ^^^^^^^^^
+  |
+  = note: ...which immediately requires computing when `List` needs drop again
+  = note: cycle used when computing whether `List` needs drop
+  = note: see https://rustc-dev-guide.rust-lang.org/overview.html#queries and https://rustc-dev-guide.rust-lang.org/query.html for more information
+
+Some errors have detailed explanations: E0072, E0391.
+For more information about an error, try `rustc --explain E0072`.
+error: could not compile `cons-list` (bin "cons-list") due to 2 previous errors
 </code></pre>
 <p><span class="caption">Codeblock 15-4: Der Fehler den wir erhalten wenn wir
 versuchen eine rekursive Aufzählung zu definieren</span></p>
@@ -18817,20 +18880,11 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
   |     ^^^^^^^^^^^^^^^^ no implementation for `{integer} == &amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
-  = help: the following other types implement trait `PartialEq&lt;Rhs&gt;`:
-            isize
-            i8
-            i16
-            i32
-            i64
-            i128
-            usize
-            u8
-          and 6 others
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
+
 </code></pre>
 <p>Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
 da es sich um verschiedene Typen handelt. Wir müssen den Dereferenzierungsoperator
@@ -19843,10 +19897,14 @@ error[E0596]: cannot borrow `self.sent_messages` as mutable, as it is behind a `
 58 |             self.sent_messages.push(String::from(message));
    |             ^^^^^^^^^^^^^^^^^^ `self` is a `&amp;` reference, so the data it refers to cannot be borrowed as mutable
    |
-help: consider changing this to be a mutable reference
+help: consider changing this to be a mutable reference in the `impl` method and the `trait` definition
    |
-2  |     fn send(&amp;mut self, msg: &amp;str);
-   |             ~~~~~~~~~
+2  ~     fn send(&amp;mut self, msg: &amp;str);
+3  | }
+...
+56 |     impl Messenger for MockMessenger {
+57 ~         fn send(&amp;mut self, message: &amp;str) {
+   |
 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` (lib test) due to 1 previous error
@@ -21218,20 +21276,16 @@ uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu kompi
 <pre><code class="language-console">$ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
 error[E0382]: borrow of moved value: `val`
-  --&gt; src/main.rs:10:31
+  --&gt; src/main.rs:10:26
    |
-8  |         let val = String::from("hallo");
+8  |         let val = String::from("hi");
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
 9  |         tx.send(val).unwrap();
    |                 --- value moved here
-10 |         println!("val ist {val}");
-   |                           ^^^^^ value borrowed here after move
+10 |         println!("val is {val}");
+   |                          ^^^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
-help: consider cloning the value if the performance cost is acceptable
-   |
-9  |         tx.send(val.clone()).unwrap();
-   |                    ++++++++
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `message-passing` (bin "message-passing") due to 1 previous error
@@ -21519,11 +21573,21 @@ error[E0382]: borrow of moved value: `counter`
 5  |     let counter = Mutex::new(0);
    |         ------- move occurs because `counter` has type `Mutex&lt;i32&gt;`, which does not implement the `Copy` trait
 ...
+8  |     for _ in 0..10 {
+   |     -------------- inside of this loop
 9  |         let handle = thread::spawn(move || {
    |                                    ------- value moved into closure here, in previous iteration of loop
 ...
 21 |     println!("Result: {}", *counter.lock().unwrap());
    |                             ^^^^^^^ value borrowed here after move
+   |
+help: consider moving the expression out of the loop so it is only moved once
+   |
+8  ~     let mut value = counter.lock();
+9  ~     for _ in 0..10 {
+10 |         let handle = thread::spawn(move || {
+11 ~             let mut num = value.unwrap();
+   |
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
@@ -25549,8 +25613,24 @@ note: required by a bound in `OutlinePrint`
 3  | trait OutlinePrint: fmt::Display {
    |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint`
 
+error[E0277]: `Point` doesn't implement `std::fmt::Display`
+  --&gt; src/main.rs:24:7
+   |
+24 |     p.outline_print();
+   |       ^^^^^^^^^^^^^ `Point` cannot be formatted with the default formatter
+   |
+   = help: the trait `std::fmt::Display` is not implemented for `Point`
+   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+note: required by a bound in `OutlinePrint::outline_print`
+  --&gt; src/main.rs:3:21
+   |
+3  | trait OutlinePrint: fmt::Display {
+   |                     ^^^^^^^^^^^^ required by this bound in `OutlinePrint::outline_print`
+4  |     fn outline_print(&amp;self) {
+   |        ------------- required by a bound in this associated function
+
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `traits-example` (bin "traits-example") due to 1 previous error
+error: could not compile `traits-example` (bin "traits-example") due to 2 previous errors
 </code></pre>
 <p>Um dies zu beheben, implementieren wir <code>Display</code> auf <code>Point</code> und erfüllen die
 Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
@@ -26839,11 +26919,11 @@ wird, wird die Verbindung als Teil der <code>drop</code>-Implementierung geschlo
 Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
 versuchen, weil das Problem möglicherweise nur vorübergehend ist. Der wichtige
 Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!</p>
-<p>Denke daran, das Programm durch Drücken von <span
-class="keystroke">Strg+c</span> zu beenden, wenn du mit der Ausführung einer
-bestimmten Version des Codes fertig bist. Starte dann das Programm neu, indem
-du den Befehl <code>cargo run</code> aufrufst, nachdem du die einzelnen Codeänderungen
-vorgenommen hast, um sicherzustellen, dass du den neuesten Code ausführst.</p>
+<p>Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
+beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
+bist. Starte dann das Programm neu, indem du den Befehl <code>cargo run</code> aufrufst,
+nachdem du die einzelnen Codeänderungen vorgenommen hast, um sicherzustellen,
+dass du den neuesten Code ausführst.</p>
 <h3 id="lesen-der-anfrage"><a class="header" href="#lesen-der-anfrage">Lesen der Anfrage</a></h3>
 <p>Lass uns die Funktionalität zum Lesen der Anfrage vom Browser implementieren!
 Um die Zuständigkeiten zu trennen, also zuerst eine Verbindung entgegenzunehmen
@@ -26887,9 +26967,9 @@ der <code>for</code>-Schleife in der Funktion <code>main</code> rufen wir jetzt,
 auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 <code>handle_connection</code> auf und übergeben ihr den <code>stream</code>.</p>
 <p>In der Funktion <code>handle_connection</code> erstellen wir eine neue
-<code>BufReader</code>-Instanz, die eine veränderbare Referenz auf den <code>stream</code> enthält.
-<code>BufReader</code> sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden
-von <code>std::io::Read</code> für uns verwaltet.</p>
+<code>BufReader</code>-Instanz, die eine Referenz auf den <code>stream</code> enthält. <code>BufReader</code>
+sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden von
+<code>std::io::Read</code> für uns verwaltet.</p>
 <p>Wir erstellen eine Variable namens <code>http_request</code>, um die Zeilen der Anfrage zu
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
 diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
@@ -27591,7 +27671,7 @@ voranzutreiben. Hier ist der erste Fehler, den wir erhalten:</p>
 error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
   --&gt; src/main.rs:10:16
    |
-10 |     let pool = ThreadPool::new(4);
+11 |     let pool = ThreadPool::new(4);
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 For more information about this error, try `rustc --explain E0433`.
@@ -27663,7 +27743,7 @@ der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
 error[E0599]: no function or associated item named `new` found for struct `ThreadPool` in the current scope
   --&gt; src/bin/main.rs:11:28
    |
-11 |     let pool = ThreadPool::new(4);
+12 |     let pool = ThreadPool::new(4);
    |                            ^^^ function or associated item not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
@@ -28196,6 +28276,12 @@ note: consider changing this parameter type in method `new` to borrow instead if
    |
 47 |     fn new(id: usize, receiver: mpsc::Receiver&lt;Job&gt;) -&gt; Worker {
    |        --- in this method       ^^^^^^^^^^^^^^^^^^^ this parameter takes ownership of the value
+help: consider moving the expression out of the loop so it is only moved once
+   |
+25 ~         let mut value = Worker::new(id, receiver);
+26 ~         for id in 0..size {
+27 ~             workers.push(value);
+   |
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `hello` (lib) due to 1 previous error
@@ -28621,10 +28707,9 @@ dass andere <code>Worker</code> keine Aufträge erhalten können.</p>
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
-wir die weniger elegante Methode <span class="keystroke">Strg+c</span>
-verwenden, um den Hauptstrang (main thread) anzuhalten, werden auch alle
-anderen Stränge sofort gestoppt, selbst wenn sie gerade dabei sind, eine
-Anfrage zu bedienen.</p>
+wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
+Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
+gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.</p>
 <p>Als Nächstes werden wir das Merkmal (trait) <code>Drop</code> implementieren, um <code>join</code>
 für jeden der Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen
 sie arbeiten, vor dem Schließen beenden können. Dann werden wir einen Weg
@@ -30180,9 +30265,8 @@ eine neue Übersetzung zu informieren!</p>
 <li><a href="https://github.com/nunojesus/rust-book-pt-pt">Português (PT)</a></li>
 <li><a href="https://github.com/KaiserY/trpl-zh-cn">简体中文</a></li>
 <li><a href="https://github.com/rust-tw/book-tw">正體中文</a></li>
-<li><a href="https://github.com/pavloslav/rust-book-uk-ua">Українська</a></li>
+<li><a href="https://rust-lang-ua.github.io/rustbook_ukrainian">Українська</a></li>
 <li><a href="https://github.com/thecodix/book">Español</a>, <a href="https://github.com/ManRR/rust-book-es">Español</a></li>
-<li><a href="https://github.com/EmanueleGurini/book_it">Italiano</a></li>
 <li><a href="https://github.com/rust-lang-ru/book">Русский</a></li>
 <li><a href="https://github.com/rinthel/rust-lang-book-ko">한국어</a></li>
 <li><a href="https://github.com/rust-lang-ja/book-ja">日本語</a></li>

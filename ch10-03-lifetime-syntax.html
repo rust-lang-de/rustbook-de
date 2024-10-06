@@ -175,8 +175,8 @@ Referenzen so lange gültig sind, wie wir sie brauchen.</p>
 dass jede Referenz in Rust eine <em>Lebensdauer</em> (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
-Typen abgeleitet werden. Wir müssen Typen mit Annotationen versehen, wenn
-mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
+Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
+wenn mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
 annotieren, wenn die Lebensdauern von Referenzen auf verschiedene Weise
 miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
@@ -238,15 +238,15 @@ error[E0597]: `x` does not live long enough
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
-<p>Die Variable <code>x</code> lebt nicht „lange genug“. Der Grund dafür ist, dass <code>x</code> den
-Gültigkeitsbereich verlässt, da der innere Gültigkeitsbereich bei Zeile 7
-endet. Aber <code>r</code> ist im äußeren Gültigkeitsbereich immer noch gültig; da sein
-Gültigkeitsbereich größer ist, sagen wir, dass es „länger lebt“. Wenn Rust
-diesen Code funktionieren ließe, würde <code>r</code> auf Speicher verweisen, der
-freigegeben wurde, als <code>x</code> den Gültigkeitsbereich verlassen hat, und alles, was
-wir mit <code>r</code> tun würden, würde nicht korrekt funktionieren. Wie stellt Rust also
-fest, dass dieser Code ungültig ist? Es verwendet einen Ausleihenprüfer (borrow
-checker).</p>
+<p>Die Fehlermeldung besagt, dass die Variable <code>x</code> „nicht lange genug lebt“. Der
+Grund dafür ist, dass <code>x</code> den Gültigkeitsbereich verlässt, da der innere
+Gültigkeitsbereich bei Zeile 7 endet. Aber <code>r</code> ist im äußeren
+Gültigkeitsbereich immer noch gültig; da sein Gültigkeitsbereich größer ist,
+sagen wir, dass es „länger lebt“. Wenn Rust diesen Code funktionieren ließe,
+würde <code>r</code> auf Speicher verweisen, der freigegeben wurde, als <code>x</code> den
+Gültigkeitsbereich verlassen hat, und alles, was wir mit <code>r</code> tun würden, würde
+nicht korrekt funktionieren. Wie stellt Rust also fest, dass dieser Code
+ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).</p>
 <h3 id="der-ausleihenprüfer"><a class="header" href="#der-ausleihenprüfer">Der Ausleihenprüfer</a></h3>
 <p>Der Rust-Compiler verfügt über einen <em>Ausleihenprüfer</em> (borrow checker), der
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
@@ -640,7 +640,7 @@ Strukturdefinition angeben. Codeblock 10-24 hat eine Struktur namens
 
 fn main() {
     let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
-    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
+    let first_sentence = novel.split('.').next().unwrap();
     let i = ImportantExcerpt {
         part: first_sentence,
     };

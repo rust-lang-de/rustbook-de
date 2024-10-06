@@ -211,21 +211,22 @@ Daten nennt man <em>auf den Stapel legen</em>, und das Entfernen von Daten nennt
 bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
 Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
 Haldenspeicher gespeichert werden.</p>
-<p>Der Haldenspeicher ist weniger organisiert: Wenn du
-Daten in den Haldenspeicher legst, forderst du eine bestimmte Menge an
-Speicherplatz an. Der Speicher-Allokator (memory allocator) sucht eine leere
-Stelle im Haldenspeicher, die groß genug ist, markiert sie als in
-Benutzung und gibt einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser
-Stelle ist. Dieser Vorgang wird als <em>Allokieren im Haldenspeicher</em>
-bezeichnet und manchmal mit <em>Allokieren</em> abgekürzt (Das Legen von Werten auf
-den Stapelspeicher gilt nicht als Allokieren). Da es sich beim Zeiger um eine
-bekannte, feste Größe handelt, kannst du den Zeiger auf den Stapelspeicher
-legen, aber wenn du die eigentlichen Daten benötigst, musst du dem Zeiger
-folgen. Stell dir vor, du sitzt in einem Restaurant. Wenn du hineingehst,
-gibst du die Anzahl der Personen deiner Gruppe an, und das Personal findet
-einen leeren Tisch, der groß genug ist, und führt euch dorthin. Wenn jemand
-aus deiner Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt,
-um euch zu finden.</p>
+<p>Der Haldenspeicher ist weniger organisiert: Wenn du Daten in den
+Haldenspeicher legst, forderst du eine bestimmte Menge an Speicherplatz an.
+Der Speicher-Allokator (memory allocator) sucht eine leere Stelle im
+Haldenspeicher, die groß genug ist, markiert sie als in Benutzung und gibt
+einen <em>Zeiger</em> (pointer) zurück, der die Adresse dieser Stelle ist. Dieser
+Vorgang wird als <em>Allokieren im Haldenspeicher</em> bezeichnet und manchmal mit
+<em>Allokieren</em> abgekürzt. (Das Legen von Werten auf den Stapelspeicher gilt
+nicht als Allokieren.) Da es sich beim Zeiger um eine bekannte, feste Größe
+handelt, kannst du den Zeiger auf den Stapelspeicher legen, aber wenn du die
+eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
+eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
+sitzt in einem Restaurant. Wenn du hineingehst, gibst du die Anzahl der
+Personen deiner Gruppe an, und der Restaurantbesitzer findet einen leeren,
+ausreichend großen Tisch und führt euch dorthin. Wenn jemand aus deiner
+Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um euch zu
+finden.</p>
 <p>Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
 Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
 neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
@@ -304,8 +305,8 @@ die zeigen wo die Variable <code>s</code> gültig ist.</p>
 gültig ist</span></p>
 <p>Mit anderen Worten, es gibt hier zwei wichtige Zeitpunkte:</p>
 <ul>
-<li>Wenn <code>s</code> <em>in den Gültigkeitsbereich</em> kommt, ist es gültig.</li>
-<li>Es bleibt gültig, bis es <em>den Gültigkeitsbereich</em> verlässt.</li>
+<li>Wenn <code>s</code> <em>in den Gültigkeitsbereich kommt</em>, ist es gültig.</li>
+<li>Es bleibt gültig, bis es <em>den Gültigkeitsbereich verlässt</em>.</li>
 </ul>
 <p>An diesem Punkt ist die Beziehung zwischen Gültigkeitsbereichen und wann
 Variablen gültig sind ähnlich zu anderen Programmiersprachen. Nun werden wir
@@ -555,6 +556,32 @@ sind fertig.</p>
 Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher kann
 man davon ausgehen, dass jedes <em>automatische</em> Kopieren im Hinblick auf die
 Laufzeitperformanz kostengünstig ist.</p>
+<h4 id="gültigkeitsbereich-und-zuweisung"><a class="header" href="#gültigkeitsbereich-und-zuweisung">Gültigkeitsbereich und Zuweisung</a></h4>
+<p>Umgekehrt gilt dies auch für die Beziehung zwischen Gültigkeitsbereich,
+Eigentümerschaft und Speicherfreigabe durch die Funktion <code>drop</code>. Wenn du einer
+bestehenden Variablen einen völlig neuen Wert zuweist, ruft Rust die Funktion
+<code>drop</code> auf und gibt den Speicher des ursprünglichen Wertes sofort frei.
+Betrachte zum Beispiel diesen Code:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+</span>    let mut s = String::from("Hallo");
+    s = String::from("Ahoi");
+
+    println!("{s} Welt!");
+<span class="boring">}</span></code></pre></pre>
+<p>Wir deklarieren zunächst eine Variable <code>s</code> und binden sie an einen <code>String</code> mit
+dem Wert <code>„Hallo“</code>. Danach erstellen wir eine neue Zeichenkette mit dem Wert
+„Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
+nichts mehr auf den ursprünglichen Wert im Haldenspeicher.</p>
+<p><img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Haldenspeicher dar
+und zeigt auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem
+Haldenspeicher, wobei die ursprünglichen Zeichenketten-Daten (Hallo)
+durchgestrichen sind, weil auf sie nicht mehr zugegriffen werden kann."
+src="img/trpl04-05.svg" class="center" style="width: 50%;" /></p>
+<p><span class="caption">Figure 4-5: Darstellung im Speicher, nachdem der
+ursprüngliche Wert vollständig ersetzt worden ist.</span></p>
+<p>Die ursprüngliche Zeichenkette verlässt damit sofort den Geltungsbereich. Rust
+führt die Funktion <code>drop</code> aus und ihr Speicher wird sofort freigegeben. Wenn
+wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.</p>
 <h4 id="variablen-und-daten-im-zusammenspiel-mit-clone"><a class="header" href="#variablen-und-daten-im-zusammenspiel-mit-clone">Variablen und Daten im Zusammenspiel mit Clone</a></h4>
 <p>Wenn wir die Daten von <code>String</code> im Haldenspeicher <em>tief</em> kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens

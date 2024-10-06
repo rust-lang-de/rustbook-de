@@ -222,7 +222,7 @@ Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust panics noplayground">fn prints_and_returns_10(a: i32) -&gt; i32 {
-    println!("Ich habe den Wert {} erhalten.", a);
+    println!("Ich habe den Wert {a} erhalten.");
     10
 }
 
@@ -233,13 +233,13 @@ mod tests {
     #[test]
     fn this_test_will_pass() {
         let value = prints_and_returns_10(4);
-        assert_eq!(10, value);
+        assert_eq!(value, 10);
     }
 
     #[test]
     fn this_test_will_fail() {
         let value = prints_and_returns_10(8);
-        assert_eq!(5, value);
+        assert_eq!(value, 5);
     }
 }</code></pre>
 <p><span class="caption">Codebock 11-10: Tests einer Funktion, die <code>println!</code>
@@ -261,8 +261,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -280,7 +280,7 @@ Tests erscheint im Abschnitt der Testzusammenfassung, der auch die Ursache des
 Testfehlers anzeigt.</p>
 <p>Wenn wir auch die ausgegebenen Werte der bestandenen Tests sehen wollen, können
 wir Rust mit <code>--show-output</code> anweisen, die Ausgabe erfolgreicher Tests mit
-anzuzeigen.</p>
+anzuzeigen:</p>
 <pre><code class="language-console">$ cargo test -- --show-output
 </code></pre>
 <p>Wenn wir die Tests in Codeblock 11-10 mit dem Schalter <code>--show-output</code> erneut
@@ -309,8 +309,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -333,7 +333,7 @@ zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Co
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_two(a: i32) -&gt; i32 {
+</span>pub fn add_two(a: usize) -&gt; usize {
     a + 2
 }
 
@@ -343,17 +343,20 @@ mod tests {
 
     #[test]
     fn add_two_and_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 
     #[test]
     fn add_three_and_two() {
-        assert_eq!(5, add_two(3));
+        let result = add_two(3);
+        assert_eq!(result, 5);
     }
 
     #[test]
     fn one_hundred() {
-        assert_eq!(102, add_two(100));
+        let result = add_two(100);
+        assert_eq!(result, 102);
     }
 }
 <span class="boring">}</span></code></pre></pre>
@@ -426,15 +429,25 @@ solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">#[test]
-fn it_works() {
-    assert_eq!(2 + 2, 4);
-}
+<pre><code class="language-rust noplayground"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+</span><span class="boring">    left + right
+</span><span class="boring">}
+</span><span class="boring">
+</span>#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-#[ignore]
-fn expensive_test() {
-    // Code, dessen Ausführung eine Stunde dauert
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+        // code that takes an hour to run
+    }
 }</code></pre>
 <p>Unterhalb <code>#[test]</code> fügen wir die Zeile <code>#[ignore]</code> beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft <code>it_works</code>,
@@ -476,11 +489,12 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
 <p>Indem du kontrollierst, welche Tests durchgeführt werden, kannst du
-sicherstellen, dass dein <code>cargo test</code>-Aufruf schnell zu Ergebnissen führt. Wenn
-du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse der
-<code>ignored</code>-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu warten,
-kannst du stattdessen <code>cargo test -- --ignored</code> ausführen. Wenn du alle Tests
-ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du <code>cargo test -- --include-ignored</code> ausführen.</p>
+sicherstellen, dass dein Aufruf von <code>cargo test</code> schnell Ergebnisse zurückgibt.
+Wenn du an einem Punkt angelangt bist, an dem es sinnvoll ist, die Ergebnisse
+der <code>ignored</code>-Tests zu überprüfen, und du Zeit hast, auf die Ergebnisse zu
+warten, kannst du stattdessen <code>cargo test -- --ignored</code> ausführen. Wenn du alle
+Tests ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du
+<code>cargo test -- --include-ignored</code> ausführen.</p>
 
                     </main>
 
