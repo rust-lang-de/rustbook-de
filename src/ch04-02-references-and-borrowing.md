@@ -353,7 +353,7 @@ Hier ist die Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling ownership v0.1.0 (file:///projects/ownership)
+   Compiling playground v0.0.1 (/playground)
 error[E0106]: missing lifetime specifier
  --> src/main.rs:5:16
   |
@@ -371,8 +371,15 @@ help: instead, you are more likely to want to return an owned value
 5 + fn dangle() -> String {
   |
 
-For more information about this error, try `rustc --explain E0106`.
-error: could not compile `ownership` (bin "ownership") due to 1 previous error
+error[E0515]: cannot return reference to local variable `s`
+ --> src/main.rs:8:5
+  |
+8 |     &s
+  |     ^^ returns a reference to data owned by the current function
+
+Some errors have detailed explanations: E0106, E0515.
+For more information about an error, try `rustc --explain E0106`.
+error: could not compile `playground` (bin "playground") due to 2 previous errors; 1 warning emitted
 ```
 
 Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht

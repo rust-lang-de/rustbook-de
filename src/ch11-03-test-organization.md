@@ -40,7 +40,7 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
+```rust,ignore
 pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
@@ -77,13 +77,13 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust
-pub fn add_two(a: i32) -> i32 {
+```rust,ignore
+pub fn add_two(a: usize) -> usize {
     internal_adder(a, 2)
 }
 
-fn internal_adder(a: i32, b: i32) -> i32 {
-    a + b
+fn internal_adder(left: usize, right: usize) -> usize {
+    left + right
 }
 
 #[cfg(test)]
@@ -92,7 +92,8 @@ mod tests {
 
     #[test]
     fn internal() {
-        assert_eq!(4, internal_adder(2, 2));
+        let result = internal_adder(2, 2);
+        assert_eq!(result, 4);
     }
 }
 ```
@@ -153,7 +154,8 @@ use adder::add_two;
 
 #[test]
 fn it_adds_two() {
-    assert_eq!(4, add_two(2));
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }
 ```
 
@@ -338,14 +340,16 @@ Aufruf der Funktion `setup` aus dem Test `it_adds_two` in
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
 ```rust,ignore
-use adder;
+use adder::add_two;
 
 mod common;
 
 #[test]
 fn it_adds_two() {
     common::setup();
-    assert_eq!(4, adder::add_two(2));
+
+    let result = add_two(2);
+    assert_eq!(result, 4);
 }
 ```
 

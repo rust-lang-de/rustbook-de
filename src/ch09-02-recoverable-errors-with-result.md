@@ -517,7 +517,7 @@ kompilieren, erhalten wir folgende Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling error-handling v0.1.0 (file:///projects/error-handling)
+   Compiling playground v0.0.1 (/playground)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --> src/main.rs:4:48
   |
@@ -527,9 +527,17 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
   = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
+help: consider adding return type
+  |
+3 ~ fn main() -> Result<(), Box<dyn std::error::Error>> {
+4 |     let greeting_file = File::open("hallo.txt")?;
+5 + 
+6 +     Ok(())
+7 + }
+  |
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
+error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion

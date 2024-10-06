@@ -71,7 +71,7 @@ einen Test, der fehlschlägt.
 
 ```rust,panics,noplayground
 fn prints_and_returns_10(a: i32) -> i32 {
-    println!("Ich habe den Wert {} erhalten.", a);
+    println!("Ich habe den Wert {a} erhalten.");
     10
 }
 
@@ -82,13 +82,13 @@ mod tests {
     #[test]
     fn this_test_will_pass() {
         let value = prints_and_returns_10(4);
-        assert_eq!(10, value);
+        assert_eq!(value, 10);
     }
 
     #[test]
     fn this_test_will_fail() {
         let value = prints_and_returns_10(8);
-        assert_eq!(5, value);
+        assert_eq!(value, 5);
     }
 }
 ```
@@ -115,8 +115,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -170,8 +170,8 @@ failures:
 Ich habe den Wert 8 erhalten.
 thread 'tests::this_test_will_fail' panicked at src/lib.rs:19:9:
 assertion `left == right` failed
-  left: 5
- right: 10
+  left: 10
+ right: 5
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 
@@ -198,7 +198,7 @@ zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Codeblock
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-pub fn add_two(a: i32) -> i32 {
+pub fn add_two(a: usize) -> usize {
     a + 2
 }
 
@@ -208,17 +208,20 @@ mod tests {
 
     #[test]
     fn add_two_and_two() {
-        assert_eq!(4, add_two(2));
+        let result = add_two(2);
+        assert_eq!(result, 4);
     }
 
     #[test]
     fn add_three_and_two() {
-        assert_eq!(5, add_two(3));
+        let result = add_two(3);
+        assert_eq!(result, 5);
     }
 
     #[test]
     fn one_hundred() {
-        assert_eq!(102, add_two(100));
+        let result = add_two(100);
+        assert_eq!(result, 102);
     }
 }
 ```
@@ -311,15 +314,25 @@ aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,noplayground
-#[test]
-fn it_works() {
-    assert_eq!(2 + 2, 4);
-}
+# pub fn add(left: usize, right: usize) -> usize {
+#     left + right
+# }
+#
+#[cfg(test)]
+mod tests {
+    use super::*;
 
-#[test]
-#[ignore]
-fn expensive_test() {
-    // Code, dessen Ausführung eine Stunde dauert
+    #[test]
+    fn it_works() {
+        let result = add(2, 2);
+        assert_eq!(result, 4);
+    }
+
+    #[test]
+    #[ignore]
+    fn expensive_test() {
+        // code that takes an hour to run
+    }
 }
 ```
 

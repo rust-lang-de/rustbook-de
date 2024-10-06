@@ -582,7 +582,7 @@ struct ImportantExcerpt<'a> {
 
 fn main() {
     let novel = String::from("Nennen Sie mich Ishmael. Vor einigen Jahren ...");
-    let first_sentence = novel.split('.').next().expect("Konnte keinen '.' finden.");
+    let first_sentence = novel.split('.').next().unwrap();
     let i = ImportantExcerpt {
         part: first_sentence,
     };

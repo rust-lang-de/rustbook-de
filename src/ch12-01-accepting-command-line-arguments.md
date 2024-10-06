@@ -140,8 +140,8 @@ fn main() {
     let query = &args[1];
     let file_path = &args[2];
 
-    println!("Suche nach {}", query);
-    println!("In Datei {}", file_path);
+    println!("Suche nach {query}");
+    println!("In Datei {file_path}");
 }
 ```
 

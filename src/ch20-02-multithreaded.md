@@ -298,7 +298,7 @@ $ cargo check
 error[E0433]: failed to resolve: use of undeclared type `ThreadPool`
   --> src/main.rs:10:16
    |
-10 |     let pool = ThreadPool::new(4);
+11 |     let pool = ThreadPool::new(4);
    |                ^^^^^^^^^^ use of undeclared type `ThreadPool`
 
 For more information about this error, try `rustc --explain E0433`.
@@ -384,7 +384,7 @@ $ cargo check
 error[E0599]: no function or associated item named `new` found for struct `ThreadPool` in the current scope
   --> src/bin/main.rs:11:28
    |
-11 |     let pool = ThreadPool::new(4);
+12 |     let pool = ThreadPool::new(4);
    |                            ^^^ function or associated item not found in `ThreadPool`
 
 For more information about this error, try `rustc --explain E0599`.
@@ -998,6 +998,12 @@ note: consider changing this parameter type in method `new` to borrow instead if
    |
 47 |     fn new(id: usize, receiver: mpsc::Receiver<Job>) -> Worker {
    |        --- in this method       ^^^^^^^^^^^^^^^^^^^ this parameter takes ownership of the value
+help: consider moving the expression out of the loop so it is only moved once
+   |
+25 ~         let mut value = Worker::new(id, receiver);
+26 ~         for id in 0..size {
+27 ~             workers.push(value);
+   |
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `hello` (lib) due to 1 previous error

@@ -193,9 +193,9 @@ auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 `handle_connection` auf und übergeben ihr den `stream`.
 
 In der Funktion `handle_connection` erstellen wir eine neue
-`BufReader`-Instanz, die eine veränderbare Referenz auf den `stream` enthält.
-`BufReader` sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden
-von `std::io::Read` für uns verwaltet.
+`BufReader`-Instanz, die eine Referenz auf den `stream` enthält. `BufReader`
+sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden von
+`std::io::Read` für uns verwaltet.
 
 Wir erstellen eine Variable namens `http_request`, um die Zeilen der Anfrage zu
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir

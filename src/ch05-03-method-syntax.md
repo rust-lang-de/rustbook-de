@@ -209,8 +209,8 @@ fn main() {
         height: 45,
     };
 
-    println!("Umfasst rect1 rect2? {}", rect1.can_hold(&rect2));
-    println!("Umfasst rect1 rect3? {}", rect1.can_hold(&rect3));
+    println!("rect1 umfasst rect2? {}", rect1.can_hold(&rect2));
+    println!("rect1 umfasst rect3? {}", rect1.can_hold(&rect3));
 }
 ```
 
@@ -222,8 +222,8 @@ Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
 `rect1` ist:
 
 ```text
-Umfasst rect1 rect2? true
-Umfasst rect1 rect3? false
+rect1 umfasst rect2? true
+rect1 umfasst rect3? false
 ```
 
 Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
@@ -273,8 +273,8 @@ impl Rectangle {
 #         height: 45,
 #     };
 #
-#     println!("Umfasst rect1 rect2? {}", rect1.can_hold(&rect2));
-#     println!("Umfasst rect1 rect3? {}", rect1.can_hold(&rect3));
+#     println!("rect1 umfasst rect2? {}", rect1.can_hold(&rect2));
+#     println!("rect1 umfasst rect3? {}", rect1.can_hold(&rect3));
 # }
 ```
 
@@ -377,8 +377,8 @@ impl Rectangle {
 #         height: 45,
 #     };
 #
-#     println!("Umfasst rect1 rect2? {}", rect1.can_hold(&rect2));
-#     println!("Umfasst rect1 rect3? {}", rect1.can_hold(&rect3));
+#     println!("rect1 umfasst rect2? {}", rect1.can_hold(&rect2));
+#     println!("rect1 umfasst rect3? {}", rect1.can_hold(&rect3));
 # }
 ```
 

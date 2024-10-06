@@ -41,13 +41,15 @@ error[E0384]: cannot assign twice to immutable variable `x`
  --> src/main.rs:4:5
   |
 2 |     let x = 5;
-  |         -
-  |         |
-  |         first assignment to `x`
-  |         help: consider making this binding mutable: `mut x`
-3 |     println!("Der Wert von x ist: {}", x);
+  |         - first assignment to `x`
+3 |     println!("Der Wert von x ist: {x}");
 4 |     x = 6;
   |     ^^^^^ cannot assign twice to immutable variable
+  |
+help: consider making this binding mutable
+  |
+2 |     let mut x = 5;
+  |         +++
 
 For more information about this error, try `rustc --explain E0384`.
 error: could not compile `variables` (bin "variables") due to 1 previous error
@@ -257,12 +259,6 @@ error[E0308]: mismatched types
   |                      ----- expected due to this value
 3 |     spaces = spaces.len();
   |              ^^^^^^^^^^^^ expected `&str`, found `usize`
-  |
-help: try removing the method call
-  |
-3 -     spaces = spaces.len();
-3 +     spaces = spaces;
-  |
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `variables` (bin "variables") due to 1 previous error

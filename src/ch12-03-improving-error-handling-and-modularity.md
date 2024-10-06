@@ -814,7 +814,6 @@ fn main() {
 
     if let Err(e) = run(config) {
         println!("Anwendungsfehler: {e}");
-
         process::exit(1);
     }
 }
@@ -946,7 +945,6 @@ fn main() {
     if let Err(e) = minigrep::run(config) {
         // --abschneiden--
 #         println!("Anwendungsfehler: {e}");
-#
 #         process::exit(1);
     }
 }
