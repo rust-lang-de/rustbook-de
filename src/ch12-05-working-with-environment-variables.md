@@ -635,8 +635,8 @@ die Variante `Err` zurück, wenn die Umgebungsvariable nicht gesetzt ist.
 Wir benutzen die Methode `is_ok` auf `Result`, um zu prüfen, ob die
 Umgebungsvariable gesetzt ist, was bedeutet, dass das Programm die Suche
 ohne Berücksichtigung der Groß-/Kleinschreibung durchführen soll. Wenn
-die Umgebungsvariable `IGNORE_CASE` keinen Wert hat, gibt `is_ok` false zurück
-und das Programm führt eine Suche mit Berücksichtigung der
+die Umgebungsvariable `IGNORE_CASE` keinen Wert hat, gibt `is_ok` den Wert
+`false` zurück und das Programm führt eine Suche mit Berücksichtigung der
 Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den *Wert* der
 Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also prüfen wir
 mit `is_ok`, anstatt mit `unwrap`, `expect` oder einer der anderen Methoden,
@@ -649,7 +649,7 @@ in Codeblock 12-22 implementiert haben.
 
 Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
 Umgebungsvariable und mit dem Abfragetext `to` aus, die zu den Zeilen passen
-sollte, die das Wort `to` in Kleinbuchstaben enthalten:
+sollte, die das Wort *to* in Kleinbuchstaben enthalten:
 
 ```console
 $ cargo run to poem.txt
@@ -662,7 +662,7 @@ How dreary to be somebody!
 
 Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 `IGNORE_CASE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
-`to`.
+*to*.
 
 ```console
 $ IGNORE_CASE=1 cargo run -- to poem.txt
@@ -682,7 +682,7 @@ kann mit `Remove-Item` zurückgesetzt werden:
 PS> Remove-Item Env:IGNORE_CASE
 ```
 
-Wir sollten Zeilen erhalten, die „to“ enthalten, die Großbuchstaben haben
+Wir sollten Zeilen erhalten, die *to* enthalten, die Großbuchstaben haben
 könnten:
 
 ```console
@@ -692,7 +692,7 @@ To tell your name the livelong day
 To an admiring bog!
 ```
 
-Ausgezeichnet, wir haben auch Zeilen mit „To“! Unser `minigrep`-Programm kann
+Ausgezeichnet, wir haben auch Zeilen mit *To*! Unser `minigrep`-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.

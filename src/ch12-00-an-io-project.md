@@ -34,17 +34,16 @@ benötigst, um ein reales Projekt wie `ripgrep` zu verstehen.
 Unser `grep`-Projekt wird eine Reihe von Konzepten kombinieren, die du bisher
 gelernt hast:
 
-* Code organisieren (unter Verwendung dessen, was du über Module in [Kapitel
-  7][chap7] gelernt hast)
-* Verwenden von Vektoren und Zeichenketten (Kollektionen, [Kapitel 8][chap8])
+* Code organisieren ([Kapitel 7][chap7])
+* Verwenden von Vektoren und Zeichenketten ([Kapitel 8][chap8])
 * Fehlerbehandlung ([Kapitel 9][chap9])
 * Verwenden von Merkmalen (traits) und Lebensdauer (lifetimes) soweit möglich
   ([Kapitel 10][chap10])
 * Schreiben von Tests ([Kapitel 11][chap11])
 
 Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den Kapiteln [13][chap13]
-und [17][chap17] ausführlich behandelt werden.
+Merkmalsobjekte (trait objects) vorstellen, die in den [Kapitel 13][chap13]
+und [Kapitel 17][chap17] ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [chap8]: ch08-00-common-collections.html
