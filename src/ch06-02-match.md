@@ -4,7 +4,7 @@ Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
 `match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
-Dingen zusammensetzen. [Kapitel 18][ch18-00-patterns] befasst sich mit all den
+Dingen zusammensetzen. [Kapitel 19][ch19-00-patterns] befasst sich mit all den
 verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
 `match` kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
 Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.
@@ -432,9 +432,9 @@ werden, der nicht mit einem Muster in einem früheren Zweig übereinstimmt, und
 dass wir in diesem Fall keinen Code ausführen wollen.
 
 Weitere Informationen zu Mustern und Abgleich findest du in [Kapitel
-18][ch18-00-patterns]. Für den Moment machen wir mit der `if let`-Syntax
+19][ch19-00-patterns]. Für den Moment machen wir mit der `if let`-Syntax
 weiter, die in Situationen nützlich sein kann, in denen der `match`-Ausdruck
 etwas wortreich ist.
 
-[ch18-00-patterns]: ch18-00-patterns.html
+[ch19-00-patterns]: ch19-00-patterns.html
 [tuples]: ch03-02-data-types.html#der-tupel-typ
