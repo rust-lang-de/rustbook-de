@@ -342,7 +342,7 @@ Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
 fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
 Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
 selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
-`&"hallo"[0]` gültiger Code wäre, der den Byte-Wert zurückgibt, würde er `104`
+`&"hi"[0]` gültiger Code wäre, der den Byte-Wert zurückgibt, würde er `104`
 zurückgeben, nicht `h`.
 
 Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
