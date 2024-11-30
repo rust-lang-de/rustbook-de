@@ -409,7 +409,7 @@ Beim Ausführen dieses Codes wird Folgendes ausgegeben:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.46s
      Running `target/debug/traits-example`
 Hier spricht Ihr Kapitän.
 Hoch!
@@ -476,7 +476,7 @@ Folgendes aus:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.54s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.54s
      Running `target/debug/traits-example`
 Ein Hundebaby wird Spot genannt.
 ```
@@ -590,7 +590,7 @@ was wir wollen:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/traits-example`
 Ein Hundebaby wird Welpe genannt.
 ```

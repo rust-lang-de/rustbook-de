@@ -227,7 +227,7 @@ Browser erhalten, aber die Ausgabe unseres Programms im Terminal wird nun
 ```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.42s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/hello`
 Request: [
     "GET / HTTP/1.1",

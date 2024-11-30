@@ -136,7 +136,7 @@ du dein Projekt, indem du den folgenden Befehl eingibst:
 ```console
 $ cargo build
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
 Dieser Befehl erzeugt eine ausführbare Datei in *target/debug/hello_cargo*
@@ -164,7 +164,7 @@ Datei mit einem einzigen Befehl auszuführen:
 
 ```console
 $ cargo run
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
 Hello, world!
 ```
@@ -183,7 +183,7 @@ Ausgabe gesehen:
 ```console
 $ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33 secs
      Running `target/debug/hello_cargo`
 Hello, world!
 ```
@@ -195,7 +195,7 @@ ausführbare Datei:
 ```console
 $ cargo check
    Checking hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32 secs
 ```
 
 Warum willst du keine ausführbare Datei? Häufig ist `cargo check` viel

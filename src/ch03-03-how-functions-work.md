@@ -43,7 +43,7 @@ weiter zu erforschen. Platziere das Beispiel `another_function` in
 ```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.28s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.28s
      Running `target/debug/functions`
 Hallo Welt!
 Eine andere Funktion.
@@ -84,7 +84,7 @@ erhalten:
 ```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.21s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.21s
      Running `target/debug/functions`
 Der Wert von x ist: 5
 ```
@@ -129,7 +129,7 @@ das vorhergehende Beispiel und führe es mit `cargo run` aus:
 ```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/functions`
 Das Maß ist: 5h
 ```
@@ -293,7 +293,7 @@ sollte wie folgt aussehen:
 ```console
 $ cargo run
    Compiling functions v0.1.0 (file:///projects/functions)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.30s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
      Running `target/debug/functions`
 Der Wert von x ist: 5
 ```

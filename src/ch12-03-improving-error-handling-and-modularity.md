@@ -314,7 +314,7 @@ Argumente laufen zu lassen; es wird so aussehen:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:27:21:
 index out of bounds: the len is 1 but the index is 1
@@ -392,7 +392,7 @@ ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:26:13:
 Nicht genügend Argumente
@@ -568,7 +568,7 @@ mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/minigrep`
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
 ```
@@ -763,7 +763,7 @@ help: use `let _ = ...` to ignore the resulting value
    |     +++++++
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.71s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt

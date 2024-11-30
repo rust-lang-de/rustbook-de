@@ -104,7 +104,7 @@ folgende Ausgabe des Makros `panic!`:
 ```console
 $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.73s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
 thread 'main' panicked at src/main.rs:8:23:
 Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }

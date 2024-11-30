@@ -703,7 +703,7 @@ veränderten Wert 15 anstelle von 5 haben:
 ```console
 $ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.63s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.63s
      Running `target/debug/cons-list`
 a nachher = Cons(RefCell { value: 15 }, Nil)
 b nachher = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))

@@ -215,7 +215,7 @@ help: use `let _ = ...` to ignore the resulting value
   |     +++++++
 
 warning: `iterators` (bin "iterators") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.47s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.47s
      Running `target/debug/iterators`
 ```
 

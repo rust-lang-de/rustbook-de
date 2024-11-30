@@ -168,7 +168,7 @@ Verzeichnis *add* ausführen!
 $ cargo build
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.68s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
 ```
 
 Um die Binärkiste aus dem Verzeichnis *add* auszuführen, können wir mithilfe des
@@ -177,7 +177,7 @@ Arbeitsbereich ausgeführt werden soll:
 
 ```console
 $ cargo run -p adder
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
 Hello, world! 10 plus one is 11!
 ```
@@ -228,7 +228,7 @@ warning: unused import: `rand`
 
 warning: `add_one` (lib) generated 1 warning
    Compiling adder v0.1.0 (file:///projects/add/adder)
-    Finished dev [unoptimized + debuginfo] target(s) in 10.18s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.18s
 ```
 
 Die *Cargo.lock*-Datei der obersten Ebene enthält nun Informationen über die

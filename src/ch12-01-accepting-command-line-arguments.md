@@ -94,7 +94,7 @@ Code zuerst ohne Argumente und dann mit zwei Argumenten laufen zu lassen:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/minigrep`
 [src/main.rs:5:5] args = [
     "target/debug/minigrep",
@@ -104,7 +104,7 @@ $ cargo run
 ```console
 $ cargo run -- Nadel Heuhaufen
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.57s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.57s
      Running `target/debug/minigrep Nadel Heuhaufen`
 [src/main.rs:5:5] args = [
     "target/debug/minigrep",
@@ -163,7 +163,7 @@ den Argumenten `test` und `sample.txt` noch einmal laufen:
 ```console
 $ cargo run test sample.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep test sample.txt`
 Suche nach test
 In Datei sample.txt

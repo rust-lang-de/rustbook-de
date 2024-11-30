@@ -171,7 +171,7 @@ Der Code in Codeblock 18-3 wird Folgendes ausgeben:
 ```console
 $ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.52s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.52s
      Running `target/debug/patterns`
 a ist beim Index 0
 b ist beim Index 1

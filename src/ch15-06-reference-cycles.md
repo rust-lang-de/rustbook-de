@@ -128,7 +128,7 @@ auskommentieren, erhalten wir folgende Ausgabe:
 ```console
 $ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.53s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.53s
      Running `target/debug/cons-list`
 a anfängliche Rc-Zählung = 1
 a nächstes Element = Some(RefCell { value: Nil })

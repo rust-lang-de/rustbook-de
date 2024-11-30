@@ -507,7 +507,7 @@ lassen. Lass es uns noch einmal überprüfen:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.24s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.24s
 ```
 
 Er kompiliert! Aber beachte, dass du, wenn du `cargo run` versuchst und eine
@@ -1337,7 +1337,7 @@ warning: field is never read: `thread`
 warning: 3 warnings emitted
 
 warning: `hello` (lib) generated 3 warnings
-    Finished dev [unoptimized + debuginfo] target(s) in 1.40s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.40s
      Running `target/debug/hello`
 Worker 0 hat einen Auftrag erhalten; führe ihn aus.
 Worker 2 hat einen Auftrag erhalten; führe ihn aus.

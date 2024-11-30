@@ -116,7 +116,7 @@ Die Ausführung dieses Codes gibt aus:
 ```console
 $ cargo run
    Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/shirt-company`
 Der Benutzer mit Präferenz Some(Red) erhält Red
 Der Benutzer mit Präferenz None erhält Blue
@@ -331,7 +331,7 @@ kompiliert, läuft und gibt folgendes aus:
 ```console
 $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
@@ -365,7 +365,7 @@ Dieser Code kompiliert, läuft und gibt aus:
 ```console
 $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
@@ -558,7 +558,7 @@ Dieser Code gibt aus:
 ```console
 $ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.41s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
      Running `target/debug/rectangles`
 [
     Rectangle {

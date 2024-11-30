@@ -15,7 +15,7 @@ Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind
 
 ```console
 $ cargo build
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
 $ cargo build --release
     Finished release [optimized] target(s) in 0.0s
 ```

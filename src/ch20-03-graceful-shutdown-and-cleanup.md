@@ -743,7 +743,7 @@ wie diese sehen:
 ```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.0s
      Running `target/debug/hello`
 Worker 0 hat einen Auftrag erhalten; führe ihn aus.
 Fahre herunter.
