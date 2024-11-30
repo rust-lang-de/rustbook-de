@@ -1,6 +1,7 @@
 # Die Programmiersprache Rust
 
-*von Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft;*
+*von Steve Klabnik, Carol Nichols und Chris Krycho, unter Mitarbeit der
+Rust-Gemeinschaft;*
 *übersetzt ins Deutsche durch die Rust-Gemeinschaft*
 
 Diese Version des Textes geht davon aus, dass du Rust 1.81.0 (veröffentlicht am
