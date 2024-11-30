@@ -143,7 +143,16 @@ lokale Dokumentation in deinem Browser zu öffnen.
 Falls du dir nicht sicher bist, wie du einen Typ oder eine Funktion aus der
 Standardbibliothek verwenden sollst, dann schau in der API-Dokumentation nach!
 
+### Texteditoren und integrierte Entwicklungsumgebungen
+
+Dieses Buch macht keine Annahmen darüber, welche Werkzeuge du für die
+Erstellung von Rust-Code verwendest. So gut wie jeder Texteditor ist dafür
+ausreichend! Viele Texteditoren und integrierte Entwicklungsumgebungen (IDEs)
+haben jedoch integrierte Unterstützung für Rust. Eine aktuelle Liste von
+Editoren und IDEs findest du auf der [Tools-Seite][tools] der Rust-Website.
+
 [community]: https://www.rust-lang.org/community
 [install]: https://www.rust-lang.org/tools/install
 [msvc]: https://rust-lang.github.io/rustup/installation/windows-msvc.html
 [otherinstall]: https://forge.rust-lang.org/infra/other-installation-methods.html
+[tools]: https://www.rust-lang.org/tools
