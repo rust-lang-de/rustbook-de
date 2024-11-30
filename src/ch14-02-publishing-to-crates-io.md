@@ -454,7 +454,7 @@ See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for
 error: failed to publish to registry at https://crates.io
 
 Caused by:
-  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+  the remote server responded with an error (status 400 Bad Request): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for more information on configuring these field
 ```
 
 Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine

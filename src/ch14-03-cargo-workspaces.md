@@ -37,10 +37,7 @@ lautet dieser Pfad *adder*:
 
 ```toml
 [workspace]
-
-members = [
-    "adder",
-]
+resolver = "2"
 ```
 
 Als nächstes erstellen wir die Binärkiste `adder`, indem wir `cargo new` im
@@ -48,7 +45,18 @@ Verzeichnis *add* ausführen:
 
 ```console
 $ cargo new adder
-     Created binary (application) `adder` package
+    Creating binary (application) `adder` package
+      Adding `adder` as member of workspace at `file:///projects/add`
+```
+
+Wenn du `cargo new` innerhalb eines Arbeitsbereichs ausführst, wird das neu
+erstellte Paket automatisch zum Schlüssel `members` in der Definition
+`[workspace]` der Datei `Cargo.toml` hinzugefügt, etwa so:
+
+```toml
+[workspace]
+resolver = "2"
+members = ["adder"]
 ```
 
 An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir `cargo build`
@@ -97,7 +105,8 @@ Dann erzeuge eine neue Bibliothekskiste namens `add_one`:
 
 ```console
 $ cargo new add_one --lib
-     Created library `add_one` package
+    Creating library `add_one` package
+      Adding `add_one` as member of workspace at `file:///projects/add`
 ```
 
 Dein *add*-Verzeichnis sollte nun so aussehen:
@@ -226,7 +235,7 @@ warning: unused import: `rand`
   |
   = note: `#[warn(unused_imports)]` on by default
 
-warning: `add_one` (lib) generated 1 warning
+warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` to apply 1 suggestion)
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.18s
 ```
