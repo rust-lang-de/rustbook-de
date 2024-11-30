@@ -173,9 +173,7 @@ fn main() {
 }
 ```
 
-Fließkommazahlen werden nach dem IEEE-754-Standard dargestellt. Der Typ `f32`
-ist eine Fließkommazahl mit einfacher Genauigkeit und `f64` mit doppelter
-Genauigkeit.
+Fließkommazahlen werden nach dem IEEE-754-Standard dargestellt.
 
 #### Numerische Operationen
 
