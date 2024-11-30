@@ -92,7 +92,7 @@ werden &ndash; sowie einer oder mehrere der folgenden Punkte zutreffen:
   Problem zu prüfen.
 * Es gibt keine gute Möglichkeit, diese Informationen in den von dir
   verwendeten Typen zu kodieren. Wir werden im Abschnitt [„Kodieren von
-  Zuständen und Verhalten als Typen“][encoding] in Kapitel 17 ein Beispiel
+  Zuständen und Verhalten als Typen“][encoding] in Kapitel 18 ein Beispiel
   dafür durcharbeiten.
 
 Wenn jemand deinen Code aufruft und Werte übergibt, die keinen Sinn ergeben,
@@ -312,4 +312,4 @@ generische Datentypen mit den Enums `Option` und `Result` verwendet, werden wir
 darüber sprechen, wie generische Datentypen funktionieren und wie du sie in
 deinem Code verwenden kannst.
 
-[encoding]: ch17-03-oo-design-patterns.html#kodieren-von-zuständen-und-verhalten-als-typen
+[encoding]: ch18-03-oo-design-patterns.html#kodieren-von-zuständen-und-verhalten-als-typen

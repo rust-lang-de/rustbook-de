@@ -644,7 +644,7 @@ fn main() -> Result<(), Box<dyn Error>> {
 
 Der Typ `Box<dyn Error>` ist ein *Merkmalsobjekt* (trait object), über das wir
 im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“][trait-objects] in Kapitel 17 sprechen werden. Vorerst kannst
+Typen erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst
 du `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
 `?` auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
@@ -674,4 +674,4 @@ entscheiden können, was in welchen Fällen geeignet ist.
 
 [handle_failure]: ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result
 [termination]: https://doc.rust-lang.org/std/process/trait.Termination.html
-[trait-objects]: ch17-02-trait-objects.html
+[trait-objects]: ch18-02-trait-objects.html
