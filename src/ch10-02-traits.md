@@ -615,7 +615,7 @@ Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
 wird im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
 Typen erlauben“][using-trait-objects-that-allow-for-values-of-different-types]
-in Kapitel 17 behandelt.
+in Kapitel 18 behandelt.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
@@ -702,5 +702,4 @@ Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
 ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.
 
 [methods]: ch05-03-method-syntax.html#definieren-von-methoden
-[using-trait-objects-that-allow-for-values-of-different-types]:
-ch17-02-trait-objects.html
+[using-trait-objects-that-allow-for-values-of-different-types]: ch18-02-trait-objects.html
