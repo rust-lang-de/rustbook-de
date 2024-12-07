@@ -17,7 +17,7 @@ Funktionszeigern ermöglicht es dir, Funktionen als Argumente für andere
 Funktionen zu verwenden.
 
 Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
-der von Funktionsabschlüssen, wie in Codeblock 19-27 gezeigt, wo wir eine
+der von Funktionsabschlüssen, wie in Codeblock 20-28 gezeigt, wo wir eine
 Funktion `add_one` definiert haben, die ihrem Parameter eins hinzufügt. Die
 Funktion `do_twice` nimmt zwei Parameter entgegen: Einen Funktionszeiger auf
 eine beliebige Funktion mit einem `i32`-Parameter und einem `i32`-Rückgabewert,
@@ -44,7 +44,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-27: Verwenden des Typs `fn` zum
+<span class="caption">Codeblock 20-28: Verwenden des Typs `fn` zum
 Entgegennehmen eines Funktionszeigers als Argument</span>
 
 Dieser Code gibt `Die Antwort ist: 12` aus. Wir spezifizieren, dass der
@@ -178,10 +178,10 @@ fn returns_closure() -> Box<dyn Fn(i32) -> i32> {
 
 Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
 Merkmalsobjekte findest du im Abschnitt [„Merkmalsobjekte (trait objects) die
-Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 17.
+Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18.
 
 Als nächstes wollen wir uns Makros ansehen!
 
-[advanced-traits]: ch19-03-advanced-traits.html
+[advanced-traits]: ch20-03-advanced-traits.html
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
-[trait-objects]: ch17-02-trait-objects.html
+[trait-objects]: ch18-02-trait-objects.html
