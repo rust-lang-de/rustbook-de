@@ -8,7 +8,7 @@ einige frühere Lektionen zusammenfassen.
 Für unser Abschlussprojekt werden wir einen Webserver erstellen, der „Hallo“
 sagt und in einem Webbrowser wie Abbildung 20-1 aussieht.
 
-![Hallo von Rust](img/trpl20-01.png)
+![Hallo von Rust](img/trpl21-01.png)
 
 <span class="caption">Abbildung 20-1: Unser letztes gemeinsames Projekt</span>
 
