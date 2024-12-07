@@ -6,11 +6,11 @@ Konzepte zu demonstrieren, die wir in den letzten Kapiteln behandelt haben, und
 einige frühere Lektionen zusammenfassen.
 
 Für unser Abschlussprojekt werden wir einen Webserver erstellen, der „Hallo“
-sagt und in einem Webbrowser wie Abbildung 20-1 aussieht.
+sagt und in einem Webbrowser wie Abbildung 21-1 aussieht.
 
 ![Hallo von Rust](img/trpl21-01.png)
 
-<span class="caption">Abbildung 20-1: Unser letztes gemeinsames Projekt</span>
+<span class="caption">Abbildung 21-1: Unser letztes gemeinsames Projekt</span>
 
 Hier ist unser Plan zum Bauen des Webservers:
 
