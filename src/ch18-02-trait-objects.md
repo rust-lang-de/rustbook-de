@@ -54,7 +54,7 @@ der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden können. Wir
 erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben, z.B. eine
 Referenz `&` oder einen intelligenten Zeiger `Box<T>`, dann das Schlüsselwort
 `dyn` und dann das relevante Merkmal. (Wir werden über den Grund, warum
-Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 19 im Abschnitt
+Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 20 im Abschnitt
 [„Dynamisch große Typen und das Merkmal `Sized`“][dynamically-sized]) sprechen.
 Wir können Merkmalsobjekte an Stelle eines generischen oder konkreten Typs
 verwenden. Wo immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem
@@ -75,7 +75,7 @@ Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
 Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
 Verhalten zu ermöglichen.
 
-In Codeblock 17-3 wird gezeigt, wie ein Merkmal namens `Draw` mit einer Methode
+In Codeblock 18-3 wird gezeigt, wie ein Merkmal namens `Draw` mit einer Methode
 namens `draw` definiert werden kann:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -86,11 +86,11 @@ pub trait Draw {
 }
 ```
 
-<span class="caption">Codeblock 17-3: Definition des Merkmals `Draw`</span>
+<span class="caption">Codeblock 18-3: Definition des Merkmals `Draw`</span>
 
 Diese Syntax sollte uns aus unseren Diskussionen über die Definition von
 Merkmalen in Kapitel 10 bekannt vorkommen. Als nächstes kommt eine neue Syntax:
-Codeblock 17-4 definiert eine Struktur namens `Screen`, die einen Vektor namens
+Codeblock 18-4 definiert eine Struktur namens `Screen`, die einen Vektor namens
 `components` enthält. Dieser Vektor ist vom Typ `Box<dyn Draw>`, der ein
 Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
 `Box`, der das Merkmal `Draw` implementiert.
@@ -107,12 +107,12 @@ pub struct Screen {
 }
 ```
 
-<span class="caption">Codeblock 17-4: Definition der Struktur `Screen` mit
+<span class="caption">Codeblock 18-4: Definition der Struktur `Screen` mit
 einem Feld `components`, das einen Vektor von Merkmalsobjekten enthält, die das
 `Draw`-Merkmal implementieren</span>
 
 Auf der Struktur `Screen` definieren wir eine Methode namens `run`, die die
-`draw`-Methode auf jeder ihrer `components` aufruft, wie in Codeblock 17-5 gezeigt:
+`draw`-Methode auf jeder ihrer `components` aufruft, wie in Codeblock 18-5 gezeigt:
 
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -135,7 +135,7 @@ impl Screen {
 }
 ```
 
-<span class="caption">Codeblock 17-5: Eine Methode `run` auf `Screen`, die die
+<span class="caption">Codeblock 18-5: Eine Methode `run` auf `Screen`, die die
 `draw`-Methode jeder Komponente aufruft</span>
 
 Dies funktioniert anders als die Definition einer Struktur, die einen
@@ -144,7 +144,7 @@ generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
 werden, während Merkmalsobjekte die Möglichkeit bieten, zur Laufzeit mehrere
 konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur `Screen` mit einem generischen Typ und einer Merkmalsabgrenzung
-wie in Codeblock 17-6 definieren können:
+wie in Codeblock 18-6 definieren können:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -169,7 +169,7 @@ where
 }
 ```
 
-<span class="caption">Codeblock 17-6: Eine alternative Implementierung der
+<span class="caption">Codeblock 18-6: Eine alternative Implementierung der
 Struktur `Screen` und ihrer `run`-Methode unter Verwendung generischer Typen
 und Merkmalsabgrenzungen</span>
 
@@ -192,7 +192,7 @@ Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
 die `draw`-Methode keine nützliche Implementierung in ihrem Rumpf haben wird.
 Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
 Struktur `Button` Felder für `width`, `height` und `label` haben, wie in
-Codeblock 17-7 gezeigt:
+Codeblock 18-7 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -226,7 +226,7 @@ impl Draw for Button {
 }
 ```
 
-<span class="caption">Codeblock 17-7: Eine Struktur `Button`, die das Merkmal
+<span class="caption">Codeblock 18-7: Eine Struktur `Button`, die das Merkmal
 `Draw` implementiert</span>
 
 Die Felder `width`, `height` und `label` in `Button` unterscheiden sich von den
@@ -243,7 +243,7 @@ Diese Art von Methoden trifft nicht auf Typen wie `TextField` zu.
 Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine
 Struktur `SelectBox` zu implementieren, die die Felder `width`, `height` und
 `options` enthält, implementiert er ebenfalls das Merkmal `Draw` für den Typ
-`SelectBox`, wie in Codeblock 17-8 gezeigt:
+`SelectBox`, wie in Codeblock 18-8 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -265,7 +265,7 @@ impl Draw for SelectBox {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 17-8: Eine weitere Kiste, die `gui` verwendet
+<span class="caption">Codeblock 18-8: Eine weitere Kiste, die `gui` verwendet
 und das Merkmal `Draw` auf einer `SelectBox`-Struktur implementiert</span>
 
 Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um
@@ -273,7 +273,7 @@ eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine
 `SelectBox` und einen `Button` hinzufügen, indem er jede in eine `Box<T>`
 setzt, um ein Merkmalsobjekt zu werden. Er kann dann die `run`-Methode auf der
 `Screen`-Instanz aufrufen, die dann `draw` auf jeder der Komponenten aufruft.
-Der Codeblock 17-9 zeigt diese Umsetzung:
+Der Codeblock 18-9 zeigt diese Umsetzung:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -318,7 +318,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 17-9: Verwenden von Merkmalsobjekten zum
+<span class="caption">Codeblock 18-9: Verwenden von Merkmalsobjekten zum
 Speichern von Werten verschiedener Typen, die das gleiche Merkmal
 implementieren</span>
 
@@ -332,7 +332,7 @@ Dieses Konzept &ndash; sich nur mit den Nachrichten zu befassen, auf die ein
 Wert reagiert, und nicht mit dem konkreten Typ des Wertes &ndash; ähnelt dem
 Konzept des *Duck-Typing* in dynamisch typisierten Sprachen: Wenn es wie eine
 Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
-Implementierung von `run` auf `Screen` in Codeblock 17-5 braucht `run` nicht zu
+Implementierung von `run` auf `Screen` in Codeblock 18-5 braucht `run` nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines `Buttons` oder einer `SelectBox` ist, es ruft nur
 die `draw`-Methode auf der Komponente auf. Durch die Spezifikation von
@@ -348,7 +348,7 @@ eine Methode nicht implementiert, wir sie aber trotzdem aufrufen. Rust wird
 unseren Code nicht kompilieren, wenn die Werte nicht die Merkmale
 implementieren, die die Merkmalsobjekte benötigen.
 
-Beispielsweise zeigt Codeblock 17-10, was passiert, wenn wir versuchen, einen
+Beispielsweise zeigt Codeblock 18-10, was passiert, wenn wir versuchen, einen
 `Screen` mit einem `String` als Komponente zu erstellen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -365,7 +365,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 17-10: Versuch, einen Typ zu verwenden, der das
+<span class="caption">Codeblock 18-10: Versuch, einen Typ zu verwenden, der das
 Merkmal des Merkmalsobjekts nicht implementiert</span>
 
 Wir werden diesen Fehler erhalten, weil `String` das Merkmal `Draw` nicht
@@ -416,11 +416,9 @@ aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
 beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
 dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Wir haben jedoch
-zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 17-5
-geschrieben haben und in Codeblock 17-9 unterstützen konnten, sodass es sich um
+zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
+geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.
 
-[dynamically-sized]:
-ch19-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
-[performance-of-code-using-generics]:
-ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen
+[dynamically-sized]: ch20-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
+[performance-of-code-using-generics]: ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen
