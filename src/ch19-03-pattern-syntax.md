@@ -32,7 +32,7 @@ verwendest. Da `match` einen neuen Gültigkeitsbereich beginnt, werden
 Variablen, die als Teil eines Musters innerhalb des `match`-Ausdrucks
 deklariert sind, diejenigen mit dem gleichen Namen außerhalb des
 `match`-Konstrukts verschatten (shadow), wie es bei allen Variablen der Fall
-ist. In Codeblock 18-11 deklarieren wir eine Variable mit dem Namen `x` mit dem
+ist. In Codeblock 19-11 deklarieren wir eine Variable mit dem Namen `x` mit dem
 Wert `Some(5)` und eine Variable `y` mit dem Wert `10`. Dann erzeugen wir einen
 `match`-Ausdruck für den Wert `x`. Sieh dir die Muster in den `match`-Zweigen
 und `println!` am Ende an und versuche herauszufinden, was der Code ausgeben
@@ -53,7 +53,7 @@ wird, bevor du diesen Code ausführst oder weiterliest.
     println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
-<span class="caption">Codeblock 18-11: Ein `match`-Ausdruck mit einem Zweig,
+<span class="caption">Codeblock 19-11: Ein `match`-Ausdruck mit einem Zweig,
 der eine verschattete Variable `y` einführt</span>
 
 Lass uns durchgehen, was passiert, wenn der `match`-Ausdruck ausgeführt wird.
@@ -156,7 +156,7 @@ Lass uns jeden Wert durchgehen.
 
 #### Destrukturieren von Strukturen
 
-Codeblock 18-12 zeigt eine Struktur `Point` mit zwei Feldern, `x` und `y`, die
+Codeblock 19-12 zeigt eine Struktur `Point` mit zwei Feldern, `x` und `y`, die
 wir mit einem Muster in einer `let`-Anweisung aufteilen können.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -176,7 +176,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-12: Destrukturieren der Felder einer
+<span class="caption">Codeblock 19-12: Destrukturieren der Felder einer
 Struktur in separate Variablen</span>
 
 Dieser Code erzeugt die Variablen `a` und `b`, die den Werten der Felder `x`
@@ -188,8 +188,8 @@ stammen. Wegen dieser häufigen Verwendung und weil das Schreiben von `let Point
 { x: x, y: y } = p;` eine Menge Duplikation enthält, hat Rust eine Kurzform
 für Muster, die mit Strukturfeldern übereinstimmen: Du musst nur die Namen des
 Struktur-Felder auflisten, und die Variablen, die aus dem Muster erzeugt
-werden, haben die gleichen Namen. Codeblock 18-13 zeigt Code, der sich gleich
-verhält wie der Code in Codeblock 18-12, aber die Variablen, die im Muster
+werden, haben die gleichen Namen. Codeblock 19-13 zeigt Code, der sich gleich
+verhält wie der Code in Codeblock 19-12, aber die Variablen, die im Muster
 `let` erzeugt werden, sind `x` und `y` anstelle von `a` und `b`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -209,7 +209,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-13: Destrukturieren von Strukturfeldern mit
+<span class="caption">Codeblock 19-13: Destrukturieren von Strukturfeldern mit
 Hilfe der Strukturfeldkurznotation (struct field shorthand)</span>
 
 Dieser Code erzeugt die Variablen `x` und `y`, die mit den Feldern `x` und `y`
@@ -221,7 +221,7 @@ destrukturieren, anstatt Variablen für alle Felder zu erstellen. Auf diese
 Weise können wir einige der Felder auf bestimmte Werte testen, während wir
 Variablen zum Destrukturieren der anderen Felder erstellen.
 
-In Codeblock 18-14 haben wir einen `match`-Ausdruck, der `Point`-Werte in drei
+In Codeblock 19-14 haben wir einen `match`-Ausdruck, der `Point`-Werte in drei
 Fälle unterscheidet: Punkte, die direkt auf der `x`-Achse liegen (was zutrifft,
 wenn `y = 0`), auf der `y`-Achse liegen (`x = 0`) oder keines von beiden.
 
@@ -244,7 +244,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-14: Destrukturieren und Abgleichen literaler
+<span class="caption">Codeblock 19-14: Destrukturieren und Abgleichen literaler
 Werte in einem Muster</span>
 
 Der erste Zweig passt zu jedem Punkt, der auf der `x`-Achse liegt, indem er
@@ -272,7 +272,7 @@ Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
 6-5 in Kapitel 6), sind aber noch nicht explizit darauf eingegangen, dass das
 Muster zur Destrukturierung einer Aufzählung der Art und Weise entspricht, wie
 die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
-verwenden wir in Codeblock 18-15 die Aufzählung `Message` aus Codeblock 6-2 und
+verwenden wir in Codeblock 19-15 die Aufzählung `Message` aus Codeblock 6-2 und
 schreiben ein `match` mit Mustern, das jeden inneren Wert destrukturiert.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -303,7 +303,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-15: Destrukturieren von
+<span class="caption">Codeblock 19-15: Destrukturieren von
 Aufzählungsvarianten, die verschiedene Arten von Werten enthalten</span>
 
 Dieser Code gibt `Ändere die Farbe in rot 0, grün 160 und blau 255` aus.
@@ -319,7 +319,7 @@ Muster verwenden, das dem von uns angegebenen Muster ähnlich ist, um Strukturen
 abzugleichen. Nach dem Variantennamen setzen wir geschweifte Klammern und
 listen dann die Felder mit Variablen auf, sodass wir die Teile aufteilen, die
 im Code für diesen Zweig verwendet werden sollen. Hier verwenden wir die
-Kurznotation, wie wir es in Codeblock 18-13 getan haben.
+Kurznotation, wie wir es in Codeblock 19-13 getan haben.
 
 Bei tupelähnlichen Aufzählungsvarianten wie `Message::Write`, die ein Tupel mit
 einem Element enthält, und `Message::ChangeColor`, die ein Tupel mit drei
@@ -331,9 +331,9 @@ Elemente in der Variante, die wir abgleichen, übereinstimmen.
 
 Bis jetzt haben unsere Beispiele alle Strukturen oder Aufzählungen auf einer
 Ebene abgeglichen, aber der Abgleich funktioniert auch bei verschachtelten
-Elementen! Zum Beispiel können wir den Code in Codeblock 18-15 umstrukturieren,
+Elementen! Zum Beispiel können wir den Code in Codeblock 19-15 umstrukturieren,
 um RGB- und HSV-Farben in der `ChangeColor`-Nachricht zu unterstützen, wie in
-Codeblock 18-16 gezeigt.
+Codeblock 19-16 gezeigt.
 
 ```rust
 enum Color {
@@ -363,7 +363,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-16: Abgleich bei verschachtelten
+<span class="caption">Codeblock 19-16: Abgleich bei verschachtelten
 Aufzählungen</span>
 
 Das Muster des ersten Zweigs im `match`-Ausdruck passt zu einer
@@ -416,7 +416,7 @@ wann jedes dieser Muster zu verwenden ist.
 Wir haben den Unterstrich (`_`) als Platzhalter verwendet, der zu jedem Wert
 passt, aber nicht an den Wert gebunden ist. Dies ist besonders nützlich als
 letzter Zweig in einem `match`-Ausdruck ist, aber wir können es in jedem Muster
-verwenden, einschließlich Funktionsparameter, wie in Codeblock 18-17 gezeigt.
+verwenden, einschließlich Funktionsparameter, wie in Codeblock 19-17 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -430,7 +430,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-17: Verwenden von `_` in einer
+<span class="caption">Codeblock 19-17: Verwenden von `_` in einer
 Funktionssignatur</span>
 
 Dieser Code ignoriert den als erstes Argument übergebenen Wert `3` vollständig
@@ -450,7 +450,7 @@ warnt, wie es der Fall wäre, wenn du stattdessen einen Namen verwenden würdest
 Wir können `_` auch innerhalb eines anderen Musters verwenden, um nur einen
 Teil eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes
 testen wollen, aber keine Verwendung für die anderen Teile in dem
-entsprechenden Code haben, den wir ausführen wollen. Der Codeblock 18-18 zeigt
+entsprechenden Code haben, den wir ausführen wollen. Der Codeblock 19-18 zeigt
 den Code, der für die Verwaltung des Wertes einer Einrichtung verantwortlich
 ist. Die Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht
 erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
@@ -473,7 +473,7 @@ einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.
     println!("Einstellung ist {setting_value:?}");
 ```
 
-<span class="caption">Codeblock 18-18: Das Verwenden eines Unterstrichs
+<span class="caption">Codeblock 19-18: Das Verwenden eines Unterstrichs
 innerhalb von Mustern, die zu `Some`-Varianten passen, wenn wir den Wert
 innerhalb `Some` nicht benötigen</span>
 
@@ -491,7 +491,7 @@ werden, wollen wir erlauben, dass `setting_value` den Wert von
 `new_setting_value` erhält.
 
 Wir können Unterstriche auch an mehreren Stellen innerhalb eines Musters
-verwenden, um bestimmte Werte zu ignorieren. Codeblock 18-19 zeigt ein Beispiel
+verwenden, um bestimmte Werte zu ignorieren. Codeblock 19-19 zeigt ein Beispiel
 für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
 Elementen.
 
@@ -505,7 +505,7 @@ Elementen.
     }
 ```
 
-<span class="caption">Codeblock 18-19: Ignorieren mehrerer Teile eines
+<span class="caption">Codeblock 19-19: Ignorieren mehrerer Teile eines
 Tupels</span>
 
 Dieser Code gibt `Einige Zahlen: 2, 8, 32` aus und die Werte 4 und 16 werden
@@ -519,7 +519,7 @@ sein könnte. Aber manchmal ist es nützlich, eine Variable erstellen zu können
 die du noch nicht verwenden wirst, z.B. wenn du einen Prototyp erstellst oder
 gerade ein Projekt beginnst. In dieser Situation kannst du Rust anweisen, dich
 nicht vor der unbenutzten Variablen zu warnen, indem du den Namen der Variablen
-mit einem Unterstrich beginnst. In Codeblock 18-20 erstellen wir zwei
+mit einem Unterstrich beginnst. In Codeblock 19-20 erstellen wir zwei
 unbenutzte Variablen, aber wenn wir diesen Code kompilieren, sollten wir nur
 vor einer von ihnen eine Warnung erhalten.
 
@@ -532,7 +532,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-20: Beginnen eines Variablennamens mit einem
+<span class="caption">Codeblock 19-20: Beginnen eines Variablennamens mit einem
 Unterstrich, um Warnungen zu unbenutzten Variablen zu vermeiden</span>
 
 Hier erhalten wir eine Warnung zur unbenutzten Variablen `y`, aber wir erhalten
@@ -542,7 +542,7 @@ Beachte, dass es einen feinen Unterschied gibt zwischen dem Verwenden von `_`
 und dem Verwenden eines Namens, der mit einem Unterstrich beginnt. Die Syntax
 `_x` bindet immer noch den Wert an die Variable, während `_` überhaupt nicht
 bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
-wird uns Codeblock 18-21 einen Fehler liefern.
+wird uns Codeblock 19-21 einen Fehler liefern.
 
 ```rust,does_not_compile
     let s = Some(String::from("Hallo!"));
@@ -554,13 +554,13 @@ wird uns Codeblock 18-21 einen Fehler liefern.
     println!("{s:?}");
 ```
 
-<span class="caption">Codeblock 18-21: Eine unbenutzte Variable, die mit einem
+<span class="caption">Codeblock 19-21: Eine unbenutzte Variable, die mit einem
 Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
 Wertes übernehmen könnte</span>
 
 Wir werden einen Fehler erhalten, weil der Wert `s` immer noch in `_s`
 verschoben wird, was uns daran hindert, `s` wieder zu verwenden. Das Verwenden
-des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 18-22 wird
+des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 19-22 wird
 ohne Fehler kompilieren, weil `s` nicht in `_` verschoben wird.
 
 ```rust
@@ -573,7 +573,7 @@ ohne Fehler kompilieren, weil `s` nicht in `_` verschoben wird.
     println!("{s:?}");
 ```
 
-<span class="caption">Codeblock 18-22: Das Verwenden eines Unterstrichs bindet
+<span class="caption">Codeblock 19-22: Das Verwenden eines Unterstrichs bindet
 den Wert nicht</span>
 
 Dieser Code funktioniert prima, weil wir `s` nie an etwas binden; es wird nicht
@@ -585,7 +585,7 @@ Bei Werten, die viele Teile haben, können wir die Syntax `..` verwenden, um nur
 spezifische Teile zu verwenden und den Rest zu ignorieren, sodass es nicht
 notwendig ist, für jeden ignorierten Wert Unterstriche aufzulisten. Das Muster
 `..` ignoriert alle Teile eines Wertes, die wir im Rest des Musters nicht
-explizit zugeordnet haben. In Codeblock 18-23 haben wir eine Struktur `Point`,
+explizit zugeordnet haben. In Codeblock 19-23 haben wir eine Struktur `Point`,
 die eine Koordinate im dreidimensionalen Raum enthält. Im `match`-Ausdruck
 wollen wir nur mit der Koordinate `x` operieren und die Werte in den Feldern
 `y` und `z` ignorieren.
@@ -604,7 +604,7 @@ wollen wir nur mit der Koordinate `x` operieren und die Werte in den Feldern
     }
 ```
 
-<span class="caption">Codeblock 18-23: Ignorieren aller Felder eines `Point`
+<span class="caption">Codeblock 19-23: Ignorieren aller Felder eines `Point`
 mit Ausnahme von `x` durch Verwenden von `..`</span>
 
 Wir listen den Wert `x` auf und fügen dann einfach das Muster `..` ein. Das
@@ -612,7 +612,7 @@ geht schneller, als `y: _` und `z: _` anzugeben, insbesondere wenn wir mit
 Strukturen arbeiten, die viele Felder haben, in Situationen, in denen nur ein
 oder zwei Felder relevant sind.
 
-Die Syntax `..` wird auf so viele Werte wie nötig erweitert. Codeblock 18-24
+Die Syntax `..` wird auf so viele Werte wie nötig erweitert. Codeblock 19-24
 zeigt, wie man `..` mit einem Tupel verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -627,7 +627,7 @@ zeigt, wie man `..` mit einem Tupel verwendet.
     }
 ```
 
-<span class="caption">Codeblock 18-24: Nur den ersten und letzten Wert in einem
+<span class="caption">Codeblock 19-24: Nur den ersten und letzten Wert in einem
 Tupel abgleichen und alle anderen Werte ignorieren</span>
 
 In diesem Code werden der erste und der letzte Wert mit `first` und `last`
@@ -635,7 +635,7 @@ abgeglichen. Das `..` passt zu allem in der Mitte und ignoriert es.
 
 Das Verwenden von `..` muss jedoch eindeutig sein. Wenn unklar ist, welche
 Werte zum Abgleich vorgesehen sind und welche ignoriert werden sollten, gibt
-uns Rust einen Fehler. Codeblock 18-25 zeigt ein Beispiel für die mehrdeutige
+uns Rust einen Fehler. Codeblock 19-25 zeigt ein Beispiel für die mehrdeutige
 Verwendung von `..`, sodass es sich nicht kompilieren lässt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -652,7 +652,7 @@ Verwendung von `..`, sodass es sich nicht kompilieren lässt.
 # }
 ```
 
-<span class="caption">Codeblock 18-25: Ein Versuch, `..` auf mehrdeutige Weise
+<span class="caption">Codeblock 19-25: Ein Versuch, `..` auf mehrdeutige Weise
 zu verwenden</span>
 
 Wenn wir dieses Beispiel kompilieren, erhalten wir diesen Fehler:
@@ -689,7 +689,7 @@ wird. Abgleichsbedingungen sind nützlich, um komplexere Ideen auszudrücken, al
 es ein Muster allein erlaubt.
 
 Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
-Codeblock 18-26 zeigt ein `match`, wobei der erste Zweig das Muster `Some(x)`
+Codeblock 19-26 zeigt ein `match`, wobei der erste Zweig das Muster `Some(x)`
 und die Abgleichsbedingung `if x % 2 == 0` (die wahr ist, wenn die Zahl gerade
 ist) hat.
 
@@ -703,7 +703,7 @@ ist) hat.
     }
 ```
 
-<span class="caption">Codeblock 18-26: Hinzufügen einer Abgleichsbedingung zu
+<span class="caption">Codeblock 19-26: Hinzufügen einer Abgleichsbedingung zu
 einem Muster</span>
 
 In diesem Beispiel wird `Die Zahl 4 ist gerade` ausgegeben. Wenn `num` mit dem
@@ -723,12 +723,12 @@ anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
 Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
 Abgleichsbedingungs-Ausdrücke beteiligt sind.
 
-In Codeblock 18-11 haben wir erwähnt, dass wir zur Lösung unseres
+In Codeblock 19-11 haben wir erwähnt, dass wir zur Lösung unseres
 Musterverschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
 verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
 Musters im `match`-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
 `match` zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
-Wert der äußeren Variable testen konnten. Codeblock 18-27 zeigt, wie wir eine
+Wert der äußeren Variable testen konnten. Codeblock 19-27 zeigt, wie wir eine
 Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -746,7 +746,7 @@ Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
     println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
-<span class="caption">Codeblock 18-27: Verwenden einer Abgleichsbedingung zum
+<span class="caption">Codeblock 19-27: Verwenden einer Abgleichsbedingung zum
 Testen der Gleichheit mit einer äußeren Variablen</span>
 
 Dieser Code gibt nun `Standardfall, x = Some(5)` aus. Das Muster im zweiten
@@ -764,7 +764,7 @@ Variablen ein. Dieses `y` *ist* das äußere `y` und nicht ein neues verschattet
 
 Du kannst auch den *oder*-Operator `|` in einer Abgleichsbedingung verwenden,
 um mehrere Muster anzugeben; die Abgleichsbedingung gilt dann für alle Muster.
-Codeblock 18-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
+Codeblock 19-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
 einem Muster, das `|` verwendet. Der wichtige Teil dieses Beispiels ist, dass
 die Abgleichsbedingung `if y` auf `4`, `5` *und* `6` zutrifft, auch wenn es so
 aussehen mag, als ob `if y` nur auf `6` zutrifft.
@@ -779,7 +779,7 @@ aussehen mag, als ob `if y` nur auf `6` zutrifft.
     }
 ```
 
-<span class="caption">Codeblock 18-28: Kombinieren mehrerer Muster mit einer
+<span class="caption">Codeblock 19-28: Kombinieren mehrerer Muster mit einer
 Abgleichsbedingung</span>
 
 Die Abgleichsbedingung besagt, dass der Zweig nur dann passt, wenn der Wert von
@@ -811,7 +811,7 @@ hätte `ja` ausgegeben.
 
 Mit dem *at*-Operator `@` können wir eine Variable erstellen, die einen Wert
 enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
-zu einem Muster passt. Codeblock 18-29 zeigt ein Beispiel, bei dem wir testen
+zu einem Muster passt. Codeblock 19-29 zeigt ein Beispiel, bei dem wir testen
 wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs `3..=7`
 liegt. Wir wollen den Wert auch an die Variable `id_variable` binden, damit wir
 ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
@@ -836,7 +836,7 @@ einen anderen Namen verwenden.
     }
 ```
 
-<span class="caption">Codeblock 18-29: Verwenden von `@`, um an einen Wert in
+<span class="caption">Codeblock 19-29: Verwenden von `@`, um an einen Wert in
 einem Muster zu binden und ihn gleichzeitig zu testen</span>
 
 In diesem Beispiel wird `id im Bereich gefunden: 5` ausgegeben. Durch das

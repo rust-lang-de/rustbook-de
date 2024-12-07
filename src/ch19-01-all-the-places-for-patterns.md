@@ -54,14 +54,14 @@ kürzeren Weg verwendet, um das Äquivalent eines `match`-Ausdrucks zu schreiben
 der nur einen Fall prüft. Optional kann `if let` ein entsprechendes `else`
 haben mit Code, der ausgeführt wird, wenn das Muster in `if let` nicht passt.
 
-Codeblock 18-1 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
+Codeblock 19-1 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
 if` und `else if let` zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein `match`-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von `if let`-, `else if`- und `else if let`-Zweigen sich
 notwendigerweise aufeinander beziehen.
 
-Der Code in Codeblock 18-1 bestimmt die Farbe des Hintergrunds auf der
+Der Code in Codeblock 19-1 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.
@@ -90,7 +90,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-1: Mischen von `if let`, `else if`, `else if
+<span class="caption">Codeblock 19-1: Mischen von `if let`, `else if`, `else if
 let` und `else`</span>
 
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
@@ -120,39 +120,43 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 
 ### `while let`-bedingte Schleifen
 
-Ähnlich konstruiert wie `if let` erlaubt die `while let`-bedingte Schleife,
-dass eine `while`-Schleife so lange läuft, wie ein Muster weiterhin passt. In
-Codeblock 18-2 haben wir eine `while let`-Schleife geschrieben, die einen
-Vektor als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
-Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.
+Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
+`while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Wir
+haben eine `while let`-Schleife zum ersten Mal in Kapitel 17 gesehen, wo wir
+sie dafür benutzt haben, eine Schleife so lange laufen zu lassen, wie ein
+Datenstrom neue Werte produziert. Auf ähnliche Weise zeigen wir in Codeblock
+19-2 eine `while let`-Schleife, die auf Nachrichten wartet, die zwischen
+Strängen gesendet werden. In aktuellen Fall prüfen wir ein `Result` statt einer
+einer `Option`.
 
 ```rust
-    let mut stack = Vec::new();
+    let (tx, rx) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        for val in [1, 2, 3] {
+            tx.send(val).unwrap();
+        }
+    });
 
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-
-    while let Some(top) = stack.pop() {
-        println!("{top}");
+    while let Ok(value) = rx.recv() {
+        println!("{value}");
     }
 ```
 
-<span class="caption">Codeblock 18-2: Das Verwenden einer `while let`-Schleife,
-um Werte so lange auszugeben, wie `stack.pop()` ein `Some` zurückgibt</span>
+<span class="caption">Codeblock 19-2: Das Verwenden einer `while let`-Schleife,
+um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
-Dieses Beispiel gibt 3, 2 und 1 aus. Die `pop`-Methode nimmt das letzte Element
-aus dem Vektor und gibt `Some(value)` zurück. Wenn der Vektor leer ist, gibt
-`pop` den Wert `None` zurück. Die `while`-Schleife führt den Code in ihrem
-Block so lange aus, wie `pop` ein `Some` zurückgibt. Wenn `pop` den Wert `None`
-zurückgibt, stoppt die Schleife. Wir können `while let` benutzen, um jedes
-Element von unserem Stapel zu holen.
+Dieses Beispiel gibt 1, 2 und 3 aus. Als wir `recv` in Kapitel 16 gesehen
+haben, haben wir den Fehler direkt ausgepackt oder mit ihm als Iterator in
+einer `for`-Schleife interagiert. Wie Codeblock 19-2 zeigt, können wir aber
+auch `while let` verwenden, da die Methode `recv` den Wert `Ok` zurückgibt,
+solange der Absender Nachrichten produziert, und schließlich `Err` zurückgibt,
+sobald die Absenderseite die Verbindung trennt.
 
 ### `for`-Schleifen
 
 In einer `for`-Schleife ist der Wert, der direkt auf das Schlüsselwort `for`
 folgt, ein Muster. Zum Beispiel ist in `for x in y` das `x` das Muster.
-Codeblock 18-3 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
+Codeblock 19-3 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
 ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
@@ -163,10 +167,10 @@ ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
     }
 ```
 
-<span class="caption">Codeblock 18-3: Verwenden eines Musters in einer
+<span class="caption">Codeblock 19-3: Verwenden eines Musters in einer
 `for`-Schleife zum Destrukturieren eines Tupels</span>
 
-Der Code in Codeblock 18-3 wird Folgendes ausgeben:
+Der Code in Codeblock 19-3 wird Folgendes ausgeben:
 
 ```console
 $ cargo run
@@ -212,14 +216,14 @@ bedeutet dieses Muster effektiv „Binde alles an die Variable `x`, was auch
 immer der Wert ist.“.
 
 Um den Aspekt des Musterabgleichs (pattern matching) von `let` deutlicher zu
-sehen, betrachte Codeblock 18-4, der ein Muster mit `let` verwendet, um ein
+sehen, betrachte Codeblock 19-4, der ein Muster mit `let` verwendet, um ein
 Tupel zu destrukturieren.
 
 ```rust
     let (x, y, z) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 18-4: Verwenden eines Musters zum
+<span class="caption">Codeblock 19-4: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span>
 
@@ -231,7 +235,7 @@ vorstellen.
 
 Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
-Kompilierfehler. Beispielsweise zeigt Codeblock 18-5 einen Versuch, ein Tupel
+Kompilierfehler. Beispielsweise zeigt Codeblock 19-5 einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.
 
@@ -239,7 +243,7 @@ funktioniert.
     let (x, y) = (1, 2, 3);
 ```
 
-<span class="caption">Codeblock 18-5: Fehlerhaft aufgebautes Musters, dessen
+<span class="caption">Codeblock 19-5: Fehlerhaft aufgebautes Musters, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
 
 Der Versuch, diesen Code zu kompilieren, führt zu diesem Typfehler:
@@ -271,7 +275,7 @@ sodass die Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
 
 ### Funktionsparameter
 
-Funktionsparameter können auch Muster sein. Der Code in Codeblock 18-6, der
+Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
 eine Funktion namens `foo` deklariert, die einen Parameter namens `x` vom Typ
 `i32` benötigt, sollte inzwischen bekannt aussehen.
 
@@ -283,11 +287,11 @@ fn foo(x: i32) {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 18-6: Eine Funktionssignatur verwendet Muster
+<span class="caption">Codeblock 19-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span>
 
 Der Teil `x` ist ein Muster! Wie wir es mit `let` taten, konnten wir ein Tupel
-in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 18-7 teilt die
+in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -303,7 +307,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 18-7: Eine Funktion mit Parametern, die ein
+<span class="caption">Codeblock 19-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span>
 
 Dieser Code gibt `Aktuelle Position: (3, 5)` aus. Die Werte `&(3, 5)` passen
@@ -319,5 +323,4 @@ verwenden können, gleich. An manchen Stellen müssen die Muster unabweisbar
 (irrefutable) sein, unter anderen Umständen können sie abweisbar (refutable)
 sein. Wir werden diese beiden Konzepte als Nächstes besprechen.
 
-[ignoring-values-in-a-pattern]:
-ch18-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster
+[ignoring-values-in-a-pattern]: ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster
