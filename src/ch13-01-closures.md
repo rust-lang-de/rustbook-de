@@ -196,7 +196,7 @@ wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.
 # }
 ```
 
-<span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
+<span class="caption">Codeblock 13-2: Hinzufügen optionaler Datentypangabe der
 Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
 
 Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
@@ -614,7 +614,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
+<span class="caption">Codeblock 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
 mit `sort_by_key` zu verwenden</span>
 
 Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
@@ -685,7 +685,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 13-9: Verwenden eines
+<span class="caption">Codeblock 13-9: Verwenden eines
 `FnMut`-Funktionsabschlusses mit `sort_by_key` ist erlaubt</span>
 
 Die `Fn`-Merkmale sind wichtig bei der Definition oder Verwendung von

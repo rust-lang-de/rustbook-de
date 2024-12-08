@@ -129,7 +129,7 @@ zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.
 Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
 Kapitel 19 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
 und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
-der Musterteile in Listing 20-28 betrachten; die vollständige Makromustersyntax
+der Musterteile in Codeblock 20-28 betrachten; die vollständige Makromustersyntax
 findest du in [der Rust-Referenz][macro-reference].
 
 Zunächst verwenden wir ein äußeres Klammernpaar, um das gesamte Muster zu
