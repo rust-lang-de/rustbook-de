@@ -128,7 +128,7 @@ die gleiche Idee auszudrücken; wenn wir `|` verwenden wollten, müssten wir `1 
 wenn wir beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben
 wollen!
 
-Der prüft Compiler zur Kompilierzeit, dass der Bereich nicht leer ist. Die
+Der Compiler prüft zur Kompilierzeit, dass der Bereich nicht leer ist. Die
 einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
 nicht, sind `char` und numerische Werte, Bereiche sind nur mit numerischen oder
 `char`-Werten zulässig.
