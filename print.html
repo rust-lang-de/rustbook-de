@@ -22806,7 +22806,7 @@ impl State for Published {
 <p><span class="caption">Codeblock 17-16: Implementierung der Methode <code>approve</code>
 bei <code>Post</code> und des Merkmals <code>State</code></span></p>
 <p>Wir fügen die Methode <code>approve</code> zum Merkmal <code>State</code> hinzu und fügen eine neue
-Struktur <code>State</code> hinzu, die den Zustand <code>Published</code> implementiert.</p>
+Struktur <code>Published</code> hinzu, die den Zustand <code>Published</code> implementiert.</p>
 <p>Ähnlich wie <code>request_review</code> bei <code>PendingReview</code> funktioniert, hat der Aufruf
 der Methode <code>approve</code> bei einem <code>Draft</code> keine Wirkung, weil <code>approve</code> den Wert
 <code>self</code> zurückgibt. Wenn wir die Methode <code>approve</code> bei <code>PendingReview</code> aufrufen,
@@ -23825,7 +23825,7 @@ bequemer bei mehreren Abgleichswerten als das Verwenden des <code>|</code>-Opera
 die gleiche Idee auszudrücken; wenn wir <code>|</code> verwenden wollten, müssten wir <code>1 | 2 | 3 | 4 | 5</code> angeben. Die Angabe eines Bereichs ist viel kürzer, besonders
 wenn wir beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben
 wollen!</p>
-<p>Der prüft Compiler zur Kompilierzeit, dass der Bereich nicht leer ist. Die
+<p>Der Compiler prüft zur Kompilierzeit, dass der Bereich nicht leer ist. Die
 einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
 nicht, sind <code>char</code> und numerische Werte, Bereiche sind nur mit numerischen oder
 <code>char</code>-Werten zulässig.</p>
