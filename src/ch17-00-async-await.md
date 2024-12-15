@@ -60,12 +60,13 @@ sie verarbeiten, vollständig verfügbar sind.
 > Programm davon profitieren würde, wenn die Operation *nicht* blockierend
 > wäre.
 
-Wir könnten das Blockieren unseres Haupt-Strangs vermeiden, indem wir für das
-Herunterladen jeder Datei einen eigenen Strang starten. Allerdings würden wir
-irgendwann feststellen, dass der Overhead dieser Stränge ein Problem darstellt.
-Es wäre auch besser, wenn der Aufruf gar nicht erst blockiert würde. Und nicht
-zuletzt wäre es besser, wenn wir in demselben direkten Stil schreiben könnten,
-den wir bei blockierendem Code verwenden. So ähnlich wie hier:
+Wir könnten das Blockieren unseres Haupt-Strangs (main thread) vermeiden, indem
+wir für das Herunterladen jeder Datei einen eigenen Strang (thread) starten.
+Allerdings würden wir irgendwann feststellen, dass der Overhead dieser Stränge
+ein Problem darstellt. Es wäre auch besser, wenn der Aufruf gar nicht erst
+blockiert würde. Und nicht zuletzt wäre es besser, wenn wir in demselben
+direkten Stil schreiben könnten, den wir bei blockierendem Code verwenden. So
+ähnlich wie hier:
 
 ```rust,ignore,does_not_compile
 let data = fetch_data_from(url).await;

@@ -432,10 +432,6 @@ die von der Befehlszeile übergeben werden, und diese miteinander vergleichen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-
-
-<Listing number="17-5" caption="" file-name="src/main.rs">
-
 ```rust,should_panic,noplayground
 # extern crate trpl;
 #
