@@ -68,7 +68,7 @@ Abkürzungen `tx` und `rx` werden traditionell in vielen Feldern für *Sender*
 Variablen als solche, um jedes Ende anzugeben. Wir verwenden eine
 `let`-Anweisung mit einem Muster, das die Tupel destrukturiert; wir werden die
 Verwendung von Mustern in `let`-Anweisungen und die Destrukturierung in Kapitel
-18 besprechen. Für den Moment solltest du wissen, dass die Verwendung einer
+19 besprechen. Für den Moment solltest du wissen, dass die Verwendung einer
 `let`-Anweisung auf diese Weise ein bequemer Ansatz ist, um die Teile des
 Tupels zu extrahieren, die von `mpsc::channel` zurückgegeben werden.
 
