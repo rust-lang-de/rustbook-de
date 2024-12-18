@@ -29,9 +29,10 @@ $ cd add
 Als Nächstes erstellen wir im Verzeichnis *add* die Datei *Cargo.toml*, mit der
 der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
 Abschnitt `[package]`. Stattdessen beginnt sie mit einem Abschnitt
-`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können,
-indem wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall
-lautet dieser Pfad *adder*:
+`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
+stellen außerdem sicher, dass wir die neueste und beste Version des
+Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
+`resolver` auf `"2"` setzen.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 

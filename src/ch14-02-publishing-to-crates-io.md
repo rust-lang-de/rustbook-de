@@ -88,7 +88,7 @@ verwenden:
   Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
   unterschiedliche Art behandelt.
 * **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
-  behandeln die Unsicherheit im Kapitel 19), sollte ein Abschnitt existieren,
+  behandeln die Unsicherheit im Kapitel 20), sollte ein Abschnitt existieren,
   in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
   behandelt werden die die Funktion vom Aufrufenden erwartet.
 
