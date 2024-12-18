@@ -43,7 +43,7 @@ gelernt hast:
 
 Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
 Merkmalsobjekte (trait objects) vorstellen, die in den [Kapitel 13][chap13]
-und [Kapitel 17][chap17] ausführlich behandelt werden.
+und [Kapitel 18][chap18] ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [chap8]: ch08-00-common-collections.html
@@ -51,4 +51,4 @@ und [Kapitel 17][chap17] ausführlich behandelt werden.
 [chap10]: ch10-00-generics.html
 [chap11]: ch11-00-testing.html
 [chap13]: ch13-00-functional-features.html
-[chap17]: ch17-00-oop.html
+[chap18]: ch18-00-oop.html

@@ -723,7 +723,7 @@ Rückgabewert im Fall `Ok` bei.
 Für den Fehlertyp haben wir das *Merkmalsobjekt* (trait object) `Box<dyn
 Error>` verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung
 am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-[Kapitel 17][ch17] behandeln. Für den Moment solltest du nur wissen, dass
+[Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
 `Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
@@ -969,7 +969,7 @@ dem alten Code schwierig gewesen wäre, mit dem neuen Code aber einfach ist: Wir
 schreiben ein paar Tests!
 
 [ch13]: ch13-00-functional-features.html
-[ch17]: ch17-00-oop.html
+[ch18]: ch18-00-oop.html
 [ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung
 [ch9-result]: ch09-02-recoverable-errors-with-result.html
