@@ -29,10 +29,10 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die verwiesen wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-*Merkmalsobjekt* (trait object) bekannt, und Kapitel 17 widmet einen ganzen
+*Merkmalsobjekt* (trait object) bekannt, und Kapitel 18 widmet einen ganzen
 Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“][trait-objects] diesem Thema. Was du hier lernst, wirst du im Kapitel
-17 erneut anwenden!
+18 erneut anwenden!
 
 ### `Box<T>` verwenden um Daten im Haldenspeicher zu speichern
 
@@ -323,7 +323,7 @@ intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
 Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
 ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
 Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
-Anwendungsfälle für Boxen werden wir uns in Kapitel 17 ansehen.
+Anwendungsfälle für Boxen werden wir uns in Kapitel 18 ansehen.
 
 Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
 implementiert, mit dem `Box<T>` Werte wie Referenzen behandelt werden können.
@@ -334,4 +334,4 @@ Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
 Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
 untersuchen.
 
-[trait-objects]: ch17-02-trait-objects.html
+[trait-objects]: ch18-02-trait-objects.html

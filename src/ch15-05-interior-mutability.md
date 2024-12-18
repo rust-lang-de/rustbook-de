@@ -8,7 +8,7 @@ Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
 Rusts übliche Regeln, die Veränderbarkeit und Ausleihen betreffen, zu
 verändern. Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell
 überprüfen, anstatt uns darauf zu verlassen, dass der Compiler sie für uns
-überprüft; wir werden unsicheren Code in Kapitel 19 genauer besprechen.
+überprüft; wir werden unsicheren Code in Kapitel 20 genauer besprechen.
 
 Wir können Typen verwenden, die das innere Veränderbarkeitsmuster verwenden,
 wenn wir sicherstellen können, dass die Ausleihregeln zur Laufzeit eingehalten
