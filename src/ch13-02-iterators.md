@@ -75,7 +75,7 @@ pub trait Iterator {
 ```
 Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
 `Self::Item` die einen *zugeordneten Typ* (associated type) mit diesem Merkmal 
-definieren. Wir werden zugeordnete Typen im Kapitel 19 besprechen. Im Moment
+definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des `Iterator`-Merkmals erfordert, dass du auch einen `Item`-Typ definierst und
 dieser `Item`-Typ im Rückgabetyp der `next`-Methode benutzt wird. Mit anderen
