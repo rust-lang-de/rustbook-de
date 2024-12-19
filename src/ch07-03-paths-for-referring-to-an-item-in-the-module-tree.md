@@ -30,7 +30,7 @@ kompiliert. Wir werden gleich erklären, warum.
 Die Funktion `eat_at_restaurant` ist Teil der öffentlichen
 Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
 sie mit dem Schlüsselwort `pub`. Im Abschnitt [„Pfade mit dem Schlüsselwort
-`pub` öffnen“][pub] gehen wir näher auf `pub` ein.
+`pub` öffentlich machen“][pub] gehen wir näher auf `pub` ein.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

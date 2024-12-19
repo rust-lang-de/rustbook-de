@@ -7,7 +7,7 @@ beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
 fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
 den Vorgang zu beenden.
 
-Erinnere dich an [„Behandeln potentieller Fehler mit dem Typ
+Erinnere dich an [„Behandeln potentieller Fehler mit
 `Result`“][handle_failure] in Kapitel 2, das die Aufzählung `Result` mit zwei
 Varianten `Ok` und `Err` definiert, wie nachfolgend zu sehen ist:
 

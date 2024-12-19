@@ -179,7 +179,7 @@ Element außerhalb des Bereichs der Vektorindizes anzufordern. Wenn dein Code in
 Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit
 welchen Werten abbricht und was der Code stattdessen tun sollte.
 
-In Abschnitt [„Wann `panic!` verwenden und wann
+In Abschnitt [„Wann `panic!` aufrufen und wann
 nicht?“][to-panic-or-not-to-panic] später in diesem Kapitel kommen wir noch
 einmal auf `panic!` zurück und wann wir `panic!` verwenden sollten und wann
 nicht, um Fehlerfälle zu behandeln. Als Nächstes schauen wir uns an, wie man
