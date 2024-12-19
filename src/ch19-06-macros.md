@@ -59,12 +59,12 @@ ihrem Kern erlauben deklarative Makros, etwas Ähnliches wie einen Rust-Ausdruck
 zu schreiben. Wie in Kapitel 6 besprochen, sind `match`-Ausdrücke
 Kontrollstrukturen, die einen Ausdruck entgegennehmen, den resultierenden Wert
 des Ausdrucks mit Mustern abgleichen und dann den Code ausführen, der mit dem
-passenden Muster verknüpft ist. Makros vergleichen ebenfalls einen Wert mit
-Mustern, die mit einem bestimmten Code verknüpft sind: In diesem Fall ist
-der Wert der literale Rust-Quellcode, der an das Makro übergeben wird; die
-Muster werden mit der Struktur dieses Quellcodes verglichen; und der mit jedem
-Muster verknüpfte Code ersetzt, wenn er passt, den an das Makro übergebenen
-Code. Dies alles geschieht während der Kompilierung.
+passenden Muster verknüpft ist. Deklarative Makros vergleichen ebenfalls einen
+Wert mit Mustern, die mit einem bestimmten Code verknüpft sind. Bei deklarativen
+Makros ist der Wert der dem Makro übergebene literale Rust-Quellcode. Die Muster
+werden mit der Struktur dieses Quellcodes verglichen. Bei Übereinstimmung ersetzt
+der mit dem Muster verknüpfte Code den an das Makro übergebenen Code. Dies alles
+geschieht während der Kompilierung.
 
 Um ein Makro zu definieren, verwendest du das Konstrukt `macro_rules!`. Lass
 uns untersuchen, wie man `macro_rules!` benutzt, indem wir uns ansehen, wie das
