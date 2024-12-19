@@ -458,7 +458,7 @@ impl State for Published {
 bei `Post` und des Merkmals `State`</span>
 
 Wir fügen die Methode `approve` zum Merkmal `State` hinzu und fügen eine neue
-Struktur `State` hinzu, die den Zustand `Published` implementiert.
+Struktur `Published` hinzu, die den Zustand `Published` implementiert.
 
 Ähnlich wie `request_review` bei `PendingReview` funktioniert, hat der Aufruf
 der Methode `approve` bei einem `Draft` keine Wirkung, weil `approve` den Wert

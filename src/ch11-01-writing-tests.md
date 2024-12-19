@@ -1119,20 +1119,25 @@ der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet
 und `Err` zurückgibt, anstatt das Programm abzubrechen:
 
 ```rust,noplayground
-# #![allow(unused_variables)]
-# fn main() {}
+# pub fn add(left: usize, right: usize) -> usize {
+#     left + right
+# }
 #
-#[cfg(test)]
-mod tests {
+# #[cfg(test)]
+# mod tests {
+#     use super::*;
+#
     #[test]
     fn it_works() -> Result<(), String> {
-        if 2 + 2 == 4 {
+        let result = add(2, 2);
+
+        if result == 4 {
             Ok(())
         } else {
             Err(String::from("zwei plus zwei ist nicht gleich vier"))
         }
     }
-}
+# }
 ```
 
 Die Funktion `it_works` hat jetzt den Rückgabetyp `Result<(), String>`. Anstatt
