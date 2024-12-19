@@ -63,7 +63,7 @@ passenden Muster verknüpft ist. Makros vergleichen ebenfalls einen Wert mit
 Mustern, die mit einem bestimmten Code verknüpft sind: In diesem Fall ist
 der Wert der literale Rust-Quellcode, der an das Makro übergeben wird; die
 Muster werden mit der Struktur dieses Quellcodes verglichen; und der mit jedem
-Muster verküpften Code ersetzt, wenn er passt, den an das Makro übergebenen
+Muster verknüpfte Code ersetzt, wenn er passt, den an das Makro übergebenen
 Code. Dies alles geschieht während der Kompilierung.
 
 Um ein Makro zu definieren, verwendest du das Konstrukt `macro_rules!`. Lass
