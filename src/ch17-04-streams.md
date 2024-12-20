@@ -648,7 +648,7 @@ werden die Meldungen des englischen Alphabets inmitten all der
 Intervallzähler-Meldungen begraben sein:
 
 ```text
---snip--
+--abschneiden--
 Intervall: 38
 Intervall: 39
 Intervall: 40
@@ -656,7 +656,7 @@ Nachricht: 'a'
 Intervall: 41
 Intervall: 42
 Intervall: 43
---snip--
+--abschneiden--
 ```
 
 Codeblock 17-39 zeigt eine Möglichkeit, diese beiden letzten Probleme zu lösen.

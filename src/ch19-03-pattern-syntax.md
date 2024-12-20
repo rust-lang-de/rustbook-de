@@ -295,10 +295,12 @@ fn main() {
         Message::Move { x, y } => {
             println!("Bewege in x-Richtung {x} und in y-Richtung {y}");
         }
-        Message::Write(text) => println!("Textnachricht: {text}"),
-        Message::ChangeColor(r, g, b) => println!(
-            "Ändere die Farbe in rot {r}, grün {g} und blau {b}"
-        ),
+        Message::Write(text) => {
+            println!("Textnachricht: {text}");
+        }
+        Message::ChangeColor(r, g, b) => {
+            println!("Ändere die Farbe in rot {r}, grün {g} und blau {b}");
+        }
     }
 }
 ```

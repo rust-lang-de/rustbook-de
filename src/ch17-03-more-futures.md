@@ -786,13 +786,13 @@ Wenn du dies ausführst, erhältst du diese Ausgabe:
 
 ```text
 'a' gestartet.
-'a' ran for 30ms
-'a' ran for 10ms
-'a' ran for 20ms
+'a' ist für 30ms gelaufen
+'a' ist für 10ms gelaufen
+'a' ist für 20ms gelaufen
 'b' gestartet.
-'b' ran for 75ms
-'b' ran for 10ms
-'b' ran for 15ms
+'b' ist für 75ms gelaufen
+'b' ist für 10ms gelaufen
+'b' ist für 15ms gelaufen
 'b' ist für 350ms gelaufen
 'a' beendet.
 ```
@@ -1129,27 +1129,27 @@ stattdessen `Err(max_time)` zurück.
 use trpl::Either;
 
 // --abschneiden--
-#
-# fn main() {
-#     trpl::run(async {
-#         let slow = async {
-#             trpl::sleep(Duration::from_secs(5)).await;
-#             "Bin fertig"
-#         };
-#
-#         match timeout(slow, Duration::from_secs(2)).await {
-#             Ok(message) => println!("Erfolgreich mit '{message}'"),
-#             Err(duration) => {
-#                 println!("Fehlgeschlagen nach {} Sekunden", duration.as_secs())
-#             }
-#         }
-#     });
-# }
-#
-# async fn timeout<F: Future>(
-#     future_to_try: F,
-#     max_time: Duration,
-# ) -> Result<F::Output, Duration> {
+
+fn main() {
+    trpl::run(async {
+        let slow = async {
+            trpl::sleep(Duration::from_secs(5)).await;
+            "Bin fertig"
+        };
+
+        match timeout(slow, Duration::from_secs(2)).await {
+            Ok(message) => println!("Erfolgreich mit '{message}'"),
+            Err(duration) => {
+                println!("Fehlgeschlagen nach {} Sekunden", duration.as_secs())
+            }
+        }
+    });
+}
+
+async fn timeout<F: Future>(
+    future_to_try: F,
+    max_time: Duration,
+) -> Result<F::Output, Duration> {
     match trpl::race(future_to_try, trpl::sleep(max_time)).await {
         Either::Left(output) => Ok(output),
         Either::Right(_) => Err(max_time),

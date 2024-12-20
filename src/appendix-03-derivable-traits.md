@@ -39,7 +39,7 @@ Die Liste der ableitbaren Merkmale in diesem Anhang ist nicht vollständig:
 Bibliotheken können `derive` für ihre eigenen Merkmale implementieren, sodass
 die Liste der Merkmale, die du mit `derive` verwenden kannst, wahrlich
 unbegrenzt ist. Das Implementieren von `derive` verwendet ein prozedurales
-Makro, das im Abschnitt [„Makros“][macros] in Kapitel 19 behandelt wird.
+Makro, das im Abschnitt [„Makros“][macros] in Kapitel 20 behandelt wird.
 
 ### `Debug` für die Programmierer-Ausgabe
 
@@ -197,10 +197,8 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `None` hat, gibt die Methode `unwrap_or_default` das Ergebnis von
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
-[creating-instances-from-other-instances-with-struct-update-syntax]:
-ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
-[macros]: ch19-06-macros.html
+[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
+[macros]: ch20-06-macros.html
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
-[ways-variables-and-data-interact-clone]:
-ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone
+[ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

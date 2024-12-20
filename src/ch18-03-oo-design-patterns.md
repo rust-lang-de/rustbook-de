@@ -699,7 +699,7 @@ das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten `Post` verstreut.
 
-> #### Warum nicht eine Aufzählung?
+> #### Warum keine Aufzählung?
 >
 > Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
 > verschiedenen möglichen Poststatus als Varianten verwendet haben. Das ist

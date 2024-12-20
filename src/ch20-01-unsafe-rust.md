@@ -487,7 +487,7 @@ unsafe extern "C" {
 }
 
 fn main() {
-    println!("Absolute value of -3 according to C: {}", abs(-3));
+    rintln!("Absolutwert von -3 gemäß C: {}", abs(-3));
 }
 ```
 
@@ -553,14 +553,13 @@ fn main() {
 <span class="caption">Codeblock 20-10: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span>
 
-Statische Variablen ähneln Konstanten, die wir im Abschnitt [„Unterschiede
-zwischen Variablen und Konstanten“][differences-between-variables-and-constants]
-in Kapitel 3 besprochen haben. Die Namen von statischen Variablen stehen per
-Konvention in `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur
-Referenzen mit der Lebensdauer `'static` speichern, was bedeutet, dass der
-Rust-Compiler die Lebensdauer herausfinden kann, und wir brauchen sie nicht
-explizit anzugeben. Der Zugriff auf eine unveränderbare, statische Variable
-ist sicher.
+Statische Variablen ähneln Konstanten, die wir im Abschnitt
+[„Konstanten“][differences-between-variables-and-constants] in Kapitel 3
+besprochen haben. Die Namen von statischen Variablen stehen per Konvention in
+`SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur Referenzen mit
+der Lebensdauer `'static` speichern, was bedeutet, dass der Rust-Compiler die
+Lebensdauer herausfinden kann, und wir brauchen sie nicht explizit anzugeben.
+Der Zugriff auf eine unveränderbare, statische Variable ist sicher.
 
 Ein feiner Unterschied zwischen Konstanten und unveränderbaren, statischen
 Variablen besteht darin, dass Werte in einer statischen Variable eine feste
