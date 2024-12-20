@@ -27,7 +27,7 @@ beabsichtigten Verhalten des Codes.
 
 Betrachten wir ein Beispiel dafür, was passiert, wenn wir versuchen, ein
 abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert und
-umgekehrt. Codeblock 18-8 zeigt eine `let`-Anweisung, allerdings haben wir für
+umgekehrt. Codeblock 19-8 zeigt eine `let`-Anweisung, allerdings haben wir für
 das Muster `Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.
 
@@ -38,7 +38,7 @@ lässt sich dieser Code nicht kompilieren.
 # }
 ```
 
-<span class="caption">Codeblock 18-8: Versuch, ein abweisbares Muster mit `let`
+<span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit `let`
 zu verwenden</span>
 
 Wenn `some_option_value` ein `None`-Wert wäre, würde er nicht zum Muster
@@ -58,7 +58,7 @@ error[E0005]: refutable pattern in local binding
   |         ^^^^^^^ pattern `None` not covered
   |
   = note: `let` bindings require an "irrefutable pattern", like a `struct` or an `enum` with only one variant
-  = note: for more information, visit https://doc.rust-lang.org/book/ch18-02-refutability.html
+  = note: for more information, visit https://doc.rust-lang.org/book/ch19-02-refutability.html
   = note: the matched value is of type `Option<i32>`
 help: you might want to use `let else` to handle the variant that isn't matched
   |
@@ -76,8 +76,8 @@ Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`
 zu verwenden, können wir `if let` verwenden. Wenn das Muster dann nicht passt,
 überspringt der Code einfach den Code in den geschweiften Klammern und gibt ihm
-die Möglichkeit, gültig fortzufahren. Codeblock 18-9 zeigt, wie der Code in
-Codeblock 18-8 zu korrigieren ist.
+die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der Code in
+Codeblock 19-8 zu korrigieren ist.
 
 ```rust
 # fn main() {
@@ -88,12 +88,12 @@ Codeblock 18-8 zu korrigieren ist.
 # }
 ```
 
-<span class="caption">Codeblock 18-9: Verwenden von `if let` und eines Blocks
+<span class="caption">Codeblock 19-9: Verwenden von `if let` und eines Blocks
 mit abweisbaren Mustern anstelle von `let`</span>
 
 Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
 `if let` allerdings ein unabweisbares Muster geben, das immer passt, z.B. `x`,
-wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.
+wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.
 
 ```rust
 # fn main() {
@@ -103,7 +103,7 @@ wie in Codeblock 18-10 gezeigt, gibt der Compiler eine Warnung aus.
 # }
 ```
 
-<span class="caption">Codeblock 18-10: Der Versuch, ein unabweisbares Muster
+<span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster
 mit `if let` zu verwenden</span>
 
 Rust beklagt, dass es keinen Sinn macht, `if let` mit einem unabweisbaren
@@ -123,7 +123,7 @@ warning: irrefutable `if let` pattern
   = note: `#[warn(irrefutable_let_patterns)]` on by default
 
 warning: `patterns` (bin "patterns") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.39s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.39s
      Running `target/debug/patterns`
 5
 ```

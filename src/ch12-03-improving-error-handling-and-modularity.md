@@ -314,7 +314,7 @@ Argumente laufen zu lassen; es wird so aussehen:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:27:21:
 index out of bounds: the len is 1 but the index is 1
@@ -392,7 +392,7 @@ ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:26:13:
 Nicht genügend Argumente
@@ -568,7 +568,7 @@ mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:
 ```console
 $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/minigrep`
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
 ```
@@ -723,7 +723,7 @@ Rückgabewert im Fall `Ok` bei.
 Für den Fehlertyp haben wir das *Merkmalsobjekt* (trait object) `Box<dyn
 Error>` verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung
 am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-[Kapitel 17][ch17] behandeln. Für den Moment solltest du nur wissen, dass
+[Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
 `Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
@@ -763,7 +763,7 @@ help: use `let _ = ...` to ignore the resulting value
    |     +++++++
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.71s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
@@ -969,7 +969,7 @@ dem alten Code schwierig gewesen wäre, mit dem neuen Code aber einfach ist: Wir
 schreiben ein paar Tests!
 
 [ch13]: ch13-00-functional-features.html
-[ch17]: ch17-00-oop.html
+[ch18]: ch18-00-oop.html
 [ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung
 [ch9-result]: ch09-02-recoverable-errors-with-result.html

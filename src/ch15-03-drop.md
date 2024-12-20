@@ -80,7 +80,7 @@ Wenn wir das Programm ausführen, erhalten wir folgende Ausgabe:
 ```console
 $ cargo run
    Compiling drop-example v0.1.0 (file:///projects/drop-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.60s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.60s
      Running `target/debug/drop-example`
 CustomSmartPointers erzeugt.
 CustomSmartPointer mit Daten aufräumen: `andere Sachen`!
@@ -213,7 +213,7 @@ Wenn wir den Programmcode aufrufen, wird folgendes ausgegeben:
 ```console
 $ cargo run
    Compiling drop-example v0.1.0 (file:///projects/drop-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.73s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/drop-example`
 CustomSmartPointer erzeugt.
 CustomSmartPointer mit Daten aufräumen: `Daten`!

@@ -26,7 +26,7 @@ Ein Beispiel für ein Merkmal mit einem assoziierten Typ ist das Merkmal
 `Iterator`, das die Standardbibliothek zur Verfügung stellt. Der assoziierte
 Typ wird `Item` genannt und steht für den Typ der Werte, über die der Typ, der
 das Merkmal `Iterator` implementiert, iteriert. Die Definition des Merkmals
-`Iterator` ist in Codeblock 19-12 zu sehen.
+`Iterator` ist in Codeblock 20-13 zu sehen.
 
 ```rust
 pub trait Iterator {
@@ -36,7 +36,7 @@ pub trait Iterator {
 }
 ```
 
-<span class="caption">Codeblock 19-12: Definition des Merkmals `Iterator`, das
+<span class="caption">Codeblock 20-13: Definition des Merkmals `Iterator`, das
 einen assoziierten Typ `Item` hat</span>
 
 Der Typ `Item` ist ein Platzhalter und die Definition der Methode `next` zeigt,
@@ -81,7 +81,7 @@ impl Iterator for Counter {
 
 Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Merkmal `Iterator` mit generischen Datentypen
-definieren, wie in Codeblock 19-13 gezeigt?
+definieren, wie in Codeblock 20-14 gezeigt?
 
 ```rust
 pub trait Iterator<T> {
@@ -89,11 +89,11 @@ pub trait Iterator<T> {
 }
 ```
 
-<span class="caption">Codeblock 19-13: Eine hypothetische Definition des
+<span class="caption">Codeblock 20-14: Eine hypothetische Definition des
 Merkmals `Iterator` unter Verwendung eines generischen Datentyps</span>
 
 Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
-Codeblock 19-13, die Typen in jeder Implementierung annotieren müssen; da wir
+Codeblock 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
 auch `Iterator<String> for Counter` oder jeden anderen Typ implementieren
 können, könnten wir mehrere Implementierungen von `Iterator` für `Counter`
 haben. Mit anderen Worten, wenn ein Merkmal einen generischen Parameter hat,
@@ -104,7 +104,7 @@ bereitstellen, um anzugeben, welche Implementierung des `Iterators` wir
 verwenden wollen.
 
 Bei assoziierten Typen brauchen wir Typen nicht zu annotieren, weil wir ein
-Merkmal auf einem Typ nicht mehrfach implementieren können. In Codeblock 19-12
+Merkmal auf einem Typ nicht mehrfach implementieren können. In Codeblock 20-13
 mit der Definition, die assoziierte Typen verwendet, können wir nur einmal
 wählen, was der Typ von `Item` sein wird, weil es nur einen `impl Iterator for
 Counter` geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
@@ -132,7 +132,7 @@ Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
 Operatoren zu überladen. Aber du kannst die in `std::ops` aufgeführten
 Operationen und entsprechenden Merkmale überladen, indem du die mit dem
 Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
-Codeblock 19-14 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir
+Codeblock 20-15 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir
 tun dies, indem wir das Merkmal `Add` auf eine `Point`-Struktur implementieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -165,7 +165,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-14: Implementieren des Merkmals `Add`, um
+<span class="caption">Codeblock 20-15: Implementieren des Merkmals `Add`, um
 den Operator `+` für `Point`-Instanzen zu überladen</span>
 
 Die Methode `add` addiert die `x`-Werte zweier `Point`-Instanzen und die
@@ -205,7 +205,7 @@ Abschnitt [„Verwenden des Newtype-Musters zum Implementieren von externen
 Merkmalen auf externen Typen“][newtype] ausführlicher beschreiben. Wir wollen
 Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
 `Add` die Umrechnung korrekt durchführen lassen. Wir können `Add` für
-`Millimeters` mit `Meters` als `Rhs` implementieren, wie in Codeblock 19-15
+`Millimeters` mit `Meters` als `Rhs` implementieren, wie in Codeblock 20-16
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -225,7 +225,7 @@ impl Add<Meters> for Millimeters {
 }
 ```
 
-<span class="caption">Codeblock 19-15: Implementieren des Merkmals `Add` auf
+<span class="caption">Codeblock 20-16: Implementieren des Merkmals `Add` auf
 `Millimeters`, um `Millimeters` zu `Meters` zu addieren</span>
 
 Um `Millimeters` und `Meters` zu addieren, geben wir `impl Add<Meters>` an, um
@@ -260,7 +260,7 @@ eine Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von
 Merkmalen zu implementieren.
 
 Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
-welche du verwenden willst. Betrachte den Code in Codeblock 19-16, wo wir zwei
+welche du verwenden willst. Betrachte den Code in Codeblock 20-17, wo wir zwei
 Merkmale `Pilot` und `Wizard` definiert haben, die beide eine Methode namens
 `fly` haben. Wir implementieren dann beide Merkmale auf einem Typ `Human`, der
 bereits eine Methode namens `fly` implementiert hat. Jede `fly`-Methode macht
@@ -300,13 +300,13 @@ impl Human {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 19-16: Zwei Merkmale sind so definiert, dass
+<span class="caption">Codeblock 20-17: Zwei Merkmale sind so definiert, dass
 sie eine Methode `fly` haben und auf dem Typ `Human` implementiert sind, und
 eine Methode `fly` ist direkt auf dem Typ `Human` implementiert</span>
 
 Wenn wir `fly` auf einer Instanz von `Human` aufrufen, ruft der Compiler
 standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
-Codeblock 19-17 gezeigt.
+Codeblock 20-18 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -345,7 +345,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-17: Aufrufen von `fly` auf einer Instanz von
+<span class="caption">Codeblock 20-18: Aufrufen von `fly` auf einer Instanz von
 `Human`</span>
 
 Wenn man diesen Code ausführt, wird `*Wütend mit den Armen wedeln*` ausgegeben,
@@ -354,7 +354,7 @@ wurde, aufgerufen hat.
 
 Um die Methoden `fly` entweder vom Merkmal `Pilot` oder vom Merkmal `Wizard`
 aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
-Methode `fly` wir meinen. Codeblock 19-18 demonstriert diese Syntax.
+Methode `fly` wir meinen. Codeblock 20-19 demonstriert diese Syntax.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -395,13 +395,13 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-18: Angeben, welche Methode `fly` wir
+<span class="caption">Codeblock 20-19: Angeben, welche Methode `fly` wir
 aufrufen wollen</span>
 
 Das Angeben des Merkmalsnamens vor dem Methodennamen verdeutlicht Rust, welche
 Implementierung von `fly` wir aufrufen wollen. Wir könnten auch
 `Human::fly(&person)` schreiben, was äquivalent zu `person.fly()` ist, das wir
-in Codeblock 19-18 verwendet haben, aber das ist etwas länger zu schreiben, wenn
+in Codeblock 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
 wir nicht vereindeutigen müssen.
 
 Beim Ausführen dieses Codes wird Folgendes ausgegeben:
@@ -409,7 +409,7 @@ Beim Ausführen dieses Codes wird Folgendes ausgegeben:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.46s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.46s
      Running `target/debug/traits-example`
 Hier spricht Ihr Kapitän.
 Hoch!
@@ -425,7 +425,7 @@ Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
 `self`-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
 nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-*voll-qualifizierte Syntax*. In Codeblock 19-19 erstellen wir zum Beispiel
+*voll-qualifizierte Syntax*. In Codeblock 20-20 erstellen wir zum Beispiel
 ein Merkmal für ein Tierheim, das alle Hundebabys *Spot* nennen möchte. Wir
 erstellen ein Merkmal `Animal` mit einer assoziierten Nicht-Methodenfunktion
 `baby_name`. Das Merkmal `Animal` ist für die Struktur `Dog` implementiert, für
@@ -458,7 +458,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-19: Ein Merkmal mit einer assoziierten
+<span class="caption">Codeblock 20-20: Ein Merkmal mit einer assoziierten
 Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
 Merkmal ebenfalls implementiert</span>
 
@@ -476,7 +476,7 @@ Folgendes aus:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.54s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.54s
      Running `target/debug/traits-example`
 Ein Hundebaby wird Spot genannt.
 ```
@@ -484,9 +484,9 @@ Ein Hundebaby wird Spot genannt.
 Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
 `baby_name` aufrufen, die Teil des Merkmals `Animal` ist, das wir auf `Dog`
 implementiert haben, sodass der Code `Ein Hundebaby wird Welpe genannt`
-ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 19-18
+ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 20-19
 verwendet haben, hilft hier nicht weiter; wenn wir `main` in den Code in
-Codeblock 19-20 ändern, erhalten wir einen Kompilierfehler.
+Codeblock 20-21 ändern, erhalten wir einen Kompilierfehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -515,7 +515,7 @@ fn main() {
 
 ```
 
-<span class="caption">Codeblock 19-20: Versuch, die Funktion `baby_name` des
+<span class="caption">Codeblock 20-21: Versuch, die Funktion `baby_name` des
 Merkmals `Animal` aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span>
 
@@ -548,7 +548,7 @@ error: could not compile `traits-example` (bin "traits-example") due to 1 previo
 Um zu vereindeutigen und Rust zu sagen, dass wir die Implementierung von
 `Animal` für `Dog` verwenden wollen und nicht die Implementierung von `Animal`
 für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
-verwenden. Codeblock 19-21 zeigt, wie man eine vollständig qualifizierte Syntax
+verwenden. Codeblock 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
 verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -577,7 +577,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-21: Verwenden einer vollständig
+<span class="caption">Codeblock 20-22: Verwenden einer vollständig
 qualifizierten Syntax, um anzugeben, dass wir die Funktion `baby_name` des
 Merkmals `Animal` aufrufen wollen, wie sie auf `Dog` implementiert ist</span>
 
@@ -590,7 +590,7 @@ was wir wollen:
 ```console
 $ cargo run
    Compiling traits-example v0.1.0 (file:///projects/traits-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/traits-example`
 Ein Hundebaby wird Welpe genannt.
 ```
@@ -640,7 +640,7 @@ das Merkmal `OutlinePrint` nur bei Typen funktioniert, die auch `Display`
 implementieren und die Funktionalität bieten, die `OutlinePrint` benötigt. Wir
 können dies in der Merkmalsdefinition tun, indem wir `OutlinePrint: Display`
 angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
-bound) bei einem Merkmal. Codeblock 19-22 zeigt eine Implementierung des
+bound) bei einem Merkmal. Codeblock 20-23 zeigt eine Implementierung des
 Merkmals `OutlinePrint`.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -663,7 +663,7 @@ trait OutlinePrint: fmt::Display {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 19-22: Implementieren des Merkmals
+<span class="caption">Codeblock 20-23: Implementieren des Merkmals
 `OutlinePrint`, das die Funktionalität von `Display` erfordert</span>
 
 Da wir festgelegt haben, dass `OutlinePrint` das Merkmal `Display` erfordert,
@@ -814,7 +814,7 @@ was uns die Waisenregel direkt verbietet, weil das Merkmal `Display` und der
 Typ `Vec<T>` außerhalb unserer Kiste definiert sind. Wir können eine Struktur
 `Wrapper` erstellen, die eine Instanz von `Vec<T>` enthält; dann können wir
 `Display` auf `Wrapper` implementieren und den Wert `Vec<T>` verwenden, wie in
-Codeblock 19-23 gezeigt.
+Codeblock 20-24 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -835,7 +835,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-23: Erstellen eines Typs `Wrapper` um
+<span class="caption">Codeblock 20-24: Erstellen eines Typs `Wrapper` um
 `Vec<String>` zur Implementierung von `Display`</span>
 
 Die Implementierung von `Display` verwendet `self.0`, um auf den inneren

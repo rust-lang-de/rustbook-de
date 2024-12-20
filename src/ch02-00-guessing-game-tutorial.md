@@ -38,8 +38,6 @@ name = "guessing_game"
 version = "0.1.0"
 edition = "2021"
 
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
-
 [dependencies]
 ```
 
@@ -60,7 +58,7 @@ Schritt aus mit dem Befehl `cargo run`:
 ```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.50s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.50s
      Running `target/debug/guessing_game`
 Hello, world!
 ```
@@ -394,7 +392,7 @@ help: use `let _ = ...` to ignore the resulting value
    |     +++++++
 
 warning: `guessing_game` (bin "guessing_game") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
 Rust warnt, dass du den von `read_line` zurückgegebenen `Result`-Wert nicht
@@ -457,7 +455,7 @@ Testen wir den ersten Teil des Ratespiels. Führe ihn mit `cargo run` aus:
 ```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 6.44s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 6.44s
      Running `target/debug/guessing_game`
 Rate die Zahl!
 Bitte gib deine Schätzung ein.
@@ -524,22 +522,28 @@ gezeigt.
 ```console
 $ cargo build
     Updating crates.io index
-  Downloaded rand v0.8.5
-  Downloaded libc v0.2.127
-  Downloaded getrandom v0.2.7
-  Downloaded cfg-if v1.0.0
-  Downloaded ppv-lite86 v0.2.16
-  Downloaded rand_chacha v0.3.1
-  Downloaded rand_core v0.6.3
-   Compiling libc v0.2.127
-   Compiling getrandom v0.2.7
+     Locking 16 packages to latest compatible versions
+      Adding wasi v0.11.0+wasi-snapshot-preview1 (latest: v0.13.3+wasi-0.2.2)
+      Adding zerocopy v0.7.35 (latest: v0.8.9)
+      Adding zerocopy-derive v0.7.35 (latest: v0.8.9)
+  Downloaded syn v2.0.87
+  Downloaded 1 crate (278.1 KB) in 0.16s
+   Compiling proc-macro2 v1.0.89
+   Compiling unicode-ident v1.0.13
+   Compiling libc v0.2.161
    Compiling cfg-if v1.0.0
-   Compiling ppv-lite86 v0.2.16
-   Compiling rand_core v0.6.3
+   Compiling byteorder v1.5.0
+   Compiling getrandom v0.2.15
+   Compiling rand_core v0.6.4
+   Compiling quote v1.0.37
+   Compiling syn v2.0.87
+   Compiling zerocopy-derive v0.7.35
+   Compiling zerocopy v0.7.35
+   Compiling ppv-lite86 v0.2.20
    Compiling rand_chacha v0.3.1
    Compiling rand v0.8.5
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.53s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.69s
 ```
 
 <span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von `cargo
@@ -576,7 +580,7 @@ sie dann speicherst und neu baust, siehst du nur zwei Zeilen Ausgabe:
 ```console
 $ cargo build
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.53 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.53 secs
 ```
 
 Diese Zeilen zeigen, dass Cargo nur den Build mit deiner winzigen Änderung an
@@ -716,7 +720,7 @@ Versuche, das Programm einige Male auszuführen:
 ```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.53s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.53s
      Running `target/debug/guessing_game`
 Rate die Zahl!
 Die Geheimzahl ist: 7
@@ -725,7 +729,7 @@ Bitte gib deine Schätzung ein.
 Du hast geschätzt: 4
 
 $ cargo run
-    Finished dev [unoptimized + debuginfo] target(s) in 0.02s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.02s
      Running `target/debug/guessing_game`
 Rate die Zahl!
 Die Geheimzahl ist: 83
@@ -972,7 +976,7 @@ Lassen wir das Programm jetzt laufen:
 ```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/guessing_game`
 Rate die Zahl!
 Die Geheimzahl ist: 58
@@ -1055,7 +1059,7 @@ gezeigt:
 ```console
 $ cargo run
    Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished dev [unoptimized + debuginfo] target(s) in 1.50s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 1.50s
      Running `target/debug/guessing_game`
 Rate die Zahl!
 Die Geheimzahl ist: 59

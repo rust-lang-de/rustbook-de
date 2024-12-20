@@ -48,7 +48,7 @@ ist standardmäßig privat. Zum Beispiel können wir eine Struktur
 der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
 Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
 `AveragedCollection` wird den errechneten Durchschnitt für uns
-zwischenspeichern. Codeblock 17-1 zeigt die Definition der Struktur
+zwischenspeichern. Codeblock 18-1 zeigt die Definition der Struktur
 `AveragedCollection`:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -60,7 +60,7 @@ pub struct AveragedCollection {
 }
 ```
 
-<span class="caption">Codeblock 17-1: Eine Struktur `AveragedCollection`, die
+<span class="caption">Codeblock 18-1: Eine Struktur `AveragedCollection`, die
 eine Liste von ganzen Zahlen und den Durchschnitt der Elemente in der
 Kollektion verwaltet</span>
 
@@ -69,7 +69,7 @@ aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
 wichtig, weil wir sicherstellen wollen, dass immer dann, wenn ein Wert
 hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden `add`, `remove` und
-`average` auf der Struktur implementieren, wie in Codeblock 17-2 gezeigt:
+`average` auf der Struktur implementieren, wie in Codeblock 18-2 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -107,7 +107,7 @@ impl AveragedCollection {
 }
 ```
 
-<span class="caption">Codeblock 17-2: Implementierungen der öffentlichen
+<span class="caption">Codeblock 18-2: Implementierungen der öffentlichen
 Methoden `add`, `remove` und `average` auf  `AveragedCollection`</span>
 
 Die öffentlichen Methoden `add`, `remove` und `average` sind die einzigen

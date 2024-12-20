@@ -88,7 +88,7 @@ verwenden:
   Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
   unterschiedliche Art behandelt.
 * **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
-  behandeln die Unsicherheit im Kapitel 19), sollte ein Abschnitt existieren,
+  behandeln die Unsicherheit im Kapitel 20), sollte ein Abschnitt existieren,
   in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
   behandelt werden die die Funktion vom Aufrufenden erwartet.
 
@@ -454,7 +454,7 @@ See https://doc.rust-lang.org/cargo/reference/manifest.html#package-metadata for
 error: failed to publish to registry at https://crates.io
 
 Caused by:
-  the remote server responded with an error: missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for how to upload metadata
+  the remote server responded with an error (status 400 Bad Request): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for more information on configuring these field
 ```
 
 Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine
@@ -531,7 +531,7 @@ $ cargo publish
    Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
    Compiling guessing_game v0.1.0
 (file:///projects/guessing_game/target/package/guessing_game-0.1.0)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.19s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
 ```
 Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die

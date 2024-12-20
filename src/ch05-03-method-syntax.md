@@ -6,7 +6,7 @@ und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
 Merkmalsobjektes (trait object), die wir in [Kapitel 6][enums] und [Kapitel
-17][trait-objects] behandeln) definiert werden und ihr erster Parameter stets
+18][trait-objects] behandeln) definiert werden und ihr erster Parameter stets
 `self` ist. `self` repräsentiert die Instanz der Struktur, zu der die Methode
 aufgerufen wird.
 
@@ -407,4 +407,4 @@ weiteres Werkzeug in deinen Werkzeugkasten zu legen.
 [enums]: ch06-00-enums.html
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 [public]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html#pfade-mit-dem-schlüsselwort-pub-öffentlich-machen
-[trait-objects]: ch17-02-trait-objects.html
+[trait-objects]: ch18-02-trait-objects.html

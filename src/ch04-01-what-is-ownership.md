@@ -477,9 +477,9 @@ src="img/trpl04-05.svg" class="center" style="width: 50%;" />
 <span class="caption">Figure 4-5: Darstellung im Speicher, nachdem der
 ursprüngliche Wert vollständig ersetzt worden ist.</span>
 
-Die ursprüngliche Zeichenkette verlässt damit sofort den Geltungsbereich. Rust
-führt die Funktion `drop` aus und ihr Speicher wird sofort freigegeben. Wenn
-wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.
+Die ursprüngliche Zeichenkette verlässt damit sofort den Gültigkeitsbereich.
+Rust führt die Funktion `drop` aus und ihr Speicher wird sofort freigegeben.
+Wenn wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.
 
 #### Variablen und Daten im Zusammenspiel mit Clone
 

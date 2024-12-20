@@ -950,7 +950,7 @@ flexible Code keine hängenden Referenzen hat. Und all diese Analysen finden zur
 Kompilierzeit statt, was die Laufzeitperformanz nicht beeinträchtigt!
 
 Ob du es glaubst oder nicht, es gibt zu den Themen, die wir in diesem Kapitel
-besprochen haben, noch viel mehr zu sagen: In Kapitel 17 werden Merkmalsobjekte
+besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Merkmalsobjekte
 erörtert, die eine weitere Möglichkeit zur Verwendung von Merkmalen darstellen.
 Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
 sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
@@ -959,6 +959,5 @@ Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
 funktioniert, wie er es soll.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
-[string-slices-as-parameters]:
-ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter
+[string-slices-as-parameters]: ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter
 [reference]: https://doc.rust-lang.org/reference/index.html

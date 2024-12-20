@@ -53,7 +53,7 @@ Versuche, diesen Code auszuführen; du solltest die folgende Ausgabe sehen:
 ```console
 $ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/branches`
 Bedingung war wahr
 ```
@@ -78,7 +78,7 @@ Führe das Programm erneut aus und sieh dir die Ausgabe an:
 ```console
 $ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/branches`
 Bedingung war falsch
 ```
@@ -166,7 +166,7 @@ ausgeführt hast, solltest du folgende Ausgabe sehen:
 ```console
 $ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/branches`
 Zahl ist durch 3 teilbar
 ```
@@ -210,7 +210,7 @@ Die Variable `number` wird an einen Wert gebunden, der auf dem Ergebnis des
 ```console
 $ cargo run
    Compiling branches v0.1.0 (file:///projects/branches)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.30s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
      Running `target/debug/branches`
 Der Wert der Zahl ist: 5
 ```
@@ -304,7 +304,7 @@ aus:
 ```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.29s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.29s
      Running `target/debug/loops`
 nochmal!
 nochmal!
@@ -413,7 +413,7 @@ gibt folgendes aus:
 ```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.58s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.58s
      Running `target/debug/loops`
 Zähler = 0
 Restliche = 10
@@ -495,7 +495,7 @@ Element im Array ausgegeben:
 ```console
 $ cargo run
    Compiling loops v0.1.0 (file:///projects/loops)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.32s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32s
      Running `target/debug/loops`
 Der Wert ist: 10
 Der Wert ist: 20

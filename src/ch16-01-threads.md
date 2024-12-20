@@ -31,7 +31,9 @@ Betriebssysteme bieten eine API, die die Sprache aufrufen kann, um neue Stränge
 zu erstellen. Die Rust-Standardbibliothek verwendet ein *1:1*-Modell der
 Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
 einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
-implementieren, die andere Kompromisse als das 1:1-Modell eingehen.
+implementieren, die andere Kompromisse als das 1:1-Modell eingehen. (Das
+async-System von Rust, das wir uns im nächsten Kapitel ansehen werden, bietet
+ebenfalls einen anderen Ansatz der Nebenläufigkeit).
 
 ### Erstellen eines neuen Strangs mit `spawn`
 

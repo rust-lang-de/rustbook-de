@@ -507,7 +507,7 @@ lassen. Lass es uns noch einmal überprüfen:
 ```console
 $ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.24s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.24s
 ```
 
 Er kompiliert! Aber beachte, dass du, wenn du `cargo run` versuchst und eine
@@ -1314,30 +1314,28 @@ run` aus und stelle einige Anfragen:
 ```console
 $ cargo run
    Compiling hello v0.1.0 (file:///projects/hello)
-warning: field is never read: `workers`
+warning: field `workers` is never read
  --> src/lib.rs:7:5
   |
+6 | pub struct ThreadPool {
+  |            ---------- field in this struct
 7 |     workers: Vec<Worker>,
-  |     ^^^^^^^^^^^^^^^^^^^^
+  |     ^^^^^^^
   |
   = note: `#[warn(dead_code)]` on by default
 
-warning: field is never read: `id`
+warning: fields `id` and `thread` are never read
   --> src/lib.rs:48:5
    |
+47 | struct Worker {
+   |        ------ fields in this struct
 48 |     id: usize,
-   |     ^^^^^^^^^
-
-warning: field is never read: `thread`
-  --> src/lib.rs:49:5
-   |
+   |     ^^
 49 |     thread: thread::JoinHandle<()>,
-   |     ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+   |     ^^^^^^
 
-warning: 3 warnings emitted
-
-warning: `hello` (lib) generated 3 warnings
-    Finished dev [unoptimized + debuginfo] target(s) in 1.40s
+warning: `hello` (lib) generated 2 warnings
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 4.91s
      Running `target/debug/hello`
 Worker 0 hat einen Auftrag erhalten; führe ihn aus.
 Worker 2 hat einen Auftrag erhalten; führe ihn aus.

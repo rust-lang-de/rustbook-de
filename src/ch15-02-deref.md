@@ -238,7 +238,7 @@ impl<T> Deref for MyBox<T> {
 Die Syntax `type Target = T;` definiert einen assoziierten Typ, den das Merkmal
 `Deref` verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
-keine Gedanken machen, in Kapitel 19 werden wir sie ausführlicher behandeln.
+keine Gedanken machen, in Kapitel 20 werden wir sie ausführlicher behandeln.
 
 Wir füllen den Rumpf der Methode `deref` mit `&self.0`, damit `deref` eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator `*` zugreifen

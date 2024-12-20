@@ -32,7 +32,7 @@ kompiliert.
 
 Jeder Typ, der vollständig aus `Send`-Typen besteht, wird automatisch auch als
 `Send` markiert. Fast alle primitiven Typen sind `Send`, abgesehen von
-Roh-Zeigern, die wir in Kapitel 19 besprechen werden.
+Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
 
 ### Erlauben des Zugriffs von mehreren Strängen mit `Sync`
 
@@ -63,7 +63,7 @@ Invarianten in Bezug auf die Nebenläufigkeit zu erzwingen.
 
 Das manuelle Implementieren dieser Merkmale beinhaltet das Schreiben von
 unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
-Kapitel 19 sprechen; für den Moment ist die wichtige Information, dass das
+Kapitel 20 sprechen; für den Moment ist die wichtige Information, dass das
 Erstellen neuer nebenläufiger Typen, die nicht aus `Send`- und `Sync`-Teilen
 bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
 aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere Informationen
@@ -72,9 +72,10 @@ aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere Informat
 ## Zusammenfassung
 
 Dies ist nicht das letzte Mal, dass du in diesem Buch der Nebenläufigkeit
-begegnest: Das Projekt in Kapitel 20 wird die Konzepte in diesem Kapitel in
-einer realistischeren Situation verwenden als die hier besprochenen kleinen
-Beispiele.
+begegnest: Das gesamte nächste Kapitel befasst sich mit asynchroner
+Programmierung, und das Projekt in Kapitel 21 wird die Konzepte in diesem
+Kapitel in einer realistischeren Situation anwenden als die hier besprochenen
+kleineren Beispiele.
 
 Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
 umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind als Kisten
@@ -93,12 +94,6 @@ hast, kannst du sicher sein, dass er problemlos mit mehreren Strängen läuft,
 ohne die schwer aufzuspürenden Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig &ndash; furchtlos!
-
-Als Nächstes werden wir über idiomatische Wege sprechen, Probleme zu
-modellieren und Lösungen zu strukturieren, während deine Rust-Programme größer
-werden. Darüber hinaus werden wir besprechen, wie Rusts Idiome mit denen
-zusammenhängen, die dir vielleicht aus der objektorientierten Programmierung
-bekannt sind.
 
 [sharing-mutext]:
 ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen

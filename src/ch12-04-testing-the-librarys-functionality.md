@@ -583,7 +583,7 @@ wiedergeben sollte: *frog*
 ```console
 $ cargo run frog poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.38s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.38s
      Running `target/debug/minigrep frog poem.txt`
 How public, like a frog
 ```
@@ -593,7 +593,7 @@ Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie *body*:
 ```console
 $ cargo run body poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep body poem.txt`
 I'm nobody! Who are you?
 Are you nobody, too?
@@ -607,7 +607,7 @@ wir nach einem Wort suchen, das nirgendwo im Gedicht vorkommt, zum Beispiel
 ```console
 $ cargo run monomorphization poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep monomorphization poem.txt`
 ```
 

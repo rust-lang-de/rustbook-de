@@ -74,7 +74,7 @@ haben) und die Datei *poem.txt* als zweites Argument:
 ```console
 $ cargo run -- the poem.txt
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt

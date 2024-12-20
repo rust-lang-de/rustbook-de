@@ -65,7 +65,7 @@ warning: unused variable: `i`
   |
   = note: #[warn(unused_variables)] on by default
 
-    Finished dev [unoptimized + debuginfo] target(s) in 0.50s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
 ```
 
 Die Warnung empfiehlt, stattdessen `_i` als Namen zu verwenden: Der Unterstrich
@@ -77,7 +77,7 @@ Kommando `cargo fix` ausführen:
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
 Wenn wir uns *src/main.rs* noch einmal ansehen, werden wir sehen, dass

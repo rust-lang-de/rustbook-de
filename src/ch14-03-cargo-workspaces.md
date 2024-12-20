@@ -29,18 +29,16 @@ $ cd add
 Als Nächstes erstellen wir im Verzeichnis *add* die Datei *Cargo.toml*, mit der
 der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
 Abschnitt `[package]`. Stattdessen beginnt sie mit einem Abschnitt
-`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können,
-indem wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall
-lautet dieser Pfad *adder*:
+`[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
+stellen außerdem sicher, dass wir die neueste und beste Version des
+Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
+`resolver` auf `"2"` setzen.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
 ```toml
 [workspace]
-
-members = [
-    "adder",
-]
+resolver = "2"
 ```
 
 Als nächstes erstellen wir die Binärkiste `adder`, indem wir `cargo new` im
@@ -48,7 +46,18 @@ Verzeichnis *add* ausführen:
 
 ```console
 $ cargo new adder
-     Created binary (application) `adder` package
+    Creating binary (application) `adder` package
+      Adding `adder` as member of workspace at `file:///projects/add`
+```
+
+Wenn du `cargo new` innerhalb eines Arbeitsbereichs ausführst, wird das neu
+erstellte Paket automatisch zum Schlüssel `members` in der Definition
+`[workspace]` der Datei `Cargo.toml` hinzugefügt, etwa so:
+
+```toml
+[workspace]
+resolver = "2"
+members = ["adder"]
 ```
 
 An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir `cargo build`
@@ -97,7 +106,8 @@ Dann erzeuge eine neue Bibliothekskiste namens `add_one`:
 
 ```console
 $ cargo new add_one --lib
-     Created library `add_one` package
+    Creating library `add_one` package
+      Adding `add_one` as member of workspace at `file:///projects/add`
 ```
 
 Dein *add*-Verzeichnis sollte nun so aussehen:
@@ -168,7 +178,7 @@ Verzeichnis *add* ausführen!
 $ cargo build
    Compiling add_one v0.1.0 (file:///projects/add/add_one)
    Compiling adder v0.1.0 (file:///projects/add/adder)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.68s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
 ```
 
 Um die Binärkiste aus dem Verzeichnis *add* auszuführen, können wir mithilfe des
@@ -177,7 +187,7 @@ Arbeitsbereich ausgeführt werden soll:
 
 ```console
 $ cargo run -p adder
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
 Hello, world! 10 plus one is 11!
 ```
@@ -226,9 +236,9 @@ warning: unused import: `rand`
   |
   = note: `#[warn(unused_imports)]` on by default
 
-warning: `add_one` (lib) generated 1 warning
+warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` to apply 1 suggestion)
    Compiling adder v0.1.0 (file:///projects/add/adder)
-    Finished dev [unoptimized + debuginfo] target(s) in 10.18s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.18s
 ```
 
 Die *Cargo.lock*-Datei der obersten Ebene enthält nun Informationen über die

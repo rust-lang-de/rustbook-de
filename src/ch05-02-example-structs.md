@@ -36,7 +36,7 @@ Nun führe dieses Programm mit `cargo run` aus:
 ```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.42s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/structs`
 Die Fläche des Rechtecks ist 1500 Quadratpixel.
 ```
@@ -274,7 +274,7 @@ folgende Ausgabe sehen:
 ```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/structs`
 rect1 ist Rectangle { width: 30, height: 50 }
 ```
@@ -289,7 +289,7 @@ In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
 ```console
 $ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/structs`
 rect1 ist Rectangle {
     width: 30,
@@ -342,7 +342,7 @@ Beispiels aus:
 ```console
 $ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/rectangles`
 [src/main.rs:10:16] 30 * scale = 60
 [src/main.rs:14:5] &rect1 = Rectangle {

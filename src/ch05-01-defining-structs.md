@@ -290,12 +290,13 @@ sein Wert _nicht_ verschoben wurde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
-Du kannst auch Strukturen definieren, die wie Tupel aussehen, sogenannte
-*Tupel-Strukturen* (tuple structs). Tupel-Strukturen sind Strukturen, die
-keine Feldnamen haben, sondern nur die Typen der Felder. Tupel-Strukturen sind
-hilfreich, wenn du dem gesamten Tupel einen Namen geben und erreichen willst,
-dass das Tupel einen anderen Typ als die anderen Tupel hat und Feldnamen wie in
-einer regulären Struktur langatmig oder unnötig wären.
+Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
+*Tupel-Strukturen* (tuple structs). Tupel-Strukturen haben den Strukturnamen
+als zusätzliche Bedeutung, allerdings haben die Felder keine Namen, sondern nur
+Typen. Tupel-Strukturen sind hilfreich, wenn du dem gesamten Tupel einen Namen
+geben und das Tupel von anderen Tupeln unterscheiden willst, und wenn die
+Benennung der Felder wie in einer regulären Struktur langatmig oder unnötig
+wäre.
 
 Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort `struct`,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
@@ -321,7 +322,9 @@ einen Parameter vom Typ `Color` hat, keinen `Point` als Argument nehmen, obwohl
 beide Typen aus drei `i32`-Werten bestehen. Ansonsten ähneln
 Tupel-Struktur-Instanzen den Tupeln insofern, als dass sie in ihre einzelnen
 Teile zerlegt werden können, und du kannst ein `.` gefolgt vom Index verwenden,
-um auf einen einzelnen Wert zuzugreifen.
+um auf einen einzelnen Wert zuzugreifen. Im Unterschied zu Tupeln musst du bei
+Tupel-Strukturen den Typ der Struktur angeben, wenn du sie destrukturierst. Wir
+würden zum Beispiel schreiben: `let Point(x, y, z) = point`
 
 ### Einheitstyp-ähnliche Strukturen ohne Felder
 

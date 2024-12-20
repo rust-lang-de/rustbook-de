@@ -40,7 +40,7 @@ Ausdruck hinter `match` angegeben wird und das Muster der erste Zweig ist. In
 diesem Fall ist das Muster `Some(max)` und das `max` ist an den Wert innerhalb
 von `Some` gebunden. Wir können dann `max` im Rumpf des `if let`-Blocks auf die
 gleiche Weise verwenden, wie `max` im entsprechenden `match`-Zweig. Der Code im
-`if let`-Block wird nicht ausgeführt, wenn der Wert nicht zum Muster passt.
+`if let`-Block wird nur ausgeführt, wenn der Wert zum Muster passt.
 
 Die Verwendung von `if let` bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die

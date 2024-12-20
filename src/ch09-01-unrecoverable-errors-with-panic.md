@@ -47,7 +47,7 @@ Wenn du das Programm ausführst, wirst du in etwa das hier sehen:
 ```console
 $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.25s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
      Running `target/debug/panic`
 thread 'main' panicked at src/main.rs:2:5:
 abstürzen und verbrennen
@@ -112,7 +112,7 @@ was passiert:
 ```console
 $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/panic`
 thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
@@ -179,7 +179,7 @@ Element außerhalb des Bereichs der Vektorindizes anzufordern. Wenn dein Code in
 Zukunft abbricht, musst du herausfinden, bei welcher Aktion der Code mit
 welchen Werten abbricht und was der Code stattdessen tun sollte.
 
-In Abschnitt [„Wann `panic!` verwenden und wann
+In Abschnitt [„Wann `panic!` aufrufen und wann
 nicht?“][to-panic-or-not-to-panic] später in diesem Kapitel kommen wir noch
 einmal auf `panic!` zurück und wann wir `panic!` verwenden sollten und wann
 nicht, um Fehlerfälle zu behandeln. Als Nächstes schauen wir uns an, wie man

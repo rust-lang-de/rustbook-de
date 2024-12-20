@@ -116,7 +116,7 @@ Die Ausführung dieses Codes gibt aus:
 ```console
 $ cargo run
    Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/shirt-company`
 Der Benutzer mit Präferenz Some(Red) erhält Red
 Der Benutzer mit Präferenz None erhält Blue
@@ -196,7 +196,7 @@ wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.
 # }
 ```
 
-<span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
+<span class="caption">Codeblock 13-2: Hinzufügen optionaler Datentypangabe der
 Parameter- und Rückgabewert-Typen im Funktionsabschluss</span>
 
 Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
@@ -331,7 +331,7 @@ kompiliert, läuft und gibt folgendes aus:
 ```console
 $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
@@ -365,7 +365,7 @@ Dieser Code kompiliert, läuft und gibt aus:
 ```console
 $ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
@@ -558,7 +558,7 @@ Dieser Code gibt aus:
 ```console
 $ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.41s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
      Running `target/debug/rectangles`
 [
     Rectangle {
@@ -614,7 +614,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
+<span class="caption">Codeblock 13-8: Versuch, einen `FnOnce`-Funktionsabschluss
 mit `sort_by_key` zu verwenden</span>
 
 Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
@@ -685,7 +685,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 13-9: Verwenden eines
+<span class="caption">Codeblock 13-9: Verwenden eines
 `FnMut`-Funktionsabschlusses mit `sort_by_key` ist erlaubt</span>
 
 Die `Fn`-Merkmale sind wichtig bei der Definition oder Verwendung von

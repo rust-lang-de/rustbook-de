@@ -102,7 +102,7 @@ Wenn wir das Programm jetzt ausführen, bekommen wir dies:
 ```console
 $ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.30s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.30s
      Running `target/debug/variables`
 Der Wert von x ist: 5
 Der Wert von x ist: 6
@@ -208,7 +208,7 @@ wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
 ```console
 $ cargo run
    Compiling variables v0.1.0 (file:///projects/variables)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.31s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.31s
      Running `target/debug/variables`
 Der Wert von x im inneren Gültigkeitsbereich ist: 12
 Der Wert von x ist: 6
