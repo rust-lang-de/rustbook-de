@@ -10,9 +10,9 @@ sondern eher Stränge *und* asynchroner Code.
 
 Viele Betriebssysteme bieten schon seit Jahrzehnten Strang-basierte
 Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
-Modelle daher. Sie sind jedoch nicht ohne Kompromisse. Auf vielen
+Modelle daher. Sie sind jedoch nicht frei von Kompromissen. Auf vielen
 Betriebssystemen wird für jeden Strang ein beträchtlicher Teil des
-Arbeitsspeichers verbraucht, und es entsteht ein gewisser Overhead beim Starten
+Arbeitsspeichers verbraucht und es entsteht ein gewisser Overhead beim Starten
 und Beenden. Stränge sind auch nur dann eine Option, wenn dein Betriebssystem
 und deine Hardware sie unterstützen! Im Gegensatz zu herkömmlichen Desktop- und
 Mobilcomputern haben einige eingebettete Systeme überhaupt kein Betriebssystem,
@@ -20,11 +20,11 @@ sodass sie auch keine Stränge haben!
 
 Das asynchrone Modell bietet eine andere &ndash; und letztlich ergänzende
 &ndash; Reihe von Kompromissen. Im asynchronen Modell benötigen gleichzeitige
-Operationen keine eigenen Stränge. Stattdessen können sie auf Aufgaben laufen,
-so wie wir `trpl::spawn_task` verwendet haben, um die Arbeit von einer
-synchronen Funktion im Abschnitt Ströme zu starten. Eine Aufgabe ähnelt einem
-Strang, wird aber nicht vom Betriebssystem, sondern von einem Code auf
-Bibliotheksebene verwaltet: Der Laufzeitumgebung.
+Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
+wie wir `trpl::spawn_task` verwendet haben, um die Arbeit von einer synchronen
+Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
+wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
+verwaltet: Der Laufzeitumgebung.
 
 Im vorigen Abschnitt haben wir gesehen, dass wir einen `Stream` erstellen
 können, indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
@@ -32,7 +32,7 @@ erzeugen, die wir von synchronem Code aus aufrufen können. Wir könnten genau
 das Gleiche mit einem Strang machen! In Codeblock 17-40 haben wir
 `trpl::spawn_task` und `trpl::sleep` verwendet. In Codeblock 17-41 ersetzen wir
 diese durch die APIs `thread::spawn` und `thread::sleep` aus der
-Standardbibliothek in der Funktion `get_intervals`.
+Standardbibliothek.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -109,7 +109,7 @@ anstelle der asynchronen `trpl`-APIs für die Funktion `get_intervals`.</span>
 
 Wenn du dies ausführst, ist die Ausgabe identisch. Und beachte, wie wenig sich
 hier aus der Sicht des aufrufenden Codes ändert! Und obwohl eine unserer
-Funktionen eine asynchrone Aufgabe auf der Laufzeitumgebung und die andere
+Funktionen eine asynchrone Aufgabe in der Laufzeitumgebung und die andere
 einen Betriebssystem-Strang startet, hat es keinen Effekt auf die
 resultierenden Ströme.
 
@@ -132,8 +132,8 @@ Aufgaben leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
 zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
 Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.
 
-Das bedeutet nicht, dass asynchrone Aufgaben immer besser sind als Stränge, und
-auch nicht, dass Stränge immer besser sind als Aufgaben.
+Das bedeutet nicht, dass asynchrone Aufgaben immer besser als Stränge sind, und
+auch nicht, dass Stränge immer besser als Aufgaben sind.
 
 Nebenläufigkeit mit Strängen ist in gewisser Weise ein einfacheres
 Programmiermodell als Nebenläufigkeit mit `async`. Das kann eine Stärke oder
@@ -141,10 +141,10 @@ eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“, sie habe
 kein natives Äquivalent zu einem Future, also laufen sie einfach bis zum Ende,
 ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt, sie haben
 keine eingebaute Unterstützung für *Nebenläufigkeit innerhalb der Aufgabe*, wie
-es Futures tun. Stränge in Rust haben auch keine Mechanismen um die abzubrechen
-&ndash; ein Thema, das wir in diesem Kapitel nicht eingehend behandelt haben,
-das aber implizit in der Tatsache enthalten ist, dass immer dann, wenn wir ein
-Future beenden, sein Zustand korrekt aufgeräumt wird.
+es Futures haben. Stränge in Rust haben auch keine Mechanismen um die
+abzubrechen &ndash; ein Thema, das wir in diesem Kapitel nicht eingehend
+behandelt haben, das aber implizit in der Tatsache enthalten ist, dass immer
+dann, wenn wir ein Future beenden, sein Zustand korrekt aufgeräumt wird.
 
 Diese Einschränkungen machen es auch schwieriger, Stränge zu erstellen als
 Futures. Es ist zum Beispiel viel schwieriger, Stränge zu verwenden, um Helfer
@@ -158,7 +158,7 @@ Aufgaben geben dann *zusätzliche* Kontrolle über Futures, da man wählen kann,
 wo und wie man die Futures gruppiert. Und es stellt sich heraus, dass Stränge
 und Aufgaben oft sehr gut zusammenarbeiten, weil Aufgaben (zumindest in einigen
 Laufzeitumgebungen) zwischen Strängen verschoben werden können. Wir haben es
-bis jetzt nicht erwähnt, aber unter der Haube ist die `Runtime`, die wir
+bis jetzt nicht erwähnt, aber unter der Haube ist die Laufzeitumgebung, die wir
 benutzt haben, einschließlich der Funktionen `spawn_blocking` und `spawn_task`,
 standardmäßig mehrstängig (multithreaded)! Viele Laufzeitumgebungen verwenden
 einen Ansatz namens *Work Stealing*, um Aufgaben transparent zwischen Strängen
@@ -241,7 +241,7 @@ sicheren, schnellen und nebenläufigen Code zu schreiben &ndash; sei es für
 einen durchsatzstarken Webserver oder ein eingebettetes Betriebssystem.
 
 Als nächstes werden wir über idiomatische Wege sprechen, Probleme zu
-modellieren und Lösungen zu strukturieren wenn deine Rust-Programme größer
+modellieren und Lösungen zu strukturieren, wenn deine Rust-Programme größer
 werden. Außerdem werden wir erörtern, wie die Idiome von Rust mit denen
 verwandt sind, die du vielleicht aus der objektorientierten Programmierung
 kennst.

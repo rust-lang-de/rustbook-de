@@ -6,10 +6,10 @@ Kanal. Erinnere dich daran, wie wir den Empfänger für unseren asynchronen Kana
 in [„Übermitteln von Nachrichten“][17-02-messages] weiter oben in diesem
 Kapitel verwendet haben. Die asynchrone Methode `recv` erzeugt eine Sequenz von
 Elementen. Dies ist eine Instanz eines viel allgemeineren Musters, das oft
-*Strom* genannt wird.
+*Strom* (stream) genannt wird.
 
 Eine Sequenz von Elementen ist etwas, das wir schon einmal gesehen haben, als
-wir in Kapitel 13 das Merkmal `Iterator` betrachteten. Es gibt jedoch zwei
+wir in Kapitel 13 das Merkmal `Iterator` betrachtet haben. Es gibt jedoch zwei
 Unterschiede zwischen Iteratoren und dem asynchronen Kanalempfänger. Der erste
 ist das Element der Zeit: Iteratoren sind synchron, während der Kanalempfänger
 asynchron ist. Der zweite ist die API. Wenn wir direkt mit einem `Iterator`
@@ -49,12 +49,13 @@ Iterator und Ausgeben seiner Werte</span>
 
 Wir beginnen mit einem Array von Zahlen, das wir in einen Iterator umwandeln
 und dann `map` aufrufen, um alle Werte zu verdoppeln. Dann wandeln wir den
-Iterator mit der Funktion `trpl::stream_from_iter` in einen Strom um. Dann
-durchlaufen wir mit der `while let`-Schleife die Elemente im Strom.
+Iterator mit der Funktion `trpl::stream_from_iter` in einen Strom um.
+Schließlich durchlaufen wir mit der `while let`-Schleife die Elemente im
+Strom.
 
 Wenn wir versuchen, den Code auszuführen, lässt er sich leider nicht
-kompilieren. Stattdessen meldet er, wie wir in der Ausgabe sehen können, dass
-keine Methode `next` verfügbar ist.
+kompilieren. Stattdessen meldet der Compiler, dass keine Methode `next`
+verfügbar ist, wie wir in der Ausgabe sehen können.
 
 ```console
 error[E0599]: no method named `next` found for struct `Iter` in the current scope
@@ -87,17 +88,17 @@ dass wir das richtige Merkmal im Gültigkeitsbereich benötigen, um die Methode
 `next` verwenden zu können. In Anbetracht der bisherigen Diskussion könnte man
 erwarten, dass dies `Stream` ist, aber das Merkmal, das wir hier brauchen, ist
 eigentlich `StreamExt`. Das `Ext` steht hier für „extension“ (engl.
-Erweiterung): Dies ist ein gängiges Muster in der Rust-Gemeinschaft, um ein
-Merkmal mit einem anderen zu erweitern.
+Erweiterung): Dies ist eine gängige Vorgehensweise in der Rust-Gemeinschaft, um
+ein Merkmal mit einem anderen zu erweitern.
 
-Warum brauchen wir `StreamExt` anstelle von `Stream`, und was macht das Merkmal
-`Stream` selbst? Kurz gesagt, die Antwort ist, dass im gesamten Rust-Ökosystem
+Warum brauchen wir `StreamExt` anstelle von `Stream` und was macht das Merkmal
+`Stream` selbst? Kurz gesagt ist die Antwort, dass im gesamten Rust-Ökosystem
 das Merkmal `Stream` eine Low-Level-Schnittstelle definiert, die effektiv die
 Merkmale `Iterator` und `Future` kombiniert. Das Merkmal `StreamExt` stellt
 eine Reihe von APIs auf höherer Ebene zur Verfügung, darunter die Methode
 `next` sowie andere Hilfsmethoden, die denen des Merkmals `Iterator` ähneln.
 Wir werden auf die Merkmale `Stream` und `StreamExt` am Ende des Kapitels etwas
-ausführlicher zurückkommen. Für den Moment ist das genug, um fortzufahren.
+ausführlicher zurückkommen. Für den Moment reicht uns das.
 
 Die Behebung des Compilerfehlers besteht darin, eine `use`-Anweisung für
 `trpl::StreamExt` hinzuzufügen, wie in Codeblock 17-31.
@@ -128,7 +129,7 @@ als Grundlage für einen Strom</span>
 Mit all diesen Teilen zusammen funktioniert der Code so, wie wir es wollen!
 Außerdem können wir jetzt, da wir `StreamExt` im Gültigkeitsbereich haben, alle
 seine Hilfsmethoden verwenden, genau wie bei Iteratoren. In Codeblock 17-32
-verwenden wir zum Beispiel die Methode `filter`, um alles außer Vielfachen von
+verwenden wir zum Beispiel die Methode `filter`, um alles außer Vielfache von
 drei und fünf herauszufiltern.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -154,21 +155,21 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 17-31: Filtern eines `Stream` mit der Methode `StreamExt::filter`</span>
+<span class="caption">Codeblock 17-32: Filtern eines `Stream` mit der Methode `StreamExt::filter`</span>
 
 Das ist natürlich nicht sehr interessant. Wir könnten das auch mit normalen
-Iteratoren und ganz ohne async machen. Schauen wir uns also einige der anderen
-Dinge an, die wir tun können und die für Streams einzigartig sind.
+Iteratoren und ganz ohne asynchronen Code machen. Schauen wir uns also andere
+Dinge an, die wir tun können und die für Ströme einzigartig sind.
 
 ### Komposition von Strömen
 
 Viele Konzepte werden auf natürliche Weise als Datenströme dargestellt:
-Elemente, die in einer Warteschlange verfügbar werden, oder die Arbeit mit mehr
-Daten, als in den Speicher eines Computers passen, indem jeweils nur Teile
-davon aus dem Dateisystem abgerufen werden, oder Daten, die im Laufe der Zeit
-über das Netzwerk ankommen. Da es sich bei Strömen um Futures handelt, können
-wir sie auch mit jeder anderen Art von Futures verwenden und sie auf
-interessante Weise kombinieren. So können wir beispielsweise Ereignisse
+Elemente, die in einer Warteschlange verfügbar werden, oder die Arbeit mit
+größeren Datenmengen, als in den Arbeitsspeicher eines Computers passen, indem
+jeweils nur Teile davon aus dem Dateisystem abgerufen werden, oder Daten, die
+im Laufe der Zeit über das Netzwerk ankommen. Da es sich bei Strömen um Futures
+handelt, können wir sie auch mit jeder anderen Art von Futures verwenden und
+sie auf interessante Weise kombinieren. So können wir beispielsweise Ereignisse
 stapeln, um zu viele Netzwerkaufrufe zu vermeiden, Zeitüberschreitungen für
 Sequenzen lang laufender Vorgänge festlegen oder Ereignisse der
 Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.
@@ -245,11 +246,11 @@ aktualisieren wir den Rumpf der `while let`-Schleife, weil der Strom jetzt ein
 `Result` zurückgibt. Die Variante `Ok` zeigt an, dass eine Nachricht
 rechtzeitig angekommen ist; die Variante `Err` zeigt an, dass die Zeit
 abgelaufen ist, bevor irgendeine Nachricht angekommen ist. Wir gleichen dieses
-Ergebnis mit `match` ab und geben entweder die Nachricht eine Meldung über die
-Zeitüberschreitung aus. Schließlich ist zu beachten, dass wir die Nachrichten
-anpinnen, nachdem wir die Zeitüberschreitung auf sie angewendet haben, da der
-Timeout-Helper einen Strom erzeugt, der angeheftet werden muss, um abgefragt zu
-werden.
+Ergebnis mit `match` ab und geben entweder die Nachricht oder eine Meldung über
+die Zeitüberschreitung aus. Schließlich ist zu beachten, dass wir die
+Nachrichten anpinnen, nachdem wir die Zeitüberschreitung auf sie angewendet
+haben, da der Timeout-Helper einen Strom erzeugt, der angeheftet werden muss,
+um abgefragt zu werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -345,14 +346,14 @@ fn get_messages() -> impl Stream<Item = String> {
 einer asynchronen Verzögerung, ohne `get_messages` zu einer asynchronen
 Funktion zu machen</span>
 
-Um zwischen den Nachrichten in der Funktion `get_messages` zu schlafen, ohne zu
+Um zwischen den Nachrichten in der Funktion `get_messages` zu schlafen ohne zu
 blockieren, müssen wir async verwenden. Allerdings können wir `get_messages`
 selbst nicht zu einer asynchronen Funktion machen, denn dann würden wir ein
 `Future<Output = Stream<Item = String>>` statt eines `Stream<Item = String>>`
 zurückgeben. Der Aufrufer müsste selbst auf `get_messages` warten, um Zugriff
 auf den Strom zu erhalten. Aber denke daran: Alles in einem bestimmten Future
 geschieht linear; Nebenläufigkeit geschieht *zwischen* den Futures. Das Warten
-aufn `get_messages` würde erfordern, dass es alle Nachrichten sendet,
+auf `get_messages` würde erfordern, dass es alle Nachrichten sendet,
 einschließlich einer Pause zwischen dem Senden jeder Nachricht, bevor es den
 Empfängerstrom zurückgibt. Infolgedessen wäre die Zeitüberschreitung am Ende
 nutzlos. Es gäbe keine Verzögerungen im Strom selbst: Die Verzögerungen würden
@@ -367,8 +368,8 @@ durchführt.
 > speziellen Implementierung von `spawn_task` *ohne* vorher eine
 > Laufzeitumgebung einzurichten, lässt das Programm abstürzen. Andere
 > Implementierungen wählen andere Kompromisse: Sie könnten eine neue
-> Laufzeitumgebung erzeugen und so den Programmabbruch vermeiden, aber mit
-> etwas zusätzlichem Overhead enden, oder sie bieten einfach keine
+> Laufzeitumgebung erzeugen und so den Programmabbruch vermeiden, müssten dafür
+> aber zusätzlichen Overhead in Kauf nehmen, oder sie bieten einfach keine
 > eigenständige Möglichkeit, Aufgaben ohne Bezug auf eine Laufzeitumgebung zu
 > erzeugen. Du solltest sicherstellen, dass du weißt, welchen Kompromiss deine
 > Laufzeitumgebung gewählt hat, und deinen Code entsprechend schreiben!
@@ -397,9 +398,10 @@ Nachricht: 'j'
 Die Zeitüberschreitung verhindert nicht, dass die Nachrichten am Ende ankommen
 &ndash; wir erhalten immer noch alle ursprünglichen Nachrichten. Das liegt
 daran, dass unser Kanal unbegrenzt ist: Er kann so viele Nachrichten aufnehmen,
-wie in den Speicher passen. Wenn die Nachricht nicht vor der Zeitüberschreitung
-eintrifft, wird unser Strom-Handler dies berücksichtigen, aber wenn er den
-Strom erneut abruft, ist die Nachricht vielleicht schon angekommen.
+wie in den Arbeitsspeicher passen. Wenn die Nachricht nicht vor der
+Zeitüberschreitung eintrifft, wird unser Strom-Handler dies berücksichtigen,
+aber wenn er den Strom erneut abruft, ist die Nachricht vielleicht schon
+angekommen.
 
 Du kannst bei Bedarf ein anderes Verhalten erreichen, indem du andere Arten von
 Kanälen oder allgemeiner andere Arten von Strömen verwendest. In unserem
@@ -492,10 +494,10 @@ solange es in jeder Schleifeniteration mindestens einen await-Punkt gibt.
 
 Zurück im asynchronen Block unserer main-Funktion beginnen wir mit dem Aufruf
 von `get_intervals`. Dann führen wir die Ströme `messages` und `intervals` mit
-der Methode `merge` zusammen, die mehrere Ströme zu einem Strom kombiniert.
-Dabei werden Elemente aus jedem der Quellströme produziert, sobald die Elemente
-verfügbar sind, ohne eine bestimmte Reihenfolge einzuhalten. Schließlich laufen
-wir in einer Schleife über diesen kombinierten Strom (Codeblock 17-37).
+der Methode `merge` zusammen. Dabei werden Elemente aus jedem der Quellströme
+produziert, sobald die Elemente verfügbar sind, ohne eine bestimmte Reihenfolge
+einzuhalten. Schließlich laufen wir in einer Schleife über diesen kombinierten
+Strom (Codeblock 17-37).
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -560,7 +562,7 @@ Zu diesem Zeitpunkt müssen weder `messages` noch `intervals` angeheftet oder
 veränderbar sein, da beide zu einem einzigen `merged`-Strom zusammengeführt
 werden. Allerdings lässt sich dieser Aufruf von `merge` nicht kompilieren!
 (Genauso wenig wie der `next`-Aufruf in der `while let`-Schleife, aber darauf
-kommen wir zurück, nachdem wir das Problem behoben haben). Die beiden Ströme
+kommen wir zurück, nachdem wir das Problem behoben haben.) Die beiden Ströme
 haben unterschiedliche Typen. Der Strom `messages` hat den Typ `Timeout<impl
  Stream<Item = String>>`, wobei `Timeout` der Typ ist, der `Stream` für einen
 `timeout`-Aufruf implementiert. Der Strom `intervals` hat hingegen den Typ
@@ -643,9 +645,9 @@ sicher ist, dies zu tun.
 
 Damit sind wir *fast* da, wo wir hinwollen. Alle Typen passen. Wenn du das
 ausführst, gibt es allerdings zwei Probleme. Erstens wird es sich nie beenden!
-Du musst es mit <span class="keystroke">Strg+c</span> abbrechen. Zweitens
-werden die Meldungen des englischen Alphabets inmitten all der
-Intervallzähler-Meldungen begraben sein:
+Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd> abbrechen. Zweitens werden die
+Meldungen des englischen Alphabets inmitten all der Intervallzähler-Meldungen
+begraben sein:
 
 ```text
 --abschneiden--
@@ -661,7 +663,7 @@ Intervall: 43
 
 Codeblock 17-39 zeigt eine Möglichkeit, diese beiden letzten Probleme zu lösen.
 Zuerst verwenden wir die Methode `throttle` für den `intervals`-Strom, sodass
-er den `messages`-Strom nicht überfordert. Die Drosselung ist eine Möglichkeit,
+er den `messages`-Strom nicht eingräbt. Die Drosselung ist eine Möglichkeit,
 die Rate zu begrenzen, mit der eine Funktion aufgerufen wird &ndash; oder in
 diesem Fall, wie oft der Strom abgefragt wird. Einmal alle hundert
 Millisekunden sollte genügen, denn das entspricht in etwa der Häufigkeit, mit
@@ -733,20 +735,20 @@ nicht nur den einen oder anderen Strom.
 ```
 
 <span class="caption">Codeblock 17-39: Verwenden von `throttle` und `take` zur
-Verwaltung der zusammengeführten Ströme</span>
+Verwaltung des zusammengeführten Stroms</span>
 
 Wenn wir das Programm jetzt ausführen, hält es nach dem Abrufen von zwanzig
 Elementen aus dem Strom an, und die Intervalle überfluten die Nachrichten
-nicht. Wir erhalten auch nicht `Intervall: 100` oder `Intervall: 200` und so
-weiter, sondern stattdessen `Intervall: 1`, `Intervall: 2` und so weiter
-&ndash; obwohl wir einen Quellstrom haben, der jede Millisekunde ein Ereignis
-erzeugen *kann*. Das liegt daran, dass der Aufruf `throttle` einen neuen Strom
-erzeugt, der den ursprünglichen Strom umhüllt, sodass der ursprüngliche Strom
-nur mit der Drosselrate abgefragt wird und nicht mit seiner eigenen „nativen“
-Rate. Wir haben keine Vielzahl von unbehandelten Intervallnachrichten, die wir
-ignorieren wollen. Stattdessen erzeugen wir diese Intervallnachrichten gar
-nicht erst! Hier haben wir wieder die inhärente „Faulheit“ von Rusts Futures,
-die uns erlaubt, die Leistungsmerkmale zu wählen.
+nicht. Wir erhalten auch nicht `Intervall: 100` oder `Intervall: 200` usw.,
+sondern stattdessen `Intervall: 1`, `Intervall: 2` usw. &ndash; obwohl wir
+einen Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen *kann*. Das
+liegt daran, dass der Aufruf `throttle` einen neuen Strom erzeugt, der den
+ursprünglichen Strom umhüllt, sodass der ursprüngliche Strom nur mit der
+Drosselrate abgefragt wird und nicht mit seiner eigenen „nativen“ Rate. Wir
+haben keine Vielzahl von unbehandelten Intervallnachrichten, die wir ignorieren
+wollen. Stattdessen erzeugen wir diese Intervallnachrichten gar nicht erst!
+Hier haben wir wieder die inhärente „Faulheit“ von Rusts Futures, die uns
+erlaubt, die Leistungsmerkmale zu wählen.
 
 ```text
 Intervall: 1
@@ -855,8 +857,9 @@ fn get_intervals() -> impl Stream<Item = u32> {
 <span class="caption">Codeblock 17-40: Behandeln von Fehlern und Beenden der
 Schleifen</span>
 
-Nachdem wir nun eine Menge async in der Praxis gesehen haben, wollen wir einen
-Schritt zurückgehen und uns ein paar Details ansehen, wie `Future`, `Stream`
-und andere Schlüsselmerkmale, die Rust verwendet, um async zu ermöglichen.
+Nachdem wir nun eine Menge asynchronen Code in der Praxis gesehen haben, wollen
+wir einen Schritt zurückgehen und uns ein paar Details ansehen, wie `Future`,
+`Stream` und andere Schlüsselmerkmale, die Rust verwendet, um asynchrone
+Programmierung zu ermöglichen.
 
 [17-02-messages]: ch17-02-concurrency-with-async.html#Übermitteln-von-nachrichten

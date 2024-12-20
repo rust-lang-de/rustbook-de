@@ -1,6 +1,6 @@
 ## Async und Await
 
-Viele Operationen, die wir einen Computer durchführen lassen, können eine Weile
+Viele Operationen, die wir einen Computer ausführen lassen, können eine Weile
 dauern, bis sie erledigt sind. Wenn du beispielsweise mit einem Video-Editor
 ein Video einer Familienfeier exportierst, kann das Minuten bis Stunden dauern.
 Auch das Herunterladen eines Videos, das jemand aus deiner Familie freigegeben
@@ -8,42 +8,42 @@ hat, kann lange dauern. Es wäre schön, wenn wir etwas anderes tun könnten,
 während wir darauf warten, dass dieser langwierige Vorgang abgeschlossen wird.
 
 Der Videoexport wird so viel CPU- und GPU-Leistung wie möglich beanspruchen.
-Wenn du nur über einen CPU-Kern verfügst und dein Betriebssystem den Export nie
-pausiert, bis er abgeschlossen ist, kannst du in der Zeit nichts anderes auf
-deinem Computer machen. Das wäre allerdings eine ziemlich frustrierende
+Wenn du nur über *einen* CPU-Kern verfügst und dein Betriebssystem den Export
+nie pausiert, bis er abgeschlossen ist, kannst du in der Zeit nichts anderes
+auf deinem Computer machen. Das wäre allerdings eine ziemlich frustrierende
 Erfahrung. Stattdessen kann und wird das Betriebssystem deines Computers den
 Export oft genug unmerkbar unterbrechen, damit du währenddessen andere Aufgaben
 erledigen kannst.
 
-Der Dateidownload unterscheidet sich. Er beansprucht nicht sehr viel CPU-Zeit.
-Stattdessen muss die CPU auf das Eintreffen der Daten aus dem Netzwerk warten.
-Während du mit dem Einlesen der Daten beginnen kannst, sobald einige von ihnen
-angekommen sind, kann es eine Weile dauern, bis der Rest angekommen ist. Selbst
-wenn alle Daten vorhanden sind, kann ein Video recht groß sein, sodass es
-einige Zeit dauern kann, bis alle Daten geladen wurden. Vielleicht dauert es
-nur ein oder zwei Sekunden, aber das ist eine sehr lange Zeit für einen
-modernen Prozessor, der in jeder Sekunde Milliarden von Operationen ausführen
-kann. Es wäre schön, wenn man die CPU für andere Aufgaben nutzen könnte,
-während man auf die Ende des Netzwerkaufrufs wartet. Auch hier unterbricht das
-Betriebssystem das Programm unmerkbar, damit andere Dinge geschehen können,
-während die Netzwerkoperation noch läuft.
+Der Dateidownload wirkt sich anders aus. Er beansprucht nicht sehr viel
+CPU-Zeit. Stattdessen muss die CPU auf das Eintreffen der Daten aus dem
+Netzwerk warten. Obwohl du mit dem Einlesen der Daten beginnen kannst, sobald
+die ersten Daten angekommen sind, kann es eine Weile dauern, bis der Rest
+angekommen ist. Selbst wenn alle Daten bereits angekommen sind, kann ein Video
+recht groß sein, sodass es einige Zeit dauern kann, bis alle Daten eingelesen
+wurden. Vielleicht dauert es nur ein oder zwei Sekunden, aber das ist eine sehr
+lange Zeit für einen modernen Prozessor, der in jeder Sekunde Milliarden von
+Operationen ausführen kann. Es wäre schön, wenn man die CPU für andere Aufgaben
+nutzen könnte, während man auf das Ende des Netzwerkaufrufs wartet. Auch hier
+unterbricht das Betriebssystem das Programm unmerkbar, damit andere Dinge
+gemacht werden können, während der Netzwerkvorgang andauert.
 
-> Hinweis: Der Videoexport ist eine Operation, die oft als „CPU-gebunden“ oder
-> „rechengebunden“ bezeichnet wird. Er ist begrenzt durch die Geschwindigkeit,
-> mit der der Computer Daten innerhalb der *CPU* oder *GPU* verarbeiten kann,
-> und wie viel von dieser Geschwindigkeit er nutzen kann. Das Herunterladen von
-> Videos ist hingegen ein Vorgang, der oft als „IO-gebunden“ bezeichnet wird,
-> weil er durch die Geschwindigkeit der *Eingabe und Ausgabe* des Computers
-> begrenzt ist. Es kann nur so schnell gehen, wie die Daten über das Netzwerk
-> gesendet werden können.
+> Hinweis: Der Videoexport ist ein Vorgang, der als „CPU-gebunden“ (CPU-bound)
+> oder „rechengebunden“ (compute-bound) bezeichnet wird. Er ist begrenzt durch
+> die Geschwindigkeit, mit der der Computer Daten innerhalb der *CPU* oder
+> *GPU* verarbeiten kann, und wie viel von dieser Geschwindigkeit er nutzen
+> kann. Das Herunterladen von Videos ist hingegen ein Vorgang, der als
+> „E/A-gebunden“ (I/O bound) bezeichnet wird, weil er durch die Geschwindigkeit
+> der *Eingabe und Ausgabe* des Computers begrenzt ist. Es kann nur so schnell
+> gehen, wie die Daten über das Netzwerk gesendet werden können.
 
 In beiden Beispielen bieten die unmerkbaren Unterbrechungen des Betriebssystems
 eine Form der Nebenläufigkeit. Diese Nebenläufigkeit findet jedoch nur auf der
 Ebene eines Programms statt: Das Betriebssystem unterbricht ein Programm, damit
 andere Programme ihre Arbeit erledigen können. Da wir unsere Programme in
-vielen Fällen auf einer viel feineren Ebene verstehen als das Betriebssystem,
-können wir viele Möglichkeiten für Nebenläufigkeit erkennen, die das
-Betriebssystem nicht sehen kann.
+vielen Fällen auf einer viel detailliertere Ebene verstehen als das
+Betriebssystem, können wir viele Möglichkeiten für Nebenläufigkeit sehen, die
+das Betriebssystem nicht erkennen kann.
 
 Wenn wir beispielsweise ein Werkzeug zur Verwaltung von Dateidownloads
 entwickeln, sollten wir unser Programm so schreiben können, dass der Start
@@ -64,7 +64,7 @@ Wir könnten das Blockieren unseres Haupt-Strangs (main thread) vermeiden, indem
 wir für das Herunterladen jeder Datei einen eigenen Strang (thread) starten.
 Allerdings würden wir irgendwann feststellen, dass der Overhead dieser Stränge
 ein Problem darstellt. Es wäre auch besser, wenn der Aufruf gar nicht erst
-blockiert würde. Und nicht zuletzt wäre es besser, wenn wir in demselben
+blockieren würde. Und nicht zuletzt wäre es besser, wenn wir in demselben
 direkten Stil schreiben könnten, den wir bei blockierendem Code verwenden. So
 ähnlich wie hier:
 
@@ -86,14 +86,14 @@ unterscheiden, denn die Unterschiede werden sich bei der Arbeit zeigen.
 
 Schauen wir uns verschiedene Möglichkeiten an, wie ein Team die Arbeit an einem
 Softwareprojekt aufteilen kann. Wir könnten einer einzelnen Person mehrere
-Aufgaben zuweisen, oder wir könnten jedem Teammitglied eine Aufgabe zuweisen,
-oder wir könnten eine Mischung aus beiden Ansätzen wählen.
+Aufgaben zuweisen oder jedem Teammitglied eine Aufgabe oder eine Mischung aus
+beiden Ansätzen.
 
 Wenn eine Person an mehreren verschiedenen Aufgaben arbeitet, bevor eine von
 ihnen abgeschlossen ist, handelt es sich um *Nebenläufigkeit*. Vielleicht hast
 du zwei verschiedene Projekte auf deinem Computer ausgecheckt, und wenn dir bei
 einem Projekt langweilig wird oder du nicht weiterkommst, wechsle zum anderen.
-Da du nur eine Person bist, kannst du nicht an beiden Aufgaben gleichzeitig
+Da du nur *eine* Person bist, kannst du nicht an beiden Aufgaben gleichzeitig
 arbeiten, aber du kannst Multitasking betreiben, d.h. du kannst an mehreren
 Aufgaben arbeiten, indem du zwischen ihnen wechselst.
 
@@ -155,8 +155,8 @@ der Haube nutzen.
 Jetzt wollen wir uns ansehen, wie die asynchrone Programmierung in Rust
 tatsächlich funktioniert! Im weiteren Verlauf dieses Kapitels werden wir:
 
-* sehen, wie man Rusts `async` und `await` Syntax verwendet
+* sehen, wie man Rusts `async` und `await` Syntax verwendet.
 * erkunden, wie man das asynchrone Modell verwendet, um einige der
-  Herausforderungen zu lösen, die wir in Kapitel 16 betrachtet haben
+  Herausforderungen zu lösen, die wir in Kapitel 16 betrachtet haben.
 * uns anschauen, wie Mehrsträngigkeit (multithreading) und async komplementäre
-  Lösungen bieten, die man in vielen Fällen sogar zusammen verwenden kann
+  Lösungen bieten, die man in vielen Fällen sogar zusammen verwenden kann.

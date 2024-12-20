@@ -6,7 +6,7 @@ die Rust-Schlüsselwörter `async` und `await`.
 Ein *Future* ist ein Wert, der vielleicht noch nicht verfügbar ist, aber
 irgendwann in der Zukunft verfügbar sein wird. (Das gleiche Konzept taucht in
 vielen Programmiersprachen auf, manchmal unter anderen Namen wie „task“ oder
-„promise“). Rust enthält ein Merkmal `Future` als Baustein, sodass verschiedene
+„promise“.) Rust enthält ein Merkmal `Future` als Baustein, sodass verschiedene
 asynchrone Operationen mit verschiedenen Datenstrukturen, aber mit einer
 gemeinsamen Schnittstelle implementiert werden können. In Rust sagen wir, dass
 Typen, die das Merkmal `Future` implementieren, Futures sind. Jeder Typ, der
@@ -20,8 +20,8 @@ Schlüsselwort `await` warten, bis ein Future fertig ist, was als *Warten auf
 ein Future* (awaiting a future) bezeichnet wird. Jede Stelle, an der du
 innerhalb eines asynchronen Blocks oder einer asynchronen Funktion auf ein
 Future wartest, ist eine Stelle, an der der asynchrone Block oder die
-asynchrone Funktion unterbrochen und fortgesetzt werden kann. Der Prozess, bei
-dem mit einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird
+asynchrone Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang, bei
+dem bei einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird
 *polling* genannt.
 
 Andere Sprachen verwenden ebenfalls die Schlüsselwörter `async` und `await` für
@@ -38,14 +38,14 @@ das Merkmal `Future` bereitstellt, kannst du es bei Bedarf auch für deine
 eigenen Datentypen implementieren. Viele der Funktionen, die wir in diesem
 Kapitel sehen werden, geben Typen mit ihren eigenen Implementierungen von
 `Future` zurück. Wir werden am Ende des Kapitels noch einmal auf die Definition
-des Merkmals zurückkommen und mehr darüber erfahren, wie es funktioniert, aber
-das sind genug Details, um uns voranzubringen.
+des Merkmals zurückkommen und mehr darüber erfahren, wie es funktioniert. Aber
+das sind vorerst genug Details, die wir brauchen.
 
 Das mag sich alles ein wenig abstrakt anfühlen. Lass uns unser erstes
 asynchrones Programm schreiben: Einen kleinen Web Scraper. Wir geben zwei URLs
 über die Befehlszeile ein, rufen beide gleichzeitig ab und geben das Ergebnis
-desjenigen zurück, der zuerst fertig ist. Dieses Beispiel wird eine ziemlich
-neue Syntax verwenden, aber keine Sorge. Wir erklären dir alles, was du zum
+desjenigen zurück, der zuerst fertig wird. Dieses Beispiel wird eine neue
+Syntax verwenden, aber keine Sorge. Wir erklären dir alles, was du zum
 jeweiligen Zeitpunkt wissen musst.
 
 ### Unser erstes asynchrones Programm
@@ -86,10 +86,10 @@ Jetzt können wir die verschiedenen von `trpl` bereitgestellten Teile verwenden,
 um unser erstes asynchrones Programm zu schreiben. Wir werden ein kleines
 Kommandozeilen-Werkzeug erstellen, das zwei Webseiten abruft, das
 jeweilige `<title>`-Element ausliest und den Titel derjenigen Seite ausgibt,
-die den Prozess zuerst beendet hat.
+die den Vorgang zuerst beendet hat.
 
 Beginnen wir mit dem Schreiben einer Funktion, die eine Seiten-URL als
-Parameter entgegennummt, eine Anfrage an diese stellt und den Text des
+Parameter entgegennimmt, eine Anfrage an diese stellt und den Text des
 Titelelements zurückgibt:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -121,12 +121,12 @@ die übergebene URL abzurufen, und warten auf die Antwort mit dem Schlüsselwort
 `await`. Dann holen wir mit der Methode `text` den Text aus der Antwort und
 warten wieder mit dem Schlüsselwort `await`. Diese beiden Schritte sind
 asynchron. Bei `get` müssen wir darauf warten, dass der Server den ersten Teil
-seiner Antwort zurücksendet, der den HTTP-Header, Cookies und so weiter
-enthält. Dieser Teil der Antwort kann getrennt vom Hauptteil der Anfrage
-übermittelt werden. Vor allem, wenn der Textteil sehr umfangreich ist, kann
-es einige Zeit dauern, bis er vollständig angekommen ist. Daher müssen wir
-warten, bis die *gesamte* Antwort eingetroffen ist, weshalb die Methode `text`
-ebenfalls asynchron ist.
+seiner Antwort sendet, der den HTTP-Header, Cookies und so weiter enthält.
+Dieser Teil der Antwort kann getrennt vom Hauptteil der Anfrage übermittelt
+werden. Vor allem, wenn der Textteil sehr umfangreich ist, kann es einige Zeit
+dauern, bis er vollständig angekommen ist. Daher müssen wir warten, bis die
+*gesamte* Antwort eingetroffen ist, weshalb die Methode `text` ebenfalls
+asynchron ist.
 
 Wir müssen beide Futures explizit abwarten, weil Futures in Rust *faul* (lazy)
 sind: Sie tun nichts, bis man sie mit `await` dazu auffordert. (Tatsächlich
@@ -143,8 +143,8 @@ vermeiden, bis er tatsächlich benötigt wird.
 > Verwendung von `thread::spawn` im vorherigen Kapitel gesehen haben, wo der
 > Funktionsabschluss, den wir an einen anderen Strang übergeben haben, sofort
 > zu laufen begann. Es unterscheidet sich auch davon, wie viele andere Sprachen
-> async umsetzen! Aber es ist wichtig für Rust. Warum das so ist, werden wir
-> später sehen.
+> die asynchrone Programmierung umsetzen! Aber es ist wichtig für Rust. Warum
+> das so ist, werden wir später sehen.
 
 Sobald wir `response_text` haben, können wir ihn mit `Html::parse` in eine
 Instanz des Typs `Html` einlesen. Anstelle einer rohen Zeichenkette haben wir
@@ -193,8 +193,8 @@ den Rumpf von `page_url_for` ändern, um die Funktionsaufrufe `trpl::get` und
 `await`</span>
 
 Damit haben wir erfolgreich unsere erste asynchrone Funktion geschrieben! Bevor
-wir etwas Code in `main` hinzufügen, um sie aufzurufen, wollen wir ein wenig
-mehr darüber sprechen, was wir geschrieben haben und was es bedeutet.
+wir etwas Code in `main` hinzufügen, um sie aufzurufen, wollen wir uns ansehen,
+was wir geschrieben haben und was es bedeutet.
 
 Wenn Rust einen mit dem Schlüsselwort `async` markierten Block sieht,
 kompiliert es ihn in einen eindeutigen, anonymen Datentyp, der das Merkmal
@@ -227,8 +227,8 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> + '_ {
 Gehen wir die einzelnen Teile der umgewandelten Version durch:
 
 * Sie verwendet die Syntax `impl Trait`, die wir bereits im Abschnitt
-  ["Merkmale als Parameter"][impl-trait] in Kapitel 10 besprochen haben.
-* Des zurückgegebene Merkmal ist ein `Future` mit dem assoziierten Typ
+  [„Merkmale als Parameter“][impl-trait] in Kapitel 10 besprochen haben.
+* Das zurückgegebene Merkmal ist ein `Future` mit dem assoziierten Typ
   `Output`. Beachte, dass der `Output`-Typ `Option<String>` ist, was dem
   ursprünglichen Rückgabetyp der `async fn`-Version von `page_title`
   entspricht.
@@ -241,7 +241,7 @@ Gehen wir die einzelnen Teile der umgewandelten Version durch:
 * Der neue Funktionsrumpf ist ein `async move`-Block, da er den Parameter `url`
   verwendet. (Wir werden später in diesem Kapitel mehr über `async` vs. `async
   move` sprechen.)
-* Die neue Version der Funktion hat eine Art von Lebensdauer, die wir bisher im
+* Die neue Version der Funktion hat eine Lebensdauerangabe, die wir bisher im
   Ausgabetyp nicht gesehen haben: `'_`. Da die Funktion ein `Future`
   zurückgibt, das sich auf eine Referenz bezieht &ndash; in diesem Fall die
   Referenz aus dem Parameter `url` &ndash; müssen wir Rust mitteilen, dass wir
@@ -306,21 +306,22 @@ nicht *selbst* eine Laufzeitumgebung. (Warum das so ist, werden wir später
 sehen.) Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine
 Stelle, an der es eine Laufzeitumgebung einrichtet und die Futures ausführt.
 
-Die meisten Sprachen, die async unterstützen, bündeln eine Laufzeitumgebung mit
-der Sprache. Rust tut dies nicht. Stattdessen gibt es viele verschiedene
-async-Laufzeitumgebungen, von denen jede für den jeweiligen Anwendungsfall
-unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem Durchsatz, vielen
-CPU-Kernen und einer großen Menge an RAM hat zum Beispiel ganz andere
-Anforderungen als ein Mikrocontroller mit einem einzigen Kern, einer kleinen
-Menge an RAM und keiner Möglichkeit, Haldenspeicher-Allokationen durchzuführen.
-Die Kisten, die diese Laufzeitumgebungen bereitstellen, bieten oft auch
-asynchrone Versionen gängiger Funktionen wie Datei- oder Netzwerkkommunikation.
+Die meisten Sprachen, die asynchrone Programmierung unterstützen, bündeln eine
+Laufzeitumgebung mit der Sprache. Rust tut dies nicht. Stattdessen gibt es
+viele verschiedene asynchrone Laufzeitumgebungen, von denen jede für den
+jeweiligen Anwendungsfall unterschiedliche Kompromisse eingeht. Ein Webserver
+mit hohem Durchsatz, vielen CPU-Kernen und einer großen Menge an RAM hat zum
+Beispiel ganz andere Anforderungen als einen Mikrocontroller mit einem einzigen
+Kern, einer kleinen Menge an RAM und keiner Möglichkeit,
+Haldenspeicher-Allokationen (heap allocations) durchzuführen. Die Kisten, die
+diese Laufzeitumgebungen bereitstellen, bieten oft auch asynchrone Versionen
+gängiger Funktionen wie Datei- oder Netzwerkkommunikation.
 
 Hier und im Rest dieses Kapitels werden wir die Funktion `run` aus der Kiste
-`trpl` verwenden, die ein Future als Argument annimmt und ihn bis ans Ende
+`trpl` verwenden, die ein Future als Argument annimmt und ihn bis zum Ende
 ausführt. Hinter den Kulissen wird durch den Aufruf von `run` eine
 Laufzeitumgebung eingerichtet, die das übergebene Future ausführt. Sobald das
-Future abgeschlossen ist, gibt `run` den Wert zurück, den der Future erzeugt
+Future abgeschlossen ist, gibt `run` den Wert zurück, den das Future erzeugt
 hat.
 
 Wir könnten das von `page_title` zurückgegebene Future direkt an `run`
@@ -362,8 +363,8 @@ fn main() {
 <span class="caption">Codeblock 17-4: Warten auf einen asynchronen Block mit
 `trpl::run`</span>
 
-Wenn wir dies ausführen, erhalten wir das Verhalten, das wir anfangs vielleicht
-erwartet haben:
+Wenn wir dies ausführen, erhalten wir das Verhalten, das wir anfangs erwartet
+haben:
 
 ```console
 $ cargo run -- https://www.rust-lang.org
@@ -378,10 +379,9 @@ kompilieren und wir können ihn ausführen. Bevor wir Code hinzufügen, um zwei
 Webseiten gegeneinander antreten zu lassen, wollen wir uns noch einmal kurz der
 Funktionsweise von Futures zuwenden.
 
-Jeder Codestelle mit dem Schlüsselwort `await` stellt eine Stelle dar, an der
-die Kontrolle an die Laufzeitumgebung zurückgegeben wird. Damit das
-funktioniert, muss Rust den Zustand des asynchronen Blocks verfolgen, sodass
-die Laufzeitumgebung eine andere Arbeit starten und dann zurückkommen kann,
+Jede Codestelle mit dem Schlüsselwort `await` stellt eine Stelle dar, an der
+die Kontrolle an die Laufzeitumgebung abgegeben wird. Damit das funktioniert,
+muss Rust den Zustand des asynchronen Blocks verwalten, sodass die Laufzeitumgebung eine andere Arbeit starten und dann zurückkommen kann,
 wenn sie bereit ist, diese Arbeit wieder fortzusetzen. Dies ist eine 
 unsichtbare Zustandsmaschine, so als ob man eine Aufzählung auf diese Weise
 schreiben würde, um den aktuellen Zustand an jedem `await`-Punkt zu speichern:
@@ -407,10 +407,10 @@ Regeln für uns und gibt gute Fehlermeldungen aus. Ein paar davon werden wir
 später im Kapitel durcharbeiten!
 
 Letztendlich muss etwas diese Zustandsmaschine ausführen. Dieses Etwas ist eine
-Laufzeitumgebung. (Aus diesem Grund stößt man manchmal auf Referenzen von
-*Executors*, wenn man sich mit Laufzeitumgebungen befasst: Ein Executor ist der
-Teil einer Laufzeitumgebung, der für die Ausführung des asynchronen Codes
-verantwortlich ist).
+Laufzeitumgebung. (Aus diesem Grund wird manchmal auf *Executors* verwiesen,
+wenn man sich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
+Laufzeitumgebung, der für die Ausführung des asynchronen Codes verantwortlich
+ist.)
 
 Jetzt können wir verstehen, warum der Compiler uns in Codeblock 17-3 davon
 abgehalten hat, `main` selbst zu einer asynchronen Funktion zu machen. Wäre
@@ -472,15 +472,15 @@ async fn page_title(url: &str) -> (&str, Option<String>) {
 In Codeblock 17-5 beginnen wir mit dem Aufruf von `page_title` für jede der vom
 Benutzer angegebenen URLs. Wir speichern die durch den Aufruf von `page_title`
 erzeugten Futures als `title_fut_1` und `title_fut_2`. Denke daran, dass diese
-noch nichts tun, denn Futures sind träge, und wir haben noch nicht auf sie
+noch nichts tun, denn Futures sind faul und wir haben noch nicht auf sie
 gewartet. Dann übergeben wir die Futures an `trpl::race`, das einen Wert
-zurückgibt, der anzeigt, welche der übergebenen Futures zuerst fertig wurde.
+zurückgibt, der anzeigt, welches der übergebenen Futures zuerst fertig wurde.
 
 > Anmerkung: Unter der Haube ist `race` auf der allgemeineren Funktion `select`
 > aufgebaut, der du in der realen Welt des Rust-Codes häufiger begegnen wirst.
-> Eine `select`-Funktion kann eine Menge Dinge tun, die die Funktion
-> `trpl::race` nicht kann, aber sie bringt auch zusätzliche Komplexität mit,
-> die wir für den Moment überspringen können.
+> Eine Funktion `select` kann eine Menge Dinge tun, die die Funktion
+> `trpl::race` nicht kann, aber sie bringt auch zusätzliche Komplexität mit
+> sich, die wir für den Moment überspringen können.
 
 Jedes Future kann legitimerweise „gewinnen“, also macht es keinen Sinn, ein
 `Result` zurückzugeben. Stattdessen gibt `race` einen Typ zurück, den wir noch
@@ -507,7 +507,7 @@ Wir aktualisieren auch `page_title`, um die gleiche URL zurückzugeben, die wir
 ausgeben, wenn die Seite, die zuerst zurückkommt, keinen `<title>` hat, den wir
 auflösen können. Mit diesen Informationen aktualisieren wir die Ausgabe von
 `println!`, um anzugeben, welche URL als erste beendet wurde und was der
-`<title>` der Webseite unter dieser URL war, sofern vorhanden.
+`<title>` der Webseite hinter dieser URL war, sofern vorhanden.
 
 Du hast jetzt einen kleinen funktionierenden Web Scraper erstellt! Wähle ein
 paar URLs aus und führe das Befehlszeilenwerkzeug aus. Du wirst möglicherweise
@@ -515,7 +515,7 @@ feststellen, dass einige Webseiten stets schneller sind als andere, während in
 anderen Fällen die schnellere Webseite von Ausführung zu Ausführung
 unterschiedlich ist. Noch wichtiger ist, dass du die Grundlagen der Arbeit mit
 Futures gelernt hast, sodass wir uns jetzt noch mehr mit den Dingen befassen
-können, die wir mit async tun können.
+können, die wir mit asynchroner Programmierung tun können.
 
 [impl-trait]: ch10-02-traits.html#merkmale-als-parameter
 [iterators-lazy]: ch13-02-iterators.html

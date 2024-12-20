@@ -85,8 +85,8 @@ musst du ein Join-Handle verwenden, um auf das Ende der ersten Aufgabe zu
 warten. Bei Strängen haben wir die Methode `join` verwendet, um zu
 „blockieren“, bis der Strang fertig ist. In Codeblock 17-7 können wir `await`
 verwenden, um dasselbe zu tun, weil das Task-Handle selbst ein Future ist. Sein
-`Output`-Typ ist ein `Result`, also entpacken wir es ebenfalls, nachdem wir es
-erwartet haben.
+`Output`-Typ ist ein `Result`, also entpacken wir es ebenfalls, nachdem wir
+darauf gewartet haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -144,8 +144,8 @@ Der größere Unterschied ist, dass wir dafür keinen weiteren
 Betriebssystem-Strang starten müssen. Tatsächlich brauchen wir hier nicht
 einmal eine Aufgabe zu starten. Da asynchrone Blöcke zu anonymen Futures
 kompiliert werden, können wir jede Schleife in einen asynchronen Block packen
-und die Laufzeitumgebung beide mittels der Funktion `trpl::join` zu Ende führen
-lassen.
+und die Laufzeitumgebung beide mittels der Funktion `trpl::join` zu Ende
+ausführen lassen.
 
 In Kapitel 16 haben wir gezeigt, wie man die Methode `join` auf den Typ
 `JoinHandle` anwendet, der beim Aufruf von `std::thread::spawn` zurückgegeben
@@ -214,10 +214,10 @@ wechselt zwischen ihnen ab, und lässt nie eines vorauslaufen, wenn die andere
 bereit ist. Bei Strängen entscheidet das Betriebssystem, welcher Strang geprüft
 wird und wie lange er laufen darf. Bei asynchronem Rust entscheidet die
 Laufzeitumgebung, welche Aufgabe geprüft werden soll. (In der Praxis sind die
-Details komplizierter, weil eine async-Laufzeitumgebung unter der Haube
+Details komplizierter, weil eine asynchrone Laufzeitumgebung unter der Haube
 Betriebssystem-Stränge für die Verwaltung der Nebenläufigkeit verwenden könnte,
 sodass das Einhalten der Fairness mehr Aufwand für eine Laufzeitumgebung sein
-kann &ndach; aber es ist immer noch möglich!) Laufzeitumgebungen müssen nicht
+kann &ndash; aber es ist immer noch möglich!) Laufzeitumgebungen müssen nicht
 für jede beliebige Operation Fairness garantieren, und Laufzeitumgebungen
 stellen oft mehrere APIs bereit, mit denen du wählen kannst, ob du Fairness
 wünschst oder nicht.
@@ -361,7 +361,7 @@ Die `while let`-Schleife fasst all dies zusammen. Wenn das Ergebnis des Aufrufs
 von `rx.recv().await` den Wert `Some(message)` hat, erhalten wir Zugriff auf
 die Nachricht und können sie im Schleifenrumpf verwenden, genauso wie wir es
 mit `if let` könnten. Wenn das Ergebnis `None` ist, endet die Schleife. Jedes
-Mal, wenn die Schleife beendet wird, trifft sie erneut auf den await-Punkt,
+Mal, wenn die Schleife durchlaufen wird, trifft sie erneut auf den await-Punkt,
 sodass die Laufzeitumgebung die Schleife erneut unterbricht, bis eine weitere
 Nachricht eintrifft.
 
@@ -370,7 +370,7 @@ immer noch ein paar Probleme. Zum einen kommen die Nachrichten nicht in
 Abständen von einer halben Sekunde an. Sie kommen alle auf einmal an, und zwar
 zwei Sekunden (2.000 Millisekunden) nach dem Start des Programms. Zum anderen
 beendet sich dieses Programm nie! Stattdessen wartet es ewig auf neue
-Nachrichten. Du musst es mit <span class="keystroke">Strg+c</span> beenden.
+Nachrichten. Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd> beenden.
 
 Beginnen wir damit, zu verstehen, warum die Nachrichten alle auf einmal nach
 der vollen Verzögerung eintreffen, anstatt mit Verzögerungen zwischen den
@@ -602,5 +602,5 @@ Erhalten: 'dich'
 ```
 
 Das ist ein guter Anfang, aber es beschränkt uns auf eine Handvoll Futures:
-Zwei mit `join`, oder drei mit `join3`. Schauen wir uns an, wie wir mit mehr
+Zwei mit `join` und drei mit `join3`. Schauen wir uns an, wie wir mit mehr
 Futures arbeiten können.

@@ -67,8 +67,8 @@ Das ist definitiv eine nette Verbesserung gegenüber der Notwendigkeit, zwischen
 `join` und `join3` und `join4` und so weiter zu wechseln! Allerdings
 funktioniert auch diese Makroform nur, wenn wir die Anzahl der Futures im
 Voraus kennen. In der realen Welt von Rust ist es jedoch ein gängiges Muster,
-Futures in eine Kollektion zu geben und dann darauf zu warten, dass einige oder
-alle Futures in dieser Kollektion fertig werden.
+Futures in eine Kollektion (collection) zu geben und dann darauf zu warten,
+dass einige oder alle Futures in dieser Kollektion fertig werden.
 
 Um alle Futures in einer Kollektion zu prüfen, müssen wir über *alle* Futures
 iterieren und sie verbinden. Die Funktion `trpl::join_all` akzeptiert jeden
@@ -159,15 +159,15 @@ Das mag überraschend sein. Schließlich gibt keiner von ihnen etwas zurück,
 sodass jeder Block ein `Future<Output = ()>` erzeugt. Allerdings ist `Future`
 ein Merkmal, kein konkreter Typ. Die konkreten Typen sind die einzelnen
 Datenstrukturen, die der Compiler für asynchrone Blöcke erzeugt. Man kann nicht
-zwei verschiedene handgeschriebene Strukturen in einen `Vec` packen, und
-dasselbe gilt für die verschiedenen vom Compiler erzeugten Strukturen.
+zwei verschiedene handgeschriebene Strukturen in einen `Vec` packen. Dasselbe
+gilt für die verschiedenen vom Compiler erzeugten Strukturen.
 
 Damit dies funktioniert, müssen wir *Merkmalsobjekte* (trait objects)
 verwenden, wie wir es in [„Rückgabe von Fehlern aus der Funktion `run`“][dyn]
 in Kapitel 12 getan haben. (Wir werden Merkmalsobjekte im Detail in Kapitel 18
-behandeln.) Die Verwendung von Merkmalsobjekte ermöglicht es uns, alle anonymen
-Futures, die von diesen Typen erzeugt werden, als denselben Typ zu behandeln,
-da alle von ihnen das Merkmal „Future“ implementieren.
+behandeln.) Die Verwendung von Merkmalsobjekten ermöglicht es uns, alle
+anonymen Futures, die von diesen Typen erzeugt werden, als denselben Typ zu
+behandeln, da alle von ihnen das Merkmal `Future` implementieren.
 
 > Anmerkung: In Kapitel 8 haben wir eine andere Möglichkeit besprochen, mehrere
 > Typen in einen `Vec` aufzunehmen: Die Verwendung eines Enums, um jeden der
@@ -236,14 +236,14 @@ wie in Codeblock 17-16 gezeigt.
 ```
 
 <span class="caption">Codeblock 17-16: Versuch `Box::new` zu verwenden, um die
-Typen der Futures in einem `Vec` anzuordnen</span>
+Typen der Futures in einen `Vec` zu bringen</span>
 
 Leider lässt sich das immer noch nicht kompilieren. Tatsächlich haben wir den
 gleichen grundlegenden Fehler wie zuvor, aber wir bekommen einen für den
 zweiten und dritten Aufruf von `Box::new`, und wir bekommen auch neue Fehler,
 die sich auf das Merkmal `Unpin` beziehen. Wir werden gleich auf die
-`Unpin`-Fehler zurückkommen. Lass uns zunächst die Typ-Fehler bei den
-`Box::new`-Aufrufen beheben, indem wir den Typ der Variable `futures` explizit
+`Unpin`-Fehler zurückkommen. Lass uns zunächst die Typ-Fehler bei den Aufrufen
+von `Box::new` beheben, indem wir den Typ der Variable `futures` explizit
 annotieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -511,10 +511,10 @@ Erhalten: 'dich'
 
 Puh!
 
-Wir können hier noch ein bisschen mehr erforschen. Zum einen bringt die
+Wir können hier noch ein bisschen weiterforschen. Zum einen bringt die
 Verwendung von `Pin<Box<T>>` ein wenig zusätzlichen Overhead mit sich, da wir
 diese Futures mit `Box` auf den Haldenspeicher (heap) legen &ndash; und das tun
-wir nur, um die Typen in eine Reihe zu bringen. Wir *brauchen* die
+wir nur, um die Typen in eine Kollektion zu bringen. Wir *brauchen* die
 Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal zu dieser
 speziellen Funktion. Wie oben erwähnt, ist `Pin` selbst ein Wrapper-Typ, sodass
 wir den Vorteil haben, einen einzigen Typ in `Vec` zu haben &ndash; der
@@ -640,11 +640,11 @@ Wettlauf zwischen zwei Futures.
 
 In Codeblock 17-21 verwenden wir wieder `trpl::race`, um zwei Futures `slow`
 und `fast` gegeneinander laufen zu lassen. Jedes gibt eine Nachricht aus, wenn
-es startet, pausiert für eine gewisse Zeit, indem es `sleep` aufruft und
-wartet, und gibt dann eine weitere Nachricht aus, wenn es fertig ist. Dann
+es startet, pausiert für eine gewisse Zeit, indem es `sleep` aufruft, und
+wartet und gibt dann eine weitere Nachricht aus, wenn es fertig ist. Dann
 übergeben wir beide an `trpl::race` und warten, bis eines von ihnen fertig ist.
 (Das Ergebnis ist nicht allzu überraschend: `fast` gewinnt!) Anders als bei der
-Verwendung von `race` in [Unser erstes asynchrones Programm][async-program]
+Verwendung von `race` in [„Unser erstes asynchrones Programm“][async-program]
 ignorieren wir hier einfach die `Either`-Instanz, die es zurückgibt, da das
 gesamte interessante Verhalten im Rumpf der asynchronen Blöcke stattfindet.
 
@@ -687,24 +687,24 @@ abgefragt wird. Unabhängig davon, ob die Implementierung von `race` fair ist,
 wird *eines* der Futures bis zum ersten `await` in seinem Rumpf laufen, bevor
 eine andere Aufgabe beginnen kann.
 
-Erinnere dich an [Unser erstes asynchrones Programm][async-program], bei dem
+Erinnere dich an [„Unser erstes asynchrones Programm“][async-program], bei dem
 Rust der Laufzeitumgebung an jedem await-Punkt die Möglichkeit gibt, die
 Aufgabe anzuhalten und zu einer anderen zu wechseln, wenn das zu erwartende
 Future nicht fertig ist. Der umgekehrte Fall ist ebenfalls wahr: Rust hält
-asynchrone Blöcke *nur* an einem await-Punkt an und übergibt die Kontrolle die
+asynchrone Blöcke *nur* an einem await-Punkt an und übergibt die Kontrolle der
 Laufzeitumgebung. Alles zwischen den await-Punkten ist synchron.
 
 Das heißt, wenn du eine Menge Arbeit in einem asynchronen Block ohne einen
 await-Punkt erledigst, blockiert dieses Future alle anderen Futures an ihrem
-Fortschritt. Dies wird manchmal auch als ein Future lässt ein anderes Future
-*verhungern* bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
-du jedoch eine teure Initialisierung oder eine langwierige Arbeit durchführst,
+Fortschritt. Dies wird manchmal auch als *ein Future lässt ein anderes Future
+verhungern* bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
+du jedoch eine teure Initialisierung oder eine langwierige Arbeit durchführst
 oder wenn du ein Future hast, das eine bestimmte Aufgabe auf unbestimmte Zeit
 ausführt, musst du darüber nachdenken, wann und wo du die Kontrolle an die
-Laufzeitumgebung zurückgibst.
+Laufzeitumgebung abgibst.
 
 Aber *wie* würdest du in diesen Fällen die Kontrolle an die Laufzeitumgebung
-zurückgeben?
+abgeben?
 
 ### Abgeben (yielding)
 
@@ -802,9 +802,9 @@ fertig ist. Es gibt jedoch keine Abwechslung zwischen den beiden Futures. Das
 Future `a` erledigt seine gesamte Arbeit, bis auf den Aufruf von `trpl::sleep`
 gewartet wird, dann erledigt das Future `b` seine gesamte Arbeit, bis auch dort
 auf den Aufruf von `trpl::sleep` gewartet wird, und dann wird das Future `a`
-beendet. Damit beide Futures während ihre langsamen Vorgänge Fortschritte
+beendet. Damit beide Futures während ihrer langsamen Vorgänge Fortschritte
 machen können, brauchen wir await-Punkte, damit wir die Kontrolle an die
-Laufzeitumgebung zurückgeben können. Das heißt, wir brauchen etwas, auf das wir
+Laufzeitumgebung abgeben können. Das heißt, wir brauchen etwas, auf das wir
 warten können!
 
 Wir können diese Art der Übergabe bereits in Codeblock 17-23 sehen: Wenn wir
@@ -1054,9 +1054,10 @@ um eine langsame Operation mit einem Zeitlimit durchzuführen</span>
 Lass es uns implementieren! Denken wir zunächst über die API für `timeout`
 nach:
 
-* Es muss selbst eine asynchrone Funktion sein, damit wir auf es warten können.
-* Sein erster Parameter sollte ein ausführbares Future sein. Wir können es
-  generisch machen, damit es mit jedem Future funktioniert.
+* Sie muss selbst eine asynchrone Funktion sein, damit wir auf sie warten
+  können.
+* Ihr erster Parameter sollte ein ausführbares Future sein. Wir können sie
+  generisch machen, damit sie mit jedem Future funktioniert.
 * Der zweite Parameter ist die maximale Wartezeit. Wenn wir eine `Duration`
   verwenden, wird es einfach sein, ihn an `trpl::sleep` weiterzureichen.
 * Es sollte ein `Result` zurückgeben. Wenn das Future erfolgreich beendet wird,
@@ -1103,7 +1104,8 @@ async fn timeout<F: Future>(
 Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
 *Verhalten* nach, das wir brauchen: Wir wollen Die Dauer des übergebenen Future
 überwachen. Wir können mit `trpl::sleep` einen Timer aus der Dauer machen und
-`trpl::race` verwenden, um mit diesem Timer das übergebene Future überwachen.
+`trpl::race` verwenden, um mit diesem Timer das übergebene Future zu
+überwachen.
 
 Wir wissen auch, dass `race` nicht fair ist und die Argumente in der
 Reihenfolge abfragt, in der sie übergeben werden. Daher übergeben wir
@@ -1193,7 +1195,7 @@ mehreren Futures in einer zeitlichen Abfolge arbeiten können, mit *Strömen*
   Kiste `futures`. Inwiefern unterscheidet sich die Verwendung dieses Typs von
   der Verwendung eines `Vec`? (Mach dir keine Sorgen über die Tatsache, dass es
   aus dem `stream`-Teil der Kiste stammt; es funktioniert einfach mit jeder
-  Sammlung von Futures.)
+  Kolletion von Futures.)
 
-[dyn]: ch12-03-improving-error-handling-and-modularity.html##rückgabe-von-fehlern-aus-der-funktion-run
+[dyn]: ch12-03-improving-error-handling-and-modularity.html#rückgabe-von-fehlern-aus-der-funktion-run
 [async-program]: ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm

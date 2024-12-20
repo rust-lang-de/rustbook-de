@@ -1,20 +1,20 @@
 ## Merkmale für async
 
-Im Laufe des Kapitels haben wir die Merke `Future`, `Pin`, `Unpin`, `Stream`
+Im Laufe des Kapitels haben wir die Merkmale `Future`, `Pin`, `Unpin`, `Stream`
 und `StreamExt` auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch
 vermieden, zu sehr ins Detail zu gehen, wie sie funktionieren oder wie sie
-zusammenpassen. Wir Rust für den Alltag schreiben, ist das meist ausreichend.
-Manchmal stößt man jedoch auf Situationen, in denen es wichtig ist, ein paar
-mehr dieser Details zu verstehen. In diesem Abschnitt gehen wir *noch* weiter
-in die Tiefe, um dir in solchen Situationen zu helfen &ndash; und überlassen
-die *wirklich* tiefen Einblicke der weiteren Dokumentation!
+zusammenpassen. Wenn wir Rust für den Alltag schreiben, ist das meist
+ausreichend. Manchmal stößt man jedoch auf Situationen, in denen es wichtig
+ist, ein paar mehr dieser Details zu verstehen. In diesem Abschnitt gehen wir
+*noch* weiter in die Tiefe, um dir in solchen Situationen zu helfen &ndash;
+und überlassen die *wirklich* tiefen Einblicke der weiteren Dokumentation!
 
 ### Future
 
-Bereits in [Futures und die asynchrone Syntax][futures-syntax] haben wir
-festgestellt, dass `Future` ein Merkmal ist. Lass uns zunächst einen genaueren
-Blick darauf werfen, wie es funktioniert. Rust definiert ein `Future` wie
-folgt:
+Im Abschnitt [„Futures und die asynchrone Syntax“][futures-syntax] haben wir
+bereits festgestellt, dass `Future` ein Merkmal ist. Lass uns zunächst einen
+genaueren Blick darauf werfen, wie es funktioniert. Rust definiert ein `Future`
+wie folgt:
 
 ```rust
 use std::pin::Pin;
@@ -27,15 +27,15 @@ pub trait Future {
 }
 ```
 
-Diese Merkmals-Definition enthält eine Reihe von neuen Typen und auch eine
-Syntax, die wir bisher noch nicht gesehen haben. Gehen wir also die Definition
-Stück für Stück durch.
+Diese Merkmals-Definition enthält eine Reihe neuer Typen und auch eine Syntax,
+die wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück
+für Stück durch.
 
 Erstens gibt der zugehörige Typ `Output` von `Future` an, was das Future
 zurückgibt. Dies ist analog zum Typ `Item` des Merkmals `Iterator`. Zweitens
 hat `Future` auch die Methode `poll`, die eine spezielle `Pin`-Referenz für
 ihren `self`-Parameter und eine veränderbare Referenz auf einen `Context`-Typ
-nimmt und `Poll<Self::Output>` zurückgibt. Wir werden später in diesem
+entgegennimmt und `Poll<Self::Output>` zurückgibt. Wir werden später in diesem
 Abschnitt ein wenig mehr über `Pin` und `Context` sprechen. Für den Moment
 wollen wir uns auf das konzentrieren, was die Methode zurückgibt: Den Typ
 `Poll`:
@@ -47,24 +47,24 @@ enum Poll<T> {
 }
 ```
 
-Dieser Typ `Poll` ist ähnlich wie eine `Option`: Er hat eine Variante, die
-einen Wert hat (`Ready(T)`), und eine, die keinen hat (`Pending`). Sie bedeutet
-jedoch etwas ganz anderes! Die Variante `Pending` zeigt an, dass das Future
-noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal nachsehen
-muss. Die Variante `Ready` zeigt an, dass das `Future` seine Arbeit beendet hat
-und der Wert `T` verfügbar ist.
+Dieser Typ `Poll` ist ähnlich wie eine `Option`: Er hat eine Variante
+`Ready(T)`, die einen Wert hat, und eine Variante `Pending` ohne Wert. Sie
+bedeutet jedoch etwas ganz anderes! Die Variante `Pending` zeigt an, dass das
+Future noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal
+nachsehen muss. Die Variante `Ready` zeigt an, dass das `Future` seine Arbeit
+beendet hat und der Wert `T` verfügbar ist.
 
-> Hinweis: Bei den meisten Futures sollte der Aufrufer `poll` nicht erneut
-> aufrufen, nachdem das Future `Ready` zurückgegeben hat. Viele Futures werden
-> das Programm abbrechen, wenn sie erneut abgefragt werden, nachdem sie bereit
-> sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies in
-> ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
+> Hinweis: Bei den meisten Futures sollte der Aufrufer die Methode `poll` nicht
+> erneut aufrufen, nachdem das Future `Ready` zurückgegeben hat. Viele Futures
+> werden das Programm abbrechen, wenn sie erneut abgefragt werden, obwohl sie
+> bereit sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies
+> in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
 > `Iterator::next`!
 
-Unter der Haube kompiliert Rust Code, der `await` verwendet, zu Code, der
-`poll` aufruft. Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für
-eine einzelne URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust
-das in etwa (wenn auch nicht genau) wie folgt:
+Unter der Haube kompiliert Rust Code mit `await` zu Code, der `poll` aufruft.
+Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
+URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust das in etwa
+(wenn auch nicht genau) wie folgt:
 
 ```rust,ignore
 match page_title(url).poll() {
@@ -79,8 +79,8 @@ match page_title(url).poll() {
 ```
 
 Was sollen wir tun, wenn das `Future` noch `Pending` ist? Wir brauchen eine
-Möglichkeit, es noch einmal zu versuchen und noch einmal und noch einmal, bis
-das Future endlich fertig ist. Mit anderen Worten, eine Schleife:
+Möglichkeit, es nochmal zu versuchen und nochmal und nochmal, bis das Future
+endlich fertig ist. Mit anderen Worten, eine Schleife:
 
 ```rust,ignore
 let mut page_title_fut = page_title(url);
@@ -102,32 +102,32 @@ genau das Gegenteil von dem, was wir erreichen wollten! Stattdessen sorgt Rust
 dafür, dass die Schleife die Kontrolle an etwas abgeben kann, das die Arbeit an
 diesem Future unterbrechen und an anderen Futures arbeiten kann, um diese
 später wieder zu prüfen. Dieses „Etwas“ ist eine asynchrone Laufzeitumgebung,
-und diese Planungs- und Koordinationsarbeit ist eine der Hauptaufgaben einer
+und diese Planungs- und Koordinierungsarbeit ist eine der Hauptaufgaben einer
 Laufzeitumgebung.
 
-Erinnere dich an unsere Beschreibung (im Abschnitt [Zählen][counting]) des
-Wartens auf `rx.recv`. Der Aufruf `recv` gibt ein `Future` zurück, und das
-Warten darauf fragt es ab. In unserer anfänglichen Diskussion haben wir
-angemerkt, dass eine Laufzeitumgebung das Future pausieren wird, bis es
+Erinnere dich an unsere Beschreibung (im Abschnitt [„Zählen“][counting]) zum
+Warten auf `rx.recv`. Der Aufruf `recv` gibt ein `Future` zurück und zum
+Warten darauf wird es es abgefragt. In unserer anfänglichen Diskussion haben
+wir angemerkt, dass eine Laufzeitumgebung das Future pausieren wird, bis es
 entweder mit `Some(message)` oder `None` bereit ist, wenn der Kanal
 geschlossen wird. Mit unserem tieferen Verständnis von `Future` und
 insbesondere von `Future::poll` können wir sehen, wie das funktioniert. Die
 Laufzeitumgebung weiß, dass das Future nicht bereit ist, wenn es
 `Poll::Pending` zurückgibt. Umgekehrt weiß die Laufzeitumgebung, dass das
-Future bereit ist und bevorzugt es, wenn `Poll` den Wert
+Future bereit ist und bevorzugt es, wenn `poll` den Wert
 `Poll::Ready(Some(message))` oder `Poll::Ready(None)` zurückgibt.
 
-Die genauen Details, wie eine Laufzeitumgebung das macht, sind mehr, als wir in
-diesem Abschnitt behandeln können. Der Schlüssel dazu ist die grundlegende
-Mechanik von Futures: Eine Laufzeitumgebung *fragt* jedes Zukunft ab, für die
-es verantwortlich ist, und legt es zurück in den Schlaf, wenn es noch nicht
-bereit ist.
+Die genauen Details, wie eine Laufzeitumgebung das macht, gehen über das
+hinaus, was wir in diesem Abschnitt behandeln können. Der Schlüssel dazu ist
+die grundlegende Mechanik von Futures: Eine Laufzeitumgebung *fragt* jedes
+Zukunft ab, für die es verantwortlich ist, und legt es zurück in den Schlaf,
+wenn es noch nicht bereit ist.
 
 ### Anheften (pinning) und die Merkmale Pin und Unpin
 
-Als wir bei der Arbeit an Codeblock 17-16 die Idee des Anheften einführten,
-stießen wir auf eine sehr unangenehme Fehlermeldung. Hier ist der relevante
-Teil davon noch einmal:
+Als wir bei der Arbeit an Codeblock 17-16 die Idee des Anheftens einführten,
+stießen wir auf eine sehr unangenehme Fehlermeldung. Hier ist noch einmal der
+relevante Teil davon:
 
 ```text
 error[E0277]: `{async block@src/main.rs:10:23: 10:33}` cannot be unpinned
@@ -184,7 +184,7 @@ pub trait Future {
 
 Der Parameter `cx` und sein Typ `Context` sind der Schlüssel dazu, wie eine
 Laufzeitumgebung tatsächlich weiß, wann sie ein bestimmtes Future prüfen muss,
-während sie immer noch faul ist. Die Details, wie das funktioniert, liegen
+während es immer noch faul ist. Die Details, wie das funktioniert, liegen
 jedoch außerhalb des Rahmens dieses Kapitels: Du musst dich im Allgemeinen nur
 darum kümmern, wenn du eine eigene `Future`-Implementierung schreibst.
 
@@ -206,15 +206,15 @@ der in ein `Pin` eingepackt ist.
 und anderen intelligenten Zeigern, die wir in Kapitel 15 gesehen haben und die
 ebenfalls andere Typen umschließen. Im Gegensatz zu diesen funktioniert `Pin`
 jedoch nur mit *Zeigertypen* wie Referenzen (`&` und `&mut`) und intelligenten
-Zeigern (`Box`, `Rc` und so weiter). Um genau zu sein, funktioniert `Pin` mit
-Typen, die das Merkmal `Deref` oder `DerefMut` implementieren, die wir in
-Kapitel 15 behandelt haben. Man kann sich diese Einschränkung so vorstellen,
-als würde man nur mit Zeigern arbeiten, weil die Implementierung von `Deref`
-oder `DerefMut` bedeutet, dass sich dein Typ ähnlich wie ein Zeigertyp verhält.
-`Pin` ist auch selbst kein Zeiger und hat kein eigenes Verhalten, wie es `Rc`
-und `Arc` mit Referenzzählern haben. Es ist lediglich ein Werkzeug, das der
-Compiler verwenden kann, um die relevanten Garantien aufrechtzuerhalten, indem
-er Zeiger in den Typ einschließt.
+Zeigern (`Box`, `Rc` usw.). Um genau zu sein, funktioniert `Pin` mit Typen, die
+das Merkmal `Deref` oder `DerefMut` implementieren, die wir in Kapitel 15
+behandelt haben. Man kann sich diese Einschränkung so vorstellen, als würde man
+nur mit Zeigern arbeiten, weil die Implementierung von `Deref` oder `DerefMut`
+bedeutet, dass sich dein Typ ähnlich wie ein Zeigertyp verhält. `Pin` ist auch
+selbst kein Zeiger und hat kein eigenes Verhalten, wie es `Rc` und `Arc` mit
+Referenzzählern haben. Es ist lediglich ein Werkzeug, das der Compiler
+verwenden kann, um die relevanten Garantien aufrechtzuerhalten, indem er Zeiger
+mit dem Typ umschließt.
 
 Wenn man sich daran erinnert, dass `await` in Form von Aufrufen von `poll`
 implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben
@@ -222,8 +222,8 @@ implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben
 `Pin` und `Unpin`, wie hängen sie zusammen, und warum muss `Future` in einem
 `Pin`-Typ sein, um `poll` aufzurufen?
 
-In [Unser erstes asynchrones Programm][first-async] haben wir beschrieben, wie
-eine Reihe von Wartepunkten in einem Future zu einem Zustandsautomaten
+In [„Unser erstes asynchrones Programm“][first-async] haben wir beschrieben,
+wie eine Reihe von Wartepunkten in einem Future zu einem Zustandsautomaten
 kompiliert wird &ndash; und wie der Compiler dafür sorgt, dass dieser
 Zustandsautomat alle normalen Sicherheitsregeln von Rust befolgt,
 einschließlich Ausleihen (borrowing) und Eigentümerschaft (ownership). Damit
@@ -243,7 +243,7 @@ zu übergeben, wie wir es im Abschnitt [„Arbeiten mit einer beliebigen Anzahl
 von Futures“][any-number-futures] getan haben &ndash;, wird es schwieriger.
 
 Wenn wir ein Future verschieben &ndash; sei es durch Verschieben in eine
-Datenstruktur, um es als Iterator mit `join_all` zu verwenden, oder durch
+Datenstruktur, um es als Iterator mit `join_all` zu verwenden oder durch
 Rückgabe aus einer Funktion &ndash; bedeutet das eigentlich, dass wir die
 Zustandsmaschine verschieben, die Rust für uns erstellt. Und im Gegensatz zu
 den meisten anderen Typen in Rust können die Futures, die Rust für async-Blöcke
@@ -254,7 +254,7 @@ anstatt sich in die oft recht komplizierten Details zu vertiefen).
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-04.svg" />
 
-<figcaption>Abbildung 17-4: Ein selbstreferenzierender Datentyp.</figcaption>
+<figcaption>Abbildung 17-4: Ein selbstreferenzierender Datentyp</figcaption>
 
 Standardmäßig kann ein Objekt, das eine Referenz auf sich selbst hat, nicht
 sicher verschoben werden, da Referenzen immer auf die tatsächliche
@@ -269,7 +269,7 @@ dass du später völlig unzusammenhängende Daten liest.
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-05.svg" />
 
 <figcaption>Abbildung 17-5: Das unsichere Ergebnis beim Verschieben eines
-selbstreferenzierenden Datentyps.</figcaption>
+selbstreferenzierenden Datentyps</figcaption>
 
 Im Prinzip könnte der Rust-Compiler versuchen, jede Referenz auf ein Objekt
 jedes Mal zu aktualisieren, wenn es verschoben wird. Das wäre potenziell eine
@@ -289,7 +289,7 @@ einpacken, kann er nicht mehr verschoben werden. Wenn du also
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-06.svg" />
 
 <figcaption>Abbildung 17-6: Anheften einer `Box`, die auf einen
-selbstreferenzierenden Future-Typ zeigt.</figcaption>
+selbstreferenzierenden Future-Typ zeigt</figcaption>
 
 In der Tat kann der Zeiger in `Box` immer noch verschoben werden. Denke daran:
 Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
@@ -358,7 +358,7 @@ Infolgedessen können wir Dinge tun, die illegal wären, wenn `String`
 stattdessen `!Unpin` implementiert hätte, wie zum Beispiel das Ersetzen einer
 Zeichenkette durch eine andere an der exakt gleichen Stelle im Speicher, wie in
 Abbildung 17-9. Dies verletzt nicht den `Pin`-Vertrag, weil `String` keine
-internen Referenzen hat, die es unsicher machen, ihn zu verschieben! Das ist
+internen Referenzen hat, die es unsicher machen, es zu verschieben! Das ist
 genau der Grund, warum es `Unpin` und nicht `!Unpin` implementiert.
 
 <img alt="Concurrent work flow" src="img/trpl17-09.svg" />
@@ -371,7 +371,7 @@ Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
 die von asynchronen Blöcken erzeugten Futures in einen `Vec<Box<dyn
  Future<Output = ()>>>` zu verschieben, aber wie wir gesehen haben, können
 diese Futures interne Referenzen haben, sodass sie `Unpin` nicht
-implementieren. Sie müssen angepinnt werden, und dann können wir den Typ `Pin`
+implementieren. Sie müssen angepinnt werden und dann können wir den Typ `Pin`
 an den `Vec` übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in
 den Futures *nicht* verschoben werden.
 
@@ -403,11 +403,11 @@ korrigieren kannst!
 
 Nachdem wir nun ein tieferes Verständnis für die Merkmale `Future`, `Pin` und
 `Unpin` haben, können wir uns dem Merkmal `Stream` zuwenden. Wie im Abschnitt
-Einführung in Ströme beschrieben, sind Ströme ähnlich wie asynchrone
-Iteratoren. Im Gegensatz zu `Iterator` und `Future` gibt es zum aktuellen
-Zeitpunkt keine Definition des Merkmals `Stream` in der Standardbibliothek,
-aber es *gibt* eine sehr verbreitete Definition in der Kiste `Futures`, die im
-gesamten Ökosystem verwendet wird.
+zu Strömen beschrieben, sind Ströme ähnlich wie asynchrone Iteratoren. Im
+Gegensatz zu `Iterator` und `Future` gibt es zum aktuellen Zeitpunkt keine
+Definition des Merkmals `Stream` in der Standardbibliothek, aber es *gibt* eine
+sehr verbreitete Definition in der Kiste `Futures`, die im gesamten Ökosystem
+verwendet wird.
 
 Schauen wir uns die Definitionen der Merkmale `Iterator` und `Future` an, damit
 wir darauf aufbauen können, wie ein Merkmal `Stream` aussehen könnte. Von
@@ -433,7 +433,7 @@ trait Stream {
 
 Das Merkmal `Stream` definiert einen zugehörigen Typ `Item` für den Typ der vom
 Strom erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`: Es kann null bis
-viele davon geben, und anders als bei `Future`, wo es immer nur einen einzigen
+viele davon geben, anders als bei `Future`, wo es immer nur einen einzigen
 `Output` gibt (selbst wenn es der Einheitstyp `()` ist).
 
 `Stream` definiert auch eine Methode zum Abrufen dieser Elemente. Wir nennen
@@ -450,7 +450,7 @@ Teil des Werkzeugkoffers der meisten Laufzeitumgebungen, sodass du dich darauf
 verlassen kannst, und alles, was wir unten behandeln, sollte im Allgemeinen
 gelten!
 
-In dem Beispiel, das wir im Abschnitt über Streaming gesehen haben, haben wir
+Im Beispiel, das wir im Abschnitt über Ströme gesehen haben, haben wir
 allerdings nicht `poll_next` *oder* `Stream` benutzt, sondern `next` und
 `StreamExt`. Wir *könnten* direkt mit der `poll_next`-API arbeiten, indem wir
 unsere eigenen `Stream`-Zustandsautomaten schreiben, genauso wie wir mit
@@ -479,10 +479,9 @@ trait StreamExt: Stream {
 }
 ```
 
-> Anmerkung: Die tatsächliche Definition, die wir weiter oben im Kapitel
-> verwendet haben, sieht etwas anders aus, da sie Versionen von Rust
-> unterstützt, die noch nicht die Verwendung von asynchronen Funktionen in
-> Merkmalen unterstützt haben. Infolgedessen sieht sie so aus:
+> Anmerkung: Die tatsächliche Definition von `StreamExt` sieht etwas anders
+> aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von
+> asynchronen Funktionen in Merkmalen kennen. Infolgedessen sieht sie so aus:
 >
 > ```rust,ignore
 > fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
