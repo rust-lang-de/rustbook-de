@@ -154,14 +154,14 @@ und dynamisch große Typen besprechen.</p>
 <h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
 <blockquote>
 <p>Hinweis: Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
-<a href="ch19-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
+<a href="ch20-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
 externen Typen“</a> gelesen hast.</p>
 </blockquote>
 <p>Das Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher
 besprochenen hinausgehen, einschließlich statisch sicherzustellen, dass Werte
 niemals verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein
 Beispiel für die Verwendung von Newtypes zum Angeben von Einheiten hast du in
-Codeblock 19-15 gesehen: Erinnere dich daran, dass die Strukturen <code>Millimeters</code>
+Codeblock 20-16 gesehen: Erinnere dich daran, dass die Strukturen <code>Millimeters</code>
 und <code>Meters</code> <code>u32</code>-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
 einem Parameter vom Typ <code>Millimeters</code> schreiben würden, könnten wir kein
 Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
@@ -176,8 +176,8 @@ interagieren, die wir zur Verfügung stellen, z.B. eine Methode, um eine
 Namenszeichenkette zur <code>People</code>-Kollektion hinzuzufügen; dieser Code müsste
 nicht wissen, dass wir Namen intern eine <code>i32</code>-ID zuordnen. Das Newtype-Muster
 ist ein leichtgewichtiger Weg, eine Kapselung zu erreichen, um
-Implementierungsdetails zu verbergen, die wir im Abschnitt <a href="ch17-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die
-Implementierungsdetails verbirgt“</a> in Kapitel 17 besprochen
+Implementierungsdetails zu verbergen, die wir im Abschnitt <a href="ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die
+Implementierungsdetails verbirgt“</a> in Kapitel 18 besprochen
 haben.</p>
 <h3 id="erstellen-von-typ-synonymen-mit-typ-alias"><a class="header" href="#erstellen-von-typ-synonymen-mit-typ-alias">Erstellen von Typ-Synonymen mit Typ-Alias</a></h3>
 <p>Rust bietet die Möglichkeit, einen <em>Typ-Alias</em> zu deklarieren, um einem
@@ -194,7 +194,7 @@ so anlegen:</p>
 </span><span class="boring">    println!("x + y = {}", x + y);
 </span><span class="boring">}</span></code></pre></pre>
 <p>Der Alias <code>Kilometers</code> ist ein <em>Synonym</em> für <code>i32</code>; im Gegensatz zu den Typen
-<code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 19-15 erstellt haben, ist
+<code>Millimeters</code> und <code>Meters</code>, die wir in Codeblock 20-16 erstellt haben, ist
 <code>Kilometers</code> kein separater, neuer Typ. Werte, die den Typ <code>Kilometers</code> haben,
 werden genauso behandelt wie Werte des Typs <code>i32</code>:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -217,7 +217,7 @@ Zum Beispiel könnten wir einen längeren Typ wie diesen haben:</p>
 <pre><code class="language-rust ignore">Box&lt;dyn Fn() + Send + 'static&gt;</code></pre>
 <p>Das Schreiben dieses langen Typs in Funktionssignaturen und als
 Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stelle
-dir vor, du hättest ein Projekt voller Code wie das in Codeblock 19-24.</p>
+dir vor, du hättest ein Projekt voller Code wie das in Codeblock 20-25.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let f: Box&lt;dyn Fn() + Send + 'static&gt; = Box::new(|| println!("hallo"));
@@ -231,10 +231,10 @@ dir vor, du hättest ein Projekt voller Code wie das in Codeblock 19-24.</p>
 <span class="boring">        Box::new(|| ())
 </span>    }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 19-24: Verwenden eines langen Typs an vielen
+<p><span class="caption">Codeblock 20-25: Verwenden eines langen Typs an vielen
 Stellen</span></p>
 <p>Ein Typ-Alias macht diesen Code leichter handhabbar, indem er die Wiederholung
-reduziert. In Codeblock 19-25 haben wir einen Alias namens <code>Thunk</code> für den
+reduziert. In Codeblock 20-26 haben wir einen Alias namens <code>Thunk</code> für den
 verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias <code>Thunk</code> ersetzen.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -252,7 +252,7 @@ kürzeren Alias <code>Thunk</code> ersetzen.</p>
 <span class="boring">        Box::new(|| ())
 </span>    }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 19-25: Einführen eines Typ-Alias <code>Thunk</code> zur
+<p><span class="caption">Codeblock 20-26: Einführen eines Typ-Alias <code>Thunk</code> zur
 Reduzierung von Wiederholungen</span></p>
 <p>Dieser Code ist viel einfacher zu lesen und zu schreiben! Die Wahl eines
 aussagekräftigen Namens für einen Typ-Alias kann auch helfen, deine Absicht zu
@@ -329,7 +329,7 @@ Funktionen, die niemals zurückkehren, werden <em>divergierende Funktionen</em>
 also kann <code>bar</code> niemals zurückkehren.</p>
 <p>Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
 den Code aus Codeblock 2-5, der Teil des Zahlenratespiels ist; wir haben einen
-Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
+Teil davon hier in Codeblock 20-27 wiedergegeben.</p>
 <pre><code class="language-rust ignore"><span class="boring">use rand::Rng;
 </span><span class="boring">use std::cmp::Ordering;
 </span><span class="boring">use std::io;
@@ -371,7 +371,7 @@ Teil davon hier in Codeblock 19-26 wiedergegeben.</p>
 </span><span class="boring">        }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 19-26: Ein <code>match</code> mit einem Zweig, der in
+<p><span class="caption">Codeblock 20-27: Ein <code>match</code> mit einem Zweig, der in
 <code>continue</code> endet</span></p>
 <p>Damals haben wir einige Details in diesem Code übersprungen. In Kapitel 6 des
 Abschnitts <a href="ch06-02-match.html">„Das Kontrollflusskonstrukt <code>match</code>“</a> haben wir
@@ -388,7 +388,7 @@ zum Beispiel der folgende Code nicht:</p>
 <p>Der Typ von <code>guess</code> in diesem Code müsste eine ganze Zahl <em>und</em> eine
 Zeichenkette sein und Rust verlangt, dass <code>guess</code> nur einen Typ hat. Was gibt
 also <code>continue</code> zurück? Wie war es uns erlaubt, ein <code>u32</code> von einem Zweig
-zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 19-26 mit
+zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 20-26 mit
 <code>continue</code> endet?</p>
 <p>Wie du vielleicht schon vermutet hast, hat <code>continue</code> einen <code>!</code>-Wert. Das
 heißt, wenn Rust den Typ von <code>guess</code> berechnet, betrachtet es beide
@@ -421,7 +421,7 @@ erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:</p>
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>In diesem Code geschieht dasselbe wie bei <code>match</code> in Codeblock 19-26: Rust
+<p>In diesem Code geschieht dasselbe wie bei <code>match</code> in Codeblock 20-27: Rust
 sieht, dass <code>val</code> den Typ <code>T</code> und <code>panic!</code> den Typ <code>!</code> hat, sodass das Ergebnis
 des gesamten <code>match</code>-Ausdrucks <code>T</code> ist. Dieser Code funktioniert, weil <code>panic!</code>
 keinen Wert produziert; es beendet das Programm. Im Fall von <code>None</code> geben wir
@@ -483,7 +483,7 @@ immer hinter eine Art Zeiger stellen müssen.</p>
 <code>Box&lt;str&gt;</code> oder <code>Rc&lt;str&gt;</code>. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
 ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. In Kapitel 17 im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait
+des Merkmals verwenden. In Kapitel 18 im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait
 objects) die Werte unterschiedlicher Typen erlauben“</a>
 haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
 diese hinter einen Zeiger setzen müssen, z.B. <code>&amp;dyn Trait</code> oder <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> würde auch funktionieren).</p>
@@ -528,11 +528,11 @@ Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch19-03-advanced-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch20-03-advanced-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch19-05-advanced-functions-and-closures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-05-advanced-functions-and-closures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -542,11 +542,11 @@ Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch19-03-advanced-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch20-03-advanced-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch19-05-advanced-functions-and-closures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-05-advanced-functions-and-closures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

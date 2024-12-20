@@ -159,7 +159,7 @@ Funktionsabschlussmerkmal (closure trait) <code>Fn</code>. Der Typ <code>fn</cod
 Funktionszeigern ermöglicht es dir, Funktionen als Argumente für andere
 Funktionen zu verwenden.</p>
 <p>Die Syntax für die Angabe, dass ein Parameter ein Funktionszeiger ist, ähnelt
-der von Funktionsabschlüssen, wie in Codeblock 19-27 gezeigt, wo wir eine
+der von Funktionsabschlüssen, wie in Codeblock 20-28 gezeigt, wo wir eine
 Funktion <code>add_one</code> definiert haben, die ihrem Parameter eins hinzufügt. Die
 Funktion <code>do_twice</code> nimmt zwei Parameter entgegen: Einen Funktionszeiger auf
 eine beliebige Funktion mit einem <code>i32</code>-Parameter und einem <code>i32</code>-Rückgabewert,
@@ -181,7 +181,7 @@ fn main() {
 
     println!("Die Antwort ist: {answer}");
 }</code></pre></pre>
-<p><span class="caption">Codeblock 19-27: Verwenden des Typs <code>fn</code> zum
+<p><span class="caption">Codeblock 20-28: Verwenden des Typs <code>fn</code> zum
 Entgegennehmen eines Funktionszeigers als Argument</span></p>
 <p>Dieser Code gibt <code>Die Antwort ist: 12</code> aus. Wir spezifizieren, dass der
 Parameter <code>f</code> in <code>do_twice</code> ein <code>fn</code> ist, das einen Parameter vom Typ <code>i32</code>
@@ -223,7 +223,7 @@ Funktionsabschlusses, so wie hier:</p>
         list_of_numbers.iter().map(ToString::to_string).collect();
 <span class="boring">}</span></code></pre></pre>
 <p>Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
-die wir vorhin im Abschnitt <a href="ch19-03-advanced-traits.html">„Fortgeschrittene Merkmale
+die wir vorhin im Abschnitt <a href="ch20-03-advanced-traits.html">„Fortgeschrittene Merkmale
 (traits)“</a> gesprochen haben, weil es mehrere Funktionen namens
 <code>to_string</code> gibt. Hier verwenden wir die Funktion <code>to_string</code>, die im Merkmal
 <code>ToString</code> definiert ist, welche die Standardbibliothek für jeden Typ
@@ -297,19 +297,19 @@ vorhin eine Lösung für dieses Problem gesehen. Wir können ein Merkmalsobjekt
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
-Merkmalsobjekte findest du im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die
-Werte unterschiedlicher Typen erlauben“</a> in Kapitel 17.</p>
+Merkmalsobjekte findest du im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die
+Werte unterschiedlicher Typen erlauben“</a> in Kapitel 18.</p>
 <p>Als nächstes wollen wir uns Makros ansehen!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch19-04-advanced-types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch20-04-advanced-types.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch19-06-macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-06-macros.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -319,11 +319,11 @@ Werte unterschiedlicher Typen erlauben“</a> in Kapitel 17.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch19-04-advanced-types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch20-04-advanced-types.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch19-06-macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-06-macros.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

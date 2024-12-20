@@ -173,10 +173,10 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die verwiesen wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-<em>Merkmalsobjekt</em> (trait object) bekannt, und Kapitel 17 widmet einen ganzen
-Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+<em>Merkmalsobjekt</em> (trait object) bekannt, und Kapitel 18 widmet einen ganzen
+Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“</a> diesem Thema. Was du hier lernst, wirst du im Kapitel
-17 erneut anwenden!</p>
+18 erneut anwenden!</p>
 <h3 id="boxt-verwenden-um-daten-im-haldenspeicher-zu-speichern"><a class="header" href="#boxt-verwenden-um-daten-im-haldenspeicher-zu-speichern"><code>Box&lt;T&gt;</code> verwenden um Daten im Haldenspeicher zu speichern</a></h3>
 <p>Bevor wir den Haldenspeicher-Anwendungsfall für <code>Box&lt;T&gt;</code> besprechen, werden wir
 die Syntax und die Interaktion mit Werten behandeln, die in einer <code>Box&lt;T&gt;</code>
@@ -406,7 +406,7 @@ intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
 Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
 ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
 Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
-Anwendungsfälle für Boxen werden wir uns in Kapitel 17 ansehen.</p>
+Anwendungsfälle für Boxen werden wir uns in Kapitel 18 ansehen.</p>
 <p>Der Typ <code>Box&lt;T&gt;</code> ist ein intelligenter Zeiger, da er das Merkmal <code>Deref</code>
 implementiert, mit dem <code>Box&lt;T&gt;</code> Werte wie Referenzen behandelt werden können.
 Wenn ein <code>Box&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt, werden die Daten am

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Muster (patterns) und Abgleich (matching) - Die Programmiersprache Rust</title>
+        <title>Fortgeschrittene Sprachelemente - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -144,46 +144,41 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h1 id="muster-patterns-und-abgleich-matching"><a class="header" href="#muster-patterns-und-abgleich-matching">Muster (patterns) und Abgleich (matching)</a></h1>
-<p><em>Muster</em> sind eine spezielle Syntax in Rust für den Abgleich mit der Struktur
-von Typen, sowohl komplexen als auch einfachen Typen. Das Verwenden von Mustern
-in Verbindung mit <code>match</code>-Ausdrücken und anderen Konstrukten gibt dir mehr
-Kontrolle über den Kontrollfluss eines Programms. Ein Muster besteht aus einer
-Kombination der folgenden Elemente:</p>
+                        <h1 id="fortgeschrittene-sprachelemente"><a class="header" href="#fortgeschrittene-sprachelemente">Fortgeschrittene Sprachelemente</a></h1>
+<p>Inzwischen hast du die am häufigsten verwendeten Teile der Programmiersprache
+Rust gelernt. Bevor wir in Kapitel 20 ein weiteres Projekt durchführen, werden
+wir uns einige Aspekte der Sprache ansehen, auf die du hin und wieder stoßen
+könntest, aber nicht jeden Tag verwenden wirst. Du kannst dieses Kapitel als
+Referenz verwenden, wenn du auf Unbekanntes stößt. Die hier beschriebenen
+Funktionalitäten sind in ganz bestimmten Situationen nützlich. Auch wenn du sie
+vielleicht nicht oft brauchst, möchten wir sicherstellen, dass du alle
+Funktionen von Rust kennst.</p>
+<p>In diesem Kapitel werden wir behandeln:</p>
 <ul>
-<li>Literale</li>
-<li>Destrukturierte Arrays, Aufzählungen (enums), Strukturen (structs) oder Tupel</li>
-<li>Variablen</li>
-<li>Wildcards</li>
-<li>Platzhalter</li>
+<li>Unsicheres Rust: Wie kann man einige der Garantien von Rust ausschalten und
+Verantwortung für das manuelle Aufrechterhalten dieser Garantien übernehmen?</li>
+<li>Fortgeschrittene Merkmale (traits): Assoziierte Typen, Standardtypparameter,
+voll qualifizierte Syntax, Supermerkmale (supertraits) und das Newtype-Muster
+in Bezug auf Merkmale</li>
+<li>Fortgeschrittene Typen: Mehr über das Newtype-Muster, Typ-Aliase, den Typ
+never und Typen dynamischer Größe</li>
+<li>Erweiterte Funktionen und Funktionsabschlüsse: Funktionszeiger und
+Zurückgeben von Funktionsabschlüssen</li>
+<li>Makros: Möglichkeiten, Code zu definieren, der zur Kompilierzeit mehr Code
+definiert</li>
 </ul>
-<p>Einige Beispielmuster sind <code>x</code>, <code>(a, 3)</code>, und <code>Some(Color::Red)</code>. In den
-Kontexten, in denen Muster gültig sind, beschreiben diese Komponenten die
-Datenform. Unser Programm gleicht dann Werte mit den Mustern ab, um
-festzustellen, ob es die richtige Datenform hat, um ein bestimmtes Stück Code
-weiter auszuführen.</p>
-<p>Um ein Muster zu verwenden, vergleichen wir es mit einem Wert. Wenn das Muster
-zum Wert passt, verwenden wir die Wertteile in unserem Code. Erinnere dich an
-die <code>match</code>-Ausdrücke in Kapitel 6, in denen Muster verwendet wurden, z.B. die
-Münzsortiermaschine. Wenn der Wert zur Form des Musters passt, können wir die
-genannten Teile verwenden. Wenn dies nicht der Fall ist, wird der mit dem
-Muster verbundene Code nicht ausgeführt.</p>
-<p>Dieses Kapitel ist eine Referenz zu allen Dingen, die mit Mustern zu tun haben.
-Wir behandeln die gültigen Stellen, an denen Muster verwendet werden können,
-den Unterschied zwischen abweisbaren (refutable) und unabweisbaren
-(irrefutable) Mustern und die verschiedenen Arten der Mustersyntax, die du
-sehen kannst. Am Ende des Kapitels wirst du wissen, wie du Muster verwenden
-kannst, um viele Konzepte auf klare Weise auszudrücken.</p>
+<p>Es ist eine Reihe von Rust-Funktionalitäten, die für jeden etwas bietet! Lass
+uns eintauchen!</p>
 
                     </main>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch17-03-oo-design-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch19-03-pattern-syntax.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch18-01-all-the-places-for-patterns.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-01-unsafe-rust.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -193,11 +188,11 @@ kannst, um viele Konzepte auf klare Weise auszudrücken.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch17-03-oo-design-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch19-03-pattern-syntax.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch18-01-all-the-places-for-patterns.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-01-unsafe-rust.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

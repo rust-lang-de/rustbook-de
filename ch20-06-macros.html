@@ -215,7 +215,7 @@ Beispiel erzeugt das folgende Makro einen neuen Vektor mit drei ganze Zahlen:</p
 Zahlen oder einen Vektor aus fünf Zeichenkettenanteilstypen (string slices) zu
 erstellen. Mit einer Funktion wäre das nicht möglich,
 da uns weder die Anzahl noch den Typ der Werte im Voraus bekannt ist.</p>
-<p>Codeblock 19-28 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
+<p>Codeblock 20-29 zeigt eine leicht vereinfachte Definition des Makros <code>vec!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -232,7 +232,7 @@ macro_rules! vec {
     };
 }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 19-28: Eine vereinfachte Version der
+<p><span class="caption">Codeblock 20-29: Eine vereinfachte Version der
 Makrodefinition <code>vec!</code></span></p>
 <blockquote>
 <p>Hinweis: Die eigentliche Definition des Makros <code>vec!</code> in der
@@ -255,9 +255,9 @@ zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
 ist, kann es nur einen passenden Zweig geben; jedes andere Muster führt
 zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.</p>
 <p>Die gültige Mustersyntax in Makrodefinitionen unterscheidet sich von der in
-Kapitel 18 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
+Kapitel 19 behandelten Mustersyntax, da Makromuster mit der Rust-Codestruktur
 und nicht mit Werten abgeglichen werden. Lass uns im Folgenden die Bedeutung
-der Musterteile in Listing 19-28 betrachten; die vollständige Makromustersyntax
+der Musterteile in Codeblock 20-28 betrachten; die vollständige Makromustersyntax
 findest du in <a href="https://doc.rust-lang.org/reference/macros-by-example.html">der Rust-Referenz</a>.</p>
 <p>Zunächst verwenden wir ein äußeres Klammernpaar, um das gesamte Muster zu
 umfassen. Wir verwenden ein Dollarzeichen (<code>$</code>), um eine Variable im
@@ -304,7 +304,7 @@ arbeiten alle auf ähnliche Weise.</p>
 <p>Beim Erstellen von prozeduralen Makros müssen sich die Definitionen in einer
 eigenen Kiste mit einem speziellen Kistentyp befinden. Dies geschieht aus
 komplexen technischen Gründen, die wir hoffentlich in Zukunft eliminieren
-werden. In Codeblock 19-29 zeigen wir, wie man ein prozedurales Makro
+werden. In Codeblock 20-30 zeigen wir, wie man ein prozedurales Makro
 definiert, wobei <code>some_attribute</code> ein Platzhalter für die Verwendung einer
 bestimmten Makro-Variante ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -313,7 +313,7 @@ bestimmten Makro-Variante ist.</p>
 #[some_attribute]
 pub fn some_name(input: TokenStream) -&gt; TokenStream {
 }</code></pre>
-<p><span class="caption">Codeblock 19-29: Beispiel für die Definition eines
+<p><span class="caption">Codeblock 20-30: Beispiel für die Definition eines
 prozeduralen Makros</span></p>
 <p>Die Funktion, die ein prozedurales Makro definiert, nimmt einen <code>TokenStream</code>
 als Eingabe und erzeugt einen <code>TokenStream</code> als Ausgabe. Der Typ <code>TokenStream</code>
@@ -336,7 +336,7 @@ können, um eine Standardimplementierung der Funktion <code>hello_macro</code> z
 Die Standardimplementierung gibt <code>Hallo Makro! Mein Name ist TypeName!</code> aus,
 wobei <code>TypeName</code> der Name des Typs ist, auf dem dieses Merkmal definiert wurde.
 Mit anderen Worten, wir werden eine Kiste schreiben, die es einem anderen
-Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock 19-30 zu
+Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock 20-31 zu
 schreiben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile">use hello_macro::HelloMacro;
@@ -348,7 +348,7 @@ struct Pancakes;
 fn main() {
     Pancakes::hello_macro();
 }</code></pre>
-<p><span class="caption">Codeblock 19-30: Code, den ein Benutzer unserer Kiste
+<p><span class="caption">Codeblock 20-31: Code, den ein Benutzer unserer Kiste
 schreiben kann, wenn er unser prozedurales Makro benutzt</span></p>
 <p>Dieser Code gibt <code>Hallo Makro! Mein Name ist Pancakes!</code> aus, wenn wir fertig
 sind. Der erste Schritt ist das Erstellen einer neuen Bibliothekskiste (library
@@ -423,7 +423,7 @@ syn = "2.0"
 quote = "1.0"
 </code></pre>
 <p>Um mit der Definition des prozeduralen Makros zu beginnen, platziere den Code
-in Codeblock 19-31 in deine Datei <em>src/lib.rs</em> der Kiste <code>hello_macro_derive</code>.
+in Codeblock 20-32 in deine Datei <em>src/lib.rs</em> der Kiste <code>hello_macro_derive</code>.
 Beachte, dass dieser Code nicht kompiliert werden kann, bis wir eine Definition
 für die Funktion <code>impl_hello_macro</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span></p>
@@ -442,7 +442,7 @@ pub fn hello_macro_derive(input: TokenStream) -&gt; TokenStream {
     // Baue die Merkmal-Implementierung
     impl_hello_macro(&amp;ast)
 }</code></pre>
-<p><span class="caption">Codeblock 19-31: Code, den die meisten prozeduralen
+<p><span class="caption">Codeblock 20-32: Code, den die meisten prozeduralen
 Makrokisten benötigen, um Rust-Code zu verarbeiten</span></p>
 <p>Beachte, dass wir den Code aufgeteilt haben in die Funktion
 <code>hello_macro_derive</code>, die für das Parsen des <code>TokenStream</code> verantwortlich ist,
@@ -474,7 +474,7 @@ folgen.</p>
 <code>TokenStream</code> in eine Datenstruktur um, die wir dann interpretieren und
 Operationen darauf ausführen können. Hier kommt <code>syn</code> ins Spiel. Die Funktion
 <code>parse</code> in <code>syn</code> nimmt einen <code>TokenStream</code> und gibt eine <code>DeriveInput</code>-Struktur
-zurück, die den geparsten Rust-Code repräsentiert. Codeblock 19-32 zeigt die
+zurück, die den geparsten Rust-Code repräsentiert. Codeblock 20-33 zeigt die
 relevanten Teile der Struktur <code>DeriveInput</code>, die wir vom Parsen der
 Zeichenkette <code>struct Pancakes;</code> erhalten:</p>
 <pre><code class="language-rust ignore">DeriveInput {
@@ -494,8 +494,8 @@ Zeichenkette <code>struct Pancakes;</code> erhalten:</p>
         }
     )
 }</code></pre>
-<p><span class="caption">Codeblock 19-32: Die <code>DeriveInput</code>-Instanz erhalten wir
-beim Parsen des Codes, den das Attribut des Makros in Codeblock 19-30
+<p><span class="caption">Codeblock 20-33: Die <code>DeriveInput</code>-Instanz erhalten wir
+beim Parsen des Codes, den das Attribut des Makros in Codeblock 20-31
 hat</span></p>
 <p>Die Felder dieser Struktur zeigen, dass der Rust-Code, den wir geparst haben,
 eine Einheitsstruktur (unit struct) mit dem <code>ident</code> (identifier, engl.
@@ -521,7 +521,7 @@ angeben, was schief gelaufen ist, indem du <code>panic!</code> oder <code>expect
 <p>Da wir nun den Code haben, um den annotierten Rust-Code aus einem <code>TokenStream</code>
 in eine <code>DeriveInput</code>-Instanz zu verwandeln, lass uns den Code generieren, der
 das Merkmal <code>HelloMacro</code> auf dem annotierten Typ implementiert, wie in
-Codeblock 19-33 gezeigt.</p>
+Codeblock 20-34 gezeigt.</p>
 <p><span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">extern crate proc_macro;
 </span><span class="boring">
@@ -550,15 +550,15 @@ Codeblock 19-33 gezeigt.</p>
     };
     gen.into()
 }</code></pre>
-<p><span class="caption">Codeblock 19-33: Implementierung des Merkmals
+<p><span class="caption">Codeblock 20-34: Implementierung des Merkmals
 <code>HelloMacro</code> unter Verwendung des geparsten Rust-Codes</span></p>
 <p>Wir erhalten eine <code>Ident</code>-Strukturinstanz, die den Namen (Bezeichner) des
 annotierten Typs enthält, indem wir <code>ast.ident</code> verwenden. Die Struktur in
-Codeblock 19-32 zeigt, dass, wenn wir die Funktion <code>impl_hello_macro</code> auf den
-Code in Codeblock 19-30 anwenden, das erhaltene <code>ident</code> ein Feld <code>ident</code> mit
-dem Wert <code>"Pancakes"</code> enthält. So wird die Variable <code>name</code> in Codeblock 19-33
+Codeblock 20-33 zeigt, dass, wenn wir die Funktion <code>impl_hello_macro</code> auf den
+Code in Codeblock 20-31 anwenden, das erhaltene <code>ident</code> ein Feld <code>ident</code> mit
+dem Wert <code>"Pancakes"</code> enthält. So wird die Variable <code>name</code> in Codeblock 20-34
 eine Instanz der Struktur <code>Ident</code> enthalten, die die Zeichenkette <code>"Pancakes"</code>
-ausgibt, der Name der Struktur in Codeblock 19-30.</p>
+ausgibt, der Name der Struktur in Codeblock 20-31.</p>
 <p>Mit dem Makro <code>quote!</code> können wir den Rust-Code definieren, den wir zurückgeben
 wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
 Ausführung des <code>quote!</code>-Makros, also müssen wir es in einen <code>TokenStream</code>
@@ -586,7 +586,7 @@ Die Verwendung von <code>stringify!</code> erspart zudem eine Speicherzuweisung,
 <code>#name</code> zur Kompilierzeit in ein Zeichenketten-Literal umgewandelt wird.</p>
 <p>An diesem Punkt sollte <code>cargo build</code> sowohl bei <code>hello_macro</code> als auch bei
 <code>hello_macro_derive</code> erfolgreich durchlaufen. Schließen wir diese Kisten an den
-Code in Codeblock 19-30 an, um das prozedurale Makro in Aktion zu sehen!
+Code in Codeblock 20-31 an, um das prozedurale Makro in Aktion zu sehen!
 Erstelle ein neues Binärprojekt in deinem <em>projects</em>-Verzeichnis durch Aufrufen
 von <code>cargo new pancakes</code>. Wir müssen <code>hello_macro</code> und <code>hello_macro_derive</code> als
 Abhängigkeiten in der Datei <em>Cargo.toml</em> der Kiste <code>pancakes</code> hinzufügen. Wenn
@@ -596,7 +596,7 @@ nicht, kannst du sie wie folgt als <code>path</code>-Abhängigkeiten angeben:</p
 <pre><code class="language-toml">hello_macro = { path = "../hello_macro" }
 hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 </code></pre>
-<p>Gib den Code in Codeblock 19-30 in <em>src/main.rs</em> ein und rufe <code>cargo run</code> auf:
+<p>Gib den Code in Codeblock 20-31 in <em>src/main.rs</em> ein und rufe <code>cargo run</code> auf:
 Es sollte <code>Hallo Makro! Mein Name ist Pancakes!</code> ausgeben. Die Implementierung
 des Merkmals <code>HelloMacro</code> aus dem prozeduralen Makro wurde eingefügt, ohne dass
 die Kiste <code>pancakes</code> es implementieren musste; <code>#[derive(HelloMacro)]</code> fügte
@@ -661,11 +661,11 @@ die Praxis umsetzen und ein weiteres Projekt durchführen!</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch19-05-advanced-functions-and-closures.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch20-05-advanced-functions-and-closures.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch20-00-final-project-a-web-server.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch21-00-final-project-a-web-server.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -675,11 +675,11 @@ die Praxis umsetzen und ein weiteres Projekt durchführen!</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch19-05-advanced-functions-and-closures.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch20-05-advanced-functions-and-closures.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch20-00-final-project-a-web-server.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch21-00-final-project-a-web-server.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

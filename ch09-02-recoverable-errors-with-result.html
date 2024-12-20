@@ -151,7 +151,7 @@ einen Grund, den man leicht erkennen und darauf reagieren kann. Wenn du
 beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
 fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
 den Vorgang zu beenden.</p>
-<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit dem Typ
+<p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
 <code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
 Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
@@ -228,7 +228,7 @@ aktuellen Verzeichnis gibt und wir diesen Code ausführen, sehen wir die
 folgende Ausgabe des Makros <code>panic!</code>:</p>
 <pre><code class="language-console">$ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.73s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
 thread 'main' panicked at src/main.rs:8:23:
 Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
@@ -678,8 +678,8 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
 <code>Result</code>-Werte.</span></p>
 <p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
-im Abschnitt <a href="ch17-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“</a> in Kapitel 17 sprechen werden. Vorerst kannst
+im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
+Typen erlauben“</a> in Kapitel 18 sprechen werden. Vorerst kannst
 du <code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
 <code>?</code> auf einen <code>Result</code>-Wert in einer <code>main</code>-Funktion mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser <code>main</code>-Funktion nur Fehler des Typs

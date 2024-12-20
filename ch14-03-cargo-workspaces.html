@@ -169,20 +169,26 @@ $ cd add
 <p>Als Nächstes erstellen wir im Verzeichnis <em>add</em> die Datei <em>Cargo.toml</em>, mit der
 der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
 Abschnitt <code>[package]</code>. Stattdessen beginnt sie mit einem Abschnitt
-<code>[workspace]</code>, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können,
-indem wir den Pfad zum Paket mit unserer Binärkiste angeben. In diesem Fall
-lautet dieser Pfad <em>adder</em>:</p>
+<code>[workspace]</code>, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
+stellen außerdem sicher, dass wir die neueste und beste Version des
+Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
+<code>resolver</code> auf <code>"2"</code> setzen.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
-
-members = [
-    "adder",
-]
+resolver = "2"
 </code></pre>
 <p>Als nächstes erstellen wir die Binärkiste <code>adder</code>, indem wir <code>cargo new</code> im
 Verzeichnis <em>add</em> ausführen:</p>
 <pre><code class="language-console">$ cargo new adder
-     Created binary (application) `adder` package
+    Creating binary (application) `adder` package
+      Adding `adder` as member of workspace at `file:///projects/add`
+</code></pre>
+<p>Wenn du <code>cargo new</code> innerhalb eines Arbeitsbereichs ausführst, wird das neu
+erstellte Paket automatisch zum Schlüssel <code>members</code> in der Definition
+<code>[workspace]</code> der Datei <code>Cargo.toml</code> hinzugefügt, etwa so:</p>
+<pre><code class="language-toml">[workspace]
+resolver = "2"
+members = ["adder"]
 </code></pre>
 <p>An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir <code>cargo build</code>
 ausführen. Die Dateien in deinem <em>add</em>-Verzeichnis sollten folgendermaßen
@@ -220,7 +226,8 @@ members = [
 </code></pre>
 <p>Dann erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
 <pre><code class="language-console">$ cargo new add_one --lib
-     Created library `add_one` package
+    Creating library `add_one` package
+      Adding `add_one` as member of workspace at `file:///projects/add`
 </code></pre>
 <p>Dein <em>add</em>-Verzeichnis sollte nun so aussehen:</p>
 <pre><code class="language-text">├── Cargo.lock
@@ -269,13 +276,13 @@ Verzeichnis <em>add</em> ausführen!</p>
 <pre><code class="language-console">$ cargo build
   Compiling add_one v0.1.0 (file:///projects/add/add_one)
   Compiling adder v0.1.0 (file:///projects/add/adder)
-   Finished dev [unoptimized + debuginfo] target(s) in 0.68s
+   Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
 </code></pre>
 <p>Um die Binärkiste aus dem Verzeichnis <em>add</em> auszuführen, können wir mithilfe des
 Arguments <code>-p</code> und des Paketnamens mit <code>cargo run</code> angeben, welches Paket im
 Arbeitsbereich ausgeführt werden soll:</p>
 <pre><code class="language-console">$ cargo run -p adder
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
 Hello, world! 10 plus one is 11!
 </code></pre>
@@ -315,9 +322,9 @@ warning: unused import: `rand`
   |
   = note: `#[warn(unused_imports)]` on by default
 
-warning: `add_one` (lib) generated 1 warning
+warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` to apply 1 suggestion)
    Compiling adder v0.1.0 (file:///projects/add/adder)
-    Finished dev [unoptimized + debuginfo] target(s) in 10.18s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.18s
 </code></pre>
 <p>Die <em>Cargo.lock</em>-Datei der obersten Ebene enthält nun Informationen über die
 Abhängigkeit von <code>add_one</code> von <code>rand</code>. Obwohl <code>rand</code> irgendwo im Arbeitsbereich

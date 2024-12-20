@@ -172,7 +172,7 @@ implementiert. Als wir zu <code>Arc&lt;T&gt;</code>, das <code>Send</code> ist, 
 kompiliert.</p>
 <p>Jeder Typ, der vollständig aus <code>Send</code>-Typen besteht, wird automatisch auch als
 <code>Send</code> markiert. Fast alle primitiven Typen sind <code>Send</code>, abgesehen von
-Roh-Zeigern, die wir in Kapitel 19 besprechen werden.</p>
+Roh-Zeigern, die wir in Kapitel 20 besprechen werden.</p>
 <h3 id="erlauben-des-zugriffs-von-mehreren-strängen-mit-sync"><a class="header" href="#erlauben-des-zugriffs-von-mehreren-strängen-mit-sync">Erlauben des Zugriffs von mehreren Strängen mit <code>Sync</code></a></h3>
 <p>Das Markierungsmerkmal <code>Sync</code> zeigt an, dass es sicher ist, den Typ, der <code>Sync</code>
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
@@ -197,16 +197,17 @@ irgendwelche Methoden, um sie zu implementieren. Sie sind nur nützlich, um
 Invarianten in Bezug auf die Nebenläufigkeit zu erzwingen.</p>
 <p>Das manuelle Implementieren dieser Merkmale beinhaltet das Schreiben von
 unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
-Kapitel 19 sprechen; für den Moment ist die wichtige Information, dass das
+Kapitel 20 sprechen; für den Moment ist die wichtige Information, dass das
 Erstellen neuer nebenläufiger Typen, die nicht aus <code>Send</code>- und <code>Sync</code>-Teilen
 bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
 aufrechtzuerhalten. <a href="https://doc.rust-lang.org/nomicon/index.html">„Das Rustonomicon“</a> enthält weitere Informationen
 über diese Garantien und wie man sie aufrechterhalten kann.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Dies ist nicht das letzte Mal, dass du in diesem Buch der Nebenläufigkeit
-begegnest: Das Projekt in Kapitel 20 wird die Konzepte in diesem Kapitel in
-einer realistischeren Situation verwenden als die hier besprochenen kleinen
-Beispiele.</p>
+begegnest: Das gesamte nächste Kapitel befasst sich mit asynchroner
+Programmierung, und das Projekt in Kapitel 21 wird die Konzepte in diesem
+Kapitel in einer realistischeren Situation anwenden als die hier besprochenen
+kleineren Beispiele.</p>
 <p>Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
 umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind als Kisten
 (crates) implementiert. Diese entwickeln sich schneller als die
@@ -223,11 +224,6 @@ hast, kannst du sicher sein, dass er problemlos mit mehreren Strängen läuft,
 ohne die schwer aufzuspürenden Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig – furchtlos!</p>
-<p>Als Nächstes werden wir über idiomatische Wege sprechen, Probleme zu
-modellieren und Lösungen zu strukturieren, während deine Rust-Programme größer
-werden. Darüber hinaus werden wir besprechen, wie Rusts Idiome mit denen
-zusammenhängen, die dir vielleicht aus der objektorientierten Programmierung
-bekannt sind.</p>
 
                     </main>
 
@@ -237,7 +233,7 @@ bekannt sind.</p>
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch17-00-oop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch17-00-async-await.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -251,7 +247,7 @@ bekannt sind.</p>
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch17-00-oop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch17-00-async-await.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

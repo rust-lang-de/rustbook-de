@@ -383,12 +383,13 @@ Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
 würde. Wir können in diesem Beispiel immer noch <code>user1.email</code> verwenden, da
 sein Wert <em>nicht</em> verschoben wurde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
-<p>Du kannst auch Strukturen definieren, die wie Tupel aussehen, sogenannte
-<em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen sind Strukturen, die
-keine Feldnamen haben, sondern nur die Typen der Felder. Tupel-Strukturen sind
-hilfreich, wenn du dem gesamten Tupel einen Namen geben und erreichen willst,
-dass das Tupel einen anderen Typ als die anderen Tupel hat und Feldnamen wie in
-einer regulären Struktur langatmig oder unnötig wären.</p>
+<p>Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
+<em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen haben den Strukturnamen
+als zusätzliche Bedeutung, allerdings haben die Felder keine Namen, sondern nur
+Typen. Tupel-Strukturen sind hilfreich, wenn du dem gesamten Tupel einen Namen
+geben und das Tupel von anderen Tupeln unterscheiden willst, und wenn die
+Benennung der Felder wie in einer regulären Struktur langatmig oder unnötig
+wäre.</p>
 <p>Um eine Tupel-Struktur zu definieren, starte mit dem Schlüsselwort <code>struct</code>,
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
@@ -408,7 +409,9 @@ einen Parameter vom Typ <code>Color</code> hat, keinen <code>Point</code> als Ar
 beide Typen aus drei <code>i32</code>-Werten bestehen. Ansonsten ähneln
 Tupel-Struktur-Instanzen den Tupeln insofern, als dass sie in ihre einzelnen
 Teile zerlegt werden können, und du kannst ein <code>.</code> gefolgt vom Index verwenden,
-um auf einen einzelnen Wert zuzugreifen.</p>
+um auf einen einzelnen Wert zuzugreifen. Im Unterschied zu Tupeln musst du bei
+Tupel-Strukturen den Typ der Struktur angeben, wenn du sie destrukturierst. Wir
+würden zum Beispiel schreiben: <code>let Point(x, y, z) = point</code></p>
 <h3 id="einheitstyp-ähnliche-strukturen-ohne-felder"><a class="header" href="#einheitstyp-ähnliche-strukturen-ohne-felder">Einheitstyp-ähnliche Strukturen ohne Felder</a></h3>
 <p>Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 <em>Einheitstyp</em> (unit-like structs) genannt, weil sie sich ähnlich zum leeren

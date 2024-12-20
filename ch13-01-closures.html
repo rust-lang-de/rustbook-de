@@ -248,7 +248,7 @@ auswerten, wenn das Ergebnis benötigt wird.</p>
 <p>Die Ausführung dieses Codes gibt aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.27s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/shirt-company`
 Der Benutzer mit Präferenz Some(Red) erhält Red
 Der Benutzer mit Präferenz None erhält Blue
@@ -318,7 +318,7 @@ wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.</p>
 </span><span class="boring">
 </span><span class="boring">    generate_workout(simulated_user_specified_value, simulated_random_number);
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Listing 13-2: Hinzufügen optionaler Datentypangabe der
+<p><span class="caption">Codeblock 13-2: Hinzufügen optionaler Datentypangabe der
 Parameter- und Rückgabewert-Typen im Funktionsabschluss</span></p>
 <p>Mit Typ-Annotationen ähnelt die Syntax eines Funktionsabschlusses sehr der
 Syntax einer Funktion. Hier definieren wir eine Funktion, die zu ihrem
@@ -429,7 +429,7 @@ Funktionsabschlusses, und nach dem Aufruf des Funktionsabschlusses. Dieser Code
 kompiliert, läuft und gibt folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Vor dem Funktionsabschluss-Aufruf: [1, 2, 3]
@@ -454,7 +454,7 @@ Funktionsabschlusses, der eine veränderbare Referenz erfasst</span></p>
 <p>Dieser Code kompiliert, läuft und gibt aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling closure-example v0.1.0 (file:///projects/closure-example)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/closure-example`
 Vor der Funktionsabschlussdefinition: [1, 2, 3]
 Nach dem Funktionsabschluss-Aufruf: [1, 2, 3, 7]
@@ -620,7 +620,7 @@ nach ihrer Breite zu sortieren</span></p>
 <p>Dieser Code gibt aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.41s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.41s
      Running `target/debug/rectangles`
 [
     Rectangle {
@@ -668,7 +668,7 @@ fn main() {
     });
     println!("{list:#?}");
 }</code></pre></pre>
-<p><span class="caption">Listing 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
+<p><span class="caption">Codeblock 13-8: Versuch, einen <code>FnOnce</code>-Funktionsabschluss
 mit <code>sort_by_key</code> zu verwenden</span></p>
 <p>Dies ist ein ausgeklügelter, verworrener Weg (der nicht funktioniert), der
 versucht die Anzahl der Aufrufe des Funktionsabschlusses durch <code>sort_by_key</code>
@@ -730,7 +730,7 @@ fn main() {
     });
     println!("{list:#?}, sortiert in {num_sort_operations} Operationen");
 }</code></pre></pre>
-<p><span class="caption">Listing 13-9: Verwenden eines
+<p><span class="caption">Codeblock 13-9: Verwenden eines
 <code>FnMut</code>-Funktionsabschlusses mit <code>sort_by_key</code> ist erlaubt</span></p>
 <p>Die <code>Fn</code>-Merkmale sind wichtig bei der Definition oder Verwendung von
 Funktionen oder Typen, die Funktionsabschlüsse verwenden. Im nächsten Abschnitt

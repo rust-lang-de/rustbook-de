@@ -434,7 +434,7 @@ Nutzer wünschen würde, wenn er nach dem ersten Buchstaben dieser Zeichenkette
 fragte; das sind jedoch die einzigen Daten, die Rust beim Byte-Index 0 hat.
 Nutzer wollen im Allgemeinen nicht, dass der Byte-Wert zurückgegeben wird,
 selbst wenn die Zeichenkette nur lateinische Buchstaben enthält: Wenn
-<code>&amp;"hallo"[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
+<code>&amp;"hi"[0]</code> gültiger Code wäre, der den Byte-Wert zurückgibt, würde er <code>104</code>
 zurückgeben, nicht <code>h</code>.</p>
 <p>Um zu vermeiden, dass ein unerwarteter Wert zurückgegeben wird und dadurch
 Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
@@ -497,7 +497,7 @@ abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
 zugegriffen würde:</p>
 <pre><code class="language-console">$ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.43s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
 thread 'main' panicked at src/main.rs:4:19:
 byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`

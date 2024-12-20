@@ -418,7 +418,7 @@ weniger als drei Elemente enthält. Versuche, das Programm ohne irgendwelche
 Argumente laufen zu lassen; es wird so aussehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:27:21:
 index out of bounds: the len is 1 but the index is 1
@@ -484,7 +484,7 @@ Programm sofort zu beenden.</p>
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
 <pre><code class="language-console">$ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
 thread 'main' panicked at src/main.rs:26:13:
 Nicht genügend Argumente
@@ -636,7 +636,7 @@ Behandlung, die wir in Codeblock 12-8 verwendet haben, aber wir erhalten nicht
 mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/minigrep`
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
 </code></pre>
@@ -771,7 +771,7 @@ Funktion gab zuvor den Einheitstyp <code>()</code> zurück und wir behalten dies
 Rückgabewert im Fall <code>Ok</code> bei.</p>
 <p>Für den Fehlertyp haben wir das <em>Merkmalsobjekt</em> (trait object) <code>Box&lt;dyn Error&gt;</code> verwendet (und wir haben <code>std::error::Error</code> mit einer <code>use</code>-Anweisung
 am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-<a href="ch17-00-oop.html">Kapitel 17</a> behandeln. Für den Moment solltest du nur wissen, dass
+<a href="ch18-00-oop.html">Kapitel 18</a> behandeln. Für den Moment solltest du nur wissen, dass
 <code>Box&lt;dyn Error&gt;</code> bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal <code>Error</code> implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
@@ -806,7 +806,7 @@ help: use `let _ = ...` to ignore the resulting value
    |     +++++++
 
 warning: `minigrep` (bin "minigrep") generated 1 warning
-    Finished dev [unoptimized + debuginfo] target(s) in 0.71s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.71s
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt

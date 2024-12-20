@@ -335,7 +335,7 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 <p>Die Syntax <code>type Target = T;</code> definiert einen assoziierten Typ, den das Merkmal
 <code>Deref</code> verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
-keine Gedanken machen, in Kapitel 19 werden wir sie ausführlicher behandeln.</p>
+keine Gedanken machen, in Kapitel 20 werden wir sie ausführlicher behandeln.</p>
 <p>Wir füllen den Rumpf der Methode <code>deref</code> mit <code>&amp;self.0</code>, damit <code>deref</code> eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator <code>*</code> zugreifen
 wollen. Erinnere dich an den Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne

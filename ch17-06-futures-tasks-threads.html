@@ -1,0 +1,415 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Futures, Aufgaben und Stränge - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="futures-aufgaben-und-stränge"><a class="header" href="#futures-aufgaben-und-stränge">Futures, Aufgaben und Stränge</a></h2>
+<p>Wie wir im vorigen Kapitel gesehen haben, bieten Stränge (threads) einen Ansatz
+für Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen anderen
+Ansatz für Nebenläufigkeit gesehen, nämlich die Verwendung von asynchronem Code
+mit Futures und Strömen. Du fragst dich vielleicht, warum du dich für das eine
+oder das andere entscheiden solltest. Die Antwort lautet: Es kommt darauf an!
+Und in vielen Fällen ist die Wahl nicht Stränge <em>oder</em> asynchroner Code,
+sondern eher Stränge <em>und</em> asynchroner Code.</p>
+<p>Viele Betriebssysteme bieten schon seit Jahrzehnten Strang-basierte
+Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
+Modelle daher. Sie sind jedoch nicht frei von Kompromissen. Auf vielen
+Betriebssystemen wird für jeden Strang ein beträchtlicher Teil des
+Arbeitsspeichers verbraucht und es entsteht ein gewisser Overhead beim Starten
+und Beenden. Stränge sind auch nur dann eine Option, wenn dein Betriebssystem
+und deine Hardware sie unterstützen! Im Gegensatz zu herkömmlichen Desktop- und
+Mobilcomputern haben einige eingebettete Systeme überhaupt kein Betriebssystem,
+sodass sie auch keine Stränge haben!</p>
+<p>Das asynchrone Modell bietet eine andere – und letztlich ergänzende
+– Reihe von Kompromissen. Im asynchronen Modell benötigen gleichzeitige
+Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
+wie wir <code>trpl::spawn_task</code> verwendet haben, um die Arbeit von einer synchronen
+Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
+wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
+verwaltet: Der Laufzeitumgebung.</p>
+<p>Im vorigen Abschnitt haben wir gesehen, dass wir einen <code>Stream</code> erstellen
+können, indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
+erzeugen, die wir von synchronem Code aus aufrufen können. Wir könnten genau
+das Gleiche mit einem Strang machen! In Codeblock 17-40 haben wir
+<code>trpl::spawn_task</code> und <code>trpl::sleep</code> verwendet. In Codeblock 17-41 ersetzen wir
+diese durch die APIs <code>thread::spawn</code> und <code>thread::sleep</code> aus der
+Standardbibliothek.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+</span><span class="boring">
+</span><span class="boring">use std::{pin::pin, thread, time::Duration};
+</span><span class="boring">
+</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
+</span><span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::run(async {
+</span><span class="boring">        let messages = get_messages().timeout(Duration::from_millis(200));
+</span><span class="boring">        let intervals = get_intervals()
+</span><span class="boring">            .map(|count| format!("Interval #{count}"))
+</span><span class="boring">            .throttle(Duration::from_millis(500))
+</span><span class="boring">            .timeout(Duration::from_secs(10));
+</span><span class="boring">        let merged = messages.merge(intervals).take(20);
+</span><span class="boring">        let mut stream = pin!(merged);
+</span><span class="boring">
+</span><span class="boring">        while let Some(result) = stream.next().await {
+</span><span class="boring">            match result {
+</span><span class="boring">                Ok(item) =&gt; println!("{item}"),
+</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    });
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
+</span><span class="boring">    let (tx, rx) = trpl::channel();
+</span><span class="boring">
+</span><span class="boring">    trpl::spawn_task(async move {
+</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
+</span><span class="boring">
+</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
+</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
+</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
+</span><span class="boring">
+</span><span class="boring">            if let Err(send_error) = tx.send(format!("Message: '{message}'")) {
+</span><span class="boring">                eprintln!("Kann die Nachricht '{message}' nicht senden: {send_error}");
+</span><span class="boring">                break;
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    });
+</span><span class="boring">
+</span><span class="boring">    ReceiverStream::new(rx)
+</span><span class="boring">}
+</span><span class="boring">
+</span>fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
+    let (tx, rx) = trpl::channel();
+
+    // This is *not* `trpl::spawn` but `std::thread::spawn`!
+    thread::spawn(move || {
+        let mut count = 0;
+        loop {
+            // Likewise, this is *not* `trpl::sleep` but `std::thread::sleep`!
+            thread::sleep(Duration::from_millis(1));
+            count += 1;
+
+            if let Err(send_error) = tx.send(count) {
+                eprintln!("Konnte das Intervall {count} nicht senden: {send_error}");
+                break;
+            };
+        }
+    });
+
+    ReceiverStream::new(rx)
+}</code></pre></pre>
+<p><span class="caption">Codeblock 17-41: Verwenden der <code>std::thread</code>-APIs
+anstelle der asynchronen <code>trpl</code>-APIs für die Funktion <code>get_intervals</code>.</span></p>
+<p>Wenn du dies ausführst, ist die Ausgabe identisch. Und beachte, wie wenig sich
+hier aus der Sicht des aufrufenden Codes ändert! Und obwohl eine unserer
+Funktionen eine asynchrone Aufgabe in der Laufzeitumgebung und die andere
+einen Betriebssystem-Strang startet, hat es keinen Effekt auf die
+resultierenden Ströme.</p>
+<p>Trotz der Ähnlichkeiten verhalten sich diese beiden Ansätze sehr
+unterschiedlich, obwohl wir es in diesem sehr einfachen Beispiel schwer haben,
+dies zu messen. Wir könnten Millionen von asynchronen Aufgaben auf jedem
+modernen Computer ausführen. Wenn wir das mit Strängen versuchen würden, würde
+uns buchstäblich der Speicher ausgehen!</p>
+<p>Es gibt jedoch einen Grund, warum sich diese APIs so ähnlich sind. Stränge
+dienen als Grenze für Gruppen von synchronen Operationen; Nebenläufigkeit ist
+<em>zwischen</em> Strängen möglich. Aufgaben fungieren als Grenze für Gruppen von
+<em>asynchronen</em> Vorgängen; Nebenläufigkeit ist sowohl <em>zwischen</em> als auch
+<em>innerhalb</em> von Aufgaben möglich, da eine Aufgabe in ihrem Rumpf zwischen
+Futures wechseln kann. Schließlich sind Futures die granularste Einheit der
+Nebenläufigkeit in Rust, und jedes Future kann einen Baum von anderen Futures
+darstellen. Die Laufzeitumgebung – genauer gesagt ihr Executor –
+verwaltet Aufgaben, und Aufgaben verwalten Futures. In dieser Hinsicht ähneln
+Aufgaben leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
+zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
+Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
+<p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser als Stränge sind, und
+auch nicht, dass Stränge immer besser als Aufgaben sind.</p>
+<p>Nebenläufigkeit mit Strängen ist in gewisser Weise ein einfacheres
+Programmiermodell als Nebenläufigkeit mit <code>async</code>. Das kann eine Stärke oder
+eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“, sie haben
+kein natives Äquivalent zu einem Future, also laufen sie einfach bis zum Ende,
+ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt, sie haben
+keine eingebaute Unterstützung für <em>Nebenläufigkeit innerhalb der Aufgabe</em>, wie
+es Futures haben. Stränge in Rust haben auch keine Mechanismen um die
+abzubrechen – ein Thema, das wir in diesem Kapitel nicht eingehend
+behandelt haben, das aber implizit in der Tatsache enthalten ist, dass immer
+dann, wenn wir ein Future beenden, sein Zustand korrekt aufgeräumt wird.</p>
+<p>Diese Einschränkungen machen es auch schwieriger, Stränge zu erstellen als
+Futures. Es ist zum Beispiel viel schwieriger, Stränge zu verwenden, um Helfer
+wie <code>timeout</code> zu bauen, das wir in <a href="ch17-03-more-futures.html#eigene-async-abstraktionen-erstellen">„Eigene Async-Abstraktionen
+erstellen“</a> gesehen haben, oder die Methode <code>throttle</code>, die
+wir mit Strömen in <a href="ch17-04-streams.html#komposition-von-str%C3%B6men">„Komposition von Strömen“</a> verwendet haben. Die
+Tatsache, dass Futures reichhaltigere Datenstrukturen sind, bedeutet, dass sie
+natürlicher zusammengesetzt werden können, wie wir gesehen haben.</p>
+<p>Aufgaben geben dann <em>zusätzliche</em> Kontrolle über Futures, da man wählen kann,
+wo und wie man die Futures gruppiert. Und es stellt sich heraus, dass Stränge
+und Aufgaben oft sehr gut zusammenarbeiten, weil Aufgaben (zumindest in einigen
+Laufzeitumgebungen) zwischen Strängen verschoben werden können. Wir haben es
+bis jetzt nicht erwähnt, aber unter der Haube ist die Laufzeitumgebung, die wir
+benutzt haben, einschließlich der Funktionen <code>spawn_blocking</code> und <code>spawn_task</code>,
+standardmäßig mehrstängig (multithreaded)! Viele Laufzeitumgebungen verwenden
+einen Ansatz namens <em>Work Stealing</em>, um Aufgaben transparent zwischen Strängen
+hin- und herzuschieben, je nach aktueller Auslastung der Stränge. Ziel ist, die
+die Gesamtleistung des Systems zu verbessern. Um das zu bauen, braucht man
+eigentlich Stränge <em>und</em> Aufgaben, und damit Futures.</p>
+<p>Daumenregel, was wann zu verwenden ist:</p>
+<ul>
+<li>Wenn die Arbeit <em>sehr parallelisierbar</em> ist, z.B. bei der Verarbeitung einer
+Menge von Daten, bei der jeder Teil separat verarbeitet werden kann, sind
+Stränge die bessere Wahl.</li>
+<li>Wenn es sich um <em>sehr nebenläufige</em> Arbeit handelt, wie die Bearbeitung von
+Nachrichten aus einer Reihe von verschiedenen Quellen, die in
+unterschiedlichen Intervallen oder mit unterschiedlicher Geschwindigkeit
+eintreffen können, ist asynchroner Code die bessere Wahl.</li>
+</ul>
+<p>Und wenn du eine Mischung aus Parallelität und Nebenläufigkeit benötigst, musst
+du dich nicht zwischen Strängen und asynchronem Code entscheiden. Du kannst
+beide zusammen verwenden, wobei jede der beiden die Aufgabe übernimmt, für die
+sie am besten geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein ziemlich
+häufiges Beispiel für diese Art von Mischung in echtem Rust-Code.</p>
+<p><span class="filename">Dateiname: src/main.rs</span></p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+</span><span class="boring">
+</span>use std::{thread, time::Duration};
+
+fn main() {
+    let (tx, mut rx) = trpl::channel();
+
+    thread::spawn(move || {
+        for i in 1..11 {
+            tx.send(i).unwrap();
+            thread::sleep(Duration::from_secs(1));
+        }
+    });
+
+    trpl::run(async {
+        while let Some(message) = rx.recv().await {
+            println!("{message}");
+        }
+    });
+}</code></pre></pre>
+<p><span class="caption">Codeblock 17-42: Senden von Nachrichten mit blockierendem
+Code in einem Strang und Warten auf die Nachrichten in einem asynchronen
+Block</span></p>
+<p>Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
+Strang an, der für die Absenderseite des Kanals zuständig ist. Innerhalb des
+Strangs senden wir die Zahlen 1 bis 10 und schlafen dazwischen jeweils eine
+Sekunde lang. Schließlich führen wir ein Future aus, das mit einem asynchronen
+Block erstellt wurde, der an <code>trpl::run</code> übergeben wurde, so wie wir es im
+ganzen Kapitel getan haben. In diesem Future warten wir auf diese Nachrichten,
+genau wie in den anderen Beispielen für die Weitergabe von Nachrichten, die wir
+gesehen haben.</p>
+<p>Um zu den Beispielen zurückzukehren, mit denen wir das Kapitel eröffnet haben:
+Man könnte sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
+einen dedizierten Strang ausgeführt wird, da die Videokodierung rechenintensiv
+ist. Die Benutzeroberfläche kann aber über einen asynchronen Kanal informiert
+werden, wenn diese Vorgänge ausgeführt werden. Beispiele für diese Art von Mix
+gibt es zuhauf!</p>
+<h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
+<p>Das Projekt in Kapitel 21 wird die Konzepte dieses Kapitels in einer
+realistischeren Situation anwenden als die hier besprochenen kleineren
+Beispiele – und einen direkteren Vergleich anstellen, wie es aussieht,
+wenn man diese Art von Problemen mit Strängen und mit Aufgaben und Futures
+löst.</p>
+<p>Ob mit Strängen, mit Futures und Aufgaben oder mit einer Kombination aus
+beidem, Rust gibt dir die Werkzeuge an die Hand, die du benötigst, um
+sicheren, schnellen und nebenläufigen Code zu schreiben – sei es für
+einen durchsatzstarken Webserver oder ein eingebettetes Betriebssystem.</p>
+<p>Als nächstes werden wir über idiomatische Wege sprechen, Probleme zu
+modellieren und Lösungen zu strukturieren, wenn deine Rust-Programme größer
+werden. Außerdem werden wir erörtern, wie die Idiome von Rust mit denen
+verwandt sind, die du vielleicht aus der objektorientierten Programmierung
+kennst.</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch17-05-traits-for-async.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch18-00-oop.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch17-05-traits-for-async.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch18-00-oop.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </div>
+    </body>
+</html>

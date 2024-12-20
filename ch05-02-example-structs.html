@@ -172,7 +172,7 @@ durch separate Breiten- und Höhenvariablen beschrieben wird</span></p>
 <p>Nun führe dieses Programm mit <code>cargo run</code> aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.42s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.42s
      Running `target/debug/structs`
 Die Fläche des Rechtecks ist 1500 Quadratpixel.
 </code></pre>
@@ -355,7 +355,7 @@ fn main() {
 folgende Ausgabe sehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/structs`
 rect1 ist Rectangle { width: 30, height: 50 }
 </code></pre>
@@ -367,7 +367,7 @@ In diesen Fällen können wir <code>{:#?}</code> anstelle von <code>{:?}</code> 
 <code>{:#?}</code> folgendes ausgegeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling structs v0.1.0 (file:///projects/structs)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.48s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.48s
      Running `target/debug/structs`
 rect1 ist Rectangle {
     width: 30,
@@ -413,7 +413,7 @@ wir eine Referenz auf <code>rect1</code> im nächsten Aufruf. So sieht die Ausga
 Beispiels aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling rectangles v0.1.0 (file:///projects/rectangles)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.61s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.61s
      Running `target/debug/rectangles`
 [src/main.rs:10:16] 30 * scale = 60
 [src/main.rs:14:5] &amp;rect1 = Rectangle {

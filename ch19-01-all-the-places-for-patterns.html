@@ -177,7 +177,7 @@ Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.</p
 <p>Das spezielle Muster <code>_</code> wird auf alles passen, aber es bindet nie an eine
 Variable, daher wird es oft im letzten <code>match</code>-Zweig verwendet. Das Muster <code>_</code>
 kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster <code>_</code> im Abschnitt <a href="ch18-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von
+ignorieren willst. Wir werden das Muster <code>_</code> im Abschnitt <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von
 Werten in einem Muster“</a> später in diesem Kapitel
 ausführlicher behandeln.</p>
 <h3 id="bedingte-if-let-ausdrücke"><a class="header" href="#bedingte-if-let-ausdrücke">Bedingte <code>if let</code>-Ausdrücke</a></h3>
@@ -185,12 +185,12 @@ ausführlicher behandeln.</p>
 kürzeren Weg verwendet, um das Äquivalent eines <code>match</code>-Ausdrucks zu schreiben,
 der nur einen Fall prüft. Optional kann <code>if let</code> ein entsprechendes <code>else</code>
 haben mit Code, der ausgeführt wird, wenn das Muster in <code>if let</code> nicht passt.</p>
-<p>Codeblock 18-1 zeigt, dass es auch möglich ist, die Ausdrücke <code>if let</code>, <code>else if</code> und <code>else if let</code> zu mischen und anzupassen. Dies gibt uns mehr
+<p>Codeblock 19-1 zeigt, dass es auch möglich ist, die Ausdrücke <code>if let</code>, <code>else if</code> und <code>else if let</code> zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein <code>match</code>-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von <code>if let</code>-, <code>else if</code>- und <code>else if let</code>-Zweigen sich
 notwendigerweise aufeinander beziehen.</p>
-<p>Der Code in Codeblock 18-1 bestimmt die Farbe des Hintergrunds auf der
+<p>Der Code in Codeblock 19-1 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.</p>
@@ -214,7 +214,7 @@ von Benutzereingaben erhalten könnte.</p>
         println!("Verwende blau als Hintergrundfarbe");
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 18-1: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
+<p><span class="caption">Codeblock 19-1: Mischen von <code>if let</code>, <code>else if</code>, <code>else if let</code> und <code>else</code></span></p>
 <p>Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
 Hintergrundfarbe. Wenn keine Lieblingsfarbe angegeben wurde und heute Dienstag
 ist, ist die Hintergrundfarbe grün. Ansonsten, wenn der Benutzer sein Alter als
@@ -235,35 +235,39 @@ Vollständigkeit nicht prüft, während er dies bei <code>match</code>-Ausdrück
 wir den letzten <code>else</code>-Block weglassen und daher einige Fälle nicht behandelt
 haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.</p>
 <h3 id="while-let-bedingte-schleifen"><a class="header" href="#while-let-bedingte-schleifen"><code>while let</code>-bedingte Schleifen</a></h3>
-<p>Ähnlich konstruiert wie <code>if let</code> erlaubt die <code>while let</code>-bedingte Schleife,
-dass eine <code>while</code>-Schleife so lange läuft, wie ein Muster weiterhin passt. In
-Codeblock 18-2 haben wir eine <code>while let</code>-Schleife geschrieben, die einen
-Vektor als Stapel (stack) verwendet und die Werte im Vektor in der umgekehrten
-Reihenfolge ausgibt, in der sie auf den Stapel gelegt wurden.</p>
+<p>Analog zu <code>if let</code> ermöglicht die bedingte Schleife <code>while let</code>, dass eine
+<code>while</code>-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Wir
+haben eine <code>while let</code>-Schleife zum ersten Mal in Kapitel 17 gesehen, wo wir
+sie dafür benutzt haben, eine Schleife so lange laufen zu lassen, wie ein
+Datenstrom neue Werte produziert. Auf ähnliche Weise zeigen wir in Codeblock
+19-2 eine <code>while let</code>-Schleife, die auf Nachrichten wartet, die zwischen
+Strängen gesendet werden. In aktuellen Fall prüfen wir ein <code>Result</code> statt einer
+einer <code>Option</code>.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let mut stack = Vec::new();
+</span>    let (tx, rx) = std::sync::mpsc::channel();
+    std::thread::spawn(move || {
+        for val in [1, 2, 3] {
+            tx.send(val).unwrap();
+        }
+    });
 
-    stack.push(1);
-    stack.push(2);
-    stack.push(3);
-
-    while let Some(top) = stack.pop() {
-        println!("{top}");
+    while let Ok(value) = rx.recv() {
+        println!("{value}");
     }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 18-2: Das Verwenden einer <code>while let</code>-Schleife,
-um Werte so lange auszugeben, wie <code>stack.pop()</code> ein <code>Some</code> zurückgibt</span></p>
-<p>Dieses Beispiel gibt 3, 2 und 1 aus. Die <code>pop</code>-Methode nimmt das letzte Element
-aus dem Vektor und gibt <code>Some(value)</code> zurück. Wenn der Vektor leer ist, gibt
-<code>pop</code> den Wert <code>None</code> zurück. Die <code>while</code>-Schleife führt den Code in ihrem
-Block so lange aus, wie <code>pop</code> ein <code>Some</code> zurückgibt. Wenn <code>pop</code> den Wert <code>None</code>
-zurückgibt, stoppt die Schleife. Wir können <code>while let</code> benutzen, um jedes
-Element von unserem Stapel zu holen.</p>
+<p><span class="caption">Codeblock 19-2: Das Verwenden einer <code>while let</code>-Schleife,
+um Werte so lange auszugeben, wie <code>rx.recv()</code> ein <code>Ok</code> zurückgibt</span></p>
+<p>Dieses Beispiel gibt 1, 2 und 3 aus. Als wir <code>recv</code> in Kapitel 16 gesehen
+haben, haben wir den Fehler direkt ausgepackt oder mit ihm als Iterator in
+einer <code>for</code>-Schleife interagiert. Wie Codeblock 19-2 zeigt, können wir aber
+auch <code>while let</code> verwenden, da die Methode <code>recv</code> den Wert <code>Ok</code> zurückgibt,
+solange der Absender Nachrichten produziert, und schließlich <code>Err</code> zurückgibt,
+sobald die Absenderseite die Verbindung trennt.</p>
 <h3 id="for-schleifen"><a class="header" href="#for-schleifen"><code>for</code>-Schleifen</a></h3>
 <p>In einer <code>for</code>-Schleife ist der Wert, der direkt auf das Schlüsselwort <code>for</code>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
-Codeblock 18-3 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
+Codeblock 19-3 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
 ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerlegen.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -273,12 +277,12 @@ ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerl
         println!("{value} ist beim Index {index}");
     }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 18-3: Verwenden eines Musters in einer
+<p><span class="caption">Codeblock 19-3: Verwenden eines Musters in einer
 <code>for</code>-Schleife zum Destrukturieren eines Tupels</span></p>
-<p>Der Code in Codeblock 18-3 wird Folgendes ausgeben:</p>
+<p>Der Code in Codeblock 19-3 wird Folgendes ausgeben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.52s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.52s
      Running `target/debug/patterns`
 a ist beim Index 0
 b ist beim Index 1
@@ -311,13 +315,13 @@ hier passt, an die Variable <code>x</code>.“ Da der Name <code>x</code> das ge
 bedeutet dieses Muster effektiv „Binde alles an die Variable <code>x</code>, was auch
 immer der Wert ist.“.</p>
 <p>Um den Aspekt des Musterabgleichs (pattern matching) von <code>let</code> deutlicher zu
-sehen, betrachte Codeblock 18-4, der ein Muster mit <code>let</code> verwendet, um ein
+sehen, betrachte Codeblock 19-4, der ein Muster mit <code>let</code> verwendet, um ein
 Tupel zu destrukturieren.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y, z) = (1, 2, 3);
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 18-4: Verwenden eines Musters zum
+<p><span class="caption">Codeblock 19-4: Verwenden eines Musters zum
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span></p>
 <p>Hier vergleichen wir ein Tupel mit einem Muster. Rust vergleicht den Wert <code>(1, 2, 3)</code> mit dem Muster <code>(x, y, z)</code> und sieht, dass der Wert zum Muster passt,
@@ -326,14 +330,14 @@ Tupelmuster als Verschachtelung von drei einzelnen Variablen-Mustern darin
 vorstellen.</p>
 <p>Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
-Kompilierfehler. Beispielsweise zeigt Codeblock 18-5 einen Versuch, ein Tupel
+Kompilierfehler. Beispielsweise zeigt Codeblock 19-5 einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y) = (1, 2, 3);
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 18-5: Fehlerhaft aufgebautes Musters, dessen
+<p><span class="caption">Codeblock 19-5: Fehlerhaft aufgebautes Musters, dessen
 Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span></p>
 <p>Der Versuch, diesen Code zu kompilieren, führt zu diesem Typfehler:</p>
 <pre><code class="language-console">$ cargo run
@@ -353,13 +357,13 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `patterns` (bin "patterns") due to 1 previous error
 </code></pre>
 <p>Um den Fehler zu beheben, könnten wir einen oder mehrere der Werte im Tupel
-mittels <code>_</code> oder <code>..</code> ignorieren, wie du im Abschnitt <a href="ch18-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten
+mittels <code>_</code> oder <code>..</code> ignorieren, wie du im Abschnitt <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten
 in einem Muster“</a> sehen wirst. Wenn das Problem
 darin besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung
 darin, die Typen aufeinander abzustimmen, indem Variablen entfernt werden,
 sodass die Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.</p>
 <h3 id="funktionsparameter"><a class="header" href="#funktionsparameter">Funktionsparameter</a></h3>
-<p>Funktionsparameter können auch Muster sein. Der Code in Codeblock 18-6, der
+<p>Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
 eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <code>x</code> vom Typ
 <code>i32</code> benötigt, sollte inzwischen bekannt aussehen.</p>
 <pre><pre class="playground"><code class="language-rust">fn foo(x: i32) {
@@ -367,10 +371,10 @@ eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <co
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
-<p><span class="caption">Codeblock 18-6: Eine Funktionssignatur verwendet Muster
+<p><span class="caption">Codeblock 19-6: Eine Funktionssignatur verwendet Muster
 in den Parametern</span></p>
 <p>Der Teil <code>x</code> ist ein Muster! Wie wir es mit <code>let</code> taten, konnten wir ein Tupel
-in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 18-7 teilt die
+in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
@@ -381,7 +385,7 @@ fn main() {
     let point = (3, 5);
     print_coordinates(&amp;point);
 }</code></pre></pre>
-<p><span class="caption">Codeblock 18-7: Eine Funktion mit Parametern, die ein
+<p><span class="caption">Codeblock 19-7: Eine Funktion mit Parametern, die ein
 Tupel destrukturieren</span></p>
 <p>Dieser Code gibt <code>Aktuelle Position: (3, 5)</code> aus. Die Werte <code>&amp;(3, 5)</code> passen
 zum Muster <code>&amp;(x, y)</code>, sodass <code>x</code> den Wert <code>3</code> und <code>y</code> den Wert <code>5</code> hat.</p>
@@ -398,11 +402,11 @@ sein. Wir werden diese beiden Konzepte als Nächstes besprechen.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch18-00-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch19-00-patterns.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch18-02-refutability.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch19-02-refutability.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -412,11 +416,11 @@ sein. Wir werden diese beiden Konzepte als Nächstes besprechen.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch18-00-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch19-00-patterns.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch18-02-refutability.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch19-02-refutability.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

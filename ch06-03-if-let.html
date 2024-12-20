@@ -181,7 +181,7 @@ Ausdruck hinter <code>match</code> angegeben wird und das Muster der erste Zweig
 diesem Fall ist das Muster <code>Some(max)</code> und das <code>max</code> ist an den Wert innerhalb
 von <code>Some</code> gebunden. Wir können dann <code>max</code> im Rumpf des <code>if let</code>-Blocks auf die
 gleiche Weise verwenden, wie <code>max</code> im entsprechenden <code>match</code>-Zweig. Der Code im
-<code>if let</code>-Block wird nicht ausgeführt, wenn der Wert nicht zum Muster passt.</p>
+<code>if let</code>-Block wird nur ausgeführt, wenn der Wert zum Muster passt.</p>
 <p>Die Verwendung von <code>if let</code> bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die
 <code>match</code> erzwingt. Die Wahl zwischen <code>match</code> und <code>if let</code> hängt davon ab, was

@@ -248,7 +248,7 @@ mit Cargo bauen und ausführen. Von deinem <em>hello_cargo</em>-Verzeichnis aus 
 du dein Projekt, indem du den folgenden Befehl eingibst:</p>
 <pre><code class="language-console">$ cargo build
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 2.85 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.85 secs
 </code></pre>
 <p>Dieser Befehl erzeugt eine ausführbare Datei in <em>target/debug/hello_cargo</em>
 (oder <em>target\debug\hello_cargo.exe</em> unter Windows) und nicht in deinem
@@ -269,7 +269,7 @@ niemals manuell ändern; Cargo verwaltet ihren Inhalt für dich.</p>
 verwenden, um den Code zu kompilieren und dann die resultierende ausführbare
 Datei mit einem einzigen Befehl auszuführen:</p>
 <pre><code class="language-console">$ cargo run
-    Finished dev [unoptimized + debuginfo] target(s) in 0.0 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0 secs
      Running `target/debug/hello_cargo`
 Hello, world!
 </code></pre>
@@ -284,7 +284,7 @@ Cargo das Projekt vor der Ausführung neu kompiliert, und du hättest diese
 Ausgabe gesehen:</p>
 <pre><code class="language-console">$ cargo run
    Compiling hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.33 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.33 secs
      Running `target/debug/hello_cargo`
 Hello, world!
 </code></pre>
@@ -293,7 +293,7 @@ schnell deinen Code, um sicherzustellen, dass er kompiliert, erzeugt aber keine
 ausführbare Datei:</p>
 <pre><code class="language-console">$ cargo check
    Checking hello_cargo v0.1.0 (file:///projects/hello_cargo)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.32 secs
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.32 secs
 </code></pre>
 <p>Warum willst du keine ausführbare Datei? Häufig ist <code>cargo check</code> viel
 schneller als <code>cargo build</code>, weil es den Schritt der Erstellung einer

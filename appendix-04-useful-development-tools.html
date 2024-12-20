@@ -192,7 +192,7 @@ warning: unused variable: `i`
   |
   = note: #[warn(unused_variables)] on by default
 
-    Finished dev [unoptimized + debuginfo] target(s) in 0.50s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
 </code></pre>
 <p>Die Warnung empfiehlt, stattdessen <code>_i</code> als Namen zu verwenden: Der Unterstrich
 zeigt an, dass wir diese Variable nicht verwenden wollen. Wir können diesen
@@ -201,7 +201,7 @@ Kommando <code>cargo fix</code> ausführen:</p>
 <pre><code class="language-console">$ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
-    Finished dev [unoptimized + debuginfo] target(s) in 0.59s
+    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 </code></pre>
 <p>Wenn wir uns <em>src/main.rs</em> noch einmal ansehen, werden wir sehen, dass
 <code>cargo fix</code> den Code geändert hat:</p>

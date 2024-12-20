@@ -1,0 +1,635 @@
+<!DOCTYPE HTML>
+<html lang="de" class="light sidebar-visible" dir="ltr">
+    <head>
+        <!-- Book generated using mdBook -->
+        <meta charset="UTF-8">
+        <title>Merkmale für async - Die Programmiersprache Rust</title>
+
+
+        <!-- Custom HTML head -->
+
+        <meta name="description" content="Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs.">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <meta name="theme-color" content="#ffffff">
+
+        <link rel="icon" href="favicon.svg">
+        <link rel="shortcut icon" href="favicon.png">
+        <link rel="stylesheet" href="css/variables.css">
+        <link rel="stylesheet" href="css/general.css">
+        <link rel="stylesheet" href="css/chrome.css">
+        <link rel="stylesheet" href="css/print.css" media="print">
+
+        <!-- Fonts -->
+        <link rel="stylesheet" href="FontAwesome/css/font-awesome.css">
+        <link rel="stylesheet" href="fonts/fonts.css">
+
+        <!-- Highlight.js Stylesheets -->
+        <link rel="stylesheet" href="highlight.css">
+        <link rel="stylesheet" href="tomorrow-night.css">
+        <link rel="stylesheet" href="ayu-highlight.css">
+
+        <!-- Custom theme stylesheets -->
+        <link rel="stylesheet" href="theme/ferris.css">
+        <link rel="stylesheet" href="theme/2018-edition.css">
+
+
+        <!-- Provide site root to javascript -->
+        <script>
+            var path_to_root = "";
+            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+        </script>
+        <!-- Start loading toc.js asap -->
+        <script src="toc.js"></script>
+    </head>
+    <body>
+    <div id="body-container">
+        <!-- Work around some values being stored in localStorage wrapped in quotes -->
+        <script>
+            try {
+                var theme = localStorage.getItem('mdbook-theme');
+                var sidebar = localStorage.getItem('mdbook-sidebar');
+
+                if (theme.startsWith('"') && theme.endsWith('"')) {
+                    localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
+                }
+
+                if (sidebar.startsWith('"') && sidebar.endsWith('"')) {
+                    localStorage.setItem('mdbook-sidebar', sidebar.slice(1, sidebar.length - 1));
+                }
+            } catch (e) { }
+        </script>
+
+        <!-- Set the theme before any content is loaded, prevents flash -->
+        <script>
+            var theme;
+            try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
+            if (theme === null || theme === undefined) { theme = default_theme; }
+            const html = document.documentElement;
+            html.classList.remove('light')
+            html.classList.add(theme);
+            html.classList.add("js");
+        </script>
+
+        <input type="checkbox" id="sidebar-toggle-anchor" class="hidden">
+
+        <!-- Hide / unhide sidebar before it is displayed -->
+        <script>
+            var sidebar = null;
+            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            if (document.body.clientWidth >= 1080) {
+                try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
+                sidebar = sidebar || 'visible';
+            } else {
+                sidebar = 'hidden';
+            }
+            sidebar_toggle.checked = sidebar === 'visible';
+            html.classList.remove('sidebar-visible');
+            html.classList.add("sidebar-" + sidebar);
+        </script>
+
+        <nav id="sidebar" class="sidebar" aria-label="Table of contents">
+            <!-- populated by js -->
+            <mdbook-sidebar-scrollbox class="sidebar-scrollbox"></mdbook-sidebar-scrollbox>
+            <noscript>
+                <iframe class="sidebar-iframe-outer" src="toc.html"></iframe>
+            </noscript>
+            <div id="sidebar-resize-handle" class="sidebar-resize-handle">
+                <div class="sidebar-resize-indicator"></div>
+            </div>
+        </nav>
+
+        <div id="page-wrapper" class="page-wrapper">
+
+            <div class="page">
+                <div id="menu-bar-hover-placeholder"></div>
+                <div id="menu-bar" class="menu-bar sticky">
+                    <div class="left-buttons">
+                        <label id="sidebar-toggle" class="icon-button" for="sidebar-toggle-anchor" title="Toggle Table of Contents" aria-label="Toggle Table of Contents" aria-controls="sidebar">
+                            <i class="fa fa-bars"></i>
+                        </label>
+                        <button id="theme-toggle" class="icon-button" type="button" title="Change theme" aria-label="Change theme" aria-haspopup="true" aria-expanded="false" aria-controls="theme-list">
+                            <i class="fa fa-paint-brush"></i>
+                        </button>
+                        <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="navy">Navy</button></li>
+                            <li role="none"><button role="menuitem" class="theme" id="ayu">Ayu</button></li>
+                        </ul>
+                    </div>
+
+                    <h1 class="menu-title">Die Programmiersprache Rust</h1>
+
+                    <div class="right-buttons">
+                        <a href="print.html" title="Print this book" aria-label="Print this book">
+                            <i id="print-button" class="fa fa-print"></i>
+                        </a>
+                        <a href="https://github.com/rust-lang-de/rustbook-de" title="Git repository" aria-label="Git repository">
+                            <i id="git-repository-button" class="fa fa-github"></i>
+                        </a>
+
+                    </div>
+                </div>
+
+
+                <!-- Apply ARIA attributes after the sidebar and the sidebar toggle button are added to the DOM -->
+                <script>
+                    document.getElementById('sidebar-toggle').setAttribute('aria-expanded', sidebar === 'visible');
+                    document.getElementById('sidebar').setAttribute('aria-hidden', sidebar !== 'visible');
+                    Array.from(document.querySelectorAll('#sidebar a')).forEach(function(link) {
+                        link.setAttribute('tabIndex', sidebar === 'visible' ? 0 : -1);
+                    });
+                </script>
+
+                <div id="content" class="content">
+                    <main>
+                        <h2 id="merkmale-für-async"><a class="header" href="#merkmale-für-async">Merkmale für async</a></h2>
+<p>Im Laufe des Kapitels haben wir die Merkmale <code>Future</code>, <code>Pin</code>, <code>Unpin</code>, <code>Stream</code>
+und <code>StreamExt</code> auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch
+vermieden, zu sehr ins Detail zu gehen, wie sie funktionieren oder wie sie
+zusammenpassen. Wenn wir Rust für den Alltag schreiben, ist das meist
+ausreichend. Manchmal stößt man jedoch auf Situationen, in denen es wichtig
+ist, ein paar mehr dieser Details zu verstehen. In diesem Abschnitt gehen wir
+<em>noch</em> weiter in die Tiefe, um dir in solchen Situationen zu helfen –
+und überlassen die <em>wirklich</em> tiefen Einblicke der weiteren Dokumentation!</p>
+<h3 id="future"><a class="header" href="#future">Future</a></h3>
+<p>Im Abschnitt <a href="ch17-01-futures-and-syntax.html">„Futures und die asynchrone Syntax“</a> haben wir
+bereits festgestellt, dass <code>Future</code> ein Merkmal ist. Lass uns zunächst einen
+genaueren Blick darauf werfen, wie es funktioniert. Rust definiert ein <code>Future</code>
+wie folgt:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::pin::Pin;
+use std::task::{Context, Poll};
+
+pub trait Future {
+    type Output;
+
+    fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Diese Merkmals-Definition enthält eine Reihe neuer Typen und auch eine Syntax,
+die wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück
+für Stück durch.</p>
+<p>Erstens gibt der zugehörige Typ <code>Output</code> von <code>Future</code> an, was das Future
+zurückgibt. Dies ist analog zum Typ <code>Item</code> des Merkmals <code>Iterator</code>. Zweitens
+hat <code>Future</code> auch die Methode <code>poll</code>, die eine spezielle <code>Pin</code>-Referenz für
+ihren <code>self</code>-Parameter und eine veränderbare Referenz auf einen <code>Context</code>-Typ
+entgegennimmt und <code>Poll&lt;Self::Output&gt;</code> zurückgibt. Wir werden später in diesem
+Abschnitt ein wenig mehr über <code>Pin</code> und <code>Context</code> sprechen. Für den Moment
+wollen wir uns auf das konzentrieren, was die Methode zurückgibt: Den Typ
+<code>Poll</code>:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>enum Poll&lt;T&gt; {
+    Ready(T),
+    Pending,
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Dieser Typ <code>Poll</code> ist ähnlich wie eine <code>Option</code>: Er hat eine Variante
+<code>Ready(T)</code>, die einen Wert hat, und eine Variante <code>Pending</code> ohne Wert. Sie
+bedeutet jedoch etwas ganz anderes! Die Variante <code>Pending</code> zeigt an, dass das
+Future noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal
+nachsehen muss. Die Variante <code>Ready</code> zeigt an, dass das <code>Future</code> seine Arbeit
+beendet hat und der Wert <code>T</code> verfügbar ist.</p>
+<blockquote>
+<p>Hinweis: Bei den meisten Futures sollte der Aufrufer die Methode <code>poll</code> nicht
+erneut aufrufen, nachdem das Future <code>Ready</code> zurückgegeben hat. Viele Futures
+werden das Programm abbrechen, wenn sie erneut abgefragt werden, obwohl sie
+bereit sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies
+in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
+<code>Iterator::next</code>!</p>
+</blockquote>
+<p>Unter der Haube kompiliert Rust Code mit <code>await</code> zu Code, der <code>poll</code> aufruft.
+Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
+URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust das in etwa
+(wenn auch nicht genau) wie folgt:</p>
+<pre><code class="language-rust ignore">match page_title(url).poll() {
+    Ready(page_title) =&gt; match page_title {
+        Some(title) =&gt; println!("Der Titel für {url} war {title}"),
+        None =&gt; println!("{url} hatte keinen Titel"),
+    }
+    Pending =&gt; {
+        // Aber was kommt hierhin?
+    }
+}</code></pre>
+<p>Was sollen wir tun, wenn das <code>Future</code> noch <code>Pending</code> ist? Wir brauchen eine
+Möglichkeit, es nochmal zu versuchen und nochmal und nochmal, bis das Future
+endlich fertig ist. Mit anderen Worten, eine Schleife:</p>
+<pre><code class="language-rust ignore">let mut page_title_fut = page_title(url);
+loop {
+    match page_title_fut.poll() {
+        Ready(value) =&gt; match page_title {
+            Some(title) =&gt; println!("Der Titel für {url} war {title}"),
+            None =&gt; println!("{url} hatte keinen Titel"),
+        }
+        Pending =&gt; {
+            // weitermachen
+        }
+    }
+}</code></pre>
+<p>Wenn Rust diesen Code kompilieren würde, würde jedes <code>await</code> blockieren –
+genau das Gegenteil von dem, was wir erreichen wollten! Stattdessen sorgt Rust
+dafür, dass die Schleife die Kontrolle an etwas abgeben kann, das die Arbeit an
+diesem Future unterbrechen und an anderen Futures arbeiten kann, um diese
+später wieder zu prüfen. Dieses „Etwas“ ist eine asynchrone Laufzeitumgebung,
+und diese Planungs- und Koordinierungsarbeit ist eine der Hauptaufgaben einer
+Laufzeitumgebung.</p>
+<p>Erinnere dich an unsere Beschreibung (im Abschnitt <a href="ch17-02-concurrency-with-async.html">„Zählen“</a>) zum
+Warten auf <code>rx.recv</code>. Der Aufruf <code>recv</code> gibt ein <code>Future</code> zurück und zum
+Warten darauf wird es es abgefragt. In unserer anfänglichen Diskussion haben
+wir angemerkt, dass eine Laufzeitumgebung das Future pausieren wird, bis es
+entweder mit <code>Some(message)</code> oder <code>None</code> bereit ist, wenn der Kanal
+geschlossen wird. Mit unserem tieferen Verständnis von <code>Future</code> und
+insbesondere von <code>Future::poll</code> können wir sehen, wie das funktioniert. Die
+Laufzeitumgebung weiß, dass das Future nicht bereit ist, wenn es
+<code>Poll::Pending</code> zurückgibt. Umgekehrt weiß die Laufzeitumgebung, dass das
+Future bereit ist und bevorzugt es, wenn <code>poll</code> den Wert
+<code>Poll::Ready(Some(message))</code> oder <code>Poll::Ready(None)</code> zurückgibt.</p>
+<p>Die genauen Details, wie eine Laufzeitumgebung das macht, gehen über das
+hinaus, was wir in diesem Abschnitt behandeln können. Der Schlüssel dazu ist
+die grundlegende Mechanik von Futures: Eine Laufzeitumgebung <em>fragt</em> jedes
+Zukunft ab, für die es verantwortlich ist, und legt es zurück in den Schlaf,
+wenn es noch nicht bereit ist.</p>
+<h3 id="anheften-pinning-und-die-merkmale-pin-und-unpin"><a class="header" href="#anheften-pinning-und-die-merkmale-pin-und-unpin">Anheften (pinning) und die Merkmale Pin und Unpin</a></h3>
+<p>Als wir bei der Arbeit an Codeblock 17-16 die Idee des Anheftens einführten,
+stießen wir auf eine sehr unangenehme Fehlermeldung. Hier ist noch einmal der
+relevante Teil davon:</p>
+<pre><code class="language-text">error[E0277]: `{async block@src/main.rs:10:23: 10:33}` cannot be unpinned
+  --&gt; src/main.rs:48:33
+   |
+48 |         trpl::join_all(futures).await;
+   |                                 ^^^^^ the trait `Unpin` is not implemented for `{async block@src/main.rs:10:23: 10:33}`, which is required by `Box&lt;{async block@src/main.rs:10:23: 10:33}&gt;: Future`
+   |
+   = note: consider using the `pin!` macro
+           consider using `Box::pin` if you need to access the pinned value outside of the current scope
+   = note: required for `Box&lt;{async block@src/main.rs:10:23: 10:33}&gt;` to implement `Future`
+note: required by a bound in `futures_util::future::join_all::JoinAll`
+  --&gt; file:///home/.cargo/registry/src/index.crates.io-6f17d22bba15001f/futures-util-0.3.30/src/future/join_all.rs:29:8
+   |
+27 | pub struct JoinAll&lt;F&gt;
+   |            ------- required by a bound in this struct
+28 | where
+29 |     F: Future,
+   |        ^^^^^^ required by this bound in `JoinAll`
+</code></pre>
+<p>Wenn wir diese Fehlermeldung aufmerksam lesen, sagt sie uns nicht nur, dass wir
+die Werte anheften müssen, sondern auch, warum das Anheften erforderlich ist.
+Die Funktion <code>trpl::join_all</code> gibt eine Struktur namens <code>JoinAll</code> zurück. Diese
+Struktur ist generisch über einen Typ <code>F</code>, der auf die Implementierung des
+Merkmals <code>Future</code> beschränkt ist. Direktes Warten auf ein Future mit <code>await</code>
+heftet das Future implizit an. Deshalb müssen wir <code>pin!</code> nicht überall
+verwenden, wo wir auf Futures warten wollen.</p>
+<p>Allerdings warten wir hier nicht direkt ein Future. Stattdessen konstruieren
+wir ein neues Future <code>JoinAll</code>, indem wir eine Kollektion von Futures an die
+Funktion <code>join_all</code> übergeben. Die Signatur für <code>join_all</code> erfordert, dass der
+Typ der Elemente in der Kollektion das Merkmal <code>Future</code> implementiert. <code>Box&lt;T&gt;</code>
+implementiert <code>Future</code> nur, wenn das <code>T</code>, das es umhüllt, ein Future ist, das
+das Merkmal <code>Unpin</code> implementiert.</p>
+<p>Das ist eine ganze Menge! Aber wir können es verstehen, wenn wir ein wenig
+tiefer in die Funktionsweise des Typs <code>Future</code> eintauchen, insbesondere im
+Zusammenhang mit <em>Anheften</em>.</p>
+<p>Schauen wir uns noch einmal die Definition von <code>Future</code> an:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::pin::Pin;
+use std::task::{Context, Poll};
+
+pub trait Future {
+    type Output;
+
+    // Erforderliche Methode
+    fn poll(self: Pin&lt;&amp;mut Self&gt;, cx: &amp;mut Context&lt;'_&gt;) -&gt; Poll&lt;Self::Output&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Der Parameter <code>cx</code> und sein Typ <code>Context</code> sind der Schlüssel dazu, wie eine
+Laufzeitumgebung tatsächlich weiß, wann sie ein bestimmtes Future prüfen muss,
+während es immer noch faul ist. Die Details, wie das funktioniert, liegen
+jedoch außerhalb des Rahmens dieses Kapitels: Du musst dich im Allgemeinen nur
+darum kümmern, wenn du eine eigene <code>Future</code>-Implementierung schreibst.</p>
+<p>Stattdessen konzentrieren wir uns auf den Typ für <code>self</code>. Dies ist das erste
+Mal, dass wir eine Methode sehen, bei der <code>self</code> eine Typ-Annotation hat. Eine
+Typ-Annotation für <code>self</code> ist ähnlich wie Typ-Annotationen für andere
+Funktionsparameter, mit zwei wesentlichen Unterschieden. Erstens, wenn wir den
+Typ von <code>self</code> auf diese Weise angeben, teilen wir Rust mit, welchen Typ <code>self</code>
+haben muss, um diese Methode aufzurufen. Zweitens kann eine Typ-Annotation auf
+<code>self</code> nicht einfach irgendein Typ sein. Es darf nur der Typ sein, auf dem die
+Methode implementiert ist, ein Referenz oder intelligenter Zeiger auf diesen
+Typ oder ein <code>Pin</code>, der eine Referenz auf diesen Typ umschließt. Wir werden
+mehr über diese Syntax in Kapitel 18 sehen. Für den Moment reicht es zu wissen,
+dass wir, wenn wir ein Future abfragen wollen (um zu prüfen, ob es <code>Pending</code>
+oder <code>Ready(Output)</code> ist), eine veränderbare Referenz auf den Typ benötigen,
+der in ein <code>Pin</code> eingepackt ist.</p>
+<p><code>Pin</code> ist ein Wrapper-Typ. In gewisser Weise ähnelt er den Typen <code>Box</code>, <code>Rc</code>
+und anderen intelligenten Zeigern, die wir in Kapitel 15 gesehen haben und die
+ebenfalls andere Typen umschließen. Im Gegensatz zu diesen funktioniert <code>Pin</code>
+jedoch nur mit <em>Zeigertypen</em> wie Referenzen (<code>&amp;</code> und <code>&amp;mut</code>) und intelligenten
+Zeigern (<code>Box</code>, <code>Rc</code> usw.). Um genau zu sein, funktioniert <code>Pin</code> mit Typen, die
+das Merkmal <code>Deref</code> oder <code>DerefMut</code> implementieren, die wir in Kapitel 15
+behandelt haben. Man kann sich diese Einschränkung so vorstellen, als würde man
+nur mit Zeigern arbeiten, weil die Implementierung von <code>Deref</code> oder <code>DerefMut</code>
+bedeutet, dass sich dein Typ ähnlich wie ein Zeigertyp verhält. <code>Pin</code> ist auch
+selbst kein Zeiger und hat kein eigenes Verhalten, wie es <code>Rc</code> und <code>Arc</code> mit
+Referenzzählern haben. Es ist lediglich ein Werkzeug, das der Compiler
+verwenden kann, um die relevanten Garantien aufrechtzuerhalten, indem er Zeiger
+mit dem Typ umschließt.</p>
+<p>Wenn man sich daran erinnert, dass <code>await</code> in Form von Aufrufen von <code>poll</code>
+implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben
+– aber die bezog sich auf <code>Unpin</code>, nicht auf <code>Pin</code>. Was genau sind also
+<code>Pin</code> und <code>Unpin</code>, wie hängen sie zusammen, und warum muss <code>Future</code> in einem
+<code>Pin</code>-Typ sein, um <code>poll</code> aufzurufen?</p>
+<p>In <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones Programm“</a> haben wir beschrieben,
+wie eine Reihe von Wartepunkten in einem Future zu einem Zustandsautomaten
+kompiliert wird – und wie der Compiler dafür sorgt, dass dieser
+Zustandsautomat alle normalen Sicherheitsregeln von Rust befolgt,
+einschließlich Ausleihen (borrowing) und Eigentümerschaft (ownership). Damit
+das funktioniert, prüft Rust, welche Daten zwischen einem await-Punkt und dem
+nächsten oder dem Ende des asynchronen Blocks benötigt werden. Dann wird eine
+entsprechende Variante in dem von ihm erstellten Zustandsautomaten erstellt.
+Jede Variante erhält den erforderlichen Zugriff auf die Daten, die in diesem
+Abschnitt des Quellcodes verwendet werden, entweder durch Übernahme der
+Eigentümerschaft an diesen Daten oder durch Erhalt einer veränderbaren oder
+unveränderbaren Referenz darauf.</p>
+<p>So weit, so gut: Wenn wir bei der Eigentümerschaft oder den Referenzen in einem
+bestimmten asynchronen Block etwas falsch machen, wird uns der Ausleihenprüfer
+(borrow checker) dies mitteilen. Wenn wir das Future, das diesem Block
+entspricht, verschieben wollen – etwa in einen <code>Vec</code>, um es an <code>join_all</code>
+zu übergeben, wie wir es im Abschnitt <a href="ch17-03-more-futures.html">„Arbeiten mit einer beliebigen Anzahl
+von Futures“</a> getan haben –, wird es schwieriger.</p>
+<p>Wenn wir ein Future verschieben – sei es durch Verschieben in eine
+Datenstruktur, um es als Iterator mit <code>join_all</code> zu verwenden oder durch
+Rückgabe aus einer Funktion – bedeutet das eigentlich, dass wir die
+Zustandsmaschine verschieben, die Rust für uns erstellt. Und im Gegensatz zu
+den meisten anderen Typen in Rust können die Futures, die Rust für async-Blöcke
+erzeugt, mit Referenzen auf sich selbst in den Feldern einer beliebigen
+Variante enden, wie in Codeblock 17-4 zu sehen ist (eine vereinfachte
+Illustration, die dir helfen soll, ein Gefühl für die Idee zu bekommen,
+anstatt sich in die oft recht komplizierten Details zu vertiefen).</p>
+<img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-04.svg" />
+<figcaption>Abbildung 17-4: Ein selbstreferenzierender Datentyp</figcaption>
+<p>Standardmäßig kann ein Objekt, das eine Referenz auf sich selbst hat, nicht
+sicher verschoben werden, da Referenzen immer auf die tatsächliche
+Speicheradresse des Objekts zeigen. Wenn du die Datenstruktur selbst
+verschiebst, verweisen diese internen Referenzen weiterhin auf den alten
+Speicherplatz. Dieser Speicherplatz ist nun jedoch ungültig. Zum einen wird ihr
+Wert nicht mehr aktualisiert, wenn du Änderungen an der Datenstruktur
+vornimmst. Zum anderen – und das ist noch wichtiger – kann der
+Computer diesen Speicherplatz nun für andere Dinge verwenden! Es könnte sein,
+dass du später völlig unzusammenhängende Daten liest.</p>
+<img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-05.svg" />
+<figcaption>Abbildung 17-5: Das unsichere Ergebnis beim Verschieben eines
+selbstreferenzierenden Datentyps</figcaption>
+<p>Im Prinzip könnte der Rust-Compiler versuchen, jede Referenz auf ein Objekt
+jedes Mal zu aktualisieren, wenn es verschoben wird. Das wäre potenziell eine
+Menge Performance-Overhead, vor allem wenn man bedenkt, dass es ein ganzes Netz
+von Referenzen geben kann, die aktualisiert werden müssen. Wenn wir
+andererseits sicherstellen können, dass die betreffende Datenstruktur <em>nicht im
+Speicher verschoben wird</em>, müssen wir keine Referenzen aktualisieren. Das ist
+genau das, was der Rust-Ausleihenprüfer verlangt: Man kann ein Element, auf das
+aktive Referenzen bestehen, nicht mit sicherem Code verschieben.</p>
+<p><code>Pin</code> baut darauf auf, um uns genau die Garantie zu geben, die wir brauchen.
+Wenn wir einen Wert <em>anheften</em>, indem wir einen Zeiger auf diesen Wert in <code>Pin</code>
+einpacken, kann er nicht mehr verschoben werden. Wenn du also
+<code>Pin&lt;Box&lt;SomeType&gt;&gt;</code> hast, heftest du eigentlich den Wert <code>SomeType</code> an,
+<em>nicht</em> den Zeiger <code>Box</code>. Abbildung 17-6 veranschaulicht dies:</p>
+<img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-06.svg" />
+<figcaption>Abbildung 17-6: Anheften einer `Box`, die auf einen
+selbstreferenzierenden Future-Typ zeigt</figcaption>
+<p>In der Tat kann der Zeiger in <code>Box</code> immer noch verschoben werden. Denke daran:
+Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
+an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
+die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
+potenzielles Problem. (Wie man das mit <code>Pin</code>, der ein <code>Box</code> umschließt, macht
+ist mehr, als wir in dieser speziellen Diskussion behandeln werden. Aber es
+wäre eine gute Übung! Wenn du dir die Dokumentationen der Typen und des Moduls
+<code>std::pin</code> ansiehst, kannst du vielleicht herausfinden, wie du das machen
+würdest.) Der Schlüssel ist, dass der selbstreferenzierende Typ selbst nicht
+verschoben werden kann, weil er immer noch angeheftet ist.</p>
+<img alt="Concurrent work flow" src="img/trpl17-07.svg" />
+<figcaption>Figure 17-7: Verschieben einer `Box`, die auf einen
+selbstreferenzierenden Futuretyp zeigt.</figcaption>
+<p>Die meisten Typen können jedoch gefahrlos verschoben werden, selbst wenn sie
+sich hinter einem <code>Pin</code>-Zeiger befinden. Wir müssen nur über das Anheften
+nachdenken, wenn Elemente interne Referenzen haben. Primitive Werte wie Zahlen
+und Boolesche Werte haben keine internen Referenzen, also sind sie
+offensichtlich sicher. Genauso wenig wie die meisten Typen, mit denen man
+normalerweise in Rust arbeitet. Ein <code>Vec</code> zum Beispiel hat keine internen
+Referenzen, die er aktuell halten muss, sodass du ihn unbesorgt verschieben
+kannst. Wenn du einen <code>Pin&lt;Vec&lt;String&gt;&gt;</code> hast, musst du alles über die
+sicheren, aber restriktiven APIs von <code>Pin</code> machen, obwohl ein <code>Vec&lt;String&gt;</code>
+immer sicher verschoben werden kann, wenn es keine anderen Referenzen darauf
+gibt. Wir brauchen eine Möglichkeit, dem Compiler mitzuteilen, dass es
+eigentlich in Ordnung ist, Elemente in solchen Fällen zu verschieben. Dafür
+gibt es <code>Unpin</code>.</p>
+<p><code>Unpin</code> ist ein Markierungsmerkmal (marker trait), ähnlich wie die Merkmale
+<code>Send</code> und <code>Sync</code>, die wir in Kapitel 16 gesehen haben. Erinnere dich, dass
+Markierungsmerkmale keine eigene Funktionalität haben. Sie existieren nur, um
+dem Compiler mitzuteilen, dass es sicher ist, den Typ zu verwenden, der ein
+bestimmtes Merkmal in einem bestimmten Kontext implementiert. <code>Unpin</code> teilt dem
+Compiler mit, dass ein gegebener Typ <em>keine</em> besonderen Garantien
+aufrechterhalten muss, um den fragliche Wert zu verschieben.</p>
+<p>Genau wie bei <code>Send</code> und <code>Sync</code> implementiert der Compiler <code>Unpin</code> automatisch
+für alle Typen, bei denen er beweisen kann, dass sie sicher sind. Der
+Sonderfall, wiederum analog zu bei <code>Send</code> und <code>Sync</code>, ist der Fall, dass
+<code>Unpin</code> für einen Typ <em>nicht</em> implementiert ist. Die Notation hierfür ist <code>impl  !Unpin for SomeType</code>, wobei <code>SomeType</code> der Name eines Typs ist, der diese
+Garantien aufrechterhalten <em>muss</em>, um sicher zu sein, wenn ein Zeiger auf
+diesen Typ in einem <code>Pin</code> verwendet wird.</p>
+<p>Mit anderen Worten, es gibt zwei Dinge über die Beziehung zwischen <code>Pin</code> und
+<code>Unpin</code> zu beachten. Erstens ist <code>Unpin</code> der „normale“ Fall, und <code>!Unpin</code> der
+Spezialfall. Zweitens, ob ein Typ <code>Unpin</code> oder <code>!Unpin</code> implementiert, spielt
+<em>nur</em> eine Rolle, wenn man einen angepinnten Zeiger auf diesen Typ wie
+<code>Pin&lt;&amp;mut SomeType&gt;</code> verwendet.</p>
+<p>Um dies zu verdeutlichen, denke an einen <code>String</code>: Er hat eine Länge und die
+Unicode-Zeichen, aus denen er besteht. Wir können einen <code>String</code> in einen <code>Pin</code>
+einpacken, wie in Abbildung 17-8. Allerdings implementiert <code>String</code> automatisch
+<code>Unpin</code>, genau wie die meisten anderen Typen in Rust.</p>
+<img alt="Concurrent work flow" src="img/trpl17-08.svg" />
+<figcaption>Abbildung 17-8: Anheften einer Zeichenkette; die gepunkteten Linie
+deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
+nicht angeheftet ist.</figcaption>
+<p>Infolgedessen können wir Dinge tun, die illegal wären, wenn <code>String</code>
+stattdessen <code>!Unpin</code> implementiert hätte, wie zum Beispiel das Ersetzen einer
+Zeichenkette durch eine andere an der exakt gleichen Stelle im Speicher, wie in
+Abbildung 17-9. Dies verletzt nicht den <code>Pin</code>-Vertrag, weil <code>String</code> keine
+internen Referenzen hat, die es unsicher machen, es zu verschieben! Das ist
+genau der Grund, warum es <code>Unpin</code> und nicht <code>!Unpin</code> implementiert.</p>
+<img alt="Concurrent work flow" src="img/trpl17-09.svg" />
+<figcaption>Figure 17-9: Ersetzen der Zeichenkette durch eine völlig andere
+Zeichenkette im Speicher.</figcaption>
+<p>Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
+<code>join_all</code> in Codeblock 17-17 gemeldet wurden. Ursprünglich haben wir versucht,
+die von asynchronen Blöcken erzeugten Futures in einen <code>Vec&lt;Box&lt;dyn  Future&lt;Output = ()&gt;&gt;&gt;</code> zu verschieben, aber wie wir gesehen haben, können
+diese Futures interne Referenzen haben, sodass sie <code>Unpin</code> nicht
+implementieren. Sie müssen angepinnt werden und dann können wir den Typ <code>Pin</code>
+an den <code>Vec</code> übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in
+den Futures <em>nicht</em> verschoben werden.</p>
+<p><code>Pin</code> und <code>Unpin</code> sind vor allem für die Erstellung von Bibliotheken auf
+niedrigerer Ebene wichtig und wenn du eine Laufzeitumgebung erstellst, weniger
+für den alltäglichen Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
+siehst, hast du jetzt eine bessere Vorstellung davon, wie du den Code
+korrigieren kannst!</p>
+<blockquote>
+<p>Anmerkung: Diese Kombination von <code>Pin</code> und <code>Unpin</code> erlaubt es, eine ganze
+Klasse komplexer Typen in Rust sicher zu machen, die sonst schwer zu
+implementieren sind, weil sie selbstreferenzierend sind. Typen, die <code>Pin</code>
+benötigen, tauchen heute <em>am häufigsten</em> in asynchronem Rust auf, aber man
+kann sie – sehr selten – auch in anderen Kontexten sehen.</p>
+<p>Die Besonderheiten der Funktionsweise von <code>Pin</code> und <code>Unpin</code> und die Regeln,
+die sie einhalten müssen, werden ausführlich in der API-Dokumentation für
+<code>std::pin</code> behandelt. Wenn du also tiefer in die Materie einsteigen willst,
+ist das ein guter Ausgangspunkt.</p>
+<p>Wenn du noch detaillierter verstehen willst, wie die Dinge „unter der Haube“
+funktionieren, ist das offizielle Buch <a href="https://rust-lang.github.io/async-book/"><em>Asynchronous Programming
+in Rust</em></a> genau das Richtige für dich:</p>
+<ul>
+<li><a href="https://rust-lang.github.io/async-book/02_execution/01_chapter.html">Kapitel 2: Under the Hood: Executing Futures and Tasks</a></li>
+<li><a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">Kapitel 4: Pinning</a></li>
+</ul>
+</blockquote>
+<h3 id="das-merkmal-stream"><a class="header" href="#das-merkmal-stream">Das Merkmal <code>Stream</code></a></h3>
+<p>Nachdem wir nun ein tieferes Verständnis für die Merkmale <code>Future</code>, <code>Pin</code> und
+<code>Unpin</code> haben, können wir uns dem Merkmal <code>Stream</code> zuwenden. Wie im Abschnitt
+zu Strömen beschrieben, sind Ströme ähnlich wie asynchrone Iteratoren. Im
+Gegensatz zu <code>Iterator</code> und <code>Future</code> gibt es zum aktuellen Zeitpunkt keine
+Definition des Merkmals <code>Stream</code> in der Standardbibliothek, aber es <em>gibt</em> eine
+sehr verbreitete Definition in der Kiste <code>Futures</code>, die im gesamten Ökosystem
+verwendet wird.</p>
+<p>Schauen wir uns die Definitionen der Merkmale <code>Iterator</code> und <code>Future</code> an, damit
+wir darauf aufbauen können, wie ein Merkmal <code>Stream</code> aussehen könnte. Von
+<code>Iterator</code> haben wir die Idee einer Sequenz: Seine Methode <code>next</code> liefert eine
+<code>Option&lt;Self::Item&gt;</code>. Von <code>Future</code> haben wir die Idee der zeitlichen
+Bereitschaft: Seine Methode <code>poll</code> liefert ein <code>Poll&lt;Self::Output&gt;</code>. Um eine
+Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sind,
+definieren wir ein Merkmal <code>Stream</code>, das diese Funktionalitäten zusammenführt:</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::pin::Pin;
+use std::task::{Context, Poll};
+
+trait Stream {
+    type Item;
+
+    fn poll_next(
+        self: Pin&lt;&amp;mut Self&gt;,
+        cx: &amp;mut Context&lt;'_&gt;
+    ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
+}
+<span class="boring">}</span></code></pre></pre>
+<p>Das Merkmal <code>Stream</code> definiert einen zugehörigen Typ <code>Item</code> für den Typ der vom
+Strom erzeugten Elemente. Dies ist ähnlich wie bei <code>Iterator</code>: Es kann null bis
+viele davon geben, anders als bei <code>Future</code>, wo es immer nur einen einzigen
+<code>Output</code> gibt (selbst wenn es der Einheitstyp <code>()</code> ist).</p>
+<p><code>Stream</code> definiert auch eine Methode zum Abrufen dieser Elemente. Wir nennen
+sie <code>poll_next</code>, um zu verdeutlichen, dass sie auf die gleiche Weise wie
+<code>Future::poll</code> abfragt und eine Sequenz von Elementen auf die gleiche Weise wie
+<code>Iterator::next</code> erzeugt. Sein Rückgabetyp kombiniert <code>Poll</code> mit <code>Option</code>. Der
+äußere Typ ist <code>Poll</code>, weil er auf Bereitschaft geprüft werden muss, genau wie
+ein Future. Der innere Typ ist <code>Option</code>, weil er signalisieren muss, ob es
+weitere Nachrichten gibt, genau wie ein Iterator.</p>
+<p>Etwas, das dem sehr ähnlich ist, wird wahrscheinlich als Teil der
+Standardbibliothek von Rust standardisiert werden. In der Zwischenzeit ist es
+Teil des Werkzeugkoffers der meisten Laufzeitumgebungen, sodass du dich darauf
+verlassen kannst, und alles, was wir unten behandeln, sollte im Allgemeinen
+gelten!</p>
+<p>Im Beispiel, das wir im Abschnitt über Ströme gesehen haben, haben wir
+allerdings nicht <code>poll_next</code> <em>oder</em> <code>Stream</code> benutzt, sondern <code>next</code> und
+<code>StreamExt</code>. Wir <em>könnten</em> direkt mit der <code>poll_next</code>-API arbeiten, indem wir
+unsere eigenen <code>Stream</code>-Zustandsautomaten schreiben, genauso wie wir mit
+Futures direkt über deren Methode <code>poll</code> arbeiten <em>können</em>. Die Verwendung von
+<code>await</code> ist jedoch viel schöner, daher liefert das Merkmal <code>StreamExt</code> die
+Methode <code>next</code>, sodass wir genau das tun können.</p>
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::pin::Pin;
+</span><span class="boring">use std::task::{Context, Poll};
+</span><span class="boring">
+</span><span class="boring">trait Stream {
+</span><span class="boring">    type Item;
+</span><span class="boring">    fn poll_next(
+</span><span class="boring">        self: Pin&lt;&amp;mut Self&gt;,
+</span><span class="boring">        cx: &amp;mut Context&lt;'_&gt;,
+</span><span class="boring">    ) -&gt; Poll&lt;Option&lt;Self::Item&gt;&gt;;
+</span><span class="boring">}
+</span><span class="boring">
+</span>trait StreamExt: Stream {
+    async fn next(&amp;mut self) -&gt; Option&lt;Self::Item&gt;
+    where
+        Self: Unpin;
+
+    // andere Methoden ...
+}
+<span class="boring">}</span></code></pre></pre>
+<blockquote>
+<p>Anmerkung: Die tatsächliche Definition von <code>StreamExt</code> sieht etwas anders
+aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von
+asynchronen Funktionen in Merkmalen kennen. Infolgedessen sieht sie so aus:</p>
+<pre><code class="language-rust ignore">fn next(&amp;mut self) -&gt; Next&lt;'_, Self&gt; where Self: Unpin;</code></pre>
+<p>Dieser Typ <code>Next</code> ist ein <code>struct</code>, das <code>Future</code> implementiert und eine
+Möglichkeit bietet, die Lebensdauer der Referenz auf <code>self</code> mit <code>Next&lt;'_, Self&gt;</code> zu benennen, sodass <code>await</code> mit dieser Methode arbeiten kann!</p>
+</blockquote>
+<p>Das Merkmal <code>StreamExt</code> ist auch die Heimat aller interessanten Methoden, die
+für die Verwendung mit Strömen zur Verfügung stehen. <code>StreamExt</code> wird
+automatisch für jeden Typ implementiert, der <code>Stream</code> implementiert. Aber diese
+Merkmale sind separat definiert, damit die Rust-Gemeinschaft das grundlegende
+Merkmal getrennt von den Komfort-APIs bearbeiten kann.</p>
+<p>In der Version von <code>StreamExt</code>, die in der Kiste <code>trpl</code> verwendet wird,
+definiert das Merkmal nicht nur die Methode <code>next</code>, sondern liefert auch eine
+Implementierung von <code>next</code>, die die Details des Aufrufs von <code>Stream::poll_next</code>
+korrekt behandelt. Das bedeutet, dass du selbst beim Schreiben deines eigenen
+Streaming-Datentyps <em>nur</em> <code>Stream</code> implementieren musst, und dann kann jeder,
+der deinen Datentyp verwendet, <code>StreamExt</code> und seine Methoden automatisch mit
+ihm verwenden.</p>
+<p>Das ist alles, was wir für die tieferen Details zu diesen Merkmalen behandeln
+werden. Zum Abschluss wollen wir uns ansehen, wie Futures (einschließlich
+Ströme), Aufgaben und Stränge zusammenpassen!</p>
+
+                    </main>
+
+                    <nav class="nav-wrapper" aria-label="Page navigation">
+                        <!-- Mobile navigation buttons -->
+                            <a rel="prev" href="ch17-04-streams.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                                <i class="fa fa-angle-left"></i>
+                            </a>
+
+                            <a rel="next prefetch" href="ch17-06-futures-tasks-threads.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                                <i class="fa fa-angle-right"></i>
+                            </a>
+
+                        <div style="clear: both"></div>
+                    </nav>
+                </div>
+            </div>
+
+            <nav class="nav-wide-wrapper" aria-label="Page navigation">
+                    <a rel="prev" href="ch17-04-streams.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                        <i class="fa fa-angle-left"></i>
+                    </a>
+
+                    <a rel="next prefetch" href="ch17-06-futures-tasks-threads.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                        <i class="fa fa-angle-right"></i>
+                    </a>
+            </nav>
+
+        </div>
+
+
+
+
+        <script>
+            window.playground_copyable = true;
+        </script>
+
+
+
+        <script src="clipboard.min.js"></script>
+        <script src="highlight.js"></script>
+        <script src="book.js"></script>
+
+        <!-- Custom JS scripts -->
+        <script src="theme/ferris.js"></script>
+
+
+    </div>
+    </body>
+</html>
