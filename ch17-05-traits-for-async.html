@@ -400,12 +400,12 @@ selbstreferenzierenden Future-Typ zeigt</figcaption>
 Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
 an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
 die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
-potenzielles Problem. (Wie man das mit <code>Pin</code>, der ein <code>Box</code> umschließt, macht
-ist mehr, als wir in dieser speziellen Diskussion behandeln werden. Aber es
-wäre eine gute Übung! Wenn du dir die Dokumentationen der Typen und des Moduls
-<code>std::pin</code> ansiehst, kannst du vielleicht herausfinden, wie du das machen
-würdest.) Der Schlüssel ist, dass der selbstreferenzierende Typ selbst nicht
-verschoben werden kann, weil er immer noch angeheftet ist.</p>
+potenzielles Problem. (Wie man das mit <code>Pin</code>macht, das ein <code>Box</code> umschließt,
+geht über den Umfang dieser Diskussion hinaus. Aber es wäre eine gute Übung!
+Wenn du dir die Dokumentationen der Typen und des Moduls <code>std::pin</code> ansiehst,
+kannst du vielleicht herausfinden, wie du das machen würdest.) Der Schlüssel
+ist, dass der selbstreferenzierende Typ selbst nicht verschoben werden kann,
+weil er immer noch angeheftet ist.</p>
 <img alt="Concurrent work flow" src="img/trpl17-07.svg" />
 <figcaption>Figure 17-7: Verschieben einer `Box`, die auf einen
 selbstreferenzierenden Futuretyp zeigt.</figcaption>
@@ -436,7 +436,7 @@ Sonderfall, wiederum analog zu bei <code>Send</code> und <code>Sync</code>, ist 
 Garantien aufrechterhalten <em>muss</em>, um sicher zu sein, wenn ein Zeiger auf
 diesen Typ in einem <code>Pin</code> verwendet wird.</p>
 <p>Mit anderen Worten, es gibt zwei Dinge über die Beziehung zwischen <code>Pin</code> und
-<code>Unpin</code> zu beachten. Erstens ist <code>Unpin</code> der „normale“ Fall, und <code>!Unpin</code> der
+<code>Unpin</code> zu beachten. Erstens ist <code>Unpin</code> der „normale“ Fall und <code>!Unpin</code> der
 Spezialfall. Zweitens, ob ein Typ <code>Unpin</code> oder <code>!Unpin</code> implementiert, spielt
 <em>nur</em> eine Rolle, wenn man einen angepinnten Zeiger auf diesen Typ wie
 <code>Pin&lt;&amp;mut SomeType&gt;</code> verwendet.</p>
@@ -445,7 +445,7 @@ Unicode-Zeichen, aus denen er besteht. Wir können einen <code>String</code> in 
 einpacken, wie in Abbildung 17-8. Allerdings implementiert <code>String</code> automatisch
 <code>Unpin</code>, genau wie die meisten anderen Typen in Rust.</p>
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
-<figcaption>Abbildung 17-8: Anheften einer Zeichenkette; die gepunkteten Linie
+<figcaption>Abbildung 17-8: Anheften einer Zeichenkette; die gestrichelte Linie
 deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
 nicht angeheftet ist.</figcaption>
 <p>Infolgedessen können wir Dinge tun, die illegal wären, wenn <code>String</code>
