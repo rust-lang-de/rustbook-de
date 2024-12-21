@@ -295,12 +295,12 @@ In der Tat kann der Zeiger in `Box` immer noch verschoben werden. Denke daran:
 Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
 an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
 die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
-potenzielles Problem. (Wie man das mit `Pin`, der ein `Box` umschließt, macht
-ist mehr, als wir in dieser speziellen Diskussion behandeln werden. Aber es
-wäre eine gute Übung! Wenn du dir die Dokumentationen der Typen und des Moduls
-`std::pin` ansiehst, kannst du vielleicht herausfinden, wie du das machen
-würdest.) Der Schlüssel ist, dass der selbstreferenzierende Typ selbst nicht
-verschoben werden kann, weil er immer noch angeheftet ist.
+potenzielles Problem. (Wie man das mit `Pin`macht, das ein `Box` umschließt,
+geht über den Umfang dieser Diskussion hinaus. Aber es wäre eine gute Übung!
+Wenn du dir die Dokumentationen der Typen und des Moduls `std::pin` ansiehst,
+kannst du vielleicht herausfinden, wie du das machen würdest.) Der Schlüssel
+ist, dass der selbstreferenzierende Typ selbst nicht verschoben werden kann,
+weil er immer noch angeheftet ist.
 
 <img alt="Concurrent work flow" src="img/trpl17-07.svg" />
 
@@ -338,7 +338,7 @@ Garantien aufrechterhalten *muss*, um sicher zu sein, wenn ein Zeiger auf
 diesen Typ in einem `Pin` verwendet wird.
 
 Mit anderen Worten, es gibt zwei Dinge über die Beziehung zwischen `Pin` und
-`Unpin` zu beachten. Erstens ist `Unpin` der „normale“ Fall, und `!Unpin` der
+`Unpin` zu beachten. Erstens ist `Unpin` der „normale“ Fall und `!Unpin` der
 Spezialfall. Zweitens, ob ein Typ `Unpin` oder `!Unpin` implementiert, spielt
 *nur* eine Rolle, wenn man einen angepinnten Zeiger auf diesen Typ wie
 `Pin<&mut SomeType>` verwendet.
@@ -350,7 +350,7 @@ einpacken, wie in Abbildung 17-8. Allerdings implementiert `String` automatisch
 
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
 
-<figcaption>Abbildung 17-8: Anheften einer Zeichenkette; die gepunkteten Linie
+<figcaption>Abbildung 17-8: Anheften einer Zeichenkette; die gestrichelte Linie
 deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
 nicht angeheftet ist.</figcaption>
 
