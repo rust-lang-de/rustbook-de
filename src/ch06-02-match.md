@@ -103,7 +103,7 @@ fn value_in_cents(coin: Coin) -> u8 {
 
 ### Muster, die Werte binden
 
-Ein weitere nützliche Funktionalität von `match`-Zweigen ist, dass sie Teile
+Eine weitere nützliche Funktionalität von `match`-Zweigen ist, dass sie Teile
 der Werte binden können, die dem Muster entsprechen. Auf diese Weise können wir
 Werte aus Aufzählungsvarianten extrahieren.
 
