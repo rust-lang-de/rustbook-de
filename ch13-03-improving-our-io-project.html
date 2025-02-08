@@ -372,8 +372,8 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">   let contents = fs::read_to_string(config.file_path)?;
+</span>#pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+<span class="boring">   let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
 </span><span class="boring">   let results = if config.ignore_case {
 </span><span class="boring">       search_case_insensitive(&amp;config.query, &amp;contents)
@@ -386,10 +386,10 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   Ok(())
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">   let mut results = Vec::new();
+</span>#}
+<span class="boring">
+</span>#pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<span class="boring">   let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">   for line in contents.lines() {
 </span><span class="boring">       if line.contains(query) {
@@ -398,13 +398,13 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   results
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn search_case_insensitive&lt;'a&gt;(
-</span><span class="boring">   query: &amp;str,
+</span>#}
+<span class="boring">
+</span>#pub fn search_case_insensitive&lt;'a&gt;(
+<span class="boring">   query: &amp;str,
 </span><span class="boring">   contents: &amp;'a str,
-</span><span class="boring">) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">   let query = query.to_lowercase();
+</span>#) -&gt; Vec&lt;&amp;'a str&gt; {
+<span class="boring">   let query = query.to_lowercase();
 </span><span class="boring">   let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">   for line in contents.lines() {
@@ -414,8 +414,8 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   results
-</span><span class="boring">}
-</span><span class="boring">
+</span>#}
+<span class="boring">
 </span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;

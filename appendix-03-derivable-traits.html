@@ -273,7 +273,7 @@ implementieren. Du kannst das Merkmal <code>Copy</code> nur auf Typen anwenden, 
 <code>Clone</code> implementieren, weil ein Typ, der <code>Copy</code> implementiert, eine triviale
 Implementierung von <code>Clone</code> hat, das die gleiche Aufgabe wie <code>Copy</code> erfüllt.</p>
 <p>Das Merkmal <code>Copy</code> ist selten erforderlich; Typen, die <code>Copy</code> implementieren,
-verfügen über Optimierungen, d.h. du mussst nicht <code>clone</code> aufrufen, was den
+verfügen über Optimierungen, d. h. du musst nicht <code>clone</code> aufrufen, was den
 Code prägnanter macht.</p>
 <p>Alles, was mit <code>Copy</code> möglich ist, kannst du auch mit <code>Clone</code> erreichen, aber
 der Code könnte langsamer sein oder an manchen Stellen <code>clone</code> erforderlich
@@ -283,7 +283,7 @@ machen.</p>
 nehmen und diese Instanz mithilfe einer Hash-Funktion auf einen Wert fester
 Größe abzubilden. Das Ableiten von <code>Hash</code> implementiert die Methode <code>hash</code>. Die
 abgeleitete Implementierung der Methode <code>hash</code> kombiniert das Ergebnis des
-Aufrufs von <code>hash</code> für alle Teile des Typs, d.h. alle Felder oder Werte müssen
+Aufrufs von <code>hash</code> für alle Teile des Typs, d. h. alle Felder oder Werte müssen
 ebenfalls <code>Hash</code> implementieren, um <code>Hash</code> abzuleiten.</p>
 <p>Ein Beispiel dafür, wann <code>Hash</code> erforderlich ist, ist das Speichern von
 Schlüsseln in einer <code>HashMap&lt;K, V&gt;</code>, um Daten effizient zu speichern.</p>
@@ -291,7 +291,7 @@ Schlüsseln in einer <code>HashMap&lt;K, V&gt;</code>, um Daten effizient zu spe
 <p>Das Merkmal <code>Default</code> erlaubt es dir, einen Standardwert für einen Typ zu
 definieren. Das Ableiten von <code>Default</code> implementiert die Funktion <code>default</code>.
 Die abgeleitete Implementierung der Funktion <code>default</code> ruft die Funktion
-<code>default</code> für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
+<code>default</code> für jeden Teil des Typs auf, d. h. alle Felder oder Werte in dem Typ
 müssen auch <code>Default</code> implementieren, um <code>Default</code> abzuleiten.</p>
 <p>Die Funktion <code>Default::default</code> wird häufig in Kombination mit der Syntax zur
 Aktualisierung von Strukturen verwendet, die im Abschnitt <a href="ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">„Instanzen aus
@@ -301,7 +301,7 @@ in Kapitel 5 besprochen wird. Du kannst einige Felder einer Struktur anpassen
 und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
 indem du <code>...Default::default()</code> schreibst.</p>
 <p>Das Merkmal <code>Default</code> ist erforderlich, wenn du die Methode <code>unwrap_or_default</code>
-z.B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
+z. B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
 <code>None</code> hat, gibt die Methode <code>unwrap_or_default</code> das Ergebnis von
 <code>Default::default</code> für den Typ <code>T</code> zurück, der in <code>Option&lt;T&gt;</code> gespeichert ist.</p>
 

@@ -265,11 +265,11 @@ erstellen, in der Werte eines beliebigen Typs gespeichert werden können.</p>
 <p>Verwendung des Typs <code>List</code> um die Liste <code>1, 2, 3</code> zu speichern.
 Siehe Codeblock 15-3:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">enum List {
-</span><span class="boring">   Cons(i32, List),
+<pre><pre class="playground"><code class="language-rust does_not_compile">#enum List {
+<span class="boring">   Cons(i32, List),
 </span><span class="boring">   Nil,
-</span><span class="boring">}
-</span><span class="boring">
+</span>#}
+<span class="boring">
 </span>use crate::List::{Cons, Nil};
 
 fn main() {

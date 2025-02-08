@@ -210,7 +210,7 @@ Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch – Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
+Möglichkeit, Details systemnah (z. B. Speichernutzung) zu kontrollieren, ohne
 den ganzen Ärger, der damit typischerweise einhergeht.</p>
 <h2 id="für-wen-rust-ist"><a class="header" href="#für-wen-rust-ist">Für wen Rust ist</a></h2>
 <p>Rust ist für viele Menschen aus einer Vielzahl von Gründen ideal. Schauen wir
@@ -314,7 +314,7 @@ Rust zu erstellen.</p>
 Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
 zugängliche Programmierschnittstelle (API). In Kapitel 8 werden einige gängige
 Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung stellt,
-behandelt, z.B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
+behandelt, z. B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
 sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.</p>
 <p>Kapitel 10 vertieft generische Datentypen, Merkmale und Lebensdauern, die dir
 die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
@@ -6302,7 +6302,7 @@ Wert <code>1</code> des Blocks zurück:</p>
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
 <h3 id="muster-die-werte-binden"><a class="header" href="#muster-die-werte-binden">Muster, die Werte binden</a></h3>
-<p>Ein weitere nützliche Funktionalität von <code>match</code>-Zweigen ist, dass sie Teile
+<p>Eine weitere nützliche Funktionalität von <code>match</code>-Zweigen ist, dass sie Teile
 der Werte binden können, die dem Muster entsprechen. Auf diese Weise können wir
 Werte aus Aufzählungsvarianten extrahieren.</p>
 <p>Lass uns als Beispiel eine unserer Aufzählungsvarianten so ändern, dass sie
@@ -17095,8 +17095,8 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">   let contents = fs::read_to_string(config.file_path)?;
+</span>#pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+<span class="boring">   let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
 </span><span class="boring">   let results = if config.ignore_case {
 </span><span class="boring">       search_case_insensitive(&amp;config.query, &amp;contents)
@@ -17109,10 +17109,10 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   Ok(())
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">   let mut results = Vec::new();
+</span>#}
+<span class="boring">
+</span>#pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+<span class="boring">   let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">   for line in contents.lines() {
 </span><span class="boring">       if line.contains(query) {
@@ -17121,13 +17121,13 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   results
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn search_case_insensitive&lt;'a&gt;(
-</span><span class="boring">   query: &amp;str,
+</span>#}
+<span class="boring">
+</span>#pub fn search_case_insensitive&lt;'a&gt;(
+<span class="boring">   query: &amp;str,
 </span><span class="boring">   contents: &amp;'a str,
-</span><span class="boring">) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">   let query = query.to_lowercase();
+</span>#) -&gt; Vec&lt;&amp;'a str&gt; {
+<span class="boring">   let query = query.to_lowercase();
 </span><span class="boring">   let mut results = Vec::new();
 </span><span class="boring">
 </span><span class="boring">   for line in contents.lines() {
@@ -17137,8 +17137,8 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">   }
 </span><span class="boring">
 </span><span class="boring">   results
-</span><span class="boring">}
-</span><span class="boring">
+</span>#}
+<span class="boring">
 </span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;
@@ -17797,18 +17797,18 @@ beginnen. Siehe Codeblock 14-2:</p>
 
 /// Adds one to the number given.
 // --abschneiden--
-<span class="boring">///
-</span><span class="boring">/// # Examples
-</span><span class="boring">///
-</span><span class="boring">/// ```
-</span><span class="boring">/// let arg = 5;
-</span><span class="boring">/// let answer = my_crate::add_one(arg);
-</span><span class="boring">///
-</span><span class="boring">/// assert_eq!(6, answer);
-</span><span class="boring">/// ```
-</span><span class="boring">pub fn add_one(x: i32) -&gt; i32 {
-</span><span class="boring">   x + 1
-</span><span class="boring">}</span></code></pre>
+#///
+#/// # Examples
+#///
+#/// ```
+#/// let arg = 5;
+#/// let answer = my_crate::add_one(arg);
+#///
+#/// assert_eq!(6, answer);
+#/// ```
+#pub fn add_one(x: i32) -&gt; i32 {
+<span class="boring">   x + 1
+</span>#}</code></pre>
 <p><span class="caption">Codeblock 14-2: Dokumentation für die gesamte
 <code>my_crate</code>-Kiste</span></p>
 <p>Beachte, dass nach der letzten Zeile, die mit <code>//!</code> beginnt, kein Programmcode
@@ -18676,11 +18676,11 @@ erstellen, in der Werte eines beliebigen Typs gespeichert werden können.</p>
 <p>Verwendung des Typs <code>List</code> um die Liste <code>1, 2, 3</code> zu speichern.
 Siehe Codeblock 15-3:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">enum List {
-</span><span class="boring">   Cons(i32, List),
+<pre><pre class="playground"><code class="language-rust does_not_compile">#enum List {
+<span class="boring">   Cons(i32, List),
 </span><span class="boring">   Nil,
-</span><span class="boring">}
-</span><span class="boring">
+</span>#}
+<span class="boring">
 </span>use crate::List::{Cons, Nil};
 
 fn main() {
@@ -33725,7 +33725,7 @@ implementieren. Du kannst das Merkmal <code>Copy</code> nur auf Typen anwenden, 
 <code>Clone</code> implementieren, weil ein Typ, der <code>Copy</code> implementiert, eine triviale
 Implementierung von <code>Clone</code> hat, das die gleiche Aufgabe wie <code>Copy</code> erfüllt.</p>
 <p>Das Merkmal <code>Copy</code> ist selten erforderlich; Typen, die <code>Copy</code> implementieren,
-verfügen über Optimierungen, d.h. du mussst nicht <code>clone</code> aufrufen, was den
+verfügen über Optimierungen, d. h. du musst nicht <code>clone</code> aufrufen, was den
 Code prägnanter macht.</p>
 <p>Alles, was mit <code>Copy</code> möglich ist, kannst du auch mit <code>Clone</code> erreichen, aber
 der Code könnte langsamer sein oder an manchen Stellen <code>clone</code> erforderlich
@@ -33735,7 +33735,7 @@ machen.</p>
 nehmen und diese Instanz mithilfe einer Hash-Funktion auf einen Wert fester
 Größe abzubilden. Das Ableiten von <code>Hash</code> implementiert die Methode <code>hash</code>. Die
 abgeleitete Implementierung der Methode <code>hash</code> kombiniert das Ergebnis des
-Aufrufs von <code>hash</code> für alle Teile des Typs, d.h. alle Felder oder Werte müssen
+Aufrufs von <code>hash</code> für alle Teile des Typs, d. h. alle Felder oder Werte müssen
 ebenfalls <code>Hash</code> implementieren, um <code>Hash</code> abzuleiten.</p>
 <p>Ein Beispiel dafür, wann <code>Hash</code> erforderlich ist, ist das Speichern von
 Schlüsseln in einer <code>HashMap&lt;K, V&gt;</code>, um Daten effizient zu speichern.</p>
@@ -33743,7 +33743,7 @@ Schlüsseln in einer <code>HashMap&lt;K, V&gt;</code>, um Daten effizient zu spe
 <p>Das Merkmal <code>Default</code> erlaubt es dir, einen Standardwert für einen Typ zu
 definieren. Das Ableiten von <code>Default</code> implementiert die Funktion <code>default</code>.
 Die abgeleitete Implementierung der Funktion <code>default</code> ruft die Funktion
-<code>default</code> für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
+<code>default</code> für jeden Teil des Typs auf, d. h. alle Felder oder Werte in dem Typ
 müssen auch <code>Default</code> implementieren, um <code>Default</code> abzuleiten.</p>
 <p>Die Funktion <code>Default::default</code> wird häufig in Kombination mit der Syntax zur
 Aktualisierung von Strukturen verwendet, die im Abschnitt <a href="ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">„Instanzen aus
@@ -33753,7 +33753,7 @@ in Kapitel 5 besprochen wird. Du kannst einige Felder einer Struktur anpassen
 und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
 indem du <code>...Default::default()</code> schreibst.</p>
 <p>Das Merkmal <code>Default</code> ist erforderlich, wenn du die Methode <code>unwrap_or_default</code>
-z.B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
+z. B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
 <code>None</code> hat, gibt die Methode <code>unwrap_or_default</code> das Ergebnis von
 <code>Default::default</code> für den Typ <code>T</code> zurück, der in <code>Option&lt;T&gt;</code> gespeichert ist.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-d-nützliche-entwicklungswerkzeuge"><a class="header" href="#anhang-d-nützliche-entwicklungswerkzeuge">Anhang D: Nützliche Entwicklungswerkzeuge</a></h2>
@@ -34075,7 +34075,7 @@ stabile Version veröffentlicht wird, erreicht die alte Version ihr
 Lebensende (engl. end of life, EOL). Das bedeutet, dass jede Version
 sechs Wochen lang unterstützt wird.</p>
 <h3 id="instabile-funktionalitäten"><a class="header" href="#instabile-funktionalitäten">Instabile Funktionalitäten</a></h3>
-<p>Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: Instabile
+<p>Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: instabile
 Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalter“
 (feature flags), um festzulegen, welche Funktionalitäten in einer bestimmten
 Version aktiviert sind. Wenn eine neue Funktionalität aktiv entwickelt wird,
