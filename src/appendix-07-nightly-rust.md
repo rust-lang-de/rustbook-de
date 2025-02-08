@@ -136,7 +136,7 @@ sechs Wochen lang unterstützt wird.
 
 ### Instabile Funktionalitäten
 
-Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: Instabile
+Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: instabile
 Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalter“
 (feature flags), um festzulegen, welche Funktionalitäten in einer bestimmten
 Version aktiviert sind. Wenn eine neue Funktionalität aktiv entwickelt wird,

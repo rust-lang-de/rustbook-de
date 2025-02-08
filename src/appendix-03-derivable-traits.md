@@ -157,7 +157,7 @@ implementieren. Du kannst das Merkmal `Copy` nur auf Typen anwenden, die auch
 Implementierung von `Clone` hat, das die gleiche Aufgabe wie `Copy` erfüllt.
 
 Das Merkmal `Copy` ist selten erforderlich; Typen, die `Copy` implementieren,
-verfügen über Optimierungen, d.h. du mussst nicht `clone` aufrufen, was den
+verfügen über Optimierungen, d. h. du musst nicht `clone` aufrufen, was den
 Code prägnanter macht.
 
 Alles, was mit `Copy` möglich ist, kannst du auch mit `Clone` erreichen, aber
@@ -170,7 +170,7 @@ Das Merkmal `Hash` erlaubt es dir, eine Instanz eines Typs beliebiger Größe zu
 nehmen und diese Instanz mithilfe einer Hash-Funktion auf einen Wert fester
 Größe abzubilden. Das Ableiten von `Hash` implementiert die Methode `hash`. Die
 abgeleitete Implementierung der Methode `hash` kombiniert das Ergebnis des
-Aufrufs von `hash` für alle Teile des Typs, d.h. alle Felder oder Werte müssen
+Aufrufs von `hash` für alle Teile des Typs, d. h. alle Felder oder Werte müssen
 ebenfalls `Hash` implementieren, um `Hash` abzuleiten.
 
 Ein Beispiel dafür, wann `Hash` erforderlich ist, ist das Speichern von
@@ -181,7 +181,7 @@ Schlüsseln in einer `HashMap<K, V>`, um Daten effizient zu speichern.
 Das Merkmal `Default` erlaubt es dir, einen Standardwert für einen Typ zu
 definieren. Das Ableiten von `Default` implementiert die Funktion `default`.
 Die abgeleitete Implementierung der Funktion `default` ruft die Funktion
-`default` für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
+`default` für jeden Teil des Typs auf, d. h. alle Felder oder Werte in dem Typ
 müssen auch `Default` implementieren, um `Default` abzuleiten.
 
 Die Funktion `Default::default` wird häufig in Kombination mit der Syntax zur
@@ -193,7 +193,7 @@ und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
 indem du `...Default::default()` schreibst.
 
 Das Merkmal `Default` ist erforderlich, wenn du die Methode `unwrap_or_default`
-z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
+z. B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `None` hat, gibt die Methode `unwrap_or_default` das Ergebnis von
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 

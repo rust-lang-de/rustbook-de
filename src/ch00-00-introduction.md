@@ -6,7 +6,7 @@ Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch &ndash; Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
+Möglichkeit, Details systemnah (z. B. Speichernutzung) zu kontrollieren, ohne
 den ganzen Ärger, der damit typischerweise einhergeht.
 
 ## Für wen Rust ist
@@ -132,7 +132,7 @@ In Kapitel 7 erfährst du mehr über das Modulsystem von Rust und über die
 Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
 zugängliche Programmierschnittstelle (API). In Kapitel 8 werden einige gängige
 Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung stellt,
-behandelt, z.B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
+behandelt, z. B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
 sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
 
 Kapitel 10 vertieft generische Datentypen, Merkmale und Lebensdauern, die dir
