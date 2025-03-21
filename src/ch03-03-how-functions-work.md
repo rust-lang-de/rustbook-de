@@ -5,7 +5,7 @@ wichtigsten Funktionen in der Sprache gesehen: Die Funktion `main`, die der
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort `fn`
 gesehen, mit dem du neue Funktionen deklarieren kannst.
 
-Rust-Code verwendet die *Schlangenschrift*-Stil-Konvention (snake case) für
+Rust-Code verwendet die _Schlangenschrift_-Stil-Konvention (snake case) für
 Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
 und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:
@@ -31,14 +31,14 @@ dem Compiler mit, wo der Funktionsrumpf beginnt und endet.
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da `another_function` im
 Programm definiert ist, kann sie von innerhalb der `main`-Funktion aufgerufen
-werden. Beachte, dass wir `another_function` *nach* der `main`-Funktion im
+werden. Beachte, dass wir `another_function` _nach_ der `main`-Funktion im
 Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
 interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
 definiert sind.
 
 Lass uns ein neues Binärprojekt namens „functions“ anfangen, um Funktionen
 weiter zu erforschen. Platziere das Beispiel `another_function` in
-*src/main.rs* und lass es laufen. Du solltest die folgende Ausgabe sehen:
+_src/main.rs_ und lass es laufen. Du solltest die folgende Ausgabe sehen:
 
 ```console
 $ cargo run
@@ -55,12 +55,12 @@ und dann wird `another_function` aufgerufen und ihre Nachricht ausgegeben.
 
 ### Parameter
 
-Wir können Funktionen auch so definieren, dass sie *Parameter* haben, das
+Wir können Funktionen auch so definieren, dass sie _Parameter_ haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
 Funktion Parameter hat, kannst du sie mit konkreten Werten für diese Parameter
-versehen. Technisch gesehen werden die konkreten Werte *Argumente* genannt,
-aber in lockeren Gesprächen neigen Leute dazu, die Worte *Parameter* und
-*Argument* entweder für die Variablen in der Definition einer Funktion oder für
+versehen. Technisch gesehen werden die konkreten Werte _Argumente_ genannt,
+aber in lockeren Gesprächen neigen Leute dazu, die Worte _Parameter_ und
+_Argument_ entweder für die Variablen in der Definition einer Funktion oder für
 die konkreten Werte, die beim Aufruf einer Funktion übergeben werden,
 synonym zu verwenden.
 
@@ -95,7 +95,7 @@ setzt das Makro `println!` den Wert `5` an die Stelle, an der sich das Paar
 geschweifter Klammern mit dem `x` darin in der Formatierungszeichenkette
 befand.
 
-In Funktionssignaturen *musst* du den Typ jedes Parameters deklarieren. Dies
+In Funktionssignaturen _musst_ du den Typ jedes Parameters deklarieren. Dies
 ist eine bewusste Designentscheidung von Rust: Das Erfordernis von
 Typ-Annotationen in Funktionsdefinitionen bedeutet, dass der Compiler sie
 fast nie an anderer Stelle im Code benötigt, um herauszufinden, welchen Typ du
@@ -123,7 +123,7 @@ zweite heißt `unit_label` und ist vom Typ `char`. Die Funktion gibt dann einen
 Text aus, der sowohl `value` als auch `unit_label` enthält.
 
 Lass uns versuchen, diesen Code auszuführen. Ersetze das Programm, das sich
-derzeit in der Datei *src/main.rs* deines „functions“-Projekts befindet, durch
+derzeit in der Datei _src/main.rs_ deines „functions“-Projekts befindet, durch
 das vorhergehende Beispiel und führe es mit `cargo run` aus:
 
 ```console
@@ -148,9 +148,9 @@ nicht dieselben Unterscheidungen, deshalb wollen wir uns ansehen, was
 Anweisungen und Ausdrücke sind und wie sich ihre Unterschiede auf die
 Funktionsrümpfe auswirken.
 
-* **Anweisungen** (statements) sind Instruktionen, die eine Aktion ausführen
+- **Anweisungen** (statements) sind Instruktionen, die eine Aktion ausführen
   und keinen Wert zurückgeben.
-* **Ausdrücke** (expressions) werden zu einem Ergebniswert ausgewertet.
+- **Ausdrücke** (expressions) werden zu einem Ergebniswert ausgewertet.
   Schauen wir uns einige Beispiele an.
 
 Eine Variable zu erstellen und ihr mit dem Schlüsselwort `let` einen Wert
@@ -170,7 +170,7 @@ Anweisung enthält</span>
 
 Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
 ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
-*Aufruf* einer Funktion keine Anweisung.)
+_Aufruf_ einer Funktion keine Anweisung.)
 
 Anweisungen geben keine Werte zurück. Daher kannst du keine `let`-Anweisung
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst
