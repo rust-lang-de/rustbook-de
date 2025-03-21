@@ -16,7 +16,7 @@ das Spiel eine Glückwunschnachricht aus und beendet sich.
 
 ## Aufsetzen eines neuen Projekts
 
-Um ein neues Projekt aufzusetzen, gehe in das Verzeichnis *projects*, das du in
+Um ein neues Projekt aufzusetzen, gehe in das Verzeichnis _projects_, das du in
 Kapitel 1 erstellt hast, und erstelle ein neues Projekt mit Cargo, wie folgt:
 
 ```console
@@ -28,7 +28,7 @@ Der erste Befehl `cargo new` nimmt den Namen des Projekts (`guessing_game`) als
 erstes Argument. Der zweite Befehl wechselt in das Verzeichnis des neuen
 Projekts.
 
-Schaue dir die generierte Datei *Cargo.toml* an:
+Schaue dir die generierte Datei _Cargo.toml_ an:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -42,7 +42,7 @@ edition = "2021"
 ```
 
 Wie du in Kapitel 1 gesehen hast, generiert `cargo new` ein „Hello,
-world!“-Programm für dich. Sieh dir die Datei *src/main.rs* an:
+world!“-Programm für dich. Sieh dir die Datei _src/main.rs_ an:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -67,7 +67,7 @@ Der Befehl `run` ist praktisch, wenn du ein Projekt schnell iterieren musst,
 wie wir es in diesem Spiel tun werden, indem du jede Iteration schnell testest,
 bevor du zur nächsten übergehst.
 
-Öffne die Datei *src/main.rs* erneut. Du wirst den gesamten Code in diese Datei
+Öffne die Datei _src/main.rs_ erneut. Du wirst den gesamten Code in diese Datei
 schreiben.
 
 ## Verarbeiten einer Schätzung
@@ -75,7 +75,7 @@ schreiben.
 Der erste Teil des Ratespielprogramms fragt nach einer Benutzereingabe,
 verarbeitet diese Eingabe und überprüft, ob die Eingabe in der erwarteten Form
 vorliegt. Zu Beginn erlauben wir dem Spieler, eine Schätzung einzugeben. Gib
-den Code aus Codeblock 2-1 in *src/main.rs* ein.
+den Code aus Codeblock 2-1 in _src/main.rs_ ein.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -126,7 +126,7 @@ use std::io;
 
 Standardmäßig hat Rust einige Elemente in der Standardbibliothek definiert,
 die es in den Gültigkeitsbereich jedes Programms bringt. Diese Menge wird
-*Präludium* genannt, und du kannst deren Inhalt [in der Dokumentation der
+_Präludium_ genannt, und du kannst deren Inhalt [in der Dokumentation der
 Standardbibliothek][prelude] sehen.
 
 Wenn ein Typ, den du verwenden willst, nicht im Präludium enthalten ist, musst
@@ -186,7 +186,7 @@ es sich handelt, und den Benutzer zur Eingabe auffordert.
 
 ### Speichern von Werten mit Variablen
 
-Als Nächstes erstellen wir eine *Variable*, um die Benutzereingabe zu
+Als Nächstes erstellen wir eine _Variable_, um die Benutzereingabe zu
 speichern, wie hier:
 
 ```rust,ignore
@@ -242,8 +242,8 @@ ist ein von der Standardbibliothek bereitgestellter Zeichenketten-Typ, der ein
 wachstumsfähiges, UTF-8-kodiertes Stück Text ist.
 
 Die Syntax `::` in der Zeile `::new` zeigt an, dass `new` eine assoziierte
-Funktion (associated function) vom Typ `String` ist. Eine *assoziierte
-Funktion* ist eine Funktion, die auf einem Typ, in diesem Fall `String`,
+Funktion (associated function) vom Typ `String` ist. Eine _assoziierte
+Funktion_ ist eine Funktion, die auf einem Typ, in diesem Fall `String`,
 implementiert ist. Diese Funktion `new` erzeugt eine neue, leere Zeichenkette.
 Du wirst eine Funktion `new` bei vielen Typen finden, weil es ein
 gebräuchlicher Name für eine Funktion ist, die einen neuen Wert irgendeiner Art
@@ -296,7 +296,7 @@ zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
 Zeichenketten-Argument muss veränderbar sein, damit die Methode den Inhalt der
 Zeichenkette ändern kann.
 
-Das `&` zeigt an, dass es sich bei diesem Argument um eine *Referenz* handelt,
+Das `&` zeigt an, dass es sich bei diesem Argument um eine _Referenz_ handelt,
 die dir eine Möglichkeit bietet, mehrere Teile deines Codes auf einen Datenteil
 zugreifen zu lassen, ohne dass du diese Daten mehrfach in den Speicher kopieren
 musst. Referenzen sind eine komplexe Funktionalität, und einer der
@@ -343,23 +343,19 @@ einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax `.method_name()` aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt. 
 
-Wie bereits erwähnt, schreibt `read_line` die Benutzereingabe in die übergebene 
-String-Variable, gibt aber darüber hinaus auch einen `Result`-Wert
-zurück.
-[`Result`][result] ist eine [*Aufzählung*][enums] (enumeration, oder
+Wie bereits erwähnt, schreibt `read_line` die Benutzereingabe in die übergebene
+Zeichenketten-Variable, gibt aber darüber hinaus auch einen `Result`-Wert
+zurück. [`Result`][result] ist eine [_Aufzählung_][enums] (enumeration, oder
 kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
-Zuständen annehmen kann.
-Wir nennen jeden möglichen Zustand eine *Variante*.
+Zuständen annehmen kann. Wir nennen jeden möglichen Zustand eine _Variante_.
 
 In Kapitel 6 werden [Aufzählungen][enums] ausführlicher behandelt. Der Zweck
 dieser `Result`-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.
 
-Die Varianten von  `Result` sind `Ok` und `Err`. Die Variante `Ok` gibt an, dass
-die Operation erfolgreich war, und der erfolgreich
-generierte Wert innerhalb von `Ok` steht. 
-Die Variante `Err` bedeutet, dass die Operation fehlgeschlagen
-ist, und `Err` enthält Informationen darüber, wie oder warum die Operation
-fehlgeschlagen ist.
+Die Varianten von `Result` sind `Ok` und `Err`. Die Variante `Ok` gibt an, dass
+die Operation erfolgreich war, und enthält den erfolgreich generierten Wert.
+Die Variante `Err` bedeutet, dass die Operation fehlgeschlagen ist, und enthält
+Informationen darüber, wie oder warum die Operation fehlgeschlagen ist.
 
 Für Werte vom Typ `Result` sind, wie für Werte jedes Typs, Methoden definiert.
 Eine Instanz von `Result` hat eine [Methode `expect`][expect], die du
@@ -479,13 +475,13 @@ Verfügung.
 ### Verwenden einer Kiste, um mehr Funktionalität zu erhalten
 
 Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
-Projekt "Ratespiel" ist eine *binäre Kiste* (binary crate), die eine
-ausführbare Datei ist. Die Kiste `rand` ist eine *Bibliotheks-Kiste* (library
+Projekt "Ratespiel" ist eine _binäre Kiste_ (binary crate), die eine
+ausführbare Datei ist. Die Kiste `rand` ist eine _Bibliotheks-Kiste_ (library
 crate), die Code enthält, der in anderen Programmen verwendet werden soll.
 
 Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
 Bevor wir Code schreiben können, der `rand` benutzt, müssen wir die Datei
-*Cargo.toml* so modifizieren, dass die Kiste `rand` als Abhängigkeit
+_Cargo.toml_ so modifizieren, dass die Kiste `rand` als Abhängigkeit
 eingebunden wird. Öffne jetzt diese Datei und füge die folgende Zeile unten
 unter der Überschrift des Abschnitts `[dependencies]` hinzu, den Cargo für dich
 erstellt hat. Stelle sicher, dass du `rand` genau so angibst, wie wir es hier
@@ -499,13 +495,13 @@ möglicherweise nicht.
 rand = "0.8.5"
 ```
 
-In der Datei *Cargo.toml* ist alles, was nach einer Überschrift folgt, Teil
+In der Datei _Cargo.toml_ ist alles, was nach einer Überschrift folgt, Teil
 dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
 Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Kisten
 dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
 Fall spezifizieren wir die Kiste `rand` mit dem semantischen
 Versionsspezifikator `0.8.5`. Cargo versteht [semantische
-Versionierung][semver] (manchmal auch *SemVer* genannt), was ein Standard zum
+Versionierung][semver] (manchmal auch _SemVer_ genannt), was ein Standard zum
 Schreiben von Versionsnummern ist. Die Angabe `0.8.5` ist eigentlich die
 Abkürzung für `^0.8.5`, was für alle Versionen ab `0.8.5` und kleiner als
 `0.9.0` steht.
@@ -521,29 +517,25 @@ gezeigt.
 
 ```console
 $ cargo build
-    Updating crates.io index
-     Locking 16 packages to latest compatible versions
-      Adding wasi v0.11.0+wasi-snapshot-preview1 (latest: v0.13.3+wasi-0.2.2)
-      Adding zerocopy v0.7.35 (latest: v0.8.9)
-      Adding zerocopy-derive v0.7.35 (latest: v0.8.9)
-  Downloaded syn v2.0.87
-  Downloaded 1 crate (278.1 KB) in 0.16s
-   Compiling proc-macro2 v1.0.89
-   Compiling unicode-ident v1.0.13
-   Compiling libc v0.2.161
-   Compiling cfg-if v1.0.0
-   Compiling byteorder v1.5.0
-   Compiling getrandom v0.2.15
-   Compiling rand_core v0.6.4
-   Compiling quote v1.0.37
-   Compiling syn v2.0.87
-   Compiling zerocopy-derive v0.7.35
-   Compiling zerocopy v0.7.35
-   Compiling ppv-lite86 v0.2.20
-   Compiling rand_chacha v0.3.1
-   Compiling rand v0.8.5
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.69s
+  Updating crates.io index
+   Locking 15 packages to latest Rust 1.85.0 compatible versions
+    Adding rand v0.8.5 (available: v0.9.0)
+ Compiling proc-macro2 v1.0.93
+ Compiling unicode-ident v1.0.17
+ Compiling libc v0.2.170
+ Compiling cfg-if v1.0.0
+ Compiling byteorder v1.5.0
+ Compiling getrandom v0.2.15
+ Compiling rand_core v0.6.4
+ Compiling quote v1.0.38
+ Compiling syn v2.0.98
+ Compiling zerocopy-derive v0.7.35
+ Compiling zerocopy v0.7.35
+ Compiling ppv-lite86 v0.2.20
+ Compiling rand_chacha v0.3.1
+ Compiling rand v0.8.5
+ Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+  Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
 ```
 
 <span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von `cargo
@@ -554,7 +546,7 @@ sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
 Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.
 
 Wenn wir eine externe Abhängigkeit einfügen, holt Cargo die neuesten
-Versionen von allem was die Abhängigkeit aus der *Registry* benötigt, was eine
+Versionen von allem was die Abhängigkeit aus der _Registry_ benötigt, was eine
 Kopie der Daten von [Crates.io][cratesio] ist. Crates.io ist der Ort, an dem
 die Menschen im Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur
 Nutzung bereitstellen.
@@ -570,11 +562,11 @@ Abhängigkeiten.
 Wenn du gleich wieder `cargo build` ausführst, ohne irgendwelche Änderungen
 vorzunehmen, erhältst du keine Ausgabe außer der Zeile `Finished`. Cargo weiß,
 dass es die Abhängigkeiten bereits heruntergeladen und kompiliert hat, und du
-hast in deiner Datei *Cargo.toml* nichts daran geändert. Cargo weiß auch, dass
+hast in deiner Datei _Cargo.toml_ nichts daran geändert. Cargo weiß auch, dass
 du nichts an deinem Code geändert hast, also wird dieser auch nicht neu
 kompiliert. Ohne etwas zu tun zu haben, wird es einfach beendet.
 
-Wenn du die Datei *src/main.rs* öffnest, eine triviale Änderung vornimmst und
+Wenn du die Datei _src/main.rs_ öffnest, eine triviale Änderung vornimmst und
 sie dann speicherst und neu baust, siehst du nur zwei Zeilen Ausgabe:
 
 ```console
@@ -584,11 +576,11 @@ $ cargo build
 ```
 
 Diese Zeilen zeigen, dass Cargo nur den Build mit deiner winzigen Änderung an
-der Datei *src/main.rs* aktualisiert. Deine Abhängigkeiten haben sich nicht
+der Datei _src/main.rs_ aktualisiert. Deine Abhängigkeiten haben sich nicht
 geändert, sodass Cargo weiß, dass es wiederverwenden kann, was es bereits
 heruntergeladen und kompiliert hat.
 
-#### Sicherstellen reproduzierbarer Builds mit der Datei *Cargo.lock*
+#### Sicherstellen reproduzierbarer Builds mit der Datei _Cargo.lock_
 
 Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wenn
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
@@ -596,26 +588,26 @@ kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
 verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
 nächste Woche Version 0.8.6 der Kiste `rand` herauskommt und eine wichtige
 Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
-dies zu handhaben, erstellt Rust die Datei *Cargo.lock* beim ersten Mal, wenn
-du `cargo build` ausführst, die nun im *guessing_game*-Verzeichnis liegt.
+dies zu handhaben, erstellt Rust die Datei _Cargo.lock_ beim ersten Mal, wenn
+du `cargo build` ausführst, die nun im _guessing_game_-Verzeichnis liegt.
 
 Wenn du ein Projekt zum ersten Mal baust, ermittelt Cargo alle Versionen der
 Abhängigkeiten, die den Kriterien entsprechen, und schreibt sie dann in die
-Datei *Cargo.lock*. Wenn du dein Projekt in der Zukunft baust, wird Cargo
-sehen, dass die Datei *Cargo.lock* existiert und die dort angegebenen Versionen
+Datei _Cargo.lock_. Wenn du dein Projekt in der Zukunft baust, wird Cargo
+sehen, dass die Datei _Cargo.lock_ existiert und die dort angegebenen Versionen
 verwenden, anstatt die ganze Arbeit der Versionsfindung erneut zu machen. Auf
 diese Weise erhältst du automatisch einen reproduzierbaren Build. Mit anderen
-Worten, dein Projekt bleibt dank der Datei *Cargo.lock* auf 0.8.5, bis du
-explizit die Versionsnummer erhöhst. Da die Datei *Cargo.lock* für das
+Worten, dein Projekt bleibt dank der Datei _Cargo.lock_ auf 0.8.5, bis du
+explizit die Versionsnummer erhöhst. Da die Datei _Cargo.lock_ für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.
 
 #### Aktualisieren einer Kiste, um eine neue Version zu erhalten
 
-Wenn du eine Kiste aktualisieren *willst*, bietet Cargo den Befehl `update` an,
-der die Datei *Cargo.lock* ignoriert und alle neuesten Versionen, die deinen
-Spezifikationen entsprechen, in *Cargo.toml* herausfindet. Cargo schreibt diese
-Versionen dann in die Datei *Cargo.lock*. In diesem Fall wird Cargo nur nach
+Wenn du eine Kiste aktualisieren _willst_, bietet Cargo den Befehl `update` an,
+der die Datei _Cargo.lock_ ignoriert und alle neuesten Versionen, die deinen
+Spezifikationen entsprechen, in _Cargo.toml_ herausfindet. Cargo schreibt diese
+Versionen dann in die Datei _Cargo.lock_. In diesem Fall wird Cargo nur nach
 Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Kiste `rand`
 zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
 sehen, wenn du `cargo update` ausführst:
@@ -623,14 +615,15 @@ sehen, wenn du `cargo update` ausführst:
 ```console
 $ cargo update
     Updating crates.io index
-    Updating rand v0.8.5 -> v0.8.6
+     Locking 1 package to latest Rust 1.85.0 compatible version
+    Updating rand v0.8.5 -> v0.8.6 (available: v0.9.0)
 ```
 
 Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
-Änderung in deiner Datei *Cargo.lock* bemerken, die feststellt, dass die
+Änderung in deiner Datei _Cargo.lock_ bemerken, die feststellt, dass die
 Version der Kiste `rand`, die du jetzt benutzt, 0.8.6 ist. Um die
-`rand`-Version 0.9.0 oder irgendeine Version aus der 0.9.*x*-Serie zu
-verwenden, müsstest du stattdessen die Datei *Cargo.toml* anpassen, damit sie
+`rand`-Version 0.9.0 oder irgendeine Version aus der 0.9._x_-Serie zu
+verwenden, müsstest du stattdessen die Datei _Cargo.toml_ anpassen, damit sie
 wie folgt aussieht:
 
 ```toml
@@ -652,7 +645,7 @@ zusammengestellt werden.
 ### Generieren einer Zufallszahl
 
 Beginnen wir mit `rand`, um eine Zahl zum Raten zu erzeugen. Der nächste
-Schritt ist *src/main.rs* zu ändern, wie in Codeblock 2-3 gezeigt.
+Schritt ist _src/main.rs_ zu ändern, wie in Codeblock 2-3 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -799,8 +792,8 @@ sie eine Variante der `Ordering`-Aufzählung zurück, die wir mit der
 basierend darauf, welche `Ordering`-Variante vom Aufruf von `cmp` mit den
 Werten in `guess` und `secret_number` zurückgegeben wurde.
 
-Ein `match`-Ausdruck besteht aus *Zweigen* (arms). Ein Zweig besteht aus einem
-*Muster* (pattern) und dem Code, der ausgeführt werden soll, wenn der Wert, der
+Ein `match`-Ausdruck besteht aus _Zweigen_ (arms). Ein Zweig besteht aus einem
+_Muster_ (pattern) und dem Code, der ausgeführt werden soll, wenn der Wert, der
 am Anfang des `match`-Ausdrucks steht, zum Muster dieses Zweigs passt. Rust
 nimmt den Wert, der bei `match` angegeben wurde, und schaut nacheinander durch
 das Muster jedes Zweigs. Das `match`-Konstrukt und die Muster sind mächtige
@@ -819,7 +812,7 @@ zurück, weil 50 größer als 38 ist. Der `match`-Ausdruck erhält den Wert
 Er schaut auf das Muster `Ordering::Less` des ersten Zweigs und sieht, dass der
 Wert `Ordering::Greater` nicht mit `Ordering::Less` übereinstimmt, also
 ignoriert er den Code in diesem Zweig und geht zum nächsten Zweig über. Das
-Muster `Ordering::Greater` des nächsten Zweigs *passt* zu `Ordering::Greater`!
+Muster `Ordering::Greater` des nächsten Zweigs _passt_ zu `Ordering::Greater`!
 Der dazugehörige Code in diesem Zweig wird ausgeführt und `Zu groß!` auf den
 Bildschirm ausgegeben. Der `match`-Ausdruck endet nach der ersten erfolgreichen
 Übereinstimmung, sodass der letzte Zweig in diesem Szenario nicht
@@ -855,7 +848,7 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `guessing_game` (bin "guessing_game") due to 1 previous error
 ```
 
-Die Kernbotschaft des Fehlers besagt, dass es *nicht übereinstimmende Typen* 
+Die Kernbotschaft des Fehlers besagt, dass es _nicht übereinstimmende Typen_ 
 (mismatched types) gibt. Rust hat ein starkes, statisches Typsystem. Es hat jedoch 
 auch eine Typ-Inferenz. Als wir `let mut guess = String::new()` schrieben, konnte
 Rust daraus schließen, dass `guess` ein `String` sein sollte, und zwang uns
@@ -918,7 +911,7 @@ let guess: u32 = guess.trim().parse().expect("Bitte gib eine Zahl ein!");
 Wir erstellen eine Variable mit dem Namen `guess`. Aber warte, hat das Programm
 nicht bereits eine Variable namens `guess`? Ja, aber Rust erlaubt uns, den
 vorherigen Wert von `guess` mit einem neuen Wert zu verschatten (shadow). Durch
-das *Verschatten* können wir den Variablennamen `guess` wiederverwenden, anstatt
+das _Verschatten_ können wir den Variablennamen `guess` wiederverwenden, anstatt
 uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. `guess_str` und
 `guess`. Wir werden dies in [Kapitel 3][shadowing] ausführlicher behandeln,
 aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
@@ -992,7 +985,7 @@ einige Male aus, um das unterschiedliche Verhalten bei verschiedenen
 Eingabearten zu überprüfen: Schätze die Zahl richtig, schätze eine zu große Zahl
 und schätze eine zu kleine Zahl.
 
-Der Großteil des Spiels funktioniert jetzt, aber der Benutzer kann nur *eine*
+Der Großteil des Spiels funktioniert jetzt, aber der Benutzer kann nur _eine_
 Schätzung anstellen. Ändern wir das, indem wir eine Schleife hinzufügen!
 
 ## Zulassen mehrerer Schätzungen mittels Schleife
@@ -1077,7 +1070,9 @@ Du hast geschätzt: 59
 Du hast gewonnen!
 Bitte gib deine Schätzung ein.
 quit
-thread 'main' panicked at 'Bitte gib eine Zahl ein!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:999:5
+
+thread 'main' panicked at src/main.rs:28:47:
+Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -1209,7 +1204,7 @@ und der `match`-Ausdruck wird nur den `num`-Wert zurückgeben, der durch `parse`
 erzeugt und in den `Ok`-Wert eingefügt wurde. Diese Zahl wird in der neuen
 `guess`-Variable, die wir erzeugen, genau dort landen, wo wir sie haben wollen.
 
-Wenn `parse` *nicht* in der Lage ist, die Zeichenkette in eine Zahl
+Wenn `parse` _nicht_ in der Lage ist, die Zeichenkette in eine Zahl
 umzuwandeln, gibt es einen `Err`-Wert zurück, der mehr Informationen über den
 Fehler enthält. Der `Err`-Wert stimmt nicht mit dem `Ok(num)`-Muster im ersten
 `match`-Zweig überein, aber er stimmt mit dem `Err(_)`-Muster im zweiten Zweig
