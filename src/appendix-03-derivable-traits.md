@@ -10,18 +10,18 @@ In diesem Anhang findest du eine Referenz aller Merkmale in der
 Standardbibliothek, die du mit `derive` verwenden kannst. Jeder Abschnitt
 umfasst:
 
-* Welche Operatoren und Methoden nach Ableiten dieses Merkmals ermöglicht
+- Welche Operatoren und Methoden nach Ableiten dieses Merkmals ermöglicht
   werden
-* Was die Implementierung des durch `derive` bereitgestellten Merkmals bewirkt
-* Was die Implementierung des Merkmals über den Typ aussagt
-* Die Bedingungen, unter denen du das Merkmal implementieren darfst oder nicht
-* Beispiele für Operationen, die dieses Merkmal erfordern
+- Was die Implementierung des durch `derive` bereitgestellten Merkmals bewirkt
+- Was die Implementierung des Merkmals über den Typ aussagt
+- Die Bedingungen, unter denen du das Merkmal implementieren darfst oder nicht
+- Beispiele für Operationen, die dieses Merkmal erfordern
 
 Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut `derive`
 bereitgestellt wird, schaue in die [Standardbibliotheksdokumentation][std-lib]
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.
 
-Diese hier aufgelisteten Merkmale sind die einzigen, die von der
+Die hier aufgelisteten Merkmale sind die einzigen, die von der
 Standardbibliothek definiert werden und die mit `derive` in deinen Typen
 implementiert werden können. Andere in der Standardbibliothek definierte
 Merkmale haben kein sinnvolles Standardverhalten, sodass es an dir liegt, sie
@@ -64,7 +64,7 @@ prüfen und ermöglicht das Verwenden der Operatoren `==` und `!=`.
 
 Das Ableiten von `PartialEq` implementiert die Methode `eq`. Wenn `PartialEq`
 für Strukturen abgeleitet wird, sind zwei Instanzen nur dann gleich, wenn
-*alle* Felder gleich sind, und die Instanzen sind nicht gleich, wenn wenigstens
+_alle_ Felder gleich sind, und die Instanzen sind nicht gleich, wenn wenigstens
 ein Feld nicht gleich ist. Beim Ableiten für Aufzählungen ist jede Variante
 gleich sich selbst und nicht gleich den anderen Varianten.
 
