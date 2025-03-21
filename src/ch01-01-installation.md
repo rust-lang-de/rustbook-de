@@ -46,7 +46,7 @@ Installation erscheint folgende Zeile:
 Rust is installed now. Great!
 ```
 
-Außerdem benötigst du einen Programmbinder (linker), ein Programm, das Rust
+Außerdem benötigst du einen _Programmbinder_ (linker), ein Programm, das Rust
 verwendet, um die kompilierten Ausgaben in eine Datei zusammenzuführen.
 Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
 du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
@@ -72,7 +72,7 @@ Linker und die nativen Bibliotheken, die zum Kompilieren von Programmen
 benötigt werden. Wenn du an dieser Stelle weitere Hilfe brauchst, geht zu
 [https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc].
 
-Der Rest dieses Buchs verwendet Befehle, die sowohl in *cmd.exe* als auch
+Der Rest dieses Buchs verwendet Befehle, die sowohl in _cmd.exe_ als auch
 in der PowerShell funktionieren. Falls es spezifische Unterschiede geben sollte,
 werden wir diese erläutern.
 
@@ -150,6 +150,28 @@ Erstellung von Rust-Code verwendest. So gut wie jeder Texteditor ist dafür
 ausreichend! Viele Texteditoren und integrierte Entwicklungsumgebungen (IDEs)
 haben jedoch integrierte Unterstützung für Rust. Eine aktuelle Liste von
 Editoren und IDEs findest du auf der [Tools-Seite][tools] der Rust-Website.
+
+### Offline mit diesem Buch arbeiten
+
+In mehreren Beispielen werden wir Rust-Pakete außerhalb der Standardbibliothek
+verwenden. Um diese Beispiele durchzuarbeiten, benötigst du entweder eine
+Internetverbindung oder du musst diese Abhängigkeiten im Voraus heruntergeladen
+haben. Um die Abhängigkeiten im Voraus herunterzuladen, kannst du die folgenden
+Befehle ausführen. (Wir werden später im Detail erklären, was `cargo` ist und
+was jeder dieser Befehle tut.)
+
+```console
+$ cargo new get-dependencies
+$ cd get-dependencies
+$ cargo add rand@0.8.5 trpl@0.2.0
+```
+
+Dadurch werden die Downloads für diese Pakete zwischengespeichert, sodass du
+sie später nicht erneut herunterladen musst. Sobald du diesen Befehl ausgeführt
+hast, musst du den Ordner `get-dependencies` nicht mehr behalten. Wenn du
+diesen Befehl ausgeführt hast, kannst du den Parameter `--offline` mit allen
+`cargo`-Befehlen im Rest des Buches verwenden, um diese zwischengespeicherten
+Versionen zu verwenden, anstatt sie aus dem Internet zu holen.
 
 [community]: https://www.rust-lang.org/community
 [install]: https://www.rust-lang.org/tools/install

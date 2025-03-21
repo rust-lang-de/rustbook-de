@@ -5,7 +5,7 @@ meisten Rust-Entwickler verwenden dieses Werkzeug, um ihre Rust-Projekte zu
 verwalten, weil Cargo viele Aufgaben für dich erledigt, z.B. Bauen deines
 Codes, Herunterladen der Bibliotheken, von denen dein Code abhängt, und das
 Bauen dieser Bibliotheken. (Wir nennen Bibliotheken, die dein Code benötigt,
-*Abhängigkeiten* (dependencies).)
+_Abhängigkeiten_ (dependencies).)
 
 Die einfachsten Rust-Programme, wie das, das wir bisher geschrieben haben,
 haben keine Abhängigkeiten. Wenn wir also das „Hallo Welt!“-Projekt mit Cargo
@@ -34,7 +34,7 @@ kannst.
 
 Lass uns mit Cargo ein neues Projekt erstellen und uns ansehen, wie es sich von
 unserem ursprünglichen „Hallo Welt!“-Projekt unterscheidet. Navigiere zurück zu
-deinem *projects*-Verzeichnis (oder wo auch immer du dich entschieden hast,
+deinem _projects_-Verzeichnis (oder wo auch immer du dich entschieden hast,
 deinen Code zu speichern). Führe dann auf einem beliebigen Betriebssystem die
 folgenden Schritte aus:
 
@@ -44,14 +44,14 @@ $ cd hello_cargo
 ```
 
 Der erste Befehl erstellt ein neues Verzeichnis und ein Projekt namens
-*hello_cargo*. Wir haben unser Projekt *hello_cargo* genannt und Cargo
+_hello_cargo_. Wir haben unser Projekt _hello_cargo_ genannt und Cargo
 erstellt seine Dateien in einem Verzeichnis mit demselben Namen.
 
-Gehe in das Verzeichnis *hello_cargo* und liste die Dateien auf. Du wirst
+Gehe in das Verzeichnis _hello_cargo_ und liste die Dateien auf. Du wirst
 sehen, dass Cargo zwei Dateien und ein Verzeichnis für uns generiert hat: Eine
-Datei *Cargo.toml* und ein Verzeichnis *src* mit einer Datei *main.rs* darin.
+Datei _Cargo.toml_ und ein Verzeichnis _src_ mit einer Datei _main.rs_ darin.
 
-Es hat auch ein neues Git-Repository zusammen mit einer Datei *.gitignore*
+Es hat auch ein neues Git-Repository zusammen mit einer Datei _.gitignore_
 initialisiert. Git-Dateien werden nicht erzeugt, wenn du `cargo new` innerhalb
 eines existierenden Git-Repositories ausführst; du kannst dieses Verhalten
 überschreiben, indem du `cargo new --vcs=git` verwendest. 
@@ -61,7 +61,7 @@ eines existierenden Git-Repositories ausführst; du kannst dieses Verhalten
 > Versionskontrollsystem zu verwenden, indem du das Flag `--vcs` verwendest.
 > Führe `cargo new --help` aus, um die verfügbaren Optionen zu sehen.
 
-Öffne *Cargo.toml* in einem Texteditor deiner Wahl. Es sollte ähnlich wie der
+Öffne _Cargo.toml_ in einem Texteditor deiner Wahl. Es sollte ähnlich wie der
 Code in Codeblock 1-2 aussehen.
 
 <span class="filename">Dateiname: Cargo.toml</span>
@@ -70,18 +70,16 @@ Code in Codeblock 1-2 aussehen.
 [package]
 name = "hello_cargo"
 version = "0.1.0"
-edition = "2021"
-
-# See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
+edition = "2024"
 
 [dependencies]
 ```
 
-<span class="caption">Codeblock 1-2: Inhalt von *Cargo.toml* erzeugt durch
+<span class="caption">Codeblock 1-2: Inhalt von _Cargo.toml_ erzeugt durch
 `cargo new`</span>
 
-Diese Datei liegt im Format [*TOML*][toml] (*Tom's Obvious, Minimal
-Language*) vor, welches das Konfigurationsformat von Cargo ist.
+Diese Datei liegt im Format [_TOML_][toml] (_Tom's Obvious, Minimal
+Language_) vor, welches das Konfigurationsformat von Cargo ist.
 
 Die erste Zeile `[package]` ist eine Abschnittsüberschrift, die anzeigt, dass
 die folgenden Anweisungen ein Paket konfigurieren. Wenn wir weitere
@@ -95,11 +93,11 @@ E][appendix-e].
 
 Die letzte Zeile `[dependencies]` ist der Anfang eines Abschnitts, in dem du
 alle Abhängigkeiten deines Projekts auflisten kannst. In Rust werden
-Code-Pakete als *Kisten* (crates) bezeichnet. Wir werden keine anderen Kisten
+Code-Pakete als _Kisten_ (crates) bezeichnet. Wir werden keine anderen Kisten
 für dieses Projekt benötigen, aber wir werden es im ersten Projekt in Kapitel 2
 tun, also werden wir dann diesen Abhängigkeits-Abschnitt verwenden.
 
-Öffne nun *src/main.rs* und wirf einen Blick darauf:
+Öffne nun _src/main.rs_ und wirf einen Blick darauf:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -112,10 +110,10 @@ fn main() {
 Cargo hat für dich ein „Hello, world!“-Programm generiert, genau wie das, das
 wir in Codeblock 1-1 geschrieben haben! Die Unterschiede zwischen unserem
 Projekt und dem Projekt, das Cargo generiert hat, bestehen bisher darin, dass
-Cargo den Code im Verzeichnis *src* abgelegt hat, und wir haben eine
-Konfigurationsdatei *Cargo.toml* im obersten Verzeichnis.
+Cargo den Code im Verzeichnis _src_ abgelegt hat, und wir haben eine
+Konfigurationsdatei _Cargo.toml_ im obersten Verzeichnis.
 
-Cargo erwartet, dass deine Quelldateien innerhalb des *src*-Verzeichnisses
+Cargo erwartet, dass deine Quelldateien innerhalb des _src_-Verzeichnisses
 liegen. Das Projektverzeichnis der obersten Ebene ist nur für README-Dateien,
 Lizenzinformationen, Konfigurationsdateien und alles andere, was nicht mit
 deinem Code zusammenhängt. Das Verwenden von Cargo hilft dir, deine Projekte zu
@@ -123,14 +121,14 @@ organisieren. Es gibt einen Platz für alles und alles ist an seinem Platz.
 
 Wenn du ein Projekt begonnen hast, das Cargo nicht verwendet, wie wir es mit
 dem Projekt „Hallo Welt!“ getan haben, kannst du es in ein Projekt umwandeln,
-das Cargo verwendet. Verschiebe den Projektcode in das Verzeichnis *src* und
-erstelle eine entsprechende *Cargo.toml*-Datei. Eine einfache Möglichkeit, die
-Datei *Cargo.toml* zu erstellen, besteht darin, `cargo init` auszuführen.
+das Cargo verwendet. Verschiebe den Projektcode in das Verzeichnis _src_ und
+erstelle eine entsprechende _Cargo.toml_-Datei. Eine einfache Möglichkeit, die
+Datei _Cargo.toml_ zu erstellen, besteht darin, `cargo init` auszuführen.
 
 ### Bauen und Ausführen eines Cargo-Projekts
 
 Schauen wir uns nun an, was anders ist, wenn wir das „Hello, world!“-Programm
-mit Cargo bauen und ausführen. Von deinem *hello_cargo*-Verzeichnis aus baust
+mit Cargo bauen und ausführen. Von deinem _hello_cargo_-Verzeichnis aus baust
 du dein Projekt, indem du den folgenden Befehl eingibst:
 
 ```console
@@ -139,10 +137,10 @@ $ cargo build
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.85 secs
 ```
 
-Dieser Befehl erzeugt eine ausführbare Datei in *target/debug/hello_cargo*
-(oder *target\debug\hello_cargo.exe* unter Windows) und nicht in deinem
+Dieser Befehl erzeugt eine ausführbare Datei in _target/debug/hello_cargo_
+(oder _target\debug\hello_cargo.exe_ unter Windows) und nicht in deinem
 aktuellen Verzeichnis. Da standardmäßig für den Debug-Modus gebaut wird, legt
-Cargo die Binärdatei in einem Verzeichnis namens *debug* ab. Mit diesem Befehl
+Cargo die Binärdatei in einem Verzeichnis namens _debug_ ab. Mit diesem Befehl
 kannst du die ausführbare Datei ausführen:
 
 ```console
@@ -152,7 +150,7 @@ Hello, world!
 
 Wenn alles gut geht, sollte `Hello, world!` im Terminal ausgegeben werden. Wenn
 `cargo build` zum ersten Mal ausgeführt wird, erzeugt Cargo auch eine neue
-Datei auf der obersten Ebene: *Cargo.lock*. Diese Datei verfolgt die genauen
+Datei auf der obersten Ebene: _Cargo.lock_. Diese Datei verfolgt die genauen
 Versionen der Abhängigkeiten in deinem Projekt. Dieses Projekt hat keine
 Abhängigkeiten, daher ist die Datei etwas spärlich. Du musst diese Datei
 niemals manuell ändern; Cargo verwaltet ihren Inhalt für dich.
@@ -209,13 +207,13 @@ ausführbare Datei zu benutzen.
 
 Lasse uns zusammenfassen, was wir bisher über Cargo gelernt haben:
 
-* Wir können ein Projekt mit `cargo new` erstellen.
-* Wir können ein Projekt mit `cargo build` bauen.
-* Wir können ein Projekt mit `cargo run` in einem Schritt bauen und ausführen.
-* Wir können ein Projekt mit `cargo check` bauen, ohne eine Binärdatei zu
+- Wir können ein Projekt mit `cargo new` erstellen.
+- Wir können ein Projekt mit `cargo build` bauen.
+- Wir können ein Projekt mit `cargo run` in einem Schritt bauen und ausführen.
+- Wir können ein Projekt mit `cargo check` bauen, ohne eine Binärdatei zu
   erzeugen, um auf Fehler zu prüfen.
-* Anstatt das Ergebnis des Bauvorgangs im selben Verzeichnis wie unser Code
-  abzulegen, legt Cargo es im Verzeichnis *target/debug* ab.
+- Anstatt das Ergebnis des Bauvorgangs im selben Verzeichnis wie unser Code
+  abzulegen, legt Cargo es im Verzeichnis _target/debug_ ab.
 
 Ein zusätzlicher Vorteil der Verwendung von Cargo ist, dass die Befehle
 unabhängig vom Betriebssystem sind, mit dem du arbeitest. Daher werden wir an
@@ -226,7 +224,7 @@ Windows mehr geben.
 
 Wenn dein Projekt schließlich zur Freigabe bereit ist, kannst du `cargo build
 --release` verwenden, um es mit Optimierungen zu kompilieren. Dieser Befehl
-erzeugt eine ausführbare Datei in *target/release* anstelle von *target/debug*.
+erzeugt eine ausführbare Datei in _target/release_ anstelle von _target/debug_.
 Durch die Optimierungen läuft dein Rust-Code schneller, aber wenn du sie
 einschaltest, verlängert sich die Zeit, die dein Programm zum Kompilieren
 benötigt. Aus diesem Grund gibt es zwei verschiedene Profile: Eines für die
@@ -235,7 +233,7 @@ Erstellen des endgültigen Programms, das du einem Benutzer gibst, das nicht
 wiederholt neu gebaut wird und das so schnell wie möglich läuft. Wenn du einen
 Laufzeit-Benchmark deines Codes durchführst, stelle sicher, dass du `cargo
 build --release` ausführst und den Benchmark mit der ausführbaren Datei in
-*target/release* durchführst.
+_target/release_ durchführst.
 
 ### Cargo als Konvention
 
@@ -265,11 +263,11 @@ Weitere Informationen über Cargo findest du unter seiner
 Du hast deine Rust-Reise bereits gut begonnen! In diesem Kapitel hast du
 gelernt, wie es geht:
 
-* Installiere die neueste stabile Version von Rust mit `rustup`.
-* Aktualisiere auf eine neuere Rust-Version.
-* Öffne die lokal installierte Dokumentation.
-* Schreibe und führe ein „Hallo Welt!“-Programm aus, direkt mittels `rustc`.
-* Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
+- Installiere die neueste stabile Version von Rust mit `rustup`.
+- Aktualisiere auf eine neuere Rust-Version.
+- Öffne die lokal installierte Dokumentation.
+- Schreibe und führe ein „Hallo Welt!“-Programm aus, direkt mittels `rustc`.
+- Schreibe und führe ein neues Projekt aus mittels Cargo-Konventionen.
 
 Dies ist ein guter Zeitpunkt, ein umfangreicheres Programm zu erstellen, um
 sich an das Lesen und Schreiben von Rust-Code zu gewöhnen. In Kapitel 2 werden
