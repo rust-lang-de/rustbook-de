@@ -1,8 +1,8 @@
 # Aufzählungen (enums) und Musterabgleich (pattern matching)
 
-In diesem Kapitel werden wir uns mit *Aufzählungen* (enumerations, kurz: enums)
+In diesem Kapitel werden wir uns mit _Aufzählungen_ (enumerations, kurz: enums)
 befassen. Aufzählungen erlauben es, einen Typ durch Aufzählung seiner möglichen
-*Varianten* (variants) zu definieren. Zuerst werden wir eine Aufzählung
+_Varianten_ (variants) zu definieren. Zuerst werden wir eine Aufzählung
 definieren und verwenden, um zu zeigen, wie eine Aufzählung mit Daten eine
 Bedeutung kodieren kann. Als Nächstes werden wir eine besonders nützliche
 Aufzählung untersuchen, die `Option` genannt wird und zum Ausdruck bringt, dass

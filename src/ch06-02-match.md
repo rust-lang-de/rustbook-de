@@ -334,7 +334,7 @@ error: could not compile `enums` (bin "enums") due to 1 previous error
 
 Rust weiß, dass wir nicht alle möglichen Fälle abgedeckt haben, und es weiß
 sogar, welches Muster wir vergessen haben! Abgleiche in Rust sind
-*vollständig*: Wir müssen jede letzte Möglichkeit ausschöpfen, damit der Code
+_vollständig_: Wir müssen jede letzte Möglichkeit ausschöpfen, damit der Code
 gültig ist! Speziell im Fall `Option<T>` schützt uns Rust davor, den Fall
 `None` zu übersehen, und davon auszugehen, dass wir einen Wert haben, obwohl
 vielleicht null vorliegt, und macht so den zuvor besprochenen Milliardenfehler
@@ -382,7 +382,7 @@ würden, würden die anderen Zweige nie ausgeführt werden, also warnt uns Rust,
 wenn wir Zweige nach einem Auffangzweig hinzufügen!
 
 Rust hat auch ein Muster, das wir verwenden können, wenn wir einen Auffangzweig
-wollen, aber den Wert im Auffangmuster *nicht* verwenden wollen: `_` ist ein
+wollen, aber den Wert im Auffangmuster _nicht_ verwenden wollen: `_` ist ein
 spezielles Muster, das zu jedem Wert passt und nicht an diesen Wert bindet.
 Dies sagt Rust, dass wir den Wert nicht verwenden werden, damit Rust uns nicht
 vor einer unbenutzten Variable warnt.
