@@ -1,6 +1,6 @@
 ## Was ist Eigentümerschaft (ownership)?
 
-*Eigentümerschaft* ist eine Reihe von Regeln, die bestimmen, wie ein
+_Eigentümerschaft_ ist eine Reihe von Regeln, die bestimmen, wie ein
 Rust-Programm den Speicher verwaltet. Alle Programme müssen den Arbeitsspeicher
 eines Rechners verwalten, während sie ausgeführt werden. Einige Sprachen
 verfügen über eine automatische Speicherbereinigung, die während der
@@ -39,13 +39,13 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
 > sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
 > Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
-> Reihenfolge. Dies wird als *zuletzt herein, zuerst hinaus* (last in, first
+> Reihenfolge. Dies wird als _zuletzt herein, zuerst hinaus_ (last in, first
 > out) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
 > hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
 > nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
 > Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
-> Daten nennt man *auf den Stapel legen*, und das Entfernen von Daten nennt man
-> *vom Stapel nehmen*. Alle im Stapelspeicher gespeicherten Daten müssen eine
+> Daten nennt man _auf den Stapel legen_, und das Entfernen von Daten nennt man
+> _vom Stapel nehmen_. Alle im Stapelspeicher gespeicherten Daten müssen eine
 > bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
 > Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
 > Haldenspeicher gespeichert werden.
@@ -54,9 +54,9 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > Haldenspeicher legst, forderst du eine bestimmte Menge an Speicherplatz an.
 > Der Speicher-Allokator (memory allocator) sucht eine leere Stelle im
 > Haldenspeicher, die groß genug ist, markiert sie als in Benutzung und gibt
-> einen *Zeiger* (pointer) zurück, der die Adresse dieser Stelle ist. Dieser
-> Vorgang wird als *Allokieren im Haldenspeicher* bezeichnet und manchmal mit
-> *Allokieren* abgekürzt. (Das Legen von Werten auf den Stapelspeicher gilt
+> einen _Zeiger_ (pointer) zurück, der die Adresse dieser Stelle ist. Dieser
+> Vorgang wird als _Allokieren im Haldenspeicher_ bezeichnet und manchmal mit
+> _Allokieren_ abgekürzt. (Das Legen von Werten auf den Stapelspeicher gilt
 > nicht als Allokieren.) Da es sich beim Zeiger um eine bekannte, feste Größe
 > handelt, kannst du den Zeiger auf den Stapelspeicher legen, aber wenn du die
 > eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
@@ -110,9 +110,9 @@ Lass uns zunächst einen Blick auf die Eigentumsregeln (ownership rules) werfen.
 Behalte diese Regeln im Hinterkopf, während wir veranschaulichende Beispiele
 durcharbeiten:
 
-* Jeder Wert in Rust hat einen *Eigentümer* (owner).
-* Es kann immer nur einen Eigentümer zur gleichen Zeit geben.
-* Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
+- Jeder Wert in Rust hat einen _Eigentümer_ (owner).
+- Es kann immer nur einen Eigentümer zur gleichen Zeit geben.
+- Wenn der Eigentümer den Gültigkeitsbereich verlässt, wird der Wert
   aufgeräumt.
 
 ### Gültigkeitsbereich (scope) einer Variable
@@ -124,7 +124,7 @@ einfügen. Folglich werden unsere Beispiele etwas prägnanter sein, damit wir un
 auf die eigentlichen Details konzentrieren können, anstatt auch den Code darum
 herum betrachten zu müssen.
 
-Als erstes Beispiel zu Eigentümerschaft werden wir uns den *Gültigkeitsbereich*
+Als erstes Beispiel zu Eigentümerschaft werden wir uns den _Gültigkeitsbereich_
 (scope) einiger Variablen ansehen. Der Gültigkeitsbereich ist der Bereich
 innerhalb eines Programms, in dem ein Element gültig ist. Sieh dir folgende
 Variable an:
@@ -136,7 +136,7 @@ let s = "Hallo";
 Die Variable `s` bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-*Gültigkeitsbereichs* gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+_Gültigkeitsbereichs_ gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable `s` gültig ist.
 
 ```rust
@@ -153,8 +153,8 @@ gültig ist</span>
 
 Mit anderen Worten, es gibt hier zwei wichtige Zeitpunkte:
 
-* Wenn `s` *in den Gültigkeitsbereich kommt*, ist es gültig.
-* Es bleibt gültig, bis es *den Gültigkeitsbereich verlässt*.
+- Wenn `s` _in den Gültigkeitsbereich kommt_, ist es gültig.
+- Es bleibt gültig, bis es _den Gültigkeitsbereich verlässt_.
 
 An diesem Punkt ist die Beziehung zwischen Gültigkeitsbereichen und wann
 Variablen gültig sind ähnlich zu anderen Programmiersprachen. Nun werden wir
@@ -203,7 +203,7 @@ wie `string_from` zu verwenden. Wir werden diese Syntax im Abschnitt
 in Kapitel 7 unter [„Mit Pfaden auf ein Element im Modulbaum
 verweisen“][paths-module-tree] über den Namensraum mit Modulen sprechen. 
 
-Diese Art von Zeichenkette kann *verändert* werden:
+Diese Art von Zeichenkette kann _verändert_ werden:
 
 ```rust
 let mut s = String::from("Hallo");
@@ -232,16 +232,16 @@ Um mit dem Typ `String` einen veränderbaren, größenänderbaren Textabschnitt 
 unterstützen, müssen wir Speicher im Haldenspeicher allokieren, dessen
 Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:
 
-* Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.
-* Wir brauchen eine Möglichkeit, diesen Speicher an den Speicher-Allokator
+- Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.
+- Wir brauchen eine Möglichkeit, diesen Speicher an den Speicher-Allokator
   zurückzugeben, wenn wir mit unserem `String` fertig sind.
 
 Der erste Teil wird von uns erledigt: Wenn wir `String::from` aufrufen, fordert
 seine Implementierung den Speicher an, den sie benötigt. Dies ist in
 Programmiersprachen ziemlich einheitlich.
 
-Der zweite Teil ist jedoch anders. In Sprachen mit einer *automatischen
-Speicherbereinigung* (garbage collector, GC) behält der GC den Überblick und
+Der zweite Teil ist jedoch anders. In Sprachen mit einer _automatischen
+Speicherbereinigung_ (garbage collector, GC) behält der GC den Überblick und
 räumt Speicherplatz, der nicht mehr verwendet wird, auf; wir brauchen nicht
 darüber nachzudenken. Ohne einen GC liegt es in unserer Verantwortung, zu
 erkennen, wann Speicherplatz nicht mehr benutzt wird, und Code aufzurufen, der
@@ -249,7 +249,7 @@ ihn explizit zurückgibt, so wie wir es beim Anfordern auch getan haben. Dies
 korrekt zu tun, war in der Vergangenheit ein schwieriges Programmierproblem.
 Wenn wir es vergessen, verschwenden wir Speicher. Wenn wir es zu früh machen,
 haben wir eine ungültige Variable. Wenn wir es zweimal machen, ist das auch ein
-Fehler. Wir müssen eine *Allokierung* mit genau einer *Freigabe* paaren.
+Fehler. Wir müssen eine _Allokierung_ mit genau einer _Freigabe_ paaren.
 
 Rust geht einen anderen Weg: Der Speicher wird automatisch zurückgegeben,
 sobald die Variable, die ihn besitzt, den Gültigkeitsbereich verlässt. Hier ist
@@ -274,8 +274,8 @@ einfügen, um den Speicher zurückzugeben. Rust ruft `drop` automatisch an der
 schließenden geschweiften Klammer auf.
 
 > Hinweis: In C++ wird dieses Muster der Freigabe von Ressourcen am Ende der
-> Lebensdauer eines Elements manchmal als *Ressourcenbelegung ist
-> Initialisierung* (resource acquisition is initialization, RAII) bezeichnet.
+> Lebensdauer eines Elements manchmal als _Ressourcenbelegung ist
+> Initialisierung_ (resource acquisition is initialization, RAII) bezeichnet.
 > Die Funktion `drop` in Rust wird dir vertraut vorkommen, wenn du bereits
 > RAII-Muster verwendet hast.
 
@@ -353,7 +353,7 @@ style="width: 50%;" />
 <span class="caption">Abbildung 4-2: Speicherdarstellung der Variable `s2`, die
 eine Kopie des Zeigers, der Länge und der Kapazität von `s1` hat</span>
 
-Die Darstellung sieht *nicht* wie Abbildung 4-3 aus, so wie der Speicher
+Die Darstellung sieht _nicht_ wie Abbildung 4-3 aus, so wie der Speicher
 aussehen würde, wenn Rust stattdessen auch die Daten im Haldenspeicher
 kopieren würde. Würde Rust dies tun, könnte die Operation `s2 = s1` bei großen
 Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
@@ -369,11 +369,11 @@ style="width: 50%;" />
 kopieren würde</span>
 
 Vorhin sagten wir, dass Rust automatisch die Funktion `drop` aufruft und den
-Haldenspeicher für diese Variable säubert, wenn eine Variable den
+Haldenspeicher für diese Variable aufräumt, wenn eine Variable den
 Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
 auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn `s2` und `s1` den
 Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
-freizugeben. Dies wird als *doppelter Freigabefehler* (double free error)
+freizugeben. Dies wird als _doppelter Freigabefehler_ (double free error)
 bezeichnet und ist einer der Speichersicherheitsfehler, die wir zuvor erwähnt
 haben. Das zweimalige Freigeben des Speichers kann zu einer
 Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.
@@ -417,13 +417,13 @@ For more information about this error, try `rustc --explain E0382`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
-Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe *flache
-Kopie* (shallow copy) und *tiefe Kopie* (deep copy) gehört hast, hört sich das
+Wenn du beim Arbeiten mit anderen Sprachen schon mal die Begriffe _flache
+Kopie_ (shallow copy) und _tiefe Kopie_ (deep copy) gehört hast, hört sich das
 Konzept des Kopierens des Zeigers, der Länge und der Kapazität ohne Kopieren
 der Daten nach einer flachen Kopie an. Aber weil Rust auch die erste Variable
-ungültig macht, wird es nicht als flache Kopie, sondern als *Verschieben*
+ungültig macht, wird es nicht als flache Kopie, sondern als _Verschieben_
 (move) bezeichnet. In diesem Beispiel würden wir sagen, dass `s1` in `s2`
-*verschoben* wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
+_verschoben_ wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
 dargestellt.
 
 <img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Zeichenketten
@@ -442,7 +442,7 @@ sind fertig.
 
 Darüber hinaus gibt es eine Entwurfsentscheidung, die damit impliziert ist:
 Rust wird niemals automatisch „tiefe“ Kopien deiner Daten erstellen. Daher kann
-man davon ausgehen, dass jedes *automatische* Kopieren im Hinblick auf die
+man davon ausgehen, dass jedes _automatische_ Kopieren im Hinblick auf die
 Laufzeitperformanz kostengünstig ist.
 
 #### Gültigkeitsbereich und Zuweisung
@@ -482,7 +482,7 @@ Wenn wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.
 
 #### Variablen und Daten im Zusammenspiel mit Clone
 
-Wenn wir die Daten von `String` im Haldenspeicher *tief* kopieren wollen,
+Wenn wir die Daten von `String` im Haldenspeicher _tief_ kopieren wollen,
 nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
 `clone` verwenden. Wir werden die Methodensyntax in Kapitel 5 besprechen, aber
 da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
@@ -498,7 +498,7 @@ println!("s1 = {s1}, s2 = {s2}");
 ```
 
 Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
-Verhalten, bei dem die Daten im Haldenspeicher *kopiert* werden.
+Verhalten, bei dem die Daten im Haldenspeicher _kopiert_ werden.
 
 Wenn du einen Aufruf von `clone` siehst, weißt du, dass irgendein beliebiger
 Code ausgeführt wird und dass dieser Code teuer sein könnte. Es ist ein
@@ -551,11 +551,11 @@ Jede Gruppierung von einfachen skalaren Werten unterstützt `Copy`, und nichts,
 was eine Allokation erfordert oder irgendeine Form von Ressource ist, kann
 `Copy` implementieren. Hier sind einige Typen, die `Copy` unterstützen:
 
-* Alle ganzzahligen Typen, z.B. `u32`.
-* Der boolesche Typ `bool` mit den Werten `true` und `false`.
-* Alle Fließkomma-Typen, z.B. `f64`.
-* Der Zeichentyp `char`.
-* Tupel, wenn sie nur Typen enthalten, die auch `Copy` unterstützen. Zum
+- Alle ganzzahligen Typen, z.B. `u32`.
+- Der boolesche Typ `bool` mit den Werten `true` und `false`.
+- Alle Fließkomma-Typen, z.B. `f64`.
+- Der Zeichentyp `char`.
+- Tupel, wenn sie nur Typen enthalten, die auch `Copy` unterstützen. Zum
   Beispiel unterstützt `(i32, i32)` `Copy`, nicht aber `(i32, String)`.
 
 ### Eigentümerschaft und Funktionen
@@ -692,7 +692,7 @@ Parametern</span>
 Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
 gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
 einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
-*Referenzen* (references).
+_Referenzen_ (references).
 
 [ch8]: ch08-02-strings.html
 [data-types]: ch03-02-data-types.html
