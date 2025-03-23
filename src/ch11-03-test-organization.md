@@ -3,9 +3,9 @@
 Wie zu Beginn des Kapitels erwähnt, ist das Testen eine komplexe Disziplin, und
 verschiedene Personen verwenden unterschiedliche Terminologien und
 Organisationen. Die Rust-Gemeinschaft teilt Tests in zwei Hauptkategorien ein:
-Modultests und Integrationstests. *Modultests* (unit tests) sind klein und
+Modultests und Integrationstests. _Modultests_ (unit tests) sind klein und
 zielgerichteter, testen jeweils ein Modul isoliert und können private
-Schnittstellen testen. *Integrationstests* (integration tests) sind völlig
+Schnittstellen testen. _Integrationstests_ (integration tests) sind völlig
 außerhalb deiner Bibliothek und verwenden deinen Code auf die gleiche Weise wie
 jeder andere externe Code, wobei nur die öffentliche Schnittstelle verwendet
 wird und möglicherweise mehrere Module pro Test ausgeführt werden.
@@ -18,7 +18,7 @@ erwartest.
 
 Der Zweck von Modultests besteht darin, jede Code-Einheit isoliert vom Rest des
 Codes zu testen, um schnell herauszufinden, welcher Code wie erwartet
-funktioniert und welcher nicht. Modultests befinden sich im Verzeichnis *src*
+funktioniert und welcher nicht. Modultests befinden sich im Verzeichnis _src_
 in den Quellcodedateien, den sie testen. Die Konvention besteht darin, in jeder
 Datei ein Modul namens `tests` zu erstellen, das die Testfunktionen enthält,
 und das Modul mit `cfg(test)` zu annotieren.
@@ -58,7 +58,7 @@ mod tests {
 ```
 
 Im automatisch generierten Modul `tests` steht das Attribut `cfg` für
-*Konfiguration* und teilt Rust mit, dass das folgende Element nur bei einer
+_Konfiguration_ und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
 Konfigurationsoption `test`, die von Rust beim Kompilieren und Ausführen von
 Tests verwendet wird. Durch das Verwenden des Attributs `cfg` kompiliert Cargo
@@ -102,7 +102,7 @@ mod tests {
 
 Beachte, dass die Funktion `internal_adder` nicht mit `pub` markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul `tests` ist nur ein weiteres Modul.
-Wie im Abschnitt [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths]
+Wie in [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths]
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
 `tests` mit `use super::*` in den Gültigkeitsbereich, und dann kann der Test
@@ -120,19 +120,19 @@ testen, ob viele Teile deiner Bibliothek korrekt zusammenarbeiten.
 Code-Einheiten, die alleine korrekt funktionieren, könnten Probleme nach deren
 Integration haben, daher ist auch die Testabdeckung des integrierten Codes
 wichtig. Um Integrationstests zu erstellen, benötigst du zunächst ein
-Verzeichnis *tests*.
+Verzeichnis _tests_.
 
-#### Das Verzeichnis *tests*
+#### Das Verzeichnis _tests_
 
-Wir erstellen ein Verzeichnis *tests* auf der obersten Ebene unseres
-Projektverzeichnisses, neben *src*. Cargo weiß, dass es in diesem Verzeichnis
+Wir erstellen ein Verzeichnis _tests_ auf der obersten Ebene unseres
+Projektverzeichnisses, neben _src_. Cargo weiß, dass es in diesem Verzeichnis
 nach Integrationstestdateien suchen soll. Wir können dann so viele Testdateien
 erstellen, wie wir wollen, und Cargo wird jede dieser Dateien als eine
 individuelle Kiste (crate) kompilieren.
 
 Lass uns einen Integrationstest erstellen. Wenn sich der Code in Codeblock
-11-12 noch in der Datei *src/lib.rs* befindet, erstelle ein Verzeichnis
-*tests* und eine neue Datei mit dem Namen *tests/integration_test.rs*. Deine
+11-12 noch in der Datei _src/lib.rs_ befindet, erstelle ein Verzeichnis
+_tests_ und eine neue Datei mit dem Namen _tests/integration_test.rs_. Deine
 Verzeichnisstruktur sollte folgendermaßen aussehen:
 
 ```text
@@ -145,7 +145,7 @@ adder
     └── integration_test.rs
 ```
 
-Gib den Code in Codeblock 11-13 in die Datei *tests/integration_test.rs* ein.
+Gib den Code in Codeblock 11-13 in die Datei _tests/integration_test.rs_ ein.
 
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
@@ -167,7 +167,7 @@ unsere Bibliothek in den Gültigkeitsbereich jeder Test-Kiste bringen. Aus
 diesem Grund fügen wir `use adder::add_two;` am Anfang des Codes hinzu, was wir
 in den Modultests nicht brauchten.
 
-Wir brauchen den Code in *tests/integration_test.rs* nicht mit `#[cfg(test)]`
+Wir brauchen den Code in _tests/integration_test.rs_ nicht mit `#[cfg(test)]`
 zu annotieren. Cargo behandelt das Verzeichnis `tests` speziell und kompiliert
 Dateien in diesem Verzeichnis nur dann, wenn wir `cargo test` ausführen. Führe
 `cargo test` jetzt aus:
@@ -215,7 +215,7 @@ in diesem Integrationstest und eine Zusammenfassung für die Ergebnisse des
 Integrationstests, kurz bevor der Abschnitt `Doc-tests adder` beginnt.
 
 Jede Integrationstestdatei hat ihren eigenen Abschnitt, wenn wir also weitere
-Dateien im Verzeichnis *tests* hinzufügen, wird es mehr
+Dateien im Verzeichnis _tests_ hinzufügen, wird es mehr
 Integrationstest-Abschnitte geben.
 
 Wir können immer noch eine bestimmte Integrationstestfunktion ausführen, indem
@@ -235,31 +235,30 @@ test it_adds_two ... ok
 test result: ok. 1 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Dieses Kommando führt nur die Tests in der Datei *tests/integration_test.rs*
+Dieses Kommando führt nur die Tests in der Datei _tests/integration_test.rs_
 aus.
 
 #### Untermodule in Integrationstests
 
 Wenn du weitere Integrationstests hinzufügst, möchtest du vielleicht mehr als
-eine Datei im Verzeichnis *tests* erstellen, um sie besser organisieren zu
+eine Datei im Verzeichnis _tests_ erstellen, um sie besser organisieren zu
 können; beispielsweise kannst du die Testfunktionen nach der Funktionalität
 gruppieren, die sie testen. Wie bereits erwähnt, wird jede Datei im Verzeichnis
-*tests* als eigene Kiste kompiliert, was nützlich ist, um getrennte Bereiche zu
+_tests_ als eigene Kiste kompiliert, was nützlich ist, um getrennte Bereiche zu
 erstellen, um die Art und Weise, wie die Endbenutzer deine Kiste verwenden
 werden, besser zu imitieren. Das bedeutet jedoch, dass Dateien im Verzeichnis
-*tests* nicht dasselbe Verhalten aufweisen wie Dateien im Verzeichnis *src*,
+_tests_ nicht dasselbe Verhalten aufweisen wie Dateien im Verzeichnis _src_,
 wie du in Kapitel 7 über die Trennung von Code in Module und Dateien gelernt
 hast.
 
-Das unterschiedliche Verhalten von Dateien im Verzeichnis *tests* ist am
+Das unterschiedliche Verhalten von Dateien im Verzeichnis _tests_ ist am
 deutlichsten, wenn du eine Reihe Hilfsfunktionen hast, die bei mehreren
-Integrationstestdateien verwendest, und du versuchst, die Schritte im
-Abschnitt [„Module in verschiedene Dateien
-aufteilen“][separating-modules-into-files] in Kapitel 7 zu befolgen, um sie in
-ein gemeinsames Modul zu extrahieren. Wenn wir zum Beispiel *tests/common.rs*
-erstellen und eine Funktion namens `setup` darin platzieren, können wir `setup`
-etwas Code hinzufügen, den wir von mehreren Testfunktionen in mehreren
-Testdateien aufrufen wollen:
+Integrationstestdateien verwendest, und du versuchst, die Schritte in [„Module
+in verschiedene Dateien aufteilen“][separating-modules-into-files] in Kapitel 7
+zu befolgen, um sie in ein gemeinsames Modul zu extrahieren. Wenn wir zum
+Beispiel _tests/common.rs_ erstellen und eine Funktion namens `setup` darin
+platzieren, können wir `setup` etwas Code hinzufügen, den wir von mehreren
+Testfunktionen in mehreren Testdateien aufrufen wollen:
 
 <span class="filename">Dateiname: tests/common.rs</span>
 
@@ -269,7 +268,7 @@ pub fn setup() {
 }
 ```
 
-Wenn wir die Tests erneut ausführen, werden wir für die Datei *common.rs* einen
+Wenn wir die Tests erneut ausführen, werden wir für die Datei _common.rs_ einen
 neuen Abschnitt in der Testausgabe sehen, obwohl diese Datei keine
 Testfunktionen enthält und wir die Funktion `setup` nicht von irgendwo
 aufgerufen haben:
@@ -308,8 +307,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 Dass in den Testergebnissen `common` erscheint und dabei `running 0 tests`
 angezeigt wird, ist nicht das, was wir wollten. Wir wollten nur etwas Code mit
 den anderen Integrationstestdateien teilen. Um zu vermeiden, dass `common` in
-der Testausgabe erscheint, werden wir statt *tests/common.rs* die Datei
-*tests/common/mod.rs* erstellen. Das Projektverzeichnis sieht nun wie folgt
+der Testausgabe erscheint, werden wir statt _tests/common.rs_ die Datei
+_tests/common/mod.rs_ erstellen. Das Projektverzeichnis sieht nun wie folgt
 aus:
 
 ```text
@@ -323,19 +322,19 @@ aus:
     └── integration_test.rs
 ```
 
-Dies ist die ältere Namenskonvention, die auch Rust versteht, die wir im
-Abschnitt [„Alternative Dateipfade“][alt-paths] in Kapitel 7 erwähnt haben.
-Durch diese Benennung der Datei wird Rust angewiesen, das Modul `common` nicht
-als Integrationstestdatei zu behandeln. Wenn wir den Funktionscode `setup` in
-*tests/common/mod.rs* verschieben und die Datei *tests/common.rs* löschen,
+Dies ist die ältere Namenskonvention, die auch Rust versteht, die wir in
+[„Alternative Dateipfade“][alt-paths] in Kapitel 7 erwähnt haben. Durch diese
+Benennung der Datei wird Rust angewiesen, das Modul `common` nicht als
+Integrationstestdatei zu behandeln. Wenn wir den Funktionscode `setup` in
+_tests/common/mod.rs_ verschieben und die Datei _tests/common.rs_ löschen,
 erscheint der Abschnitt in der Testausgabe nicht mehr. Dateien in
-Unterverzeichnissen des Verzeichnisses *tests* werden nicht als separate Kisten
+Unterverzeichnissen des Verzeichnisses _tests_ werden nicht als separate Kisten
 kompiliert und erzeugen keine Abschnitte in der Testausgabe.
 
-Nachdem wir *tests/common/mod.rs* erstellt haben, können wir es von jeder der
+Nachdem wir _tests/common/mod.rs_ erstellt haben, können wir es von jeder der
 Integrationstestdateien als Modul verwenden. Hier ist ein Beispiel für den
 Aufruf der Funktion `setup` aus dem Test `it_adds_two` in
-*tests/integration_test.rs*:
+_tests/integration_test.rs_:
 
 <span class="filename">Dateiname: tests/integration_test.rs</span>
 
@@ -359,20 +358,20 @@ können wir dann die Funktion `common::setup()` aufrufen.
 
 #### Integrationstests für binäre Kisten
 
-Wenn unser Projekt eine binäre Kiste ist, die nur eine Datei *src/main.rs*
-enthält und keine Datei *src/lib.rs*, können wir keine Integrationstests im
-*tests*-Verzeichnis erstellen und Funktionen, die in der *src/main.rs*-Datei
+Wenn unser Projekt eine binäre Kiste ist, die nur eine Datei _src/main.rs_
+enthält und keine Datei _src/lib.rs_, können wir keine Integrationstests im
+_tests_-Verzeichnis erstellen und Funktionen, die in der _src/main.rs_-Datei
 definiert sind, mit einer `use`-Anweisung in den Gültigkeitsbereich bringen.
 Nur Bibliothekskisten stellen Funktionen zur Verfügung, die auch von anderen
 Kisten verwendet werden können; binäre Kisten sind für den eigenständigen
 Betrieb gedacht.
 
 Dies ist einer der Gründe, warum Rust-Projekte, die eine Binärdatei
-bereitstellen, eine einfache *src/main.rs*-Datei haben, die Logik aufruft, die
-in der *src/lib.rs*-Datei lebt. Unter Verwendung dieser Struktur können
+bereitstellen, eine einfache _src/main.rs_-Datei haben, die Logik aufruft, die
+in der _src/lib.rs_-Datei lebt. Unter Verwendung dieser Struktur können
 Integrationstests die Bibliothekskiste mit `use` testen, um wichtige
 Funktionalität verfügbar zu machen. Wenn die Hauptfunktionalität korrekt ist,
-funktionieren auch die kleinen Codestücke in der Datei *src/main.rs*, und diese
+funktionieren auch die kleinen Codestücke in der Datei _src/main.rs_, und diese
 kleinen Codestücke müssen nicht getestet werden.
 
 ## Zusammenfassung

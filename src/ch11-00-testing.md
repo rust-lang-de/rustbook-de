@@ -19,7 +19,7 @@ eine ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück.
 Wenn wir diese Funktion implementieren und kompilieren, führt Rust die gesamte
 Typ- und Ausleihenprüfung durch, die du bisher kennengelernt hast, um
 sicherzustellen, dass wir z.B. keinen `String`-Wert oder eine ungültige
-Referenz an diese Funktion übergeben. Aber Rust kann *nicht* überprüfen, ob
+Referenz an diese Funktion übergeben. Aber Rust kann _nicht_ überprüfen, ob
 diese Funktion genau das tut, was wir beabsichtigen, nämlich den Parameter plus
 2 zurückzugeben und nicht etwa den Parameter plus 10 oder den Parameter minus
 50! Hier kommen Tests ins Spiel.
