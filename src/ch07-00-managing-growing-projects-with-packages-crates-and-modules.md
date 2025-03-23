@@ -14,7 +14,7 @@ kann mehrere Binär-Kisten (binary crates) und optional eine Bibliotheks-Kiste
 Kisten extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel
 behandelt all diese Techniken. Für sehr große Projekte aus einer Reihe von
 zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
-*Arbeitsbereiche* zur Verfügung, die wir im Abschnitt
+_Arbeitsbereiche_ zur Verfügung, die wir in
 [„Cargo-Arbeitsbereiche“][workspaces] in Kapitel 14 behandeln werden.
 
 Wir werden auch die Kapselung von Implementierungsdetails besprechen, wodurch
@@ -43,15 +43,15 @@ Rust verfügt über eine Reihe von Funktionalitäten, mit denen du die
 Organisation deines Codes verwalten kannst, z.B. welche Details offengelegt
 werden, welche Details privat sind und welche Namen im jeweiligen
 Gültigkeitsbereich deines Programms sind. Zu diesen Funktionalitäten, die
-manchmal kollektiv als *Modulsystem* bezeichnet werden, gehören:
+manchmal kollektiv als _Modulsystem_ bezeichnet werden, gehören:
 
-* **Pakete (packages):** Eine Cargo-Funktionalität, mit der du Kisten bauen,
+- **Pakete (packages):** Eine Cargo-Funktionalität, mit der du Kisten bauen,
   testen und gemeinsam nutzen kannst.
-* **Kisten (crates):** Ein Baum von Modulen, der eine Bibliothek oder ein
+- **Kisten (crates):** Ein Baum von Modulen, der eine Bibliothek oder ein
   ausführbares Programm erzeugt.
-* **Module** und **`use`**: Ermöglicht dir, die Organisation, den
+- **Module** und **`use`**: Ermöglicht dir, die Organisation, den
   Gültigkeitsbereich und den Datenschutz von Pfaden zu steuern.
-* **Pfade:** Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
+- **Pfade:** Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
   eine Funktion oder ein Modul.
 
 In diesem Kapitel gehen wir auf all diese Funktionalitäten ein, besprechen, wie

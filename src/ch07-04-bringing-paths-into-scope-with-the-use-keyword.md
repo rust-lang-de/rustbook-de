@@ -199,7 +199,7 @@ Gültigkeitsbereich und Rust wüsste nicht, welchen wir beim Verwenden von
 
 Es gibt eine andere Lösung für das Problem, zwei Typen desselben Namens mit
 `use` in den gleichen Gültigkeitsbereich zu bringen: Hinter dem Pfad können wir
-`as` und einen neuen lokalen Namen oder *Alias* für den Typ angeben. Codeblock
+`as` und einen neuen lokalen Namen oder _Alias_ für den Typ angeben. Codeblock
 7-16 zeigt eine weitere Möglichkeit, den Code in Codeblock 7-15 zu schreiben,
 indem einer der beiden `Result`-Typen mittels `as` umbenannt wird.
 
@@ -231,12 +231,13 @@ und Codeblock 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!
 ### Rück-Exportieren von Namen mit `pub use`
 
 Wenn wir einen Namen mit dem Schlüsselwort `use` in den Gültigkeitsbereich
-bringen, ist der im neuen Gültigkeitsbereich verfügbare Name privat. Damit der
-Code, der unseren Code aufruft, auf diesen Namen verweisen kann, als wäre er im
-Gültigkeitsbereich dieses Codes definiert worden, können wir `pub` und `use`
-kombinieren. Diese Technik wird *Rück-Exportieren* (re-exporting) genannt, weil
-wir ein Element in den Gültigkeitsbereich bringen, dieses Element aber auch
-anderen zur Verfügung stellen, um es in ihren Gültigkeitsbereich zu bringen.
+bringen, ist der Name privat für den Gültigkeitsbereich, in den wir ihn
+importiert haben. Damit der Code, der unseren Code aufruft, auf diesen Namen
+verweisen kann, als wäre er im Gültigkeitsbereich dieses Codes definiert
+worden, können wir `pub` und `use` kombinieren. Diese Technik wird
+_Rück-Exportieren_ (re-exporting) genannt, weil wir ein Element in den
+Gültigkeitsbereich bringen, dieses Element aber auch anderen zur Verfügung
+stellen, um es in ihren Gültigkeitsbereich zu bringen.
 
 Codeblock 7-17 zeigt den Code in Codeblock 7-11, wobei `use` im Wurzelmodul in
 `pub use` geändert wurde.
@@ -276,14 +277,14 @@ Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
 Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
 Beispiel für `pub use` und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir im Abschnitt [„Mit `pub use` eine benutzerfreundliche
-öffentliche API exportieren“][ch14-pub-use] in Kapitel 14 betrachten.
+auswirkt, werden wir in [„Mit `pub use` eine benutzerfreundliche öffentliche
+API exportieren“][ch14-pub-use] in Kapitel 14 betrachten.
 
 ### Verwenden externer Pakete
 
 In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens `rand` benutzte, um Zufallszahlen zu generieren. Um `rand` in unserem
-Projekt zu verwenden, fügten wir diese Zeile zu *Cargo.toml* hinzu:
+Projekt zu verwenden, fügten wir diese Zeile zu _Cargo.toml_ hinzu:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -291,15 +292,15 @@ Projekt zu verwenden, fügten wir diese Zeile zu *Cargo.toml* hinzu:
 rand = "0.8.5"
 ```
 
-Das Hinzufügen von `rand` als Abhängigkeit in *Cargo.toml* weist Cargo an, das
+Das Hinzufügen von `rand` als Abhängigkeit in _Cargo.toml_ weist Cargo an, das
 Paket `rand` und alle Abhängigkeiten von [crates.io](https://crates.io/)
 herunterzuladen und `rand` für unser Projekt verfügbar zu machen.
 
 Um dann Definitionen von `rand` in den Gültigkeitsbereich unseres Pakets
 aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem
 Kistennamen `rand` beginnt und die Elemente auflistet, die wir in den
-Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir im Abschnitt
-[„Generieren einer Geheimzahl“][rand] in Kapitel 2 das Merkmal `Rng` in den
+Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir in [„Generieren
+einer Geheimzahl“][rand] in Kapitel 2 das Merkmal `Rng` in den
 Gültigkeitsbereich gebracht und die Funktion `rand::thread_rng` aufgerufen
 haben:
 
@@ -329,12 +330,12 @@ fn main() {
 Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 [crates.io](https://crates.io/) zur Verfügung gestellt und wenn du eines davon
 in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie
-in der Datei *Cargo.toml* deines Pakets auf und verwende `use`, um Elemente aus
+in der Datei _Cargo.toml_ deines Pakets auf und verwende `use`, um Elemente aus
 ihren Kisten in den Gültigkeitsbereich zu bringen.
 
 Beachte, dass die Standardbibliothek `std` ebenfalls eine Kiste ist, die nicht
 zu unserem Paket gehört. Da die Standardbibliothek mit der Sprache Rust
-ausgeliefert wird, brauchen wir *Cargo.toml* nicht zu ändern, um `std`
+ausgeliefert wird, brauchen wir _Cargo.toml_ nicht zu ändern, um `std`
 einzubinden. Aber wir müssen `use` verwenden, um Elemente von dort in den
 Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 `HashMap` diese Zeile verwenden:
@@ -419,7 +420,7 @@ Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.
 
 ### Der Stern-Operator (glob)
 
-Wenn wir *alle* öffentlichen Elemente, die in einem Pfad definiert sind, in den
+Wenn wir _alle_ öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator `*` angeben:
 
@@ -434,7 +435,7 @@ zu erkennen, welche Namen in den Gültigkeitsbereich fallen und wo ein in deinem
 Programm verwendeter Name definiert wurde.
 
 Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
-in das Modul `tests` zu bringen. Wir werden darüber im Abschnitt [„Tests
+in das Modul `tests` zu bringen. Wir werden darüber in [„Tests
 schreiben“][writing-tests] in Kapitel 11 sprechen. Der Stern-Operator wird
 manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
 [Standardbibliotheksdokumentation][std-lib-preludes] für weitere Informationen
