@@ -1,6 +1,6 @@
 ## `RefCell<T>` und das innere Veränderbarkeitsmuster
 
-*Innere Veränderbarkeit* (interior mutability) ist ein Entwurfsmuster in Rust,
+_Innere Veränderbarkeit_ (interior mutability) ist ein Entwurfsmuster in Rust,
 mit dem man Daten auch dann verändern kann, wenn unveränderbare Referenzen auf
 diese Daten vorhanden sind. Normalerweise ist diese Aktion nach den
 Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
@@ -26,12 +26,12 @@ einzige Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unte
 `RefCell<T>` von einem Typ wie `Box<T>`? Erinnere dich an die Ausleihregeln die
 wir im Kapitel 4 gelernt haben:
 
-* Zu jeder Zeit kann man *entweder* eine veränderbare Referenz oder eine
+- Zu jeder Zeit kann man _entweder_ eine veränderbare Referenz oder eine
   beliebige Anzahl unveränderbarer Referenzen haben (nicht aber beides).
-* Referenzen müssen immer gültig sein.
+- Referenzen müssen immer gültig sein.
 
 Mit Referenzen und `Box<T>` werden die Invarianten der Ausleihregeln beim
-Kompilieren erzwungen. Mit `RefCell<T>` werden diese Invarianten *zur Laufzeit*
+Kompilieren erzwungen. Mit `RefCell<T>` werden diese Invarianten _zur Laufzeit_
 erzwungen. Wenn man mit Referenzen gegen diese Regeln verstößt wird beim
 Kompilieren ein Fehler angezeigt. Wenn man mit `RefCell<T>` gegen diese Regeln
 verstößt, wird das Programm mit `panic` beendet.
@@ -70,19 +70,19 @@ von `RefCell<T>` in einem mehrsträngigen Programm erhält.
 Eine Zusammenfassung der Gründe für die Wahl von `Box<T>`, `Rc<T>` oder
 `RefCell<T>`:
 
-* `Rc<T>` erlaubt mehrere Eigentümer derselben Daten. Mit `Box<T>` und
+- `Rc<T>` erlaubt mehrere Eigentümer derselben Daten. Mit `Box<T>` und
   `RefCell<T>` haben Daten nur einen Eigentümer.
-* `Box<T>` ermöglicht unveränderbares oder veränderbares Ausleihen, das zur
+- `Box<T>` ermöglicht unveränderbares oder veränderbares Ausleihen, das zur
   Kompilierzeit überprüft wird. `Rc<T>` erlaubt nur unveränderbares
   Ausleihen, das zur Kompilierzeit geprüft wird und `RefCell<T>`
   erlaubt unveränderbares oder veränderbares Ausleihen, das zur Laufzeit
   überprüft wird.
-* Da `RefCell<T>` zur Laufzeit überprüfbares veränderbares Ausleihen zulässt,
+- Da `RefCell<T>` zur Laufzeit überprüfbares veränderbares Ausleihen zulässt,
   kann man den Wert innerhalb von `RefCell<T>` auch dann ändern, wenn
   `RefCell<T>` unveränderbar ist.
 
-Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das *innere
-Veränderbarkeitsmuster*. Schauen wir uns eine Situation an, in der innere
+Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das _innere
+Veränderbarkeitsmuster_. Schauen wir uns eine Situation an, in der innere
 Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.
 
 ### Innere Veränderbarkeit: Das veränderbare Ausleihen eines unveränderbaren Wertes
@@ -137,11 +137,11 @@ warum dies nützlich ist.
 
 Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
 anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
-es korrekt implementiert ist. Dieser Platzhaltertyp wird *Testdoppel* (test
+es korrekt implementiert ist. Dieser Platzhaltertyp wird _Testdoppel_ (test
 double) genannt. Stell dir das so vor wie ein „Stunt-Double“ beim Film, bei dem
 eine Person einspringt und einen Schauspieler in einer besonders schwierigen
 Szene ersetzt. Testdoppel stehen für andere Typen ein, wenn wir Tests
-durchführen. *Mock-Objekte* sind bestimmte Arten von Testdoppeln, die
+durchführen. _Mock-Objekte_ sind bestimmte Arten von Testdoppeln, die
 aufzeichnen, was während eines Tests passiert, damit man bestätigen kann, dass
 die richtigen Aktionen ausgeführt wurden.
 
@@ -161,10 +161,10 @@ am Maximum liegt und wie die Nachrichten zu welchen Zeiten sein sollten.
 Von Anwendungen, die unsere Bibliothek verwenden wird erwartet, dass sie den
 Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung könnte eine
 Nachricht in der Anwendung anlegen, eine E-Mail senden, eine Textnachricht
-senden oder etwas anderes. Die Bibliothek muss dieses Detail nicht kennen.
-Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes Merkmal
-(trait) namens `Messenger` implementiert. Codeblock 15-20 zeigt den
-Bibliothekscode:
+senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
+kennen. Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes
+Merkmal (trait) namens `Messenger` implementiert. Codeblock 15-20 zeigt den
+Bibliothekscode.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -233,7 +233,7 @@ einen `LimitTracker` erstellen, der das Mock-Objekt verwendet, die
 `set_value`-Methode für `LimitTracker` aufrufen und dann überprüfen, ob das
 Mock-Objekt die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den
 Versuch, ein Mock-Objekt zu implementieren, um genau das zu tun, aber der
-Ausleihenprüfer erlaubt dies nicht:
+Ausleihenprüfer erlaubt dies nicht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -329,8 +329,8 @@ Im Test testen wir, was passiert, wenn dem `LimitTracker` gesagt wird, er solle
 Zuerst erstellen wir einen neuen `MockMessenger`, der mit einer leeren
 Nachrichtenliste beginnt. Dann erstellen wir einen neuen `LimitTracker` und
 geben ihm eine Referenz auf den neuen `MockMessenger` und einen `max`-Wert von
-100. Wir rufen die Methode `set_value` auf `LimitTracker` mit dem Wert 80 auf,
-was mehr als 75 Prozent von 100 ist. Dann stellen wir sicher, dass die
+`100`. Wir rufen die Methode `set_value` auf `LimitTracker` mit dem Wert `80`
+auf, was mehr als 75 Prozent von 100 ist. Dann stellen wir sicher, dass die
 Nachrichtenliste, die der `MockMessenger` verwaltet, nun eine einzige Nachricht
 enthalten sollte.
 
@@ -360,15 +360,16 @@ error: could not compile `limit-tracker` (lib test) due to 1 previous error
 
 Wir können `MockMessenger` nicht so ändern, um die Nachrichten zu verfolgen, da
 die `send`-Methode eine unveränderbare Referenz auf `self` verwendet. Wir
-können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen 
-`&mut self` zu verwenden, da die Signatur von `send` nicht mit der Signatur in 
-der Merkmalsdefinition von `Messenger` übereinstimmt (probiere es gerne aus und
-schau dir die Fehlermeldung an, die dabei ausgegeben wird).
+können auch nicht den Vorschlag aus dem Fehlertext übernehmen, `&mut self`
+sowohl in der `impl`-Methode als auch in der `Trait`-Definition zu verwenden.
+Wir wollen das Merkmal `Messenger` nicht nur um des Testens willen ändern.
+Stattdessen müssen wir einen Weg finden, damit unser Testcode mit unserem
+bestehenden Design korrekt funktioniert.
 
 Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die `send_messages` in einer `RefCell<T>` und dann kann die
 `send`-Methode `sent_messages` ändern, um Nachrichten zu speichern, die wir
-gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:
+gesehen haben. Codeblock 15-22 zeigt, wie das aussieht.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -482,13 +483,13 @@ Methode `borrow` gibt den intelligenten Zeigertyp `Ref<T>` zurück und
 implementieren `Deref`, sodass wir sie wie reguläre Referenzen behandeln
 können.
 
-Der `RefCell<T>` verfolgt, wie viele intelligente Zeiger `Ref<T>` und `RefMut<T>`
-derzeit aktiv sind. Jedes Mal, wenn wir `borrow` aufrufen, erhöht `RefCell<T>`
-die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein `Ref<T>`-Wert
-außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl der unveränderbaren
-Ausleihen um eins. Genau wie bei den Ausleihregeln zur Kompilierzeit können
-wir mit `RefCell<T>` zu jedem Zeitpunkt viele unveränderbare Ausleihen oder eine
-veränderbare Ausleihe haben.
+Der `RefCell<T>` verfolgt, wie viele intelligente Zeiger `Ref<T>` und
+`RefMut<T>` derzeit aktiv sind. Jedes Mal, wenn wir `borrow` aufrufen, erhöht
+`RefCell<T>` die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein
+`Ref<T>`-Wert außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl
+der unveränderbaren Ausleihen um eins. Genau wie bei den Ausleihregeln zur
+Kompilierzeit können wir mit `RefCell<T>` zu jedem Zeitpunkt viele
+unveränderbare Ausleihen oder eine veränderbare Ausleihe haben.
 
 Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von
@@ -630,13 +631,13 @@ verwendet, in dem nur unveränderbare Werte zulässig sind. Man kann
 `RefCell<T>` trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.
 
-### Mehrere Eigentümer veränderbarer Daten durch Kombinieren von `Rc<T>` und `RefCell<T>`
+### Mehrere Eigentümer veränderbarer Daten mit `Rc<T>` und `RefCell<T>` erlauben
 
 Eine übliche Methode zur Verwendung von `RefCell<T>` ist die Kombination mit
 `Rc<T>`. Erinnere dich, dass man mit `Rc<T>` mehrere Eigentümer einiger Daten
 haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
 man eine `Rc<T>` hat, das eine `RefCell<T>` enthält, kann man einen Wert
-erhalten, der mehrere Eigentümer hat *und* veränderbar ist!
+erhalten, der mehrere Eigentümer hat _und_ veränderbar ist!
 
 Erinnern wir uns beispielsweise an das Beispiel für die Cons-Liste in Codeblock
 15-18, in dem wir `Rc<T>` verwendet haben, um mehrere Listen die gemeinsame
@@ -690,15 +691,15 @@ Wir wickeln die Liste `a` in ein `Rc<T>` ein. Wenn wir also die Listen `b` und
 haben.
 
 Nachdem wir die Listen `a`, `b` und `c` erstellt haben, wollen wir 10 zum Wert
-in `value` addieren. Dazu rufen wir `borrow_mut` für `value` auf, wobei die in
-Kapitel 5 beschriebene automatische Dereferenzierung verwendet wird (siehe
-Abschnitt [„Wo ist der Operator `->`?“][wheres-the-operator]), um den `Rc<T>`
-auf den inneren `RefCell<T>`-Wert zu dereferenzieren. Die Methode `borrow_mut`
-gibt einen intelligenten Zeiger `RefMut<T>` zurück, und wir verwenden den
+in `value` addieren. Dazu rufen wir `borrow_mut` für `value` auf, die die
+automatische Dereferenzierung verwendet, die wir in [„Wo ist der Operator
+`->`?“][wheres-the-operator] besprochen haben, um `Rc<T>` auf den inneren
+`RefCell<T>`-Wert zu dereferenzieren. Die Methode `borrow_mut` gibt einen
+intelligenten Zeiger `RefMut<T>` zurück, und wir verwenden den
 Dereferenzierungsoperator darauf und ändern den inneren Wert.
 
 Wenn wir `a`, `b` und `c` ausgeben, können wir sehen, dass sie alle den
-veränderten Wert 15 anstelle von 5 haben:
+veränderten Wert `15` anstelle von `5` haben:
 
 ```console
 $ cargo run

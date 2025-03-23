@@ -15,7 +15,7 @@ den die Box zeigt.
 In einigen Programmiersprachen muss der Programmierer für manche Datentypen
 den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
 Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
-Sockets oder Sperren. Wenn er das vergisst, kann das System überlastet werden
+Sockets und Sperren. Wenn er das vergisst, kann das System überlastet werden
 und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
 ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
 Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
@@ -31,7 +31,7 @@ aufruft, implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 Codeblock 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige 
 benutzerdefinierte Funktionalität darin besteht, dass `Lösche
 CustomSmartPointer!` ausgegeben wird, wenn die Instanz den Gültigkeitsbereich
-verlässt, um zu zeigen, wann Rust die `drop`-Funktion ausführt.
+verlässt, um zu zeigen, wann Rust die `drop`-Methode ausführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -63,7 +63,7 @@ Aufräumen platzieren würden</span>
 Das Merkmal `Drop` ist im Präludium (prelude) enthalten, daher müssen wir es
 nicht in den Gültigkeitsbereich bringen. Wir implementieren das Merkmal `Drop`
 in `CustomSmartPointer` und stellen eine Implementierung für die Methode `drop`
-bereit, die `println!` aufruft. Im Hauptteil der `drop`-Funktion kannst du jede
+bereit, die `println!` aufruft. Im Hauptteil der `drop`-Methode kannst du jede
 Logik platzieren, die du ausführen möchtest, wenn eine Instanz deines Typs
 ihren Gültigkeitsbereich verlässt. Wir geben hier einen Text aus, um visuell zu
 zeigen, wann Rust `drop` aufruft.
@@ -94,8 +94,6 @@ Anleitung zur Funktionsweise der `drop`-Methode zu geben. Normalerweise
 schreibst du den Aufräumcode, den dein Typ ausführen muss, anstatt einen Text
 auszugeben.
 
-### Einen Wert mit `std::mem::drop` frühzeitig aufräumen
-
 Unglücklicherweise ist es nicht einfach, die automatische `drop`-Funktionalität
 zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des `Drop`-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
@@ -110,7 +108,7 @@ Ende seines ültigkeitsbereich erzwingen möchte.
 
 Wenn wir versuchen die `drop`-Methode des `Drop`-Merkmals manuell aufzurufen,
 indem wir die `main`-Funktion aus Codeblock 15-14 ändern, wie im Codeblock
-15-15, gezeigt, erhalten wir folgenden Fehler beim Kompilieren:
+15-15, gezeigt, erhalten wir folgenden Fehler beim Kompilieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -160,15 +158,15 @@ error: could not compile `drop-example` (bin "drop-example") due to 1 previous e
 ```
 
 Diese Fehlermeldung besagt, dass wir `drop` nicht explizit aufrufen dürfen. Die
-Fehlermeldung verwendet den Begriff *Destruktor* (destructor), der der
+Fehlermeldung verwendet den Begriff _Destruktor_ (destructor), der der
 allgemeine Programmierbegriff für eine Funktion ist, die eine Instanz
-aufräumt. Ein *Destruktor* ist analog zu einem *Konstruktor* (constructor),
+aufräumt. Ein _Destruktor_ ist analog zu einem _Konstruktor_ (constructor),
 der eine Instanz erstellt. Die `drop`-Funktion in Rust ist ein bestimmter
-*Destruktor*.
+_Destruktor_.
 
 Rust lässt uns `drop` nicht explizit aufrufen, da Rust immer noch automatisch
 für den Wert am Ende von `main` `drop` aufruft. Dies würde einen
-*Doppel-Freigabe-Fehler* (double free error) verursachen, da Rust versuchen
+_Doppel-Freigabe-Fehler_ (double free error) verursachen, da Rust versuchen
 würde, den gleichen Wert zweimal aufzuräumen.
 
 Wir können das automatische Einfügen von `drop` nicht deaktivieren, wenn ein
@@ -180,7 +178,7 @@ Die Funktion `std::mem::drop` unterscheidet sich von der Methode `drop` im
 Merkmal `Drop`. Wir rufen sie auf, indem wir den Wert, dessen vorzeitiges
 Aufräumen wir erzwingen möchten, der Funktion als Argument mitgeben. Die
 Funktion befindet sich im Präludium, daher können wir `main` in Codeblock 15-15
-ändern, um die `drop`-Funktion wie in Codeblock 15-16 gezeigt aufzurufen:
+ändern, um die `drop`-Funktion wie in Codeblock 15-16 gezeigt aufzurufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -220,7 +218,7 @@ CustomSmartPointer mit Daten aufräumen: `Daten`!
 CustomSmartPointer vor dem Ende von main aufgeräumt.
 ```
 
-Der Text ```CustomSmartPointer mit Daten aufräumen: `Daten`!``` wird zwischen
+Der Text ``CustomSmartPointer mit Daten aufräumen: `Daten`!`` wird zwischen
 `CustomSmartPointer erzeugt` und `CustomSmartPointer vor dem Ende von main
 aufgeräumt.` ausgegeben und zeigt, dass der `drop`-Methodencode aufgerufen wird
 um `c` an diesem Punkt aufzuräumen.
