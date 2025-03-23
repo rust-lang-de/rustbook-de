@@ -1,10 +1,10 @@
 ## Mit Strängen (threads) Programmcode gleichzeitig ausführen
 
 In den meisten aktuellen Betriebssystemen wird der Code eines ausgeführten
-Programms in einem *Prozess* ausgeführt und das Betriebssystem verwaltet
+Programms in einem _Prozess_ ausgeführt und das Betriebssystem verwaltet
 mehrere Prozesse gleichzeitig. Innerhalb eines Programms kannst du auch
 unabhängige Teile haben, die gleichzeitig laufen. Die Funktionalitäten, die
-diese unabhängigen Teile ausführen, werden *Stränge* (threads) genannt. Ein
+diese unabhängigen Teile ausführen, werden _Stränge_ (threads) genannt. Ein
 Webserver könnte beispielsweise mehrere Stränge haben, damit er auf mehrere
 Anfragen gleichzeitig reagieren kann.
 
@@ -14,11 +14,11 @@ auch die Komplexität. Da Stränge gleichzeitig laufen können, gibt es keine
 inhärente Garantie für die Reihenfolge, in der Teile deines Codes in
 verschiedenen Strängen ausgeführt werden. Dies kann zu Problemen führen wie:
 
-* Wettlaufsituationen (race conditions), bei denen Stränge auf Daten oder
+- Wettlaufsituationen (race conditions), bei denen Stränge auf Daten oder
   Ressourcen in einer inkonsistenten Reihenfolge zugreifen.
-* Deadlocks, bei denen zwei Stränge auf den jeweils anderen warten, sodass
+- Deadlocks, bei denen zwei Stränge auf den jeweils anderen warten, sodass
   beide Stränge nicht fortgesetzt werden können.
-* Fehler, die nur in bestimmten Situationen auftreten und schwer zu
+- Fehler, die nur in bestimmten Situationen auftreten und schwer zu
   reproduzieren und zu beheben sind.
 
 Rust versucht, die negativen Auswirkungen bei der Verwendung von Strängen zu
@@ -28,7 +28,7 @@ bei Programmen, die in einem einzigen Strang laufen.
 
 Programmiersprachen implementieren Stränge auf verschiedene Weise, und viele
 Betriebssysteme bieten eine API, die die Sprache aufrufen kann, um neue Stränge
-zu erstellen. Die Rust-Standardbibliothek verwendet ein *1:1*-Modell der
+zu erstellen. Die Rust-Standardbibliothek verwendet ein _1:1_-Modell der
 Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
 einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
 implementieren, die andere Kompromisse als das 1:1-Modell eingehen. (Das
@@ -90,8 +90,8 @@ werden sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt
 davon ab, wie dein Betriebssystem die Stränge organisiert (schedules). In
 diesem Lauf wurde der Hauptstrang zuerst ausgegeben, obwohl die
 Ausgabeanweisung aus dem erzeugten Strang zuerst im Code erscheint. Und obwohl
-wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis `i` 9 ist, kam er
-nur bis 5, bis sich der Hauptstrang beendet hat.
+wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis `i` `9` ist, kam
+er nur bis `5`, bis sich der Hauptstrang beendet hat.
 
 Wenn du diesen Code ausführst und nur Ausgaben aus dem Hauptstrang siehst oder
 keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
@@ -107,12 +107,12 @@ dass der erzeugten Strang überhaupt zum Laufen kommt!
 
 Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
-Variablen speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle`. Ein
-`JoinHandle` ist ein aneigenbarer (owned) Wert, der, wenn wir die Methode
-`join` darauf aufrufen, darauf wartet, bis sich sein Strang beendet. Codeblock
-16-2 zeigt, wie der `JoinHandle` des Strangs, den wir in Codeblock 16-1
-erstellt haben, verwendet und `join` aufgerufen wird, um sicherzustellen, dass
-der erzeugte Strang beendet wird, bevor `main` endet:
+Variablen speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle<T>`.
+Ein `JoinHandle<T>` ist ein aneigenbarer (owned) Wert, der, wenn wir die
+Methode `join` darauf aufrufen, darauf wartet, bis sich sein Strang beendet.
+Codeblock 16-2 zeigt, wie der `JoinHandle<T>` des Strangs, den wir in Codeblock
+16-1 erstellt haben, verwendet und wie `join` aufgerufen wird, um
+sicherzustellen, dass der erzeugte Strang beendet wird, bevor `main` endet:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -137,12 +137,12 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-2: Speichern eines `JoinHandle` von
+<span class="caption">Codeblock 16-2: Speichern eines `JoinHandle<T>` von
 `thread::spawn`, um zu garantieren, dass der Strang bis zum Ende ausgeführt
 wird</span>
 
 Aufrufen von `join` auf `JoinHandle` blockiert den gerade laufenden Strang, bis
-der durch `JoinHandle` repräsentierte Strang beendet ist. *Blockieren* eines
+der durch `JoinHandle` repräsentierte Strang beendet ist. _Blockieren_ eines
 Strangs bedeutet, dass der Strang daran gehindert wird, Arbeit auszuführen oder
 sich zu beenden. Da wir den Aufruf von `join` nach der `for`-Schleife im
 Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine
@@ -223,7 +223,7 @@ Wir werden oft das Schlüsselwort `move` mit Funktionsabschlüssen verwenden, di
 an `thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
 Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
 damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
-überträgt. Im Abschnitt [„Erfassen von Referenzen oder Verschieben der
+überträgt. In [„Erfassen von Referenzen oder Verschieben der
 Eigentümerschaft“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
 Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
 zwischen `move` und `thread::spawn` konzentrieren.
@@ -290,7 +290,7 @@ For more information about this error, try `rustc --explain E0373`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
-Rust *folgert*, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
+Rust _folgert_, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
 `v` benötigt, versucht der Funktionsabschluss, `v` auszuleihen. Es gibt jedoch
 ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen wird,
 sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
@@ -342,7 +342,7 @@ Indem wir vor dem Funktionsabschluss das Schlüsselwort `move` hinzufügen,
 zwingen wir den Funktionsabschluss dazu, die Eigentümerschaft der Werte zu
 übernehmen, die er benutzt, anstatt zuzulassen, dass Rust daraus ableitet, dass
 er sich die Werte ausleihen sollte. Die in Codeblock 16-5 gezeigte Änderung an
-Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt:
+Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -405,7 +405,8 @@ versuchen, `v` im Hauptstrang zu benutzen. Das Schlüsselwort `move` setzt Rusts
 konservative Standardausleihe außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.
 
-Mit einem grundlegenden Verständnis von Strängen und der Strang-API wollen wir
-uns ansehen, was wir mit Strängen noch machen können.
+Nachdem wir uns nun damit beschäftigt haben, was Stränge sind und welche
+Methoden die Strang-API bietet, wollen wir uns nun einige Situationen ansehen,
+in denen wir Stränge verwenden können.
 
 [capture]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft
