@@ -79,21 +79,21 @@ stattdessen definitiv `Result` auf eine robustere Weise behandeln wollen.
 
 Es ist ratsam, dass dein Code abbricht, wenn es möglich ist, dass dein Code in
 einem schlechten Zustand enden könnte. In diesem Zusammenhang ist ein
-*schlechter Zustand* (bad state) dann gegeben, wenn eine Annahme, eine
+_schlechter Zustand_ (bad state) dann gegeben, wenn eine Annahme, eine
 Garantie, ein Vertrag oder eine Invariante gebrochen wurde, z.B. wenn ungültige
 Werte, widersprüchliche Werte oder fehlende Werte an deinen Code übergeben
 werden &ndash; sowie einer oder mehrere der folgenden Punkte zutreffen:
 
-* Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
+- Der schlechte Zustand ist etwas Unerwartetes, im Gegensatz zu etwas, das
   wahrscheinlich gelegentlich vorkommt, wie die Eingabe von Daten in einem
   falschen Format durch einen Benutzer.
-* Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
+- Dein Code muss sich nach diesem Punkt darauf verlassen können, dass er sich
   in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
   Problem zu prüfen.
-* Es gibt keine gute Möglichkeit, diese Informationen in den von dir
-  verwendeten Typen zu kodieren. Wir werden im Abschnitt [„Kodieren von
-  Zuständen und Verhalten als Typen“][encoding] in Kapitel 18 ein Beispiel
-  dafür durcharbeiten.
+- Es gibt keine gute Möglichkeit, diese Informationen in den von dir
+  verwendeten Typen zu kodieren. Wir werden in [„Kodieren von Zuständen und
+  Verhalten als Typen“][encoding] in Kapitel 18 ein Beispiel dafür
+  durcharbeiten.
 
 Wenn jemand deinen Code aufruft und Werte übergibt, die keinen Sinn ergeben,
 ist es am besten, einen Fehler zurückzugeben, damit der Benutzer der Bibliothek
@@ -121,14 +121,14 @@ Der Versuch, mit ungültigen Daten zu operieren, kann deinen Code Schwachstellen
 aussetzen. Dies ist der Hauptgrund dafür, dass die Standardbibliothek `panic!`
 aufruft, wenn du versuchst, einen unzulässigen Speicherzugriff durchzuführen:
 Der Versuch, auf Speicher zuzugreifen, der nicht zur aktuellen Datenstruktur
-gehört, ist ein häufiges Sicherheitsproblem. Funktionen haben oft *Verträge*
+gehört, ist ein häufiges Sicherheitsproblem. Funktionen haben oft _Verträge_
 (contracts): Ihr Verhalten ist nur dann garantiert, wenn die Eingaben bestimmte
 Anforderungen erfüllen. Abzubrechen, wenn der Vertrag verletzt wird, ist
 sinnvoll, weil eine Vertragsverletzung immer auf einen Fehler auf der
 Aufruferseite hinweist und es sich nicht um eine Fehlerart handelt, die der
 aufgerufende Code explizit behandeln sollte. Tatsächlich gibt es keinen
 vernünftigen Weg, wie sich der aufrufende Code vom Fehler erholen kann; die
-aufrufenden *Programmierer* müssen den Code reparieren. Verträge zu einer
+aufrufenden _Programmierer_ müssen den Code reparieren. Verträge zu einer
 Funktion sollten in der API-Dokumentation der Funktion erläutert werden,
 insbesondere wenn deren Verletzung zu einem Programmabbruch führt.
 
@@ -138,8 +138,8 @@ Typprüfung durch den Compiler) verwenden, um viele Prüfungen für dich zu
 übernehmen. Wenn deine Funktion einen besonderen Typ als Parameter hat, kannst
 du mit der Logik deines Codes fortfahren, da du weißt, dass der Compiler
 bereits sichergestellt hat, dass du einen gültigen Wert hast. Wenn du zum
-Beispiel einen Typ anstatt einer `Option` hast, erwartet dein Programm *etwas*
-statt *nichts*. Dein Code muss dann nicht zwei Fälle für die Varianten `Some`
+Beispiel einen Typ anstatt einer `Option` hast, erwartet dein Programm _etwas_
+statt _nichts_. Dein Code muss dann nicht zwei Fälle für die Varianten `Some`
 und `None` behandeln: Er wird nur einen Fall mit definitiv einem Wert haben.
 Code, der versucht, nichts an deine Funktion zu übergeben, lässt sich nicht
 einmal kompilieren, sodass deine Funktion diesen Fall zur Laufzeit nicht prüfen
@@ -224,13 +224,13 @@ Programm nur mit Werten zwischen 1 und 100 arbeitet, und wir viele Funktionen
 mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühsam
 (und könnte die Leistung beeinträchtigen).
 
-Stattdessen können wir einen neuen Typ erstellen und die Validierungen in eine
-Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
-überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
-neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
-`Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt, wenn die
-Funktion `new` einen Wert zwischen 1 und 100 erhält.
+Stattdessen können wir einen neuen Typ in einem bestimmten Modul erstellen und
+die Validierungen in eine Funktion geben, um eine Instanz des Typs zu erzeugen,
+anstatt die Validierungen überall zu wiederholen. Auf diese Weise ist es für
+die Funktionen sicher, den neuen Typ in ihren Signaturen zu verwenden und die
+erhaltenen Werte bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit,
+einen Typ `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt,
+wenn die Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
 <span class="Dateiname">Dateiname: src/main.rs</span>
 
@@ -257,8 +257,9 @@ impl Guess {
 <span class="caption">Codeblock 9-13: Ein Typ `Guess`, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span>
 
-Zuerst definieren wir eine Struktur `Guess`, die ein Feld `value` hat, das
-einen `i32` enthält. Hier wird die Nummer gespeichert.
+Zuerst erstellen wir ein neues Modul namens `guessing_game`. Danach definieren
+wir in diesem Modul eine Struktur `Guess`, die ein Feld `value` hat, das einen
+`i32` enthält. Hier wird die Nummer gespeichert.
 
 Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
 Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
@@ -278,15 +279,15 @@ Feld `value` den Parameterwert `value` erhält, und geben die Instanz zurück.
 
 Als nächstes implementieren wir eine Methode namens `value`, die `self`
 ausleiht, keine anderen Parameter hat und ein `i32` zurückgibt. Diese
-Methodenart wird manchmal als *Abfragemethode* (getter) bezeichnet, weil ihr
+Methodenart wird manchmal als _Abfragemethode_ (getter) bezeichnet, weil ihr
 Zweck darin besteht, Daten aus ihren Feldern zurückzugeben. Diese öffentliche
 Methode ist notwendig, weil das Feld `value` der Struktur `Guess` privat ist.
 Es ist wichtig, dass das Feld `value` privat ist, damit Code, der die Struktur
 `Guess` verwendet, `value` nicht direkt setzen kann: Code außerhalb des Moduls
-*muss* die Funktion `Guess::new` verwenden, um eine Instanz von `Guess` zu
-erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit gibt, dass
-`Guess` einen `Wert` hat, der nicht durch die Bedingungen in der Funktion
-`Guess::new` überprüft wurde.
+`guessing_game` _muss_ die Funktion `Guess::new` verwenden, um eine Instanz von
+`Guess` zu erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit
+gibt, dass `Guess` einen `Wert` hat, der nicht durch die Bedingungen in der
+Funktion `Guess::new` überprüft wurde.
 
 Eine Funktion, die einen Parameter hat oder nur Zahlen zwischen 1 und 100
 zurückgibt, könnte dann in ihrer Signatur angeben, dass sie ein `Guess`

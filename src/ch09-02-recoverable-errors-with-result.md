@@ -97,7 +97,7 @@ und Schreiben verwenden.
 
 Der andere Zweig von `match` behandelt den Fall, dass wir einen `Err`-Wert von
 `File::open` erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
-Makro `panic!` aufzurufen. Wenn es keine Datei namens *hallo.txt* in unserem
+Makro `panic!` aufzurufen. Wenn es keine Datei namens _hallo.txt_ in unserem
 aktuellen Verzeichnis gibt und wir diesen Code ausführen, sehen wir die
 folgende Ausgabe des Makros `panic!`:
 
@@ -229,7 +229,7 @@ fn main() {
 }
 ```
 
-Wenn wir diesen Code ohne eine Datei *hallo.txt* ausführen, werden wir die
+Wenn wir diesen Code ohne eine Datei _hallo.txt_ ausführen, werden wir die
 Fehlermeldung des `panic!`-Aufrufs sehen, den die Methode `unwrap` macht:
 
 ```console
@@ -275,7 +275,7 @@ erweisen sollten.
 Wenn die Implementierung einer Funktion etwas aufruft, das fehlschlagen könnte,
 kannst du, anstatt den Fehler innerhalb dieser Funktion zu behandeln, den
 Fehler an den aufrufenden Code zurückgeben, damit dieser entscheiden kann, was
-zu tun ist. Dies wird als *Weitergeben* (propagating) des Fehlers bezeichnet
+zu tun ist. Dies wird als _Weitergeben_ (propagating) des Fehlers bezeichnet
 und gibt dem aufrufenden Code mehr Kontrolle, wo mehr Informationen und Logik
 zur Fehlerbehandlung vorhanden sein könnte, als im Kontext deines Codes zur
 Verfügung steht.
@@ -642,11 +642,11 @@ fn main() -> Result<(), Box<dyn Error>> {
 `Result<(), E>` erlaubt die Verwendung des `?`-Operators für
 `Result`-Werte.</span>
 
-Der Typ `Box<dyn Error>` ist ein *Merkmalsobjekt* (trait object), über das wir
-im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst
-du `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
-`?` auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
+Der Typ `Box<dyn Error>` ist ein _Merkmalsobjekt_ (trait object), über das wir
+in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
+`Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von `?`
+auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser `main`-Funktion nur Fehler des Typs
 `std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von
