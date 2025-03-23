@@ -1,7 +1,7 @@
 ## Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen
 
-Jetzt, da wir die Logik nach *src/lib.rs* extrahiert haben und die
-Argumentkollektion und Fehlerbehandlung in *src/main.rs* belassen haben, ist es
+Jetzt, da wir die Logik nach _src/lib.rs_ extrahiert haben und die
+Argumentkollektion und Fehlerbehandlung in _src/main.rs_ belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
 Wir können Funktionen direkt mit verschiedenen Argumenten aufrufen und
 Rückgabewerte überprüfen, ohne unsere Binärdatei vom Terminal aus aufrufen zu
@@ -31,8 +31,8 @@ Funktionalität in einer Funktion namens `search` hinzufügen.
 ### Schreiben eines fehlschlagenden Tests
 
 Da wir sie nicht mehr benötigen, entfernen wir die `println!` -Anweisungen aus
-*src/lib.rs* und *src/main.rs*, die wir zum Überprüfen des Programmverhaltens
-verwendet haben. Dann füge in *src/lib.rs* ein Modul `tests` mit einer
+_src/lib.rs_ und _src/main.rs_, die wir zum Überprüfen des Programmverhaltens
+verwendet haben. Dann füge in _src/lib.rs_ ein Modul `tests` mit einer
 Testfunktion hinzu, wie wir es in [Kapitel 11][ch11-anatomy] getan haben. Die
 Testfunktion spezifiziert das Verhalten, das die Funktion `search` haben soll:
 Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
@@ -172,7 +172,7 @@ referenzieren.
 Mit anderen Worten sagen wir Rust, dass die von der Funktion `search`
 zurückgegebenen Daten so lange leben, wie die Daten, die im Argument `contents`
 an die Funktion `search` übergeben werden. Das ist wichtig! Die Daten, auf die
-durch einen Anteilstyp *referenziert* wird, müssen gültig sein, damit die
+durch einen Anteilstyp _referenziert_ wird, müssen gültig sein, damit die
 Referenz gültig ist; wenn der Compiler annimmt, dass wir
 Zeichenkettenanteilstypen aus `query` statt aus `contents` erstellen, wird er
 seine Sicherheitsprüfung falsch durchführen.
@@ -578,7 +578,7 @@ zurückzugeben und auszugeben.
 
 Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
-wiedergeben sollte: *frog*
+wiedergeben sollte: _frog_
 
 ```console
 $ cargo run frog poem.txt
@@ -588,7 +588,7 @@ $ cargo run frog poem.txt
 How public, like a frog
 ```
 
-Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie *body*:
+Cool! Versuchen wir nun ein Wort, das zu mehreren Zeilen passt, wie _body_:
 
 ```console
 $ cargo run body poem.txt
@@ -602,7 +602,7 @@ How dreary to be somebody!
 
 Und schließlich sollten wir sicherstellen, dass wir keine Zeilen bekommen, wenn
 wir nach einem Wort suchen, das nirgendwo im Gedicht vorkommt, zum Beispiel
-*monomorphization*:
+_monomorphization_:
 
 ```console
 $ cargo run monomorphization poem.txt
