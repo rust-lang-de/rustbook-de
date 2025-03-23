@@ -1,13 +1,13 @@
 ## Merkmale (traits): Gemeinsames Verhalten definieren
 
-Ein *Merkmal* (trait) definiert die Funktionalität, den ein bestimmter Typ hat
+Ein _Merkmal_ (trait) definiert die Funktionalität, den ein bestimmter Typ hat
 und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
 gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
 Merkmalsabgrenzungen (trait bounds) verwenden, um anzugeben, dass ein
 generischer Typ jeder Typ sein kann, der ein bestimmtes Verhalten aufweist.
 
 > Anmerkung: Merkmale sind einer Funktionalität recht ähnlich, die in anderen
-> Sprachen oft *Schnittstelle* (interface) genannt wird, wenn auch mit einigen
+> Sprachen oft _Schnittstelle_ (interface) genannt wird, wenn auch mit einigen
 > Unterschieden.
 
 ### Ein Merkmal definieren
@@ -22,17 +22,17 @@ erforderlich sind.
 Nehmen wir zum Beispiel an, wir haben mehrere Strukturen (structs), die
 verschiedene Arten und Mengen von Text enthalten: Eine Struktur `NewsArticle`,
 die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
-`Tweet`, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die angeben,
-ob es sich um eine neue Kurznachricht, eine Wiederholung oder eine Antwort auf
-eine andere Kurznachricht handelt.
+`SocialPost`, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die
+angeben, ob es sich um eine neue Nachricht, eine Wiederholung oder eine Antwort
+auf eine andere Nachricht handelt.
 
 Wir wollen eine Medienaggregator-Bibliothekskiste namens `aggregator`
 erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
-`NewsArticle`- oder `Tweet`-Instanz gespeichert sein könnten. Dazu brauchen wir
-eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
-anfordern, indem wir eine Methode `summarize` auf einer Instanz aufrufen.
-Codeblock 10-12 zeigt die Definition eines öffentlichen `Summary`-Merkmals, das
-dieses Verhalten zum Ausdruck bringt.
+`NewsArticle`- oder `SocialPost`-Instanz gespeichert sein könnten. Dazu
+brauchen wir eine Zusammenfassung von jedem Typ, und wir werden diese
+Zusammenfassung anfordern, indem wir eine Methode `summarize` auf einer Instanz
+aufrufen. Codeblock 10-12 zeigt die Definition eines öffentlichen
+`Summary`-Merkmals, das dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -70,9 +70,9 @@ definiert haben, können wir sie für die Typen in unserem Medienaggregator
 implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
 `Summary` für die Struktur `NewsArticle`, die die Überschrift, den Autor und
 den Ort verwendet, um den Rückgabewert von `summarize` zu erzeugen. Für die
-Struktur `Tweet` definieren wir `summarize` als den Benutzernamen, gefolgt vom
-gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
-Kurznachricht bereits auf 280 Zeichen begrenzt ist.
+Struktur `SocialPost` definieren wir `summarize` als den Benutzernamen, gefolgt
+vom gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
+Nachricht bereits auf 280 Zeichen begrenzt ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -94,14 +94,14 @@ impl Summary for NewsArticle {
     }
 }
 
-pub struct Tweet {
+pub struct SocialPost {
     pub username: String,
     pub content: String,
     pub reply: bool,
-    pub retweet: bool,
+    pub repost: bool,
 }
 
-impl Summary for Tweet {
+impl Summary for SocialPost {
     fn summarize(&self) -> String {
         format!("{}: {}", self.username, self.content)
     }
@@ -109,7 +109,7 @@ impl Summary for Tweet {
 ```
 
 <span class="caption">Codeblock 10-13: Implementierung des Merkmals `Summary`
-für die Typen `NewsArticle` und `Tweet`</span>
+für die Typen `NewsArticle` und `SocialPost`</span>
 
 Die Implementierung eines Merkmals für einen Typ ist ähnlich zur
 Implementierung regulärer Methoden. Der Unterschied besteht darin, dass wir
@@ -121,30 +121,31 @@ Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
 Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
 den jeweiligen Typ haben sollen.
 
-Da die Bibliothek nun das Merkmal `Summary` auf `NewsArticle` und `Tweet`
+Da die Bibliothek nun das Merkmal `Summary` auf `NewsArticle` und `SocialPost`
 implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
-Instanzen von `NewsArticle` und `Tweet` auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
-Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
-die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
-wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
+Instanzen von `NewsArticle` und `SocialPost` auf die gleiche Weise aufrufen,
+wie wir reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass
+der Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen
+muss, um die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel
+dafür, wie eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden
+könnte:
 
 ```rust,ignore
-use aggregator::{self, Summary, Tweet};
+use aggregator::{self, Summary, SocialPost};
 
 fn main() {
-    let tweet = Tweet {
+    let post = SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     };
 
-    println!("1 neue Kurznachricht: {}", tweet.summarize());
+    println!("1 neue Nachricht: {}", post.summarize());
 }
 ```
 
-Dieser Code gibt `1 neue Kurznachricht: horse_ebooks: natürlich, wie du
+Dieser Code gibt `1 neue Nachricht: horse_ebooks: natürlich, wie du
 wahrscheinlich schon weißt` aus.
 
 Andere Kisten, die von der `aggregator`-Kiste abhängen, können auch das Merkmal
@@ -153,17 +154,18 @@ Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für eine
 Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
 lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
 Standard-Bibliotheksmerkmale wie `Display` auf einem benutzerdefinierten Typ
-wie `Tweet` als Teil unserer `aggregator`-Kistenfunktionalität implementieren,
-weil der Typ `Tweet` lokal zu unserer `aggregator`-Kiste gehört. Wir können
-auch `Summary` auf `Vec<T>` in unserer `aggregator`-Kiste implementieren, weil
-das Merkmal `Summary` lokal zu unserer `aggregator`-Kiste gehört.
+wie `SocialPost` als Teil unserer `aggregator`-Kistenfunktionalität
+implementieren, weil der Typ `SocialPost` lokal zu unserer `aggregator`-Kiste
+gehört. Wir können auch `Summary` auf `Vec<T>` in unserer `aggregator`-Kiste
+implementieren, weil das Merkmal `Summary` lokal zu unserer `aggregator`-Kiste
+gehört.
 
 Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
 können wir das Merkmal `Display` auf `Vec<T>` in unserer `aggregator`-Kiste
 nicht implementieren, weil `Display` und `Vec<T>` in der Standardbibliothek
 definiert sind und nicht lokal zu unserer `aggregator`-Kiste gehören. Diese
-Beschränkung ist Teil einer Eigenschaft von Programmen namens *Kohärenz*
-(coherence), genauer gesagt der *Waisenregel* (orphan rule), die so genannt
+Beschränkung ist Teil einer Eigenschaft von Programmen namens _Kohärenz_
+(coherence), genauer gesagt der _Waisenregel_ (orphan rule), die so genannt
 wird, weil der übergeordnete Typ nicht vorhanden ist. Diese Regel stellt
 sicher, dass der Code anderer Personen deinen Code nicht brechen kann und
 umgekehrt. Ohne diese Regel könnten zwei Kisten dasselbe Merkmal für denselben
@@ -200,14 +202,14 @@ pub trait Summary {
 #
 # impl Summary for NewsArticle {}
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-# impl Summary for Tweet {
+# impl Summary for SocialPost {
 #     fn summarize(&self) -> String {
 #         format!("{}: {}", self.username, self.content)
 #     }
@@ -247,8 +249,8 @@ Infolgedessen können wir immer noch die Methode `summarize` einer
 Dieser Code gibt `Neuer Artikel verfügbar! (Lies mehr ...)` aus.
 
 Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
-Implementierung von `Summary` für `Tweet` in Codeblock 10-13 etwas ändern. Der
-Grund dafür ist, dass die Syntax für das Überschreiben einer
+Implementierung von `Summary` für `SocialPost` in Codeblock 10-13 etwas ändern.
+Der Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Merkmalsmethode, die keine Standard-Implementierung hat.
 
@@ -270,14 +272,14 @@ pub trait Summary {
     }
 }
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-# impl Summary for Tweet {
+# impl Summary for SocialPost {
 #     fn summarize_author(&self) -> String {
 #         format!("@{}", self.username)
 #     }
@@ -296,14 +298,14 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:
 #     }
 # }
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-impl Summary for Tweet {
+impl Summary for SocialPost {
     fn summarize_author(&self) -> String {
         format!("@{}", self.username)
     }
@@ -311,28 +313,28 @@ impl Summary for Tweet {
 ```
 
 Nachdem wir `summarize_author` definiert haben, können wir `summarize` auf
-Instanzen der `Tweet`-Struktur aufrufen, und die Standard-Implementierung von
-`summarize` wird die Definition von `summarize_author` aufrufen, die wir
+Instanzen der `SocialPost`-Struktur aufrufen, und die Standard-Implementierung
+von `summarize` wird die Definition von `summarize_author` aufrufen, die wir
 bereitgestellt haben. Da wir `summarize_author` implementiert haben, hat uns
 das Merkmal `Summary` das Verhalten der `summarize`-Methode mitgeliefert, ohne
 dass wir weiteren Code schreiben müssen. Das sieht dann so aus:
 
 ```rust,ignore
-# use aggregator::{self, Summary, Tweet};
+# use aggregator::{self, Summary, SocialPost};
 #
 # fn main() {
-    let tweet = Tweet {
+    let post = SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     };
 
-    println!("1 neue Kurznachricht: {}", tweet.summarize());
+    println!("1 neue Nachricht: {}", post.summarize());
 # }
 ```
 
-Dieser Code gibt `1 neue Kurznachricht: (Lies mehr von @horse_ebooks...)` aus.
+Dieser Code gibt `1 neue Nachricht: (Lies mehr von @horse_ebooks...)` aus.
 
 Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.
@@ -342,11 +344,11 @@ Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
 viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal `Summary`, das
-wir für die Typen `NewsArticle` und `Tweet` in Codeblock 10-13 implementiert
-haben, um eine Funktion `notify` zu definieren, die die Methode `summarize` für
-ihren Parameter `item` aufruft, der von einem Typ ist, der das Merkmal
-`Summary` implementiert. Um dies zu tun, können wir die Syntax `impl Trait`
-verwenden, etwa so:
+wir für die Typen `NewsArticle` und `SocialPost` in Codeblock 10-13
+implementiert haben, um eine Funktion `notify` zu definieren, die die Methode
+`summarize` für ihren Parameter `item` aufruft, der von einem Typ ist, der das
+Merkmal `Summary` implementiert. Um dies zu tun, können wir die Syntax `impl
+ Trait` verwenden, etwa so:
 
 ```rust
 # pub trait Summary {
@@ -366,14 +368,14 @@ verwenden, etwa so:
 #     }
 # }
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-# impl Summary for Tweet {
+# impl Summary for SocialPost {
 #     fn summarize(&self) -> String {
 #         format!("{}: {}", self.username, self.content)
 #     }
@@ -389,15 +391,15 @@ Schlüsselwort `impl` und den Merkmalsnamen an. Dieser Parameter akzeptiert
 jeden Typ, der das angegebene Merkmal implementiert. Im Rumpf von `notify`
 können wir alle Methoden von `item` aufrufen, die vom Merkmal `Summary`
 herrühren, zum Beispiel `summarize`. Wir können `notify` aufrufen und jede
-Instanz von `NewsArticle` und `Tweet` angeben. Code, der die Funktion mit einem
-anderen Typ aufruft, z.B. `String` oder `i32`, lässt sich nicht kompilieren, da
-diese Typen kein `Summary` implementieren.
+Instanz von `NewsArticle` und `SocialPost` angeben. Code, der die Funktion mit
+einem anderen Typ aufruft, z.B. `String` oder `i32`, lässt sich nicht
+kompilieren, da diese Typen kein `Summary` implementieren.
 
 
 #### Merkmalsabgrenzungs-Syntax
 
 Die Syntax `impl Trait` funktioniert für einfache Fälle, ist aber eigentlich
-syntaktischer Zucker für eine längere Form, die *Merkmalsabgrenzung* (trait
+syntaktischer Zucker für eine längere Form, die _Merkmalsabgrenzung_ (trait
 bound) genannt wird; sie sieht so aus:
 
 ```rust
@@ -512,25 +514,25 @@ gezeigt:
 #     }
 # }
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-# impl Summary for Tweet {
+# impl Summary for SocialPost {
 #     fn summarize(&self) -> String {
 #         format!("{}: {}", self.username, self.content)
 #     }
 # }
 #
 fn returns_summarizable() -> impl Summary {
-    Tweet {
+    SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     }
 }
 ```
@@ -538,8 +540,8 @@ fn returns_summarizable() -> impl Summary {
 Durch Verwenden von `impl Summary` für den Rückgabetyp legen wir fest, dass die
 Funktion `returns_summarizable` einen Typ zurückgibt, der das Merkmal `Summary`
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
-`returns_summarizable` einen `Tweet` zurück, aber der Code, der diese Funktion
-aufruft, muss das nicht wissen.
+`returns_summarizable` einen `SocialPost` zurück, aber der Code, der diese
+Funktion aufruft, muss das nicht wissen.
 
 Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
 zu spezifizieren, ist besonders nützlich im Zusammenhang mit
@@ -552,7 +554,7 @@ musst.
 
 Du kannst `impl Trait` jedoch nur verwenden, wenn du einen einzigen Typ
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen `NewsArticle`
-oder einen `Tweet` mit dem Rückgabetyp `impl Summary` zurückgibt, nicht
+oder einen `SocialPost` mit dem Rückgabetyp `impl Summary` zurückgibt, nicht
 funktionieren:
 
 ```rust,does_not_compile
@@ -573,14 +575,14 @@ funktionieren:
 #     }
 # }
 #
-# pub struct Tweet {
+# pub struct SocialPost {
 #     pub username: String,
 #     pub content: String,
 #     pub reply: bool,
-#     pub retweet: bool,
+#     pub repost: bool,
 # }
 #
-# impl Summary for Tweet {
+# impl Summary for SocialPost {
 #     fn summarize(&self) -> String {
 #         format!("{}: {}", self.username, self.content)
 #     }
@@ -600,22 +602,22 @@ fn returns_summarizable(switch: bool) -> impl Summary {
             ),
         }
     } else {
-        Tweet {
+        SocialPost {
             username: String::from("horse_ebooks"),
             content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
             reply: false,
-            retweet: false,
+            repost: false,
         }
     }
 }
 ```
 
-Die Rückgabe entweder eines `NewsArticle` oder eines `Tweet` ist aufgrund von
-Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
+Die Rückgabe entweder eines `NewsArticle` oder eines `SocialPost` ist aufgrund
+von Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird im Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“][using-trait-objects-that-allow-for-values-of-different-types]
-in Kapitel 18 behandelt.
+wird in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+erlauben“][using-trait-objects-that-allow-for-values-of-different-types] in
+Kapitel 18 behandelt.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
@@ -623,12 +625,12 @@ Durch Verwenden einer Merkmalsabgrenzung mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
 `Pair<T>` in Codeblock 10-15 immer die Funktion `new`, um eine neue Instanz von
-`Pair<T>` zurückzugeben (erinnere dich an den Abschnitt [„Definieren von
-Methoden“][methods] in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des
-`impl`-Blocks ist, der in diesem Fall `Pair<T>` ist). Aber im nächsten
-`impl`-Block implementiert `Pair<T>` die Methode `cmp_display` nur, wenn ihr
-innerer Typ `T` die Merkmale `PartialOrd` *und* `Display` implementiert, die
-den Vergleich bzw. eine Ausgabe ermöglichen.
+`Pair<T>` zurückzugeben (erinnere dich an [„Definieren von Methoden“][methods]
+in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der
+in diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
+`Pair<T>` die Methode `cmp_display` nur, wenn ihr innerer Typ `T` die Merkmale
+`PartialOrd` _und_ `Display` implementiert, die den Vergleich bzw. eine Ausgabe
+ermöglichen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -662,7 +664,7 @@ für einen generischen Typ in Abhängigkeit von Merkmalsabgrenzungen</span>
 
 Wir können auch ein Merkmal für beliebige Typen bedingt implementieren, die ein
 anderes Merkmal implementieren. Implementierungen eines Merkmals für Typen, die
-Merkmalsabgrenzungen erfüllen, werden als *Pauschal-Implementierungen* (blanket
+Merkmalsabgrenzungen erfüllen, werden als _Pauschal-Implementierungen_ (blanket
 implementations) bezeichnet und kommen in der Rust-Standardbibliothek ausgiebig
 zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Merkmal
 `ToString` für jeden Typ, der das Merkmal `Display` implementiert. Der

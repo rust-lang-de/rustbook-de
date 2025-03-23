@@ -78,8 +78,8 @@ den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
 wir werden `T` verwenden, weil die Typparameternamen gemäß Konvention in Rust
 kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
-Binnenmajuskel (UpperCamelCase). Als Abkürzung für „Typ“ ist `T` die
-Standardwahl der meisten Rust-Programmierer.
+CamelCase. Als Abkürzung für „Typ“ ist `T` die Standardwahl der meisten
+Rust-Programmierer.
 
 Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
@@ -102,8 +102,7 @@ Codeblock 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
 generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
 wir die Funktion entweder mit einem Anteilstyp von `i32`-Werten oder
 `char`-Werten aufrufen können. Beachte, dass sich dieser Code noch nicht
-kompilieren lässt, aber wir werden das Problem später in diesem Kapitel
-beheben.
+kompilieren lässt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -158,18 +157,18 @@ For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
-Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein *Merkmal* (trait) ist,
+Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein _Merkmal_ (trait) ist,
 und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
 dieser Fehler, dass der Rumpf von `largest` nicht für alle möglichen Typen
 funktioniert, die `T` sein könnten. Da wir Werte des Typs `T` im Rumpf
 vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
 können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
 `std::cmp::PartialOrd`, das du auf Typen implementieren kannst (siehe Anhang C
-für weitere Informationen zu diesem Merkmal). Indem wir dem Vorschlag des
-Hilfetextes folgen, schränken wir die für `T` gültigen Typen auf diejenigen
-ein, die `PartialOrd` implementieren und dieses Beispiel kompiliert, weil die
-Standardbibliothek `PartialOrd` sowohl auf `i32` als auch auf `char`
-implementiert.
+für weitere Informationen zu diesem Merkmal). Um den obigen Beispielcode zu
+korrigieren, müssten wir den Vorschlägen des Hilfetextes folgen und die für `T`
+gültigen Typen auf diejenigen beschränken, die `PartialOrd` implementieren. Das
+Beispiel würde dann kompilieren, weil die Standardbibliothek `PartialOrd`
+sowohl für `i32` als auch für `char` implementiert.
 
 ### In Struktur-Definitionen
 
@@ -203,7 +202,7 @@ Strukturdefinition, wo wir sonst konkrete Datentypen angeben würden.
 
 Beachte, da wir nur einen generischen Typ zur Definition von `Point<T>`
 verwendet haben, besagt diese Definition, dass die Struktur `Point<T>`
-generisch über einen Typ `T` ist, und die beiden Felder `x` und `y` *denselben*
+generisch über einen Typ `T` ist, und die beiden Felder `x` und `y` _denselben_
 Typ haben, welcher Typ das auch immer sein mag. Wenn wir eine Instanz von
 `Point<T>` erzeugen, die Werte unterschiedlichen Typs hat, wie in Codeblock
 10-7, wird sich unser Code nicht kompilieren lassen.
@@ -362,10 +361,10 @@ generischen Typ hinter `impl` kann Rust erkennen, dass der Typ in spitzen
 Klammern in `Point` ein generischer und kein konkreter Typ ist. Wir hätten
 einen anderen Namen für den generischen Parameter wählen können als den in der
 Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
-desselben Namens ist üblich. Methoden, die innerhalb eines `impl` geschrieben
-werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
-definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
-ersetzt.
+desselben Namens ist üblich. Wenn du eine Methode innerhalb eines `impl`
+schreibst, die einen generischen Typ deklariert, wird diese Methode auf jeder
+Instanz des Typs definiert, unabhängig davon, welcher konkrete Typ am Ende den
+generischen Typ ersetzt.
 
 Wir können auch Einschränkungen für generische Typen angeben, wenn wir Methoden
 auf dem Typ definieren. Wir könnten zum Beispiel Methoden nur auf
@@ -473,7 +472,7 @@ generischer Typen die Ausführung deines Programms nicht langsamer macht als bei
 konkreten Typen.
 
 Rust erreicht dies durch Duplizierung von Code mit generischen Datentypen zur
-Kompilierzeit. *Codeduplizierung* (monomorphization) ist der Vorgang der
+Kompilierzeit. _Codeduplizierung_ (monomorphization) ist der Vorgang der
 Umwandlung von generischem Code in spezifischen Code durch Ausfüllen der
 konkreten Typen, die bei der Kompilierung verwendet werden. Bei diesem Vorgang
 führt der Compiler das Gegenteil der Schritte aus, die wir beim Erstellen der

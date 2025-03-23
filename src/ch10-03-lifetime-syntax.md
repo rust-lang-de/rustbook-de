@@ -1,13 +1,13 @@
 ## Referenzen validieren mit Lebensdauern
 
-*Lebensdauer* (lifetimes) sind eine weitere generische Funktionalität, die wir
+_Lebensdauer_ (lifetimes) sind eine weitere generische Funktionalität, die wir
 bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
 gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
 Referenzen so lange gültig sind, wie wir sie brauchen.
 
 Ein Detail, das wir im Abschnitt [„Referenzen und Ausleihen
 (borrowing)“][references-and-borrowing] in Kapitel 4 nicht erörtert haben, ist,
-dass jede Referenz in Rust eine *Lebensdauer* (lifetime) hat, d.h. einen
+dass jede Referenz in Rust eine _Lebensdauer_ (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
 Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
@@ -18,15 +18,16 @@ Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.
 
-Das Vermerken von Lebensdauern ist ein Konzept, das die meisten anderen
-Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
-wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
-werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
-mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.
+Das Annotieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Programmiersprachen nicht einmal kennen, sodass es sich ungewohnt anfühlen
+wird. Auch wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer
+Gesamtheit behandeln werden, so werden wir doch allgemeine Möglichkeiten
+erörtern, mit denen du dich mit der Syntax der Lebensdauer und den Konzepten
+vertraut machen kannst.
 
 ### Verhindern hängender Referenzen mit Lebensdauern
 
-Das Hauptziel der Lebensdauer ist es, *hängende Referenzen* (dangling
+Das Hauptziel der Lebensdauer ist es, _hängende Referenzen_ (dangling
 references) zu verhindern, die dazu führen, dass ein Programm auf andere
 Daten referenziert als die, auf die es referenzieren soll. Betrachte das
 Programm in Codeblock 10-16, das einen äußeren und einen inneren
@@ -95,7 +96,7 @@ ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).
 
 ### Der Ausleihenprüfer
 
-Der Rust-Compiler verfügt über einen *Ausleihenprüfer* (borrow checker), der
+Der Rust-Compiler verfügt über einen _Ausleihenprüfer_ (borrow checker), der
 Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
 sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
@@ -177,11 +178,10 @@ bestimmen</span>
 
 Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
 die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
-Funktion `longest` die Eigentümerschaft ihrer Parameter übernimmt. Lies den
-Abschnitt [„Zeichenkettenanteilstypen als
-Parameter“][string-slices-as-parameters] in Kapitel 4, um mehr darüber zu
-erfahren, warum die Parameter, die wir in Codeblock 10-19 verwenden, die von
-uns gewünschten sind.
+Funktion `longest` die Eigentümerschaft ihrer Parameter übernimmt. Lies
+[„Zeichenkettenanteilstypen als Parameter“][string-slices-as-parameters] in
+Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
+Codeblock 10-19 verwenden, die von uns gewünschten sind.
 
 Wenn wir versuchen, die Funktion `longest`, wie in Codeblock 10-20 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.
@@ -286,9 +286,9 @@ wir, wie sich die Lebensdauer-Annotationen im Zusammenhang mit der Funktion
 ### Lebensdauer-Annotationen in Funktionssignaturen
 
 Um Lebensdauer-Annotationen in Funktionssignaturen zu verwenden, müssen wir die
-generischen *Lebensdauer*-Parameter in spitzen Klammern zwischen dem
+generischen _Lebensdauer_-Parameter in spitzen Klammern zwischen dem
 Funktionsnamen und der Parameterliste deklarieren, genau wie wir es mit den
-generischen *Typ*-Parametern gemacht haben.
+generischen _Typ_-Parametern gemacht haben.
 
 Wir möchten, dass die Signatur die folgende Bedingung ausdrückt: Die
 zurückgegebene Referenz ist gültig, solange die beiden Parameter gültig sind.
@@ -506,7 +506,7 @@ steht.
 
 Wenn eine Funktion eine Referenz zurückgibt, muss der Lebensdauerparameter für
 den Rückgabetyp mit dem Lebensdauerparameter für einen der Parameter
-übereinstimmen. Wenn sich die zurückgegebene Referenz *nicht* auf einen der
+übereinstimmen. Wenn sich die zurückgegebene Referenz _nicht_ auf einen der
 Parameter bezieht, muss er sich auf einen innerhalb dieser Funktion erzeugten
 Wert beziehen. Dies wäre jedoch eine hängende Referenz, da der Wert am Ende der
 Funktion den Gültigkeitsbereich verlässt. Betrachte diesen Versuch einer
@@ -674,7 +674,7 @@ deterministische Muster auftauchen und dem Compiler hinzugefügt werden. In
 Zukunft könnten noch weniger Lebensdauer-Annotationen erforderlich sein.
 
 Die Muster, die in Rusts Referenzanalyse programmiert sind, werden die
-*Lebensdauer-Elisionsregeln* (lifetime elision rules) genannt. Dies sind keine
+_Lebensdauer-Elisionsregeln_ (lifetime elision rules) genannt. Dies sind keine
 Regeln, die Programmierer befolgen müssen; es handelt sich um eine Reihe
 besonderer Fälle, die der Compiler berücksichtigt, und wenn dein Code zu
 einem dieser Fälle passt, brauchst du die Lebensdauer nicht explizit anzugeben.
@@ -688,8 +688,8 @@ du die Lebensdauer-Annotationen angibst, die festlegen, wie sich die Referenzen
 zueinander verhalten.
 
 Die Lebensdauern der Funktions- oder Methodenparameter werden als
-*Eingangslebensdauern* (input lifetimes) bezeichnet, und die Lebensdauern der
-Rückgabewerte als *Ausgangslebensdauern* (output lifetimes) bezeichnet.
+_Eingangslebensdauern_ (input lifetimes) bezeichnet, und die Lebensdauern der
+Rückgabewerte als _Ausgangslebensdauern_ (output lifetimes) bezeichnet.
 
 Der Compiler verwendet drei Regeln, um herauszufinden, welche Lebensdauer
 Referenzen haben, wenn keine expliziten Annotationen vorhanden sind. Die erste
@@ -880,15 +880,15 @@ Der Text dieser Zeichenkette wird direkt in der Binärdatei des Programms
 gespeichert, die immer verfügbar ist. Daher ist die Lebensdauer aller
 Zeichenkettenliterale `'static`.
 
-Möglicherweise siehst du Hinweise zur Verwendung der Lebensdauer `'static` in
-Fehlermeldungen. Aber bevor du `'static` als Lebensdauer für eine Referenz
-angibst, denke darüber nach, ob deine Referenz tatsächlich während der gesamten
-Lebensdauer deines Programms lebt oder nicht, und ob du das so willst. In den
-meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer `'static`
-hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder aus einer
-Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen besteht
-die Lösung darin, diese Probleme zu beheben und nicht darin, die Lebensdauer
-als `'static` festzulegen.
+Möglicherweise siehst du in Fehlermeldungen Hinweise zur Verwendung der
+Lebensdauer `'static`. Aber bevor du `'static` als Lebensdauer für eine
+Referenz angibst, denke darüber nach, ob deine Referenz tatsächlich während der
+gesamten Lebensdauer deines Programms lebt oder nicht, und ob du das so willst.
+In den meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer
+`'static` hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder
+aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen
+besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
+Lebensdauer als `'static` festzulegen.
 
 ## Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen
 
