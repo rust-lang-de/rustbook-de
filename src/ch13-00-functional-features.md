@@ -2,7 +2,7 @@
 
 Das Design von Rust wurde von einer Vielzahl von vorhandenen Programmiersprachen
 und Techniken beeinflusst und einen signifikanter Einfluss hat die *funktionale
-Programmierung*. Programmieren im funktionalen Stil beinhaltet oft das
+Programmierung_. Programmieren im funktionalen Stil beinhaltet oft das
 Verwenden von Funktionen als Werte, die in Argumenten übergeben, von anderen
 Funktionen zurückgegeben, Variablen zur späteren Ausführung zugewiesen werden
 und so weiter.
@@ -14,12 +14,12 @@ funktional bezeichnet werden.
 
 Im Einzelnen wird Folgendes behandelt:
 
-* *Funktionsabschlüsse*, ein Konstrukt, das einer Funktion ähnelt und in einer
+- _Funktionsabschlüsse_, ein Konstrukt, das einer Funktion ähnelt und in einer
   Variable gespeichert werden kann.
-* *Iteratoren*, ein Mechanismus, eine Reihe von Elementen abzuarbeiten.
-* Wie wir Funktionsabschlüsse und Iteratoren einsetzen, um unser E/A-Projekt
+- _Iteratoren_, ein Mechanismus, eine Reihe von Elementen abzuarbeiten.
+- Wie wir Funktionsabschlüsse und Iteratoren einsetzen, um unser E/A-Projekt
   aus Kapitel 12 zu verbessern
-* Die Performanz von Funktionsabschlüssen und Iteratoren (Spoiler-Alarm: Sie
+- Die Performanz von Funktionsabschlüssen und Iteratoren (Spoiler-Alarm: Sie
   sind schneller, als du vielleicht denken magst!)
 
 Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und

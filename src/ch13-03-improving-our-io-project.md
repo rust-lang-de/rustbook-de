@@ -12,7 +12,7 @@ Im Codeblock 12-6 haben wir Programmcode hinzugefügt, der einen Anteilstyp
 `Config`-Struktur indem wir den Anteilstyp indexierten und die Werte klonten
 und der `Config`-Struktur die Eigentümerschaft dieser Werte gaben. Im Codeblock
 13-17 haben wir die Implementierung der Funktion `Config::build` so reproduziert 
-wie sie im Codeblock 12-23 aussah:
+wie sie im Codeblock 12-23 aussah.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -151,7 +151,7 @@ aufzurufen und eine neue Zuweisung vorzunehmen.
 
 #### Direktes Verwenden des zurückgegebenen Iterators
 
-Öffne die Datei *src/main.rs* deines E/A-Projekts, sie sollte so aussehen:
+Öffne die Datei _src/main.rs_ deines E/A-Projekts, sie sollte so aussehen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -216,7 +216,7 @@ in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
 zurückgegeben wird, direkt an `Config::build`.
 
 Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
-Ändere in der Datei *src/lib.rs* deines E/A-Projekts die Signatur von
+Ändere in der Datei _src/lib.rs_ deines E/A-Projekts die Signatur von
 `Config::build` um, damit sie so wie im Codeblock 13-26 aussieht. Dies wird
 noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.
 
@@ -356,7 +356,7 @@ Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
 `args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
 `next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die `next`-Methode zu verwenden:
+Codeblock 12-23, um die `next`-Methode zu verwenden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -477,14 +477,15 @@ impl Config {
 <span class="caption">Codeblock 13-20: Ändern des Rumpfes von `Config::build` um
 Iterator-Methoden zu verwenden</span>
 
-Beachte, dass der erste Wert des Rückgabewerts von `env::args` der Name des
+Denke daran, dass der erste Wert des Rückgabewerts von `env::args` der Name des
 Programms ist, wir wollen das ignorieren und rufen daher gleich `next` auf um
 zum nächsten Wert zu gelangen und den ersten Rückgabewert zu überspringen. Als
-Nächstes rufen wir `next` auf, um den Wert zu erhalten, den wir in das Feld `query`
-von `Config` einfügen möchten. Falls `next` ein `Some` zurückgibt, benutzen wir
-`match`, um den Wert zu extrahieren, wenn es jedoch `None` zurückgibt,
-bedeutet dies, das nicht genügend Argumente eingegeben wurden und wir kehren
-vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert `file_path`.
+Nächstes rufen wir `next` auf, um den Wert zu erhalten, den wir in das Feld
+`query` von `Config` einfügen möchten. Falls `next` ein `Some` zurückgibt,
+benutzen wir `match`, um den Wert zu extrahieren, wenn es jedoch `None`
+zurückgibt, bedeutet dies, das nicht genügend Argumente eingegeben wurden und
+wir kehren vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert
+`file_path`.
 
 ### Programmcode mit Iteratorenadapter klarer gestalten
 
@@ -681,10 +682,10 @@ bei der Implementierung der Funktion `search`</span>
 Denke daran, der Zweck der Funktion `search` besteht darin, alle Zeilen in
 `contents` zurückzugeben, die die `query` enthalten. So ähnlich wie im Beispiel
 `filter` im Codeblock 13-16 verwendet dieser Programmcode den `filter`-Adapter,
-um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true` zurückgibt.
-Wir sammeln dann die passenden Zeilen mit `collect` in einen anderen Vektor.
-Viel einfacher! Nimm die gleiche Änderung vor, um Iteratormethoden auch in der
-Funktion `search_case_insensitive` zu nutzen.
+um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true`
+zurückgibt. Wir sammeln dann die passenden Zeilen mit `collect` in einen
+anderen Vektor. Viel einfacher! Nimm die gleiche Änderung vor, um
+Iteratormethoden auch in der Funktion `search_case_insensitive` zu nutzen.
 
 ### Zwischen Schleifen und Iteratoren wählen
 

@@ -438,10 +438,10 @@ erhältst!
 
 Sobald ein Funktionsabschluss eine Referenz oder die Eigentümerschaft eines
 Werts aus der Umgebung, in der der Funktionsabschluss definiert ist, erfasst
-hat (und damit beeinflusst, was *in* den Funktionsabschluss verschoben wird),
+hat (und damit beeinflusst, was _in_ den Funktionsabschluss verschoben wird),
 definiert der Code im Rumpf des Funktionsabschlusses, was mit den Referenzen
 oder Werten passiert, wenn der Funktionsabschluss später ausgewertet wird (und
-damit beeinflusst, was *aus* dem Funktionsabschluss verschoben wird). Ein
+damit beeinflusst, was _aus_ dem Funktionsabschluss verschoben wird). Ein
 Funktionsabschluss-Rumpf kann eine der folgenden Aktionen ausführen: Einen
 erfassten Wert aus dem Funktionsabschluss herausbewegen, den erfassten Wert
 verändern, den Wert weder bewegen noch verändern oder zunächst nichts aus der
@@ -510,13 +510,13 @@ aufgerufen. Da alle Funktionsabschlüsse `FnOnce` implementieren, akzeptiert
 `unwrap_or_else` alle drei Arten von Funktionsabschlüssen und ist so flexibel
 wie nur möglich.
 
-> Anmerkung: Funktionen können auch alle drei `Fn`-Merkmale implementieren.
-> Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
-> erfordert, können wir den Namen einer Funktion anstelle eines
-> Funktionsabschlüsses verwenden, bei dem wir etwas brauchen, das eine der
-> `Fn`-Markmale implementiert. Zum Beispiel könnten wir bei einem
-> `Option<Vec<T>>`-Wert `unwrap_or_else(Vec::new)` aufrufen, um einen neuen,
-> leeren Vektor zu erhalten, wenn der Wert `None` ist.
+> Anmerkung: Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der
+> Umgebung erfordert, können wir den Namen einer Funktion anstelle eines
+> Funktionsabschlüsses verwenden. Zum Beispiel könnten wir
+> `unwrap_or_else(Vec::new)` auf einem `Option<Vec<T>>`-Wert aufrufen, um einen
+> neuen, leeren Vektor zu erhalten, wenn der Wert `None` ist. Der Compiler
+> implementiert automatisch die `Fn`-Merkmale, die für eine Funktionsdefinition
+> anwendbar sind.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
 Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von `unwrap_or_else`
@@ -653,12 +653,12 @@ error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
 Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die `value`
 aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
 Funktionsabschlusses so ändern, dass er keine Werte aus der Umgebung
-verschiebt. Um zu zählen, wie oft `sort_by_key` aufgerufen wird, ist es
-einfacher, einen Zähler in der Umgebung zu halten und seinen Wert im
-Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
-Funktionsabschluss in Codeblock 13-9 funktioniert mit `sort_by_key`, weil er
-nur eine veränderbare Referenz auf den `num_sort_operations`-Zähler erfasst
-und daher mehr als einmal aufgerufen werden kann:
+verschiebt. Es ist einfacher, einen Zähler in der Umgebung zu halten und seinen
+Wert im Funktionsabschluss-Rumpf zu erhöhen, um zu zählen, wie oft
+`sort_by_key` aufgerufen wurde. Der Funktionsabschluss in Codeblock 13-9
+funktioniert mit `sort_by_key`, weil er nur eine veränderbare Referenz auf den
+`num_sort_operations`-Zähler erfasst und daher mehr als einmal aufgerufen
+werden kann:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

@@ -4,9 +4,9 @@ Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest
 du wissen, welche Implementierung schneller ist: Die Version der Funktion
 `search` mit einer expliziten `for`-Schleife oder die Version mit Iteratoren.
 
-Wir haben einen Benchmark durchführt, der den gesamten Inhalt von *The
-Adventures of Sherlock Holmes* von Sir Arthur Conan Doyle in eine `Zeichenkette`
-(String) lädt und nach dem Wort *the* im Inhalt sucht. Hier sind die
+Wir haben einen Benchmark durchführt, der den gesamten Inhalt von _The
+Adventures of Sherlock Holmes_ von Sir Arthur Conan Doyle in eine `Zeichenkette`
+(String) lädt und nach dem Wort _the_ im Inhalt sucht. Hier sind die
 Ergebnisse des Benchmarks für die Version von `search` mit `for`-Schleife und
 der Version die Iteratoren verwendet:
 
@@ -26,9 +26,9 @@ unterschiedlicher Länge als `query` verwenden und verschiedene Arten anderer
 Variationen verwenden. Der Punkt ist folgender: Obwohl Iteratoren eine
 hochrangige Abstraktion sind, werden sie ungefähr auf denselben Programmcode
 kompiliert, als hättest du diesen selbst auf niedriger Ebene geschrieben.
-Iteratoren sind eine von Rusts *Zero-Cost Abstraktionen*, damit ist gemeint,
+Iteratoren sind eine von Rusts _Zero-Cost Abstraktionen_, damit ist gemeint,
 dass die Verwendung keinen zusätzlichen Laufzeitaufwand verursacht. Dies
-entspricht der Definition von *Zero-Overhead* in C++ von Bjarne Stroustrup in
+entspricht der Definition von _Zero-Overhead_ in C++ von Bjarne Stroustrup in
 "Foundations of C++" (2012):
 
 > Im Allgemeinen folgen C++-Implementierungen dem Zero-Overhead-Prinzip: Was
@@ -76,7 +76,7 @@ kompiliert werden? Er würde auf denselben Programmcode kompiliert werden, als
 hättest du das Programm selbst in Assemblersprache geschrieben. Es gibt keine
 Schleife, die der Iteration über die Werte von `coefficients` entsprechen würde.
 Rust weiß, dass es 12 Iterationen gibt und „rollt“ daher die Schleife ab.
-*Abrollen* (unrolling) ist eine Optimierung, die den Mehraufwand (overhead) der
+_Abrollen_ (unrolling) ist eine Optimierung, die den Mehraufwand (overhead) der
 Steuerung der Schleife beseitigt und stattdessen sich wiederholenden
 Programmcode für jede Iteration der Schleife generiert.
 
