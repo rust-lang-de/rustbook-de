@@ -1,7 +1,7 @@
 ## Cargo um benutzerdefinierte Befehle erweitern
 
 Cargo ist so konzipiert, dass man es mit neuen Unterbefehlen erweitern kann,
-ohne Cargo ändern zu müssen. Wenn  in deinem `$PATH` eine Binärdatei
+ohne Cargo ändern zu müssen. Wenn in deinem `$PATH` eine Binärdatei
 `cargo-something` benannt wird, kannst du sie wie einen Unterbefehl von Cargo
 ausführen, indem du `cargo something` ausführst. Benutzerdefinierte Befehle wie
 dieser werden auch aufgelistet, wenn du `cargo --list` ausführst. Die

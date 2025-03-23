@@ -1,6 +1,6 @@
 ## Bauvorgang anpassen mit Freigabeprofilen (release profiles)
 
-In Rust sind *Freigabeprofile* vordefinierte, anpassbare Profile mit
+In Rust sind _Freigabeprofile_ vordefinierte, anpassbare Profile mit
 unterschiedlichen Konfigurationen, durch die ein Programmierer mehr Kontrolle
 über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes Profil
 wird von den anderen unabhängig konfiguriert.
@@ -24,7 +24,7 @@ Die Angaben `dev` und `release` sind diese verschiedenen Profile, die vom
 Compiler verwendet werden.
 
 Cargo hat Standardeinstellungen für jedes der Profile, die verwendet werden,
-wenn du keine expliziten Abschnitte `[profile.*]` in der Datei *Cargo.toml* des
+wenn du keine expliziten Abschnitte `[profile.*]` in der Datei _Cargo.toml_ des
 Projekts hast. Durch Hinzufügen eines Abschnitts `[profile.*]` für Profile, die
 du anpassen möchtest, überschreibst du Teile der Standardeinstellungen. Hier
 sind zum Beispiel die Standardwerte für die Einstellung `opt-level` der Profile
@@ -54,9 +54,9 @@ Aus diesem Grund ist das standardmäßige `opt-level` für das Profil `release`
 `3`.
 
 Du kannst eine Standardeinstellung überschreiben, indem du dafür in
-*Cargo.toml* einen anderen Wert hinzufügst. Wenn wir zum Beispiel die
+_Cargo.toml_ einen anderen Wert hinzufügst. Wenn wir zum Beispiel die
 Optimierungsstufe 1 im Entwicklungsprofil verwenden möchten, können wir diese
-beiden Zeilen in die Datei *Cargo.toml* unseres Projekts hinzufügen:
+beiden Zeilen in die Datei _Cargo.toml_ unseres Projekts hinzufügen:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 

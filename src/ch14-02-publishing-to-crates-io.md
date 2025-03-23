@@ -19,10 +19,10 @@ wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
 Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
 Rust-Code mit zwei Schrägstrichen `//` kommentiert. Rust hat auch eine eigene
 Art von Kommentar für die Dokumentation, die passenderweise als
-*Dokumentationskommentar* bezeichnet wird und HTML-Dokumentation generiert.
+_Dokumentationskommentar_ bezeichnet wird und HTML-Dokumentation generiert.
 Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
 API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
-wie deine Kiste *benutzt* wird, und nicht, wie deine Kiste *implementiert*
+wie deine Kiste _benutzt_ wird, und nicht, wie deine Kiste _implementiert_
 ist.
 
 Dokumentationskommentare verwenden drei Schrägstriche `///` anstelle von zwei
@@ -58,7 +58,7 @@ Programmcode, der die Verwendung der Funktion `add_one` demonstriert. Wir könne
 die HTML-Dokumentation aus diesem Dokumentationskommentar generieren, indem wir
 `cargo doc` ausführen. Dieser Befehl führt das mit Rust verbreitete Werkzeug
 `rustdoc` aus und legt die generierte HTML-Dokumentation im Verzeichnis
-*target/doc* ab.
+_target/doc_ ab.
 
 Wenn du `cargo doc --open` ausführst, wird der HTML-Code für die Dokumentation
 deiner aktuellen Kiste (und auch die Dokumentation aller Abhängigkeiten
@@ -78,16 +78,16 @@ einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
 einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
 verwenden:
 
-* **Panics**: Die Szenarien, in denen die dokumentierte Funktion `panic`
+- **Panics**: Die Szenarien, in denen die dokumentierte Funktion `panic`
   aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
   `panic` aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
   Situationen nicht aufrufen.
-* **Errors**: Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
+- **Errors**: Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
   Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
   Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
   Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
   unterschiedliche Art behandelt.
-* **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
+- **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
   behandeln die Unsicherheit im Kapitel 20), sollte ein Abschnitt existieren,
   in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
   behandelt werden die die Funktion vom Aufrufenden erwartet.
@@ -127,13 +127,13 @@ Der Stil des Dokumentationskommentars `//!` fügt dem Element, das die
 Kommentare enthält, Dokumentation hinzu, anstatt den Elementen die auf die
 Kommentare folgen Dokumentation hinzuzufügen. Wir verwenden diese
 Dokumentationskommentare üblicherweise in der Wurzeldatei (laut Konvention
-*src/lib.rs*) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
+_src/lib.rs_) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
 dokumentieren.
 
 Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
 `my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
-der Datei *src/lib.rs* Dokumentationskommentare hinzufügen die mit `//!`
-beginnen. Siehe Codeblock 14-2: 
+der Datei _src/lib.rs_ Dokumentationskommentare hinzufügen die mit `//!`
+beginnen. Siehe Codeblock 14-2.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -166,7 +166,7 @@ Beachte, dass nach der letzten Zeile, die mit `//!` beginnt, kein Programmcode
 mehr vorhanden ist. Da wir die Kommentare mit `//!` anstatt `///` begonnen
 haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht ein 
 Element, das diesem Kommentar folgt. In diesem Fall ist dieses Element die
-Datei *src/lib.rs*, dabei handelt es sich um das Wurzelverzeichnis der Kiste.
+Datei _src/lib.rs_, dabei handelt es sich um das Wurzelverzeichnis der Kiste.
 Diese Kommentare beschreiben die gesamte Kiste.
 
 Wenn wir `cargo doc --open` ausführen, werden diese Kommentare auf der
@@ -204,7 +204,7 @@ könnten sich auch darüber ärgern, dass sie `use`
 eingeben müssen anstatt `use` `my_crate::UsefulType;`.
 
 Die gute Nachricht ist, dass du die interne Organisation nicht neu anordnen
-musst, wenn sie für andere aus einer anderen Bibliothek *nicht* geeignet ist.
+musst, wenn sie für andere aus einer anderen Bibliothek _nicht_ geeignet ist.
 Stattdessen kannst du Elemente erneut exportieren, um mit `pub use` eine
 veränderte öffentliche Struktur von deiner privaten Struktur zu erstellen.
 Beim Re-Exportieren wird ein öffentliches Element an einem Speicherort genommen 
@@ -415,7 +415,7 @@ abcdefghijklmnopqrstuvwxyz012345
 ```
 
 Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
-*~/.cargo/credentials*. Beachte, dass dieses Token ein *Geheimnis* ist: Gib es
+_~/.cargo/credentials_. Beachte, dass dieses Token ein _Geheimnis_ ist: Gib es
 nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem teilst,
 solltest du es widerrufen und ein neues Token auf [crates.io][crates] erzeugen.
 
@@ -423,7 +423,7 @@ solltest du es widerrufen und ein neues Token auf [crates.io][crates] erzeugen.
 
 Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem
 Veröffentlichen musst du deiner Kiste einige Metadaten im Abschnitt `[package]`
-der Datei *Cargo.toml* der Kiste hinzufügen.
+der Datei _Cargo.toml_ der Kiste hinzufügen.
 
 Deine Kiste benötigt einen eindeutigen Namen. Während du vor Ort an einer Kiste
 arbeitest, kannst du eine Kiste beliebig benennen. Allerdings werden
@@ -432,7 +432,7 @@ Kistenname vergeben ist, kann niemand mehr eine Kiste mit diesem Namen
 veröffentlichen. Suche vor dem Versuch, eine Kiste zu veröffentlichen, nach dem
 Namen, den du verwenden möchtest. Wenn der Name von einer anderen Kiste
 verwendet wurde, wirst du einen anderen Namen suchen müssen und das Feld `name`
-in der Datei *Cargo.toml* im Abschnitt `[package]` bearbeiten, um den neuen
+in der Datei _Cargo.toml_ im Abschnitt `[package]` bearbeiten, um den neuen
 Namen für die Veröffentlichung zu verwenden:
 
 <span class="filename">Dateiname: Cargo.toml</span>
@@ -460,9 +460,9 @@ Caused by:
 Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine
 Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
 deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Ergänze
-in der Datei *Cargo.toml* eine Beschreibung hinzu, die nur ein oder zwei Sätze
+in der Datei _Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze
 umfasst, da sie zusammen mit deiner Kiste in den Suchergebnissen angezeigt
-wird. Für das Feld `license` musst du einen *Lizenzkennungswert* (licence
+wird. Für das Feld `license` musst du einen _Lizenzkennungswert_ (licence
 identifier value) angeben. In [Linux Foundation's Software Package Data
 Exchange (SPDX)][spdx] sind die Bezeichner aufgeführt, die Sie für diesen Wert
 verwenden können. Um beispielsweise anzugeben, dass du deine Kiste mit der
@@ -475,6 +475,7 @@ MIT-Lizenz lizenziert hast, füge die `MIT`-Identifikation hinzu:
 name = "guessing_game"
 license = "MIT"
 ```
+
 Wenn man eine Lizenz verwenden möchte, die nicht in SPDX angezeigt wird, muss
 man den Text dieser Lizenz in eine Datei einfügen, die Datei in das Projekt
 aufnehmen und dann `license-file` verwenden um den Namen dieser Lizenz zu
@@ -487,7 +488,7 @@ Diese Übung zeigt, dass man durch `OR` auch mehrere Lizenzkennungen getrennt
 angeben kann, um mehrere Lizenzen für ein Projekt zu haben.
 
 Mit einem eindeutigen Namen, der Version, deiner Beschreibung und einer
-hinzugefügten Lizenz könnte die Datei *Cargo.toml* für ein Projekt, das zur
+hinzugefügten Lizenz könnte die Datei _Cargo.toml_ für ein Projekt, das zur
 Veröffentlichung bereit ist, folgendermaßen aussehen:
 
 <span class="filename">Dateiname: Cargo.toml</span>
@@ -496,7 +497,7 @@ Veröffentlichung bereit ist, folgendermaßen aussehen:
 [package]
 name = "guessing_game"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"
 
@@ -514,7 +515,7 @@ Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
 Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.
 
-Sei vorsichtig, da eine Veröffentlichung *dauerhaft* ist. Die Version kann
+Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
 niemals überschrieben und der Programmcode nicht gelöscht werden. Ein Hauptziel
 von [crates.io][crates] ist es, als permanentes Archiv von Code zu fungieren,
 sodass alle Projekte die erstellt werden und von Kisten aus [crates.io][crates]
@@ -541,7 +542,7 @@ für sein Projekt hinzufügen.
 ### Veröffentlichen einer neuen Version einer vorhandenen Kiste
 
 Wenn du Änderungen an deiner Kiste vorgenommen hast und bereit bist, eine neue
-Version zu veröffentlichen, ändere den in der *Cargo.toml*-Datei
+Version zu veröffentlichen, ändere den in der _Cargo.toml_-Datei
 angegebenen Versionswert und veröffentliche ihn erneut. Verwende die
 [Regeln für die semantische Versionierung][semver], um auf den von dir 
 vorgenommenen Änderungen basierend welche neue Versionsnummer geeignet ist.
@@ -552,14 +553,14 @@ Führe dann `cargo publish` aus, um die neue Version hochzuladen.
 Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
 ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt
-ist. In solchen Situationen unterstützt Cargo das *herausziehen* (yanking)
-einer Kistenversion.
+ist. In solchen Situationen unterstützt Cargo das Herausziehen (yanking) einer
+Kistenversion.
 
-Durch das Herausziehen einer Version wird verhindert, dass neue Projekte von
+Durch das _Herausziehen_ einer Version wird verhindert, dass neue Projekte von
 dieser Version abhängen, während alle vorhandenen Projekte, die davon abhängen,
 weiterhin heruntergeladen werden können. Im Wesentlichen bedeutet Herausziehen
-(yank), dass alle Projekte mit einem *Cargo.lock* nicht kaputt gehen und
-zukünftige generierte *Cargo.lock*-Dateien nicht die herausgezogene Version
+(yank), dass alle Projekte mit einem _Cargo.lock_ nicht kaputt gehen und
+zukünftige generierte _Cargo.lock_-Dateien nicht die herausgezogene Version
 verwenden.
 
 Um eine Version einer Kiste herauszuziehen, rufe `cargo yank` auf und
@@ -583,7 +584,7 @@ $ cargo yank --vers 1.0.1 --undo
       Unyank guessing_game@1.0.1
 ```
 
-Das Herausziehen löscht *keinen* Programmcode. Es kann zum Beispiel keine
+Das Herausziehen löscht _keinen_ Programmcode. Es kann zum Beispiel keine
 versehentlich hochgeladenen Geheimnisse löschen. Falls das passieren sollte
 musst du diese Geheimnisse sofort zurücksetzen.
 

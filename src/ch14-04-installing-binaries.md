@@ -5,15 +5,15 @@ Dies soll keine Systempakete ersetzen, sondern soll Rust-Entwicklern eine
 bequeme Möglichkeit bieten, Tools zu installieren, die andere auf
 [crates.io](https://crates.io/) veröffentlicht haben. Beachte,
 dass du nur binäre Pakete installieren kannst, das heißt in der Kiste muss eine
-Datei *src/main.rs* oder eine andere als binär spezifizierte Datei vorhanden
+Datei _src/main.rs_ oder eine andere als binär spezifizierte Datei vorhanden
 sein, und nicht nur eine Bibliothek, die alleine nicht ausführbar ist sondern zur 
 Aufnahme in andere Programme geeignet ist. Für gewöhnlich enthalten Kisten eine
-*README*-Datei mit Informationen darüber ob die Datei ausführbar ist, eine
+_README_-Datei mit Informationen darüber ob die Datei ausführbar ist, eine
 Bibliothek enthält oder beides.
 
-Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis *bin* 
+Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis _bin_ 
 des Wurzelverzeichnisses der Installation gespeichert. Wenn du die Installation
-mit *rustup.rs* durchgeführt und keine benutzerdefinierte Konfiguration
+mit _rustup.rs_ durchgeführt und keine benutzerdefinierte Konfiguration
 hast, lautet dieses Verzeichnis `$HOME/.cargo/bin`. Stelle sicher, dass sich
 dieses Verzeichnis in deinem `$PATH` befindet, damit du Programme ausführen
 kannst, die du mit `cargo install` installiert hast.
