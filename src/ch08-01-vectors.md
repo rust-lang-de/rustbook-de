@@ -1,7 +1,7 @@
 ## Wertlisten in Vektoren ablegen
 
 Der erste Kollektionstyp, den wir betrachten werden, ist `Vec<T>`, auch bekannt
-als *Vektor*. Vektoren ermöglichen es dir, mehr als einen Wert in einer
+als _Vektor_. Vektoren ermöglichen es dir, mehr als einen Wert in einer
 einzigen Datenstruktur zu speichern und alle Werte nebeneinander im Speicher
 abzulegen. Vektoren können nur Werte desselben Typs speichern. Sie sind nützlich,
 wenn du eine Liste von Einträgen hast, z.B. die Textzeilen einer Datei oder die

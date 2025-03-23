@@ -1,7 +1,7 @@
 # Allgemeine Kollektionen
 
 Die Standardbibliothek von Rust enthält eine Reihe sehr nützlicher
-Datenstrukturen, die *Kollektionen* (collections) genannt werden. Die meisten
+Datenstrukturen, die _Kollektionen_ (collections) genannt werden. Die meisten
 anderen Datentypen repräsentieren einen bestimmten Wert, aber Kollektionen
 können mehrere Werte enthalten. Im Gegensatz zu den eingebauten Array- und
 Tupel-Typen werden die Daten, auf die diese Kollektionen zeigen, im dynamischen
@@ -13,14 +13,14 @@ Fähigkeit, die du im Laufe der Zeit entwickeln wirst. In diesem Kapitel
 besprechen wir drei Kollektionen, die sehr häufig in Rust-Programmen verwendet
 werden:
 
-* Ein *Vektor* erlaubt es dir, eine variable Anzahl von Werten nebeneinander zu
+- Ein _Vektor_ erlaubt es dir, eine variable Anzahl von Werten nebeneinander zu
   speichern.
-* Eine *Zeichenkette* ist eine Kollektion von Zeichen. Wir haben den Typ
+- Eine _Zeichenkette_ ist eine Kollektion von Zeichen. Wir haben den Typ
   `String` bereits kennengelernt, aber in diesem Kapitel werden wir ausführlich
   darauf eingehen.
-* Eine *Hashtabelle* (hash map) erlaubt es dir, einen Wert mit einem
+- Eine _Hashtabelle_ (hash map) erlaubt es dir, einen Wert mit einem
   bestimmten Schlüssel zu assoziieren. Es ist eine spezielle Implementierung
-  der allgemeineren Datenstruktur, die *assoziatives Datenfeld* (map) genannt
+  der allgemeineren Datenstruktur, die _assoziatives Datenfeld_ (map) genannt
   wird.
 
 Informationen über weitere Kollektionsarten, die von der Standardbibliothek

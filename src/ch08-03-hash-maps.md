@@ -1,12 +1,12 @@
 ## Schlüssel mit zugehörigen Werten in Hashtabellen ablegen
 
-Die letzte unserer allgemeinen Kollektionen ist die *Hashtabelle* (hash map).
+Die letzte unserer allgemeinen Kollektionen ist die _Hashtabelle_ (hash map).
 Der Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
-Werten vom Typ `V` mittels einer *Hashfunktion* (hash function), die bestimmt,
+Werten vom Typ `V` mittels einer _Hashfunktion_ (hash function), die bestimmt,
 wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
-Namen wie *Hash*, *Abbildung* (map), *Objekt*, *Hashtabelle* (hash table),
-*Wörterbuch* (dictionary) oder *assoziatives Array* (associative array), um nur
+Namen wie _Hash_, _Abbildung_ (map), _Objekt_, _Hashtabelle_ (hash table),
+_Wörterbuch_ (dictionary) oder _assoziatives Array_ (associative array), um nur
 einige zu nennen.
 
 Hashtabellen sind nützlich, wenn du Daten nicht wie bei Vektoren über einen
@@ -132,7 +132,7 @@ nachdem sie mit dem Aufruf von `insert` in die Hashtabelle verschoben wurden.
 Wenn wir Referenzen auf Werte in die Hashtabelle einfügen, werden die Werte
 nicht in die Hashtabelle verschoben. Die Werte, auf die die Referenzen zeigen,
 müssen mindestens so lange gültig sein, wie die Hashtabelle gültig ist. Wir
-werden mehr über diese Fragen im Abschnitt [„Referenzen validieren mit
+werden mehr über diese Fragen in [„Referenzen validieren mit
 Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10 sprechen.
 
 ### Aktualisieren einer Hashtabelle
@@ -147,7 +147,7 @@ der Fall zu behandeln ist, wenn einem Schlüssel bereits ein Wert zugewiesen
 wurde. Du kannst den alten Wert durch den neuen ersetzen und dabei den alten
 Wert völlig außer Acht lassen. Du kannst den alten Wert behalten und den neuen
 Wert ignorieren und nur dann den neuen Wert hinzufügen, wenn der Schlüssel noch
-*keinen* zugewiesenen Wert hat. Oder du kannst den alten und neuen Wert
+_keinen_ zugewiesenen Wert hat. Oder du kannst den alten und neuen Wert
 kombinieren. Schauen wir uns an, wie diese Varianten jeweils funktionieren!
 
 #### Überschreiben eines Wertes
@@ -251,9 +251,9 @@ Hilfe einer Hashtabelle, die Wörter speichert und zählt</span>
 
 Dieser Code gibt `{"Welt": 2, "wunderbare": 1, "Hallo": 1}` aus. Es kann sein,
 dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
-werden: Du erinnerst dich an den Abschnitt [„Zugreifen auf Werte in einer
-Hashtabelle“][access], dass die Iteration über eine Hashtabelle in beliebiger
-Reihenfolge erfolgt.
+werden: Du erinnerst dich an [„Zugreifen auf Werte in einer
+Hashtabelle“][access], wo die Iteration über eine Hashtabelle in einer
+willkürlichen Reihenfolge erfolgt.
 
 Die Methode `split_whitespace` gibt einen Iterator über durch Leerzeichen
 getrennte Sub-Anteilstypen des Wertes in `text` zurück. Die Methode `or_insert`
@@ -266,14 +266,14 @@ und gemäß der Ausleihregeln zulässig sind.
 
 ### Hash-Funktionen
 
-Standardmäßig verwendet `HashMap` eine Hash-Funktion namens *SipHash*, die robust
+Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die robust
 gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist. Dies
 ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
 zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
 Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
 die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
 anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-*Hash-Funktion* ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
+_Hash-Funktion_ ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
 werden in [Kapitel 10][traits] über Merkmale und ihre Implementierung sprechen.
 Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
 implementieren; [crates.io][crates] verfügt über Bibliotheken, die von anderen

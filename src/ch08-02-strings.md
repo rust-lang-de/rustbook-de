@@ -19,11 +19,11 @@ ist, weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
 
 ### Was ist eine Zeichenkette?
 
-Zuerst werden wir definieren, was wir mit dem Begriff *Zeichenkette* (string)
+Zuerst werden wir definieren, was wir mit dem Begriff _Zeichenkette_ (string)
 meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
 nämlich den Zeichenkettenanteilstyp `str`, der üblicherweise in seiner
 Ausleihenform `&str` zu sehen ist. In Kapitel 4 sprachen wir über
-*Zeichenkettenanteilstypen* (string slices), die Referenzen auf einige
+_Zeichenkettenanteilstypen_ (string slices), die Referenzen auf einige
 UTF-8-kodierte Zeichenkettendaten sind, die anderswo gespeichert sind.
 Zeichenkettenliterale werden beispielsweise in der Binärdatei des Programms
 gespeichert und sind daher Zeichenkettenanteilstypen.
@@ -202,7 +202,7 @@ generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
 entscheidenden Hinweis, um die kniffligen Stellen des Operators `+` zu
 verstehen.
 
-Erstens hat `s2` ein `&`, was bedeutet, dass wir eine *Referenz* der zweiten
+Erstens hat `s2` ein `&`, was bedeutet, dass wir eine _Referenz_ der zweiten
 Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
 Parameter `s` in der Funktion `add`: Wir können nur einen `&str` zu einem
 `String` hinzufügen; wir können nicht zwei `String`-Werte aneinanderhängen.
@@ -211,14 +211,14 @@ zweiten Parameter von `add` spezifiziert. Warum kompiliert also Codeblock 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
 Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
-Wenn wir die Methode `add` aufrufen, benutzt Rust eine *automatische
-Umwandlung* (deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die
+Wenn wir die Methode `add` aufrufen, benutzt Rust eine _automatische
+Umwandlung_ (deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die
 automatische Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add`
 nicht die Eigentümerschaft des Parameters `s` übernimmt, ist `s2` auch nach
 dieser Operation immer noch ein gültiger `String`.
 
 Zweitens können wir in der Signatur sehen, dass `add` die Eigentümerschaft von
-`self` übernimmt, weil `self` *kein* `&` hat. Das bedeutet, dass `s1` in
+`self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in
 Codeblock 8-18 in den Aufruf von `add` verschoben wird und danach nicht mehr
 gültig ist. Obwohl also `let s3 = s1 + &s2;` so aussieht, als ob beide
 Zeichenketten kopiert und eine neue erzeugt wird, übernimmt diese Anweisung
@@ -355,7 +355,7 @@ frühen Stadium des Entwicklungsprozesses.
 Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
 Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
 Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
-*Buchstaben* bezeichnen würden).
+_Buchstaben_ bezeichnen würden).
 
 Wenn wir uns das in der Devanagari-Schrift geschriebene Hindi-Wort „नमस्ते“
 ([_Namaste_](https://de.wikipedia.org/wiki/Namaste)) ansehen, wird es als ein 
