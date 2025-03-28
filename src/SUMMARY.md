@@ -101,12 +101,12 @@
     - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
     - [Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
 
-- [Async und Await](ch17-00-async-await.md)
+- [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme](ch17-00-async-await.md)
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
-  - [Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
+  - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
   - [Arbeiten mit einer beliebigen Anzahl von Futures](ch17-03-more-futures.md)
-  - [Ströme (streams)](ch17-04-streams.md)
-  - [Merkmale für async](ch17-05-traits-for-async.md)
+  - [Ströme (streams): Abfolge von Futures](ch17-04-streams.md)
+  - [Ein genauerer Blick auf die Merkmale für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
 
 - [Objektorientierte Sprachelemente von Rust](ch18-00-oop.md)
