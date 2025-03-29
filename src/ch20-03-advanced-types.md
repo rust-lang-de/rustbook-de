@@ -442,4 +442,4 @@ Als nächstes werden wir über Funktionen und Funktionsabschlüsse sprechen!
 [string-slices]: ch04-03-slices.html#zeichenkettenanteilstypen-string-slices
 [match-operator]: ch06-02-match.html
 [using-trait-objects]: ch18-02-trait-objects.html
-[using-the-newtype-pattern]: ch20-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
+[using-the-newtype-pattern]: ch20-02-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen

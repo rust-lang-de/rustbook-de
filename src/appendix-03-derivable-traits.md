@@ -198,7 +198,7 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
 [creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
-[macros]: ch20-06-macros.html
+[macros]: ch20-05-macros.html
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

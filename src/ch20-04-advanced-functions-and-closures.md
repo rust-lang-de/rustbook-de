@@ -182,6 +182,6 @@ Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18.
 
 Als nächstes wollen wir uns Makros ansehen!
 
-[advanced-traits]: ch20-03-advanced-traits.html
+[advanced-traits]: ch20-02-advanced-traits.html
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

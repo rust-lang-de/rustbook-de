@@ -1032,4 +1032,4 @@ uns im Laufe des Buches kurz angeschaut, haben aber noch nicht ihre volle
 Leistungsfähigkeit gesehen. Los geht's!
 
 [more-info-than-rustc]: ch09-03-to-panic-or-not-to-panic.html#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast
-[macros]: ch20-06-macros.html
+[macros]: ch20-05-macros.html

@@ -424,5 +424,5 @@ geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.
 
 [dyn-compatibility]: https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility
-[dynamically-sized]: ch20-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
+[dynamically-sized]: ch20-03-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
 [performance-of-code-using-generics]: ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen

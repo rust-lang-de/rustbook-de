@@ -123,10 +123,10 @@
 
 - [Fortgeschrittene Sprachelemente](ch20-00-advanced-features.md)
     - [Unsicheres (unsafe) Rust](ch20-01-unsafe-rust.md)
-    - [Fortgeschrittene Merkmale (traits)](ch20-03-advanced-traits.md)
-    - [Fortgeschrittene Typen](ch20-04-advanced-types.md)
-    - [Erweiterte Funktionen und Funktionsabschlüsse (closures)](ch20-05-advanced-functions-and-closures.md)
-    - [Makros](ch20-06-macros.md)
+    - [Fortgeschrittene Merkmale (traits)](ch20-02-advanced-traits.md)
+    - [Fortgeschrittene Typen](ch20-03-advanced-types.md)
+    - [Erweiterte Funktionen und Funktionsabschlüsse (closures)](ch20-04-advanced-functions-and-closures.md)
+    - [Makros](ch20-05-macros.md)
 
 - [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch21-00-final-project-a-web-server.md)
     - [Einen einsträngigen (single-threaded) Webserver erstellen](ch21-01-single-threaded.md)
