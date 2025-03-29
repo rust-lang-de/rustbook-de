@@ -255,7 +255,7 @@ $ cd someproject
 $ cargo build
 ```
 
-Weitere Informationen über Cargo findest du unter seiner
+Weitere Informationen über Cargo findest du in seiner
 [Dokumentation][cargo-doc].
 
 ## Zusammenfassung
