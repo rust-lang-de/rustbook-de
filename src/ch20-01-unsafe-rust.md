@@ -3,14 +3,14 @@
 Bei allem Code, den wir bisher besprochen haben, wurden Rusts
 Speichersicherheitsgarantien zur Kompilierzeit erzwungen. Allerdings ist in
 Rust eine zweite Sprache versteckt, die diese Speichersicherheitsgarantien
-nicht erzwingt: Sie heißt *unsicheres Rust* (unsafe Rust) und funktioniert
+nicht erzwingt: Sie heißt _unsicheres Rust_ (unsafe Rust) und funktioniert
 genau wie das normale Rust, gibt uns aber zusätzliche Superkräfte.
 
 Unsicheres Rust existiert, weil die statische Analyse von Natur aus konservativ
 ist. Wenn der Compiler versucht festzustellen, ob der Code die Garantien
 einhält oder nicht, ist es besser für ihn, einige gültige Programme
 zurückzuweisen, als einige ungültige Programme zu akzeptieren. Obwohl der Code
-*möglicherweise* in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
+_möglicherweise_ in Ordnung ist, wird der Rust-Compiler den Code ablehnen, wenn
 er nicht genügend Informationen hat, um sicher zu sein. In diesen Fällen kannst
 du unsicheren Code verwenden, um dem Compiler zu sagen: „Vertraue mir, ich
 weiß, was ich tue.“ Sei jedoch gewarnt, dass du unsicheres Rust auf eigenes
@@ -32,14 +32,14 @@ untersuchen, was wir mit unsicherem Rust tun können und wie wir es tun können.
 Um auf unsicheres Rust umzuschalten, verwendest du das Schlüsselwort `unsafe`
 und startest dann einen neuen Block, der den unsicheren Code enthält. In
 unsicherem Rust kannst du fünf Aktionen ausführen, die du in sicherem Rust
-nicht ausführen kannst, die wir *unsichere Superkräfte* nennen. Zu diesen
+nicht ausführen kannst, die wir _unsichere Superkräfte_ nennen. Zu diesen
 Superkräften gehören folgende Fähigkeiten:
 
-* Dereferenzieren eines Rohzeigers
-* Aufrufen einer unsicheren Funktion oder Methode
-* Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
-* Implementieren eines unsicheren Merkmals (trait)
-* Zugreifen auf Feldern in `union`
+- Dereferenzieren eines Rohzeigers
+- Aufrufen einer unsicheren Funktion oder Methode
+- Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
+- Implementieren eines unsicheren Merkmals (trait)
+- Zugreifen auf Feldern in `union`
 
 Es ist wichtig zu verstehen, dass `unsafe` weder den Ausleihenprüfer (borrow
 checker) abschaltet noch andere Sicherheitsprüfungen von Rust deaktiviert: Wenn
@@ -62,8 +62,8 @@ mit der Speichersicherheit innerhalb eines `unsafe`-Blocks liegen müssen. Halte
 `unsafe`-Blöcke klein; du wirst später dankbar sein, wenn du Speicherfehler
 untersuchst.
 
-Um unsicheren Code so weit wie möglich zu isolieren, ist es am besten,
-unsicheren Code in eine sichere Abstraktion einzupacken und eine sichere API
+Um unsicheren Code so weit wie möglich zu isolieren, ist es am besten, solchen
+Code in eine sichere Abstraktion einzupacken und eine sichere API
 bereitzustellen, auf die wir später im Kapitel eingehen werden, wenn wir
 unsichere Funktionen und Methoden untersuchen. Teile der Standardbibliothek
 sind als sichere Abstraktionen über unsicheren, geprüften Code implementiert.
@@ -78,24 +78,24 @@ unsicheren Codes bieten.
 
 ### Dereferenzieren eines Rohzeigers
 
-In Kapitel 4 haben wir im Abschnitt [„Hängende
-Referenzen“][dangling-references] erwähnt, dass der Compiler sicherstellt,
-dass Referenzen immer gültig sind. Unsicheres Rust hat zwei neue Typen namens
-*Rohzeiger* (raw pointers), die ähnlich wie Referenzen sind. Wie bei Referenzen
-können Rohzeiger unveränderbar oder veränderbar sein und werden als `*const
-T` bzw. `*mut T` geschrieben. Das Sternchen ist nicht der
-Dereferenzierungsoperator (dereference operator); es ist Teil des Typnamens. Im
-Zusammenhang mit Rohzeigern bedeutet *unveränderbar* (immutable), dass der
-Zeiger nach der Dereferenzierung nicht direkt zugewiesen werden kann.
+In [„Hängende Referenzen“][dangling-references] in Kapitel 4 haben wir erwähnt,
+dass der Compiler sicherstellt, dass Referenzen immer gültig sind. Unsicheres
+Rust hat zwei neue Typen namens _Rohzeiger_ (raw pointers), die ähnlich wie
+Referenzen sind. Wie bei Referenzen können Rohzeiger unveränderbar oder
+veränderbar sein und werden als `_const T` bzw. `_mut T` geschrieben. Das
+Sternchen ist nicht der Dereferenzierungsoperator (dereference operator); es
+ist Teil des Typnamens. Im Zusammenhang mit Rohzeigern bedeutet _unveränderbar_
+(immutable), dass der Zeiger nach der Dereferenzierung nicht direkt zugewiesen
+werden kann.
 
 Rohzeiger sind anders als Referenzen und intelligente Zeiger:
 
-* Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderbare als
+- Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderbare als
   auch veränderbare Zeiger oder mehrere veränderbare Zeiger auf die gleiche
   Stelle haben.
-* Sie zeigen nicht garantiert auf gültigen Speicher.
-* Sie dürfen null sein.
-* Sie implementieren kein automatisches Aufräumen.
+- Sie zeigen nicht garantiert auf gültigen Speicher.
+- Sie dürfen null sein.
+- Sie implementieren kein automatisches Aufräumen.
 
 Wenn du dich dagegen entscheidest, diese Garantien von Rust erzwingen zu
 lassen, kannst du auf garantierte Sicherheit verzichten und stattdessen eine
@@ -135,9 +135,9 @@ wie man einen Rohzeiger auf eine willkürliche Stelle im Speicher erstellt. Der
 Versuch, willkürlichen Speicher zu verwenden, ist undefiniert: Es könnten Daten
 an dieser Adresse vorhanden sein oder auch nicht, der Compiler könnte den Code
 so optimieren, dass es keinen Speicherzugriff gibt, oder das Programm könnte
-eine Schutzverletzung (segmentation fault) verursachen. Normalerweise gibt es
-keinen guten Grund, solchen Code zu schreiben, vor allem, wenn man stattdessen
-den Operator `&raw` verwenden kann, aber es ist möglich.
+mit einer Schutzverletzung (segmentation fault) abbrechen. Normalerweise gibt
+es keinen guten Grund, solchen Code zu schreiben, vor allem, wenn man
+stattdessen den Operator `&raw` verwenden kann, aber es ist möglich.
 
 ```rust
 # fn main() {
@@ -150,7 +150,7 @@ den Operator `&raw` verwenden kann, aber es ist möglich.
 willkürliche Speicheradresse</span>
 
 Erinnere dich, dass wir Rohzeiger in sicherem Code erstellen können, aber wir
-können keine Rohzeiger *dereferenzieren* und die Daten lesen, auf die gezeigt
+können keine Rohzeiger _dereferenzieren_ und die Daten lesen, auf die gezeigt
 wird. In Codeblock 20-3 wenden wir den Dereferenzierungsoperator `*` auf einen
 Rohzeiger an, was einen `unsafe`-Block erfordert.
 
@@ -188,11 +188,11 @@ Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!
 
 Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
 Hauptanwendungsfall ist die Kopplung mit C-Code, wie du im nächsten Abschnitt
-[„Aufrufen einer unsicheren Funktion oder
-Methode“](#aufrufen-einer-unsicheren-funktion-oder-methode) sehen wirst. Ein
-anderer Fall ist der Aufbau von sicheren Abstraktionen, die der Ausleihenprüfer
-nicht versteht. Wir stellen unsichere Funktionen vor und betrachten dann ein
-Beispiel für eine sichere Abstraktion, die unsicheren Code verwendet.
+[„Aufrufen einer unsicheren Funktion oder Methode“][unsafe-call] sehen wirst.
+Ein anderer Fall ist der Aufbau von sicheren Abstraktionen, die der
+Ausleihenprüfer nicht versteht. Wir stellen unsichere Funktionen vor und
+betrachten dann ein Beispiel für eine sichere Abstraktion, die unsicheren
+Code verwendet.
 
 ### Aufrufen einer unsicheren Funktion oder Methode
 
@@ -204,7 +204,7 @@ ein zusätzliches `unsafe` vor dem Rest der Definition. Das Schlüsselwort
 Anforderungen hat, die wir einhalten müssen, wenn wir diese Funktion aufrufen,
 denn Rust kann nicht garantieren, dass wir diese Anforderungen erfüllt haben.
 Indem wir eine unsichere Funktion innerhalb eines `unsafe`-Blocks aufrufen,
-sagen wir, dass wir die Dokumentation dieser Funktion gelesen haben und die
+sagen wir, dass wir die Dokumentation dieser Funktion gelesen haben und wir die
 Verantwortung für die Einhaltung der Verträge der Funktion übernehmen.
 
 Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
@@ -243,9 +243,11 @@ Mit dem `unsafe`-Block versichern wir Rust, dass wir die Dokumentation der
 Funktion gelesen haben, dass wir verstehen, wie sie richtig zu benutzen ist,
 und dass wir überprüft haben, dass wir den Vertrag der Funktion erfüllen.
 
-Rümpfe von unsicheren Funktionen sind effektiv `unsafe`-Blöcke, d.h. wir können
-andere unsichere Operationen innerhalb einer unsicheren Funktion ausführen,
-ohne einen weiteren `unsafe`-Block hinfügen zu müssen.
+Um unsichere Operationen im Rumpf einer unsicheren Funktion auszuführen, musst
+du wie bei einer regulären Funktion einen `unsafe`-Block verwenden, und der
+Compiler wird dich warnen, wenn du dies vergisst. Dies hilft dabei,
+`unsafe`-Blöcke so klein wie möglich zu halten, da unsichere Operationen
+möglicherweise nicht im gesamten Funktionsrumpf benötigt werden.
 
 #### Erstellen einer sicheren Abstraktion von unsicherem Code
 
@@ -371,13 +373,13 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 <span class="caption">Codeblock 20-6: Verwenden von unsicherem Codes bei der
 Implementierung der Funktion `split_at_mut`</span>
 
-Erinnere dich an Abschnitt [„Der Anteilstyp (slice)“][the-slice-type] in
-Kapitel 4, dass Anteilstypen Zeiger auf Daten und die Länge des Anteilstyps
-sind. Wir verwenden die Methode `len`, um die Länge eines Anteilstyps zu
-erhalten, und die Methode `as_mut_ptr`, um auf den Rohzeiger eines Anteilstyps
-zuzugreifen. Da wir in diesem Fall einen veränderbaren Anteilstyp von
-`i32`-Werten haben, gibt `as_mut_ptr` einen Rohzeiger vom Typ `*mut i32`
-zurück, den wir in der Variable `ptr` gespeichert haben.
+Erinnere dich an [„Der Anteilstyp (slice)“][the-slice-type] in Kapitel 4, dass
+Anteilstypen Zeiger auf Daten und die Länge des Anteilstyps sind. Wir verwenden
+die Methode `len`, um die Länge eines Anteilstyps zu erhalten, und die Methode
+`as_mut_ptr`, um auf den Rohzeiger eines Anteilstyps zuzugreifen. Da wir in
+diesem Fall einen veränderbaren Anteilstyp von `i32`-Werten haben, gibt
+`as_mut_ptr` einen Rohzeiger vom Typ `*mut i32` zurück, den wir in der Variable
+`ptr` gespeichert haben.
 
 Wir halten an der Zusicherung fest, dass der Index `mid` innerhalb des
 Anteilstyps liegt. Dann kommen wir zum unsicheren Code: Die Funktion
@@ -434,7 +436,7 @@ Anteilstyp ist, führt zu undefiniertem Verhalten.
 
 Manchmal muss dein Rust-Code möglicherweise mit Code interagieren, der in einer
 anderen Sprache geschrieben wurde. Hierfür hat Rust das Schlüsselwort `extern`,
-das das Erstellen und Verwenden einer *Fremdfunktionsschnittstelle* (Foreign
+das das Erstellen und Verwenden einer _Fremdfunktionsschnittstelle_ (Foreign
 Function Interface, kurz FFI) erleichtert. Eine FFI ist eine Möglichkeit für
 eine Programmiersprache, Funktionen zu definieren und es einer anderen
 (fremden) Programmiersprache zu ermöglichen, diese Funktionen aufzurufen.
@@ -464,20 +466,24 @@ fn main() {
 <span class="caption">Codeblock 20-8: Deklarieren und Aufrufen einer
 `extern`-Funktion, die in einer anderen Sprache definiert wurde</span>
 
-Innerhalb des Blocks `extern "C"` listen wir die Namen und Signaturen von
-externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen. Der
-Teil `"C"` definiert, welche *Binärschnittstelle* (application binary
+Innerhalb des Blocks `unsafe extern "C"` listen wir die Namen und Signaturen
+von externen Funktionen aus einer anderen Sprache auf, die wir aufrufen wollen.
+Der Teil `"C"` definiert, welche _Binärschnittstelle_ (application binary
 interface, kurz ABI) die externe Funktion benutzt: Die ABI definiert, wie die
 Funktion auf der technischen Ebene (assembly level) aufgerufen wird. Die ABI
 `"C"` ist die gebräuchlichste und folgt der ABI der Programmiersprache C.
+Informationen über alle von Rust unterstützten ABIs finden Sie in der
+[Rust-Referenz][ABI].
 
-Diese spezielle Funktion hat jedoch keine Überlegungen zur Speichersicherheit.
-Tatsächlich wissen wir, dass jeder Aufruf von `abs` für jeden `i32`-Wert sicher
-ist. Daher können wir das Schlüsselwort `safe` verwenden, um zu sagen, dass der
-Aufruf dieser speziellen Funktion sicher ist, obwohl sie sich in einem `unsafe
- extern`-Block befindet. Sobald wir diese Änderung vorgenommen haben, erfordert
-der Aufruf dieser Funktion keinen `unsafe`-Block mehr, wie in Codeblock 20-9
-gezeigt.
+Jedes Element, das innerhalb eines `unsafe extern`-Blocks deklariert wird, ist
+implizit `unsafe`. Einige FFI-Funktionen sind jedoch _sicher aufrufbar_. Zum
+Beispiel hat die Funktion `abs` aus der C-Standardbibliothek keine Überlegungen
+zur Speichersicherheit und wir wissen, dass sie mit jedem `i32` aufgerufen
+werden kann. In solchen Fällen können wir das Schlüsselwort `safe` verwenden,
+um zu sagen, dass der Aufruf dieser speziellen Funktion sicher ist, obwohl sie
+sich in einem `unsafe extern`-Block befindet. Sobald wir diese Änderung
+vorgenommen haben, erfordert der Aufruf der Funktion keinen `unsafe`-Block
+mehr, wie in Codeblock 20-9 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -487,7 +493,7 @@ unsafe extern "C" {
 }
 
 fn main() {
-    rintln!("Absolutwert von -3 gemäß C: {}", abs(-3));
+    println!("Absolutwert von -3 gemäß C: {}", abs(-3));
 }
 ```
 
@@ -497,7 +503,7 @@ Funktion</span>
 
 Die Kennzeichnung einer Funktion mit `safe` macht sie nicht von sich aus
 sicher! Vielmehr ist es ein Versprechen, das du Rust gegenüber abgibst, dass
-sie *sicher* ist. Es bleibt in deiner Verantwortung, dafür zu sorgen, dass
+sie _sicher_ ist. Es bleibt in deiner Verantwortung, dafür zu sorgen, dass
 dieses Versprechen eingehalten wird!
 
 > #### Aufrufen von Rust-Funktionen aus anderen Sprachen
@@ -506,37 +512,43 @@ dieses Versprechen eingehalten wird!
 > anderen Sprachen erlaubt, Rust-Funktionen aufzurufen. Anstelle eines
 > `extern`-Blocks fügen wir das Schlüsselwort `extern` hinzu und geben die zu
 > verwendende ABI unmittelbar vor dem Schlüsselwort `fn` der relevanten
-> Funktion an. Wir müssen auch eine Annotation `#[no_mangle]` hinzufügen, um
-> dem Rust-Compiler mitzuteilen, dass er den Namen dieser Funktion nicht
-> verändern soll. *Mangling* bedeutet, dass ein Compiler den Namen, den wir
-> einer Funktion gegeben haben, in einen anderen Namen ändert, der mehr
-> Informationen für andere Teile des Kompiliervorgangs enthält, aber weniger
-> menschenlesbar ist. Jeder Programmiersprachen-Compiler verändert Namen etwas
-> anders. Damit eine Rust-Funktion von anderen Sprachen aufgerufen werden kann,
-> müssen wir also die Namensveränderung des Rust-Compilers deaktivieren.
+> Funktion an. Wir müssen auch eine Annotation `#[unsafe(no_mangle)]`
+> hinzufügen, um dem Rust-Compiler mitzuteilen, dass er den Namen dieser
+> Funktion nicht verändern soll. _Mangling_ bedeutet, dass ein Compiler den
+> Namen, den wir einer Funktion gegeben haben, in einen anderen Namen ändert,
+> der mehr Informationen für andere Teile des Kompiliervorgangs enthält, aber
+> weniger menschenlesbar ist. Jeder Programmiersprachen-Compiler verändert
+> Namen etwas anders. Damit eine Rust-Funktion von anderen Sprachen aufgerufen
+> werden kann, müssen wir also die Namensveränderung des Rust-Compilers
+> deaktivieren. Dies ist unsicher, da es ohne die eingebaute
+> Namensveränderung-Funktion zu Namenskollisionen in verschiedenen Bibliotheken
+> kommen kann. Es liegt also in unserer Verantwortung, sicherzustellen, dass
+> der von uns gewählte Name ohne Namensveränderung sicher exportiert werden
+> kann.
 >
 > Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
 > zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 > gelinkt wurde:
 >
 > ```rust
-> #[no_mangle]
+> #[unsafe(no_mangle)]
 > pub extern "C" fn call_from_c() {
 >     println!("Rust-Funktion von C aufgerufen!");
 > }
 > ```
 >
-> Diese Verwendung von `extern` erfordert kein `unsafe`.
+> Diese Verwendung von `extern` erfordert `unsafe` nur im Attribut, nicht im
+> `extern`-Block.
 
 ### Zugreifen oder Ändern einer veränderbaren, statischen Variable
 
-In diesem Buch haben wir noch nicht über *globale Variablen* gesprochen, die
+In diesem Buch haben wir noch nicht über _globale Variablen_ gesprochen, die
 Rust zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
 problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
 veränderbare, globale Variable zugreifen, kann dies zu einer
 Daten-Wettlaufsituation (data race) führen.
 
-In Rust werden globale Variablen als *statische* Variablen bezeichnet.
+In Rust werden globale Variablen als _statische_ Variablen bezeichnet.
 Codeblock 20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer
 statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.
 
@@ -553,7 +565,7 @@ fn main() {
 <span class="caption">Codeblock 20-10: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span>
 
-Statische Variablen ähneln Konstanten, die wir im Abschnitt
+Statische Variablen ähneln Konstanten, die wir in
 [„Konstanten“][differences-between-variables-and-constants] in Kapitel 3
 besprochen haben. Die Namen von statischen Variablen stehen per Konvention in
 `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur Referenzen mit
@@ -567,7 +579,7 @@ Adresse im Speicher haben. Beim Verwenden des Wertes wird immer auf die
 gleichen Daten zugegriffen. Konstanten hingegen dürfen ihre Daten duplizieren,
 wann immer sie verwendet werden. Ein weiterer Unterschied besteht darin, dass
 statische Variablen veränderbar sein können. Der Zugriff auf und die Änderung
-von veränderbaren, statischen Variablen ist *unsicher*. Codeblock 20-11 zeigt,
+von veränderbaren, statischen Variablen ist _unsicher_. Codeblock 20-11 zeigt,
 wie man eine veränderbare, statische Variable namens `COUNTER` deklariert, auf
 sie zugreift und sie modifiziert.
 
@@ -611,6 +623,14 @@ muss, um die Funktion sicher aufzurufen. Ebenso ist es idiomatisch, beim Aufruf
 einer `unsafe`-Operation einen Kommentar zu schreiben, der mit `SAFETY`
 beginnt, um zu erklären, wie die Sicherheitsregeln eingehalten werden.
 
+Außerdem erlaubt der Compiler nicht, Referenzen auf eine veränderbare statische
+Variable zu erstellen. Du kannst nur über einen Rohzeiger darauf zugreifen, der
+mit einem der Roh-Ausleihen-Operatoren erstellt wurde. Das gilt auch für Fälle,
+in denen die Referenz unsichtbar erstellt wird, wie bei der Verwendung von
+`println!` in diesem Codeblock. Die Anforderung, dass Referenzen auf statische
+veränderbare Variablen nur über Rohzeiger erstellt werden können, trägt dazu
+bei, die Sicherheitsanforderungen deutlicher zu machen.
+
 Bei veränderbaren Daten, die global zugänglich sind, ist es schwierig,
 sicherzustellen, dass es keine Daten-Wettlaufsituationen gibt, weshalb Rust
 veränderbare, statische Variablen als unsicher betrachtet. Wann immer möglich,
@@ -645,17 +665,18 @@ unsicheren Merkmals</span>
 Indem wir `unsafe impl` verwenden, versprechen wir, dass wir die Invarianten
 aufrechterhalten, die der Compiler nicht verifizieren kann.
 
-Erinnere dich als Beispiel an die Marker-Merkmale `Sync` und `Send`, die wir im
-Abschnitt [„Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Sync` und
+Erinnere dich als Beispiel an die Marker-Merkmale `Sync` und `Send`, die wir in
+[„Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Sync` und
 `Send`“][extensible-concurrency-with-the-sync-and-send-traits] in Kapitel 16
 besprochen haben: Der Compiler implementiert diese Merkmale automatisch, wenn
-unsere Typen vollständig aus `Send`- und `Sync`-Typen zusammengesetzt sind.
-Wenn wir einen Typ implementieren, der einen Typ enthält, der nicht `Send` oder
-`Sync` ist, z.B. Rohzeiger, und wir diesen Typ als `Send` oder `Sync` markieren
-wollen, müssen wir `unsafe` verwenden. Rust kann nicht überprüfen, ob unser Typ
-die Garantien aufrechterhält, dass er sicher über Stränge gesendet oder von
-mehreren Strängen aus zugegriffen werden kann; daher müssen wir diese Prüfungen
-manuell durchführen und als solche mit `unsafe` kennzeichnen.
+unsere Typen vollständig aus anderen Typen zusammengesetzt sind, die `Send` und
+`Sync` implementieren. Wenn wir einen Typ implementieren, der einen Typ
+enthält, der nicht `Send` oder `Sync` implementiert, z.B. Rohzeiger, und wir
+diesen Typ als `Send` oder `Sync` markieren wollen, müssen wir `unsafe`
+verwenden. Rust kann nicht überprüfen, ob unser Typ die Garantien
+aufrechterhält, dass er sicher über Stränge gesendet oder von mehreren Strängen
+aus zugegriffen werden kann; daher müssen wir diese Prüfungen manuell
+durchführen und als solche mit `unsafe` kennzeichnen.
 
 ### Zugreifen auf Felder einer Vereinigung (union)
 
@@ -666,16 +687,16 @@ werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
 Weitere Informationen über Vereinigung findest du in der
-[Rust-Referenz][union-reference].
+[Rust-Referenz][unions].
 
 ### Miri zur Überprüfung von `unsafe`-Code verwenden
 
 Wenn du unsicheren Code schreibst, möchtest du vielleicht überprüfen, ob das,
 was du geschrieben hast, tatsächlich sicher und korrekt ist. Eine der besten
-Möglichkeiten, dies zu tun, ist die Verwendung von [Miri][miri], einem
-offiziellen Rust-Tool zur Erkennung von undefiniertem Verhalten. Während der
-Ausleihenprüfer ein *statisches* Werkzeug ist, das zur Kompilierzeit arbeitet,
-ist Miri ein *dynamisches* Werkzeug, das zur Laufzeit arbeitet. Es prüft deinen
+Möglichkeiten, dies zu tun, ist die Verwendung von Miri, einem offiziellen
+Rust-Werkzeug zur Erkennung von undefiniertem Verhalten. Während der
+Ausleihenprüfer ein _statisches_ Werkzeug ist, das zur Kompilierzeit arbeitet,
+ist Miri ein _dynamisches_ Werkzeug, das zur Laufzeit arbeitet. Es prüft deinen
 Code, indem es dein Programm oder deine Testfälle ausführt und erkennt, ob du
 Rust-Regeln verletzt.
 
@@ -709,40 +730,50 @@ warning: creating a shared reference to mutable static is discouraged
 COUNTER: 3
 ```
 
-Es stellt hilfreich und korrekt fest, dass wir gemeinsame Referenzen auf
-veränderbare Daten haben, und warnt davor. In diesem Fall sagt es uns nicht,
-wie wir das Problem beheben können, aber es bedeutet, dass wir wissen, dass es
-ein mögliches Problem gibt und darüber nachdenken sollten, wie wir es sicher
-machen können. In anderen Fällen kann es uns sagen, dass ein bestimmter Code
-*mit Sicherheit* falsch ist, und Empfehlungen geben, wie man ihn korrigieren
-kann.
+Miri warnt uns richtigerweise, dass wir gemeinsame Referenzen auf veränderbare
+Daten haben. Hier gibt Miri nur eine Warnung aus, da in diesem Fall nicht
+garantiert ist, dass es sich um undefiniertes Verhalten handelt, und es sagt
+uns nicht, wie wir das Problem beheben können. In einigen Fällen kann Miri auch
+eindeutige Fehler erkennen &ndash; Codemuster, die _mit Sicherheit_ falsch sind
+&ndash; und Empfehlungen geben, wie diese Fehler behoben werden können.
 
-Miri findet nicht *alles*, was man beim Schreiben von unsicherem Code falsch
-machen könnte. Da es sich um eine dynamische Prüfung handelt, findet es nur
-Probleme in Code, der tatsächlich ausgeführt wird. Das bedeutet, dass du es
-zusammen mit guten Testtechniken verwenden solltest, um dein Vertrauen in den
-von dir geschriebenen unsicheren Code zu erhöhen. Des Weiteren deckt es nicht
-alle Möglichkeiten ab, wie dein Code unsauber sein kann. *Wenn* Miri ein
-Problem findet, weißt du, dass es einen Fehler gibt, aber nur weil Miri
-*keinen* Fehler findet, heißt das nicht, dass es kein Problem gibt. Miri kann
-allerdings eine Menge abfangen. Versuche es auf die anderen Beispiele
-unsicheren Codes in diesem Kapitel anzuwenden und sieh was es ausgibt!
+Miri deckt nicht alles auf, was man beim Schreiben von unsicherem Code falsch
+machen könnte. Miri ist ein dynamisches Analysewerkzeug, d.h. es erkennt nur
+Probleme mit Code, der tatsächlich ausgeführt wird. Das bedeutet, dass du es in
+Verbindung mit guten Testverfahren verwenden musst, um dein Vertrauen in den
+von dir geschriebenen unsicheren Code zu erhöhen. Miri deckt auch nicht alle
+Möglichkeiten ab, in denen dein Code unsauber sein kann.
+
+Mit anderen Worten: Wenn Miri ein Problem _findet_, weißt du, dass es einen
+Fehler gibt, aber nur weil Miri _keinen_ Fehler findet, heißt das nicht, dass
+kein Problem vorhanden ist. Es kann allerdings eine Menge finden. Versuche, es
+auf die anderen Beispiele mit unsicherem Code in diesem Kapitel anzuwenden und
+sieh, was es sagt!
+
+Mehr über Miri erfährst du in seinem [GitHub-Repository][miri].
 
 ### Wann unsicheren Code verwenden?
 
-Die Verwendung von `unsafe` für eine der fünf gerade besprochenen Aktionen
-(Superkräfte) ist nicht falsch oder gar verpönt. Aber es ist kniffliger,
-`unsafe` Code korrekt zu schreiben, weil der Compiler nicht helfen kann, die
+Die Verwendung von `unsafe` für eine der fünf gerade besprochenen Superkräfte
+ist nicht falsch oder gar verpönt, aber es ist kniffliger, `unsafe` Code
+korrekt zu schreiben, weil der Compiler nicht helfen kann, die
 Speichersicherheit aufrechtzuerhalten. Wenn du einen Grund hast, `unsafe` Code
 zu verwenden, kannst du dies tun, und die explizite `unsafe`-Annotation macht
 es einfacher, die Quelle von Problemen aufzuspüren, wenn sie auftreten. Wann
 immer du unsicheren Code schreibst, kannst du Miri verwenden, um dich zu
 vergewissern, dass der von dir geschriebene Code die Rust-Regeln einhält.
 
+Wenn du dich eingehender mit der effektiven Arbeit mit unsicherem Rust befassen
+möchtest, lies den offiziellen Rust-Leitfaden zum Thema
+[Rustonomicon][nomicon].
+
+[ABI]: https://doc.rust-lang.org/nightly/reference/items/external-blocks.html#abi
 [dangling-references]: ch04-02-references-and-borrowing.html#hängende-referenzen
 [differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#konstanten
 [extensible-concurrency-with-the-sync-and-send-traits]: ch16-04-extensible-concurrency-sync-and-send.html
 [miri]: https://github.com/rust-lang/miri
 [nightly]: appendix-07-nightly-rust.html
+[nomicon]: https://doc.rust-lang.org/nomicon/
 [the-slice-type]: ch04-03-slices.html
-[union-reference]: https://doc.rust-lang.org/reference/items/unions.html
+[unions]: https://doc.rust-lang.org/reference/items/unions.html
+[unsafe-call]: #aufrufen-einer-unsicheren-funktion-oder-methode

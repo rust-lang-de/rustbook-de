@@ -1,13 +1,13 @@
 ## Fortgeschrittene Merkmale (traits)
 
-Merkmale behandelten wir als Erstes im Abschnitt [„Merkmale (traits):
-Gemeinsames Verhalten definieren“][traits-defining-shared-behavior] in Kapitel
-10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
-mehr über Rust weißt, können wir zum Kern der Sache kommen.
+Merkmale behandelten wir als Erstes in [„Merkmale (traits): Gemeinsames
+Verhalten definieren“][traits-defining-shared-behavior] in Kapitel 10, aber wir
+haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über
+Rust weißt, können wir zum Kern der Sache kommen.
 
-### Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen
+### Assoziierte Typen
 
-*Assoziierte Typen* (associated types) verbinden einen Typ-Platzhalter mit
+_Assoziierte Typen_ (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
 Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
 Merkmals gibt den konkreten Typ an, der anstelle des Platzhaltertyps für die
@@ -125,7 +125,7 @@ Standardtyp passt. Du gibst einen Standardtyp an, wenn du einen generischen Typ
 mit der Syntax `<PlaceholderType=ConcreteType>` deklarierst.
 
 Ein gutes Beispiel für eine Situation, in der diese Technik nützlich ist, ist
-die *Operatorüberladung* (operator overloading), bei der du das Verhalten eines
+die _Operatorüberladung_ (operator overloading), bei der du das Verhalten eines
 Operators (wie `+`) in bestimmten Situationen anpasst.
 
 Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
@@ -133,7 +133,7 @@ Operatoren zu überladen. Aber du kannst die in `std::ops` aufgeführten
 Operationen und entsprechenden Merkmale überladen, indem du die mit dem
 Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
 Codeblock 20-15 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir
-tun dies, indem wir das Merkmal `Add` auf eine `Point`-Struktur implementieren:
+tun dies, indem wir das Merkmal `Add` auf eine `Point`-Struktur implementieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -186,7 +186,7 @@ trait Add<Rhs=Self> {
 
 Dieser Code sollte allgemein bekannt aussehen: Ein Merkmal mit einer Methode
 und einem assoziierten Typ. Der neue Teil ist `Rhs=Self`: Diese Syntax heißt
-*Standardtypparameter* (default type parameters). Der generische Typparameter
+_Standardtypparameter_ (default type parameters). Der generische Typparameter
 `Rhs` (kurz für „right hand side“, engl. „rechte Seite“) definiert den Typ des
 Parameters `rhs` in der Methode `add`. Wenn wir keinen konkreten Typ für `Rhs`
 angeben, wenn wir das Merkmal `Add` implementieren, wird der Typ `Rhs`
@@ -200,7 +200,7 @@ Typ `Rhs` anpassen wollen, anstatt den Standardwert zu verwenden.
 
 Wir haben zwei Strukturen `Millimeters` und `Meters`, die Werte in
 verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
-in einer anderen Struktur ist als *Newtype-Muster* bekannt, das wir im
+in einer anderen Struktur ist als _Newtype-Muster_ bekannt, das wir im
 Abschnitt [„Verwenden des Newtype-Musters zum Implementieren von externen
 Merkmalen auf externen Typen“][newtype] ausführlicher beschreiben. Wir wollen
 Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
@@ -234,9 +234,9 @@ den Wert des Parameters vom Typ `Rhs` zu setzen, anstatt den Standardwert
 
 Du wirst Standardtypparameter auf zwei Arten verwenden:
 
-* Um einen Typ zu erweitern, ohne bestehenden Code zu brechen.
-* Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
-  Benutzer nicht benötigen.
+1. Um einen Typ zu erweitern, ohne bestehenden Code zu brechen.
+2. Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
+   Benutzer nicht benötigen.
 
 Das Merkmal `Add` der Standardbibliothek ist ein Beispiel für den zweiten
 Zweck: Normalerweise addierst du zwei ähnliche Typen, aber das Merkmal `Add`
@@ -251,7 +251,7 @@ vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm eine
 Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
 ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.
 
-### Vollständig qualifizierte Syntax zur Vereindeutigung: Aufrufen von Methoden mit gleichem Namen
+### Eindeutiger Aufruf von Methoden mit gleichem Namen
 
 Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
 die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
@@ -417,7 +417,7 @@ Hoch!
 ```
 
 Da die Methode `fly` einen Parameter `self` benötigt, könnte Rust, wenn wir
-zwei *Typen* hätten, die beide ein *Merkmal* implementieren, herausfinden,
+zwei _Typen_ hätten, die beide ein _Merkmal_ implementieren, herausfinden,
 welche Implementierung eines Merkmals basierend auf dem Typ von `self` zu
 verwenden ist.
 
@@ -425,8 +425,8 @@ Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
 `self`-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
 nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-*voll-qualifizierte Syntax*. In Codeblock 20-20 erstellen wir zum Beispiel
-ein Merkmal für ein Tierheim, das alle Hundebabys *Spot* nennen möchte. Wir
+_voll-qualifizierte Syntax_. In Codeblock 20-20 erstellen wir zum Beispiel
+ein Merkmal für ein Tierheim, das alle Hundebabys _Spot_ nennen möchte. Wir
 erstellen ein Merkmal `Animal` mit einer assoziierten Nicht-Methodenfunktion
 `baby_name`. Das Merkmal `Animal` ist für die Struktur `Dog` implementiert, für
 die wir auch direkt eine assoziierte Nicht-Methodenfunktionen `baby_name`
@@ -610,14 +610,14 @@ ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
 Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
 um herauszufinden, welche Implementierung du aufrufen möchtest.
 
-### Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern
+### Verwenden von Supermerkmalen
 
 Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
 einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
 kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
 tun, damit deine Merkmalsdefinition die zugehörigen Elemente des zweiten
 Merkmals verwenden kann. Das Merkmal, auf das sich deine Merkmalsdefinition
-stützt, wird als *Supermerkmal* (supertrait) deines Merkmals bezeichnet.
+stützt, wird als _Supermerkmal_ (supertrait) deines Merkmals bezeichnet.
 
 Nehmen wir zum Beispiel an, wir wollen ein Merkmal `OutlinePrint` mit einer
 Methode `outline_print` erstellen, das einen bestimmten Wert so formatiert,
@@ -793,21 +793,21 @@ erfolgreich kompilieren und wir können `outline_print` auf einer
 
 ### Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf externen Typen
 
-In Kapitel 10 im Abschnitt [„Ein Merkmal für einen Typ
-implementieren“][implementing-a-trait-on-a-type] erwähnten wir die Waisenregel,
-die besagt, dass wir ein Merkmal nur dann auf einem Typ implementieren dürfen,
-wenn entweder das Merkmal oder der Typ lokal in unserer Kiste (crate) vorhanden
-ist. Es ist möglich, diese Einschränkung zu umgehen, indem man das
-*Newtype-Muster* (newtype pattern) verwendet, bei dem ein neuer Typ in einer
-Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen im Abschnitt [„Verwenden
-von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu
-erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
-Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
-implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
-wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
-*Newtype* ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
-Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
-und der Verpackungstyp wird zur Kompilierzeit elidiert.
+In [„Ein Merkmal für einen Typ implementieren“][implementing-a-trait-on-a-type]
+in Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Merkmal nur dann
+auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
+oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
+Einschränkung zu umgehen, indem man das _Newtype-Muster_ (newtype pattern)
+verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
+haben Tupelstrukturen in [„Verwenden von Tupel-Strukturen ohne benannte Felder
+um verschiedene Typen zu erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die
+Tupelstruktur wird ein Feld haben und eine dünne Verpackung um den Typ sein,
+für den wir ein Merkmal implementieren wollen. Dann ist der Verpackungstyp
+lokal in unserer Kiste und wir können das Merkmal auf dem Verpackungstyp
+(wrapper type) implementieren. _Newtype_ ist ein Begriff, der aus der
+Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es keine
+Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
+Kompilierzeit elidiert.
 
 Nehmen wir als Beispiel an, wir wollen `Display` auf `Vec<T>` implementieren,
 was uns die Waisenregel direkt verbietet, weil das Merkmal `Display` und der
@@ -847,24 +847,22 @@ Der Nachteil der Verwendung dieser Technik ist, dass `Wrapper` ein neuer Typ
 ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten alle
 Methoden von `Vec<T>` direkt auf `Wrapper` implementieren, sodass die Methoden
 an `self.0` delegieren, was uns erlauben würde, `Wrapper` genau wie einen
-`Vec<T>` zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode hat,
-die der innere Typ hat, wäre es eine Lösung, das Merkmal `Deref` (das in
-Kapitel 15 im Abschnitt [„Intelligente Zeiger wie normale Referenzen behandeln
-mit dem Merkmal (trait) `Deref`“][smart-pointer-deref] behandelt wird) auf dem
-`Wrapper` zu implementieren, um den inneren Typ zurückzugeben. Wenn wir nicht
-wollen, dass der `Wrapper`-Typ alle Methoden des inneren Typs hat &ndash; zum
-Beispiel, um das Verhalten des `Wrapper`-Typs einzuschränken &ndash; müssten
-wir nur die Methoden manuell implementieren, die wir wollen.
+`Vec<T>` zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode des
+inneren Typs hat, wäre die Implementierung des Merkmals `Deref` auf dem
+`Wrapper` eine Lösung, um den inneren Typ zurückzugeben (wir haben die
+Implementierung des Merkmals `Deref` in [„Intelligente Zeiger wie normale
+Referenzen behandeln mit dem Merkmal (trait) `Deref`“][smart-pointer-deref] in
+Kapitel 15 besprochen). Wenn wir nicht wollten, dass der `Wrapper`-Typ alle
+Methoden des inneren Typs hat &ndash; zum Beispiel, um das Verhalten des
+`Wrapper`-Typs einzuschränken &ndash; müssten wir nur die Methoden, die wir
+wollen, manuell implementieren.
 
 Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
 sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
 Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.
 
-[implementing-a-trait-on-a-type]:
-ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
-[newtype]:
-#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
-[traits-defining-shared-behavior]: ch10-02-traits.html
+[implementing-a-trait-on-a-type]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
+[newtype]: #verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
 [smart-pointer-deref]: ch15-02-deref.html
-[tuple-structs]:
-ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
+[traits-defining-shared-behavior]: ch10-02-traits.html
+[tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
