@@ -1,8 +1,8 @@
 # Die Programmiersprache Rust
 
-Das Buch „Die Programmiersprache Rust“ ist eine deutsche Gemeinschafts-Übersetzung
-des [offiziellen Rust-Buchs][rustbook-en].
-Es enthält alle Änderungen des englischen Originals bis einschließlich zum **21.03.2025**.
+Das Buch „Die Programmiersprache Rust“ ist eine deutsche
+Gemeinschafts-Übersetzung des [offiziellen Rust-Buchs][rustbook-en]. Es enthält
+alle Änderungen des englischen Originals bis einschließlich zum **21.03.2025**.
 
 ## [📖 > Hier online lesen < 📖][rustbook-de]
 
@@ -28,8 +28,7 @@ Issue. Bitte beachte die [Übersetzungskonventionen][konventionen].
 
 Für jeden Beitrag zu diesem Buch gibt es das aktuelle E-Book kostenlos für den
 persönlichen Gebrauch. Bei Interesse bitte eine E-Mail an [damoasda][damoasda]
-senden, dann schicke ich den Download-Link. Das Angebot gilt sogar rückwirkend
-für alle, die zum Buch beigetragen haben.
+senden, dann schicke ich den Download-Link.
 
 [damoasda]: https://github.com/damoasda
 [konventionen]: https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen
