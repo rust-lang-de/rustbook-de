@@ -109,7 +109,7 @@
   - [Ein genauerer Blick auf die Merkmale für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
 
-- [Objektorientierte Sprachelemente von Rust](ch18-00-oop.md)
+- [Objektorientierte Sprachelemente](ch18-00-oop.md)
     - [Charakteristiken objektorientierter Sprachen](ch18-01-what-is-oo.md)
     - [Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben](ch18-02-trait-objects.md)
     - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)

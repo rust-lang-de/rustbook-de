@@ -11,26 +11,27 @@ bedeutet und ob Rust es unterstützt.
 
 ### Objekte enthalten Daten und Verhalten
 
-Das Buch *Design Patterns: Elements of Reusable Object-Oriented Software* von
-Erich Gamma, Richard Helm, Ralph Johnson und John Vlissides (Addison-Wesley
-Professional, 1994), umgangssprachlich als *The Gang of Four*-Buch bezeichnet,
-ist ein Katalog von objektorientierten Entwurfsmustern. Es definiert OOP auf
-diese Weise:
+Das Buch _Design Patterns: Elements of Reusable Object-Oriented Software_ von
+Erich Gamma, Richard Helm, Ralph Johnson und John Vlissides (Addison-Wesley,
+1994), umgangssprachlich als _The Gang of Four_-Buch bezeichnet, ist ein
+Katalog von objektorientierten Entwurfsmustern. Es definiert OOP auf folgende
+Weise:
 
-> Objektorientierte Programme setzen sich aus Objekten zusammen. Ein *Objekt*
+> Objektorientierte Programme setzen sich aus Objekten zusammen. Ein **Objekt**
 > verpackt sowohl Daten als auch Prozeduren, die auf diesen Daten operieren.
-> Die Prozeduren werden normalerweise *Methoden* oder *Operationen* genannt.
+> Die Prozeduren werden normalerweise **Methoden** oder **Operationen**
+> genannt.
 
 Mit dieser Definition ist Rust objektorientiert: Strukturen (structs) und
 Aufzählungen (enums) haben Daten, und `impl`-Blöcke stellen Methoden auf
 Strukturen und Aufzählungen zur Verfügung. Auch wenn Strukturen und
-Aufzählungen mit Methoden keine *aufgerufenen* Objekte sind, bieten sie
+Aufzählungen mit Methoden keine _aufgerufenen_ Objekte sind, bieten sie
 dieselbe Funktionalität gemäß der Definition von Objekten der Gang of Four.
 
 ### Kapselung, die Implementierungsdetails verbirgt
 
 Ein weiterer Aspekt, der gemeinhin mit OOP in Verbindung gebracht wird, ist die
-Idee der *Kapselung* (encapsulation), was bedeutet, dass die
+Idee der _Kapselung_ (encapsulation), was bedeutet, dass die
 Implementierungsdetails eines Objekts nicht zugänglich sind für Code, der
 dieses Objekt verwendet. Daher ist die einzige Möglichkeit, mit einem Objekt zu
 interagieren, seine öffentliche API; Code, der das Objekt verwendet, sollte
@@ -141,12 +142,12 @@ nicht, ermöglicht die Kapselung von Implementierungsdetails.
 
 ### Vererbung als Typsystem und für gemeinsamen Code
 
-*Vererbung* ist ein Mechanismus, mit dem ein Objekt Elemente von der Definition
+_Vererbung_ ist ein Mechanismus, mit dem ein Objekt Elemente von der Definition
 eines anderen Objekts erben kann und so die Daten und das Verhalten des
 übergeordneten Objekts erhält, ohne dass du diese erneut definieren musst.
 
-Wenn eine Sprache Vererbung haben muss, um eine objektorientierte Sprache zu
-sein, dann ist Rust keine solche. Es gibt keine Möglichkeit, eine Struktur zu
+Wenn eine Programmiersprache Vererbung haben muss, um objektorientiert zu sein,
+dann ist Rust keine solche Sprache. Es gibt keine Möglichkeit, eine Struktur zu
 definieren, die die Felder und Methodenimplementierungen der Elternstruktur
 erbt, ohne ein Makro zu benutzen.
 
@@ -172,7 +173,7 @@ außer Kraft setzt.
 
 Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
 untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
-verwendet werden können. Dies wird auch *Polymorphismus* (polymorphism)
+verwendet werden können. Dies wird auch _Polymorphismus_ (polymorphism)
 genannt, d.h. du kannst mehrere Objekte zur Laufzeit gegeneinander austauschen,
 wenn sie bestimmte Eigenschaften gemeinsam haben.
 
@@ -186,7 +187,7 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.
 > Rust verwendet stattdessen generische Datentypen (generics), um über
 > verschiedene mögliche Typen und Merkmalsabgrenzungen (trait bounds) zu
 > abstrahieren, um Beschränkungen für das aufzuerlegen, was diese Typen bieten
-> müssen. Dies wird manchmal als *begrenzter parametrischer Polymorphismus*
+> müssen. Dies wird manchmal als _begrenzter parametrischer Polymorphismus_
 > (bounded parametric polymorphism) bezeichnet.
 
 Die Vererbung ist in letzter Zeit als Lösung für das Programmierdesign in
