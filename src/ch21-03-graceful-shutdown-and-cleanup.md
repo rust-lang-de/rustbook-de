@@ -109,9 +109,10 @@ Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span>
 Zuerst iterieren wir über alle `workers` im Strang-Vorrat. Wir verwenden dafür
 `&mut`, weil `self` eine veränderbare Referenz ist und wir auch in der Lage
 sein müssen, `worker` zu verändern. Für jeden `worker` geben wir eine Nachricht
-aus, die besagt, dass dieser bestimmte `worker` heruntergefahren wird, und dann
-rufen wir auf dem Strang `join` auf. Wenn der Aufruf von `join` fehlschlägt,
-benutzen wir `unwrap`, um das Programm abstürzen zu lassen.
+aus, die besagt, dass diese bestimmte `worker`-Instanz heruntergefahren wird,
+und dann rufen wir auf dem Strang dieser `worker`-Instanz `join` auf. Wenn der
+Aufruf von `join` fehlschlägt, benutzen wir `unwrap`, um das Programm abstürzen
+zu lassen.
 
 Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:
 
@@ -137,232 +138,38 @@ Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
 veränderbare Ausleihe von jedem `worker` haben und `join` die Eigentümerschaft
 für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Strang
 `thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Strang
-konsumieren kann. Wir haben dies in Codeblock 17-15 getan: Wenn `Worker`
-stattdessen ein `Option<Thread::JoinHandle<()>>` hält, können wir die Methode
-`take` auf `Option` aufrufen, um den Wert aus der Variante `Some`
-herauszuverschieben und eine Variante `None` an ihrer Stelle zu belassen. Mit
-anderen Worten, ein `Worker`, der läuft, wird eine Variante `Some` in `thread`
-haben, und wenn wir einen `Worker` aufräumen wollen, ersetzen wir `Some` durch
-`None`, sodass der `Worker` keinen Strang zum Laufen hat.
+konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
+Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn `Worker` ein
+`Option<Thread::JoinHandle<()>>` hielte, könnten wir die Methode `take` auf
+`Option` aufrufen, um den Wert aus der Variante `Some` herauszuverschieben und
+eine Variante `None` an ihrer Stelle zu belassen. Mit anderen Worten, ein
+`Worker`, der läuft, würde eine Variante `Some` in `thread` haben, und wenn wir
+einen `Worker` aufräumen wollten, würden wir `Some` durch `None` ersetzen,
+sodass der `Worker` keinen Strang zum Laufen haben würde.
 
-Wir wissen also, dass wir die Definition von `Worker` so aktualisieren wollen:
+Das _einzige_ Mal, dass dies der Fall wäre, wäre, wenn man den `Worker`
+aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread`
+zugreifen, mit einer `Option<thread::JoinHandle<()>>` umgehen. Idiomatisch
+verwendet Rust `Option` ziemlich oft, aber wenn du etwas in `Option` einpackst,
+von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
+alternativen Ansätzen zu suchen. Du könntest deinen Code sauberer und weniger
+fehleranfällig machen.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+In diesem Fall gibt es eine bessere Alternative: Die Methode `Vec::drain`. Sie
+akzeptiert einen Bereichsparameter, um anzugeben, welche Elemente aus dem `Vec`
+entfernt werden sollen, und gibt einen Iterator dieser Elemente zurück. Die
+Angabe der Bereichssyntax `..` entfernt _alle_ Werte aus dem `Vec`.
 
-```rust,does_not_compile
-# use std::{
-#     sync::{mpsc, Arc, Mutex},
-#     thread,
-# };
-#
-# pub struct ThreadPool {
-#     workers: Vec<Worker>,
-#     sender: mpsc::Sender<Job>,
-# }
-#
-# type Job = Box<dyn FnOnce() + Send + 'static>;
-#
-# impl ThreadPool {
-#     /// Erzeuge einen neuen ThreadPool.
-#     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
-#     ///
-#     /// # Panics
-#     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
-#     pub fn new(size: usize) -> ThreadPool {
-#         assert!(size > 0);
-#
-#         let (sender, receiver) = mpsc::channel();
-#
-#         let receiver = Arc::new(Mutex::new(receiver));
-#
-#         let mut workers = Vec::with_capacity(size);
-#
-#         for id in 0..size {
-#             workers.push(Worker::new(id, Arc::clone(&receiver)));
-#         }
-#
-#         ThreadPool { workers, sender }
-#     }
-#
-#     pub fn execute<F>(&self, f: F)
-#     where
-#         F: FnOnce() + Send + 'static,
-#     {
-#         let job = Box::new(f);
-#
-#         self.sender.send(job).unwrap();
-#     }
-# }
-#
-# impl Drop for ThreadPool {
-#     fn drop(&mut self) {
-#         for worker in &mut self.workers {
-#             println!("Worker {} herunterfahren", worker.id);
-#
-#             worker.thread.join().unwrap();
-#         }
-#     }
-# }
-#
-struct Worker {
-    id: usize,
-    thread: Option<thread::JoinHandle<()>>,
-}
-#
-# impl Worker {
-#     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-#         let thread = thread::spawn(move || loop {
-#             let job = receiver.lock().unwrap().recv().unwrap();
-#
-#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
-#
-#             job();
-#         });
-#
-#         Worker { id, thread }
-#     }
-# }
-```
-
-Nun wollen wir uns auf den Compiler stützen, um die anderen Stellen zu finden,
-die geändert werden müssen. Wenn wir diesen Code überprüfen, erhalten wir zwei
-Fehler:
-
-```console
-$ cargo check
-    Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no method named `join` found for enum `Option` in the current scope
-  --> src/lib.rs:52:27
-   |
-52 |             worker.thread.join().unwrap();
-   |                           ^^^^ method not found in `Option<JoinHandle<()>>`
-   |
-note: the method `join` exists on the type `JoinHandle<()>`
-  --> /rustc/07dca489ac2d933c78d3c5158e3f43be/library/std/src/thread/mod.rs:1649:5
-help: consider using `Option::expect` to unwrap the `JoinHandle<()>` value, panicking if the value is an `Option::None`
-   |
-52 |             worker.thread.expect("REASON").join().unwrap();
-   |                          +++++++++++++++++
-
-error[E0308]: mismatched types
-  --> src/lib.rs:72:22
-   |
-72 |         Worker { id, thread }
-   |                      ^^^^^^ expected `Option<JoinHandle<()>>`, found `JoinHandle<_>`
-   |
-   = note: expected enum `Option<JoinHandle<()>>`
-            found struct `JoinHandle<_>`
-help: try wrapping the expression in `Some`
-   |
-72 |         Worker { id, thread: Some(thread) }
-   |                      +++++++++++++      +
-
-Some errors have detailed explanations: E0308, E0599.
-For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello` (lib) due to 2 previous errors
-```
-
-Lass uns den zweiten Fehler beheben, der auf den Code am Ende von `Worker::new`
-verweist; wir müssen den Wert `thread` in `Some` einpacken, wenn wir einen
-neuen `Worker` erstellen. Nimm die folgenden Änderungen vor, um diesen Fehler
-zu beheben:
+Wir müssen also die `drop`-Implementierung von `ThreadPool` wie folgt
+aktualisieren:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
+```rust
+# #![allow(unused)]
+# fn main() {
 # use std::{
-#     sync::{mpsc, Arc, Mutex},
-#     thread,
-# };
-#
-# pub struct ThreadPool {
-#     workers: Vec<Worker>,
-#     sender: mpsc::Sender<Job>,
-# }
-#
-# type Job = Box<dyn FnOnce() + Send + 'static>;
-#
-# impl ThreadPool {
-#     /// Erzeuge einen neuen ThreadPool.
-#     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
-#     ///
-#     /// # Panics
-#     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
-#     pub fn new(size: usize) -> ThreadPool {
-#         assert!(size > 0);
-#
-#         let (sender, receiver) = mpsc::channel();
-#
-#         let receiver = Arc::new(Mutex::new(receiver));
-#
-#         let mut workers = Vec::with_capacity(size);
-#
-#         for id in 0..size {
-#             workers.push(Worker::new(id, Arc::clone(&receiver)));
-#         }
-#
-#         ThreadPool { workers, sender }
-#     }
-#
-#     pub fn execute<F>(&self, f: F)
-#     where
-#         F: FnOnce() + Send + 'static,
-#     {
-#         let job = Box::new(f);
-#
-#         self.sender.send(job).unwrap();
-#     }
-# }
-#
-# impl Drop for ThreadPool {
-#     fn drop(&mut self) {
-#         for worker in &mut self.workers {
-#             println!("Worker {} herunterfahren", worker.id);
-#
-#             worker.thread.join().unwrap();
-#         }
-#     }
-# }
-#
-# struct Worker {
-#     id: usize,
-#     thread: Option<thread::JoinHandle<()>>,
-# }
-#
-impl Worker {
-    fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-        // --abschneiden--
-
-#         let thread = thread::spawn(move || loop {
-#             let job = receiver.lock().unwrap().recv().unwrap();
-#
-#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
-#
-#             job();
-#         });
-#
-        Worker {
-            id,
-            thread: Some(thread),
-        }
-    }
-}
-```
-
-Der erste Fehler liegt in unserer `Drop`-Implementierung. Wir haben bereits
-erwähnt, dass wir beabsichtigten, `take` auf dem `Option`-Wert aufzurufen, um
-`thread` aus `worker` heraus zu verschieben. Die folgenden Änderungen werden
-dies tun:
-
-<span class="filename">Dateiname: src/lib.rs</span>
-
-```rust,ignore,not_desired_behavior
-# use std::{
-#     sync::{mpsc, Arc, Mutex},
+#     sync::{Arc, Mutex, mpsc},
 #     thread,
 # };
 #
@@ -409,45 +216,38 @@ dies tun:
 #
 impl Drop for ThreadPool {
     fn drop(&mut self) {
-        for worker in &mut self.workers {
+        for worker in self.workers.drain(..) {
             println!("Worker {} herunterfahren", worker.id);
 
-            if let Some(thread) = worker.thread.take() {
-                thread.join().unwrap();
-            }
+            worker.thread.join().unwrap();
         }
     }
 }
 #
 # struct Worker {
 #     id: usize,
-#     thread: Option<thread::JoinHandle<()>>,
+#     thread: thread::JoinHandle<()>,
 # }
 #
 # impl Worker {
 #     fn new(id: usize, receiver: Arc<Mutex<mpsc::Receiver<Job>>>) -> Worker {
-#         let thread = thread::spawn(move || loop {
-#             let job = receiver.lock().unwrap().recv().unwrap();
+#         let thread = thread::spawn(move || {
+#             loop {
+#                 let job = receiver.lock().unwrap().recv().unwrap();
 #
-#             println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+#                 println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 #
-#             job();
+#                 job();
+#             }
 #         });
 #
-#         Worker {
-#             id,
-#             thread: Some(thread),
-#         }
+#         Worker { id, thread }
 #     }
 # }
 ```
 
-Wie in Kapitel 17 besprochen, nimmt die Methode `take` auf `Option` die
-Variante `Some` heraus und lässt an ihrer Stelle `None` stehen. Wir benutzen
-`if let`, um die `Some` zu destrukturieren und den Strang zu erhalten; dann
-rufen wir `join` auf dem Strang auf. Wenn der Strang eines `Worker` bereits
-`None` ist, wissen wir, dass der Strang bereits aufgeräumt wurde, also passiert
-in diesem Fall nichts.
+Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
+an unserem Code erforderlich.
 
 ### Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen
 
@@ -467,8 +267,9 @@ von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
 `Sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
 Codeblock 20-23 zeigt die Änderungen an `ThreadPool`, um den `Absender`
-explizit aufzuräumen. Wir verwenden die gleiche `Option` und `take`-Technik wie
-beim Strang, um `sender` aus dem `ThreadPool` herauszuverschieben:
+explizit aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option`
+verwenden, um den `Sender` mit `Option::take` aus dem `ThreadPool` herausnehmen
+zu können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -567,11 +368,11 @@ impl Drop for ThreadPool {
 
 Das Aufräumen von `sender` schließt den Kanal, was bedeutet, dass keine
 weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
-von `recv`, die die `Worker` in der Endlosschleife machen, einen Fehler zurück.
-In Codeblock 20-24 ändern wir die `Worker`-Schleife so, dass die Schleife in
-diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die Stränge beendet
-werden, wenn die Implementierung von `drop` in `ThreadPool` `join` für sie
-aufruft.
+von `recv`, die die `Worker`-Instanzen in der Endlosschleife machen, einen
+Fehler zurück. In Codeblock 20-24 ändern wir die `Worker`-Schleife so, dass die
+Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
+Stränge beendet werden, wenn die Implementierung von `drop` in `ThreadPool`
+`join` für sie aufruft.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -758,16 +559,16 @@ Worker 2 herunterfahren
 Worker 3 herunterfahren
 ```
 
-Möglicherweise siehst du eine andere Reihenfolge der `Worker` und der
+Möglicherweise siehst du eine andere Reihenfolge der `Worker`-IDs und der
 ausgegebenen Nachrichten. Wir können anhand der Nachrichten sehen, wie dieser
 Code funktioniert: Die `Worker` 0 und 3 haben die ersten beiden Anfragen
 erhalten. Der Server hat nach der zweiten Verbindung aufgehört, Verbindungen
 anzunehmen, und die `Drop`-Implementierung auf `ThreadPool` beginnt mit der
 Ausführung, bevor `Worker` 3 überhaupt seinen Job beginnt. Wenn man den
-`sender` aufräumt, werden alle `Worker` getrennt und angewiesen, sich zu
-beenden. Die `Worker` geben jeweils eine Nachricht aus, wenn sie die Verbindung
-trennen, und dann ruft der Strang-Vorrat `join` auf, um das Ende jedes
-`Worker`-Strangs zu warten.
+`sender` aufräumt, werden alle `Worker`-Instanzen getrennt und angewiesen, sich
+zu beenden. Die `Worker`-Instanzen geben jeweils eine Nachricht aus, wenn sie
+die Verbindung trennen, und dann ruft der Strang-Vorrat `join` auf, um das Ende
+jedes `Worker`-Strangs zu warten.
 
 Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
 `ThreadPool` hat den `sender` aufgeräumt, und bevor ein `Worker` einen Fehler
@@ -776,8 +577,8 @@ noch keinen Fehler von `recv` erhalten, also blockierte der Hauptstrang und
 wartete darauf, dass `Worker` 0 fertig wird. In der Zwischenzeit erhielt
 `Worker` 3 einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
 `Worker` 0 fertig war, wartete der Hauptstrang darauf, dass die restlichen
-`Worker` fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre Schleifen
-verlassen und konnten sich beenden.
+`Worker`-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
+Schleifen verlassen und konnten sich beenden.
 
 Herzlichen Glückwunsch! Wir haben jetzt unser Projekt abgeschlossen; wir haben
 einen einfachen Webserver, der einen Strang-Vorrat verwendet, um asynchron zu
@@ -935,13 +736,13 @@ impl Worker {
 Wir könnten hier mehr tun! Wenn du dieses Projekt weiter verbessern willst,
 findest du hier einige Ideen:
 
-* Füge weitere Dokumentation zu `ThreadPool` und seinen öffentlichen Methoden
+- Füge weitere Dokumentation zu `ThreadPool` und seinen öffentlichen Methoden
   hinzu.
-* Füge Tests der Funktionalität der Bibliothek hinzu.
-* Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
-* Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
+- Füge Tests der Funktionalität der Bibliothek hinzu.
+- Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
+- Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
   Web-Anfragen durchzuführen.
-* Suche eine Strang-Vorrats-Kiste auf [crates.io](https://crates.io/) und
+- Suche eine Strang-Vorrats-Kiste auf [crates.io](https://crates.io/) und
   implementiere damit einen ähnlichen Webserver unter Verwendung der Kiste.
   Vergleiche dann dessen API und Robustheit mit dem von uns implementierten
   Strang-Vorrat.
