@@ -30,10 +30,10 @@ match x {
 }
 ```
 
-Die Muster in diesem `match`-Ausdruck sind `None` und `Some(i)` links von jedem
-Pfeil.
+Die Muster in diesem `match`-Ausdruck sind `None` und `Some(i)` links von den
+Pfeilen.
 
-Eine Anforderung für `match`-Ausdrücke ist, dass sie *erschöpfend* (exhaustive)
+Eine Anforderung für `match`-Ausdrücke ist, dass sie _erschöpfend_ (exhaustive)
 in dem Sinne sein müssen, dass alle Möglichkeiten für den Wert im
 `match`-Ausdruck berücksichtigt sein müssen. Ein Weg, um sicherzustellen, dass
 alle Möglichkeiten abgedeckt sind, ist ein Sammel-Muster (catchall pattern) für
@@ -43,8 +43,8 @@ Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.
 Das spezielle Muster `_` wird auf alles passen, aber es bindet nie an eine
 Variable, daher wird es oft im letzten `match`-Zweig verwendet. Das Muster `_`
 kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster `_` im Abschnitt [„Ignorieren von
-Werten in einem Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel
+ignorieren willst. Wir werden das Muster `_` in [„Ignorieren von Werten in
+einem Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel
 ausführlicher behandeln.
 
 ### Bedingte `if let`-Ausdrücke
@@ -104,14 +104,15 @@ Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 `Verwende violett als Hintergrundfarbe` ausgeben.
 
-Du kannst sehen, dass `if let` auch verschattete Variablen (shadowed variables)
-auf die gleiche Weise einführen kann wie bei `match`-Zweigen: Die Zeile `if let
-Ok(age) = age` führt eine neue verschattete Variable `age` ein, die den Wert
-innerhalb der `Ok`-Variante enthält. Das bedeutet, dass wir die Bedingung `if
-age > 30` innerhalb dieses Blocks platzieren müssen: Wir können diese beiden
-Bedingungen nicht in `if let Ok(age) = age && age > 30` kombinieren. Das
-verschattete `age`, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
-neue Gültigkeitsbereich mit der geschweiften Klammer beginnt.
+Du kannst sehen, dass `if let` auch neue Variablen einführen kann, die
+vorhandene Variablen verschatten (shadow) können, so wie bei `match`-Zweigen:
+Die Zeile `if let Ok(age) = age` führt eine neue Variable `age` ein, die den
+Wert innerhalb der `Ok`-Variante enthält und die vorhandene Variable `age`
+verschattet. Das bedeutet, dass wir die Bedingung `if age > 30` innerhalb
+dieses Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in
+`if let Ok(age) = age && age > 30` kombinieren. Die neue Variable `age`, die
+wir mit 30 vergleichen wollen, ist erst gültig, wenn der neue
+Gültigkeitsbereich mit der geschweiften Klammer beginnt.
 
 Der Nachteil der Verwendung von `if let`-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei `match`-Ausdrücken tut. Wenn
@@ -121,13 +122,10 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 ### `while let`-bedingte Schleifen
 
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
-`while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Wir
-haben eine `while let`-Schleife zum ersten Mal in Kapitel 17 gesehen, wo wir
-sie dafür benutzt haben, eine Schleife so lange laufen zu lassen, wie ein
-Datenstrom neue Werte produziert. Auf ähnliche Weise zeigen wir in Codeblock
-19-2 eine `while let`-Schleife, die auf Nachrichten wartet, die zwischen
-Strängen gesendet werden. In aktuellen Fall prüfen wir ein `Result` statt einer
-einer `Option`.
+`while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
+ähnliche Weise zeigen wir in Codeblock 19-2 eine `while let`-Schleife, die auf
+Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
+prüfen wir ein `Result` statt einer einer `Option`.
 
 ```rust
     let (tx, rx) = std::sync::mpsc::channel();
@@ -145,12 +143,14 @@ einer `Option`.
 <span class="caption">Codeblock 19-2: Das Verwenden einer `while let`-Schleife,
 um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
-Dieses Beispiel gibt 1, 2 und 3 aus. Als wir `recv` in Kapitel 16 gesehen
-haben, haben wir den Fehler direkt ausgepackt oder mit ihm als Iterator in
-einer `for`-Schleife interagiert. Wie Codeblock 19-2 zeigt, können wir aber
-auch `while let` verwenden, da die Methode `recv` den Wert `Ok` zurückgibt,
-solange der Absender Nachrichten produziert, und schließlich `Err` zurückgibt,
-sobald die Absenderseite die Verbindung trennt.
+Dieses Beispiel gibt `1`, `2` und `3` aus. Die Methode `recv` nimmt die erste
+Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als
+wir `recv` das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
+direkt ausgepackt oder mit ihm als Iterator in einer `for`-Schleife
+interagiert. Wie Codeblock 19-2 zeigt, können wir aber auch `while let`
+verwenden, da die Methode `recv` nach jeder angekommenen Nachricht den Wert
+`Ok` zurückgibt, solange der Sender existiert, und schließlich `Err`
+zurückgibt, sobald die Senderseite die Verbindung trennt.
 
 ### `for`-Schleifen
 
@@ -208,7 +208,7 @@ let PATTERN = EXPRESSION;
 ```
 
 In Anweisungen wie `let x = 5;` mit einem Variablennamen an der Stelle
-`PATTERN` ist der Variablenname nur eine besonders einfache Form eines Musters.
+_PATTERN_ ist der Variablenname nur eine besonders einfache Form eines Musters.
 Rust vergleicht den Ausdruck mit dem Muster und weist alle gefundenen Namen zu.
 Im Beispiel `let x = 5;` ist `x` also ein Muster, das bedeutet: „Binde das, was
 hier passt, an die Variable `x`.“ Da der Name `x` das gesamte Muster ist,
@@ -229,9 +229,9 @@ Variablen</span>
 
 Hier vergleichen wir ein Tupel mit einem Muster. Rust vergleicht den Wert `(1,
 2, 3)` mit dem Muster `(x, y, z)` und sieht, dass der Wert zum Muster passt,
-also bindet Rust `1` an `x`, `2` an `y` und `3` an `z`. Man kann sich dieses
-Tupelmuster als Verschachtelung von drei einzelnen Variablen-Mustern darin
-vorstellen.
+weil die Anzahl der Elemente in beiden Werten dieselbe ist, und bindet `1` an
+`x`, `2` an `y` und `3` an `z`. Man kann sich dieses Tupelmuster als
+Verschachtelung von drei einzelnen Variablen-Mustern darin vorstellen.
 
 Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
