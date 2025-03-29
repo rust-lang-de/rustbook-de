@@ -4,7 +4,7 @@ Die Nachrichtenübermittlung ist eine gute Methode zur Behandlung von
 Nebenläufigkeit, aber sie ist nicht die einzige. Eine andere Methode wäre, dass
 mehrere Stränge auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
 Teil des Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere
-nicht, indem du Arbeitsspeicher teilst.“
+nicht über gemeinsamen Arbeitsspeicher.“
                                                     
 Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
 Und warum sollten Liebhaber der Nachrichtenübermittlung davor warnen,
@@ -24,21 +24,21 @@ genutzten Speicher.
 
 ### Verwenden von Mutex, um Datenzugriff von jeweils einem Strang zu ermöglichen
 
-*Mutex* ist eine Abkürzung für *mutual exclusion* (engl. wechselseitiger
+_Mutex_ ist eine Abkürzung für _mutual exclusion_ (engl. wechselseitiger
 Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
 (thread) den Zugriff auf einige Daten erlaubt. Um auf die Daten in einem Mutex
 zuzugreifen, muss ein Strang zunächst signalisieren, dass er Zugriff wünscht,
-indem er darum bittet, die *Sperre* (lock) des Mutex zu erwerben. Die Sperre
+indem er darum bittet, die _Sperre_ (lock) des Mutex zu erwerben. Die Sperre
 ist eine Datenstruktur, die Teil des Mutex ist, der verfolgt, wer derzeit
-exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als *Schutz* der
+exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz* der
 Daten beschrieben, die er über das Schließsystem hält.
 
 Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
 Regeln merken muss:
 
-* Du musst versuchen, die Sperre zu erwerben, bevor du die Daten verwendest.
-* Wenn du mit den Daten, die der Mutex schützt, fertig bist, musst du die Daten
-  entsperren, damit andere Stränge die Sperre übernehmen können.
+1. Du musst versuchen, die Sperre zu erwerben, bevor du die Daten verwendest.
+2. Wenn du mit den Daten, die der Mutex schützt, fertig bist, musst du die Daten
+   entsperren, damit andere Stränge die Sperre übernehmen können.
 
 Als reale Metapher für einen Mutex stelle dir eine Podiumsdiskussion auf einer
 Konferenz mit nur einem Mikrofon vor. Bevor ein Podiumsteilnehmer das Wort
@@ -59,7 +59,7 @@ falsch machen.
 
 Als Beispiel für die Verwendung eines Mutex beginnen wir mit der Verwendung
 eines Mutex in einem einsträngigen (single-threaded) Kontext, wie in Codeblock
-16-12 gezeigt:
+16-12 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -96,7 +96,7 @@ Nachdem wir die Sperre erworben haben, können wir den Rückgabewert, in diesem
 Fall `num` genannt, als veränderbare Referenz auf die darin enthaltenen Daten
 verwenden. Das Typsystem stellt sicher, dass wir eine Sperre erwerben, bevor
 wir den Wert in `m` verwenden. Der Typ von `m` ist `Mutex<i32>`, nicht `i32`,
-also *müssen* wir `lock` aufrufen, um den `i32`-Wert verwenden zu können. Wir
+also _müssen_ wir `lock` aufrufen, um den `i32`-Wert verwenden zu können. Wir
 können das nicht vergessen, das Typsystem würde uns sonst keinen Zugriff auf
 das innere `i32` erlauben.
 
@@ -118,10 +118,10 @@ sehen, dass wir den inneren `i32` in 6 ändern konnten.
 
 Versuchen wir nun, einen Wert zwischen mehreren Strängen mit `Mutex<T>` zu
 teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
-erhöhen, sodass der Zähler von 0 auf 10 geht. Das nächste Beispiel in Codeblock
-16-13 wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden,
-um mehr über die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust
-uns hilft, ihn korrekt zu verwenden.
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Codeblock 16-13
+wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um
+mehr über die Verwendung von `Mutex<T>` zu erfahren und darüber, wie Rust uns
+hilft, ihn korrekt zu verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -208,7 +208,7 @@ Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 
 #### Mehrfacheigentum mit mehreren Strängen
 
-In Kapitel 15 gaben wir einen Wert mit mehreren Eigentümern an, indem wir den
+In Kapitel 15 gaben wir einen Wert an mehrere Eigentümern, indem wir den
 intelligenten Zeiger `Rc<T>` verwendeten, um einen Referenzzählwert zu
 erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
 den `Mutex<T>` in `Rc<T>` in Codeblock 16-14 ein und klonen den `Rc<T>`, bevor
@@ -246,8 +246,8 @@ fn main() {
 <span class="caption">Codeblock 16-14: Versuch, `Rc<T>` zu verwenden, um
 mehreren Strängen zu erlauben, den `Mutex<T>` zu besitzen</span>
 
-Wir kompilieren nochmal und bekommen ... verschiedene Fehler! Der Compiler
-lehrt uns eine Menge.
+Wir kompilieren nochmal und bekommen verschiedene Fehler! Der Compiler lehrt
+uns eine Menge.
 
 ```console
 $ cargo run
@@ -281,10 +281,10 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 ```
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
-den wir uns konzentrieren müssen: `Rc<Mutex<i32>>` kann nicht sicher zwischen
-Strängen gesendet werden. Der Compiler teilt uns auch den Grund dafür mit: Das
-Merkmal (trait) `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Wir werden
-im nächsten Abschnitt über `Send` sprechen: Es ist eines der Merkmale, das
+den wir uns konzentrieren müssen: `` `Rc<Mutex<i32>>` cannot be sent between
+ threads safely `` Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+(trait) `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Wir werden im
+nächsten Abschnitt über `Send` sprechen: Es ist eines der Merkmale, das
 sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
 Verwendung in nebenläufigen Situationen gedacht sind.
 
@@ -302,8 +302,8 @@ wollen. Was wir brauchen, ist ein Typ genau wie `Rc<T>`, aber einer, der
 #### Atomare Referenzzählung mit `Arc<T>`
 
 Glücklicherweise ist `Arc<T>` ein Typ wie `Rc<T>`, der in nebenläufigen
-Situationen sicher zu verwenden ist. Das *a* steht für *atomar*, d.h. es
-handelt sich um einen *atomar referenzgezählten* (atomically reference
+Situationen sicher zu verwenden ist. Das _a_ steht für _atomar_, d.h. es
+handelt sich um einen _atomar referenzgezählten_ (atomically reference
 counted) Typ. Atomare Typen (atomics) sind eine zusätzliche Art von
 Nebenläufigkeitsprimitiven, die wir hier nicht im Detail behandeln werden:
 Weitere Einzelheiten findest du in der Standardbibliotheksdokumentation für
@@ -322,7 +322,7 @@ die Garantien erzwingen muss, die atomare Typen bieten.
 Kehren wir zu unserem Beispiel zurück: `Arc<T>` und `Rc<T>` haben die gleiche
 API, also reparieren wir unser Programm, indem wir die `use`-Zeile, den Aufruf
 von `new` und den Aufruf von `clone` ändern. Der Code in Codeblock 16-15 wird
-schließlich kompilieren und laufen:
+schließlich kompilieren und laufen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -389,11 +389,11 @@ Inhalte innerhalb eines `Rc<T>` zu mutieren, benutzen wir `Mutex<T>`, um
 Inhalte innerhalb eines `Arc<T>` zu mutieren.
 
 Ein weiteres zu beachtendes Detail ist, dass Rust dich nicht vor allen Arten
-von Logikfehlern schützen kann, wenn du `Mutex<T>` verwendest. Erinnere dich in
-Kapitel 15 daran, dass die Verwendung von `Rc<T>` mit dem Risiko verbunden war,
+von Logikfehlern schützen kann, wenn du `Mutex<T>` verwendest. Erinnere dich an
+Kapitel 15, dass die Verwendung von `Rc<T>` mit dem Risiko verbunden war,
 Referenzzyklen zu erzeugen, bei denen zwei `Rc<T>` Werte aufeinander
 referenzieren und dadurch Speicherlecks verursachen. In ähnlicher Weise ist
-`Mutex<T>` mit dem Risiko verbunden, *Deadlocks* zu schaffen. Diese treten auf,
+`Mutex<T>` mit dem Risiko verbunden, _Deadlocks_ zu schaffen. Diese treten auf,
 wenn eine Operation zwei Ressourcen sperren muss und zwei Stränge jeweils eine
 der Sperren erworben haben, was dazu führt, dass sie ewig aufeinander warten.
 Wenn du an Deadlocks interessiert bist, versuche, ein Programm in Rust zu

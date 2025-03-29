@@ -4,7 +4,7 @@ Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
 `calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
-den `String`-Wert angeben. Eine *Referenz* ist wie ein Zeiger, d.h. eine
+den `String`-Wert angeben. Eine _Referenz_ ist wie ein Zeiger, d.h. eine
 Adresse, der wir folgen können, um auf Daten zugreifen zu können, die an dieser
 Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
 einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
@@ -33,7 +33,7 @@ fn calculate_length(s: &String) -> usize {
 Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 `&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
-`String` steht. Das `&`-Zeichen steht für eine *Referenz*, und sie ermöglicht
+`String` steht. Das `&`-Zeichen steht für eine _Referenz_, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
 
@@ -46,7 +46,7 @@ src="img/trpl04-06.svg" class="center" />
 `String s1` zeigt</span>
 
 > Anmerkung: Das Gegenteil der Referenzierung durch `&` ist die
-> *Dereferenzierung* (dereferencing), die mittels Dereferenzoperator `*`
+> _Dereferenzierung_ (dereferencing), die mittels Dereferenzoperator `*`
 > erfolgt. Wir werden in Kapitel 8 einige Verwendungen des Dereferenzoperators
 > sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.
 
@@ -67,9 +67,9 @@ Schauen wir uns den Funktionsaufruf hier genauer an:
 ```
 
 Die Syntax `&s1` erlaubt es uns, eine Referenz zu erstellen, die auf den Wert
-von `s1` *referenziert*, ihn aber nicht besitzt. Da sie diesen nicht besitzt,
-verfällt der Wert, auf den sie verweist, nicht, wenn die Referenz nicht mehr
-benutzt wird.
+von `s1` _referenziert_, ihn aber nicht besitzt. Da die Referenz diesen nicht
+besitzt, wird der Wert nicht aufgeräumt, wenn die Referenz nicht mehr benutzt
+wird.
 
 Ebenso verwendet die Signatur der Funktion das Zeichen `&`, um anzuzeigen, dass
 der Typ des Parameters `s` eine Referenz ist. Lass uns einige erklärende
@@ -98,7 +98,7 @@ Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
 
-Wir nennen den Vorgang des Erstellens einer Referenz *Ausleihen* (borrowing).
+Wir nennen den Vorgang des Erstellens einer Referenz _Ausleihen_ (borrowing).
 Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
 ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.
 
@@ -150,7 +150,7 @@ Referenz haben.
 
 Wir können den Code aus Codeblock 4-6 so ändern, dass wir einen geliehenen Wert
 mit ein paar kleinen Änderungen ändern können, die stattdessen eine
-*veränderbare Referenz* verwenden:
+_veränderbare Referenz_ verwenden:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -220,13 +220,13 @@ gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr
 kontrollierten Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn
 in den meisten Sprachen kann man verändern wann immer man will. Diese
 Beschränkung hat den Vorteil, dass Rust Daten-Wettlaufsituation zur
-Kompilierzeit verhindern kann. Eine *Daten-Wettlaufsituation* (data race) ist
+Kompilierzeit verhindern kann. Eine _Daten-Wettlaufsituation_ (data race) ist
 ähnlich einer Wettlaufsituation (race condition) und tritt auf, wenn diese drei
 Verhaltensweisen auftreten:
 
-* Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
-* Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
-* Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
+- Zwei oder mehr Zeiger greifen gleichzeitig auf die gleichen Daten zu.
+- Mindestens einer der Zeiger wird zum Schreiben auf die Daten verwendet.
+- Es gibt keinen Mechanismus, um den Zugriff auf die Daten zu synchronisieren.
 
 Daten-Wettlaufsituationen verursachen undefiniertes Verhalten und können
 schwierig zu diagnostizieren und zu beheben sein, wenn du versuchst, sie zur
@@ -235,7 +235,7 @@ Daten-Wettlaufsituationen gar nicht erst kompiliert!
 
 Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
-nur nicht *gleichzeitige*:
+nur nicht _gleichzeitige_:
 
 ```rust
 let mut s = String::from("Hallo");
@@ -323,8 +323,8 @@ sind, wie du dachtest.
 
 ### Hängende Referenzen
 
-In Sprachen mit Zeigern ist es leicht, fälschlicherweise einen *hängenden
-Zeiger* (dangling pointer) zu erzeugen, also einen Zeiger, der auf eine Stelle
+In Sprachen mit Zeigern ist es leicht, fälschlicherweise einen _hängenden
+Zeiger_ (dangling pointer) zu erzeugen, also einen Zeiger, der auf eine Stelle
 im Speicher verweist, die vielleicht an jemand anderem vergeben wurde, weil der
 Speicher freigegeben wurde, während noch ein Zeiger auf diesen Speicher
 bestehen bleibt. In Rust hingegen garantiert der Compiler, dass Referenzen
@@ -438,9 +438,9 @@ verschoben, und nichts wird freigegeben.
 
 Lass uns rekapitulieren, was wir über Referenzen gelernt haben:
 
-* Zu jedem beliebigen Zeitpunkt kannst du *entweder* eine veränderbare
-  Referenz *oder* eine beliebige Anzahl unveränderbarer Referenzen haben.
-* Referenzen müssen immer gültig sein.
+- Zu jedem beliebigen Zeitpunkt kannst du _entweder_ eine veränderbare
+  Referenz _oder_ eine beliebige Anzahl unveränderbarer Referenzen haben.
+- Referenzen müssen immer gültig sein.
 
 Als Nächstes werden wir uns mit einer anderen Art von Referenz befassen:
 Anteilstypen (slice).

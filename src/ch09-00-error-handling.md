@@ -8,8 +8,8 @@ Diese Anforderung macht dein Programm robuster, da sichergestellt wird, dass du
 Fehler entdeckst und diese angemessen behandelst, bevor dein Code in Produktion
 gebracht wird!
 
-Rust gruppiert Fehler in zwei Hauptkategorien: *Behebbare* (recoverable) und
-*nicht behebbare* (unrecoverable) Fehler. Bei einem behebbaren Fehler, z.B.
+Rust gruppiert Fehler in zwei Hauptkategorien: _Behebbare_ (recoverable) und
+_nicht behebbare_ (unrecoverable) Fehler. Bei einem behebbaren Fehler, z.B.
 „Datei nicht gefunden“, wollen wir das Problem wahrscheinlich dem Benutzer
 melden und den Vorgang erneut versuchen. Nicht behebbare Fehler sind immer
 Symptome von Programmierfehlern, z.B. der Versuch, auf eine Stelle hinter dem

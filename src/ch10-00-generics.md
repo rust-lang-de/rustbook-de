@@ -2,7 +2,7 @@
 
 Jede Programmiersprache verfügt über Werkzeuge, mit denen die Duplizierung von
 Konzepten (duplication of concepts) effektiv gehandhabt werden kann. In Rust
-ist ein solches Werkzeug der *generische Datentyp* (generics): Abstrakte
+ist ein solches Werkzeug der _generische Datentyp_ (generics): Abstrakte
 Stellvertreter für konkrete Typen oder andere Eigenschaften. Wir können das
 Verhalten generischer Datentypen oder ihre Beziehung zu anderen generischen
 Datentypen ausdrücken, ohne zu wissen, was an ihrer Stelle beim Kompilieren und
@@ -23,12 +23,12 @@ generische Funktion zu machen. Wir werden auch erklären, wie generische Typen
 in Struktur- (struct) und Aufzählungsdefinitionen (enum) verwendet werden
 können.
 
-Dann wirst du lernen, wie man *Merkmale* (traits) verwendet, um Verhalten auf
+Dann wirst du lernen, wie man _Merkmale_ (traits) verwendet, um Verhalten auf
 generische Weise zu definieren. Du kannst Merkmale mit generischen Typen
 kombinieren, um einen generischen Typ auf solche Typen einzuschränken, die ein
 bestimmtes Verhalten aufweisen, im Gegensatz zu einem beliebigen Typ.
 
-Schließlich werden wir die *Lebensdauer* (lifetimes) besprechen: Eine Spielart
+Schließlich werden wir die _Lebensdauer_ (lifetimes) besprechen: Eine Spielart
 generischer Typen, die dem Compiler Informationen darüber gibt, wie
 Referenzen zueinander in Beziehung stehen. Lebensdauern ermöglichen es uns, dem
 Compiler genügend Informationen über ausgeliehene Werte zu geben, sodass er
@@ -118,7 +118,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 10-2: Code zum Auffinden der größten Zahl in
-*zwei* Zahlenlisten</span>
+_zwei_ Zahlenlisten</span>
 
 Obwohl dieser Code funktioniert, ist das Duplizieren von Code mühsam und
 fehleranfällig. Außerdem müssen wir daran denken, den Code an mehreren Stellen

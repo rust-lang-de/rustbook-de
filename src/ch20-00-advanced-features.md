@@ -11,16 +11,16 @@ Funktionen von Rust kennst.
 
 In diesem Kapitel werden wir behandeln:
 
-* Unsicheres Rust: Wie kann man einige der Garantien von Rust ausschalten und
+- Unsicheres Rust: Wie kann man einige der Garantien von Rust ausschalten und
   Verantwortung für das manuelle Aufrechterhalten dieser Garantien übernehmen?
-* Fortgeschrittene Merkmale (traits): Assoziierte Typen, Standardtypparameter,
+- Fortgeschrittene Merkmale (traits): Assoziierte Typen, Standardtypparameter,
   voll qualifizierte Syntax, Supermerkmale (supertraits) und das Newtype-Muster
   in Bezug auf Merkmale
-* Fortgeschrittene Typen: Mehr über das Newtype-Muster, Typ-Aliase, den Typ
+- Fortgeschrittene Typen: Mehr über das Newtype-Muster, Typ-Aliase, den Typ
   never und Typen dynamischer Größe
-* Erweiterte Funktionen und Funktionsabschlüsse: Funktionszeiger und
+- Erweiterte Funktionen und Funktionsabschlüsse: Funktionszeiger und
   Zurückgeben von Funktionsabschlüssen
-* Makros: Möglichkeiten, Code zu definieren, der zur Kompilierzeit mehr Code
+- Makros: Möglichkeiten, Code zu definieren, der zur Kompilierzeit mehr Code
   definiert
 
 Es ist eine Reihe von Rust-Funktionalitäten, die für jeden etwas bietet! Lass

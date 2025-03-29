@@ -5,7 +5,7 @@ dich als Rust-Entwickler auswirkt.
 
 ### Stabilität ohne Stillstand
 
-Als Sprache kümmert sich Rust *viel* um die Stabilität deines Codes. Wir
+Als Sprache kümmert sich Rust _viel_ um die Stabilität deines Codes. Wir
 wollen, dass Rust ein felsenfestes Fundament ist, auf dem du aufbauen kannst,
 und wenn sich die Dinge ständig ändern würden, wäre das unmöglich. Gleichzeitig
 werden wir, wenn wir nicht mit neuen Funktionen experimentieren können,
@@ -20,16 +20,16 @@ Kompilierzeiten mit sich bringen.
 
 ### Tüff, tüff! Veröffentlichungs-Kanäle und Zugfahren
 
-Die Rust-Entwicklung erfolgt nach einem *Zugfahrplan* (train schedule). Das
+Die Rust-Entwicklung erfolgt nach einem _Zugfahrplan_ (train schedule). Das
 bedeutet, dass die gesamte Entwicklung auf dem `master`-Zweig der
 Rust-Versionsverwaltung durchgeführt wird. Die Veröffentlichungen folgen einem
 Software-Veröffentlichungs-Zugmodell, das von Cisco IOS und anderen
-Softwareprojekten verwendet wurde. Es gibt drei *Veröffentlichungskanäle*
+Softwareprojekten verwendet wurde. Es gibt drei _Veröffentlichungskanäle_
 (release channels) für Rust:
 
-* Nächtlich (nightly)
-* Beta
-* Stabil (stable)
+- Nächtlich (nightly)
+- Beta
+- Stabil (stable)
 
 Die meisten Rust-Entwickler verwenden in erster Linie den stabilen Kanal, aber
 diejenigen, die experimentelle neue Funktionen ausprobieren wollen, können
@@ -95,7 +95,7 @@ stabil:                                  *
 ```
 
 Hurra! Rust 1.5 ist geschafft! Eines haben wir jedoch vergessen: Da die sechs
-Wochen vergangen sind, brauchen wir auch eine neue Beta der *nächsten* Version,
+Wochen vergangen sind, brauchen wir auch eine neue Beta der _nächsten_ Version,
 Rust 1.6. Nachdem also `stable` von `beta` abzweigt, zweigt die nächste Version
 von `beta` wieder von `nightly` ab:
 
@@ -141,7 +141,7 @@ Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalt
 (feature flags), um festzulegen, welche Funktionalitäten in einer bestimmten
 Version aktiviert sind. Wenn eine neue Funktionalität aktiv entwickelt wird,
 landet sie auf dem `master` und damit in „nächtlich“, aber hinter einem
-*Funktionalitäts-Schalter*. Wenn du als Nutzer eine in Entwicklung befindliche
+_Funktionalitäts-Schalter_. Wenn du als Nutzer eine in Entwicklung befindliche
 Funktionalität ausprobieren möchtest, kannst du dies tun, aber du musst eine
 nächtliche Version von Rust verwenden und deinen Quellcode mit dem
 entsprechenden Schalter versehen, um sie nutzen zu können.
@@ -172,7 +172,7 @@ folgenden Aufruf:
 $ rustup toolchain install nightly
 ```
 
-Du kannst auch alle *Werkzeugketten* (toolchains) (Versionen von Rust und
+Du kannst auch alle _Werkzeugketten_ (toolchains) (Versionen von Rust und
 zugehörigen Komponenten) sehen, die du mit `rustup` installiert hast. Hier ist
 ein Beispiel auf dem Windows-Rechner einer deiner Autoren:
 
@@ -198,14 +198,14 @@ $ rustup override set nightly
 ```
 
 Jedes Mal, wenn du nun `rustc` oder `cargo` innerhalb von
-*~/projects/needs-nightly* aufrufst, stellt `rustup` sicher, dass du das
+_~/projects/needs-nightly_ aufrufst, stellt `rustup` sicher, dass du das
 nächtliche Rust verwendest und nicht dein standardmäßiges, stabiles Rust. Das
 ist praktisch, wenn du viele Rust-Projekte hast!
 
 ### Der RFC-Prozess und die Teams
 
 Wie erfährst du also von diesen neuen Funktionalitäten? Das Entwicklungsmodell
-von Rust folgt einem *Bitte-um-Kommentare-Prozess* (Request For Comments, RFC). 
+von Rust folgt einem _Bitte-um-Kommentare-Prozess_ (Request For Comments, RFC). 
 Wenn du eine Verbesserung von Rust wünschst, kannst du einen Vorschlag
 schreiben, einen sogenannten RFC.
 
@@ -217,8 +217,6 @@ aufgeführt sind: Sprachdesign, Compiler-Implementierung, Infrastruktur,
 Dokumentation und weitere. Das zuständige Team liest den Vorschlag und die
 Kommentare, schreibt einige eigene Kommentare und schließlich gibt es einen
 Konsens, die Funktionalität anzunehmen oder abzulehnen.
-
-[rust-website]: https://www.rust-lang.org/governance
 
 Wenn die Funktionalität angenommen wird, wird ein Ticket (issue) in der
 Rust-Versionsverwaltung eröffnet, und jemand kann es implementieren. Die
@@ -235,3 +233,5 @@ entscheiden, ob sie ins stabile Rust kommen soll oder nicht. Wenn die
 Entscheidung positiv ist, wird das Funktionalitätstor (feature gate) entfernt
 und die Funktionalität gilt jetzt als stabil! Sie fährt mit den Zügen in eine
 neue stabile Version von Rust.
+
+[rust-website]: https://www.rust-lang.org/governance

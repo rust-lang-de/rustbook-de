@@ -2,7 +2,7 @@
 
 Die Speichersicherheitsgarantien von Rust machen es schwierig, aber nicht
 unmöglich, versehentlich Speicher zu erstellen, der niemals aufgeräumt wird
-(bekannt als *Speicherleck* (memory leak)). Das vollständige Verhindern von
+(bekannt als _Speicherleck_ (memory leak)). Das vollständige Verhindern von
 Speicherlecks gehört nicht zu den Garantien von Rust, d.h. Speicherlecks sind
 in Rust speichersicher. Wir können sehen, dass Rust Speicherlecks mithilfe von
 `Rc<T>` und `RefCell<T>` zulässt: Es ist möglich, Referenzen zu erstellen, bei
@@ -14,7 +14,7 @@ erreicht und die Werte niemals aufgeräumt werden.
 
 Schauen wir uns an, wie ein Referenzzyklus stattfinden kann und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung `List` und einer
-Methode `tail` in Codeblock 15-25:
+Methode `tail` in Codeblock 15-25.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -112,7 +112,7 @@ aufeinanderzeigenden Listenwerten</span>
 Wir erstellen eine `Rc<List>`-Instanz, die einen `List`-Wert in der Variablen
 `a` mit einer initialen Liste `5, Nil` enthält. Wir erstellen dann eine
 `Rc<List>`-Instanz, die einen anderen `List`-Wert in der Variablen `b` enthält,
-die den Wert 10 enthält und auf die Liste in `a` zeigt.
+die den Wert `10` enthält und auf die Liste in `a` zeigt.
 
 Wir modifizieren `a` so, dass es auf `b` anstatt auf `Nil` zeigt, wodurch ein
 Zyklus erstellt wird. Wir tun dies, indem wir die `tail`-Methode verwenden, um
@@ -148,8 +148,8 @@ da seine Referenzanzahl 1 und nicht 0 ist. Dann räumt Rust `a` auf, was die
 Referenzanzahl der `Rc<List>`-Instanz in `a` ebenfalls von 2 auf 1 reduziert.
 Der Speicher dieser Instanz kann ebenfalls nicht aufgeräumt werden, weil die
 andere `Rc<List>`-Instanz immer noch auf sie referenziert. Der der Liste
-zugewiesene Speicher bleibt für immer unaufgeräumt. Um diesen Referenzzyklus zu
-veranschaulichen, haben wir in Abbildung 15-4 ein Diagramm erstellt.
+zugewiesene Speicher bleibt für immer unaufgeräumt. Das Diagramm in Abbildung
+15-4 veranschaulicht diesen Referenzzyklus.
 
 <img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 40%;" />
 
@@ -189,11 +189,11 @@ Diagramme aus übergeordneten und untergeordneten Knoten verwendet werden, um
 festzustellen, wann Beziehungen ohne Eigentümerschaft ein geeigneter Weg sind,
 um Referenzzyklen zu verhindern.
 
-### Verhindern von Referenzzyklen: Umwandeln von `Rc<T>` in `Weak<T>`
+### Verhindern von Referenzzyklen mit `Weak<T>`
 
 Bisher haben wir gezeigt, dass das Aufrufen von `Rc::clone` den `strong_count`
 einer `Rc<T>`-Instanz erhöht und eine `Rc<T>`-Instanz nur dann aufgeräumt wird,
-wenn ihr `strong_count` 0 ist. Man kann auch eine *schwache Referenz* (weak
+wenn ihr `strong_count` 0 ist. Man kann auch eine _schwache Referenz_ (weak
 reference) auf den Wert innerhalb einer `Rc<T>`-Instanz erstellen, indem man
 `Rc::downgrade` aufruft und eine Referenz auf den `Rc<T>` übergibt. Starke
 Referenzen sind die Art und Weise, wie man die Eigentümerschaft an einer
@@ -221,7 +221,7 @@ als Ergebnis, wenn der Wert `Rc<T>` noch nicht aufgeräumt wurde, und das Ergebn
 Fall `None` behandelt werden und es keine ungültigen Zeiger gibt.
 
 Anstatt eine Liste zu verwenden, deren Elemente nur das nächste Element kennen,
-erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente *und* die
+erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente _und_ die
 Eltern-Elemente kennen.
 	
 #### Erstellen einer Baumdatenstruktur: Ein Knoten mit Kind-Knoten
@@ -263,9 +263,9 @@ Knoten Kind-Knoten eines anderen Knotens sind, sodass wir einen `RefCell<T>` in
 `children` um den `Vec<Rc<Node>>` haben.
 
 Als Nächstes verwenden wir unsere Strukturdefinition und erstellen eine
-`Node`-Instanz mit dem Namen `leaf` und dem Wert 3 und ohne Kind-Elemente,
-sowie eine weitere Instanz mit dem Namen `branch` und dem Wert 5 und `leaf` als
-Kind-Element, wie in Codeblock 15-27 gezeigt wird:
+`Node`-Instanz mit dem Namen `leaf` und dem Wert `3` und ohne Kind-Elemente,
+sowie eine weitere Instanz mit dem Namen `branch` und dem Wert `5` und `leaf`
+als Kind-Element, wie in Codeblock 15-27 gezeigt wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -361,7 +361,7 @@ struct Node {
 Ein Knoten kann auf seinen Eltern-Knoten referenzieren, besitzt ihn jedoch
 nicht. In Codeblock 15-28 aktualisieren wir `main`, um diese neue Definition
 zu verwenden, damit der `leaf`-Knoten auf seinen Eltern-Knoten `branch`
-referenzieren kann:
+referenzieren kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -446,7 +446,7 @@ Schauen wir uns an, wie sich die Werte für `strong_count` und `weak_count` der
 erstellt und die Erstellung von `branch` in diesen Bereich verschoben wird. Auf
 diese Weise können wir sehen, was passiert, wenn `branch` erstellt und dann
 aufgeräumt wird, wenn es den Gültigkeitsbereich verlässt. Die Änderungen
-sind in Codeblock 15-29 aufgeführt:
+sind in Codeblock 15-29 aufgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

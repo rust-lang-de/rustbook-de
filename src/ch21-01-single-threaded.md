@@ -7,10 +7,10 @@ Einzelheiten dieser Protokolle sprengen den Rahmen dieses Buches, aber ein
 kurzer Überblick wird dir die Informationen geben, die du benötigst.
 
 Die beiden wichtigsten Protokolle, die bei Webservern zum Einsatz kommen, sind
-das *Hypertext-Übertragungsprotokoll* (Hypertext Transfer Protocol, kurz
-*HTTP*) und das *Übertragungssteuerungsprotokoll* (Transmission Control
-Protocol, kurz *TCP*). Beide Protokolle sind *Anfrage-Antwort-Protokolle*, d.h.
-ein *Client* initiiert Anfragen und ein *Server* hört auf die Anfragen und gibt
+das _Hypertext-Übertragungsprotokoll_ (Hypertext Transfer Protocol, kurz
+_HTTP_) und das _Übertragungssteuerungsprotokoll_ (Transmission Control
+Protocol, kurz _TCP_). Beide Protokolle sind _Anfrage-Antwort-Protokolle_, d.h.
+ein _Client_ initiiert Anfragen und ein _Server_ hört auf die Anfragen und gibt
 eine Antwort an den Client. Der Inhalt dieser Anfragen und Antworten wird durch
 die Protokolle definiert.
 
@@ -35,7 +35,7 @@ $ cargo new hello
 $ cd hello
 ```
 
-Gib nun den Code in Codeblock 20-1 in *src/main.rs* ein, um zu beginnen. Dieser
+Gib nun den Code in Codeblock 20-1 in _src/main.rs_ ein, um zu beginnen. Dieser
 Code lauscht unter der lokalen Adresse `127.0.0.1:7878` auf eingehende
 TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
 `Verbindung hergestellt!` ausgeben.
@@ -66,7 +66,7 @@ gleich und gilt nicht nur speziell für den Computer der Autoren), und `7878`
 ist der Port. Wir haben diesen Port aus zwei Gründen gewählt: HTTP wird auf
 diesem Port normalerweise nicht akzeptiert, sodass unser Server wahrscheinlich
 nicht mit anderen Webservern in Konflikt geraten wird, die du auf deinem
-Rechner hast, und 7878 steht für *rust*, wenn du es auf einem Telefon tippst.
+Rechner hast, und 7878 steht für _rust_, wenn du es auf einem Telefon tippst.
 
 Die Funktion `bind` in diesem Szenario arbeitet wie die Funktion `new`, indem
 sie eine neue `TcpListener`-Instanz zurückgibt. Die Funktion wird `bind`
@@ -86,8 +86,8 @@ verwenden wir `unwrap`, um das Programm zu stoppen, wenn Fehler auftreten.
 
 Die Methode `incoming` von `TcpListener` gibt einen Iterator zurück, der uns
 eine Sequenz von Strömen (genauer gesagt Ströme vom Typ `TcpStream`) liefert.
-Ein einzelner *Strom* (stream) stellt eine offene Verbindung zwischen dem
-Client und dem Server dar. Eine *Verbindung* (connection) ist der Name für den
+Ein einzelner _Strom_ (stream) stellt eine offene Verbindung zwischen dem
+Client und dem Server dar. Eine _Verbindung_ (connection) ist der Name für den
 vollständigen Anfrage- und Antwortprozess, bei dem sich ein Client mit dem
 Server verbindet, der Server eine Antwort erzeugt und der Server die Verbindung
 schließt. Daher werden wir aus dem `TcpStream` lesen, um zu sehen, was der
@@ -102,7 +102,7 @@ keine Fehler vorliegen, gibt das Programm eine Nachricht aus. Wir werden im
 nächsten Codeblock mehr Funktionalität für den Erfolgsfall hinzufügen. Der
 Grund, warum wir Fehler von der `incoming`-Methode erhalten könnten, wenn sich
 ein Client mit dem Server verbindet, ist, dass wir nicht wirklich über
-Verbindungen iterieren. Stattdessen iterieren wir über *Verbindungsversuche*.
+Verbindungen iterieren. Stattdessen iterieren wir über _Verbindungsversuche_.
 Die Verbindung kann aus einer Reihe von Gründen nicht erfolgreich sein, viele
 davon sind betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme
 ein Limit für die Anzahl der gleichzeitig offenen Verbindungen, die sie
@@ -110,7 +110,7 @@ unterstützen können; neue Verbindungsversuche über diese Anzahl hinaus führe
 zu einem Fehler, bis einige der offenen Verbindungen geschlossen werden.
 
 Lass uns versuchen, diesen Code auszuführen! Rufe `cargo run` im Terminal auf
-und öffne dann *127.0.0.1:7878* in einem Web-Browser. Der Browser sollte eine
+und öffne dann _127.0.0.1:7878_ in einem Web-Browser. Der Browser sollte eine
 Fehlermeldung wie „Verbindung abgebrochen“ anzeigen, da der Server derzeit
 keine Daten zurücksendet. Aber wenn du auf dein Terminal siehst, solltest du
 mehrere Meldungen sehen, die ausgegeben wurden, als der Browser eine Verbindung
@@ -125,7 +125,7 @@ Verbindung hergestellt!
 
 Manchmal werden mehrere Nachrichten für eine Browser-Anfrage ausgegeben; der
 Grund dafür könnte sein, dass der Browser sowohl eine Anfrage für die Seite als
-auch eine Anfrage für andere Ressourcen stellt, z.B. das Symbol *favicon.ico*,
+auch eine Anfrage für andere Ressourcen stellt, z.B. das Symbol _favicon.ico_,
 das in der Browser-Registerkarte erscheint.
 
 Es könnte auch sein, dass der Browser mehrmals versucht, eine Verbindung mit
@@ -233,7 +233,7 @@ Request: [
     "GET / HTTP/1.1",
     "Host: 127.0.0.1:7878",
     "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
-    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/_;q=0.8",
     "Accept-Language: en-US,en;q=0.5",
     "Accept-Encoding: gzip, deflate, br",
     "DNT: 1",
@@ -267,23 +267,23 @@ headers CRLF
 message-body
 ```
 
-Die erste Zeile ist die *Anfragezeile* (request line), die Informationen
+Die erste Zeile ist die _Anfragezeile_ (request line), die Informationen
 darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
-die *Methode* an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt,
+die _Methode_ an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt,
 wie der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage,
 was bedeutet, dass er nach Informationen fragt.
 
-Der nächste Teil der Anfragezeile ist `/`, der den *einheitlichen
-Ressourcenbezeichner* (Uniform Resource Identifier, kurz *URI*) angibt, den der
+Der nächste Teil der Anfragezeile ist `/`, der den _einheitlichen
+Ressourcenbezeichner_ (Uniform Resource Identifier, kurz _URI_) angibt, den der
 Client anfragt: Ein URI ist fast, aber nicht ganz dasselbe wie ein
-*einheitlicher Ressourcenzeiger* (Uniform Resource Locator, kurz *URL*). Der
+_einheitlicher Ressourcenzeiger_ (Uniform Resource Locator, kurz _URL_). Der
 Unterschied zwischen URIs und URLs ist für unsere Zwecke in diesem Kapitel
 nicht wichtig, aber die HTTP-Spezifikation verwendet den Begriff URI, sodass
 wir hier einfach gedanklich URL durch URI ersetzen können.
 
 Der letzte Teil ist die HTTP-Version, die der Client verwendet, und dann endet
-die Anfragezeile mit einer *CRLF-Sequenz*. (CRLF steht für *carriage return*
-(Wagenrücklauf) und *line feed* (Zeilenvorschub), das sind Begriffe aus der
+die Anfragezeile mit einer _CRLF-Sequenz_. (CRLF steht für _carriage return_
+(Wagenrücklauf) und _line feed_ (Zeilenvorschub), das sind Begriffe aus der
 Schreibmaschinenzeit!) Die CRLF-Sequenz kann auch als `\r\n` geschrieben
 werden, wobei `\r` ein Wagenrücklauf und `\n` ein Zeilenvorschub ist. Die
 CRLF-Sequenz trennt die Anfragezeile von den restlichen Anfragedaten. Beachte,
@@ -297,7 +297,7 @@ Nach der Anfragezeile sind die restlichen Zeilen ab `Host:` Kopfzeilen.
 `GET`-Anfragen haben keinen Rumpf (body).
 
 Versuche, eine Anfrage von einem anderen Browser aus zu stellen oder nach einer
-anderen Adresse zu fragen, z.B. *127.0.0.1:7878/test*, um zu sehen, wie sich
+anderen Adresse zu fragen, z.B. _127.0.0.1:7878/test_, um zu sehen, wie sich
 die Anfragedaten ändern.
 
 Jetzt, da wir wissen, was der Browser anfragt, schicken wir ein paar Daten
@@ -314,7 +314,7 @@ headers CRLF
 message-body
 ```
 
-Die erste Zeile ist eine *Statuszeile*, die die in der Antwort verwendete
+Die erste Zeile ist eine _Statuszeile_, die die in der Antwort verwendete
 HTTP-Version, einen numerischen Statuscode, der das Ergebnis der Anfrage
 zusammenfasst, und eine Begründungsphrase, die eine Textbeschreibung des
 Statuscodes liefert, enthält. Nach der CRLF-Sequenz folgen beliebige
@@ -378,7 +378,7 @@ eine Fehlerbehandlung hinzufügen.
 
 Lass uns mit diesen Änderungen unseren Code ausführen und eine Anfrage stellen.
 Wir geben keine Daten mehr im Terminal aus, sodass wir außer der Ausgabe von
-Cargo keine weiteren Ausgaben sehen werden. Wenn du *127.0.0.1:7878* in einem
+Cargo keine weiteren Ausgaben sehen werden. Wenn du _127.0.0.1:7878_ in einem
 Webbrowser lädst, solltest du statt eines Fehlers eine leere Seite sehen. Du
 hast soeben das Empfangen einer HTTP-Anfrage und das Senden einer Antwort von
 Hand programmiert!
@@ -386,8 +386,8 @@ Hand programmiert!
 ### Echtes HTML zurückgeben
 
 Lass uns die Funktionalität für die Rückgabe von mehr als einer leeren Seite
-implementieren. Erstelle die neue Datei *hello.html* in der Wurzel deines
-Projektverzeichnisses, nicht im Verzeichnis *src*. Du kannst beliebiges HTML
+implementieren. Erstelle die neue Datei _hello.html_ in der Wurzel deines
+Projektverzeichnisses, nicht im Verzeichnis _src_. Du kannst beliebiges HTML
 eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.
 
 <span class="filename">Dateiname: hello.html</span>
@@ -453,26 +453,26 @@ fn handle_connection(mut stream: TcpStream) {
 }
 ```
 
-<span class="caption">Codeblock 20-5: Senden des Inhalts von *hello.html* als
+<span class="caption">Codeblock 20-5: Senden des Inhalts von _hello.html_ als
 Rumpf der Antwort</span>
 
 Wir haben `fs` zur `use`-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
 Inhalts einer Datei in eine Zeichenkette sollte vertraut aussehen; wir haben
-ihn in Kapitel 12 verwendet, als wir den Inhalt einer Datei für unser
-E/A-Projekt in Codeblock 12-4 gelesen haben.
+ihn verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in
+Codeblock 12-4 gelesen haben.
 
 Als Nächstes verwenden wir `format!`, um den Inhalt der Datei als Rumpf der
 Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,
 fügen wir den Header `Content-Length` hinzu, der auf die Größe unseres
 Antwortrumpfs gesetzt wird, in diesem Fall auf die Größe von `hello.html`. 
 
-Führe diesen Code mit `cargo run` aus und lade *127.0.0.1:7878* im Browser; du
+Führe diesen Code mit `cargo run` aus und lade _127.0.0.1:7878_ im Browser; du
 solltest dein HTML gerendert sehen!
 
 Gegenwärtig ignorieren wir die Anfragedaten in `http_request` und senden
 einfach den Inhalt der HTML-Datei bedingungslos zurück. Das heißt, wenn du
-versuchst, *127.0.0.1:7878/something-else* in deinem Browser anzufragen,
+versuchst, _127.0.0.1:7878/something-else_ in deinem Browser anzufragen,
 erhältst du immer noch dieselbe HTML-Antwort zurück. Unser Server ist im Moment
 sehr begrenzt und macht nicht das, was die meisten Webserver tun. Wir wollen
 unsere Antworten je nach Anfrage anpassen und nur die HTML-Datei für eine
@@ -544,13 +544,13 @@ Als nächstes überprüfen wir `request_line`, um zu sehen, ob es der Anfragezei
 einer GET-Anfrage mit dem Pfad `/` entspricht. Ist dies der Fall, gibt der
 `if`-Block den Inhalt unserer HTML-Datei zurück.
 
-Wenn `request_line` *nicht* der GET-Anfrage mit dem `/` Pfad entspricht,
+Wenn `request_line` _nicht_ der GET-Anfrage mit dem `/` Pfad entspricht,
 bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
 `else`-Block gleich Code hinzufügen, um auf alle anderen Anfragen zu reagieren.
 
-Führe diesen Code jetzt aus und frage *127.0.0.1:7878* an; du solltest das HTML
-in *hello.html* erhalten. Wenn du eine andere Anfrage stellst, z.B.
-*127.0.0.1:7878/something-else*, erhältst du einen Verbindungsfehler, wie du
+Führe diesen Code jetzt aus und frage _127.0.0.1:7878_ an; du solltest das HTML
+in _hello.html_ erhalten. Wenn du eine andere Anfrage stellst, z.B.
+_127.0.0.1:7878/something-else_, erhältst du einen Verbindungsfehler, wie du
 ihn beim Ausführen des Codes in Codeblock 20-1 und Codeblock 20-2 gesehen hast.
 
 Fügen wir nun den Code in Codeblock 20-7 in den `else`-Block ein, um eine
@@ -612,8 +612,8 @@ Fehlerseite, wenn etwas anderes als `/` angefragt wurde</span>
 
 Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
 Begründungsphrase `NOT FOUND` (nicht gefunden). Der Rumpf der Antwort wird das
-HTML in der Datei *404.html* sein. Du musst neben *hallo.html* eine Datei
-*404.html* für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
+HTML in der Datei _404.html_ sein. Du musst neben _hallo.html_ eine Datei
+_404.html_ für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
 HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.
 
 <span class="filename">Dateiname: 404.html</span>
@@ -636,8 +636,8 @@ HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.
 jeder 404-Antwort zurückgesendet werden soll</span>
 
 Lass deinen Server mit diesen Änderungen erneut laufen. Die Anfrage
-*127.0.0.1:7878* sollte den Inhalt von *hallo.html* zurückgeben und jede andere
-Anfrage, wie *127.0.0.1:7878/foo*, sollte das Fehler-HTML von *404.html*
+_127.0.0.1:7878_ sollte den Inhalt von _hallo.html_ zurückgeben und jede andere
+Anfrage, wie _127.0.0.1:7878/foo_, sollte das Fehler-HTML von _404.html_
 zurückgeben.
 
 ### Ein Hauch von Refaktorierung

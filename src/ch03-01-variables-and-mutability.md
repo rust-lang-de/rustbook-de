@@ -12,10 +12,10 @@ manchmal vielleicht davon abweichen möchtest.
 
 Wenn eine Variable unveränderbar ist, kannst du deren Wert nicht mehr ändern,
 sobald ein Wert gebunden ist. Um dies zu veranschaulichen, lege ein neues
-Projekt namens *variables* in deinem *projects*-Verzeichnis an, indem du
+Projekt namens _variables_ in deinem _projects_-Verzeichnis an, indem du
 `cargo new variables` aufrufst.
 
-Öffne dann in deinem neuen Verzeichnis *variables* die Datei *src/main.rs* und
+Öffne dann in deinem neuen Verzeichnis _variables_ die Datei _src/main.rs_ und
 ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
 lässt:
 
@@ -58,7 +58,7 @@ error: could not compile `variables` (bin "variables") due to 1 previous error
 Dieses Beispiel zeigt, wie der Compiler dir hilft, Fehler in deinen Programmen
 zu finden. Kompilierfehler können frustrierend sein, aber eigentlich bedeuten
 sie nur, dass dein Programm noch nicht sicher das tut, was du willst; sie
-bedeuten *nicht*, dass du kein guter Programmierer bist! Erfahrene
+bedeuten _nicht_, dass du kein guter Programmierer bist! Erfahrene
 Rust-Entwickler bekommen ebenfalls noch Kompilierfehler.
 
 Du hast die Fehlermeldung `cannot assign twice to immutable variable x`
@@ -72,7 +72,7 @@ Annahme ausgeht, dass sich ein Wert niemals ändern wird, und ein anderer Teil
 unseres Codes diesen Wert ändert, ist es möglich, dass der erste Teil des Codes
 nicht das tut, wozu er entwickelt wurde. Die Ursache für diese Art von Fehler
 kann im Nachhinein schwer aufzuspüren sein, besonders wenn das zweite Stück
-Code den Wert nur *gelegentlich* ändert. In Rust garantiert der Compiler, dass
+Code den Wert nur _gelegentlich_ ändert. In Rust garantiert der Compiler, dass
 sich ein Wert tatsächlich nicht ändert, wenn du angibst, dass er sich nicht
 ändern darf, du musst also nicht selbst darauf achten. Dein Code ist somit
 leichter zu durchschauen.
@@ -84,7 +84,7 @@ in [Kapitel 2][storing-values-with-variables] getan hast. Das Hinzufügen von
 `mut` vermittelt den zukünftigen Lesern des Codes die Absicht, dass andere
 Teile des Codes den Wert dieser Variablen ändern werden.
 
-Lass uns zum Beispiel *src/main.rs* wie folgt ändern:
+Lass uns zum Beispiel _src/main.rs_ wie folgt ändern:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -115,14 +115,14 @@ Situation für am sinnvollsten hältst.
 
 ### Konstanten
 
-Wie unveränderbare Variablen sind *Konstanten* Werte, die an einen Namen
+Wie unveränderbare Variablen sind _Konstanten_ Werte, die an einen Namen
 gebunden sind und sich nicht ändern dürfen, aber es gibt einige Unterschiede
 zwischen Konstanten und Variablen.
 
 Erstens ist es dir nicht erlaubt, `mut` mit Konstanten zu verwenden. Konstanten
 sind nicht nur von vornherein unveränderbar &ndash; sie sind immer
 unveränderbar. Du deklarierst Konstanten mit dem Schlüsselwort `const`
-anstelle des Schlüsselworts `let` und der Typ des Wertes *muss* annotiert
+anstelle des Schlüsselworts `let` und der Typ des Wertes _muss_ annotiert
 werden. Wir sind dabei, Typen und Typ-Annotationen im nächsten Abschnitt
 [„Datentypen“][data-types] zu behandeln, also mach dir jetzt keine Gedanken
 über die Details. Du musst nur wissen, dass du den Typ immer annotieren musst.
@@ -170,7 +170,7 @@ müssen, sollte der hartkodierte Wert irgendwann zu ändern sein.
 Wie du in der Anleitung zum Ratespiel in [Kapitel
 2][comparing-the-guess-to-the-secret-number] gesehen hast, kannst du eine neue
 Variable mit dem gleichen Namen wie eine vorherige Variable deklarieren. Die
-Rust-Entwickler sagen, dass die erste Variable von der zweiten *verschattet*
+Rust-Entwickler sagen, dass die erste Variable von der zweiten _verschattet_
 (shadowed) wird, was bedeutet, dass die zweite Variable das ist, was der
 Compiler sieht, wenn du den Namen der Variable verwendest. Die zweite Variable
 verschattet die erste und nimmt alle Verwendungen des Variablennamens auf sich,

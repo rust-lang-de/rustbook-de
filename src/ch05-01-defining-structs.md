@@ -10,7 +10,7 @@ Instanz zu spezifizieren oder auf sie zuzugreifen.
 Um eine Struktur zu definieren, geben wir das Schlüsselwort `struct` an und
 benennen die gesamte Struktur. Der Name einer Struktur sollte die Bedeutung der
 Daten beschreiben, die gruppiert werden. Dann definieren wir innerhalb
-geschweifter Klammern die Namen und Typen der Datenteile, die wir *Felder*
+geschweifter Klammern die Namen und Typen der Datenteile, die wir _Felder_
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.
 
@@ -30,9 +30,9 @@ struct User {
 <span class="caption">Codeblock 5-1: Definition der Struktur `User`</span>
 
 Um eine Struktur zu verwenden, nachdem wir sie definiert haben, erstellen wir
-eine *Instanz* dieser Struktur, indem wir für jedes Feld einen konkreten Wert
+eine _Instanz_ dieser Struktur, indem wir für jedes Feld einen konkreten Wert
 angeben. Wir erzeugen eine Instanz, indem wir den Namen der Struktur angeben
-und dann in geschweiften Klammern die *Schlüssel: Wert*-Paare angeben, wobei
+und dann in geschweiften Klammern die _Schlüssel: Wert_-Paare angeben, wobei
 die Schlüssel die Namen der Felder und die Werte die Daten sind, die wir in
 diesen Feldern speichern wollen. Wir müssen die Felder nicht in der gleichen
 Reihenfolge angeben, in der wir sie in der Struktur deklariert haben. Anders
@@ -143,7 +143,7 @@ praktische Kurznotation!
 ### Kurznotation der Feld-Initialisierung verwenden
 
 Da die Parameter und die Strukturfelder in Codeblock 5-4 die gleichen Namen
-haben, können wir die *Kurznotation der Feld-Initialisierung* (field init
+haben, können wir die _Kurznotation der Feld-Initialisierung_ (field init
 shorthand syntax) verwenden, um die Funktion `build_user` so umzuschreiben,
 dass sie sich unverändert gleich verhält, ohne `email` und `username` zu
 wiederholen, siehe Codeblock 5-5.
@@ -189,7 +189,7 @@ zu schreiben.
 
 Oft ist es hilfreich, eine neue Instanz einer Struktur zu erstellen, die die
 meisten Werte einer alten Instanz verwendet und nur einige davon verändert. Du
-kannst dazu die *Strukturaktualisierungssyntax* (struct update syntax)
+kannst dazu die _Strukturaktualisierungssyntax_ (struct update syntax)
 verwenden.
 
 Zunächst zeigt Codeblock 5-6, wie wir eine neue `User`-Instanz `user2` ohne
@@ -277,21 +277,20 @@ der Strukturdefinition.
 Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit `=` ist,
 da sie die Daten verschiebt, wie wir im Abschnitt [„Variablen und Daten im
 Zusammenspiel mit Move“][move] gesehen haben. In diesem Beispiel können wir
-`user1` nicht mehr als Ganzes verwenden, nachdem wir `user2` erzeugt haben,
-weil der `String` im Feld `username` von `user1` in `user2` verschoben wurde.
-Hätten wir `user2` neue `String`-Werte für beide Felder `email` und `username`
-gegeben und somit nur die Werte `active` und `sign_in_count` von `user1`
-verwendet, wäre `user1` auch nach dem Erstellen von `user2` noch gültig. Die
-Typen `active` und `sign_in_count` sind Typen, die das Merkmal `Copy`
-implementieren, sodass das Verhalten, das wir im Abschnitt [„Nur
-Stapelspeicher-Daten: Kopieren (copy)“][copy] besprochen haben, zutreffen
-würde. Wir können in diesem Beispiel immer noch `user1.email` verwenden, da
-sein Wert _nicht_ verschoben wurde.
+`user1` nicht mehr verwenden, nachdem wir `user2` erzeugt haben, weil der
+`String` im Feld `username` von `user1` in `user2` verschoben wurde. Hätten wir
+`user2` neue `String`-Werte für beide Felder `email` und `username` gegeben und
+somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
+`user1` auch nach dem Erstellen von `user2` noch gültig. Die Typen `active` und
+`sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
+Verhalten, das wir im Abschnitt [„Nur Stapelspeicher-Daten: Kopieren
+(copy)“][copy] besprochen haben, zutreffen würde. Wir können in diesem Beispiel
+immer noch `user1.email` verwenden, da sein Wert _nicht_ verschoben wurde.
 
 ### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
 
 Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
-*Tupel-Strukturen* (tuple structs). Tupel-Strukturen haben den Strukturnamen
+_Tupel-Strukturen_ (tuple structs). Tupel-Strukturen haben den Strukturnamen
 als zusätzliche Bedeutung, allerdings haben die Felder keine Namen, sondern nur
 Typen. Tupel-Strukturen sind hilfreich, wenn du dem gesamten Tupel einen Namen
 geben und das Tupel von anderen Tupeln unterscheiden willst, und wenn die
@@ -329,7 +328,7 @@ würden zum Beispiel schreiben: `let Point(x, y, z) = point`
 ### Einheitstyp-ähnliche Strukturen ohne Felder
 
 Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
-*Einheitstyp* (unit-like structs) genannt, weil sie sich ähnlich zum leeren
+_Einheitstyp_ (unit-like structs) genannt, weil sie sich ähnlich zum leeren
 Tupel `()` verhalten, das wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt
 haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
 Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
@@ -367,7 +366,7 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 >
 > Bei Strukturen ist es möglich, Referenzen auf Daten zu speichern, die im
 > Besitz von etwas anderem sind, aber das erfordert die Verwendung von
-> *Lebensdauern*, einer Rust-Funktionalität, die wir in Kapitel 10 besprechen
+> _Lebensdauern_, einer Rust-Funktionalität, die wir in Kapitel 10 besprechen
 > werden. Die Lebensdauer stellt sicher, dass die von einer Struktur
 > referenzierten Daten so lange gültig sind, wie die Struktur gültig ist.
 > Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne

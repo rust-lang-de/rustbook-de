@@ -14,16 +14,16 @@ aufspüren kannst.
 > ### Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion
 >
 > Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
-> *Abwickeln*, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
+> _Abwickeln_, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
 > und die Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
 > Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
-> Programm sofort *abzubrechen*, also das Programm ohne Aufräumen zu beenden.
+> Programm sofort _abzubrechen_, also das Programm ohne Aufräumen zu beenden.
 >
 > Der Speicher, den das Programm benutzt hat, muss dann vom Betriebssystem
 > aufgeräumt werden. Wenn du in deinem Projekt die resultierende Binärdatei so
 > klein wie möglich machen willst, kannst du für ein vorzeitiges Programmende
 > vom Abwickeln zum sofortigen Abbrechen umschalten, indem du `panic = 'abort'`
-> in den entsprechenden `[profile]`-Abschnitten in deiner *Cargo.toml*-Datei
+> in den entsprechenden `[profile]`-Abschnitten in deiner _Cargo.toml_-Datei
 > hinzufügst. Wenn du beispielsweise im Freigabemodus (release mode) im
 > Fehlerfall sofort abbrechen möchtest, füge dies hinzu:
 >
@@ -56,9 +56,9 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 
 Der Aufruf von `panic!` verursacht die in den letzten beiden Zeilen enthaltene
 Fehlermeldung. Die erste Zeile zeigt unsere Fehlermeldung und die Position in
-unserem Quellcode, an der der Fehler aufgetreten ist: *src/main.rs:2:5* gibt
+unserem Quellcode, an der der Fehler aufgetreten ist: _src/main.rs:2:5_ gibt
 an, dass es sich um die zweite Zeile und dem fünften Zeichen in unserer Datei
-*src/main.rs* handelt.
+_src/main.rs_ handelt.
 
 In diesem Fall ist die angegebene Zeile Teil unseres Codes und wenn wir uns
 diese Zeile ansehen, sehen wir den Makroaufruf `panic!`. In anderen Fällen
@@ -99,7 +99,7 @@ könnte.
 In C ist der Versuch, über das Ende einer Datenstruktur hinaus zu lesen, ein
 undefiniertes Verhalten. Möglicherweise erhältst du den Wert im Speicher an der
 der Datenstruktur entsprechenden Stelle, selbst wenn der Speicher nicht zu
-dieser Struktur gehört. Dies wird als *Hinauslesen über den Puffer* (buffer
+dieser Struktur gehört. Dies wird als _Hinauslesen über den Puffer_ (buffer
 overread) bezeichnet und kann zu Sicherheitslücken führen, wenn ein Angreifer
 in der Lage ist, den Index so zu manipulieren, dass er unerlaubterweise Daten
 lesen kann, die nach der Datenstruktur gespeichert sind.
@@ -124,7 +124,7 @@ den Index `99` des Vektors in `v` zuzugreifen.
 
 Die Zeile `note:` sagt uns, dass wir die Umgebungsvariable `RUST_BACKTRACE`
 setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
-den Fehler verursacht hat. Eine *Aufrufhistorie* ist eine Liste aller
+den Fehler verursacht hat. Eine _Aufrufhistorie_ ist eine Liste aller
 Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
 Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel
 zum Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du
@@ -170,7 +170,7 @@ Fehlersuchinfos sind standardmäßig aktiviert, wenn du `cargo build` oder
 `cargo run` ohne Flag `--release` verwendest, wie wir es hier haben.
 
 In der Ausgabe in Codeblock 9-2 zeigt Zeile 17 der Aufrufhistorie auf die Zeile
-in unserem Projekt, die das Problem verursacht: Zeile 4 in *src/main.rs*. Wenn
+in unserem Projekt, die das Problem verursacht: Zeile 4 in _src/main.rs_. Wenn
 wir nicht wollen, dass unser Programm abbricht, sollten wir bei der ersten
 Zeile, die auf eine von uns geschriebenen Datei verweist, mit der Untersuchung
 beginnen. In Codeblock 9-1, wo wir absichtlich Code geschrieben haben, der das

@@ -49,27 +49,27 @@ Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
 einzelnen Aufgaben eines Binärprogramms entwickelt, wenn die Funktion `main`
 groß wird. Dieser Prozess umfasst die folgenden Schritte:
 
-* Teile dein Programm in die Dateien *main.rs* und *lib.rs* auf und verschiebe
-  die Logik deines Programms in *lib.rs*.
-* Solange deine Kommandozeilen-Parselogik klein ist, kann sie in *main.rs*
+- Teile dein Programm in die Dateien _main.rs_ und _lib.rs_ auf und verschiebe
+  die Logik deines Programms in _lib.rs_.
+- Solange deine Kommandozeilen-Parselogik klein ist, kann sie in _main.rs_
   bleiben.
-* Wenn die Kommandozeilen-Parselogik anfängt, kompliziert zu werden, extrahiere
-  sie aus *main.rs* und verschiebe sie in *lib.rs*.
+- Wenn die Kommandozeilen-Parselogik anfängt, kompliziert zu werden, extrahiere
+  sie aus _main.rs_ und verschiebe sie in _lib.rs_.
 
 Die Verantwortlichkeiten, die nach diesem Prozess in der Funktion `main`
 verbleiben, sollten sich auf Folgendes beschränken:
 
-* Aufrufen der Kommandozeilen-Parselogik mit den Argumentwerten
-* Aufbauen weiterer Konfiguration
-* Aufrufen einer Funktion `run` in *lib.rs*
-* Behandeln des Fehlers, wenn `run` einen Fehler zurückgibt
+- Aufrufen der Kommandozeilen-Parselogik mit den Argumentwerten
+- Aufbauen weiterer Konfiguration
+- Aufrufen einer Funktion `run` in _lib.rs_
+- Behandeln des Fehlers, wenn `run` einen Fehler zurückgibt
 
-Bei diesem Muster geht es darum, Verantwortlichkeiten zu trennen: *main.rs*
-kümmert sich um die Ausführung des Programms und *lib.rs* kümmert sich um die
+Bei diesem Muster geht es darum, Verantwortlichkeiten zu trennen: _main.rs_
+kümmert sich um die Ausführung des Programms und _lib.rs_ kümmert sich um die
 gesamte Logik der anstehenden Aufgabe. Da du die Funktion `main` nicht direkt
 testen kannst, kannst du mit dieser Struktur die gesamte Logik deines Programms
-testen, indem du sie in Funktionen in *lib.rs* verschiebst. Der Code, der in
-*main.rs* verbleibt, wird klein genug sein, um seine Korrektheit durch Lesen zu
+testen, indem du sie in Funktionen in _lib.rs_ verschiebst. Der Code, der in
+_main.rs_ verbleibt, wird klein genug sein, um seine Korrektheit durch Lesen zu
 überprüfen. Lass uns unser Programm überarbeiten, indem wir diesem Prozess
 folgen.
                                                             
@@ -77,9 +77,9 @@ folgen.
      
 Wir werden die Funktionalität für das Parsen von Argumenten in eine Funktion
 extrahieren, die von `main` aufgerufen wird, um das Verschieben der
-Kommandozeilen-Parselogik nach *src/lib.rs* vorzubereiten. Codeblock 12-5 zeigt
+Kommandozeilen-Parselogik nach _src/lib.rs_ vorzubereiten. Codeblock 12-5 zeigt
 den neuen Anfang von `main`, der eine neue Funktion `parse_config` aufruft, die
-wir vorerst in *src/main.rs* definieren werden.
+wir vorerst in _src/main.rs_ definieren werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -546,7 +546,7 @@ nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
 uns, eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren.
 Wenn das `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie
 `unwrap`: Sie gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein
-`Err`-Wert ist, ruft diese Methode den Code im *Funktionsabschluss* (closure)
+`Err`-Wert ist, ruft diese Methode den Code im _Funktionsabschluss_ (closure)
 auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
 `unwrap_or_else` übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
 [Kapitel 13][ch13] ein. Im Moment musst du nur wissen, dass `unwrap_or_else`
@@ -590,7 +590,7 @@ schreiben.
 
 Codeblock 12-11 zeigt die extrahierte Funktion `run`. Im Moment machen wir nur
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
-immer noch dabei, die Funktion in *src/main.rs* zu definieren.
+immer noch dabei, die Funktion in _src/main.rs_ zu definieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -720,7 +720,7 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das *Merkmalsobjekt* (trait object) `Box<dyn
+Für den Fehlertyp haben wir das _Merkmalsobjekt_ (trait object) `Box<dyn
 Error>` verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung
 am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 [Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
@@ -728,7 +728,7 @@ am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
 Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
-können. Das Schlüsselwort `dyn` ist die Abkürzung für *dynamisch*.
+können. Das Schlüsselwort `dyn` ist die Abkürzung für _dynamisch_.
 
 Zweitens haben wir den Aufruf von `expect` zugunsten des `?`-Operators
 entfernt, wie wir in [Kapitel 9][ch9-question-mark] besprochen haben. Statt
@@ -859,21 +859,21 @@ Fällen gleich: Wir geben den Fehler aus und beenden.
 ### Code in eine Bibliothekskiste aufteilen
 
 Unser `minigrep`-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
-*src/main.rs* auf und fügen etwas Code in die Datei *src/lib.rs* ein. Auf
-diese Weise können wir den Code testen und haben eine Datei *src/main.rs* mit
+_src/main.rs_ auf und fügen etwas Code in die Datei _src/lib.rs_ ein. Auf
+diese Weise können wir den Code testen und haben eine Datei _src/main.rs_ mit
 weniger Verantwortlichkeiten.
 
 Lass uns den ganzen Code, der nicht in der Funktion `main` ist, von
-*src/main.rs* nach *src/lib.rs* verschieben:
+_src/main.rs_ nach _src/lib.rs_ verschieben:
 
-* Die Definition der Funktion `run`
-* Die relevanten `use`-Anweisungen
-* Die Definition von `Config`
-* Die Funktionsdefinition `Config::build`
+- Die Definition der Funktion `run`
+- Die relevanten `use`-Anweisungen
+- Die Definition von `Config`
+- Die Funktionsdefinition `Config::build`
 
-Der Inhalt von *src/lib.rs* sollte die in Codeblock 12-13 gezeigten Signaturen
+Der Inhalt von _src/lib.rs_ sollte die in Codeblock 12-13 gezeigten Signaturen
 haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
-Beachte, dass dies nicht kompiliert werden kann, bis wir *src/main.rs* in
+Beachte, dass dies nicht kompiliert werden kann, bis wir _src/main.rs_ in
 Codeblock 12-14 modifiziert haben.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -912,14 +912,14 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 ```
 
 <span class="caption">Codeblock 12-13: Verschieben von `Config` und `run` in
-*src/lib.rs*</span>
+_src/lib.rs_</span>
 
 Wir haben das Schlüsselwort `pub` großzügig verwendet: Bei `Config`, bei seinen
 Feldern und seiner Methode `build` und bei der Funktion `run`. Wir haben jetzt
 eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!
 
-Jetzt müssen wir den Code, den wir nach *src/lib.rs* verschoben haben, in den
-Gültigkeitsbereich der Binärkiste in *src/main.rs* bringen, wie in Codeblock
+Jetzt müssen wir den Code, den wir nach _src/lib.rs_ verschoben haben, in den
+Gültigkeitsbereich der Binärkiste in _src/main.rs_ bringen, wie in Codeblock
 12-14 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -951,7 +951,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 12-14: Verwenden der
-`minigrep`-Bibliothekskiste in *src/main.rs*</span>
+`minigrep`-Bibliothekskiste in _src/main.rs_</span>
 
 Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der
 Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen, und wir
@@ -962,7 +962,7 @@ run` und stelle sicher, dass alles korrekt funktioniert.
 Puh! Das war eine Menge Arbeit, aber wir haben uns für den Erfolg in der
 Zukunft gerüstet. Jetzt ist es viel einfacher, mit Fehlern umzugehen, und wir
 haben den Code modularer gestaltet. Fast unsere gesamte Arbeit wird von nun an
-in *src/lib.rs* durchgeführt.
+in _src/lib.rs_ durchgeführt.
 
 Lass uns diese neu gewonnene Modularität nutzen, indem wir etwas tun, was mit
 dem alten Code schwierig gewesen wäre, mit dem neuen Code aber einfach ist: Wir

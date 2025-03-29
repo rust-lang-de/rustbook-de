@@ -6,7 +6,7 @@ Beispieldatei, um sie zu testen: Die beste Art von Datei, die wir benutzen
 können, um sicherzustellen, dass `minigrep` funktioniert, ist eine Datei mit
 einer kleinen Menge Text über mehrere Zeilen mit einigen sich wiederholenden
 Wörtern. In Codeblock 12-3 ist ein Gedicht von Emily Dickinson, das gut
-funktionieren wird! Erstelle eine Datei namens *poem.txt* im Hauptverzeichnis
+funktionieren wird! Erstelle eine Datei namens _poem.txt_ im Hauptverzeichnis
 deines Projekts und gib das Gedicht „I'm Nobody! Who are you?“ ein.
 
 <span class="filename">Dateiname: poem.txt</span>
@@ -26,7 +26,7 @@ To an admiring bog!
 <span class="caption">Codeblock 12-3: Ein Gedicht von Emily Dickinson ist ein
 guter Testfall</span>
 
-Wenn der Text vorhanden ist, editiere *src/main.rs* und füge Code zum Lesen der
+Wenn der Text vorhanden ist, editiere _src/main.rs_ und füge Code zum Lesen der
 Datei hinzu, wie in Codeblock 12-4 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -69,7 +69,7 @@ wurde, sodass wir überprüfen können, ob das Programm soweit funktioniert.
 
 Lassen wir diesen Code mit einer beliebigen Zeichenkette als erstes
 Kommandozeilenargument laufen (weil wir den Suchteil noch nicht implementiert
-haben) und die Datei *poem.txt* als zweites Argument:
+haben) und die Datei _poem.txt_ als zweites Argument:
 
 ```console
 $ cargo run -- the poem.txt

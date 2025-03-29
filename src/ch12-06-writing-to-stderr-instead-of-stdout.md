@@ -2,8 +2,8 @@
 
 Im Moment schreiben wir unsere gesamte Ausgabe mit dem Makro `println!` auf das
 Terminal. In den meisten Terminals gibt es zwei Arten von Ausgaben:
-Die *Standardausgabe* (`stdout`) für allgemeine Informationen und die
-*Standardfehlerausgabe* (`stderr`) für Fehlermeldungen. Diese Unterscheidung
+Die _Standardausgabe_ (`stdout`) für allgemeine Informationen und die
+_Standardfehlerausgabe_ (`stderr`) für Fehlermeldungen. Diese Unterscheidung
 ermöglicht es dem Benutzer, die erfolgreiche Ausgabe eines Programms in eine
 Datei zu leiten, aber dennoch Fehlermeldungen auf dem Bildschirm auszugeben.
 
@@ -28,7 +28,7 @@ Unser Programm ist zur Zeit nicht sehr brav: Wir werden gleich sehen, dass es
 die ausgegebenen Fehlermeldungen stattdessen in eine Datei speichert!
 
 Der Weg, dieses Verhalten zu demonstrieren, besteht darin, das Programm mit `>`
-und dem Dateipfad *output.txt* laufen zu lassen, zu dem wir die
+und dem Dateipfad _output.txt_ laufen zu lassen, zu dem wir die
 Standardausgabe umleiten wollen. Wir werden keine Argumente übergeben, was
 einen Fehler verursachen sollte:
 
@@ -37,9 +37,9 @@ $ cargo run > output.txt
 ```
 
 Die Syntax `>` weist die Shell an, den Inhalt der Standardausgabe anstelle des
-Bildschirms in *output.txt* zu schreiben. Wir haben die erwartete Fehlermeldung
+Bildschirms in _output.txt_ zu schreiben. Wir haben die erwartete Fehlermeldung
 nicht gesehen, die auf den Bildschirm ausgegeben werden sollte, also muss sie
-in der Datei gelandet sein. Dies ist der Inhalt von *output.txt*:
+in der Datei gelandet sein. Dies ist der Inhalt von _output.txt_:
 
 ```text
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
@@ -96,7 +96,7 @@ $ cargo run > output.txt
 Fehler beim Parsen der Argumente: Nicht genügend Argumente
 ```
 
-Jetzt sehen wir den Fehler auf dem Bildschirm und *output.txt* enthält nichts,
+Jetzt sehen wir den Fehler auf dem Bildschirm und _output.txt_ enthält nichts,
 was dem Verhalten entspricht, das wir von Kommandozeilenprogrammen erwarten.
 
 Lassen wir das Programm erneut mit Argumenten laufen, die keinen Fehler
@@ -106,7 +106,7 @@ verursachen, aber dennoch die Standardausgabe in eine Datei umleiten, etwa so:
 $ cargo run -- to poem.txt > output.txt
 ```
 
-Wir werden keine Ausgabe auf dem Terminal sehen und *output.txt* wird unsere
+Wir werden keine Ausgabe auf dem Terminal sehen und _output.txt_ wird unsere
 Ergebnisse enthalten:
 
 <span class="filename">Dateiname: output.txt</span>

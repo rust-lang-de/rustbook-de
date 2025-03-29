@@ -13,7 +13,7 @@ erhältst du eine starke Basis, auf der du aufbauen kannst.
 
 > #### Schlüsselwörter
 >
-> Die Sprache Rust hat eine Reihe von *Schlüsselwörtern* (keywords), die wie in
+> Die Sprache Rust hat eine Reihe von _Schlüsselwörtern_ (keywords), die wie in
 > anderen Sprachen nur der Sprache selbst vorbehalten sind. Denke daran, dass
 > du diese Wörter nicht als Namen von Variablen oder Funktionen verwenden
 > kannst. Die meisten der Schlüsselwörter haben spezielle Bedeutungen und du

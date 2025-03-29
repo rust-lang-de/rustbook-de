@@ -1,6 +1,6 @@
 ## Methodensyntax
 
-*Methoden* sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
+_Methoden_ sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
 und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
@@ -52,7 +52,7 @@ dem Typ `Rectangle` assoziiert. Dann verschieben wir die Funktion `area` in die
 geschweiften Klammern von `impl`, ändern den ersten (und in diesem Fall
 einzigen) Parameter zu `self` und passen den Methodenrumpf entsprechend an. In
 `main`, wo wir die Funktion `area` aufrufen und `rect1` als Argument übergeben,
-können wir stattdessen die *Methodensyntax* verwenden, um die Methode `area`
+können wir stattdessen die _Methodensyntax_ verwenden, um die Methode `area`
 auf unserer `Rectangle`-Instanz aufzurufen. Die Methodensyntax bezieht sich auf
 eine Instanz: Wir ergänzen einen Punkt, gefolgt vom Methodennamen, Klammern und
 Argumenten.
@@ -126,7 +126,7 @@ Klammern verwenden, weiß Rust, dass wir das Feld `width` meinen.
 
 Oft, aber nicht immer, wird eine Methode mit demselben Namen wie ein Feld so
 definiert, dass sie nur den Wert des Feldes zurückgeben und nichts anderes tun.
-Methoden wie diese werden *getters* genannt, und Rust implementiert sie nicht
+Methoden wie diese werden _getters_ genannt, und Rust implementiert sie nicht
 automatisch für Strukturfelder, wie es einige andere Sprachen tun. Getter sind
 nützlich, weil man das Feld als privat, die Methode aber als öffentlich
 kennzeichnen und so den Nur-Lese-Zugriff auf dieses Feld als Teil der
@@ -144,7 +144,7 @@ wir in [Kapitel 7][public] behandeln.
 > `(*object).something()`.
 >
 > Rust hat kein Äquivalent zum Operator `->`. Stattdessen hat Rust eine
-> Funktionalität namens *automatische Referenzierung und Dereferenzierung*
+> Funktionalität namens _automatische Referenzierung und Dereferenzierung_
 > (automatic referencing and dereferencing). Der Aufruf von Methoden ist einer
 > der wenigen Orte in Rust, der dieses Verhalten aufweist.
 >
@@ -289,7 +289,7 @@ funktionieren genau wie Parameter in Funktionen.
 ### Assoziierte Funktionen
 
 Alle Funktionen, die innerhalb eines `impl`-Blocks definiert sind, werden
-*assoziierte Funktionen* genannt, weil sie mit dem Typ assoziiert sind, der
+_assoziierte Funktionen_ genannt, weil sie mit dem Typ assoziiert sind, der
 nach dem `impl` benannt ist. Wir können assoziierte Funktionen definieren, die
 nicht `self` als ihren ersten Parameter haben (und somit keine Methoden sind),
 weil sie keine Instanz des Typs benötigen, um damit zu arbeiten. Wir haben

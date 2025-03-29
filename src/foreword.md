@@ -1,7 +1,7 @@
 # Vorwort
 
 Es war nicht immer so klar, aber bei der Programmiersprache Rust geht es im
-Grunde um *Befähigung*: Egal, welche Art von Code du jetzt schreibst, Rust
+Grunde um _Befähigung_: Egal, welche Art von Code du jetzt schreibst, Rust
 befähigt dich dazu, weiter zu gehen, mit Vertrauen in einer größeren Vielfalt
 von Bereichen zu programmieren, als du es zuvor getan hast.
 

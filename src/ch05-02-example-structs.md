@@ -5,10 +5,10 @@ Programm, das die Fläche eines Rechtecks berechnet. Wir beginnen mit einzelnen
 Variablen und schreiben das Programm dann um, bis wir stattdessen Strukturen
 einsetzen.
 
-Legen wir mit Cargo ein neues Binärprojekt namens *rectangles* an, das die
+Legen wir mit Cargo ein neues Binärprojekt namens _rectangles_ an, das die
 Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
 Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
-*src/main.rs* unseres Projekts macht.
+_src/main.rs_ unseres Projekts macht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -351,10 +351,10 @@ $ cargo run
 }
 ```
 
-Wir können sehen, dass der erste Teil der Ausgabe von *src/main.rs* Zeile 10
+Wir können sehen, dass der erste Teil der Ausgabe von _src/main.rs_ Zeile 10
 stammt, wo wir den Ausdruck `30 * scale` debuggen, und der Ergebniswert ist
 `60` (die `Debug`-Formatierung, die für Ganzzahlen implementiert ist, gibt nur
-deren Wert aus). Der `dbg!`-Aufruf in Zeile 14 von *src/main.rs* gibt den Wert
+deren Wert aus). Der `dbg!`-Aufruf in Zeile 14 von _src/main.rs_ gibt den Wert
 von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe verwendet die
 hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro `dbg!` kann sehr
 hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!
@@ -372,7 +372,7 @@ Unsere Funktion `area` ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 `Rectangle` zu verbinden, da es zu keinem anderen Typ passt. Schauen wir uns
 an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
-*Methode* `area` unseres Typs `Rectangle` verwandeln können.
+_Methode_ `area` unseres Typs `Rectangle` verwandeln können.
 
 [app-c]: appendix-03-derivable-traits.html
 [attributes]: https://doc.rust-lang.org/reference/attributes.html

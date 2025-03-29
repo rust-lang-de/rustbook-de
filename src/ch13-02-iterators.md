@@ -6,7 +6,7 @@ Elemente zu durchlaufen und zu bestimmen, wann eine Sequenz beendet ist.
 Durch die Verwendung von Iteratoren ist es nicht notwendig, diese Logik selbst
 neu zu implementieren.
 
-Die Iteratoren in Rust sind *faul* (lazy), das bedeutet, dass sie erst durch
+Die Iteratoren in Rust sind _faul_ (lazy), das bedeutet, dass sie erst durch
 Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
 Programmcode in Codeblock 13-10 erstellt beispielsweise einen Iterator über die
 Elemente im Vektor `v1` indem die in `Vec<T>` definierte Methode `iter`
@@ -74,7 +74,7 @@ pub trait Iterator {
 }
 ```
 Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
-`Self::Item` die einen *zugeordneten Typ* (associated type) mit diesem Merkmal 
+`Self::Item` die einen _zugeordneten Typ_ (associated type) mit diesem Merkmal 
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des `Iterator`-Merkmals erfordert, dass du auch einen `Item`-Typ definierst und
@@ -116,7 +116,7 @@ aufrufen</span>
 Beachte, dass wir `v1_iter` veränderbar (mutable) machen mussten: Beim Aufrufen
 der `next`-Methode auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
-Mit anderen Worten *verbraucht* dieser Programmcode den Iterator. Jeder Aufruf
+Mit anderen Worten _verbraucht_ dieser Programmcode den Iterator. Jeder Aufruf
 von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
 benutzten, mussten wir `v1_iter` nicht veränderbar machen, da dies schon hinter
 den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
@@ -139,7 +139,7 @@ library API documentation) nach dem `Iterator`-Merkmal suchst. Einige dieser
 Methoden rufen in ihrer Definition die `next`-Methode auf, daher musst du die
 `next`-Methode bei der Implementierung des `Iterator`-Merkmals einbauen.
 
-Methoden die `next` aufrufen werden als *konsumierende Adapter* (consuming
+Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
 die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
@@ -175,7 +175,7 @@ Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.
 
 ### Methoden die andere Iteratoren erzeugen
 
-*Iterator-Adaptoren* sind Methoden, die auf dem Merkmal `Iterator` definiert
+_Iterator-Adaptoren_ sind Methoden, die auf dem Merkmal `Iterator` definiert
 sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
 Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.
 

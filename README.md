@@ -1,8 +1,8 @@
 # Die Programmiersprache Rust
 
-Das Buch „Die Programmiersprache Rust“ ist eine deutsche Gemeinschafts-Übersetzung
-des [offiziellen Rust-Buchs][rustbook-en].
-Es enthält alle Änderungen des englischen Originals bis einschließlich zum **30.11.2024**.
+Das Buch „Die Programmiersprache Rust“ ist eine deutsche
+Gemeinschafts-Übersetzung des [offiziellen Rust-Buchs][rustbook-en]. Es enthält
+alle Änderungen des englischen Originals bis einschließlich zum **21.03.2025**.
 
 ## [📖 > Hier online lesen < 📖][rustbook-de]
 
@@ -14,7 +14,7 @@ Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
 
 Schritte zum Bauen und Anschauen des Buchs:
 
-1. mdBook installieren: `cargo install mdbook --vers "^0.4.43"`
+1. mdBook installieren: `cargo install mdbook --vers "^0.4.47"`
 2. Live-Vorschau-Server starten: `mdbook serve`
 3. http://localhost:3000/ im Browser öffnen
 
@@ -28,8 +28,7 @@ Issue. Bitte beachte die [Übersetzungskonventionen][konventionen].
 
 Für jeden Beitrag zu diesem Buch gibt es das aktuelle E-Book kostenlos für den
 persönlichen Gebrauch. Bei Interesse bitte eine E-Mail an [damoasda][damoasda]
-senden, dann schicke ich den Download-Link. Das Angebot gilt sogar rückwirkend
-für alle, die zum Buch beigetragen haben.
+senden, dann schicke ich den Download-Link.
 
 [damoasda]: https://github.com/damoasda
 [konventionen]: https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen

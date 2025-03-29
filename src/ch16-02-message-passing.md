@@ -1,16 +1,16 @@
 ## Nachrichtenaustausch zwischen Strängen (threads)
 
 Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
-Nebenläufigkeit (safe concurrency) ist der *Nachrichtenaustausch* (message
+Nebenläufigkeit (safe concurrency) ist der _Nachrichtenaustausch_ (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 [der Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
 Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“
 
 Um die Gleichzeitigkeit beim Senden von Nachrichten zu erreichen, bietet die
-Standardbibliothek von Rust eine Implementierung von *Kanälen* (channels). Ein
-Kanal ist ein allgemeines Programmierkonzept, mit dem Daten von einem Strang zu
-einem anderen gesendet werden.
+Standardbibliothek von Rust eine Implementierung von Kanälen. Ein _Kanal_
+(channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem
+Strang zu einem anderen gesendet werden.
 
 Du kannst dir einen Kanal in der Programmierung wie einen gerichteten
 Wasserkanal vorstellen, z.B. einen Bach oder einen Fluss. Wenn du etwas wie
@@ -18,12 +18,13 @@ eine Gummiente in einen Fluss setzt, wird sie stromabwärts bis zum Ende des
 Wasserwegs reisen.
 
 Ein Kanal hat zwei Hälften: Einen Sender und einen Empfänger. Die Senderhälfte
-ist die stromaufwärts gelegene Stelle, an der du Gummienten in den Fluss setzt,
-und die Empfängerhälfte ist die Stelle, an der die Gummiente stromabwärts
-ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit den Daten auf,
-die du senden möchtest, und ein anderer Teil überprüft die Empfangsseite auf
-ankommende Nachrichten. Ein Kanal gilt als *geschlossen* (closed), wenn
-entweder die Sender- oder die Empfängerhälfte aufgeräumt (dropped) wird.
+ist die stromaufwärts gelegene Stelle, an der du die Gummiente in den Fluss
+setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente
+stromabwärts ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit
+den Daten auf, die du senden möchtest, und ein anderer Teil überprüft die
+Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als _geschlossen_
+(closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
+(dropped) wird.
 
 Hier arbeiten wir uns zu einem Programm hoch, das einen Strang hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
@@ -52,10 +53,10 @@ fn main() {
 beiden Hälften zu `tx` und `rx`</span>
 
 Wir erstellen einen neuen Kanal mit der Funktion `mpsc::channel`; `mpsc` steht
-für *mehrfacher Produzent, einzelner Konsument* (multiple producer, single
+für _mehrfacher Produzent, einzelner Konsument_ (multiple producer, single
 consumer). Kurz gesagt, die Art und Weise, wie die Standardbibliothek von Rust
-Kanäle implementiert, bedeutet, dass ein Kanal mehrere *sendende* Enden haben
-kann, die Werte produzieren, aber nur ein *empfangendes* Ende, das diese Werte
+Kanäle implementiert, bedeutet, dass ein Kanal mehrere _sendende_ Enden haben
+kann, die Werte produzieren, aber nur ein _empfangendes_ Ende, das diese Werte
 konsumiert. Stell dir vor, mehrere Bäche würden zu einem großen Fluss
 zusammenfließen: Alles, was in einem der Bäche hinuntergeschickt wird, landet
 am Ende in einem Fluss. Wir fangen zunächst mit einem einzigen Produzenten an,
@@ -63,8 +64,8 @@ aber wir fügen mehrere Produzenten hinzu, wenn dieses Beispiel funktioniert.
 
 Die Funktion `mpsc::channel` gibt ein Tupel zurück, dessen erstes Element die
 sendende Seite und dessen zweites Element die empfangende Seite ist. Die
-Abkürzungen `tx` und `rx` werden traditionell in vielen Feldern für *Sender*
-(transmitter) bzw. *Empfänger* (receiver) verwendet, daher benennen wir unsere
+Abkürzungen `tx` und `rx` werden traditionell in vielen Feldern für _Sender_
+(transmitter) bzw. _Empfänger_ (receiver) verwendet, daher benennen wir unsere
 Variablen als solche, um jedes Ende anzugeben. Wir verwenden eine
 `let`-Anweisung mit einem Muster, das die Tupel destrukturiert; wir werden die
 Verwendung von Mustern in `let`-Anweisungen und die Destrukturierung in Kapitel
@@ -100,14 +101,15 @@ Strang und Senden von „hallo“</span>
 Wieder verwenden wir `thread::spawn`, um einen neuen Strang zu erstellen, und
 dann `move`, um `tx` in den Funktionsabschluss zu verschieben, sodass der
 erzeugte Strang `tx` besitzt. Der erzeugte Strang muss den Sender besitzen, um
-in der Lage zu sein, Nachrichten durch den Kanal zu senden. Der Sender hat eine
-Methode `send`, die den Wert nimmt, den wir senden wollen. Die Methode `send`
-gibt ein `Result<T, E>` zurück; wenn also die empfangende Seite bereits
-aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet werden kann,
-wird die Sendeoperation einen Fehler zurückgeben. In diesem Beispiel rufen wir
-`unwrap` auf, um im Falle eines Fehlers abzustürzen. Aber in einer echten
-Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9 zurück, um
-Strategien für eine korrekte Fehlerbehandlung anzusehen.
+in der Lage zu sein, Nachrichten durch den Kanal zu senden.
+
+Der Sender hat eine Methode `send`, die den Wert nimmt, den wir senden wollen.
+Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die empfangende
+Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet
+werden kann, wird die Sendeoperation einen Fehler zurückgeben. In diesem
+Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzustürzen. Aber in
+einer echten Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9
+zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
 
 In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
@@ -136,7 +138,7 @@ fn main() {
 Hauptstrang und Ausgeben des Wertes</span>
 
 Das Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
-`recv`, kurz für *empfangen* (receive), was die Ausführung des Hauptstrangs
+`recv`, kurz für _empfangen_ (receive), was die Ausführung des Hauptstrangs
 blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
 gesendet wurde, wird er von `recv` in einem `Result<T, E>` zurückgegeben. Wenn
 der Sender geschlossen wird, gibt `recv` einen Fehler zurück, um zu
@@ -172,9 +174,9 @@ von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, wenn du bei
 deinen Rust-Programmen an die Eigentümerschaft denkst. Lass uns ein Experiment
 machen, um zu zeigen, wie Kanäle und Eigentümerschaft zusammenwirken, um
 Probleme zu vermeiden: Wir versuchen, einen `val`-Wert im erzeugten Strang zu
-verwenden, *nachdem* wir ihn in den Kanal geschickt haben. Versuche, den Code
+verwenden, _nachdem_ wir ihn in den Kanal geschickt haben. Versuche, den Code
 in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser Code nicht erlaubt
-ist:
+ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -277,14 +279,14 @@ Pausieren dazwischen</span>
 Diesmal hat der erzeugte Strang einen Vektor von Zeichenketten, die wir an den
 Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten, senden jede
 einzeln und pausieren dazwischen, indem wir die Funktion `thread::sleep` mit
-einem `Duration`-Wert von 1 Sekunde aufrufen.
+einem `Duration`-Wert von einer Sekunde aufrufen.
 
 Im Hauptstrang rufen wir die Funktion `recv` nicht mehr explizit auf:
 Stattdessen behandeln wir `rx` als Iterator. Jeden empfangenen Wert geben wir
 aus. Wenn der Kanal geschlossen wird, wird die Iteration beendet.
 
 Wenn du den Code in Codeblock 16-10 ausführst, solltest du die folgende Ausgabe
-mit einer 1-Sekunden-Pause zwischen jeder Zeile sehen:
+mit einer Ein-Sekunden-Pause zwischen jeder Zeile sehen:
 
 ```text
 Erhalten: hallo
@@ -299,8 +301,8 @@ erzeugten Strang zu erhalten.
 
 ### Erstellen mehrerer Produzenten durch Klonen des Senders
 
-Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für *mehrfacher Produzent,
-einzelner Konsument* ist. Lass uns `mpsc` verwenden und den Code in Codeblock
+Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für _mehrfacher Produzent,
+einzelner Konsument_ ist. Lass uns `mpsc` verwenden und den Code in Codeblock
 16-10 erweitern, um mehrere Stränge zu erzeugen, die alle Werte an den gleichen
 Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
 Codeblock 16-11 gezeigt:

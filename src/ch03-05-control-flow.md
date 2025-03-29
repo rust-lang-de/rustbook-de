@@ -13,8 +13,8 @@ verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
 Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
 erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“
 
-Erstelle in deinem *projects*-Verzeichnis ein neues Projekt namens *branches*,
-um den `if`-Ausdruck zu erforschen. Gibt in der Datei *src/main.rs* folgendes
+Erstelle in deinem _projects_-Verzeichnis ein neues Projekt namens _branches_,
+um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ folgendes
 ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -36,7 +36,7 @@ Bedingung. In diesem Fall prüft die Bedingung, ob die Variable `number` einen
 Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
 wenn die Bedingung `true` ist, wird unmittelbar nach der Bedingung in
 geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
-`if`-Ausdrücken verbunden sind, werden manchmal auch als *Zweige* (arms)
+`if`-Ausdrücken verbunden sind, werden manchmal auch als _Zweige_ (arms)
 bezeichnet, genau wie die Zweige in `match`-Ausdrücken, die wir im Abschnitt
 [„Vergleichen der Schätzung mit der
 Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
@@ -84,7 +84,7 @@ Bedingung war falsch
 ```
 
 Es ist auch erwähnenswert, dass die Bedingung in diesem Code ein `bool` sein
-*muss*. Wenn die Bedingung kein `bool` ist, erhalten wir einen Fehler. Versuche
+_muss_. Wenn die Bedingung kein `bool` ist, erhalten wir einen Fehler. Versuche
 zum Beispiel, den folgenden Code auszuführen:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -268,10 +268,10 @@ Variable verfolgen müsste.
 ### Wiederholung mit Schleifen
 
 Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
-Aufgabe stellt Rust mehrere *Schleifen* (loops) zur Verfügung, die den Code
+Aufgabe stellt Rust mehrere _Schleifen_ (loops) zur Verfügung, die den Code
 innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
 Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
-Projekt namens *loops*.
+Projekt namens _loops_.
 
 Rust hat drei Arten von Schleifen: `loop`, `while` und `for`. Probieren wir
 jede einzelne aus.
@@ -282,7 +282,7 @@ Das Schlüsselwort `loop` weist Rust an, einen Codeblock immer und immer wieder
 auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er
 aufhören soll.
 
-Als Beispiel änderst du die Datei *src/main.rs* in deinem *loops*-Verzeichnis
+Als Beispiel änderst du die Datei _src/main.rs_ in deinem _loops_-Verzeichnis
 so, dass sie wie folgt aussieht:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -374,7 +374,7 @@ die aktuelle Schleife verlässt, verlässt `return` immer die aktuelle Funktion.
 
 Wenn du Schleifen innerhalb von Schleifen hast, gelten `break` und `continue`
 für die innerste Schleife an diesem Punkt. Du kannst optional ein
-*Schleifenlabel* (loop label) für eine Schleife angeben, das wir dann mit
+_Schleifenlabel_ (loop label) für eine Schleife angeben, das wir dann mit
 `break` oder `continue` verwenden können, um festzulegen, dass diese
 Schlüsselwörter für die gekennzeichnete Schleife gelten und nicht für die
 innerste Schleife. Schleifenlabel müssen mit einem einfachen Anführungszeichen
@@ -578,13 +578,13 @@ Variablen, Skalare und zusammengesetzte Datentypen, Funktionen, Kommentare,
 `if`-Ausdrücke und Schleifen! Um mit den in diesem Kapitel besprochenen
 Konzepten zu üben, versuche, Programme zu bauen, um Folgendes zu tun:
 
-* Temperaturen zwischen Fahrenheit und Celsius umrechnen.
-* Die *n*-te Fibonacci-Zahl berechnen.
-* Den Text des Weihnachtsliedes „Die Zwölf Weihnachtstage“ (The Twelve Days of
+- Temperaturen zwischen Fahrenheit und Celsius umrechnen.
+- Die _n_-te Fibonacci-Zahl berechnen.
+- Den Text des Weihnachtsliedes „Die Zwölf Weihnachtstage“ (The Twelve Days of
   Christmas) ausgeben und dabei die Wiederholung im Lied nutzen.
 
 Wenn du bereit bist, weiterzumachen, werden wir in Rust über ein Konzept
-sprechen, das es in anderen Programmiersprachen üblicherweise *nicht* gibt:
+sprechen, das es in anderen Programmiersprachen üblicherweise _nicht_ gibt:
 Eigentümerschaft (ownership).
 
 [comparing-the-guess-to-the-secret-number]:

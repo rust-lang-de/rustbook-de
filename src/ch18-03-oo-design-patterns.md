@@ -1,9 +1,9 @@
 ## Ein objektorientiertes Entwurfsmuster implementieren
 
-Das *Zustandsmuster* (state pattern) ist ein objektorientiertes Entwurfsmuster.
+Das _Zustandsmuster_ (state pattern) ist ein objektorientiertes Entwurfsmuster.
 Der Kernpunkt des Musters besteht darin, dass wir eine Reihe von Zuständen
 definieren, die ein Wert intern annehmen kann. Die Zustände werden durch eine
-Reihe von *Zustandsobjekten* (state objects) dargestellt, und das Verhalten des
+Reihe von _Zustandsobjekten_ (state objects) dargestellt, und das Verhalten des
 Wertes ändert sich je nach Zustand. Wir werden ein Beispiel für eine
 Blog-Post-Struktur durcharbeiten, die ein Feld für ihren Status hat, das ein
 Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
@@ -160,7 +160,7 @@ als Methode, anstatt das Feld `content` mit `pub` offenzulegen, damit wir
 später eine Methode implementieren können, die steuert, wie die Daten des
 Feldes `content` gelesen werden. Die Methode `add_text` ist ziemlich einfach,
 also lass uns die Implementierung in Codeblock 18-13 zum Block `impl Post`
-hinzufügen:
+hinzufügen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -214,7 +214,7 @@ Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern, sobald wi
 die Möglichkeit implementiert haben, den Zustand eines Beitrags zu ändern,
 damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
-Codeblock 18-14 zeigt diese Platzhalter-Implementierung:
+Codeblock 18-14 zeigt diese Platzhalter-Implementierung.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -256,11 +256,11 @@ einen leeren Zeichenkettenanteilstyp zurückgibt</span>
 Mit dieser zusätzlichen Methode `content` funktioniert alles in Codeblock 18-11
 bis hin zu Zeile 7 wie beabsichtigt.
 
-### Antrag auf Überprüfung des Beitrags ändert seinen Zustand
+### Antrag auf Überprüfung ändert den Zustand des Beitrags
 
 Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
-ändern sollte. Codeblock 18-15 zeigt diesen Code:
+ändern sollte. Codeblock 18-15 zeigt diesen Code.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -574,11 +574,10 @@ im Funktionsparameter herausverschieben können.
 Wir rufen dann die `unwrap`-Methode auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 `Post` sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese
-Methoden zu Ende sind. Dies ist einer der Fälle, über die wir im Abschnitt
-[„Fälle, in denen du mehr Informationen als der Compiler
-hast“][more-info-than-rustc] in Kapitel 9 gesprochen haben, wenn wir wissen,
-dass ein `None`-Wert niemals möglich ist, obwohl der Compiler nicht in der Lage
-ist, das zu verstehen.
+Methoden zu Ende sind. Dies ist einer der Fälle, über die wir in [„Fälle, in
+denen du mehr Informationen als der Compiler hast“][more-info-than-rustc] in
+Kapitel 9 gesprochen haben, wenn wir wissen, dass ein `None`-Wert niemals
+möglich ist, obwohl der Compiler nicht in der Lage ist, das zu verstehen.
 
 Wenn wir nun `content` auf der `&Box<dyn State>` aufrufen, wird eine
 automatische Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass
@@ -699,7 +698,7 @@ das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten `Post` verstreut.
 
-> #### Warum keine Aufzählung?
+> ### Warum keine Aufzählung?
 >
 > Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
 > verschiedenen möglichen Poststatus als Varianten verwendet haben. Das ist
@@ -739,11 +738,11 @@ erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
 ist, Code zu pflegen, der das Zustandsmuster verwendet, probiere einige dieser
 Vorschläge aus:
 
-* Füge eine `reject`-Methode hinzu, die den Zustand des Beitrags von
+- Füge eine `reject`-Methode hinzu, die den Zustand des Beitrags von
   `PendingReview` zurück zu `Draft` ändert.
-* Verlange zwei `approve`-Aufrufe, bevor der Zustand in `Published` geändert
+- Verlange zwei `approve`-Aufrufe, bevor der Zustand in `Published` geändert
   werden kann.
-* Erlaube Benutzern das Hinzufügen von Textinhalten nur dann, wenn sich ein
+- Erlaube Benutzern das Hinzufügen von Textinhalten nur dann, wenn sich ein
   Beitrag im Zustand `Draft` befindet. Hinweis: Lasse das Zustandsobjekt dafür
   verantwortlich sein, was sich am Inhalt ändern könnte, aber nicht für die
   Änderung des Beitrags.
@@ -760,18 +759,20 @@ Entwurfsmuster zu wechseln.
 Ein weiterer Nachteil ist, dass wir eine gewisse Logik dupliziert haben. Um
 einen Teil der Duplikation zu eliminieren, könnten wir versuchen,
 Standard-Implementierungen für die Methoden `request_review` und `approval` für
-das Merkmal `State` zu erstellen, die `self` zurückgeben; dies würde jedoch die
-Objektsicherheit verletzen, da das Merkmal nicht weiß, was das konkrete `self`
-genau sein wird. Wir wollen in der Lage sein, `State` als Merkmalsobjekt zu
-verwenden, deshalb müssen seine Methoden objektsicher sein.
+das Merkmal `State` zu erstellen, die `self` zurückgeben; dies würde jedoch
+nicht funktionieren: Bei der Verwendung von `State` als Merkmals-Objekt weiß
+das Merkmal nicht, was das konkrete `self` genau sein wird, sodass der
+Rückgabetyp zur Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits
+erwähnten dyn-Kompatibilitätsregeln).
 
 Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
-`request_review` und `approve` auf `Post`. Beide Methoden delegieren die
-Implementierung der gleichen Methode auf den Wert im Feld `state` von `Option`
-und setzen den neuen Wert des Feldes `state` auf das Ergebnis. Wenn wir eine
-Menge Methoden auf `Post` hätten, die diesem Muster folgen, könnten wir in
-Erwägung ziehen, ein Makro zu definieren, um die Wiederholung zu eliminieren
-(siehe den Abschnitt [„Makros“][macros] in Kapitel 20).
+`request_review` und `approve` auf `Post`. Beide Methoden verwenden
+`Option::take` mit dem Feld `state` von `Post`, und wenn `state` den Wert
+`Some` hat, delegieren sie den Aufruf an die gleiche Methode des umschlossenen
+Werts und speichern das Ergebnis im Feld `state`. Wenn wir viele Methoden auf
+`Post` hätten, die diesem Muster folgen, könnten wir in Erwägung ziehen, ein
+Makro zu definieren, um die Wiederholung zu eliminieren (siehe
+[„Makros“][macros] in Kapitel 20).
 
 Indem wir das Zustandsmuster genau so implementieren, wie es für
 objektorientierte Sprachen definiert ist, nutzen wir die Stärken Rusts nicht so
@@ -821,7 +822,7 @@ nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
 Inhalt eines Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser
 Code nicht einmal kompilieren lässt. Codeblock 18-19 zeigt die Definition einer
 Struktur `Post` und einer Struktur `DraftPost` sowie die Methoden dieser
-Strukturen:
+Strukturen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -885,7 +886,7 @@ implementieren, indem wir eine weitere Struktur `PendingReviewPost` hinzufügen,
 indem wir die Methode `request_review` auf `DraftPost` definieren, um einen
 `PendingReviewPost` zurückzugeben, und eine Methode `approve` auf
 `PendingReviewPost`, um einen `Post` zurückzugeben, wie in Codeblock 18-20
-gezeigt:
+gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -964,7 +965,7 @@ dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
 Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
 in diesen Zuständen zu verwenden. Der aktualisierte Code in `main` ist in
-Codeblock 18-21 aufgeführt:
+Codeblock 18-21 aufgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1015,15 +1016,15 @@ Eigentümerschaft, nicht haben.
 ## Zusammenfassung
 
 Unabhängig davon, ob du nach der Lektüre dieses Kapitels der Meinung bist, dass
-Rust eine objektorientierte Sprache ist oder nicht, weißt du jetzt, dass du
-Merkmalsobjekte verwenden kannst, um einige objektorientierte Funktionalitäten
-in Rust zu erhalten. Dynamische Aufrufe können deinem Code eine gewisse
-Flexibilität im Austausch gegen ein wenig Laufzeitperformanz verleihen. Du
-kannst diese Flexibilität nutzen, um objektorientierte Muster zu
-implementieren, die die Wartbarkeit deines Codes verbessern können. Rust hat
-auch andere Funktionalitäten, z.B. Eigentümerschaft, die objektorientierte
-Sprachen nicht haben. Ein objektorientiertes Muster wird nicht immer der beste
-Weg sein, um die Stärken von Rust zu nutzen, ist aber eine verfügbare Option.
+Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Merkmalsobjekte
+verwenden kannst, um einige objektorientierte Funktionalitäten in Rust zu
+erhalten. Dynamische Aufrufe können deinem Code eine gewisse Flexibilität im
+Austausch gegen ein wenig Laufzeitperformanz verleihen. Du kannst diese
+Flexibilität nutzen, um objektorientierte Muster zu implementieren, die die
+Wartbarkeit deines Codes verbessern können. Rust hat auch andere
+Funktionalitäten, z.B. Eigentümerschaft, die objektorientierte Sprachen nicht
+haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um
+die Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.
 
 Als nächstes werden wir uns mit Mustern befassen, die eine weitere
 Funktionalität von Rust sind und viel Flexibilität ermöglichen. Wir haben sie
@@ -1031,4 +1032,4 @@ uns im Laufe des Buches kurz angeschaut, haben aber noch nicht ihre volle
 Leistungsfähigkeit gesehen. Los geht's!
 
 [more-info-than-rustc]: ch09-03-to-panic-or-not-to-panic.html#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast
-[macros]: ch20-06-macros.html
+[macros]: ch20-05-macros.html

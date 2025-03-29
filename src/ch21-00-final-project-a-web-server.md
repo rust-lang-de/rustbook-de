@@ -21,7 +21,7 @@ Hier ist unser Plan zum Bauen des Webservers:
 5. Verbessere den Durchsatz unseres Servers mit einem Strang-Vorrat (thread
    pool).
 
-Bevor wir anfangen, sollten wir ein Detail erwähnen: Die Methode, die wir
+Bevor wir anfangen, sollten wir ein Detail erwähnen. Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu
 bauen. Gemeinschaftsmitglieder haben eine Reihe von produktionsreifen Kisten
 auf [crates.io][crates] veröffentlicht, die umfassendere Webserver- und

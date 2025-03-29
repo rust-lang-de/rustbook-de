@@ -1,7 +1,7 @@
 ## Anhang E: Ausgaben
 
 In Kapitel 1 hast du gesehen, dass `cargo new` Metadaten zur Ausgabe (edition)
-in deiner Datei *Cargo.toml* hinzufügt. Dieser Anhang erläutert, was das
+in deiner Datei _Cargo.toml_ hinzufügt. Dieser Anhang erläutert, was das
 bedeutet!
 
 Die Sprache Rust und der Compiler haben einen sechswöchigen
@@ -13,7 +13,7 @@ Veröffentlichung zu Veröffentlichung kann es schwierig sein, zurückzublicken
 und zu sagen: "Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr
 verändert!
 
-Alle zwei oder drei Jahre gibt das Rust-Team eine neue *Rust-Ausgabe* (edition)
+Etwa alle drei Jahre gibt das Rust-Team eine neue _Rust-Ausgabe_ (edition)
 heraus. Jede Ausgabe fasst die neuen Funktionalitäten in einem übersichtlichen
 Paket mit vollständig aktualisierter Dokumentation und Werkzeugausstattung
 zusammen. Neue Ausgaben werden im Rahmen des üblichen sechswöchigen
@@ -21,19 +21,19 @@ Freigabeprozesses ausgeliefert.
 
 Ausgaben dienen unterschiedlichen Zwecken für verschiedene Menschen:
 
-* Für aktive Rust-Nutzer fasst eine neue Ausgabe inkrementelle Änderungen in
+- Für aktive Rust-Nutzer fasst eine neue Ausgabe inkrementelle Änderungen in
   einem leicht verständlichen Paket zusammen.
-* Für Nicht-Nutzer signalisiert eine neue Ausgabe, dass einige wichtige
+- Für Nicht-Nutzer signalisiert eine neue Ausgabe, dass einige wichtige
   Fortschritte hinzugekommen sind, sodass sich ein erneuter Blick auf Rust
   lohnen könnte.
-* Für diejenigen, die Rust entwickeln, stellt eine neue Ausgabe einen
+- Für diejenigen, die Rust entwickeln, stellt eine neue Ausgabe einen
   Treffpunkt für das gesamte Projekt dar.
 
-Zum Verfassungszeitpunkt dieses Artikels sind drei Rust-Ausgaben verfügbar:
-Rust 2015, Rust 2018 und Rust 2021. Dieses Buch wurde unter Verwendung der
-Rust-Ausgabe 2021 geschrieben.
+Zum Verfassungszeitpunkt dieses Artikels sind vier Rust-Ausgaben verfügbar:
+Rust 2015, Rust 2018, Rust 2021 und Rust 2024. Dieses Buch wurde unter
+Verwendung der Rust-Ausgabe 2024 geschrieben.
 
-Der Schlüssel `edition` in *Cargo.toml* gibt an, welche Ausgabe der Compiler
+Der Schlüssel `edition` in _Cargo.toml_ gibt an, welche Ausgabe der Compiler
 für deinen Code verwenden soll. Wenn der Schlüssel nicht existiert, verwendet
 Rust aus Gründen der Abwärtskompatibilität die Edition `2015`.
 

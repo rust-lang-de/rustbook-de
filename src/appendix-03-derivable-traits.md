@@ -10,18 +10,18 @@ In diesem Anhang findest du eine Referenz aller Merkmale in der
 Standardbibliothek, die du mit `derive` verwenden kannst. Jeder Abschnitt
 umfasst:
 
-* Welche Operatoren und Methoden nach Ableiten dieses Merkmals ermöglicht
+- Welche Operatoren und Methoden nach Ableiten dieses Merkmals ermöglicht
   werden
-* Was die Implementierung des durch `derive` bereitgestellten Merkmals bewirkt
-* Was die Implementierung des Merkmals über den Typ aussagt
-* Die Bedingungen, unter denen du das Merkmal implementieren darfst oder nicht
-* Beispiele für Operationen, die dieses Merkmal erfordern
+- Was die Implementierung des durch `derive` bereitgestellten Merkmals bewirkt
+- Was die Implementierung des Merkmals über den Typ aussagt
+- Die Bedingungen, unter denen du das Merkmal implementieren darfst oder nicht
+- Beispiele für Operationen, die dieses Merkmal erfordern
 
 Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut `derive`
 bereitgestellt wird, schaue in die [Standardbibliotheksdokumentation][std-lib]
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.
 
-Diese hier aufgelisteten Merkmale sind die einzigen, die von der
+Die hier aufgelisteten Merkmale sind die einzigen, die von der
 Standardbibliothek definiert werden und die mit `derive` in deinen Typen
 implementiert werden können. Andere in der Standardbibliothek definierte
 Merkmale haben kein sinnvolles Standardverhalten, sodass es an dir liegt, sie
@@ -64,7 +64,7 @@ prüfen und ermöglicht das Verwenden der Operatoren `==` und `!=`.
 
 Das Ableiten von `PartialEq` implementiert die Methode `eq`. Wenn `PartialEq`
 für Strukturen abgeleitet wird, sind zwei Instanzen nur dann gleich, wenn
-*alle* Felder gleich sind, und die Instanzen sind nicht gleich, wenn wenigstens
+_alle_ Felder gleich sind, und die Instanzen sind nicht gleich, wenn wenigstens
 ein Feld nicht gleich ist. Beim Ableiten für Aufzählungen ist jede Variante
 gleich sich selbst und nicht gleich den anderen Varianten.
 
@@ -198,7 +198,7 @@ z. B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
 [creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
-[macros]: ch20-06-macros.html
+[macros]: ch20-05-macros.html
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

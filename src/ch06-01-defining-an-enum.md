@@ -13,7 +13,7 @@ wollen, und sehen wir, warum Aufzählungen in diesem Fall nützlich und besser
 geeignet sind als Strukturen. Angenommen, wir müssen mit IP-Adressen arbeiten.
 Aktuell werden zwei Hauptstandards für IP-Adressen verwendet: Version vier und
 Version sechs. Da dies die einzigen Möglichkeiten für eine IP-Adresse sind, auf
-die unser Programm stößt, können wir alle möglichen Varianten *aufzählen*,
+die unser Programm stößt, können wir alle möglichen Varianten _aufzählen_,
 woher die Aufzählung ihren Namen hat.
 
 Jede IP-Adresse kann entweder eine Adresse der Version vier oder der Version
@@ -112,8 +112,8 @@ Und wir können diese Funktion mit beiden Varianten aufrufen:
 ```
 
 Aufzählungen haben noch weitere Vorteile. Wenn wir weiter über unseren
-IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den *Wert* der
-tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche *Variante* es
+IP-Adresstyp nachdenken, haben wir im Moment keine Möglichkeit, den _Wert_ der
+tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche _Variante_ es
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
 hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
 Codeblock 6-1.
@@ -251,10 +251,10 @@ jeweils eine unterschiedliche Anzahl an Werttypen speichern</span>
 
 Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
 
-* `Quit` hat überhaupt keine Daten.
-* `Move` hat benannte Felder wie eine Struktur.
-* `Write` enthält einen einzelnen `String`.
-* `ChangeColor` enthält drei `i32`-Werte.
+- `Quit` hat überhaupt keine Daten.
+- `Move` hat benannte Felder wie eine Struktur.
+- `Write` enthält einen einzelnen `String`.
+- `ChangeColor` enthält drei `i32`-Werte.
 
 Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
@@ -330,7 +330,7 @@ extrem häufig auftreten.
 Bei der Entwicklung von Programmiersprachen wird oft überlegt, welche
 Funktionalität aufgenommen werden soll, aber auch die auszuschließende
 Funktionalität ist wichtig. Rust hat nicht die Funktionalität „null“, die es in
-vielen anderen Sprachen gibt. *Null* ist ein Wert, der bedeutet, dass kein Wert
+vielen anderen Sprachen gibt. _Null_ ist ein Wert, der bedeutet, dass kein Wert
 vorhanden ist. In Sprachen mit null können sich Variablen immer in einem von
 zwei Zuständen befinden: null oder nicht null.
 
@@ -383,7 +383,7 @@ dass `<T>` bedeutet, dass die Variante `Some` der Aufzählung `Option` einen
 Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
 anstelle von `T` verwendet wird, den Gesamttyp `Option<T>` zu einem anderen Typ
 macht. Hier sind einige Beispiele für die Verwendung von `Option`-Werten zur
-Aufnahme von Zahlentypen und Zeichenkettentypen:
+Aufnahme von Zahlentypen und Zeichentypen:
 
 ```rust
 let some_number = Some(5);
@@ -459,7 +459,7 @@ anzunehmen, gewinnst du mehr Vertrauen in deinen Code. Um einen Wert zu haben,
 der möglicherweise null sein kann, musst du dich explizit dafür entscheiden,
 indem du als Typ `Option<T>` verwendest. Wenn du dann diesen Wert verwendest,
 musst du den Fall null explizit behandeln. Überall dort, wo ein Wert nicht den
-Typ `Option<T>` hat, kannst du *sicher* sein, dass der Wert nicht null ist.
+Typ `Option<T>` hat, kannst du _sicher_ sein, dass der Wert nicht null ist.
 Dies war eine bewusste Konstruktionsentscheidung bei Rust, um die Verbreitung
 von Null einzuschränken und die Sicherheit von Rust-Code zu erhöhen.
 

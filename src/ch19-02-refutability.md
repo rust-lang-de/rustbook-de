@@ -2,21 +2,21 @@
 
 Es gibt zwei Arten von Mustern: Abweisbare (refutable) und unabweisbare
 (irrefutable). Muster, die für jeden möglichen übergebenen Wert passen, sind
-*unabweisbar*. Ein Beispiel wäre `x` in der Anweisung `let x = 5;` weil `x` auf
+_unabweisbar_. Ein Beispiel wäre `x` in der Anweisung `let x = 5;` weil `x` auf
 alles passt und daher nicht fehlschlagen kann. Muster, die für irgendeinen
-möglichen Wert nicht passen können, sind *abweisbar*. Ein Beispiel wäre
+möglichen Wert nicht passen können, sind _abweisbar_. Ein Beispiel wäre
 `Some(x)` im Ausdruck `if let Some(x) = a_value`, denn wenn der Wert in der
 Variablen `a_value` eher `None` als `Some` ist, wird das Muster `Some(x)` nicht
 passen. 
 
 Funktionsparameter, `let`-Anweisungen und `for`-Schleifen können nur
 unabweisbare Muster akzeptieren, da das Programm nichts Sinnvolles tun kann,
-wenn die Werte nicht passen. Die Ausdrücke `if let` und `while let` akzeptieren
-abweisbare und unabweisbare Muster, aber der Compiler warnt vor unabweisbaren
-Mustern, weil sie per Definition dazu gedacht sind, mit einem möglichen
-Fehlerfall umzugehen: Die Funktionalität einer Bedingung besteht in ihrer
-Fähigkeit, sich abhängig von Erfolg oder Fehlerfall unterschiedlich zu
-verhalten.
+wenn die Werte nicht passen. Die Ausdrücke `if let` und `while let` sowie die
+Anweisung `let...else` akzeptieren abweisbare und unabweisbare Muster, aber der
+Compiler warnt vor unabweisbaren Mustern, weil sie per Definition dazu gedacht
+sind, mit einem möglichen Fehlerfall umzugehen: Die Funktionalität einer
+Bedingung besteht in ihrer Fähigkeit, sich abhängig von Erfolg oder Fehlerfall
+unterschiedlich zu verhalten.
 
 Im Allgemeinen solltest du dich nicht um die Unterscheidung zwischen
 abweisbaren und unabweisbaren Mustern kümmern müssen; du musst jedoch mit dem
@@ -41,7 +41,7 @@ lässt sich dieser Code nicht kompilieren.
 <span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit `let`
 zu verwenden</span>
 
-Wenn `some_option_value` ein `None`-Wert wäre, würde er nicht zum Muster
+Wenn `some_option_value` den Wert `None` hätte, würde er nicht zum Muster
 `Some(x)` passen, was bedeutet, dass das Muster abweisbar ist. Die
 `let`-Anweisung kann jedoch nur ein unabweisbares Muster akzeptieren, weil es
 nichts Gültiges gibt, was der Code mit einem `None`-Wert tun kann. Zur
@@ -74,52 +74,52 @@ auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.
 
 Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`
-zu verwenden, können wir `if let` verwenden. Wenn das Muster dann nicht passt,
-überspringt der Code einfach den Code in den geschweiften Klammern und gibt ihm
-die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der Code in
-Codeblock 19-8 zu korrigieren ist.
+zu verwenden, können wir `let...else` verwenden. Wenn das Muster dann nicht
+passt, führt das Programm einfach den Code in den geschweiften Klammern aus und
+gibt ihm die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der
+Code in Codeblock 19-8 zu korrigieren ist.
 
 ```rust
 # fn main() {
 #     let some_option_value: Option<i32> = None;
-    if let Some(x) = some_option_value {
-        println!("{x}");
-    }
+    let Some(x) = some_option_value else {
+        return;
+    };
 # }
 ```
 
-<span class="caption">Codeblock 19-9: Verwenden von `if let` und eines Blocks
-mit abweisbaren Mustern anstelle von `let`</span>
+<span class="caption">Codeblock 19-9: Verwenden von `let...else` und eines
+Blocks mit abweisbaren Mustern anstelle von `let`</span>
 
 Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
-`if let` allerdings ein unabweisbares Muster geben, das immer passt, z.B. `x`,
-wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.
+`let...else` allerdings ein unabweisbares Muster geben, das immer passt, z.B.
+`x`, wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.
 
 ```rust
 # fn main() {
-    if let x = 5 {
-        println!("{x}");
+    let x = 5 else {
+        return;
     };
 # }
 ```
 
 <span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster
-mit `if let` zu verwenden</span>
+mit `let...else` zu verwenden</span>
 
-Rust beklagt, dass es keinen Sinn macht, `if let` mit einem unabweisbaren
+Rust beklagt, dass es keinen Sinn macht, `let...else` mit einem unabweisbaren
 Muster zu verwenden:
 
 ```console
 $ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-warning: irrefutable `if let` pattern
- --> src/main.rs:2:8
+warning: irrefutable `let...else` pattern
+ --> src/main.rs:2:5
   |
-2 |     if let x = 5 {
-  |        ^^^^^^^^^
+2 |     let x = 5 else {
+  |     ^^^^^^^^^
   |
-  = note: this pattern will always match, so the `if let` is useless
-  = help: consider replacing the `if let` with a `let`
+  = note: this pattern will always match, so the `else` clause is useless
+  = help: consider removing the `else` clause
   = note: `#[warn(irrefutable_let_patterns)]` on by default
 
 warning: `patterns` (bin "patterns") generated 1 warning
@@ -135,6 +135,6 @@ unabweisbares Muster in einem `match` mit nur einem Zweig zu verwenden, aber
 diese Syntax ist nicht besonders nützlich und könnte durch eine einfachere
 `let`-Anweisung ersetzt werden.
 
-Nun, da du weißt, wo du Muster verwenden kannst und den Unterschied zwischen
+Da du nun weißt, wo du Muster verwenden kannst und den Unterschied zwischen
 abweisbaren und unabweisbaren Mustern kennst, lass uns alle Syntaxen behandeln,
 die wir zum Erstellen von Mustern verwenden können.

@@ -19,12 +19,12 @@ wir hier das gleiche tun!
 
 Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
-Projekte in diesem Buch schlagen wir vor, ein Verzeichnis *projects* in deinem
+Projekte in diesem Buch schlagen wir vor, ein Verzeichnis _projects_ in deinem
 Hauptverzeichnis anzulegen und all deine Projekte dort abzulegen.
 
 Öffne ein Terminal und gib die folgenden Befehle ein, um ein Verzeichnis
-*projects* und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
-Verzeichnisses *projects* zu erstellen.
+_projects_ und ein Verzeichnis für das Projekt „Hallo Welt!“ innerhalb des
+Verzeichnisses _projects_ zu erstellen.
 
 Gib dies bei Linux, macOS und PowerShell unter Windows ein:
 
@@ -46,12 +46,12 @@ Bei Windows CMD gib dies ein:
 
 ### Schreiben und Ausführen eines Rust-Programms
 
-Als nächstes erstelle eine neue Quelldatei und nenne sie *main.rs*.
-Rust-Dateien enden immer mit der Erweiterung *.rs*. Wenn du mehr als ein Wort
+Als nächstes erstelle eine neue Quelldatei und nenne sie _main.rs_.
+Rust-Dateien enden immer mit der Erweiterung _.rs_. Wenn du mehr als ein Wort
 in deinem Dateinamen verwendest, verwende einen Unterstrich, um sie zu trennen.
-Verwende zum Beispiel *hello_world.rs* statt *helloworld.rs*.
+Verwende zum Beispiel _hello_world.rs_ statt _helloworld.rs_.
 
-Öffne nun die Datei *main.rs*, die du gerade erstellt hast, und gib den Code in
+Öffne nun die Datei _main.rs_, die du gerade erstellt hast, und gib den Code in
 Codeblock 1-1 ein.
 
 <span class="filename">Dateiname: main.rs</span>
@@ -66,7 +66,7 @@ fn main() {
 ausgibt</span>
 
 Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
-*~/projects/hello_world*. Gib unter Linux oder MacOS die folgenden Befehle ein,
+_~/projects/hello_world_. Gib unter Linux oder MacOS die folgenden Befehle ein,
 um die Datei zu kompilieren und auszuführen:
 
 ```console
@@ -125,27 +125,24 @@ dazwischen ein Leerzeichen einzufügen.
 Innerhalb der Funktion `main` befindet sich der folgende Code:
 
 ```rust
-    println!("Hallo Welt!");
+println!("Hallo Welt!");
 ```
 
 Diese Zeile erledigt die ganze Arbeit in diesem kleinen Programm: Sie gibt Text
-auf dem Bildschirm aus. Hier gibt es vier wichtige Details zu beachten.
+auf dem Bildschirm aus. Hier gibt es drei wichtige Details zu beachten.
 
-Erstens wird im Rust-Stil mit vier Leerzeichen eingerückt, nicht mit einem
-Tabulator.
-
-Zweitens ruft `println!` ein Rust-Makro auf. Wenn es stattdessen eine Funktion
+Erstens ruft `println!` ein Rust-Makro auf. Wenn es stattdessen eine Funktion
 aufrufte, würde diese als `println` (ohne `!`) angegeben werden. Wir werden die
 Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines `!` bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.
 
-Drittens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
+Zweitens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
 Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.
 
-Viertens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
+Drittens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.
 
@@ -185,26 +182,26 @@ main.pdb
 main.rs
 ```
 
-Dies zeigt die Quellcodedatei mit der Erweiterung *.rs*, die ausführbare Datei
-(*main.exe* unter Windows, aber *main* auf allen anderen Plattformen) und, bei
+Dies zeigt die Quellcodedatei mit der Erweiterung _.rs_, die ausführbare Datei
+(_main.exe_ unter Windows, aber _main_ auf allen anderen Plattformen) und, bei
 Verwendung von Windows, eine Datei mit Debugging-Informationen mit der
-Erweiterung *.pdb*. Von hier aus führst du die Datei *main* oder *main.exe*
+Erweiterung _.pdb_. Von hier aus führst du die Datei _main_ oder _main.exe_
 aus, so wie hier:
 
 ```console
 $ ./main # oder .\main.exe unter Windows
 ```
 
-Wenn *main.rs* dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
+Wenn _main.rs_ dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
 Welt!“ in deinem Terminal ausgeben.
 
 Wenn du mit einer dynamischen Sprache wie Ruby, Python oder JavaScript besser
 vertraut bist, bist du es möglicherweise nicht gewohnt, ein Programm in
-getrennten Schritten zu kompilieren und auszuführen. Rust ist eine *vorab
-kompilierte* (ahead-of-time compiled) Sprache, d.h. du kannst ein Programm
+getrennten Schritten zu kompilieren und auszuführen. Rust ist eine _vorab
+kompilierte_ (ahead-of-time compiled) Sprache, d.h. du kannst ein Programm
 kompilieren und die ausführbare Datei an jemand anderen weitergeben, und dieser
 kann das Programm auch ohne Installation von Rust ausführen. Wenn du jemandem
-eine *.rb*-, *.py*- oder *.js*-Datei gibst, muss er eine Ruby-, Python- bzw.
+eine _*.rb_-, _.py_- oder _.js_-Datei gibst, muss er eine Ruby-, Python- bzw.
 JavaScript-Implementierung installiert haben. Aber in diesen Sprachen benötigst
 du nur einen Befehl, um dein Programm zu kompilieren und auszuführen. Beim
 Sprachdesign ist alles ein Kompromiss.

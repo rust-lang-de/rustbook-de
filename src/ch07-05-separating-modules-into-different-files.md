@@ -6,16 +6,16 @@ separate Datei verschieben, um die Navigation im Code zu erleichtern.
 
 Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
 Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
-eigene Datei *src/front_of_house.rs*, indem wir die Kistenwurzeldatei so
+eigene Datei _src/front_of_house.rs_, indem wir die Kistenwurzeldatei so
 ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
-ist die Kistenwurzeldatei *src/lib.rs*, aber diese Vorgehensweise funktioniert
-auch mit binären Kisten, deren Kistenwurzeldatei *src/main.rs* ist.
+ist die Kistenwurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert
+auch mit binären Kisten, deren Kistenwurzeldatei _src/main.rs_ ist.
 
 Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
 `front_of_house` und lasse nur die Deklaration `mod front_of_house;` übrig,
-sodass *src/lib.rs* den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
-dies nicht kompiliert und wir noch die Datei *src/front_of_house.rs* in
+sodass _src/lib.rs_ den in Codeblock 7-21 gezeigten Code enthält. Beachte, dass
+dies nicht kompiliert und wir noch die Datei _src/front_of_house.rs_ in
 Codeblock 7-22 erstellen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -31,10 +31,10 @@ pub fn eat_at_restaurant() {
 ```
 
 <span class="caption">Codeblock 7-21: Deklarieren des Moduls `front_of_house`,
-dessen Rumpf sich in *src/front_of_house.rs* befinden wird</span>
+dessen Rumpf sich in _src/front_of_house.rs_ befinden wird</span>
 
 Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
-namens *src/front_of_house.rs* ein, wie in Codeblock 7-22 zu sehen ist. Der
+namens _src/front_of_house.rs_ ein, wie in Codeblock 7-22 zu sehen ist. Der
 Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
 Moduldeklaration in der Kistenwurzel mit dem Namen `front_of_house` gestoßen
 ist.
@@ -48,26 +48,26 @@ pub mod hosting {
 ```
 
 <span class="caption">Codeblock 7-22: Definitionen innerhalb des Moduls
-`front_of_house` in *src/front_of_house.rs*</span>
+`front_of_house` in _src/front_of_house.rs_</span>
 
 Beachte, dass du den Inhalt einer Datei mit einer `mod`-Deklaration nur
-*einmal* in deinem Modulbaum laden musst. Sobald der Compiler weiß, dass die
+_einmal_ in deinem Modulbaum laden musst. Sobald der Compiler weiß, dass die
 Datei Teil des Projekts ist (und weiß, wo im Modulbaum sich der Code befindet,
 weil du die `mod`-Anweisung eingefügt hast), sollten andere Dateien in deinem
 Projekt auf den Code der geladenen Datei referenzieren, indem sie einen Pfad zu
 der Stelle verwenden, an der er deklariert wurde, wie im Abschnitt [„Mit Pfaden
 auf ein Element im Modulbaum verweisen“][paths] beschrieben. Mit anderen
-Worten: `mod` ist *keine* „include“-Operation, wie du sie vielleicht aus
+Worten: `mod` ist _keine_ „include“-Operation, wie du sie vielleicht aus
 anderen Programmiersprachen kennst.
 
 Als Nächstes extrahieren wir das Modul `hosting` in seine eigene Datei. Der
 Prozess ist ein bisschen anders, weil `hosting` ein untergeordnetes Modul von
 `front_of_house` ist, nicht vom Stammmodul. Wir legen die Datei für `hosting`
 in einem neuen Verzeichnis ab, das nach seinen Vorgängern im Modulbaum benannt
-wird, in diesem Fall *src/front_of_house*.
+wird, in diesem Fall _src/front_of_house_.
 
 Um mit dem Verschieben von `hosting` zu beginnen, ändern wir
-*src/front_of_house.rs* so, dass es nur die Deklaration des `hosting`-Moduls
+_src/front_of_house.rs_ so, dass es nur die Deklaration des `hosting`-Moduls
 enthält:
 
 <span class="filename">Dateiname: src/front_of_house.rs</span>
@@ -76,8 +76,8 @@ enthält:
 pub mod hosting;
 ```
 
-Dann erstellen wir ein Verzeichnis *src/front_of_house* und eine Datei
-*hosting.rs*, die die Definitionen des Moduls `hosting` enthält:
+Dann erstellen wir ein Verzeichnis _src/front_of_house_ und eine Datei
+_hosting.rs_, die die Definitionen des Moduls `hosting` enthält:
 
 <span class="filename">Dateiname: src/front_of_house/hosting.rs</span>
 
@@ -85,8 +85,8 @@ Dann erstellen wir ein Verzeichnis *src/front_of_house* und eine Datei
 pub fn add_to_waitlist() {}
 ```
 
-Wenn wir stattdessen *hosting.rs* in das *src*-Verzeichnis legen, würde der
-Compiler erwarten, dass der *hosting.rs*-Code in einem `hosting`-Modul
+Wenn wir stattdessen _hosting.rs_ in das _src_-Verzeichnis legen, würde der
+Compiler erwarten, dass der _hosting.rs_-Code in einem `hosting`-Modul
 enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
 Kind des `front_of_house`-Moduls. Die Regeln des Compilers dafür, welche
 Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
@@ -99,22 +99,22 @@ Verzeichnisse und Dateien dem Modulbaum besser entsprechen.
 > Dateipfaden. Für ein Modul mit dem Namen `front_of_house`, das in der
 > Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:
 >
-> * *src/front_of_house.rs* (was wir behandelt haben)
-> * *src/front_of_house/mod.rs* (älterer Stil, noch unterstützter Pfad)
+> - _src/front_of_house.rs_ (was wir behandelt haben)
+> - _src/front_of_house/mod.rs_ (älterer Stil, noch unterstützter Pfad)
 >
 > Bei einem Modul mit dem Namen `hosting`, das ein Untermodul von
 > `front_of_house` ist, sucht der Compiler den Code des Moduls in:
 >
-> * *src/front_of_house/hosting.rs* (was wir behandelt haben)
-> * *src/front_of_house/hosting/mod.rs* (älterer Stil, noch unterstützter Pfad)
+> - _src/front_of_house/hosting.rs_ (was wir behandelt haben)
+> - _src/front_of_house/hosting/mod.rs_ (älterer Stil, noch unterstützter Pfad)
 >
 > Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
 > Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
 > Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
 > sein, die durch dein Projekt navigieren.
 >
-> Der größte Nachteil des Stils, der Dateien mit dem Namen *mod.rs* verwendet,
-> ist, dass dein Projekt am Ende viele Dateien mit dem Namen *mod.rs* haben
+> Der größte Nachteil des Stils, der Dateien mit dem Namen _mod.rs_ verwendet,
+> ist, dass dein Projekt am Ende viele Dateien mit dem Namen _mod.rs_ haben
 > kann, was verwirrend sein kann, wenn du sie gleichzeitig in deinem Editor
 > geöffnet hast.
 
@@ -125,7 +125,7 @@ Dateien stehen. Mit dieser Technik kannst du Module in neue Dateien
 verschieben, wenn diese größer werden.
 
 Beachte, dass sich die Anweisung `pub use crate::front_of_house::hosting` in
-*src/lib.rs* ebenfalls nicht geändert hat und dass `use` keinen Einfluss darauf
+_src/lib.rs_ ebenfalls nicht geändert hat und dass `use` keinen Einfluss darauf
 hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort
 `mod` deklariert Module und Rust sucht in einer Datei mit dem Modulnamen nach
 dem Code, der zu diesem Modul gehört.

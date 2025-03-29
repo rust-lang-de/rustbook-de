@@ -1,7 +1,7 @@
 ## Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`
 
 Durch die Implementierung des Merkmals `Deref` kann man das Verhalten des
-*Dereferenzierungsoperators* (dereference operator) `*` (nicht zu verwechseln
+_Dereferenzierungsoperators_ (dereference operator) `*` (nicht zu verwechseln
 mit dem Multiplikations- oder Stern-Operator (glob operator)) anpassen. Indem
 du `Deref` so implementierst, dass ein intelligenter Zeiger wie eine reguläre
 Referenz behandelt werden kann, kannst du Programmcode schreiben, der mit
@@ -14,8 +14,8 @@ zu definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
 Dereferenzierungsoperator nicht wie eine Referenz für unseren neu definierten
 Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
 `Deref` es intelligenten Zeigern ermöglicht, auf ähnliche Weise wie Referenzen
-zu funktionieren, dann sehen wir uns an wie wir mit Rusts *automatischer
-Umwandlung* (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
+zu funktionieren, dann sehen wir uns an wie wir mit Rusts _automatischer
+Umwandlung_ (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.
 
 > Hinweis: Es gibt einen großen Unterschied zwischen dem Typ `MyBox<T>`, den wir
@@ -51,7 +51,7 @@ Die Variable `x` enthält den `i32`-Wert `5`. Wir setzen `y` gleich einer
 Referenz auf `x`. Wir können sicherstellen, das `x` gleich `5` ist. Wenn wir
 jedoch eine Aussage über den Wert `y` machen möchten, auf den er zeigt, müssen
 wir `*y` verwenden, um der Referenz auf den Wert zu folgen, auf den sie zeigt
-(daher *Dereferenzierung*), damit der Compiler den aktuellen Wert vergleichen
+(daher _Dereferenzierung_), damit der Compiler den aktuellen Wert vergleichen
 kann. Sobald wir `y` dereferenzieren, haben wir Zugriff auf den Zahlenwert auf
 den `y` zeigt und können ihn mit `5` vergleichen.
 
@@ -193,12 +193,12 @@ Fähigkeit für unseren Typ nicht implementiert haben. Um eine
 Dereferenzierung mit dem Operator `*` zu ermöglichen, implementieren wir das
 Merkmal `Deref`.
 
-### Einen Typ wie eine Referenz behandeln durch Implementieren des `Deref`-Merkmals
+### Implementieren des Merkmals `Deref`
 
-Wie im Abschnitt [„Ein Merkmal für einen Typ implementieren“][impl-trait1] in
-Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
-Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
-Das von der Standardbibliothek bereitgestellte Merkmal `Deref` erfordert die
+Wie in [„Ein Merkmal für einen Typ implementieren“][impl-trait1] in Kapitel 10
+beschrieben, müssen wir zur Implementierung eines Merkmals Implementierungen
+für die erforderlichen Methoden des Merkmals bereitstellen. Das von der
+Standardbibliothek bereitgestellte Merkmal `Deref` erfordert die
 Implementierung einer Methode namens `deref`, die `self` ausleiht (borrow) und
 eine Referenz auf die beinhalteten Daten zurückgibt. Codeblock 15-10 enthält
 eine Implementierung von `Deref`, um die Definition von `MyBox` zu ergänzen:
@@ -282,7 +282,7 @@ wir ein `*` in unserem Programmcode verwenden. Da die Ersetzung des
 
 ### Implizite automatische Umwandlung mit Funktionen und Methoden
 
-*Automatische Umwandlung* (deref coercion) wandelt eine Referenz auf einen Typ,
+_Automatische Umwandlung_ (deref coercion) wandelt eine Referenz auf einen Typ,
 der das Merkmal `Deref` implementiert, in eine Referenz auf einen anderen Typ
 um. Zum Beispiel kann die automatische Umwandlung `&String` in `&str`
 konvertieren, da `String` das Merkmal `Deref` implementiert, sodass `&str`
@@ -304,7 +304,7 @@ für intelligente Zeiger geeignet ist.
 Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in Codeblock 15-8
 definierten Typ `MyBox<T>` sowie die Implementierung von `Deref`, die wir in
 Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
-Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:
+Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -322,7 +322,7 @@ fn hello(name: &str) {
 Wir können die Funktion `hello` mit einem Zeichenketten-Anteilstyp als Argument
 aufrufen, wie zum Beispiel `hello("Rust");`. Die automatischer Umwandlung ermöglicht es,
 `hello` mit einer Referenz auf einen Wert vom Typ `MyBox<String>` aufzurufen,
-wie es in Codeblock 15-12 gezeigt wird:
+wie es in Codeblock 15-12 gezeigt wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -428,9 +428,9 @@ verwenden, um den `*`-Operator bei veränderbaren Referenzen zu überschreiben.
 Rust wendet die automatische Umwandlung an, wenn Typen und
 Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:
 
-* Von `&T` zu `&U`, wenn `T:Deref<Target=U>`
-* Von `&mutT` zu `&mutU`, wenn `T:DerefMut<Target=U>`
-* Von `&mutT` zu `&U`, wenn `T:Deref<Target=U>`
+1. Von `&T` zu `&U`, wenn `T:Deref<Target=U>`
+2. Von `&mutT` zu `&mutU`, wenn `T:DerefMut<Target=U>`
+3. Von `&mutT` zu `&U`, wenn `T:Deref<Target=U>`
 
 Die ersten beiden Fälle sind identisch, mit der Ausnahme, dass der zweite die
 Veränderbarkeit implementiert. Der erste Fall besagt, dass wenn man einen `&T`
@@ -439,7 +439,7 @@ hat und `T` `Deref` für einen Typ `U` implementiert hat, man transparent einen
 Umwandlung bei veränderbaren Referenzen erfolgt.
 
 Der dritte Fall ist schwieriger: Rust wird auch eine veränderbare Referenz in
-eine unveränderbare umwandeln. Das Gegenteil ist jedoch *nicht* möglich:
+eine unveränderbare umwandeln. Das Gegenteil ist jedoch _nicht_ möglich:
 Unveränderbare Referenzen werden niemals zu veränderbaren gemacht. Wenn man
 eine veränderbare Referenz hat, muss diese veränderbare Referenz aufgrund der
 Ausleihregeln (borrowing rules) die einzige Referenz auf diese Daten sein

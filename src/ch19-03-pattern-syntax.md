@@ -3,7 +3,7 @@
 In diesem Abschnitt stellen wir die gesamte Syntax gültiger Muster zusammen und
 erörtern, warum und wann du jedes einzelne Muster verwenden solltest.
 
-### Passende Literale
+### Literale abgleichen
 
 Wie du in Kapitel 6 gesehen hast, kannst du Muster direkt mit Literalen
 abgleichen. Der folgende Code enthält einige Beispiele:
@@ -27,13 +27,13 @@ bestimmten konkreten Wert erhält.
 
 Benannte Variablen (named variables) sind unabweisbare Muster, die zu jedem
 Wert passen, und wir haben sie in diesem Buch schon oft verwendet. Es gibt
-jedoch eine Komplikation, wenn du benannte Variablen in `match`-Ausdrücken
-verwendest. Da `match` einen neuen Gültigkeitsbereich beginnt, werden
-Variablen, die als Teil eines Musters innerhalb des `match`-Ausdrucks
-deklariert sind, diejenigen mit dem gleichen Namen außerhalb des
-`match`-Konstrukts verschatten (shadow), wie es bei allen Variablen der Fall
-ist. In Codeblock 19-11 deklarieren wir eine Variable mit dem Namen `x` mit dem
-Wert `Some(5)` und eine Variable `y` mit dem Wert `10`. Dann erzeugen wir einen
+jedoch eine Komplikation, wenn du benannte Variablen in `match`-, `if let`-
+oder `while let`-Ausdrücken verwendest. Da mit jeder dieser Ausdrücke ein neuer
+Gültigkeitsbereich beginnt, werden Variablen, die als Teil eines Musters
+innerhalb des Ausdrucks deklariert sind, diejenigen Variablen mit dem gleichen
+Namen außerhalb verschatten (shadow), wie es bei allen Variablen der Fall ist.
+In Codeblock 19-11 deklarieren wir eine Variable mit dem Namen `x` mit dem Wert
+`Some(5)` und eine Variable `y` mit dem Wert `10`. Dann erzeugen wir einen
 `match`-Ausdruck für den Wert `x`. Sieh dir die Muster in den `match`-Zweigen
 und `println!` am Ende an und versuche herauszufinden, was der Code ausgeben
 wird, bevor du diesen Code ausführst oder weiterliest.
@@ -54,7 +54,8 @@ wird, bevor du diesen Code ausführst oder weiterliest.
 ```
 
 <span class="caption">Codeblock 19-11: Ein `match`-Ausdruck mit einem Zweig,
-der eine verschattete Variable `y` einführt</span>
+der eine neue Variable einführt, die die bereits existierende Variable `y`
+verschattet</span>
 
 Lass uns durchgehen, was passiert, wenn der `match`-Ausdruck ausgeführt wird.
 Das Muster im ersten Zweig passt nicht zum definierten Wert von `x`, also setzt
@@ -63,7 +64,7 @@ der Code fort.
 Das Muster im zweiten Zweig führt eine neue Variable namens `y` ein, die zu
 jedem Wert innerhalb eines `Some`-Wertes passt. Da wir uns in einem neuen
 Gültigkeitsbereich innerhalb des `match`-Ausdrucks befinden, ist dies eine neue
-Variable `y`, nicht das `y`, das wir am Anfang mit dem Wert 10 deklariert
+Variable `y`, nicht das `y`, das wir am Anfang mit dem Wert `10` deklariert
 haben. Diese neue `y`-Bindung wird mit jedem Wert innerhalb eines `Some`
 übereinstimmen, das ist das, was wir in `x` haben. Daher bindet dieses neue `y`
 an den inneren Wert des `Some` in `x`. Dieser Wert ist `5`, sodass der Ausdruck
@@ -80,18 +81,19 @@ Wenn der `match`-Ausdruck zu Ende ist, endet sein Gültigkeitsbereich und damit
 auch der Gültigkeitsbereich des inneren `y`. Das letzte `println!` gibt `Am
 Ende: x = Some(5), y = 10` aus.
 
-Um einen `match`-Ausdruck zu erstellen, der die Werte der äußeren `x` und `y`
-abgleicht anstatt eine verschattete Variable einzuführen, müssten wir
-stattdessen eine Abgleichsbedingung (match guard conditional) verwenden. Wir
-werden über Abgleichsbedingungen später im Abschnitt [„Extra-Bedingungen mit
-Abgleichsbedingungen“](#extra-bedingungen-mit-abgleichsbedingungen) sprechen.
+Um einen `match`-Ausdruck zu erstellen, der die Werte der äußeren Variablen `x`
+und `y` abgleicht, anstatt eine neue Variable einzuführen, die die existierende
+Variable `y` verschattet, müssten wir stattdessen eine Abgleichsbedingung
+(match guard conditional) verwenden. Wir werden über Abgleichsbedingungen
+später im Abschnitt [„Extra-Bedingungen mit
+Abgleichsbedingungen“][extra-conditionals] sprechen.
 
 ### Mehrfache Muster
 
-In `match`-Ausdrücken kannst du mehrere Muster mit der Syntax `|` abgleichen,
-die das *oder*-Operator-Muster ist. Zum Beispiel gleicht der folgende Code den
+Du kannst mehrere Muster mit der Syntax `|` abgleichen, die das
+*oder*-Operator-Muster darstellt. Zum Beispiel gleicht der folgende Code den
 Wert von `x` mit den `match`-Zweigen ab, wobei der erste davon eine
-*oder*-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
+_oder_-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:
 
 ```rust
@@ -121,12 +123,12 @@ vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:
     }
 ```
 
-Wenn `x` 1, 2, 3, 4 oder 5 ist, passt der erste Zweig. Diese Syntax ist
-bequemer bei mehreren Abgleichswerten als das Verwenden des `|`-Operators, um
-die gleiche Idee auszudrücken; wenn wir `|` verwenden wollten, müssten wir `1 |
-2 | 3 | 4 | 5` angeben. Die Angabe eines Bereichs ist viel kürzer, besonders
-wenn wir beispielsweise eine beliebige Zahl zwischen 1 und 1.000 angeben
-wollen!
+Wenn `x` einen der Werte `1`, `2`, `3`, `4` oder `5` hat, passt der erste
+Zweig. Diese Syntax ist bequemer bei mehreren Abgleichswerten als das Verwenden
+des `|`-Operators, um die gleiche Idee auszudrücken; wenn wir `|` verwenden
+wollten, müssten wir `1 | 2 | 3 | 4 | 5` angeben. Die Angabe eines Bereichs ist
+viel kürzer, besonders wenn wir beispielsweise eine beliebige Zahl zwischen 1
+und 1.000 angeben wollen!
 
 Der Compiler prüft zur Kompilierzeit, dass der Bereich nicht leer ist. Die
 einzigen Typen, bei denen Rust erkennen kann, ob ein Bereich leer ist oder
@@ -223,7 +225,7 @@ Variablen zum Destrukturieren der anderen Felder erstellen.
 
 In Codeblock 19-14 haben wir einen `match`-Ausdruck, der `Point`-Werte in drei
 Fälle unterscheidet: Punkte, die direkt auf der `x`-Achse liegen (was zutrifft,
-wenn `y = 0`), auf der `y`-Achse liegen (`x = 0`) oder keines von beiden.
+wenn `y = 0` ist), auf der `y`-Achse liegen (`x = 0`) oder auf keiner Achse.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -258,8 +260,8 @@ Wert des `y` -Feldes erzeugt. Der dritte Zweig spezifiziert keine Literale,
 sodass er zu jedem anderen `Point` passt und Variablen für die Felder `x` und
 `y` erzeugt.
 
-In diesem Beispiel passt der Wert `p` zum zweiten Zweig, da `x` eine 0 enthält,
-sodass dieser Code `Auf der y-Achse bei 7` ausgeben wird.
+In diesem Beispiel passt der Wert `p` zum zweiten Zweig, da `x` den Wert `0`
+hat, sodass dieser Code `Auf der y-Achse bei 7` ausgeben wird.
 
 Denke daran, dass ein `match`-Ausdruck aufhört, weitere Zweige zu prüfen,
 sobald er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn der
@@ -269,11 +271,11 @@ Code nur `Auf der x-Achse bei 0` ausgeben.
 #### Destrukturieren von Aufzählungen
 
 Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
-6-5 in Kapitel 6), sind aber noch nicht explizit darauf eingegangen, dass das
-Muster zur Destrukturierung einer Aufzählung der Art und Weise entspricht, wie
-die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
-verwenden wir in Codeblock 19-15 die Aufzählung `Message` aus Codeblock 6-2 und
-schreiben ein `match` mit Mustern, das jeden inneren Wert destrukturiert.
+6-5), wir sind aber noch nicht explizit darauf eingegangen, dass das Muster zur
+Destrukturierung einer Aufzählung der Art und Weise entspricht, wie die in der
+Aufzählung gespeicherten Daten definiert sind. Als Beispiel verwenden wir in
+Codeblock 19-15 die Aufzählung `Message` aus Codeblock 6-2 und schreiben ein
+`match` mit Mustern, das jeden inneren Wert destrukturiert.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -299,7 +301,7 @@ fn main() {
             println!("Textnachricht: {text}");
         }
         Message::ChangeColor(r, g, b) => {
-            println!("Ändere die Farbe in rot {r}, grün {g} und blau {b}");
+            println!("Ändere Farbe in rot {r}, grün {g} und blau {b}");
         }
     }
 }
@@ -308,9 +310,8 @@ fn main() {
 <span class="caption">Codeblock 19-15: Destrukturieren von
 Aufzählungsvarianten, die verschiedene Arten von Werten enthalten</span>
 
-Dieser Code gibt `Ändere die Farbe in rot 0, grün 160 und blau 255` aus.
-Versuche, den Wert von `msg` zu ändern, um den Code der anderen Zweige laufen
-zu sehen.
+Dieser Code gibt `Ändere Farbe in rot 0, grün 160 und blau 255` aus. Versuche,
+den Wert von `msg` zu ändern, um den Code der anderen Zweige laufen zu sehen.
 
 Bei Aufzählungs-Varianten ohne Daten, wie `Message::Quit`, können wir den Wert
 nicht weiter destrukturieren. Wir können nur mit dem Literalwert
@@ -355,10 +356,10 @@ fn main() {
 
     match msg {
         Message::ChangeColor(Color::Rgb(r, g, b)) => {
-            println!("Ändere die Farbe in rot {r}, grün {g} und blau {b}");
+            println!("Ändere Farbe in rot {r}, grün {g} und blau {b}");
         }
         Message::ChangeColor(Color::Hsv(h, s, v)) => {
-            println!("Ändere die Farbe in Farbwert {h}, Sättigung {s} und Hellwert {v}")
+            println!("Ändere Farbe in Farbwert {h}, Sättigung {s} und Hellwert {v}")
         }
         _ => (),
     }
@@ -413,7 +414,7 @@ eines Namens, der mit einem Unterstrich beginnt, oder Verwenden von `..`, um
 verbleibende Teile eines Wertes zu ignorieren. Lass uns untersuchen, wie und
 wann jedes dieser Muster zu verwenden ist.
 
-#### Ignorieren eines Gesamtwertes mit `_`
+#### Gesamtwert mit `_`
 
 Wir haben den Unterstrich (`_`) als Platzhalter verwendet, der zu jedem Wert
 passt, aber nicht an den Wert gebunden ist. Dies ist besonders nützlich als
@@ -447,7 +448,7 @@ Funktionsrumpf in deiner Implementierung jedoch keinen der Parameter benötigt.
 Du kannst dann vermeiden, dass der Compiler vor unbenutzten Funktionsparametern
 warnt, wie es der Fall wäre, wenn du stattdessen einen Namen verwenden würdest.
 
-#### Ignorieren von Teilen eines Wertes mit einem verschachtelten `_`
+#### Teile eines Wertes mit einem verschachtelten `_`
 
 Wir können `_` auch innerhalb eines anderen Musters verwenden, um nur einen
 Teil eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes
@@ -510,10 +511,10 @@ Elementen.
 <span class="caption">Codeblock 19-19: Ignorieren mehrerer Teile eines
 Tupels</span>
 
-Dieser Code gibt `Einige Zahlen: 2, 8, 32` aus und die Werte 4 und 16 werden
-ignoriert.
+Dieser Code gibt `Einige Zahlen: 2, 8, 32` aus und die Werte `4` und `16`
+werden ignoriert.
 
-#### Ignorieren einer unbenutzten Variable, indem ihr Name mit `_` beginnt
+#### Eine unbenutzte Variable mit `_` am Namensanfang
 
 Wenn du eine Variable erstellst, sie aber nirgendwo verwendest, wird Rust
 normalerweise eine Warnung ausgeben, weil eine unbenutzte Variable ein Fehler
@@ -581,7 +582,7 @@ den Wert nicht</span>
 Dieser Code funktioniert prima, weil wir `s` nie an etwas binden; es wird nicht
 verschoben.
 
-#### Ignorieren der verbleibenden Teile eines Wertes mit `..`
+#### Verbleibende Teile eines Wertes mit `..`
 
 Bei Werten, die viele Teile haben, können wir die Syntax `..` verwenden, um nur
 spezifische Teile zu verwenden und den Rest zu ignorieren, sodass es nicht
@@ -684,16 +685,18 @@ Verwenden von `..` an zwei Stellen wie dieser mehrdeutig ist.
 
 ### Extra-Bedingungen mit Abgleichsbedingungen
 
-Eine *Abgleichsbedingung* (match guard) ist eine zusätzliche `if`-Bedingung,
+Eine _Abgleichsbedingung_ (match guard) ist eine zusätzliche `if`-Bedingung,
 die nach dem Muster in einem `match`-Zweig angegeben wird und die zusammen mit
 dem Musterabgleich ebenfalls übereinstimmen muss, damit dieser Zweig ausgewählt
 wird. Abgleichsbedingungen sind nützlich, um komplexere Ideen auszudrücken, als
-es ein Muster allein erlaubt.
+es ein Muster allein erlaubt. Beachte jedoch, dass sie nur in
+`match`-Ausdrücken verfügbar sind, nicht in `if let`- oder `while
+ let`-Ausdrücken.
 
 Die Bedingung kann Variablen verwenden, die im Muster erstellt wurden.
 Codeblock 19-26 zeigt ein `match`, wobei der erste Zweig das Muster `Some(x)`
-und die Abgleichsbedingung `if x % 2 == 0` (die wahr ist, wenn die Zahl gerade
-ist) hat.
+und die Abgleichsbedingung `if x % 2 == 0` (die `true` ist, wenn die Zahl
+gerade ist) hat.
 
 ```rust
     let num = Some(4);
@@ -714,7 +717,7 @@ passt. Dann prüft die Abgleichsbedingung, ob der Rest der Division von `x`
 durch 2 gleich 0 ist, und weil dies der Fall ist, wird der erste Zweig ausgewählt.
 
 Wenn `num` stattdessen `Some(5)` gewesen wäre, wäre die Abgleichsbedingung im
-ersten Zweig falsch gewesen, weil der Rest von 5 geteilt durch 2 den Wert 1
+ersten Zweig `false` gewesen, weil der Rest von 5 geteilt durch 2 den Wert 1
 ergibt, was ungleich 0 ist. Rust würde dann zum zweiten Zweig gehen, der passen
 würde, weil der zweite Zweig keine Abgleichsbedingung hat und daher zu allen
 `Some`-Varianten passt.
@@ -760,15 +763,15 @@ neue Variable `n`, die nichts verschattet, weil es keine Variable `n` außerhalb
 von `match` gibt.
 
 Die Abgleichsbedingung `if n == y` ist kein Muster und führt daher keine neuen
-Variablen ein. Dieses `y` *ist* das äußere `y` und nicht ein neues verschattetes
-`y`, und wir können nach einem Wert suchen, der den gleichen Wert wie das
-äußere `y` hat, indem wir `n` mit `y` vergleichen.
+Variablen ein. Dieses `y` _ist_ das äußere `y` und nicht ein neues `y`, das es
+verschattet, und wir können nach einem Wert suchen, der den gleichen Wert wie
+das äußere `y` hat, indem wir `n` mit `y` vergleichen.
 
-Du kannst auch den *oder*-Operator `|` in einer Abgleichsbedingung verwenden,
+Du kannst auch den _oder_-Operator `|` in einer Abgleichsbedingung verwenden,
 um mehrere Muster anzugeben; die Abgleichsbedingung gilt dann für alle Muster.
 Codeblock 19-28 zeigt den Vorrang der Kombination einer Abgleichsbedingung mit
 einem Muster, das `|` verwendet. Der wichtige Teil dieses Beispiels ist, dass
-die Abgleichsbedingung `if y` auf `4`, `5` *und* `6` zutrifft, auch wenn es so
+die Abgleichsbedingung `if y` auf `4`, `5` _und_ `6` zutrifft, auch wenn es so
 aussehen mag, als ob `if y` nur auf `6` zutrifft.
 
 ```rust
@@ -785,7 +788,7 @@ aussehen mag, als ob `if y` nur auf `6` zutrifft.
 Abgleichsbedingung</span>
 
 Die Abgleichsbedingung besagt, dass der Zweig nur dann passt, wenn der Wert von
-`x` gleich `4`, `5` oder `6` ist *und* wenn `y` `wahr` ist. Wenn dieser Code
+`x` gleich `4`, `5` oder `6` ist _und_ wenn `y` `wahr` ist. Wenn dieser Code
 ausgeführt wird, passt das Muster des ersten Zweigs, weil `x` gleich `4` ist,
 allerdings ist die Abgleichsbedingung `if y` falsch, sodass der erste Zweig
 nicht ausgewählt wird. Der Code geht weiter zum zweiten Zweig, der passt, und
@@ -811,7 +814,7 @@ hätte `ja` ausgegeben.
 
 ### `@`-Bindungen
 
-Mit dem *at*-Operator `@` können wir eine Variable erstellen, die einen Wert
+Mit dem _at_-Operator `@` können wir eine Variable erstellen, die einen Wert
 enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
 zu einem Muster passt. Codeblock 19-29 zeigt ein Beispiel, bei dem wir testen
 wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs `3..=7`
@@ -870,9 +873,11 @@ Daten zu unterscheiden. Wenn sie in `match`-Ausdrücken verwendet werden, stellt
 Rust sicher, dass deine Muster jeden möglichen Wert abdecken oder dein Programm
 sich nicht kompilieren lässt. Muster in `let`-Anweisungen und
 Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
-Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen an
-Variablen. Wir können einfache oder komplexe Muster erstellen, die unseren
-Bedürfnissen entsprechen.
+Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen
+dieser Teile an Variablen. Wir können einfache oder komplexe Muster erstellen,
+die unseren Bedürfnissen entsprechen.
 
 Als nächstes werden wir uns im vorletzten Kapitel des Buches mit einigen
 fortgeschrittenen Aspekten einer Vielzahl von Rusts Funktionalitäten befassen.
+
+[extra-conditionals]: #extra-bedingungen-mit-abgleichsbedingungen

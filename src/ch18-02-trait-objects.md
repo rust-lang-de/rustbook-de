@@ -45,22 +45,22 @@ die Benutzer sie um neue Typen erweitern können.
 
 ### Definieren eines Merkmals (trait) für allgemeines Verhalten
 
-Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir ein
-Merkmal namens `Draw` definieren, das eine Methode namens `draw` haben wird.
-Dann können wir einen Vektor definieren, der ein *Merkmalsobjekt* (trait
-object) annimmt. Ein Merkmalsobjekt verweist sowohl auf eine Instanz eines
+Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir
+ein Merkmal namens `Draw` definieren, das eine Methode namens `draw` haben
+wird. Dann können wir einen Vektor definieren, der ein Merkmalsobjekt annimmt.
+Ein *Merkmalsobjekt* (trait object) verweist sowohl auf eine Instanz eines
 Typs, der das von uns spezifizierte Merkmal implementiert, und eine Tabelle, in
 der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden können. Wir
 erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben, z.B. eine
 Referenz `&` oder einen intelligenten Zeiger `Box<T>`, dann das Schlüsselwort
 `dyn` und dann das relevante Merkmal. (Wir werden über den Grund, warum
-Merkmalsobjekte einen Zeiger verwenden müssen, in Kapitel 20 im Abschnitt
-[„Dynamisch große Typen und das Merkmal `Sized`“][dynamically-sized]) sprechen.
-Wir können Merkmalsobjekte an Stelle eines generischen oder konkreten Typs
-verwenden. Wo immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem
-zur Kompilierzeit sicher, dass jeder in diesem Kontext verwendete Wert das
-Merkmal des Merkmalsobjekts implementiert. Folglich müssen wir zur
-Kompilierzeit nicht alle möglichen Typen kennen.
+Merkmalsobjekte einen Zeiger verwenden müssen, in [„Dynamisch große Typen und
+das Merkmal `Sized`“][dynamically-sized] in Kapitel 20 sprechen.) Wir können
+Merkmalsobjekte an Stelle eines generischen oder konkreten Typs verwenden. Wo
+immer wir ein Merkmalsobjekt verwenden, stellt Rusts Typsystem zur
+Kompilierzeit sicher, dass jeder in diesem Kontext verwendete Wert das Merkmal
+des Merkmalsobjekts implementiert. Folglich müssen wir zur Kompilierzeit nicht
+alle möglichen Typen kennen.
 
 Wir haben erwähnt, dass wir in Rust davon absehen, Strukturen (structs) und
 Aufzählungen „Objekte“ zu nennen, um sie von den Objekten anderer Sprachen zu
@@ -76,7 +76,7 @@ Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
 Verhalten zu ermöglichen.
 
 In Codeblock 18-3 wird gezeigt, wie ein Merkmal namens `Draw` mit einer Methode
-namens `draw` definiert werden kann:
+namens `draw` definiert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -112,8 +112,8 @@ einem Feld `components`, das einen Vektor von Merkmalsobjekten enthält, die das
 `Draw`-Merkmal implementieren</span>
 
 Auf der Struktur `Screen` definieren wir eine Methode namens `run`, die die
-`draw`-Methode auf jeder ihrer `components` aufruft, wie in Codeblock 18-5 gezeigt:
-
+Methode `draw` auf jeder ihrer `components` aufruft, wie in Codeblock 18-5
+gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -242,8 +242,8 @@ Diese Art von Methoden trifft nicht auf Typen wie `TextField` zu.
 
 Wenn sich jemand, der unsere Bibliothek benutzt, dazu entschließt, eine
 Struktur `SelectBox` zu implementieren, die die Felder `width`, `height` und
-`options` enthält, implementiert er ebenfalls das Merkmal `Draw` für den Typ
-`SelectBox`, wie in Codeblock 18-8 gezeigt:
+`options` enthält, würde er ebenfalls das Merkmal `Draw` für den Typ
+`SelectBox` implementieren, wie in Codeblock 18-8 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -349,7 +349,7 @@ unseren Code nicht kompilieren, wenn die Werte nicht die Merkmale
 implementieren, die die Merkmalsobjekte benötigen.
 
 Beispielsweise zeigt Codeblock 18-10, was passiert, wenn wir versuchen, einen
-`Screen` mit einem `String` als Komponente zu erstellen:
+`Screen` mit einem `String` als Komponente zu erstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -394,18 +394,18 @@ ist, `Draw` darauf aufzurufen.
 
 ### Merkmalsobjekte führen dynamischen Aufruf durch
 
-Erinnere dich im Abschnitt [„Code-Performanz beim Verwenden generischer
+Erinnere dich [„Code-Performanz beim Verwenden generischer
 Datentypen“][performance-of-code-using-generics] in Kapitel 10 an unsere
-Diskussion über den Monomorphisierungsprozess, den der Compiler durchführt,
-wenn wir bei generischen Typen Merkmalsabgrenzungen verwenden: Der Compiler
-generiert nicht-generische Implementierungen von Funktionen und Methoden für
-jeden konkreten Typ, den wir anstelle eines generischen Typparameters
-verwenden. Der Code, der sich aus der Monomorphisierung ergibt, macht
-*statische Aufrufe* (static dispatch), d.h. wenn der Compiler weiß, welche
-Methode du zur Kompilierzeit aufrufst. Dies steht im Gegensatz zum *dynamischen
-Aufruf* (dynamic dispatch), bei dem der Compiler zur Kompilierzeit nicht weiß,
-welche Methode du aufrufst. In Fällen von dynamischem Aufruf erzeugt der
-Compiler Code, der zur Laufzeit herausfindet, welche Methode aufzurufen ist.
+Diskussion über den Monomorphisierungsprozess bei generischen Typen, den der
+Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
+von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
+generischen Typparameters verwenden. Der Code, der sich aus der
+Monomorphisierung ergibt, macht *statische Aufrufe* (static dispatch), d.h.
+wenn der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies
+steht im Gegensatz zum *dynamischen Aufruf* (dynamic dispatch), bei dem der
+Compiler zur Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen
+von dynamischem Aufruf erzeugt der Compiler Code, der zur Laufzeit
+herausfindet, welche Methode aufzurufen ist.
 
 Wenn wir Merkmalsobjekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
 Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
@@ -415,10 +415,14 @@ die Zeiger innerhalb des Merkmalsobjekts, um zu wissen, welche Methode
 aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
 beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
 dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
-verwenden, was wiederum einige Optimierungen verhindert. Wir haben jedoch
-zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
+verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
+Regeln, genannt _dyn compatibility_, wo man dynamische Aufrufe verwenden kann
+und wo nicht. Diese Regeln gehen über den Rahmen dieser Diskussion hinaus, aber
+du kannst mehr über sie in [der Referenz][dyn-compatibility] lesen. Wir haben
+jedoch zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
 geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.
 
-[dynamically-sized]: ch20-04-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
+[dyn-compatibility]: https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility
+[dynamically-sized]: ch20-03-advanced-types.html#dynamisch-große-typen-und-das-merkmal-sized
 [performance-of-code-using-generics]: ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen

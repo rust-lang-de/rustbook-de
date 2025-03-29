@@ -232,15 +232,15 @@ pub fn search_case_insensitive<'a>(
 in Kleinbuchstaben umzuwandeln</span>
 
 Zuerst wandeln wir die Zeichenkette `query` in Kleinbuchstaben um und speichern
-ihn in einer verschatteten Variablen mit dem gleichen Namen. Der Aufruf von
-`to_lowercase` beim Abfragetext ist notwendig, sodass wir unabhängig davon, ob
-die Abfrage des Benutzers `"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die
-Abfrage so behandeln, als ob sie `"rust"` wäre, und die Groß-/Kleinschreibung
-nicht beachten. Obwohl `to_lowercase` mit einfachem Unicode umgehen kann, wird
-es nicht 100% genau sein. Wenn wir eine echte Anwendung schreiben würden,
-würden wir hier etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt
-geht es um Umgebungsvariablen, nicht um Unicode, also belassen wir es hier
-dabei.
+ihn in einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche
+Variable `query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext
+ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
+`"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als
+ob sie `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
+`to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100% genau
+sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier etwas
+mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
+Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.
 
 Beachte, dass `query` jetzt ein `String` und nicht mehr ein
 Zeichenkettenanteilstyp ist, weil der Aufruf von `to_lowercase` neue Daten
@@ -506,7 +506,7 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
-Standardbibliothek, daher bringen wir dieses Modul am Anfang von *src/lib.rs*
+Standardbibliothek, daher bringen wir dieses Modul am Anfang von _src/lib.rs_
 in den Gültigkeitsbereich. Dann werden wir die Funktion `var` aus dem Modul
 `env` verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE`
 einen Wert hat, wie in Codeblock 12-23 gezeigt.
@@ -637,7 +637,7 @@ Umgebungsvariable gesetzt ist, was bedeutet, dass das Programm die Suche
 ohne Berücksichtigung der Groß-/Kleinschreibung durchführen soll. Wenn
 die Umgebungsvariable `IGNORE_CASE` keinen Wert hat, gibt `is_ok` den Wert
 `false` zurück und das Programm führt eine Suche mit Berücksichtigung der
-Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den *Wert* der
+Groß-/Kleinschreibung durch. Wir kümmern uns nicht um den _Wert_ der
 Umgebungsvariablen, nur darum, ob sie gesetzt ist oder nicht, also prüfen wir
 mit `is_ok`, anstatt mit `unwrap`, `expect` oder einer der anderen Methoden,
 die wir bei `Result` gesehen haben.
@@ -649,7 +649,7 @@ in Codeblock 12-22 implementiert haben.
 
 Lass es uns versuchen! Zuerst führen wir unser Programm ohne die gesetzte
 Umgebungsvariable und mit dem Abfragetext `to` aus, die zu den Zeilen passen
-sollte, die das Wort *to* in Kleinbuchstaben enthalten:
+sollte, die das Wort _to_ in Kleinbuchstaben enthalten:
 
 ```console
 $ cargo run to poem.txt
@@ -662,7 +662,7 @@ How dreary to be somebody!
 
 Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 `IGNORE_CASE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
-*to*.
+_to_.
 
 ```console
 $ IGNORE_CASE=1 cargo run -- to poem.txt
@@ -682,7 +682,7 @@ kann mit `Remove-Item` zurückgesetzt werden:
 PS> Remove-Item Env:IGNORE_CASE
 ```
 
-Wir sollten Zeilen erhalten, die *to* enthalten, die Großbuchstaben haben
+Wir sollten Zeilen erhalten, die _to_ enthalten, die Großbuchstaben haben
 könnten:
 
 ```console
@@ -692,12 +692,12 @@ To tell your name the livelong day
 To an admiring bog!
 ```
 
-Ausgezeichnet, wir haben auch Zeilen mit *To*! Unser `minigrep`-Programm kann
+Ausgezeichnet, wir haben auch Zeilen mit _To_! Unser `minigrep`-Programm kann
 jetzt ohne Berücksichtigung von Groß-/Kleinschreibung suchen, gesteuert durch
 eine Umgebungsvariable. Jetzt weißt du, wie man Optionen verwaltet, die
 entweder mit Kommandozeilenargumenten oder Umgebungsvariablen gesetzt werden.
 
-Einige Programme erlauben Argumente *und* Umgebungsvariablen für die gleiche
+Einige Programme erlauben Argumente _und_ Umgebungsvariablen für die gleiche
 Konfiguration. In diesen Fällen entscheiden die Programme, dass das eine oder
 das andere Vorrang hat. Versuche für eine weitere eigene Übung, die Steuerung,
 ob die Groß-/Kleinschreibung berücksichtigt werden soll, entweder über ein

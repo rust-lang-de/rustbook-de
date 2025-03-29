@@ -1,6 +1,6 @@
 # Einführung
 
-Willkommen bei *Die Programmiersprache Rust*, einem einführenden Buch über
+Willkommen bei _Die Programmiersprache Rust_, einem einführenden Buch über
 Rust. Die Programmiersprache Rust hilft dir, schnellere und zuverlässigere
 Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch &ndash; Rust stellt sich diesem
@@ -29,12 +29,12 @@ das Team auf die Programmlogik konzentrieren, anstatt Fehler zu suchen.
 Rust bringt auch zeitgemäße Entwicklerwerkzeuge in die Welt der
 Systemprogrammierung:
 
-* Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
+- Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
   Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
   Rust-Ökosystem schmerzlos und konsistent.
-* Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
+- Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
   den Entwicklern.
-* Der rust-analyzer ermöglicht Codevervollständigung und im Code angezeigte
+- Der rust-analyzer ermöglicht Codevervollständigung und im Code angezeigte
   Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).
 
 Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können
@@ -81,8 +81,8 @@ Code zu machen.
 Die Sprache Rust hofft, auch viele andere Nutzer zu unterstützen; die hier
 genannten sind nur einige der größten Interessensgruppen. Insgesamt ist es
 Rusts größtes Bestreben, den Zielkonflikt zu beseitigen, den Programmierer
-jahrzehntelang hingenommen haben, wenn sie Sicherheit *und* Produktivität bzw.
-Geschwindigkeit *und* Ergonomie erreichen wollten. Versuche es mit Rust und
+jahrzehntelang hingenommen haben, wenn sie Sicherheit _und_ Produktivität bzw.
+Geschwindigkeit _und_ Ergonomie erreichen wollten. Versuche es mit Rust und
 finde heraus, ob dessen Möglichkeiten für dich geeignet sind.
 
 ## Für wen dieses Buch gedacht ist
@@ -91,7 +91,7 @@ In diesem Buch wird davon ausgegangen, dass du bereits Code in einer anderen
 Programmiersprache geschrieben hast, es spielt aber keine Rolle in welcher. Wir
 haben versucht, das Material einem breiten Publikum mit unterschiedlichem
 Programmierhintergrund zugänglich zu machen. Wir verbringen nicht viel Zeit
-damit, darüber zu sprechen, was Programmieren *ist* oder wie man darüber denkt.
+damit, darüber zu sprechen, was Programmieren _ist_ oder wie man darüber denkt.
 Wenn Programmieren für dich ganz neu ist, wäre es besser, wenn du ein Buch
 speziell zur Einführung in die Programmierung liest.
 
@@ -106,7 +106,7 @@ aufgreifen.
 Du findest in diesem Buch zwei Kapitelarten: Konzeptkapitel und
 Projektkapitel. In Konzeptkapiteln erfährst du etwas über einen Aspekt von
 Rust. In Projektkapiteln schreiben wir gemeinsam kleine Programme und wenden
-das bisher Gelernte an. Die Kapitel 2, 12 und 20 sind Projektkapitel; die
+das bisher Gelernte an. Die Kapitel 2, 12 und 21 sind Projektkapitel; die
 übrigen sind Konzeptkapitel.
 
 Kapitel 1 erklärt, wie man Rust installiert, wie man ein „Hallo Welt“-Programm
@@ -153,26 +153,30 @@ und Merkmale, die ihre Funktionalität ermöglichen, erörtert.
 
 In Kapitel 16 gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. Kapitel 17 befasst sich mit dem Vergleich zwischen
-Rust-Idiomen und den Prinzipien der objektorientierten Programmierung, mit
-denen du vielleicht vertraut bist.
+Strängen zu programmieren. In Kapitel 17 bauen wir darauf auf, indem wir die
+async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
+ermöglichen, untersuchen.
 
-Kapitel 18 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
-mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 19
+Kapitel 18 befasst sich mit dem Vergleich von Rust-Idiomen mit
+objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
+bist. Kapitel 19 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
+mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 20
 enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
 unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen, Funktionen
 und Funktionsabschlüssen.
 
-In Kapitel 20 werden wir ein Projekt abschließen, bei dem wir einen
+In Kapitel 21 werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!
 
 Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
-in einem eher referenzartigen Format. Anhang A enthält die Schlüsselwörter von
-Rust, Anhang B die Operatoren und Symbole von Rust, Anhang C ableitbare
-Merkmalen, die von der Standardbibliothek mitgebracht werden, Anhang D
-nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben. In
-Anhang F findest du Übersetzungen des Buches, und in Anhang G erfährst du, wie
-Rust erstellt wird und was nächtliches (nightly) Rust ist.
+in einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörter
+von Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C**
+ableitbare Merkmalen, die von der Standardbibliothek mitgebracht werden,
+**Anhang D** nützliche Entwicklungswerkzeuge und **Anhang E** erläutert die
+Rust-Ausgaben. In **Anhang F** findest du Übersetzungen des Buches, und in
+**Anhang G* erfährst du, wie Rust erstellt wird und was nächtliches (nightly)
+Rust ist.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn

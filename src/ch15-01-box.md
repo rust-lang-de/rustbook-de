@@ -11,17 +11,17 @@ den Haldenspeicher anstatt auf dem Stapelspeicher gespeichert werden, aber
 sie haben auch nicht viele zusätzliche Funktionalitäten. Sie werden am
 häufigsten in folgenden Situationen verwendet:
 
-* Wenn man einen Typ hat, dessen Größe zum Zeitpunkt der Kompilierung nicht
-    bekannt ist, und man einen Wert dieses Typs in einem Kontext verwenden
-    möchte, für den eine genaue Größe erforderlich ist.
-* Wenn man über eine große Datenmenge verfügt und die Eigentümerschaft
-    (ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
-    nicht kopiert werden.
-* Wenn man einen Wert besitzen möchte und sich nur darum kümmert, dass es sich
-    um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
-    Typ zu spezifizieren.
+- Wenn man einen Typ hat, dessen Größe zum Zeitpunkt der Kompilierung nicht
+  bekannt ist, und man einen Wert dieses Typs in einem Kontext verwenden
+  möchte, für den eine genaue Größe erforderlich ist.
+- Wenn man über eine große Datenmenge verfügt und die Eigentümerschaft
+  (ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
+  nicht kopiert werden.
+- Wenn man einen Wert besitzen möchte und sich nur darum kümmert, dass es sich
+  um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
+  Typ zu spezifizieren.
 
-Wir werden die erste Situation im Abschnitt [„Ermöglichen rekursiver Typen mit
+Wir werden die erste Situation in [„Ermöglichen rekursiver Typen mit
 Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
 die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
 die Daten auf dem Stapelspeicher kopiert werden. Um die Performanz in dieser
@@ -29,10 +29,10 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die verwiesen wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-*Merkmalsobjekt* (trait object) bekannt, und Kapitel 18 widmet einen ganzen
-Abschnitt [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“][trait-objects] diesem Thema. Was du hier lernst, wirst du im Kapitel
-18 erneut anwenden!
+_Merkmalsobjekt_ (trait object) bekannt, und [„Merkmalsobjekte (trait objects)
+die Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18
+widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
+erneut anwenden!
 
 ### `Box<T>` verwenden um Daten im Haldenspeicher zu speichern
 
@@ -74,7 +74,7 @@ gäbe.
 
 ### Ermöglichen rekursiver Typen mit Boxen
 
-Ein Wert eines *rekursiven Typs* kann einen anderen Wert desselben Typs als
+Ein Wert eines _rekursiven Typs_ kann einen anderen Wert desselben Typs als
 Teil von sich selbst haben. Rekursive Typen stellen ein Problem dar, weil Rust
 zur Kompilierzeit wissen muss, wie viel Platz ein Typ einnimmt. Allerdings
 könnte die Verschachtelung von Werten rekursiver Typen theoretisch unendlich
@@ -82,7 +82,7 @@ weitergehen, sodass Rust nicht wissen kann, wie viel Platz der Wert benötigt.
 Da Boxen eine bekannte Größe haben, können wir rekursive Typen ermöglichen,
 indem wir eine Box in die Definition des rekursiven Typs einfügen.
 
-Als Beispiel für einen rekursiven Typ wollen wir uns die *Cons-Liste* ansehen.
+Als Beispiel für einen rekursiven Typ wollen wir uns die _Cons-Liste_ ansehen.
 Dies ist ein Datentyp, den man häufig in funktionalen Programmiersprachen
 findet. Der Cons-Listen-Typ, den wir definieren werden, ist bis auf die
 Rekursion einfach; daher werden die Konzepte in dem Beispiel, mit dem wir
@@ -91,7 +91,7 @@ mit rekursiven Typen arbeitest.
 
 #### Weitere Informationen zur Cons-Liste
 
-Eine *Cons-Liste* ist eine Datenstruktur, die aus der Programmiersprache Lisp
+Eine _Cons-Liste_ ist eine Datenstruktur, die aus der Programmiersprache Lisp
 und ihren Dialekten stammt und aus verschachtelten Paaren besteht. Sie ist die
 Lisp-Version einer verketteten Liste. Ihr Name stammt von der Funktion `cons`
 (Kurzform von „construct function“) in Lisp, die aus ihren beiden Argumenten
@@ -100,7 +100,7 @@ einem Wert und einem anderen Paar besteht, können wir Cons-Listen konstruieren,
 die aus rekursiven Paaren bestehen.
 
 Hier ist zum Beispiel eine Pseudocode-Darstellung einer Cons-Liste, die die
-Liste 1, 2, 3 enthält, wobei jedes Paar in Klammern steht:
+Liste `1, 2, 3` enthält, wobei jedes Paar in Klammern steht:
 
 ```text
 (1, (2, (3, Nil)))
@@ -145,7 +145,7 @@ definieren, um eine Datenstruktur der Cons-Liste von `i32`-Werten darzustellen</
 > erstellen, in der Werte eines beliebigen Typs gespeichert werden können.
 
 Verwendung des Typs `List` um die Liste `1, 2, 3` zu speichern.
-Siehe Codeblock 15-3:
+Siehe Codeblock 15-3.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -172,7 +172,7 @@ enthält. Dieser `List`-Wert ist ein weiterer `Cons`, der `3` enthält und ein
 der Liste signalisiert.
 
 Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
-erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird:
+erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird.
 
 ```console
 $ cargo run
@@ -283,7 +283,7 @@ ineinander.
 
 Wir können die Definition der Liste `List` in Codeblock 15-2 und die Verwendung
 von `List` in Codeblock 15-3 in den Programmcode von Codeblock 15-5 ändern, der
-kompilieren wird:
+kompilieren wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -323,7 +323,7 @@ intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
 Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
 ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
 Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
-Anwendungsfälle für Boxen werden wir uns in Kapitel 18 ansehen.
+Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.
 
 Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
 implementiert, mit dem `Box<T>` Werte wie Referenzen behandelt werden können.

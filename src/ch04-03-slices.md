@@ -1,6 +1,6 @@
 ## Der Anteilstyp (slice)
 
-Mit *Anteilstypen* kannst du auf eine zusammenhängende Folge von Elementen in
+Mit _Anteilstypen_ kannst du auf eine zusammenhängende Folge von Elementen in
 einer [Kollektion][collection] referenzieren anstatt auf die gesamte
 Kollektion. Ein Anteilstyp ist eine Art Referenz und hat daher keine
 Eigentümerschaft.
@@ -19,11 +19,13 @@ Anteilstypen gelöst wird:
 fn first_word(s: &String) -> ?
 ```
 
-Die Funktion `first_word` hat einen `&String` als Parameter. Wir wollen keine
-Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
-haben nicht wirklich eine Möglichkeit, über *einen Teil* einer Zeichenkette zu
-sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
-das, wie in Codeblock 4-7 gezeigt.
+Die Funktion `first_word` hat `&String` als Parameter. Wir benötigen keine
+Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust übernehmen
+Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei denn, sie
+müssen es, und die Gründe dafür werden im weiteren Verlauf klar werden). Aber
+was sollen wir zurückgeben? Wir haben nicht wirklich eine Möglichkeit, über
+_einen Teil_ einer Zeichenkette zu sprechen. Wir könnten jedoch den Index des
+Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -177,7 +179,7 @@ Signatur müsste dann so aussehen:
 fn second_word(s: &String) -> (usize, usize) {
 ```
 
-Jetzt verfolgen wir einen Anfangs- *und* einen Endindex, und wir haben noch
+Jetzt verfolgen wir einen Anfangs- _und_ einen Endindex, und wir haben noch
 mehr Werte, die aus Daten in einem bestimmten Zustand berechnet wurden, aber
 überhaupt nicht an diesen Zustand gebunden sind. Wir haben drei unverbundene
 Variablen, die synchron gehalten werden müssen.
@@ -187,7 +189,7 @@ Zeichenkettenanteilstypen
 
 ### Zeichenkettenanteilstypen (string slices)
 
-Ein *Zeichenkettenanteilstyp*  (string slice) ist ein Verweis auf einen Teil
+Ein _Zeichenkettenanteilstyp_  (string slice) ist ein Verweis auf einen Teil
 eines `String`, und er sieht so aus:
 
 ```rust
@@ -200,8 +202,8 @@ let world = &s[6..10];
 Anstelle einer Referenz auf den gesamten `String` ist `hello` eine Referenz auf
 einen Teil des `String`, der mit dem zusätzlichen `[0..5]` spezifiziert ist.
 Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
-indem wir `[starting_index..ending_index]` angeben, wobei `starting_index` die
-erste Position im Anteilstyp und `ending_index` eine Position mehr als die
+indem wir `[starting_index..ending_index]` angeben, wobei _`starting_index`_
+die erste Position im Anteilstyp und _`ending_index`_ eine Position mehr als die
 letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was `ending_index` minus `starting_index` entspricht. Im Fall von `let world =
@@ -444,7 +446,7 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters `s`</span>
 Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen `String` haben, können wir einen Anteilstyp des
 `String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
-nutzt die Vorteile der *automatischen Umwandlung*, eine Funktionalität, die wir
+nutzt die Vorteile der _automatischen Umwandlung_, eine Funktionalität, die wir
 im Abschnitt [„Implizite automatische Umwandlung mit Funktionen und
 Methoden“][deref-coercions] in Kapitel 15 behandeln.
 

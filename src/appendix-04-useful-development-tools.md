@@ -13,60 +13,59 @@ Gemeinschafts-Codestils. Viele kollaborative Projekte verwenden `rustfmt`, um
 Diskussionen zum Stil beim Schreiben von Rust zu vermeiden: Jeder formatiert
 seinen Code mithilfe des Tools.
 
-Um `rustfmt` zu installieren, gib folgendes ein:
-
-```console
-$ rustup component add rustfmt
-```
-
-Dieser Befehl stellt dir `rustfmt` und `cargo-fmt` zur Verfügung, ähnlich wie
-Rust sowohl `rustc` als auch `cargo` bereitstellt. Um ein beliebiges
-Cargo-Projekt zu formatieren, gib folgendes ein:
+Rust-Installationen enthalten standardmäßig rustfmt, daher solltest du die
+Programme `rustfmt` und `cargo-fmt` bereits auf deinem System haben. Diese
+beiden Befehle funktionieren analog zu `rustc` und `cargo`, wobei `rustfmt`
+eine feingranularere Steuerung erlaubt und `cargo-fmt` die Konventionen eines
+Projekts versteht, das Cargo verwendet. Um ein beliebiges Cargo-Projekt zu
+formatieren, gibst du Folgendes ein:
 
 ```console
 $ cargo fmt
 ```
 
-Durch Ausführen dieses Befehls wird der gesamte Rust-Code in der aktuellen
-Kiste (crate) neu formatiert. Dies sollte nur den Codestil, nicht aber die
-Codesemantik ändern. Weitere Informationen zu `rustfmt` findest du in [seiner
+Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Kiste neu
+formatiert. Dies sollte nur den Stil des Codes ändern, nicht die Semantik des
+Codes. Weitere Informationen zu `rustfmt` findest du in [seiner
 Dokumentation][rustfmt].
 
 ### Korrigiere deinen Code mit `rustfix`
 
-Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das Problem zu
-beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du
-schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:
+Das Werkzeug `rustfix` ist in Rust-Installationen enthalten und kann
+automatisch Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das
+Problem zu beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich
+hast du schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen
+Code:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-fn do_something() {}
-
 fn main() {
-    for i in 0..100 {
-        do_something();
-    }
+    let mut x = 42;
+    println!("{x}");
 }
 ```
 
-Hier rufen wir die Funktion `do_something` 100 Mal auf, aber wir verwenden die
-Variable `i` im Rumpf der `for`-Schleife nicht. Rust warnt uns davor:
+Hier definieren wir die Variable `x` als veränderbar, aber wir verändern sie nie
+wirklich. Rust warnt uns vor dieser Tatsache:
 
 ```console
 $ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
-warning: unused variable: `i`
- --> src/main.rs:4:9
+warning: variable does not need to be mutable
+ --> src/main.rs:2:9
   |
-4 |     for i in 1..100 {
-  |         ^ help: consider using `_i` instead
+2 |     let mut x = 0;
+  |         ----^
+  |         |
+  |         help: remove this `mut`
   |
-  = note: #[warn(unused_variables)] on by default
-
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
+  = note: `#[warn(unused_mut)]` on by default
 ```
+
+Die Warnung empfiehlt, dass wir das Schlüsselwort `mut` entfernen. Wir können
+diesen Vorschlag automatisch mit dem Werkzeug `rustfix` übernehmen, indem wir
+den Befehl `cargo fix` ausführen:
 
 Die Warnung empfiehlt, stattdessen `_i` als Namen zu verwenden: Der Unterstrich
 zeigt an, dass wir diese Variable nicht verwenden wollen. Wir können diesen
@@ -80,22 +79,19 @@ $ cargo fix
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.59s
 ```
 
-Wenn wir uns *src/main.rs* noch einmal ansehen, werden wir sehen, dass
+Wenn wir uns _src/main.rs_ noch einmal ansehen, werden wir sehen, dass
 `cargo fix` den Code geändert hat:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-fn do_something() {}
-
 fn main() {
-    for _i in 0..100 {
-        do_something();
-    }
+    let x = 42;
+    println!("{x}");
 }
 ```
 
-Die `for`-Schleifenvariable heißt jetzt `_i` und die Warnung erscheint nicht
+Die Variable `x` ist jetzt unveränderlich, und die Warnung erscheint nicht
 mehr.
 
 Du kannst den Befehl `cargo fix` auch dazu verwenden, deinen Code zwischen
@@ -105,13 +101,8 @@ E][appendix-e] aufgeführt.
 ### Mehr statische Codeanalyse mit Clippy
 
 Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit dem
-du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst.
-
-Um Clippy zu installieren, gib folgendes ein:
-
-```console
-$ rustup component add clippy
-```
+du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst. Clippy ist
+in den Standardinstallationen von Rust enthalten.
 
 Um Clippy bei einem Cargo-Projekt auszuführen, gib folgendes ein:
 

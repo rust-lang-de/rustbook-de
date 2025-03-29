@@ -6,11 +6,11 @@ Um eine Funktion aufzurufen, müssen wir ihren Pfad kennen.
 
 Ein Pfad kann zwei Formen annehmen:
 
-* Ein *absoluter Pfad* ist der vollständige Pfad ausgehend von einer
+- Ein _absoluter Pfad_ ist der vollständige Pfad ausgehend von einer
   Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
   der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
   Literal `crate`.
-* Ein *relativer Pfad* startet beim aktuellen Modul und benutzt `self`, `super`
+- Ein _relativer Pfad_ startet beim aktuellen Modul und benutzt `self`, `super`
   oder einen Bezeichner im aktuellen Modul.
 
 Sowohl absolute als auch relative Pfade bestehen aus einem oder mehreren
@@ -220,7 +220,7 @@ error: could not compile `restaurant` (lib) due to 2 previous errors
 
 Was ist passiert? Das Hinzufügen des Schlüsselworts `pub` vor `mod hosting`
 macht das Modul öffentlich. Wenn wir auf `front_of_house` zugreifen können,
-können wir mit dieser Änderung auch auf `hosting` zugreifen. Aber die *Inhalte*
+können wir mit dieser Änderung auch auf `hosting` zugreifen. Aber die _Inhalte_
 von `hosting` sind immer noch privat; das Modul öffentlich zu machen, macht
 seinen Inhalt nicht öffentlich. Das Schlüsselwort `pub` für ein Modul erlaubt
 es dem Code in seinen Vorgängermodulen nur, auf das Modul zu referenzieren,
@@ -288,14 +288,14 @@ deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mi
 Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
 öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
-verlassen. Diese Überlegungen liegen außerhalb des Rahmens dieses Buches; wenn
+verlassen. Diese Überlegungen gehen über den Rahmen dieses Buches hinaus; wenn
 du an diesem Thema interessiert bist, lies die [Rust API
 Guidelines][api-guidelines].
 
 > #### Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek
 >
 > Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
-> *src/main.rs* als auch eine Bibliothekskistenwurzel *src/lib.rs* enthalten
+> _src/main.rs_ als auch eine Bibliothekskistenwurzel _src/lib.rs_ enthalten
 > kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
 > haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
 > Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
@@ -303,7 +303,7 @@ Guidelines][api-guidelines].
 > Dadurch können andere Projekte von den meisten Funktionen des Pakets
 > profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.
 >
-> Der Modulbaum sollte in *src/lib.rs* definiert werden. Dann können alle
+> Der Modulbaum sollte in _src/lib.rs_ definiert werden. Dann können alle
 > öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
 > mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
 > der Bibliothekskiste, so wie eine vollständig externe Kiste die

@@ -1,11 +1,11 @@
 ## Datentypen
 
-Jeder Wert in Rust ist von einem bestimmten *Datentyp*, der Rust mitteilt,
+Jeder Wert in Rust ist von einem bestimmten _Datentyp_, der Rust mitteilt,
 welche Art von Daten angegeben wird, damit es weiß, wie es mit diesen Daten
 arbeiten soll. Wir werden uns zwei Datentyp-Untermengen ansehen: Skalar (scalar) und
 Verbund (compound).
 
-Denk daran, dass Rust eine *statisch typisierte* Sprache ist, was bedeutet,
+Denk daran, dass Rust eine _statisch typisierte_ Sprache ist, was bedeutet,
 dass es die Typen von allen Variablen zur Kompilierzeit kennen muss. Der
 Compiler kann normalerweise auf der Grundlage des Wertes und wie wir ihn
 verwenden ableiten, welchen Typ wir verwenden wollen. Wenn mehrere Typen
@@ -45,14 +45,14 @@ Für andere Datentypen wirst du andere Typ-Annotationen sehen.
 
 ### Skalare Typen
 
-Ein *skalarer* Typ stellt einen einzelnen Wert dar. Rust hat vier primäre
+Ein _skalarer_ Typ stellt einen einzelnen Wert dar. Rust hat vier primäre
 skalare Typen: Ganze Zahlen, Fließkommazahlen, boolesche Werte (Wahrheitswerte)
 und Zeichen. Du erkennst diese vielleicht aus anderen Programmiersprachen. Lass
 uns darüber sprechen, wie sie in Rust funktionieren.
 
 #### Ganzzahl-Typen
 
-Eine *ganze Zahl* ist eine Zahl ohne Bruchteilkomponente. Wir verwendeten eine
+Eine _ganze Zahl_ ist eine Zahl ohne Bruchteilkomponente. Wir verwendeten eine
 ganze Zahl in Kapitel 2, den Typ `u32`. Diese Typdeklaration gibt an, dass der
 Wert, dem sie zugeordnet ist, eine 32 Bit große ganze Zahl ohne Vorzeichen ist
 (vorzeichenbehaftete Ganzzahl-Typen beginnen mit `i` anstatt `u`). Tabelle 3-1
@@ -71,7 +71,7 @@ verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.
 | arch    | `isize`             | `usize`       |
 
 Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
-eine explizite Größe. *Vorzeichenbehaftet* (signed) und *vorzeichenlos*
+eine explizite Größe. _Vorzeichenbehaftet_ (signed) und _vorzeichenlos_
 (unsigned) beziehen sich darauf, ob es möglich ist, dass die Zahl negativ ist
 &ndash; in anderen Worten, ob die Zahl ein Vorzeichen haben muss
 (vorzeichenbehaftet) oder ob sie immer nur positiv sein wird und daher ohne
@@ -83,7 +83,7 @@ Vorzeichenbehaftete Zahlen werden unter Verwendung der
 [Zweierkomplementdarstellung][twos-complement] gespeichert.
 
 Jede vorzeichenbehaftete Variante kann Zahlen von -(2<sup>n - 1</sup>) bis
-einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei *n* die Anzahl an Bits
+einschließlich 2<sup>n - 1</sup> - 1 speichern, wobei _n_ die Anzahl an Bits
 ist, die diese Variante benutzt. Ein `i8` kann also Zahlen von -(2<sup>7</sup>)
 bis 2<sup>7</sup> - 1 speichern, was -128 bis 127 entspricht. Vorzeichenlose
 Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
@@ -123,16 +123,16 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > dieses Bereiches zu ändern, z.B. auf 256, tritt ein Ganzzahlüberlauf auf, was
 > zu einem von zwei Verhaltensweisen führen kann. Wenn du im Fehlersuchmodus
 > (debug mode) kompilierst, fügt Rust Prüfungen auf Ganzzahlüberläufe ein, was
-> dazu führt, dass dein Programm zur Laufzeit *abbricht* (panic), falls dieses
+> dazu führt, dass dein Programm zur Laufzeit _abbricht_ (panic), falls dieses
 > Verhalten auftritt. Rust verwendet den Begriff „panic“, wenn ein Programm
 > durch einen Fehler abgebrochen wird; wir werden Programmabbrüche im Abschnitt
 > [„Nicht behebbare Fehler mit `panic!`“][unrecoverable-errors-with-panic] in
 > Kapitel 9 näher betrachten.
 >
 > Wenn du mit dem Schalter `--release` im Freigabemodus (release mode)
-> kompilierst, fügt Rust *keine* Prüfungen auf Ganzzahlüberläufe, die das
+> kompilierst, fügt Rust _keine_ Prüfungen auf Ganzzahlüberläufe, die das
 > Programm abbrechen, ein. Wenn ein Überlauf auftritt, führt Rust stattdessen
-> einen *Zweier-Komplement-Umbruch* durch. Kurz gesagt, Werte die größer als
+> einen _Zweier-Komplement-Umbruch_ durch. Kurz gesagt, Werte die größer als
 > der Maximalwert den der Typ enthalten kann sind, werden umgebrochen zum
 > kleinsten Wert den der Typ enthalten kann. Im Falle eines `u8` wird der Wert
 > 256 zu 0, der Wert 257 zu 1 und so weiter. Das Programm wird nicht abbrechen,
@@ -144,18 +144,18 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > Methodenfamilien verwenden, die die Standardbibliothek für primitive
 > numerische Typen bereitstellt:
 > 
-> * Umbrechen (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
+> - Umbrechen (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
 >   `wrapping_add`
-> * Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
+> - Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
 >   `checked_*`-Methode gibt.
-> * Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
+> - Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
 >   Überlauf mit einer `overflowing_*`-Methode stattgefunden hat.
-> * Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
+> - Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
 >   `saturating_*`-Methoden.
 
 #### Fließkomma-Typen
 
-Rust hat auch zwei primitive Typen für *Fließkommazahlen*, das sind Zahlen mit
+Rust hat auch zwei primitive Typen für _Fließkommazahlen_, das sind Zahlen mit
 Dezimalkomma. Die Fließkomma-Typen in Rust sind `f32` und `f64`, die 32 Bit
 bzw. 64 Bit groß sind. Der Standardtyp ist `f64`, da er auf modernen CPUs
 ungefähr die gleiche Geschwindigkeit wie `f32` hat, aber eine höhere Präzision
@@ -261,12 +261,12 @@ ablegen“][strings] in Kapitel 8 im Detail besprechen.
 
 ### Verbund-Typen
 
-*Verbund-Typen* (compound types) können mehrere Werte zu einem Typ gruppieren.
+_Verbund-Typen_ (compound types) können mehrere Werte zu einem Typ gruppieren.
 Rust hat zwei primitive Verbund-Typen: Tupel (tuples) und Arrays (arrays).
 
 #### Der Tupel-Typ
 
-Ein *Tupel* ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
+Ein _Tupel_ ist eine allgemeine Möglichkeit, eine Reihe von Werten mit einer
 Vielzahl von Typen zu einem Verbund-Typ zusammenzufassen. Tupel haben eine
 feste Länge: Einmal deklariert, können sie weder wachsen noch schrumpfen.
 
@@ -302,7 +302,7 @@ fn main() {
 
 Dieses Programm erzeugt zunächst ein Tupel und bindet es an die Variable `tup`.
 Dann benutzt es ein Muster mit `let`, um `tup` zu nehmen und in drei separate
-Variablen `x`, `y` und `z` umzuwandeln. Dies nennt man *destrukturieren*
+Variablen `x`, `y` und `z` umzuwandeln. Dies nennt man _destrukturieren_
 (destructuring), weil es das einzelne Tupel in drei Teile zerlegt. Schließlich
 gibt das Programm den Wert von `y` aus, der `6.4` ist.
 
@@ -328,8 +328,8 @@ Dieses Programm erstellt das Tupel `x` und greift dann auf jedes Element des
 Tupels über die jeweiligen Indizes zu. Wie bei den meisten Programmiersprachen
 ist der erste Index in einem Tupel 0.
 
-Das Tupel ohne Werte hat einen speziellen Namen: *Einheitswert* (unit value).
-Dieser Wert und der zugehörige Typ (*Einheitstyp* (unit type)) werden beide mit
+Das Tupel ohne Werte hat einen speziellen Namen: _Einheitswert_ (unit value).
+Dieser Wert und der zugehörige Typ (_Einheitstyp_ (unit type)) werden beide mit
 `()` geschrieben und stellen einen leeren Wert oder einen leeren Rückgabetyp
 dar. Ausdrücke geben implizit den Einheitswert zurück, wenn sie keinen anderen
 Wert zurückgeben.
@@ -337,7 +337,7 @@ Wert zurückgeben.
 #### Der Array-Typ
 
 Eine andere Möglichkeit, eine Kollektion mit mehreren Werten zu haben, ist mit
-einem *Array*. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
+einem _Array_. Im Gegensatz zu einem Tupel muss jedes Element eines Arrays den
 gleichen Typ haben. Anders als Arrays in einigen anderen Sprachen haben Arrays
 in Rust eine feste Länge.
 
@@ -357,7 +357,7 @@ Haldenspeicher abgelegt haben möchtest, wie bei den anderen Typen, die wir
 bisher gesehen haben, (auf den Stapelspeicher und den Haldenspeicher gehen wir
 in [Kapitel 4][stack-and-heap] näher ein) oder wenn du sicherstellen willst,
 dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
-so flexibel wie der Vektortyp. Ein *Vektor* ist ein ähnlicher Kollektionstyp,
+so flexibel wie der Vektortyp. Ein _Vektor_ ist ein ähnlicher Kollektionstyp,
 der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
 Größe wachsen oder schrumpfen kann. Wenn du dir nicht sicher bist, ob du ein
 Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du einen
@@ -465,7 +465,7 @@ index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Das Programm führte zu einem *Laufzeitfehler* an der Stelle, an der ein
+Das Programm führte zu einem _Laufzeitfehler_ an der Stelle, an der ein
 ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
 einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung
 nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
