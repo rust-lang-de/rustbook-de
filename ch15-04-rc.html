@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -178,16 +178,16 @@ Programmen befassen.</p>
 <p>Kehren wir zu unserem Beispiel für die Cons-Liste in Codeblock 15-5 zurück.
 Denke daran, dass wir es mit <code>Box&lt;T&gt;</code> definiert haben. Dieses Mal erstellen
 wir zwei Listen, die beide gemeinsam eine dritte Liste besitzen. Konzeptionell
-sieht dies ähnlich aus wie in Abbildung 15-3:</p>
+sieht dies ähnlich aus wie in Abbildung 15-3.</p>
 <p><img alt="Zwei Listen die sich die Eigentümerschaft einer dritten Liste teilen" 
 src="img/trpl15-03.svg" class="center" /></p>
 <p><span class="caption">Abbildung 15-3: Zwei Listen <code>b</code> und <code>c</code> teilen sich
 die Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
-<p>Wir erstellen eine Liste <code>a</code>, die 5 und dann 10 enthält. Dann erstellen wir zwei
-weitere Listen: <code>b</code>, die mit 3 beginnt, und <code>c</code>, die mit 4 beginnt. Sowohl
-<code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren, die 5 und
-10 enthält. Mit anderen Worten, beide Listen teilen sich die erste Liste mit 5
-und 10.</p>
+<p>Wir erstellen eine Liste <code>a</code>, die <code>5</code> und dann <code>10</code> enthält. Dann erstellen wir
+zwei weitere Listen: <code>b</code>, die mit <code>3</code> beginnt, und <code>c</code>, die mit <code>4</code> beginnt.
+Sowohl <code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren,
+die <code>5</code> und <code>10</code> enthält. Mit anderen Worten, beide Listen teilen sich die
+erste Liste mit <code>5</code> und <code>10</code>.</p>
 <p>Der Versuch, dieses Szenario mithilfe unserer Definition von <code>List</code> mit <code>Box&lt;T&gt;</code>
 zu implementieren, funktioniert nicht, wie in Codeblock 15-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -306,9 +306,9 @@ den Gültigkeitsbereich verlässt.</p>
 <p>An jeden Punkt im Programm, an dem sich der Referenzzähler ändert, geben wir
 den Referenzzähler aus, den wir durch Aufrufen der Funktion <code>Rc::strong_count</code>
 erhalten. Diese Funktion heißt <code>strong_count</code> und nicht <code>count</code>, da der Typ
-<code>Rc&lt;T&gt;</code> auch eine Funktion <code>weak_count</code> hat. Wir werden im Abschnitt
-<a href="ch15-06-reference-cycles.html#verhindern-von-referenzzyklen-umwandeln-von-rct-in-weakt">„Verhindern von Referenzzyklen: <code>Rc&lt;T&gt;</code> in <code>Weak&lt;T&gt;</code>
-verwandeln“</a> sehen wofür <code>weak_count</code> verwendet wird.</p>
+<code>Rc&lt;T&gt;</code> auch eine Funktion <code>weak_count</code> hat. Wir werden in <a href="ch15-06-reference-cycles.html#verhindern-von-referenzzyklen-mit-weakt">„Verhindern von
+Referenzzyklen mit <code>Weak&lt;T&gt;</code>“</a> sehen wofür
+<code>weak_count</code> verwendet wird.</p>
 <p>Dieser Programmcode gibt folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)

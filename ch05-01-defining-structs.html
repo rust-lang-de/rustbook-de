@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -372,16 +372,15 @@ der Strukturdefinition.</p>
 <p>Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit <code>=</code> ist,
 da sie die Daten verschiebt, wie wir im Abschnitt <a href="ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move">„Variablen und Daten im
 Zusammenspiel mit Move“</a> gesehen haben. In diesem Beispiel können wir
-<code>user1</code> nicht mehr als Ganzes verwenden, nachdem wir <code>user2</code> erzeugt haben,
-weil der <code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben wurde.
-Hätten wir <code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und <code>username</code>
-gegeben und somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code>user1</code>
-verwendet, wäre <code>user1</code> auch nach dem Erstellen von <code>user2</code> noch gültig. Die
-Typen <code>active</code> und <code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code>
-implementieren, sodass das Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur
-Stapelspeicher-Daten: Kopieren (copy)“</a> besprochen haben, zutreffen
-würde. Wir können in diesem Beispiel immer noch <code>user1.email</code> verwenden, da
-sein Wert <em>nicht</em> verschoben wurde.</p>
+<code>user1</code> nicht mehr verwenden, nachdem wir <code>user2</code> erzeugt haben, weil der
+<code>String</code> im Feld <code>username</code> von <code>user1</code> in <code>user2</code> verschoben wurde. Hätten wir
+<code>user2</code> neue <code>String</code>-Werte für beide Felder <code>email</code> und <code>username</code> gegeben und
+somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code>user1</code> verwendet, wäre
+<code>user1</code> auch nach dem Erstellen von <code>user2</code> noch gültig. Die Typen <code>active</code> und
+<code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code> implementieren, sodass das
+Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur Stapelspeicher-Daten: Kopieren
+(copy)“</a> besprochen haben, zutreffen würde. Wir können in diesem Beispiel
+immer noch <code>user1.email</code> verwenden, da sein Wert <em>nicht</em> verschoben wurde.</p>
 <h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
 <p>Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen haben den Strukturnamen

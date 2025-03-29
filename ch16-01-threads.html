@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -222,8 +222,8 @@ werden sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt
 davon ab, wie dein Betriebssystem die Stränge organisiert (schedules). In
 diesem Lauf wurde der Hauptstrang zuerst ausgegeben, obwohl die
 Ausgabeanweisung aus dem erzeugten Strang zuerst im Code erscheint. Und obwohl
-wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis <code>i</code> 9 ist, kam er
-nur bis 5, bis sich der Hauptstrang beendet hat.</p>
+wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis <code>i</code> <code>9</code> ist, kam
+er nur bis <code>5</code>, bis sich der Hauptstrang beendet hat.</p>
 <p>Wenn du diesen Code ausführst und nur Ausgaben aus dem Hauptstrang siehst oder
 keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
 erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Strängen
@@ -235,12 +235,12 @@ Reihenfolge gibt, in der Stränge laufen. Wir können auch nicht garantieren,
 dass der erzeugten Strang überhaupt zum Laufen kommt!</p>
 <p>Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von <code>thread::spawn</code> in einer
-Variablen speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle</code>. Ein
-<code>JoinHandle</code> ist ein aneigenbarer (owned) Wert, der, wenn wir die Methode
-<code>join</code> darauf aufrufen, darauf wartet, bis sich sein Strang beendet. Codeblock
-16-2 zeigt, wie der <code>JoinHandle</code> des Strangs, den wir in Codeblock 16-1
-erstellt haben, verwendet und <code>join</code> aufgerufen wird, um sicherzustellen, dass
-der erzeugte Strang beendet wird, bevor <code>main</code> endet:</p>
+Variablen speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle&lt;T&gt;</code>.
+Ein <code>JoinHandle&lt;T&gt;</code> ist ein aneigenbarer (owned) Wert, der, wenn wir die
+Methode <code>join</code> darauf aufrufen, darauf wartet, bis sich sein Strang beendet.
+Codeblock 16-2 zeigt, wie der <code>JoinHandle&lt;T&gt;</code> des Strangs, den wir in Codeblock
+16-1 erstellt haben, verwendet und wie <code>join</code> aufgerufen wird, um
+sicherzustellen, dass der erzeugte Strang beendet wird, bevor <code>main</code> endet:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;
 use std::time::Duration;
@@ -260,7 +260,7 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 16-2: Speichern eines <code>JoinHandle</code> von
+<p><span class="caption">Codeblock 16-2: Speichern eines <code>JoinHandle&lt;T&gt;</code> von
 <code>thread::spawn</code>, um zu garantieren, dass der Strang bis zum Ende ausgeführt
 wird</span></p>
 <p>Aufrufen von <code>join</code> auf <code>JoinHandle</code> blockiert den gerade laufenden Strang, bis
@@ -331,7 +331,7 @@ Stränge zur gleichen Zeit laufen oder nicht.</p>
 an <code>thread::spawn</code> übergeben werden, weil der Funktionsabschluss dann die
 Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
 damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
-überträgt. Im Abschnitt <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigent%C3%BCmerschaft">„Erfassen von Referenzen oder Verschieben der
+überträgt. In <a href="ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigent%C3%BCmerschaft">„Erfassen von Referenzen oder Verschieben der
 Eigentümerschaft“</a> in Kapitel 13 haben wir <code>move</code> im Zusammenhang mit
 Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
 zwischen <code>move</code> und <code>thread::spawn</code> konzentrieren.</p>
@@ -429,7 +429,7 @@ der Fehlermeldung verwenden:</p>
 zwingen wir den Funktionsabschluss dazu, die Eigentümerschaft der Werte zu
 übernehmen, die er benutzt, anstatt zuzulassen, dass Rust daraus ableitet, dass
 er sich die Werte ausleihen sollte. Die in Codeblock 16-5 gezeigte Änderung an
-Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt:</p>
+Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;
 
@@ -482,8 +482,9 @@ wir Rust, dass der Hauptstrang <code>v</code> nicht mehr benutzen wird. Wenn wir
 versuchen, <code>v</code> im Hauptstrang zu benutzen. Das Schlüsselwort <code>move</code> setzt Rusts
 konservative Standardausleihe außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.</p>
-<p>Mit einem grundlegenden Verständnis von Strängen und der Strang-API wollen wir
-uns ansehen, was wir mit Strängen noch machen können.</p>
+<p>Nachdem wir uns nun damit beschäftigt haben, was Stränge sind und welche
+Methoden die Strang-API bietet, wollen wir uns nun einige Situationen ansehen,
+in denen wir Stränge verwenden können.</p>
 
                     </main>
 

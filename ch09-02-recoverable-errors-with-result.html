@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -678,10 +678,10 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
 <code>Result</code>-Werte.</span></p>
 <p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
-im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“</a> in Kapitel 18 sprechen werden. Vorerst kannst
-du <code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von
-<code>?</code> auf einen <code>Result</code>-Wert in einer <code>main</code>-Funktion mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
+in <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+erlauben“</a> in Kapitel 18 sprechen werden. Vorerst kannst du
+<code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von <code>?</code>
+auf einen <code>Result</code>-Wert in einer <code>main</code>-Funktion mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser <code>main</code>-Funktion nur Fehler des Typs
 <code>std::io::Error</code> zurückgibt, ist diese Signatur durch die Angabe von
 <code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt, wenn weiterer Code, der andere Fehler

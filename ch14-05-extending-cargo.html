@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -146,7 +146,7 @@
                     <main>
                         <h2 id="cargo-um-benutzerdefinierte-befehle-erweitern"><a class="header" href="#cargo-um-benutzerdefinierte-befehle-erweitern">Cargo um benutzerdefinierte Befehle erweitern</a></h2>
 <p>Cargo ist so konzipiert, dass man es mit neuen Unterbefehlen erweitern kann,
-ohne Cargo ändern zu müssen. Wenn  in deinem <code>$PATH</code> eine Binärdatei
+ohne Cargo ändern zu müssen. Wenn in deinem <code>$PATH</code> eine Binärdatei
 <code>cargo-something</code> benannt wird, kannst du sie wie einen Unterbefehl von Cargo
 ausführen, indem du <code>cargo something</code> ausführst. Benutzerdefinierte Befehle wie
 dieser werden auch aufgelistet, wenn du <code>cargo --list</code> ausführst. Die

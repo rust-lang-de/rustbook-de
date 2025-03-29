@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -580,13 +580,13 @@ aufgerufen. Da alle Funktionsabschlüsse <code>FnOnce</code> implementieren, akz
 <code>unwrap_or_else</code> alle drei Arten von Funktionsabschlüssen und ist so flexibel
 wie nur möglich.</p>
 <blockquote>
-<p>Anmerkung: Funktionen können auch alle drei <code>Fn</code>-Merkmale implementieren.
-Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der Umgebung
-erfordert, können wir den Namen einer Funktion anstelle eines
-Funktionsabschlüsses verwenden, bei dem wir etwas brauchen, das eine der
-<code>Fn</code>-Markmale implementiert. Zum Beispiel könnten wir bei einem
-<code>Option&lt;Vec&lt;T&gt;&gt;</code>-Wert <code>unwrap_or_else(Vec::new)</code> aufrufen, um einen neuen,
-leeren Vektor zu erhalten, wenn der Wert <code>None</code> ist.</p>
+<p>Anmerkung: Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der
+Umgebung erfordert, können wir den Namen einer Funktion anstelle eines
+Funktionsabschlüsses verwenden. Zum Beispiel könnten wir
+<code>unwrap_or_else(Vec::new)</code> auf einem <code>Option&lt;Vec&lt;T&gt;&gt;</code>-Wert aufrufen, um einen
+neuen, leeren Vektor zu erhalten, wenn der Wert <code>None</code> ist. Der Compiler
+implementiert automatisch die <code>Fn</code>-Merkmale, die für eine Funktionsdefinition
+anwendbar sind.</p>
 </blockquote>
 <p>Schauen wir uns nun die Standard-Bibliotheksmethode <code>sort_by_key</code> an, die auf
 Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von <code>unwrap_or_else</code>
@@ -703,12 +703,12 @@ error: could not compile `rectangles` (bin "rectangles") due to 1 previous error
 <p>Der Fehler bezieht sich auf die Zeile im Funktionsabschluss-Rumpf, die <code>value</code>
 aus der Umgebung verschiebt. Um dies zu beheben, müssen wir den Rumpf des
 Funktionsabschlusses so ändern, dass er keine Werte aus der Umgebung
-verschiebt. Um zu zählen, wie oft <code>sort_by_key</code> aufgerufen wird, ist es
-einfacher, einen Zähler in der Umgebung zu halten und seinen Wert im
-Funktionsabschluss-Rumpf zu erhöhen, um das zu berechnen. Der
-Funktionsabschluss in Codeblock 13-9 funktioniert mit <code>sort_by_key</code>, weil er
-nur eine veränderbare Referenz auf den <code>num_sort_operations</code>-Zähler erfasst
-und daher mehr als einmal aufgerufen werden kann:</p>
+verschiebt. Es ist einfacher, einen Zähler in der Umgebung zu halten und seinen
+Wert im Funktionsabschluss-Rumpf zu erhöhen, um zu zählen, wie oft
+<code>sort_by_key</code> aufgerufen wurde. Der Funktionsabschluss in Codeblock 13-9
+funktioniert mit <code>sort_by_key</code>, weil er nur eine veränderbare Referenz auf den
+<code>num_sort_operations</code>-Zähler erfasst und daher mehr als einmal aufgerufen
+werden kann:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 struct Rectangle {

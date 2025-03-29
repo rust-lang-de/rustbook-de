@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -152,20 +152,18 @@ Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den Newtypes
 ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den Typ <code>!</code>
 und dynamisch große Typen besprechen.</p>
 <h3 id="verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion"><a class="header" href="#verwenden-des-newtype-musters-für-typsicherheit-und-abstraktion">Verwenden des Newtype-Musters für Typsicherheit und Abstraktion</a></h3>
-<blockquote>
-<p>Hinweis: Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
-<a href="ch20-03-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
-externen Typen“</a> gelesen hast.</p>
-</blockquote>
-<p>Das Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher
-besprochenen hinausgehen, einschließlich statisch sicherzustellen, dass Werte
-niemals verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein
-Beispiel für die Verwendung von Newtypes zum Angeben von Einheiten hast du in
-Codeblock 20-16 gesehen: Erinnere dich daran, dass die Strukturen <code>Millimeters</code>
-und <code>Meters</code> <code>u32</code>-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
-einem Parameter vom Typ <code>Millimeters</code> schreiben würden, könnten wir kein
-Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
-vom Typ <code>Meters</code> oder einem einfachen <code>u32</code> aufzurufen.</p>
+<p>Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
+<a href="ch20-02-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
+externen Typen“</a> gelesen hast. Das Newtype-Muster
+ist auch für Aufgaben nützlich, die über die bisher besprochenen hinausgehen,
+einschließlich statisch sicherzustellen, dass Werte niemals verwechselt werden,
+und dem Angeben von Einheiten eines Wertes. Ein Beispiel für die Verwendung von
+Newtypes zum Angeben von Einheiten hast du in Codeblock 20-16 gesehen: Erinnere
+dich daran, dass die Strukturen <code>Millimeters</code> und <code>Meters</code> <code>u32</code>-Werte in einem
+Newtype einpacken. Wenn wir eine Funktion mit einem Parameter vom Typ
+<code>Millimeters</code> schreiben würden, könnten wir kein Programm kompilieren, das
+versehentlich versucht, diese Funktion mit einem Wert vom Typ <code>Meters</code> oder
+einem einfachen <code>u32</code> aufzurufen.</p>
 <p>Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
 eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
 bereitstellen, die sich von der API des privaten, inneren Typs unterscheidet.</p>
@@ -176,7 +174,7 @@ interagieren, die wir zur Verfügung stellen, z.B. eine Methode, um eine
 Namenszeichenkette zur <code>People</code>-Kollektion hinzuzufügen; dieser Code müsste
 nicht wissen, dass wir Namen intern eine <code>i32</code>-ID zuordnen. Das Newtype-Muster
 ist ein leichtgewichtiger Weg, eine Kapselung zu erreichen, um
-Implementierungsdetails zu verbergen, die wir im Abschnitt <a href="ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die
+Implementierungsdetails zu verbergen, die wir in <a href="ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt">„Kapselung, die
 Implementierungsdetails verbirgt“</a> in Kapitel 18 besprochen
 haben.</p>
 <h3 id="erstellen-von-typ-synonymen-mit-typ-alias"><a class="header" href="#erstellen-von-typ-synonymen-mit-typ-alias">Erstellen von Typ-Synonymen mit Typ-Alias</a></h3>
@@ -373,8 +371,8 @@ Teil davon hier in Codeblock 20-27 wiedergegeben.</p>
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 20-27: Ein <code>match</code> mit einem Zweig, der in
 <code>continue</code> endet</span></p>
-<p>Damals haben wir einige Details in diesem Code übersprungen. In Kapitel 6 des
-Abschnitts <a href="ch06-02-match.html">„Das Kontrollflusskonstrukt <code>match</code>“</a> haben wir
+<p>Damals haben wir einige Details in diesem Code übersprungen. In <a href="ch06-02-match.html">„Das
+Kontrollflusskonstrukt <code>match</code>“</a> in Kapitel 6 haben wir
 erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktioniert
 zum Beispiel der folgende Code nicht:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
@@ -466,27 +464,27 @@ Bytes. Aus diesem Grund ist es nicht möglich, eine Variable zu erzeugen, die
 einen dynamisch großen Typ enthält.</p>
 <p>Was sollen wir also tun? In diesem Fall kennst du die Antwort bereits: Wir
 machen die Typen <code>s1</code> und <code>s2</code> zu einem <code>&amp;str</code> anstatt zu einem <code>str</code>. Erinnere
-dich, dass wir im Abschnitt <a href="ch04-03-slices.html#zeichenkettenanteilstypen-string-slices">„Zeichenkettenanteilstypen
-(string slices)“</a> in Kapitel 4 gesagt haben, dass die
-Anteilstypen-Datenstruktur die Startposition und die Länge des Anteilstyps
-speichert. Obwohl also <code>&amp;T</code> ein einzelner Wert ist, der die Speicheradresse des
-Ortes speichert, an dem sich <code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse
-von <code>str</code> und seine Länge. Als solches können wir die Größe eines <code>&amp;str</code>-Wertes
-zur Kompilierzeit kennen: Er ist doppelt so lang wie ein <code>usize</code>. Das heißt,
-wir wissen immer die Größe einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist,
-auf die sie sich bezieht. Im Allgemeinen werden in Rust Typen mit dynamischer
-Größe auf diese Weise verwendet: Sie haben ein zusätzliches Stück Metadaten,
-das die Größe der dynamischen Information speichert. Die goldene Regel für
-Typen dynamischer Größe lautet, dass wir Werte von Typen mit dynamischer Größe
-immer hinter eine Art Zeiger stellen müssen.</p>
+dich, dass wir in <a href="ch04-03-slices.html#zeichenkettenanteilstypen-string-slices">„Zeichenkettenanteilstypen (string slices)“</a>
+in Kapitel 4 gesagt haben, dass die Anteilstypen-Datenstruktur die
+Startposition und die Länge des Anteilstyps speichert. Obwohl also <code>&amp;T</code> ein
+einzelner Wert ist, der die Speicheradresse des Ortes speichert, an dem sich
+<code>T</code> befindet, hat <code>&amp;str</code> <em>zwei</em> Werte: Die Adresse von <code>str</code> und seine Länge.
+Als solches können wir die Größe eines <code>&amp;str</code>-Wertes zur Kompilierzeit kennen:
+Er ist doppelt so lang wie ein <code>usize</code>. Das heißt, wir wissen immer die Größe
+einer <code>&amp;str</code>, egal wie lang die Zeichenkette ist, auf die sie sich bezieht. Im
+Allgemeinen werden in Rust Typen mit dynamischer Größe auf diese Weise
+verwendet: Sie haben ein zusätzliches Stück Metadaten, das die Größe der
+dynamischen Information speichert. Die goldene Regel für Typen dynamischer
+Größe lautet, dass wir Werte von Typen mit dynamischer Größe immer hinter eine
+Art Zeiger stellen müssen.</p>
 <p>Wir können <code>str</code> mit allen Arten von Zeigern kombinieren: Zum Beispiel
 <code>Box&lt;str&gt;</code> oder <code>Rc&lt;str&gt;</code>. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
 ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. In Kapitel 18 im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait
-objects) die Werte unterschiedlicher Typen erlauben“</a>
-haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
-diese hinter einen Zeiger setzen müssen, z.B. <code>&amp;dyn Trait</code> oder <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> würde auch funktionieren).</p>
+des Merkmals verwenden. In <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte
+unterschiedlicher Typen erlauben“</a> in Kapitel 18 haben wir
+erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden, diese hinter
+einen Zeiger setzen müssen, z.B. <code>&amp;dyn Trait</code> oder <code>Box&lt;dyn Trait&gt;</code> (<code>Rc&lt;dyn Trait&gt;</code> würde auch funktionieren).</p>
 <p>Um mit DSTs zu arbeiten, hat Rust das Merkmal <code>Sized</code>, um zu bestimmen, ob die
 Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Merkmal wird
 automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
@@ -528,11 +526,11 @@ Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
 
                     <nav class="nav-wrapper" aria-label="Page navigation">
                         <!-- Mobile navigation buttons -->
-                            <a rel="prev" href="ch20-03-advanced-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                            <a rel="prev" href="ch20-02-advanced-traits.html" class="mobile-nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch20-05-advanced-functions-and-closures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-04-advanced-functions-and-closures.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -542,11 +540,11 @@ Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.</p>
             </div>
 
             <nav class="nav-wide-wrapper" aria-label="Page navigation">
-                    <a rel="prev" href="ch20-03-advanced-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
+                    <a rel="prev" href="ch20-02-advanced-traits.html" class="nav-chapters previous" title="Previous chapter" aria-label="Previous chapter" aria-keyshortcuts="Left">
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch20-05-advanced-functions-and-closures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-04-advanced-functions-and-closures.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

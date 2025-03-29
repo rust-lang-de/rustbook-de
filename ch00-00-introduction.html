@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -232,7 +232,7 @@ aufgreifen.</p>
 <p>Du findest in diesem Buch zwei Kapitelarten: Konzeptkapitel und
 Projektkapitel. In Konzeptkapiteln erfährst du etwas über einen Aspekt von
 Rust. In Projektkapiteln schreiben wir gemeinsam kleine Programme und wenden
-das bisher Gelernte an. Die Kapitel 2, 12 und 20 sind Projektkapitel; die
+das bisher Gelernte an. Die Kapitel 2, 12 und 21 sind Projektkapitel; die
 übrigen sind Konzeptkapitel.</p>
 <p>Kapitel 1 erklärt, wie man Rust installiert, wie man ein „Hallo Welt“-Programm
 schreibt und wie man Cargo, den Paketmanager und das Bauwerkzeug von Rust,
@@ -273,23 +273,27 @@ Kapitel 15 werden intelligente Zeiger, die die Standardbibliothek bereitstellt,
 und Merkmale, die ihre Funktionalität ermöglichen, erörtert.</p>
 <p>In Kapitel 16 gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. Kapitel 17 befasst sich mit dem Vergleich zwischen
-Rust-Idiomen und den Prinzipien der objektorientierten Programmierung, mit
-denen du vielleicht vertraut bist.</p>
-<p>Kapitel 18 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
-mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 19
+Strängen zu programmieren. In Kapitel 17 bauen wir darauf auf, indem wir die
+async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
+ermöglichen, untersuchen.</p>
+<p>Kapitel 18 befasst sich mit dem Vergleich von Rust-Idiomen mit
+objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
+bist. Kapitel 19 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
+mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 20
 enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
 unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen, Funktionen
 und Funktionsabschlüssen.</p>
-<p>In Kapitel 20 werden wir ein Projekt abschließen, bei dem wir einen
+<p>In Kapitel 21 werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!</p>
 <p>Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
-in einem eher referenzartigen Format. Anhang A enthält die Schlüsselwörter von
-Rust, Anhang B die Operatoren und Symbole von Rust, Anhang C ableitbare
-Merkmalen, die von der Standardbibliothek mitgebracht werden, Anhang D
-nützliche Entwicklungswerkzeuge und Anhang E erläutert die Rust-Ausgaben. In
-Anhang F findest du Übersetzungen des Buches, und in Anhang G erfährst du, wie
-Rust erstellt wird und was nächtliches (nightly) Rust ist.</p>
+in einem eher referenzartigen Format. <strong>Anhang A</strong> enthält die Schlüsselwörter
+von Rust, <strong>Anhang B</strong> die Operatoren und Symbole von Rust, <strong>Anhang C</strong>
+ableitbare Merkmalen, die von der Standardbibliothek mitgebracht werden,
+<strong>Anhang D</strong> nützliche Entwicklungswerkzeuge und <strong>Anhang E</strong> erläutert die
+Rust-Ausgaben. In <strong>Anhang F</strong> findest du Übersetzungen des Buches, und in
+*<em>Anhang G</em> erfährst du, wie Rust erstellt wird und was nächtliches (nightly)
+Rust ist.</p>
 <p>Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn
 du irritiert bist. Aber tue, was immer für dich passt.</p>

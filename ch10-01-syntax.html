@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -213,8 +213,8 @@ den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
 wir werden <code>T</code> verwenden, weil die Typparameternamen gemäß Konvention in Rust
 kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
-Binnenmajuskel (UpperCamelCase). Als Abkürzung für „Typ“ ist <code>T</code> die
-Standardwahl der meisten Rust-Programmierer.</p>
+CamelCase. Als Abkürzung für „Typ“ ist <code>T</code> die Standardwahl der meisten
+Rust-Programmierer.</p>
 <p>Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
 dieser Name bedeutet. In ähnlicher Weise müssen wir den Typ-Parameternamen
@@ -231,8 +231,7 @@ Wert des gleichen Typs <code>T</code> zurück.</p>
 generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
 wir die Funktion entweder mit einem Anteilstyp von <code>i32</code>-Werten oder
 <code>char</code>-Werten aufrufen können. Beachte, dass sich dieser Code noch nicht
-kompilieren lässt, aber wir werden das Problem später in diesem Kapitel
-beheben.</p>
+kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {
     let mut largest = &amp;list[0];
@@ -285,11 +284,11 @@ funktioniert, die <code>T</code> sein könnten. Da wir Werte des Typs <code>T</c
 vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
 können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
 <code>std::cmp::PartialOrd</code>, das du auf Typen implementieren kannst (siehe Anhang C
-für weitere Informationen zu diesem Merkmal). Indem wir dem Vorschlag des
-Hilfetextes folgen, schränken wir die für <code>T</code> gültigen Typen auf diejenigen
-ein, die <code>PartialOrd</code> implementieren und dieses Beispiel kompiliert, weil die
-Standardbibliothek <code>PartialOrd</code> sowohl auf <code>i32</code> als auch auf <code>char</code>
-implementiert.</p>
+für weitere Informationen zu diesem Merkmal). Um den obigen Beispielcode zu
+korrigieren, müssten wir den Vorschlägen des Hilfetextes folgen und die für <code>T</code>
+gültigen Typen auf diejenigen beschränken, die <code>PartialOrd</code> implementieren. Das
+Beispiel würde dann kompilieren, weil die Standardbibliothek <code>PartialOrd</code>
+sowohl für <code>i32</code> als auch für <code>char</code> implementiert.</p>
 <h3 id="in-struktur-definitionen"><a class="header" href="#in-struktur-definitionen">In Struktur-Definitionen</a></h3>
 <p>Wir können auch Strukturen definieren, um einen generischen Typparameter in
 einem oder mehreren Feldern mit der <code>&lt;&gt;</code> Syntax zu verwenden. Codeblock 10-6
@@ -443,10 +442,10 @@ generischen Typ hinter <code>impl</code> kann Rust erkennen, dass der Typ in spi
 Klammern in <code>Point</code> ein generischer und kein konkreter Typ ist. Wir hätten
 einen anderen Namen für den generischen Parameter wählen können als den in der
 Strukturdefinition deklarierten generischen Parameter, aber die Verwendung
-desselben Namens ist üblich. Methoden, die innerhalb eines <code>impl</code> geschrieben
-werden, das den generischen Typ deklariert, werden auf jeder Instanz des Typs
-definiert, unabhängig davon, welcher konkrete Typ am Ende den generischen Typ
-ersetzt.</p>
+desselben Namens ist üblich. Wenn du eine Methode innerhalb eines <code>impl</code>
+schreibst, die einen generischen Typ deklariert, wird diese Methode auf jeder
+Instanz des Typs definiert, unabhängig davon, welcher konkrete Typ am Ende den
+generischen Typ ersetzt.</p>
 <p>Wir können auch Einschränkungen für generische Typen angeben, wenn wir Methoden
 auf dem Typ definieren. Wir könnten zum Beispiel Methoden nur auf
 <code>Point&lt;f32&gt;</code>-Instanzen implementieren und nicht auf <code>Point&lt;T&gt;</code>-Instanzen mit

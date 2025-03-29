@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -203,7 +203,8 @@ Programmausführung</li>
 Schlüsselwort innerhalb einer Vereinigungdeklaration</li>
 <li><code>unsafe</code> – Code, Funktionen, Merkmale (traits) und Implementierungen
 als unsicher kennzeichnen</li>
-<li><code>use</code> – Symbole in den Gültigkeitsbereich bringen</li>
+<li><code>use</code> – Symbole in den Gültigkeitsbereich bringen; genaue Spezifikation
+von generischen und Lebensdauer-Grenzen</li>
 <li><code>where</code> – Klauseln zur Typabgrenzung angeben</li>
 <li><code>while</code> – wiederhole abhängig vom Ergebnis eines Bedingungsausdrucks</li>
 </ul>
@@ -216,6 +217,7 @@ Rust für eine mögliche zukünftige Verwendung reserviert.</p>
 <li><code>box</code></li>
 <li><code>do</code></li>
 <li><code>final</code></li>
+<li><code>gen</code></li>
 <li><code>macro</code></li>
 <li><code>override</code></li>
 <li><code>priv</code></li>
@@ -267,11 +269,12 @@ Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
 Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
 Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
 Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
-<code>try</code> in Ausgabe 2015 kein Schlüsselwort, aber in Ausgabe 2018 schon. Wenn du
-auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015 geschrieben wurde und
-eine Funktion <code>try</code> hat, musst du die Roh-Bezeichner-Syntax verwenden, in
-diesem Fall <code>r#try</code>, um diese Funktion von deinem Code der Ausgabe 2018 aus
-aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang E</a> für weitere Informationen zu Ausgaben.</p>
+<code>try</code> in Ausgabe 2015 kein Schlüsselwort, in den Ausgaben 2018, 2021 und 2024
+aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
+geschrieben wurde und eine Funktion <code>try</code> hat, musst du die
+Roh-Bezeichner-Syntax verwenden, in diesem Fall <code>r#try</code>, um diese Funktion von
+deinem Code in einer neueren Ausgabe aus aufzurufen. Siehe <a href="appendix-05-editions.html">Anhang
+E</a> für weitere Informationen zu Ausgaben.</p>
 
                     </main>
 

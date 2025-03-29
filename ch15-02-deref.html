@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -297,11 +297,11 @@ error: could not compile `deref-example` (bin "deref-example") due to 1 previous
 Fähigkeit für unseren Typ nicht implementiert haben. Um eine
 Dereferenzierung mit dem Operator <code>*</code> zu ermöglichen, implementieren wir das
 Merkmal <code>Deref</code>.</p>
-<h3 id="einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals"><a class="header" href="#einen-typ-wie-eine-referenz-behandeln-durch-implementieren-des-deref-merkmals">Einen Typ wie eine Referenz behandeln durch Implementieren des <code>Deref</code>-Merkmals</a></h3>
-<p>Wie im Abschnitt <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a> in
-Kapitel 10 beschrieben, müssen wir zur Implementierung eines Merkmals
-Implementierungen für die erforderlichen Methoden des Merkmals bereitstellen.
-Das von der Standardbibliothek bereitgestellte Merkmal <code>Deref</code> erfordert die
+<h3 id="implementieren-des-merkmals-deref"><a class="header" href="#implementieren-des-merkmals-deref">Implementieren des Merkmals <code>Deref</code></a></h3>
+<p>Wie in <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a> in Kapitel 10
+beschrieben, müssen wir zur Implementierung eines Merkmals Implementierungen
+für die erforderlichen Methoden des Merkmals bereitstellen. Das von der
+Standardbibliothek bereitgestellte Merkmal <code>Deref</code> erfordert die
 Implementierung einer Methode namens <code>deref</code>, die <code>self</code> ausleiht (borrow) und
 eine Referenz auf die beinhalteten Daten zurückgibt. Codeblock 15-10 enthält
 eine Implementierung von <code>Deref</code>, um die Definition von <code>MyBox</code> zu ergänzen:</p>
@@ -388,7 +388,7 @@ für intelligente Zeiger geeignet ist.</p>
 <p>Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in Codeblock 15-8
 definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von <code>Deref</code>, die wir in
 Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
-Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
+Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn hello(name: &amp;str) {
     println!("Hallo {name}!");
@@ -400,7 +400,7 @@ Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter:</p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument
 aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatischer Umwandlung ermöglicht es,
 <code>hello</code> mit einer Referenz auf einen Wert vom Typ <code>MyBox&lt;String&gt;</code> aufzurufen,
-wie es in Codeblock 15-12 gezeigt wird:</p>
+wie es in Codeblock 15-12 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::ops::Deref;
 </span><span class="boring">
@@ -488,11 +488,11 @@ unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal <code>Deref
 verwenden, um den <code>*</code>-Operator bei veränderbaren Referenzen zu überschreiben.</p>
 <p>Rust wendet die automatische Umwandlung an, wenn Typen und
 Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:</p>
-<ul>
+<ol>
 <li>Von <code>&amp;T</code> zu <code>&amp;U</code>, wenn <code>T:Deref&lt;Target=U&gt;</code></li>
 <li>Von <code>&amp;mutT</code> zu <code>&amp;mutU</code>, wenn <code>T:DerefMut&lt;Target=U&gt;</code></li>
 <li>Von <code>&amp;mutT</code> zu <code>&amp;U</code>, wenn <code>T:Deref&lt;Target=U&gt;</code></li>
-</ul>
+</ol>
 <p>Die ersten beiden Fälle sind identisch, mit der Ausnahme, dass der zweite die
 Veränderbarkeit implementiert. Der erste Fall besagt, dass wenn man einen <code>&amp;T</code>
 hat und <code>T</code> <code>Deref</code> für einen Typ <code>U</code> implementiert hat, man transparent einen

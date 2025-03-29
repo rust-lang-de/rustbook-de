@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -256,7 +256,7 @@ dokumentieren.</p>
 <p>Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
 <code>my_crate</code> beschreibt, die die Funktion <code>add_one</code> enthält, können wir am Anfang
 der Datei <em>src/lib.rs</em> Dokumentationskommentare hinzufügen die mit <code>//!</code>
-beginnen. Siehe Codeblock 14-2:</p>
+beginnen. Siehe Codeblock 14-2.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">//! # My Crate
 //!
@@ -547,7 +547,7 @@ Veröffentlichung bereit ist, folgendermaßen aussehen:</p>
 <pre><code class="language-toml">[package]
 name = "guessing_game"
 version = "0.1.0"
-edition = "2021"
+edition = "2024"
 description = "A fun game where you guess what number the computer has chosen."
 license = "MIT OR Apache-2.0"
 
@@ -592,9 +592,9 @@ Führe dann <code>cargo publish</code> aus, um die neue Version hochzuladen.</p>
 <p>Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
 ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt
-ist. In solchen Situationen unterstützt Cargo das <em>herausziehen</em> (yanking)
-einer Kistenversion.</p>
-<p>Durch das Herausziehen einer Version wird verhindert, dass neue Projekte von
+ist. In solchen Situationen unterstützt Cargo das Herausziehen (yanking) einer
+Kistenversion.</p>
+<p>Durch das <em>Herausziehen</em> einer Version wird verhindert, dass neue Projekte von
 dieser Version abhängen, während alle vorhandenen Projekte, die davon abhängen,
 weiterhin heruntergeladen werden können. Im Wesentlichen bedeutet Herausziehen
 (yank), dass alle Projekte mit einem <em>Cargo.lock</em> nicht kaputt gehen und

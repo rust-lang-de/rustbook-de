@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -155,14 +155,15 @@ Vererbung (inheritance). Schauen wir uns an, was jedes dieser Charakteristiken
 bedeutet und ob Rust es unterstützt.</p>
 <h3 id="objekte-enthalten-daten-und-verhalten"><a class="header" href="#objekte-enthalten-daten-und-verhalten">Objekte enthalten Daten und Verhalten</a></h3>
 <p>Das Buch <em>Design Patterns: Elements of Reusable Object-Oriented Software</em> von
-Erich Gamma, Richard Helm, Ralph Johnson und John Vlissides (Addison-Wesley
-Professional, 1994), umgangssprachlich als <em>The Gang of Four</em>-Buch bezeichnet,
-ist ein Katalog von objektorientierten Entwurfsmustern. Es definiert OOP auf
-diese Weise:</p>
+Erich Gamma, Richard Helm, Ralph Johnson und John Vlissides (Addison-Wesley,
+1994), umgangssprachlich als <em>The Gang of Four</em>-Buch bezeichnet, ist ein
+Katalog von objektorientierten Entwurfsmustern. Es definiert OOP auf folgende
+Weise:</p>
 <blockquote>
-<p>Objektorientierte Programme setzen sich aus Objekten zusammen. Ein <em>Objekt</em>
+<p>Objektorientierte Programme setzen sich aus Objekten zusammen. Ein <strong>Objekt</strong>
 verpackt sowohl Daten als auch Prozeduren, die auf diesen Daten operieren.
-Die Prozeduren werden normalerweise <em>Methoden</em> oder <em>Operationen</em> genannt.</p>
+Die Prozeduren werden normalerweise <strong>Methoden</strong> oder <strong>Operationen</strong>
+genannt.</p>
 </blockquote>
 <p>Mit dieser Definition ist Rust objektorientiert: Strukturen (structs) und
 Aufzählungen (enums) haben Daten, und <code>impl</code>-Blöcke stellen Methoden auf
@@ -273,8 +274,8 @@ nicht, ermöglicht die Kapselung von Implementierungsdetails.</p>
 <p><em>Vererbung</em> ist ein Mechanismus, mit dem ein Objekt Elemente von der Definition
 eines anderen Objekts erben kann und so die Daten und das Verhalten des
 übergeordneten Objekts erhält, ohne dass du diese erneut definieren musst.</p>
-<p>Wenn eine Sprache Vererbung haben muss, um eine objektorientierte Sprache zu
-sein, dann ist Rust keine solche. Es gibt keine Möglichkeit, eine Struktur zu
+<p>Wenn eine Programmiersprache Vererbung haben muss, um objektorientiert zu sein,
+dann ist Rust keine solche Sprache. Es gibt keine Möglichkeit, eine Struktur zu
 definieren, die die Felder und Methodenimplementierungen der Elternstruktur
 erbt, ohne ein Makro zu benutzen.</p>
 <p>Wenn du jedoch daran gewöhnt bist, Vererbung in deinem

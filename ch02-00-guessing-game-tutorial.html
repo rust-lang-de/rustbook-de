@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -413,20 +413,16 @@ einzufügen, um lange Zeilen aufzubrechen, wenn du eine Methode mit der
 Syntax <code>.method_name()</code> aufrufst. Lass uns nun besprechen, was diese Zeile
 bewirkt.</p>
 <p>Wie bereits erwähnt, schreibt <code>read_line</code> die Benutzereingabe in die übergebene
-String-Variable, gibt aber darüber hinaus auch einen <code>Result</code>-Wert
-zurück.
-<a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
+Zeichenketten-Variable, gibt aber darüber hinaus auch einen <code>Result</code>-Wert
+zurück. <a href="https://doc.rust-lang.org/std/result/enum.Result.html"><code>Result</code></a> ist eine <a href="ch06-00-enums.html"><em>Aufzählung</em></a> (enumeration, oder
 kurz enum), die einen Datentyp darstellt, der einem von mehreren möglichen
-Zuständen annehmen kann.
-Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
+Zuständen annehmen kann. Wir nennen jeden möglichen Zustand eine <em>Variante</em>.</p>
 <p>In Kapitel 6 werden <a href="ch06-00-enums.html">Aufzählungen</a> ausführlicher behandelt. Der Zweck
 dieser <code>Result</code>-Typen ist es, Informationen zur Fehlerbehandlung zu kodieren.</p>
-<p>Die Varianten von  <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
-die Operation erfolgreich war, und der erfolgreich
-generierte Wert innerhalb von <code>Ok</code> steht.
-Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen
-ist, und <code>Err</code> enthält Informationen darüber, wie oder warum die Operation
-fehlgeschlagen ist.</p>
+<p>Die Varianten von <code>Result</code> sind <code>Ok</code> und <code>Err</code>. Die Variante <code>Ok</code> gibt an, dass
+die Operation erfolgreich war, und enthält den erfolgreich generierten Wert.
+Die Variante <code>Err</code> bedeutet, dass die Operation fehlgeschlagen ist, und enthält
+Informationen darüber, wie oder warum die Operation fehlgeschlagen ist.</p>
 <p>Für Werte vom Typ <code>Result</code> sind, wie für Werte jedes Typs, Methoden definiert.
 Eine Instanz von <code>Result</code> hat eine <a href="https://doc.rust-lang.org/std/result/enum.Result.html#method.expect">Methode <code>expect</code></a>, die du
 aufrufen kannst. Wenn diese <code>io::Result</code>-Instanz ein <code>Err</code>-Wert ist, wird
@@ -557,29 +553,25 @@ den folgenden Beispielen verwendeten übereinstimmt.</p>
 <p>Lass uns nun, ohne den Code zu ändern, das Projekt bauen, wie in Codeblock 2-2
 gezeigt.</p>
 <pre><code class="language-console">$ cargo build
-    Updating crates.io index
-     Locking 16 packages to latest compatible versions
-      Adding wasi v0.11.0+wasi-snapshot-preview1 (latest: v0.13.3+wasi-0.2.2)
-      Adding zerocopy v0.7.35 (latest: v0.8.9)
-      Adding zerocopy-derive v0.7.35 (latest: v0.8.9)
-  Downloaded syn v2.0.87
-  Downloaded 1 crate (278.1 KB) in 0.16s
-   Compiling proc-macro2 v1.0.89
-   Compiling unicode-ident v1.0.13
-   Compiling libc v0.2.161
-   Compiling cfg-if v1.0.0
-   Compiling byteorder v1.5.0
-   Compiling getrandom v0.2.15
-   Compiling rand_core v0.6.4
-   Compiling quote v1.0.37
-   Compiling syn v2.0.87
-   Compiling zerocopy-derive v0.7.35
-   Compiling zerocopy v0.7.35
-   Compiling ppv-lite86 v0.2.20
-   Compiling rand_chacha v0.3.1
-   Compiling rand v0.8.5
-   Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 3.69s
+  Updating crates.io index
+   Locking 15 packages to latest Rust 1.85.0 compatible versions
+    Adding rand v0.8.5 (available: v0.9.0)
+ Compiling proc-macro2 v1.0.93
+ Compiling unicode-ident v1.0.17
+ Compiling libc v0.2.170
+ Compiling cfg-if v1.0.0
+ Compiling byteorder v1.5.0
+ Compiling getrandom v0.2.15
+ Compiling rand_core v0.6.4
+ Compiling quote v1.0.38
+ Compiling syn v2.0.98
+ Compiling zerocopy-derive v0.7.35
+ Compiling zerocopy v0.7.35
+ Compiling ppv-lite86 v0.2.20
+ Compiling rand_chacha v0.3.1
+ Compiling rand v0.8.5
+ Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
+  Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
 </code></pre>
 <p><span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von <code>cargo build</code> nach dem Hinzufügen der Kiste rand als Abhängigkeit</span></p>
 <p>Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
@@ -642,7 +634,8 @@ zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
 sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
-    Updating rand v0.8.5 -&gt; v0.8.6
+     Locking 1 package to latest Rust 1.85.0 compatible version
+    Updating rand v0.8.5 -&gt; v0.8.6 (available: v0.9.0)
 </code></pre>
 <p>Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei <em>Cargo.lock</em> bemerken, die feststellt, dass die
@@ -1033,7 +1026,9 @@ Du hast geschätzt: 59
 Du hast gewonnen!
 Bitte gib deine Schätzung ein.
 quit
-thread 'main' panicked at 'Bitte gib eine Zahl ein!: ParseIntError { kind: InvalidDigit }', src/libcore/result.rs:999:5
+
+thread 'main' panicked at src/main.rs:28:47:
+Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Mit der Eingabe von <code>quit</code> wird das Spiel beendet, aber das gilt

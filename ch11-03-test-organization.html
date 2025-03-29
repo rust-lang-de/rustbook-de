@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -228,7 +228,7 @@ mod tests {
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
-Wie im Abschnitt <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
+Wie in <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
 beschrieben, können Elemente in Kind-Modulen die Elemente ihrer Eltern-Module
 verwenden. In diesem Test bringen wir alle Elemente des Eltern-Moduls von
 <code>tests</code> mit <code>use super::*</code> in den Gültigkeitsbereich, und dann kann der Test
@@ -350,13 +350,12 @@ wie du in Kapitel 7 über die Trennung von Code in Module und Dateien gelernt
 hast.</p>
 <p>Das unterschiedliche Verhalten von Dateien im Verzeichnis <em>tests</em> ist am
 deutlichsten, wenn du eine Reihe Hilfsfunktionen hast, die bei mehreren
-Integrationstestdateien verwendest, und du versuchst, die Schritte im
-Abschnitt <a href="ch07-05-separating-modules-into-different-files.html">„Module in verschiedene Dateien
-aufteilen“</a> in Kapitel 7 zu befolgen, um sie in
-ein gemeinsames Modul zu extrahieren. Wenn wir zum Beispiel <em>tests/common.rs</em>
-erstellen und eine Funktion namens <code>setup</code> darin platzieren, können wir <code>setup</code>
-etwas Code hinzufügen, den wir von mehreren Testfunktionen in mehreren
-Testdateien aufrufen wollen:</p>
+Integrationstestdateien verwendest, und du versuchst, die Schritte in <a href="ch07-05-separating-modules-into-different-files.html">„Module
+in verschiedene Dateien aufteilen“</a> in Kapitel 7
+zu befolgen, um sie in ein gemeinsames Modul zu extrahieren. Wenn wir zum
+Beispiel <em>tests/common.rs</em> erstellen und eine Funktion namens <code>setup</code> darin
+platzieren, können wir <code>setup</code> etwas Code hinzufügen, den wir von mehreren
+Testfunktionen in mehreren Testdateien aufrufen wollen:</p>
 <p><span class="filename">Dateiname: tests/common.rs</span></p>
 <pre><code class="language-rust noplayground">pub fn setup() {
     // Vorbereitungscode speziell für die Tests deiner Bibliothek
@@ -409,10 +408,10 @@ aus:</p>
     │   └── mod.rs
     └── integration_test.rs
 </code></pre>
-<p>Dies ist die ältere Namenskonvention, die auch Rust versteht, die wir im
-Abschnitt <a href="ch07-05-separating-modules-into-different-files.html#alternative-dateipfade">„Alternative Dateipfade“</a> in Kapitel 7 erwähnt haben.
-Durch diese Benennung der Datei wird Rust angewiesen, das Modul <code>common</code> nicht
-als Integrationstestdatei zu behandeln. Wenn wir den Funktionscode <code>setup</code> in
+<p>Dies ist die ältere Namenskonvention, die auch Rust versteht, die wir in
+<a href="ch07-05-separating-modules-into-different-files.html#alternative-dateipfade">„Alternative Dateipfade“</a> in Kapitel 7 erwähnt haben. Durch diese
+Benennung der Datei wird Rust angewiesen, das Modul <code>common</code> nicht als
+Integrationstestdatei zu behandeln. Wenn wir den Funktionscode <code>setup</code> in
 <em>tests/common/mod.rs</em> verschieben und die Datei <em>tests/common.rs</em> löschen,
 erscheint der Abschnitt in der Testausgabe nicht mehr. Dateien in
 Unterverzeichnissen des Verzeichnisses <em>tests</em> werden nicht als separate Kisten

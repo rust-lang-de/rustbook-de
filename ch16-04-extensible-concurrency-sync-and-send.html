@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Sync und Send - Die Programmiersprache Rust</title>
+        <title>Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Send und Sync - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -144,70 +144,73 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-sync-und-send"><a class="header" href="#erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-sync-und-send">Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) <code>Sync</code> und <code>Send</code></a></h2>
-<p>Interessanterweise hat die Sprache Rust <em>sehr wenige</em>
-Nebenläufigkeitsfunktionalitäten. Fast jede Nebenläufigkeitsfunktionalität,
-über die wir bisher in diesem Kapitel gesprochen haben, war Teil der
-Standardbibliothek, nicht der Sprache. Deine Möglichkeiten für den Umgang mit
-Nebenläufigkeit sind nicht auf die Sprache oder die Standardbibliothek
-beschränkt; du kannst deine eigenen Nebenläufigkeitsfunktionalitäten schreiben
-oder die von anderen geschriebenen verwenden.</p>
-<p>In der Sprache sind jedoch zwei Nebenläufigkeitskonzepte eingebettet: Die
-<code>std::marker</code>-Merkmale (traits) <code>Sync</code> und <code>Send</code>.</p>
+                        <h2 id="erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-send-und-sync"><a class="header" href="#erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-send-und-sync">Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) <code>Send</code> und <code>Sync</code></a></h2>
+<p>Interessanterweise war fast jede Nebenläufigkeitsfunktionalität, über die wir
+bisher in diesem Kapitel gesprochen haben, Teil der Standardbibliothek, nicht
+der Sprache. Deine Möglichkeiten für den Umgang mit Nebenläufigkeit sind nicht
+auf die Sprache oder die Standardbibliothek beschränkt; du kannst deine eigenen
+Nebenläufigkeitsfunktionalitäten schreiben oder die von anderen geschriebenen
+verwenden.</p>
+<p>Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
+die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale <code>Send</code> und
+<code>Sync</code> in <code>std::marker</code>.</p>
 <h3 id="erlauben-der-eigentümerschaftübertragung-zwischen-strängen-mit-send"><a class="header" href="#erlauben-der-eigentümerschaftübertragung-zwischen-strängen-mit-send">Erlauben der Eigentümerschaftübertragung zwischen Strängen mit <code>Send</code></a></h3>
 <p>Das Markierungsmerkmal (marker trait) <code>Send</code> zeigt an, dass die
 Eigentümerschaft an Werten des Typs, der <code>Send</code> implementiert, zwischen
-Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ ist <code>Send</code>, aber
-es gibt einige Ausnahmen, einschließlich <code>Rc&lt;T&gt;</code>: Dieser kann nicht <code>Send</code>
-sein, denn wenn du einen <code>Rc&lt;T&gt;</code> Wert geklont hast und versucht hast, die
-Eigentümerschaft am Klon auf einen anderen Strang zu übertragen, könnten beide
-Stränge gleichzeitig die Referenzzahl aktualisieren. Aus diesem Grund ist
-<code>Rc&lt;T&gt;</code> für die Verwendung in einsträngigen Situationen implementiert, in denen
-du nicht die Strang-sichere Performanzeinbuße zahlen willst.</p>
+Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ implementiert
+<code>Send</code>, aber es gibt einige Ausnahmen, einschließlich <code>Rc&lt;T&gt;</code>: Dieser kann
+nicht <code>Send</code> sein, denn wenn du einen <code>Rc&lt;T&gt;</code> Wert geklont hast und versucht
+hast, die Eigentümerschaft am Klon auf einen anderen Strang zu übertragen,
+könnten beide Stränge gleichzeitig die Referenzzahl aktualisieren. Aus diesem
+Grund ist <code>Rc&lt;T&gt;</code> für die Verwendung in einsträngigen Situationen
+implementiert, in denen du nicht die Strang-sichere Performanzeinbuße zahlen
+willst.</p>
 <p>Daher stellen das Typsystem und die Merkmalsabgrenzungen (trait bounds) von
 Rust sicher, dass du niemals versehentlich einen <code>Rc&lt;T&gt;</code>-Wert über Stränge
 unsicher senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
 wir folgenden Fehler: Das Merkmal <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht
-implementiert. Als wir zu <code>Arc&lt;T&gt;</code>, das <code>Send</code> ist, wechselten, wurde der Code
-kompiliert.</p>
+implementiert. Als wir zu <code>Arc&lt;T&gt;</code> wechselten, das <code>Send</code> implementiert, ließ
+sich der Code kompilieren.</p>
 <p>Jeder Typ, der vollständig aus <code>Send</code>-Typen besteht, wird automatisch auch als
 <code>Send</code> markiert. Fast alle primitiven Typen sind <code>Send</code>, abgesehen von
 Roh-Zeigern, die wir in Kapitel 20 besprechen werden.</p>
 <h3 id="erlauben-des-zugriffs-von-mehreren-strängen-mit-sync"><a class="header" href="#erlauben-des-zugriffs-von-mehreren-strängen-mit-sync">Erlauben des Zugriffs von mehreren Strängen mit <code>Sync</code></a></h3>
 <p>Das Markierungsmerkmal <code>Sync</code> zeigt an, dass es sicher ist, den Typ, der <code>Sync</code>
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
-jeder Typ <code>T</code> ist <code>Sync</code>, wenn <code>&amp;T</code> (eine unveränderbare Referenz auf <code>T</code>)
-<code>Send</code> ist, was bedeutet, dass die Referenz sicher an einen anderen Strang
-gesendet werden kann. Ähnlich wie bei <code>Send</code> sind primitive Typen <code>Sync</code> und
-Typen, die vollständig aus Typen bestehen, die <code>Sync</code> sind, sind ebenfalls
-<code>Sync</code>.</p>
-<p>Der intelligente Zeiger <code>Rc&lt;T&gt;</code> ist nicht <code>Sync</code>, aus den gleichen Gründen, aus
-denen er nicht <code>Send</code> ist. Der Typ <code>RefCell&lt;T&gt;</code> (über den wir in Kapitel 15
-gesprochen haben) und die Familie der verwandten <code>Cell&lt;T&gt;</code>-Typen sind nicht
-<code>Sync</code>. Die Implementierung der Ausleihenprüfung (borrow checking), die
-<code>RefCell&lt;T&gt;</code> zur Laufzeit durchführt, ist nicht Strang-sicher. Der intelligente
-Zeiger <code>Mutex&lt;T&gt;</code> ist <code>Sync</code> und kann verwendet werden, um den Zugriff mit
-mehreren Strängen zu teilen, wie du im Abschnitt <a href="ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-str%C3%A4ngen">„Gemeinsames Nutzen eines
-<code>Mutex&lt;T&gt;</code> von mehreren Strängen“</a> gesehen hast.</p>
+jeder Typ <code>T</code> implementiert <code>Sync</code>, wenn <code>&amp;T</code> (eine unveränderbare Referenz auf
+<code>T</code>) <code>Send</code> implementiert, was bedeutet, dass die Referenz sicher an einen
+anderen Strang gesendet werden kann. Ähnlich wie bei <code>Send</code> implementieren
+primitive Typen <code>Sync</code>, und Typen, die vollständig aus Typen bestehen, die
+<code>Sync</code> implementieren, implementieren ebenfalls <code>Sync</code>.</p>
+<p>Der intelligente Zeiger <code>Rc&lt;T&gt;</code> implementiert ebenfalls nicht <code>Sync</code>, aus
+denselben Gründen, warum er nicht <code>Send</code> implementiert. Der Typ <code>RefCell&lt;T&gt;</code>
+(über den wir in Kapitel 15 gesprochen haben) und die Familie der verwandten
+<code>Cell&lt;T&gt;</code>-Typen implementieren nicht <code>Sync</code>. Die Implementierung der
+Ausleihenprüfung (borrow checking), die <code>RefCell&lt;T&gt;</code> zur Laufzeit durchführt,
+ist nicht Strang-sicher. Der intelligente Zeiger <code>Mutex&lt;T&gt;</code> implementiert
+<code>Sync</code> und kann verwendet werden, um den Zugriff mit mehreren Strängen zu
+teilen, wie du in <a href="ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-str%C3%A4ngen">„Gemeinsames Nutzen eines <code>Mutex&lt;T&gt;</code> von mehreren
+Strängen“</a> gesehen hast.</p>
 <h3 id="manuelles-implementieren-von-send-und-sync-ist-unsicher"><a class="header" href="#manuelles-implementieren-von-send-und-sync-ist-unsicher">Manuelles Implementieren von <code>Send</code> und <code>Sync</code> ist unsicher</a></h3>
-<p>Da Typen, die sich aus den Merkmalen <code>Send</code> und <code>Sync</code> zusammensetzen,
-automatisch auch <code>Send</code> und <code>Sync</code> sind, müssen wir diese Merkmale nicht
-manuell implementieren. Als Markierungsmerkmale haben sie noch nicht einmal
-irgendwelche Methoden, um sie zu implementieren. Sie sind nur nützlich, um
-Invarianten in Bezug auf die Nebenläufigkeit zu erzwingen.</p>
+<p>Da Typen, die sich ausschließlich aus Typen zusammensetzen, die die Merkmale
+<code>Send</code> und <code>Sync</code> implementieren, automatisch auch <code>Send</code> und <code>Sync</code>
+implementieren, müssen wir diese Merkmale nicht manuell implementieren. Als
+Markierungsmerkmale haben sie noch nicht einmal irgendwelche Methoden, um sie
+zu implementieren. Sie sind nur nützlich, um Invarianten in Bezug auf die
+Nebenläufigkeit zu erzwingen.</p>
 <p>Das manuelle Implementieren dieser Merkmale beinhaltet das Schreiben von
 unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
 Kapitel 20 sprechen; für den Moment ist die wichtige Information, dass das
 Erstellen neuer nebenläufiger Typen, die nicht aus <code>Send</code>- und <code>Sync</code>-Teilen
 bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
-aufrechtzuerhalten. <a href="https://doc.rust-lang.org/nomicon/index.html">„Das Rustonomicon“</a> enthält weitere Informationen
-über diese Garantien und wie man sie aufrechterhalten kann.</p>
+aufrechtzuerhalten. <a href="https://doc.rust-lang.org/nomicon/index.html">„Das Rustonomicon“</a> enthält weitere
+Informationen über diese Garantien und wie man sie aufrechterhalten kann.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Dies ist nicht das letzte Mal, dass du in diesem Buch der Nebenläufigkeit
-begegnest: Das gesamte nächste Kapitel befasst sich mit asynchroner
-Programmierung, und das Projekt in Kapitel 21 wird die Konzepte in diesem
-Kapitel in einer realistischeren Situation anwenden als die hier besprochenen
-kleineren Beispiele.</p>
+begegnest: Das nächste Kapitel befasst sich mit asynchroner Programmierung, und
+das Projekt in Kapitel 21 wird die Konzepte in diesem Kapitel in einer
+realistischeren Situation anwenden als die hier besprochenen kleineren
+Beispiele.</p>
 <p>Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
 umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind als Kisten
 (crates) implementiert. Diese entwickeln sich schneller als die

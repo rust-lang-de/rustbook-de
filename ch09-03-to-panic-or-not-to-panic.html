@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -226,9 +226,9 @@ falschen Format durch einen Benutzer.</li>
 in keinem schlechten Zustand befindet, anstatt bei jedem Schritt auf das
 Problem zu prüfen.</li>
 <li>Es gibt keine gute Möglichkeit, diese Informationen in den von dir
-verwendeten Typen zu kodieren. Wir werden im Abschnitt <a href="ch18-03-oo-design-patterns.html#kodieren-von-zust%C3%A4nden-und-verhalten-als-typen">„Kodieren von
-Zuständen und Verhalten als Typen“</a> in Kapitel 18 ein Beispiel
-dafür durcharbeiten.</li>
+verwendeten Typen zu kodieren. Wir werden in <a href="ch18-03-oo-design-patterns.html#kodieren-von-zust%C3%A4nden-und-verhalten-als-typen">„Kodieren von Zuständen und
+Verhalten als Typen“</a> in Kapitel 18 ein Beispiel dafür
+durcharbeiten.</li>
 </ul>
 <p>Wenn jemand deinen Code aufruft und Werte übergibt, die keinen Sinn ergeben,
 ist es am besten, einen Fehler zurückzugeben, damit der Benutzer der Bibliothek
@@ -346,13 +346,13 @@ fortfahren, wobei wir wissen, dass <code>guess</code> zwischen 1 und 100 liegt.<
 Programm nur mit Werten zwischen 1 und 100 arbeitet, und wir viele Funktionen
 mit dieser Anforderung haben, wäre eine solche Prüfung in jeder Funktion mühsam
 (und könnte die Leistung beeinträchtigen).</p>
-<p>Stattdessen können wir einen neuen Typ erstellen und die Validierungen in eine
-Funktion geben, um eine Instanz des Typs zu erzeugen, anstatt die Validierungen
-überall zu wiederholen. Auf diese Weise ist es für die Funktionen sicher, den
-neuen Typ in ihren Signaturen zu verwenden und die erhaltenen Werte
-bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit, einen Typ
-<code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt, wenn die
-Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
+<p>Stattdessen können wir einen neuen Typ in einem bestimmten Modul erstellen und
+die Validierungen in eine Funktion geben, um eine Instanz des Typs zu erzeugen,
+anstatt die Validierungen überall zu wiederholen. Auf diese Weise ist es für
+die Funktionen sicher, den neuen Typ in ihren Signaturen zu verwenden und die
+erhaltenen Werte bedenkenlos zu nutzen. Codeblock 9-13 zeigt eine Möglichkeit,
+einen Typ <code>Guess</code> zu definieren, der nur dann eine Instanz von <code>Guess</code> erzeugt,
+wenn die Funktion <code>new</code> einen Wert zwischen 1 und 100 erhält.</p>
 <p><span class="Dateiname">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -376,8 +376,9 @@ impl Guess {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 9-13: Ein Typ <code>Guess</code>, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span></p>
-<p>Zuerst definieren wir eine Struktur <code>Guess</code>, die ein Feld <code>value</code> hat, das
-einen <code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
+<p>Zuerst erstellen wir ein neues Modul namens <code>guessing_game</code>. Danach definieren
+wir in diesem Modul eine Struktur <code>Guess</code>, die ein Feld <code>value</code> hat, das einen
+<code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
 <p>Dann implementieren wir die zugehörige Funktion <code>new</code> für <code>Guess</code>, die
 Instanzen von <code>Guess</code> erzeugt. Die Funktion <code>new</code> ist so definiert, dass sie
 einen Parameter <code>value</code> vom Typ <code>i32</code> entgegen nimmt und eine <code>Guess</code>-Instanz
@@ -400,10 +401,10 @@ Zweck darin besteht, Daten aus ihren Feldern zurückzugeben. Diese öffentliche
 Methode ist notwendig, weil das Feld <code>value</code> der Struktur <code>Guess</code> privat ist.
 Es ist wichtig, dass das Feld <code>value</code> privat ist, damit Code, der die Struktur
 <code>Guess</code> verwendet, <code>value</code> nicht direkt setzen kann: Code außerhalb des Moduls
-<em>muss</em> die Funktion <code>Guess::new</code> verwenden, um eine Instanz von <code>Guess</code> zu
-erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit gibt, dass
-<code>Guess</code> einen <code>Wert</code> hat, der nicht durch die Bedingungen in der Funktion
-<code>Guess::new</code> überprüft wurde.</p>
+<code>guessing_game</code> <em>muss</em> die Funktion <code>Guess::new</code> verwenden, um eine Instanz von
+<code>Guess</code> zu erzeugen, wodurch sichergestellt wird, dass es keine Möglichkeit
+gibt, dass <code>Guess</code> einen <code>Wert</code> hat, der nicht durch die Bedingungen in der
+Funktion <code>Guess::new</code> überprüft wurde.</p>
 <p>Eine Funktion, die einen Parameter hat oder nur Zahlen zwischen 1 und 100
 zurückgibt, könnte dann in ihrer Signatur angeben, dass sie ein <code>Guess</code>
 anstelle eines <code>i32</code> entgegennimmt oder zurückgibt und bräuchte dann in ihrem

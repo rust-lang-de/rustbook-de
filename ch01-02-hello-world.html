@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -239,22 +239,20 @@ deinem Computer installiert sein!</p>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    println!("Hallo Welt!");
+</span>println!("Hallo Welt!");
 <span class="boring">}</span></code></pre></pre>
 <p>Diese Zeile erledigt die ganze Arbeit in diesem kleinen Programm: Sie gibt Text
-auf dem Bildschirm aus. Hier gibt es vier wichtige Details zu beachten.</p>
-<p>Erstens wird im Rust-Stil mit vier Leerzeichen eingerückt, nicht mit einem
-Tabulator.</p>
-<p>Zweitens ruft <code>println!</code> ein Rust-Makro auf. Wenn es stattdessen eine Funktion
+auf dem Bildschirm aus. Hier gibt es drei wichtige Details zu beachten.</p>
+<p>Erstens ruft <code>println!</code> ein Rust-Makro auf. Wenn es stattdessen eine Funktion
 aufrufte, würde diese als <code>println</code> (ohne <code>!</code>) angegeben werden. Wir werden die
 Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
 wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
 einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
 folgen wie Funktionen.</p>
-<p>Drittens siehst du die Zeichenkette <code>"Hallo Welt!"</code>. Wir übergeben diese
+<p>Zweitens siehst du die Zeichenkette <code>"Hallo Welt!"</code>. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
-<p>Viertens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
+<p>Drittens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.</p>
 <h3 id="kompilieren-und-ausführen-sind-getrennte-schritte"><a class="header" href="#kompilieren-und-ausführen-sind-getrennte-schritte">Kompilieren und Ausführen sind getrennte Schritte</a></h3>
@@ -296,7 +294,7 @@ getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab
 kompilierte</em> (ahead-of-time compiled) Sprache, d.h. du kannst ein Programm
 kompilieren und die ausführbare Datei an jemand anderen weitergeben, und dieser
 kann das Programm auch ohne Installation von Rust ausführen. Wenn du jemandem
-eine <em>.rb</em>-, <em>.py</em>- oder <em>.js</em>-Datei gibst, muss er eine Ruby-, Python- bzw.
+eine <em>*.rb</em>-, <em>.py</em>- oder <em>.js</em>-Datei gibst, muss er eine Ruby-, Python- bzw.
 JavaScript-Implementierung installiert haben. Aber in diesen Sprachen benötigst
 du nur einen Befehl, um dein Programm zu kompilieren und auszuführen. Beim
 Sprachdesign ist alles ein Kompromiss.</p>

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -148,15 +148,18 @@
 <p><em>von Steve Klabnik, Carol Nichols und Chris Krycho, unter Mitarbeit der
 Rust-Gemeinschaft;</em>
 <em>übersetzt ins Deutsche durch die Rust-Gemeinschaft</em></p>
-<p>Diese Version des Textes geht davon aus, dass du Rust 1.82.0 (veröffentlicht am
-2024-10-17) oder neuer verwendest. Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel
-1</a> zum Installieren und Aktualisieren von Rust.</p>
+<p>Diese Version des Textes geht davon aus, dass du Rust 1.85.0 (veröffentlicht am
+2025-02-17) oder neuer mit <code>edition = "2024"</code> in der Cargo.toml-Datei aller
+Projekte verwendest, damit sie die Idiome der Rust 2024 Edition verwenden.
+Siehe <a href="ch01-01-installation.html">Abschnitt „Installation“ in Kapitel 1</a> zum Installieren und
+Aktualisieren von Rust.</p>
 <p>Die HTML-Version ist online verfügbar unter
 <a href="https://doc.rust-lang.org/stable/book/">https://doc.rust-lang.org/stable/book/</a>
 (englisches Original) und unter
 <a href="https://rust-lang-de.github.io/rustbook-de/">https://rust-lang-de.github.io/rustbook-de/</a>
-(deutsche Übersetzung) sowie offline in Rust-Installationen, die mit <code>rustup</code>
-erfolgt sind; führe <code>rustup docs --book</code> aus um es zu öffnen.</p>
+(deutsche Übersetzung). Die englische Fassung ist zudem offline in
+Rust-Installationen, die mit <code>rustup</code> installiert wurden, verfügbar; führe
+<code>rustup docs --book</code> aus um sie zu öffnen.</p>
 <p>Es sind weitere <a href="appendix-06-translation.html">Gemeinschaftsübersetzungen</a> verfügbar.</p>
 <p>Der englische Text ist als <a href="https://nostarch.com/rust-programming-language-2nd-edition">Taschenbuch und E-Book bei No Starch
 Press</a> erhältlich, den deutschen Text gibt es ebenfalls als

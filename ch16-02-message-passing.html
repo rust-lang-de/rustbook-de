@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -152,20 +152,21 @@ gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 <a href="https://golang.org/doc/effective_go.html#concurrency">der Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du
 Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“</p>
 <p>Um die Gleichzeitigkeit beim Senden von Nachrichten zu erreichen, bietet die
-Standardbibliothek von Rust eine Implementierung von <em>Kanälen</em> (channels). Ein
-Kanal ist ein allgemeines Programmierkonzept, mit dem Daten von einem Strang zu
-einem anderen gesendet werden.</p>
+Standardbibliothek von Rust eine Implementierung von Kanälen. Ein <em>Kanal</em>
+(channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem
+Strang zu einem anderen gesendet werden.</p>
 <p>Du kannst dir einen Kanal in der Programmierung wie einen gerichteten
 Wasserkanal vorstellen, z.B. einen Bach oder einen Fluss. Wenn du etwas wie
 eine Gummiente in einen Fluss setzt, wird sie stromabwärts bis zum Ende des
 Wasserwegs reisen.</p>
 <p>Ein Kanal hat zwei Hälften: Einen Sender und einen Empfänger. Die Senderhälfte
-ist die stromaufwärts gelegene Stelle, an der du Gummienten in den Fluss setzt,
-und die Empfängerhälfte ist die Stelle, an der die Gummiente stromabwärts
-ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit den Daten auf,
-die du senden möchtest, und ein anderer Teil überprüft die Empfangsseite auf
-ankommende Nachrichten. Ein Kanal gilt als <em>geschlossen</em> (closed), wenn
-entweder die Sender- oder die Empfängerhälfte aufgeräumt (dropped) wird.</p>
+ist die stromaufwärts gelegene Stelle, an der du die Gummiente in den Fluss
+setzt, und die Empfängerhälfte ist die Stelle, an der die Gummiente
+stromabwärts ankommt. Ein Teil deines Codes ruft Methoden auf dem Sender mit
+den Daten auf, die du senden möchtest, und ein anderer Teil überprüft die
+Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als <em>geschlossen</em>
+(closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
+(dropped) wird.</p>
 <p>Hier arbeiten wir uns zu einem Programm hoch, das einen Strang hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
 die Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Strängen
@@ -226,14 +227,14 @@ Strang und Senden von „hallo“</span></p>
 <p>Wieder verwenden wir <code>thread::spawn</code>, um einen neuen Strang zu erstellen, und
 dann <code>move</code>, um <code>tx</code> in den Funktionsabschluss zu verschieben, sodass der
 erzeugte Strang <code>tx</code> besitzt. Der erzeugte Strang muss den Sender besitzen, um
-in der Lage zu sein, Nachrichten durch den Kanal zu senden. Der Sender hat eine
-Methode <code>send</code>, die den Wert nimmt, den wir senden wollen. Die Methode <code>send</code>
-gibt ein <code>Result&lt;T, E&gt;</code> zurück; wenn also die empfangende Seite bereits
-aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet werden kann,
-wird die Sendeoperation einen Fehler zurückgeben. In diesem Beispiel rufen wir
-<code>unwrap</code> auf, um im Falle eines Fehlers abzustürzen. Aber in einer echten
-Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9 zurück, um
-Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
+in der Lage zu sein, Nachrichten durch den Kanal zu senden.</p>
+<p>Der Sender hat eine Methode <code>send</code>, die den Wert nimmt, den wir senden wollen.
+Die Methode <code>send</code> gibt ein <code>Result&lt;T, E&gt;</code> zurück; wenn also die empfangende
+Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet
+werden kann, wird die Sendeoperation einen Fehler zurückgeben. In diesem
+Beispiel rufen wir <code>unwrap</code> auf, um im Falle eines Fehlers abzustürzen. Aber in
+einer echten Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9
+zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
 <p>In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
 eine Chat-Nachricht erhalten.</p>
@@ -285,7 +286,7 @@ machen, um zu zeigen, wie Kanäle und Eigentümerschaft zusammenwirken, um
 Probleme zu vermeiden: Wir versuchen, einen <code>val</code>-Wert im erzeugten Strang zu
 verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt haben. Versuche, den Code
 in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser Code nicht erlaubt
-ist:</p>
+ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::mpsc;
 use std::thread;
@@ -371,12 +372,12 @@ Pausieren dazwischen</span></p>
 <p>Diesmal hat der erzeugte Strang einen Vektor von Zeichenketten, die wir an den
 Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten, senden jede
 einzeln und pausieren dazwischen, indem wir die Funktion <code>thread::sleep</code> mit
-einem <code>Duration</code>-Wert von 1 Sekunde aufrufen.</p>
+einem <code>Duration</code>-Wert von einer Sekunde aufrufen.</p>
 <p>Im Hauptstrang rufen wir die Funktion <code>recv</code> nicht mehr explizit auf:
 Stattdessen behandeln wir <code>rx</code> als Iterator. Jeden empfangenen Wert geben wir
 aus. Wenn der Kanal geschlossen wird, wird die Iteration beendet.</p>
 <p>Wenn du den Code in Codeblock 16-10 ausführst, solltest du die folgende Ausgabe
-mit einer 1-Sekunden-Pause zwischen jeder Zeile sehen:</p>
+mit einer Ein-Sekunden-Pause zwischen jeder Zeile sehen:</p>
 <pre><code class="language-text">Erhalten: hallo
 Erhalten: aus
 Erhalten: dem

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -155,45 +155,46 @@ Entwicklungsumgebungen (IDEs) befassen.</p>
 Gemeinschafts-Codestils. Viele kollaborative Projekte verwenden <code>rustfmt</code>, um
 Diskussionen zum Stil beim Schreiben von Rust zu vermeiden: Jeder formatiert
 seinen Code mithilfe des Tools.</p>
-<p>Um <code>rustfmt</code> zu installieren, gib folgendes ein:</p>
-<pre><code class="language-console">$ rustup component add rustfmt
-</code></pre>
-<p>Dieser Befehl stellt dir <code>rustfmt</code> und <code>cargo-fmt</code> zur Verfügung, ähnlich wie
-Rust sowohl <code>rustc</code> als auch <code>cargo</code> bereitstellt. Um ein beliebiges
-Cargo-Projekt zu formatieren, gib folgendes ein:</p>
+<p>Rust-Installationen enthalten standardmäßig rustfmt, daher solltest du die
+Programme <code>rustfmt</code> und <code>cargo-fmt</code> bereits auf deinem System haben. Diese
+beiden Befehle funktionieren analog zu <code>rustc</code> und <code>cargo</code>, wobei <code>rustfmt</code>
+eine feingranularere Steuerung erlaubt und <code>cargo-fmt</code> die Konventionen eines
+Projekts versteht, das Cargo verwendet. Um ein beliebiges Cargo-Projekt zu
+formatieren, gibst du Folgendes ein:</p>
 <pre><code class="language-console">$ cargo fmt
 </code></pre>
-<p>Durch Ausführen dieses Befehls wird der gesamte Rust-Code in der aktuellen
-Kiste (crate) neu formatiert. Dies sollte nur den Codestil, nicht aber die
-Codesemantik ändern. Weitere Informationen zu <code>rustfmt</code> findest du in <a href="https://github.com/rust-lang/rustfmt">seiner
+<p>Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Kiste neu
+formatiert. Dies sollte nur den Stil des Codes ändern, nicht die Semantik des
+Codes. Weitere Informationen zu <code>rustfmt</code> findest du in <a href="https://github.com/rust-lang/rustfmt">seiner
 Dokumentation</a>.</p>
 <h3 id="korrigiere-deinen-code-mit-rustfix"><a class="header" href="#korrigiere-deinen-code-mit-rustfix">Korrigiere deinen Code mit <code>rustfix</code></a></h3>
-<p>Das Werkzeug rustfix ist in Rust-Installationen enthalten und kann automatisch
-Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das Problem zu
-beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich hast du
-schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen Code:</p>
+<p>Das Werkzeug <code>rustfix</code> ist in Rust-Installationen enthalten und kann
+automatisch Compiler-Warnungen beheben, die eine klare Möglichkeit haben, das
+Problem zu beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich
+hast du schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen
+Code:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn do_something() {}
-
-fn main() {
-    for i in 0..100 {
-        do_something();
-    }
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let mut x = 42;
+    println!("{x}");
 }</code></pre></pre>
-<p>Hier rufen wir die Funktion <code>do_something</code> 100 Mal auf, aber wir verwenden die
-Variable <code>i</code> im Rumpf der <code>for</code>-Schleife nicht. Rust warnt uns davor:</p>
+<p>Hier definieren wir die Variable <code>x</code> als veränderbar, aber wir verändern sie nie
+wirklich. Rust warnt uns vor dieser Tatsache:</p>
 <pre><code class="language-console">$ cargo build
    Compiling myprogram v0.1.0 (file:///projects/myprogram)
-warning: unused variable: `i`
- --&gt; src/main.rs:4:9
+warning: variable does not need to be mutable
+ --&gt; src/main.rs:2:9
   |
-4 |     for i in 1..100 {
-  |         ^ help: consider using `_i` instead
+2 |     let mut x = 0;
+  |         ----^
+  |         |
+  |         help: remove this `mut`
   |
-  = note: #[warn(unused_variables)] on by default
-
-    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.50s
+  = note: `#[warn(unused_mut)]` on by default
 </code></pre>
+<p>Die Warnung empfiehlt, dass wir das Schlüsselwort <code>mut</code> entfernen. Wir können
+diesen Vorschlag automatisch mit dem Werkzeug <code>rustfix</code> übernehmen, indem wir
+den Befehl <code>cargo fix</code> ausführen:</p>
 <p>Die Warnung empfiehlt, stattdessen <code>_i</code> als Namen zu verwenden: Der Unterstrich
 zeigt an, dass wir diese Variable nicht verwenden wollen. Wir können diesen
 Vorschlag mit dem Werkzeug <code>rustfix</code> automatisch übernehmen, indem wir das
@@ -206,24 +207,19 @@ Kommando <code>cargo fix</code> ausführen:</p>
 <p>Wenn wir uns <em>src/main.rs</em> noch einmal ansehen, werden wir sehen, dass
 <code>cargo fix</code> den Code geändert hat:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn do_something() {}
-
-fn main() {
-    for _i in 0..100 {
-        do_something();
-    }
+<pre><pre class="playground"><code class="language-rust">fn main() {
+    let x = 42;
+    println!("{x}");
 }</code></pre></pre>
-<p>Die <code>for</code>-Schleifenvariable heißt jetzt <code>_i</code> und die Warnung erscheint nicht
+<p>Die Variable <code>x</code> ist jetzt unveränderlich, und die Warnung erscheint nicht
 mehr.</p>
 <p>Du kannst den Befehl <code>cargo fix</code> auch dazu verwenden, deinen Code zwischen
 verschiedenen Rust-Ausgaben zu konvertieren. Die Ausgaben sind in <a href="appendix-05-editions.html">Anhang
 E</a> aufgeführt.</p>
 <h3 id="mehr-statische-codeanalyse-mit-clippy"><a class="header" href="#mehr-statische-codeanalyse-mit-clippy">Mehr statische Codeanalyse mit Clippy</a></h3>
 <p>Das Tool Clippy ist eine Sammlung von Tools zur statischen Codeanalyse, mit dem
-du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst.</p>
-<p>Um Clippy zu installieren, gib folgendes ein:</p>
-<pre><code class="language-console">$ rustup component add clippy
-</code></pre>
+du häufige Fehler aufspüren und deinen Rust-Code verbessern kannst. Clippy ist
+in den Standardinstallationen von Rust enthalten.</p>
 <p>Um Clippy bei einem Cargo-Projekt auszuführen, gib folgendes ein:</p>
 <pre><code class="language-console">$ cargo clippy
 </code></pre>

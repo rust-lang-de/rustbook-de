@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -161,11 +161,12 @@ miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
 sicherzustellen, dass die tatsächlich zur Laufzeit verwendeten Referenzen
 definitiv gültig sind.</p>
-<p>Das Vermerken von Lebensdauern ist ein Konzept, das die meisten anderen
-Programmiersprachen nicht kennen, sodass es sich ungewohnt anfühlen wird. Auch
-wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer Gesamtheit behandeln
-werden, so werden wir doch allgemeine Möglichkeiten erörtern, mit denen du dich
-mit der Syntax der Lebensdauer und den Konzepten vertraut machen kannst.</p>
+<p>Das Annotieren von Lebensdauern ist ein Konzept, das die meisten anderen
+Programmiersprachen nicht einmal kennen, sodass es sich ungewohnt anfühlen
+wird. Auch wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer
+Gesamtheit behandeln werden, so werden wir doch allgemeine Möglichkeiten
+erörtern, mit denen du dich mit der Syntax der Lebensdauer und den Konzepten
+vertraut machen kannst.</p>
 <h3 id="verhindern-hängender-referenzen-mit-lebensdauern"><a class="header" href="#verhindern-hängender-referenzen-mit-lebensdauern">Verhindern hängender Referenzen mit Lebensdauern</a></h3>
 <p>Das Hauptziel der Lebensdauer ist es, <em>hängende Referenzen</em> (dangling
 references) zu verhindern, die dazu führen, dass ein Programm auf andere
@@ -288,11 +289,10 @@ implementiert haben, sollte der Code in Codeblock 10-19 <code>Die längere Zeich
 bestimmen</span></p>
 <p>Beachte, dass wir wollen, dass die Funktion Zeichenkettenanteilstypen nimmt,
 die Referenzen sind und keine Zeichenketten, weil wir nicht wollen, dass die
-Funktion <code>longest</code> die Eigentümerschaft ihrer Parameter übernimmt. Lies den
-Abschnitt <a href="ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter">„Zeichenkettenanteilstypen als
-Parameter“</a> in Kapitel 4, um mehr darüber zu
-erfahren, warum die Parameter, die wir in Codeblock 10-19 verwenden, die von
-uns gewünschten sind.</p>
+Funktion <code>longest</code> die Eigentümerschaft ihrer Parameter übernimmt. Lies
+<a href="ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter">„Zeichenkettenanteilstypen als Parameter“</a> in
+Kapitel 4, um mehr darüber zu erfahren, warum die Parameter, die wir in
+Codeblock 10-19 verwenden, die von uns gewünschten sind.</p>
 <p>Wenn wir versuchen, die Funktion <code>longest</code>, wie in Codeblock 10-20 gezeigt, zu
 implementieren, wird sie sich nicht kompilieren lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -851,15 +851,15 @@ folgt annotiert:</p>
 <p>Der Text dieser Zeichenkette wird direkt in der Binärdatei des Programms
 gespeichert, die immer verfügbar ist. Daher ist die Lebensdauer aller
 Zeichenkettenliterale <code>'static</code>.</p>
-<p>Möglicherweise siehst du Hinweise zur Verwendung der Lebensdauer <code>'static</code> in
-Fehlermeldungen. Aber bevor du <code>'static</code> als Lebensdauer für eine Referenz
-angibst, denke darüber nach, ob deine Referenz tatsächlich während der gesamten
-Lebensdauer deines Programms lebt oder nicht, und ob du das so willst. In den
-meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer <code>'static</code>
-hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder aus einer
-Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen besteht
-die Lösung darin, diese Probleme zu beheben und nicht darin, die Lebensdauer
-als <code>'static</code> festzulegen.</p>
+<p>Möglicherweise siehst du in Fehlermeldungen Hinweise zur Verwendung der
+Lebensdauer <code>'static</code>. Aber bevor du <code>'static</code> als Lebensdauer für eine
+Referenz angibst, denke darüber nach, ob deine Referenz tatsächlich während der
+gesamten Lebensdauer deines Programms lebt oder nicht, und ob du das so willst.
+In den meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer
+<code>'static</code> hindeutet, aus dem Versuch, eine hängende Referenz zu erstellen, oder
+aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen
+besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
+Lebensdauer als <code>'static</code> festzulegen.</p>
 <h2 id="generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen"><a class="header" href="#generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen">Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen</a></h2>
 <p>Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
 Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -340,7 +340,7 @@ Request: [
     "GET / HTTP/1.1",
     "Host: 127.0.0.1:7878",
     "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
-    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/_;q=0.8",
     "Accept-Language: en-US,en;q=0.5",
     "Accept-Encoding: gzip, deflate, br",
     "DNT: 1",
@@ -524,8 +524,8 @@ Rumpf der Antwort</span></p>
 <p>Wir haben <code>fs</code> zur <code>use</code>-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
 Inhalts einer Datei in eine Zeichenkette sollte vertraut aussehen; wir haben
-ihn in Kapitel 12 verwendet, als wir den Inhalt einer Datei für unser
-E/A-Projekt in Codeblock 12-4 gelesen haben.</p>
+ihn verwendet, als wir den Inhalt einer Datei für unser E/A-Projekt in
+Codeblock 12-4 gelesen haben.</p>
 <p>Als Nächstes verwenden wir <code>format!</code>, um den Inhalt der Datei als Rumpf der
 Erfolgsantwort hinzuzufügen. Um eine gültige HTTP-Antwort zu gewährleisten,
 fügen wir den Header <code>Content-Length</code> hinzu, der auf die Größe unseres

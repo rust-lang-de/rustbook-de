@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -144,23 +144,23 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="futures-aufgaben-und-stränge"><a class="header" href="#futures-aufgaben-und-stränge">Futures, Aufgaben und Stränge</a></h2>
-<p>Wie wir im vorigen Kapitel gesehen haben, bieten Stränge (threads) einen Ansatz
-für Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen anderen
-Ansatz für Nebenläufigkeit gesehen, nämlich die Verwendung von asynchronem Code
-mit Futures und Strömen. Du fragst dich vielleicht, warum du dich für das eine
-oder das andere entscheiden solltest. Die Antwort lautet: Es kommt darauf an!
-Und in vielen Fällen ist die Wahl nicht Stränge <em>oder</em> asynchroner Code,
-sondern eher Stränge <em>und</em> asynchroner Code.</p>
+                        <h2 id="alles-zusammenfügen-futures-aufgaben-und-stränge"><a class="header" href="#alles-zusammenfügen-futures-aufgaben-und-stränge">Alles zusammenfügen: Futures, Aufgaben und Stränge</a></h2>
+<p>Wie wir in <a href="ch16-00-concurrency.html">Kapitel 16</a> gesehen haben, bieten Stränge (threads) einen
+Ansatz für Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen
+anderen Ansatz für Nebenläufigkeit gesehen: Verwenden von asynchronem Code mit
+Futures und Strömen. Wenn du dich fragst, wann du eine Methode der anderen
+vorziehen solltest, lautet die Antwort: Es kommt darauf an! Und in vielen
+Fällen ist die Wahl nicht Stränge <em>oder</em> asynchroner Code, sondern eher
+Stränge <em>und</em> asynchroner Code.</p>
 <p>Viele Betriebssysteme bieten schon seit Jahrzehnten Strang-basierte
 Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
-Modelle daher. Sie sind jedoch nicht frei von Kompromissen. Auf vielen
-Betriebssystemen wird für jeden Strang ein beträchtlicher Teil des
+Modelle daher. Diese Modelle sind jedoch nicht frei von Kompromissen. Auf
+vielen Betriebssystemen wird für jeden Strang ein beträchtlicher Teil des
 Arbeitsspeichers verbraucht und es entsteht ein gewisser Overhead beim Starten
 und Beenden. Stränge sind auch nur dann eine Option, wenn dein Betriebssystem
-und deine Hardware sie unterstützen! Im Gegensatz zu herkömmlichen Desktop- und
+und deine Hardware sie unterstützen. Im Gegensatz zu herkömmlichen Desktop- und
 Mobilcomputern haben einige eingebettete Systeme überhaupt kein Betriebssystem,
-sodass sie auch keine Stränge haben!</p>
+sodass sie auch keine Stränge haben.</p>
 <p>Das asynchrone Modell bietet eine andere – und letztlich ergänzende
 – Reihe von Kompromissen. Im asynchronen Modell benötigen gleichzeitige
 Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
@@ -168,10 +168,10 @@ wie wir <code>trpl::spawn_task</code> verwendet haben, um die Arbeit von einer s
 Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
 wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
 verwaltet: Der Laufzeitumgebung.</p>
-<p>Im vorigen Abschnitt haben wir gesehen, dass wir einen <code>Stream</code> erstellen
-können, indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
-erzeugen, die wir von synchronem Code aus aufrufen können. Wir könnten genau
-das Gleiche mit einem Strang machen! In Codeblock 17-40 haben wir
+<p>Im vorigen Abschnitt haben wir gesehen, dass wir einen Strom erstellen können,
+indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
+erzeugen, die wir von synchronem Code aus aufrufen können. Wir können genau das
+Gleiche mit einem Strang machen! In Codeblock 17-40 haben wir
 <code>trpl::spawn_task</code> und <code>trpl::sleep</code> verwendet. In Codeblock 17-41 ersetzen wir
 diese durch die APIs <code>thread::spawn</code> und <code>thread::sleep</code> aus der
 Standardbibliothek.</p>
@@ -211,7 +211,7 @@ Standardbibliothek.</p>
 </span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
 </span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
 </span><span class="boring">
-</span><span class="boring">            if let Err(send_error) = tx.send(format!("Message: '{message}'")) {
+</span><span class="boring">            if let Err(send_error) = tx.send(format!("Nachricht: '{message}'")) {
 </span><span class="boring">                eprintln!("Kann die Nachricht '{message}' nicht senden: {send_error}");
 </span><span class="boring">                break;
 </span><span class="boring">            }
@@ -224,11 +224,11 @@ Standardbibliothek.</p>
 </span>fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
     let (tx, rx) = trpl::channel();
 
-    // This is *not* `trpl::spawn` but `std::thread::spawn`!
+    // Dies ist *nicht* `trpl::spawn` sondern `std::thread::spawn`!
     thread::spawn(move || {
         let mut count = 0;
         loop {
-            // Likewise, this is *not* `trpl::sleep` but `std::thread::sleep`!
+            // Ebenso ist dies *nicht* `trpl::sleep` sondern `std::thread::sleep`!
             thread::sleep(Duration::from_millis(1));
             count += 1;
 
@@ -243,12 +243,12 @@ Standardbibliothek.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 17-41: Verwenden der <code>std::thread</code>-APIs
 anstelle der asynchronen <code>trpl</code>-APIs für die Funktion <code>get_intervals</code>.</span></p>
-<p>Wenn du dies ausführst, ist die Ausgabe identisch. Und beachte, wie wenig sich
-hier aus der Sicht des aufrufenden Codes ändert! Und obwohl eine unserer
-Funktionen eine asynchrone Aufgabe in der Laufzeitumgebung und die andere
-einen Betriebssystem-Strang startet, hat es keinen Effekt auf die
-resultierenden Ströme.</p>
-<p>Trotz der Ähnlichkeiten verhalten sich diese beiden Ansätze sehr
+<p>Wenn du diesen Code ausführst, ist die Ausgabe identisch zu der von Codeblock
+17-40. Und beachte, wie wenig sich hier aus der Sicht des aufrufenden Codes
+ändert! Und obwohl eine unserer Funktionen eine asynchrone Aufgabe in der
+Laufzeitumgebung und die andere einen Betriebssystem-Strang startet, hat es
+keinen Effekt auf die resultierenden Ströme.</p>
+<p>Trotz deren Ähnlichkeiten verhalten sich diese beiden Ansätze sehr
 unterschiedlich, obwohl wir es in diesem sehr einfachen Beispiel schwer haben,
 dies zu messen. Wir könnten Millionen von asynchronen Aufgaben auf jedem
 modernen Computer ausführen. Wenn wir das mit Strängen versuchen würden, würde
@@ -265,11 +265,10 @@ verwaltet Aufgaben, und Aufgaben verwalten Futures. In dieser Hinsicht ähneln
 Aufgaben leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
 zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
 Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
-<p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser als Stränge sind, und
-auch nicht, dass Stränge immer besser als Aufgaben sind.</p>
-<p>Nebenläufigkeit mit Strängen ist in gewisser Weise ein einfacheres
+<p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser als Stränge sind (und
+umgekehrt). Nebenläufigkeit mit Strängen ist in gewisser Weise ein einfacheres
 Programmiermodell als Nebenläufigkeit mit <code>async</code>. Das kann eine Stärke oder
-eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“, sie haben
+eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“; sie haben
 kein natives Äquivalent zu einem Future, also laufen sie einfach bis zum Ende,
 ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt, sie haben
 keine eingebaute Unterstützung für <em>Nebenläufigkeit innerhalb der Aufgabe</em>, wie
@@ -279,23 +278,23 @@ behandelt haben, das aber implizit in der Tatsache enthalten ist, dass immer
 dann, wenn wir ein Future beenden, sein Zustand korrekt aufgeräumt wird.</p>
 <p>Diese Einschränkungen machen es auch schwieriger, Stränge zu erstellen als
 Futures. Es ist zum Beispiel viel schwieriger, Stränge zu verwenden, um Helfer
-wie <code>timeout</code> zu bauen, das wir in <a href="ch17-03-more-futures.html#eigene-async-abstraktionen-erstellen">„Eigene Async-Abstraktionen
-erstellen“</a> gesehen haben, oder die Methode <code>throttle</code>, die
-wir mit Strömen in <a href="ch17-04-streams.html#komposition-von-str%C3%B6men">„Komposition von Strömen“</a> verwendet haben. Die
-Tatsache, dass Futures reichhaltigere Datenstrukturen sind, bedeutet, dass sie
-natürlicher zusammengesetzt werden können, wie wir gesehen haben.</p>
-<p>Aufgaben geben dann <em>zusätzliche</em> Kontrolle über Futures, da man wählen kann,
-wo und wie man die Futures gruppiert. Und es stellt sich heraus, dass Stränge
-und Aufgaben oft sehr gut zusammenarbeiten, weil Aufgaben (zumindest in einigen
-Laufzeitumgebungen) zwischen Strängen verschoben werden können. Wir haben es
-bis jetzt nicht erwähnt, aber unter der Haube ist die Laufzeitumgebung, die wir
-benutzt haben, einschließlich der Funktionen <code>spawn_blocking</code> und <code>spawn_task</code>,
-standardmäßig mehrstängig (multithreaded)! Viele Laufzeitumgebungen verwenden
-einen Ansatz namens <em>Work Stealing</em>, um Aufgaben transparent zwischen Strängen
-hin- und herzuschieben, je nach aktueller Auslastung der Stränge. Ziel ist, die
-die Gesamtleistung des Systems zu verbessern. Um das zu bauen, braucht man
-eigentlich Stränge <em>und</em> Aufgaben, und damit Futures.</p>
-<p>Daumenregel, was wann zu verwenden ist:</p>
+wie <code>timeout</code> und <code>throttle</code> zu erstellen, die wir weiter oben in diesem
+Kapitel erstellt haben. Die Tatsache, dass Futures reichhaltigere
+Datenstrukturen sind, bedeutet, dass sie natürlicher zusammengesetzt werden
+können, wie wir gesehen haben.</p>
+<p>Aufgaben geben uns dann <em>zusätzliche</em> Kontrolle über Futures, da man wählen
+kann, wo und wie man die Futures gruppiert. Und es stellt sich heraus, dass
+Stränge und Aufgaben oft sehr gut zusammenarbeiten, weil Aufgaben (zumindest in
+einigen Laufzeitumgebungen) zwischen Strängen verschoben werden können. Unter
+der Haube ist die Laufzeitumgebung, die wir verwenden – einschließlich
+der Funktionen <code>spawn_blocking</code> und <code>spawn_task</code> – standardmäßig
+mehrstängig (multithreaded)! Viele Laufzeitumgebungen verwenden einen Ansatz
+namens <em>Work Stealing</em>, um Aufgaben transparent zwischen Strängen zu
+verschieben, je nachdem, wie die Stränge gerade ausgelastet sind, um die
+Gesamtleistung des Systems zu verbessern. Dieser Ansatz erfordert eigentlich
+Stränge <em>und</em> Aufgaben, und damit Futures.</p>
+<p>Wenn du überlegst, welche Methode du wann anwenden solltest, beachte diese
+Faustregeln:</p>
 <ul>
 <li>Wenn die Arbeit <em>sehr parallelisierbar</em> ist, z.B. bei der Verarbeitung einer
 Menge von Daten, bei der jeder Teil separat verarbeitet werden kann, sind
@@ -305,11 +304,11 @@ Nachrichten aus einer Reihe von verschiedenen Quellen, die in
 unterschiedlichen Intervallen oder mit unterschiedlicher Geschwindigkeit
 eintreffen können, ist asynchroner Code die bessere Wahl.</li>
 </ul>
-<p>Und wenn du eine Mischung aus Parallelität und Nebenläufigkeit benötigst, musst
-du dich nicht zwischen Strängen und asynchronem Code entscheiden. Du kannst
-beide zusammen verwenden, wobei jede der beiden die Aufgabe übernimmt, für die
-sie am besten geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein ziemlich
-häufiges Beispiel für diese Art von Mischung in echtem Rust-Code.</p>
+<p>Und wenn du Parallelität und Nebenläufigkeit benötigst, musst du dich nicht
+zwischen Strängen und asynchronem Code entscheiden. Du kannst beide zusammen
+verwenden, wobei jede der beiden die Aufgabe übernimmt, für die sie am besten
+geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein ziemlich häufiges Beispiel
+für diese Art von Mischung in echtem Rust-Code.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
 </span><span class="boring">
@@ -342,22 +341,23 @@ Block erstellt wurde, der an <code>trpl::run</code> übergeben wurde, so wie wir
 ganzen Kapitel getan haben. In diesem Future warten wir auf diese Nachrichten,
 genau wie in den anderen Beispielen für die Weitergabe von Nachrichten, die wir
 gesehen haben.</p>
-<p>Um zu den Beispielen zurückzukehren, mit denen wir das Kapitel eröffnet haben:
-Man könnte sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
+<p>Um zu den Szenarien zurückzukehren, mit denen wir das Kapitel eröffnet haben,
+könnte man sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
 einen dedizierten Strang ausgeführt wird, da die Videokodierung rechenintensiv
 ist. Die Benutzeroberfläche kann aber über einen asynchronen Kanal informiert
-werden, wenn diese Vorgänge ausgeführt werden. Beispiele für diese Art von Mix
-gibt es zuhauf!</p>
+werden, wenn diese Vorgänge ausgeführt werden. Es gibt unzählige Beispiele für
+diese Art von Kombinationen in der Praxis.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
-<p>Das Projekt in Kapitel 21 wird die Konzepte dieses Kapitels in einer
-realistischeren Situation anwenden als die hier besprochenen kleineren
-Beispiele – und einen direkteren Vergleich anstellen, wie es aussieht,
-wenn man diese Art von Problemen mit Strängen und mit Aufgaben und Futures
-löst.</p>
-<p>Ob mit Strängen, mit Futures und Aufgaben oder mit einer Kombination aus
-beidem, Rust gibt dir die Werkzeuge an die Hand, die du benötigst, um
-sicheren, schnellen und nebenläufigen Code zu schreiben – sei es für
-einen durchsatzstarken Webserver oder ein eingebettetes Betriebssystem.</p>
+<p>Dies ist nicht das letzte Mal, dass du in diesem Buch etwas über
+Nebenläufigkeit lesen wirst. Das Projekt in <a href="ch21-00-final-project-a-web-server.html">Kapitel 21</a> wird die
+Konzepte dieses Kapitels in einer realistischeren Situation anwenden als die
+hier besprochenen einfacheren Beispiele und einen direkteren Vergleich
+anstellen, wie es aussieht, wenn man diese Art von Problemen mit Strängen und
+mit Aufgaben und Futures löst.</p>
+<p>Welchen Ansatz Sie auch immer wählen, Rust gibt dir die Werkzeuge an die Hand,
+die du benötigst, um sicheren, schnellen und nebenläufigen Code zu schreiben
+– sei es für einen durchsatzstarken Webserver oder ein eingebettetes
+Betriebssystem.</p>
 <p>Als nächstes werden wir über idiomatische Wege sprechen, Probleme zu
 modellieren und Lösungen zu strukturieren, wenn deine Rust-Programme größer
 werden. Außerdem werden wir erörtern, wie die Idiome von Rust mit denen

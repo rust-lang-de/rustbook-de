@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -360,15 +360,15 @@ wir prüfen, ob die Zeile die Abfrage enthält.</p>
 <code>search_case_insensitive</code>, um den Abfragetext und die Zeile vor dem Vergleich
 in Kleinbuchstaben umzuwandeln</span></p>
 <p>Zuerst wandeln wir die Zeichenkette <code>query</code> in Kleinbuchstaben um und speichern
-ihn in einer verschatteten Variablen mit dem gleichen Namen. Der Aufruf von
-<code>to_lowercase</code> beim Abfragetext ist notwendig, sodass wir unabhängig davon, ob
-die Abfrage des Benutzers <code>"rust"</code>, <code>"RUST"</code>, <code>"RUST"</code> oder <code>"rUsT"</code> ist, die
-Abfrage so behandeln, als ob sie <code>"rust"</code> wäre, und die Groß-/Kleinschreibung
-nicht beachten. Obwohl <code>to_lowercase</code> mit einfachem Unicode umgehen kann, wird
-es nicht 100% genau sein. Wenn wir eine echte Anwendung schreiben würden,
-würden wir hier etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt
-geht es um Umgebungsvariablen, nicht um Unicode, also belassen wir es hier
-dabei.</p>
+ihn in einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche
+Variable <code>query</code> verschattetet. Der Aufruf von <code>to_lowercase</code> beim Abfragetext
+ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
+<code>"rust"</code>, <code>"RUST"</code>, <code>"RUST"</code> oder <code>"rUsT"</code> ist, die Abfrage so behandeln, als
+ob sie <code>"rust"</code> wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
+<code>to_lowercase</code> mit einfachem Unicode umgehen kann, wird es nicht 100% genau
+sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier etwas
+mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
+Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.</p>
 <p>Beachte, dass <code>query</code> jetzt ein <code>String</code> und nicht mehr ein
 Zeichenkettenanteilstyp ist, weil der Aufruf von <code>to_lowercase</code> neue Daten
 erzeugt, anstatt auf bestehende Daten zu referenzieren. Nehmen wir als Beispiel

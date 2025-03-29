@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -155,7 +155,7 @@ Funktion <code>Config::build</code> und der Funktion <code>search</code> optimie
 <code>Config</code>-Struktur indem wir den Anteilstyp indexierten und die Werte klonten
 und der <code>Config</code>-Struktur die Eigentümerschaft dieser Werte gaben. Im Codeblock
 13-17 haben wir die Implementierung der Funktion <code>Config::build</code> so reproduziert
-wie sie im Codeblock 12-23 aussah:</p>
+wie sie im Codeblock 12-23 aussah.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -465,7 +465,7 @@ Parameters <code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.
 <p>Als Nächstes werden wir den Rumpf von <code>Config::build</code> in Ordnung bringen. Da
 <code>args</code> das Merkmal <code>Iterator</code> implementiert, wissen wir, dass wir die Methode
 <code>next</code> darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die <code>next</code>-Methode zu verwenden:</p>
+Codeblock 12-23, um die <code>next</code>-Methode zu verwenden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
@@ -580,14 +580,15 @@ Codeblock 12-23, um die <code>next</code>-Methode zu verwenden:</p>
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 13-20: Ändern des Rumpfes von <code>Config::build</code> um
 Iterator-Methoden zu verwenden</span></p>
-<p>Beachte, dass der erste Wert des Rückgabewerts von <code>env::args</code> der Name des
+<p>Denke daran, dass der erste Wert des Rückgabewerts von <code>env::args</code> der Name des
 Programms ist, wir wollen das ignorieren und rufen daher gleich <code>next</code> auf um
 zum nächsten Wert zu gelangen und den ersten Rückgabewert zu überspringen. Als
-Nächstes rufen wir <code>next</code> auf, um den Wert zu erhalten, den wir in das Feld <code>query</code>
-von <code>Config</code> einfügen möchten. Falls <code>next</code> ein <code>Some</code> zurückgibt, benutzen wir
-<code>match</code>, um den Wert zu extrahieren, wenn es jedoch <code>None</code> zurückgibt,
-bedeutet dies, das nicht genügend Argumente eingegeben wurden und wir kehren
-vorzeitig mit einem <code>Err</code> zurück. Dasselbe machen wir für den Wert <code>file_path</code>.</p>
+Nächstes rufen wir <code>next</code> auf, um den Wert zu erhalten, den wir in das Feld
+<code>query</code> von <code>Config</code> einfügen möchten. Falls <code>next</code> ein <code>Some</code> zurückgibt,
+benutzen wir <code>match</code>, um den Wert zu extrahieren, wenn es jedoch <code>None</code>
+zurückgibt, bedeutet dies, das nicht genügend Argumente eingegeben wurden und
+wir kehren vorzeitig mit einem <code>Err</code> zurück. Dasselbe machen wir für den Wert
+<code>file_path</code>.</p>
 <h3 id="programmcode-mit-iteratorenadapter-klarer-gestalten"><a class="header" href="#programmcode-mit-iteratorenadapter-klarer-gestalten">Programmcode mit Iteratorenadapter klarer gestalten</a></h3>
 <p>Wir können die Vorteile der Iteratoren auch in der Funktion <code>search</code> unseres
 E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben ist, wie im
@@ -769,10 +770,10 @@ bei der Implementierung der Funktion <code>search</code></span></p>
 <p>Denke daran, der Zweck der Funktion <code>search</code> besteht darin, alle Zeilen in
 <code>contents</code> zurückzugeben, die die <code>query</code> enthalten. So ähnlich wie im Beispiel
 <code>filter</code> im Codeblock 13-16 verwendet dieser Programmcode den <code>filter</code>-Adapter,
-um nur die Zeilen beizubehalten, für die <code>line.contains(query)</code> den Wert <code>true</code> zurückgibt.
-Wir sammeln dann die passenden Zeilen mit <code>collect</code> in einen anderen Vektor.
-Viel einfacher! Nimm die gleiche Änderung vor, um Iteratormethoden auch in der
-Funktion <code>search_case_insensitive</code> zu nutzen.</p>
+um nur die Zeilen beizubehalten, für die <code>line.contains(query)</code> den Wert <code>true</code>
+zurückgibt. Wir sammeln dann die passenden Zeilen mit <code>collect</code> in einen
+anderen Vektor. Viel einfacher! Nimm die gleiche Änderung vor, um
+Iteratormethoden auch in der Funktion <code>search_case_insensitive</code> zu nutzen.</p>
 <h3 id="zwischen-schleifen-und-iteratoren-wählen"><a class="header" href="#zwischen-schleifen-und-iteratoren-wählen">Zwischen Schleifen und Iteratoren wählen</a></h3>
 <p>Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
 wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21

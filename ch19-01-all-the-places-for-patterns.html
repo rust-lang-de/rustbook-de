@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -166,8 +166,8 @@ ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:</p>
     None =&gt; None,
     Some(i) =&gt; Some(i + 1),
 }</code></pre>
-<p>Die Muster in diesem <code>match</code>-Ausdruck sind <code>None</code> und <code>Some(i)</code> links von jedem
-Pfeil.</p>
+<p>Die Muster in diesem <code>match</code>-Ausdruck sind <code>None</code> und <code>Some(i)</code> links von den
+Pfeilen.</p>
 <p>Eine Anforderung für <code>match</code>-Ausdrücke ist, dass sie <em>erschöpfend</em> (exhaustive)
 in dem Sinne sein müssen, dass alle Möglichkeiten für den Wert im
 <code>match</code>-Ausdruck berücksichtigt sein müssen. Ein Weg, um sicherzustellen, dass
@@ -177,8 +177,8 @@ Wert passt, niemals fehlschlagen und deckt somit jeden verbleibenden Fall ab.</p
 <p>Das spezielle Muster <code>_</code> wird auf alles passen, aber es bindet nie an eine
 Variable, daher wird es oft im letzten <code>match</code>-Zweig verwendet. Das Muster <code>_</code>
 kann zum Beispiel nützlich sein, wenn du jeden nicht angegebenen Wert
-ignorieren willst. Wir werden das Muster <code>_</code> im Abschnitt <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von
-Werten in einem Muster“</a> später in diesem Kapitel
+ignorieren willst. Wir werden das Muster <code>_</code> in <a href="ch19-03-pattern-syntax.html#ignorieren-von-werten-in-einem-muster">„Ignorieren von Werten in
+einem Muster“</a> später in diesem Kapitel
 ausführlicher behandeln.</p>
 <h3 id="bedingte-if-let-ausdrücke"><a class="header" href="#bedingte-if-let-ausdrücke">Bedingte <code>if let</code>-Ausdrücke</a></h3>
 <p>In Kapitel 6 haben wir erörtert, wie man <code>if let</code>-Ausdrücke hauptsächlich als
@@ -224,25 +224,25 @@ dieser Bedingungen zutrifft, ist die Hintergrundfarbe blau.</p>
 <p>Mit dieser bedingten Struktur können wir komplexe Anforderungen unterstützen.
 Mit den hartkodierten Werten, die wir hier haben, wird dieses Beispiel
 <code>Verwende violett als Hintergrundfarbe</code> ausgeben.</p>
-<p>Du kannst sehen, dass <code>if let</code> auch verschattete Variablen (shadowed variables)
-auf die gleiche Weise einführen kann wie bei <code>match</code>-Zweigen: Die Zeile <code>if let Ok(age) = age</code> führt eine neue verschattete Variable <code>age</code> ein, die den Wert
-innerhalb der <code>Ok</code>-Variante enthält. Das bedeutet, dass wir die Bedingung <code>if age &gt; 30</code> innerhalb dieses Blocks platzieren müssen: Wir können diese beiden
-Bedingungen nicht in <code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> kombinieren. Das
-verschattete <code>age</code>, das wir mit 30 vergleichen wollen, ist erst gültig, wenn der
-neue Gültigkeitsbereich mit der geschweiften Klammer beginnt.</p>
+<p>Du kannst sehen, dass <code>if let</code> auch neue Variablen einführen kann, die
+vorhandene Variablen verschatten (shadow) können, so wie bei <code>match</code>-Zweigen:
+Die Zeile <code>if let Ok(age) = age</code> führt eine neue Variable <code>age</code> ein, die den
+Wert innerhalb der <code>Ok</code>-Variante enthält und die vorhandene Variable <code>age</code>
+verschattet. Das bedeutet, dass wir die Bedingung <code>if age &gt; 30</code> innerhalb
+dieses Blocks platzieren müssen: Wir können diese beiden Bedingungen nicht in
+<code>if let Ok(age) = age &amp;&amp; age &gt; 30</code> kombinieren. Die neue Variable <code>age</code>, die
+wir mit 30 vergleichen wollen, ist erst gültig, wenn der neue
+Gültigkeitsbereich mit der geschweiften Klammer beginnt.</p>
 <p>Der Nachteil der Verwendung von <code>if let</code>-Ausdrücken ist, dass der Compiler die
 Vollständigkeit nicht prüft, während er dies bei <code>match</code>-Ausdrücken tut. Wenn
 wir den letzten <code>else</code>-Block weglassen und daher einige Fälle nicht behandelt
 haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.</p>
 <h3 id="while-let-bedingte-schleifen"><a class="header" href="#while-let-bedingte-schleifen"><code>while let</code>-bedingte Schleifen</a></h3>
 <p>Analog zu <code>if let</code> ermöglicht die bedingte Schleife <code>while let</code>, dass eine
-<code>while</code>-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Wir
-haben eine <code>while let</code>-Schleife zum ersten Mal in Kapitel 17 gesehen, wo wir
-sie dafür benutzt haben, eine Schleife so lange laufen zu lassen, wie ein
-Datenstrom neue Werte produziert. Auf ähnliche Weise zeigen wir in Codeblock
-19-2 eine <code>while let</code>-Schleife, die auf Nachrichten wartet, die zwischen
-Strängen gesendet werden. In aktuellen Fall prüfen wir ein <code>Result</code> statt einer
-einer <code>Option</code>.</p>
+<code>while</code>-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
+ähnliche Weise zeigen wir in Codeblock 19-2 eine <code>while let</code>-Schleife, die auf
+Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
+prüfen wir ein <code>Result</code> statt einer einer <code>Option</code>.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (tx, rx) = std::sync::mpsc::channel();
@@ -258,12 +258,14 @@ einer <code>Option</code>.</p>
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-2: Das Verwenden einer <code>while let</code>-Schleife,
 um Werte so lange auszugeben, wie <code>rx.recv()</code> ein <code>Ok</code> zurückgibt</span></p>
-<p>Dieses Beispiel gibt 1, 2 und 3 aus. Als wir <code>recv</code> in Kapitel 16 gesehen
-haben, haben wir den Fehler direkt ausgepackt oder mit ihm als Iterator in
-einer <code>for</code>-Schleife interagiert. Wie Codeblock 19-2 zeigt, können wir aber
-auch <code>while let</code> verwenden, da die Methode <code>recv</code> den Wert <code>Ok</code> zurückgibt,
-solange der Absender Nachrichten produziert, und schließlich <code>Err</code> zurückgibt,
-sobald die Absenderseite die Verbindung trennt.</p>
+<p>Dieses Beispiel gibt <code>1</code>, <code>2</code> und <code>3</code> aus. Die Methode <code>recv</code> nimmt die erste
+Nachricht von der Empfängerseite des Kanals und gibt <code>Ok(value)</code> zurück. Als
+wir <code>recv</code> das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
+direkt ausgepackt oder mit ihm als Iterator in einer <code>for</code>-Schleife
+interagiert. Wie Codeblock 19-2 zeigt, können wir aber auch <code>while let</code>
+verwenden, da die Methode <code>recv</code> nach jeder angekommenen Nachricht den Wert
+<code>Ok</code> zurückgibt, solange der Sender existiert, und schließlich <code>Err</code>
+zurückgibt, sobald die Senderseite die Verbindung trennt.</p>
 <h3 id="for-schleifen"><a class="header" href="#for-schleifen"><code>for</code>-Schleifen</a></h3>
 <p>In einer <code>for</code>-Schleife ist der Wert, der direkt auf das Schlüsselwort <code>for</code>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
@@ -308,7 +310,7 @@ eine <code>let</code>-Anweisung wie folgt aus:</p>
 <pre><code class="language-text">let PATTERN = EXPRESSION;
 </code></pre>
 <p>In Anweisungen wie <code>let x = 5;</code> mit einem Variablennamen an der Stelle
-<code>PATTERN</code> ist der Variablenname nur eine besonders einfache Form eines Musters.
+<em>PATTERN</em> ist der Variablenname nur eine besonders einfache Form eines Musters.
 Rust vergleicht den Ausdruck mit dem Muster und weist alle gefundenen Namen zu.
 Im Beispiel <code>let x = 5;</code> ist <code>x</code> also ein Muster, das bedeutet: „Binde das, was
 hier passt, an die Variable <code>x</code>.“ Da der Name <code>x</code> das gesamte Muster ist,
@@ -325,9 +327,9 @@ Tupel zu destrukturieren.</p>
 Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
 Variablen</span></p>
 <p>Hier vergleichen wir ein Tupel mit einem Muster. Rust vergleicht den Wert <code>(1, 2, 3)</code> mit dem Muster <code>(x, y, z)</code> und sieht, dass der Wert zum Muster passt,
-also bindet Rust <code>1</code> an <code>x</code>, <code>2</code> an <code>y</code> und <code>3</code> an <code>z</code>. Man kann sich dieses
-Tupelmuster als Verschachtelung von drei einzelnen Variablen-Mustern darin
-vorstellen.</p>
+weil die Anzahl der Elemente in beiden Werten dieselbe ist, und bindet <code>1</code> an
+<code>x</code>, <code>2</code> an <code>y</code> und <code>3</code> an <code>z</code>. Man kann sich dieses Tupelmuster als
+Verschachtelung von drei einzelnen Variablen-Mustern darin vorstellen.</p>
 <p>Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
 Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
 Kompilierfehler. Beispielsweise zeigt Codeblock 19-5 einen Versuch, ein Tupel

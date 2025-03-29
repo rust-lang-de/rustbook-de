@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -178,7 +178,9 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>-</code></td><td style="text-align: left"><code>expr - expr</code></td><td style="text-align: left">Arithmetische Subtraktion</td><td style="text-align: left"><code>Sub</code></td></tr>
 <tr><td style="text-align: left"><code>-=</code></td><td style="text-align: left"><code>var -= expr</code></td><td style="text-align: left">Arithmetische Subtraktion und Zuweisung</td><td style="text-align: left"><code>SubAssign</code></td></tr>
 <tr><td style="text-align: left"><code>-&gt;</code></td><td style="text-align: left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td style="text-align: left">Funktion und Funktionsabschlussrückgabetyp</td><td style="text-align: left"></td></tr>
-<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident</code></td><td style="text-align: left">Elementzugriff</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident</code></td><td style="text-align: left">Feldzugriff</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident(expr, ...)</code></td><td style="text-align: left">Methodenaufruf</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.0</code>, <code>expr.1</code>, etc.</td><td style="text-align: left">Tupel-Indexzugriff</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td style="text-align: left">Rechts-ausschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
 <tr><td style="text-align: left"><code>..=</code></td><td style="text-align: left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td style="text-align: left">Rechts-einschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
 <tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..expr</code></td><td style="text-align: left">Aktualisierungssyntax für Strukturliterale</td><td style="text-align: left"></td></tr>
@@ -237,7 +239,7 @@ Modulhierarchie eines Elements vorkommen.</p>
 <p><span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span></p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>ident::ident</code></td><td style="text-align: left">Namensraum-Pfad</td></tr>
-<tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zur Kistenwurzel<br> (d.h. ein explizit absoluter Pfad)</td></tr>
+<tr><td style="text-align: left"><code>::path</code></td><td style="text-align: left">Pfad relativ zum externen Präludium, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname)</td></tr>
 <tr><td style="text-align: left"><code>self::path</code></td><td style="text-align: left">Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)</td></tr>
 <tr><td style="text-align: left"><code>super::path</code></td><td style="text-align: left">Pfad relativ zum Elternmodul</td></tr>
 <tr><td style="text-align: left"><code>type::ident</code>,<br> <code>&lt;type as trait&gt;::ident</code></td><td style="text-align: left">Zugehörige Konstanten, Funktionen<br> und Typen</td></tr>
@@ -297,9 +299,8 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>/**...*/</code></td><td style="text-align: left">Mehrzeiliger Dokumentationskommentar außen</td></tr>
 </tbody></table>
 </div>
-<p>Tabelle B-8 zeigt Symbole, die im Zusammenhang mit der Verwendung von Tupeln
-auftreten.</p>
-<p><span class="caption">Tabelle B-8: Tupel</span></p>
+<p>Tabelle B-8 zeigt die Kontexte, in denen Klammern verwendet werden.</p>
+<p><span class="caption">Tabelle B-8: Klammern</span></p>
 <div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>()</code></td><td style="text-align: left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
 <tr><td style="text-align: left"><code>(expr)</code></td><td style="text-align: left">Eingeklammerter Ausdruck</td></tr>
@@ -308,7 +309,6 @@ auftreten.</p>
 <tr><td style="text-align: left"><code>(expr, ...)</code></td><td style="text-align: left">Tupel-Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>(type, ...)</code></td><td style="text-align: left">Tupel-Typ</td></tr>
 <tr><td style="text-align: left"><code>expr(expr, ...)</code></td><td style="text-align: left">Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet</td></tr>
-<tr><td style="text-align: left"><code>expr.0</code>,<br> <code>expr.1</code> usw.</td><td style="text-align: left">Tupel-Indexierung</td></tr>
 </tbody></table>
 </div>
 <p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>

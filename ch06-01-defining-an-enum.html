@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -475,7 +475,7 @@ dass <code>&lt;T&gt;</code> bedeutet, dass die Variante <code>Some</code> der Au
 Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
 anstelle von <code>T</code> verwendet wird, den Gesamttyp <code>Option&lt;T&gt;</code> zu einem anderen Typ
 macht. Hier sind einige Beispiele für die Verwendung von <code>Option</code>-Werten zur
-Aufnahme von Zahlentypen und Zeichenkettentypen:</p>
+Aufnahme von Zahlentypen und Zeichentypen:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let some_number = Some(5);

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -332,12 +332,13 @@ Gültigkeitsbereich gebrachten <code>Result</code> aus <code>std::fmt</code> ste
 und Codeblock 7-16 gelten als idiomatisch, die Wahl liegt also bei dir!</p>
 <h3 id="rück-exportieren-von-namen-mit-pub-use"><a class="header" href="#rück-exportieren-von-namen-mit-pub-use">Rück-Exportieren von Namen mit <code>pub use</code></a></h3>
 <p>Wenn wir einen Namen mit dem Schlüsselwort <code>use</code> in den Gültigkeitsbereich
-bringen, ist der im neuen Gültigkeitsbereich verfügbare Name privat. Damit der
-Code, der unseren Code aufruft, auf diesen Namen verweisen kann, als wäre er im
-Gültigkeitsbereich dieses Codes definiert worden, können wir <code>pub</code> und <code>use</code>
-kombinieren. Diese Technik wird <em>Rück-Exportieren</em> (re-exporting) genannt, weil
-wir ein Element in den Gültigkeitsbereich bringen, dieses Element aber auch
-anderen zur Verfügung stellen, um es in ihren Gültigkeitsbereich zu bringen.</p>
+bringen, ist der Name privat für den Gültigkeitsbereich, in den wir ihn
+importiert haben. Damit der Code, der unseren Code aufruft, auf diesen Namen
+verweisen kann, als wäre er im Gültigkeitsbereich dieses Codes definiert
+worden, können wir <code>pub</code> und <code>use</code> kombinieren. Diese Technik wird
+<em>Rück-Exportieren</em> (re-exporting) genannt, weil wir ein Element in den
+Gültigkeitsbereich bringen, dieses Element aber auch anderen zur Verfügung
+stellen, um es in ihren Gültigkeitsbereich zu bringen.</p>
 <p>Codeblock 7-17 zeigt den Code in Codeblock 7-11, wobei <code>use</code> im Wurzelmodul in
 <code>pub use</code> geändert wurde.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -369,8 +370,8 @@ Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
 Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
 Beispiel für <code>pub use</code> und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir im Abschnitt <a href="ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-%C3%B6ffentliche-api-exportieren">„Mit <code>pub use</code> eine benutzerfreundliche
-öffentliche API exportieren“</a> in Kapitel 14 betrachten.</p>
+auswirkt, werden wir in <a href="ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-%C3%B6ffentliche-api-exportieren">„Mit <code>pub use</code> eine benutzerfreundliche öffentliche
+API exportieren“</a> in Kapitel 14 betrachten.</p>
 <h3 id="verwenden-externer-pakete"><a class="header" href="#verwenden-externer-pakete">Verwenden externer Pakete</a></h3>
 <p>In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
@@ -384,8 +385,8 @@ herunterzuladen und <code>rand</code> für unser Projekt verfügbar zu machen.</
 <p>Um dann Definitionen von <code>rand</code> in den Gültigkeitsbereich unseres Pakets
 aufzunehmen, haben wir eine Zeile mit <code>use</code> hinzugefügt, die mit dem
 Kistennamen <code>rand</code> beginnt und die Elemente auflistet, die wir in den
-Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir im Abschnitt
-<a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">„Generieren einer Geheimzahl“</a> in Kapitel 2 das Merkmal <code>Rng</code> in den
+Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir in <a href="ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl">„Generieren
+einer Geheimzahl“</a> in Kapitel 2 das Merkmal <code>Rng</code> in den
 Gültigkeitsbereich gebracht und die Funktion <code>rand::thread_rng</code> aufgerufen
 haben:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::io;
@@ -496,7 +497,7 @@ vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
 zu erkennen, welche Namen in den Gültigkeitsbereich fallen und wo ein in deinem
 Programm verwendeter Name definiert wurde.</p>
 <p>Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
-in das Modul <code>tests</code> zu bringen. Wir werden darüber im Abschnitt <a href="ch11-01-writing-tests.html">„Tests
+in das Modul <code>tests</code> zu bringen. Wir werden darüber in <a href="ch11-01-writing-tests.html">„Tests
 schreiben“</a> in Kapitel 11 sprechen. Der Stern-Operator wird
 manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
 <a href="https://doc.rust-lang.org/std/prelude/index.html#other-preludes">Standardbibliotheksdokumentation</a> für weitere Informationen

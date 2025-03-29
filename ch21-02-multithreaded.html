@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -157,8 +157,8 @@ das Problem in Aktion ansehen.</p>
 <p>Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
 Codeblock 20-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
-einer simulierten langsamen Antwort, die den Server veranlasst, 5 Sekunden lang
-zu schlafen, bevor er antwortet.</p>
+einer simulierten langsamen Antwort, die den Server veranlasst, fünf Sekunden
+lang zu schlafen, bevor er antwortet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run">use std::{
     fs,
@@ -212,8 +212,9 @@ keine automatische Referenzierung und Dereferenzierung durch, wie es die
 Gleichheitsmethode tut.</p>
 <p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 20-9. Der
 zweite Zweig entspricht einer Anfrage an <em>/sleep</em>. Wenn diese Anfrage empfangen
-wird, schläft der Server für 5 Sekunden, bevor er die erfolgreiche HTML-Seite
-rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Codeblock 20-9.</p>
+wird, schläft der Server für fünf Sekunden, bevor er die erfolgreiche
+HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Codeblock
+20-9.</p>
 <p>Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!</p>
 <p>Starte den Server mit <code>cargo run</code>. Öffne dann zwei Browser-Fenster: Eines für
@@ -247,8 +248,8 @@ Strängen im Vorrat warten lassen. Wenn Anfragen eingehen, werden sie zur
 Verarbeitung an den Vorrat geschickt. Der Vorrat verwaltet eine Warteschlange
 für eingehende Anfragen. Jeder der Stränge im Vorrat wird eine Anfrage aus
 dieser Warteschlange holen, die Anfrage bearbeiten und dann die Warteschlange
-um eine weitere Anfrage fragen. Mit diesem Design können wir bis zu <code>N</code>
-Anfragen gleichzeitig bearbeiten, wobei <code>N</code> die Anzahl der Stränge ist. Wenn
+um eine weitere Anfrage fragen. Mit diesem Design können wir bis zu <em><code>N</code></em>
+Anfragen gleichzeitig bearbeiten, wobei <em><code>N</code></em> die Anzahl der Stränge ist. Wenn
 jeder Strang auf eine lang laufende Anfrage antwortet, können sich nachfolgende
 Anfragen immer noch in der Warteschlange rückstauen, aber wir haben die Anzahl
 der lang laufenden Anfragen erhöht, die wir bearbeiten können, bevor wir diesen
@@ -500,8 +501,8 @@ impl ThreadPool {
 <span class="boring">}</span></code></pre></pre>
 <p>Wir haben <code>usize</code> als Typ des Parameters <code>size</code> gewählt, weil wir wissen, dass
 eine negative Anzahl von Strängen keinen Sinn macht. Wir wissen auch, dass wir
-diese 4 als die Anzahl der Elemente in einer Kollektion von Strängen verwenden
-werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
+diese <code>4</code> als die Anzahl der Elemente in einer Kollektion von Strängen
+verwenden werden, wofür der Typ <code>usize</code> gedacht ist, wie im Abschnitt
 <a href="ch03-02-data-types.html#ganzzahl-typen">„Ganzzahl-Typen“</a> in Kapitel 3 besprochen.</p>
 <p>Lass uns den Code noch einmal überprüfen:</p>
 <pre><code class="language-console">$ cargo check
@@ -516,22 +517,22 @@ For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Der Fehler tritt jetzt auf, weil wir keine Methode <code>execute</code> auf <code>ThreadPool</code>
-haben. Erinnere dich an den Abschnitt <a href="#erstellen-einer-endliche-anzahl-von-str%C3%A4ngen">„Erstellen einer endlichen Anzahl von
-Strängen“</a>, dass wir beschlossen haben, dass unser
+haben. Erinnere dich an <a href="#erstellen-einer-endliche-anzahl-von-str%C3%A4ngen">„Erstellen einer endlichen Anzahl von
+Strängen“</a>, wo wir beschlossen haben, dass unser
 Strang-Vorrat eine ähnliche Schnittstelle wie <code>thread::spawn</code> haben sollte.
 Zusätzlich werden wir die Funktion <code>execute</code> implementieren, sodass sie den
 Funktionsabschluss, der ihr gegeben wird, nimmt und sie einem unbeschäftigten
 Strang im Vorrat zur Ausführung übergibt.</p>
 <p>Wir werden die Methode <code>execute</code> auf <code>ThreadPool</code> definieren, um einen
-Funktionsabschluss als Parameter zu nehmen. Aus dem Abschnitt <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschl%C3%BCssen-und-fn-merkmalen">„Verschieben
-erfasster Werte aus Funktionsabschlüssen und Fn-Merkmalen“</a>
-in Kapitel 13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit
-drei verschiedenen Merkmalen nehmen können: <code>Fn</code>, <code>FnMut</code> und <code>FnOnce</code>. Wir
-müssen entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir
-wissen, dass wir am Ende etwas Ähnliches wie die Implementierung
-<code>thread::spawn</code> der Standardbibliothek tun werden, sodass wir uns ansehen
-können, welche Abgrenzungen die Signatur von <code>thread::spawn</code> in ihrem Parameter
-hat. Die Dokumentation zeigt uns Folgendes:</p>
+Funktionsabschluss als Parameter zu nehmen. Aus <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschl%C3%BCssen-und-fn-merkmalen">„Verschieben erfasster Werte
+aus Funktionsabschlüssen und Fn-Merkmalen“</a> in Kapitel 13 erinnern
+wir uns, dass wir Funktionsabschlüsse als Parameter mit drei verschiedenen
+Merkmalen nehmen können: <code>Fn</code>, <code>FnMut</code> und <code>FnOnce</code>. Wir müssen entscheiden,
+welche Art von Funktionsabschluss wir hier verwenden. Wir wissen, dass wir am
+Ende etwas Ähnliches wie die Implementierung <code>thread::spawn</code> der
+Standardbibliothek tun werden, sodass wir uns ansehen können, welche
+Abgrenzungen die Signatur von <code>thread::spawn</code> in ihrem Parameter hat. Die
+Dokumentation zeigt uns Folgendes:</p>
 <pre><code class="language-rust ignore">pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
     where
         F: FnOnce() -&gt; T,
@@ -740,8 +741,8 @@ wird eine einzelne <code>JoinHandle&lt;()&gt;</code>-Instanz speichern. Dann wer
 Methode auf <code>Worker</code> implementieren, die einen Funktionsabschluss zur
 Ausführung benötigt und ihn zur Ausführung an den bereits laufenden Strang
 sendet. Wir werden auch jedem <code>Worker</code> eine <code>id</code> geben, damit wir beim
-Protokollieren oder Debuggen zwischen den verschiedenen <code>Worker</code> im Vorrat
-unterscheiden können.</p>
+Protokollieren oder Debuggen zwischen den verschiedenen <code>Worker</code>-Instanzen im
+Vorrat unterscheiden können.</p>
 <p>Hier ist der neue Prozess, der abläuft, wenn wir einen <code>ThreadPool</code> erstellen.
 Wir werden den Code implementieren, der den Funktionsabschluss an den Strang
 sendet, nachdem wir <code>Worker</code> auf diese Weise eingerichtet haben:</p>
@@ -925,9 +926,9 @@ zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
 sendende Ende halten. Dies kompiliert erfolgreich.</p>
 <p>Lass uns versuchen, einen Empfänger an jeden <code>Worker</code> weiterzugeben, während
 der Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger
-verwenden wollen, den der <code>Worker</code> hat, also werden wir den Parameter
-<code>receiver</code> im Funktionsabschluss referenzieren. Der Code in Codeblock 20-17
-lässt sich noch nicht ganz kompilieren.</p>
+im Strang verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden
+wir den Parameter <code>receiver</code> im Funktionsabschluss referenzieren. Der Code in
+Codeblock 20-17 lässt sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
@@ -985,7 +986,7 @@ lässt sich noch nicht ganz kompilieren.</p>
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-17: Übergeben des Empfängers an die
+<p><span class="caption">Codeblock 20-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
 den Empfänger an <code>Worker::new</code> und dann verwenden wir ihn innerhalb des
@@ -1026,7 +1027,7 @@ einzigen <em>Konsumenten</em>. Das bedeutet, dass wir nicht einfach das konsumie
 Ende des Kanals klonen können, um diesen Code zu reparieren. Selbst wenn wir
 das könnten, ist das nicht die Technik, die wir anwenden wollen; stattdessen
 wollen wir die Aufträge auf mehrere Stränge verteilen, indem wir den einzigen
-<code>receiver</code> unter allen <code>Worker</code> aufteilen.</p>
+<code>receiver</code> unter allen <code>Worker</code>-Instanzen aufteilen.</p>
 <p>Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des
 Kanals eine Mutation von <code>receiver</code>, sodass die Stränge einen sicheren Weg
 benötigen, um <code>receiver</code> gemeinsam zu nutzen und zu modifizieren; andernfalls
@@ -1035,10 +1036,10 @@ behandelt).</p>
 <p>Erinnere dich an die Strang-sicheren intelligenten Zeiger, die in Kapitel 16
 besprochen wurden: Um die Eigentümerschaft über mehrere Stränge zu teilen und
 den Strängen zu erlauben, den Wert zu mutieren, müssen wir <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>
-verwenden. Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>, den Empfänger zu
-besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code> zur gleichen
-Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt die
-Änderungen, die wir vornehmen müssen.</p>
+verwenden. Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>-Instanzen, den
+Empfänger zu besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code>
+zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt
+die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">use std::{
     sync::{mpsc, Arc, Mutex},
@@ -1108,14 +1109,14 @@ Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt die
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen
 <code>Mutex</code>. Für jeden neuen <code>Worker</code> klonen wir den <code>Arc</code>, um die Referenzzählung
-zu erhöhen, sodass die <code>Worker</code> die Eigentümerschaft des Empfängers teilen
-können.</p>
+zu erhöhen, sodass die <code>Worker</code>-Instanzen die Eigentümerschaft des Empfängers
+teilen können.</p>
 <p>Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!</p>
 <h4 id="implementieren-der-methode-execute"><a class="header" href="#implementieren-der-methode-execute">Implementieren der Methode <code>execute</code></a></h4>
 <p>Lass uns endlich die Methode <code>execute</code> auf <code>ThreadPool</code> implementieren. Wir
 werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
 (trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-<code>execute</code> erhält. Wie im Abschnitt <a href="ch19-04-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias">„Erstellen von Typ-Synonymen mit
+<code>execute</code> erhält. Wie in <a href="ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias">„Erstellen von Typ-Synonymen mit
 Typ-Alias“</a> in Kapitel 19 besprochen, ermöglichen uns
 Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
 Siehe Codeblock 20-19.</p>
@@ -1432,7 +1433,7 @@ Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die
 <code>let</code>-Anweisung endet. Allerdings gibt <code>while let</code> (und <code>if let</code> und <code>match</code>)
 temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 20-21
 bleibt die Sperre für die Dauer des Aufrufs von <code>job()</code> erhalten, was bedeutet,
-dass andere <code>Worker</code> keine Aufträge erhalten können.</p>
+dass andere <code>Worker</code>-Instanzen keine Aufträge erhalten können.</p>
 
                     </main>
 

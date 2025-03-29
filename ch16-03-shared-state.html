@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -149,7 +149,7 @@
 Nebenläufigkeit, aber sie ist nicht die einzige. Eine andere Methode wäre, dass
 mehrere Stränge auf dieselben gemeinsamen Daten zugreifen. Betrachte folgenden
 Teil des Slogans aus der Go-Sprachdokumentation noch einmal: „Kommuniziere
-nicht, indem du Arbeitsspeicher teilst.“</p>
+nicht über gemeinsamen Arbeitsspeicher.“</p>
 <p>Wie würde Kommunikation durch gemeinsame Nutzung von Arbeitsspeicher aussehen?
 Und warum sollten Liebhaber der Nachrichtenübermittlung davor warnen,
 gemeinsamen Arbeitsspeicher zu verwenden?</p>
@@ -171,15 +171,15 @@ Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
 zuzugreifen, muss ein Strang zunächst signalisieren, dass er Zugriff wünscht,
 indem er darum bittet, die <em>Sperre</em> (lock) des Mutex zu erwerben. Die Sperre
 ist eine Datenstruktur, die Teil des Mutex ist, der verfolgt, wer derzeit
-exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als <em>Schutz</em> der
+exklusiven Zugriff auf die Daten hat. Daher wird der Mutex als _Schutz* der
 Daten beschrieben, die er über das Schließsystem hält.</p>
 <p>Mutexe haben den Ruf, dass sie schwierig anzuwenden sind, weil man sich zwei
 Regeln merken muss:</p>
-<ul>
+<ol>
 <li>Du musst versuchen, die Sperre zu erwerben, bevor du die Daten verwendest.</li>
 <li>Wenn du mit den Daten, die der Mutex schützt, fertig bist, musst du die Daten
 entsperren, damit andere Stränge die Sperre übernehmen können.</li>
-</ul>
+</ol>
 <p>Als reale Metapher für einen Mutex stelle dir eine Podiumsdiskussion auf einer
 Konferenz mit nur einem Mikrofon vor. Bevor ein Podiumsteilnehmer das Wort
 ergreifen kann, muss er fragen oder signalisieren, dass er das Mikrofon
@@ -196,7 +196,7 @@ falsch machen.</p>
 <h4 id="die-api-von-mutext"><a class="header" href="#die-api-von-mutext">Die API von <code>Mutex&lt;T&gt;</code></a></h4>
 <p>Als Beispiel für die Verwendung eines Mutex beginnen wir mit der Verwendung
 eines Mutex in einem einsträngigen (single-threaded) Kontext, wie in Codeblock
-16-12 gezeigt:</p>
+16-12 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::sync::Mutex;
 
@@ -243,10 +243,10 @@ sehen, dass wir den inneren <code>i32</code> in 6 ändern konnten.</p>
 <h4 id="gemeinsames-nutzen-eines-mutext-von-mehreren-strängen"><a class="header" href="#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen">Gemeinsames Nutzen eines <code>Mutex&lt;T&gt;</code> von mehreren Strängen</a></h4>
 <p>Versuchen wir nun, einen Wert zwischen mehreren Strängen mit <code>Mutex&lt;T&gt;</code> zu
 teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
-erhöhen, sodass der Zähler von 0 auf 10 geht. Das nächste Beispiel in Codeblock
-16-13 wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden,
-um mehr über die Verwendung von <code>Mutex&lt;T&gt;</code> zu erfahren und darüber, wie Rust
-uns hilft, ihn korrekt zu verwenden.</p>
+erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Codeblock 16-13
+wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um
+mehr über die Verwendung von <code>Mutex&lt;T&gt;</code> zu erfahren und darüber, wie Rust uns
+hilft, ihn korrekt zu verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::Mutex;
 use std::thread;
@@ -320,7 +320,7 @@ der Schleife verschoben wurde. Rust sagt uns, dass wir die Eigentümerschaft von
 Kompilierfehler mit einer Mehrfacheigentums-Methode beheben, die wir in Kapitel
 15 besprochen haben.</p>
 <h4 id="mehrfacheigentum-mit-mehreren-strängen"><a class="header" href="#mehrfacheigentum-mit-mehreren-strängen">Mehrfacheigentum mit mehreren Strängen</a></h4>
-<p>In Kapitel 15 gaben wir einen Wert mit mehreren Eigentümern an, indem wir den
+<p>In Kapitel 15 gaben wir einen Wert an mehrere Eigentümern, indem wir den
 intelligenten Zeiger <code>Rc&lt;T&gt;</code> verwendeten, um einen Referenzzählwert zu
 erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
 den <code>Mutex&lt;T&gt;</code> in <code>Rc&lt;T&gt;</code> in Codeblock 16-14 ein und klonen den <code>Rc&lt;T&gt;</code>, bevor
@@ -352,8 +352,8 @@ fn main() {
 }</code></pre></pre>
 <p><span class="caption">Codeblock 16-14: Versuch, <code>Rc&lt;T&gt;</code> zu verwenden, um
 mehreren Strängen zu erlauben, den <code>Mutex&lt;T&gt;</code> zu besitzen</span></p>
-<p>Wir kompilieren nochmal und bekommen ... verschiedene Fehler! Der Compiler
-lehrt uns eine Menge.</p>
+<p>Wir kompilieren nochmal und bekommen verschiedene Fehler! Der Compiler lehrt
+uns eine Menge.</p>
 <pre><code class="language-console">$ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
 error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
@@ -384,10 +384,9 @@ For more information about this error, try `rustc --explain E0277`.
 error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 </code></pre>
 <p>Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
-den wir uns konzentrieren müssen: <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> kann nicht sicher zwischen
-Strängen gesendet werden. Der Compiler teilt uns auch den Grund dafür mit: Das
-Merkmal (trait) <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht implementiert. Wir werden
-im nächsten Abschnitt über <code>Send</code> sprechen: Es ist eines der Merkmale, das
+den wir uns konzentrieren müssen: <code>`Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between  threads safely</code> Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+(trait) <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht implementiert. Wir werden im
+nächsten Abschnitt über <code>Send</code> sprechen: Es ist eines der Merkmale, das
 sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
 Verwendung in nebenläufigen Situationen gedacht sind.</p>
 <p>Leider ist es nicht sicher, <code>Rc&lt;T&gt;</code> über verschiedene Stränge hinweg gemeinsam
@@ -420,7 +419,7 @@ die Garantien erzwingen muss, die atomare Typen bieten.</p>
 <p>Kehren wir zu unserem Beispiel zurück: <code>Arc&lt;T&gt;</code> und <code>Rc&lt;T&gt;</code> haben die gleiche
 API, also reparieren wir unser Programm, indem wir die <code>use</code>-Zeile, den Aufruf
 von <code>new</code> und den Aufruf von <code>clone</code> ändern. Der Code in Codeblock 16-15 wird
-schließlich kompilieren und laufen:</p>
+schließlich kompilieren und laufen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
 use std::thread;
@@ -474,8 +473,8 @@ Weise, wie wir <code>RefCell&lt;T&gt;</code> in Kapitel 15 benutzt haben, um uns
 Inhalte innerhalb eines <code>Rc&lt;T&gt;</code> zu mutieren, benutzen wir <code>Mutex&lt;T&gt;</code>, um
 Inhalte innerhalb eines <code>Arc&lt;T&gt;</code> zu mutieren.</p>
 <p>Ein weiteres zu beachtendes Detail ist, dass Rust dich nicht vor allen Arten
-von Logikfehlern schützen kann, wenn du <code>Mutex&lt;T&gt;</code> verwendest. Erinnere dich in
-Kapitel 15 daran, dass die Verwendung von <code>Rc&lt;T&gt;</code> mit dem Risiko verbunden war,
+von Logikfehlern schützen kann, wenn du <code>Mutex&lt;T&gt;</code> verwendest. Erinnere dich an
+Kapitel 15, dass die Verwendung von <code>Rc&lt;T&gt;</code> mit dem Risiko verbunden war,
 Referenzzyklen zu erzeugen, bei denen zwei <code>Rc&lt;T&gt;</code> Werte aufeinander
 referenzieren und dadurch Speicherlecks verursachen. In ähnlicher Weise ist
 <code>Mutex&lt;T&gt;</code> mit dem Risiko verbunden, <em>Deadlocks</em> zu schaffen. Diese treten auf,

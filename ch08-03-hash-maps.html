@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -257,7 +257,7 @@ nachdem sie mit dem Aufruf von <code>insert</code> in die Hashtabelle verschoben
 <p>Wenn wir Referenzen auf Werte in die Hashtabelle einfügen, werden die Werte
 nicht in die Hashtabelle verschoben. Die Werte, auf die die Referenzen zeigen,
 müssen mindestens so lange gültig sein, wie die Hashtabelle gültig ist. Wir
-werden mehr über diese Fragen im Abschnitt <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
+werden mehr über diese Fragen in <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
 Lebensdauern“</a> in Kapitel 10 sprechen.</p>
 <h3 id="aktualisieren-einer-hashtabelle"><a class="header" href="#aktualisieren-einer-hashtabelle">Aktualisieren einer Hashtabelle</a></h3>
 <p>Obwohl die Anzahl der Schlüssel- und Wertepaare vergrößerbar ist, kann jedem
@@ -359,9 +359,9 @@ println!("{map:?}");
 Hilfe einer Hashtabelle, die Wörter speichert und zählt</span></p>
 <p>Dieser Code gibt <code>{"Welt": 2, "wunderbare": 1, "Hallo": 1}</code> aus. Es kann sein,
 dass dieselben Schlüssel/Wert-Paare in einer anderen Reihenfolge ausgegeben
-werden: Du erinnerst dich an den Abschnitt <a href="#zugreifen-auf-werte-in-einer-hashtabelle">„Zugreifen auf Werte in einer
-Hashtabelle“</a>, dass die Iteration über eine Hashtabelle in beliebiger
-Reihenfolge erfolgt.</p>
+werden: Du erinnerst dich an <a href="#zugreifen-auf-werte-in-einer-hashtabelle">„Zugreifen auf Werte in einer
+Hashtabelle“</a>, wo die Iteration über eine Hashtabelle in einer
+willkürlichen Reihenfolge erfolgt.</p>
 <p>Die Methode <code>split_whitespace</code> gibt einen Iterator über durch Leerzeichen
 getrennte Sub-Anteilstypen des Wertes in <code>text</code> zurück. Die Methode <code>or_insert</code>
 gibt eine veränderbare Referenz (<code>&amp;mut V</code>) auf den Wert für den angegebenen

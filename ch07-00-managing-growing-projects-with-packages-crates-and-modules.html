@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -158,7 +158,7 @@ kann mehrere Binär-Kisten (binary crates) und optional eine Bibliotheks-Kiste
 Kisten extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel
 behandelt all diese Techniken. Für sehr große Projekte aus einer Reihe von
 zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
-<em>Arbeitsbereiche</em> zur Verfügung, die wir im Abschnitt
+<em>Arbeitsbereiche</em> zur Verfügung, die wir in
 <a href="ch14-03-cargo-workspaces.html">„Cargo-Arbeitsbereiche“</a> in Kapitel 14 behandeln werden.</p>
 <p>Wir werden auch die Kapselung von Implementierungsdetails besprechen, wodurch
 du Code auf einer höheren Ebene wiederverwenden kannst: Sobald du eine

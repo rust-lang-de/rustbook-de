@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -283,7 +283,7 @@ als Methode, anstatt das Feld <code>content</code> mit <code>pub</code> offenzul
 später eine Methode implementieren können, die steuert, wie die Daten des
 Feldes <code>content</code> gelesen werden. Die Methode <code>add_text</code> ist ziemlich einfach,
 also lass uns die Implementierung in Codeblock 18-13 zum Block <code>impl Post</code>
-hinzufügen:</p>
+hinzufügen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -332,7 +332,7 @@ Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern, sobald wi
 die Möglichkeit implementiert haben, den Zustand eines Beitrags zu ändern,
 damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
-Codeblock 18-14 zeigt diese Platzhalter-Implementierung:</p>
+Codeblock 18-14 zeigt diese Platzhalter-Implementierung.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -370,10 +370,10 @@ Platzhalter-Implementierung für die <code>content</code>-Methode auf <code>Post
 einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
 <p>Mit dieser zusätzlichen Methode <code>content</code> funktioniert alles in Codeblock 18-11
 bis hin zu Zeile 7 wie beabsichtigt.</p>
-<h3 id="antrag-auf-Überprüfung-des-beitrags-ändert-seinen-zustand"><a class="header" href="#antrag-auf-Überprüfung-des-beitrags-ändert-seinen-zustand">Antrag auf Überprüfung des Beitrags ändert seinen Zustand</a></h3>
+<h3 id="antrag-auf-Überprüfung-ändert-den-zustand-des-beitrags"><a class="header" href="#antrag-auf-Überprüfung-ändert-den-zustand-des-beitrags">Antrag auf Überprüfung ändert den Zustand des Beitrags</a></h3>
 <p>Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von <code>Draft</code> in <code>PendingReview</code>
-ändern sollte. Codeblock 18-15 zeigt diesen Code:</p>
+ändern sollte. Codeblock 18-15 zeigt diesen Code.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -666,11 +666,10 @@ im Funktionsparameter herausverschieben können.</p>
 <p>Wir rufen dann die <code>unwrap</code>-Methode auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 <code>Post</code> sicherstellen, dass <code>state</code> stets einen <code>Some</code>-Wert enthält, wenn diese
-Methoden zu Ende sind. Dies ist einer der Fälle, über die wir im Abschnitt
-<a href="ch09-03-to-panic-or-not-to-panic.html#f%C3%A4lle-in-denen-du-mehr-informationen-als-der-compiler-hast">„Fälle, in denen du mehr Informationen als der Compiler
-hast“</a> in Kapitel 9 gesprochen haben, wenn wir wissen,
-dass ein <code>None</code>-Wert niemals möglich ist, obwohl der Compiler nicht in der Lage
-ist, das zu verstehen.</p>
+Methoden zu Ende sind. Dies ist einer der Fälle, über die wir in <a href="ch09-03-to-panic-or-not-to-panic.html#f%C3%A4lle-in-denen-du-mehr-informationen-als-der-compiler-hast">„Fälle, in
+denen du mehr Informationen als der Compiler hast“</a> in
+Kapitel 9 gesprochen haben, wenn wir wissen, dass ein <code>None</code>-Wert niemals
+möglich ist, obwohl der Compiler nicht in der Lage ist, das zu verstehen.</p>
 <p>Wenn wir nun <code>content</code> auf der <code>&amp;Box&lt;dyn State&gt;</code> aufrufen, wird eine
 automatische Umwandlung (deref coercion) auf <code>&amp;</code> und <code>Box</code> stattfinden, sodass
 die <code>content</code>-Methode letztlich auf dem Typ aufgerufen wird, der das Merkmal
@@ -785,7 +784,7 @@ das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten <code>Post</code> verstreut.</p>
 <blockquote>
-<h4 id="warum-keine-aufzählung"><a class="header" href="#warum-keine-aufzählung">Warum keine Aufzählung?</a></h4>
+<h3 id="warum-keine-aufzählung"><a class="header" href="#warum-keine-aufzählung">Warum keine Aufzählung?</a></h3>
 <p>Vielleicht hast du dich gefragt, warum wir nicht ein <code>enum</code> mit den
 verschiedenen möglichen Poststatus als Varianten verwendet haben. Das ist
 sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
@@ -840,17 +839,19 @@ Entwurfsmuster zu wechseln.</p>
 <p>Ein weiterer Nachteil ist, dass wir eine gewisse Logik dupliziert haben. Um
 einen Teil der Duplikation zu eliminieren, könnten wir versuchen,
 Standard-Implementierungen für die Methoden <code>request_review</code> und <code>approval</code> für
-das Merkmal <code>State</code> zu erstellen, die <code>self</code> zurückgeben; dies würde jedoch die
-Objektsicherheit verletzen, da das Merkmal nicht weiß, was das konkrete <code>self</code>
-genau sein wird. Wir wollen in der Lage sein, <code>State</code> als Merkmalsobjekt zu
-verwenden, deshalb müssen seine Methoden objektsicher sein.</p>
+das Merkmal <code>State</code> zu erstellen, die <code>self</code> zurückgeben; dies würde jedoch
+nicht funktionieren: Bei der Verwendung von <code>State</code> als Merkmals-Objekt weiß
+das Merkmal nicht, was das konkrete <code>self</code> genau sein wird, sodass der
+Rückgabetyp zur Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits
+erwähnten dyn-Kompatibilitätsregeln).</p>
 <p>Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
-<code>request_review</code> und <code>approve</code> auf <code>Post</code>. Beide Methoden delegieren die
-Implementierung der gleichen Methode auf den Wert im Feld <code>state</code> von <code>Option</code>
-und setzen den neuen Wert des Feldes <code>state</code> auf das Ergebnis. Wenn wir eine
-Menge Methoden auf <code>Post</code> hätten, die diesem Muster folgen, könnten wir in
-Erwägung ziehen, ein Makro zu definieren, um die Wiederholung zu eliminieren
-(siehe den Abschnitt <a href="ch20-06-macros.html">„Makros“</a> in Kapitel 20).</p>
+<code>request_review</code> und <code>approve</code> auf <code>Post</code>. Beide Methoden verwenden
+<code>Option::take</code> mit dem Feld <code>state</code> von <code>Post</code>, und wenn <code>state</code> den Wert
+<code>Some</code> hat, delegieren sie den Aufruf an die gleiche Methode des umschlossenen
+Werts und speichern das Ergebnis im Feld <code>state</code>. Wenn wir viele Methoden auf
+<code>Post</code> hätten, die diesem Muster folgen, könnten wir in Erwägung ziehen, ein
+Makro zu definieren, um die Wiederholung zu eliminieren (siehe
+<a href="ch20-05-macros.html">„Makros“</a> in Kapitel 20).</p>
 <p>Indem wir das Zustandsmuster genau so implementieren, wie es für
 objektorientierte Sprachen definiert ist, nutzen wir die Stärken Rusts nicht so
 aus, wie wir es könnten. Sehen wir uns einige Änderungen an, die wir an der
@@ -891,7 +892,7 @@ nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
 Inhalt eines Beitragsentwurfs in der Produktion anzuzeigen, weil sich dieser
 Code nicht einmal kompilieren lässt. Codeblock 18-19 zeigt die Definition einer
 Struktur <code>Post</code> und einer Struktur <code>DraftPost</code> sowie die Methoden dieser
-Strukturen:</p>
+Strukturen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -948,7 +949,7 @@ implementieren, indem wir eine weitere Struktur <code>PendingReviewPost</code> h
 indem wir die Methode <code>request_review</code> auf <code>DraftPost</code> definieren, um einen
 <code>PendingReviewPost</code> zurückzugeben, und eine Methode <code>approve</code> auf
 <code>PendingReviewPost</code>, um einen <code>Post</code> zurückzugeben, wie in Codeblock 18-20
-gezeigt:</p>
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -1022,7 +1023,7 @@ dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
 Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
 in diesen Zuständen zu verwenden. Der aktualisierte Code in <code>main</code> ist in
-Codeblock 18-21 aufgeführt:</p>
+Codeblock 18-21 aufgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use blog::Post;
 
@@ -1063,15 +1064,15 @@ Lösung sein, da objektorientierte Sprachen bestimmte Funktionalitäten, z.B.
 Eigentümerschaft, nicht haben.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Unabhängig davon, ob du nach der Lektüre dieses Kapitels der Meinung bist, dass
-Rust eine objektorientierte Sprache ist oder nicht, weißt du jetzt, dass du
-Merkmalsobjekte verwenden kannst, um einige objektorientierte Funktionalitäten
-in Rust zu erhalten. Dynamische Aufrufe können deinem Code eine gewisse
-Flexibilität im Austausch gegen ein wenig Laufzeitperformanz verleihen. Du
-kannst diese Flexibilität nutzen, um objektorientierte Muster zu
-implementieren, die die Wartbarkeit deines Codes verbessern können. Rust hat
-auch andere Funktionalitäten, z.B. Eigentümerschaft, die objektorientierte
-Sprachen nicht haben. Ein objektorientiertes Muster wird nicht immer der beste
-Weg sein, um die Stärken von Rust zu nutzen, ist aber eine verfügbare Option.</p>
+Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Merkmalsobjekte
+verwenden kannst, um einige objektorientierte Funktionalitäten in Rust zu
+erhalten. Dynamische Aufrufe können deinem Code eine gewisse Flexibilität im
+Austausch gegen ein wenig Laufzeitperformanz verleihen. Du kannst diese
+Flexibilität nutzen, um objektorientierte Muster zu implementieren, die die
+Wartbarkeit deines Codes verbessern können. Rust hat auch andere
+Funktionalitäten, z.B. Eigentümerschaft, die objektorientierte Sprachen nicht
+haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um
+die Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.</p>
 <p>Als nächstes werden wir uns mit Mustern befassen, die eine weitere
 Funktionalität von Rust sind und viel Flexibilität ermöglichen. Wir haben sie
 uns im Laufe des Buches kurz angeschaut, haben aber noch nicht ihre volle

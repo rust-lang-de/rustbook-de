@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -248,9 +248,10 @@ Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span></p>
 <p>Zuerst iterieren wir über alle <code>workers</code> im Strang-Vorrat. Wir verwenden dafür
 <code>&amp;mut</code>, weil <code>self</code> eine veränderbare Referenz ist und wir auch in der Lage
 sein müssen, <code>worker</code> zu verändern. Für jeden <code>worker</code> geben wir eine Nachricht
-aus, die besagt, dass dieser bestimmte <code>worker</code> heruntergefahren wird, und dann
-rufen wir auf dem Strang <code>join</code> auf. Wenn der Aufruf von <code>join</code> fehlschlägt,
-benutzen wir <code>unwrap</code>, um das Programm abstürzen zu lassen.</p>
+aus, die besagt, dass diese bestimmte <code>worker</code>-Instanz heruntergefahren wird,
+und dann rufen wir auf dem Strang dieser <code>worker</code>-Instanz <code>join</code> auf. Wenn der
+Aufruf von <code>join</code> fehlschlägt, benutzen wir <code>unwrap</code>, um das Programm abstürzen
+zu lassen.</p>
 <p>Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:</p>
 <pre><code class="language-console">$ cargo check
     Checking hello v0.1.0 (file:///projects/hello)
@@ -272,218 +273,32 @@ error: could not compile `hello` (lib) due to 1 previous error
 veränderbare Ausleihe von jedem <code>worker</code> haben und <code>join</code> die Eigentümerschaft
 für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Strang
 <code>thread</code> aus der <code>Worker</code>-Instanz herausnehmen, damit <code>join</code> den Strang
-konsumieren kann. Wir haben dies in Codeblock 17-15 getan: Wenn <code>Worker</code>
-stattdessen ein <code>Option&lt;Thread::JoinHandle&lt;()&gt;&gt;</code> hält, können wir die Methode
-<code>take</code> auf <code>Option</code> aufrufen, um den Wert aus der Variante <code>Some</code>
-herauszuverschieben und eine Variante <code>None</code> an ihrer Stelle zu belassen. Mit
-anderen Worten, ein <code>Worker</code>, der läuft, wird eine Variante <code>Some</code> in <code>thread</code>
-haben, und wenn wir einen <code>Worker</code> aufräumen wollen, ersetzen wir <code>Some</code> durch
-<code>None</code>, sodass der <code>Worker</code> keinen Strang zum Laufen hat.</p>
-<p>Wir wissen also, dass wir die Definition von <code>Worker</code> so aktualisieren wollen:</p>
+konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
+Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn <code>Worker</code> ein
+<code>Option&lt;Thread::JoinHandle&lt;()&gt;&gt;</code> hielte, könnten wir die Methode <code>take</code> auf
+<code>Option</code> aufrufen, um den Wert aus der Variante <code>Some</code> herauszuverschieben und
+eine Variante <code>None</code> an ihrer Stelle zu belassen. Mit anderen Worten, ein
+<code>Worker</code>, der läuft, würde eine Variante <code>Some</code> in <code>thread</code> haben, und wenn wir
+einen <code>Worker</code> aufräumen wollten, würden wir <code>Some</code> durch <code>None</code> ersetzen,
+sodass der <code>Worker</code> keinen Strang zum Laufen haben würde.</p>
+<p>Das <em>einzige</em> Mal, dass dies der Fall wäre, wäre, wenn man den <code>Worker</code>
+aufräumt. Im Gegenzug müssten wir überall, wo wir auf <code>Worker.thread</code>
+zugreifen, mit einer <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> umgehen. Idiomatisch
+verwendet Rust <code>Option</code> ziemlich oft, aber wenn du etwas in <code>Option</code> einpackst,
+von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
+alternativen Ansätzen zu suchen. Du könntest deinen Code sauberer und weniger
+fehleranfällig machen.</p>
+<p>In diesem Fall gibt es eine bessere Alternative: Die Methode <code>Vec::drain</code>. Sie
+akzeptiert einen Bereichsparameter, um anzugeben, welche Elemente aus dem <code>Vec</code>
+entfernt werden sollen, und gibt einen Iterator dieser Elemente zurück. Die
+Angabe der Bereichssyntax <code>..</code> entfernt <em>alle</em> Werte aus dem <code>Vec</code>.</p>
+<p>Wir müssen also die <code>drop</code>-Implementierung von <code>ThreadPool</code> wie folgt
+aktualisieren:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
-</span><span class="boring">    thread,
-</span><span class="boring">};
-</span><span class="boring">
-</span><span class="boring">pub struct ThreadPool {
-</span><span class="boring">    workers: Vec&lt;Worker&gt;,
-</span><span class="boring">    sender: mpsc::Sender&lt;Job&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">type Job = Box&lt;dyn FnOnce() + Send + 'static&gt;;
-</span><span class="boring">
-</span><span class="boring">impl ThreadPool {
-</span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
-</span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
-</span><span class="boring">    ///
-</span><span class="boring">    /// # Panics
-</span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
-</span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
-</span><span class="boring">        assert!(size &gt; 0);
-</span><span class="boring">
-</span><span class="boring">        let (sender, receiver) = mpsc::channel();
-</span><span class="boring">
-</span><span class="boring">        let receiver = Arc::new(Mutex::new(receiver));
-</span><span class="boring">
-</span><span class="boring">        let mut workers = Vec::with_capacity(size);
-</span><span class="boring">
-</span><span class="boring">        for id in 0..size {
-</span><span class="boring">            workers.push(Worker::new(id, Arc::clone(&amp;receiver)));
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        ThreadPool { workers, sender }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn execute&lt;F&gt;(&amp;self, f: F)
-</span><span class="boring">    where
-</span><span class="boring">        F: FnOnce() + Send + 'static,
-</span><span class="boring">    {
-</span><span class="boring">        let job = Box::new(f);
-</span><span class="boring">
-</span><span class="boring">        self.sender.send(job).unwrap();
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Drop for ThreadPool {
-</span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        for worker in &amp;mut self.workers {
-</span><span class="boring">            println!("Worker {} herunterfahren", worker.id);
-</span><span class="boring">
-</span><span class="boring">            worker.thread.join().unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>struct Worker {
-    id: usize,
-    thread: Option&lt;thread::JoinHandle&lt;()&gt;&gt;,
-}
-<span class="boring">
-</span><span class="boring">impl Worker {
-</span><span class="boring">    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-</span><span class="boring">        let thread = thread::spawn(move || loop {
-</span><span class="boring">            let job = receiver.lock().unwrap().recv().unwrap();
-</span><span class="boring">
-</span><span class="boring">            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
-</span><span class="boring">
-</span><span class="boring">            job();
-</span><span class="boring">        });
-</span><span class="boring">
-</span><span class="boring">        Worker { id, thread }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">}</span></code></pre></pre>
-<p>Nun wollen wir uns auf den Compiler stützen, um die anderen Stellen zu finden,
-die geändert werden müssen. Wenn wir diesen Code überprüfen, erhalten wir zwei
-Fehler:</p>
-<pre><code class="language-console">$ cargo check
-    Checking hello v0.1.0 (file:///projects/hello)
-error[E0599]: no method named `join` found for enum `Option` in the current scope
-  --&gt; src/lib.rs:52:27
-   |
-52 |             worker.thread.join().unwrap();
-   |                           ^^^^ method not found in `Option&lt;JoinHandle&lt;()&gt;&gt;`
-   |
-note: the method `join` exists on the type `JoinHandle&lt;()&gt;`
-  --&gt; /rustc/07dca489ac2d933c78d3c5158e3f43be/library/std/src/thread/mod.rs:1649:5
-help: consider using `Option::expect` to unwrap the `JoinHandle&lt;()&gt;` value, panicking if the value is an `Option::None`
-   |
-52 |             worker.thread.expect("REASON").join().unwrap();
-   |                          +++++++++++++++++
-
-error[E0308]: mismatched types
-  --&gt; src/lib.rs:72:22
-   |
-72 |         Worker { id, thread }
-   |                      ^^^^^^ expected `Option&lt;JoinHandle&lt;()&gt;&gt;`, found `JoinHandle&lt;_&gt;`
-   |
-   = note: expected enum `Option&lt;JoinHandle&lt;()&gt;&gt;`
-            found struct `JoinHandle&lt;_&gt;`
-help: try wrapping the expression in `Some`
-   |
-72 |         Worker { id, thread: Some(thread) }
-   |                      +++++++++++++      +
-
-Some errors have detailed explanations: E0308, E0599.
-For more information about an error, try `rustc --explain E0308`.
-error: could not compile `hello` (lib) due to 2 previous errors
-</code></pre>
-<p>Lass uns den zweiten Fehler beheben, der auf den Code am Ende von <code>Worker::new</code>
-verweist; wir müssen den Wert <code>thread</code> in <code>Some</code> einpacken, wenn wir einen
-neuen <code>Worker</code> erstellen. Nimm die folgenden Änderungen vor, um diesen Fehler
-zu beheben:</p>
-<p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
-</span><span class="boring">    thread,
-</span><span class="boring">};
-</span><span class="boring">
-</span><span class="boring">pub struct ThreadPool {
-</span><span class="boring">    workers: Vec&lt;Worker&gt;,
-</span><span class="boring">    sender: mpsc::Sender&lt;Job&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">type Job = Box&lt;dyn FnOnce() + Send + 'static&gt;;
-</span><span class="boring">
-</span><span class="boring">impl ThreadPool {
-</span><span class="boring">    /// Erzeuge einen neuen ThreadPool.
-</span><span class="boring">    ///
-</span><span class="boring">    /// Die Größe ist die Anzahl der Stränge im Vorrat.
-</span><span class="boring">    ///
-</span><span class="boring">    /// # Panics
-</span><span class="boring">    ///
-</span><span class="boring">    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
-</span><span class="boring">    pub fn new(size: usize) -&gt; ThreadPool {
-</span><span class="boring">        assert!(size &gt; 0);
-</span><span class="boring">
-</span><span class="boring">        let (sender, receiver) = mpsc::channel();
-</span><span class="boring">
-</span><span class="boring">        let receiver = Arc::new(Mutex::new(receiver));
-</span><span class="boring">
-</span><span class="boring">        let mut workers = Vec::with_capacity(size);
-</span><span class="boring">
-</span><span class="boring">        for id in 0..size {
-</span><span class="boring">            workers.push(Worker::new(id, Arc::clone(&amp;receiver)));
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        ThreadPool { workers, sender }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    pub fn execute&lt;F&gt;(&amp;self, f: F)
-</span><span class="boring">    where
-</span><span class="boring">        F: FnOnce() + Send + 'static,
-</span><span class="boring">    {
-</span><span class="boring">        let job = Box::new(f);
-</span><span class="boring">
-</span><span class="boring">        self.sender.send(job).unwrap();
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Drop for ThreadPool {
-</span><span class="boring">    fn drop(&amp;mut self) {
-</span><span class="boring">        for worker in &amp;mut self.workers {
-</span><span class="boring">            println!("Worker {} herunterfahren", worker.id);
-</span><span class="boring">
-</span><span class="boring">            worker.thread.join().unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">struct Worker {
-</span><span class="boring">    id: usize,
-</span><span class="boring">    thread: Option&lt;thread::JoinHandle&lt;()&gt;&gt;,
-</span><span class="boring">}
-</span><span class="boring">
-</span>impl Worker {
-    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-        // --abschneiden--
-
-<span class="boring">        let thread = thread::spawn(move || loop {
-</span><span class="boring">            let job = receiver.lock().unwrap().recv().unwrap();
-</span><span class="boring">
-</span><span class="boring">            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
-</span><span class="boring">
-</span><span class="boring">            job();
-</span><span class="boring">        });
-</span><span class="boring">
-</span>        Worker {
-            id,
-            thread: Some(thread),
-        }
-    }
-}</code></pre>
-<p>Der erste Fehler liegt in unserer <code>Drop</code>-Implementierung. Wir haben bereits
-erwähnt, dass wir beabsichtigten, <code>take</code> auf dem <code>Option</code>-Wert aufzurufen, um
-<code>thread</code> aus <code>worker</code> heraus zu verschieben. Die folgenden Änderungen werden
-dies tun:</p>
-<p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore not_desired_behavior"><span class="boring">use std::{
-</span><span class="boring">    sync::{mpsc, Arc, Mutex},
+</span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
 </span><span class="boring">
@@ -530,43 +345,36 @@ dies tun:</p>
 </span><span class="boring">
 </span>impl Drop for ThreadPool {
     fn drop(&amp;mut self) {
-        for worker in &amp;mut self.workers {
+        for worker in self.workers.drain(..) {
             println!("Worker {} herunterfahren", worker.id);
 
-            if let Some(thread) = worker.thread.take() {
-                thread.join().unwrap();
-            }
+            worker.thread.join().unwrap();
         }
     }
 }
 <span class="boring">
 </span><span class="boring">struct Worker {
 </span><span class="boring">    id: usize,
-</span><span class="boring">    thread: Option&lt;thread::JoinHandle&lt;()&gt;&gt;,
+</span><span class="boring">    thread: thread::JoinHandle&lt;()&gt;,
 </span><span class="boring">}
 </span><span class="boring">
 </span><span class="boring">impl Worker {
 </span><span class="boring">    fn new(id: usize, receiver: Arc&lt;Mutex&lt;mpsc::Receiver&lt;Job&gt;&gt;&gt;) -&gt; Worker {
-</span><span class="boring">        let thread = thread::spawn(move || loop {
-</span><span class="boring">            let job = receiver.lock().unwrap().recv().unwrap();
+</span><span class="boring">        let thread = thread::spawn(move || {
+</span><span class="boring">            loop {
+</span><span class="boring">                let job = receiver.lock().unwrap().recv().unwrap();
 </span><span class="boring">
-</span><span class="boring">            println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
+</span><span class="boring">                println!("Worker {id} hat einen Auftrag erhalten; führe ihn aus.");
 </span><span class="boring">
-</span><span class="boring">            job();
+</span><span class="boring">                job();
+</span><span class="boring">            }
 </span><span class="boring">        });
 </span><span class="boring">
-</span><span class="boring">        Worker {
-</span><span class="boring">            id,
-</span><span class="boring">            thread: Some(thread),
-</span><span class="boring">        }
+</span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<p>Wie in Kapitel 17 besprochen, nimmt die Methode <code>take</code> auf <code>Option</code> die
-Variante <code>Some</code> heraus und lässt an ihrer Stelle <code>None</code> stehen. Wir benutzen
-<code>if let</code>, um die <code>Some</code> zu destrukturieren und den Strang zu erhalten; dann
-rufen wir <code>join</code> auf dem Strang auf. Wenn der Strang eines <code>Worker</code> bereits
-<code>None</code> ist, wissen wir, dass der Strang bereits aufgeräumt wurde, also passiert
-in diesem Fall nichts.</p>
+</span><span class="boring">}</span></code></pre></pre>
+<p>Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
+an unserem Code erforderlich.</p>
 <h3 id="den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen"><a class="header" href="#den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen">Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen</a></h3>
 <p>Mit all den Änderungen, die wir vorgenommen haben, lässt sich unser Code ohne
 jede Warnung kompilieren. Aber die schlechte Nachricht ist, dass dieser Code
@@ -582,8 +390,9 @@ von <code>drop</code> in <code>ThreadPool</code> und dann eine Änderung in der 
 <p>Zuerst ändern wir die Implementierung von <code>drop</code> in <code>ThreadPool</code>, um den
 <code>Sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
 Codeblock 20-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>Absender</code>
-explizit aufzuräumen. Wir verwenden die gleiche <code>Option</code> und <code>take</code>-Technik wie
-beim Strang, um <code>sender</code> aus dem <code>ThreadPool</code> herauszuverschieben:</p>
+explizit aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code>
+verwenden, um den <code>Sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen
+zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -679,11 +488,11 @@ impl Drop for ThreadPool {
 <code>Worker</code>-Stränge explizit aufräumen</span></p>
 <p>Das Aufräumen von <code>sender</code> schließt den Kanal, was bedeutet, dass keine
 weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
-von <code>recv</code>, die die <code>Worker</code> in der Endlosschleife machen, einen Fehler zurück.
-In Codeblock 20-24 ändern wir die <code>Worker</code>-Schleife so, dass die Schleife in
-diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die Stränge beendet
-werden, wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code> <code>join</code> für sie
-aufruft.</p>
+von <code>recv</code>, die die <code>Worker</code>-Instanzen in der Endlosschleife machen, einen
+Fehler zurück. In Codeblock 20-24 ändern wir die <code>Worker</code>-Schleife so, dass die
+Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
+Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code>
+<code>join</code> für sie aufruft.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -853,16 +662,16 @@ Worker 1 herunterfahren
 Worker 2 herunterfahren
 Worker 3 herunterfahren
 </code></pre>
-<p>Möglicherweise siehst du eine andere Reihenfolge der <code>Worker</code> und der
+<p>Möglicherweise siehst du eine andere Reihenfolge der <code>Worker</code>-IDs und der
 ausgegebenen Nachrichten. Wir können anhand der Nachrichten sehen, wie dieser
 Code funktioniert: Die <code>Worker</code> 0 und 3 haben die ersten beiden Anfragen
 erhalten. Der Server hat nach der zweiten Verbindung aufgehört, Verbindungen
 anzunehmen, und die <code>Drop</code>-Implementierung auf <code>ThreadPool</code> beginnt mit der
 Ausführung, bevor <code>Worker</code> 3 überhaupt seinen Job beginnt. Wenn man den
-<code>sender</code> aufräumt, werden alle <code>Worker</code> getrennt und angewiesen, sich zu
-beenden. Die <code>Worker</code> geben jeweils eine Nachricht aus, wenn sie die Verbindung
-trennen, und dann ruft der Strang-Vorrat <code>join</code> auf, um das Ende jedes
-<code>Worker</code>-Strangs zu warten.</p>
+<code>sender</code> aufräumt, werden alle <code>Worker</code>-Instanzen getrennt und angewiesen, sich
+zu beenden. Die <code>Worker</code>-Instanzen geben jeweils eine Nachricht aus, wenn sie
+die Verbindung trennen, und dann ruft der Strang-Vorrat <code>join</code> auf, um das Ende
+jedes <code>Worker</code>-Strangs zu warten.</p>
 <p>Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
 <code>ThreadPool</code> hat den <code>sender</code> aufgeräumt, und bevor ein <code>Worker</code> einen Fehler
 erhalten hat, haben wir versucht, auf <code>Worker</code> 0 zu warten. <code>Worker</code> 0 hatte
@@ -870,8 +679,8 @@ noch keinen Fehler von <code>recv</code> erhalten, also blockierte der Hauptstra
 wartete darauf, dass <code>Worker</code> 0 fertig wird. In der Zwischenzeit erhielt
 <code>Worker</code> 3 einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
 <code>Worker</code> 0 fertig war, wartete der Hauptstrang darauf, dass die restlichen
-<code>Worker</code> fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre Schleifen
-verlassen und konnten sich beenden.</p>
+<code>Worker</code>-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
+Schleifen verlassen und konnten sich beenden.</p>
 <p>Herzlichen Glückwunsch! Wir haben jetzt unser Projekt abgeschlossen; wir haben
 einen einfachen Webserver, der einen Strang-Vorrat verwendet, um asynchron zu
 antworten. Wir sind in der Lage, den Server kontrolliert herunterzufahren,

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -160,9 +160,10 @@ konzentrieren können. Es gibt verschiedene Möglichkeiten, einen Arbeitsbereich
 zu strukturieren. Wir werden nur einen einen üblichen Weg zeigen. Wir haben
 einen Arbeitsbereich mit einer Binärdatei und zwei Bibliotheken. Die Binärdatei
 stellt die Hauptfunktion bereit und hängt von den beiden Bibliotheken ab. Eine
-Bibliothek stellt die Funktion <code>add_one</code> und die andere <code>add_two</code> zur
-Verfügung. Diese drei Kisten werden Teil desselben Arbeitsbereichs sein.
-Zunächst erstellen wir ein neues Verzeichnis für den Arbeitsbereich:</p>
+Bibliothek stellt die Funktion <code>add_one</code> und eine andere Bibliothek die
+Funktion <code>add_two</code> zur Verfügung. Diese drei Kisten werden Teil desselben
+Arbeitsbereichs sein. Zunächst erstellen wir ein neues Verzeichnis für den
+Arbeitsbereich:</p>
 <pre><code class="language-console">$ mkdir add
 $ cd add
 </code></pre>
@@ -214,8 +215,13 @@ Arbeitsbereich neu kompiliert werden, damit die Artefakte ein eigenes
 Verzeichnisses können die Kisten unnötig wiederholte Erstellung vermeiden.</p>
 <h3 id="erstellen-des-zweiten-pakets-im-arbeitsbereich"><a class="header" href="#erstellen-des-zweiten-pakets-im-arbeitsbereich">Erstellen des zweiten Pakets im Arbeitsbereich</a></h3>
 <p>Als Nächstes erstellen wir ein weiteres, dem Arbeitsbereich zugehöriges Paket
-und nennen es <code>add_one</code>. Ändere die auf der obersten Ebene befindliche Datei
-<em>Cargo.toml</em> um den <em>add_one</em>-Pfad in der Mitgliederliste anzugeben:</p>
+und nennen es <code>add_one</code>. Erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
+<pre><code class="language-console">$ cargo new add_one --lib
+    Creating library `add_one` package
+      Adding `add_one` as member of workspace at `file:///projects/add`
+</code></pre>
+<p>Die Datei <em>Cargo.toml</em> auf der obersten Ebene enthält nun den Pfad <em>add_one</em> in
+der Liste <code>members</code>:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
 
@@ -224,12 +230,7 @@ members = [
     "add_one",
 ]
 </code></pre>
-<p>Dann erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
-<pre><code class="language-console">$ cargo new add_one --lib
-    Creating library `add_one` package
-      Adding `add_one` as member of workspace at `file:///projects/add`
-</code></pre>
-<p>Dein <em>add</em>-Verzeichnis sollte nun so aussehen:</p>
+<p>Dein Verzeichnis <em>add</em> sollte nun so aussehen:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── add_one
@@ -258,10 +259,8 @@ add_one = { path = "../add_one" }
 <p>Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
 abhängen, daher müssen wir die Abhängigkeit explizit angeben.</p>
 <p>Als nächstes verwenden wir die Funktion <code>add_one</code> (aus der <code>add_one</code>-Kiste) in
-der <code>adder</code>-Kiste. Öffne die Datei <em>adder/src/main.rs</em> und füge oben eine Zeile
-<code>use</code> hinzu, um die neue Bibliothekskiste <code>add_one</code> in den Gültigkeitsbereich
-(scope) zu bringen. Ändere dann die Funktion <code>main</code>, um die Funktion <code>add_one</code>
-aufzurufen, siehe Codeblock 14-7.</p>
+der <code>adder</code>-Kiste. Öffne die Datei <em>adder/src/main.rs</em> und ändere die Funktion
+<code>main</code>, um die Funktion <code>add_one</code> aufzurufen, siehe Codeblock 14-7.</p>
 <p><span class="filename">Dateiname: adder/src/main.rs</span></p>
 <pre><code class="language-rust ignore">use add_one;
 
@@ -269,8 +268,8 @@ fn main() {
     let num = 10;
     println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
 }</code></pre>
-<p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste aus der
-<code>adder</code>-Kiste verwenden</span></p>
+<p><span class="caption">Codeblock 14-7: Die <code>add_one</code>-Bibliothekskiste in der
+Kiste <code>adder</code> verwenden</span></p>
 <p>Erstellen wir den Arbeitsbereich, indem wir <code>cargo build</code> im obersten
 Verzeichnis <em>add</em> ausführen!</p>
 <pre><code class="language-console">$ cargo build
@@ -429,11 +428,11 @@ du in das Verzeichnis jeder Kiste wechseln und <code>cargo publish</code> auf je
 im Arbeitsbereich ausführen, um die Kisten zu veröffentlichen.</p>
 <p>Als zusätzliche Übung, füge ähnlich der Kiste <code>add_one</code> diesem Arbeitsbereich
 eine <code>add-two</code>-Kiste hinzu!</p>
-<p>Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden, es ist
-einfacher kleinere, einzelne Komponenten zu verstehen, als ein großes
-Programmcode-Objekt. Darüber hinaus kann die Verwaltung von Kisten in einem
-Arbeitsbereich die Koordination zwischen Kisten erleichtern, wenn sie häufig
-zur gleichen Zeit verändert werden.</p>
+<p>Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden: Es
+ermöglicht dir, mit kleineren, leichter zu verstehenden Komponenten zu arbeiten
+als mit einem großen Klumpen von Code. Darüber hinaus kann die Verwaltung von
+Kisten in einem Arbeitsbereich die Koordination zwischen Kisten erleichtern,
+wenn sie häufig zur gleichen Zeit verändert werden.</p>
 
                     </main>
 

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -156,7 +156,7 @@ einer Weile summieren sich all diese kleinen Änderungen. Aber von
 Veröffentlichung zu Veröffentlichung kann es schwierig sein, zurückzublicken
 und zu sagen: "Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr
 verändert!</p>
-<p>Alle zwei oder drei Jahre gibt das Rust-Team eine neue <em>Rust-Ausgabe</em> (edition)
+<p>Etwa alle drei Jahre gibt das Rust-Team eine neue <em>Rust-Ausgabe</em> (edition)
 heraus. Jede Ausgabe fasst die neuen Funktionalitäten in einem übersichtlichen
 Paket mit vollständig aktualisierter Dokumentation und Werkzeugausstattung
 zusammen. Neue Ausgaben werden im Rahmen des üblichen sechswöchigen
@@ -171,9 +171,9 @@ lohnen könnte.</li>
 <li>Für diejenigen, die Rust entwickeln, stellt eine neue Ausgabe einen
 Treffpunkt für das gesamte Projekt dar.</li>
 </ul>
-<p>Zum Verfassungszeitpunkt dieses Artikels sind drei Rust-Ausgaben verfügbar:
-Rust 2015, Rust 2018 und Rust 2021. Dieses Buch wurde unter Verwendung der
-Rust-Ausgabe 2021 geschrieben.</p>
+<p>Zum Verfassungszeitpunkt dieses Artikels sind vier Rust-Ausgaben verfügbar:
+Rust 2015, Rust 2018, Rust 2021 und Rust 2024. Dieses Buch wurde unter
+Verwendung der Rust-Ausgabe 2024 geschrieben.</p>
 <p>Der Schlüssel <code>edition</code> in <em>Cargo.toml</em> gibt an, welche Ausgabe der Compiler
 für deinen Code verwenden soll. Wenn der Schlüssel nicht existiert, verwendet
 Rust aus Gründen der Abwärtskompatibilität die Edition <code>2015</code>.</p>

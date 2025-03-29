@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -164,7 +164,7 @@ werden</li>
 <p>Wenn du ein anderes Verhalten wünschst als das, das durch das Attribut <code>derive</code>
 bereitgestellt wird, schaue in die <a href="https://doc.rust-lang.org/std/index.html">Standardbibliotheksdokumentation</a>
 zu den Merkmalen, um zu erfahren, wie sie manuell implementiert werden können.</p>
-<p>Diese hier aufgelisteten Merkmale sind die einzigen, die von der
+<p>Die hier aufgelisteten Merkmale sind die einzigen, die von der
 Standardbibliothek definiert werden und die mit <code>derive</code> in deinen Typen
 implementiert werden können. Andere in der Standardbibliothek definierte
 Merkmale haben kein sinnvolles Standardverhalten, sodass es an dir liegt, sie
@@ -180,7 +180,7 @@ kein angemessenes Standardverhalten für dich bereitstellen kann.</p>
 Bibliotheken können <code>derive</code> für ihre eigenen Merkmale implementieren, sodass
 die Liste der Merkmale, die du mit <code>derive</code> verwenden kannst, wahrlich
 unbegrenzt ist. Das Implementieren von <code>derive</code> verwendet ein prozedurales
-Makro, das im Abschnitt <a href="ch20-06-macros.html">„Makros“</a> in Kapitel 20 behandelt wird.</p>
+Makro, das im Abschnitt <a href="ch20-05-macros.html">„Makros“</a> in Kapitel 20 behandelt wird.</p>
 <h3 id="debug-für-die-programmierer-ausgabe"><a class="header" href="#debug-für-die-programmierer-ausgabe"><code>Debug</code> für die Programmierer-Ausgabe</a></h3>
 <p>Das Merkmal <code>Debug</code> ermöglicht das Debuggen von Formatierungen in
 Formatierungszeichenketten, die du durch Angeben von <code>:?</code> innerhalb Platzhalter

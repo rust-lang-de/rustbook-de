@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -183,7 +183,7 @@ Du wirst ggf. aufgefordert, dein Passwort einzugeben. Nach erfolgreicher
 Installation erscheint folgende Zeile:</p>
 <pre><code class="language-text">Rust is installed now. Great!
 </code></pre>
-<p>Außerdem benötigst du einen Programmbinder (linker), ein Programm, das Rust
+<p>Außerdem benötigst du einen <em>Programmbinder</em> (linker), ein Programm, das Rust
 verwendet, um die kompilierten Ausgaben in eine Datei zusammenzuführen.
 Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
 du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
@@ -250,6 +250,23 @@ Erstellung von Rust-Code verwendest. So gut wie jeder Texteditor ist dafür
 ausreichend! Viele Texteditoren und integrierte Entwicklungsumgebungen (IDEs)
 haben jedoch integrierte Unterstützung für Rust. Eine aktuelle Liste von
 Editoren und IDEs findest du auf der <a href="https://www.rust-lang.org/tools">Tools-Seite</a> der Rust-Website.</p>
+<h3 id="offline-mit-diesem-buch-arbeiten"><a class="header" href="#offline-mit-diesem-buch-arbeiten">Offline mit diesem Buch arbeiten</a></h3>
+<p>In mehreren Beispielen werden wir Rust-Pakete außerhalb der Standardbibliothek
+verwenden. Um diese Beispiele durchzuarbeiten, benötigst du entweder eine
+Internetverbindung oder du musst diese Abhängigkeiten im Voraus heruntergeladen
+haben. Um die Abhängigkeiten im Voraus herunterzuladen, kannst du die folgenden
+Befehle ausführen. (Wir werden später im Detail erklären, was <code>cargo</code> ist und
+was jeder dieser Befehle tut.)</p>
+<pre><code class="language-console">$ cargo new get-dependencies
+$ cd get-dependencies
+$ cargo add rand@0.8.5 trpl@0.2.0
+</code></pre>
+<p>Dadurch werden die Downloads für diese Pakete zwischengespeichert, sodass du
+sie später nicht erneut herunterladen musst. Sobald du diesen Befehl ausgeführt
+hast, musst du den Ordner <code>get-dependencies</code> nicht mehr behalten. Wenn du
+diesen Befehl ausgeführt hast, kannst du den Parameter <code>--offline</code> mit allen
+<code>cargo</code>-Befehlen im Rest des Buches verwenden, um diese zwischengespeicherten
+Versionen zu verwenden, anstatt sie aus dem Internet zu holen.</p>
 
                     </main>
 

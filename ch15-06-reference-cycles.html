@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -157,7 +157,7 @@ erreicht und die Werte niemals aufgeräumt werden.</p>
 <h3 id="einen-referenzzyklus-erstellen"><a class="header" href="#einen-referenzzyklus-erstellen">Einen Referenzzyklus erstellen</a></h3>
 <p>Schauen wir uns an, wie ein Referenzzyklus stattfinden kann und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung <code>List</code> und einer
-Methode <code>tail</code> in Codeblock 15-25:</p>
+Methode <code>tail</code> in Codeblock 15-25.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use crate::List::{Cons, Nil};
 use std::cell::RefCell;
@@ -242,7 +242,7 @@ aufeinanderzeigenden Listenwerten</span></p>
 <p>Wir erstellen eine <code>Rc&lt;List&gt;</code>-Instanz, die einen <code>List</code>-Wert in der Variablen
 <code>a</code> mit einer initialen Liste <code>5, Nil</code> enthält. Wir erstellen dann eine
 <code>Rc&lt;List&gt;</code>-Instanz, die einen anderen <code>List</code>-Wert in der Variablen <code>b</code> enthält,
-die den Wert 10 enthält und auf die Liste in <code>a</code> zeigt.</p>
+die den Wert <code>10</code> enthält und auf die Liste in <code>a</code> zeigt.</p>
 <p>Wir modifizieren <code>a</code> so, dass es auf <code>b</code> anstatt auf <code>Nil</code> zeigt, wodurch ein
 Zyklus erstellt wird. Wir tun dies, indem wir die <code>tail</code>-Methode verwenden, um
 eine Referenz auf <code>RefCell&lt;Rc&lt;List&gt;&gt;</code> in <code>a</code> zu erhalten, die wir in die
@@ -272,8 +272,8 @@ da seine Referenzanzahl 1 und nicht 0 ist. Dann räumt Rust <code>a</code> auf, 
 Referenzanzahl der <code>Rc&lt;List&gt;</code>-Instanz in <code>a</code> ebenfalls von 2 auf 1 reduziert.
 Der Speicher dieser Instanz kann ebenfalls nicht aufgeräumt werden, weil die
 andere <code>Rc&lt;List&gt;</code>-Instanz immer noch auf sie referenziert. Der der Liste
-zugewiesene Speicher bleibt für immer unaufgeräumt. Um diesen Referenzzyklus zu
-veranschaulichen, haben wir in Abbildung 15-4 ein Diagramm erstellt.</p>
+zugewiesene Speicher bleibt für immer unaufgeräumt. Das Diagramm in Abbildung
+15-4 veranschaulicht diesen Referenzzyklus.</p>
 <img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 40%;" />
 <p><span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen <code>a</code> und <code>b</code>,
 die aufeinander zeigen</span></p>
@@ -306,7 +306,7 @@ Datenstruktur nicht möglich ist. Schauen wir uns ein Beispiel an, in dem
 Diagramme aus übergeordneten und untergeordneten Knoten verwendet werden, um
 festzustellen, wann Beziehungen ohne Eigentümerschaft ein geeigneter Weg sind,
 um Referenzzyklen zu verhindern.</p>
-<h3 id="verhindern-von-referenzzyklen-umwandeln-von-rct-in-weakt"><a class="header" href="#verhindern-von-referenzzyklen-umwandeln-von-rct-in-weakt">Verhindern von Referenzzyklen: Umwandeln von <code>Rc&lt;T&gt;</code> in <code>Weak&lt;T&gt;</code></a></h3>
+<h3 id="verhindern-von-referenzzyklen-mit-weakt"><a class="header" href="#verhindern-von-referenzzyklen-mit-weakt">Verhindern von Referenzzyklen mit <code>Weak&lt;T&gt;</code></a></h3>
 <p>Bisher haben wir gezeigt, dass das Aufrufen von <code>Rc::clone</code> den <code>strong_count</code>
 einer <code>Rc&lt;T&gt;</code>-Instanz erhöht und eine <code>Rc&lt;T&gt;</code>-Instanz nur dann aufgeräumt wird,
 wenn ihr <code>strong_count</code> 0 ist. Man kann auch eine <em>schwache Referenz</em> (weak
@@ -368,9 +368,9 @@ der Baumstruktur zugreifen können. Zu diesem Zweck definieren wir die
 Knoten Kind-Knoten eines anderen Knotens sind, sodass wir einen <code>RefCell&lt;T&gt;</code> in
 <code>children</code> um den <code>Vec&lt;Rc&lt;Node&gt;&gt;</code> haben.</p>
 <p>Als Nächstes verwenden wir unsere Strukturdefinition und erstellen eine
-<code>Node</code>-Instanz mit dem Namen <code>leaf</code> und dem Wert 3 und ohne Kind-Elemente,
-sowie eine weitere Instanz mit dem Namen <code>branch</code> und dem Wert 5 und <code>leaf</code> als
-Kind-Element, wie in Codeblock 15-27 gezeigt wird:</p>
+<code>Node</code>-Instanz mit dem Namen <code>leaf</code> und dem Wert <code>3</code> und ohne Kind-Elemente,
+sowie eine weitere Instanz mit dem Namen <code>branch</code> und dem Wert <code>5</code> und <code>leaf</code>
+als Kind-Element, wie in Codeblock 15-27 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::Rc;
@@ -451,7 +451,7 @@ struct Node {
 <p>Ein Knoten kann auf seinen Eltern-Knoten referenzieren, besitzt ihn jedoch
 nicht. In Codeblock 15-28 aktualisieren wir <code>main</code>, um diese neue Definition
 zu verwenden, damit der <code>leaf</code>-Knoten auf seinen Eltern-Knoten <code>branch</code>
-referenzieren kann:</p>
+referenzieren kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::{Rc, Weak};
@@ -519,7 +519,7 @@ wir durch den Aufruf von <code>Rc::strong_count</code> und <code>Rc::weak_count<
 erstellt und die Erstellung von <code>branch</code> in diesen Bereich verschoben wird. Auf
 diese Weise können wir sehen, was passiert, wenn <code>branch</code> erstellt und dann
 aufgeräumt wird, wenn es den Gültigkeitsbereich verlässt. Die Änderungen
-sind in Codeblock 15-29 aufgeführt:</p>
+sind in Codeblock 15-29 aufgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::{Rc, Weak};

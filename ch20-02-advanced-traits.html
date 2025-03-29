@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -145,11 +145,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
-<p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Merkmale (traits):
-Gemeinsames Verhalten definieren“</a> in Kapitel
-10, aber wir haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du
-mehr über Rust weißt, können wir zum Kern der Sache kommen.</p>
-<h3 id="spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen"><a class="header" href="#spezifizieren-von-platzhaltertypen-in-merkmalsdefinitionen-mit-assoziierten-typen">Spezifizieren von Platzhaltertypen in Merkmalsdefinitionen mit assoziierten Typen</a></h3>
+<p>Merkmale behandelten wir als Erstes in <a href="ch10-02-traits.html">„Merkmale (traits): Gemeinsames
+Verhalten definieren“</a> in Kapitel 10, aber wir
+haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über
+Rust weißt, können wir zum Kern der Sache kommen.</p>
+<h3 id="assoziierte-typen"><a class="header" href="#assoziierte-typen">Assoziierte Typen</a></h3>
 <p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
 Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
@@ -260,7 +260,7 @@ Operatoren zu überladen. Aber du kannst die in <code>std::ops</code> aufgeführ
 Operationen und entsprechenden Merkmale überladen, indem du die mit dem
 Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
 Codeblock 20-15 den Operator <code>+</code>, um zwei <code>Point</code>-Instanzen zu addieren. Wir
-tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Struktur implementieren:</p>
+tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Struktur implementieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::ops::Add;
 
@@ -346,11 +346,11 @@ impl Add&lt;Meters&gt; for Millimeters {
 den Wert des Parameters vom Typ <code>Rhs</code> zu setzen, anstatt den Standardwert
 <code>Self</code> zu verwenden.</p>
 <p>Du wirst Standardtypparameter auf zwei Arten verwenden:</p>
-<ul>
+<ol>
 <li>Um einen Typ zu erweitern, ohne bestehenden Code zu brechen.</li>
 <li>Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
 Benutzer nicht benötigen.</li>
-</ul>
+</ol>
 <p>Das Merkmal <code>Add</code> der Standardbibliothek ist ein Beispiel für den zweiten
 Zweck: Normalerweise addierst du zwei ähnliche Typen, aber das Merkmal <code>Add</code>
 bietet die Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das
@@ -362,7 +362,7 @@ Verwenden des Merkmals erleichtert.</p>
 vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm einen
 Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
 ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.</p>
-<h3 id="vollständig-qualifizierte-syntax-zur-vereindeutigung-aufrufen-von-methoden-mit-gleichem-namen"><a class="header" href="#vollständig-qualifizierte-syntax-zur-vereindeutigung-aufrufen-von-methoden-mit-gleichem-namen">Vollständig qualifizierte Syntax zur Vereindeutigung: Aufrufen von Methoden mit gleichem Namen</a></h3>
+<h3 id="eindeutiger-aufruf-von-methoden-mit-gleichem-namen"><a class="header" href="#eindeutiger-aufruf-von-methoden-mit-gleichem-namen">Eindeutiger Aufruf von Methoden mit gleichem Namen</a></h3>
 <p>Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
 die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
 daran, beide Merkmale auf einem Typ zu implementieren. Es ist auch möglich,
@@ -662,7 +662,7 @@ anderen Informationen im Programm herausfinden kann. Du musst diese
 ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
 Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
 um herauszufinden, welche Implementierung du aufrufen möchtest.</p>
-<h3 id="verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern"><a class="header" href="#verwenden-von-supermerkmalen-um-die-funktionalität-eines-merkmals-innerhalb-eines-anderen-merkmals-zu-erfordern">Verwenden von Supermerkmalen um die Funktionalität eines Merkmals innerhalb eines anderen Merkmals zu erfordern</a></h3>
+<h3 id="verwenden-von-supermerkmalen"><a class="header" href="#verwenden-von-supermerkmalen">Verwenden von Supermerkmalen</a></h3>
 <p>Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
 einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
 kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
@@ -818,21 +818,21 @@ impl fmt::Display for Point {
 erfolgreich kompilieren und wir können <code>outline_print</code> auf einer
 <code>Point</code>-Instanz aufrufen, um sie in Sternchen eingerahmt anzuzeigen.</p>
 <h3 id="verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen"><a class="header" href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf externen Typen</a></h3>
-<p>In Kapitel 10 im Abschnitt <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ
-implementieren“</a> erwähnten wir die Waisenregel,
-die besagt, dass wir ein Merkmal nur dann auf einem Typ implementieren dürfen,
-wenn entweder das Merkmal oder der Typ lokal in unserer Kiste (crate) vorhanden
-ist. Es ist möglich, diese Einschränkung zu umgehen, indem man das
-<em>Newtype-Muster</em> (newtype pattern) verwendet, bei dem ein neuer Typ in einer
-Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen im Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden
-von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu
-erzeugen“</a> in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
-Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
-implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
-wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
-<em>Newtype</em> ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
-Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
-und der Verpackungstyp wird zur Kompilierzeit elidiert.</p>
+<p>In <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a>
+in Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Merkmal nur dann
+auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
+oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
+Einschränkung zu umgehen, indem man das <em>Newtype-Muster</em> (newtype pattern)
+verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
+haben Tupelstrukturen in <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne benannte Felder
+um verschiedene Typen zu erzeugen“</a> in Kapitel 5 behandelt.) Die
+Tupelstruktur wird ein Feld haben und eine dünne Verpackung um den Typ sein,
+für den wir ein Merkmal implementieren wollen. Dann ist der Verpackungstyp
+lokal in unserer Kiste und wir können das Merkmal auf dem Verpackungstyp
+(wrapper type) implementieren. <em>Newtype</em> ist ein Begriff, der aus der
+Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es keine
+Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
+Kompilierzeit elidiert.</p>
 <p>Nehmen wir als Beispiel an, wir wollen <code>Display</code> auf <code>Vec&lt;T&gt;</code> implementieren,
 was uns die Waisenregel direkt verbietet, weil das Merkmal <code>Display</code> und der
 Typ <code>Vec&lt;T&gt;</code> außerhalb unserer Kiste definiert sind. Wir können eine Struktur
@@ -864,14 +864,15 @@ Element mit dem Index 0 im Tupel ist. Dann können wir die Funktionalität des
 ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten alle
 Methoden von <code>Vec&lt;T&gt;</code> direkt auf <code>Wrapper</code> implementieren, sodass die Methoden
 an <code>self.0</code> delegieren, was uns erlauben würde, <code>Wrapper</code> genau wie einen
-<code>Vec&lt;T&gt;</code> zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode hat,
-die der innere Typ hat, wäre es eine Lösung, das Merkmal <code>Deref</code> (das in
-Kapitel 15 im Abschnitt <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale Referenzen behandeln
-mit dem Merkmal (trait) <code>Deref</code>“</a> behandelt wird) auf dem
-<code>Wrapper</code> zu implementieren, um den inneren Typ zurückzugeben. Wenn wir nicht
-wollen, dass der <code>Wrapper</code>-Typ alle Methoden des inneren Typs hat – zum
-Beispiel, um das Verhalten des <code>Wrapper</code>-Typs einzuschränken – müssten
-wir nur die Methoden manuell implementieren, die wir wollen.</p>
+<code>Vec&lt;T&gt;</code> zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode des
+inneren Typs hat, wäre die Implementierung des Merkmals <code>Deref</code> auf dem
+<code>Wrapper</code> eine Lösung, um den inneren Typ zurückzugeben (wir haben die
+Implementierung des Merkmals <code>Deref</code> in <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale
+Referenzen behandeln mit dem Merkmal (trait) <code>Deref</code>“</a> in
+Kapitel 15 besprochen). Wenn wir nicht wollten, dass der <code>Wrapper</code>-Typ alle
+Methoden des inneren Typs hat – zum Beispiel, um das Verhalten des
+<code>Wrapper</code>-Typs einzuschränken – müssten wir nur die Methoden, die wir
+wollen, manuell implementieren.</p>
 <p>Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
 sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
 Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>
@@ -884,7 +885,7 @@ Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>
                                 <i class="fa fa-angle-left"></i>
                             </a>
 
-                            <a rel="next prefetch" href="ch20-04-advanced-types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                            <a rel="next prefetch" href="ch20-03-advanced-types.html" class="mobile-nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                                 <i class="fa fa-angle-right"></i>
                             </a>
 
@@ -898,7 +899,7 @@ Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>
                         <i class="fa fa-angle-left"></i>
                     </a>
 
-                    <a rel="next prefetch" href="ch20-04-advanced-types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
+                    <a rel="next prefetch" href="ch20-03-advanced-types.html" class="nav-chapters next" title="Next chapter" aria-label="Next chapter" aria-keyshortcuts="Right">
                         <i class="fa fa-angle-right"></i>
                     </a>
             </nav>

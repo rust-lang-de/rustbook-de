@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -282,10 +282,10 @@ am Maximum liegt und wie die Nachrichten zu welchen Zeiten sein sollten.
 Von Anwendungen, die unsere Bibliothek verwenden wird erwartet, dass sie den
 Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung könnte eine
 Nachricht in der Anwendung anlegen, eine E-Mail senden, eine Textnachricht
-senden oder etwas anderes. Die Bibliothek muss dieses Detail nicht kennen.
-Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes Merkmal
-(trait) namens <code>Messenger</code> implementiert. Codeblock 15-20 zeigt den
-Bibliothekscode:</p>
+senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
+kennen. Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes
+Merkmal (trait) namens <code>Messenger</code> implementiert. Codeblock 15-20 zeigt den
+Bibliothekscode.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -350,7 +350,7 @@ einen <code>LimitTracker</code> erstellen, der das Mock-Objekt verwendet, die
 <code>set_value</code>-Methode für <code>LimitTracker</code> aufrufen und dann überprüfen, ob das
 Mock-Objekt die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den
 Versuch, ein Mock-Objekt zu implementieren, um genau das zu tun, aber der
-Ausleihenprüfer erlaubt dies nicht:</p>
+Ausleihenprüfer erlaubt dies nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -442,8 +442,8 @@ die übergebene Nachricht als Parameter und speichern sie in der Liste
 Zuerst erstellen wir einen neuen <code>MockMessenger</code>, der mit einer leeren
 Nachrichtenliste beginnt. Dann erstellen wir einen neuen <code>LimitTracker</code> und
 geben ihm eine Referenz auf den neuen <code>MockMessenger</code> und einen <code>max</code>-Wert von
-100. Wir rufen die Methode <code>set_value</code> auf <code>LimitTracker</code> mit dem Wert 80 auf,
-was mehr als 75 Prozent von 100 ist. Dann stellen wir sicher, dass die
+<code>100</code>. Wir rufen die Methode <code>set_value</code> auf <code>LimitTracker</code> mit dem Wert <code>80</code>
+auf, was mehr als 75 Prozent von 100 ist. Dann stellen wir sicher, dass die
 Nachrichtenliste, die der <code>MockMessenger</code> verwaltet, nun eine einzige Nachricht
 enthalten sollte.</p>
 <p>Es gibt jedoch ein Problem mit diesem Test, wie hier gezeigt:</p>
@@ -469,14 +469,15 @@ error: could not compile `limit-tracker` (lib test) due to 1 previous error
 </code></pre>
 <p>Wir können <code>MockMessenger</code> nicht so ändern, um die Nachrichten zu verfolgen, da
 die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
-können auch nicht den Vorschlag aus dem Fehlertext übernehmen, stattdessen
-<code>&amp;mut self</code> zu verwenden, da die Signatur von <code>send</code> nicht mit der Signatur in
-der Merkmalsdefinition von <code>Messenger</code> übereinstimmt (probiere es gerne aus und
-schau dir die Fehlermeldung an, die dabei ausgegeben wird).</p>
+können auch nicht den Vorschlag aus dem Fehlertext übernehmen, <code>&amp;mut self</code>
+sowohl in der <code>impl</code>-Methode als auch in der <code>Trait</code>-Definition zu verwenden.
+Wir wollen das Merkmal <code>Messenger</code> nicht nur um des Testens willen ändern.
+Stattdessen müssen wir einen Weg finden, damit unser Testcode mit unserem
+bestehenden Design korrekt funktioniert.</p>
 <p>Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die <code>send_messages</code> in einer <code>RefCell&lt;T&gt;</code> und dann kann die
 <code>send</code>-Methode <code>sent_messages</code> ändern, um Nachrichten zu speichern, die wir
-gesehen haben. Codeblock 15-22 zeigt, wie das aussieht:</p>
+gesehen haben. Codeblock 15-22 zeigt, wie das aussieht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -578,13 +579,13 @@ Methode <code>borrow</code> gibt den intelligenten Zeigertyp <code>Ref&lt;T&gt;<
 <code>borrow_mut</code> den intelligenten Zeigertyp <code>RefMut&lt;T&gt;</code>. Beide Typen
 implementieren <code>Deref</code>, sodass wir sie wie reguläre Referenzen behandeln
 können.</p>
-<p>Der <code>RefCell&lt;T&gt;</code> verfolgt, wie viele intelligente Zeiger <code>Ref&lt;T&gt;</code> und <code>RefMut&lt;T&gt;</code>
-derzeit aktiv sind. Jedes Mal, wenn wir <code>borrow</code> aufrufen, erhöht <code>RefCell&lt;T&gt;</code>
-die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein <code>Ref&lt;T&gt;</code>-Wert
-außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl der unveränderbaren
-Ausleihen um eins. Genau wie bei den Ausleihregeln zur Kompilierzeit können
-wir mit <code>RefCell&lt;T&gt;</code> zu jedem Zeitpunkt viele unveränderbare Ausleihen oder eine
-veränderbare Ausleihe haben.</p>
+<p>Der <code>RefCell&lt;T&gt;</code> verfolgt, wie viele intelligente Zeiger <code>Ref&lt;T&gt;</code> und
+<code>RefMut&lt;T&gt;</code> derzeit aktiv sind. Jedes Mal, wenn wir <code>borrow</code> aufrufen, erhöht
+<code>RefCell&lt;T&gt;</code> die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein
+<code>Ref&lt;T&gt;</code>-Wert außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl
+der unveränderbaren Ausleihen um eins. Genau wie bei den Ausleihregeln zur
+Kompilierzeit können wir mit <code>RefCell&lt;T&gt;</code> zu jedem Zeitpunkt viele
+unveränderbare Ausleihen oder eine veränderbare Ausleihe haben.</p>
 <p>Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von
 <code>RefCell&lt;T&gt;</code> wird zur Laufzeit abstürzen. Codeblock 15-23 zeigt eine
@@ -718,7 +719,7 @@ Nachrichten zu verfolgen, die es gesehen hat, während man es in einem Kontext
 verwendet, in dem nur unveränderbare Werte zulässig sind. Man kann
 <code>RefCell&lt;T&gt;</code> trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.</p>
-<h3 id="mehrere-eigentümer-veränderbarer-daten-durch-kombinieren-von-rct-und-refcellt"><a class="header" href="#mehrere-eigentümer-veränderbarer-daten-durch-kombinieren-von-rct-und-refcellt">Mehrere Eigentümer veränderbarer Daten durch Kombinieren von <code>Rc&lt;T&gt;</code> und <code>RefCell&lt;T&gt;</code></a></h3>
+<h3 id="mehrere-eigentümer-veränderbarer-daten-mit-rct-und-refcellt-erlauben"><a class="header" href="#mehrere-eigentümer-veränderbarer-daten-mit-rct-und-refcellt-erlauben">Mehrere Eigentümer veränderbarer Daten mit <code>Rc&lt;T&gt;</code> und <code>RefCell&lt;T&gt;</code> erlauben</a></h3>
 <p>Eine übliche Methode zur Verwendung von <code>RefCell&lt;T&gt;</code> ist die Kombination mit
 <code>Rc&lt;T&gt;</code>. Erinnere dich, dass man mit <code>Rc&lt;T&gt;</code> mehrere Eigentümer einiger Daten
 haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
@@ -768,14 +769,14 @@ Eigentum von <code>value</code> auf <code>a</code> zu übertragen oder <code>a</
 <code>c</code> erstellen, können beide auf <code>a</code> verweisen, was wir in Codeblock 15-18 getan
 haben.</p>
 <p>Nachdem wir die Listen <code>a</code>, <code>b</code> und <code>c</code> erstellt haben, wollen wir 10 zum Wert
-in <code>value</code> addieren. Dazu rufen wir <code>borrow_mut</code> für <code>value</code> auf, wobei die in
-Kapitel 5 beschriebene automatische Dereferenzierung verwendet wird (siehe
-Abschnitt <a href="ch05-03-method-syntax.html#wo-ist-der-operator--">„Wo ist der Operator <code>-&gt;</code>?“</a>), um den <code>Rc&lt;T&gt;</code>
-auf den inneren <code>RefCell&lt;T&gt;</code>-Wert zu dereferenzieren. Die Methode <code>borrow_mut</code>
-gibt einen intelligenten Zeiger <code>RefMut&lt;T&gt;</code> zurück, und wir verwenden den
+in <code>value</code> addieren. Dazu rufen wir <code>borrow_mut</code> für <code>value</code> auf, die die
+automatische Dereferenzierung verwendet, die wir in <a href="ch05-03-method-syntax.html#wo-ist-der-operator--">„Wo ist der Operator
+<code>-&gt;</code>?“</a> besprochen haben, um <code>Rc&lt;T&gt;</code> auf den inneren
+<code>RefCell&lt;T&gt;</code>-Wert zu dereferenzieren. Die Methode <code>borrow_mut</code> gibt einen
+intelligenten Zeiger <code>RefMut&lt;T&gt;</code> zurück, und wir verwenden den
 Dereferenzierungsoperator darauf und ändern den inneren Wert.</p>
 <p>Wenn wir <code>a</code>, <code>b</code> und <code>c</code> ausgeben, können wir sehen, dass sie alle den
-veränderten Wert 15 anstelle von 5 haben:</p>
+veränderten Wert <code>15</code> anstelle von <code>5</code> haben:</p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.63s

@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -158,11 +158,13 @@ Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.</p>
 von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
 Anteilstypen gelöst wird:</p>
 <pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?</code></pre>
-<p>Die Funktion <code>first_word</code> hat einen <code>&amp;String</code> als Parameter. Wir wollen keine
-Eigentümerschaft, also ist das in Ordnung. Aber was sollen wir zurückgeben? Wir
-haben nicht wirklich eine Möglichkeit, über <em>einen Teil</em> einer Zeichenkette zu
-sprechen. Wir könnten jedoch den Index des Wortendes zurückgeben. Versuchen wir
-das, wie in Codeblock 4-7 gezeigt.</p>
+<p>Die Funktion <code>first_word</code> hat <code>&amp;String</code> als Parameter. Wir benötigen keine
+Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust übernehmen
+Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei denn, sie
+müssen es, und die Gründe dafür werden im weiteren Verlauf klar werden). Aber
+was sollen wir zurückgeben? Wir haben nicht wirklich eine Möglichkeit, über
+<em>einen Teil</em> einer Zeichenkette zu sprechen. Wir könnten jedoch den Index des
+Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {
     let bytes = s.as_bytes();
@@ -304,8 +306,8 @@ let world = &amp;s[6..10];
 <p>Anstelle einer Referenz auf den gesamten <code>String</code> ist <code>hello</code> eine Referenz auf
 einen Teil des <code>String</code>, der mit dem zusätzlichen <code>[0..5]</code> spezifiziert ist.
 Wir erstellen Anteilstypen unter Angabe eines Bereichs innerhalb von Klammern,
-indem wir <code>[starting_index..ending_index]</code> angeben, wobei <code>starting_index</code> die
-erste Position im Anteilstyp und <code>ending_index</code> eine Position mehr als die
+indem wir <code>[starting_index..ending_index]</code> angeben, wobei <em><code>starting_index</code></em>
+die erste Position im Anteilstyp und <em><code>ending_index</code></em> eine Position mehr als die
 letzte Position im Anteilstyp ist. Intern speichert die
 Anteilstyp-Datenstruktur die Anfangsposition und die Länge des Anteilstypen,
 was <code>ending_index</code> minus <code>starting_index</code> entspricht. Im Fall von <code>let world = &amp;s[6..10];</code> wäre <code>world</code> also ein Anteilstyp, der einen Zeiger auf das Byte bei

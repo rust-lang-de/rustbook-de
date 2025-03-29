@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -155,12 +155,12 @@ Variablen <code>a_value</code> eher <code>None</code> als <code>Some</code> ist,
 passen.</p>
 <p>Funktionsparameter, <code>let</code>-Anweisungen und <code>for</code>-Schleifen können nur
 unabweisbare Muster akzeptieren, da das Programm nichts Sinnvolles tun kann,
-wenn die Werte nicht passen. Die Ausdrücke <code>if let</code> und <code>while let</code> akzeptieren
-abweisbare und unabweisbare Muster, aber der Compiler warnt vor unabweisbaren
-Mustern, weil sie per Definition dazu gedacht sind, mit einem möglichen
-Fehlerfall umzugehen: Die Funktionalität einer Bedingung besteht in ihrer
-Fähigkeit, sich abhängig von Erfolg oder Fehlerfall unterschiedlich zu
-verhalten.</p>
+wenn die Werte nicht passen. Die Ausdrücke <code>if let</code> und <code>while let</code> sowie die
+Anweisung <code>let...else</code> akzeptieren abweisbare und unabweisbare Muster, aber der
+Compiler warnt vor unabweisbaren Mustern, weil sie per Definition dazu gedacht
+sind, mit einem möglichen Fehlerfall umzugehen: Die Funktionalität einer
+Bedingung besteht in ihrer Fähigkeit, sich abhängig von Erfolg oder Fehlerfall
+unterschiedlich zu verhalten.</p>
 <p>Im Allgemeinen solltest du dich nicht um die Unterscheidung zwischen
 abweisbaren und unabweisbaren Mustern kümmern müssen; du musst jedoch mit dem
 Konzept der Abweisbarkeit vertraut sein, damit du reagieren kannst, wenn du es
@@ -178,7 +178,7 @@ lässt sich dieser Code nicht kompilieren.</p>
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit <code>let</code>
 zu verwenden</span></p>
-<p>Wenn <code>some_option_value</code> ein <code>None</code>-Wert wäre, würde er nicht zum Muster
+<p>Wenn <code>some_option_value</code> den Wert <code>None</code> hätte, würde er nicht zum Muster
 <code>Some(x)</code> passen, was bedeutet, dass das Muster abweisbar ist. Die
 <code>let</code>-Anweisung kann jedoch nur ein unabweisbares Muster akzeptieren, weil es
 nichts Gültiges gibt, was der Code mit einem <code>None</code>-Wert tun kann. Zur
@@ -207,40 +207,40 @@ error: could not compile `patterns` (bin "patterns") due to 1 previous error
 auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.</p>
 <p>Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt <code>let</code>
-zu verwenden, können wir <code>if let</code> verwenden. Wenn das Muster dann nicht passt,
-überspringt der Code einfach den Code in den geschweiften Klammern und gibt ihm
-die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der Code in
-Codeblock 19-8 zu korrigieren ist.</p>
+zu verwenden, können wir <code>let...else</code> verwenden. Wenn das Muster dann nicht
+passt, führt das Programm einfach den Code in den geschweiften Klammern aus und
+gibt ihm die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der
+Code in Codeblock 19-8 zu korrigieren ist.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
-</span>    if let Some(x) = some_option_value {
-        println!("{x}");
-    }
+</span>    let Some(x) = some_option_value else {
+        return;
+    };
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 19-9: Verwenden von <code>if let</code> und eines Blocks
-mit abweisbaren Mustern anstelle von <code>let</code></span></p>
+<p><span class="caption">Codeblock 19-9: Verwenden von <code>let...else</code> und eines
+Blocks mit abweisbaren Mustern anstelle von <code>let</code></span></p>
 <p>Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
-<code>if let</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B. <code>x</code>,
-wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
+<code>let...else</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B.
+<code>x</code>, wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
-</span>    if let x = 5 {
-        println!("{x}");
+</span>    let x = 5 else {
+        return;
     };
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster
-mit <code>if let</code> zu verwenden</span></p>
-<p>Rust beklagt, dass es keinen Sinn macht, <code>if let</code> mit einem unabweisbaren
+mit <code>let...else</code> zu verwenden</span></p>
+<p>Rust beklagt, dass es keinen Sinn macht, <code>let...else</code> mit einem unabweisbaren
 Muster zu verwenden:</p>
 <pre><code class="language-console">$ cargo run
    Compiling patterns v0.1.0 (file:///projects/patterns)
-warning: irrefutable `if let` pattern
- --&gt; src/main.rs:2:8
+warning: irrefutable `let...else` pattern
+ --&gt; src/main.rs:2:5
   |
-2 |     if let x = 5 {
-  |        ^^^^^^^^^
+2 |     let x = 5 else {
+  |     ^^^^^^^^^
   |
-  = note: this pattern will always match, so the `if let` is useless
-  = help: consider replacing the `if let` with a `let`
+  = note: this pattern will always match, so the `else` clause is useless
+  = help: consider removing the `else` clause
   = note: `#[warn(irrefutable_let_patterns)]` on by default
 
 warning: `patterns` (bin "patterns") generated 1 warning
@@ -254,7 +254,7 @@ unabweisbaren Muster übereinstimmen sollten. Rust erlaubt es uns, ein
 unabweisbares Muster in einem <code>match</code> mit nur einem Zweig zu verwenden, aber
 diese Syntax ist nicht besonders nützlich und könnte durch eine einfachere
 <code>let</code>-Anweisung ersetzt werden.</p>
-<p>Nun, da du weißt, wo du Muster verwenden kannst und den Unterschied zwischen
+<p>Da du nun weißt, wo du Muster verwenden kannst und den Unterschied zwischen
 abweisbaren und unabweisbaren Mustern kennst, lass uns alle Syntaxen behandeln,
 die wir zum Erstellen von Mustern verwenden können.</p>
 

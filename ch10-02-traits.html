@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -165,16 +165,16 @@ erforderlich sind.</p>
 <p>Nehmen wir zum Beispiel an, wir haben mehrere Strukturen (structs), die
 verschiedene Arten und Mengen von Text enthalten: Eine Struktur <code>NewsArticle</code>,
 die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
-<code>Tweet</code>, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die angeben,
-ob es sich um eine neue Kurznachricht, eine Wiederholung oder eine Antwort auf
-eine andere Kurznachricht handelt.</p>
+<code>SocialPost</code>, der maximal 280 Zeichen umfassen kann, sowie Metadaten, die
+angeben, ob es sich um eine neue Nachricht, eine Wiederholung oder eine Antwort
+auf eine andere Nachricht handelt.</p>
 <p>Wir wollen eine Medienaggregator-Bibliothekskiste namens <code>aggregator</code>
 erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
-<code>NewsArticle</code>- oder <code>Tweet</code>-Instanz gespeichert sein könnten. Dazu brauchen wir
-eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
-anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz aufrufen.
-Codeblock 10-12 zeigt die Definition eines öffentlichen <code>Summary</code>-Merkmals, das
-dieses Verhalten zum Ausdruck bringt.</p>
+<code>NewsArticle</code>- oder <code>SocialPost</code>-Instanz gespeichert sein könnten. Dazu
+brauchen wir eine Zusammenfassung von jedem Typ, und wir werden diese
+Zusammenfassung anfordern, indem wir eine Methode <code>summarize</code> auf einer Instanz
+aufrufen. Codeblock 10-12 zeigt die Definition eines öffentlichen
+<code>Summary</code>-Merkmals, das dieses Verhalten zum Ausdruck bringt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -205,9 +205,9 @@ definiert haben, können wir sie für die Typen in unserem Medienaggregator
 implementieren. Codeblock 10-13 zeigt eine Implementierung des Merkmals
 <code>Summary</code> für die Struktur <code>NewsArticle</code>, die die Überschrift, den Autor und
 den Ort verwendet, um den Rückgabewert von <code>summarize</code> zu erzeugen. Für die
-Struktur <code>Tweet</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt vom
-gesamten Text der Kurznachricht, wobei wir davon ausgehen, dass der Inhalt der
-Kurznachricht bereits auf 280 Zeichen begrenzt ist.</p>
+Struktur <code>SocialPost</code> definieren wir <code>summarize</code> als den Benutzernamen, gefolgt
+vom gesamten Text der Nachricht, wobei wir davon ausgehen, dass der Inhalt der
+Nachricht bereits auf 280 Zeichen begrenzt ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -228,21 +228,21 @@ impl Summary for NewsArticle {
     }
 }
 
-pub struct Tweet {
+pub struct SocialPost {
     pub username: String,
     pub content: String,
     pub reply: bool,
-    pub retweet: bool,
+    pub repost: bool,
 }
 
-impl Summary for Tweet {
+impl Summary for SocialPost {
     fn summarize(&amp;self) -&gt; String {
         format!("{}: {}", self.username, self.content)
     }
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 10-13: Implementierung des Merkmals <code>Summary</code>
-für die Typen <code>NewsArticle</code> und <code>Tweet</code></span></p>
+für die Typen <code>NewsArticle</code> und <code>SocialPost</code></span></p>
 <p>Die Implementierung eines Merkmals für einen Typ ist ähnlich zur
 Implementierung regulärer Methoden. Der Unterschied besteht darin, dass wir
 nach <code>impl</code> den Namen des Merkmals schreiben, das wir implementieren wollen
@@ -252,36 +252,38 @@ Methodensignaturen an, die das Merkmal vorgibt. Anstatt nach jeder Signatur ein
 Semikolon zu schreiben, verwenden wir geschweifte Klammern und füllen den
 Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Merkmals für
 den jeweiligen Typ haben sollen.</p>
-<p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>Tweet</code>
+<p>Da die Bibliothek nun das Merkmal <code>Summary</code> auf <code>NewsArticle</code> und <code>SocialPost</code>
 implementiert hat, können Benutzer der Kiste die Merkmals-Methoden auf
-Instanzen von <code>NewsArticle</code> und <code>Tweet</code> auf die gleiche Weise aufrufen, wie wir
-reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
-Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen muss, um
-die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel dafür,
-wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden könnte:</p>
-<pre><code class="language-rust ignore">use aggregator::{self, Summary, Tweet};
+Instanzen von <code>NewsArticle</code> und <code>SocialPost</code> auf die gleiche Weise aufrufen,
+wie wir reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass
+der Benutzer das Merkmal sowie die Typen in den Gültigkeitsbereich bringen
+muss, um die zusätzlichen Merkmals-Methoden zu erhalten. Hier ist ein Beispiel
+dafür, wie eine binäre Kiste unsere <code>aggregator</code>-Bibliothekskiste verwenden
+könnte:</p>
+<pre><code class="language-rust ignore">use aggregator::{self, Summary, SocialPost};
 
 fn main() {
-    let tweet = Tweet {
+    let post = SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     };
 
-    println!("1 neue Kurznachricht: {}", tweet.summarize());
+    println!("1 neue Nachricht: {}", post.summarize());
 }</code></pre>
-<p>Dieser Code gibt <code>1 neue Kurznachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
+<p>Dieser Code gibt <code>1 neue Nachricht: horse_ebooks: natürlich, wie du wahrscheinlich schon weißt</code> aus.</p>
 <p>Andere Kisten, die von der <code>aggregator</code>-Kiste abhängen, können auch das Merkmal
 <code>Summary</code> in den Gültigkeitsbereich bringen, um <code>Summary</code> auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Merkmal für einen
 Typ nur dann implementieren können, wenn entweder das Merkmal und/oder der Typ
 lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
 Standard-Bibliotheksmerkmale wie <code>Display</code> auf einem benutzerdefinierten Typ
-wie <code>Tweet</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität implementieren,
-weil der Typ <code>Tweet</code> lokal zu unserer <code>aggregator</code>-Kiste gehört. Wir können
-auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste implementieren, weil
-das Merkmal <code>Summary</code> lokal zu unserer <code>aggregator</code>-Kiste gehört.</p>
+wie <code>SocialPost</code> als Teil unserer <code>aggregator</code>-Kistenfunktionalität
+implementieren, weil der Typ <code>SocialPost</code> lokal zu unserer <code>aggregator</code>-Kiste
+gehört. Wir können auch <code>Summary</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
+implementieren, weil das Merkmal <code>Summary</code> lokal zu unserer <code>aggregator</code>-Kiste
+gehört.</p>
 <p>Aber wir können externe Merkmale nicht auf externe Typen anwenden. Zum Beispiel
 können wir das Merkmal <code>Display</code> auf <code>Vec&lt;T&gt;</code> in unserer <code>aggregator</code>-Kiste
 nicht implementieren, weil <code>Display</code> und <code>Vec&lt;T&gt;</code> in der Standardbibliothek
@@ -320,14 +322,14 @@ definieren, wie wir es in Codeblock 10-12 getan haben.</p>
 </span><span class="boring">
 </span><span class="boring">impl Summary for NewsArticle {}
 </span><span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">impl Summary for SocialPost {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
@@ -358,8 +360,8 @@ Infolgedessen können wir immer noch die Methode <code>summarize</code> einer
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>Neuer Artikel verfügbar! (Lies mehr ...)</code> aus.</p>
 <p>Das Erstellen einer Standard-Implementierung erfordert nicht, dass wir an der
-Implementierung von <code>Summary</code> für <code>Tweet</code> in Codeblock 10-13 etwas ändern. Der
-Grund dafür ist, dass die Syntax für das Überschreiben einer
+Implementierung von <code>Summary</code> für <code>SocialPost</code> in Codeblock 10-13 etwas ändern.
+Der Grund dafür ist, dass die Syntax für das Überschreiben einer
 Standard-Implementierung die gleiche ist wie die Syntax für die Implementierung
 einer Merkmalsmethode, die keine Standard-Implementierung hat.</p>
 <p>Standard-Implementierungen können andere Methoden desselben Merkmals aufrufen,
@@ -380,14 +382,14 @@ Methode <code>summarize_author</code> aufruft:</p>
     }
 }
 <span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">impl Summary for SocialPost {
 </span><span class="boring">    fn summarize_author(&amp;self) -&gt; String {
 </span><span class="boring">        format!("@{}", self.username)
 </span><span class="boring">    }
@@ -405,49 +407,48 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span>impl Summary for Tweet {
+</span>impl Summary for SocialPost {
     fn summarize_author(&amp;self) -&gt; String {
         format!("@{}", self.username)
     }
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Nachdem wir <code>summarize_author</code> definiert haben, können wir <code>summarize</code> auf
-Instanzen der <code>Tweet</code>-Struktur aufrufen, und die Standard-Implementierung von
-<code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
+Instanzen der <code>SocialPost</code>-Struktur aufrufen, und die Standard-Implementierung
+von <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
 bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
 das Merkmal <code>Summary</code> das Verhalten der <code>summarize</code>-Methode mitgeliefert, ohne
 dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
-<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, Tweet};
+<pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, SocialPost};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span>    let tweet = Tweet {
+</span>    let post = SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     };
 
-    println!("1 neue Kurznachricht: {}", tweet.summarize());
+    println!("1 neue Nachricht: {}", post.summarize());
 <span class="boring">}</span></code></pre>
-<p>Dieser Code gibt <code>1 neue Kurznachricht: (Lies mehr von @horse_ebooks...)</code> aus.</p>
+<p>Dieser Code gibt <code>1 neue Nachricht: (Lies mehr von @horse_ebooks...)</code> aus.</p>
 <p>Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.</p>
 <h3 id="merkmale-als-parameter"><a class="header" href="#merkmale-als-parameter">Merkmale als Parameter</a></h3>
 <p>Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
 viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal <code>Summary</code>, das
-wir für die Typen <code>NewsArticle</code> und <code>Tweet</code> in Codeblock 10-13 implementiert
-haben, um eine Funktion <code>notify</code> zu definieren, die die Methode <code>summarize</code> für
-ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das Merkmal
-<code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl Trait</code>
-verwenden, etwa so:</p>
+wir für die Typen <code>NewsArticle</code> und <code>SocialPost</code> in Codeblock 10-13
+implementiert haben, um eine Funktion <code>notify</code> zu definieren, die die Methode
+<code>summarize</code> für ihren Parameter <code>item</code> aufruft, der von einem Typ ist, der das
+Merkmal <code>Summary</code> implementiert. Um dies zu tun, können wir die Syntax <code>impl  Trait</code> verwenden, etwa so:</p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Summary {
@@ -467,14 +468,14 @@ verwenden, etwa so:</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">impl Summary for SocialPost {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
@@ -489,9 +490,9 @@ Schlüsselwort <code>impl</code> und den Merkmalsnamen an. Dieser Parameter akze
 jeden Typ, der das angegebene Merkmal implementiert. Im Rumpf von <code>notify</code>
 können wir alle Methoden von <code>item</code> aufrufen, die vom Merkmal <code>Summary</code>
 herrühren, zum Beispiel <code>summarize</code>. Wir können <code>notify</code> aufrufen und jede
-Instanz von <code>NewsArticle</code> und <code>Tweet</code> angeben. Code, der die Funktion mit einem
-anderen Typ aufruft, z.B. <code>String</code> oder <code>i32</code>, lässt sich nicht kompilieren, da
-diese Typen kein <code>Summary</code> implementieren.</p>
+Instanz von <code>NewsArticle</code> und <code>SocialPost</code> angeben. Code, der die Funktion mit
+einem anderen Typ aufruft, z.B. <code>String</code> oder <code>i32</code>, lässt sich nicht
+kompilieren, da diese Typen kein <code>Summary</code> implementieren.</p>
 <h4 id="merkmalsabgrenzungs-syntax"><a class="header" href="#merkmalsabgrenzungs-syntax">Merkmalsabgrenzungs-Syntax</a></h4>
 <p>Die Syntax <code>impl Trait</code> funktioniert für einfache Fälle, ist aber eigentlich
 syntaktischer Zucker für eine längere Form, die <em>Merkmalsabgrenzung</em> (trait
@@ -577,33 +578,33 @@ gezeigt:</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">impl Summary for SocialPost {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
 </span>fn returns_summarizable() -&gt; impl Summary {
-    Tweet {
+    SocialPost {
         username: String::from("horse_ebooks"),
         content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
         reply: false,
-        retweet: false,
+        repost: false,
     }
 }
 <span class="boring">}</span></code></pre></pre>
 <p>Durch Verwenden von <code>impl Summary</code> für den Rückgabetyp legen wir fest, dass die
 Funktion <code>returns_summarizable</code> einen Typ zurückgibt, der das Merkmal <code>Summary</code>
 implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
-<code>returns_summarizable</code> einen <code>Tweet</code> zurück, aber der Code, der diese Funktion
-aufruft, muss das nicht wissen.</p>
+<code>returns_summarizable</code> einen <code>SocialPost</code> zurück, aber der Code, der diese
+Funktion aufruft, muss das nicht wissen.</p>
 <p>Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
 zu spezifizieren, ist besonders nützlich im Zusammenhang mit
 Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
@@ -614,7 +615,7 @@ Merkmal <code>Iterator</code> implementiert, ohne dass du einen sehr langen Typ 
 musst.</p>
 <p>Du kannst <code>impl Trait</code> jedoch nur verwenden, wenn du einen einzigen Typ
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen <code>NewsArticle</code>
-oder einen <code>Tweet</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
+oder einen <code>SocialPost</code> mit dem Rückgabetyp <code>impl Summary</code> zurückgibt, nicht
 funktionieren:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -635,14 +636,14 @@ funktionieren:</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">pub struct Tweet {
+</span><span class="boring">pub struct SocialPost {
 </span><span class="boring">    pub username: String,
 </span><span class="boring">    pub content: String,
 </span><span class="boring">    pub reply: bool,
-</span><span class="boring">    pub retweet: bool,
+</span><span class="boring">    pub repost: bool,
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Summary for Tweet {
+</span><span class="boring">impl Summary for SocialPost {
 </span><span class="boring">    fn summarize(&amp;self) -&gt; String {
 </span><span class="boring">        format!("{}: {}", self.username, self.content)
 </span><span class="boring">    }
@@ -662,32 +663,32 @@ funktionieren:</p>
             ),
         }
     } else {
-        Tweet {
+        SocialPost {
             username: String::from("horse_ebooks"),
             content: String::from("natürlich, wie du wahrscheinlich schon weißt"),
             reply: false,
-            retweet: false,
+            repost: false,
         }
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>Tweet</code> ist aufgrund von
-Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
+<p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>SocialPost</code> ist aufgrund
+von Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird im Abschnitt <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher
-Typen erlauben“</a>
-in Kapitel 18 behandelt.</p>
+wird in <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+erlauben“</a> in
+Kapitel 18 behandelt.</p>
 <h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
 <code>Pair&lt;T&gt;</code> in Codeblock 10-15 immer die Funktion <code>new</code>, um eine neue Instanz von
-<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an den Abschnitt <a href="ch05-03-method-syntax.html#definieren-von-methoden">„Definieren von
-Methoden“</a> in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des
-<code>impl</code>-Blocks ist, der in diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten
-<code>impl</code>-Block implementiert <code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr
-innerer Typ <code>T</code> die Merkmale <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die
-den Vergleich bzw. eine Ausgabe ermöglichen.</p>
+<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an <a href="ch05-03-method-syntax.html#definieren-von-methoden">„Definieren von Methoden“</a>
+in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des <code>impl</code>-Blocks ist, der
+in diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>-Block implementiert
+<code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die Merkmale
+<code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw. eine Ausgabe
+ermöglichen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {

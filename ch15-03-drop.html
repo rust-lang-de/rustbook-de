@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -158,7 +158,7 @@ den die Box zeigt.</p>
 <p>In einigen Programmiersprachen muss der Programmierer für manche Datentypen
 den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
 Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
-Sockets oder Sperren. Wenn er das vergisst, kann das System überlastet werden
+Sockets und Sperren. Wenn er das vergisst, kann das System überlastet werden
 und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
 ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
 Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
@@ -171,7 +171,7 @@ veränderbare Referenz auf <code>self</code> enthält. Um zu sehen, wann Rust <c
 aufruft, implementieren wir <code>drop</code> zunächst mit <code>println!</code>-Anweisungen.</p>
 <p>Codeblock 15-14 zeigt eine Struktur (struct) <code>CustomSmartPointer</code>, deren einzige
 benutzerdefinierte Funktionalität darin besteht, dass <code>Lösche CustomSmartPointer!</code> ausgegeben wird, wenn die Instanz den Gültigkeitsbereich
-verlässt, um zu zeigen, wann Rust die <code>drop</code>-Funktion ausführt.</p>
+verlässt, um zu zeigen, wann Rust die <code>drop</code>-Methode ausführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct CustomSmartPointer {
     data: String,
@@ -198,7 +198,7 @@ Aufräumen platzieren würden</span></p>
 <p>Das Merkmal <code>Drop</code> ist im Präludium (prelude) enthalten, daher müssen wir es
 nicht in den Gültigkeitsbereich bringen. Wir implementieren das Merkmal <code>Drop</code>
 in <code>CustomSmartPointer</code> und stellen eine Implementierung für die Methode <code>drop</code>
-bereit, die <code>println!</code> aufruft. Im Hauptteil der <code>drop</code>-Funktion kannst du jede
+bereit, die <code>println!</code> aufruft. Im Hauptteil der <code>drop</code>-Methode kannst du jede
 Logik platzieren, die du ausführen möchtest, wenn eine Instanz deines Typs
 ihren Gültigkeitsbereich verlässt. Wir geben hier einen Text aus, um visuell zu
 zeigen, wann Rust <code>drop</code> aufruft.</p>
@@ -224,7 +224,6 @@ wurde <code>d</code> vor <code>c</code> aufgeräumt. Der Zweck dieses Beispiels 
 Anleitung zur Funktionsweise der <code>drop</code>-Methode zu geben. Normalerweise
 schreibst du den Aufräumcode, den dein Typ ausführen muss, anstatt einen Text
 auszugeben.</p>
-<h3 id="einen-wert-mit-stdmemdrop-frühzeitig-aufräumen"><a class="header" href="#einen-wert-mit-stdmemdrop-frühzeitig-aufräumen">Einen Wert mit <code>std::mem::drop</code> frühzeitig aufräumen</a></h3>
 <p>Unglücklicherweise ist es nicht einfach, die automatische <code>drop</code>-Funktionalität
 zu deaktivieren. Für gewöhnlich ist es auch nicht erforderlich; der wesentliche
 Punkt des <code>Drop</code>-Merkmals ist, dass es automatisch erledigt wird. Gelegentlich
@@ -238,7 +237,7 @@ Funktion <code>std::mem::drop</code> aufrufen, wenn man das Aufräumen eines Wer
 Ende seines ültigkeitsbereich erzwingen möchte.</p>
 <p>Wenn wir versuchen die <code>drop</code>-Methode des <code>Drop</code>-Merkmals manuell aufzurufen,
 indem wir die <code>main</code>-Funktion aus Codeblock 15-14 ändern, wie im Codeblock
-15-15, gezeigt, erhalten wir folgenden Fehler beim Kompilieren:</p>
+15-15, gezeigt, erhalten wir folgenden Fehler beim Kompilieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">struct CustomSmartPointer {
 </span><span class="boring">    data: String,
@@ -296,7 +295,7 @@ aufgeräumt wird, verwenden wir die Funktion <code>std::mem::drop</code>.</p>
 Merkmal <code>Drop</code>. Wir rufen sie auf, indem wir den Wert, dessen vorzeitiges
 Aufräumen wir erzwingen möchten, der Funktion als Argument mitgeben. Die
 Funktion befindet sich im Präludium, daher können wir <code>main</code> in Codeblock 15-15
-ändern, um die <code>drop</code>-Funktion wie in Codeblock 15-16 gezeigt aufzurufen:</p>
+ändern, um die <code>drop</code>-Funktion wie in Codeblock 15-16 gezeigt aufzurufen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">struct CustomSmartPointer {
 </span><span class="boring">    data: String,

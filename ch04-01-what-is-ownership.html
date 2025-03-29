@@ -24,9 +24,9 @@
         <link rel="stylesheet" href="fonts/fonts.css">
 
         <!-- Highlight.js Stylesheets -->
-        <link rel="stylesheet" href="highlight.css">
-        <link rel="stylesheet" href="tomorrow-night.css">
-        <link rel="stylesheet" href="ayu-highlight.css">
+        <link rel="stylesheet" id="highlight-css" href="highlight.css">
+        <link rel="stylesheet" id="tomorrow-night-css" href="tomorrow-night.css">
+        <link rel="stylesheet" id="ayu-highlight-css" href="ayu-highlight.css">
 
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
@@ -469,7 +469,7 @@ style="width: 50%;" /></p>
 <code>s2 = s1</code> tun könnte, falls Rust auch die Daten im Haldenspeicher
 kopieren würde</span></p>
 <p>Vorhin sagten wir, dass Rust automatisch die Funktion <code>drop</code> aufruft und den
-Haldenspeicher für diese Variable säubert, wenn eine Variable den
+Haldenspeicher für diese Variable aufräumt, wenn eine Variable den
 Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
 auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn <code>s2</code> und <code>s1</code> den
 Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
