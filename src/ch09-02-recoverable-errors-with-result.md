@@ -270,7 +270,7 @@ immer erfolgreich sein wird. Auf diese Weise hast du mehr Informationen, die du
 bei der Fehlersuche verwenden kannst, falls sich deine Annahmen als falsch
 erweisen sollten.
 
-### Weitergabe von Fehlern
+### Weitergeben von Fehlern
 
 Wenn die Implementierung einer Funktion etwas aufruft, das fehlschlagen könnte,
 kannst du, anstatt den Fehler innerhalb dieser Funktion zu behandeln, den
@@ -531,13 +531,11 @@ help: consider adding return type
   |
 3 ~ fn main() -> Result<(), Box<dyn std::error::Error>> {
 4 |     let greeting_file = File::open("hallo.txt")?;
-5 + 
-6 +     Ok(())
-7 + }
+5 +     Ok(())
   |
 
 For more information about this error, try `rustc --explain E0277`.
-error: could not compile `playground` (bin "playground") due to 1 previous error
+error: could not compile `error-handling` (bin "error-handling") due to 1 previous error
 ```
 
 Dieser Fehler weist darauf hin, dass wir den `?`-Operator nur in einer Funktion
