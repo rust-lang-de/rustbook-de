@@ -33,14 +33,14 @@ Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
 einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
 implementieren, die andere Kompromisse als das 1:1-Modell eingehen. (Das
 async-System von Rust, das wir uns im nächsten Kapitel ansehen werden, bietet
-ebenfalls einen anderen Ansatz der Nebenläufigkeit).
+ebenfalls einen anderen Ansatz der Nebenläufigkeit.)
 
 ### Erstellen eines neuen Strangs mit `spawn`
 
 Um einen neuen Strang zu erstellen, rufen wir die Funktion `thread::spawn` auf
 und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
 über Funktionsabschlüsse gesprochen), der den Code enthält, den wir im neuen
-Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt etwas Text im
+Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt einen Text im
 Hauptstrang und anderen Text im neuen Strang aus:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -64,13 +64,13 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um eine
-Sache auszugeben, während der Hauptstrang etwas anderes ausgibt</span>
+<span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um einen
+Text auszugeben, während der Hauptstrang einen anderen Text ausgibt</span>
 
-Beachte, dass bei der Beendigung des Haupt-Strangs eines Rust-Programms alle
+Beachte, dass bei der Beendigung des Hauptstrangs eines Rust-Programms alle
 erzeugten Stränge beendet werden, unabhängig davon, ob sie zu Ende gelaufen
 sind oder nicht. Die Ausgabe dieses Programms kann jedes Mal ein wenig anders
-sein, aber sie wird ähnlich wie die folgende aussehen:
+sein, aber sie wird in etwa wie folgt aussehen:
 
 ```text
 Hallo Zahl 1 aus dem Hauptstrang!
@@ -87,11 +87,11 @@ Hallo Zahl 5 aus dem erzeugten Strang!
 Aufrufe von `thread::sleep` zwingen einen Strang, seine Ausführung für eine
 kurze Zeit anzuhalten, sodass ein anderer Strang laufen kann. Die Stränge
 werden sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt
-davon ab, wie dein Betriebssystem die Stränge organisiert (schedules). In
-diesem Lauf wurde der Hauptstrang zuerst ausgegeben, obwohl die
-Ausgabeanweisung aus dem erzeugten Strang zuerst im Code erscheint. Und obwohl
-wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis `i` `9` ist, kam
-er nur bis `5`, bis sich der Hauptstrang beendet hat.
+davon ab, wie dein Betriebssystem die Stränge organisiert (schedule). In diesem
+Lauf hat der Hauptstrang zuerst etwas ausgegeben, obwohl sich die
+Ausgabeanweisung des erzeugten Strangs weiter oben im Code befindet. Und obwohl
+wir dem erzeugten Strang gesagt haben, er solle solange etwas ausgeben, bis `i`
+den Wert `9` hat, kam er nur bis `5`, als sich der Hauptstrang beendet hat.
 
 Wenn du diesen Code ausführst und nur Ausgaben aus dem Hauptstrang siehst oder
 keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
@@ -103,11 +103,11 @@ zu wechseln.
 Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
 vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die
 Reihenfolge gibt, in der Stränge laufen. Wir können auch nicht garantieren,
-dass der erzeugten Strang überhaupt zum Laufen kommt!
+dass der erzeugte Strang überhaupt zum Laufen kommt!
 
 Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
-Variablen speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle<T>`.
+Variable speichern. Der Rückgabetyp von `thread::spawn` ist `JoinHandle<T>`.
 Ein `JoinHandle<T>` ist ein aneigenbarer (owned) Wert, der, wenn wir die
 Methode `join` darauf aufrufen, darauf wartet, bis sich sein Strang beendet.
 Codeblock 16-2 zeigt, wie der `JoinHandle<T>` des Strangs, den wir in Codeblock
@@ -137,7 +137,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-2: Speichern eines `JoinHandle<T>` von
+<span class="caption">Codeblock 16-2: Speichern des `JoinHandle<T>` von
 `thread::spawn`, um zu garantieren, dass der Strang bis zum Ende ausgeführt
 wird</span>
 
@@ -145,8 +145,8 @@ Aufrufen von `join` auf `JoinHandle` blockiert den gerade laufenden Strang, bis
 der durch `JoinHandle` repräsentierte Strang beendet ist. _Blockieren_ eines
 Strangs bedeutet, dass der Strang daran gehindert wird, Arbeit auszuführen oder
 sich zu beenden. Da wir den Aufruf von `join` nach der `for`-Schleife im
-Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine
-ähnliche Ausgabe erzeugen:
+Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine Ausgabe
+wie folgt erzeugen:
 
 ```text
 Hallo Zahl 1 aus dem Hauptstrang!
@@ -253,8 +253,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-3: Versuch, einen durch den Hauptstrang
-erzeugten Vektor in einem anderen Strang zu verwenden</span>
+<span class="caption">Codeblock 16-3: Versuch, einen im Hauptstrang erzeugten
+Vektor in einem anderen Strang zu verwenden</span>
 
 Der Funktionsabschluss verwendet `v`, sodass er `v` erfasst und zum Teil der
 Umgebung des Funktionsabschlusses macht. Da `thread::spawn` diesen
@@ -290,10 +290,10 @@ For more information about this error, try `rustc --explain E0373`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
-Rust _folgert_, wie man `v` erfasst, und weil `println!` nur eine Referenz auf
-`v` benötigt, versucht der Funktionsabschluss, `v` auszuleihen. Es gibt jedoch
-ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen wird,
-sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
+Rust _folgert_, wie `v` zu erfassen ist, und weil `println!` nur eine Referenz
+auf `v` benötigt, versucht der Funktionsabschluss, `v` auszuleihen. Es gibt
+jedoch ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen
+wird, sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
 
 Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf `v` hat, die eher
 nicht gültig ist:
@@ -364,14 +364,14 @@ fn main() {
 `move` zwigen wir den Funktionsabschluss, die Eigentümerschaft der von ihm
 verwendeten Werte zu übernehmen</span>
 
-Wir könnten versucht sein, dasselbe zu versuchen, um den Code in Codeblock 16-4
-zu reparieren, wo der Hauptstrang `drop` aufruft, indem wir einen
+Wir könnten versuchen, den Code in Codeblock 16-4 auf diesselbe Weise zu
+reparieren, wo der Hauptstrang `drop` aufruft, während wir einen
 `move`-Funktionsabschluss verwenden. Diese Lösung wird jedoch nicht
 funktionieren, weil das, was Codeblock 16-4 versucht, aus einem anderen Grund
-nicht erlaubt ist. Wenn wir dem Funktionsabschluss `move` hinzufügen würden,
-würden wir `v` in die Umgebung des Funktionsabschlusses verschieben, und wir
-könnten im Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden
-stattdessen diesen Kompilierfehler erhalten:
+nicht erlaubt ist. Wenn wir dem Funktionsabschluss `move` hinzufügen, würden
+wir `v` in die Umgebung des Funktionsabschlusses verschieben, und wir könnten
+im Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden stattdessen diesen
+Kompilierfehler erhalten:
 
 ```console
 $ cargo run

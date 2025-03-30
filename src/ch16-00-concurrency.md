@@ -51,7 +51,8 @@ Situation und deine Anforderungen geeignet ist.
 
 Hier sind die Themen, die wir in diesem Kapitel behandeln werden:
 
-- Wie man Stränge erstellt, um mehrere Code-Stücke gleichzeitig auszuführen.
+- Wie man Stränge (threads) erstellt, um mehrere Code-Abschnitte gleichzeitig
+  auszuführen.
 - _Nachrichtenübermittelnde_ Nebenläufigkeit, bei der Kanäle Nachrichten
   zwischen Strängen senden.
 - Nebenläufigkeit mit _gemeinsamem Zustand_ (shared-state), bei der mehrere
