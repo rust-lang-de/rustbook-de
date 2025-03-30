@@ -1,17 +1,17 @@
 ## Installieren von Binärdateien mit  `cargo install`
 
-Mit dem Befehl `cargo install` kannst du Binärkisten installieren und verwenden.
-Dies soll keine Systempakete ersetzen, sondern soll Rust-Entwicklern eine
-bequeme Möglichkeit bieten, Tools zu installieren, die andere auf
-[crates.io](https://crates.io/) veröffentlicht haben. Beachte,
-dass du nur binäre Pakete installieren kannst, das heißt in der Kiste muss eine
-Datei _src/main.rs_ oder eine andere als binär spezifizierte Datei vorhanden
-sein, und nicht nur eine Bibliothek, die alleine nicht ausführbar ist sondern zur 
-Aufnahme in andere Programme geeignet ist. Für gewöhnlich enthalten Kisten eine
-_README_-Datei mit Informationen darüber ob die Datei ausführbar ist, eine
-Bibliothek enthält oder beides.
+Mit dem Befehl `cargo install` kannst du Binärkisten installieren und
+verwenden. Dies soll keine Systempakete ersetzen, sondern soll Rust-Entwicklern
+eine bequeme Möglichkeit bieten, Tools zu installieren, die andere auf
+[crates.io][crates] veröffentlicht haben. Beachte, dass du nur binäre Pakete
+installieren kannst, das heißt in der Kiste muss eine Datei _src/main.rs_ oder
+eine andere als binär spezifizierte Datei vorhanden sein, und nicht nur eine
+Bibliothek, die alleine nicht ausführbar ist sondern zur Aufnahme in andere
+Programme geeignet ist. Für gewöhnlich enthalten Kisten eine _README_-Datei mit
+Informationen darüber ob die Datei ausführbar ist, eine Bibliothek enthält oder
+beides.
 
-Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis _bin_ 
+Alle mit `cargo install` installierten Binärdateien werden im Verzeichnis _bin_
 des Wurzelverzeichnisses der Installation gespeichert. Wenn du die Installation
 mit _rustup.rs_ durchgeführt und keine benutzerdefinierte Konfiguration
 hast, lautet dieses Verzeichnis `$HOME/.cargo/bin`. Stelle sicher, dass sich
@@ -40,3 +40,5 @@ installierten Binärdatei, der im Fall von `ripgrep` `rg` ist. Solange sich das
 Installationsverzeichnis in deinem `$PATH` befindet, kannst du `rg --help`
 ausführen und damit beginnen ein schnelleres, in Rust programmiertes
 Werkzeug zum Durchsuchen von Dateien verwenden!
+
+[crates]: https://crates.io/

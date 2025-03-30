@@ -248,7 +248,7 @@ erzeugt, anstatt auf bestehende Daten zu referenzieren. Nehmen wir als Beispiel
 an, der Abfragetext sei `"rUsT"`, dieser Zeichenkettenanteilstyp enthält kein
 kleingeschriebenes `u` oder `t`, das wir verwenden könnten, also müssen wir
 einen neuen `String` zuweisen, der `"rust"` enthält. Wenn wir nun `query` als
-Argument an die `contains`-Methode übergeben, müssen wir ein `&`-Zeichen
+Argument an die Methode `contains` übergeben, müssen wir ein `&`-Zeichen
 angeben, weil die Signatur von `contains` so definiert ist, dass sie einen
 Zeichenkettenanteilstyp nimmt.
 

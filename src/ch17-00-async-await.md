@@ -11,7 +11,7 @@ der _asynchronen Programmierung_ verbunden sind, bei der Operationen nicht
 unbedingt in der Reihenfolge beendet werden, in der sie begonnen wurden. Dieses
 Kapitel baut auf der Verwendung von Strängen (threads) für Parallelität und
 Nebenläufigkeit in Kapitel 16 auf, indem es einen alternativen Ansatz zur
-asynchronen Programmierung vorstellt: Rust's Futures, Ströme (streams), die
+asynchronen Programmierung vorstellt: Rusts Futures, Ströme (streams), die
 unterstützende Syntax `async` und `await`, und die Werkzeuge für die Verwaltung
 und Koordinierung zwischen asynchronen Operationen.
 
@@ -55,10 +55,10 @@ Da wir unsere Programme in vielen Fällen auf einer viel detaillierteren Ebene
 verstehen als das Betriebssystem, können wir Möglichkeiten zur Nebenläufigkeit
 sehen, die das Betriebssystem nicht erkennen kann.
 
-Wenn wir beispielsweise ein Tool zur Verwaltung von Dateidownloads entwickeln,
-sollten wir unser Programm so schreiben können, dass das Starten eines
-Downloads die Benutzeroberfläche nicht blockiert, und die Benutzer sollten in
-der Lage sein, mehrere Downloads zur gleichen Zeit zu starten. Viele
+Wenn wir beispielsweise ein Werkzeug zur Verwaltung von Dateidownloads
+entwickeln, sollten wir unser Programm so schreiben können, dass das Starten
+eines Downloads die Benutzeroberfläche nicht blockiert, und die Benutzer
+sollten in der Lage sein, mehrere Downloads zur gleichen Zeit zu starten. Viele
 Betriebssystem-APIs für die Interaktion mit dem Netzwerk sind jedoch
 _blockierend_, d.h. sie blockieren den Programmfortschritt, bis die Daten, die
 sie verarbeiten, vollständig verfügbar sind.
@@ -70,7 +70,7 @@ sie verarbeiten, vollständig verfügbar sind.
 > Programm davon profitieren würde, wenn die Operation _nicht_ blockierend
 > wäre.
 
-Wir könnten das Blockieren unseres Haupt-Strangs (main thread) vermeiden, indem
+Wir könnten das Blockieren unseres Hauptstrangs (main thread) vermeiden, indem
 wir für das Herunterladen jeder Datei einen eigenen Strang (thread) starten.
 Der Overhead dieser Stränge würde jedoch irgendwann zu einem Problem werden. Es
 wäre besser, wenn der Aufruf gar nicht erst blockiert würde. Es wäre auch
@@ -104,16 +104,16 @@ unterscheiden, denn die Unterschiede werden sich bei der Arbeit zeigen.
 
 Es gibt verschiedene Möglichkeiten, wie ein Team die Arbeit an einem
 Softwareprojekt aufteilen kann. Du könntest einem einzelnen Mitglied mehrere
-Aufgaben zuweisen oder jedem Teammitglied genau eine Aufgabe zuweisen oder eine
-Mischung aus beiden Ansätzen verwenden.
+Aufgaben zuweisen oder jedem Teammitglied genau eine Aufgabe oder eine Mischung
+aus beiden Ansätzen verwenden.
 
-Wenn eine Person an mehreren verschiedenen Aufgaben arbeitet, bevor eine von
+Wenn eine Person an mehreren, verschiedenen Aufgaben arbeitet, bevor eine von
 ihnen abgeschlossen ist, handelt es sich um _Nebenläufigkeit_. Vielleicht hast
 du zwei verschiedene Projekte auf deinem Computer ausgecheckt, und wenn dir bei
 einem Projekt langweilig wird oder du nicht weiterkommst, wechselst du zum
 anderen. Da du nur eine Person bist, kannst du nicht an beiden Aufgaben
-gleichzeitig arbeiten, aber du kannst mehrere Aufgaben gleichzeitig bearbeiten,
-indem du zwischen ihnen abwechselst (siehe Abbildung 17-1).
+gleichzeitig arbeiten, aber du kannst an mehreren Aufgaben arbeiten, indem du
+zwischen ihnen abwechselst (siehe Abbildung 17-1).
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-01.svg" class="center" />
 
@@ -162,7 +162,7 @@ Mithilfe von Werkzeugen wie Strängen, Prozessen und async kann der Computer
 eine Aktivität unterbrechen und zu einer anderen wechseln, bis er schließlich
 wieder zur ersten Aktivität zurückkehrt. Auf einem Computer mit mehreren
 CPU-Kernen kann er auch parallel arbeiten. Ein Kern kann eine Aufgabe
-erledigen, während ein anderer Kern eine komplett unabhängige andere Aufgabe
+erledigen, während ein anderer Kern eine komplett unabhängige, andere Aufgabe
 erledigt, und das sogar zur gleichen Zeit.
 
 Wenn wir mit async in Rust arbeiten, haben wir es immer mit Nebenläufigkeit zu

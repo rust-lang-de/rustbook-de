@@ -123,7 +123,7 @@ impl Config {
 # }
 ```
 
-<span class="caption">Codeblock 13-17: Reproduktion der `Config::build`-Funktion
+<span class="caption">Codeblock 13-17: Reproduktion der Funktion `Config::build`
 vom Codeblock 12-23</span>
 
 Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
@@ -210,7 +210,7 @@ fn main() {
 <span class="caption">Codeblock 13-18: Übergabe des Rückgabewerts von 
 `env::args` an `Config::build`</span>
 	
-Die `env::arg`-Funktion gibt einen Iterator zurück! Anstatt die Werte des Iterators
+Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des Iterators
 in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
 übergeben, geben wir nun die Eigentümerschaft des Iterators, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
@@ -237,7 +237,7 @@ impl Config {
     pub fn build(
         mut args: impl Iterator<Item = String>,
     ) -> Result<Config, &'static str> {
-       // --abschneiden--
+        // --abschneiden--
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -255,49 +255,49 @@ impl Config {
 #     }
 # }
 #
-#pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#    let contents = fs::read_to_string(config.file_path)?;
+# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+#     let contents = fs::read_to_string(config.file_path)?;
 #
-#    let results = if config.ignore_case {
-#        search_case_insensitive(&config.query, &contents)
-#    } else {
-#        search(&config.query, &contents)
-#    };
+#     let results = if config.ignore_case {
+#         search_case_insensitive(&config.query, &contents)
+#     } else {
+#         search(&config.query, &contents)
+#     };
 #
-#    for line in results {
-#        println!("{line}");
-#    }
+#     for line in results {
+#         println!("{line}");
+#     }
 #
-#    Ok(())
-#}
+#     Ok(())
+# }
 #
-#pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#    let mut results = Vec::new();
+# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+#     let mut results = Vec::new();
 #
-#    for line in contents.lines() {
-#        if line.contains(query) {
-#            results.push(line);
-#        }
-#    }
+#     for line in contents.lines() {
+#         if line.contains(query) {
+#             results.push(line);
+#         }
+#     }
 #
-#    results
-#}
+#     results
+# }
 #
-#pub fn search_case_insensitive<'a>(
-#    query: &str,
-#    contents: &'a str,
-#) -> Vec<&'a str> {
-#    let query = query.to_lowercase();
-#    let mut results = Vec::new();
+# pub fn search_case_insensitive<'a>(
+#     query: &str,
+#     contents: &'a str,
+# ) -> Vec<&'a str> {
+#     let query = query.to_lowercase();
+#     let mut results = Vec::new();
 #
-#    for line in contents.lines() {
-#        if line.to_lowercase().contains(&query) {
-#            results.push(line);
-#        }
-#    }
+#     for line in contents.lines() {
+#         if line.to_lowercase().contains(&query) {
+#             results.push(line);
+#         }
+#     }
 #
-#    results
-#}
+#     results
+# }
 #
 # #[cfg(test)]
 # mod tests {
@@ -356,7 +356,7 @@ Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
 `args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
 `next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die `next`-Methode zu verwenden.
+Codeblock 12-23, um die Methode `next` zu verwenden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

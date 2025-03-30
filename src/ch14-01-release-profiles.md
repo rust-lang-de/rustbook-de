@@ -72,7 +72,7 @@ vornehmen als mit Standardeinstellungen, aber weniger als bei einem
 Releasebuild.
 
 Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
-jedes Profil findest du in [Cargos Dokumentation][cargo1].
+jedes Profil findest du in der [Cargo-Dokumentation][cargo1].
 
 [^1]: **Release**: Veröffentlichung, **Build**: Kompilierter Quelltext
 

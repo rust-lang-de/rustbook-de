@@ -116,7 +116,7 @@ aus `main`</span>
 
 Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
 anstatt den Argumentwert am Index 1 der Variablen `query` und den Argumentwert
-am Index 2 der Variablen `file_path` innerhalb der `main`-Funktion zuzuweisen,
+am Index 2 der Variablen `file_path` innerhalb der Funktion `main` zuzuweisen,
 übergeben wir den gesamten Vektor an die Funktion `parse_config`. Die Funktion
 `parse_config` enthält dann die Logik, die bestimmt, welches Argument in welche
 Variable geht und die Werte an `main` zurückgibt. Wir erstellen immer noch die
@@ -200,7 +200,7 @@ Rusts Regeln für das Ausleihen verletzen würden, wenn `Config` versucht, die
 Eigentümerschaft für die Werte in `args` zu nehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
-einfachste, wenn auch etwas ineffiziente Weg ist es, die `clone`-Methode der
+einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode `clone` der
 Werte aufzurufen. Dadurch wird eine vollständige Kopie der Daten erstellt, die
 die `Config`-Instanz besitzen soll, was mehr Zeit und Speicherplatz in Anspruch
 nimmt als das Speichern einer Referenz auf die Zeichenkettendaten. Das Klonen
@@ -242,10 +242,10 @@ verschoben. Dies half uns zu erkennen, dass die Werte `query` und `file_path`
 miteinander in Beziehung stehen und diese Beziehung in unserem Code vermittelt
 werden sollte. Wir fügten dann eine `Config`-Struktur hinzu, um das
 Zusammengehören von `query` und `file_path` zu benennen und um die Namen der
-Werte als Feldnamen der Struktur von der `parse_config`-Funktion zurückgeben zu
+Werte als Feldnamen der Struktur von der Funktion `parse_config` zurückgeben zu
 können.
 
-Da nun der Zweck der `parse_config`-Funktion darin besteht, eine
+Da nun der Zweck der Funktion `parse_config` darin besteht, eine
 `Config`-Instanz zu erzeugen, können wir `parse_config` von einer einfachen
 Funktion in eine Funktion namens `new` ändern, die mit der `Config`-Struktur
 assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
@@ -300,7 +300,7 @@ impl Config {
 Wir haben `main` aktualisiert, wo wir `parse_config` aufgerufen haben, um
 stattdessen `Config::new` aufzurufen. Wir haben den Namen von `parse_config` in
 `new` geändert und ihn innerhalb eines `impl`-Blocks verschoben, der die
-`new`-Funktion mit `Config` assoziiert. Versuche, diesen Code erneut zu
+Funktion `new` mit `Config` assoziiert. Versuche, diesen Code erneut zu
 kompilieren, um sicherzustellen, dass er funktioniert.
 
 ### Korrigieren der Fehlerbehandlung
@@ -478,7 +478,7 @@ verpackt. Diese Änderungen machen die Funktion konform mit ihrer neuen
 Typsignatur.
 
 Die Rückgabe eines `Err`-Wertes aus `Config::build` erlaubt es der Funktion
-`main`, den von der `build`-Funktion zurückgegebenen `Result`-Wert zu verarbeiten
+`main`, den von der Funktion `build` zurückgegebenen `Result`-Wert zu verarbeiten
 und den Prozess im Fehlerfall sauberer zu beenden.
 
 #### Aufrufen von `Config::build` und Behandeln von Fehlern

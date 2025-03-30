@@ -100,7 +100,7 @@ Im Moment besteht unsere Behandlung des Stroms darin, dass wir `unwrap`
 aufrufen, um unser Programm zu beenden, wenn der Strom Fehler aufweist; wenn
 keine Fehler vorliegen, gibt das Programm eine Nachricht aus. Wir werden im
 nächsten Codeblock mehr Funktionalität für den Erfolgsfall hinzufügen. Der
-Grund, warum wir Fehler von der `incoming`-Methode erhalten könnten, wenn sich
+Grund, warum wir Fehler von der Methode `incoming` erhalten könnten, wenn sich
 ein Client mit dem Server verbindet, ist, dass wir nicht wirklich über
 Verbindungen iterieren. Stattdessen iterieren wir über _Verbindungsversuche_.
 Die Verbindung kann aus einer Reihe von Gründen nicht erfolgreich sein, viele

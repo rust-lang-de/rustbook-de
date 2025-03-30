@@ -330,7 +330,7 @@ benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen
 
 Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
 enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
-`contains`, die dies für uns erledigt! Füge einen Aufruf der `contains`-Methode
+`contains`, die dies für uns erledigt! Füge einen Aufruf der Methode `contains`
 in der Funktion `search` hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.
 
@@ -400,9 +400,9 @@ Funktionssignatur angegeben haben.
 
 Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
-einen veränderbaren Vektor vor der `for`-Schleife erstellen und die
-`push`-Methode aufrufen, um eine `line` im Vektor zu speichern. Nach der
-`for`-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
+einen veränderbaren Vektor vor der `for`-Schleife erstellen und die Methode
+`push` aufrufen, um eine `line` im Vektor zu speichern. Nach der `for`-Schleife
+geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

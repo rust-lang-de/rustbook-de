@@ -146,12 +146,12 @@ Typen sind standardmäßig `i32`. Die primäre Situation, in der du `isize` oder
 > 
 > - Umbrechen (wrap) aller Fälle mit den Methoden `wrapping_*`, z.B.
 >   `wrapping_add`
-> - Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer
->   `checked_*`-Methode gibt.
+> - Zurückgeben des Wertes `None`, wenn es einen Überlauf mit einer Methode
+>   `checked_*` gibt.
 > - Zurückgeben des Wertes und eines booleschen Wertes, der angibt, ob ein
->   Überlauf mit einer `overflowing_*`-Methode stattgefunden hat.
-> - Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den
->   `saturating_*`-Methoden.
+>   Überlauf mit einer Methode `overflowing_*` stattgefunden hat.
+> - Gewährleisten der Minimal- oder Maximalwerte des Wertes mit den Methoden
+>   `saturating_*`.
 
 #### Fließkomma-Typen
 

@@ -513,7 +513,7 @@ ausgibt, der Name der Struktur in Codeblock 20-37.
 Mit dem Makro `quote!` können wir den Rust-Code definieren, den wir zurückgeben
 wollen. Der Compiler erwartet etwas anderes als das direkte Ergebnis der
 Ausführung des `quote!`-Makros, also müssen wir es in einen `TokenStream`
-konvertieren. Wir tun dies, indem wir die `into`-Methode aufrufen, die diese
+konvertieren. Wir tun dies, indem wir die Methode `into` aufrufen, die diese
 Zwischendarstellung konsumiert und einen Wert des erforderlichen Typs
 `TokenStream` zurückgibt.
 

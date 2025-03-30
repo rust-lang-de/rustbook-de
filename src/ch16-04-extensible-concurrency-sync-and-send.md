@@ -17,23 +17,23 @@ Das Markierungsmerkmal (marker trait) `Send` zeigt an, dass die
 Eigentümerschaft an Werten des Typs, der `Send` implementiert, zwischen
 Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ implementiert
 `Send`, aber es gibt einige Ausnahmen, einschließlich `Rc<T>`: Dieser kann
-nicht `Send` sein, denn wenn du einen `Rc<T>` Wert geklont hast und versucht
+nicht `Send` sein, denn wenn du einen `Rc<T>`-Wert geklont hast und versucht
 hast, die Eigentümerschaft am Klon auf einen anderen Strang zu übertragen,
-könnten beide Stränge gleichzeitig die Referenzzahl aktualisieren. Aus diesem
+könnten beide Stränge gleichzeitig den Referenzzähler aktualisieren. Aus diesem
 Grund ist `Rc<T>` für die Verwendung in einsträngigen Situationen
 implementiert, in denen du nicht die Strang-sichere Performanzeinbuße zahlen
 willst.
 
 Daher stellen das Typsystem und die Merkmalsabgrenzungen (trait bounds) von
-Rust sicher, dass du niemals versehentlich einen `Rc<T>`-Wert über Stränge
-unsicher senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
+Rust sicher, dass du niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen
+Strängen senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
 wir folgenden Fehler: Das Merkmal `Send` ist für `Rc<Mutex<i32>>` nicht
 implementiert. Als wir zu `Arc<T>` wechselten, das `Send` implementiert, ließ
 sich der Code kompilieren.
 
 Jeder Typ, der vollständig aus `Send`-Typen besteht, wird automatisch auch als
-`Send` markiert. Fast alle primitiven Typen sind `Send`, abgesehen von
-Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
+`Send` markiert. Fast alle primitiven Typen implementieren `Send`, abgesehen
+von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
 
 ### Erlauben des Zugriffs von mehreren Strängen mit `Sync`
 
@@ -81,20 +81,20 @@ realistischeren Situation anwenden als die hier besprochenen kleineren
 Beispiele.
 
 Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
-umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind als Kisten
+umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind in Kisten
 (crates) implementiert. Diese entwickeln sich schneller als die
 Standardbibliothek. Stelle also sicher, dass du online nach den aktuellen,
 hochmodernen Kisten suchst, die in mehrsträngigen Situationen verwendet werden
 können.
 
 Die Rust-Standardbibliothek bietet Kanäle (channels) für die
-Nachrichtenübermittlung und intelligente Zeigertypen, wie `Mutex<T>` und
+Nachrichtenübermittlung und intelligente Zeigertypen wie `Mutex<T>` und
 `Arc<T>`, die sicher in nebenläufigen Kontexten verwendet werden können. Das
 Typsystem und der Ausleihenprüfer stellen sicher, dass der Code, der diese
 Lösungen verwendet, nicht mit Daten-Wettlaufsituationen (data races) oder
 ungültigen Referenzen endet. Sobald du deinen Code zum Kompilieren gebracht
 hast, kannst du sicher sein, dass er problemlos mit mehreren Strängen läuft,
-ohne die schwer aufzuspürenden Fehler, die in anderen Sprachen üblich sind.
+ohne die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig &ndash; furchtlos!
 

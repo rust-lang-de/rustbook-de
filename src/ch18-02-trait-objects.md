@@ -36,7 +36,7 @@ bereithält.
 Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
 `Component` definieren, die eine Methode namens `draw` enthält. Die anderen
 Klassen, z.B. `Button`, `Image` und `SelectBox`, würden von `Component` erben
-und somit die Methode `draw` erben. Sie könnten jeweils die `draw`-Methode
+und somit die Methode `draw` erben. Sie könnten jeweils die Methode `draw`
 überschreiben, um ihr eigenes Verhalten zu definieren, aber das
 Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
 `Component`-Instanzen, und `draw` aufrufen. Aber da Rust keine Vererbung hat,
@@ -136,7 +136,7 @@ impl Screen {
 ```
 
 <span class="caption">Codeblock 18-5: Eine Methode `run` auf `Screen`, die die
-`draw`-Methode jeder Komponente aufruft</span>
+Methode `draw` jeder Komponente aufruft</span>
 
 Dies funktioniert anders als die Definition einer Struktur, die einen
 generischen Typparameter mit Merkmalsabgrenzungen (trait bounds) verwendet. Ein
@@ -170,7 +170,7 @@ where
 ```
 
 <span class="caption">Codeblock 18-6: Eine alternative Implementierung der
-Struktur `Screen` und ihrer `run`-Methode unter Verwendung generischer Typen
+Struktur `Screen` und ihrer Methode `run` unter Verwendung generischer Typen
 und Merkmalsabgrenzungen</span>
 
 Dies schränkt uns auf eine `Screen`-Instanz ein, die eine Liste von Komponenten
@@ -189,7 +189,7 @@ werden wir über die Auswirkungen auf die Laufzeitperformanz sprechen.
 Nun fügen wir einige Typen hinzu, die das Merkmal `Draw` implementieren. Wir
 werden den Typ `Button` zur Verfügung stellen. Auch hier liegt die eigentliche
 Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
-die `draw`-Methode keine nützliche Implementierung in ihrem Rumpf haben wird.
+die Methode `draw` keine nützliche Implementierung in ihrem Rumpf haben wird.
 Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
 Struktur `Button` Felder für `width`, `height` und `label` haben, wie in
 Codeblock 18-7 gezeigt:
@@ -233,7 +233,7 @@ Die Felder `width`, `height` und `label` in `Button` unterscheiden sich von den
 Feldern anderer Komponenten; beispielsweise könnte ein Typ `TextField` diese
 Felder und zusätzlich ein `placeholder` haben. Jeder der Typen, die wir auf dem
 Bildschirm zeichnen wollen, wird das Merkmal `Draw` implementieren, aber
-unterschiedlichen Code in der `draw`-Methode verwenden, um zu definieren, wie
+unterschiedlichen Code in der Methode `draw` verwenden, um zu definieren, wie
 dieser bestimmte Typ gezeichnet werden soll, wie es hier bei `Button` der Fall
 ist (ohne wie erwähnt den eigentlichen GUI-Code). Der Typ `Button` könnte zum
 Beispiel einen zusätzlichen `impl`-Block haben, der Methoden enthält, die sich
@@ -271,7 +271,7 @@ und das Merkmal `Draw` auf einer `SelectBox`-Struktur implementiert</span>
 Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um
 eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine
 `SelectBox` und einen `Button` hinzufügen, indem er jede in eine `Box<T>`
-setzt, um ein Merkmalsobjekt zu werden. Er kann dann die `run`-Methode auf der
+setzt, um ein Merkmalsobjekt zu werden. Er kann dann die Methode `run` auf der
 `Screen`-Instanz aufrufen, die dann `draw` auf jeder der Komponenten aufruft.
 Der Codeblock 18-9 zeigt diese Umsetzung:
 
@@ -325,7 +325,7 @@ implementieren</span>
 Als wir die Bibliothek schrieben, wussten wir nicht, dass jemand den Typ
 `SelectBox` hinzufügen könnte, aber unsere `Screen`-Implementierung war in der
 Lage, mit dem neuen Typ umzugehen und ihn zu zeichnen, weil `SelectBox` das
-Merkmal `Draw` implementiert, was bedeutet, dass sie die `draw`-Methode
+Merkmal `Draw` implementiert, was bedeutet, dass sie die Methode `draw`
 implementiert.
 
 Dieses Konzept &ndash; sich nur mit den Nachrichten zu befassen, auf die ein
@@ -335,9 +335,9 @@ Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
 Implementierung von `run` auf `Screen` in Codeblock 18-5 braucht `run` nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines `Buttons` oder einer `SelectBox` ist, es ruft nur
-die `draw`-Methode auf der Komponente auf. Durch die Spezifikation von
+die Methode `draw` auf der Komponente auf. Durch die Spezifikation von
 `Box<dyn Draw>` als Typ der Werte im `components`-Vektor haben wir `Screen` so
-definiert, dass wir Werte benötigen, auf denen wir die `draw`-Methode aufrufen
+definiert, dass wir Werte benötigen, auf denen wir die Methode `draw` aufrufen
 können.
 
 Der Vorteil der Verwendung von Merkmalsobjekten und des Rust-Typsystems zum

@@ -634,7 +634,7 @@ Funktionsabschluss `FnMut` implementieren muss:
 
 ```console
 $ cargo run
-   Compiling playground v0.0.1 (/playground)
+   Compiling rectangles v0.1.0 (file:///projects/rectangles)
 error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` closure
   --> src/main.rs:18:30
    |
@@ -645,6 +645,11 @@ error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` clos
    |                      --- captured by this `FnMut` closure
 18 |         sort_operations.push(value);
    |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |
+help: consider cloning the value if the performance cost is acceptable
+   |
+18 |         sort_operations.push(value.clone());
+   |                                   ++++++++
 
 For more information about this error, try `rustc --explain E0507`.
 error: could not compile `rectangles` (bin "rectangles") due to 1 previous error

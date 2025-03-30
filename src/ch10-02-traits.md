@@ -316,7 +316,7 @@ Nachdem wir `summarize_author` definiert haben, können wir `summarize` auf
 Instanzen der `SocialPost`-Struktur aufrufen, und die Standard-Implementierung
 von `summarize` wird die Definition von `summarize_author` aufrufen, die wir
 bereitgestellt haben. Da wir `summarize_author` implementiert haben, hat uns
-das Merkmal `Summary` das Verhalten der `summarize`-Methode mitgeliefert, ohne
+das Merkmal `Summary` das Verhalten der Methode `summarize` mitgeliefert, ohne
 dass wir weiteren Code schreiben müssen. Das sieht dann so aus:
 
 ```rust,ignore
@@ -677,7 +677,7 @@ impl<T: Display> ToString for T {
 ```
 
 Da die Standardbibliothek diese Pauschal-Implementierungen hat, können wir die
-`to_string`-Methode, die durch das Merkmal `ToString` definiert ist, bei jedem
+Methode `to_string`, die durch das Merkmal `ToString` definiert ist, bei jedem
 Typ aufrufen, der das Merkmal `Display` implementiert. Zum Beispiel können wir
 ganze Zahlen in ihre entsprechenden `String`-Werte umwandeln, weil ganze
 Zahlen `Display` implementieren:

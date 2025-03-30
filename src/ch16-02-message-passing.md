@@ -4,11 +4,11 @@ Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
 Nebenläufigkeit (safe concurrency) ist der _Nachrichtenaustausch_ (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
-[der Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
+der [Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
 Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“
 
-Um die Gleichzeitigkeit beim Senden von Nachrichten zu erreichen, bietet die
-Standardbibliothek von Rust eine Implementierung von Kanälen. Ein _Kanal_
+Um Nebenläufigkeit beim Senden von Nachrichten zu erreichen, bietet die
+Standardbibliothek von Rust eine Implementierung für Kanäle. Ein _Kanal_
 (channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem
 Strang zu einem anderen gesendet werden.
 
@@ -26,7 +26,7 @@ Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als _geschlossen_
 (closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
 (dropped) wird.
 
-Hier arbeiten wir uns zu einem Programm hoch, das einen Strang hat, um Werte zu
+Hier erarbeiten wir uns ein Programm, das einen Strang hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
 die Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Strängen
 über einen Kanal senden, um die Funktionalität zu veranschaulichen. Sobald du
@@ -36,8 +36,8 @@ dem viele Stränge Teile einer Berechnung durchführen und die Teile an einen
 Strang senden, der die Ergebnisse zusammenfasst.
 
 Erstens werden wir in Codeblock 16-6 einen Kanal erstellen, aber nichts damit
-machen. Beachte, dass sich dieser noch nicht kompilieren lässt, weil Rust nicht
-sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.
+machen. Beachte, dass sich dieser Code noch nicht kompilieren lässt, weil Rust
+nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -103,13 +103,13 @@ dann `move`, um `tx` in den Funktionsabschluss zu verschieben, sodass der
 erzeugte Strang `tx` besitzt. Der erzeugte Strang muss den Sender besitzen, um
 in der Lage zu sein, Nachrichten durch den Kanal zu senden.
 
-Der Sender hat eine Methode `send`, die den Wert nimmt, den wir senden wollen.
-Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die empfangende
-Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet
-werden kann, wird die Sendeoperation einen Fehler zurückgeben. In diesem
-Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzustürzen. Aber in
-einer echten Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9
-zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
+Der Sender hat eine Methode `send`, die den Wert entgegennimmt, den wir senden
+wollen. Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die
+empfangende Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein
+Wert gesendet werden kann, wird die Sendeoperation einen Fehler zurückgeben. In
+diesem Beispiel rufen wir `unwrap` auf, um im Falle eines Fehlers abzubrechen.
+Aber in einer echten Anwendung würden wir es ordentlich handhaben: Kehre zu
+Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.
 
 In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
@@ -141,13 +141,13 @@ Das Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
 `recv`, kurz für _empfangen_ (receive), was die Ausführung des Hauptstrangs
 blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
 gesendet wurde, wird er von `recv` in einem `Result<T, E>` zurückgegeben. Wenn
-der Sender geschlossen wird, gibt `recv` einen Fehler zurück, um zu
+der Sender geschlossen ist, gibt `recv` einen Fehler zurück, um zu
 signalisieren, dass keine weiteren Werte mehr kommen werden.
 
 Die Methode `try_recv` blockiert nicht, sondern gibt stattdessen sofort ein
 `Result<T, E>` zurück: Einen `Ok`-Wert, der eine Nachricht enthält, wenn eine
-verfügbar ist, und einen `Err`-Wert, wenn diesmal keine Nachricht vorhanden
-ist. Die Verwendung von `try_recv` ist nützlich, wenn dieser Strang während des
+verfügbar ist, und einen `Err`-Wert, wenn gerade keine Nachricht vorhanden ist.
+Die Verwendung von `try_recv` ist nützlich, wenn dieser Strang während des
 Wartens auf Nachrichten andere Arbeiten zu erledigen hat: Wir könnten eine
 Schleife schreiben, die `try_recv` ab und zu aufruft, eine Nachricht
 verarbeitet, wenn eine verfügbar ist, und ansonsten für eine Weile andere
@@ -170,13 +170,13 @@ Perfekt!
 
 Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
-von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, wenn du bei
-deinen Rust-Programmen an die Eigentümerschaft denkst. Lass uns ein Experiment
-machen, um zu zeigen, wie Kanäle und Eigentümerschaft zusammenwirken, um
-Probleme zu vermeiden: Wir versuchen, einen `val`-Wert im erzeugten Strang zu
-verwenden, _nachdem_ wir ihn in den Kanal geschickt haben. Versuche, den Code
-in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser Code nicht erlaubt
-ist.
+von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, den du durch
+Berücksichtigen der Eigentümerschaft in deinen Rust-Programmen erhältst. Lass
+uns ein Experiment machen, um zu zeigen, wie Kanäle und Eigentümerschaft
+zusammenwirken, um Probleme zu vermeiden: Wir versuchen, einen Wert `val` im
+erzeugten Strang zu verwenden, _nachdem_ wir ihn in den Kanal geschickt haben.
+Versuche, den Code in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser
+Code nicht erlaubt ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -207,7 +207,8 @@ einen anderen Strang gesendet wurde, könnte dieser Strang ihn ändern oder
 aufräumen, bevor wir versuchen, den Wert erneut zu verwenden. Möglicherweise
 können die Änderungen des anderen Strangs aufgrund inkonsistenter oder nicht
 vorhandener Daten zu Fehlern oder unerwarteten Ergebnissen führen. Rust gibt
-uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu kompilieren:
+uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu
+kompilieren:
 
 ```console
 $ cargo run
@@ -273,13 +274,13 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten und
-Pausieren dazwischen</span>
+<span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten mit Pausen
+dazwischen</span>
 
-Diesmal hat der erzeugte Strang einen Vektor von Zeichenketten, die wir an den
-Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten, senden jede
-einzeln und pausieren dazwischen, indem wir die Funktion `thread::sleep` mit
-einem `Duration`-Wert von einer Sekunde aufrufen.
+Diesmal verwendet der erzeugte Strang einen Vektor von Zeichenketten, die wir
+an den Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten,
+senden jede einzeln und pausieren dazwischen, indem wir die Funktion
+`thread::sleep` mit einem `Duration`-Wert von einer Sekunde aufrufen.
 
 Im Hauptstrang rufen wir die Funktion `recv` nicht mehr explizit auf:
 Stattdessen behandeln wir `rx` als Iterator. Jeden empfangenen Wert geben wir

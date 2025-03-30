@@ -78,14 +78,14 @@ Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des `Iterator`-Merkmals erfordert, dass du auch einen `Item`-Typ definierst und
-dieser `Item`-Typ im Rückgabetyp der `next`-Methode benutzt wird. Mit anderen
+dieser `Item`-Typ im Rückgabetyp der Methode `next` benutzt wird. Mit anderen
 Worten wird der `Item`-Typ der vom Iterator zurückgegebene Typ sein.
 
 Für das `Iterator`-Merkmal muss man bei der Implementierung nur eine Methode
-definieren: Die `next`-Methode, die jeweils ein Element des Iterators verpackt
+definieren: Die Methode `next`, die jeweils ein Element des Iterators verpackt
 in `Some` zurückgibt und nach Beendigung der Iteration `None` zurückgibt.
 
-Wir können für Iteratoren die `next`-Methode direkt aufrufen. Codeblock 13-12
+Wir können für Iteratoren die Methode `next` direkt aufrufen. Codeblock 13-12
 zeigt, welche Werte bei wiederholten Aufrufen von `next` auf einen aus einem
 Vektor erstellten Iterator zurückgegeben werden:
 
@@ -110,11 +110,11 @@ Vektor erstellten Iterator zurückgegeben werden:
 # }
 ```
 
-<span class="caption">Codeblock 13-12: Iterator mit der `next`-Methode
+<span class="caption">Codeblock 13-12: Iterator mit der Methode `next`
 aufrufen</span>
 
 Beachte, dass wir `v1_iter` veränderbar (mutable) machen mussten: Beim Aufrufen
-der `next`-Methode auf einen Iterator wird dessen interner Status geändert, der
+der Methode `next` auf einen Iterator wird dessen interner Status geändert, der
 verwendet wird, um festzustellen, wo sich der Iterator in der Sequenz befindet.
 Mit anderen Worten _verbraucht_ dieser Programmcode den Iterator. Jeder Aufruf
 von `next` isst ein Element des Iterators auf. Als wir die `for`-Schleife
@@ -124,10 +124,10 @@ den Kulissen geschah, als die Schleife die Eigentümerschaft (ownership) von
 
 Merke auch, dass die Werte, die wir von den Aufrufen von `next` erhalten,
 unveränderbare Referenzen (immutable references) auf die Werte im Vektor sind.
-Die `iter`-Methode erzeugt einen Iterator über unveränderbare Referenzen. Wenn
+Die Methode `iter` erzeugt einen Iterator über unveränderbare Referenzen. Wenn
 wir einen Iterator erzeugen möchten der die Eigentümerschaft von `v1` übernimmt
-und angeeignete Werte (owned values) zurückgibt, können wir die
-`into_iter`-Methode anstelle von `iter` benutzen, und wenn wir über veränderbare
+und angeeignete Werte (owned values) zurückgibt, können wir die Methode
+`into_iter` anstelle von `iter` benutzen, und wenn wir über veränderbare
 Referenzen iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
 ### Methoden die den Iterator verbrauchen
@@ -136,8 +136,8 @@ Das `Iterator`-Merkmal verfügt über eine Vielzahl von Methoden, die in der
 Standardbibliothek bereitgestellt werden. Du kannst dich über diese Methoden
 informieren, indem du in der Standardbibliothek-API-Dokumentation (standard
 library API documentation) nach dem `Iterator`-Merkmal suchst. Einige dieser
-Methoden rufen in ihrer Definition die `next`-Methode auf, daher musst du die
-`next`-Methode bei der Implementierung des `Iterator`-Merkmals einbauen.
+Methoden rufen in ihrer Definition die Methode `next` auf, daher musst du die
+Methode `next` bei der Implementierung des `Iterator`-Merkmals einbauen.
 
 Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
@@ -145,7 +145,7 @@ die Methode `sum`, sie übernimmt die Eigentümerschaft des Iterators und
 durchläuft die Elemente durch wiederholtes Aufrufen von `next`, wodurch der
 Iterator verbraucht wird. Jedes Element wird während der Iteration zu einer
 Summe hinzugefügt, die zurückgegeben wird, sobald die Iteration abgeschlossen
-ist. Codeblock 13-13 enthält einen Test, der die `sum`-Methode veranschaulicht:
+ist. Codeblock 13-13 enthält einen Test, der die Methode `sum` veranschaulicht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -167,7 +167,7 @@ ist. Codeblock 13-13 enthält einen Test, der die `sum`-Methode veranschaulicht:
 # }
 ```
 
-<span class="caption">Codeblock 13-13: Aufruf der `sum`-Methode um den Wert der
+<span class="caption">Codeblock 13-13: Aufruf der Methode `sum` um den Wert der
 Summe aller Elemente zu erhalten</span>
 
 Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` die
@@ -223,13 +223,13 @@ Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
 wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
 sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
-Um das zu beheben, werden wir die `collect`-Methode verwenden, die wir im Kapitel
+Um das zu beheben, werden wir die Methode `collect` verwenden, die wir im Kapitel
 12 mit `env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
 In Codeblock 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
-der vom Aufruf der `map`-Methode zurückgegeben wird, in einem Vektor. Dieser
+der vom Aufruf der Methode `map` zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -242,8 +242,8 @@ Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
     assert_eq!(v2, vec![2, 3, 4]);
 ```
 
-<span class="caption">Codeblock 13-15: Aufruf der `map`-Methode um einen
-Iterator zu erzeugen und anschließend der `collect`-Methode um den
+<span class="caption">Codeblock 13-15: Aufruf der Methode `map` um einen
+Iterator zu erzeugen und anschließend der Methode `collect` um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 
 Da `map` einen Funktionsabschluss als Parameter annimmt, können wir eine
@@ -327,10 +327,10 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 13-16: Die `filter`-Methode mit einen
-Funktionsabschluss benutzen der `shoe_size` erfasst</span>
+<span class="caption">Codeblock 13-16: Die Methode `filter` mit einen
+Funktionsabschluss benutzen, der `shoe_size` erfasst</span>
 
-Die `shoes_in_size`-Funktion übernimmt die Eigentümerschaft über einen Vektor
+Die Funktion `shoes_in_size` übernimmt die Eigentümerschaft über einen Vektor
 aus Schuhen mit der Schuhgröße als Parameter und gibt einen Vektor zurück, der
 nur Schuhe einer bestimmten Größe enthält.
 
@@ -341,7 +341,7 @@ Elemente enthält, für die der Funktionsabschluss `true` zurückgibt.
 
 Der Funktionsabschluss erfasst den `shoe_size`-Parameter aus seiner Umgebung und
 vergleicht dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der
-gewählten Größe. Zuletzt sammelt der Aufruf der `collect`-Methode die
+gewählten Größe. Zuletzt sammelt der Aufruf der Methode `collect` die
 zurückgegeben Werte des angeschlossenen Adapters in den Vektor, der von der
 Funktion zurückgegeben wird.
 

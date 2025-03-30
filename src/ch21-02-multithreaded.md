@@ -1301,8 +1301,8 @@ Fehlermeldung zu ändern, die für dich von Bedeutung ist.
 Wenn wir die Sperre auf dem Mutex erhalten, rufen wir `recv` auf, um einen
 `Job` vom Kanal zu empfangen. Ein abschließendes `unwrap` geht auch hier an
 eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Strang, der
-den Sender hält, beendet hat, ähnlich wie die `send`-Methode `Err` zurückgibt,
-wenn der Empfänger abschaltet.
+den Sender hält, beendet hat, ähnlich wie die Methode `send` den Wert `Err`
+zurückgibt, wenn der Empfänger abschaltet.
 
 Der Aufruf von `recv` blockiert, wenn also noch kein Auftrag vorhanden ist,
 wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der `Mutex<T>`

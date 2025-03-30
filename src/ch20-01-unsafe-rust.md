@@ -179,10 +179,10 @@ Beachte auch, dass wir in Codeblock 20-1 und 20-3 die Rohzeiger `*const i32`
 und `*mut i32` erstellt haben, die beide auf die gleiche Speicherstelle
 zeigten, in der `num` gespeichert ist. Wenn wir stattdessen versucht hätten,
 eine unveränderbare und einen veränderbare Referenz auf `num` zu erstellen,
-hätte sich der Code nicht kompilieren lassen, weil die Eigentümerschaftsregeln
-von Rust eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren
-Referenzen zulassen. Mit Rohzeigern können wir einen veränderbaren und
-einen unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
+hätte sich der Code nicht kompilieren lassen, weil die Eigentumsregeln von Rust
+eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren Referenzen
+zulassen. Mit Rohzeigern können wir einen veränderbaren und einen
+unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
 veränderbaren Zeiger ändern, wodurch möglicherweise eine
 Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!
 
@@ -543,7 +543,7 @@ dieses Versprechen eingehalten wird!
 ### Zugreifen oder Ändern einer veränderbaren, statischen Variable
 
 In diesem Buch haben wir noch nicht über _globale Variablen_ gesprochen, die
-Rust zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
+Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust
 problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
 veränderbare, globale Variable zugreifen, kann dies zu einer
 Daten-Wettlaufsituation (data race) führen.

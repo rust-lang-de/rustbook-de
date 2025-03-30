@@ -208,7 +208,7 @@ Selbst nachdem wir `add_text` aufgerufen und unserem Beitrag etwas Inhalt
 hinzugefügt haben, wollen wir immer noch, dass die Methode `content` einen
 leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
 noch im Entwurfszustand befindet, wie in Zeile 7 von Codeblock 18-11 gezeigt
-wird. Lass uns fürs Erste die `content`-Methode mit der einfachsten Sache
+wird. Lass uns fürs Erste die Methode `content` mit der einfachsten Sache
 implementieren, die diese Anforderung erfüllt: Immer einen leeren
 Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern, sobald wir
 die Möglichkeit implementiert haben, den Zustand eines Beitrags zu ändern,
@@ -250,7 +250,7 @@ impl Post {
 ```
 
 <span class="caption">Codeblock 18-14: Hinzufügen einer
-Platzhalter-Implementierung für die `content`-Methode auf `Post`, die immer
+Platzhalter-Implementierung für die Methode `content` auf `Post`, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span>
 
 Mit dieser zusätzlichen Methode `content` funktioniert alles in Codeblock 18-11
@@ -321,7 +321,7 @@ impl State for PendingReview {
 Wir geben `Post` eine öffentliche Methode namens `request_review`, die eine
 veränderbare Referenz auf `self` nimmt. Dann rufen wir eine interne
 `request_review`-Methode über den aktuellen Zustand von `Post` auf und diese
-zweite `request_review`-Methode konsumiert den aktuellen Zustand und gibt einen
+zweite Methode `request_review` konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.
 
 Wir fügen die Methode `request_review` zum Merkmal `State` hinzu; alle Typen,
@@ -333,7 +333,7 @@ aufgerufen wird. Diese Syntax übernimmt die Eigentümerschaft von `Box<Self>`,
 wodurch der alte Zustand ungültig wird, sodass der Zustandswert von `Post` in
 einen neuen Zustand transformiert werden kann.
 
-Um den alten Zustand zu konsumieren, muss die `request_review`-Methode die
+Um den alten Zustand zu konsumieren, muss die Methode `request_review` die
 Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die `Option` im Feld
 `state` von `Post` ins Spiel: Wir rufen die Methode `take` auf, um den
 `Some`-Wert aus dem `state`-Feld zu nehmen und an seiner Stelle ein `None` zu
@@ -471,7 +471,7 @@ sollte.
 
 Jetzt müssen wir die Methode `content` auf `Post` aktualisieren: Wir wollen,
 dass der von `content` zurückgegebene Wert vom aktuellen Zustand von `Post`
-abhängt, also delegieren wir `Post` an eine `content`-Methode, die auf seinen
+abhängt, also delegieren wir `Post` an eine Methode `content`, die auf seinen
 `state` definiert ist, wie in Codeblock 18-17 gezeigt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -571,7 +571,7 @@ Wert innerhalb `Option` wollen und nicht die Eigentümerschaft am Wert. Weil
 bekämen wir einen Fehler, weil wir `state` nicht aus dem ausgeliehenen `&self`
 im Funktionsparameter herausverschieben können.
 
-Wir rufen dann die `unwrap`-Methode auf, von der wir wissen, dass sie das
+Wir rufen dann die Methode `unwrap` auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 `Post` sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese
 Methoden zu Ende sind. Dies ist einer der Fälle, über die wir in [„Fälle, in
@@ -581,7 +581,7 @@ möglich ist, obwohl der Compiler nicht in der Lage ist, das zu verstehen.
 
 Wenn wir nun `content` auf der `&Box<dyn State>` aufrufen, wird eine
 automatische Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass
-die `content`-Methode letztlich auf dem Typ aufgerufen wird, der das Merkmal
+die Methode `content` letztlich auf dem Typ aufgerufen wird, der das Merkmal
 `State` implementiert. Das bedeutet, dass wir die Definition des Merkmals
 `State` um `content` erweitern müssen, und hier werden wir die Logik dafür
 unterbringen, welcher Inhalt je nach Zustand zurückgegeben wird, wie in
@@ -738,7 +738,7 @@ erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
 ist, Code zu pflegen, der das Zustandsmuster verwendet, probiere einige dieser
 Vorschläge aus:
 
-- Füge eine `reject`-Methode hinzu, die den Zustand des Beitrags von
+- Füge eine Methode `reject` hinzu, die den Zustand des Beitrags von
   `PendingReview` zurück zu `Draft` ändert.
 - Verlange zwei `approve`-Aufrufe, bevor der Zustand in `Published` geändert
   werden kann.
@@ -813,9 +813,9 @@ fn main() {
 
 Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von `Post::new` und der Möglichkeit, dem Inhalt des Beitrags
-Text hinzuzufügen. Aber anstatt eine `content`-Methode bei einem
+Text hinzuzufügen. Aber anstatt eine Methode `content` bei einem
 Beitragsentwurf zu haben, die eine leere Zeichenkette zurückgibt, werden wir
-es so einrichten, dass Beitragsentwürfe überhaupt keine `content`-Methode
+es so einrichten, dass Beitragsentwürfe überhaupt keine Methode `content`
 haben. Wenn wir auf diese Weise versuchen, den Inhalt eines Beitragsentwurfs
 zu erhalten, erhalten wir einen Kompilierfehler, der uns sagt, dass die Methode
 nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
@@ -938,21 +938,21 @@ impl PendingReviewPost {
 ```
 
 <span class="caption">Codeblock 18-20: Ein `PendingReviewPost`, der durch
-Aufrufen von `request_review` auf `DraftPost` erzeugt wird, und eine
-`approve`-Methode, die einen `PendingReviewPost` in einen veröffentlichten
-`Post` verwandelt</span>
+Aufrufen von `request_review` auf `DraftPost` erzeugt wird, und eine Methode
+`approve`, die einen `PendingReviewPost` in einen veröffentlichten `Post`
+verwandelt</span>
 
 Die Methoden `request_review` und `approve` übernehmen die Eigentümerschaft von
 `self`, wodurch die Instanzen `DraftPost` und `PendingReviewPost` verbraucht
 und in einen `PendingReviewPost` bzw. einen veröffentlichten `Post` umgewandelt
 werden. Auf diese Weise werden wir keine `DraftPost`-Instanzen mehr haben,
 nachdem wir `request_review` darauf aufgerufen haben, und so weiter. Die
-`PendingReviewPost`-Struktur hat keine `content`-Methode definiert, sodass der
+`PendingReviewPost`-Struktur hat keine Methode `content` definiert, sodass der
 Versuch, ihren Inhalt zu lesen, zu einem Kompilierfehler führt, wie bei
 `DraftPost`. Da der einzige Weg, eine veröffentlichte `Post`-Instanz zu
-erhalten, die eine `content`-Methode definiert hat, der Aufruf der
-`approve`-Methode auf einem `PendingReviewPost` ist, und der einzige Weg, einen
-`PendingReviewPost` zu erhalten, der Aufruf der `request_review`-Methode auf
+erhalten, die eine Methode `content` definiert hat, der Aufruf der Methode
+`approve` auf einem `PendingReviewPost` ist, und der einzige Weg, einen
+`PendingReviewPost` zu erhalten, der Aufruf der Methode `request_review` auf
 einem `DraftPost` ist, haben wir jetzt den Blog-Beitrags-Workflow in das
 Typsystem kodiert.
 
