@@ -147,7 +147,7 @@
                         <h2 id="der-referenzzählende-intelligente-zeiger-rct"><a class="header" href="#der-referenzzählende-intelligente-zeiger-rct">Der referenzzählende intelligente Zeiger <code>Rc&lt;T&gt;</code></a></h2>
 <p>In den meisten Fällen ist die Eigentümerschaft klar, man weiß genau, welche
 Variable einen bestimmten Wert besitzt. Es gibt jedoch Fälle, in denen ein
-einzelner Wert mehrere Eigentümer haben kann. In Diagrammdatenstrukturen (graph
+einzelner Wert mehrere Eigentümer haben kann. In Graphdatenstrukturen (graph
 data structures) können beispielsweise mehrere Kanten auf denselben Knoten
 verweisen, und dieser Knoten gehört konzeptionell allen Kanten, die darauf
 verweisen. Ein Knoten sollte nur aufgeräumt werden, wenn keine Kanten darauf
@@ -164,30 +164,30 @@ fernsehen. Wenn die letzte Person den Raum verlässt, schaltet sie den Fernseher
 aus, da er nicht mehr verwendet wird. Wenn jemand den Fernseher ausschaltet,
 während andere noch fernsehen möchten, wird es Aufruhr bei den übrigen
 Zuschauern geben!</p>
-<p>Wir verwenden den Typ <code>Rc&lt;T&gt;</code>, wenn wir Daten auf dem Haldenspeicher allokieren
-möchten, damit mehrere Teile unseres Programms diese lesen können,
+<p>Wir verwenden den Typ <code>Rc&lt;T&gt;</code>, wenn wir Daten auf dem Haldenspeicher (heap)
+allokieren möchten, damit mehrere Teile unseres Programms diese lesen können,
 und wir können zum Zeitpunkt der Kompilierung nicht bestimmen, welcher Teil
 zuletzt fertig sein würde. Wenn wir wüssten, welcher Teil zuletzt fertig sein
 würde, könnten wir diesen Teil einfach zum Eigentümer der Daten machen, und die
-Eigentumsregeln, die zur Kompilierzeit durchgesetzt werden, würden wirksam.</p>
+Eigentumsregeln, die zur Kompilierzeit sichergestellt werden, würden wirksam.</p>
 <p>Beachte, dass <code>Rc&lt;T&gt;</code> nur in einsträngigen (single-threaded) Szenarien verwendet
 werden kann. Wenn wir in Kapitel 16 auf Nebenläufigkeit (concurrency) eingehen,
 werden wir uns mit der Referenzzählung in mehrsträngigen (multi-threaded)
 Programmen befassen.</p>
 <h3 id="rct-zur-gemeinsamen-nutzung-von-daten-verwenden"><a class="header" href="#rct-zur-gemeinsamen-nutzung-von-daten-verwenden"><code>Rc&lt;T&gt;</code> zur gemeinsamen Nutzung von Daten verwenden</a></h3>
-<p>Kehren wir zu unserem Beispiel für die Cons-Liste in Codeblock 15-5 zurück.
-Denke daran, dass wir es mit <code>Box&lt;T&gt;</code> definiert haben. Dieses Mal erstellen
+<p>Kehren wir zu unserem Beispiel mit der Cons-Liste in Codeblock 15-5 zurück.
+Denke daran, dass wir sie mit <code>Box&lt;T&gt;</code> definiert haben. Dieses Mal erstellen
 wir zwei Listen, die beide gemeinsam eine dritte Liste besitzen. Konzeptionell
 sieht dies ähnlich aus wie in Abbildung 15-3.</p>
-<p><img alt="Zwei Listen die sich die Eigentümerschaft einer dritten Liste teilen" 
+<p><img alt="Zwei Listen die sich die Eigentümerschaft einer dritten Liste teilen"
 src="img/trpl15-03.svg" class="center" /></p>
-<p><span class="caption">Abbildung 15-3: Zwei Listen <code>b</code> und <code>c</code> teilen sich
-die Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
-<p>Wir erstellen eine Liste <code>a</code>, die <code>5</code> und dann <code>10</code> enthält. Dann erstellen wir
-zwei weitere Listen: <code>b</code>, die mit <code>3</code> beginnt, und <code>c</code>, die mit <code>4</code> beginnt.
-Sowohl <code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren,
-die <code>5</code> und <code>10</code> enthält. Mit anderen Worten, beide Listen teilen sich die
-erste Liste mit <code>5</code> und <code>10</code>.</p>
+<p><span class="caption">Abbildung 15-3: Zwei Listen <code>b</code> und <code>c</code> teilen sich die
+Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
+<p>Wir erstellen eine Liste <code>a</code>, die <code>5</code> und <code>10</code> enthält. Dann erstellen wir zwei
+weitere Listen: <code>b</code>, die mit <code>3</code> beginnt, und <code>c</code>, die mit <code>4</code> beginnt. Sowohl
+<code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren, die <code>5</code>
+und <code>10</code> enthält. Mit anderen Worten, beide Listen teilen sich die erste Liste
+mit <code>5</code> und <code>10</code>.</p>
 <p>Der Versuch, dieses Szenario mithilfe unserer Definition von <code>List</code> mit <code>Box&lt;T&gt;</code>
 zu implementieren, funktioniert nicht, wie in Codeblock 15-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -204,8 +204,8 @@ fn main() {
     let c = Cons(4, Box::new(a));
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-17: Dies zeigt, dass wir mit <code>Box&lt;T&gt;</code> keine
-zwei Listen haben dürfen, die versuchen, die Eigentümerschaft einer dritten Liste zu
-teilen</span></p>
+zwei Listen haben dürfen, die versuchen, die Eigentümerschaft einer dritten
+Liste zu teilen</span></p>
 <p>Beim Versuch den Programmcode zu kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
@@ -223,11 +223,11 @@ For more information about this error, try `rustc --explain E0382`.
 error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
 </code></pre>
 <p>Die <code>Cons</code>-Varianten besitzen die Daten, die sie enthalten. Wenn wir also die
-<code>b</code>-Liste erstellen, wird <code>a</code> in <code>b</code> verschoben und <code>b</code> besitzt <code>a</code>. Wenn wir
+Liste <code>b</code> erstellen, wird <code>a</code> in <code>b</code> verschoben und <code>b</code> besitzt <code>a</code>. Wenn wir
 dann beim Erstellen von <code>c</code> versuchen erneut <code>a</code> zu verwenden, ist dies nicht
 zulässig, da <code>a</code> verschoben wurde.</p>
-<p>Wir könnten die Definition von <code>Cons</code> ändern, um stattdessen Referenzen zu
-erhalten, aber dann müssten wir Lebensdauerparameter (lifetime parameters)
+<p>Wir könnten die Definition von <code>Cons</code> ändern und stattdessen Referenzen
+verwenden, aber dann müssten wir Lebensdauerparameter (lifetime parameters)
 angeben. Durch die Angabe von Lebensdauerparametern würden wir angeben, dass
 jedes Element in der Liste mindestens so lange wie die gesamte Liste lebt. Dies
 ist bei den Elementen und Listen in Codeblock 15-17 der Fall, aber nicht in
@@ -235,14 +235,14 @@ jedem Szenario.</p>
 <p>Stattdessen ändern wir unsere Definition von <code>List</code> so, dass <code>Rc&lt;T&gt;</code> anstelle
 von <code>Box&lt;T&gt;</code> verwendet wird, wie in Codeblock 15-18 gezeigt. Jede
 <code>Cons</code>-Variante enthält nun einen Wert und ein <code>Rc&lt;T&gt;</code>, das auf eine <code>List</code>
-zeigt. Wenn wir <code>b</code> erstellen, klonen wir, anstatt <code>a</code> zu übernehmen, die
-<code>Rc&lt;List&gt;</code>, die <code>a</code> enthält, und erhöhen die Anzahl der Referenzen von eins auf
+zeigt. Wenn wir <code>b</code> erstellen, übernehmen wir nicht <code>a</code>, sondern klonen
+<code>Rc&lt;List&gt;</code>, das <code>a</code> enthält, und erhöhen die Anzahl der Referenzen von eins auf
 zwei und lassen <code>a</code> und <code>b</code> die Eigentümerschaft (ownership) an den Daten
-dieser <code>Rc&lt;List&gt;</code> teilen. Wir werden auch <code>a</code> klonen, wenn wir <code>c</code> erstellen,
+dieser <code>Rc&lt;List&gt;</code> teilen. Wir werden <code>a</code> auch klonen, wenn wir <code>c</code> erstellen,
 wodurch die Anzahl der Referenzen von zwei auf drei erhöht wird. Jedes Mal,
 wenn wir <code>Rc::clone</code> aufrufen, erhöht sich die Anzahl der Referenzen auf die
-Daten in der <code>Rc&lt;List&gt;</code>, und die Daten werden erst dann aufgeräumt, wenn keine
-Referenzen darauf vorhanden sind.</p>
+Daten in <code>Rc&lt;List&gt;</code>, und die Daten werden erst dann aufgeräumt, wenn keine
+Referenzen mehr darauf vorhanden sind.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">enum List {
     Cons(i32, Rc&lt;List&gt;),
@@ -257,30 +257,32 @@ fn main() {
     let b = Cons(3, Rc::clone(&amp;a));
     let c = Cons(4, Rc::clone(&amp;a));
 }</code></pre></pre>
-<p><span class="caption">Codeblock 15-18: Eine Definition von <code>List</code> die <code>Rc&lt;T&gt;</code>
+<p><span class="caption">Codeblock 15-18: Eine Definition von <code>List</code>, die <code>Rc&lt;T&gt;</code>
 verwendet</span></p>
 <p>Wir müssen eine <code>use</code>-Anweisung hinzufügen, um <code>Rc&lt;T&gt;</code> in den
-Gültigkeitsbereich (scope) zu bringen, da sie nicht im Präludium (prelude) ist.
-In <code>main</code> erstellen wir die Liste mit 5 und 10 und speichern sie in einem neuen
-<code>Rc&lt;List&gt;</code> in <code>a</code>. Wenn wir dann <code>b</code> und <code>c</code> erstellen, rufen wir die Funktion
-<code>Rc::clone</code> auf und übergeben eine Referenz auf <code>Rc&lt;List&gt;</code> in <code>a</code> als Argument.</p>
-<p>Wir hätten <code>a.clone()</code> anstelle von <code>Rc::clone(&amp;a)</code> aufrufen können, aber Rusts
-Konvention lautet in diesem Fall <code>Rc::clone</code>. Die Implementierung von <code>Rc::clone</code>
-erstellt keine tiefe Kopie aller Daten, wie es bei den meisten Implementierungen
-von <code>clone</code> der Fall ist. Der Aufruf von <code>Rc::clone</code> erhöht nur den
-Referenzzähler, was nicht viel Zeit in benötigt. Tiefe Kopien von Daten
-können viel Zeit in Anspruch nehmen. Durch die Verwendung von <code>Rc::clone</code> für
-die Referenzzählung können wir visuell zwischen den Arten von Klonen mit tiefer
-Kopie und Klonen, die den Referenzzähler erhöhen, unterscheiden. Bei
-der Suche nach Performanzproblemen im Code müssen wir nur die Klone mit tiefer
-Kopie berücksichtigen und können die Aufrufe von <code>Rc::clone</code> ignorieren.</p>
-<h3 id="rct-zu-klonen-erhöht-den-referenzzähler"><a class="header" href="#rct-zu-klonen-erhöht-den-referenzzähler"><code>Rc&lt;T&gt;</code> zu klonen erhöht den Referenzzähler</a></h3>
+Gültigkeitsbereich (scope) zu bringen, da es nicht im Präludium (prelude) ist.
+In <code>main</code> erstellen wir die Liste mit <code>5</code> und <code>10</code> und speichern sie in einer
+neuen <code>Rc&lt;List&gt;</code>-Instanz in <code>a</code>. Wenn wir dann <code>b</code> und <code>c</code> erstellen, rufen wir
+die Funktion <code>Rc::clone</code> auf und übergeben eine Referenz auf <code>Rc&lt;List&gt;</code> in <code>a</code>
+als Argument.</p>
+<p>Wir hätten <code>a.clone()</code> anstelle von <code>Rc::clone(&amp;a)</code> aufrufen können, aber in
+Rust ist es Konvention, in diesem Fall <code>Rc::clone</code> zu verwenden. Die
+Implementierung von <code>Rc::clone</code> erstellt keine tiefe Kopie aller Daten, wie es
+bei den meisten Implementierungen von <code>clone</code> der Fall ist. Der Aufruf von
+<code>Rc::clone</code> erhöht nur den Referenzzähler, was nicht viel Zeit in benötigt.
+Tiefe Kopien von Daten können viel Zeit in Anspruch nehmen. Durch die
+Verwendung von <code>Rc::clone</code> für die Referenzzählung können wir visuell zwischen
+den Arten von Klonen mit tiefer Kopie und Klonen, die den Referenzzähler
+erhöhen, unterscheiden. Bei der Suche nach Performanzproblemen im Code müssen
+wir nur die Klone mit tiefer Kopie berücksichtigen und können die Aufrufe von
+<code>Rc::clone</code> ignorieren.</p>
+<h3 id="klonen-von-rct-erhöht-den-referenzzähler"><a class="header" href="#klonen-von-rct-erhöht-den-referenzzähler">Klonen von <code>Rc&lt;T&gt;</code> erhöht den Referenzzähler</a></h3>
 <p>Lass uns unser Arbeitsbeispiel in Codeblock 15-18 ändern, damit sich die
 Referenzanzahl ändert, wenn wir Referenzen auf <code>Rc&lt;List&gt;</code> in <code>a</code> erstellen
 und aufräumen.</p>
-<p>In Codeblock 15-19 ändern wir <code>main</code>, damit es einen inneren Gültigkeitsbereich um die
-Liste <code>c</code> hat, so können wir sehen, wie sich der Referenzzähler ändert, wenn <code>c</code>
-den Gültigkeitsbereich verlässt.</p>
+<p>In Codeblock 15-19 ändern wir <code>main</code>, damit es einen inneren Gültigkeitsbereich
+um die Liste <code>c</code> hat; so können wir sehen, wie sich der Referenzzähler ändert,
+wenn <code>c</code> den Gültigkeitsbereich verlässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">enum List {
 </span><span class="boring">    Cons(i32, Rc&lt;List&gt;),
@@ -299,16 +301,16 @@ den Gültigkeitsbereich verlässt.</p>
         let c = Cons(4, Rc::clone(&amp;a));
         println!("Zähler nach der Erstellung von c = {}", Rc::strong_count(&amp;a));
     }
-    println!("Zahler nachdem c den Gültigkeitsbereich verlässt = {}",
+    println!("Zahler nachdem c den Gültigkeitsbereich verlassen hat = {}",
              Rc::strong_count(&amp;a));
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-19: Den Referenzzähler ausgeben</span></p>
-<p>An jeden Punkt im Programm, an dem sich der Referenzzähler ändert, geben wir
-den Referenzzähler aus, den wir durch Aufrufen der Funktion <code>Rc::strong_count</code>
+<p>An jeder Programmstelle, an der sich der Referenzzähler ändert, geben wir den
+Referenzzählerstand aus, den wir durch Aufrufen der Funktion <code>Rc::strong_count</code>
 erhalten. Diese Funktion heißt <code>strong_count</code> und nicht <code>count</code>, da der Typ
 <code>Rc&lt;T&gt;</code> auch eine Funktion <code>weak_count</code> hat. Wir werden in <a href="ch15-06-reference-cycles.html#verhindern-von-referenzzyklen-mit-weakt">„Verhindern von
-Referenzzyklen mit <code>Weak&lt;T&gt;</code>“</a> sehen wofür
-<code>weak_count</code> verwendet wird.</p>
+Referenzzyklen mit <code>Weak&lt;T&gt;</code>“</a> sehen, wofür <code>weak_count</code>
+verwendet wird.</p>
 <p>Dieser Programmcode gibt folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
@@ -317,15 +319,16 @@ Referenzzyklen mit <code>Weak&lt;T&gt;</code>“</a> sehen wofür
 Zähler nach der Erstellung von a = 1
 Zähler nach der Erstellung von b = 2
 Zähler nach der Erstellung von c = 3
-Zahler nachdem c den Gültigkeitsbereich verlässt = 2
+Zahler nachdem c den Gültigkeitsbereich verlassen hat = 2
 </code></pre>
-<p>Wir sehen, dass <code>Rc&lt;List&gt;</code> in <code>a</code> einen anfänglichen Referenzzähler
-von 1 hat. Jedes Mal wenn wir <code>clone</code> aufrufen, steigt die Anzahl um 1. Wenn <code>c</code>
-den Gültigkeitsbereich verlässt, sinkt die Anzahl um 1. Wir müssen keine
-Funktion aufrufen, um den Referenzzähler wie erforderlich zu verringern,
-während wir <code>Rc::clone</code> aufrufen müssen, um den Referenzzähler zu erhöhen: Die
-Implementierung des Merkmals (trait) <code>Drop</code> verringert den Referenzzähler
-automatisch, wenn ein <code>Rc&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt.</p>
+<p>Wir sehen, dass <code>Rc&lt;List&gt;</code> in <code>a</code> einen anfänglichen Referenzzählerstand
+von 1 hat. Jedes Mal wenn wir <code>clone</code> aufrufen, erhöht sich der Zähler um 1.
+Wenn <code>c</code> den Gültigkeitsbereich verlässt, verringert sich der Zähler um 1. Wir
+müssen keine Funktion aufrufen, um den Referenzzähler wie erforderlich zu
+verringern, während wir <code>Rc::clone</code> aufrufen müssen, um den Referenzzähler zu
+erhöhen: Die Implementierung des Merkmals (trait) <code>Drop</code> verringert den
+Referenzzähler automatisch, wenn ein <code>Rc&lt;T&gt;</code>-Wert den Gültigkeitsbereich
+verlässt.</p>
 <p>Was wir in diesem Beispiel nicht sehen können, ist, dass wenn <code>b</code> und dann <code>a</code>
 am Ende von <code>main</code> den Gültigkeitsbereich verlassen, der Zähler 0 ist und
 <code>Rc&lt;List&gt;</code> vollständig aufgeräumt wird. Durch die Verwendung von <code>Rc&lt;T&gt;</code> kann
@@ -334,12 +337,12 @@ der Wert gültig bleibt, solange ein Eigentümer vorhanden ist.</p>
 <p>Über unveränderbare (immutable) Referenzen kann man mit <code>Rc&lt;T&gt;</code> Daten zwischen
 mehreren Teilen eines Programms zum Lesen austauschen. Wenn man mit <code>Rc&lt;T&gt;</code>
 auch mehrere veränderbare (mutable) Referenzen haben könnte, verstößt man
-möglicherweise gegen eine der in Kapitel 4 beschriebenen Ausleihregeln: Mehrere
-veränderbar ausgeliehene Referenzen an derselben Stelle können zu
-Daten-Wettlaufsituationen (data races) und Inkonsistenzen führen. Es ist jedoch
-sehr nützlich, Daten verändern zu können! Im nächsten Abschnitt werden wir das
-innere Veränderbarkeitsmuster und den Typ <code>RefCell&lt;T&gt;</code> erläutern, den man in
-Verbindung mit <code>Rc&lt;T&gt;</code> verwenden kann, um mit dieser
+möglicherweise gegen eine der in Kapitel 4 beschriebenen Ausleihregeln
+(borrowing rules): Mehrere veränderbar ausgeliehene Referenzen an derselben
+Stelle können zu Daten-Wettlaufsituationen (data races) und Inkonsistenzen
+führen. Es ist jedoch sehr nützlich, Daten verändern zu können! Im nächsten
+Abschnitt werden wir das innere Veränderbarkeitsmuster und den Typ <code>RefCell&lt;T&gt;</code>
+erläutern, den man in Verbindung mit <code>Rc&lt;T&gt;</code> verwenden kann, um mit dieser
 Unveränderbarkeitsbeschränkung zu arbeiten.</p>
 
                     </main>

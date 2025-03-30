@@ -159,21 +159,21 @@ die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale <code>Send
 Eigentümerschaft an Werten des Typs, der <code>Send</code> implementiert, zwischen
 Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ implementiert
 <code>Send</code>, aber es gibt einige Ausnahmen, einschließlich <code>Rc&lt;T&gt;</code>: Dieser kann
-nicht <code>Send</code> sein, denn wenn du einen <code>Rc&lt;T&gt;</code> Wert geklont hast und versucht
+nicht <code>Send</code> sein, denn wenn du einen <code>Rc&lt;T&gt;</code>-Wert geklont hast und versucht
 hast, die Eigentümerschaft am Klon auf einen anderen Strang zu übertragen,
-könnten beide Stränge gleichzeitig die Referenzzahl aktualisieren. Aus diesem
+könnten beide Stränge gleichzeitig den Referenzzähler aktualisieren. Aus diesem
 Grund ist <code>Rc&lt;T&gt;</code> für die Verwendung in einsträngigen Situationen
 implementiert, in denen du nicht die Strang-sichere Performanzeinbuße zahlen
 willst.</p>
 <p>Daher stellen das Typsystem und die Merkmalsabgrenzungen (trait bounds) von
-Rust sicher, dass du niemals versehentlich einen <code>Rc&lt;T&gt;</code>-Wert über Stränge
-unsicher senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
+Rust sicher, dass du niemals versehentlich einen <code>Rc&lt;T&gt;</code>-Wert unsicher zwischen
+Strängen senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
 wir folgenden Fehler: Das Merkmal <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht
 implementiert. Als wir zu <code>Arc&lt;T&gt;</code> wechselten, das <code>Send</code> implementiert, ließ
 sich der Code kompilieren.</p>
 <p>Jeder Typ, der vollständig aus <code>Send</code>-Typen besteht, wird automatisch auch als
-<code>Send</code> markiert. Fast alle primitiven Typen sind <code>Send</code>, abgesehen von
-Roh-Zeigern, die wir in Kapitel 20 besprechen werden.</p>
+<code>Send</code> markiert. Fast alle primitiven Typen implementieren <code>Send</code>, abgesehen
+von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.</p>
 <h3 id="erlauben-des-zugriffs-von-mehreren-strängen-mit-sync"><a class="header" href="#erlauben-des-zugriffs-von-mehreren-strängen-mit-sync">Erlauben des Zugriffs von mehreren Strängen mit <code>Sync</code></a></h3>
 <p>Das Markierungsmerkmal <code>Sync</code> zeigt an, dass es sicher ist, den Typ, der <code>Sync</code>
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
@@ -212,19 +212,19 @@ das Projekt in Kapitel 21 wird die Konzepte in diesem Kapitel in einer
 realistischeren Situation anwenden als die hier besprochenen kleineren
 Beispiele.</p>
 <p>Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
-umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind als Kisten
+umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind in Kisten
 (crates) implementiert. Diese entwickeln sich schneller als die
 Standardbibliothek. Stelle also sicher, dass du online nach den aktuellen,
 hochmodernen Kisten suchst, die in mehrsträngigen Situationen verwendet werden
 können.</p>
 <p>Die Rust-Standardbibliothek bietet Kanäle (channels) für die
-Nachrichtenübermittlung und intelligente Zeigertypen, wie <code>Mutex&lt;T&gt;</code> und
+Nachrichtenübermittlung und intelligente Zeigertypen wie <code>Mutex&lt;T&gt;</code> und
 <code>Arc&lt;T&gt;</code>, die sicher in nebenläufigen Kontexten verwendet werden können. Das
 Typsystem und der Ausleihenprüfer stellen sicher, dass der Code, der diese
 Lösungen verwendet, nicht mit Daten-Wettlaufsituationen (data races) oder
 ungültigen Referenzen endet. Sobald du deinen Code zum Kompilieren gebracht
 hast, kannst du sicher sein, dass er problemlos mit mehreren Strängen läuft,
-ohne die schwer aufzuspürenden Fehler, die in anderen Sprachen üblich sind.
+ohne die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig – furchtlos!</p>
 

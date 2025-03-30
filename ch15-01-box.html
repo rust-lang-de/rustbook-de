@@ -146,9 +146,9 @@
                     <main>
                         <h2 id="mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen"><a class="header" href="#mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen">Mit <code>Box&lt;T&gt;</code> auf Daten im Haldenspeicher (heap) zeigen</a></h2>
 <p>Der einfachste intelligente Zeiger ist <em>Box</em>, deren Typ <code>Box&lt;T&gt;</code> lautet. In
-Boxen kann man Daten statt auf dem Stapelspeicher im Haldenspeicher
-speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die Daten im
-Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
+Boxen kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
+(heap) speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die
+Daten im Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
 zwischen dem Stapelspeicher und dem Haldenspeicher.</p>
 <p>Boxen haben keinen Performanz-Overhead, außer dass die Daten auf
 den Haldenspeicher anstatt auf dem Stapelspeicher gespeichert werden, aber
@@ -161,7 +161,7 @@ möchte, für den eine genaue Größe erforderlich ist.</li>
 <li>Wenn man über eine große Datenmenge verfügt und die Eigentümerschaft
 (ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
 nicht kopiert werden.</li>
-<li>Wenn man einen Wert besitzen möchte und sich nur darum kümmert, dass es sich
+<li>Wenn man einen Wert besitzen und sich nur darum kümmern möchte, dass es sich
 um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
 Typ zu spezifizieren.</li>
 </ul>
@@ -171,7 +171,7 @@ die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
 die Daten auf dem Stapelspeicher kopiert werden. Um die Performanz in dieser
 Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeicher
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
-Stapelspeicher kopiert, während die Daten, auf die verwiesen wird, im
+Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
 <em>Merkmalsobjekt</em> (trait object) bekannt, und <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects)
 die Werte unterschiedlicher Typen erlauben“</a> in Kapitel 18
@@ -191,15 +191,14 @@ Haldenspeicher speichert:</p>
 <p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
 im Haldenspeicher</span></p>
 <p>Wir definieren die Variable <code>b</code> so, dass sie den den Wert einer <code>Box</code> hat die
-auf den Wert <code>5</code> zeigt, der auf dem Haldenspeicher alloziert ist.
-Dieses Programm gibt <code>b = 5</code> aus, in diesem Fall können wir auf die Daten in der
-Box zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden.
-Genau wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben
-wenn sie den Gültigkeitsbereich verlässt, wie dies bei <code>b</code> am Ende von <code>main</code>
-der Fall ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im
-Stapelspeicher) als auch für die Daten, auf die sie zeigt (gespeichert im
-Haldenspeicher).</p>
-<p>Es ist nicht sehr nützlich, einen einzelnen Wert im Haldenspeicher zu
+auf den Wert <code>5</code> zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
+Programm gibt <code>b = 5</code> aus, in diesem Fall können wir auf die Daten in der Box
+zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
+wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben, wenn sie
+den Gültigkeitsbereich verlässt, wie dies bei <code>b</code> am Ende von <code>main</code> der Fall
+ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im Stapelspeicher)
+als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).</p>
+<p>Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
 speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
 Werte wie eine <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
 gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
@@ -238,15 +237,15 @@ rekursives Aufrufen der Funktion <code>cons</code> erstellt. Der kanonische Name
 Basisfall der Rekursion lautet <code>Nil</code>. Beachte, dass dies nicht mit dem Konzept
 „null“ oder „nil“ in Kapitel 6 identisch ist, das einen fehlenden oder
 ungültigen Wert darstellt.</p>
-<p>Die Cons-Liste verwenden ist keine häufig verwendete Datenstruktur in Rust. Wenn
-man in Rust eine Liste von Elementen hat, ist <code>Vec&lt;T&gt;</code> die bessere Wahl.
-Andere, komplexere rekursive Datentypen sind in verschiedenen Situationen
-nützlich. Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen,
-wie Boxen es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp
-zu definieren.</p>
-<p>Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste. Beachte,
-dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine bekannte
-Grösse hat, was wir zeigen werden.</p>
+<p>Die Cons-Liste ist keine häufig verwendete Datenstruktur in Rust. Wenn man in
+Rust eine Liste von Elementen hat, ist <code>Vec&lt;T&gt;</code> die bessere Wahl. Andere,
+komplexere rekursive Datentypen sind in verschiedenen Situationen nützlich.
+Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen
+es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp zu
+definieren.</p>
+<p>Codeblock 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
+Beachte, dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine
+bekannte Größe hat, wie wir nachfolgend sehen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">enum List {
     Cons(i32, List),
@@ -255,21 +254,22 @@ Grösse hat, was wir zeigen werden.</p>
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-2: Der erste Versuch eine Aufzählung zu
-definieren, um eine Datenstruktur der Cons-Liste von <code>i32</code>-Werten darzustellen</span></p>
+definieren, um eine Datenstruktur der Cons-Liste von <code>i32</code>-Werten
+darzustellen</span></p>
 <blockquote>
 <p>Hinweis: Für dieses Beispiel implementieren wir eine Cons-Liste, die nur
 <code>i32</code>-Werte enthält. Wir hätten sie mit generischen Typen implementieren
 können wie wir es in Kapitel 10 besprochen haben, um eine Cons-Liste zu
 erstellen, in der Werte eines beliebigen Typs gespeichert werden können.</p>
 </blockquote>
-<p>Verwendung des Typs <code>List</code> um die Liste <code>1, 2, 3</code> zu speichern.
-Siehe Codeblock 15-3.</p>
+<p>Die Verwendung des Typs <code>List</code>, um die Liste <code>1, 2, 3</code> zu speichern, würde wie
+in Codeblock 15-3 aussehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">#enum List {
-<span class="boring">   Cons(i32, List),
-</span><span class="boring">   Nil,
-</span>#}
-<span class="boring">
+<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">enum List {
+</span><span class="boring">    Cons(i32, List),
+</span><span class="boring">    Nil,
+</span><span class="boring">}
+</span><span class="boring">
 </span>use crate::List::{Cons, Nil};
 
 fn main() {
@@ -279,11 +279,12 @@ fn main() {
 Liste <code>1, 2, 3</code> zu speichern</span></p>
 <p>Der erste <code>Cons</code>-Wert enthält <code>1</code> und einen anderen <code>List</code>-Wert. Dieser
 <code>List</code>-Wert ist ein weiterer <code>Cons</code>-Wert, der <code>2</code> und einen anderen <code>List</code>-Wert
-enthält. Dieser <code>List</code>-Wert ist ein weiterer <code>Cons</code>, der <code>3</code> enthält und ein
-<code>List</code>, der schließlich <code>Nil</code> ist, die nicht rekursive Variante, die das Ende
-der Liste signalisiert.</p>
+enthält. Dieser <code>List</code>-Wert ist wiederum ein <code>Cons</code>-Wert, der <code>3</code> enthält und
+ein <code>List</code>, das schließlich <code>Nil</code> ist – die nicht-rekursive Variante, die
+das Ende der Liste signalisiert.</p>
 <p>Wenn wir versuchen den Programmcode in Codeblock 15-3 zu kompilieren,
 erhalten wir den Fehler der in Codeblock 15-4 gezeigt wird.</p>
+<p><span class="filename">Dateiname: output.txt</span></p>
 <pre><code class="language-console">$ cargo run
    Compiling cons-list v0.1.0 (file:///projects/cons-list)
 error[E0072]: recursive type `List` has infinite size
@@ -320,8 +321,8 @@ dass wir <code>List</code> mit einer rekursiven Variante definiert haben, sie en
 direkt einen anderen Wert von sich selbst, daher kann Rust nicht herausfinden,
 wie viel Speicherplatz zum Speichern eines Listenwerts erforderlich ist. Lass
 uns zusammenfassen, warum wir diesen Fehler bekommen. Schauen wir uns zunächst
-an, wie Rust entscheidet, wie viel Speicherplatz zum Speichern des Werts eines
-nicht rekursiven Typs benötigt wird.</p>
+an, wie Rust ermittelt, wie viel Speicherplatz zum Speichern des Werts eines
+nicht-rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
 <p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
@@ -333,25 +334,25 @@ die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
-<p>Um zu bestimmen, wie viel Speicherplatz für einen <code>Message</code>-Wert zugewiesen
-werden soll, durchläuft Rust jede der Varianten, um festzustellen, welche
-Variante den meisten Speicherplatz benötigt. Rust sieht, dass <code>Message::Quit</code>
-keinen Speicherplatz benötigt, und <code>Message::Move</code> genügend Speicherplatz braucht
-um zwei <code>i32</code>-Werte zu speichern, und so weiter. Da nur eine Variante verwendet
-wird, ist der größte Speicherplatz, den ein <code>Message</code>-Wert benötigt, gleich
-den, der zum Speichern der größten Variante benötigt wird.</p>
-<p>Vergleiche das mit dem, was passiert wenn Rust zu bestimmen versucht, wie viel
+<p>Um zu bestimmen, wie viel Speicherplatz für einen <code>Message</code>-Wert benötigt wird,
+analysiert Rust alle Varianten, um festzustellen, welche Variante den meisten
+Speicherplatz benötigt. Rust erkennt, dass <code>Message::Quit</code> keinen Speicherplatz
+benötigt, und <code>Message::Move</code> so viel Speicherplatz braucht um zwei <code>i32</code>-Werte
+zu speichern, und so weiter. Da nur eine Variante verwendet wird, ist der
+Speicherbedarf, den ein <code>Message</code>-Wert benötigt, gleich dem Speicherplatz, der
+zum Speichern der größten Variante benötigt wird.</p>
+<p>Übertrage das auf den Fall, bei dem Rust zu bestimmen versucht, wie viel
 Speicherplatz ein rekursiver Typ wie die Aufzählung <code>List</code> in Codeblock 15-2
 benötigt. Der Compiler betrachtet zunächst die Variante <code>Cons</code>, die einen Typ
-<code>i32</code> und einen Wert vom Typ <code>List</code> enthält. Daher benötigt <code>Cons</code> einen
+<code>i32</code> und einen Wert vom Typ <code>List</code> enthält. Daher benötigt <code>Cons</code>
 Speicherplatz, der der Größe eines <code>i32</code> plus der Größe einer <code>List</code>
 entspricht. Um herauszufinden, wie viel Speicher der Typ <code>List</code> benötigt,
 betrachtet der Compiler die Varianten, beginnend mit der Variante <code>Cons</code>. Die
 Variante <code>Cons</code> enthält einen Typ <code>i32</code> und einen Wert vom Typ <code>List</code>. Dieser
 Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
-<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus unendlichen
-<code>Cons</code>-Varianten besteht</span></p>
+<p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus
+unendlichen <code>Cons</code>-Varianten besteht</span></p>
 <h4 id="verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten"><a class="header" href="#verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten">Verwenden von <code>Box&lt;T&gt;</code>, um einen rekursiven Typ mit einer bekannten Größe zu erhalten</a></h4>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
 Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
@@ -387,28 +388,28 @@ use crate::List::{Cons, Nil};
 fn main() {
     let list = Cons(1, Box::new(Cons(2, Box::new(Cons(3, Box::new(Nil))))));
 }</code></pre></pre>
-<p><span class="caption">Codeblock 15-5: Definition von <code>List</code> die <code>Box&lt;T&gt;</code> benutzt
-um eine bekannte Größe zu haben</span></p>
+<p><span class="caption">Codeblock 15-5: Definition von <code>List</code>, die <code>Box&lt;T&gt;</code>
+benutzt, um eine bekannte Größe zu haben</span></p>
 <p>Die <code>Cons</code>-Variante benötigt die Größe eines <code>i32</code> plus Platz zum Speichern der
-Zeigerdaten der Box. Die <code>Nil</code>-Variante speichert keine Werte und benötigt daher
-weniger Speicher als die <code>Cons</code>-Variante. Wir wissen nun, dass jeder <code>List</code>-Wert
-die Größe eines <code>i32</code> plus die Größe der Zeigerdaten einer Box annimmt. Durch
-Verwenden einer Box haben wir die unendliche, rekursive Kette unterbrochen,
-sodass der Compiler die Größe ermitteln kann, die zum Speichern eines
-Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante <code>Cons</code>
-jetzt aussieht.</p>
+Zeigerdaten der Box. Die <code>Nil</code>-Variante speichert keine Werte und benötigt
+daher weniger Speicher als die <code>Cons</code>-Variante. Wir wissen nun, dass jeder
+<code>List</code>-Wert die Größe eines <code>i32</code> plus die Größe der Zeigerdaten einer Box
+annimmt. Durch Verwenden einer Box haben wir die unendliche, rekursive Kette
+unterbrochen, sodass der Compiler die Größe ermitteln kann, die zum Speichern
+eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
+<code>Cons</code> jetzt aussieht.</p>
 <img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" style="width: 20%;" />
-<p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ der keine unendliche Größe
-hat da <code>Cons</code> eine <code>Box</code> enthält</span></p>
-<p>Boxen bieten nur die Dereferenzierung und Zuordnung am Haldenspeicher, haben
-aber sonst keine speziellen Funktionalitäten, wie wir sie bei anderen
-intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
-Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
-ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
-Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
-Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.</p>
+<p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ, der keine unendliche
+Größe hat, da <code>Cons</code> eine <code>Box</code> enthält</span></p>
+<p>Boxen kümmern sich nur die Dereferenzierung und Speicherallokation auf dem
+Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
+sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
+keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
+verbunden ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in
+denen die Dereferenzierung die einzige Funktionalität ist, die wir benötigen.
+Weitere Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.</p>
 <p>Der Typ <code>Box&lt;T&gt;</code> ist ein intelligenter Zeiger, da er das Merkmal <code>Deref</code>
-implementiert, mit dem <code>Box&lt;T&gt;</code> Werte wie Referenzen behandelt werden können.
+implementiert, mit dem <code>Box&lt;T&gt;</code>-Werte wie Referenzen behandelt werden können.
 Wenn ein <code>Box&lt;T&gt;</code>-Wert den Gültigkeitsbereich verlässt, werden die Daten am
 Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
 Merkmals <code>Drop</code> ebenfalls aufgeräumt. Diese beiden Merkmale sind für die

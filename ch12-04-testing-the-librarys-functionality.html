@@ -438,7 +438,7 @@ benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen
 <h4 id="durchsuchen-aller-zeilen-nach-dem-abfragetext"><a class="header" href="#durchsuchen-aller-zeilen-nach-dem-abfragetext">Durchsuchen aller Zeilen nach dem Abfragetext</a></h4>
 <p>Als nächstes prüfen wir, ob die aktuelle Zeile unsere Abfragezeichenkette
 enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
-<code>contains</code>, die dies für uns erledigt! Füge einen Aufruf der <code>contains</code>-Methode
+<code>contains</code>, die dies für uns erledigt! Füge einen Aufruf der Methode <code>contains</code>
 in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -500,9 +500,9 @@ Funktionssignatur angegeben haben.</p>
 <h4 id="speichern-passender-zeilen"><a class="header" href="#speichern-passender-zeilen">Speichern passender Zeilen</a></h4>
 <p>Um diese Funktion zu vervollständigen, brauchen wir auch eine Möglichkeit, die
 passenden Zeilen zu speichern, die wir zurückgeben wollen. Dafür können wir
-einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die
-<code>push</code>-Methode aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der
-<code>for</code>-Schleife geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
+einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die Methode
+<code>push</code> aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der <code>for</code>-Schleife
+geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;

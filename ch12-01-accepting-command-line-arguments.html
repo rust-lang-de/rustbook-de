@@ -198,7 +198,7 @@ Importieren von <code>use std::env::args</code> und dem anschließenden Aufrufen
 Funktion nur mit <code>args</code>, weil <code>args</code> leicht mit einer Funktion verwechselt
 werden könnte, die im aktuellen Modul definiert ist.</p>
 <blockquote>
-<h3 id="die-args-funktion-und-ungültiger-unicode"><a class="header" href="#die-args-funktion-und-ungültiger-unicode">Die <code>args</code>-Funktion und ungültiger Unicode</a></h3>
+<h3 id="die-funktion-args-und-ungültiger-unicode"><a class="header" href="#die-funktion-args-und-ungültiger-unicode">Die Funktion <code>args</code> und ungültiger Unicode</a></h3>
 <p>Beachte, dass <code>std::env::args</code> abstürzt, wenn ein Argument einen ungültigen
 Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode
 akzeptieren muss, verwende stattdessen <code>std::env::args_os</code>. Diese Funktion

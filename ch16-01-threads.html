@@ -176,12 +176,12 @@ Strang-Implementierung, bei dem ein Programm einen Betriebssystem-Strang für
 einen Sprach-Strang verwendet. Es gibt Kisten, die andere Strang-Modelle
 implementieren, die andere Kompromisse als das 1:1-Modell eingehen. (Das
 async-System von Rust, das wir uns im nächsten Kapitel ansehen werden, bietet
-ebenfalls einen anderen Ansatz der Nebenläufigkeit).</p>
+ebenfalls einen anderen Ansatz der Nebenläufigkeit.)</p>
 <h3 id="erstellen-eines-neuen-strangs-mit-spawn"><a class="header" href="#erstellen-eines-neuen-strangs-mit-spawn">Erstellen eines neuen Strangs mit <code>spawn</code></a></h3>
 <p>Um einen neuen Strang zu erstellen, rufen wir die Funktion <code>thread::spawn</code> auf
 und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
 über Funktionsabschlüsse gesprochen), der den Code enthält, den wir im neuen
-Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt etwas Text im
+Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt einen Text im
 Hauptstrang und anderen Text im neuen Strang aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::thread;
@@ -200,12 +200,12 @@ fn main() {
         thread::sleep(Duration::from_millis(1));
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um eine
-Sache auszugeben, während der Hauptstrang etwas anderes ausgibt</span></p>
-<p>Beachte, dass bei der Beendigung des Haupt-Strangs eines Rust-Programms alle
+<p><span class="caption">Codeblock 16-1: Erstellen eines neuen Strangs, um einen
+Text auszugeben, während der Hauptstrang einen anderen Text ausgibt</span></p>
+<p>Beachte, dass bei der Beendigung des Hauptstrangs eines Rust-Programms alle
 erzeugten Stränge beendet werden, unabhängig davon, ob sie zu Ende gelaufen
 sind oder nicht. Die Ausgabe dieses Programms kann jedes Mal ein wenig anders
-sein, aber sie wird ähnlich wie die folgende aussehen:</p>
+sein, aber sie wird in etwa wie folgt aussehen:</p>
 <pre><code class="language-text">Hallo Zahl 1 aus dem Hauptstrang!
 Hallo Zahl 1 aus dem erzeugten Strang!
 Hallo Zahl 2 aus dem Hauptstrang!
@@ -219,11 +219,11 @@ Hallo Zahl 5 aus dem erzeugten Strang!
 <p>Aufrufe von <code>thread::sleep</code> zwingen einen Strang, seine Ausführung für eine
 kurze Zeit anzuhalten, sodass ein anderer Strang laufen kann. Die Stränge
 werden sich wahrscheinlich abwechseln, aber das ist nicht garantiert: Es hängt
-davon ab, wie dein Betriebssystem die Stränge organisiert (schedules). In
-diesem Lauf wurde der Hauptstrang zuerst ausgegeben, obwohl die
-Ausgabeanweisung aus dem erzeugten Strang zuerst im Code erscheint. Und obwohl
-wir dem erzeugten Strang gesagt haben, er solle ausgeben, bis <code>i</code> <code>9</code> ist, kam
-er nur bis <code>5</code>, bis sich der Hauptstrang beendet hat.</p>
+davon ab, wie dein Betriebssystem die Stränge organisiert (schedule). In diesem
+Lauf hat der Hauptstrang zuerst etwas ausgegeben, obwohl sich die
+Ausgabeanweisung des erzeugten Strangs weiter oben im Code befindet. Und obwohl
+wir dem erzeugten Strang gesagt haben, er solle solange etwas ausgeben, bis <code>i</code>
+den Wert <code>9</code> hat, kam er nur bis <code>5</code>, als sich der Hauptstrang beendet hat.</p>
 <p>Wenn du diesen Code ausführst und nur Ausgaben aus dem Hauptstrang siehst oder
 keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
 erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Strängen
@@ -232,10 +232,10 @@ zu wechseln.</p>
 <p>Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
 vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die
 Reihenfolge gibt, in der Stränge laufen. Wir können auch nicht garantieren,
-dass der erzeugten Strang überhaupt zum Laufen kommt!</p>
+dass der erzeugte Strang überhaupt zum Laufen kommt!</p>
 <p>Wir können das Problem, dass der erzeugte Strang nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von <code>thread::spawn</code> in einer
-Variablen speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle&lt;T&gt;</code>.
+Variable speichern. Der Rückgabetyp von <code>thread::spawn</code> ist <code>JoinHandle&lt;T&gt;</code>.
 Ein <code>JoinHandle&lt;T&gt;</code> ist ein aneigenbarer (owned) Wert, der, wenn wir die
 Methode <code>join</code> darauf aufrufen, darauf wartet, bis sich sein Strang beendet.
 Codeblock 16-2 zeigt, wie der <code>JoinHandle&lt;T&gt;</code> des Strangs, den wir in Codeblock
@@ -260,15 +260,15 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 16-2: Speichern eines <code>JoinHandle&lt;T&gt;</code> von
+<p><span class="caption">Codeblock 16-2: Speichern des <code>JoinHandle&lt;T&gt;</code> von
 <code>thread::spawn</code>, um zu garantieren, dass der Strang bis zum Ende ausgeführt
 wird</span></p>
 <p>Aufrufen von <code>join</code> auf <code>JoinHandle</code> blockiert den gerade laufenden Strang, bis
 der durch <code>JoinHandle</code> repräsentierte Strang beendet ist. <em>Blockieren</em> eines
 Strangs bedeutet, dass der Strang daran gehindert wird, Arbeit auszuführen oder
 sich zu beenden. Da wir den Aufruf von <code>join</code> nach der <code>for</code>-Schleife im
-Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine
-ähnliche Ausgabe erzeugen:</p>
+Hauptstrang gesetzt haben, sollte das Ausführen von Codeblock 16-2 eine Ausgabe
+wie folgt erzeugen:</p>
 <pre><code class="language-text">Hallo Zahl 1 aus dem Hauptstrang!
 Hallo Zahl 2 aus dem Hauptstrang!
 Hallo Zahl 1 aus dem erzeugten Strang!
@@ -355,8 +355,8 @@ fn main() {
 
     handle.join().unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 16-3: Versuch, einen durch den Hauptstrang
-erzeugten Vektor in einem anderen Strang zu verwenden</span></p>
+<p><span class="caption">Codeblock 16-3: Versuch, einen im Hauptstrang erzeugten
+Vektor in einem anderen Strang zu verwenden</span></p>
 <p>Der Funktionsabschluss verwendet <code>v</code>, sodass er <code>v</code> erfasst und zum Teil der
 Umgebung des Funktionsabschlusses macht. Da <code>thread::spawn</code> diesen
 Funktionsabschluss in einem neuen Strang ausführt, sollten wir in der Lage
@@ -388,10 +388,10 @@ help: to force the closure to take ownership of `v` (and any other referenced va
 For more information about this error, try `rustc --explain E0373`.
 error: could not compile `playground` (bin "playground") due to 1 previous error
 </code></pre>
-<p>Rust <em>folgert</em>, wie man <code>v</code> erfasst, und weil <code>println!</code> nur eine Referenz auf
-<code>v</code> benötigt, versucht der Funktionsabschluss, <code>v</code> auszuleihen. Es gibt jedoch
-ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen wird,
-sodass es nicht weiß, ob die Referenz auf <code>v</code> immer gültig sein wird.</p>
+<p>Rust <em>folgert</em>, wie <code>v</code> zu erfassen ist, und weil <code>println!</code> nur eine Referenz
+auf <code>v</code> benötigt, versucht der Funktionsabschluss, <code>v</code> auszuleihen. Es gibt
+jedoch ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen
+wird, sodass es nicht weiß, ob die Referenz auf <code>v</code> immer gültig sein wird.</p>
 <p>Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf <code>v</code> hat, die eher
 nicht gültig ist:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -445,14 +445,14 @@ fn main() {
 <p><span class="caption">Codeblock 16-5: Durch Verwenden des Schlüsselwortes
 <code>move</code> zwigen wir den Funktionsabschluss, die Eigentümerschaft der von ihm
 verwendeten Werte zu übernehmen</span></p>
-<p>Wir könnten versucht sein, dasselbe zu versuchen, um den Code in Codeblock 16-4
-zu reparieren, wo der Hauptstrang <code>drop</code> aufruft, indem wir einen
+<p>Wir könnten versuchen, den Code in Codeblock 16-4 auf diesselbe Weise zu
+reparieren, wo der Hauptstrang <code>drop</code> aufruft, während wir einen
 <code>move</code>-Funktionsabschluss verwenden. Diese Lösung wird jedoch nicht
 funktionieren, weil das, was Codeblock 16-4 versucht, aus einem anderen Grund
-nicht erlaubt ist. Wenn wir dem Funktionsabschluss <code>move</code> hinzufügen würden,
-würden wir <code>v</code> in die Umgebung des Funktionsabschlusses verschieben, und wir
-könnten im Hauptstrang nicht mehr <code>drop</code> darauf aufrufen. Wir würden
-stattdessen diesen Kompilierfehler erhalten:</p>
+nicht erlaubt ist. Wenn wir dem Funktionsabschluss <code>move</code> hinzufügen, würden
+wir <code>v</code> in die Umgebung des Funktionsabschlusses verschieben, und wir könnten
+im Hauptstrang nicht mehr <code>drop</code> darauf aufrufen. Wir würden stattdessen diesen
+Kompilierfehler erhalten:</p>
 <pre><code class="language-console">$ cargo run
    Compiling threads v0.1.0 (file:///projects/threads)
 error[E0382]: use of moved value: `v`

@@ -173,10 +173,10 @@ Abschnitt <code>[package]</code>. Stattdessen beginnt sie mit einem Abschnitt
 <code>[workspace]</code>, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
 stellen außerdem sicher, dass wir die neueste und beste Version des
 Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
-<code>resolver</code> auf <code>"2"</code> setzen.</p>
+<code>resolver</code> auf <code>"3"</code> setzen.</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
-resolver = "2"
+resolver = "3"
 </code></pre>
 <p>Als nächstes erstellen wir die Binärkiste <code>adder</code>, indem wir <code>cargo new</code> im
 Verzeichnis <em>add</em> ausführen:</p>
@@ -188,12 +188,11 @@ Verzeichnis <em>add</em> ausführen:</p>
 erstellte Paket automatisch zum Schlüssel <code>members</code> in der Definition
 <code>[workspace]</code> der Datei <code>Cargo.toml</code> hinzugefügt, etwa so:</p>
 <pre><code class="language-toml">[workspace]
-resolver = "2"
+resolver = "3"
 members = ["adder"]
 </code></pre>
-<p>An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir <code>cargo build</code>
-ausführen. Die Dateien in deinem <em>add</em>-Verzeichnis sollten folgendermaßen
-aussehen:</p>
+<p>An dieser Stelle können wir den Arbeitsbereich erstellen, indem wir <code>cargo  build</code> ausführen. Die Dateien in deinem <em>add</em>-Verzeichnis sollten
+folgendermaßen aussehen:</p>
 <pre><code class="language-text">├── Cargo.lock
 ├── Cargo.toml
 ├── adder
@@ -224,11 +223,8 @@ und nennen es <code>add_one</code>. Erzeuge eine neue Bibliothekskiste namens <c
 der Liste <code>members</code>:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
-
-members = [
-    "adder",
-    "add_one",
-]
+resolver = "3"
+members = ["adder", "add_one"]
 </code></pre>
 <p>Dein Verzeichnis <em>add</em> sollte nun so aussehen:</p>
 <pre><code class="language-text">├── Cargo.lock
@@ -249,11 +245,10 @@ members = [
     x + 1
 }</code></pre>
 <p>Nun können wir das <code>adder</code>-Paket von unserem <code>add_one</code>-Paket, das unsere
-Bibliothek enthält, abhängig machen. Zuerst müssen wir <em>adder/Cargo.toml</em>
-einen Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>
+Bibliothek enthält, abhängig machen. Zuerst müssen wir <em>adder/Cargo.toml</em> einen
+Pfad zur Abhängigkeit von <code>add_one</code> hinzufügen.</p>
 <p><span class="filename">Dateiname: adder/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
-
 add_one = { path = "../add_one" }
 </code></pre>
 <p>Cargo geht nicht davon aus, dass Kisten in einem Arbeitsbereich voneinander
@@ -262,9 +257,7 @@ abhängen, daher müssen wir die Abhängigkeit explizit angeben.</p>
 der <code>adder</code>-Kiste. Öffne die Datei <em>adder/src/main.rs</em> und ändere die Funktion
 <code>main</code>, um die Funktion <code>add_one</code> aufzurufen, siehe Codeblock 14-7.</p>
 <p><span class="filename">Dateiname: adder/src/main.rs</span></p>
-<pre><code class="language-rust ignore">use add_one;
-
-fn main() {
+<pre><code class="language-rust ignore">fn main() {
     let num = 10;
     println!("Hello, world! {num} plus one is {}!", add_one::add_one(num));
 }</code></pre>
@@ -277,9 +270,9 @@ Verzeichnis <em>add</em> ausführen!</p>
   Compiling adder v0.1.0 (file:///projects/add/adder)
    Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.68s
 </code></pre>
-<p>Um die Binärkiste aus dem Verzeichnis <em>add</em> auszuführen, können wir mithilfe des
-Arguments <code>-p</code> und des Paketnamens mit <code>cargo run</code> angeben, welches Paket im
-Arbeitsbereich ausgeführt werden soll:</p>
+<p>Um die Binärkiste aus dem Verzeichnis <em>add</em> auszuführen, können wir mithilfe
+des Arguments <code>-p</code> und des Paketnamens mit <code>cargo run</code> angeben, welches Paket
+im Arbeitsbereich ausgeführt werden soll:</p>
 <pre><code class="language-console">$ cargo run -p adder
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/adder`
@@ -288,15 +281,15 @@ Hello, world! 10 plus one is 11!
 <p>Dadurch wird der Programmcode in <em>adder/src/main.rs</em> ausgeführt, der von der
 Kiste <code>add_one</code> abhängt.</p>
 <h4 id="abhängigkeiten-zu-externen-paketen-in-einem-arbeitsbereich"><a class="header" href="#abhängigkeiten-zu-externen-paketen-in-einem-arbeitsbereich">Abhängigkeiten zu externen Paketen in einem Arbeitsbereich</a></h4>
-<p>Beachte, dass der Arbeitsbereich nur eine <em>Cargo.lock</em>-Datei auf der obersten
+<p>Beachte, dass der Arbeitsbereich nur eine Datei <em>Cargo.lock</em> auf der obersten
 Ebene enthält, anstatt einer in jeder Kiste. Dies stellt sicher, dass alle
 Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn wir das Paket
 <code>rand</code> zu den Dateien <em>adder/Cargo.toml</em> und <em>add_one/Cargo.toml</em> hinzufügen,
 löst Cargo beide dieser Versionen zu einer auf und fügt diese in der
 <em>Cargo.lock</em>-Datei hinzu. Wenn alle Kisten im Arbeitsbereich dieselben
 Abhängigkeiten verwenden, sind die Kisten immer miteinander kompatibel. Lass
-uns die <code>rand</code>-Kiste in der Datei <em>add_one/Cargo.toml</em> zum Abschnitt
-<code>[dependencies]</code> hinzufügen, damit wir die Kiste <code>rand</code> in der <code>add_one</code>-Kiste
+uns die Kiste <code>rand</code> in der Datei <em>add_one/Cargo.toml</em> zum Abschnitt
+<code>[dependencies]</code> hinzufügen, damit wir die Kiste <code>rand</code> in der Kiste <code>add_one</code>
 verwenden können:</p>
 <p><span class="filename">Dateiname: add_one/Cargo.toml</span></p>
 <pre><code class="language-toml">[dependencies]
@@ -325,7 +318,7 @@ warning: `add_one` (lib) generated 1 warning (run `cargo fix --lib -p add_one` t
    Compiling adder v0.1.0 (file:///projects/add/adder)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 10.18s
 </code></pre>
-<p>Die <em>Cargo.lock</em>-Datei der obersten Ebene enthält nun Informationen über die
+<p>Die Datei <em>Cargo.lock</em> der obersten Ebene enthält nun Informationen über die
 Abhängigkeit von <code>add_one</code> von <code>rand</code>. Obwohl <code>rand</code> irgendwo im Arbeitsbereich
 verwendet wird, können wir es nicht in anderen Kisten im Arbeitsbereich
 verwenden, es sei denn, wir fügen <code>rand</code> zu ihren <em>Cargo.toml</em>-Dateien hinzu.
@@ -397,13 +390,13 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Der erste Abschnitt der Ausgabe zeigt, dass der Test <code>it_works</code> in der
-<code>add_one</code>-Kiste bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
-<code>adder</code> keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in der
-Kiste <code>add_one</code> keine Dokumentationstests gefunden wurden.</p>
+<p>Der erste Abschnitt der Ausgabe zeigt, dass der Test <code>it_works</code> in der Kiste
+<code>add_one</code> bestanden wurde. Der nächste Abschnitt zeigt, dass in der Kiste
+<code>adder</code> keine Tests gefunden wurden, und der letzte Abschnitt zeigt, dass in
+der Kiste <code>add_one</code> keine Dokumentationstests gefunden wurden.</p>
 <p>Wir können auch Tests für eine bestimmte Kiste in einem Arbeitsbereich aus dem
-Verzeichnis der obersten Ebene ausführen, indem wir die Option <code>-p</code> verwenden und
-den Namen der Kiste angeben, die wir testen möchten:</p>
+Verzeichnis der obersten Ebene ausführen, indem wir die Option <code>-p</code> verwenden
+und den Namen der Kiste angeben, die wir testen möchten:</p>
 <pre><code class="language-console">$ cargo test -p add_one
     Finished test [unoptimized + debuginfo] target(s) in 0.00s
      Running unittests src/lib.rs (target/debug/deps/add_one-b3235fea9a156f74)
@@ -419,15 +412,15 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Die Ausgabe zeigt, dass <code>cargo test</code> nur die Tests für die Kiste <code>add_one</code> aber
-nicht die <code>adder</code>-Tests ausgeführt hat.</p>
-<p>Wenn du die Kisten im Arbeitsbereich unter <a href="https://crates.io/">crates.io</a>
-veröffentlichst, muss jede Kiste im Arbeitsbereich separat veröffentlicht
-werden. Der Befehl <code>cargo publish</code> hat kein Flag <code>--all</code> oder <code>-p</code>, daher musst
-du in das Verzeichnis jeder Kiste wechseln und <code>cargo publish</code> auf jeder Kiste
-im Arbeitsbereich ausführen, um die Kisten zu veröffentlichen.</p>
+<p>Die Ausgabe zeigt, dass <code>cargo test</code> nur die Tests der Kiste <code>add_one</code> aber
+nicht der Kiste <code>adder</code> ausgeführt hat.</p>
+<p>Wenn du die Kisten im Arbeitsbereich unter <a href="https://crates.io/">crates.io</a> veröffentlichst,
+muss jede Kiste im Arbeitsbereich separat veröffentlicht werden. Der Befehl
+<code>cargo publish</code> hat keine Option <code>--all</code> oder <code>-p</code>, daher musst du in das
+Verzeichnis jeder Kiste wechseln und <code>cargo publish</code> für jede Kiste im
+Arbeitsbereich ausführen, um die Kisten zu veröffentlichen.</p>
 <p>Als zusätzliche Übung, füge ähnlich der Kiste <code>add_one</code> diesem Arbeitsbereich
-eine <code>add-two</code>-Kiste hinzu!</p>
+eine Kiste <code>add-two</code> hinzu!</p>
 <p>Wenn dein Projekt wächst, solltest du einen Arbeitsbereich verwenden: Es
 ermöglicht dir, mit kleineren, leichter zu verstehenden Komponenten zu arbeiten
 als mit einem großen Klumpen von Code. Darüber hinaus kann die Verwaltung von

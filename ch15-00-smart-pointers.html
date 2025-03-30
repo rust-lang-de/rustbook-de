@@ -145,26 +145,25 @@
                 <div id="content" class="content">
                     <main>
                         <h1 id="intelligente-zeiger"><a class="header" href="#intelligente-zeiger">Intelligente Zeiger</a></h1>
-<p>Im Allgemeinen ist ein <em>Zeiger</em> ein Konzept für eine Variable die eine
-Speicheradresse enthält. Diese Adresse bezieht sich, oder „zeigt“, auf andere
+<p>Ein <em>Zeiger</em> ist im Allgemeinen ein Konzept für eine Variable, die eine
+Speicheradresse enthält. Diese Adresse referenziert oder „zeigt“ auf andere
 Daten. Die häufigste Art von Zeigern in Rust ist eine Referenz, die wir bereits
 in Kapitel 4 kennengelernt haben. Referenzen werden durch das Symbol <code>&amp;</code>
-gekennzeichnet und leihen (borrow) den Wert auf den sie zeigen aus. Sie haben,
-außer dem Verweisen auf Daten, keine besonderen Funktionalitäten. Im Übrigen
-erzeugen sie keinen Mehraufwand (overhead) und sind die am häufigsten
-verwendete Art von Zeigern.</p>
+gekennzeichnet und leihen (borrow) den Wert auf den sie zeigen aus. Sie haben
+außer dem Referenzieren auf Daten keine besondere Funktionalität und
+verursachen keinen Mehraufwand (overhead).</p>
 <p><em>Intelligente Zeiger</em> (smart pointers) sind hingegen Datenstrukturen, die wie
-ein Zeiger wirken, sondern auch über zusätzliche Metadaten und Funktionalitäten
-verfügen. Das Konzept der intelligenten Zeiger gilt nicht nur für Rust, sie
-stammen aus C++ und sind auch in anderen Sprachen vorhanden. Rust hat diverse
+ein Zeiger funktionieren, und über zusätzliche Metadaten und Funktionalitäten
+verfügen. Das Konzept der intelligenten Zeiger gibt es nicht nur in Rust, es
+stammt aus C++ und ist auch in anderen Sprachen vorhanden. Rust hat diverse
 intelligente Zeiger, die in der Standardbibliothek definiert sind und
-Funktionalitäten die über die durch Referenzen bereitgestellten Möglichkeiten
-hinausgehen. Um das allgemeine Konzept zu erkunden, werden wir uns einige
-verschiedene Beispiele für intelligente Zeiger ansehen, darunter einen
+Funktionalitäten haben, die über die durch Referenzen bereitgestellten
+Möglichkeiten hinausgehen. Um das allgemeine Konzept zu erkunden, werden wir
+uns verschiedene Beispiele mit intelligenten Zeigern ansehen, darunter einen
 <em>referenzzählenden</em> (reference counting) intelligenten Zeigertyp. Dieser Zeiger
 ermöglicht es, dass Daten mehrere Eigentümer (owner) haben können, indem er die
-Anzahl der Eigentümer verfolgt und die Daten aufräumt, wenn keine Eigentümer
-mehr vorhanden sind.</p>
+Anzahl der Eigentümer verfolgt und die Daten erst dann aufräumt, wenn keine
+Eigentümer mehr vorhanden sind.</p>
 <p>Da Rust das Konzept der Eigentümerschaft (ownership) und Ausleihen
 (borrowing) verwendet, besteht ein zusätzlicher Unterschied zwischen Referenzen
 und intelligenten Zeigern: Während Referenzen Zeiger sind, die Daten nur
@@ -172,16 +171,17 @@ ausleihen, <em>besitzen</em> intelligente Zeiger in vielen Fällen die Eigentüm
 der Daten, auf die sie zeigen.</p>
 <p>Obwohl wir sie nicht so genannt haben, sind wir in diesem Buch bereits auf
 einige intelligente Zeiger gestoßen, z.B. <code>String</code> und <code>Vec&lt;T&gt;</code> in Kapitel 8.
-Diese beiden Typen zählen zu den intelligenten Zeigern, da sie einen gewissen
-Speicher besitzen und es dir ermöglichen, diesen zu manipulieren. Sie verfügen
-auch über Metadaten und zusätzliche Fähigkeiten oder Garantien. <code>String</code>
-speichert beispielsweise seine Kapazität als Metadaten und hat die zusätzliche
-Fähigkeit, sicherzustellen, dass seine Daten immer gültiges UTF-8 enthalten.</p>
+Diese beiden Typen zählen zu den intelligenten Zeigern, da sie etwas
+Arbeitsspeicher besitzen und es dir ermöglichen, diesen zu manipulieren. Sie
+verfügen auch über Metadaten und zusätzliche Fähigkeiten oder Garantien.
+<code>String</code> speichert beispielsweise seine Kapazität als Metadaten und hat die
+zusätzliche Fähigkeit, sicherzustellen, dass seine Daten immer gültiges UTF-8
+enthalten.</p>
 <p>Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
 Im Unterschied zu einer gewöhnlichen Struktur (struct) implementieren
 intelligente Zeiger die Merkmale <code>Deref</code> und <code>Drop</code>. Das Merkmal <code>Deref</code>
-ermöglicht es einer Instanz der Struktur für intelligente Zeiger, sich wie eine
-Referenz zu verhalten, sodass du Programmcode schreiben kannst, der entweder mit
+ermöglicht es einer Instanz eines intelligenten Zeigers, sich wie eine Referenz
+zu verhalten, sodass du Programmcode schreiben kannst, der entweder mit
 Referenzen oder intelligenten Zeigern funktioniert. Mit dem Merkmal <code>Drop</code>
 kannst du den Programmcode anpassen, der ausgeführt wird, wenn eine Instanz des
 intelligenten Zeigers den Gültigkeitsbereich (scope) verlässt. In diesem
@@ -197,15 +197,15 @@ behandeln:</p>
 <li><code>Box&lt;T&gt;</code> zum Zuweisen von Werten auf dem Heap</li>
 <li><code>Rc&lt;T&gt;</code>, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
 ermöglicht</li>
-<li><code>Ref&lt;T&gt;</code> und <code>RefMut&lt;T&gt;</code>, Zugriff über <code>RefCell&lt;T&gt;</code>, ein Typ, der das
+<li><code>Ref&lt;T&gt;</code> und <code>RefMut&lt;T&gt;</code> mit Zugriff über <code>RefCell&lt;T&gt;</code>, ein Typ, der das
 Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierzeit
 erzwingt.</li>
 </ul>
-<p>Darüber hinaus wird das <em>innere Veränderbarkeitsmuster</em> (interior mutability pattern)
-behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern eines inneren
-Werts verfügbar macht. Wir werden auch <em>Referenzzyklen</em> besprechen, wie diese
-Speicherverlust verursachen können und wie das verhindert werden kann.</p>
-<p>Lass uns in die Materie eintauchen!</p>
+<p>Darüber hinaus wird das <em>innere Veränderbarkeitsmuster</em> (interior mutability
+pattern) behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern
+eines inneren Werts bereitstellt. Wir werden auch <em>Referenzzyklen</em> besprechen,
+wie sie Speicherverlust verursachen können und wie wir das verhindert können.</p>
+<p>Lass uns in die Themen eintauchen!</p>
 
                     </main>
 

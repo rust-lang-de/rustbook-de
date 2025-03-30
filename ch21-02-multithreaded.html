@@ -1289,8 +1289,8 @@ Fehlermeldung zu ändern, die für dich von Bedeutung ist.</p>
 <p>Wenn wir die Sperre auf dem Mutex erhalten, rufen wir <code>recv</code> auf, um einen
 <code>Job</code> vom Kanal zu empfangen. Ein abschließendes <code>unwrap</code> geht auch hier an
 eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Strang, der
-den Sender hält, beendet hat, ähnlich wie die <code>send</code>-Methode <code>Err</code> zurückgibt,
-wenn der Empfänger abschaltet.</p>
+den Sender hält, beendet hat, ähnlich wie die Methode <code>send</code> den Wert <code>Err</code>
+zurückgibt, wenn der Empfänger abschaltet.</p>
 <p>Der Aufruf von <code>recv</code> blockiert, wenn also noch kein Auftrag vorhanden ist,
 wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der <code>Mutex&lt;T&gt;</code>
 stellt sicher, dass immer nur ein <code>Worker</code>-Strang zur gleichen Zeit versucht,

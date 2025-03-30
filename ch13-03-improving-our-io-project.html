@@ -261,7 +261,7 @@ wie sie im Codeblock 12-23 aussah.</p>
 </span><span class="boring">        );
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 13-17: Reproduktion der <code>Config::build</code>-Funktion
+<p><span class="caption">Codeblock 13-17: Reproduktion der Funktion <code>Config::build</code>
 vom Codeblock 12-23</span></p>
 <p>Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
 ineffizienten <code>clone</code>-Aufrufe machen soll, da sie zu einem späteren Zeitpunkt
@@ -331,7 +331,7 @@ abgeändert haben.</p>
 </span>}</code></pre>
 <p><span class="caption">Codeblock 13-18: Übergabe des Rückgabewerts von
 <code>env::args</code> an <code>Config::build</code></span></p>
-<p>Die <code>env::arg</code>-Funktion gibt einen Iterator zurück! Anstatt die Werte des Iterators
+<p>Die Funktion <code>env::arg</code> gibt einen Iterator zurück! Anstatt die Werte des Iterators
 in einem Vektor zu sammeln und dann einen Anteilstyp an <code>Config::build</code> zu
 übergeben, geben wir nun die Eigentümerschaft des Iterators, der von <code>env::args</code>
 zurückgegeben wird, direkt an <code>Config::build</code>.</p>
@@ -354,7 +354,7 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
     pub fn build(
         mut args: impl Iterator&lt;Item = String&gt;,
     ) -&gt; Result&lt;Config, &amp;'static str&gt; {
-       // --abschneiden--
+        // --abschneiden--
 <span class="boring">        if args.len() &lt; 3 {
 </span><span class="boring">            return Err("Nicht genügend Argumente");
 </span><span class="boring">        }
@@ -372,50 +372,50 @@ noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.</p
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">
-</span>#pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-<span class="boring">   let contents = fs::read_to_string(config.file_path)?;
+</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
 </span><span class="boring">
-</span><span class="boring">   let results = if config.ignore_case {
-</span><span class="boring">       search_case_insensitive(&amp;config.query, &amp;contents)
-</span><span class="boring">   } else {
-</span><span class="boring">       search(&amp;config.query, &amp;contents)
-</span><span class="boring">   };
+</span><span class="boring">    let results = if config.ignore_case {
+</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
+</span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">   for line in results {
-</span><span class="boring">       println!("{line}");
-</span><span class="boring">   }
+</span><span class="boring">    for line in results {
+</span><span class="boring">        println!("{line}");
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">   Ok(())
-</span>#}
-<span class="boring">
-</span>#pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-<span class="boring">   let mut results = Vec::new();
+</span><span class="boring">    Ok(())
+</span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">   for line in contents.lines() {
-</span><span class="boring">       if line.contains(query) {
-</span><span class="boring">           results.push(line);
-</span><span class="boring">       }
-</span><span class="boring">   }
+</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+</span><span class="boring">    let mut results = Vec::new();
 </span><span class="boring">
-</span><span class="boring">   results
-</span>#}
-<span class="boring">
-</span>#pub fn search_case_insensitive&lt;'a&gt;(
-<span class="boring">   query: &amp;str,
-</span><span class="boring">   contents: &amp;'a str,
-</span>#) -&gt; Vec&lt;&amp;'a str&gt; {
-<span class="boring">   let query = query.to_lowercase();
-</span><span class="boring">   let mut results = Vec::new();
+</span><span class="boring">    for line in contents.lines() {
+</span><span class="boring">        if line.contains(query) {
+</span><span class="boring">            results.push(line);
+</span><span class="boring">        }
+</span><span class="boring">    }
 </span><span class="boring">
-</span><span class="boring">   for line in contents.lines() {
-</span><span class="boring">       if line.to_lowercase().contains(&amp;query) {
-</span><span class="boring">           results.push(line);
-</span><span class="boring">       }
-</span><span class="boring">   }
+</span><span class="boring">    results
+</span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">   results
-</span>#}
-<span class="boring">
+</span><span class="boring">pub fn search_case_insensitive&lt;'a&gt;(
+</span><span class="boring">    query: &amp;str,
+</span><span class="boring">    contents: &amp;'a str,
+</span><span class="boring">) -&gt; Vec&lt;&amp;'a str&gt; {
+</span><span class="boring">    let query = query.to_lowercase();
+</span><span class="boring">    let mut results = Vec::new();
+</span><span class="boring">
+</span><span class="boring">    for line in contents.lines() {
+</span><span class="boring">        if line.to_lowercase().contains(&amp;query) {
+</span><span class="boring">            results.push(line);
+</span><span class="boring">        }
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    results
+</span><span class="boring">}
+</span><span class="boring">
 </span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;
@@ -465,7 +465,7 @@ Parameters <code>args</code> eintragen, um ihn veränderbar (mutable) zu machen.
 <p>Als Nächstes werden wir den Rumpf von <code>Config::build</code> in Ordnung bringen. Da
 <code>args</code> das Merkmal <code>Iterator</code> implementiert, wissen wir, dass wir die Methode
 <code>next</code> darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die <code>next</code>-Methode zu verwenden.</p>
+Codeblock 12-23, um die Methode <code>next</code> zu verwenden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;

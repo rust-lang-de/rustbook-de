@@ -554,7 +554,7 @@ definiert haben. In Codeblock 9-6 verwendet <code>match</code> einen <code>Resul
 der frühe Rückgabezweig liefert einen <code>Err(e)</code>-Wert. Der Rückgabetyp der
 Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kompatibel ist.</p>
 <p>Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den <code>?</code>-Operator
-in einer <code>main</code>-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
+in einer Funktion <code>main</code> verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
@@ -562,12 +562,11 @@ Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 fn main() {
     let greeting_file = File::open("hallo.txt")?;
 }</code></pre></pre>
-<p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der
-<code>main</code>-Funktion zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht
-kompilieren.</span></p>
+<p><span class="caption">Codeblock 9-10: Der Versuch, das <code>?</code> in der Funktion
+<code>main</code> zu verwenden, die <code>()</code> zurückgibt, lässt sich nicht kompilieren.</span></p>
 <p>Dieser Code öffnet eine Datei, was fehlschlagen kann. Der <code>?</code>-Operator folgt
-dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese
-<code>main</code>-Funktion hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
+dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wird, aber diese Funktion
+<code>main</code> hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
 kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
    Compiling playground v0.0.1 (/playground)
@@ -679,12 +678,12 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 in <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“</a> in Kapitel 18 sprechen werden. Vorerst kannst du
 <code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von <code>?</code>
-auf einen <code>Result</code>-Wert in einer <code>main</code>-Funktion mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
-werden kann. Obwohl der Rumpf dieser <code>main</code>-Funktion nur Fehler des Typs
+auf einen <code>Result</code>-Wert in einer Funktion <code>main</code> mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
+werden kann. Obwohl der Rumpf dieser Funktion <code>main</code> nur Fehler des Typs
 <code>std::io::Error</code> zurückgibt, ist diese Signatur durch die Angabe von
 <code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt, wenn weiterer Code, der andere Fehler
 zurückgibt, dem Rumpf von <code>main</code> hinzugefügt wird.</p>
-<p>Wenn eine <code>main</code>-Funktion ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
+<p>Wenn eine Funktion <code>main</code> ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
 ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> den Wert <code>Ok(())</code>
 zurückgibt, und mit einem Wert ungleich Null, wenn <code>main</code> einen <code>Err</code>-Wert
 zurückgibt. In C geschriebene ausführbare Programme geben beim Beenden ganze

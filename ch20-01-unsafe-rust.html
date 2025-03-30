@@ -294,10 +294,10 @@ Wert zu tun haben.</p>
 und <code>*mut i32</code> erstellt haben, die beide auf die gleiche Speicherstelle
 zeigten, in der <code>num</code> gespeichert ist. Wenn wir stattdessen versucht hätten,
 eine unveränderbare und einen veränderbare Referenz auf <code>num</code> zu erstellen,
-hätte sich der Code nicht kompilieren lassen, weil die Eigentümerschaftsregeln
-von Rust eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren
-Referenzen zulassen. Mit Rohzeigern können wir einen veränderbaren und
-einen unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
+hätte sich der Code nicht kompilieren lassen, weil die Eigentumsregeln von Rust
+eine veränderbare Referenz nicht gleichzeitig mit unveränderbaren Referenzen
+zulassen. Mit Rohzeigern können wir einen veränderbaren und einen
+unveränderbaren Zeiger auf denselben Ort erstellen und Daten über den
 veränderbaren Zeiger ändern, wodurch möglicherweise eine
 Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!</p>
 <p>Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
@@ -594,7 +594,7 @@ pub extern "C" fn call_from_c() {
 </blockquote>
 <h3 id="zugreifen-oder-Ändern-einer-veränderbaren-statischen-variable"><a class="header" href="#zugreifen-oder-Ändern-einer-veränderbaren-statischen-variable">Zugreifen oder Ändern einer veränderbaren, statischen Variable</a></h3>
 <p>In diesem Buch haben wir noch nicht über <em>globale Variablen</em> gesprochen, die
-Rust zwar unterstützt, die aber wegen der Eigentümerschaftsregeln von Rust
+Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust
 problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
 veränderbare, globale Variable zugreifen, kann dies zu einer
 Daten-Wettlaufsituation (data race) führen.</p>

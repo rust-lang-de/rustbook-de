@@ -775,7 +775,7 @@ bringt. Der Typ <code>Ordering</code> ist eine weitere Aufzählung und hat die V
 <code>Less</code>, <code>Greater</code> und <code>Equal</code>. Dies sind die drei Ergebnisse, die möglich sind,
 wenn man zwei Werte vergleicht.</p>
 <p>Dann fügen wir unten fünf neue Zeilen hinzu, die den Typ <code>Ordering</code> verwenden.
-Die <code>cmp</code>-Methode vergleicht zwei Werte und kann auf alles, was verglichen
+Die Methode <code>cmp</code> vergleicht zwei Werte und kann auf alles, was verglichen
 werden kann, angewendet werden. Sie braucht eine Referenz auf das, was du
 vergleichen willst: Hier wird <code>guess</code> mit <code>secret_number</code> verglichen. Dann gibt
 sie eine Variante der <code>Ordering</code>-Aufzählung zurück, die wir mit der
@@ -795,7 +795,7 @@ Kapitel 18 behandelt.</p>
 <p>Gehen wir ein Beispiel dafür durch, was mit dem hier verwendeten
 <code>match</code>-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und
 die zufällig generierte Geheimzahl ist diesmal 38.</p>
-<p>Wenn der Code 50 mit 38 vergleicht, gibt die <code>cmp</code>-Methode <code>Ordering::Greater</code>
+<p>Wenn der Code 50 mit 38 vergleicht, gibt die Methode <code>cmp</code> <code>Ordering::Greater</code>
 zurück, weil 50 größer als 38 ist. Der <code>match</code>-Ausdruck erhält den Wert
 <code>Ordering::Greater</code> und beginnt mit der Überprüfung des Musters jedes Zweigs.
 Er schaut auf das Muster <code>Ordering::Less</code> des ersten Zweigs und sieht, dass der
@@ -894,7 +894,7 @@ wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
 willst.</p>
 <p>Wir binden <code>guess</code> an den Ausdruck <code>guess.trim().parse()</code>. Das <code>guess</code> im
 Ausdruck bezieht sich auf das ursprüngliche <code>guess</code>, das ein <code>String</code> mit der
-Eingabe darin war. Die <code>trim</code>-Methode der <code>String</code>-Instanz wird alle
+Eingabe darin war. Die Methode <code>trim</code> der <code>String</code>-Instanz wird alle
 Leerzeichen am Anfang und am Ende entfernen. Obwohl <code>u32</code> nur numerische
 Zeichen enthalten kann, muss der Benutzer die <span
 class="keystroke">Eingabetaste</span> drücken, um <code>read_line</code>
@@ -906,9 +906,9 @@ class="keystroke">Eingabetaste</span> drückt, sieht <code>guess</code> wie folg
 <code>5\n</code>. Das <code>\n</code> steht für „Zeilenumbruch“ (newline), das Ergebnis des Drückens
 der <span class="keystroke">Eingabetaste</span>. (Unter Windows ergibt das
 Drücken der <span class="keystroke">Eingabetaste</span> einen Wagenrücklauf
-(carriage return) und einen Zeilenumbruch (newline): <code>\r\n</code>) Die <code>trim</code>-Methode
+(carriage return) und einen Zeilenumbruch (newline): <code>\r\n</code>) Die Methode <code>trim</code>
 entfernt <code>\n</code> und <code>\r\n</code>, was nur <code>5</code> ergibt.</p>
-<p>Die <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse"><code>parse</code>-Methode für Zeichenketten</a> konvertiert eine Zeichenkette in
+<p>Die <a href="https://doc.rust-lang.org/std/primitive.str.html#method.parse">Methode <code>parse</code> für Zeichenketten</a> konvertiert eine Zeichenkette in
 einen anderen Typ. Hier verwenden wir sie, um eine Zeichenkette in eine Zahl
 umzuwandeln. Wir müssen Rust den genauen Zahlentyp mitteilen, den wir wollen,
 indem wir <code>let guess: u32</code> verwenden. Der Doppelpunkt (<code>:</code>) nach <code>guess</code> sagt
@@ -923,8 +923,8 @@ zwischen zwei Werten desselben Typs durchgeführt!</p>
 <p>Die Methode <code>parse</code> funktioniert nur bei Zeichen, die logisch in Zahlen
 umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel <code>A👍%</code> enthielte, gäbe es keine Möglichkeit, dies in
-eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die <code>parse</code>-Methode
-einen <code>Result</code>-Typ zurück, ähnlich wie die <code>read_line</code>-Methode (weiter oben in
+eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die Methode <code>parse</code>
+einen <code>Result</code>-Typ zurück, ähnlich wie die Methode <code>read_line</code> (weiter oben in
 <a href="#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
 <code>Result</code>“</a>). Wir werden dieses
 <code>Result</code> auf die gleiche Weise behandeln, indem wir erneut <code>expect</code> verwenden.
@@ -1134,8 +1134,8 @@ bringen</span></p>
 Möglichkeit für den Übergang vom Absturz bei einem Fehler zur Behandlung des
 Fehlers. Denke daran, dass <code>parse</code> einen <code>Result</code>-Typ zurückgibt und <code>Result</code>
 eine Aufzählung ist, die die Varianten <code>Ok</code> und <code>Err</code> hat. Wir benutzen hier
-einen <code>match</code>-Ausdruck, wie wir es mit dem <code>Ordering</code>-Ergebnis der
-<code>cmp</code>-Methode getan haben.</p>
+einen <code>match</code>-Ausdruck, wie wir es mit dem <code>Ordering</code>-Ergebnis der Methode
+<code>cmp</code> getan haben.</p>
 <p>Wenn <code>parse</code> in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
 umzuwandeln, gibt es einen <code>Ok</code>-Wert zurück, der die resultierende Zahl
 enthält. Dieser <code>Ok</code>-Wert wird mit dem Muster des ersten Zweigs übereinstimmen

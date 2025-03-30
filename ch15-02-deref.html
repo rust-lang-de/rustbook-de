@@ -162,15 +162,15 @@ zu funktionieren, dann sehen wir uns an wie wir mit Rusts <em>automatischer
 Umwandlung</em> (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.</p>
 <blockquote>
-<p>Hinweis: Es gibt einen großen Unterschied zwischen dem Typ <code>MyBox&lt;T&gt;</code>, den wir
-gerade erstellen, und dem echten Typ <code>Box&lt;T&gt;</code>: Unsere Version speichert ihre
-Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel konzentrieren wir uns auf
-<code>Deref</code>, daher ist es weniger wichtig, wo die Daten tatsächlich gespeichert sind
-als das zeigerähnliche Verhalten.</p>
+<p>Hinweis: Es gibt einen großen Unterschied zwischen dem Typ <code>MyBox&lt;T&gt;</code>, den
+wir gerade erstellen, und dem echten Typ <code>Box&lt;T&gt;</code>: Unsere Version speichert
+ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
+konzentrieren wir uns auf <code>Deref</code>, daher ist es weniger wichtig, wo die Daten
+tatsächlich gespeichert sind als das zeigerähnliche Verhalten.</p>
 </blockquote>
 <h3 id="dem-zeiger-zum-wert-folgen"><a class="header" href="#dem-zeiger-zum-wert-folgen">Dem Zeiger zum Wert folgen</a></h3>
 <p>Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
-Zeiger vorzustellen, ein Pfeil der auf einen Wert zeigt der an einer anderen
+Zeiger als Pfeil vorzustellen, der auf einen Wert zeigt, der an einer anderen
 Stelle gespeichert ist. In Codeblock 15-6 erstellen wir eine Referenz auf einen
 <code>i32</code>-Wert und verwenden dann den Dereferenzierungsoperator, um der Referenz
 zum Wert zu folgen:</p>
@@ -184,13 +184,12 @@ zum Wert zu folgen:</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-6: Einen Dereferenzierungsoperator verwenden
 um einer Referenz auf einen <code>i32</code>-Wert zu folgen </span></p>
-<p>Die Variable <code>x</code> enthält den <code>i32</code>-Wert <code>5</code>. Wir setzen <code>y</code> gleich einer
-Referenz auf <code>x</code>. Wir können sicherstellen, das <code>x</code> gleich <code>5</code> ist. Wenn wir
-jedoch eine Aussage über den Wert <code>y</code> machen möchten, auf den er zeigt, müssen
-wir <code>*y</code> verwenden, um der Referenz auf den Wert zu folgen, auf den sie zeigt
-(daher <em>Dereferenzierung</em>), damit der Compiler den aktuellen Wert vergleichen
-kann. Sobald wir <code>y</code> dereferenzieren, haben wir Zugriff auf den Zahlenwert auf
-den <code>y</code> zeigt und können ihn mit <code>5</code> vergleichen.</p>
+<p>Die Variable <code>x</code> enthält den <code>i32</code>-Wert <code>5</code>. Wir weisen <code>y</code> eine Referenz auf
+<code>x</code> zu. Wir können sicherstellen, dass <code>x</code> gleich <code>5</code> ist. Wenn wir jedoch eine
+Aussage über den Wert <code>y</code> machen möchten, müssen wir <code>*y</code> verwenden, um der
+Referenz auf den Wert zu folgen, auf den sie zeigt (daher <em>Dereferenzierung</em>).
+Sobald wir <code>y</code> dereferenzieren, haben wir Zugriff auf den Zahlenwert, auf den
+<code>y</code> zeigt, und können ihn mit <code>5</code> vergleichen.</p>
 <p>Wenn wir stattdessen versuchen würden, <code>assert_eq!(5, y);</code> zu schreiben, würden
 wir diesen Fehler beim Kompilieren erhalten:</p>
 <pre><code class="language-console">$ cargo run
@@ -203,14 +202,19 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
+help: consider dereferencing here
+ --&gt; file:///home/.rustup/toolchains/1.85/lib/rustlib/src/rust/library/core/src/macros/mod.rs:46:35
+  |
+46|                 if !(*left_val == **right_val) {
+  |                                   +
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
-
 </code></pre>
 <p>Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
-da es sich um verschiedene Typen handelt. Wir müssen den Dereferenzierungsoperator
-verwenden um der Referenz auf den Wert zu folgen, auf den sie zeigt.</p>
+da es sich um verschiedene Typen handelt. Wir müssen den
+Dereferenzierungsoperator verwenden um der Referenz auf den Wert zu folgen, auf
+den sie zeigt.</p>
 <h3 id="boxt-wie-eine-referenz-verwenden"><a class="header" href="#boxt-wie-eine-referenz-verwenden"><code>Box&lt;T&gt;</code> wie eine Referenz verwenden</a></h3>
 <p>Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
 Referenz <code>Box&lt;T&gt;</code> zu verwenden. Wie Codeblock 15-7 zeigt, funktioniert der
@@ -229,10 +233,10 @@ Dereferenzierungsoperator:</p>
 hier <code>y</code> als Instanz einer <code>Box&lt;T&gt;</code> festlegen, das auf einen kopierten Wert von
 <code>x</code> zeigt, und nicht als Referenz, die auf den Wert <code>x</code> zeigt. In der letzten
 Zusicherung (assertion) können wir den Dereferenzierungsoperator verwenden um
-dem Zeiger der <code>Box&lt;T&gt;</code> auf die gleiche Weise zu folgen, wie wir es getan
-haben, als <code>y</code> eine Referenz war. Als Nächstes werden wir ergründen, was das
-Besondere an <code>Box&lt;T&gt;</code> ist, das es uns ermöglicht, den Dereferenzierungsoperator
-zu verwenden, indem wir unseren eigenen Box-Typ definieren.</p>
+dem Zeiger in <code>Box&lt;T&gt;</code> auf die gleiche Weise zu folgen, wie wir es getan haben,
+als <code>y</code> eine Referenz war. Als Nächstes werden wir ergründen, was das Besondere
+an <code>Box&lt;T&gt;</code> ist, wodurch der Dereferenzierungsoperator verwendet werden kann,
+indem wir unseren eigenen Box-Typ definieren.</p>
 <h3 id="einen-eigenen-intelligenten-zeiger-definieren"><a class="header" href="#einen-eigenen-intelligenten-zeiger-definieren">Einen eigenen intelligenten Zeiger definieren</a></h3>
 <p>Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
 bereitgestellten Typ <code>Box&lt;T&gt;</code> ähnelt, um zu erfahren, wie sich intelligente
@@ -240,9 +244,8 @@ Zeiger standardmäßig anders als Referenzen verhalten. Anschließend sehen wir
 uns an, wie man die Möglichkeit zur Verwendung des Dereferenzierungsoperators
 hinzufügen kann.</p>
 <p>Der Typ <code>Box&lt;T&gt;</code> wird letztendlich als Tupel-Struktur (tuple struct) mit einem
-Element definiert, sodass Codeblock 15-8 einen Typ <code>MyBox&lt;T&gt;</code> auf die gleiche
-Weise definiert. Wir werden auch eine <code>new</code>-Funktion definieren, die mit der in
-der <code>Box&lt;T&gt;</code> definierten übereinstimmt.</p>
+Element definiert. Codeblock 15-8 definiert den Typ <code>MyBox&lt;T&gt;</code> auf die gleiche
+Weise. Wir werden auch eine Funktion <code>new</code> definieren, analog zu <code>Box&lt;T&gt;</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">struct MyBox&lt;T&gt;(T);
 
@@ -253,13 +256,13 @@ impl&lt;T&gt; MyBox&lt;T&gt; {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
-<p><span class="caption">Codeblock 15-8: Einen <code>MyBox&lt;T&gt;</code>-Typ definieren</span></p>
+<p><span class="caption">Codeblock 15-8: Definition des Type <code>MyBox&lt;T&gt;</code></span></p>
 <p>Wir definieren eine Struktur mit dem Namen <code>MyBox</code> und deklarieren einen
-generischen Parameter <code>T</code>, da unser Typ Werte eines beliebigen Typs enthalten
-soll. Der Typ <code>MyBox</code> ist eine Tupelstruktur mit einem Element vom Typ <code>T</code>. Die
-Funktion <code>MyBox::new</code> verwendet einen Parameter vom Typ <code>T</code> und gibt eine
-<code>MyBox</code>-Instanz zurück, die den übergebenen Wert enthält.</p>
-<p>Versuchen wir, die <code>main</code>-Funktion in Codeblock 15-7 zu Codeblock 15-8
+generischen Parameter <code>T</code>, da unser Typ Werte jedes beliebigen Typs enthalten
+können soll. Der Typ <code>MyBox</code> ist eine Tupelstruktur mit einem Element vom Typ
+<code>T</code>. Die Funktion <code>MyBox::new</code> verwendet einen Parameter vom Typ <code>T</code> und gibt
+eine <code>MyBox</code>-Instanz zurück, die den übergebenen Wert enthält.</p>
+<p>Versuchen wir, die Funktion <code>main</code> in Codeblock 15-7 zu Codeblock 15-8
 hinzuzufügen und sie so zu ändern, dass der von uns definierte Typ <code>MyBox&lt;T&gt;</code>
 anstelle von <code>Box&lt;T&gt;</code> verwendet wird. Der Programmcode in Codeblock 15-9 wird
 nicht kompilieren, da Rust nicht weiß, wie er <code>MyBox</code> dereferenzieren kann.</p>
@@ -293,10 +296,9 @@ error[E0614]: type `MyBox&lt;{integer}&gt;` cannot be dereferenced
 For more information about this error, try `rustc --explain E0614`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
 </code></pre>
-<p>Unser Typ <code>MyBox&lt;T&gt;</code> kann nicht dereferenziert werden, da wir diese
-Fähigkeit für unseren Typ nicht implementiert haben. Um eine
-Dereferenzierung mit dem Operator <code>*</code> zu ermöglichen, implementieren wir das
-Merkmal <code>Deref</code>.</p>
+<p>Unser Typ <code>MyBox&lt;T&gt;</code> kann nicht dereferenziert werden, da wir diese Fähigkeit
+für unseren Typ nicht implementiert haben. Um eine Dereferenzierung mit dem
+Operator <code>*</code> zu ermöglichen, implementieren wir das Merkmal <code>Deref</code>.</p>
 <h3 id="implementieren-des-merkmals-deref"><a class="header" href="#implementieren-des-merkmals-deref">Implementieren des Merkmals <code>Deref</code></a></h3>
 <p>Wie in <a href="ch10-02-traits.html#ein-merkmal-f%C3%BCr-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a> in Kapitel 10
 beschrieben, müssen wir zur Implementierung eines Merkmals Implementierungen
@@ -331,76 +333,80 @@ impl&lt;T&gt; Deref for MyBox&lt;T&gt; {
 </span><span class="boring">    assert_eq!(5, x);
 </span><span class="boring">    assert_eq!(5, *y);
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 15-10: <code>Deref</code> auf <code>MyBox&lt;T&gt;</code> implementieren</span></p>
+<p><span class="caption">Codeblock 15-10: <code>Deref</code> auf <code>MyBox&lt;T&gt;</code>
+implementieren</span></p>
 <p>Die Syntax <code>type Target = T;</code> definiert einen assoziierten Typ, den das Merkmal
 <code>Deref</code> verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
-keine Gedanken machen, in Kapitel 20 werden wir sie ausführlicher behandeln.</p>
+keine Gedanken machen; in Kapitel 20 werden wir sie ausführlicher behandeln.</p>
 <p>Wir füllen den Rumpf der Methode <code>deref</code> mit <code>&amp;self.0</code>, damit <code>deref</code> eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator <code>*</code> zugreifen
-wollen. Erinnere dich an den Abschnitt <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne
-benannte Felder um verschiedene Typen zu erzeugen“</a> in Kapitel
-5, wo <code>.0</code> auf den ersten Wert in einer Tupel-Struktur zugreift. Die
-<code>main</code>-Funktion in Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code> aufruft,
-kompiliert nun und die Zusicherungen werden erfüllt!</p>
+wollen. Erinnere dich an <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne benannte Felder
+um verschiedene Typen zu erzeugen“</a> in Kapitel 5, wo <code>.0</code> auf
+den ersten Wert in einer Tupel-Struktur zugreift. Die Funktion <code>main</code> in
+Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code> aufruft, kompiliert nun und die
+Zusicherungen werden erfüllt!</p>
 <p>Ohne das Merkmal <code>Deref</code> kann der Compiler nur <code>&amp;</code>-Referenzen dereferenzieren.
-Die <code>deref</code>-Methode gibt dem Compiler die Möglichkeit, einen Wert eines
-beliebigen Typs zu verwenden, der <code>Deref</code> implementiert, und die <code>deref</code>-Methode
-aufzurufen, um eine <code>&amp;</code>-Referenz zu erhalten, die er dereferenzieren kann.</p>
+Die Methode <code>deref</code> gibt dem Compiler die Möglichkeit, einen Wert eines
+beliebigen Typs zu verwenden, der <code>Deref</code> implementiert, und die Methode
+<code>deref</code> aufzurufen, um eine <code>&amp;</code>-Referenz zu erhalten, die er dereferenzieren
+kann.</p>
 <p>Als wir in Codeblock 15-9 <code>*y</code> eingegeben haben, hat Rust hinter den Kulissen
 tatsächlich diesen Programmcode ausgeführt:</p>
 <pre><code class="language-rust ignore">*(y.deref())</code></pre>
-<p>Rust ersetzt den Operator <code>*</code> durch einen Aufruf der <code>deref</code>-Methode und dann
+<p>Rust ersetzt den Operator <code>*</code> durch einen Aufruf der Methode <code>deref</code> und dann
 durch eine einfache Dereferenzierung, sodass wir nicht darüber nachdenken
-müssen, ob wir die <code>deref</code>-Methode aufrufen müssen oder nicht. Mit dieser
-Rust-Funktionalität können wir Code schreiben, der unabhängig davon, ob wir eine reguläre
-Referenz oder einen Typ haben der <code>Deref</code> implementiert, identisch funktioniert.</p>
-<p>Der Grund, warum die <code>deref</code>-Methode eine Referenz auf einen Wert zurückgibt
+müssen, ob wir die Methode <code>deref</code> aufrufen müssen oder nicht. Mit dieser
+Rust-Funktionalität können wir Code schreiben, der unabhängig davon
+funktioniert, ob wir eine reguläre Referenz haben oder einen Typ, der <code>Deref</code>
+implementiert.</p>
+<p>Der Grund, warum die Methode <code>deref</code> eine Referenz auf einen Wert zurückgibt
 und die einfache Dereferenzierung außerhalb der Klammern in <code>*(y.deref())</code>
 weiterhin erforderlich ist, hat mit der Eigentümerschaft (ownership) zu tun.
-Wenn die <code>deref</code>-Methode den Wert direkt anstelle einer Referenz auf den Wert
-zurückgibt, wird der Wert aus <code>self</code> herausverschoben. Meistens wenn wir den
-Dereferenzierungsoperator verwenden, wollen wir, so wie auch in diesem Fall,
-nicht die Eigentümerschaft des inneren Wertes von <code>MyBox&lt;T&gt;</code> übernehmen.</p>
-<p>Beachte, dass der <code>*</code>-Operator durch einen Aufruf der <code>deref</code>-Methode und dann
-nur einmal durch einen Aufruf des <code>*</code>-Operators ersetzt wird, jedes Mal, wenn
-wir ein <code>*</code> in unserem Programmcode verwenden. Da die Ersetzung des
-<code>*</code>-Operator nicht unendlich rekursiv ist, erhalten wir Daten vom Typ
-<code>i32</code>, die mit der <code>5</code> in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
+Wenn die Methode <code>deref</code> den Wert direkt anstelle einer Referenz auf den Wert
+zurückgibt, wird der Wert aus <code>self</code> herausverschoben. Wenn wir den
+Dereferenzierungsoperator verwenden, wollen wir meistens, wie auch hier, nicht
+die Eigentümerschaft des inneren Wertes von <code>MyBox&lt;T&gt;</code> übernehmen.</p>
+<p>Beachte, dass der <code>*</code>-Operator durch einen Aufruf der Methode <code>deref</code> und dann
+einem Aufruf des <code>*</code>-Operators ersetzt wird. Da die Ersetzung des <code>*</code>-Operators
+nicht unendlich rekursiv ist, erhalten wir Daten vom Typ <code>i32</code>, die mit der <code>5</code>
+in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
 <h3 id="implizite-automatische-umwandlung-mit-funktionen-und-methoden"><a class="header" href="#implizite-automatische-umwandlung-mit-funktionen-und-methoden">Implizite automatische Umwandlung mit Funktionen und Methoden</a></h3>
-<p><em>Automatische Umwandlung</em> (deref coercion) wandelt eine Referenz auf einen Typ,
-der das Merkmal <code>Deref</code> implementiert, in eine Referenz auf einen anderen Typ
-um. Zum Beispiel kann die automatische Umwandlung <code>&amp;String</code> in <code>&amp;str</code>
+<p>Die <em>automatische Umwandlung</em> (deref coercion) wandelt eine Referenz auf einen
+Typ, der das Merkmal <code>Deref</code> implementiert, in eine Referenz auf einen anderen
+Typ um. Zum Beispiel kann die automatische Umwandlung <code>&amp;String</code> in <code>&amp;str</code>
 konvertieren, da <code>String</code> das Merkmal <code>Deref</code> implementiert, sodass <code>&amp;str</code>
 zurückgegeben wird. Die automatische Umwandlung ist eine Bequemlichkeit, die
-Rust auf Argumente für Funktionen und Methoden ausübt, und funktioniert nur bei
-Typen, die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung
+Rust auf Argumente für Funktionen und Methoden anwendet, und funktioniert nur
+bei Typen, die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung
 erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
 als Argument an eine Funktion oder Methode übergeben, die nicht dem
 Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
-von Aufrufen der <code>deref</code>-Methode konvertiert den von uns angegebenen Typ in den
+von Aufrufen der Methode <code>deref</code> konvertiert den von uns angegebenen Typ in den
 Typ, den der Parameter benötigt.</p>
-<p>Rust wurde um die automatische Umwandlung erweitert, damit Programmierer, die Funktions- und
-Methodenaufrufe schreiben, nicht so viele explizite Referenzierungen und Dereferenzierungen
-mit <code>&amp;</code> und <code>*</code> angeben müssen. Mit der Funktionalität der automatischen Umwandlung
-können wir auch mehr Programmcode schreiben, der sowohl für Referenzen als auch
-für intelligente Zeiger geeignet ist.</p>
-<p>Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in Codeblock 15-8
-definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von <code>Deref</code>, die wir in
-Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt die Definition einer
-Funktion mit einen Zeichenketten-Anteilstyp (string slice) Parameter.</p>
+<p>Rust wurde um die automatische Umwandlung erweitert, damit Programmierer, die
+Funktions- und Methodenaufrufe schreiben, nicht so viele explizite
+Referenzierungen und Dereferenzierungen mit <code>&amp;</code> und <code>*</code> angeben müssen. Mit der
+Funktionalität der automatischen Umwandlung können wir auch Programmcode
+schreiben, der sowohl für Referenzen als auch für intelligente Zeiger geeignet
+ist.</p>
+<p>Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in
+Codeblock 15-8 definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von
+<code>Deref</code>, die wir in Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt
+die Definition einer Funktion mit einen Zeichenketten-Anteilstyp (string slice)
+Parameter.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">fn hello(name: &amp;str) {
     println!("Hallo {name}!");
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre></pre>
-<p><span class="caption">Codeblock 15-11: Eine <code>hello</code>-Funktion mit dem Parameter
+<p><span class="caption">Codeblock 15-11: Eine Funktion <code>hello</code> mit dem Parameter
 <code>name</code> vom Typ <code>&amp;str</code></span></p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument
-aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatischer Umwandlung ermöglicht es,
-<code>hello</code> mit einer Referenz auf einen Wert vom Typ <code>MyBox&lt;String&gt;</code> aufzurufen,
-wie es in Codeblock 15-12 gezeigt wird.</p>
+aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatischer Umwandlung
+ermöglicht es, <code>hello</code> mit einer Referenz auf einen Wert vom Typ
+<code>MyBox&lt;String&gt;</code> aufzurufen, wie Codeblock 15-12 zeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use std::ops::Deref;
 </span><span class="boring">
@@ -431,13 +437,13 @@ wie es in Codeblock 15-12 gezeigt wird.</p>
 <p><span class="caption">Codeblock 15-12: <code>hello</code> mit einer Referenz auf einen
 <code>MyBox&lt;String&gt;</code>-Wert, der aufgrund automatischer Umwandlung funktioniert</span></p>
 <p>Hier rufen wir die Funktion <code>hello</code> mit dem Argument <code>&amp;m</code> auf, das auf einen
-<code>MyBox&lt;String&gt;</code>-Wert verweist. Da wir in Codeblock 15-10 das Merkmal <code>Deref</code> für
-<code>MyBox&lt;T&gt;</code> implementiert haben, kann Rust <code>&amp;MyBox&lt;String&gt;</code> durch Aufrufen von
-<code>deref</code> in <code>&amp;String</code> verwandeln. Die Standardbibliothek bietet eine
-Implementierung von <code>Deref</code> auf <code>String</code>, die einen Zeichenketten-Anteilstyp
-zurückgibt. Dies kann man in der API-Dokumentation für <code>Deref</code> nachlesen. Rust
-ruft erneut <code>deref</code> auf, um <code>&amp;String</code> in <code>&amp;str</code> umzuwandeln, was der Definition
-der Funktion <code>hello</code> entspricht.</p>
+<code>MyBox&lt;String&gt;</code>-Wert referenziert. Da wir in Codeblock 15-10 das Merkmal
+<code>Deref</code> für <code>MyBox&lt;T&gt;</code> implementiert haben, kann Rust <code>&amp;MyBox&lt;String&gt;</code> durch
+Aufrufen von <code>deref</code> in <code>&amp;String</code> verwandeln. Die Standardbibliothek bietet
+eine Implementierung von <code>Deref</code> auf <code>String</code>, die einen
+Zeichenketten-Anteilstyp zurückgibt. Dies kann man in der API-Dokumentation für
+<code>Deref</code> nachlesen. Rust ruft erneut <code>deref</code> auf, um <code>&amp;String</code> in <code>&amp;str</code>
+umzuwandeln, was der Definition der Funktion <code>hello</code> entspricht.</p>
 <p>Wenn Rust keine automatische Umwandlung implementiert hätte, müssten wir den
 Programmcode in Codeblock 15-13 anstelle des Programmcodes in 15-12 schreiben,
 um <code>hello</code> mit einem Wert vom Typ <code>&amp;MyBox&lt;String&gt;</code> aufzurufen.</p>
@@ -470,34 +476,33 @@ um <code>hello</code> mit einem Wert vom Typ <code>&amp;MyBox&lt;String&gt;</cod
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span></p>
-<p>Das <code>(*m)</code> dereferenziert <code>Mybox&lt;String&gt;</code> in einen <code>String</code>. Dann nehmen die
-<code>&amp;</code> und <code>[..]</code> einen Anteilstyp des <code>String</code>, der gleich der gesamten
-Zeichenkette ist, um der Signatur von <code>hello</code> zu entsprechen. Dieser
-Programmcode ohne automatische Umwandlung ist mit allen Symbolen schwerer zu
-lesen, zu schreiben und zu verstehen. Durch die automatische Umwandlung kann
-Rust diese Konvertierung automatisch für uns abwickeln.</p>
+<p>Das <code>(*m)</code> dereferenziert <code>Mybox&lt;String&gt;</code> zu einem <code>String</code>. Dann nehmen <code>&amp;</code>
+und <code>[..]</code> einen Anteilstyp des <code>String</code>, der gleich der gesamten Zeichenkette
+ist, um der Signatur von <code>hello</code> zu entsprechen. Der Programmcode ohne
+automatische Umwandlung ist mit all den Symbolen schwerer zu lesen, zu
+schreiben und zu verstehen. Durch die automatische Umwandlung kann Rust diese
+Konvertierung automatisch für uns durchführen.</p>
 <p>Wenn das Merkmal <code>Deref</code> für die beteiligten Typen definiert ist, analysiert
 Rust die Typen und verwendet <code>Deref::deref</code> so oft wie nötig, um eine Referenz
-zu erhalten, die dem Typ des Parameters entspricht. Die Häufigkeit, mit der
-<code>Deref::deref</code> eingefügt werden muss, wird zur Kompilierzeit aufgelöst,
-sodass kein Nachteil zur Laufzeit bei der Nutzung der automatischen Umwandlung
-entsteht!</p>
+zu erhalten, die dem Typ des Parameters entspricht. Wie oft <code>Deref::deref</code>
+eingefügt werden muss, wird zur Kompilierzeit ermittelt, sodass zur Laufzeit
+kein Nachteil durch die Nutzung der automatischen Umwandlung entsteht!</p>
 <h3 id="wie-die-automatische-umwandlung-mit-veränderbarkeit-umgeht"><a class="header" href="#wie-die-automatische-umwandlung-mit-veränderbarkeit-umgeht">Wie die automatische Umwandlung mit Veränderbarkeit umgeht</a></h3>
 <p>Ähnlich wie du das Merkmal <code>Deref</code> verwendest, um den <code>*</code>-Operator bei
 unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal <code>DerefMut</code>
 verwenden, um den <code>*</code>-Operator bei veränderbaren Referenzen zu überschreiben.</p>
-<p>Rust wendet die automatische Umwandlung an, wenn Typen und
-Merkmalsimplementierungen in folgenden drei Fällen gefunden werden:</p>
+<p>Rust wendet die automatische Umwandlung bei Typen und Merkmalsimplementierungen
+in folgenden drei Fällen an:</p>
 <ol>
-<li>Von <code>&amp;T</code> zu <code>&amp;U</code>, wenn <code>T:Deref&lt;Target=U&gt;</code></li>
-<li>Von <code>&amp;mutT</code> zu <code>&amp;mutU</code>, wenn <code>T:DerefMut&lt;Target=U&gt;</code></li>
-<li>Von <code>&amp;mutT</code> zu <code>&amp;U</code>, wenn <code>T:Deref&lt;Target=U&gt;</code></li>
+<li>Von <code>&amp;T</code> zu <code>&amp;U</code>, wenn <code>T: Deref&lt;Target=U&gt;</code></li>
+<li>Von <code>&amp;mutT</code> zu <code>&amp;mutU</code>, wenn <code>T: DerefMut&lt;Target=U&gt;</code></li>
+<li>Von <code>&amp;mutT</code> zu <code>&amp;U</code>, wenn <code>T: Deref&lt;Target=U&gt;</code></li>
 </ol>
 <p>Die ersten beiden Fälle sind identisch, mit der Ausnahme, dass der zweite die
 Veränderbarkeit implementiert. Der erste Fall besagt, dass wenn man einen <code>&amp;T</code>
-hat und <code>T</code> <code>Deref</code> für einen Typ <code>U</code> implementiert hat, man transparent einen
-<code>&amp;U</code> erhalten kann. Der zweite Fall besagt, dass die gleiche automatische
-Umwandlung bei veränderbaren Referenzen erfolgt.</p>
+hat und <code>T</code> <code>Deref</code> für einen Typ <code>U</code> implementiert hat, man transparent <code>&amp;U</code>
+erhalten kann. Der zweite Fall besagt, dass die gleiche automatische Umwandlung
+bei veränderbaren Referenzen erfolgt.</p>
 <p>Der dritte Fall ist schwieriger: Rust wird auch eine veränderbare Referenz in
 eine unveränderbare umwandeln. Das Gegenteil ist jedoch <em>nicht</em> möglich:
 Unveränderbare Referenzen werden niemals zu veränderbaren gemacht. Wenn man

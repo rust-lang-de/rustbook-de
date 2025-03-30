@@ -168,8 +168,8 @@ einem Funktionsnamen und einem Satz Klammern. Die geschweiften Klammern teilen
 dem Compiler mit, wo der Funktionsrumpf beginnt und endet.</p>
 <p>Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da <code>another_function</code> im
-Programm definiert ist, kann sie von innerhalb der <code>main</code>-Funktion aufgerufen
-werden. Beachte, dass wir <code>another_function</code> <em>nach</em> der <code>main</code>-Funktion im
+Programm definiert ist, kann sie von innerhalb der Funktion <code>main</code> aufgerufen
+werden. Beachte, dass wir <code>another_function</code> <em>nach</em> der Funktion <code>main</code> im
 Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
 interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
 definiert sind.</p>
@@ -183,9 +183,9 @@ weiter zu erforschen. Platziere das Beispiel <code>another_function</code> in
 Hallo Welt!
 Eine andere Funktion.
 </code></pre>
-<p>Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der
-<code>main</code>-Funktion erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben
-und dann wird <code>another_function</code> aufgerufen und ihre Nachricht ausgegeben.</p>
+<p>Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der Funktion
+<code>main</code> erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben und dann
+wird <code>another_function</code> aufgerufen und ihre Nachricht ausgegeben.</p>
 <h3 id="parameter"><a class="header" href="#parameter">Parameter</a></h3>
 <p>Wir können Funktionen auch so definieren, dass sie <em>Parameter</em> haben, das
 sind spezielle Variablen, die Teil der Funktionssignatur sind. Wenn eine
@@ -363,7 +363,7 @@ fn main() {
     println!("Der Wert von x ist: {x}");
 }</code></pre></pre>
 <p>Es gibt keine Funktionsaufrufe, Makros oder gar <code>let</code>-Anweisungen in der
-<code>five</code>-Funktion – nur die Zahl <code>5</code> selbst. Das ist eine vollkommen
+Funktion <code>five</code> – nur die Zahl <code>5</code> selbst. Das ist eine vollkommen
 gültige Funktion in Rust. Beachte, dass der Rückgabetyp der Funktion ebenfalls
 angegeben ist, mit <code>-&gt; i32</code>. Versuche diesen Code auszuführen; die Ausgabe
 sollte wie folgt aussehen:</p>

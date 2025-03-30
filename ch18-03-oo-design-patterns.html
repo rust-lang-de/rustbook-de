@@ -326,7 +326,7 @@ Feld <code>state</code>, aber sie ist Teil des Verhaltens, das wir unterstützen
 hinzugefügt haben, wollen wir immer noch, dass die Methode <code>content</code> einen
 leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
 noch im Entwurfszustand befindet, wie in Zeile 7 von Codeblock 18-11 gezeigt
-wird. Lass uns fürs Erste die <code>content</code>-Methode mit der einfachsten Sache
+wird. Lass uns fürs Erste die Methode <code>content</code> mit der einfachsten Sache
 implementieren, die diese Anforderung erfüllt: Immer einen leeren
 Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern, sobald wir
 die Möglichkeit implementiert haben, den Zustand eines Beitrags zu ändern,
@@ -366,7 +366,7 @@ Codeblock 18-14 zeigt diese Platzhalter-Implementierung.</p>
 </span><span class="boring">impl State for Draft {}
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-14: Hinzufügen einer
-Platzhalter-Implementierung für die <code>content</code>-Methode auf <code>Post</code>, die immer
+Platzhalter-Implementierung für die Methode <code>content</code> auf <code>Post</code>, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span></p>
 <p>Mit dieser zusätzlichen Methode <code>content</code> funktioniert alles in Codeblock 18-11
 bis hin zu Zeile 7 wie beabsichtigt.</p>
@@ -431,7 +431,7 @@ impl State for PendingReview {
 <p>Wir geben <code>Post</code> eine öffentliche Methode namens <code>request_review</code>, die eine
 veränderbare Referenz auf <code>self</code> nimmt. Dann rufen wir eine interne
 <code>request_review</code>-Methode über den aktuellen Zustand von <code>Post</code> auf und diese
-zweite <code>request_review</code>-Methode konsumiert den aktuellen Zustand und gibt einen
+zweite Methode <code>request_review</code> konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.</p>
 <p>Wir fügen die Methode <code>request_review</code> zum Merkmal <code>State</code> hinzu; alle Typen,
 die das Merkmal implementieren, müssen nun die Methode <code>request_review</code>
@@ -441,7 +441,7 @@ dass die Methode nur gültig ist, wenn sie auf einer <code>Box</code> mit dem Ty
 aufgerufen wird. Diese Syntax übernimmt die Eigentümerschaft von <code>Box&lt;Self&gt;</code>,
 wodurch der alte Zustand ungültig wird, sodass der Zustandswert von <code>Post</code> in
 einen neuen Zustand transformiert werden kann.</p>
-<p>Um den alten Zustand zu konsumieren, muss die <code>request_review</code>-Methode die
+<p>Um den alten Zustand zu konsumieren, muss die Methode <code>request_review</code> die
 Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die <code>Option</code> im Feld
 <code>state</code> von <code>Post</code> ins Spiel: Wir rufen die Methode <code>take</code> auf, um den
 <code>Some</code>-Wert aus dem <code>state</code>-Feld zu nehmen und an seiner Stelle ein <code>None</code> zu
@@ -568,7 +568,7 @@ selbst zurück, weil der Beitrag in diesen Fällen im Zustand <code>Published</c
 sollte.</p>
 <p>Jetzt müssen wir die Methode <code>content</code> auf <code>Post</code> aktualisieren: Wir wollen,
 dass der von <code>content</code> zurückgegebene Wert vom aktuellen Zustand von <code>Post</code>
-abhängt, also delegieren wir <code>Post</code> an eine <code>content</code>-Methode, die auf seinen
+abhängt, also delegieren wir <code>Post</code> an eine Methode <code>content</code>, die auf seinen
 <code>state</code> definiert ist, wie in Codeblock 18-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
@@ -663,7 +663,7 @@ Wert innerhalb <code>Option</code> wollen und nicht die Eigentümerschaft am Wer
 <code>Option&lt;&amp;Box&lt;dyn State&gt;&gt;</code> zurückgegeben. Würden wir nicht <code>as_ref</code> aufrufen,
 bekämen wir einen Fehler, weil wir <code>state</code> nicht aus dem ausgeliehenen <code>&amp;self</code>
 im Funktionsparameter herausverschieben können.</p>
-<p>Wir rufen dann die <code>unwrap</code>-Methode auf, von der wir wissen, dass sie das
+<p>Wir rufen dann die Methode <code>unwrap</code> auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 <code>Post</code> sicherstellen, dass <code>state</code> stets einen <code>Some</code>-Wert enthält, wenn diese
 Methoden zu Ende sind. Dies ist einer der Fälle, über die wir in <a href="ch09-03-to-panic-or-not-to-panic.html#f%C3%A4lle-in-denen-du-mehr-informationen-als-der-compiler-hast">„Fälle, in
@@ -672,7 +672,7 @@ Kapitel 9 gesprochen haben, wenn wir wissen, dass ein <code>None</code>-Wert nie
 möglich ist, obwohl der Compiler nicht in der Lage ist, das zu verstehen.</p>
 <p>Wenn wir nun <code>content</code> auf der <code>&amp;Box&lt;dyn State&gt;</code> aufrufen, wird eine
 automatische Umwandlung (deref coercion) auf <code>&amp;</code> und <code>Box</code> stattfinden, sodass
-die <code>content</code>-Methode letztlich auf dem Typ aufgerufen wird, der das Merkmal
+die Methode <code>content</code> letztlich auf dem Typ aufgerufen wird, der das Merkmal
 <code>State</code> implementiert. Das bedeutet, dass wir die Definition des Merkmals
 <code>State</code> um <code>content</code> erweitern müssen, und hier werden wir die Logik dafür
 unterbringen, welcher Inhalt je nach Zustand zurückgegeben wird, wie in
@@ -819,7 +819,7 @@ erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
 ist, Code zu pflegen, der das Zustandsmuster verwendet, probiere einige dieser
 Vorschläge aus:</p>
 <ul>
-<li>Füge eine <code>reject</code>-Methode hinzu, die den Zustand des Beitrags von
+<li>Füge eine Methode <code>reject</code> hinzu, die den Zustand des Beitrags von
 <code>PendingReview</code> zurück zu <code>Draft</code> ändert.</li>
 <li>Verlange zwei <code>approve</code>-Aufrufe, bevor der Zustand in <code>Published</code> geändert
 werden kann.</li>
@@ -883,9 +883,9 @@ wird.</p>
 </span>}</code></pre>
 <p>Wir ermöglichen nach wie vor das Erstellen neuer Beiträge im Entwurfsstadium
 unter Verwendung von <code>Post::new</code> und der Möglichkeit, dem Inhalt des Beitrags
-Text hinzuzufügen. Aber anstatt eine <code>content</code>-Methode bei einem
+Text hinzuzufügen. Aber anstatt eine Methode <code>content</code> bei einem
 Beitragsentwurf zu haben, die eine leere Zeichenkette zurückgibt, werden wir
-es so einrichten, dass Beitragsentwürfe überhaupt keine <code>content</code>-Methode
+es so einrichten, dass Beitragsentwürfe überhaupt keine Methode <code>content</code>
 haben. Wenn wir auf diese Weise versuchen, den Inhalt eines Beitragsentwurfs
 zu erhalten, erhalten wir einen Kompilierfehler, der uns sagt, dass die Methode
 nicht existiert. Infolgedessen wird es für uns unmöglich, versehentlich den
@@ -999,20 +999,20 @@ impl PendingReviewPost {
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-20: Ein <code>PendingReviewPost</code>, der durch
-Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine
-<code>approve</code>-Methode, die einen <code>PendingReviewPost</code> in einen veröffentlichten
-<code>Post</code> verwandelt</span></p>
+Aufrufen von <code>request_review</code> auf <code>DraftPost</code> erzeugt wird, und eine Methode
+<code>approve</code>, die einen <code>PendingReviewPost</code> in einen veröffentlichten <code>Post</code>
+verwandelt</span></p>
 <p>Die Methoden <code>request_review</code> und <code>approve</code> übernehmen die Eigentümerschaft von
 <code>self</code>, wodurch die Instanzen <code>DraftPost</code> und <code>PendingReviewPost</code> verbraucht
 und in einen <code>PendingReviewPost</code> bzw. einen veröffentlichten <code>Post</code> umgewandelt
 werden. Auf diese Weise werden wir keine <code>DraftPost</code>-Instanzen mehr haben,
 nachdem wir <code>request_review</code> darauf aufgerufen haben, und so weiter. Die
-<code>PendingReviewPost</code>-Struktur hat keine <code>content</code>-Methode definiert, sodass der
+<code>PendingReviewPost</code>-Struktur hat keine Methode <code>content</code> definiert, sodass der
 Versuch, ihren Inhalt zu lesen, zu einem Kompilierfehler führt, wie bei
 <code>DraftPost</code>. Da der einzige Weg, eine veröffentlichte <code>Post</code>-Instanz zu
-erhalten, die eine <code>content</code>-Methode definiert hat, der Aufruf der
-<code>approve</code>-Methode auf einem <code>PendingReviewPost</code> ist, und der einzige Weg, einen
-<code>PendingReviewPost</code> zu erhalten, der Aufruf der <code>request_review</code>-Methode auf
+erhalten, die eine Methode <code>content</code> definiert hat, der Aufruf der Methode
+<code>approve</code> auf einem <code>PendingReviewPost</code> ist, und der einzige Weg, einen
+<code>PendingReviewPost</code> zu erhalten, der Aufruf der Methode <code>request_review</code> auf
 einem <code>DraftPost</code> ist, haben wir jetzt den Blog-Beitrags-Workflow in das
 Typsystem kodiert.</p>
 <p>Aber wir müssen auch einige kleine Änderungen an <code>main</code> vornehmen. Die Methoden

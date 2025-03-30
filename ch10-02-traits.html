@@ -424,7 +424,7 @@ dann definieren, wenn wir das Merkmal für einen Typ implementieren:</p>
 Instanzen der <code>SocialPost</code>-Struktur aufrufen, und die Standard-Implementierung
 von <code>summarize</code> wird die Definition von <code>summarize_author</code> aufrufen, die wir
 bereitgestellt haben. Da wir <code>summarize_author</code> implementiert haben, hat uns
-das Merkmal <code>Summary</code> das Verhalten der <code>summarize</code>-Methode mitgeliefert, ohne
+das Merkmal <code>Summary</code> das Verhalten der Methode <code>summarize</code> mitgeliefert, ohne
 dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <pre><code class="language-rust ignore"><span class="boring">use aggregator::{self, Summary, SocialPost};
 </span><span class="boring">
@@ -728,7 +728,7 @@ zur Anwendung. Beispielsweise implementiert die Standardbibliothek das Merkmal
     // --abschneiden--
 }</code></pre>
 <p>Da die Standardbibliothek diese Pauschal-Implementierungen hat, können wir die
-<code>to_string</code>-Methode, die durch das Merkmal <code>ToString</code> definiert ist, bei jedem
+Methode <code>to_string</code>, die durch das Merkmal <code>ToString</code> definiert ist, bei jedem
 Typ aufrufen, der das Merkmal <code>Display</code> implementiert. Zum Beispiel können wir
 ganze Zahlen in ihre entsprechenden <code>String</code>-Werte umwandeln, weil ganze
 Zahlen <code>Display</code> implementieren:</p>

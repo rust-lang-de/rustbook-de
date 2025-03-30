@@ -149,10 +149,10 @@
 Nebenläufigkeit (safe concurrency) ist der <em>Nachrichtenaustausch</em> (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
-<a href="https://golang.org/doc/effective_go.html#concurrency">der Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du
+der <a href="https://golang.org/doc/effective_go.html#concurrency">Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du
 Arbeitsspeicher teilst; teile stattdessen Arbeitsspeicher durch Kommunikation.“</p>
-<p>Um die Gleichzeitigkeit beim Senden von Nachrichten zu erreichen, bietet die
-Standardbibliothek von Rust eine Implementierung von Kanälen. Ein <em>Kanal</em>
+<p>Um Nebenläufigkeit beim Senden von Nachrichten zu erreichen, bietet die
+Standardbibliothek von Rust eine Implementierung für Kanäle. Ein <em>Kanal</em>
 (channel) ist ein allgemeines Programmierkonzept, mit dem Daten von einem
 Strang zu einem anderen gesendet werden.</p>
 <p>Du kannst dir einen Kanal in der Programmierung wie einen gerichteten
@@ -167,7 +167,7 @@ den Daten auf, die du senden möchtest, und ein anderer Teil überprüft die
 Empfangsseite auf ankommende Nachrichten. Ein Kanal gilt als <em>geschlossen</em>
 (closed), wenn entweder die Sender- oder die Empfängerhälfte aufgeräumt
 (dropped) wird.</p>
-<p>Hier arbeiten wir uns zu einem Programm hoch, das einen Strang hat, um Werte zu
+<p>Hier erarbeiten wir uns ein Programm, das einen Strang hat, um Werte zu
 generieren und sie über einen Kanal zu senden, und einen anderen Strang, der
 die Werte empfängt und ausgibt. Wir werden einfache Werte zwischen den Strängen
 über einen Kanal senden, um die Funktionalität zu veranschaulichen. Sobald du
@@ -176,8 +176,8 @@ miteinander kommunizieren müssen, z.B. für ein Chatsystem oder ein System, in
 dem viele Stränge Teile einer Berechnung durchführen und die Teile an einen
 Strang senden, der die Ergebnisse zusammenfasst.</p>
 <p>Erstens werden wir in Codeblock 16-6 einen Kanal erstellen, aber nichts damit
-machen. Beachte, dass sich dieser noch nicht kompilieren lässt, weil Rust nicht
-sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.</p>
+machen. Beachte, dass sich dieser Code noch nicht kompilieren lässt, weil Rust
+nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::mpsc;
 
@@ -228,13 +228,13 @@ Strang und Senden von „hallo“</span></p>
 dann <code>move</code>, um <code>tx</code> in den Funktionsabschluss zu verschieben, sodass der
 erzeugte Strang <code>tx</code> besitzt. Der erzeugte Strang muss den Sender besitzen, um
 in der Lage zu sein, Nachrichten durch den Kanal zu senden.</p>
-<p>Der Sender hat eine Methode <code>send</code>, die den Wert nimmt, den wir senden wollen.
-Die Methode <code>send</code> gibt ein <code>Result&lt;T, E&gt;</code> zurück; wenn also die empfangende
-Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein Wert gesendet
-werden kann, wird die Sendeoperation einen Fehler zurückgeben. In diesem
-Beispiel rufen wir <code>unwrap</code> auf, um im Falle eines Fehlers abzustürzen. Aber in
-einer echten Anwendung würden wir es richtig handhaben: Kehre zu Kapitel 9
-zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
+<p>Der Sender hat eine Methode <code>send</code>, die den Wert entgegennimmt, den wir senden
+wollen. Die Methode <code>send</code> gibt ein <code>Result&lt;T, E&gt;</code> zurück; wenn also die
+empfangende Seite bereits aufgeräumt wurde und es keinen Ort gibt, an den ein
+Wert gesendet werden kann, wird die Sendeoperation einen Fehler zurückgeben. In
+diesem Beispiel rufen wir <code>unwrap</code> auf, um im Falle eines Fehlers abzubrechen.
+Aber in einer echten Anwendung würden wir es ordentlich handhaben: Kehre zu
+Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.</p>
 <p>In Codeblock 16-8 erhalten wir den Wert vom Empfänger im Hauptstrang. Das ist
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
 eine Chat-Nachricht erhalten.</p>
@@ -259,12 +259,12 @@ Hauptstrang und Ausgeben des Wertes</span></p>
 <code>recv</code>, kurz für <em>empfangen</em> (receive), was die Ausführung des Hauptstrangs
 blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
 gesendet wurde, wird er von <code>recv</code> in einem <code>Result&lt;T, E&gt;</code> zurückgegeben. Wenn
-der Sender geschlossen wird, gibt <code>recv</code> einen Fehler zurück, um zu
+der Sender geschlossen ist, gibt <code>recv</code> einen Fehler zurück, um zu
 signalisieren, dass keine weiteren Werte mehr kommen werden.</p>
 <p>Die Methode <code>try_recv</code> blockiert nicht, sondern gibt stattdessen sofort ein
 <code>Result&lt;T, E&gt;</code> zurück: Einen <code>Ok</code>-Wert, der eine Nachricht enthält, wenn eine
-verfügbar ist, und einen <code>Err</code>-Wert, wenn diesmal keine Nachricht vorhanden
-ist. Die Verwendung von <code>try_recv</code> ist nützlich, wenn dieser Strang während des
+verfügbar ist, und einen <code>Err</code>-Wert, wenn gerade keine Nachricht vorhanden ist.
+Die Verwendung von <code>try_recv</code> ist nützlich, wenn dieser Strang während des
 Wartens auf Nachrichten andere Arbeiten zu erledigen hat: Wir könnten eine
 Schleife schreiben, die <code>try_recv</code> ab und zu aufruft, eine Nachricht
 verarbeitet, wenn eine verfügbar ist, und ansonsten für eine Weile andere
@@ -280,13 +280,13 @@ Hauptstrang ausgegebenen Wert:</p>
 <h3 id="kanäle-und-eigentümerschaftsübertragung"><a class="header" href="#kanäle-und-eigentümerschaftsübertragung">Kanäle und Eigentümerschaftsübertragung</a></h3>
 <p>Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
-von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, wenn du bei
-deinen Rust-Programmen an die Eigentümerschaft denkst. Lass uns ein Experiment
-machen, um zu zeigen, wie Kanäle und Eigentümerschaft zusammenwirken, um
-Probleme zu vermeiden: Wir versuchen, einen <code>val</code>-Wert im erzeugten Strang zu
-verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt haben. Versuche, den Code
-in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser Code nicht erlaubt
-ist.</p>
+von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, den du durch
+Berücksichtigen der Eigentümerschaft in deinen Rust-Programmen erhältst. Lass
+uns ein Experiment machen, um zu zeigen, wie Kanäle und Eigentümerschaft
+zusammenwirken, um Probleme zu vermeiden: Wir versuchen, einen Wert <code>val</code> im
+erzeugten Strang zu verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt haben.
+Versuche, den Code in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser
+Code nicht erlaubt ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::mpsc;
 use std::thread;
@@ -311,7 +311,8 @@ einen anderen Strang gesendet wurde, könnte dieser Strang ihn ändern oder
 aufräumen, bevor wir versuchen, den Wert erneut zu verwenden. Möglicherweise
 können die Änderungen des anderen Strangs aufgrund inkonsistenter oder nicht
 vorhandener Daten zu Fehlern oder unerwarteten Ergebnissen führen. Rust gibt
-uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu kompilieren:</p>
+uns jedoch einen Fehler, wenn wir versuchen, den Code in Codeblock 16-9 zu
+kompilieren:</p>
 <pre><code class="language-console">$ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
 error[E0382]: borrow of moved value: `val`
@@ -367,12 +368,12 @@ fn main() {
         println!("Erhalten: {received}");
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten und
-Pausieren dazwischen</span></p>
-<p>Diesmal hat der erzeugte Strang einen Vektor von Zeichenketten, die wir an den
-Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten, senden jede
-einzeln und pausieren dazwischen, indem wir die Funktion <code>thread::sleep</code> mit
-einem <code>Duration</code>-Wert von einer Sekunde aufrufen.</p>
+<p><span class="caption">Codeblock 16-10: Senden mehrerer Nachrichten mit Pausen
+dazwischen</span></p>
+<p>Diesmal verwendet der erzeugte Strang einen Vektor von Zeichenketten, die wir
+an den Hauptstrang senden wollen. Wir iterieren über diese Zeichenketten,
+senden jede einzeln und pausieren dazwischen, indem wir die Funktion
+<code>thread::sleep</code> mit einem <code>Duration</code>-Wert von einer Sekunde aufrufen.</p>
 <p>Im Hauptstrang rufen wir die Funktion <code>recv</code> nicht mehr explizit auf:
 Stattdessen behandeln wir <code>rx</code> als Iterator. Jeden empfangenen Wert geben wir
 aus. Wenn der Kanal geschlossen wird, wird die Iteration beendet.</p>

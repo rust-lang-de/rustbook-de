@@ -145,11 +145,11 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="refcellt-und-das-innere-veränderbarkeitsmuster"><a class="header" href="#refcellt-und-das-innere-veränderbarkeitsmuster"><code>RefCell&lt;T&gt;</code> und das innere Veränderbarkeitsmuster</a></h2>
-<p><em>Innere Veränderbarkeit</em> (interior mutability) ist ein Entwurfsmuster in Rust,
-mit dem man Daten auch dann verändern kann, wenn unveränderbare Referenzen auf
-diese Daten vorhanden sind. Normalerweise ist diese Aktion nach den
-Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
-„unsicherer Programmcode“ (<code>unsafe</code> code) innerhalb einer Datenstruktur, um
+<p>Die <em>innere Veränderbarkeit</em> (interior mutability) ist ein Entwurfsmuster in
+Rust, mit dem man Daten auch dann verändern kann, wenn unveränderbare
+Referenzen auf diese Daten vorhanden sind. Normalerweise ist diese Aktion nach
+den Ausleihregeln nicht zulässig. Um Daten zu verändern, verwendet das Muster
+„unsicheren Programmcode“ (<code>unsafe</code> code) innerhalb einer Datenstruktur, um
 Rusts übliche Regeln, die Veränderbarkeit und Ausleihen betreffen, zu
 verändern. Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell
 überprüfen, anstatt uns darauf zu verlassen, dass der Compiler sie für uns
@@ -157,13 +157,13 @@ verändern. Unsicherer Code zeigt dem Compiler an, dass wir die Regeln manuell
 <p>Wir können Typen verwenden, die das innere Veränderbarkeitsmuster verwenden,
 wenn wir sicherstellen können, dass die Ausleihregeln zur Laufzeit eingehalten
 werden, obwohl der Compiler dies nicht garantieren kann. Der betroffene
-unsichere Programmcode wird dann in eine sichere API eingeschlossen und der
-äußere Typ ist immer noch unveränderbar.</p>
-<p>Lass uns dieses Konzept untersuchen, indem wir uns den Typ <code>RefCell&lt;T&gt;</code> ansehen,
-der dem inneren Veränderbarkeitsmuster folgt.</p>
-<h3 id="mit-refcellt-ausleihregeln-zur-laufzeit-durchsetzen"><a class="header" href="#mit-refcellt-ausleihregeln-zur-laufzeit-durchsetzen">Mit <code>RefCell&lt;T&gt;</code> Ausleihregeln zur Laufzeit durchsetzen</a></h3>
-<p>Im Gegensatz zu <code>Rc&lt;T&gt;</code> repräsentiert der Typ <code>RefCell&lt;T&gt;</code> die
-einzige Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
+unsichere Programmcode wird dann in eine sichere API eingepackt und der äußere
+Typ ist immer noch unveränderbar.</p>
+<p>Lass uns dieses Konzept untersuchen, indem wir uns den Typ <code>RefCell&lt;T&gt;</code>
+ansehen, der dem inneren Veränderbarkeitsmuster folgt.</p>
+<h3 id="mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen"><a class="header" href="#mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen">Mit <code>RefCell&lt;T&gt;</code> Ausleihregeln zur Laufzeit sicherstellen</a></h3>
+<p>Im Gegensatz zu <code>Rc&lt;T&gt;</code> repräsentiert der Typ <code>RefCell&lt;T&gt;</code> die ungeteilte
+Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
 <code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln die
 wir im Kapitel 4 gelernt haben:</p>
 <ul>
@@ -173,9 +173,9 @@ beliebige Anzahl unveränderbarer Referenzen haben (nicht aber beides).</li>
 </ul>
 <p>Mit Referenzen und <code>Box&lt;T&gt;</code> werden die Invarianten der Ausleihregeln beim
 Kompilieren erzwungen. Mit <code>RefCell&lt;T&gt;</code> werden diese Invarianten <em>zur Laufzeit</em>
-erzwungen. Wenn man mit Referenzen gegen diese Regeln verstößt wird beim
+erzwungen. Wenn man mit Referenzen gegen diese Regeln verstößt, wird beim
 Kompilieren ein Fehler angezeigt. Wenn man mit <code>RefCell&lt;T&gt;</code> gegen diese Regeln
-verstößt, wird das Programm mit <code>panic</code> beendet.</p>
+verstößt, wird das Programm mit <code>panic</code> abgebrochen.</p>
 <p>Die Überprüfung der Ausleihregeln zur Kompilierzeit hat den Vorteil, dass
 Fehler früher im Entwicklungsprozess erkannt werden und die Laufzeitperformanz
 nicht beeinträchtigt wird, da die gesamte Analyse im Voraus abgeschlossen
@@ -183,24 +183,25 @@ wurde. Aus diesen Gründen ist es in den meisten Fällen die beste Wahl, die
 Ausleihregeln zur Kompilierzeit zu überprüfen. Aus diesem Grund ist dies die
 Standardeinstellung von Rust.</p>
 <p>Der Vorteil der Überprüfung der Ausleihregeln zur Laufzeit besteht darin, dass
-bestimmte speichersichere Szenarien zulässig sind, während sie durch die
+bestimmte speichersichere Szenarien zulässig sind, während sie bei der
 Überprüfung zur Kompilierzeit nicht zulässig gewesen wären. Die statische
 Analyse ist wie der Rust-Compiler von Natur aus konservativ. Einige
 Eigenschaften des Programmcodes lassen sich durch Analyse des Programmcodes
-nicht erkennen: Das bekannteste Beispiel ist das Halteproblem, das den Rahmen
-dieses Buches sprengt, aber ein interessantes Thema zum Nachforschen darstellt.</p>
-<p>Da eine Analyse nicht möglich ist, lehnt der Rust-Compiler möglicherweise ein
-ein korrektes Programm ab, wenn er nicht sicher sein kann, dass der Programmcode
-den Eigentümerschaftsregeln entspricht. Auf diese Art ist Rust konservativ. Wenn
-es ein falsches Programm akzeptiert, können Benutzer den Garantien von Rust
-nicht vertrauen. Wenn Rust jedoch ein korrektes Programm ablehnt, wird der
-Programmierer belästigt, obwohl nichts negatives passieren kann. Der Typ
-<code>RefCell&lt;T&gt;</code> ist nützlich, wenn man sicher ist, dass der Programmcode den
-Ausleihregeln entspricht, der Compiler dies jedoch nicht verstehen und
-garantieren kann.</p>
+nicht erkennen: Das bekannteste Beispiel ist das Halteproblem, das über den
+Rahmen dieses Buches hinausgeht, aber ein interessantes Thema zum Nachforschen
+ist.</p>
+<p>Da manche Analysen nicht möglich sind, lehnt der Rust-Compiler möglicherweise
+ein korrektes Programm ab, wenn er nicht sicher sein kann, dass der
+Programmcode den Eigentumsregeln entspricht. Auf diese Art ist Rust
+konservativ. Wenn es ein falsches Programm akzeptiert, können Benutzer den
+Garantien von Rust nicht vertrauen. Wenn Rust jedoch ein korrektes Programm
+ablehnt, wird der Programmierer belästigt, obwohl nichts Schlimmes passieren
+kann. Der Typ <code>RefCell&lt;T&gt;</code> ist nützlich, wenn man sicher ist, dass der
+Programmcode den Ausleihregeln entspricht, der Compiler dies jedoch nicht
+verstehen und garantieren kann.</p>
 <p>Ähnlich wie <code>Rc&lt;T&gt;</code> ist <code>RefCell&lt;T&gt;</code> nur für die Verwendung in einsträngigen
-(single-threaded) Szenarien vorgesehen und gibt einen Fehler beim Kompilieren
-aus, wenn man versucht, es in einem mehrsträngigen (multi-threaded) Kontext zu
+(single-threaded) Szenarien vorgesehen und verursacht einen Kompilierfehler,
+wenn man versucht, es in einem mehrsträngigen (multi-threaded) Kontext zu
 verwenden. Wir werden in Kapitel 16 darüber sprechen, wie man die Funktionalität
 von <code>RefCell&lt;T&gt;</code> in einem mehrsträngigen Programm erhält.</p>
 <p>Eine Zusammenfassung der Gründe für die Wahl von <code>Box&lt;T&gt;</code>, <code>Rc&lt;T&gt;</code> oder
@@ -225,10 +226,10 @@ Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.</p>
 nicht veränderbar ausleihen kann. Dieser Programmcode wird beispielsweise nicht
 kompilieren:</p>
 <pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
-let x = 5;
-let y = &amp;mut x;
+    let x = 5;
+    let y = &amp;mut x;
 }</code></pre></pre>
-<p>Wenn man versucht, diesen Programmcode zu kompilieren, wird die folgende
+<p>Wenn man versucht, diesen Programmcode zu kompilieren, wird folgende
 Fehlermeldung angezeigt:</p>
 <pre><code class="language-console">$ cargo run
    Compiling borrowing v0.1.0 (file:///projects/borrowing)
@@ -246,18 +247,18 @@ help: consider changing this to be mutable
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `borrowing` (bin "borrowing") due to 1 previous error
 </code></pre>
-<p>Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert in
-seinen Methoden selbst veränderbar ist, aber für einen anderen Programmcode
+<p>Es gibt jedoch Situationen, in denen es nützlich wäre, wenn ein Wert durch
+seine Methoden selbst veränderbar ist, aber für anderen Programmcode
 unveränderbar erscheint. Programmcode außerhalb der Methoden des Werts kann
 diesen nicht verändern. Die Verwendung von <code>RefCell&lt;T&gt;</code> ist eine Möglichkeit,
 die Fähigkeit zur inneren Veränderbarkeit zu erhalten, allerdings umgeht
 <code>RefCell&lt;T&gt;</code> die Ausleihregeln nicht vollständig: Der Ausleihenprüfer (borrow
 checker) im Compiler ermöglicht diese innere Veränderbarkeit, und die
 Ausleihregeln werden stattdessen zur Laufzeit überprüft. Wenn man gegen die
-Regeln verstößt wird <code>panic</code> anstelle eines Fehlers beim Kompilieren ausgelöst.</p>
+Regeln verstößt, führt das zu <code>panic!</code> anstelle eines Kompilierfehlers.</p>
 <p>Lass uns ein praktisches Beispiel durcharbeiten, in dem wir <code>RefCell&lt;T&gt;</code>
-verwenden können, um einen unveränderbaren Wert zu ändern und herauszufinden,
-warum dies nützlich ist.</p>
+verwenden, um einen unveränderbaren Wert zu ändern und um herauszufinden, warum
+dies nützlich ist.</p>
 <h4 id="ein-anwendungsfall-für-die-innere-veränderbarkeit-mock-objekte-mock-objects"><a class="header" href="#ein-anwendungsfall-für-die-innere-veränderbarkeit-mock-objekte-mock-objects">Ein Anwendungsfall für die innere Veränderbarkeit: Mock-Objekte (Mock Objects)</a></h4>
 <p>Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
 anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
@@ -269,23 +270,23 @@ durchführen. <em>Mock-Objekte</em> sind bestimmte Arten von Testdoppeln, die
 aufzeichnen, was während eines Tests passiert, damit man bestätigen kann, dass
 die richtigen Aktionen ausgeführt wurden.</p>
 <p>Rust verfügt nicht im gleichen Sinne wie andere Programmiersprachen über
-Objekte und in die Standardbibliothek integrierte Mock-Objekt-Funktionen. Man
-kann jedoch definitiv eine Struktur erstellen, die denselben Zwecken dient wie
-ein Mock-Objekt.</p>
-<p>Hier ist das Szenario, das wir testen werden: Wir erstellen eine Bibliothek, die
-einen Wert anhand eines Maximalwerts verfolgt und Nachrichten basierend darauf
-sendet, wie nahe der Maximalwert am aktuellen Wert liegt. Diese Bibliothek kann
-verwendet werden, um das Kontingent eines Benutzers für die Anzahl der
-API-Aufrufe zu verfolgen, die er beispielsweise ausführen darf.</p>
-<p>Unsere Bibliothek bietet nur die Funktionalität, zu verfolgen, wie nahe ein Wert
-am Maximum liegt und wie die Nachrichten zu welchen Zeiten sein sollten.
-Von Anwendungen, die unsere Bibliothek verwenden wird erwartet, dass sie den
-Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung könnte eine
-Nachricht in der Anwendung anlegen, eine E-Mail senden, eine Textnachricht
-senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
-kennen. Alles, was es braucht, ist etwas, das ein von uns bereitgestelltes
-Merkmal (trait) namens <code>Messenger</code> implementiert. Codeblock 15-20 zeigt den
-Bibliothekscode.</p>
+Objekte und in die Standardbibliothek integrierte Mock-Objekt-Funktionalität.
+Man kann jedoch definitiv eine Struktur erstellen, die denselben Zwecken dient
+wie ein Mock-Objekt.</p>
+<p>Hier ist das Szenario, das wir testen werden: Wir erstellen eine Bibliothek,
+die einen Wert anhand eines Maximalwerts verfolgt und Nachrichten basierend
+darauf sendet, wie nahe der Maximalwert am aktuellen Wert liegt. Diese
+Bibliothek kann verwendet werden, um das Kontingent eines Benutzers für die
+Anzahl der API-Aufrufe zu verfolgen, die er beispielsweise ausführen darf.</p>
+<p>Unsere Bibliothek bietet nur die Funktionalität, zu verfolgen, wie nahe ein
+Wert am Maximum liegt und wie die Nachrichten zu bestimmten Zeiten sein
+sollten. Von Anwendungen, die unsere Bibliothek verwenden, wird erwartet, dass
+sie den Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung
+könnte eine Nachricht in der Anwendung anlegen, eine E-Mail senden, eine
+Textnachricht senden oder etwas anderes machen. Die Bibliothek muss dieses
+Detail nicht kennen. Alles, was es braucht, ist Code, der ein von uns
+bereitgestelltes Merkmal (trait) namens <code>Messenger</code> implementiert. Codeblock
+15-20 zeigt den Bibliothekscode.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -333,7 +334,7 @@ ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span></p>
 <p>Ein wichtiger Teil dieses Programmcodes ist, dass das Merkmal <code>Messenger</code> eine
 Methode namens <code>send</code> hat, die eine unveränderbare Referenz auf <code>self</code> und den
-Text der Nachricht enthält. Dieses Merkmal ist die Schnittstelle, die unser
+Text der Nachricht erhält. Dieses Merkmal ist die Schnittstelle, die unser
 Mock-Objekt implementieren muss, damit das Mock-Objekt auf die gleiche Weise
 wie ein reales Objekt verwendet werden kann. Der andere wichtige Teil ist, dass
 wir das Verhalten der Methode <code>set_value</code> von <code>LimitTracker</code> testen wollen. Wir
@@ -346,11 +347,11 @@ wird, die entsprechenden Nachrichten zu senden.</p>
 <p>Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von <code>send</code> nur die Nachrichten verfolgt, die
 gesendet werden sollen. Wir können eine neue Instanz des Mock-Objekts estellen,
-einen <code>LimitTracker</code> erstellen, der das Mock-Objekt verwendet, die
-<code>set_value</code>-Methode für <code>LimitTracker</code> aufrufen und dann überprüfen, ob das
-Mock-Objekt die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den
-Versuch, ein Mock-Objekt zu implementieren, um genau das zu tun, aber der
-Ausleihenprüfer erlaubt dies nicht.</p>
+einen <code>LimitTracker</code> erstellen, der das Mock-Objekt verwendet, die Methode
+<code>set_value</code> für <code>LimitTracker</code> aufrufen und dann überprüfen, ob das Mock-Objekt
+die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den Versuch, ein
+Mock-Objekt zu implementieren, um genau das zu tun, aber der Ausleihenprüfer
+erlaubt dies nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -428,14 +429,14 @@ mod tests {
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 15-21: Der Versuch einen <code>MockMessenger</code> zu
 implementieren, der vom Ausleihenprüfer nicht erlaubt wird</span></p>
-<p>Dieser Testcode definiert eine Struktur <code>MockMessenger</code> mit einem
-<code>sent_messages</code>-Feld mit einem <code>Vec</code> von <code>String</code>-Werten, um Nachrichten zu
+<p>Dieser Testcode definiert eine Struktur <code>MockMessenger</code> mit einem Feld
+<code>sent_messages</code> mit einem <code>Vec</code> von <code>String</code>-Werten, um Nachrichten zu
 verfolgen, die gesendet werden sollen. Wir definieren auch eine zugehörige
 Funktion <code>new</code>, um das Erstellen neuer <code>MockMessenger</code>-Werte zu vereinfachen,
-die mit einer leeren Liste von Nachrichten beginnen. Wir implementieren dann das
-Merkmal <code>Messenger</code> für <code>MockMessenger</code> damit wir einem <code>LimitTracker</code> einen
-<code>MockMessenger</code> übergeben können. Bei der Definition der Methode <code>send</code> nehmen wir
-die übergebene Nachricht als Parameter und speichern sie in der Liste
+die mit einer leeren Liste von Nachrichten beginnen. Wir implementieren dann
+das Merkmal <code>Messenger</code> für <code>MockMessenger</code>, damit wir <code>LimitTracker</code> einen
+<code>MockMessenger</code> übergeben können. Bei der Definition der Methode <code>send</code> nehmen
+wir die übergebene Nachricht als Parameter und speichern sie in der Liste
 <code>sent_messages</code> von <code>MockMessenger</code>.</p>
 <p>Im Test testen wir, was passiert, wenn dem <code>LimitTracker</code> gesagt wird, er solle
 <code>value</code> auf etwas setzen, das mehr als 75 Prozent des <code>max</code>-Wertes beträgt.
@@ -467,16 +468,16 @@ help: consider changing this to be a mutable reference in the `impl` method and 
 For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` (lib test) due to 1 previous error
 </code></pre>
-<p>Wir können <code>MockMessenger</code> nicht so ändern, um die Nachrichten zu verfolgen, da
-die <code>send</code>-Methode eine unveränderbare Referenz auf <code>self</code> verwendet. Wir
+<p>Wir können <code>MockMessenger</code> nicht so ändern, dass es die Nachrichten verfolgt,
+da die Methode <code>send</code> eine unveränderbare Referenz auf <code>self</code> benötigt. Wir
 können auch nicht den Vorschlag aus dem Fehlertext übernehmen, <code>&amp;mut self</code>
-sowohl in der <code>impl</code>-Methode als auch in der <code>Trait</code>-Definition zu verwenden.
+sowohl in der Methode <code>impl</code> als auch in der Merkmalsdefinition zu verwenden.
 Wir wollen das Merkmal <code>Messenger</code> nicht nur um des Testens willen ändern.
 Stattdessen müssen wir einen Weg finden, damit unser Testcode mit unserem
 bestehenden Design korrekt funktioniert.</p>
 <p>Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
-speichern die <code>send_messages</code> in einer <code>RefCell&lt;T&gt;</code> und dann kann die
-<code>send</code>-Methode <code>sent_messages</code> ändern, um Nachrichten zu speichern, die wir
+speichern die <code>send_messages</code> in einer <code>RefCell&lt;T&gt;</code> und dann kann die Methode
+<code>send</code> den Wert <code>sent_messages</code> ändern, um Nachrichten zu speichern, die wir
 gesehen haben. Codeblock 15-22 zeigt, wie das aussieht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">pub trait Messenger {
@@ -554,21 +555,22 @@ mod tests {
     }
 }</code></pre>
 <p><span class="caption">Codeblock 15-22: <code>RefCell&lt;T&gt;</code> verwenden, um einen inneren
-Wert zu verändern, während der äußere Wert als unveränderbar betrachtet wird</span></p>
+Wert zu verändern, während der äußere Wert als unveränderbar betrachtet
+wird</span></p>
 <p>Das Feld <code>sent_messages</code> ist jetzt vom Typ <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> anstelle von
 <code>Vec&lt;String&gt;</code>. In der Funktion <code>new</code> erstellen wir eine neue
 <code>RefCell&lt;Vec&lt;Sting&gt;&gt;</code>-Instanz um den leeren Vektor.</p>
-<p>Für die Implementierung der <code>send</code>-Methode ist der erste Parameter immer noch
+<p>Für die Implementierung der Methode <code>send</code> ist der erste Parameter immer noch
 eine unveränderbare Ausleihe von <code>self</code>, die der Merkmalsdefinition entspricht.
-Wir rufen <code>borrow_mut</code> auf der <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> in <code>self.sent_messages</code> auf,
-um eine veränderbare Referenz auf den Wert in der <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> zu
-erhalten, der der Vektor ist. Dann können wir <code>push</code> auf der veränderbaren
-Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten zu
-verfolgen.</p>
-<p>Die letzte Änderung, die wir vornehmen müssen, betrifft die Behauptung: Um zu
-sehen, wie viele Elemente sich im inneren Vektor befinden, rufen wir in der
-<code>RefCell&lt;Vec&lt;String&gt;&gt;</code> <code>borrow</code> auf, um eine unveränderbare Referenz auf den
-Vektor zu erhalten.</p>
+Wir rufen <code>borrow_mut</code> auf der <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> in <code>self.sent_messages</code>
+auf, um eine veränderbare Referenz auf den Wert in der <code>RefCell&lt;Vec&lt;String&gt;&gt;</code>
+zu erhalten, der der Vektor ist. Dann können wir <code>push</code> auf der veränderbaren
+Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten
+zu verfolgen.</p>
+<p>Die letzte Änderung, die wir vornehmen müssen, betrifft die Zusicherung: Um zu
+sehen, wie viele Elemente sich im inneren Vektor befinden, rufen wir <code>borrow</code>
+auf <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> auf, um eine unveränderbare Referenz auf den Vektor
+zu erhalten.</p>
 <p>Nachdem du nun gesehen hast, wie du <code>RefCell&lt;T&gt;</code> verwendest, wollen wir uns mit
 der Funktionsweise befassen.</p>
 <h4 id="mit-refcellt-den-Überblick-über-die-ausleihen-zur-laufzeit-behalten"><a class="header" href="#mit-refcellt-den-Überblick-über-die-ausleihen-zur-laufzeit-behalten">Mit <code>RefCell&lt;T&gt;</code> den Überblick über die Ausleihen zur Laufzeit behalten</a></h4>
@@ -579,20 +581,20 @@ Methode <code>borrow</code> gibt den intelligenten Zeigertyp <code>Ref&lt;T&gt;<
 <code>borrow_mut</code> den intelligenten Zeigertyp <code>RefMut&lt;T&gt;</code>. Beide Typen
 implementieren <code>Deref</code>, sodass wir sie wie reguläre Referenzen behandeln
 können.</p>
-<p>Der <code>RefCell&lt;T&gt;</code> verfolgt, wie viele intelligente Zeiger <code>Ref&lt;T&gt;</code> und
-<code>RefMut&lt;T&gt;</code> derzeit aktiv sind. Jedes Mal, wenn wir <code>borrow</code> aufrufen, erhöht
-<code>RefCell&lt;T&gt;</code> die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein
-<code>Ref&lt;T&gt;</code>-Wert außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl
-der unveränderbaren Ausleihen um eins. Genau wie bei den Ausleihregeln zur
+<p><code>RefCell&lt;T&gt;</code> verfolgt, wie viele intelligente Zeiger <code>Ref&lt;T&gt;</code> und <code>RefMut&lt;T&gt;</code>
+derzeit aktiv sind. Jedes Mal, wenn wir <code>borrow</code> aufrufen, erhöht <code>RefCell&lt;T&gt;</code>
+die Anzahl der aktiven unveränderbaren Ausleihen. Wenn ein <code>Ref&lt;T&gt;</code>-Wert
+außerhalb des Gültigkeitsbereichs (scope) liegt, sinkt die Anzahl der
+unveränderbaren Ausleihen um eins. Genau wie bei den Ausleihregeln zur
 Kompilierzeit können wir mit <code>RefCell&lt;T&gt;</code> zu jedem Zeitpunkt viele
 unveränderbare Ausleihen oder eine veränderbare Ausleihe haben.</p>
 <p>Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von
 <code>RefCell&lt;T&gt;</code> wird zur Laufzeit abstürzen. Codeblock 15-23 zeigt eine
 Modifikation der Implementierung von <code>send</code> in Codeblock 15-22. Wir versuchen
-absichtlich, zwei veränderbare Ausleihen zu erstellen, die für denselben
-Bereich aktiv sind, um zu veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran
-hindert, dies zur Laufzeit zu tun.</p>
+absichtlich, zwei veränderbare Ausleihen im selben Gültigkeitsbereich zu
+erstellen, um zu veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies
+zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust panics"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -673,15 +675,16 @@ hindert, dies zur Laufzeit zu tun.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare Referenzen im
-selben Gültigkeitsbereich, um zu sehen, dass <code>RefCell&lt;T&gt;</code> abstürzt</span></p>
+<p><span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare
+Referenzen im selben Gültigkeitsbereich, um zu sehen, dass <code>RefCell&lt;T&gt;</code>
+abstürzt</span></p>
 <p>Wir erstellen eine Variable <code>one_borrow</code> für den intelligenten Zeiger
-<code>RefMut&lt;T&gt;</code>, der von <code>borrow_mut</code> zurückgegeben wird. Dann erstellen wir auf die
-gleiche Weise eine weitere veränderbare Ausleihe in der Variable <code>two_borrow</code>.
-Dadurch werden zwei veränderbare Referenzen im selben Bereich erstellt, was
-nicht zulässig ist. Wenn wir die Tests für unsere Bibliothek ausführen, wird der
-Programmcode in Codeblock 15-23 fehlerfrei kompiliert, aber der Test schlägt
-fehl:</p>
+<code>RefMut&lt;T&gt;</code>, der von <code>borrow_mut</code> zurückgegeben wird. Dann erstellen wir auf
+die gleiche Weise eine weitere veränderbare Ausleihe in der Variable
+<code>two_borrow</code>. Dadurch werden zwei veränderbare Referenzen im selben
+Gültigkeitsbereich erstellt, was nicht zulässig ist. Wenn wir die Tests für
+unsere Bibliothek ausführen, wird der Programmcode in Codeblock 15-23
+fehlerfrei kompiliert, aber der Test schlägt fehl:</p>
 <pre><code class="language-console">$ cargo test
    Compiling limit-tracker v0.1.0 (file:///projects/limit-tracker)
     Finished test [unoptimized + debuginfo] target(s) in 0.91s
@@ -711,7 +714,7 @@ Laufzeit Verstöße gegen die Ausleihregel.</p>
 Kompilierzeit abzufangen, wie wir es hier getan haben, bedeutet das, dass du
 Fehler in deinem Code möglicherweise erst später im Entwicklungsprozess
 findest: Möglicherweise erst, wenn dein Code in der Produktion eingesetzt
-wurde. Außerdem würde dieser Programmcode eine kleine Beeinträchtigung der
+wird. Außerdem würde dieser Programmcode eine kleine Beeinträchtigung der
 Laufzeitperformanz verursachen, da die Ausleihen zur Laufzeit und nicht zur
 Kompilierzeit nachverfolgt werden. Die Verwendung von <code>RefCell&lt;T&gt;</code> ermöglicht
 es jedoch, ein Mock-Objekt zu schreiben, das sich selbst ändern kann, um die
@@ -725,13 +728,13 @@ erhalten, als reguläre Referenzen bieten.</p>
 haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn
 man eine <code>Rc&lt;T&gt;</code> hat, das eine <code>RefCell&lt;T&gt;</code> enthält, kann man einen Wert
 erhalten, der mehrere Eigentümer hat <em>und</em> veränderbar ist!</p>
-<p>Erinnern wir uns beispielsweise an das Beispiel für die Cons-Liste in Codeblock
-15-18, in dem wir <code>Rc&lt;T&gt;</code> verwendet haben, um mehrere Listen die gemeinsame
-Nutzung einer anderen Liste zu ermöglichen. Da <code>Rc&lt;T&gt;</code> nur unveränderbare Werte
-enthält, können wir keinen der Werte in der Liste ändern, sobald wir sie
-erstellt haben. Fügen wir <code>RefCell&lt;T&gt;</code> hinzu, um die Werte in den Listen ändern
-zu können. Codeblock 15-24 zeigt, dass wir durch Verwendung einer <code>RefCell&lt;T&gt;</code>
-in der Cons-Definition den in allen Listen gespeicherten Wert ändern können:</p>
+<p>Erinnern wir uns beispielsweise an die Cons-Liste in Codeblock 15-18, in dem
+wir <code>Rc&lt;T&gt;</code> verwendet haben, um mehreren Listen die gemeinsame Nutzung einer
+anderen Liste zu ermöglichen. Da <code>Rc&lt;T&gt;</code> nur unveränderbare Werte enthält,
+können wir keinen der Werte in der Liste ändern, sobald wir sie erstellt haben.
+Fügen wir <code>RefCell&lt;T&gt;</code> hinzu, um die Werte in den Listen ändern zu können.
+Codeblock 15-24 zeigt, dass wir durch Verwendung einer <code>RefCell&lt;T&gt;</code> in der
+Cons-Definition den in allen Listen gespeicherten Wert ändern können:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
 enum List {
@@ -757,14 +760,15 @@ fn main() {
     println!("b nachher = {b:?}");
     println!("c nachher = {c:?}");
 }</code></pre></pre>
-<p><span class="caption">Codeblock 15-24: Verwendung von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> um <code>List</code>
-zu erstellen, die wir verändern können</span></p>
+<p><span class="caption">Codeblock 15-24: Verwenden von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> um
+<code>List</code> zu erstellen, die wir verändern können</span></p>
 <p>Wir erstellen einen Wert, der eine Instanz von <code>Rc&lt;RefCell&lt;i32&gt;&gt;</code> ist, und
 speichern ihn dann in einer Variable mit dem Namen <code>value</code>, damit wir später
-direkt darauf zugreifen können. Dann erstellen wir eine Liste in <code>a</code> mit einer
+direkt darauf zugreifen können. Dann erstellen wir eine Liste <code>a</code> mit einer
 <code>Cons</code>-Variante, die <code>value</code> enthält. Wir müssen <code>value</code> klonen, damit sowohl
-<code>a</code> als auch <code>value</code> Eigentümerschaft am inneren Wert <code>5</code> haben, anstatt das
-Eigentum von <code>value</code> auf <code>a</code> zu übertragen oder <code>a</code> von <code>value</code> auszuleihen.</p>
+<code>a</code> als auch <code>value</code> die Eigentümerschaft am inneren Wert <code>5</code> haben, anstatt
+die Eigentümerschaft von <code>value</code> auf <code>a</code> zu übertragen oder <code>a</code> von <code>value</code>
+auszuleihen.</p>
 <p>Wir wickeln die Liste <code>a</code> in ein <code>Rc&lt;T&gt;</code> ein. Wenn wir also die Listen <code>b</code> und
 <code>c</code> erstellen, können beide auf <code>a</code> verweisen, was wir in Codeblock 15-18 getan
 haben.</p>
@@ -785,14 +789,14 @@ a nachher = Cons(RefCell { value: 15 }, Nil)
 b nachher = Cons(RefCell { value: 3 }, Cons(RefCell { value: 15 }, Nil))
 c nachher = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 </code></pre>
-<p>Diese Technik ist ziemlich sauber! Durch die Verwendung von <code>RefCell&lt;T&gt;</code> haben
+<p>Diese Technik ist ganz ordentlich! Durch die Verwendung von <code>RefCell&lt;T&gt;</code> haben
 wir einen nach außen unveränderbaren <code>List</code>-Wert. Wir können jedoch die
 Methoden für <code>RefCell&lt;T&gt;</code> verwenden, die den Zugriff auf die innere
 Veränderbarkeit ermöglichen, damit wir unsere Daten bei Bedarf ändern können.
 Die Laufzeitprüfungen der Ausleihregeln schützen uns vor
 Daten-Wettlaufsituationen (data races), und manchmal lohnt es sich, ein wenig
 Geschwindigkeit für diese Flexibilität in unseren Datenstrukturen
-einzutauschen. Beachte, dass <code>RefCell&lt;T&gt;</code> nicht bei nebenläufigen Code
+einzutauschen. Beachte, dass <code>RefCell&lt;T&gt;</code> nicht bei nebenläufigem Code
 funktioniert! <code>Mutex&lt;T&gt;</code> ist die Strang-sichere (thread-safe) Version von
 <code>RefCell&lt;T&gt;</code> und wir werden <code>Mutex&lt;T&gt;</code> in Kapitel 16 besprechen.</p>
 

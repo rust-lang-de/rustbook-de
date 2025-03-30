@@ -247,7 +247,7 @@ fn parse_config(args: &amp;[String]) -&gt; (&amp;str, &amp;str) {
 aus <code>main</code></span></p>
 <p>Wir sammeln immer noch die Kommandozeilenargumente in einem Vektor, aber
 anstatt den Argumentwert am Index 1 der Variablen <code>query</code> und den Argumentwert
-am Index 2 der Variablen <code>file_path</code> innerhalb der <code>main</code>-Funktion zuzuweisen,
+am Index 2 der Variablen <code>file_path</code> innerhalb der Funktion <code>main</code> zuzuweisen,
 übergeben wir den gesamten Vektor an die Funktion <code>parse_config</code>. Die Funktion
 <code>parse_config</code> enthält dann die Logik, die bestimmt, welches Argument in welche
 Variable geht und die Werte an <code>main</code> zurückgibt. Wir erstellen immer noch die
@@ -319,7 +319,7 @@ lässt die Funktion <code>parse_config</code> diese nur ausleihen, was bedeutet,
 Rusts Regeln für das Ausleihen verletzen würden, wenn <code>Config</code> versucht, die
 Eigentümerschaft für die Werte in <code>args</code> zu nehmen.</p>
 <p>Wir könnten die <code>String</code>-Daten auf verschiedene Weise verwalten, aber der
-einfachste, wenn auch etwas ineffiziente Weg ist es, die <code>clone</code>-Methode der
+einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode <code>clone</code> der
 Werte aufzurufen. Dadurch wird eine vollständige Kopie der Daten erstellt, die
 die <code>Config</code>-Instanz besitzen soll, was mehr Zeit und Speicherplatz in Anspruch
 nimmt als das Speichern einer Referenz auf die Zeichenkettendaten. Das Klonen
@@ -357,9 +357,9 @@ verschoben. Dies half uns zu erkennen, dass die Werte <code>query</code> und <co
 miteinander in Beziehung stehen und diese Beziehung in unserem Code vermittelt
 werden sollte. Wir fügten dann eine <code>Config</code>-Struktur hinzu, um das
 Zusammengehören von <code>query</code> und <code>file_path</code> zu benennen und um die Namen der
-Werte als Feldnamen der Struktur von der <code>parse_config</code>-Funktion zurückgeben zu
+Werte als Feldnamen der Struktur von der Funktion <code>parse_config</code> zurückgeben zu
 können.</p>
-<p>Da nun der Zweck der <code>parse_config</code>-Funktion darin besteht, eine
+<p>Da nun der Zweck der Funktion <code>parse_config</code> darin besteht, eine
 <code>Config</code>-Instanz zu erzeugen, können wir <code>parse_config</code> von einer einfachen
 Funktion in eine Funktion namens <code>new</code> ändern, die mit der <code>Config</code>-Struktur
 assoziiert ist. Durch diese Änderung wird der Code idiomatischer. Wir können
@@ -408,7 +408,7 @@ Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> er
 <p>Wir haben <code>main</code> aktualisiert, wo wir <code>parse_config</code> aufgerufen haben, um
 stattdessen <code>Config::new</code> aufzurufen. Wir haben den Namen von <code>parse_config</code> in
 <code>new</code> geändert und ihn innerhalb eines <code>impl</code>-Blocks verschoben, der die
-<code>new</code>-Funktion mit <code>Config</code> assoziiert. Versuche, diesen Code erneut zu
+Funktion <code>new</code> mit <code>Config</code> assoziiert. Versuche, diesen Code erneut zu
 kompilieren, um sicherzustellen, dass er funktioniert.</p>
 <h3 id="korrigieren-der-fehlerbehandlung"><a class="header" href="#korrigieren-der-fehlerbehandlung">Korrigieren der Fehlerbehandlung</a></h3>
 <p>Jetzt werden wir daran arbeiten, unsere Fehlerbehandlung zu korrigieren.
@@ -558,7 +558,7 @@ einen <code>Err</code>-Wert zurück, und wir haben den <code>Config</code>-Rück
 verpackt. Diese Änderungen machen die Funktion konform mit ihrer neuen
 Typsignatur.</p>
 <p>Die Rückgabe eines <code>Err</code>-Wertes aus <code>Config::build</code> erlaubt es der Funktion
-<code>main</code>, den von der <code>build</code>-Funktion zurückgegebenen <code>Result</code>-Wert zu verarbeiten
+<code>main</code>, den von der Funktion <code>build</code> zurückgegebenen <code>Result</code>-Wert zu verarbeiten
 und den Prozess im Fehlerfall sauberer zu beenden.</p>
 <h4 id="aufrufen-von-configbuild-und-behandeln-von-fehlern"><a class="header" href="#aufrufen-von-configbuild-und-behandeln-von-fehlern">Aufrufen von <code>Config::build</code> und Behandeln von Fehlern</a></h4>
 <p>Um den Fehlerfall zu behandeln und eine benutzerfreundliche Meldung auszugeben,

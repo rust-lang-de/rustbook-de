@@ -178,7 +178,7 @@ bereithält.</p>
 <p>Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
 <code>Component</code> definieren, die eine Methode namens <code>draw</code> enthält. Die anderen
 Klassen, z.B. <code>Button</code>, <code>Image</code> und <code>SelectBox</code>, würden von <code>Component</code> erben
-und somit die Methode <code>draw</code> erben. Sie könnten jeweils die <code>draw</code>-Methode
+und somit die Methode <code>draw</code> erben. Sie könnten jeweils die Methode <code>draw</code>
 überschreiben, um ihr eigenes Verhalten zu definieren, aber das
 Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
 <code>Component</code>-Instanzen, und <code>draw</code> aufrufen. Aber da Rust keine Vererbung hat,
@@ -266,7 +266,7 @@ gezeigt.</p>
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-5: Eine Methode <code>run</code> auf <code>Screen</code>, die die
-<code>draw</code>-Methode jeder Komponente aufruft</span></p>
+Methode <code>draw</code> jeder Komponente aufruft</span></p>
 <p>Dies funktioniert anders als die Definition einer Struktur, die einen
 generischen Typparameter mit Merkmalsabgrenzungen (trait bounds) verwendet. Ein
 generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
@@ -297,7 +297,7 @@ where
 }
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-6: Eine alternative Implementierung der
-Struktur <code>Screen</code> und ihrer <code>run</code>-Methode unter Verwendung generischer Typen
+Struktur <code>Screen</code> und ihrer Methode <code>run</code> unter Verwendung generischer Typen
 und Merkmalsabgrenzungen</span></p>
 <p>Dies schränkt uns auf eine <code>Screen</code>-Instanz ein, die eine Liste von Komponenten
 hat, die alle vom Typ <code>Button</code> oder alle vom Typ <code>TextField</code> sind. Wenn du
@@ -312,7 +312,7 @@ werden wir über die Auswirkungen auf die Laufzeitperformanz sprechen.</p>
 <p>Nun fügen wir einige Typen hinzu, die das Merkmal <code>Draw</code> implementieren. Wir
 werden den Typ <code>Button</code> zur Verfügung stellen. Auch hier liegt die eigentliche
 Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
-die <code>draw</code>-Methode keine nützliche Implementierung in ihrem Rumpf haben wird.
+die Methode <code>draw</code> keine nützliche Implementierung in ihrem Rumpf haben wird.
 Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
 Struktur <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in
 Codeblock 18-7 gezeigt:</p>
@@ -350,7 +350,7 @@ impl Draw for Button {
 Feldern anderer Komponenten; beispielsweise könnte ein Typ <code>TextField</code> diese
 Felder und zusätzlich ein <code>placeholder</code> haben. Jeder der Typen, die wir auf dem
 Bildschirm zeichnen wollen, wird das Merkmal <code>Draw</code> implementieren, aber
-unterschiedlichen Code in der <code>draw</code>-Methode verwenden, um zu definieren, wie
+unterschiedlichen Code in der Methode <code>draw</code> verwenden, um zu definieren, wie
 dieser bestimmte Typ gezeichnet werden soll, wie es hier bei <code>Button</code> der Fall
 ist (ohne wie erwähnt den eigentlichen GUI-Code). Der Typ <code>Button</code> könnte zum
 Beispiel einen zusätzlichen <code>impl</code>-Block haben, der Methoden enthält, die sich
@@ -381,7 +381,7 @@ und das Merkmal <code>Draw</code> auf einer <code>SelectBox</code>-Struktur impl
 <p>Der Benutzer unserer Bibliothek kann nun seine Funktion <code>main</code> schreiben, um
 eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz kann er eine
 <code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er jede in eine <code>Box&lt;T&gt;</code>
-setzt, um ein Merkmalsobjekt zu werden. Er kann dann die <code>run</code>-Methode auf der
+setzt, um ein Merkmalsobjekt zu werden. Er kann dann die Methode <code>run</code> auf der
 <code>Screen</code>-Instanz aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft.
 Der Codeblock 18-9 zeigt diese Umsetzung:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -429,7 +429,7 @@ implementieren</span></p>
 <p>Als wir die Bibliothek schrieben, wussten wir nicht, dass jemand den Typ
 <code>SelectBox</code> hinzufügen könnte, aber unsere <code>Screen</code>-Implementierung war in der
 Lage, mit dem neuen Typ umzugehen und ihn zu zeichnen, weil <code>SelectBox</code> das
-Merkmal <code>Draw</code> implementiert, was bedeutet, dass sie die <code>draw</code>-Methode
+Merkmal <code>Draw</code> implementiert, was bedeutet, dass sie die Methode <code>draw</code>
 implementiert.</p>
 <p>Dieses Konzept – sich nur mit den Nachrichten zu befassen, auf die ein
 Wert reagiert, und nicht mit dem konkreten Typ des Wertes – ähnelt dem
@@ -438,9 +438,9 @@ Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
 Implementierung von <code>run</code> auf <code>Screen</code> in Codeblock 18-5 braucht <code>run</code> nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines <code>Buttons</code> oder einer <code>SelectBox</code> ist, es ruft nur
-die <code>draw</code>-Methode auf der Komponente auf. Durch die Spezifikation von
+die Methode <code>draw</code> auf der Komponente auf. Durch die Spezifikation von
 <code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im <code>components</code>-Vektor haben wir <code>Screen</code> so
-definiert, dass wir Werte benötigen, auf denen wir die <code>draw</code>-Methode aufrufen
+definiert, dass wir Werte benötigen, auf denen wir die Methode <code>draw</code> aufrufen
 können.</p>
 <p>Der Vorteil der Verwendung von Merkmalsobjekten und des Rust-Typsystems zum
 Schreiben von Code, der dem Code mit Duck-Typing ähnelt, besteht darin, dass

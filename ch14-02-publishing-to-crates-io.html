@@ -145,16 +145,15 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="kisten-crate-auf-cratesio-veröffentlichen"><a class="header" href="#kisten-crate-auf-cratesio-veröffentlichen">Kisten (crate) auf crates.io veröffentlichen</a></h2>
-<p>Wir haben Pakete von <a href="https://crates.io/">crates.io</a> als
-Abhängigkeiten (dependencies) unseres Projekts verwendet. Du kannst deinen
-Programmcode jedoch auch für andere Personen freigeben, indem du eigene Pakete
-veröffentlichst. Die Registrierung von Kisten auf <a href="https://crates.io/">crates.io</a>
-verteilt den Quellcode deiner Pakete, daher wird primär Open Source Programmcode
-gehostet.</p>
-<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern, ihr
-veröffentlichtes Paket zu finden und zu verwenden. Wir werden nun über einige
-dieser Funktionalitäten sprechen und dann erklären, wie ein Paket veröffentlicht
-wird.</p>
+<p>Wir haben Pakete von <a href="https://crates.io/">crates.io</a> als Abhängigkeiten (dependencies)
+unseres Projekts verwendet. Du kannst deinen Programmcode jedoch auch für
+andere Personen freigeben, indem du eigene Pakete veröffentlichst. Die
+Registrierung von Kisten auf <a href="https://crates.io/">crates.io</a> verteilt den Quellcode deiner
+Pakete, daher wird primär Open Source Programmcode gehostet.</p>
+<p>Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern,
+ihr veröffentlichtes Paket zu finden und zu verwenden. Wir werden nun über
+einige dieser Funktionalitäten sprechen und dann erklären, wie ein Paket
+veröffentlicht wird.</p>
 <h3 id="sinnvolle-dokumentationskommentare-erstellen"><a class="header" href="#sinnvolle-dokumentationskommentare-erstellen">Sinnvolle Dokumentationskommentare erstellen</a></h3>
 <p>Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen,
 wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
@@ -172,7 +171,7 @@ Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
 14-1 zeigt Dokumentationskommentare für eine Funktion <code>add_one</code> in einer Kiste
 mit dem Namen <code>my_crate</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore">/// Adds one to the number given 
+<pre><code class="language-rust ignore">/// Adds one to the number given
 ///
 /// # Examples 
 ///
@@ -184,9 +183,9 @@ mit dem Namen <code>my_crate</code>.</p>
 /// ```
 pub fn add_one(x: i32) -&gt; i32 {
     x + 1
-}
-</code></pre>
-<p><span class="caption">Codeblock 14-1: Ein Dokumentationskommentar für eine Funktion</span></p>
+}</code></pre>
+<p><span class="caption">Codeblock 14-1: Ein Dokumentationskommentar für eine
+Funktion</span></p>
 <p>Hier geben wir eine Beschreibung der Funktionsweise der Funktion <code>add_one</code> an,
 beginnen einen Abschnitt mit der Überschrift <code>Examples</code> gefolgt vom
 Programmcode, der die Verwendung der Funktion <code>add_one</code> demonstriert. Wir können
@@ -265,24 +264,24 @@ beginnen. Siehe Codeblock 14-2.</p>
 
 /// Adds one to the number given.
 // --abschneiden--
-#///
-#/// # Examples
-#///
-#/// ```
-#/// let arg = 5;
-#/// let answer = my_crate::add_one(arg);
-#///
-#/// assert_eq!(6, answer);
-#/// ```
-#pub fn add_one(x: i32) -&gt; i32 {
-<span class="boring">   x + 1
-</span>#}</code></pre>
+<span class="boring">///
+</span><span class="boring">/// # Examples
+</span><span class="boring">///
+</span><span class="boring">/// ```
+</span><span class="boring">/// let arg = 5;
+</span><span class="boring">/// let answer = my_crate::add_one(arg);
+</span><span class="boring">///
+</span><span class="boring">/// assert_eq!(6, answer);
+</span><span class="boring">/// ```
+</span><span class="boring">pub fn add_one(x: i32) -&gt; i32 {
+</span><span class="boring">    x + 1
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 14-2: Dokumentation für die gesamte
 <code>my_crate</code>-Kiste</span></p>
 <p>Beachte, dass nach der letzten Zeile, die mit <code>//!</code> beginnt, kein Programmcode
 mehr vorhanden ist. Da wir die Kommentare mit <code>//!</code> anstatt <code>///</code> begonnen
-haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht ein
-Element, das diesem Kommentar folgt. In diesem Fall ist dieses Element die
+haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht
+ein Element, das diesem Kommentar folgt. In diesem Fall ist dieses Element die
 Datei <em>src/lib.rs</em>, dabei handelt es sich um das Wurzelverzeichnis der Kiste.
 Diese Kommentare beschreiben die gesamte Kiste.</p>
 <p>Wenn wir <code>cargo doc --open</code> ausführen, werden diese Kommentare auf der
@@ -296,10 +295,11 @@ Kisten und Module zu beschreiben. Erkläre anhand dieser Informationen den
 allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Kiste
 besser verstehen können.</p>
 <h3 id="mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren"><a class="header" href="#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren">Mit <code>pub use</code> eine benutzerfreundliche öffentliche API exportieren</a></h3>
-<p>Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste eine
-wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur weniger
-vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu finden,
-die sie verwenden möchten, wenn deine Kiste eine große Modulhierarchie aufweist.</p>
+<p>Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste
+eine wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur
+weniger vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu
+finden, die sie verwenden möchten, wenn deine Kiste eine große Modulhierarchie
+aufweist.</p>
 <p>In Kapitel 7 wurde erläutert, wie wir unseren Programmcode mithilfe des
 Schlüsselworts <code>mod</code> in Module organisieren, Elemente mit dem Schlüsselwort
 <code>pub</code> veröffentlichen und Elemente mit dem Schlüsselwort <code>use</code> in einen
@@ -310,8 +310,8 @@ in einer Hierarchie mit mehreren Ebenen organisieren, aber Personen, die einen
 Typ verwenden möchten, den du tief in der Hierarchie definiert hast, haben
 möglicherweise Probleme, herauszufinden, ob dieser Typ vorhanden ist. Sie
 könnten sich auch darüber ärgern, dass sie <code>use</code>
-<code>my_crate::some_module::another_module::UsefulType;</code>
-eingeben müssen anstatt <code>use</code> <code>my_crate::UsefulType;</code>.</p>
+<code>my_crate::some_module::another_module::UsefulType;</code> eingeben müssen anstatt
+<code>use</code> <code>my_crate::UsefulType;</code>.</p>
 <p>Die gute Nachricht ist, dass du die interne Organisation nicht neu anordnen
 musst, wenn sie für andere aus einer anderen Bibliothek <em>nicht</em> geeignet ist.
 Stattdessen kannst du Elemente erneut exportieren, um mit <code>pub use</code> eine
@@ -438,10 +438,10 @@ Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen <code>PrimaryColor</cod
 <img alt="Rendered documentation for the `art` crate with the re-exports on the front page" src="img/trpl14-04.png" class="center" />
 <p><span class="caption">Abbildung 14-4: Die Startseite der Dokumentation von
 <code>art</code> mit den aufgelisteten erneuten Exporten</span></p>
-<p>Die Benutzer der <code>art</code>-Kiste können weiterhin die interne Struktur aus Codeblock
-14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde, oder sie
-können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden, wie es im
-Codeblock 14-6 gezeigt wurde:</p>
+<p>Die Benutzer der <code>art</code>-Kiste können weiterhin die interne Struktur aus
+Codeblock 14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde,
+oder sie können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden,
+wie es im Codeblock 14-6 gezeigt wurde:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use art::mix;
 use art::PrimaryColor;
@@ -460,25 +460,23 @@ Benutzer der Kiste signifikant verbessern. Eine andere häufige Verwendung von
 <code>pub use</code> ist es, Definitionen einer Abhängigkeit in der aktuellen Kiste zu
 re-exportieren, um die Definitionen dieser Kiste zu einem Teil der öffentlichen
 API deiner Kiste zu machen.</p>
-<p>Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst als
-eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
+<p>Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst
+als eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
 Benutzer am besten geeignet ist. Wenn man <code>pub use</code> wählt, erhält man
 Flexibilität bei der internen Strukturierung einer Kiste und entkoppelt diese
 interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir
-einige der Programmcodes von Kisten an die du installiert hast, um festzustellen,
-ob sie intern strukturiert sind und ob sich ihre interne Struktur von der
-öffentlichen API unterscheidet.</p>
-<h3 id="einrichten-eines-kontos-auf-cratesio"><a class="header" href="#einrichten-eines-kontos-auf-cratesio">Einrichten eines Kontos auf Crates.io</a></h3>
+einige der Programmcodes von Kisten an die du installiert hast, um
+festzustellen, ob sie intern strukturiert sind und ob sich ihre interne
+Struktur von der öffentlichen API unterscheidet.</p>
+<h3 id="einrichten-eines-kontos-auf-cratesio"><a class="header" href="#einrichten-eines-kontos-auf-cratesio">Einrichten eines Kontos auf crates.io</a></h3>
 <p>Bevor man eine Kiste veröffentlichen kann, muss man ein Konto auf
-<a href="https://crates.io/">crates.io</a> erstellen um ein API-Token zu
-erhalten. Besuche dazu die Homepage auf <a href="https://crates.io/">crates.io</a>
-und melde dich über ein GitHub-Konto an. (Derzeit ist ein GitHub-Konto eine
-Voraussetzung, aber die Seite wird möglicherweise in Zukunft andere Wege einen
-Account zu erstellen ermöglichen.) Sobald du angemeldet bist, gehe zu
-Kontoeinstellungen (account settings) auf
-<a href="https://crates.io/me/">https://crates.io/me/</a> und erhalte deinen
-API-Schlüssel. Rufe anschließend das Kommando <code>cargo login</code> mit deinem
-API-Schlüssel auf:</p>
+<a href="https://crates.io/">crates.io</a> erstellen um ein API-Token zu erhalten. Besuche dazu die
+Homepage auf <a href="https://crates.io/">crates.io</a> und melde dich über ein GitHub-Konto an.
+(Derzeit ist ein GitHub-Konto eine Voraussetzung, aber die Seite wird
+möglicherweise in Zukunft andere Wege einen Account zu erstellen ermöglichen.)
+Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf
+<a href="https://crates.io/me/">https://crates.io/me/</a> und erhalte deinen API-Schlüssel. Rufe
+anschließend das Kommando <code>cargo login</code> mit deinem API-Schlüssel auf:</p>
 <pre><code class="language-console">$ cargo login
 abcdefghijklmnopqrstuvwxyz012345
 </code></pre>
@@ -553,12 +551,12 @@ license = "MIT OR Apache-2.0"
 
 [dependencies]
 </code></pre>
-<p><a href="https://doc.rust-lang.org/cargo/">Cargos documentation</a> beschreibt andere
-Metadaten, die du angeben kannst, um sicherzustellen, dass andere deine Kiste
-leichter entdecken und verwenden können.</p>
-<h3 id="veröffentlichen-auf-cratesio"><a class="header" href="#veröffentlichen-auf-cratesio">Veröffentlichen auf Crates.io</a></h3>
-<p>Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für seine
-Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
+<p>Die <a href="https://doc.rust-lang.org/cargo/">Cargo-Documentation</a> beschreibt andere Metadaten, die du
+angeben kannst, um sicherzustellen, dass andere deine Kiste leichter entdecken
+und verwenden können.</p>
+<h3 id="veröffentlichen-auf-cratesio"><a class="header" href="#veröffentlichen-auf-cratesio">Veröffentlichen auf crates.io</a></h3>
+<p>Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für
+seine Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
 Version auf <a href="https://crates.io/">crates.io</a> hochgeladen, damit andere sie verwenden können.</p>
 <p>Sei vorsichtig, da eine Veröffentlichung <em>dauerhaft</em> ist. Die Version kann
@@ -583,12 +581,12 @@ Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
 für sein Projekt hinzufügen.</p>
 <h3 id="veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste"><a class="header" href="#veröffentlichen-einer-neuen-version-einer-vorhandenen-kiste">Veröffentlichen einer neuen Version einer vorhandenen Kiste</a></h3>
 <p>Wenn du Änderungen an deiner Kiste vorgenommen hast und bereit bist, eine neue
-Version zu veröffentlichen, ändere den in der <em>Cargo.toml</em>-Datei
-angegebenen Versionswert und veröffentliche ihn erneut. Verwende die
-<a href="https://semver.org/lang/de/">Regeln für die semantische Versionierung</a>, um auf den von dir
-vorgenommenen Änderungen basierend welche neue Versionsnummer geeignet ist.
-Führe dann <code>cargo publish</code> aus, um die neue Version hochzuladen.</p>
-<h3 id="mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen"><a class="header" href="#mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen">Mit <code>cargo yank</code> Versionen auf Crates.io als veraltet kennzeichnen</a></h3>
+Version zu veröffentlichen, ändere den in der <em>Cargo.toml</em>-Datei angegebenen
+Versionswert und veröffentliche ihn erneut. Verwende die <a href="https://semver.org/lang/de/">Regeln für die
+semantische Versionierung</a>, um auf den von dir vorgenommenen Änderungen
+basierend welche neue Versionsnummer geeignet ist. Führe dann <code>cargo publish</code>
+aus, um die neue Version hochzuladen.</p>
+<h3 id="mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen"><a class="header" href="#mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen">Mit <code>cargo yank</code> Versionen auf crates.io als veraltet kennzeichnen</a></h3>
 <p>Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
 ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt

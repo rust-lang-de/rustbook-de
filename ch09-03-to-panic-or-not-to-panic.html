@@ -203,7 +203,7 @@ let home: IpAddr = "127.0.0.1"
 <p>Wir erstellen eine <code>IpAddr</code>-Instanz, indem wir eine hartkodierte Zeichenkette
 parsen. Wir können sehen, dass <code>127.0.0.1</code> eine gültige IP-Adresse ist, sodass
 es akzeptabel ist, hier <code>expect</code> zu verwenden. Eine hartkodierte, gültige
-Zeichenkette ändert jedoch nicht den Rückgabetyp der <code>parse</code>-Methode: Wir
+Zeichenkette ändert jedoch nicht den Rückgabetyp der Methode <code>parse</code>: Wir
 erhalten immer noch einen <code>Result</code>-Wert und der Compiler wird von uns
 verlangen, <code>Result</code> so zu behandeln, als ob die <code>Err</code>-Variante möglich wäre,
 weil der Compiler nicht klug genug ist, um zu erkennen, dass diese

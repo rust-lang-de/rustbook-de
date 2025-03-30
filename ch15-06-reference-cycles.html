@@ -146,7 +146,7 @@
                     <main>
                         <h2 id="referenzzyklen-können-zu-einem-speicherleck-führen"><a class="header" href="#referenzzyklen-können-zu-einem-speicherleck-führen">Referenzzyklen können zu einem Speicherleck führen</a></h2>
 <p>Die Speichersicherheitsgarantien von Rust machen es schwierig, aber nicht
-unmöglich, versehentlich Speicher zu erstellen, der niemals aufgeräumt wird
+unmöglich, versehentlich Speicher zu allokieren, der niemals aufgeräumt wird
 (bekannt als <em>Speicherleck</em> (memory leak)). Das vollständige Verhindern von
 Speicherlecks gehört nicht zu den Garantien von Rust, d.h. Speicherlecks sind
 in Rust speichersicher. Wir können sehen, dass Rust Speicherlecks mithilfe von
@@ -155,7 +155,7 @@ denen Elemente in einem Zyklus aufeinander referenzieren. Dies führt zu
 Speicherlecks, da der Referenzzähler jedes Elements im Zyklus niemals 0
 erreicht und die Werte niemals aufgeräumt werden.</p>
 <h3 id="einen-referenzzyklus-erstellen"><a class="header" href="#einen-referenzzyklus-erstellen">Einen Referenzzyklus erstellen</a></h3>
-<p>Schauen wir uns an, wie ein Referenzzyklus stattfinden kann und wie er verhindert
+<p>Schauen wir uns an, wie ein Referenzzyklus passieren und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung <code>List</code> und einer
 Methode <code>tail</code> in Codeblock 15-25.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -185,15 +185,15 @@ referenziert</span></p>
 <p>Wir verwenden eine andere Variante der <code>List</code>-Definition aus Codeblock 15-5.
 Das zweite Element in der <code>Cons</code>-Variante ist jetzt <code>RefCell&lt;Rc&lt;List&gt;&gt;</code>. Dies
 bedeutet, dass wir anstelle der Möglichkeit, den <code>i32</code>-Wert wie in Codeblock
-15-24 zu ändern, den <code>List</code>-Wert einer <code>Cons</code>-Variante ändern auf den sie
-zeigt. Wir fügen eine <code>tail</code>-Methode hinzu, damit wir bequem auf das zweite
+15-24 zu ändern, den <code>List</code>-Wert einer <code>Cons</code>-Variante ändern, auf den sie
+zeigt. Wir fügen eine Methode <code>tail</code> hinzu, damit wir bequem auf das zweite
 Element zugreifen können, wenn wir eine <code>Cons</code>-Variante haben.</p>
 <p>In Codeblock 15-26 fügen wir eine Funktion <code>main</code> hinzu, die die Definitionen
-in Codeblock 15-25 verwendet. Dieser Code erstellt eine Liste in <code>a</code> und eine
-Liste in <code>b</code>, die auf die Liste in <code>a</code> verweist. Anschließend wird die Liste in
-<code>a</code> so geändert, dass sie auf <code>b</code> zeigt, wodurch ein Referenzzyklus erstellt
-wird. Es gibt <code>println!</code>-Anweisungen auf dem Weg, um zu zeigen, wie hoch der
-Referenzzähler an verschiedenen Punkten in diesem Prozess sind.</p>
+in Codeblock 15-25 verwendet. Dieser Code erstellt eine Liste <code>a</code> und eine
+Liste <code>b</code>, die auf die Liste <code>a</code> zeigt. Anschließend wird die Liste <code>a</code> so
+geändert, dass sie auf <code>b</code> zeigt, wodurch ein Referenzzyklus erstellt wird. Wir
+fügen <code>println!</code>-Anweisungen ein, um zu zeigen, wie hoch der Referenzzähler an
+den jeweiligen Stellen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust"><span class="boring">use crate::List::{Cons, Nil};
 </span><span class="boring">use std::cell::RefCell;
@@ -234,19 +234,19 @@ Referenzzähler an verschiedenen Punkten in diesem Prozess sind.</p>
     println!("a Rc-Zählung nach Änderung von a = {}", Rc::strong_count(&amp;a));
 
     // Kommentiere die nächste Zeile aus, um zu sehen, dass wir einen Zyklus haben;
-    // es wird den Stapelspeicher überlaufen lassen
+    // sie wird den Stapelspeicher (stack) überlaufen lassen.
     // println!("a nächstes Element = {:?}", a.tail());
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-26: Erstellen eines Referenzzyklus aus zwei
-aufeinanderzeigenden Listenwerten</span></p>
+Listenwerten, die aufeinander zeigen</span></p>
 <p>Wir erstellen eine <code>Rc&lt;List&gt;</code>-Instanz, die einen <code>List</code>-Wert in der Variablen
 <code>a</code> mit einer initialen Liste <code>5, Nil</code> enthält. Wir erstellen dann eine
 <code>Rc&lt;List&gt;</code>-Instanz, die einen anderen <code>List</code>-Wert in der Variablen <code>b</code> enthält,
 die den Wert <code>10</code> enthält und auf die Liste in <code>a</code> zeigt.</p>
 <p>Wir modifizieren <code>a</code> so, dass es auf <code>b</code> anstatt auf <code>Nil</code> zeigt, wodurch ein
-Zyklus erstellt wird. Wir tun dies, indem wir die <code>tail</code>-Methode verwenden, um
+Zyklus erstellt wird. Wir tun dies, indem wir die Methode <code>tail</code> verwenden, um
 eine Referenz auf <code>RefCell&lt;Rc&lt;List&gt;&gt;</code> in <code>a</code> zu erhalten, die wir in die
-Variable <code>link</code> einfügen. Dann verwenden wir die <code>borrow_mut</code>-Methode für
+Variable <code>link</code> einfügen. Dann verwenden wir die Methode <code>borrow_mut</code> für
 <code>RefCell&lt;Rc&lt;List&gt;&gt;</code>, um den Wert von <code>Rc&lt;List&gt;</code>, der einen <code>Nil</code>-Wert enthält,
 in <code>Rc&lt;List&gt;</code> in <code>b</code> zu ändern.</p>
 <p>Wenn wir diesen Programmcode ausführen und das letzte <code>println!</code>
@@ -275,11 +275,11 @@ andere <code>Rc&lt;List&gt;</code>-Instanz immer noch auf sie referenziert. Der 
 zugewiesene Speicher bleibt für immer unaufgeräumt. Das Diagramm in Abbildung
 15-4 veranschaulicht diesen Referenzzyklus.</p>
 <img alt="Referenzzyklus von Listen" src="img/trpl15-04.svg" class="center" style="width: 40%;" />
-<p><span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen <code>a</code> und <code>b</code>,
-die aufeinander zeigen</span></p>
+<p><span class="caption">Abbildung 15-4: Ein Referenzzyklus der Listen <code>a</code> und
+<code>b</code>, die aufeinander zeigen</span></p>
 <p>Wenn man das letzte <code>println!</code> auskommentiert und das Programm ausführt,
-versucht Rust, diesen Zyklus mit <code>a</code> auszugeben, wobei <code>b</code> auf <code>a</code> zeigt, und so
-weiter, bis der Stapelspeicher (stack) überläuft.</p>
+versucht Rust, diesen Zyklus mit <code>a</code> auszugeben, wobei <code>b</code> auf <code>a</code> zeigt, und
+so weiter, bis der Stapelspeicher (stack) überläuft.</p>
 <p>Im Vergleich zu einem realen Programm sind die Konsequenzen, die das Anlegen
 eines Referenzzyklus in diesem Beispiel hat, nicht sehr schlimm: Gleich nachdem
 wir den Referenzzyklus angelegt haben, endet das Programm. Wenn jedoch ein
@@ -298,7 +298,7 @@ Softwareentwicklung minimieren solltest.</p>
 <p>Eine andere Lösung zur Vermeidung von Referenzzyklen besteht darin, deine
 Datenstrukturen so zu reorganisieren, dass einige Referenzen die
 Eigentümerschaft (ownership) erhalten und andere nicht. Infolgedessen können
-Zyklen bestehen, die aus Beziehungen mit und ohne Eigentümerschaft bestehen,
+Zyklen entstehen, die aus Beziehungen mit und ohne Eigentümerschaft bestehen,
 und nur die Beziehungen mit Eigentümerschaft beeinflussen, ob ein
 Wert aufgeräumt wird oder nicht. In Codeblock 15-25 möchten wir immer, dass
 <code>Cons</code>-Varianten ihre Liste besitzen, sodass eine Neuorganisation der
@@ -325,12 +325,12 @@ verwendet <code>weak_count</code>, um den Überblick zu behalten wie viele
 <code>Weak&lt;T&gt;</code>-Referenzen existieren, ähnlich wie bei <code>strong_count</code>. Der
 Unterschied besteht darin, dass <code>weak_count</code> nicht 0 sein muss, damit die
 <code>Rc&lt;T&gt;</code>-Instanz aufgeräumt wird.</p>
-<p>Da der Wert, auf den <code>Weak&lt;T&gt;</code> referenziert, möglicherweise aufgeräumt wurde, musst
-du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert zu
-tun, auf den ein <code>Weak&lt;T&gt;</code> zeigt. Ruft man dazu die Methode <code>upgrade</code> für eine
-<code>Weak&lt;T&gt;</code>-Instanz auf, die eine <code>Option&lt;Rc&lt;T&gt;&gt;</code>zurückgibt, erhält man ein <code>Some</code>
-als Ergebnis, wenn der Wert <code>Rc&lt;T&gt;</code> noch nicht aufgeräumt wurde, und das Ergebnis
-<code>None</code>, wenn der <code>Rc&lt;T&gt;</code>-Wert aufgeräumt wurde. Da <code>upgrade</code> eine
+<p>Da der Wert, auf den <code>Weak&lt;T&gt;</code> referenziert, möglicherweise aufgeräumt wurde,
+musst du sicherstellen, dass der Wert noch vorhanden ist, um etwas mit dem Wert
+zu tun, auf den ein <code>Weak&lt;T&gt;</code> zeigt. Ruft man dazu die Methode <code>upgrade</code> für
+eine <code>Weak&lt;T&gt;</code>-Instanz auf, die eine <code>Option&lt;Rc&lt;T&gt;&gt;</code>zurückgibt, erhält man ein
+<code>Some</code> als Ergebnis, wenn der Wert <code>Rc&lt;T&gt;</code> noch nicht aufgeräumt wurde, und das
+Ergebnis <code>None</code>, wenn der <code>Rc&lt;T&gt;</code>-Wert aufgeräumt wurde. Da <code>upgrade</code> eine
 <code>Option&lt;Rc&lt;T&gt;&gt;</code> zurückgibt, stellt Rust sicher, dass der Fall <code>Some</code> und der
 Fall <code>None</code> behandelt werden und es keine ungültigen Zeiger gibt.</p>
 <p>Anstatt eine Liste zu verwenden, deren Elemente nur das nächste Element kennen,
@@ -338,9 +338,8 @@ erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente <em>und</em> d
 Eltern-Elemente kennen.</p>
 <h4 id="erstellen-einer-baumdatenstruktur-ein-knoten-mit-kind-knoten"><a class="header" href="#erstellen-einer-baumdatenstruktur-ein-knoten-mit-kind-knoten">Erstellen einer Baumdatenstruktur: Ein Knoten mit Kind-Knoten</a></h4>
 <p>Zunächst erstellen wir eine Baumstruktur mit Knoten (nodes), die ihre
-Kind-Knoten kennen. Wir erstellen eine Struktur mit dem
-Namen <code>Node</code>, die ihren eigenen <code>i32</code>-Wert sowie Referenzen auf die
-Kind-<code>Node</code>-Werte enthält:</p>
+Kind-Knoten kennen. Wir erstellen eine Struktur mit dem Namen <code>Node</code>, die ihren
+eigenen <code>i32</code>-Wert sowie Referenzen auf die Kind-<code>Node</code>-Werte enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust">use std::cell::RefCell;
 use std::rc::Rc;
@@ -365,7 +364,7 @@ struct Node {
 Eigentümerschaft mit Variablen teilen, damit wir direkt auf jeden <code>Node</code> in
 der Baumstruktur zugreifen können. Zu diesem Zweck definieren wir die
 <code>Vec&lt;T&gt;</code>-Elemente als Werte vom Typ <code>Rc&lt;Node&gt;</code>. Wir möchten auch ändern, welche
-Knoten Kind-Knoten eines anderen Knotens sind, sodass wir einen <code>RefCell&lt;T&gt;</code> in
+Knoten Kind-Knoten eines anderen Knotens sind, sodass wir ein <code>RefCell&lt;T&gt;</code> in
 <code>children</code> um den <code>Vec&lt;Rc&lt;Node&gt;&gt;</code> haben.</p>
 <p>Als Nächstes verwenden wir unsere Strukturdefinition und erstellen eine
 <code>Node</code>-Instanz mit dem Namen <code>leaf</code> und dem Wert <code>3</code> und ohne Kind-Elemente,
@@ -394,21 +393,20 @@ als Kind-Element, wie in Codeblock 15-27 gezeigt wird.</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-27: Erstellen eines <code>leaf</code>-Knotens ohne
 Kind-Element und eines <code>branch</code>-Knotens mit <code>leaf</code> als Kind-Element</span></p>
-<p>Wir klonen den <code>Rc&lt;Node&gt;</code> in <code>leaf</code> und speichern ihn in <code>branch</code>, was bedeutet,
+<p>Wir klonen <code>Rc&lt;Node&gt;</code> in <code>leaf</code> und speichern ihn in <code>branch</code>, was bedeutet,
 dass der <code>Node</code> in <code>leaf</code> jetzt zwei Eigentümer hat: <code>leaf</code> und <code>branch</code>. Wir
 können über <code>branch.children</code> von <code>branch</code> zu <code>leaf</code> gelangen, aber es gibt
-keine Möglichkeit, von <code>leaf</code> zu <code>branch</code> zu gelangen. Der Grund dafür ist, dass
-<code>leaf</code> keine Referenz zu <code>branch</code> hat und daher nicht weiß, dass diese in
+keine Möglichkeit, von <code>leaf</code> zu <code>branch</code> zu gelangen. Der Grund dafür ist,
+dass <code>leaf</code> keine Referenz zu <code>branch</code> hat und daher nicht weiß, dass diese in
 Beziehung stehen. Wir möchten, dass <code>leaf</code> weiß, dass <code>branch</code> ein
 übergeordnetes Element ist. Das machen wir als Nächstes.</p>
 <h4 id="hinzufügen-einer-referenz-vom-kind--zum-eltern-element"><a class="header" href="#hinzufügen-einer-referenz-vom-kind--zum-eltern-element">Hinzufügen einer Referenz vom Kind- zum Eltern-Element</a></h4>
-<p>Um dem Kind-Knoten seinen Eltern-Knoten bewusst zu
-machen, müssen wir unserer Strukturdefinition <code>Node</code> ein <code>parent</code>-Feld
-hinzufügen. Das Problem besteht darin, zu entscheiden, welcher Typ <code>parent</code> sein
-soll. Wir wissen, dass es keinen <code>Rc&lt;T&gt;</code> enthalten kann, da dies einen
-Referenzzyklus erzeugen würde, bei dem <code>leaf.parent</code> auf <code>branch</code> und
-<code>branch.children</code> auf <code>leaf</code> zeigt, was dazu führen würde das die
-<code>strong_count</code>-Werte niemals 0 sein würden.</p>
+<p>Um dem Kind-Knoten seinen Eltern-Knoten bewusst zu machen, müssen wir unserer
+Strukturdefinition <code>Node</code> ein <code>parent</code>-Feld hinzufügen. Das Problem besteht
+darin, zu entscheiden, welcher Typ <code>parent</code> sein soll. Wir wissen, dass es
+keinen <code>Rc&lt;T&gt;</code> enthalten kann, da dies einen Referenzzyklus erzeugen würde, bei
+dem <code>leaf.parent</code> auf <code>branch</code> und <code>branch.children</code> auf <code>leaf</code> zeigt, was dazu
+führen würde das die <code>strong_count</code>-Werte niemals 0 sein würden.</p>
 <p>Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
 die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten
 aufgeräumt wird, sollten auch seine Kind-Knoten aufgeräumt werden. Ein
@@ -487,25 +485,24 @@ Referenz auf seinen Eltern-Knoten <code>branch</code></span></p>
 <p>Das Erstellen des <code>leaf</code>-Knotens ähnelt Codeblock 15-27 mit Ausnahme des Feldes
 <code>parent</code>: <code>leaf</code> beginnt ohne Eltern-Knoten, daher erstellen wir eine neue
 leere <code>Weak&lt;Node&gt;</code>-Referenz-Instanz.</p>
-<p>Wenn wir zu diesem Zeitpunkt versuchen, mit der Methode <code>upgrade</code> eine
-Referenz auf das Eltern-Element von <code>leaf</code> zu bekommen, erhalten wir den
-Wert <code>None</code>. Wir sehen dies in der Ausgabe der ersten <code>println!</code>-Anweisung:</p>
+<p>Wenn wir zu diesem Zeitpunkt versuchen, mit der Methode <code>upgrade</code> eine Referenz
+auf das Eltern-Element von <code>leaf</code> zu bekommen, erhalten wir den Wert <code>None</code>.
+Wir sehen dies in der Ausgabe der ersten <code>println!</code>-Anweisung:</p>
 <pre><code class="language-text">leaf parent = None
 </code></pre>
-<p>Wenn wir den <code>branch</code>-Knoten erstellen, hat er auch eine neue <code>Weak&lt;Node&gt;</code>-Referenz
-im Feld <code>parent</code>, da <code>branch</code> keinen Eltern-Knoten hat. Wir haben
-noch immer <code>leaf</code> als Kind-Element von <code>branch</code>. Sobald
-wir die <code>Node</code>-Instanz in <code>branch</code> haben, können wir <code>leaf</code> ändern, um ihm eine
-<code>Weak&lt;Node&gt;</code>-Referenz auf sein Eltern-Element zu geben. Wir verwenden
-die <code>borrow_mut</code>-Methode für <code>RefCell&lt;Weak&lt;Node&gt;&gt;</code> im <code>parent</code>-Feld von <code>leaf</code> und
+<p>Wenn wir den <code>branch</code>-Knoten erstellen, hat er auch eine neue
+<code>Weak&lt;Node&gt;</code>-Referenz im Feld <code>parent</code>, da <code>branch</code> keinen Eltern-Knoten hat.
+Wir haben noch immer <code>leaf</code> als Kind-Element von <code>branch</code>. Sobald wir die
+<code>Node</code>-Instanz in <code>branch</code> haben, können wir <code>leaf</code> ändern, um ihm eine
+<code>Weak&lt;Node&gt;</code>-Referenz auf sein Eltern-Element zu geben. Wir verwenden die
+Methode <code>borrow_mut</code> für <code>RefCell&lt;Weak&lt;Node&gt;&gt;</code> im <code>parent</code>-Feld von <code>leaf</code> und
 verwenden dann die Funktion <code>Rc::downgrade</code>, um eine <code>Weak&lt;Node&gt;</code>-Referenz auf
 <code>branch</code> aus dem <code>Rc&lt;Node&gt;</code> in <code>branch</code> zu erzeugen.</p>
-<p>Wenn wir das Eltern-Element von <code>leaf</code> erneut ausgeben, erhalten wir
-diesmal eine <code>Some</code>-Variante mit <code>branch</code>: Jetzt kann <code>leaf</code> auf das
-Eltern-Element zugreifen! Wenn wir <code>leaf</code> ausgeben, vermeiden wir auch
-den Zyklus, der schließlich zu einem Stapelspeicherüberlauf führte, wie wir ihn
-in Codeblock 15-26 hatten. Die <code>Weak&lt;Node&gt;</code>-Referenzen werden als <code>(Weak)</code>
-ausgegeben:</p>
+<p>Wenn wir das Eltern-Element von <code>leaf</code> erneut ausgeben, erhalten wir diesmal
+eine <code>Some</code>-Variante mit <code>branch</code>: Jetzt kann <code>leaf</code> auf das Eltern-Element
+zugreifen! Wenn wir <code>leaf</code> ausgeben, vermeiden wir auch den Zyklus, der
+schließlich zu einem Stapelspeicherüberlauf führte, wie wir ihn in Codeblock
+15-26 hatten. Die <code>Weak&lt;Node&gt;</code>-Referenzen werden als <code>(Weak)</code> ausgegeben:</p>
 <pre><code class="language-text">leaf parent = Some(Node { value: 5, parent: RefCell { value: (Weak) },
 children: RefCell { value: [Node { value: 3, parent: RefCell { value: (Weak) },
 children: RefCell { value: [] } }] } })
@@ -575,22 +572,23 @@ sind in Codeblock 15-29 aufgeführt.</p>
 <p><span class="caption">Codeblock 15-29: Erstellen von <code>branch</code> in einem inneren
 Gültigkeitsbereich und Prüfen der starken und schwachen Referenzzähler</span></p>
 <p>Nachdem <code>leaf</code> erstellt wurde, hat <code>Rc&lt;Node&gt;</code> einen <code>strong_count</code> von 1 und
-einen <code>weak_count</code> von 0. Im inneren Gültigkeitsbereich erstellen wir <code>branch</code> und ordnen
-ihm <code>leaf</code> zu. Zum Zeitpunkt des Ausgebens der Zähler, hat der <code>Rc&lt;Node&gt;</code> in
-<code>branch</code> einen <code>strong_count</code> von 1 und einen <code>weak_count</code> von 1 (da <code>leaf.parent</code>
-mit einen <code>Weak&lt;Node&gt;</code> auf <code>branch</code> zeigt). Wenn wir den Zähler in <code>leaf</code>
-ausgeben, werden wir sehen, dass er einen <code>strong_count</code> von 2 hat, da <code>branch</code>
-jetzt einen Klon des <code>Rc&lt;Node&gt;</code> von <code>leaf</code> in <code>branch.children</code> gespeichert hat,
-aber immer noch einen <code>weak_count</code>von 0 hat.</p>
+einen <code>weak_count</code> von 0. Im inneren Gültigkeitsbereich erstellen wir <code>branch</code>
+und ordnen ihm <code>leaf</code> zu. Zum Zeitpunkt des Ausgebens der Zähler, hat der
+<code>Rc&lt;Node&gt;</code> in <code>branch</code> einen <code>strong_count</code> von 1 und einen <code>weak_count</code> von 1
+(da <code>leaf.parent</code> mit einen <code>Weak&lt;Node&gt;</code> auf <code>branch</code> zeigt). Wenn wir den
+Zähler in <code>leaf</code> ausgeben, werden wir sehen, dass er einen <code>strong_count</code> von 2
+hat, da <code>branch</code> jetzt einen Klon des <code>Rc&lt;Node&gt;</code> von <code>leaf</code> in
+<code>branch.children</code> gespeichert hat, aber immer noch einen <code>weak_count</code>von 0 hat.</p>
 <p>Wenn der innere Gültigkeitsbereich endet, verlässt <code>branch</code> den
 Gültigkeitsbereich und der <code>strong_count</code> von <code>Rc&lt;Node&gt;</code> sinkt auf 0, sodass
 sein <code>Node</code> aufgeräumt wird. Der <code>weak_count</code> von 1 aus <code>leaf_parent</code> hat keinen
 Einfluss darauf, ob <code>Node</code> aufgeräumt wird oder nicht, sodass wir kein
 Speicherleck bekommen!</p>
-<p>Wenn wir nach dem Ende des Gültigkeitsbereichs versuchen, auf das Eltern-Element von
-<code>leaf</code> zuzugreifen, erhalten wir erneut <code>None</code>. Am Ende des Programms hat der
-<code>Rc&lt;Node&gt;</code> in <code>branch</code> einen <code>strong_count</code> von 1 und einen <code>weak_count</code> von 0, da
-die Variable <code>branch</code> jetzt wieder die einzige Referenz auf <code>Rc&lt;Node&gt;</code> ist.</p>
+<p>Wenn wir nach dem Ende des Gültigkeitsbereichs versuchen, auf das
+Eltern-Element von <code>leaf</code> zuzugreifen, erhalten wir erneut <code>None</code>. Am Ende des
+Programms hat der <code>Rc&lt;Node&gt;</code> in <code>branch</code> einen <code>strong_count</code> von 1 und einen
+<code>weak_count</code> von 0, da die Variable <code>branch</code> jetzt wieder die einzige Referenz
+auf <code>Rc&lt;Node&gt;</code> ist.</p>
 <p>Die gesamte Logik, die die Zähler und das Aufräumen des Wertes verwaltet, ist
 in <code>Rc&lt;T&gt;</code> und <code>Weak&lt;T&gt;</code> und deren Implementierung des Merkmals (trait) <code>Drop</code>
 integriert. Wenn man angibt, dass die Beziehung von einem Kind- zu seinem
@@ -599,7 +597,7 @@ können Eltern-Knoten auf Kind-Knoten referenzieren und umgekehrt, ohne einen
 Referenzzyklus oder Speicherlecks zu erzeugen.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>In diesem Kapitel wurde beschrieben, wie man mithilfe intelligenter Zeiger
-andere Garantien und Kompromisse eingehen kann als es standardmäßig mit gewöhnlichen
+andere Garantien und Kompromisse eingehen kann, als es standardmäßig mit gewöhnlichen
 Referenzen in Rust möglich ist. Der Typ <code>Box&lt;T&gt;</code> hat eine bekannte Größe und
 zeigt auf Daten die auf dem Haldenspeicher allokiert sind. Der Typ <code>Rc&lt;T&gt;</code>
 verfolgt die Anzahl der Referenzen von Daten auf dem Haldenspeicher, sodass
