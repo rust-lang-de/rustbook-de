@@ -19,7 +19,7 @@ oder einen Server. Jede muss eine Funktion namens `main` haben, die definiert,
 was passiert, wenn die ausführbare Datei läuft. Alle Kisten, die wir bisher
 erstellt haben, waren binäre Kisten.
 
-_Bibliothekskisten_ (library crates) haben keine `main`-Funktion und sie werden
+_Bibliothekskisten_ (library crates) haben keine Funktion `main` und sie werden
 nicht zu einer ausführbaren Datei kompiliert. Stattdessen definieren sie
 Funktionalität, die für mehrere Projekte gemeinsam genutzt werden soll. Zum
 Beispiel bietet die Kiste `rand`, die wir in [Kapitel 2][rand] verwendet haben,

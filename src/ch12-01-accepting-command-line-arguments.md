@@ -68,7 +68,7 @@ Importieren von `use std::env::args` und dem anschließenden Aufrufen der
 Funktion nur mit `args`, weil `args` leicht mit einer Funktion verwechselt
 werden könnte, die im aktuellen Modul definiert ist.
 
-> ### Die `args`-Funktion und ungültiger Unicode
+> ### Die Funktion `args` und ungültiger Unicode
 >
 > Beachte, dass `std::env::args` abstürzt, wenn ein Argument einen ungültigen
 > Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode

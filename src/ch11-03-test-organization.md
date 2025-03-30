@@ -384,7 +384,7 @@ Implementierungsdetails testen. Integrationstests prüfen, ob viele Teile der
 Bibliothek korrekt zusammenarbeiten, und sie verwenden die öffentliche
 Programmierschnittstelle (API) der Bibliothek, um den Code auf die gleiche
 Weise zu testen, wie externer Code ihn verwenden wird. Auch wenn das Typsystem
-und die Eigentümerschaftsregeln von Rust dazu beitragen, einige Fehlerarten zu
+und die Eigentumsregeln von Rust dazu beitragen, einige Fehlerarten zu
 verhindern, sind Tests immer noch wichtig, um Logikfehler zu reduzieren, die
 damit zu tun haben, wie sich dein Code voraussichtlich verhalten wird.
 

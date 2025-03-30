@@ -81,7 +81,7 @@ Hallo Nummer 5 von der ersten Aufgabe!
 
 Diese Version beendet sich, sobald die `for`-Schleife im Rumpf des asynchronen
 Blocks beendet ist, da die von `spawn_task` erzeugte Aufgabe beendet wird, wenn
-die `main`-Funktion endet. Wenn du die Aufgabe bis zum Ende ausführen willst,
+die Funktion `main` endet. Wenn du die Aufgabe bis zum Ende ausführen willst,
 musst du ein Join-Handle verwenden, um auf das Ende der ersten Aufgabe zu
 warten. Bei Strängen haben wir die Methode `join` verwendet, um zu
 „blockieren“, bis der Strang fertig ist. In Codeblock 17-7 können wir `await`

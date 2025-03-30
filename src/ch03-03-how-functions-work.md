@@ -30,8 +30,8 @@ dem Compiler mit, wo der Funktionsrumpf beginnt und endet.
 
 Wir können jede Funktion, die wir definiert haben, aufrufen, indem wir ihren
 Namen gefolgt von einem Satz Klammern eingeben. Da `another_function` im
-Programm definiert ist, kann sie von innerhalb der `main`-Funktion aufgerufen
-werden. Beachte, dass wir `another_function` _nach_ der `main`-Funktion im
+Programm definiert ist, kann sie von innerhalb der Funktion `main` aufgerufen
+werden. Beachte, dass wir `another_function` _nach_ der Funktion `main` im
 Quellcode definiert haben; wir hätten sie auch vorher definieren können. Rust
 interessiert es nicht, wo du deine Funktionen definierst, nur dass sie irgendwo
 definiert sind.
@@ -49,9 +49,9 @@ Hallo Welt!
 Eine andere Funktion.
 ```
 
-Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der
-`main`-Funktion erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben
-und dann wird `another_function` aufgerufen und ihre Nachricht ausgegeben.
+Die Zeilen werden in der Reihenfolge ausgeführt, in der sie in der Funktion
+`main` erscheinen. Zuerst wird die Nachricht „Hallo Welt!“ ausgegeben und dann
+wird `another_function` aufgerufen und ihre Nachricht ausgegeben.
 
 ### Parameter
 
@@ -285,7 +285,7 @@ fn main() {
 ```
 
 Es gibt keine Funktionsaufrufe, Makros oder gar `let`-Anweisungen in der
-`five`-Funktion &ndash; nur die Zahl `5` selbst. Das ist eine vollkommen
+Funktion `five` &ndash; nur die Zahl `5` selbst. Das ist eine vollkommen
 gültige Funktion in Rust. Beachte, dass der Rückgabetyp der Funktion ebenfalls
 angegeben ist, mit `-> i32`. Versuche diesen Code auszuführen; die Ausgabe
 sollte wie folgt aussehen:

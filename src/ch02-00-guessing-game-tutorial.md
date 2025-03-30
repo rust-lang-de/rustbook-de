@@ -783,7 +783,7 @@ bringt. Der Typ `Ordering` ist eine weitere Aufzählung und hat die Varianten
 wenn man zwei Werte vergleicht.
 
 Dann fügen wir unten fünf neue Zeilen hinzu, die den Typ `Ordering` verwenden.
-Die `cmp`-Methode vergleicht zwei Werte und kann auf alles, was verglichen
+Die Methode `cmp` vergleicht zwei Werte und kann auf alles, was verglichen
 werden kann, angewendet werden. Sie braucht eine Referenz auf das, was du
 vergleichen willst: Hier wird `guess` mit `secret_number` verglichen. Dann gibt
 sie eine Variante der `Ordering`-Aufzählung zurück, die wir mit der
@@ -806,7 +806,7 @@ Gehen wir ein Beispiel dafür durch, was mit dem hier verwendeten
 `match`-Ausdruck geschehen würde. Angenommen, der Benutzer hat 50 geschätzt und
 die zufällig generierte Geheimzahl ist diesmal 38.
 
-Wenn der Code 50 mit 38 vergleicht, gibt die `cmp`-Methode `Ordering::Greater`
+Wenn der Code 50 mit 38 vergleicht, gibt die Methode `cmp` `Ordering::Greater`
 zurück, weil 50 größer als 38 ist. Der `match`-Ausdruck erhält den Wert
 `Ordering::Greater` und beginnt mit der Überprüfung des Musters jedes Zweigs.
 Er schaut auf das Muster `Ordering::Less` des ersten Zweigs und sieht, dass der
@@ -920,7 +920,7 @@ willst.
 
 Wir binden `guess` an den Ausdruck `guess.trim().parse()`. Das `guess` im
 Ausdruck bezieht sich auf das ursprüngliche `guess`, das ein `String` mit der
-Eingabe darin war. Die `trim`-Methode der `String`-Instanz wird alle
+Eingabe darin war. Die Methode `trim` der `String`-Instanz wird alle
 Leerzeichen am Anfang und am Ende entfernen. Obwohl `u32` nur numerische
 Zeichen enthalten kann, muss der Benutzer die <span
 class="keystroke">Eingabetaste</span> drücken, um `read_line`
@@ -932,10 +932,10 @@ class="keystroke">Eingabetaste</span> drückt, sieht `guess` wie folgt aus:
 `5\n`. Das `\n` steht für „Zeilenumbruch“ (newline), das Ergebnis des Drückens
 der <span class="keystroke">Eingabetaste</span>. (Unter Windows ergibt das
 Drücken der <span class="keystroke">Eingabetaste</span> einen Wagenrücklauf
-(carriage return) und einen Zeilenumbruch (newline): `\r\n`) Die `trim`-Methode
+(carriage return) und einen Zeilenumbruch (newline): `\r\n`) Die Methode `trim`
 entfernt `\n` und `\r\n`, was nur `5` ergibt.
 
-Die [`parse`-Methode für Zeichenketten][parse] konvertiert eine Zeichenkette in
+Die [Methode `parse` für Zeichenketten][parse] konvertiert eine Zeichenkette in
 einen anderen Typ. Hier verwenden wir sie, um eine Zeichenkette in eine Zahl
 umzuwandeln. Wir müssen Rust den genauen Zahlentyp mitteilen, den wir wollen,
 indem wir `let guess: u32` verwenden. Der Doppelpunkt (`:`) nach `guess` sagt
@@ -952,8 +952,8 @@ zwischen zwei Werten desselben Typs durchgeführt!
 Die Methode `parse` funktioniert nur bei Zeichen, die logisch in Zahlen
 umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel `A👍%` enthielte, gäbe es keine Möglichkeit, dies in
-eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die `parse`-Methode
-einen `Result`-Typ zurück, ähnlich wie die `read_line`-Methode (weiter oben in
+eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die Methode `parse`
+einen `Result`-Typ zurück, ähnlich wie die Methode `read_line` (weiter oben in
 [„Behandeln potentieller Fehler mit
 `Result`“](#behandeln-potentieller-fehler-mit-result)). Wir werden dieses
 `Result` auf die gleiche Weise behandeln, indem wir erneut `expect` verwenden.
@@ -1194,8 +1194,8 @@ Das Umstellen von einem `expect`-Aufruf zu einem `match`-Ausdruck ist eine
 Möglichkeit für den Übergang vom Absturz bei einem Fehler zur Behandlung des
 Fehlers. Denke daran, dass `parse` einen `Result`-Typ zurückgibt und `Result`
 eine Aufzählung ist, die die Varianten `Ok` und `Err` hat. Wir benutzen hier
-einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der
-`cmp`-Methode getan haben.
+einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der Methode
+`cmp` getan haben.
 
 Wenn `parse` in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
 umzuwandeln, gibt es einen `Ok`-Wert zurück, der die resultierende Zahl

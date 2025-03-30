@@ -123,7 +123,7 @@ impl Config {
 # }
 ```
 
-<span class="caption">Codeblock 13-17: Reproduktion der `Config::build`-Funktion
+<span class="caption">Codeblock 13-17: Reproduktion der Funktion `Config::build`
 vom Codeblock 12-23</span>
 
 Zu diesem Zeitpunkt sagten wir, dass man sich keine Gedanken wegen der
@@ -210,7 +210,7 @@ fn main() {
 <span class="caption">Codeblock 13-18: Übergabe des Rückgabewerts von 
 `env::args` an `Config::build`</span>
 	
-Die `env::arg`-Funktion gibt einen Iterator zurück! Anstatt die Werte des Iterators
+Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des Iterators
 in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
 übergeben, geben wir nun die Eigentümerschaft des Iterators, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
@@ -356,7 +356,7 @@ Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
 `args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
 `next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
-Codeblock 12-23, um die `next`-Methode zu verwenden.
+Codeblock 12-23, um die Methode `next` zu verwenden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

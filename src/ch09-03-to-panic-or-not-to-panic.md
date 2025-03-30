@@ -66,7 +66,7 @@ let home: IpAddr = "127.0.0.1"
 Wir erstellen eine `IpAddr`-Instanz, indem wir eine hartkodierte Zeichenkette
 parsen. Wir können sehen, dass `127.0.0.1` eine gültige IP-Adresse ist, sodass
 es akzeptabel ist, hier `expect` zu verwenden. Eine hartkodierte, gültige
-Zeichenkette ändert jedoch nicht den Rückgabetyp der `parse`-Methode: Wir
+Zeichenkette ändert jedoch nicht den Rückgabetyp der Methode `parse`: Wir
 erhalten immer noch einen `Result`-Wert und der Compiler wird von uns
 verlangen, `Result` so zu behandeln, als ob die `Err`-Variante möglich wäre,
 weil der Compiler nicht klug genug ist, um zu erkennen, dass diese

@@ -493,7 +493,7 @@ der frühe Rückgabezweig liefert einen `Err(e)`-Wert. Der Rückgabetyp der
 Funktion muss ein `Result` sein, damit er mit `return` kompatibel ist.
 
 Schauen wir uns in Codeblock 9-10 an, was passiert, wenn wir den `?`-Operator
-in einer `main`-Funktion verwenden, deren Rückgabetyp nicht mit dem Typ des
+in einer Funktion `main` verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir `?` verwenden, kompatibel ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -506,13 +506,12 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 9-10: Der Versuch, das `?` in der
-`main`-Funktion zu verwenden, die `()` zurückgibt, lässt sich nicht
-kompilieren.</span>
+<span class="caption">Codeblock 9-10: Der Versuch, das `?` in der Funktion
+`main` zu verwenden, die `()` zurückgibt, lässt sich nicht kompilieren.</span>
 
 Dieser Code öffnet eine Datei, was fehlschlagen kann. Der `?`-Operator folgt
-dem `Result`-Wert, der von `File::open` zurückgegeben wird, aber diese
-`main`-Funktion hat den Rückgabetyp `()`, nicht `Result`. Wenn wir diesen Code
+dem `Result`-Wert, der von `File::open` zurückgegeben wird, aber diese Funktion
+`main` hat den Rückgabetyp `()`, nicht `Result`. Wenn wir diesen Code
 kompilieren, erhalten wir folgende Fehlermeldung:
 
 ```console
@@ -644,14 +643,14 @@ Der Typ `Box<dyn Error>` ist ein _Merkmalsobjekt_ (trait object), über das wir
 in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
 `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von `?`
-auf einen `Result`-Wert in einer `main`-Funktion mit dem Fehlertyp `Box<dyn
+auf einen `Result`-Wert in einer Funktion `main` mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
-werden kann. Obwohl der Rumpf dieser `main`-Funktion nur Fehler des Typs
+werden kann. Obwohl der Rumpf dieser Funktion `main` nur Fehler des Typs
 `std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von
 `Box<dyn Error>` auch dann noch korrekt, wenn weiterer Code, der andere Fehler
 zurückgibt, dem Rumpf von `main` hinzugefügt wird.
 
-Wenn eine `main`-Funktion ein `Result<(), E>` zurückgibt, beendet sich die
+Wenn eine Funktion `main` ein `Result<(), E>` zurückgibt, beendet sich die
 ausführbare Datei mit einem Wert von `0`, wenn `main` den Wert `Ok(())`
 zurückgibt, und mit einem Wert ungleich Null, wenn `main` einen `Err`-Wert
 zurückgibt. In C geschriebene ausführbare Programme geben beim Beenden ganze

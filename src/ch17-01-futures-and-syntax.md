@@ -417,7 +417,7 @@ um eine Laufzeitumgebung einzurichten und das vom `async`-Block zurückgegebene
 Future auszuführen, bis es fertig ist.
 
 > Hinweis: Einige Laufzeitumgebungen stellen Makros zur Verfügung, mit denen du
-> eine asynchrone `main`-Funktion schreiben _kannst_. Diese Makros schreiben
+> eine asynchrone Funktion `main` schreiben _kannst_. Diese Makros schreiben
 > `async fn main() { ... }` in ein normales `fn main` um, das dasselbe tut, was
 > wir in Codeblock 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
 > Future zu Ende ausführt, so wie es `trpl::run` tut.

@@ -158,7 +158,7 @@ zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen
 wir 10 Stränge, indem wir über einen Zahlenbereich iterieren. Wir verwenden
 `thread::spawn` und geben allen Strängen den gleichen Funktionsabschluss
 (closure), der den Zähler in den Strang verschiebt, eine Sperre auf dem
-`Mutex<T>` durch Aufrufen der `lock`-Methode erwirbt und dann 1 zum Wert im
+`Mutex<T>` durch Aufrufen der Methode `lock` erwirbt und dann 1 zum Wert im
 Mutex addiert. Wenn ein Strang die Ausführung seines Funktionsabschlusses
 beendet hat, verlässt `num` den Gültigkeitsbereich und gibt die Sperre frei,
 sodass ein anderer Strang sie erwerben kann.

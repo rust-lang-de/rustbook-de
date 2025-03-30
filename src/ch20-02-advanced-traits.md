@@ -263,7 +263,7 @@ Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
 welche du verwenden willst. Betrachte den Code in Codeblock 20-17, wo wir zwei
 Merkmale `Pilot` und `Wizard` definiert haben, die beide eine Methode namens
 `fly` haben. Wir implementieren dann beide Merkmale auf einem Typ `Human`, der
-bereits eine Methode namens `fly` implementiert hat. Jede `fly`-Methode macht
+bereits eine Methode namens `fly` implementiert hat. Jede Methode `fly` macht
 etwas anderes.
 
 <span class="filename">Dateiname: src/main.rs</span>
