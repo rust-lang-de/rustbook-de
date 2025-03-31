@@ -1,6 +1,6 @@
 ## Hallo Welt
 
-Nun, da du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
+Nachdem du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
 Wenn man eine neue Sprache lernt, ist es üblich, ein kleines Programm zu
 schreiben, das den Text `Hallo Welt!` auf dem Bildschirm ausgibt, also werden
 wir hier das gleiche tun!
