@@ -3,28 +3,28 @@
 Wie wir in [Kapitel 16][ch16] gesehen haben, bieten Stränge (threads) einen
 Ansatz für Nebenläufigkeit (concurrency). In diesem Kapitel haben wir einen
 anderen Ansatz für Nebenläufigkeit gesehen: Verwenden von asynchronem Code mit
-Futures und Strömen. Wenn du dich fragst, wann du eine Methode der anderen
-vorziehen solltest, lautet die Antwort: Es kommt darauf an! Und in vielen
-Fällen ist die Wahl nicht Stränge _oder_ asynchroner Code, sondern eher
+Futures und Strömen (streams). Wenn du dich fragst, wann du eine Methode der
+anderen vorziehen solltest, lautet die Antwort: Es kommt darauf an! Und in
+vielen Fällen ist die Wahl nicht Stränge _oder_ asynchroner Code, sondern eher
 Stränge _und_ asynchroner Code.
 
 Viele Betriebssysteme bieten schon seit Jahrzehnten Strang-basierte
 Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
 Modelle daher. Diese Modelle sind jedoch nicht frei von Kompromissen. Auf
-vielen Betriebssystemen wird für jeden Strang ein beträchtlicher Teil des
-Arbeitsspeichers verbraucht und es entsteht ein gewisser Overhead beim Starten
+vielen Betriebssystemen wird für jeden Strang ein beträchtlicher Teil an
+Arbeitsspeicher verbraucht und es entsteht ein gewisser Overhead beim Starten
 und Beenden. Stränge sind auch nur dann eine Option, wenn dein Betriebssystem
 und deine Hardware sie unterstützen. Im Gegensatz zu herkömmlichen Desktop- und
 Mobilcomputern haben einige eingebettete Systeme überhaupt kein Betriebssystem,
 sodass sie auch keine Stränge haben.
 
 Das asynchrone Modell bietet eine andere &ndash; und letztlich ergänzende
-&ndash; Reihe von Kompromissen. Im asynchronen Modell benötigen gleichzeitige
+&ndash; Reihe von Kompromissen. Im asynchronen Modell benötigen nebenläufige
 Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
 wie wir `trpl::spawn_task` verwendet haben, um die Arbeit von einer synchronen
 Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
 wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
-verwaltet: Der Laufzeitumgebung.
+verwaltet: der Laufzeitumgebung.
 
 Im vorigen Abschnitt haben wir gesehen, dass wir einen Strom erstellen können,
 indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
@@ -105,7 +105,7 @@ fn get_intervals() -> impl Stream<Item = u32> {
 ```
 
 <span class="caption">Codeblock 17-41: Verwenden der `std::thread`-APIs
-anstelle der asynchronen `trpl`-APIs für die Funktion `get_intervals`.</span>
+anstelle der asynchronen `trpl`-APIs für die Funktion `get_intervals`</span>
 
 Wenn du diesen Code ausführst, ist die Ausgabe identisch zu der von Codeblock
 17-40. Und beachte, wie wenig sich hier aus der Sicht des aufrufenden Codes
@@ -132,19 +132,19 @@ Aufgaben leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
 zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
 Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.
 
-Das bedeutet nicht, dass asynchrone Aufgaben immer besser als Stränge sind (und
-umgekehrt). Nebenläufigkeit mit Strängen ist in gewisser Weise ein einfacheres
-Programmiermodell als Nebenläufigkeit mit `async`. Das kann eine Stärke oder
-eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“; sie haben
-kein natives Äquivalent zu einem Future, also laufen sie einfach bis zum Ende,
-ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt, sie haben
-keine eingebaute Unterstützung für _Nebenläufigkeit innerhalb der Aufgabe_, wie
-es Futures haben. Stränge in Rust haben auch keine Mechanismen um die
-abzubrechen &ndash; ein Thema, das wir in diesem Kapitel nicht eingehend
+Das bedeutet nicht, dass asynchrone Aufgaben immer besser sind als Stränge
+(oder umgekehrt). Nebenläufigkeit mit Strängen ist in gewisser Weise ein
+einfacheres Programmiermodell als Nebenläufigkeit mit `async`. Das kann eine
+Stärke und eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“;
+sie haben kein natives Äquivalent zu einem Future, also laufen sie einfach bis
+zum Ende, ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt,
+sie haben keine eingebaute Unterstützung für _Nebenläufigkeit innerhalb der
+Aufgabe_, wie es Futures haben. Stränge in Rust haben auch keine Mechanismen um
+die abzubrechen &ndash; ein Thema, das wir in diesem Kapitel nicht eingehend
 behandelt haben, das aber implizit in der Tatsache enthalten ist, dass immer
 dann, wenn wir ein Future beenden, sein Zustand korrekt aufgeräumt wird.
 
-Diese Einschränkungen machen es auch schwieriger, Stränge zu erstellen als
+Diese Einschränkungen machen es auch schwieriger, Stränge zu kombinieren, als
 Futures. Es ist zum Beispiel viel schwieriger, Stränge zu verwenden, um Helfer
 wie `timeout` und `throttle` zu erstellen, die wir weiter oben in diesem
 Kapitel erstellt haben. Die Tatsache, dass Futures reichhaltigere
@@ -177,8 +177,8 @@ Faustregeln:
 Und wenn du Parallelität und Nebenläufigkeit benötigst, musst du dich nicht
 zwischen Strängen und asynchronem Code entscheiden. Du kannst beide zusammen
 verwenden, wobei jede der beiden die Aufgabe übernimmt, für die sie am besten
-geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein ziemlich häufiges Beispiel
-für diese Art von Mischung in echtem Rust-Code.
+geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein gängiges Beispiel für
+dieses Zusammenspiel in echtem Rust-Code.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -215,8 +215,8 @@ Strangs senden wir die Zahlen 1 bis 10 und schlafen dazwischen jeweils eine
 Sekunde lang. Schließlich führen wir ein Future aus, das mit einem asynchronen
 Block erstellt wurde, der an `trpl::run` übergeben wurde, so wie wir es im
 ganzen Kapitel getan haben. In diesem Future warten wir auf diese Nachrichten,
-genau wie in den anderen Beispielen für die Weitergabe von Nachrichten, die wir
-gesehen haben.
+genau wie in den anderen Beispielen mit Nachrichten-Weitergabe, die wir gesehen
+haben.
 
 Um zu den Szenarien zurückzukehren, mit denen wir das Kapitel eröffnet haben,
 könnte man sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
@@ -234,7 +234,7 @@ hier besprochenen einfacheren Beispiele und einen direkteren Vergleich
 anstellen, wie es aussieht, wenn man diese Art von Problemen mit Strängen und
 mit Aufgaben und Futures löst.
 
-Welchen Ansatz Sie auch immer wählen, Rust gibt dir die Werkzeuge an die Hand,
+Welchen Ansatz du auch immer wählst, Rust gibt dir die Werkzeuge an die Hand,
 die du benötigst, um sicheren, schnellen und nebenläufigen Code zu schreiben
 &ndash; sei es für einen durchsatzstarken Webserver oder ein eingebettetes
 Betriebssystem.

@@ -44,21 +44,21 @@ enum Poll<T> {
 }
 ```
 
-Dieser Typ `Poll` ist ähnlich wie eine `Option`: Er hat eine Variante
-`Ready(T)`, die einen Wert hat, und eine Variante `Pending` ohne Wert. `Poll`
-bedeutet jedoch etwas ganz anderes als `Option`! Die Variante `Pending` zeigt
-an, dass das Future noch Arbeit zu erledigen hat, sodass der Aufrufer später
-noch einmal nachsehen muss. Die Variante `Ready` zeigt an, dass das `Future`
-seine Arbeit beendet hat und der Wert `T` verfügbar ist.
+Dieser Typ `Poll` ist `Option` recht ähnlich: Er hat eine Variante `Ready(T)`,
+die einen Wert hat, und eine Variante `Pending` ohne Wert. `Poll` bedeutet
+jedoch etwas ganz anderes als `Option`! Die Variante `Pending` zeigt an, dass
+das Future noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal
+nachsehen muss. Die Variante `Ready` zeigt an, dass das `Future` seine Arbeit
+beendet hat und der Wert `T` verfügbar ist.
 
 > Hinweis: Bei den meisten Futures sollte der Aufrufer die Methode `poll` nicht
 > erneut aufrufen, nachdem das Future `Ready` zurückgegeben hat. Viele Futures
-> werden das Programm abbrechen, wenn sie erneut abgefragt werden, obwohl sie
-> bereit sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies
-> in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
-> `Iterator::next`!
+> werden das Programm zum Absturz bringen, wenn sie erneut abgefragt werden,
+> obwohl sie bereit sind! Futures, bei denen eine erneute Abfrage sicher ist,
+> werden dies in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum
+> Verhalten von `Iterator::next`!
 
-Unter der Haube kompiliert Rust Code mit `await` zu Code, der `poll` aufruft.
+Rust kompiliert Code mit `await` unter der Haube zu Code, der `poll` aufruft.
 Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
 URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust das in etwa
 (wenn auch nicht genau) wie folgt:
@@ -153,12 +153,12 @@ ist generisch über einen Typ `F`, der auf die Implementierung des Merkmals
 Future implizit an. Deshalb müssen wir `pin!` nicht überall verwenden, wo wir
 auf Futures warten wollen.
 
-Allerdings warten wir hier nicht direkt ein Future. Stattdessen konstruieren
-wir ein neues Future `JoinAll`, indem wir eine Kollektion von Futures an die
-Funktion `join_all` übergeben. Die Signatur für `join_all` erfordert, dass der
-Typ der Elemente in der Kollektion das Merkmal `Future` implementiert. `Box<T>`
-implementiert `Future` nur, wenn das `T`, das es umhüllt, ein Future ist, das
-das Merkmal `Unpin` implementiert.
+Allerdings warten wir hier nicht direkt auf ein Future. Stattdessen
+konstruieren wir ein neues Future `JoinAll`, indem wir eine Kollektion von
+Futures an die Funktion `join_all` übergeben. Die Signatur für `join_all`
+erfordert, dass der Typ der Elemente in der Kollektion das Merkmal `Future`
+implementiert. `Box<T>` implementiert `Future` nur, wenn das `T`, das es
+umhüllt, ein Future ist, das das Merkmal `Unpin` implementiert.
 
 Das ist eine Menge, die man verarbeiten muss! Um es wirklich zu verstehen,
 müssen wir ein wenig tiefer in die Funktionsweise des Merkmals `Future`
@@ -191,11 +191,10 @@ Funktionsparameter, jedoch mit zwei wesentlichen Unterschieden:
 - Sie teilt Rust mit, welchen Typ `self` haben muss, damit die Methode
   aufgerufen werden kann.
 
-- Sie teilt Rust mit, welchen Typ `self` haben muss, damit die Methode aufgerufen werden kann.
-
-- Es kann nicht einfach irgendein Typ sein. Es ist beschränkt auf den Typ, auf
-  dem die Methode implementiert ist, eine Referenz oder ein Smart Pointer auf
-  diesen Typ oder ein `Pin`, der eine Referenz auf diesen Typ umhüllt.
+- Sie kann nicht einfach irgendein Typ sein. Sie ist beschränkt auf den Typ,
+  auf dem die Methode implementiert ist, eine Referenz oder ein intelligenter
+  Zeiger auf diesen Typ oder ein `Pin`, das eine Referenz auf diesen Typ
+  umhüllt.
 
 Wir werden mehr über diese Syntax in [Kapitel 18][ch-18] erfahren. Für den
 Moment reicht es zu wissen, dass wir, wenn wir ein Future abfragen wollen, um
@@ -210,13 +209,13 @@ Verhalten wie `Rc` und `Arc` mit Referenzzählern; es ist lediglich ein
 Werkzeug, das der Compiler verwenden kann, um Einschränkungen bei der 
 Verwendung von Zeigern zu erzwingen.
 
-Wenn man sich daran erinnert, dass `await` in Form von Aufrufen von `poll`
+Wenn du dich daran erinnerst, dass `await` in Form von Aufrufen von `poll`
 implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben,
 aber die bezog sich auf `Unpin`, nicht auf `Pin`. Wie genau verhält sich also
 `Pin` zu `Unpin`, und warum muss `self` bei einem `Future` in einem `Pin`-Typ
 sein, um `poll` aufzurufen?
 
-Erinnere dich an den Anfang dieses Kapitels: Eine Reihe von Wartepunkten in
+Erinnere dich an den Anfang dieses Kapitels: Eine Reihe von await-Punkten in
 einem Future wird zu einem Zustandsautomaten kompiliert, und der Compiler
 stellt sicher, dass dieser Zustandsautomat alle normalen Sicherheitsregeln von
 Rust befolgt, einschließlich Ausleihen (borrowing) und Eigentümerschaft
@@ -245,7 +244,8 @@ Variante enden, wie in der vereinfachten Darstellung in Abbildung 17-4 gezeigt.
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-04.svg" />
 
-<figcaption>Abbildung 17-4: Ein selbstreferenzierender Datentyp</figcaption>
+<span class="caption">Abbildung 17-4: Ein selbstreferenzierender
+Datentyp</span>
 
 Standardmäßig kann ein Objekt, das eine Referenz auf sich selbst hat, nicht
 sicher verschoben werden, da Referenzen immer auf die tatsächliche
@@ -259,8 +259,8 @@ könnte sein, dass du später völlig unzusammenhängende Daten liest.
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-05.svg" />
 
-<figcaption>Abbildung 17-5: Das unsichere Ergebnis beim Verschieben eines
-selbstreferenzierenden Datentyps</figcaption>
+<span class="caption">Abbildung 17-5: Das unsichere Ergebnis beim Verschieben
+eines selbstreferenzierenden Datentyps</span>
 
 Theoretisch könnte der Rust-Compiler versuchen, jede Referenz auf ein Objekt zu
 aktualisieren, wenn es verschoben wird. Das würde potenziell eine Menge
@@ -279,8 +279,8 @@ _nicht_ den Zeiger `Box`. Abbildung 17-6 veranschaulicht dies:
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-06.svg" />
 
-<figcaption>Abbildung 17-6: Anheften einer `Box`, die auf einen
-selbstreferenzierenden Future-Typ zeigt</figcaption>
+<span class="caption">Abbildung 17-6: Anheften einer `Box`, die auf einen
+selbstreferenzierenden Future-Typ zeigt</span>
 
 In der Tat kann der Zeiger in `Box` immer noch verschoben werden. Denke daran:
 Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
@@ -288,23 +288,23 @@ an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
 die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
 potenzielles Problem. (Schau dir als unabhängige Übung die Dokumentationen der
 Typen sowie des Moduls `std::pin` an und versuche herauszufinden, wie du das
-mit einem `Pin` machst, der eine `Box` umhüllt). Der Schlüssel ist, dass der
+mit einem `Pin` machst, der eine `Box` umhüllt.) Der Schlüssel ist, dass der
 selbstreferenzierende Typ selbst nicht verschoben werden kann, weil er immer
 noch angeheftet ist.
 
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-07.svg" />
 
-<figcaption>Figure 17-7: Verschieben einer `Box`, die auf einen
-selbstreferenzierenden Futuretyp zeigt.</figcaption>
+<span class="caption">Abbildung 17-7: Verschieben einer `Box`, die auf einen
+selbstreferenzierenden Futuretyp zeigt.</span>
 
 Die meisten Typen können jedoch gefahrlos verschoben werden, selbst wenn sie
 sich hinter einem `Pin`-Wrapper befinden. Wir müssen nur über das Anheften
 nachdenken, wenn Elemente interne Referenzen haben. Primitive Werte wie Zahlen
 und Boolesche Werte sind sicher, weil sie keine internen Referenzen haben.
 Genauso wenig wie die meisten Typen, mit denen man normalerweise in Rust
-arbeitet. Du kannst zum Beispiel unbesorgt in einem `Vec` verschieben. Nach
-dem, was wir bisher gesehen haben, müsste man bei einem `Pin<Vec<String>>`
-alles über die sicheren, aber restriktiven APIs von `Pin` machen, obwohl ein
+arbeitet. Du kannst zum Beispiel unbesorgt einen `Vec` verschieben. Nach dem,
+was wir bisher gesehen haben, müsste man bei einem `Pin<Vec<String>>` alles
+über die sicheren, aber restriktiven APIs von `Pin` machen, obwohl ein
 `Vec<String>` immer sicher verschoben werden kann, wenn es keine anderen
 Referenzen auf ihn gibt. Wir brauchen eine Möglichkeit, dem Compiler
 mitzuteilen, dass es in solchen Fällen in Ordnung ist, Elemente zu verschieben
@@ -316,7 +316,7 @@ Funktionalität. Markierungsmerkmale existieren nur, um dem Compiler
 mitzuteilen, dass es sicher ist, den Typ zu verwenden, der ein bestimmtes
 Merkmal in einem bestimmten Kontext implementiert. `Unpin` teilt dem Compiler
 mit, dass ein gegebener Typ _keine_ besonderen Garantien aufrechterhalten muss,
-um den fragliche Wert zu verschieben.
+um den fraglichen Wert zu verschieben.
 
 Genau wie bei `Send` und `Sync` implementiert der Compiler `Unpin` automatisch
 für alle Typen, bei denen er beweisen kann, dass sie sicher sind. Ein
@@ -339,9 +339,9 @@ einpacken, wie in Abbildung 17-8. Allerdings implementiert `String` automatisch
 
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
 
-<figcaption>Abbildung 17-8: Anheften eines `String`; die gestrichelte Linie
+<span class="caption">Abbildung 17-8: Anheften eines `String`; die gestrichelte Linie
 deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
-nicht angeheftet ist.</figcaption>
+nicht angeheftet ist.</span>
 
 Infolgedessen können wir Dinge tun, die illegal wären, wenn `String`
 stattdessen `!Unpin` implementiert hätte, wie zum Beispiel das Ersetzen einer
@@ -352,8 +352,8 @@ genau der Grund, warum es `Unpin` und nicht `!Unpin` implementiert.
 
 <img alt="Concurrent work flow" src="img/trpl17-09.svg" />
 
-<figcaption>Figure 17-9: Ersetzen eines `String` durch einen völlig anderen
-`String` im Speicher.</figcaption>
+<span class="caption">Abbildung 17-9: Ersetzen eines `String` durch einen
+völlig anderen `String` im Speicher.</span>
 
 Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
 `join_all` in Codeblock 17-17 gemeldet wurden. Ursprünglich haben wir versucht,
@@ -364,9 +364,9 @@ implementieren. Sie müssen angepinnt werden und dann können wir den Typ `Pin`
 an den `Vec` übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in
 den Futures _nicht_ verschoben werden.
 
-`Pin` und `Unpin` sind vor allem für die Erstellung von Bibliotheken auf
-niedrigerer Ebene wichtig und wenn du eine Laufzeitumgebung erstellst, weniger
-für den alltäglichen Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
+`Pin` und `Unpin` sind vor allem wichtig für die Erstellung von
+Low-Level-Bibliotheken und wenn du eine Laufzeitumgebung erstellst, weniger
+bei alltäglichem Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
 siehst, hast du jetzt eine bessere Vorstellung davon, wie du deinen Code
 korrigieren kannst!
 
@@ -382,8 +382,9 @@ korrigieren kannst!
 > Ausgangspunkt.
 >
 > Wenn du noch detaillierter verstehen willst, wie die Dinge unter der Haube
-> funktionieren, schaue dir die Kapitel [2][under-the-hood] and [4][pinning]
-> des Buchs [_Asynchronous Programming in Rust_][async-book] an:
+> funktionieren, schaue dir die Kapitel [„Under the Hood: Executing Futures and
+> Tasks“][under-the-hood] und [„Pinning“][pinning] im Buch _Asynchronous
+> Programming in Rust_ an:
 
 ### Das Merkmal `Stream`
 
@@ -399,7 +400,7 @@ wir uns ansehen, wie ein Merkmal `Stream` aussehen könnte. Von `Iterator` haben
 wir die Idee einer Sequenz: Seine Methode `next` liefert eine
 `Option<Self::Item>`. Von `Future` haben wir die Idee der zeitlichen
 Bereitschaft: Seine Methode `poll` liefert ein `Poll<Self::Output>`. Um eine
-Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sind,
+Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
 definieren wir ein Merkmal `Stream`, das diese Funktionalitäten zusammenführt:
 
 ```rust
@@ -418,7 +419,7 @@ trait Stream {
 
 Das Merkmal `Stream` definiert einen zugehörigen Typ namens `Item` für den Typ
 der vom Strom erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`, wo es
-null bis viele Elemente geben kann, anders als bei `Future`, wo es immer nur
+beliebig viele Elemente geben kann, anders als bei `Future`, wo es immer nur
 einen einzigen `Output` gibt, selbst wenn es der Einheitstyp `()` ist.
 
 `Stream` definiert auch eine Methode zum Abrufen dieser Elemente. Wir nennen
@@ -432,8 +433,7 @@ weitere Nachrichten gibt, genau wie ein Iterator.
 Etwas, das dieser Definition sehr ähnlich ist, wird wahrscheinlich Teil der
 Standardbibliothek von Rust werden. In der Zwischenzeit ist es Teil des
 Werkzeugkoffers der meisten Laufzeitumgebungen, sodass du dich darauf verlassen
-kannst, und alles, was wir als nächstes behandeln, sollte im Allgemeinen
-gelten!
+kannst, und alles, was wir als nächstes behandeln, allgemein gilt!
 
 Im Beispiel, das wir im Abschnitt über Ströme gesehen haben, haben wir
 allerdings nicht `poll_next` _oder_ `Stream` benutzt, sondern `next` und
@@ -441,7 +441,7 @@ allerdings nicht `poll_next` _oder_ `Stream` benutzt, sondern `next` und
 unsere eigenen `Stream`-Zustandsautomaten schreiben, genauso wie wir mit
 Futures direkt über deren Methode `poll` arbeiten _können_. Die Verwendung von
 `await` ist jedoch viel schöner, und das Merkmal `StreamExt` stellt die Methode
-`next` bereit, sodass wir genau das tun können:
+`next` bereit, sodass wir folgendes tun können:
 
 ```rust
 # use std::pin::Pin;
@@ -472,9 +472,9 @@ trait StreamExt: Stream {
 > fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
 > ```
 >
-> Dieser Typ `Next` ist ein `struct`, das `Future` implementiert und erlaubt
-> uns, die Lebensdauer der Referenz auf `self` mit `Next<'_, Self>` zu
-> benennen, sodass `await` mit dieser Methode arbeiten kann!
+> Der Typ `Next` ist ein `struct`, das `Future` implementiert, und erlaubt uns,
+> die Lebensdauer der Referenz auf `self` mit `Next<'_, Self>` zu benennen,
+> sodass `await` mit dieser Methode arbeiten kann!
 
 Das Merkmal `StreamExt` ist auch die Heimat aller interessanten Methoden, die
 für die Verwendung mit Strömen zur Verfügung stehen. `StreamExt` wird
@@ -495,7 +495,6 @@ Das ist alles, was wir für die tieferen Details zu diesen Merkmalen behandeln
 werden. Zum Abschluss wollen wir uns ansehen, wie Futures (einschließlich
 Ströme), Aufgaben und Stränge zusammenpassen!
 
-[async-book]: https://rust-lang.github.io/async-book/
 [ch-18]: ch18-00-oop.html
 [pinning]: https://rust-lang.github.io/async-book/04_pinning/01_chapter.html
 [under-the-hood]: https://rust-lang.github.io/async-book/02_execution/01_chapter.html

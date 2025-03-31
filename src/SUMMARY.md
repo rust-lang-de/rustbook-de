@@ -105,7 +105,7 @@
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
   - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
   - [Arbeiten mit einer beliebigen Anzahl von Futures](ch17-03-more-futures.md)
-  - [Ströme (streams): Abfolge von Futures](ch17-04-streams.md)
+  - [Ströme (streams): Sequenz von Futures](ch17-04-streams.md)
   - [Ein genauerer Blick auf die Merkmale für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
 

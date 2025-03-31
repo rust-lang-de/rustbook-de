@@ -1,20 +1,20 @@
-## Ströme (streams): Abfolge von Futures
+## Ströme (streams): Sequenz von Futures
 
 Bislang haben wir uns in diesem Kapitel hauptsächlich mit einzelnen Futures
 beschäftigt. Die einzige große Ausnahme war der von uns verwendete asynchrone
-Kanal. Erinnere dich daran, wie wir den Empfänger für unseren asynchronen Kanal
+Kanal. Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
 weiter oben in diesem Kapitel in [„Hochzählen in zwei Aufgaben mit
 Nachrichtenübermittlung“][17-02-messages] verwendet haben. Die asynchrone
-Methode `recv` erzeugt eine Sequenz von Elementen. Dies ist eine Instanz eines
+Methode `recv` erzeugt eine Sequenz von Elementen. Dies ist ein Beispiel eines
 viel allgemeineren Musters, bekannt als _Strom_ (stream).
 
 Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Merkmal
 `Iterator` im Abschnitt [„Das Merkmal (trait) `Iterator` und die Methode
 `next`“][iterator] betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
-Iteratoren und dem asynchronen Kanalempfänger. Der erste ist das Element der
-Zeit: Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der
-zweite ist die API. Wenn wir direkt mit einem `Iterator` arbeiten, rufen wir
-seine synchrone Methode `next` auf. Mit dem Strom `trpl::Receiver` rufen wir
+Iteratoren und dem asynchronen Kanalempfänger. Der erste ist die Zeit:
+Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der zweite
+ist die API. Wenn wir direkt mit einem `Iterator` arbeiten, rufen wir seine
+synchrone Methode `next` auf. Mit dem Strom `trpl::Receiver` rufen wir
 stattdessen die asynchrone Methode `recv` auf. Ansonsten sind sich diese APIs
 sehr ähnlich, und diese Ähnlichkeit ist kein Zufall. Ein Strom ist wie eine
 asynchrone Form der Iteration. Während `trpl::Receiver` jedoch speziell auf den
@@ -167,11 +167,11 @@ was für Ströme einzigartig sind.
 
 Viele Konzepte werden auf natürliche Weise als Datenströme dargestellt:
 Elemente, die in einer Warteschlange verfügbar werden, Datenpakete, die
-inkrementell aus dem Dateisystem gezogen werden, wenn der gesamte Datensatz zu
-groß für den Speicher des Computers ist, oder Daten, die im Laufe der Zeit über
-das Netz ankommen. Da es sich bei Strömen um Futures handelt, können wir sie
-auch mit jeder anderen Art von Futures verwenden und sie auf interessante Weise
-kombinieren. So können wir beispielsweise Ereignisse stapeln, um zu viele
+inkrementell aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
+zu groß für den Speicher des Computers ist, oder Daten, die im Laufe der Zeit
+über das Netz ankommen. Da es sich bei Strömen um Futures handelt, können wir
+sie auch mit jeder anderen Art von Futures verwenden und sie auf interessante
+Weise kombinieren. So können wir beispielsweise Ereignisse stapeln, um zu viele
 Netzwerkaufrufe zu vermeiden, Zeitüberschreitungen für Sequenzen lang laufender
 Vorgänge festlegen oder Ereignisse der Benutzeroberfläche drosseln, um unnötige
 Arbeit zu vermeiden.
@@ -289,8 +289,8 @@ Variante `Err` zeigt an, dass die Zeit abgelaufen ist, bevor irgendeine
 Nachricht angekommen ist. Wir gleichen dieses Ergebnis mit `match` ab und geben
 entweder die Nachricht oder eine Meldung über die Zeitüberschreitung aus.
 Schließlich ist zu beachten, dass wir die Nachrichten anpinnen, nachdem wir die
-Zeitüberschreitung auf sie angewendet haben, da der Timeout-Helper einen Strom
-erzeugt, der angeheftet werden muss, um abgefragt zu werden.
+Zeitüberschreitung auf sie angewendet haben, da die Timeout-Hilfsmethode einen
+Strom erzeugt, der angeheftet werden muss, um abgefragt zu werden.
 
 Da es jedoch keine Verzögerungen zwischen den Nachrichten gibt, ändert diese
 Zeitüberschreitung das Verhalten des Programms nicht. Fügen wir den
@@ -374,8 +374,8 @@ durchführt.
 > vermeiden, müssten dafür aber zusätzlichen Overhead in Kauf nehmen, oder sie
 > bieten einfach keine eigenständige Möglichkeit, Aufgaben ohne Bezug auf eine
 > Laufzeitumgebung zu erzeugen. Stelle sicher, dass du weißt, welchen
-> Kompromiss deine Laufzeitumgebung gewählt hat, und deinen Code entsprechend
-> schreiben!
+> Kompromiss deine Laufzeitumgebung gewählt hat, und schreibe deinen Code
+> entsprechend!
 
 Jetzt hat unser Code ein viel interessanteres Ergebnis. Zwischen jedem zweiten
 Paar von Meldungen wird der Fehler `Problem: Elapsed(())` gemeldet.
@@ -488,10 +488,11 @@ dies alles in der von `spawn_task` erzeugten Aufgabe verpackt ist, wird alles
 zusammen mit der Laufzeitumgebung aufgeräumt, einschließlich der
 Endlosschleife.
 
-Diese Art von Endlosschleife, die erst endet, wenn die gesamte Laufzeitumgebung
-beendet wird, ist in asynchronem Rust recht häufig: Viele Programme müssen
-unbegrenzt weiterlaufen. Mit asynchronem Code blockiert dies nichts anderes,
-solange es in jeder Schleifeniteration mindestens einen await-Punkt gibt.
+Eine derartige Endlosschleife, die erst endet, wenn die gesamte
+Laufzeitumgebung beendet wird, ist in asynchronem Rust recht häufig: Viele
+Programme müssen unbegrenzt weiterlaufen. Mit asynchronem Code blockiert dies
+nichts anderes, solange es in jeder Schleifeniteration mindestens einen
+await-Punkt gibt.
 
 Zurück im asynchronen Block unserer Hauptfunktion können wir nun versuchen, die
 Ströme `messages` und `intervals` zusammenzuführen, wie in Codeblock 17-37
@@ -561,15 +562,15 @@ Wir beginnen mit dem Aufruf von `get_intervals`. Dann führen wir die Ströme
 zu einem Strom kombiniert, der Elemente aus jedem der Quellströme produziert,
 sobald die Elemente verfügbar sind, ohne eine bestimmte Reihenfolge
 festzulegen. Schließlich laufen wir in einer Schleife über diesen kombinierten
-Stream anstatt über `messages`.
+Strom anstatt über `messages`.
 
 Zu diesem Zeitpunkt müssen weder `messages` noch `intervals` angeheftet oder
-veränderbar sein, da beide zu einem einzigen `merged`-Strom zusammengeführt
+veränderbar sein, da beide zu einem einzigen Strom `merged` zusammengeführt
 werden. Allerdings lässt sich dieser Aufruf von `merge` nicht kompilieren!
 (Genauso wenig wie der `next`-Aufruf in der `while let`-Schleife, aber darauf
 kommen wir zurück.) Das liegt daran, dass die beiden Ströme unterschiedliche
 Typen haben. Der Strom `messages` hat den Typ `Timeout<impl Stream<Item =
- String>>`, wobei `Timeout` der Typ ist, der `Stream` für einen
+ String>>`, wobei `Timeout` der Typ ist, den `Stream` für einen
 `timeout`-Aufruf implementiert. Der Strom `intervals` hat den Typ `impl
 Stream<Item = u32>`. Um diese beiden Ströme zusammenzuführen, müssen wir
 einen von ihnen umwandeln, damit er mit dem anderen übereinstimmt. Wir
@@ -635,8 +636,8 @@ Grundformat hat und Timeout-Fehler behandeln muss (siehe Codeblock 17-38).
 # }
 ```
 
-<span class="caption">Codeblock 17-38: Angleichen des Typs des
-`intervals`-Stroms an den Typ des `messages`-Stroms</span>
+<span class="caption">Codeblock 17-38: Angleichen des Typs des Stroms
+`intervals` an den Typ des Stroms `messages`</span>
 
 Erstens können wir die Hilfsmethode `map` verwenden, um `intervals` in eine
 Zeichenkette umzuwandeln. Zweitens müssen wir das `Timeout` aus `messages`
@@ -644,13 +645,13 @@ abgleichen. Da wir aber eigentlich keine Zeitüberschreitung für `intervals`
 _wollen_, können wir einfach eine Zeitüberschreitung erstellen, die länger ist
 als die anderen Zeitspannen, die wir verwenden. Hier erstellen wir eine
 10-Sekunden-Zeitüberschreitung mit `Duration::from_secs(10)`. Schließlich
-müssen wir `Stream` veränderbar machen, damit die `next`-Aufrufe in der `while
-let`-Schleife durch den Strom iterieren können, und ihn so pinnen, dass es
-sicher ist, dies zu tun. Damit sind wir _fast_ da, wo wir hinwollen. Alle Typen
-passen. Wenn du das ausführst, gibt es allerdings zwei Probleme. Erstens wird
-es sich nie beenden! Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd> abbrechen.
-Zweitens werden die Meldungen des englischen Alphabets inmitten all der
-Intervallzähler-Meldungen begraben sein:
+müssen wir `Stream` veränderbar machen, damit die Aufrufe von `next` in der
+`while let`-Schleife durch den Strom iterieren können, und ihn so pinnen, dass
+es sicher ist, dies zu tun. Damit sind wir _fast_ da, wo wir hinwollen. Alle
+Typen passen. Wenn du das Programm ausführst, gibt es allerdings zwei Probleme.
+Erstens wird es sich nie beenden! Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd>
+abbrechen. Zweitens werden die Meldungen des englischen Alphabets inmitten all
+der Intervallzähler-Meldungen begraben sein:
 
 ```text
 --abschneiden--
@@ -729,8 +730,8 @@ Codeblock 17-39 zeigt eine Möglichkeit, diese beiden letzten Probleme zu lösen
 <span class="caption">Codeblock 17-39: Verwenden von `throttle` und `take` zur
 Verwaltung des zusammengeführten Stroms</span>
 
-Zuerst verwenden wir die Methode `throttle` für den `intervals`-Strom, sodass
-er den `messages`-Strom nicht eingräbt. Die _Drosselung_ ist eine Möglichkeit,
+Zuerst verwenden wir die Methode `throttle` für den Strom `intervals`, sodass
+er den Strom `messages` nicht begräbt. Die _Drosselung_ ist eine Möglichkeit,
 die Rate zu begrenzen, mit der eine Funktion aufgerufen wird &ndash; oder in
 diesem Fall, wie oft der Strom abgefragt wird. Einmal alle 100 Millisekunden
 sollte genügen, denn das entspricht in etwa der Häufigkeit, mit der unsere
@@ -741,11 +742,11 @@ wenden wir die Methode `take` auf den _zusammengeführten_ Strom an, da wir die
 gesamte Ausgabe begrenzen wollen, nicht nur den einen oder anderen Strom.
 
 Wenn wir das Programm jetzt ausführen, hält es nach dem Abrufen von 20
-Elementen aus dem Strom an, und die Intervalle überfluten die Nachrichten
-nicht. Wir erhalten auch nicht `Intervall: 100` oder `Intervall: 200` usw.,
-sondern stattdessen `Intervall: 1`, `Intervall: 2` usw. &ndash; obwohl wir
-einen Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen _kann_. Das
-liegt daran, dass der Aufruf `throttle` einen neuen Strom erzeugt, der den
+Elementen aus dem Strom an, und die Intervalle begraben die Nachrichten nicht.
+Wir erhalten auch nicht `Intervall: 100` oder `Intervall: 200` usw., sondern
+stattdessen `Intervall: 1`, `Intervall: 2` usw. &ndash; obwohl wir einen
+Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen _kann_. Das liegt
+daran, dass der Aufruf `throttle` einen neuen Strom erzeugt, der den
 ursprünglichen Strom umhüllt, sodass der ursprüngliche Strom nur mit der
 Drosselrate abgefragt wird und nicht mit seiner eigenen „nativen“ Rate. Wir
 haben keine Vielzahl von unbehandelten Intervallnachrichten, die wir ignorieren
@@ -857,14 +858,14 @@ fn get_intervals() -> impl Stream<Item = u32> {
 <span class="caption">Codeblock 17-40: Behandeln von Fehlern und Beenden der
 Schleifen</span>
 
-Wie üblich ist die richtige Art und Weise, einen Fehler beim Senden von
-Nachrichten zu behandeln, unterschiedlich &ndash; stelle einfach sicher, dass
-du eine Strategie hast.
+Wie üblich, gibt es verschiedene Weisen, einen Fehler beim Senden von
+Nachrichten zu behandeln, &ndash; stelle einfach sicher, dass du eine Strategie
+hast.
 
 Nachdem wir nun eine Menge asynchronen Code in der Praxis gesehen haben, wollen
-wir einen Schritt zurückgehen und uns ein paar Details ansehen, wie `Future`,
-`Stream` und andere Schlüsselmerkmale, die Rust verwendet, um asynchrone
-Programmierung zu ermöglichen.
+wir einen Schritt zurückgehen und uns ein paar Details, wie `Future`, `Stream`
+und andere Schlüsselmerkmale, die Rust verwendet, ansehen, die die asynchrone
+Programmierung ermöglichen.
 
 [17-02-messages]: ch17-02-concurrency-with-async.html#hochzählen-in-zwei-aufgaben-mit-nachrichtenübermittlung
 [iterator]: ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next

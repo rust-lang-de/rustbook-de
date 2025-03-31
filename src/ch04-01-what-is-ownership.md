@@ -473,7 +473,7 @@ Haldenspeicher, wobei die ursprünglichen Zeichenketten-Daten (Hallo)
 durchgestrichen sind, weil auf sie nicht mehr zugegriffen werden kann."
 src="img/trpl04-05.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Figure 4-5: Darstellung im Speicher, nachdem der
+<span class="caption">Abbildung 4-5: Darstellung im Speicher, nachdem der
 ursprüngliche Wert vollständig ersetzt worden ist.</span>
 
 Die ursprüngliche Zeichenkette verlässt damit sofort den Gültigkeitsbereich.

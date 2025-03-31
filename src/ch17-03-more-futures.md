@@ -2,8 +2,8 @@
 
 Als wir im vorigen Abschnitt von zwei auf drei Futures umgestellt haben,
 mussten wir auch von `join` auf `join3` umstellen. Es wäre lästig, jedes Mal
-eine andere Funktion aufrufen zu müssen, wenn wir die Anzahl der Futures, die
-wir verbinden wollen, ändern. Glücklicherweise gibt es eine Makroform von
+eine andere Funktion aufrufen zu müssen, wenn wir die Anzahl der Futures, auf
+die wir warten wollen, ändern. Glücklicherweise gibt es eine Makroform von
 `join`, an die wir eine beliebige Anzahl von Argumenten übergeben können. Es
 kümmert sich auch um das Warten auf die Futures. Wir könnten also den Code aus
 Codeblock 17-13 umschreiben, um `join!` anstelle von `join3` zu verwenden, wie
@@ -172,15 +172,15 @@ behandeln, da alle von ihnen das Merkmal `Future` implementieren.
 > Anmerkung: In [„Verwenden einer Aufzählung zum Speichern mehrerer
 > Typen“][enum-alt] in Kapitel 8 haben wir eine andere Möglichkeit besprochen,
 > mehrere Typen in einem `Vec` aufzunehmen: Verwenden eines Enums, um jeden
-> Typen, der im Vektor vorkommen können, zu repräsentieren. Das können wir hier
+> Typ, der im Vektor vorkommen kann, zu repräsentieren. Das können wir hier
 > allerdings nicht tun. Zum einen haben wir keine Möglichkeit, die
 > verschiedenen Typen zu benennen, da sie anonym sind. Zum anderen war der
 > Grund, warum wir uns überhaupt für einen Vektor und `join_all` entschieden
 > haben, dass wir mit einer dynamischen Kollektion von Futures arbeiten
 > wollten, wobei wir nur darauf achten, dass sie denselben Ausgabetyp haben.
 
-Wir beginnen, indem wir jedes Future in `vec!` in eine `Box::new` verpacken,
-wie in Codeblock 17-16 gezeigt.
+Wir beginnen, indem wir jedes Future in `vec!` in eine `Box::new` packen, wie
+in Codeblock 17-16 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -244,8 +244,8 @@ erhalten wir den gleichen grundlegenden Fehler wie zuvor, aber wir bekommen
 einen für den zweiten und dritten Aufruf von `Box::new`, sowie neue Fehler, die
 sich auf das Merkmal `Unpin` beziehen. Wir werden gleich auf die `Unpin`-Fehler
 zurückkommen. Lass uns zunächst die Typ-Fehler bei den Aufrufen von `Box::new`
-beheben, indem wir den Typ der Variable `futures` explizit annotieren (siehe
-Codeblock 17-17).
+beheben, indem wir den Typ der Variable `futures` explizit annotieren, siehe
+Codeblock 17-17.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -385,12 +385,12 @@ Das ist _viel_ zu verdauen, also lass uns das auseinandernehmen. Der erste Teil
 der Meldung sagt uns, dass der erste asynchrone Block (`src/main.rs:8:23:
  20:10`) das Merkmal `Unpin` nicht implementiert, und schlägt vor, `pin!` oder
 `Box::pin` zu verwenden, um das Problem zu lösen. Später in diesem Kapitel
-werden wir uns mit ein paar mehr Details über `Pin` und `Unpin` beschäftigen.
-Für den Moment können wir jedoch einfach dem Rat des Compilers folgen, um uns
-aus der Patsche zu helfen! In Codeblock 17-18 beginnen wir damit, `Pin` von
-`std::pin` zu importieren. Danach aktualisieren wir die Typ-Annotation für
-`futures`, indem jede `Box` mit einem `Pin` umschlossen wird. Schließlich
-verwenden wir `Box::pin` bei den Futures.
+werden wir uns mit weiteren Details zu `Pin` und `Unpin` beschäftigen. Für den
+Moment können wir jedoch einfach dem Rat des Compilers folgen, um uns aus der
+Patsche zu helfen! In Codeblock 17-18 beginnen wir damit, `Pin` von `std::pin`
+zu importieren. Danach aktualisieren wir die Typ-Annotation für `futures`,
+indem jede `Box` mit einem `Pin` umschlossen wird. Schließlich rufen wir
+`Box::pin` bei den Futures auf.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -450,8 +450,8 @@ verwenden wir `Box::pin` bei den Futures.
 # }
 ```
 
-<span class="caption">Codeblock 17-18: Verwenden von `Pin` und `Box::pin` zum
-Überprüfen des Typs `Vec`</span>
+<span class="caption">Codeblock 17-18: Verwenden von `Pin` und `Box::pin`, um
+den Typ `Vec` zu korrigieren</span>
 
 Wenn wir dies kompilieren und ausführen, erhalten wir endlich die erhoffte Ausgabe:
 
@@ -470,9 +470,9 @@ Puh!
 
 Wir können hier noch ein bisschen weiterforschen. Zum einen bringt die
 Verwendung von `Pin<Box<T>>` ein wenig zusätzlichen Overhead mit sich, da wir
-diese Futures mit `Box` auf den Haldenspeicher (heap) legen &ndash; und das tun
+die Futures mit `Box` auf den Haldenspeicher (heap) legen &ndash; und das tun
 wir nur, um die Typen in eine Kollektion zu bringen. Wir _brauchen_ die
-Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal zu dieser
+Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal in dieser
 speziellen Funktion. Wie zuvor erwähnt, ist `Pin` selbst ein Wrapper-Typ,
 sodass wir den Vorteil haben, einen einzigen Typ in `Vec` zu haben &ndash; der
 ursprüngliche Grund, warum wir uns für `Box` entschieden haben &ndash; ohne
@@ -481,11 +481,10 @@ Future verwenden, indem wir das Makro `std::pin::pin` benutzen.
 
 Wir müssen jedoch immer noch explizit den Typ der `Pin`-Referenz angeben, da
 Rust sonst nicht weiß, wie es diese als dynamische Merkmals-Objekte
-interpretieren soll, was wir im `Vec` benötigen. Wir fügen daher `pin` 
-zu unserer Importliste von `std::pin` hinzu. Dann können wir `pin!` für jedes
-Future verwenden und definieren `futures` als `Vec`, der veränderbare
-Referenzen mit `pin` auf den dynamischen Future-Typ enthält, wie in Codeblock
-17-19 zu sehen.
+interpretieren soll. Wir fügen daher `pin` zu unserer Importliste von
+`std::pin` hinzu. Dann können wir `pin!` für jedes Future aufrufen und
+definieren `futures` als `Vec`, der veränderbare Referenzen mit `pin` auf den
+dynamischen Future-Typ enthält, wie in Codeblock 17-19 zu sehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -594,12 +593,12 @@ das ist eine gute Sache.
 ### Future-Wettlauf
 
 Wenn wir auf Futures mit `join` warten, müssen _alle_ von ihnen beendet sein,
-bevor wir weitermachen. Manchmal müssen jedoch nur _einige_ Futures aus einer
-Menge fertig sein, bevor wir weitermachen &ndash; ähnlich wie bei einem
-Wettlauf zwischen zwei Futures.
+bevor wir weitermachen. Manchmal müssen jedoch nur _einige_ Futures fertig
+sein, bevor wir weitermachen &ndash; ähnlich wie bei einem Wettlauf zwischen
+zwei Futures.
 
 In Codeblock 17-21 verwenden wir wieder `trpl::race`, um zwei Futures `slow`
-und `fast` gegeneinander laufen zu lassen.
+und `fast` gegeneinander antreten zu lassen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -631,7 +630,7 @@ und `fast` gegeneinander laufen zu lassen.
 des zuerst beendeten Future zu erhalten</span>
 
 Jedes Future gibt eine Nachricht aus, wenn es startet, pausiert für eine
-gewisse Zeit, indem es `sleep` aufruft, und wartet und gibt dann eine weitere
+gewisse Zeit, indem es `sleep` aufruft und wartet, und gibt dann eine weitere
 Nachricht aus, wenn es fertig ist. Dann übergeben wir `slow` und `fast` an
 `trpl::race` und warten, bis eines von ihnen fertig ist. (Das Ergebnis ist
 nicht allzu überraschend: `fast` gewinnt!) Anders als bei der Verwendung von
@@ -644,7 +643,7 @@ die Reihenfolge der Argumente in `race` umdrehst, obwohl das Future `fast`
 immer zuerst fertig wird. Das liegt daran, dass die Implementierung dieser
 speziellen Funktion `race` nicht fair ist. Sie führt die als Argumente
 übergebenen Futures immer in der Reihenfolge aus, in der sie übergeben werden.
-Andere Implementierungen _sind_ fair und wählen zufällig, welches Future zuerst
+Andere Implementierungen sind _fair_ und wählen zufällig, welches Future zuerst
 abgefragt wird. Unabhängig davon, ob die Implementierung von `race` fair ist,
 wird _eines_ der Futures bis zum ersten `await` in seinem Rumpf laufen, bevor
 eine andere Aufgabe beginnen kann.
@@ -652,14 +651,14 @@ eine andere Aufgabe beginnen kann.
 Erinnere dich an [„Unser erstes asynchrones Programm“][async-program], bei dem
 Rust der Laufzeitumgebung an jedem await-Punkt die Möglichkeit gibt, die
 Aufgabe anzuhalten und zu einer anderen zu wechseln, wenn das zu erwartende
-Future nicht fertig ist. Der umgekehrte Fall ist ebenfalls wahr: Rust hält
+Future nicht fertig ist. Der umgekehrte Fall gilt ebenfalls: Rust hält
 asynchrone Blöcke _nur_ an einem await-Punkt an und übergibt die Kontrolle der
 Laufzeitumgebung. Alles zwischen den await-Punkten ist synchron.
 
 Das heißt, wenn du eine Menge Arbeit in einem asynchronen Block ohne einen
 await-Punkt erledigst, blockiert dieses Future alle anderen Futures an ihrem
-Fortschritt. Dies wird manchmal auch als _ein Future lässt ein anderes Future
-verhungern_ bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
+Fortschritt. Dies wird manchmal auch als „ein Future lässt ein anderes Future
+verhungern“ bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
 du jedoch eine teure Initialisierung oder eine langwierige Arbeit durchführst
 oder wenn du ein Future hast, das eine bestimmte Aufgabe auf unbestimmte Zeit
 ausführt, musst du darüber nachdenken, wann und wo du die Kontrolle an die
@@ -688,7 +687,7 @@ Simulieren wir einen langlaufenden Ablauf. Codeblock 17-22 führt eine Funktion
 #
 fn slow(name: &str, ms: u64) {
     thread::sleep(Duration::from_millis(ms));
-    println!("'{name}' ist für {ms}ms gelaufen");
+    println!("'{name}' ist für {ms} ms gelaufen");
 }
 ```
 
@@ -737,7 +736,7 @@ in einem Paar von Futures zu emulieren.
 #
 # fn slow(name: &str, ms: u64) {
 #     thread::sleep(Duration::from_millis(ms));
-#     println!("'{name}' ist für {ms}ms gelaufen");
+#     println!("'{name}' ist für {ms} ms gelaufen");
 # }
 ```
 
@@ -750,14 +749,14 @@ erhältst du diese Ausgabe:
 
 ```text
 'a' gestartet.
-'a' ist für 30ms gelaufen
-'a' ist für 10ms gelaufen
-'a' ist für 20ms gelaufen
+'a' ist für 30 ms gelaufen
+'a' ist für 10 ms gelaufen
+'a' ist für 20 ms gelaufen
 'b' gestartet.
-'b' ist für 75ms gelaufen
-'b' ist für 10ms gelaufen
-'b' ist für 15ms gelaufen
-'b' ist für 350ms gelaufen
+'b' ist für 75 ms gelaufen
+'b' ist für 10 ms gelaufen
+'b' ist für 15 ms gelaufen
+'b' ist für 350 ms gelaufen
 'a' beendet.
 ```
 
@@ -818,7 +817,7 @@ Codeblock 17-24 gezeigt.
 #
 # fn slow(name: &str, ms: u64) {
 #     thread::sleep(Duration::from_millis(ms));
-#     println!("'{name}' ist für {ms}ms gelaufen");
+#     println!("'{name}' ist für {ms} ms gelaufen");
 # }
 ```
 
@@ -831,13 +830,13 @@ Arbeit ab:
 
 ```text
 'a' gestartet.
-'a' ist für 30ms gelaufen
+'a' ist für 30 ms gelaufen
 'b' gestartet.
-'b' ist für 75ms gelaufen
-'a' ist für 10ms gelaufen
-'b' ist für 10ms gelaufen
-'a' ist für 20ms gelaufen
-'b' ist für 15ms gelaufen
+'b' ist für 75 ms gelaufen
+'a' ist für 10 ms gelaufen
+'b' ist für 10 ms gelaufen
+'a' ist für 20 ms gelaufen
+'b' ist für 15 ms gelaufen
 'a' beendet.
 ```
 
@@ -892,7 +891,7 @@ verwenden. In Codeblock 17-25 ersetzen wir all diese Aufrufe von `sleep` durch
 #
 # # fn slow(name: &str, ms: u64) {
 #     thread::sleep(Duration::from_millis(ms));
-#     println!("'{name}' ist für {ms}ms gelaufen");
+#     println!("'{name}' ist für {ms} ms gelaufen");
 # }
 ```
 
@@ -967,7 +966,7 @@ für die Strukturierung der Beziehungen zwischen verschiedenen Teilen des
 Programms ist. Es handelt sich um eine Form von _kooperativem Multitasking_,
 bei dem jedes Future die Möglichkeit hat zu bestimmen, wann es die Kontrolle
 mittels await-Punkte abgibt. Jedes Future hat daher auch die Verantwortung, ein
-zu langes Blockieren zu vermeiden. In einigen Rust-basierten eingebetteten
+zu langes Blockieren zu vermeiden. In einigen Rust-basierten, eingebetteten
 Betriebssystemen ist dies die _einzige_ Art von Multitasking!
 
 In der Praxis wirst du natürlich nicht nach jeder einzelnen Zeile
@@ -978,12 +977,12 @@ machen, sodass es manchmal für die _gesamte_ Performanz besser ist, eine
 Operation kurzzeitig zu blockieren. Du solltest immer messen, um die
 tatsächlichen Leistungsengpässe deines Codes zu finden. Die zugrundeliegende
 Dynamik solltest du immer im Hinterkopf haben, wenn du feststellst, dass viele
-Vorgänge seriell ausgeführt werde, von denen du erwartet hast, dass sie
+Vorgänge seriell ausgeführt werden, von denen du erwartet hast, dass sie
 nebenläufig ausgeführt werden!
 
 ### Eigene Async-Abstraktionen erstellen
 
-Wir können auch Futures kombinieren, um neue Muster zu schaffen. Zum Beispiel
+Wir können Futures auch kombinieren, um neue Muster zu schaffen. Zum Beispiel
 können wir eine Funktion `timeout` mit bereits vorhandenen asynchronen
 Bausteinen erstellen. Wenn wir fertig sind, ist das Ergebnis ein weiterer
 Baustein, mit dem wir weitere asynchrone Abstraktionen erstellen können.
@@ -1069,7 +1068,7 @@ async fn timeout<F: Future>(
 `timeout`</span>
 
 Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
-_Verhalten_ nach, das wir brauchen: Wir wollen Die Dauer des übergebenen Future
+_Verhalten_ nach, das wir brauchen: Wir wollen die Dauer des übergebenen Future
 überwachen. Wir können mit `trpl::sleep` einen Timer aus der Dauer machen und
 `trpl::race` verwenden, um mit diesem Timer das übergebene Future zu
 überwachen.
@@ -1082,7 +1081,7 @@ fertig zu werden, wenn `max_time` eine sehr kurze Dauer hat. Wenn
 Ausgabe von `future` zurückgeben. Wenn `timer` zuerst fertig wird, gibt
 `race` den Wert `Right` mit der Ausgabe des Timers von `()` zurück.
 
-In Codeblock 17-29 gleichen wir das Ergebnis des Wartens auf `trpl::race` ab.
+In Codeblock 17-29 werten wir das Ergebnis des Wartens auf `trpl::race` aus.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1150,9 +1149,9 @@ und so weiter. Du wirst nur ab und zu zu `pin` greifen müssen, um Futures mit
 diesen APIs zu benutzen.
 
 Wir haben nun eine Reihe von Möglichkeiten gesehen, mit mehreren Futures
-gleichzeitig zu arbeiten. Als Nächstes werden wir uns ansehen, wie wir mit
-mehreren Futures in einer zeitlichen Abfolge arbeiten können, mit _Strömen_
-(streams). Vorher solltest du aber noch ein paar Dinge beachten:
+gleichzeitig zu arbeiten. Als Nächstes werden wir uns mit Hilfe von _Strömen_
+(streams) ansehen, wie wir mit mehreren Futures in einer zeitlichen Reihenfolge
+arbeiten können. Vorher solltest du aber noch ein paar Dinge beachten:
 
 - Wir haben einen `Vec` mit `join_all` verwendet, um zu warten, bis alle
   Futures in einer Gruppe beendet sind. Wie könnte man stattdessen einen
@@ -1162,10 +1161,10 @@ mehreren Futures in einer zeitlichen Abfolge arbeiten können, mit _Strömen_
 - Wirf einen Blick auf den Typ `futures::stream::FuturesUnordered` aus der
   Kiste `futures`. Inwiefern unterscheidet sich die Verwendung dieses Typs von
   der Verwendung eines `Vec`? (Mach dir keine Sorgen über die Tatsache, dass es
-  aus dem `stream`-Teil der Kiste stammt; es funktioniert einfach mit jeder
-  Kolletion von Futures.)
+  aus dem `stream`-Teil der Kiste stammt; es funktioniert problemlos mit jeder
+  Kollektion von Futures.)
 
 [async-program]: ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm
-[dyn]: ch12-03-improving-error-handling-and-modularity.html
+[dyn]: ch12-03-improving-error-handling-and-modularity.html#rückgabe-von-fehlern-aus-der-funktion-run
 [enum-alt]: ch08-01-vectors.html#verwenden-einer-aufzählung-zum-speichern-mehrerer-typen
 [iterator-trait]: ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next
