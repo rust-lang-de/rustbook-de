@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -147,14 +149,14 @@
                         <h2 id="arbeiten-mit-einer-beliebigen-anzahl-von-futures"><a class="header" href="#arbeiten-mit-einer-beliebigen-anzahl-von-futures">Arbeiten mit einer beliebigen Anzahl von Futures</a></h2>
 <p>Als wir im vorigen Abschnitt von zwei auf drei Futures umgestellt haben,
 mussten wir auch von <code>join</code> auf <code>join3</code> umstellen. Es wäre lästig, jedes Mal
-eine andere Funktion aufrufen zu müssen, wenn wir die Anzahl der Futures, die
-wir verbinden wollen, ändern. Glücklicherweise gibt es eine Makroform von
+eine andere Funktion aufrufen zu müssen, wenn wir die Anzahl der Futures, auf
+die wir warten wollen, ändern. Glücklicherweise gibt es eine Makroform von
 <code>join</code>, an die wir eine beliebige Anzahl von Argumenten übergeben können. Es
 kümmert sich auch um das Warten auf die Futures. Wir könnten also den Code aus
 Codeblock 17-13 umschreiben, um <code>join!</code> anstelle von <code>join3</code> zu verwenden, wie
 in Codeblock 17-14.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -291,7 +293,7 @@ asynchronen Block eine eigene Aufzählung erstellt. Man kann nicht zwei
 verschiedene handgeschriebene Strukturen in einen <code>Vec</code> packen. Dieselbe Regel
 gilt für die verschiedenen vom Compiler erzeugten Strukturen.</p>
 <p>Damit dies funktioniert, müssen wir <em>Merkmalsobjekte</em> (trait objects)
-verwenden, wie wir es in <a href="ch12-03-improving-error-handling-and-modularity.html">„Rückgabe von Fehlern aus der Funktion <code>run</code>“</a>
+verwenden, wie wir es in <a href="ch12-03-improving-error-handling-and-modularity.html#r%C3%BCckgabe-von-fehlern-aus-der-funktion-run">„Rückgabe von Fehlern aus der Funktion <code>run</code>“</a>
 in Kapitel 12 getan haben. (Wir werden Merkmalsobjekte im Detail in Kapitel 18
 behandeln.) Die Verwendung von Merkmalsobjekten ermöglicht es uns, alle
 anonymen Futures, die von diesen Typen erzeugt werden, als denselben Typ zu
@@ -300,15 +302,15 @@ behandeln, da alle von ihnen das Merkmal <code>Future</code> implementieren.</p>
 <p>Anmerkung: In <a href="ch08-01-vectors.html#verwenden-einer-aufz%C3%A4hlung-zum-speichern-mehrerer-typen">„Verwenden einer Aufzählung zum Speichern mehrerer
 Typen“</a> in Kapitel 8 haben wir eine andere Möglichkeit besprochen,
 mehrere Typen in einem <code>Vec</code> aufzunehmen: Verwenden eines Enums, um jeden
-Typen, der im Vektor vorkommen können, zu repräsentieren. Das können wir hier
+Typ, der im Vektor vorkommen kann, zu repräsentieren. Das können wir hier
 allerdings nicht tun. Zum einen haben wir keine Möglichkeit, die
 verschiedenen Typen zu benennen, da sie anonym sind. Zum anderen war der
 Grund, warum wir uns überhaupt für einen Vektor und <code>join_all</code> entschieden
 haben, dass wir mit einer dynamischen Kollektion von Futures arbeiten
 wollten, wobei wir nur darauf achten, dass sie denselben Ausgabetyp haben.</p>
 </blockquote>
-<p>Wir beginnen, indem wir jedes Future in <code>vec!</code> in eine <code>Box::new</code> verpacken,
-wie in Codeblock 17-16 gezeigt.</p>
+<p>Wir beginnen, indem wir jedes Future in <code>vec!</code> in eine <code>Box::new</code> packen, wie
+in Codeblock 17-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
 </span><span class="boring">
@@ -366,8 +368,8 @@ erhalten wir den gleichen grundlegenden Fehler wie zuvor, aber wir bekommen
 einen für den zweiten und dritten Aufruf von <code>Box::new</code>, sowie neue Fehler, die
 sich auf das Merkmal <code>Unpin</code> beziehen. Wir werden gleich auf die <code>Unpin</code>-Fehler
 zurückkommen. Lass uns zunächst die Typ-Fehler bei den Aufrufen von <code>Box::new</code>
-beheben, indem wir den Typ der Variable <code>futures</code> explizit annotieren (siehe
-Codeblock 17-17).</p>
+beheben, indem wir den Typ der Variable <code>futures</code> explizit annotieren, siehe
+Codeblock 17-17.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
 </span><span class="boring">
@@ -496,14 +498,14 @@ error: could not compile `async_await` (bin "async_await") due to 3 previous err
 <p>Das ist <em>viel</em> zu verdauen, also lass uns das auseinandernehmen. Der erste Teil
 der Meldung sagt uns, dass der erste asynchrone Block (<code>src/main.rs:8:23:  20:10</code>) das Merkmal <code>Unpin</code> nicht implementiert, und schlägt vor, <code>pin!</code> oder
 <code>Box::pin</code> zu verwenden, um das Problem zu lösen. Später in diesem Kapitel
-werden wir uns mit ein paar mehr Details über <code>Pin</code> und <code>Unpin</code> beschäftigen.
-Für den Moment können wir jedoch einfach dem Rat des Compilers folgen, um uns
-aus der Patsche zu helfen! In Codeblock 17-18 beginnen wir damit, <code>Pin</code> von
-<code>std::pin</code> zu importieren. Danach aktualisieren wir die Typ-Annotation für
-<code>futures</code>, indem jede <code>Box</code> mit einem <code>Pin</code> umschlossen wird. Schließlich
-verwenden wir <code>Box::pin</code> bei den Futures.</p>
+werden wir uns mit weiteren Details zu <code>Pin</code> und <code>Unpin</code> beschäftigen. Für den
+Moment können wir jedoch einfach dem Rat des Compilers folgen, um uns aus der
+Patsche zu helfen! In Codeblock 17-18 beginnen wir damit, <code>Pin</code> von <code>std::pin</code>
+zu importieren. Danach aktualisieren wir die Typ-Annotation für <code>futures</code>,
+indem jede <code>Box</code> mit einem <code>Pin</code> umschlossen wird. Schließlich rufen wir
+<code>Box::pin</code> bei den Futures auf.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{
 </span><span class="boring">    future::Future,
@@ -556,8 +558,8 @@ verwenden wir <code>Box::pin</code> bei den Futures.</p>
 <span class="boring">        trpl::join_all(futures).await;
 </span><span class="boring">    });
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 17-18: Verwenden von <code>Pin</code> und <code>Box::pin</code> zum
-Überprüfen des Typs <code>Vec</code></span></p>
+<p><span class="caption">Codeblock 17-18: Verwenden von <code>Pin</code> und <code>Box::pin</code>, um
+den Typ <code>Vec</code> zu korrigieren</span></p>
 <p>Wenn wir dies kompilieren und ausführen, erhalten wir endlich die erhoffte Ausgabe:</p>
 <pre><code class="language-text">Erhalten: 'Hallo'
 Erhalten: 'Weitere'
@@ -571,9 +573,9 @@ Erhalten: 'dich'
 <p>Puh!</p>
 <p>Wir können hier noch ein bisschen weiterforschen. Zum einen bringt die
 Verwendung von <code>Pin&lt;Box&lt;T&gt;&gt;</code> ein wenig zusätzlichen Overhead mit sich, da wir
-diese Futures mit <code>Box</code> auf den Haldenspeicher (heap) legen – und das tun
+die Futures mit <code>Box</code> auf den Haldenspeicher (heap) legen – und das tun
 wir nur, um die Typen in eine Kollektion zu bringen. Wir <em>brauchen</em> die
-Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal zu dieser
+Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal in dieser
 speziellen Funktion. Wie zuvor erwähnt, ist <code>Pin</code> selbst ein Wrapper-Typ,
 sodass wir den Vorteil haben, einen einzigen Typ in <code>Vec</code> zu haben – der
 ursprüngliche Grund, warum wir uns für <code>Box</code> entschieden haben – ohne
@@ -581,13 +583,12 @@ eine Haldenspeicher-Allokation durchzuführen. Wir können <code>Pin</code> dire
 Future verwenden, indem wir das Makro <code>std::pin::pin</code> benutzen.</p>
 <p>Wir müssen jedoch immer noch explizit den Typ der <code>Pin</code>-Referenz angeben, da
 Rust sonst nicht weiß, wie es diese als dynamische Merkmals-Objekte
-interpretieren soll, was wir im <code>Vec</code> benötigen. Wir fügen daher <code>pin</code>
-zu unserer Importliste von <code>std::pin</code> hinzu. Dann können wir <code>pin!</code> für jedes
-Future verwenden und definieren <code>futures</code> als <code>Vec</code>, der veränderbare
-Referenzen mit <code>pin</code> auf den dynamischen Future-Typ enthält, wie in Codeblock
-17-19 zu sehen.</p>
+interpretieren soll. Wir fügen daher <code>pin</code> zu unserer Importliste von
+<code>std::pin</code> hinzu. Dann können wir <code>pin!</code> für jedes Future aufrufen und
+definieren <code>futures</code> als <code>Vec</code>, der veränderbare Referenzen mit <code>pin</code> auf den
+dynamischen Future-Typ enthält, wie in Codeblock 17-19 zu sehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{
 </span><span class="boring">    future::Future,
@@ -651,7 +652,7 @@ implementiert das anonyme Future für <code>a</code> den Typ <code>Future&lt;Out
 anonyme Future für <code>b</code> implementiert <code>Future&lt;Output = &amp;str&gt;</code>, und das anonyme
 Future für <code>c</code> implementiert <code>Future&lt;Output = bool&gt;</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    trpl::run(async {
@@ -679,13 +680,13 @@ Besonderes, auch wenn wir eine nette Syntax für die Arbeit mit ihnen haben, und
 das ist eine gute Sache.</p>
 <h3 id="future-wettlauf"><a class="header" href="#future-wettlauf">Future-Wettlauf</a></h3>
 <p>Wenn wir auf Futures mit <code>join</code> warten, müssen <em>alle</em> von ihnen beendet sein,
-bevor wir weitermachen. Manchmal müssen jedoch nur <em>einige</em> Futures aus einer
-Menge fertig sein, bevor wir weitermachen – ähnlich wie bei einem
-Wettlauf zwischen zwei Futures.</p>
+bevor wir weitermachen. Manchmal müssen jedoch nur <em>einige</em> Futures fertig
+sein, bevor wir weitermachen – ähnlich wie bei einem Wettlauf zwischen
+zwei Futures.</p>
 <p>In Codeblock 17-21 verwenden wir wieder <code>trpl::race</code>, um zwei Futures <code>slow</code>
-und <code>fast</code> gegeneinander laufen zu lassen.</p>
+und <code>fast</code> gegeneinander antreten zu lassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
@@ -709,7 +710,7 @@ und <code>fast</code> gegeneinander laufen zu lassen.</p>
 <p><span class="caption">Codeblock 17-21: Verwenden von <code>race</code>, um das Ergebnis
 des zuerst beendeten Future zu erhalten</span></p>
 <p>Jedes Future gibt eine Nachricht aus, wenn es startet, pausiert für eine
-gewisse Zeit, indem es <code>sleep</code> aufruft, und wartet und gibt dann eine weitere
+gewisse Zeit, indem es <code>sleep</code> aufruft und wartet, und gibt dann eine weitere
 Nachricht aus, wenn es fertig ist. Dann übergeben wir <code>slow</code> und <code>fast</code> an
 <code>trpl::race</code> und warten, bis eines von ihnen fertig ist. (Das Ergebnis ist
 nicht allzu überraschend: <code>fast</code> gewinnt!) Anders als bei der Verwendung von
@@ -721,20 +722,20 @@ die Reihenfolge der Argumente in <code>race</code> umdrehst, obwohl das Future <
 immer zuerst fertig wird. Das liegt daran, dass die Implementierung dieser
 speziellen Funktion <code>race</code> nicht fair ist. Sie führt die als Argumente
 übergebenen Futures immer in der Reihenfolge aus, in der sie übergeben werden.
-Andere Implementierungen <em>sind</em> fair und wählen zufällig, welches Future zuerst
+Andere Implementierungen sind <em>fair</em> und wählen zufällig, welches Future zuerst
 abgefragt wird. Unabhängig davon, ob die Implementierung von <code>race</code> fair ist,
 wird <em>eines</em> der Futures bis zum ersten <code>await</code> in seinem Rumpf laufen, bevor
 eine andere Aufgabe beginnen kann.</p>
 <p>Erinnere dich an <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones Programm“</a>, bei dem
 Rust der Laufzeitumgebung an jedem await-Punkt die Möglichkeit gibt, die
 Aufgabe anzuhalten und zu einer anderen zu wechseln, wenn das zu erwartende
-Future nicht fertig ist. Der umgekehrte Fall ist ebenfalls wahr: Rust hält
+Future nicht fertig ist. Der umgekehrte Fall gilt ebenfalls: Rust hält
 asynchrone Blöcke <em>nur</em> an einem await-Punkt an und übergibt die Kontrolle der
 Laufzeitumgebung. Alles zwischen den await-Punkten ist synchron.</p>
 <p>Das heißt, wenn du eine Menge Arbeit in einem asynchronen Block ohne einen
 await-Punkt erledigst, blockiert dieses Future alle anderen Futures an ihrem
-Fortschritt. Dies wird manchmal auch als <em>ein Future lässt ein anderes Future
-verhungern</em> bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
+Fortschritt. Dies wird manchmal auch als „ein Future lässt ein anderes Future
+verhungern“ bezeichnet. In manchen Fällen mag das keine große Sache sein. Wenn
 du jedoch eine teure Initialisierung oder eine langwierige Arbeit durchführst
 oder wenn du ein Future hast, das eine bestimmte Aufgabe auf unbestimmte Zeit
 ausführt, musst du darüber nachdenken, wann und wo du die Kontrolle an die
@@ -745,7 +746,7 @@ abgeben?</p>
 <p>Simulieren wir einen langlaufenden Ablauf. Codeblock 17-22 führt eine Funktion
 <code>slow</code> ein.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -757,7 +758,7 @@ abgeben?</p>
 </span><span class="boring">
 </span>fn slow(name: &amp;str, ms: u64) {
     thread::sleep(Duration::from_millis(ms));
-    println!("'{name}' ist für {ms}ms gelaufen");
+    println!("'{name}' ist für {ms} ms gelaufen");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 17-22: Verwenden von <code>thread::sleep</code> zum
 Simulieren langsamer Abläufe</span></p>
@@ -768,7 +769,7 @@ simulieren, die sowohl langwierig als auch blockierend sind.</p>
 <p>In Codeblock 17-23 verwenden wir <code>slow</code>, um diese Art von CPU-gebundener Arbeit
 in einem Paar von Futures zu emulieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -799,7 +800,7 @@ in einem Paar von Futures zu emulieren.</p>
 </span><span class="boring">
 </span><span class="boring">fn slow(name: &amp;str, ms: u64) {
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
-</span><span class="boring">    println!("'{name}' ist für {ms}ms gelaufen");
+</span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-23: Verwenden von <code>thread::sleep</code> zum
 Simulieren langsamer Abläufe</span></p>
@@ -807,14 +808,14 @@ Simulieren langsamer Abläufe</span></p>
 Abläufen an die Laufzeitumgebung zurück. Wenn du diesen Code ausführst,
 erhältst du diese Ausgabe:</p>
 <pre><code class="language-text">'a' gestartet.
-'a' ist für 30ms gelaufen
-'a' ist für 10ms gelaufen
-'a' ist für 20ms gelaufen
+'a' ist für 30 ms gelaufen
+'a' ist für 10 ms gelaufen
+'a' ist für 20 ms gelaufen
 'b' gestartet.
-'b' ist für 75ms gelaufen
-'b' ist für 10ms gelaufen
-'b' ist für 15ms gelaufen
-'b' ist für 350ms gelaufen
+'b' ist für 75 ms gelaufen
+'b' ist für 10 ms gelaufen
+'b' ist für 15 ms gelaufen
+'b' ist für 350 ms gelaufen
 'a' beendet.
 </code></pre>
 <p>Wie in unserem früheren Beispiel wird <code>race</code> immer noch beendet, sobald <code>a</code>
@@ -832,7 +833,7 @@ dass das Future <code>b</code> <em>überhaupt</em> läuft. Versuchen wir, die Fu
 Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu hindern, wie in
 Codeblock 17-24 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -870,7 +871,7 @@ Codeblock 17-24 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">fn slow(name: &amp;str, ms: u64) {
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
-</span><span class="boring">    println!("'{name}' ist für {ms}ms gelaufen");
+</span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-24: Verwenden von <code>sleep</code>, um Vorgänge zu
 unterbrechen</span></p>
@@ -878,13 +879,13 @@ unterbrechen</span></p>
 zwischen den Aufrufen von <code>slow</code> ein. Nun wechseln die beiden Futures ihre
 Arbeit ab:</p>
 <pre><code class="language-text">'a' gestartet.
-'a' ist für 30ms gelaufen
+'a' ist für 30 ms gelaufen
 'b' gestartet.
-'b' ist für 75ms gelaufen
-'a' ist für 10ms gelaufen
-'b' ist für 10ms gelaufen
-'a' ist für 20ms gelaufen
-'b' ist für 15ms gelaufen
+'b' ist für 75 ms gelaufen
+'a' ist für 10 ms gelaufen
+'b' ist für 10 ms gelaufen
+'a' ist für 20 ms gelaufen
+'b' ist für 15 ms gelaufen
 'a' beendet.
 </code></pre>
 <p>Das Future <code>a</code> läuft noch eine Weile, bevor es die Kontrolle an <code>b</code> abgibt,
@@ -898,7 +899,7 @@ abgeben. Das können wir direkt tun, indem wir die Funktion <code>yield_now</cod
 verwenden. In Codeblock 17-25 ersetzen wir all diese Aufrufe von <code>sleep</code> durch
 <code>yield_now</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
@@ -934,7 +935,7 @@ verwenden. In Codeblock 17-25 ersetzen wir all diese Aufrufe von <code>sleep</co
 </span><span class="boring">
 </span><span class="boring"># fn slow(name: &amp;str, ms: u64) {
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
-</span><span class="boring">    println!("'{name}' ist für {ms}ms gelaufen");
+</span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-25: Verwenden von <code>yield_now</code>, um Vorgänge
 anzuhalten</span></p>
@@ -949,7 +950,7 @@ Codeblock 17-26 erstellst. (Dies ist kein besonders strenger Weg, um
 Leistungstests durchzuführen, aber es reicht aus, um den Unterschied hier zu
 zeigen.)</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::time::{Duration, Instant};
 </span><span class="boring">
@@ -997,7 +998,7 @@ für die Strukturierung der Beziehungen zwischen verschiedenen Teilen des
 Programms ist. Es handelt sich um eine Form von <em>kooperativem Multitasking</em>,
 bei dem jedes Future die Möglichkeit hat zu bestimmen, wann es die Kontrolle
 mittels await-Punkte abgibt. Jedes Future hat daher auch die Verantwortung, ein
-zu langes Blockieren zu vermeiden. In einigen Rust-basierten eingebetteten
+zu langes Blockieren zu vermeiden. In einigen Rust-basierten, eingebetteten
 Betriebssystemen ist dies die <em>einzige</em> Art von Multitasking!</p>
 <p>In der Praxis wirst du natürlich nicht nach jeder einzelnen Zeile
 einen await-Punkt einfügen. Obwohl die Abgabe der Kontrolle auf diese Weise
@@ -1007,10 +1008,10 @@ machen, sodass es manchmal für die <em>gesamte</em> Performanz besser ist, eine
 Operation kurzzeitig zu blockieren. Du solltest immer messen, um die
 tatsächlichen Leistungsengpässe deines Codes zu finden. Die zugrundeliegende
 Dynamik solltest du immer im Hinterkopf haben, wenn du feststellst, dass viele
-Vorgänge seriell ausgeführt werde, von denen du erwartet hast, dass sie
+Vorgänge seriell ausgeführt werden, von denen du erwartet hast, dass sie
 nebenläufig ausgeführt werden!</p>
 <h3 id="eigene-async-abstraktionen-erstellen"><a class="header" href="#eigene-async-abstraktionen-erstellen">Eigene Async-Abstraktionen erstellen</a></h3>
-<p>Wir können auch Futures kombinieren, um neue Muster zu schaffen. Zum Beispiel
+<p>Wir können Futures auch kombinieren, um neue Muster zu schaffen. Zum Beispiel
 können wir eine Funktion <code>timeout</code> mit bereits vorhandenen asynchronen
 Bausteinen erstellen. Wenn wir fertig sind, ist das Ergebnis ein weiterer
 Baustein, mit dem wir weitere asynchrone Abstraktionen erstellen können.</p>
@@ -1083,7 +1084,7 @@ sein.</li>
 <p><span class="caption">Codeblock 17-28: Definieren der Signatur von
 <code>timeout</code></span></p>
 <p>Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
-<em>Verhalten</em> nach, das wir brauchen: Wir wollen Die Dauer des übergebenen Future
+<em>Verhalten</em> nach, das wir brauchen: Wir wollen die Dauer des übergebenen Future
 überwachen. Wir können mit <code>trpl::sleep</code> einen Timer aus der Dauer machen und
 <code>trpl::race</code> verwenden, um mit diesem Timer das übergebene Future zu
 überwachen.</p>
@@ -1094,9 +1095,9 @@ fertig zu werden, wenn <code>max_time</code> eine sehr kurze Dauer hat. Wenn
 <code>future_to_try</code> zuerst fertig wird, wird <code>race</code> den Wert <code>Left</code> mit der
 Ausgabe von <code>future</code> zurückgeben. Wenn <code>timer</code> zuerst fertig wird, gibt
 <code>race</code> den Wert <code>Right</code> mit der Ausgabe des Timers von <code>()</code> zurück.</p>
-<p>In Codeblock 17-29 gleichen wir das Ergebnis des Wartens auf <code>trpl::race</code> ab.</p>
+<p>In Codeblock 17-29 werten wir das Ergebnis des Wartens auf <code>trpl::race</code> aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{future::Future, time::Duration};
 </span><span class="boring">
@@ -1150,9 +1151,9 @@ und in zweiter Linie mit Funktionen und Makros wie <code>join</code>, <code>join
 und so weiter. Du wirst nur ab und zu zu <code>pin</code> greifen müssen, um Futures mit
 diesen APIs zu benutzen.</p>
 <p>Wir haben nun eine Reihe von Möglichkeiten gesehen, mit mehreren Futures
-gleichzeitig zu arbeiten. Als Nächstes werden wir uns ansehen, wie wir mit
-mehreren Futures in einer zeitlichen Abfolge arbeiten können, mit <em>Strömen</em>
-(streams). Vorher solltest du aber noch ein paar Dinge beachten:</p>
+gleichzeitig zu arbeiten. Als Nächstes werden wir uns mit Hilfe von <em>Strömen</em>
+(streams) ansehen, wie wir mit mehreren Futures in einer zeitlichen Reihenfolge
+arbeiten können. Vorher solltest du aber noch ein paar Dinge beachten:</p>
 <ul>
 <li>
 <p>Wir haben einen <code>Vec</code> mit <code>join_all</code> verwendet, um zu warten, bis alle
@@ -1164,8 +1165,8 @@ Was sind die Nachteile dieser Vorgehensweise?</p>
 <p>Wirf einen Blick auf den Typ <code>futures::stream::FuturesUnordered</code> aus der
 Kiste <code>futures</code>. Inwiefern unterscheidet sich die Verwendung dieses Typs von
 der Verwendung eines <code>Vec</code>? (Mach dir keine Sorgen über die Tatsache, dass es
-aus dem <code>stream</code>-Teil der Kiste stammt; es funktioniert einfach mit jeder
-Kolletion von Futures.)</p>
+aus dem <code>stream</code>-Teil der Kiste stammt; es funktioniert problemlos mit jeder
+Kollektion von Futures.)</p>
 </li>
 </ul>
 

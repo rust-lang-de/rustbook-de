@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -235,7 +237,7 @@ voranstellst.</p>
 <p>Zum Beispiel ist <code>match</code> ein Schlüsselwort. Versuche, folgende Funktion zu
 kompilieren, die <code>match</code> als Namen benutzt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
     haystack.contains(needle)
@@ -252,7 +254,7 @@ kompilieren, die <code>match</code> als Namen benutzt:</p>
 Funktionsbezeichner verwenden kannst. Um <code>match</code> als Funktionsnamen zu
 verwenden, musst du die Syntax für Roh-Bezeichner wie folgt verwenden:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn r#match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
+<pre><pre class="playground"><code class="language-rust edition2024">fn r#match(needle: &amp;str, haystack: &amp;str) -&gt; bool {
     haystack.contains(needle)
 }
 

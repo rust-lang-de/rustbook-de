@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -169,7 +171,7 @@ Standardbibliotheksdokumentation.</p>
 hinzuzufügen mit <code>insert</code>. In Codeblock 8-20 verfolgen wir die Ergebnisse
 zweier Mannschaften mit den Namen Blau und Gelb. Das Team Blau startet mit 10
 Punkten, das Team Gelb mit 50 Punkten.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -193,7 +195,7 @@ haben und alle Werte müssen denselben Typ haben.</p>
 <h3 id="zugreifen-auf-werte-in-einer-hashtabelle"><a class="header" href="#zugreifen-auf-werte-in-einer-hashtabelle">Zugreifen auf Werte in einer Hashtabelle</a></h3>
 <p>Wir können einen Wert aus der Hashtabelle herausholen, indem wir die Methode
 <code>get</code> mit ihrem Schlüssel aufrufen, wie in Codeblock 8-21 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -216,7 +218,7 @@ erhalten, und ruft dann <code>unwrap_or</code> auf, um <code>score</code> auf Nu
 <code>scores</code> keinen Eintrag für den Schlüssel hat.</p>
 <p>Wir können über jedes Schlüssel-Wert-Paar in einer Hashtabelle auf ähnliche
 Weise iterieren wie bei Vektoren, indem wir eine <code>for</code>-Schleife verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -238,7 +240,7 @@ Blau: 10
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie <code>String</code> werden die Werte
 verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
 8-22 gezeigt wird.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -278,7 +280,7 @@ Schlüssel assoziierte Wert ersetzt. Auch wenn der Code in Codeblock 8-23
 zweimal <code>insert</code> aufruft, wird die Hashtabelle nur ein Schlüssel-Wert-Paar
 enthalten, weil wir beide Male einen Wert für den Schlüssel des Teams Blau
 einfügen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -307,7 +309,7 @@ wir wollen prüfen, ob der Schlüssel für das Team Gelb einen Wert hat. Wenn da
 nicht der Fall ist, wollen wir den Wert <code>50</code> einfügen, und dasselbe gilt für
 das Team Blau. Bei Verwendung von <code>entry</code> sieht der Code wie Codeblock 8-24
 aus.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 
@@ -340,7 +342,7 @@ oft jedes Wort in einem Text vorkommt. Wir verwenden eine Hashtabelle mit den
 Wörtern als Schlüssel und inkrementieren den Wert, um nachzuvollziehen, wie oft
 wir dieses Wort schon gesehen haben. Wenn es das erste Mal ist, dass wir ein
 Wort sehen, fügen wir zuerst den Wert <code>0</code> ein.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::collections::HashMap;
 

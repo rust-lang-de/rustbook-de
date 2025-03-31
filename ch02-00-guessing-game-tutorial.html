@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -178,7 +180,7 @@ edition = "2024"
 <p>Wie du in Kapitel 1 gesehen hast, generiert <code>cargo new</code> ein „Hello,
 world!“-Programm für dich. Sieh dir die Datei <em>src/main.rs</em> an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     println!("Hello, world!");
 }</code></pre></pre>
 <p>Kompilieren wir nun dieses „Hello, world!“-Programm und führen es im gleichen
@@ -314,7 +316,7 @@ nicht mehr ändern. Wir werden dieses Konzept im Abschnitt <a href="ch03-01-vari
 Veränderbarkeit“</a> in Kapitel 3 ausführlich
 besprechen. Um eine Variable veränderbar zu machen, ergänzen wir <code>mut</code> vor dem
 Variablennamen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let apples = 5; // unveränderbar
 let mut bananas = 5; // veränderbar
@@ -489,7 +491,7 @@ eine durch Komma getrennte Liste von Ausdrücken ein, die in jedem leeren
 geschweiften Klammerplatzhalter in derselben Reihenfolge ausgegeben werden
 sollen. Das Ausgeben einer Variablen und des Ergebnisses eines Ausdrucks in
 einem Aufruf von <code>println!</code> würde wie folgt aussehen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 let y = 10;

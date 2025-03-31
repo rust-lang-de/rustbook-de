@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -159,7 +161,7 @@ erreicht und die Werte niemals aufgeräumt werden.</p>
 werden kann, beginnend mit der Definition der Aufzählung <code>List</code> und einer
 Methode <code>tail</code> in Codeblock 15-25.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use crate::List::{Cons, Nil};
+<pre><pre class="playground"><code class="language-rust edition2024">use crate::List::{Cons, Nil};
 use std::cell::RefCell;
 use std::rc::Rc;
 
@@ -195,7 +197,7 @@ geändert, dass sie auf <code>b</code> zeigt, wodurch ein Referenzzyklus erstell
 fügen <code>println!</code>-Anweisungen ein, um zu zeigen, wie hoch der Referenzzähler an
 den jeweiligen Stellen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use crate::List::{Cons, Nil};
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use crate::List::{Cons, Nil};
 </span><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
@@ -341,7 +343,7 @@ Eltern-Elemente kennen.</p>
 Kind-Knoten kennen. Wir erstellen eine Struktur mit dem Namen <code>Node</code>, die ihren
 eigenen <code>i32</code>-Wert sowie Referenzen auf die Kind-<code>Node</code>-Werte enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::cell::RefCell;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::cell::RefCell;
 use std::rc::Rc;
 
 #[derive(Debug)]
@@ -371,7 +373,7 @@ Knoten Kind-Knoten eines anderen Knotens sind, sodass wir ein <code>RefCell&lt;T
 sowie eine weitere Instanz mit dem Namen <code>branch</code> und dem Wert <code>5</code> und <code>leaf</code>
 als Kind-Element, wie in Codeblock 15-27 gezeigt wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
 </span><span class="boring">#[derive(Debug)]
@@ -417,7 +419,7 @@ existieren. Dies ist ein Fall für schwache Referenzen!</p>
 einen <code>RefCell&lt;Weak&lt;Node&gt;&gt;</code>. Nun sieht unsere <code>Node</code>-Strukturdefinition
 folgendermaßen aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::cell::RefCell;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::cell::RefCell;
 use std::rc::{Rc, Weak};
 
 #[derive(Debug)]
@@ -451,7 +453,7 @@ nicht. In Codeblock 15-28 aktualisieren wir <code>main</code>, um diese neue Def
 zu verwenden, damit der <code>leaf</code>-Knoten auf seinen Eltern-Knoten <code>branch</code>
 referenzieren kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::{Rc, Weak};
 </span><span class="boring">
 </span><span class="boring">#[derive(Debug)]
@@ -518,7 +520,7 @@ diese Weise können wir sehen, was passiert, wenn <code>branch</code> erstellt u
 aufgeräumt wird, wenn es den Gültigkeitsbereich verlässt. Die Änderungen
 sind in Codeblock 15-29 aufgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::cell::RefCell;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::cell::RefCell;
 </span><span class="boring">use std::rc::{Rc, Weak};
 </span><span class="boring">
 </span><span class="boring">#[derive(Debug)]

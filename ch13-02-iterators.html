@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -155,7 +157,7 @@ Methodenaufrufe konsumiert werden müssen, um einen Effekt zu haben. Der
 Programmcode in Codeblock 13-10 erstellt beispielsweise einen Iterator über die
 Elemente im Vektor <code>v1</code> indem die in <code>Vec&lt;T&gt;</code> definierte Methode <code>iter</code>
 aufgerufen wird. Dieser Programmcode macht nichts Sinnvolles.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -172,7 +174,7 @@ aber wir haben bis jetzt übersehen, wie das genau funktioniert.</p>
 der <code>for</code>-Schleife getrennt. Wenn die <code>for</code>-Schleife unter Verwendung des
 Iterators in <code>v1_iter</code> aufgerufen wird, wird jedes Element des Iterators in
 einer Iteration der Schleife verwendet, die den jeweiligen Wert ausgibt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let v1 = vec![1, 2, 3];
 
@@ -199,7 +201,7 @@ bewerkstelligen.</p>
 <p>Alle Iteratoren implementieren ein Merkmal namens <code>Iterator</code> das in der
 Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
 aus:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
     type Item;
@@ -300,7 +302,7 @@ Elemente durchlaufen werden. Die Methode <code>map</code> gibt einen neuen Itera
 zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
 hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust not_desired_behavior"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
@@ -339,7 +341,7 @@ data type).</p>
 der vom Aufruf der Methode <code>map</code> zurückgegeben wird, in einem Vektor. Dieser
 Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 

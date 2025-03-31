@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -191,7 +193,7 @@ mit <code>5</code> und <code>10</code>.</p>
 <p>Der Versuch, dieses Szenario mithilfe unserer Definition von <code>List</code> mit <code>Box&lt;T&gt;</code>
 zu implementieren, funktioniert nicht, wie in Codeblock 15-17 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">enum List {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">enum List {
     Cons(i32, Box&lt;List&gt;),
     Nil,
 }
@@ -244,7 +246,7 @@ wenn wir <code>Rc::clone</code> aufrufen, erhöht sich die Anzahl der Referenzen
 Daten in <code>Rc&lt;List&gt;</code>, und die Daten werden erst dann aufgeräumt, wenn keine
 Referenzen mehr darauf vorhanden sind.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2024">enum List {
     Cons(i32, Rc&lt;List&gt;),
     Nil,
 }
@@ -284,7 +286,7 @@ und aufräumen.</p>
 um die Liste <code>c</code> hat; so können wir sehen, wie sich der Referenzzähler ändert,
 wenn <code>c</code> den Gültigkeitsbereich verlässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">enum List {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">enum List {
 </span><span class="boring">    Cons(i32, Rc&lt;List&gt;),
 </span><span class="boring">    Nil,
 </span><span class="boring">}

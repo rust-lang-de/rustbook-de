@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -184,7 +186,7 @@ Bytes mit einigen zusätzlichen Garantien, Einschränkungen und Fähigkeiten
 implementiert ist. Ein Beispiel für eine Funktion, die auf die gleiche Weise
 mit <code>Vec&lt;T&gt;</code> und <code>String</code> arbeitet, ist die Funktion <code>new</code> zum Erstellen einer
 Instanz, die in Codeblock 8-11 gezeigt wird.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::new();
 <span class="boring">}</span></code></pre></pre>
@@ -196,7 +198,7 @@ wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode <code>to_str
 die für jeden Typ verfügbar ist, der das Merkmal <code>Display</code> implementiert, wie
 es bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei
 Beispiele.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let data = "initialer Inhalt";
 
@@ -211,7 +213,7 @@ Erzeugen eines <code>String</code> aus einem Zeichenkettenliteral</span></p>
 <p>Wir können auch die Funktion <code>String::from</code> verwenden, um einen <code>String</code> aus
 einem Zeichenkettenliteral zu erzeugen. Der Code in Codeblock 8-13 ist
 äquivalent zum Code in Codeblock 8-12, der <code>to_string</code> verwendet.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("initialer Inhalt");
 <span class="boring">}</span></code></pre></pre>
@@ -225,7 +227,7 @@ verwenden, was uns viele Möglichkeiten bietet. Einige von ihnen können
 Stils und der Lesbarkeit.</p>
 <p>Denke daran, dass Zeichenketten UTF-8-kodiert sind, sodass sie alle
 ordnungsgemäß kodierten Daten aufnehmen können, wie in Codeblock 8-14 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from("السلام عليكم");
 let hello = String::from("Dobrý den");
@@ -252,7 +254,7 @@ kannst du bequem den Operator <code>+</code> oder das Makro <code>format!</code>
 <p>Wir können einen <code>String</code> wachsen lassen, indem wir die Methode <code>push_str</code>
 verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("foo");
 s.push_str("bar");
@@ -264,7 +266,7 @@ nimmt einen Zeichenkettenanteilstyp, weil wir nicht unbedingt die
 Eigentümerschaft des Parameters übernehmen wollen. Zum Beispiel wollen wir im
 Code in Codeblock 8-16 in der Lage sein, <code>s2</code> zu verwenden, nachdem wir seinen
 Inhalt an <code>s1</code> angehängt haben.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s1 = String::from("foo");
 let s2 = "bar";
@@ -279,7 +281,7 @@ funktioniert jedoch wie erwartet!</p>
 <p>Die Methode <code>push</code> nimmt ein einzelnes Zeichen als Parameter und fügt es dem
 <code>String</code> hinzu. Codeblock 8-17 fügt den Buchstaben <code>l</code> mit der Methode <code>push</code>
 zu einem <code>String</code> hinzu.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("lo");
 s.push('l');
@@ -290,7 +292,7 @@ s.push('l');
 <h4 id="aneinanderhängen-mit-dem-operator--und-dem-makro-format"><a class="header" href="#aneinanderhängen-mit-dem-operator--und-dem-makro-format">Aneinanderhängen mit dem Operator <code>+</code> und dem Makro <code>format!</code></a></h4>
 <p>Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
 das zu tun ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("Hallo ");
 let s2 = String::from("Welt!");
@@ -335,7 +337,7 @@ Worten sieht es so aus, als würde es viele Kopien erstellen, das ist aber nicht
 so; die Implementierung ist effizienter als Kopieren.</p>
 <p>Wenn wir mehrere Zeichenketten aneinanderhängen wollen, wird das Verhalten des
 Operators <code>+</code> unhandlich:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("tic");
 let s2 = String::from("tac");
@@ -347,7 +349,7 @@ let s = s1 + "-" + &amp;s2 + "-" + &amp;s3;
 und <code>"</code> ist es schwer zu erkennen, was vor sich geht. Um Zeichenketten auf
 kompliziertere Weise zu kombinieren, können wir stattdessen das Makro <code>format!</code>
 verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("tic");
 let s2 = String::from("tac");
@@ -367,7 +369,7 @@ einer Zeichenkette mittels Index eine gültige und gängige Operation. Wenn du
 jedoch in Rust versuchst, mittels Indexierungssyntax auf Teile einer
 Zeichenkette zuzugreifen, wirst du einen Fehler erhalten. Betrachte den
 ungültigen Code in Codeblock 8-19.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s1 = String::from("Hallo");
 let h = s1[0];
@@ -402,7 +404,7 @@ beantworten, müssen wir uns ansehen, wie Rust Zeichenketten im Speicher ablegt.
 <p>Ein <code>String</code> ist eine Hülle um einen <code>Vec&lt;u8&gt;</code>. Sehen wir uns einige unserer
 korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
 diese:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from("Hola");
 <span class="boring">}</span></code></pre></pre>
@@ -411,7 +413,7 @@ der die Zeichenkette „Hola“ speichert, 4 Bytes lang ist. Jeder dieser
 Buchstaben benötigt 1 Byte in UTF-8-Kodierung. Die folgende Zeile mag dich
 jedoch überraschen. (Beachte, dass diese Zeichenkette mit dem kyrillischen
 Großbuchstaben „Ze“ beginnt, nicht mit der Zahl 3.)</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = String::from("Здравствуйте");
 <span class="boring">}</span></code></pre></pre>
@@ -421,7 +423,7 @@ von Rust lautet jedoch 24: Das ist die Anzahl der Bytes, die benötigt wird, um
 Zeichenkette 2 Bytes Speicherplatz benötigt. Daher wird ein Index auf die Bytes
 der Zeichenkette nicht immer mit einem gültigen Unicode-Skalarwert korrelieren.
 Um das zu erläutern, betrachte diesen ungültigen Rust-Code:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = "Здравствуйте";
 let answer = &amp;hello[0];
@@ -482,7 +484,7 @@ erstellen, bittet Rust dich daher, genauer zu sein.</p>
 <p>Anstatt <code>[]</code> mit einer einzelnen Zahl zu indizieren, kannst du <code>[]</code> mit einem
 Bereich verwenden, um ein Zeichenkettenanteilstyp zu erstellen, der bestimmte
 Bytes enthält:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let hello = "Здравствуйте";
 
@@ -512,7 +514,7 @@ Unicode-Skalarwerte ist die Methode <code>chars</code> zu verwenden. Der Aufruf 
 <code>chars</code> auf „Зд“ trennt zwei Werte vom Typ <code>char</code> heraus und gibt sie
 zurück, und du kannst über das Ergebnis iterieren, um auf jedes Element
 zuzugreifen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for c in "Зд".chars() {
     println!("{c}");
@@ -524,7 +526,7 @@ zuzugreifen:</p>
 </code></pre>
 <p>Die Methode <code>bytes</code> gibt jedes rohe Byte zurück, das für deinen
 Verwendungszweck benötigt wird:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>for b in "Зд".bytes() {
     println!("{b}");

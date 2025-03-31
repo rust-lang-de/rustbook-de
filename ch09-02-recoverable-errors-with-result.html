@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -154,7 +156,7 @@ den Vorgang zu beenden.</p>
 <p>Erinnere dich an <a href="ch02-00-guessing-game-tutorial.html#behandeln-potentieller-fehler-mit-result">„Behandeln potentieller Fehler mit
 <code>Result</code>“</a> in Kapitel 2, das die Aufzählung <code>Result</code> mit zwei
 Varianten <code>Ok</code> und <code>Err</code> definiert, wie nachfolgend zu sehen ist:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Result&lt;T, E&gt; {
     Ok(T),
@@ -174,7 +176,7 @@ sein können.</p>
 Funktion fehlschlagen könnte. In Codeblock 9-3 versuchen wir, eine Datei zu
 öffnen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 
 fn main() {
     let greeting_file_result = File::open("hallo.txt");
@@ -201,7 +203,7 @@ enthält. Im Fehlerfall ist der Wert von <code>greeting_file_result</code> eine 
 Möglichkeit, <code>Result</code> mit Hilfe eines grundlegenden Werkzeugs, dem Ausdruck
 <code>match</code>, den wir in Kapitel 6 besprochen haben, zu behandeln.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
 
 fn main() {
     let greeting_file_result = File::open("hallo.txt");
@@ -246,7 +248,7 @@ hatten, wollen wir immer noch, dass der Code abbricht, so wie es in Codeblock
 9-4 der Fall war. Dazu fügen wir einen inneren <code>match</code>-Ausdruck hinzu, wie in
 Codeblock 9-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 use std::io::ErrorKind;
 
 fn main() {
@@ -295,7 +297,7 @@ von <code>match</code> bei der Behandlung von <code>Result&lt;T, E&gt;</code>-We
 <p>Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
 Codeblock 9-5 zu schreiben, aber unter Verwendung von Funktionsabschlüssen
 und der Methode <code>unwrap_or_else</code>:</p>
-<pre><pre class="playground"><code class="language-rust">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::fs::File;
 use std::io::ErrorKind;
 
 fn main() {
@@ -326,7 +328,7 @@ Variante <code>Ok</code> ist, gibt <code>unwrap</code> den Wert innerhalb <code>
 die Variante <code>Err</code> ist, ruft <code>unwrap</code> das Makro <code>panic!</code> für uns auf. Hier ist
 ein Beispiel für <code>unwrap</code> im Einsatz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
 
 fn main() {
     let greeting_file = File::open("hallo.txt").unwrap();
@@ -341,7 +343,7 @@ von <code>panic!</code> angeben. Das Verwenden von <code>expect</code> anstelle 
 Angeben guter Fehlermeldungen kann deine Absicht vermitteln und das Aufspüren
 der Fehlerursache erleichtern. Die Syntax von <code>expect</code> sieht wie folgt aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust should_panic edition2024">use std::fs::File;
 
 fn main() {
     let greeting_file = File::open("hallo.txt")
@@ -373,7 +375,7 @@ einer Datei liest. Wenn die Datei nicht existiert oder nicht gelesen werden
 kann, gibt diese Funktion den Fehler an den Code zurück, der die Funktion
 aufgerufen hat.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io::{self, Read};
@@ -451,7 +453,7 @@ Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
 den <code>?</code>-Operator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io;
@@ -499,7 +501,7 @@ Implementierung dieser Funktion einfacher. Wir können diesen Code sogar noch
 weiter verkürzen, indem wir die Methodenaufrufe unmittelbar nach dem <code>?</code>
 verketten, wie in Codeblock 9-8 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs::File;
 use std::io;
@@ -527,7 +529,7 @@ das ist nur eine andere, ergonomischere Schreibweise.</p>
 <p>Codeblock 9-9 zeigt, dass es einen Weg gibt, diese Funktion noch kürzer zu
 machen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::fs;
 use std::io;
@@ -557,7 +559,7 @@ Funktion muss ein <code>Result</code> sein, damit er mit <code>return</code> kom
 in einer Funktion <code>main</code> verwenden, deren Rückgabetyp nicht mit dem Typ des
 Wertes, für den wir <code>?</code> verwenden, kompatibel ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::fs::File;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::fs::File;
 
 fn main() {
     let greeting_file = File::open("hallo.txt")?;
@@ -608,7 +610,7 @@ Wenn der Wert <code>Some</code> ist, ist der Wert innerhalb von <code>Some</code
 Wert des Ausdrucks und die Funktion wird fortgesetzt. Codeblock 9-11 zeigt ein
 Beispiel für eine Funktion, die das letzte Zeichen der ersten Zeile in einem
 gegebenen Text findet.</p>
-<pre><pre class="playground"><code class="language-rust">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
+<pre><pre class="playground"><code class="language-rust edition2024">fn last_char_of_first_line(text: &amp;str) -&gt; Option&lt;char&gt; {
     text.lines().next()?.chars().last()
 }
 <span class="boring">

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -150,7 +152,7 @@ Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
 auf einen <code>Option&lt;u8&gt;</code>-Wert in der Variable <code>config_max</code> passt, aber nur dann
 Code ausführen soll, wenn der Wert die <code>Some</code>-Variante ist.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 match config_max {
@@ -168,7 +170,7 @@ ist.</p>
 <p>Stattdessen könnten wir dies in kürzerer Form schreiben, indem wir <code>if let</code>
 verwenden. Der folgende Code verhält sich genauso wie der <code>match</code>-Ausdruck in
 Codeblock 6-6:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let config_max = Some(3u8);
 if let Some(max) = config_max {
@@ -197,7 +199,7 @@ Codeblock 6-4, wo die Variante <code>Quarter</code> auch einen <code>UsState</co
 Wenn wir alle Nicht-25-Cent-Münzen zählen wollten, während wir die Eigenschaft
 der 25-Cent-Münzen ausgeben, könnten wir das mit einem <code>match</code>-Ausdruck wie
 diesem tun:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -220,7 +222,7 @@ diesem tun:</p>
     }
 <span class="boring">}</span></code></pre></pre>
 <p>Oder wir könnten einen Ausdruck mit <code>if let</code> und <code>else</code> wie diesen verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -250,7 +252,7 @@ Beispiel der Münzen mit einem <code>UsState</code>-Wert zu bleiben: Wenn wir et
 Lustiges sagen wollten, je nachdem, wie alt der Zustand des Vierteldollars ist,
 könnten wir eine Methode für <code>UsState</code> einführen, um das Alter eines
 Bundesstaates zu prüfen, etwa so:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -295,7 +297,7 @@ Bundesstaates zu prüfen, etwa so:</p>
 eine Variable <code>state</code> in den Rumpf der Bedingung einfügen, wie in Codeblock
 6-7.</p>
 <p>Dateiname: src/main.rs</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)] // so we can inspect the state in a minute
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)] // so we can inspect the state in a minute
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -345,7 +347,7 @@ obersten Ebene zusammenhängen. Wir könnten uns auch die Tatsache zunutze
 machen, dass Ausdrücke einen Wert erzeugen, um entweder <code>state</code> aus der <code>if let</code>-Anweisung zu setzen oder um früh zurückzukehren, wie in Codeblock 6-8.
 (Ähnliches könnte man auch mit einem <code>match</code> machen.)</p>
 <p>Dateiname: src/main.rs</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -402,7 +404,7 @@ wird das Programm im <code>else</code>-Zweig fortgesetzt, der die Funktion beend
 auf diese Weise „auf dem richtigen Weg“ bleibt, ohne dass sich der
 Kontrollfluss für zwei Verzweigungen signifikant unterscheidet, wie es bei <code>if  let</code> der Fall war.</p>
 <p>Dateiname: src/main.rs</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -221,7 +223,7 @@ die den Vorgang zuerst beendet hat.</p>
 Parameter entgegennimmt, eine Anfrage an diese stellt und den Text des
 Titelelements zurückgibt (siehe Codeblock 17-1).</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    // TODO: Wir fügen dies als nächstes hinzu!
@@ -293,7 +295,7 @@ es die Arbeit mit Methodenketten viel angenehmer macht. Als Ergebnis können wir
 den Rumpf von <code>page_url_for</code> ändern, um die Funktionsaufrufe <code>trpl::get</code> und
 <code>text</code> mit <code>await</code> dazwischen zu verketten, wie in Codeblock 17-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use trpl::Html;
 </span><span class="boring">
@@ -323,7 +325,7 @@ diesen asynchronen Block erstellt.</p>
 Funktion, die ein <em>Future</em> des Rückgabetyps zurückgibt. Für den Compiler ist
 eine Funktionsdefinition wie <code>async fn page_title</code> in Codeblock 17-1
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">extern crate trpl;
 </span>use std::future::Future;
@@ -471,7 +473,7 @@ Laufzeitumgebung eine andere Arbeit starten und dann zurückkommen kann, wenn
 er bereit ist, diese Arbeit wieder fortzusetzen. Dies ist eine unsichtbare
 Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speichern:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">extern crate trpl;
 </span><span class="boring">
@@ -568,7 +570,7 @@ insofern ähnlich, als dass er zwei Fälle hat. Im Gegensatz zu <code>Result</co
 unterscheidet <code>Either</code> jedoch nicht zwischen Erfolg und Misserfolg.
 Stattdessen werden <code>Left</code> und <code>Right</code> verwendet, um „das eine oder das andere“
 anzuzeigen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Either&lt;A, B&gt; {
     Left(A),

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -225,7 +227,7 @@ Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.</p>
 <p>Eine Konsequenz der Ausleihregeln ist, dass man einen unveränderbaren Wert
 nicht veränderbar ausleihen kann. Dieser Programmcode wird beispielsweise nicht
 kompilieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = 5;
     let y = &amp;mut x;
 }</code></pre></pre>
@@ -288,7 +290,7 @@ Detail nicht kennen. Alles, was es braucht, ist Code, der ein von uns
 bereitgestelltes Merkmal (trait) namens <code>Messenger</code> implementiert. Codeblock
 15-20 zeigt den Bibliothekscode.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Messenger {
     fn send(&amp;self, msg: &amp;str);
@@ -353,7 +355,7 @@ die erwarteten Nachrichten enthält. Codeblock 15-21 zeigt den Versuch, ein
 Mock-Objekt zu implementieren, um genau das zu tun, aber der Ausleihenprüfer
 erlaubt dies nicht.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -596,7 +598,7 @@ absichtlich, zwei veränderbare Ausleihen im selben Gültigkeitsbereich zu
 erstellen, um zu veranschaulichen, dass <code>RefCell&lt;T&gt;</code> uns daran hindert, dies
 zur Laufzeit zu tun.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust panics"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Messenger {
 </span><span class="boring">    fn send(&amp;self, msg: &amp;str);
@@ -736,7 +738,7 @@ Fügen wir <code>RefCell&lt;T&gt;</code> hinzu, um die Werte in den Listen ände
 Codeblock 15-24 zeigt, dass wir durch Verwendung einer <code>RefCell&lt;T&gt;</code> in der
 Cons-Definition den in allen Listen gespeicherten Wert ändern können:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 enum List {
     Cons(Rc&lt;RefCell&lt;i32&gt;&gt;, Rc&lt;List&gt;),
     Nil,

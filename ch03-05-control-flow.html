@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -159,7 +161,7 @@ erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“</p>
 um den <code>if</code>-Ausdruck zu erforschen. Gibt in der Datei <em>src/main.rs</em> folgendes
 ein:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let number = 3;
 
     if number &lt; 5 {
@@ -192,7 +194,7 @@ Bedingung war wahr
 </code></pre>
 <p>Lass uns versuchen, den Wert von <code>number</code> in einen Wert zu ändern, der die
 Bedingung <code>falsch</code> macht, um zu sehen, was passiert:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let number = 7;
 <span class="boring">
 </span><span class="boring">    if number &lt; 5 {
@@ -212,7 +214,7 @@ Bedingung war falsch
 <em>muss</em>. Wenn die Bedingung kein <code>bool</code> ist, erhalten wir einen Fehler. Versuche
 zum Beispiel, den folgenden Code auszuführen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let number = 3;
 
     if number {
@@ -239,7 +241,7 @@ musst explizit sein und immer <code>if</code> mit einer Booleschen Bedingung ver
 Wenn wir beispielsweise wollen, dass der <code>if</code>-Codeblock nur ausgeführt wird,
 wenn eine Zahl ungleich <code>0</code> ist, können wir den <code>if</code>-Ausdruck wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let number = 3;
 
     if number != 0 {
@@ -252,7 +254,7 @@ ausgegeben.</p>
 <p>Du kannst mehrere Bedingungen verwenden, indem du <code>if</code> und <code>else</code> in einem
 <code>else if</code>-Ausdruck kombinierst. Zum Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let number = 6;
 
     if number % 4 == 0 {
@@ -288,7 +290,7 @@ Rust-Verzweigungskonstrukt namens <code>match</code> für solche Fälle.</p>
 <code>let</code>-Anweisung verwenden, um das Ergebnis einer Variablen zuzuordnen, wie in
 Codeblock 3-2.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let condition = true;
     let number = if condition { 5 } else { 6 };
 
@@ -313,7 +315,7 @@ sowohl des <code>if</code>-Zweigs als auch des <code>else</code>-Zweigs <code>i3
 Typen nicht übereinstimmen, wie im folgenden Beispiel, erhalten wir einen
 Fehler:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let condition = true;
 
     let number = if condition { 5 } else { "sechs" };
@@ -403,7 +405,7 @@ Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
 hinter dem <code>break</code>-Ausdruck angeben, den du zum Beenden der Schleife
 verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
 verwenden kannst, wie hier gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut counter = 0;
 
     let result = loop {
@@ -435,7 +437,7 @@ für die innerste Schleife an diesem Punkt. Du kannst optional ein
 Schlüsselwörter für die gekennzeichnete Schleife gelten und nicht für die
 innerste Schleife. Schleifenlabel müssen mit einem einfachen Anführungszeichen
 beginnen. Hier ist ein Beispiel mit zwei verschachtelten Schleifen:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut count = 0;
     'counting_up: loop {
         println!("Zähler = {count}");
@@ -487,7 +489,7 @@ verbreitet, dass Rust ein eingebautes Sprachkonstrukt dafür hat, die sogenannte
 durchläuft dreimal eine Schleife, in der es jedes Mal abwärts zählt, und dann
 nach dem Ende der Schleife eine weitere Nachricht ausgibt und sich beendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut number = 3;
 
     while number != 0 {
@@ -509,7 +511,7 @@ andernfalls wird die Schleife verlassen.</p>
 z.B. ein Array, in einer Schleife zu durchlaufen. Die Schleife in Codeblock 3-4
 gibt zum Beispiel jedes Element im Array <code>a</code> aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [10, 20, 30, 40, 50];
     let mut index = 0;
 
@@ -549,7 +551,7 @@ Schleifeniteration durchführt.</p>
 jedes Element einer Kollektion etwas Code ausführen. Eine <code>for</code>-Schleife sieht
 wie der Code in Codeblock 3-5 aus.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [10, 20, 30, 40, 50];
 
     for element in a {
@@ -578,7 +580,7 @@ endend vor einer anderen Zahl.</p>
 <code>rev</code>, über die wir noch nicht gesprochen haben und die den <code>Range</code> umkehrt,
 verwenden würde:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     for number in (1..4).rev() {
         println!("{number}!");
     }

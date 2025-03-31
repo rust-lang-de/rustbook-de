@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -276,7 +278,7 @@ fallen, zu verstehen, wie die verschiedenen Werte miteinander in Beziehung
 stehen und was ihr Zweck ist.</p>
 <p>Codeblock 12-6 zeigt die Verbesserungen der Funktion <code>parse_config</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>fn main() {
@@ -369,7 +371,7 @@ von <code>parse_config</code> in eine Funktion <code>new</code>, die mit <code>C
 Instanzen von <code>Config</code> durch Aufrufen von <code>Config::new</code> erzeugen. Codeblock
 12-7 zeigt die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust should_panic edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span>fn main() {
@@ -434,7 +436,7 @@ korrigieren.</p>
 zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
 ab und zeigt eine bessere Fehlermeldung an.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">
 </span><span class="boring">fn main() {
@@ -570,7 +572,7 @@ Ein Exit-Status ungleich Null ist eine Konvention, um dem Prozess, der unser
 Programm aufgerufen hat, zu signalisieren, dass das Programm mit einem
 Fehlerstatus beendet wurde.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span>use std::process;
 
@@ -656,7 +658,7 @@ schreiben.</p>
 die kleine, inkrementelle Verbesserung durch Extrahieren der Funktion. Wir sind
 immer noch dabei, die Funktion in <em>src/main.rs</em> zu definieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">use std::process;
 </span><span class="boring">
@@ -717,7 +719,7 @@ Umgang mit Fehlern auf benutzerfreundliche Weise weiter konsolidieren.
 Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 <code>run</code> vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::fs;
 </span><span class="boring">use std::process;
 </span>use std::error::Error;
@@ -831,7 +833,7 @@ Fehlerbehandlungscode zu haben! Lass uns dieses Problem jetzt beheben.</p>
 der Technik ist, die wir mit <code>Config::build</code> in Codeblock 12-10 verwendet
 haben, aber mit einem kleinen Unterschied:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::env;
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;
 </span><span class="boring">use std::process;

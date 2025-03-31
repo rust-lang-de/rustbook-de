@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -166,7 +168,7 @@ was sollen wir zurückgeben? Wir haben nicht wirklich eine Möglichkeit, über
 <em>einen Teil</em> einer Zeichenkette zu sprechen. Wir könnten jedoch den Index des
 Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;String) -&gt; usize {
     let bytes = s.as_bytes();
 
     for (i, &amp;item) in bytes.iter().enumerate() {
@@ -184,7 +186,7 @@ Byte-Indexwert zum Parameter <code>String</code> zurückgibt</span></p>
 <p>Da wir den <code>String</code> Zeichen für Zeichen durchgehen und prüfen müssen, ob ein
 Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Methode
 <code>as_bytes</code> in ein Byte-Array um.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span>    let bytes = s.as_bytes();
 <span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -199,7 +201,7 @@ Wert ein Leerzeichen ist, wandeln wir unseren <code>String</code> mit der Method
 </span><span class="boring">fn main() {}</span></code></pre></pre>
 <p>Als nächstes erstellen wir einen Iterator über das Byte-Array, indem wir die
 Methode <code>iter</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span>    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -229,7 +231,7 @@ wir <code>&amp;</code> im Muster.</p>
 <code>b' '</code> nach dem Byte, das das Leerzeichen repräsentiert. Wenn wir ein
 Leerzeichen finden, geben wir die Position zurück. Andernfalls geben wir die
 Länge der Zeichenkette zurück, indem wir <code>s.len()</code> verwenden.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -250,7 +252,7 @@ handelt, gibt es keine Garantie, dass er auch in Zukunft noch gültig ist.
 Betrachte das Programm in Codeblock 4-8, das die Funktion <code>first_word</code> aus
 Codeblock 4-7 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; usize {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -296,7 +298,7 @@ Zeichenkettenanteilstypen</p>
 <h3 id="zeichenkettenanteilstypen-string-slices"><a class="header" href="#zeichenkettenanteilstypen-string-slices">Zeichenkettenanteilstypen (string slices)</a></h3>
 <p>Ein <em>Zeichenkettenanteilstyp</em>  (string slice) ist ein Verweis auf einen Teil
 eines <code>String</code>, und er sieht so aus:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hallo Welt");
 
@@ -324,7 +326,7 @@ Teil eines <code>String</code> bezieht</span></p>
 <p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
 kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
 gleich:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hallo");
 
@@ -333,7 +335,7 @@ let slice = &amp;s[..2];
 <span class="boring">}</span></code></pre></pre>
 <p>Ebenso kannst du den Endindex weglassen, wenn dein Anteilstyp das letzte Byte
 des <code>String</code> enthält. Das bedeutet, dass diese gleich sind:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hallo");
 
@@ -344,7 +346,7 @@ let slice = &amp;s[3..];
 <span class="boring">}</span></code></pre></pre>
 <p>Du kannst auch beide Werte weglassen, um einen Ausschnitt der gesamten
 Zeichenkette zu beschreiben. Diese sind also gleichwertig:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = String::from("Hallo");
 
@@ -367,7 +369,7 @@ Kapitel 8.</p>
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
 „Zeichenkettenanteilstyp“ wird <code>&amp;str</code> geschrieben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;String) -&gt; &amp;str {
+<pre><pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;String) -&gt; &amp;str {
     let bytes = s.as_bytes();
 
     for (i, &amp;item) in bytes.iter().enumerate() {
@@ -404,7 +406,7 @@ unmöglich und lassen uns viel früher wissen, dass wir ein Problem mit unserem
 Code haben. Die Anteilstypen-Variante von <code>first_word</code> führt zu einem
 Kompilierfehler:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn first_word(s: &amp;String) -&gt; &amp;str {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn first_word(s: &amp;String) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -457,7 +459,7 @@ von Fehlern zur Kompilierzeit beseitigt!</p>
 <p>Erinnere dich, dass wir darüber sprachen, dass Zeichenkettenliterale in der
 Binärdatei gespeichert werden. Jetzt, da wir über Anteilstypen Bescheid wissen,
 können wir Zeichenkettenliterale richtig verstehen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let s = "Hallo Welt!";
 <span class="boring">}</span></code></pre></pre>
@@ -473,7 +475,7 @@ ihre Signatur:</p>
 <p>Ein erfahrenerer Rust-Entwickler würde stattdessen die in Codeblock 4-9
 gezeigte Signatur schreiben, da sie es uns erlaubt, dieselbe Funktion sowohl
 auf <code>&amp;String</code>-Werte als auch auf <code>&amp;str</code>-Werte anzuwenden.</p>
-<pre><pre class="playground"><code class="language-rust">fn first_word(s: &amp;str) -&gt; &amp;str {
+<pre><pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;str) -&gt; &amp;str {
 <span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -517,7 +519,7 @@ Methoden“</a> in Kapitel 15 behandeln.</p>
 Referenz auf einen <code>String</code> entgegennimmt, macht unsere API allgemeiner und
 nützlicher, ohne an Funktionalität einzubüßen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn first_word(s: &amp;str) -&gt; &amp;str {
 </span><span class="boring">    let bytes = s.as_bytes();
 </span><span class="boring">
 </span><span class="boring">    for (i, &amp;item) in bytes.iter().enumerate() {
@@ -553,14 +555,14 @@ nützlicher, ohne an Funktionalität einzubüßen:</p>
 <p>Zeichenkettenanteilstypen sind, wie du dir vorstellen kannst, spezifisch für
 Zeichenketten. Es gibt aber auch einen allgemeineren Anteilstyp. Betrachte
 dieses Array:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [1, 2, 3, 4, 5];
 <span class="boring">}</span></code></pre></pre>
 <p>Genauso wie wir vielleicht auf einen Teil einer Zeichenkette verweisen möchten,
 möchten wir vielleicht auf einen Teil eines Arrays verweisen. Wir würden das so
 machen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [1, 2, 3, 4, 5];
 

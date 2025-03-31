@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -150,14 +152,14 @@ manchmal sind zusätzliche Erklärungen angebracht. In solchen Fällen versehen
 Entwickler den Quellcode mit <em>Kommentaren</em>, welche der Compiler ignoriert
 und für andere Entwickler nützlich sein können.</p>
 <p>Dies ist ein einfacher Kommentar:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Hallo Welt
 <span class="boring">}</span></code></pre></pre>
 <p>In Rust beginnt ein gewöhnlicher Kommentar mit zwei Schrägstrichen; der
 Kommentar reicht dann bis zum Ende der Zeile. Für Kommentare, die über eine
 einzelne Zeile hinausgehen, musst du bei jedem Zeilenanfang <code>//</code> angeben:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>// Hier passiert etwas kompliziertes, so komplex dass wir
 // mehrere Kommentarzeilen brauchen! Puh! Hoffentlich erklärt
@@ -165,13 +167,13 @@ einzelne Zeile hinausgehen, musst du bei jedem Zeilenanfang <code>//</code> ange
 <span class="boring">}</span></code></pre></pre>
 <p>Kommentare können auch am Ende einer Codezeile stehen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let lucky_number = 7; // Heute habe ich Glück
 }</code></pre></pre>
 <p>Gängiger ist jedoch die Schreibweise mit dem Kommentar über der Codezeile, die
 er beschreibt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     // Heute habe ich Glück
     let lucky_number = 7;
 }</code></pre></pre>

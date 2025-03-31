@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -168,7 +170,7 @@ besprochenen Funktionalitäten.</p>
 Typ wird <code>Item</code> genannt und steht für den Typ der Werte, über die der Typ, der
 das Merkmal <code>Iterator</code> implementiert, iteriert. Die Definition des Merkmals
 <code>Iterator</code> ist in Codeblock 20-13 zu sehen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator {
     type Item;
@@ -189,7 +191,7 @@ zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
 Implementierung des Merkmals <code>Iterator</code> für einen Typ namens <code>Counter</code>, der
 angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">struct Counter {
 </span><span class="boring">    count: u32,
@@ -218,7 +220,7 @@ angibt, dass der <code>Item</code>-Typ <code>u32</code> ist:</p>
 <p>Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
 Warum also nicht einfach das Merkmal <code>Iterator</code> mit generischen Datentypen
 definieren, wie in Codeblock 20-14 gezeigt?</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Iterator&lt;T&gt; {
     fn next(&amp;mut self) -&gt; Option&lt;T&gt;;
@@ -262,7 +264,7 @@ Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
 Codeblock 20-15 den Operator <code>+</code>, um zwei <code>Point</code>-Instanzen zu addieren. Wir
 tun dies, indem wir das Merkmal <code>Add</code> auf eine <code>Point</code>-Struktur implementieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::ops::Add;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::ops::Add;
 
 #[derive(Debug, Copy, Clone, PartialEq)]
 struct Point {
@@ -295,7 +297,7 @@ Merkmal <code>Add</code> hat einen assoziierten Typ namens <code>Output</code>, 
 Methode <code>add</code> zurückgegebenen Typ bestimmt.</p>
 <p>Der generische Standardtyp in diesem Code befindet sich innerhalb des Merkmals
 <code>Add</code>. Hier ist seine Definition:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>trait Add&lt;Rhs=Self&gt; {
     type Output;
@@ -325,7 +327,7 @@ Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
 <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 20-16
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::ops::Add;
 
@@ -375,7 +377,7 @@ Merkmale <code>Pilot</code> und <code>Wizard</code> definiert haben, die beide e
 bereits eine Methode namens <code>fly</code> implementiert hat. Jede Methode <code>fly</code> macht
 etwas anderes.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">trait Pilot {
+<pre><pre class="playground"><code class="language-rust edition2024">trait Pilot {
     fn fly(&amp;self);
 }
 
@@ -411,7 +413,7 @@ eine Methode <code>fly</code> ist direkt auf dem Typ <code>Human</code> implemen
 standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
 Codeblock 20-18 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Pilot {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Pilot {
 </span><span class="boring">    fn fly(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -452,7 +454,7 @@ wurde, aufgerufen hat.</p>
 aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
 Methode <code>fly</code> wir meinen. Codeblock 20-19 demonstriert diese Syntax.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Pilot {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Pilot {
 </span><span class="boring">    fn fly(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -517,7 +519,7 @@ erstellen ein Merkmal <code>Animal</code> mit einer assoziierten Nicht-Methodenf
 die wir auch direkt eine assoziierte Nicht-Methodenfunktionen <code>baby_name</code>
 bereitstellen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">trait Animal {
+<pre><pre class="playground"><code class="language-rust edition2024">trait Animal {
     fn baby_name() -&gt; String;
 }
 
@@ -563,7 +565,7 @@ ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 20-19
 verwendet haben, hilft hier nicht weiter; wenn wir <code>main</code> in den Code in
 Codeblock 20-21 ändern, erhalten wir einen Kompilierfehler.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">trait Animal {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">trait Animal {
 </span><span class="boring">    fn baby_name() -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -617,7 +619,7 @@ für einen anderen Typ, müssen wir eine vollständig qualifizierte Syntax
 verwenden. Codeblock 20-22 zeigt, wie man eine vollständig qualifizierte Syntax
 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">trait Animal {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">trait Animal {
 </span><span class="boring">    fn baby_name() -&gt; String;
 </span><span class="boring">}
 </span><span class="boring">
@@ -690,7 +692,7 @@ angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
 bound) bei einem Merkmal. Codeblock 20-23 zeigt eine Implementierung des
 Merkmals <code>OutlinePrint</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::fmt;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::fmt;
 
 trait OutlinePrint: fmt::Display {
     fn outline_print(&amp;self) {
@@ -718,7 +720,7 @@ aktuellen Gültigkeitsbereich gefunden wurde.</p>
 zu implementieren, der <code>Display</code> nicht implementiert, z.B. die Struktur
 <code>Point</code>:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">use std::fmt;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">use std::fmt;
 </span><span class="boring">
 </span><span class="boring">trait OutlinePrint: fmt::Display {
 </span><span class="boring">    fn outline_print(&amp;self) {
@@ -783,7 +785,7 @@ error: could not compile `traits-example` (bin "traits-example") due to 2 previo
 <p>Um dies zu beheben, implementieren wir <code>Display</code> auf <code>Point</code> und erfüllen die
 Bedingung, die <code>OutlinePrint</code> erfordert, in etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">trait OutlinePrint: fmt::Display {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">trait OutlinePrint: fmt::Display {
 </span><span class="boring">    fn outline_print(&amp;self) {
 </span><span class="boring">        let output = self.to_string();
 </span><span class="boring">        let len = output.len();
@@ -840,7 +842,7 @@ Typ <code>Vec&lt;T&gt;</code> außerhalb unserer Kiste definiert sind. Wir könn
 <code>Display</code> auf <code>Wrapper</code> implementieren und den Wert <code>Vec&lt;T&gt;</code> verwenden, wie in
 Codeblock 20-24 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::fmt;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::fmt;
 
 struct Wrapper(Vec&lt;String&gt;);
 

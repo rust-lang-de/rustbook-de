@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -154,7 +156,7 @@ Breite und Höhe eines in Pixeln angegebenen Rechtecks nimmt und die Fläche des
 Rechtecks berechnet. Codeblock 5-8 zeigt ein kurzes Programm, das genau das in
 <em>src/main.rs</em> unseres Projekts macht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let width1 = 30;
     let height1 = 50;
 
@@ -180,7 +182,7 @@ Die Fläche des Rechtecks ist 1500 Quadratpixel.
 Funktion <code>area</code> mit jeder Dimension aufgerufen wird. Aber wir können noch mehr
 tun, um diesen Code klar und lesbar zu machen.</p>
 <p>Das Problem dieses Codes wird bei der Signatur von <code>area</code> deutlich:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let width1 = 30;
 </span><span class="boring">    let height1 = 50;
 </span><span class="boring">
@@ -203,7 +205,7 @@ vorgestellt: Der Einsatz von Tupeln.</p>
 <p>Codeblock 5-9 zeigt eine weitere Version unseres Programms, die Tupel
 verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let rect1 = (30, 50);
 
     println!(
@@ -235,7 +237,7 @@ anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
 5-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct Rectangle {
+<pre><pre class="playground"><code class="language-rust edition2024">struct Rectangle {
     width: u32,
     height: u32,
 }
@@ -281,7 +283,7 @@ ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
 versuchen wir, das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
 vorangegangenen Kapiteln verwendet haben. Dies wird jedoch nicht funktionieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">struct Rectangle {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">struct Rectangle {
     width: u32,
     height: u32,
 }
@@ -335,7 +337,7 @@ aber wir müssen diese explizit für unsere Struktur aktivieren. Dazu fügen wir
 das äußere Attribut <code>#[derive(Debug)]</code> unmittelbar vor der Strukturdefinition
 ein, wie in Codeblock 5-12 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -390,7 +392,7 @@ Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
 </blockquote>
 <p>Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
 <code>width</code> zugewiesen wird, als auch am Wert der gesamten Struktur in <code>rect1</code>:</p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,

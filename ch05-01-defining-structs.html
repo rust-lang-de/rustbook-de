@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -158,7 +160,7 @@ geschweifter Klammern die Namen und Typen der Datenteile, die wir <em>Felder</em
 nennen. Beispielsweise zeigt Codeblock 5-1 eine Struktur, die Informationen
 über ein Benutzerkonto speichert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024">struct User {
     active: bool,
     username: String,
     email: String,
@@ -179,7 +181,7 @@ füllen diese Vorlage mit bestimmten Daten aus, um Werte des Typs zu erzeugen.
 Beispielsweise können wir einen bestimmten Benutzer deklarieren, wie in
 Codeblock 5-2 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -203,7 +205,7 @@ können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
 einem bestimmten Feld zuweisen. Codeblock 5-3 gezeigt, wie der Wert im Feld
 <code>email</code> einer veränderbaren <code>User</code>-Instanz geändert werden kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -229,7 +231,7 @@ Funktionsrumpf erzeugen, um diese neue Instanz implizit zurückzugeben.</p>
 angegebenen E-Mail und dem Benutzernamen zurückgibt. Das Feld <code>active</code> erhält
 den Wert <code>true</code> und das Feld <code>sign_in_count</code> den Wert <code>1</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -265,7 +267,7 @@ shorthand syntax) verwenden, um die Funktion <code>build_user</code> so umzuschr
 dass sie sich unverändert gleich verhält, ohne <code>email</code> und <code>username</code> zu
 wiederholen, siehe Codeblock 5-5.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -305,7 +307,7 @@ Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</c
 verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
 5-2 erstellt haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -336,7 +338,7 @@ mit weniger Code erreichen, wie Codeblock 5-7 zeigt. Die Syntax <code>..</code> 
 dass die restlichen Felder, die nicht explizit gesetzt wurden, den gleichen
 Wert haben sollen wie die Felder in der gegebenen Instanz.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct User {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
 </span><span class="boring">    username: String,
 </span><span class="boring">    email: String,
@@ -393,7 +395,7 @@ wäre.</p>
 gefolgt vom Strukturnamen und den Typen im Tupel. Nachfolgend ein Beispiel mit
 Definition und Verwendung zweier Tupel-Strukturen <code>Color</code> und <code>Point</code>:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct Color(i32, i32, i32);
+<pre><pre class="playground"><code class="language-rust edition2024">struct Color(i32, i32, i32);
 struct Point(i32, i32, i32);
 
 fn main() {
@@ -421,7 +423,7 @@ die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
 besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
 Unit-Struktur namens <code>AlwaysEqual</code>:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct AlwaysEqual;
+<pre><pre class="playground"><code class="language-rust edition2024">struct AlwaysEqual;
 
 fn main() {
     let subject = AlwaysEqual;
@@ -450,7 +452,7 @@ referenzierten Daten so lange gültig sind, wie die Struktur gültig ist.
 Angenommen, du versuchst eine Referenz in einer Struktur zu speichern, ohne
 eine Lebensdauer anzugeben, wird das nicht funktionieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">struct User {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">struct User {
     active: bool,
     username: &amp;str,
     email: &amp;str,

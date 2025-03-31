@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -184,7 +186,7 @@ gespeichert sind.</p>
 <p>Codeblock 15.1 zeigt, wie man mit einer Box einen <code>i32</code>-Wert auf dem
 Haldenspeicher speichert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let b = Box::new(5);
     println!("b = {b}");
 }</code></pre></pre>
@@ -247,7 +249,7 @@ definieren.</p>
 Beachte, dass dieser Code nicht kompiliert werden kann, da der Typ <code>List</code> keine
 bekannte Größe hat, wie wir nachfolgend sehen werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">enum List {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">enum List {
     Cons(i32, List),
     Nil,
 }
@@ -265,7 +267,7 @@ erstellen, in der Werte eines beliebigen Typs gespeichert werden können.</p>
 <p>Die Verwendung des Typs <code>List</code>, um die Liste <code>1, 2, 3</code> zu speichern, würde wie
 in Codeblock 15-3 aussehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">enum List {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">enum List {
 </span><span class="boring">    Cons(i32, List),
 </span><span class="boring">    Nil,
 </span><span class="boring">}
@@ -326,7 +328,7 @@ nicht-rekursiven Typs benötigt wird.</p>
 <h4 id="die-größe-eines-nicht-rekursiven-typs-berechnen"><a class="header" href="#die-größe-eines-nicht-rekursiven-typs-berechnen">Die Größe eines nicht-rekursiven Typs berechnen</a></h4>
 <p>Erinnere dich an die in Codeblock 6-2 definierte <code>Message</code>-Aufzählung, als wir
 die Definition von Aufzählungen in Kapitel 6 besprochen haben:</p>
-<pre><pre class="playground"><code class="language-rust">enum Message {
+<pre><pre class="playground"><code class="language-rust edition2024">enum Message {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
@@ -378,7 +380,7 @@ ineinander.</p>
 von <code>List</code> in Codeblock 15-3 in den Programmcode von Codeblock 15-5 ändern, der
 kompilieren wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">enum List {
+<pre><pre class="playground"><code class="language-rust edition2024">enum List {
     Cons(i32, Box&lt;List&gt;),
     Nil,
 }

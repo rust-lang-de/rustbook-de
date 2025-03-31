@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -145,7 +147,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="hallo-welt"><a class="header" href="#hallo-welt">Hallo Welt</a></h2>
-<p>Nun, da du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
+<p>Nachdem du Rust installiert hast, lass uns dein erstes Rust-Programm schreiben.
 Wenn man eine neue Sprache lernt, ist es üblich, ein kleines Programm zu
 schreiben, das den Text <code>Hallo Welt!</code> auf dem Bildschirm ausgibt, also werden
 wir hier das gleiche tun!</p>
@@ -188,7 +190,7 @@ Verwende zum Beispiel <em>hello_world.rs</em> statt <em>helloworld.rs</em>.</p>
 <p>Öffne nun die Datei <em>main.rs</em>, die du gerade erstellt hast, und gib den Code in
 Codeblock 1-1 ein.</p>
 <p><span class="filename">Dateiname: main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     println!("Hallo Welt!");
 }</code></pre></pre>
 <p><span class="caption">Codeblock 1-1: Ein Programm, das <code>Hallo Welt!</code>
@@ -215,7 +217,7 @@ ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 <h3 id="anatomie-eines-rust-programms"><a class="header" href="#anatomie-eines-rust-programms">Anatomie eines Rust-Programms</a></h3>
 <p>Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:</p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
 
 }</code></pre></pre>
 <p>Diese Zeilen definieren eine Funktion namens <code>main</code> in Rust. Die Funktion
@@ -237,7 +239,7 @@ in die Standard-Rust-Distribution aufgenommen, es sollte also bereits auf
 deinem Computer installiert sein!</p>
 </blockquote>
 <p>Innerhalb der Funktion <code>main</code> befindet sich der folgende Code:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>println!("Hallo Welt!");
 <span class="boring">}</span></code></pre></pre>

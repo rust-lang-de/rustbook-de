@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -156,7 +158,7 @@ weit ins Detail gehen, wie es für diese Szenarien nötig ist, und überlassen d
 <h3 id="das-merkmal-future"><a class="header" href="#das-merkmal-future">Das Merkmal <code>Future</code></a></h3>
 <p>Lass uns zunächst einen genaueren Blick darauf werfen, wie das Merkmal <code>Future</code>
 funktioniert. Rust definiert es wie folgt:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -177,28 +179,28 @@ ihren <code>self</code>-Parameter und eine veränderbare Referenz auf einen <cod
 entgegennimmt und <code>Poll&lt;Self::Output&gt;</code> zurückgibt. Wir werden gleich ein wenig
 mehr über <code>Pin</code> und <code>Context</code> sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ <code>Poll</code>:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Poll&lt;T&gt; {
     Ready(T),
     Pending,
 }
 <span class="boring">}</span></code></pre></pre>
-<p>Dieser Typ <code>Poll</code> ist ähnlich wie eine <code>Option</code>: Er hat eine Variante
-<code>Ready(T)</code>, die einen Wert hat, und eine Variante <code>Pending</code> ohne Wert. <code>Poll</code>
-bedeutet jedoch etwas ganz anderes als <code>Option</code>! Die Variante <code>Pending</code> zeigt
-an, dass das Future noch Arbeit zu erledigen hat, sodass der Aufrufer später
-noch einmal nachsehen muss. Die Variante <code>Ready</code> zeigt an, dass das <code>Future</code>
-seine Arbeit beendet hat und der Wert <code>T</code> verfügbar ist.</p>
+<p>Dieser Typ <code>Poll</code> ist <code>Option</code> recht ähnlich: Er hat eine Variante <code>Ready(T)</code>,
+die einen Wert hat, und eine Variante <code>Pending</code> ohne Wert. <code>Poll</code> bedeutet
+jedoch etwas ganz anderes als <code>Option</code>! Die Variante <code>Pending</code> zeigt an, dass
+das Future noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal
+nachsehen muss. Die Variante <code>Ready</code> zeigt an, dass das <code>Future</code> seine Arbeit
+beendet hat und der Wert <code>T</code> verfügbar ist.</p>
 <blockquote>
 <p>Hinweis: Bei den meisten Futures sollte der Aufrufer die Methode <code>poll</code> nicht
 erneut aufrufen, nachdem das Future <code>Ready</code> zurückgegeben hat. Viele Futures
-werden das Programm abbrechen, wenn sie erneut abgefragt werden, obwohl sie
-bereit sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies
-in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
-<code>Iterator::next</code>!</p>
+werden das Programm zum Absturz bringen, wenn sie erneut abgefragt werden,
+obwohl sie bereit sind! Futures, bei denen eine erneute Abfrage sicher ist,
+werden dies in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum
+Verhalten von <code>Iterator::next</code>!</p>
 </blockquote>
-<p>Unter der Haube kompiliert Rust Code mit <code>await</code> zu Code, der <code>poll</code> aufruft.
+<p>Rust kompiliert Code mit <code>await</code> unter der Haube zu Code, der <code>poll</code> aufruft.
 Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
 URL ausgegeben haben, sobald sie aufgelöst wurde, kompiliert Rust das in etwa
 (wenn auch nicht genau) wie folgt:</p>
@@ -277,17 +279,17 @@ ist generisch über einen Typ <code>F</code>, der auf die Implementierung des Me
 <code>Future</code> beschränkt ist. Direktes Warten auf ein Future mit <code>await</code> heftet das
 Future implizit an. Deshalb müssen wir <code>pin!</code> nicht überall verwenden, wo wir
 auf Futures warten wollen.</p>
-<p>Allerdings warten wir hier nicht direkt ein Future. Stattdessen konstruieren
-wir ein neues Future <code>JoinAll</code>, indem wir eine Kollektion von Futures an die
-Funktion <code>join_all</code> übergeben. Die Signatur für <code>join_all</code> erfordert, dass der
-Typ der Elemente in der Kollektion das Merkmal <code>Future</code> implementiert. <code>Box&lt;T&gt;</code>
-implementiert <code>Future</code> nur, wenn das <code>T</code>, das es umhüllt, ein Future ist, das
-das Merkmal <code>Unpin</code> implementiert.</p>
+<p>Allerdings warten wir hier nicht direkt auf ein Future. Stattdessen
+konstruieren wir ein neues Future <code>JoinAll</code>, indem wir eine Kollektion von
+Futures an die Funktion <code>join_all</code> übergeben. Die Signatur für <code>join_all</code>
+erfordert, dass der Typ der Elemente in der Kollektion das Merkmal <code>Future</code>
+implementiert. <code>Box&lt;T&gt;</code> implementiert <code>Future</code> nur, wenn das <code>T</code>, das es
+umhüllt, ein Future ist, das das Merkmal <code>Unpin</code> implementiert.</p>
 <p>Das ist eine Menge, die man verarbeiten muss! Um es wirklich zu verstehen,
 müssen wir ein wenig tiefer in die Funktionsweise des Merkmals <code>Future</code>
 eintauchen, insbesondere in Bezug auf das <em>Anheften</em> (pinning).</p>
 <p>Schau dir noch einmal die Definition des Merkmals <code>Future</code> an:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -314,12 +316,10 @@ Funktionsparameter, jedoch mit zwei wesentlichen Unterschieden:</p>
 aufgerufen werden kann.</p>
 </li>
 <li>
-<p>Sie teilt Rust mit, welchen Typ <code>self</code> haben muss, damit die Methode aufgerufen werden kann.</p>
-</li>
-<li>
-<p>Es kann nicht einfach irgendein Typ sein. Es ist beschränkt auf den Typ, auf
-dem die Methode implementiert ist, eine Referenz oder ein Smart Pointer auf
-diesen Typ oder ein <code>Pin</code>, der eine Referenz auf diesen Typ umhüllt.</p>
+<p>Sie kann nicht einfach irgendein Typ sein. Sie ist beschränkt auf den Typ,
+auf dem die Methode implementiert ist, eine Referenz oder ein intelligenter
+Zeiger auf diesen Typ oder ein <code>Pin</code>, das eine Referenz auf diesen Typ
+umhüllt.</p>
 </li>
 </ul>
 <p>Wir werden mehr über diese Syntax in <a href="ch18-00-oop.html">Kapitel 18</a> erfahren. Für den
@@ -333,12 +333,12 @@ Zeigern zu arbeiten.) <code>Pin</code> ist selbst kein Zeiger und hat kein eigen
 Verhalten wie <code>Rc</code> und <code>Arc</code> mit Referenzzählern; es ist lediglich ein
 Werkzeug, das der Compiler verwenden kann, um Einschränkungen bei der
 Verwendung von Zeigern zu erzwingen.</p>
-<p>Wenn man sich daran erinnert, dass <code>await</code> in Form von Aufrufen von <code>poll</code>
+<p>Wenn du dich daran erinnerst, dass <code>await</code> in Form von Aufrufen von <code>poll</code>
 implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben,
 aber die bezog sich auf <code>Unpin</code>, nicht auf <code>Pin</code>. Wie genau verhält sich also
 <code>Pin</code> zu <code>Unpin</code>, und warum muss <code>self</code> bei einem <code>Future</code> in einem <code>Pin</code>-Typ
 sein, um <code>poll</code> aufzurufen?</p>
-<p>Erinnere dich an den Anfang dieses Kapitels: Eine Reihe von Wartepunkten in
+<p>Erinnere dich an den Anfang dieses Kapitels: Eine Reihe von await-Punkten in
 einem Future wird zu einem Zustandsautomaten kompiliert, und der Compiler
 stellt sicher, dass dieser Zustandsautomat alle normalen Sicherheitsregeln von
 Rust befolgt, einschließlich Ausleihen (borrowing) und Eigentümerschaft
@@ -363,7 +363,8 @@ den meisten anderen Typen in Rust können die Futures, die Rust für async-Blöc
 erzeugt, mit Referenzen auf sich selbst in den Feldern einer beliebigen
 Variante enden, wie in der vereinfachten Darstellung in Abbildung 17-4 gezeigt.</p>
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-04.svg" />
-<figcaption>Abbildung 17-4: Ein selbstreferenzierender Datentyp</figcaption>
+<p><span class="caption">Abbildung 17-4: Ein selbstreferenzierender
+Datentyp</span></p>
 <p>Standardmäßig kann ein Objekt, das eine Referenz auf sich selbst hat, nicht
 sicher verschoben werden, da Referenzen immer auf die tatsächliche
 Speicheradresse des Objekts zeigen (siehe Abbildung 17-5). Wenn du die
@@ -374,8 +375,8 @@ Datenstruktur vornimmst. Zum anderen – und das ist noch wichtiger –
 kann der Computer diesen Speicherplatz nun für andere Zwecke verwenden! Es
 könnte sein, dass du später völlig unzusammenhängende Daten liest.</p>
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-05.svg" />
-<figcaption>Abbildung 17-5: Das unsichere Ergebnis beim Verschieben eines
-selbstreferenzierenden Datentyps</figcaption>
+<p><span class="caption">Abbildung 17-5: Das unsichere Ergebnis beim Verschieben
+eines selbstreferenzierenden Datentyps</span></p>
 <p>Theoretisch könnte der Rust-Compiler versuchen, jede Referenz auf ein Objekt zu
 aktualisieren, wenn es verschoben wird. Das würde potenziell eine Menge
 zusätzlicher Performance-Overhead bedeuten, vor allem wenn man bedenkt, dass es
@@ -390,28 +391,28 @@ einpacken, kann er nicht mehr verschoben werden. Wenn du also
 <code>Pin&lt;Box&lt;SomeType&gt;&gt;</code> hast, heftest du eigentlich den Wert <code>SomeType</code> an,
 <em>nicht</em> den Zeiger <code>Box</code>. Abbildung 17-6 veranschaulicht dies:</p>
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-06.svg" />
-<figcaption>Abbildung 17-6: Anheften einer `Box`, die auf einen
-selbstreferenzierenden Future-Typ zeigt</figcaption>
+<p><span class="caption">Abbildung 17-6: Anheften einer <code>Box</code>, die auf einen
+selbstreferenzierenden Future-Typ zeigt</span></p>
 <p>In der Tat kann der Zeiger in <code>Box</code> immer noch verschoben werden. Denke daran:
 Wir wollen sicherstellen, dass die Daten, auf die letztlich referenziert wird,
 an ihrem Platz bleiben. Wenn ein Zeiger verschoben wird, aber die Daten, auf
 die er zeigt, an der gleichen Stelle sind, wie in Abbildung 17-7, gibt es kein
 potenzielles Problem. (Schau dir als unabhängige Übung die Dokumentationen der
 Typen sowie des Moduls <code>std::pin</code> an und versuche herauszufinden, wie du das
-mit einem <code>Pin</code> machst, der eine <code>Box</code> umhüllt). Der Schlüssel ist, dass der
+mit einem <code>Pin</code> machst, der eine <code>Box</code> umhüllt.) Der Schlüssel ist, dass der
 selbstreferenzierende Typ selbst nicht verschoben werden kann, weil er immer
 noch angeheftet ist.</p>
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-07.svg" />
-<figcaption>Figure 17-7: Verschieben einer `Box`, die auf einen
-selbstreferenzierenden Futuretyp zeigt.</figcaption>
+<p><span class="caption">Abbildung 17-7: Verschieben einer <code>Box</code>, die auf einen
+selbstreferenzierenden Futuretyp zeigt.</span></p>
 <p>Die meisten Typen können jedoch gefahrlos verschoben werden, selbst wenn sie
 sich hinter einem <code>Pin</code>-Wrapper befinden. Wir müssen nur über das Anheften
 nachdenken, wenn Elemente interne Referenzen haben. Primitive Werte wie Zahlen
 und Boolesche Werte sind sicher, weil sie keine internen Referenzen haben.
 Genauso wenig wie die meisten Typen, mit denen man normalerweise in Rust
-arbeitet. Du kannst zum Beispiel unbesorgt in einem <code>Vec</code> verschieben. Nach
-dem, was wir bisher gesehen haben, müsste man bei einem <code>Pin&lt;Vec&lt;String&gt;&gt;</code>
-alles über die sicheren, aber restriktiven APIs von <code>Pin</code> machen, obwohl ein
+arbeitet. Du kannst zum Beispiel unbesorgt einen <code>Vec</code> verschieben. Nach dem,
+was wir bisher gesehen haben, müsste man bei einem <code>Pin&lt;Vec&lt;String&gt;&gt;</code> alles
+über die sicheren, aber restriktiven APIs von <code>Pin</code> machen, obwohl ein
 <code>Vec&lt;String&gt;</code> immer sicher verschoben werden kann, wenn es keine anderen
 Referenzen auf ihn gibt. Wir brauchen eine Möglichkeit, dem Compiler
 mitzuteilen, dass es in solchen Fällen in Ordnung ist, Elemente zu verschieben
@@ -422,7 +423,7 @@ Funktionalität. Markierungsmerkmale existieren nur, um dem Compiler
 mitzuteilen, dass es sicher ist, den Typ zu verwenden, der ein bestimmtes
 Merkmal in einem bestimmten Kontext implementiert. <code>Unpin</code> teilt dem Compiler
 mit, dass ein gegebener Typ <em>keine</em> besonderen Garantien aufrechterhalten muss,
-um den fragliche Wert zu verschieben.</p>
+um den fraglichen Wert zu verschieben.</p>
 <p>Genau wie bei <code>Send</code> und <code>Sync</code> implementiert der Compiler <code>Unpin</code> automatisch
 für alle Typen, bei denen er beweisen kann, dass sie sicher sind. Ein
 Sonderfall analog zu <code>Send</code> und <code>Sync</code> ist, dass <code>Unpin</code> für einen Typ <em>nicht</em>
@@ -440,9 +441,9 @@ Unicode-Zeichen, aus denen er besteht. Wir können einen <code>String</code> in 
 einpacken, wie in Abbildung 17-8. Allerdings implementiert <code>String</code> automatisch
 <code>Unpin</code>, wie die meisten anderen Typen in Rust.</p>
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
-<figcaption>Abbildung 17-8: Anheften eines `String`; die gestrichelte Linie
-deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
-nicht angeheftet ist.</figcaption>
+<p><span class="caption">Abbildung 17-8: Anheften eines <code>String</code>; die gestrichelte Linie
+deutet an, dass die Zeichenkette das Merkmal <code>Unpin</code> implementiert und daher
+nicht angeheftet ist.</span></p>
 <p>Infolgedessen können wir Dinge tun, die illegal wären, wenn <code>String</code>
 stattdessen <code>!Unpin</code> implementiert hätte, wie zum Beispiel das Ersetzen einer
 Zeichenkette durch eine andere an der exakt gleichen Stelle im Speicher, wie in
@@ -450,8 +451,8 @@ Abbildung 17-9. Dies verletzt nicht den <code>Pin</code>-Vertrag, weil <code>Str
 internen Referenzen hat, die es unsicher machen, es zu verschieben! Das ist
 genau der Grund, warum es <code>Unpin</code> und nicht <code>!Unpin</code> implementiert.</p>
 <img alt="Concurrent work flow" src="img/trpl17-09.svg" />
-<figcaption>Figure 17-9: Ersetzen eines `String` durch einen völlig anderen
-`String` im Speicher.</figcaption>
+<p><span class="caption">Abbildung 17-9: Ersetzen eines <code>String</code> durch einen
+völlig anderen <code>String</code> im Speicher.</span></p>
 <p>Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
 <code>join_all</code> in Codeblock 17-17 gemeldet wurden. Ursprünglich haben wir versucht,
 die von asynchronen Blöcken erzeugten Futures in einen <code>Vec&lt;Box&lt;dyn  Future&lt;Output = ()&gt;&gt;&gt;</code> zu verschieben, aber wie wir gesehen haben, können
@@ -459,9 +460,9 @@ diese Futures interne Referenzen haben, sodass sie <code>Unpin</code> nicht
 implementieren. Sie müssen angepinnt werden und dann können wir den Typ <code>Pin</code>
 an den <code>Vec</code> übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in
 den Futures <em>nicht</em> verschoben werden.</p>
-<p><code>Pin</code> und <code>Unpin</code> sind vor allem für die Erstellung von Bibliotheken auf
-niedrigerer Ebene wichtig und wenn du eine Laufzeitumgebung erstellst, weniger
-für den alltäglichen Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
+<p><code>Pin</code> und <code>Unpin</code> sind vor allem wichtig für die Erstellung von
+Low-Level-Bibliotheken und wenn du eine Laufzeitumgebung erstellst, weniger
+bei alltäglichem Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
 siehst, hast du jetzt eine bessere Vorstellung davon, wie du deinen Code
 korrigieren kannst!</p>
 <blockquote>
@@ -475,8 +476,9 @@ die sie einhalten müssen, werden ausführlich in der API-Dokumentation für
 <code>std::pin</code> behandelt. Wenn du mehr darüber lernen willst, ist das ein guter
 Ausgangspunkt.</p>
 <p>Wenn du noch detaillierter verstehen willst, wie die Dinge unter der Haube
-funktionieren, schaue dir die Kapitel <a href="https://rust-lang.github.io/async-book/02_execution/01_chapter.html">2</a> and <a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">4</a>
-des Buchs <a href="https://rust-lang.github.io/async-book/"><em>Asynchronous Programming in Rust</em></a> an:</p>
+funktionieren, schaue dir die Kapitel <a href="https://rust-lang.github.io/async-book/02_execution/01_chapter.html">„Under the Hood: Executing Futures and
+Tasks“</a> und <a href="https://rust-lang.github.io/async-book/04_pinning/01_chapter.html">„Pinning“</a> im Buch <em>Asynchronous
+Programming in Rust</em> an:</p>
 </blockquote>
 <h3 id="das-merkmal-stream"><a class="header" href="#das-merkmal-stream">Das Merkmal <code>Stream</code></a></h3>
 <p>Nachdem du nun ein tieferes Verständnis für die Merkmale <code>Future</code>, <code>Pin</code> und
@@ -490,9 +492,9 @@ wir uns ansehen, wie ein Merkmal <code>Stream</code> aussehen könnte. Von <code
 wir die Idee einer Sequenz: Seine Methode <code>next</code> liefert eine
 <code>Option&lt;Self::Item&gt;</code>. Von <code>Future</code> haben wir die Idee der zeitlichen
 Bereitschaft: Seine Methode <code>poll</code> liefert ein <code>Poll&lt;Self::Output&gt;</code>. Um eine
-Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sind,
+Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
 definieren wir ein Merkmal <code>Stream</code>, das diese Funktionalitäten zusammenführt:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::pin::Pin;
 use std::task::{Context, Poll};
@@ -508,7 +510,7 @@ trait Stream {
 <span class="boring">}</span></code></pre></pre>
 <p>Das Merkmal <code>Stream</code> definiert einen zugehörigen Typ namens <code>Item</code> für den Typ
 der vom Strom erzeugten Elemente. Dies ist ähnlich wie bei <code>Iterator</code>, wo es
-null bis viele Elemente geben kann, anders als bei <code>Future</code>, wo es immer nur
+beliebig viele Elemente geben kann, anders als bei <code>Future</code>, wo es immer nur
 einen einzigen <code>Output</code> gibt, selbst wenn es der Einheitstyp <code>()</code> ist.</p>
 <p><code>Stream</code> definiert auch eine Methode zum Abrufen dieser Elemente. Wir nennen
 sie <code>poll_next</code>, um zu verdeutlichen, dass sie auf die gleiche Weise wie
@@ -520,16 +522,15 @@ weitere Nachrichten gibt, genau wie ein Iterator.</p>
 <p>Etwas, das dieser Definition sehr ähnlich ist, wird wahrscheinlich Teil der
 Standardbibliothek von Rust werden. In der Zwischenzeit ist es Teil des
 Werkzeugkoffers der meisten Laufzeitumgebungen, sodass du dich darauf verlassen
-kannst, und alles, was wir als nächstes behandeln, sollte im Allgemeinen
-gelten!</p>
+kannst, und alles, was wir als nächstes behandeln, allgemein gilt!</p>
 <p>Im Beispiel, das wir im Abschnitt über Ströme gesehen haben, haben wir
 allerdings nicht <code>poll_next</code> <em>oder</em> <code>Stream</code> benutzt, sondern <code>next</code> und
 <code>StreamExt</code>. Wir <em>könnten</em> direkt mit der <code>poll_next</code>-API arbeiten, indem wir
 unsere eigenen <code>Stream</code>-Zustandsautomaten schreiben, genauso wie wir mit
 Futures direkt über deren Methode <code>poll</code> arbeiten <em>können</em>. Die Verwendung von
 <code>await</code> ist jedoch viel schöner, und das Merkmal <code>StreamExt</code> stellt die Methode
-<code>next</code> bereit, sodass wir genau das tun können:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<code>next</code> bereit, sodass wir folgendes tun können:</p>
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::pin::Pin;
 </span><span class="boring">use std::task::{Context, Poll};
@@ -555,9 +556,9 @@ Futures direkt über deren Methode <code>poll</code> arbeiten <em>können</em>. 
 aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von
 asynchronen Funktionen in Merkmalen kennen. Infolgedessen sieht sie so aus:</p>
 <pre><code class="language-rust ignore">fn next(&amp;mut self) -&gt; Next&lt;'_, Self&gt; where Self: Unpin;</code></pre>
-<p>Dieser Typ <code>Next</code> ist ein <code>struct</code>, das <code>Future</code> implementiert und erlaubt
-uns, die Lebensdauer der Referenz auf <code>self</code> mit <code>Next&lt;'_, Self&gt;</code> zu
-benennen, sodass <code>await</code> mit dieser Methode arbeiten kann!</p>
+<p>Der Typ <code>Next</code> ist ein <code>struct</code>, das <code>Future</code> implementiert, und erlaubt uns,
+die Lebensdauer der Referenz auf <code>self</code> mit <code>Next&lt;'_, Self&gt;</code> zu benennen,
+sodass <code>await</code> mit dieser Methode arbeiten kann!</p>
 </blockquote>
 <p>Das Merkmal <code>StreamExt</code> ist auch die Heimat aller interessanten Methoden, die
 für die Verwendung mit Strömen zur Verfügung stehen. <code>StreamExt</code> wird

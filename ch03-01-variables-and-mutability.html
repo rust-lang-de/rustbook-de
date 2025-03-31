@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -162,7 +164,7 @@ Projekt namens <em>variables</em> in deinem <em>projects</em>-Verzeichnis an, in
 ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
 lässt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = 5;
     println!("Der Wert von x ist: {x}");
     x = 6;
@@ -217,7 +219,7 @@ in <a href="ch02-00-guessing-game-tutorial.html#speichern-von-werten-mit-variabl
 Teile des Codes den Wert dieser Variablen ändern werden.</p>
 <p>Lass uns zum Beispiel <em>src/main.rs</em> wie folgt ändern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut x = 5;
     println!("Der Wert von x ist: {x}");
     x = 6;
@@ -253,7 +255,7 @@ Teile des Codes Bescheid wissen müssen.</p>
 Ausdruck gesetzt werden dürfen, nicht auf einen Wert, der nur zur Laufzeit
 berechnet werden könnte.</p>
 <p>Hier ist ein Beispiel für eine Konstantendeklaration:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>const THREE_HOURS_IN_SECONDS: u32 = 60 * 60 * 3;
 <span class="boring">}</span></code></pre></pre>
@@ -290,7 +292,7 @@ bis sie entweder selbst verschattet wird oder der Gültigkeitsbereich endet. Wir
 können eine Variable verschatten, indem wir denselben Variablenamen verwenden
 und das Schlüsselwort <code>let</code> wie folgt wiederholen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 5;
 
     let x = x + 1;
@@ -331,7 +333,7 @@ wiederverwenden. Nehmen wir zum Beispiel an, unser Programm bittet einen
 Benutzer, durch Eingeben von Leerzeichen zu zeigen, wie viele Leerzeichen er
 zwischen irgendeinem Text haben möchte, und wir möchten diese Eingabe als Zahl
 speichern:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let spaces = "   ";
 let spaces = spaces.len();
@@ -341,7 +343,7 @@ ist ein Zahlentyp Integer. Das Verschatten erspart es uns also, uns verschiedene
 Namen auszudenken, z.B. <code>spaces_str</code> und <code>spaces_num</code>; stattdessen können wir
 den einfacheren Namen <code>spaces</code> wiederverwenden. Wenn wir jedoch versuchen,
 dafür <code>mut</code> zu verwenden, wie hier gezeigt, erhalten wir einen Kompilierfehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut spaces = "   ";
 spaces = spaces.len();

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -237,7 +239,7 @@ höhere Performanz oder die Möglichkeit der Interaktion mit einer anderen
 Sprache oder Hardware erhalten, für die die Rust-Garantien nicht gelten.</p>
 <p>Codeblock 20-1 zeigt, wie man aus Referenzen einen unveränderbaren und einen
 veränderbaren Rohzeiger erzeugt.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let mut num = 5;
 
     let r1 = &amp;raw const num;
@@ -264,7 +266,7 @@ so optimieren, dass es keinen Speicherzugriff gibt, oder das Programm könnte
 mit einer Schutzverletzung (segmentation fault) abbrechen. Normalerweise gibt
 es keinen guten Grund, solchen Code zu schreiben, vor allem, wenn man
 stattdessen den Operator <code>&amp;raw</code> verwenden kann, aber es ist möglich.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let address = 0x012345usize;
     let r = address as *const i32;
 <span class="boring">}</span></code></pre></pre>
@@ -274,7 +276,7 @@ willkürliche Speicheradresse</span></p>
 können keine Rohzeiger <em>dereferenzieren</em> und die Daten lesen, auf die gezeigt
 wird. In Codeblock 20-3 wenden wir den Dereferenzierungsoperator <code>*</code> auf einen
 Rohzeiger an, was einen <code>unsafe</code>-Block erfordert.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let mut num = 5;
 
     let r1 = &amp;num as *const i32;
@@ -320,7 +322,7 @@ sagen wir, dass wir die Dokumentation dieser Funktion gelesen haben und wir die
 Verantwortung für die Einhaltung der Verträge der Funktion übernehmen.</p>
 <p>Hier ist eine unsichere Funktion namens <code>dangerous</code>, die in ihrem Rumpf nichts
 tut:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    unsafe fn dangerous() {}
 
     unsafe {
@@ -361,7 +363,7 @@ implementieren könnten. Diese sichere Methode ist auf veränderbaren
 Anteilstypen definiert: Sie nimmt einen Anteilstyp und macht zwei daraus, indem
 sie den Anteilstyp an dem als Argument angegebenen Index teilt. Codeblock 20-4
 zeigt, wie man <code>split_at_mut</code> verwendet.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let mut v = vec![1, 2, 3, 4, 5, 6];
 
     let r = &amp;mut v[..];
@@ -378,7 +380,7 @@ Versuch könnte in etwa wie in Codeblock 20-5 aussehen, der sich nicht
 kompilieren lässt. Der Einfachheit halber implementieren wir <code>split_at_mut</code> als
 Funktion und nicht als Methode und nur für Anteilstypen von <code>i32</code>-Werten, nicht
 für einen generischen Typ <code>T</code>.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
     let len = values.len();
 
     assert!(mid &lt;= len);
@@ -431,7 +433,7 @@ verwenden.</p>
 <p>Codeblock 20-6 zeigt, wie man einen <code>unsafe</code>-Block, einen Rohzeiger und einige
 Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
 <code>split_at_mut</code> zum Funktionieren zu bringen.</p>
-<pre><pre class="playground"><code class="language-rust">use std::slice;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::slice;
 
 fn split_at_mut(values: &amp;mut [i32], mid: usize) -&gt; (&amp;mut [i32], &amp;mut [i32]) {
     let len = values.len();
@@ -488,7 +490,7 @@ Funktion Zugriff hat.</p>
 Codeblock 20-7 wahrscheinlich abstürzen, wenn der Anteilstyp verwendet wird.
 Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
 mit einer Länge von 10.000 Elementen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    use std::slice;
 
     let address = 0x01234usize;
@@ -517,7 +519,7 @@ andere Sprachen die Regeln und Garantien von Rust nicht erzwingen und Rust sie
 nicht überprüfen kann, sodass die Verantwortung für die Sicherheit beim
 Programmierer liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">extern "C" {
+<pre><pre class="playground"><code class="language-rust edition2024">extern "C" {
     fn abs(input: i32) -&gt; i32;
 }
 
@@ -546,7 +548,7 @@ sich in einem <code>unsafe extern</code>-Block befindet. Sobald wir diese Änder
 vorgenommen haben, erfordert der Aufruf der Funktion keinen <code>unsafe</code>-Block
 mehr, wie in Codeblock 20-9 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">unsafe extern "C" {
+<pre><pre class="playground"><code class="language-rust edition2024">unsafe extern "C" {
     safe fn abs(input: i32) -&gt; i32;
 }
 
@@ -582,7 +584,7 @@ kann.</p>
 <p>Im folgenden Beispiel machen wir die Funktion <code>call_from_c</code> von C-Code aus
 zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
 gelinkt wurde:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>#[unsafe(no_mangle)]
 pub extern "C" fn call_from_c() {
@@ -602,7 +604,7 @@ Daten-Wettlaufsituation (data race) führen.</p>
 Codeblock 20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer
 statischen Variablen mit einem Zeichenkettenanteilstyp als Wert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">static HELLO_WORLD: &amp;str = "Hallo Welt!";
+<pre><pre class="playground"><code class="language-rust edition2024">static HELLO_WORLD: &amp;str = "Hallo Welt!";
 
 fn main() {
     println!("Name ist: {HELLO_WORLD}");
@@ -626,7 +628,7 @@ von veränderbaren, statischen Variablen ist <em>unsicher</em>. Codeblock 20-11 
 wie man eine veränderbare, statische Variable namens <code>COUNTER</code> deklariert, auf
 sie zugreift und sie modifiziert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">static mut COUNTER: u32 = 0;
+<pre><pre class="playground"><code class="language-rust edition2024">static mut COUNTER: u32 = 0;
 
 /// SAFETY: Calling this from more than a single thread at a time is undefined
 /// behavior, so you *must* guarantee you only call it from a single thread at
@@ -678,15 +680,15 @@ Invariante hat, die der Compiler nicht verifizieren kann. Wir können erklären,
 dass ein Merkmal <code>unsafe</code> ist, indem wir das Schlüsselwort <code>unsafe</code> vor <code>trait</code>
 einfügen und die Implementierung des Merkmals ebenfalls mit <code>unsafe</code> markieren,
 wie in Codeblock 20-12 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">unsafe trait Foo {
+<pre><pre class="playground"><code class="language-rust edition2024">unsafe trait Foo {
     // Methoden kommen hierhin
 }
 
 unsafe impl Foo for i32 {
     // Methoden-Implementierungen kommen hierhin
 }
-
-fn main() {}</code></pre></pre>
+<span class="boring">
+</span><span class="boring">fn main() {}</span></code></pre></pre>
 <p><span class="caption">Codeblock 20-12: Definition und Implementierung eines
 unsicheren Merkmals</span></p>
 <p>Indem wir <code>unsafe impl</code> verwenden, versprechen wir, dass wir die Invarianten
@@ -711,7 +713,7 @@ werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
 Weitere Informationen über Vereinigung findest du in der
-<a href="https://doc.rust-lang.org/reference/items/unions.html">Rust-Referenz</a>.</p>
+<a href="https://doc.rust-lang.org/reference/items/unions.html">Unions-Referenz</a>.</p>
 <h3 id="miri-zur-Überprüfung-von-unsafe-code-verwenden"><a class="header" href="#miri-zur-Überprüfung-von-unsafe-code-verwenden">Miri zur Überprüfung von <code>unsafe</code>-Code verwenden</a></h3>
 <p>Wenn du unsicheren Code schreibst, möchtest du vielleicht überprüfen, ob das,
 was du geschrieben hast, tatsächlich sicher und korrekt ist. Eine der besten
@@ -733,17 +735,7 @@ Codeblock 20-11:</p>
 <pre><code class="language-console">$ cargo +nightly miri run
    Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/Users/chris/.rustup/toolchains/nightly-aarch64-apple-darwin/bin/cargo-miri runner target/miri/aarch64-apple-darwin/debug/unsafe-example`
-warning: creating a shared reference to mutable static is discouraged
-  --&gt; src/main.rs:14:33
-   |
-14 |         println!("COUNTER: {}", COUNTER);
-   |                                 ^^^^^^^ shared reference to mutable static
-   |
-   = note: for more information, see &lt;https://doc.rust-lang.org/nightly/edition-guide/rust-2024/static-mut-references.html&gt;
-   = note: shared references to mutable statics are dangerous; it's undefined behavior if the static is mutated or if a mutable reference is created for it while the shared reference lives
-   = note: `#[warn(static_mut_refs)]` on by default
-
+     Running `file:///home/.rustup/toolchains/nightly/bin/cargo-miri runner target/miri/debug/unsafe-example`
 COUNTER: 3
 </code></pre>
 <p>Miri warnt uns richtigerweise, dass wir gemeinsame Referenzen auf veränderbare

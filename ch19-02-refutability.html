@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -172,7 +174,7 @@ abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert und
 umgekehrt. Codeblock 19-8 zeigt eine <code>let</code>-Anweisung, allerdings haben wir für
 das Muster <code>Some(x)</code> angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
 </span>    let Some(x) = some_option_value;
 <span class="boring">}</span></code></pre></pre>
@@ -211,7 +213,7 @@ zu verwenden, können wir <code>let...else</code> verwenden. Wenn das Muster dan
 passt, führt das Programm einfach den Code in den geschweiften Klammern aus und
 gibt ihm die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der
 Code in Codeblock 19-8 zu korrigieren ist.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
 </span>    let Some(x) = some_option_value else {
         return;
@@ -222,7 +224,7 @@ Blocks mit abweisbaren Mustern anstelle von <code>let</code></span></p>
 <p>Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
 <code>let...else</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B.
 <code>x</code>, wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let x = 5 else {
         return;
     };

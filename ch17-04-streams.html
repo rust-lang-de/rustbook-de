@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Ströme (streams): Abfolge von Futures - Die Programmiersprache Rust</title>
+        <title>Ströme (streams): Sequenz von Futures - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -144,21 +146,21 @@
 
                 <div id="content" class="content">
                     <main>
-                        <h2 id="ströme-streams-abfolge-von-futures"><a class="header" href="#ströme-streams-abfolge-von-futures">Ströme (streams): Abfolge von Futures</a></h2>
+                        <h2 id="ströme-streams-sequenz-von-futures"><a class="header" href="#ströme-streams-sequenz-von-futures">Ströme (streams): Sequenz von Futures</a></h2>
 <p>Bislang haben wir uns in diesem Kapitel hauptsächlich mit einzelnen Futures
 beschäftigt. Die einzige große Ausnahme war der von uns verwendete asynchrone
-Kanal. Erinnere dich daran, wie wir den Empfänger für unseren asynchronen Kanal
+Kanal. Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
 weiter oben in diesem Kapitel in <a href="ch17-02-concurrency-with-async.html#hochz%C3%A4hlen-in-zwei-aufgaben-mit-nachrichten%C3%BCbermittlung">„Hochzählen in zwei Aufgaben mit
 Nachrichtenübermittlung“</a> verwendet haben. Die asynchrone
-Methode <code>recv</code> erzeugt eine Sequenz von Elementen. Dies ist eine Instanz eines
+Methode <code>recv</code> erzeugt eine Sequenz von Elementen. Dies ist ein Beispiel eines
 viel allgemeineren Musters, bekannt als <em>Strom</em> (stream).</p>
 <p>Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Merkmal
 <code>Iterator</code> im Abschnitt <a href="ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next">„Das Merkmal (trait) <code>Iterator</code> und die Methode
 <code>next</code>“</a> betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
-Iteratoren und dem asynchronen Kanalempfänger. Der erste ist das Element der
-Zeit: Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der
-zweite ist die API. Wenn wir direkt mit einem <code>Iterator</code> arbeiten, rufen wir
-seine synchrone Methode <code>next</code> auf. Mit dem Strom <code>trpl::Receiver</code> rufen wir
+Iteratoren und dem asynchronen Kanalempfänger. Der erste ist die Zeit:
+Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der zweite
+ist die API. Wenn wir direkt mit einem <code>Iterator</code> arbeiten, rufen wir seine
+synchrone Methode <code>next</code> auf. Mit dem Strom <code>trpl::Receiver</code> rufen wir
 stattdessen die asynchrone Methode <code>recv</code> auf. Ansonsten sind sich diese APIs
 sehr ähnlich, und diese Ähnlichkeit ist kein Zufall. Ein Strom ist wie eine
 asynchrone Form der Iteration. Während <code>trpl::Receiver</code> jedoch speziell auf den
@@ -235,7 +237,7 @@ meisten Ökosystemkisten verwenden dieselbe Definition.</p>
 <p>Die Behebung des Compilerfehlers besteht darin, eine <code>use</code>-Anweisung für
 <code>trpl::StreamExt</code> hinzuzufügen, wie in Codeblock 17-31.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span>use trpl::StreamExt;
 
@@ -258,7 +260,7 @@ seine Hilfsmethoden verwenden, genau wie bei Iteratoren. In Codeblock 17-32
 verwenden wir zum Beispiel die Methode <code>filter</code>, um alles außer Vielfache von
 drei und fünf herauszufiltern.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span>use trpl::StreamExt;
 
@@ -284,11 +286,11 @@ was für Ströme einzigartig sind.</p>
 <h3 id="komposition-von-strömen"><a class="header" href="#komposition-von-strömen">Komposition von Strömen</a></h3>
 <p>Viele Konzepte werden auf natürliche Weise als Datenströme dargestellt:
 Elemente, die in einer Warteschlange verfügbar werden, Datenpakete, die
-inkrementell aus dem Dateisystem gezogen werden, wenn der gesamte Datensatz zu
-groß für den Speicher des Computers ist, oder Daten, die im Laufe der Zeit über
-das Netz ankommen. Da es sich bei Strömen um Futures handelt, können wir sie
-auch mit jeder anderen Art von Futures verwenden und sie auf interessante Weise
-kombinieren. So können wir beispielsweise Ereignisse stapeln, um zu viele
+inkrementell aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
+zu groß für den Speicher des Computers ist, oder Daten, die im Laufe der Zeit
+über das Netz ankommen. Da es sich bei Strömen um Futures handelt, können wir
+sie auch mit jeder anderen Art von Futures verwenden und sie auf interessante
+Weise kombinieren. So können wir beispielsweise Ereignisse stapeln, um zu viele
 Netzwerkaufrufe zu vermeiden, Zeitüberschreitungen für Sequenzen lang laufender
 Vorgänge festlegen oder Ereignisse der Benutzeroberfläche drosseln, um unnötige
 Arbeit zu vermeiden.</p>
@@ -296,7 +298,7 @@ Arbeit zu vermeiden.</p>
 einen Datenstrom, den wir von einer WebSocket oder einem anderen
 Echtzeit-Kommunikationsprotokoll sehen könnten, wie in Codeblock 17-33 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span>use trpl::{ReceiverStream, Stream, StreamExt};
 
@@ -347,7 +349,7 @@ regulären <code>Iterator</code>-API tun. Fügen wir also etwas hinzu, das Strö
 Eine Zeitüberschreitung, die für jedes Element im Strom gilt, und eine
 Verzögerung für die Elemente, die wir ausgeben, siehe Codeblock 17-34.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span>use std::{pin::pin, time::Duration};
 use trpl::{ReceiverStream, Stream, StreamExt};
@@ -387,14 +389,14 @@ Variante <code>Err</code> zeigt an, dass die Zeit abgelaufen ist, bevor irgendei
 Nachricht angekommen ist. Wir gleichen dieses Ergebnis mit <code>match</code> ab und geben
 entweder die Nachricht oder eine Meldung über die Zeitüberschreitung aus.
 Schließlich ist zu beachten, dass wir die Nachrichten anpinnen, nachdem wir die
-Zeitüberschreitung auf sie angewendet haben, da der Timeout-Helper einen Strom
-erzeugt, der angeheftet werden muss, um abgefragt zu werden.</p>
+Zeitüberschreitung auf sie angewendet haben, da die Timeout-Hilfsmethode einen
+Strom erzeugt, der angeheftet werden muss, um abgefragt zu werden.</p>
 <p>Da es jedoch keine Verzögerungen zwischen den Nachrichten gibt, ändert diese
 Zeitüberschreitung das Verhalten des Programms nicht. Fügen wir den
 Nachrichten, die wir senden, eine variable Verzögerung hinzu, wie in Codeblock
 17-35 zu sehen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{pin::pin, time::Duration};
 </span><span class="boring">
@@ -463,8 +465,8 @@ könnten eine neue Laufzeitumgebung erzeugen und so den Programmabbruch
 vermeiden, müssten dafür aber zusätzlichen Overhead in Kauf nehmen, oder sie
 bieten einfach keine eigenständige Möglichkeit, Aufgaben ohne Bezug auf eine
 Laufzeitumgebung zu erzeugen. Stelle sicher, dass du weißt, welchen
-Kompromiss deine Laufzeitumgebung gewählt hat, und deinen Code entsprechend
-schreiben!</p>
+Kompromiss deine Laufzeitumgebung gewählt hat, und schreibe deinen Code
+entsprechend!</p>
 </blockquote>
 <p>Jetzt hat unser Code ein viel interessanteres Ergebnis. Zwischen jedem zweiten
 Paar von Meldungen wird der Fehler <code>Problem: Elapsed(())</code> gemeldet.</p>
@@ -504,7 +506,7 @@ dieses Mal die Anzahl der abgelaufenen Intervalle zurücksenden werden, also
 wird der Rückgabetyp <code>impl Stream&lt;Item = u32&gt;</code> sein, und wir können die Funktion
 <code>get_intervals</code> aufrufen (siehe Codeblock 17-36).</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{pin::pin, time::Duration};
 </span><span class="boring">
@@ -564,10 +566,11 @@ Millisekunde lang, erhöht die Anzahl und sendet sie dann über den Kanal. Da
 dies alles in der von <code>spawn_task</code> erzeugten Aufgabe verpackt ist, wird alles
 zusammen mit der Laufzeitumgebung aufgeräumt, einschließlich der
 Endlosschleife.</p>
-<p>Diese Art von Endlosschleife, die erst endet, wenn die gesamte Laufzeitumgebung
-beendet wird, ist in asynchronem Rust recht häufig: Viele Programme müssen
-unbegrenzt weiterlaufen. Mit asynchronem Code blockiert dies nichts anderes,
-solange es in jeder Schleifeniteration mindestens einen await-Punkt gibt.</p>
+<p>Eine derartige Endlosschleife, die erst endet, wenn die gesamte
+Laufzeitumgebung beendet wird, ist in asynchronem Rust recht häufig: Viele
+Programme müssen unbegrenzt weiterlaufen. Mit asynchronem Code blockiert dies
+nichts anderes, solange es in jeder Schleifeniteration mindestens einen
+await-Punkt gibt.</p>
 <p>Zurück im asynchronen Block unserer Hauptfunktion können wir nun versuchen, die
 Ströme <code>messages</code> und <code>intervals</code> zusammenzuführen, wie in Codeblock 17-37
 gezeigt.</p>
@@ -630,13 +633,13 @@ gezeigt.</p>
 zu einem Strom kombiniert, der Elemente aus jedem der Quellströme produziert,
 sobald die Elemente verfügbar sind, ohne eine bestimmte Reihenfolge
 festzulegen. Schließlich laufen wir in einer Schleife über diesen kombinierten
-Stream anstatt über <code>messages</code>.</p>
+Strom anstatt über <code>messages</code>.</p>
 <p>Zu diesem Zeitpunkt müssen weder <code>messages</code> noch <code>intervals</code> angeheftet oder
-veränderbar sein, da beide zu einem einzigen <code>merged</code>-Strom zusammengeführt
+veränderbar sein, da beide zu einem einzigen Strom <code>merged</code> zusammengeführt
 werden. Allerdings lässt sich dieser Aufruf von <code>merge</code> nicht kompilieren!
 (Genauso wenig wie der <code>next</code>-Aufruf in der <code>while let</code>-Schleife, aber darauf
 kommen wir zurück.) Das liegt daran, dass die beiden Ströme unterschiedliche
-Typen haben. Der Strom <code>messages</code> hat den Typ <code>Timeout&lt;impl Stream&lt;Item =  String&gt;&gt;</code>, wobei <code>Timeout</code> der Typ ist, der <code>Stream</code> für einen
+Typen haben. Der Strom <code>messages</code> hat den Typ <code>Timeout&lt;impl Stream&lt;Item =  String&gt;&gt;</code>, wobei <code>Timeout</code> der Typ ist, den <code>Stream</code> für einen
 <code>timeout</code>-Aufruf implementiert. Der Strom <code>intervals</code> hat den Typ <code>impl Stream&lt;Item = u32&gt;</code>. Um diese beiden Ströme zusammenzuführen, müssen wir
 einen von ihnen umwandeln, damit er mit dem anderen übereinstimmt. Wir
 überarbeiten den Strom <code>intervals</code>, da <code>messages</code> bereits das gewünschte
@@ -696,20 +699,21 @@ Grundformat hat und Timeout-Fehler behandeln muss (siehe Codeblock 17-38).</p>
 </span><span class="boring">
 </span><span class="boring">    ReceiverStream::new(rx)
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-38: Angleichen des Typs des
-<code>intervals</code>-Stroms an den Typ des <code>messages</code>-Stroms</span></p>
+<p><span class="caption">Codeblock 17-38: Angleichen des Typs des Stroms
+<code>intervals</code> an den Typ des Stroms <code>messages</code></span></p>
 <p>Erstens können wir die Hilfsmethode <code>map</code> verwenden, um <code>intervals</code> in eine
 Zeichenkette umzuwandeln. Zweitens müssen wir das <code>Timeout</code> aus <code>messages</code>
 abgleichen. Da wir aber eigentlich keine Zeitüberschreitung für <code>intervals</code>
 <em>wollen</em>, können wir einfach eine Zeitüberschreitung erstellen, die länger ist
 als die anderen Zeitspannen, die wir verwenden. Hier erstellen wir eine
 10-Sekunden-Zeitüberschreitung mit <code>Duration::from_secs(10)</code>. Schließlich
-müssen wir <code>Stream</code> veränderbar machen, damit die <code>next</code>-Aufrufe in der <code>while let</code>-Schleife durch den Strom iterieren können, und ihn so pinnen, dass es
-sicher ist, dies zu tun. Damit sind wir <em>fast</em> da, wo wir hinwollen. Alle Typen
-passen. Wenn du das ausführst, gibt es allerdings zwei Probleme. Erstens wird
-es sich nie beenden! Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd> abbrechen.
-Zweitens werden die Meldungen des englischen Alphabets inmitten all der
-Intervallzähler-Meldungen begraben sein:</p>
+müssen wir <code>Stream</code> veränderbar machen, damit die Aufrufe von <code>next</code> in der
+<code>while let</code>-Schleife durch den Strom iterieren können, und ihn so pinnen, dass
+es sicher ist, dies zu tun. Damit sind wir <em>fast</em> da, wo wir hinwollen. Alle
+Typen passen. Wenn du das Programm ausführst, gibt es allerdings zwei Probleme.
+Erstens wird es sich nie beenden! Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd>
+abbrechen. Zweitens werden die Meldungen des englischen Alphabets inmitten all
+der Intervallzähler-Meldungen begraben sein:</p>
 <pre><code class="language-text">--abschneiden--
 Intervall: 38
 Intervall: 39
@@ -722,7 +726,7 @@ Intervall: 43
 </code></pre>
 <p>Codeblock 17-39 zeigt eine Möglichkeit, diese beiden letzten Probleme zu lösen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{pin::pin, time::Duration};
 </span><span class="boring">
@@ -779,8 +783,8 @@ Intervall: 43
 </span><span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 17-39: Verwenden von <code>throttle</code> und <code>take</code> zur
 Verwaltung des zusammengeführten Stroms</span></p>
-<p>Zuerst verwenden wir die Methode <code>throttle</code> für den <code>intervals</code>-Strom, sodass
-er den <code>messages</code>-Strom nicht eingräbt. Die <em>Drosselung</em> ist eine Möglichkeit,
+<p>Zuerst verwenden wir die Methode <code>throttle</code> für den Strom <code>intervals</code>, sodass
+er den Strom <code>messages</code> nicht begräbt. Die <em>Drosselung</em> ist eine Möglichkeit,
 die Rate zu begrenzen, mit der eine Funktion aufgerufen wird – oder in
 diesem Fall, wie oft der Strom abgefragt wird. Einmal alle 100 Millisekunden
 sollte genügen, denn das entspricht in etwa der Häufigkeit, mit der unsere
@@ -789,11 +793,11 @@ Nachrichten eintreffen.</p>
 wenden wir die Methode <code>take</code> auf den <em>zusammengeführten</em> Strom an, da wir die
 gesamte Ausgabe begrenzen wollen, nicht nur den einen oder anderen Strom.</p>
 <p>Wenn wir das Programm jetzt ausführen, hält es nach dem Abrufen von 20
-Elementen aus dem Strom an, und die Intervalle überfluten die Nachrichten
-nicht. Wir erhalten auch nicht <code>Intervall: 100</code> oder <code>Intervall: 200</code> usw.,
-sondern stattdessen <code>Intervall: 1</code>, <code>Intervall: 2</code> usw. – obwohl wir
-einen Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen <em>kann</em>. Das
-liegt daran, dass der Aufruf <code>throttle</code> einen neuen Strom erzeugt, der den
+Elementen aus dem Strom an, und die Intervalle begraben die Nachrichten nicht.
+Wir erhalten auch nicht <code>Intervall: 100</code> oder <code>Intervall: 200</code> usw., sondern
+stattdessen <code>Intervall: 1</code>, <code>Intervall: 2</code> usw. – obwohl wir einen
+Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen <em>kann</em>. Das liegt
+daran, dass der Aufruf <code>throttle</code> einen neuen Strom erzeugt, der den
 ursprünglichen Strom umhüllt, sodass der ursprüngliche Strom nur mit der
 Drosselrate abgefragt wird und nicht mit seiner eigenen „nativen“ Rate. Wir
 haben keine Vielzahl von unbehandelten Intervallnachrichten, die wir ignorieren
@@ -831,7 +835,7 @@ explizit behandeln, zumindest indem wir die Schleife beenden, damit wir nicht
 versuchen, weitere Nachrichten zu senden! Codeblock 17-40 zeigt eine einfache
 Fehlerstrategie: Den Fehler ausgeben und dann die Schleife verlassen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">extern crate trpl;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
 </span><span class="boring">
 </span><span class="boring">use std::{pin::pin, time::Duration};
 </span><span class="boring">
@@ -896,13 +900,13 @@ fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
 }</code></pre></pre>
 <p><span class="caption">Codeblock 17-40: Behandeln von Fehlern und Beenden der
 Schleifen</span></p>
-<p>Wie üblich ist die richtige Art und Weise, einen Fehler beim Senden von
-Nachrichten zu behandeln, unterschiedlich – stelle einfach sicher, dass
-du eine Strategie hast.</p>
+<p>Wie üblich, gibt es verschiedene Weisen, einen Fehler beim Senden von
+Nachrichten zu behandeln, – stelle einfach sicher, dass du eine Strategie
+hast.</p>
 <p>Nachdem wir nun eine Menge asynchronen Code in der Praxis gesehen haben, wollen
-wir einen Schritt zurückgehen und uns ein paar Details ansehen, wie <code>Future</code>,
-<code>Stream</code> und andere Schlüsselmerkmale, die Rust verwendet, um asynchrone
-Programmierung zu ermöglichen.</p>
+wir einen Schritt zurückgehen und uns ein paar Details, wie <code>Future</code>, <code>Stream</code>
+und andere Schlüsselmerkmale, die Rust verwendet, ansehen, die die asynchrone
+Programmierung ermöglichen.</p>
 
                     </main>
 

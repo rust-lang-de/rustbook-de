@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -174,7 +176,7 @@ Problem zu beheben, was wahrscheinlich das ist, was du willst. Wahrscheinlich
 hast du schon einmal Compiler-Warnungen gesehen. Betrachte zum Beispiel diesen
 Code:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut x = 42;
     println!("{x}");
 }</code></pre></pre>
@@ -207,7 +209,7 @@ Kommando <code>cargo fix</code> ausführen:</p>
 <p>Wenn wir uns <em>src/main.rs</em> noch einmal ansehen, werden wir sehen, dass
 <code>cargo fix</code> den Code geändert hat:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 42;
     println!("{x}");
 }</code></pre></pre>
@@ -226,7 +228,7 @@ in den Standardinstallationen von Rust enthalten.</p>
 <p>Angenommen, du schreibst ein Programm, das eine Annäherung an eine
 mathematische Konstante wie Pi verwendet, wie dieses Programm es tut:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 3.1415;
     let r = 8.0;
     println!("Die Kreisfläche ist {}", x * r * r);
@@ -248,7 +250,7 @@ stattdessen diese Konstante verwenden würdest. Du würdest dann deinen Code
 ändern, um die Konstante <code>PI</code> zu verwenden. Der folgende Code führt zu keinen
 Fehlern oder Warnungen von Clippy:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = std::f64::consts::PI;
     let r = 8.0;
     println!("Die Kreisfläche ist {}", x * r * r);

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -160,7 +162,7 @@ Codeblock 20-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mi
 einer simulierten langsamen Antwort, die den Server veranlasst, fünf Sekunden
 lang zu schlafen, bevor er antwortet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
     fs,
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
@@ -286,7 +288,7 @@ Lösungen zu vergleichen. Codeblock 20-11 zeigt die Änderungen, die an <code>ma
 vorgenommen werden müssen, um einen neuen Strang zu erzeugen, der jeden Strom
 innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    fs,
 </span><span class="boring">    io::{prelude::*, BufReader},
 </span><span class="boring">    net::{TcpListener, TcpStream},
@@ -489,7 +491,7 @@ einen Parameter haben muss, der <code>4</code> als Argument akzeptieren kann und
 <code>ThreadPool</code>-Instanz zurückgeben sollte. Lass uns die einfachste Funktion <code>new</code>
 implementieren, die diese Eigenschaften haben wird:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub struct ThreadPool;
 
@@ -1207,7 +1209,7 @@ Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
 bekommt. Lass uns die in Codeblock 20-20 gezeigte Änderung in <code>Worker::new</code>
 vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -173,7 +175,7 @@ aufruft, implementieren wir <code>drop</code> zunächst mit <code>println!</code
 einzige benutzerdefinierte Funktionalität darin besteht, <code>CustomSmartPointer mit Daten aufräumen</code> auszugegeben, sobald die Instanz den Gültigkeitsbereich
 verlässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">struct CustomSmartPointer {
+<pre><pre class="playground"><code class="language-rust edition2024">struct CustomSmartPointer {
     data: String,
 }
 
@@ -239,7 +241,7 @@ eines Werts vor dem Ende seines ültigkeitsbereichs erzwingen möchte.</p>
 indem wir die Funktion <code>main</code> aus Codeblock 15-14 ändern, wie im Codeblock
 15-15, gezeigt, erhalten wir einen Kompilierfehler.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">struct CustomSmartPointer {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">struct CustomSmartPointer {
 </span><span class="boring">    data: String,
 </span><span class="boring">}
 </span><span class="boring">
@@ -296,7 +298,7 @@ Aufräumen wir erzwingen möchten, der Funktion als Argument mitgeben. Die
 Funktion befindet sich im Präludium, daher können wir <code>main</code> in Codeblock 15-15
 ändern, um die Funktion <code>drop</code> wie in Codeblock 15-16 gezeigt aufzurufen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">struct CustomSmartPointer {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">struct CustomSmartPointer {
 </span><span class="boring">    data: String,
 </span><span class="boring">}
 </span><span class="boring">

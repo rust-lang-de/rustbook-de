@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -157,7 +159,7 @@ möglich sind, wie zum Beispiel als wir im Abschnitt <a href="ch02-00-guessing-g
 mit der Geheimzahl“</a> eine
 Zeichenkette (<code>String</code>) mittels <code>parse</code> zu einem numerischen Typ umwandelten,
 müssen wir eine Typ-Annotation ergänzen, wie hier:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let guess: u32 = "42".parse().expect("Keine Zahl!");
 <span class="boring">}</span></code></pre></pre>
@@ -288,7 +290,7 @@ ungefähr die gleiche Geschwindigkeit wie <code>f32</code> hat, aber eine höher
 ermöglicht. Alle Fließkomma-Typen sind vorzeichenbehaftet.</p>
 <p>Hier ist ein Beispiel, das Fließkommazahlen in Aktion zeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 2.0; // f64
 
     let y: f32 = 3.0; // f32
@@ -301,7 +303,7 @@ Restberechnung. Die Ganzzahldivision rundet auf die nächste Ganzzahl ab. Der
 folgende Code zeigt, wie du die einzelnen Typen in einer <code>let</code>-Anweisung
 verwenden würdest:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     // Addition
     let sum = 5 + 10;
 
@@ -328,7 +330,7 @@ zwei mögliche Werte: <code>true</code> (wahr) und <code>false</code> (falsch). 
 ein Byte groß. In Rust wird der boolesche Typ mit <code>bool</code> spezifiziert. Zum
 Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let t = true;
 
     let f: bool = false; // mit expliziter Typ-Annotation
@@ -340,7 +342,7 @@ Beispiel:</p>
 <p>Rusts Typ <code>char</code> ist der primitivste alphabetische Typ der Sprache. Hier sind
 einige Beispiele für die Deklaration von <code>char</code>-Werten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let c = 'z';
     let z: char = 'ℤ'; // mit expliziter Typannotation
     let heart_eyed_cat = '😻';
@@ -369,7 +371,7 @@ innerhalb von Klammern schreiben. Jede Position im Tupel hat einen Typ und die
 Typen der verschiedenen Werte im Tupel müssen nicht gleich sein. In diesem
 Beispiel haben wir optionale Typ-Annotationen angegeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let tup: (i32, f64, u8) = (500, 6.4, 1);
 }</code></pre></pre>
 <p>Die Variable <code>tup</code> bindet das gesamte Tupel, da ein Tupel als ein einziges
@@ -377,7 +379,7 @@ Verbundelement betrachtet wird. Um die einzelnen Werte aus einem Tupel
 herauszubekommen, können wir den Musterabgleich verwenden, um einen Tupelwert
 zu destrukturieren, etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let tup = (500, 6.4, 1);
 
     let (x, y, z) = tup;
@@ -393,7 +395,7 @@ gibt das Programm den Wert von <code>y</code> aus, der <code>6.4</code> ist.</p>
 gefolgt vom Index des Wertes, auf den wir zugreifen wollen, verwenden. Zum
 Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x: (i32, f64, u8) = (500, 6.4, 1);
 
     let five_hundred = x.0;
@@ -418,7 +420,7 @@ in Rust eine feste Länge.</p>
 <p>Wir schreiben die Werte in einem Array als kommagetrennte Liste in eckigen
 Klammern:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [1, 2, 3, 4, 5];
 }</code></pre></pre>
 <p>Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
@@ -436,7 +438,7 @@ ausführlicher besprochen.</p>
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
 verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let months = ["Januar", "Februar", "März", "April", "Mai", "Juni", "Juli",
               "August", "September", "Oktober", "November", "Dezember"];
@@ -444,7 +446,7 @@ verwenden, weil du weißt, dass es immer 12 Elemente enthalten wird:</p>
 <p>Der Typ eines Arrays wird in eckigen Klammern mit dem Typ der einzelnen
 Elemente angegeben, ein Semikolon und dann die Anzahl der Elemente im Array,
 etwa so:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a: [i32; 5] = [1, 2, 3, 4, 5];
 <span class="boring">}</span></code></pre></pre>
@@ -453,7 +455,7 @@ dass das Array fünf Elemente enthält.</p>
 <p>Du kannst ein Array auch so initialisieren, dass es für jedes Element denselben
 Wert enthält, indem du den Anfangswert, gefolgt von einem Semikolon, und dann
 die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let a = [3; 5];
 <span class="boring">}</span></code></pre></pre>
@@ -465,7 +467,7 @@ auf den Wert <code>3</code> gesetzt werden. Dies ist dasselbe wie das Schreiben 
 der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
 Hilfe der Indizierung wie folgt zugreifen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let a = [1, 2, 3, 4, 5];
 
     let first = a[0];
@@ -480,7 +482,7 @@ zuzugreifen, das sich hinter dem Ende des Arrays befindet. Angenommen, du
 führst diesen Code aus, ähnlich zum Ratespiel in Kapitel 2, um einen
 Array-Index vom Benutzer zu erhalten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust panics">use std::io;
+<pre><pre class="playground"><code class="language-rust panics edition2024">use std::io;
 
 fn main() {
     let a = [1, 2, 3, 4, 5];

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -198,7 +200,7 @@ falsch machen.</p>
 eines Mutex in einem einsträngigen (single-threaded) Kontext, wie in Codeblock
 16-12 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::sync::Mutex;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::sync::Mutex;
 
 fn main() {
     let m = Mutex::new(5);
@@ -248,7 +250,7 @@ wird einen Kompilierfehler haben und wir werden diesen Fehler verwenden, um
 mehr über die Verwendung von <code>Mutex&lt;T&gt;</code> zu erfahren und darüber, wie Rust uns
 hilft, ihn korrekt zu verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::Mutex;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::sync::Mutex;
 use std::thread;
 
 fn main() {
@@ -326,7 +328,7 @@ erstellen. Lass uns hier das Gleiche tun und sehen, was passiert. Wir packen
 den <code>Mutex&lt;T&gt;</code> in <code>Rc&lt;T&gt;</code> in Codeblock 16-14 ein und klonen <code>Rc&lt;T&gt;</code>, bevor wir
 die Eigentümerschaft an den Strang übertragen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::rc::Rc;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::rc::Rc;
 use std::sync::Mutex;
 use std::thread;
 
@@ -427,7 +429,7 @@ API, also reparieren wir unser Programm, indem wir die <code>use</code>-Zeile, d
 von <code>new</code> und den Aufruf von <code>clone</code> ändern. Der Code in Codeblock 16-15 wird
 schließlich kompilieren und laufen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::sync::{Arc, Mutex};
+<pre><pre class="playground"><code class="language-rust edition2024">use std::sync::{Arc, Mutex};
 use std::thread;
 
 fn main() {

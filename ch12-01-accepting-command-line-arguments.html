@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -178,7 +180,7 @@ der alle Elemente enthält, die der Iterator erzeugt.</p>
 übergebenen Befehlszeilenargumente zu lesen und die Werte dann in einem Vektor
 zu sammeln.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::env;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::env;
 
 fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();

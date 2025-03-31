@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -163,7 +165,7 @@ werden soll.</p>
 können eine Funktion schreiben, die eine unbekannte US-Münze nimmt und, ähnlich
 wie die Zählmaschine, bestimmt, um welche Münze es sich handelt und ihren Wert
 in Cent zurückgibt, wie in Codeblock 6-3 gezeigt.</p>
-<pre><pre class="playground"><code class="language-rust">enum Coin {
+<pre><pre class="playground"><code class="language-rust edition2024">enum Coin {
     Penny,
     Nickel,
     Dime,
@@ -211,7 +213,7 @@ geschweifte Klammern verwenden, und das Komma nach dem Zweig ist dann optional.
 Zum Beispiel gibt der folgende Code jedes Mal „Glückspfennig!“ aus, wenn die
 Methode mit <code>Coin::Penny</code> aufgerufen wird, er gibt aber immer noch den letzten
 Wert <code>1</code> des Blocks zurück:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">enum Coin {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">enum Coin {
 </span><span class="boring">    Penny,
 </span><span class="boring">    Nickel,
 </span><span class="boring">    Dime,
@@ -242,7 +244,7 @@ andere Münze hatte ein Staaten-spezifisches Aussehen, sodass nur 25-Cent-Münze
 diese zusätzliche Eigenschaft haben. Wir können diese Information in unserer
 Aufzählung unterbringen, indem wir die Variante <code>Quarter</code> so ändern, dass sie
 einen <code>UsState</code>-Wert enthält, wie in Codeblock 6-4 umgesetzt.</p>
-<pre><pre class="playground"><code class="language-rust">enum UsState {
+<pre><pre class="playground"><code class="language-rust edition2024">enum UsState {
     Alabama,
     Alaska,
     // --abschneiden--
@@ -266,7 +268,7 @@ Freund in seine Sammlung aufnehmen kann, falls er es nicht hat. Im
 <code>Coin::Quarter</code> eine Variable <code>state</code> hinzu. Wenn der Zweig für <code>Coin::Quarter</code>
 passt, wird die Variable <code>state</code> an den Wert der Eigenschaft der 25-Cent-Münze
 gebunden. Dann können wir <code>state</code> im Code für diesen Zweig etwa so verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
 </span><span class="boring">    Alabama,
 </span><span class="boring">    Alaska,
@@ -315,7 +317,7 @@ kein Wert enthalten ist, soll die Funktion den Wert <code>None</code> zurückgeb
 nicht versuchen, irgendwelche Operationen durchzuführen.</p>
 <p>Diese Funktion ist dank <code>match</code> sehr einfach zu schreiben und wird wie in
 Codeblock 6-5 aussehen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
     match x {
@@ -386,7 +388,7 @@ Sprachen zu haben. Es ist durchweg ein beliebtes Werkzeug.</p>
 Muster der Zweige müssen alle Möglichkeiten abdecken. Betrachte folgende
 Version unserer Funktion <code>plus_one</code>, die einen Fehler hat und sich nicht
 kompilieren lässt:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn plus_one(x: Option&lt;i32&gt;) -&gt; Option&lt;i32&gt; {
     match x {
@@ -443,7 +445,7 @@ diese Logik implementiert, wobei das Ergebnis des Würfelwurfs anstelle eines
 Zufallswerts fest kodiert ist, und alle weitere Logik wird durch Funktionen ohne
 Rumpf dargestellt, da die tatsächliche Implementierung für dieses Beispiel den
 Rahmen sprengen würde:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {
@@ -478,7 +480,7 @@ vor einer unbenutzten Variable warnt.</p>
 würfelst, musst du erneut würfeln. Wir brauchen den Auffangwert nicht mehr zu
 verwenden, also können wir unseren Code so ändern, dass wir <code>_</code> anstelle der
 Variable namens <code>other</code> verwenden:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {
@@ -499,7 +501,7 @@ anderes passiert, wenn etwas anderes als eine 3 oder eine 7 gewürfelt wird. Wir
 können das ausdrücken, indem wir den Einheitswert (den leeren Tupel-Typ, den
 wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt haben) als Code im <code>_</code>-Zweig
 angeben:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let dice_roll = 9;
 match dice_roll {

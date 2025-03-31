@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -154,7 +156,7 @@ Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
 und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
 Beispiel-Funktionsdefinition enthält:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     println!("Hallo Welt!");
 
     another_function();
@@ -197,7 +199,7 @@ die konkreten Werte, die beim Aufruf einer Funktion übergeben werden,
 synonym zu verwenden.</p>
 <p>In dieser Version von <code>another_function</code> fügen wir einen Parameter hinzu:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     another_function(5);
 }
 
@@ -226,7 +228,7 @@ geben, wenn er weiß, welche Typen die Funktion erwartet.</p>
 <p>Wenn wir mehrere Parameter definieren, trennen wir die Parameterdeklarationen
 mit Kommas, so wie hier:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     print_labeled_measurement(5, 'h');
 }
 
@@ -267,7 +269,7 @@ Schauen wir uns einige Beispiele an.</li>
 zuzuweisen, ist eine Anweisung. In Codeblock 3-1 ist <code>let y = 6;</code> eine
 Anweisung.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let y = 6;
 }</code></pre></pre>
 <p><span class="caption">Codeblock 3-1: Eine Funktionsdeklaration <code>main</code>, die eine
@@ -279,7 +281,7 @@ ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst
 einen Fehler erhalten:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = (let y = 6);
 }</code></pre></pre>
 <p>Wenn du dieses Programm ausführst, wirst du in etwa folgenden Fehler erhalten:</p>
@@ -323,7 +325,7 @@ einer Funktion ist ein Ausdruck. Der Aufruf eines Makros ist ein Ausdruck. Ein
 neuer Gültigkeitsbereichsblock, der mit geschweiften Klammern erstellt wird,
 ist ein Ausdruck, zum Beispiel:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let y = {
         let x = 3;
         x + 1
@@ -353,7 +355,7 @@ und einen Wert angibst, aber die meisten Funktionen geben den letzten Ausdruck
 implizit zurück. Hier ist ein Beispiel für eine Funktion, die einen Wert
 zurückgibt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn five() -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust edition2024">fn five() -&gt; i32 {
     5
 }
 
@@ -378,7 +380,7 @@ Der Wert von x ist: 5
 Erstens zeigt die Zeile <code>let x = five();</code>, dass wir den Rückgabewert einer
 Funktion verwenden, um eine Variable zu initialisieren. Da die Funktion <code>five</code>
 den Wert <code>5</code> zurückgibt, ist diese Zeile die gleiche wie die folgende:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 <span class="boring">}</span></code></pre></pre>
@@ -387,7 +389,7 @@ Rückgabewertes, aber der Funktionsrumpf ist eine einsame <code>5</code> ohne Se
 weil es ein Ausdruck ist, dessen Wert wir zurückgeben wollen.</p>
 <p>Sehen wir uns ein weiteres Beispiel an:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = plus_one(5);
 
     println!("Der Wert von x ist: {x}");
@@ -400,7 +402,7 @@ fn plus_one(x: i32) -&gt; i32 {
 aber ein Semikolon an das Ende der Zeile mit <code>x + 1</code> setzen und es von einem
 Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = plus_one(5);
 
     println!("Der Wert von x ist: {x}");

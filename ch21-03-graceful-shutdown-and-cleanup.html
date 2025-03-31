@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -166,7 +168,7 @@ warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
 einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -295,7 +297,7 @@ Angabe der Bereichssyntax <code>..</code> entfernt <em>alle</em> Werte aus dem <
 <p>Wir müssen also die <code>drop</code>-Implementierung von <code>ThreadPool</code> wie folgt
 aktualisieren:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
@@ -394,7 +396,7 @@ explizit aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <c
 verwenden, um den <code>Sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen
 zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -732,7 +734,7 @@ fn handle_connection(mut stream: TcpStream) {
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>use std::{
     sync::{mpsc, Arc, Mutex},

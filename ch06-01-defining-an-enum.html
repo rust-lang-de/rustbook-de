@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -169,7 +171,7 @@ beide IP-Adressenarten gelten.</p>
 <p>Wir können dieses Konzept im Code ausdrücken, indem wir eine Aufzählung
 <code>IpAddrKind</code> definieren und die möglichen Varianten auflisten, die eine
 IP-Adresse haben kann, <code>V4</code> und <code>V6</code>. Hier die Varianten der Aufzählung:</p>
-<pre><pre class="playground"><code class="language-rust">enum IpAddrKind {
+<pre><pre class="playground"><code class="language-rust edition2024">enum IpAddrKind {
     V4,
     V6,
 }
@@ -187,7 +189,7 @@ IP-Adresse haben kann, <code>V4</code> und <code>V6</code>. Hier die Varianten d
 Stelle in unserem Code verwenden können.</p>
 <h3 id="werte-in-aufzählungen"><a class="header" href="#werte-in-aufzählungen">Werte in Aufzählungen</a></h3>
 <p>Wir können Instanzen von beiden Varianten von <code>IpAddrKind</code> wie folgt erstellen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">enum IpAddrKind {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
 </span><span class="boring">    V4,
 </span><span class="boring">    V6,
 </span><span class="boring">}
@@ -206,7 +208,7 @@ angegeben sind und wir einen doppelten Doppelpunkt verwenden, um die beiden zu
 trennen. Das ist sinnvoll, weil beide Werte <code>IpAddrKind::V4</code> und
 <code>IpAddrKind::V6</code> vom gleichen Typ sind: <code>IpAddrKind</code>. Wir können dann zum
 Beispiel eine Funktion definieren, die jedes <code>IpAddrKind</code> annimmt:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">enum IpAddrKind {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
 </span><span class="boring">    V4,
 </span><span class="boring">    V6,
 </span><span class="boring">}
@@ -221,7 +223,7 @@ Beispiel eine Funktion definieren, die jedes <code>IpAddrKind</code> annimmt:</p
 </span><span class="boring">
 </span>fn route(ip_kind: IpAddrKind) {}</code></pre></pre>
 <p>Und wir können diese Funktion mit beiden Varianten aufrufen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">enum IpAddrKind {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">enum IpAddrKind {
 </span><span class="boring">    V4,
 </span><span class="boring">    V6,
 </span><span class="boring">}
@@ -241,7 +243,7 @@ tatsächlichen IP-Adresse zu speichern; wir wissen nur, um welche <em>Variante</
 sich handelt. Mit dem was du gerade erst in Kapitel 5 über Strukturen gelernt
 hast, könntest du versucht sein, dieses Problem mit Strukturen zu lösen, wie in
 Codeblock 6-1.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddrKind {
     V4,
@@ -278,7 +280,7 @@ prägnanter: Anstelle einer Aufzählung innerhalb einer Struktur können wir die
 Daten direkt in jede Aufzählungsvariante einfügen. Diese neue Definition der
 Aufzählung <code>IpAddr</code> legt fest, dass sowohl die Variante <code>V4</code> als auch <code>V6</code>
 zugehörige <code>String</code>-Werte haben:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddr {
     V4(String),
@@ -304,7 +306,7 @@ numerische Komponenten, die Werte zwischen 0 und 255 haben. Wenn wir
 <code>V4</code>-Adressen als vier <code>u8</code>-Werte speichern und <code>V6</code>-Adressen als einen
 <code>String</code>-Wert ausdrücken wollten, wäre das mit einer Struktur nicht möglich.
 Aufzählungen lösen diesen Fall ganz einfach:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum IpAddr {
     V4(u8, u8, u8, u8),
@@ -324,7 +326,7 @@ wie die Standardbibliothek <code>IpAddr</code> definiert: Es hat genau die Aufz�
 die Varianten, die wir definiert und verwendet haben, aber es bettet die
 Adressdaten innerhalb der Varianten in Form von zwei verschiedenen Strukturen
 ein, die für jede Variante unterschiedlich definiert sind:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>struct Ipv4Addr {
     // --abschneiden--
@@ -350,7 +352,7 @@ nicht in unseren Gültigkeitsbereich aufgenommen haben. Wir werden in Kapitel 7
 mehr darauf eingehen, wie man Typen in den Gültigkeitsbereich aufnimmt.</p>
 <p>Schauen wir uns ein weiteres Beispiel für eine Aufzählung in Codeblock 6-2 an:
 In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet.</p>
-<pre><pre class="playground"><code class="language-rust">enum Message {
+<pre><pre class="playground"><code class="language-rust edition2024">enum Message {
     Quit,
     Move { x: i32, y: i32 },
     Write(String),
@@ -372,7 +374,7 @@ zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
 Aufzählung nicht das Schlüsselwort <code>struct</code> verwendet und alle Varianten unter
 dem Typ <code>Message</code> zusammengefasst sind. Die folgenden Strukturen könnten die
 gleichen Daten aufnehmen wie die vorhergehenden Aufzählungsvarianten:</p>
-<pre><pre class="playground"><code class="language-rust">struct QuitMessage; // leere Struktur
+<pre><pre class="playground"><code class="language-rust edition2024">struct QuitMessage; // leere Struktur
 struct MoveMessage {
     x: i32,
     y: i32,
@@ -390,7 +392,7 @@ einzigen Typ handelt.</p>
 wie wir Methoden für Strukturen mit <code>impl</code> definieren können, können wir auch
 Methoden für Aufzählungen definieren. Hier ist eine Methode namens <code>call</code>, die
 wir für unsere Aufzählung <code>Message</code> definieren könnten:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    enum Message {
 </span><span class="boring">        Quit,
 </span><span class="boring">        Move { x: i32, y: i32 },
@@ -455,7 +457,7 @@ Umsetzung. Als solches hat Rust keine Nullen, aber es hat eine Aufzählung, die
 das Konzept des Vorhandenseins oder Nichtvorhandenseins eines Wertes abbilden
 kann. Diese Aufzählung heißt <code>Option&lt;T&gt;</code> und ist
 <a href="https://doc.rust-lang.org/std/option/enum.Option.html">in der Standardbibliothek</a> wie folgt definiert:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>enum Option&lt;T&gt; {
     None,
@@ -476,7 +478,7 @@ Wert eines beliebigen Typs enthalten kann und dass jeder konkrete Typ, der
 anstelle von <code>T</code> verwendet wird, den Gesamttyp <code>Option&lt;T&gt;</code> zu einem anderen Typ
 macht. Hier sind einige Beispiele für die Verwendung von <code>Option</code>-Werten zur
 Aufnahme von Zahlentypen und Zeichentypen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let some_number = Some(5);
 let some_char = Some('e');
@@ -499,7 +501,7 @@ unterschiedliche Typen sind, erlaubt es der Compiler nicht <code>Option&lt;T&gt;
 verwenden als wäre es definitiv ein gültiger Wert. Beispielsweise lässt sich
 dieser Code nicht kompilieren, weil er versucht, ein <code>i8</code> mit einem
 <code>Option&lt;i8&gt;</code> zu addieren:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x: i8 = 5;
 let y: Option&lt;i8&gt; = Some(5);

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -178,7 +180,7 @@ Code lauscht unter der lokalen Adresse <code>127.0.0.1:7878</code> auf eingehend
 TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
 <code>Verbindung hergestellt!</code> ausgeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::net::TcpListener;
+<pre><pre class="playground"><code class="language-rust no_run edition2024">use std::net::TcpListener;
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
@@ -272,7 +274,7 @@ Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
 dass er wie Codeblock 20-2 aussieht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
 };
@@ -418,7 +420,7 @@ Anfrage in den Strom schreiben! Entferne aus der Funktion <code>handle_connectio
 das <code>println!</code>, das die Anfragedaten ausgegeben hat, und ersetze es durch den
 Code in Codeblock 20-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    io::{prelude::*, BufReader},
 </span><span class="boring">    net::{TcpListener, TcpStream},
 </span><span class="boring">};
@@ -485,7 +487,7 @@ dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
 wir <code>handle_connection</code> wie in Codeblock 20-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
     fs,
     io::{prelude::*, BufReader},
     net::{TcpListener, TcpStream},
@@ -549,7 +551,7 @@ Dieser neue Code prüft den Inhalt der erhaltenen Anfrage, ob <code>/</code> ang
 wird, und fügt <code>if</code>- und <code>else</code>-Blöcke hinzu, um die Anfragen unterschiedlich
 zu behandeln.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    fs,
 </span><span class="boring">    io::{prelude::*, BufReader},
 </span><span class="boring">    net::{TcpListener, TcpStream},
@@ -609,7 +611,7 @@ für die Anfrage nicht gefunden wurde. Wir geben auch etwas HTML für eine Seite
 zurück, die im Browser dargestellt werden soll, um dem Endbenutzer die Antwort
 anzuzeigen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    fs,
 </span><span class="boring">    io::{prelude::*, BufReader},
 </span><span class="boring">    net::{TcpListener, TcpStream},
@@ -661,7 +663,7 @@ HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hallo.html</em> ein
 HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
 <p><span class="filename">Dateiname: 404.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang="de"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8"&gt;
     &lt;title&gt;Hallo!&lt;/title&gt;
@@ -689,7 +691,7 @@ verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 20-9
 zeigt den resultierenden Code nach dem Ersetzen der großen <code>if</code>- und
 <code>else</code>-Blöcke.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust no_run"><span class="boring">use std::{
+<pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    fs,
 </span><span class="boring">    io::{prelude::*, BufReader},
 </span><span class="boring">    net::{TcpListener, TcpStream},

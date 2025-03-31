@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -175,7 +177,7 @@ panic = 'abort'
 </blockquote>
 <p>Versuchen wir <code>panic!</code> in einem einfachen Programm aufzurufen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic panics">fn main() {
+<pre><pre class="playground"><code class="language-rust should_panic panics edition2024">fn main() {
     panic!("abstürzen und verbrennen");
 }</code></pre></pre>
 <p>Wenn du das Programm ausführst, wirst du in etwa das hier sehen:</p>
@@ -207,7 +209,7 @@ der das Makro direkt aufruft. Codeblock 9-1 enthält einen Code, der versucht,
 auf einen Index in einem Vektor zuzugreifen, der außerhalb des Bereichs
 gültiger Indizes liegt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust should_panic panics">fn main() {
+<pre><pre class="playground"><code class="language-rust should_panic panics edition2024">fn main() {
     let v = vec![1, 2, 3];
 
     v[99];

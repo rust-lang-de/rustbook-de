@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -312,7 +314,7 @@ die Namen der Tests, die du ausführen willst, als Argument übergibst.</p>
 zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Codeblock
 11-11 zu sehen ist, und auswählen, welche wir ausführen wollen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub fn add_two(a: usize) -&gt; usize {
     a + 2

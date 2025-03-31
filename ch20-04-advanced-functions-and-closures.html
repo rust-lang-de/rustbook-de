@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -168,7 +170,7 @@ zweimal auf, übergibt ihr den Wert <code>arg</code> und addiert dann die Ergebn
 beiden Funktionsaufrufe zusammen. Die Funktion <code>main</code> ruft <code>do_twice</code> mit den
 Argumenten <code>add_one</code> und <code>5</code> auf.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn add_one(x: i32) -&gt; i32 {
+<pre><pre class="playground"><code class="language-rust edition2024">fn add_one(x: i32) -&gt; i32 {
     x + 1
 }
 
@@ -208,7 +210,7 @@ der Methode <code>map</code> an, die vom Merkmal <code>Iterator</code> in der St
 bereitgestellt wird. Um die Methode <code>map</code> zu verwenden, um einen Vektor von
 Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss verwenden, wie in Codeblock 20-29.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -218,7 +220,7 @@ Funktionsabschluss verwenden, wie in Codeblock 20-29.</p>
 mit der Methode <code>map</code> zur Umwandlung von Zahlen in Zeichenketten</span></p>
 <p>Oder wir könnten eine Funktion als Argument für <code>map</code> angeben anstelle des
 Funktionsabschlusses. Codeblock 20-30 zeigt, wie das aussehen würde.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let list_of_numbers = vec![1, 2, 3];
     let list_of_strings: Vec&lt;String&gt; =
@@ -238,7 +240,7 @@ ist. Wir können diese Initialisierungsfunktionen als Funktionszeiger verwenden,
 die die Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
 Initialisierungsfunktionen als Argumente für Methoden angeben können, die
 Funktionsabschlüsse nehmen, wie in Codeblock 20-32 zu sehen ist.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    enum Status {
         Value(u32),
@@ -268,7 +270,7 @@ Funktionsabschluss irgendwelche Werte aus seinem Gültigkeitsbereich erfasst.</p
 in Kapitel 10 kennengelernt haben. Du kannst jeden Funktionstyp zurückgeben,
 indem du <code>Fn</code>, <code>FnOnce</code> und <code>FnMut</code> verwendest. Zum Beispiel wird der Code in
 Codeblock 20-32 problemlos funktionieren.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn returns_closure() -&gt; impl Fn(i32) -&gt; i32 {
     |x| x + 1
@@ -283,7 +285,7 @@ arbeiten musst, die dieselbe Signatur, aber unterschiedliche Implementierungen
 haben, musst du ein Merkmals-Objekt für sie verwenden. Überlege, was passiert,
 wenn du einen Code wie in Codeblock 20-33 schreibst.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let handlers = vec![returns_closure(), returns_initialized_closure(123)];
     for handler in handlers {
         let output = handler(5);
@@ -339,7 +341,7 @@ selbst wenn sie denselben Ausgabetyp haben, wie wir in <a href="ch17-03-more-fut
 beliebigen Anzahl von Futures“</a> in Kapitel 17 gesehen
 haben. Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal
 gesehen: Wir können ein Merkmals-Objekt verwenden, wie in Codeblock 20-34.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let handlers = vec![returns_closure(), returns_initialized_closure(123)];
 </span><span class="boring">    for handler in handlers {
 </span><span class="boring">        let output = handler(5);

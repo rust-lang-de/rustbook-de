@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -195,7 +197,7 @@ Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let favorite_color: Option&lt;&amp;str&gt; = None;
     let is_tuesday = false;
     let age: Result&lt;u8, _&gt; = "34".parse();
@@ -243,7 +245,7 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.</
 ähnliche Weise zeigen wir in Codeblock 19-2 eine <code>while let</code>-Schleife, die auf
 Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
 prüfen wir ein <code>Result</code> statt einer einer <code>Option</code>.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (tx, rx) = std::sync::mpsc::channel();
     std::thread::spawn(move || {
@@ -271,7 +273,7 @@ zurückgibt, sobald die Senderseite die Verbindung trennt.</p>
 folgt, ein Muster. Zum Beispiel ist in <code>for x in y</code> das <code>x</code> das Muster.
 Codeblock 19-3 zeigt, wie man ein Muster in einer <code>for</code>-Schleife verwendet, um
 ein Tupel als Teil der <code>for</code>-Schleife zu destrukturieren oder zu zerlegen.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let v = vec!['a', 'b', 'c'];
 
@@ -300,7 +302,7 @@ zum Muster <code>(index, value)</code> passt, ist <code>index</code> gleich <cod
 <code>match</code> und <code>if let</code> besprochen, aber tatsächlich haben wir Muster auch an
 anderen Stellen verwendet, auch in <code>let</code>-Anweisungen. Betrachte zum Beispiel
 diese einfache Variablenzuweisung mit <code>let</code>:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
 <span class="boring">}</span></code></pre></pre>
@@ -319,7 +321,7 @@ immer der Wert ist.“.</p>
 <p>Um den Aspekt des Musterabgleichs (pattern matching) von <code>let</code> deutlicher zu
 sehen, betrachte Codeblock 19-4, der ein Muster mit <code>let</code> verwendet, um ein
 Tupel zu destrukturieren.</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y, z) = (1, 2, 3);
 <span class="boring">}</span></code></pre></pre>
@@ -335,7 +337,7 @@ Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
 Kompilierfehler. Beispielsweise zeigt Codeblock 19-5 einen Versuch, ein Tupel
 mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>    let (x, y) = (1, 2, 3);
 <span class="boring">}</span></code></pre></pre>
@@ -368,7 +370,7 @@ sodass die Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.</p>
 <p>Funktionsparameter können auch Muster sein. Der Code in Codeblock 19-6, der
 eine Funktion namens <code>foo</code> deklariert, die einen Parameter namens <code>x</code> vom Typ
 <code>i32</code> benötigt, sollte inzwischen bekannt aussehen.</p>
-<pre><pre class="playground"><code class="language-rust">fn foo(x: i32) {
+<pre><pre class="playground"><code class="language-rust edition2024">fn foo(x: i32) {
     // Code kommt hierher
 }
 <span class="boring">
@@ -379,7 +381,7 @@ in den Parametern</span></p>
 in den Argumenten einer Funktion dem Muster zuordnen. Codeblock 19-7 teilt die
 Werte in einem Tupel auf, wenn wir es an eine Funktion übergeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
+<pre><pre class="playground"><code class="language-rust edition2024">fn print_coordinates(&amp;(x, y): &amp;(i32, i32)) {
     println!("Aktuelle Position: ({x}, {y})");
 }
 

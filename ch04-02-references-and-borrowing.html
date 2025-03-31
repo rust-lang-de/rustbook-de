@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -158,7 +160,7 @@ Wert eines bestimmten Typs zeigt.</p>
 verwenden kannst, die eine Referenz auf ein Objekt als Parameter hat, anstatt
 die Eigentümerschaft (ownership) des Wertes zu übernehmen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let s1 = String::from("Hallo");
 
     let len = calculate_length(&amp;s1);
@@ -188,7 +190,7 @@ erfolgt. Wir werden in Kapitel 8 einige Verwendungen des Dereferenzoperators
 sehen und in Kapitel 15 Einzelheiten der Dereferenzierung besprechen.</p>
 </blockquote>
 <p>Schauen wir uns den Funktionsaufruf hier genauer an:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span>    let s1 = String::from("Hallo");
 
     let len = calculate_length(&amp;s1);
@@ -206,7 +208,7 @@ wird.</p>
 <p>Ebenso verwendet die Signatur der Funktion das Zeichen <code>&amp;</code>, um anzuzeigen, dass
 der Typ des Parameters <code>s</code> eine Referenz ist. Lass uns einige erklärende
 Anmerkungen ergänzen:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let s1 = String::from("Hallo");
 </span><span class="boring">
 </span><span class="boring">    let len = calculate_length(&amp;s1);
@@ -231,7 +233,7 @@ ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.<
 <p>Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
 ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let s = String::from("Hallo");
 
     change(&amp;s);
@@ -267,7 +269,7 @@ Referenz haben.</p>
 mit ein paar kleinen Änderungen ändern können, die stattdessen eine
 <em>veränderbare Referenz</em> verwenden:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut s = String::from("Hallo");
 
     change(&amp;mut s);
@@ -286,7 +288,7 @@ veränderbare Referenz auf einen Wert hast, kannst du keine andere Referenz auf
 diesen Wert haben. Dieser Code versucht, zwei veränderbare Referenzen auf <code>s</code>
 zu erstellen, und wird fehlschlagen:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("Hallo");
 
@@ -338,7 +340,7 @@ Daten-Wettlaufsituationen gar nicht erst kompiliert!</p>
 <p>Wie immer können wir geschweifte Klammern verwenden, um einen neuen
 Gültigkeitsbereich zu schaffen, der mehrere veränderbare Referenzen erlaubt,
 nur nicht <em>gleichzeitige</em>:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("Hallo");
 
@@ -351,7 +353,7 @@ let r2 = &amp;mut s;
 <span class="boring">}</span></code></pre></pre>
 <p>Rust erzwingt eine ähnliche Regel für die Kombination von veränderbaren und
 unveränderbaren Referenzen. Dieser Code führt zu einem Fehler:</p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("Hallo");
 
@@ -425,7 +427,7 @@ verlassen, bevor die Referenz auf die Daten dies tut.</p>
 <p>Versuchen wir, eine hängende Referenz zu erstellen, um zu sehen wie Rust das
 mit einem Kompilierfehler verhindert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let reference_to_nothing = dangle();
 }
 
@@ -474,7 +476,7 @@ for it to be borrowed from
 <p>Lass uns einen genaueren Blick auf das werfen, was in jeder Phase unseres
 <code>dangle</code>-Codes geschieht:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let reference_to_nothing = dangle();
 </span><span class="boring">}
 </span><span class="boring">
@@ -491,7 +493,7 @@ Code von <code>dangle</code> zu Ende ist. Aber wir haben versucht, eine Referenz
 zurückzugeben. Das heißt, diese Referenz würde auf einen ungültigen <code>String</code>
 verweisen. Das ist nicht gut! Rust lässt uns das nicht tun.</p>
 <p>Die Lösung ist, den <code>String</code> direkt zurückzugeben:</p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    let string = no_dangle();
 </span><span class="boring">}
 </span><span class="boring">

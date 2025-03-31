@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -189,7 +191,7 @@ verwenden kann.</p>
 <p>Wir werden mit dem kurzen Programm in Codeblock 10-1 beginnen, das die größte
 Zahl in einer Liste findet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let mut largest = &amp;number_list[0];
@@ -218,7 +220,7 @@ Zahlenlisten zu finden. Zu diesem Zweck können wir den Code in Codeblock 10-1
 duplizieren und dieselbe Logik an zwei verschiedenen Stellen im Programm
 verwenden, wie in Codeblock 10-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let number_list = vec![34, 50, 25, 100, 65];
 
     let mut largest = &amp;number_list[0];
@@ -259,7 +261,7 @@ in den beiden Listen aus Codeblock 10-2 zu finden. Wir könnten die Funktion
 auch auf jede andere Liste von <code>i32</code>-Werten anwenden, die wir in Zukunft haben
 könnten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn largest(list: &amp;[i32]) -&gt; &amp;i32 {
+<pre><pre class="playground"><code class="language-rust edition2024">fn largest(list: &amp;[i32]) -&gt; &amp;i32 {
     let mut largest = &amp;list[0];
 
     for item in list {

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -173,7 +175,7 @@ repräsentiert, die ein Feld mit dem Namen <code>shirts</code> hat, das ein
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
 zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug, PartialEq, Copy, Clone)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
     Red,
     Blue,
@@ -287,7 +289,7 @@ Beispiel definieren wir einen Funktionsabschluss und speichern ihn in einer
 Variablen, anstatt den Funktionsabschluss an der Stelle zu definieren, an der
 wir ihn als Argument übergeben, wie wir es in Codeblock 13-1 getan haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">fn generate_workout(intensity: u32, random_number: u32) {
@@ -352,7 +354,7 @@ wir den Funktionsabschluss mit einem beliebigen Typ aufrufen, was wir hier mit
 <code>String</code> das erste Mal getan haben. Wenn wir dann versuchen, <code>example_closure</code>
 mit einer Ganzzahl aufzurufen, erhalten wir einen Fehler.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let example_closure = |x| x;
 
@@ -406,7 +408,7 @@ erfassten Werten macht.</p>
 unveränderbare Referenz an den Vektor mit dem Namen <code>list</code> erfasst, weil er
 nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let list = vec![1, 2, 3];
     println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
@@ -440,7 +442,7 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
 dass er ein Element zum Vektor <code>list</code> hinzufügt. Der Funktionsabschluss erfasst
 nun eine veränderbare Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">fn main() {
+<pre><pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut list = vec![1, 2, 3];
     println!("Vor der Funktionsabschlussdefinition: {list:?}");
 
@@ -483,7 +485,7 @@ Strangs mithilfe eines Funktionsabschlusses befassen, der das Schlüsselwort
 <code>move</code> benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor
 in einem neuen Strang statt im Hauptstrang auszugeben:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::thread;
 
 fn main() {
     let list = vec![1, 2, 3];
@@ -599,7 +601,7 @@ sortieren will. In Codeblock 13-7 haben wir eine Liste von
 <code>Rectangle</code>-Instanzen und benutzen <code>sort_by_key</code>, um sie nach ihrem
 <code>width</code>-Attribut von niedrig nach hoch zu sortieren:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -646,7 +648,7 @@ Funktionsabschluss, der nur das Merkmal <code>FnOnce</code> implementiert, weil 
 Wert aus der Umgebung verschiebt. Der Compiler lässt uns diesen
 Funktionsabschluss nicht mit <code>sort_by_key</code> verwenden:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,
@@ -715,7 +717,7 @@ funktioniert mit <code>sort_by_key</code>, weil er nur eine veränderbare Refere
 <code>num_sort_operations</code>-Zähler erfasst und daher mehr als einmal aufgerufen
 werden kann:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">#[derive(Debug)]
+<pre><pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {
     width: u32,
     height: u32,

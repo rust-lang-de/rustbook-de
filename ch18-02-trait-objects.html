@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -147,20 +149,20 @@
                         <h2 id="merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben"><a class="header" href="#merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben">Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></h2>
 <p>In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
-in Codeblock 8-9 eine Abhilfe geschaffen, indem wir eine Aufzählung (enum)
+in Codeblock 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
 <code>SpreadsheetCell</code> definiert haben, die Varianten zur Aufnahme von Ganzzahlen,
 Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in jeder Zelle
-verschiedene Typen von Daten speichern konnten und trotzdem einen Vektor
-hatten, der eine Reihe von Zellen darstellte. Dies ist eine perfekte Lösung,
-wenn unsere austauschbaren Elemente ein fester Satz von Typen sind, die wir
-kennen, wenn unser Code kompiliert wird.</p>
+verschiedene Datentypen speichern konnten und trotzdem einen Vektor hatten, der
+eine Reihe von Zellen darstellte. Dies ist eine perfekte Lösung, wenn unsere
+austauschbaren Elemente ein fester Satz von Typen sind, die wir kennen, wenn
+unser Code kompiliert wird.</p>
 <p>Manchmal möchten wir jedoch, dass unsere Bibliotheksbenutzer in der Lage sind,
-die Menge der Typen, die in einer bestimmten Situation erlaubt sind, zu
+die möglichen Typen, die in einer bestimmten Situation erlaubt sind, zu
 erweitern. Um zu zeigen, wie wir dies erreichen können, werden wir ein Beispiel
 für ein GUI-Werkzeug (Graphical User Interface) erstellen, das über eine Liste
 von Elementen iteriert, wobei auf jedem Element eine Methode <code>draw</code> aufgerufen
-wird, um es auf den Bildschirm zu zeichnen – eine übliche Technik für
-GUI-Werkzeuge. Wir werden eine Bibliothekskiste (library crate) namens <code>gui</code>
+wird, um es auf den Bildschirm zu zeichnen – eine übliche Technik bei
+GUI-Werkzeugen. Wir werden eine Bibliothekskiste (library crate) namens <code>gui</code>
 erstellen, die die Struktur einer GUI-Bibliothek enthält. Diese Kiste (crate)
 könnte einige Typen enthalten, die Leute benutzen können, z.B. <code>Button</code> und
 <code>TextField</code>. Darüber hinaus werden <code>gui</code>-Benutzer ihre eigenen Typen erstellen
@@ -173,7 +175,7 @@ die andere Programmierer vielleicht erstellen möchten. Aber wir wissen, dass
 <code>gui</code> den Überblick über viele Werte unterschiedlicher Typen behalten muss, und
 es muss für jeden dieser unterschiedlich typisierten Werte eine Methode <code>draw</code>
 aufrufen. Es muss nicht genau wissen, was passieren wird, wenn wir die Methode
-<code>draw</code> aufrufen, sondern nur, dass der Wert diese Methode für uns zum Aufruf
+<code>draw</code> aufrufen, sondern nur, dass der Typ diese Methode für uns zum Aufruf
 bereithält.</p>
 <p>Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
 <code>Component</code> definieren, die eine Methode namens <code>draw</code> enthält. Die anderen
@@ -213,10 +215,10 @@ Objekten dadurch, dass wir einem Merkmalsobjekt keine Daten hinzufügen können.
 Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
 Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
 Verhalten zu ermöglichen.</p>
-<p>In Codeblock 18-3 wird gezeigt, wie ein Merkmal namens <code>Draw</code> mit einer Methode
-namens <code>draw</code> definiert werden kann.</p>
+<p>In Codeblock 18-3 wird gezeigt, wie ein Merkmal <code>Draw</code> mit einer Methode <code>draw</code>
+definiert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>pub trait Draw {
     fn draw(&amp;self);
@@ -230,7 +232,7 @@ Codeblock 18-4 definiert eine Struktur namens <code>Screen</code>, die einen Vek
 Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
 <code>Box</code>, der das Merkmal <code>Draw</code> implementiert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -242,12 +244,12 @@ Merkmalsobjekt ist; er ist ein Stellvertreter für jeden Typ innerhalb einer
 <span class="boring">}</span></code></pre></pre>
 <p><span class="caption">Codeblock 18-4: Definition der Struktur <code>Screen</code> mit
 einem Feld <code>components</code>, das einen Vektor von Merkmalsobjekten enthält, die das
-<code>Draw</code>-Merkmal implementieren</span></p>
+Merkmal <code>Draw</code> implementieren</span></p>
 <p>Auf der Struktur <code>Screen</code> definieren wir eine Methode namens <code>run</code>, die die
 Methode <code>draw</code> auf jeder ihrer <code>components</code> aufruft, wie in Codeblock 18-5
 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -275,7 +277,7 @@ konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
 wie in Codeblock 18-6 definieren können:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
@@ -376,12 +378,12 @@ impl Draw for SelectBox {
 }
 <span class="boring">
 </span><span class="boring">fn main() {}</span></code></pre>
-<p><span class="caption">Codeblock 18-8: Eine weitere Kiste, die <code>gui</code> verwendet
-und das Merkmal <code>Draw</code> auf einer <code>SelectBox</code>-Struktur implementiert</span></p>
+<p><span class="caption">Codeblock 18-8: Eine andere Kiste, die <code>gui</code> verwendet
+und das Merkmal <code>Draw</code> auf einer Struktur <code>SelectBox</code> implementiert</span></p>
 <p>Der Benutzer unserer Bibliothek kann nun seine Funktion <code>main</code> schreiben, um
 eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz kann er eine
-<code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er jede in eine <code>Box&lt;T&gt;</code>
-setzt, um ein Merkmalsobjekt zu werden. Er kann dann die Methode <code>run</code> auf der
+<code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er sie in eine <code>Box&lt;T&gt;</code> legt,
+um ein Merkmalsobjekt zu werden. Er kann dann die Methode <code>run</code> auf der
 <code>Screen</code>-Instanz aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft.
 Der Codeblock 18-9 zeigt diese Umsetzung:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -439,7 +441,7 @@ Implementierung von <code>run</code> auf <code>Screen</code> in Codeblock 18-5 b
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines <code>Buttons</code> oder einer <code>SelectBox</code> ist, es ruft nur
 die Methode <code>draw</code> auf der Komponente auf. Durch die Spezifikation von
-<code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im <code>components</code>-Vektor haben wir <code>Screen</code> so
+<code>Box&lt;dyn Draw&gt;</code> als Typ der Werte im Vektor <code>components</code> haben wir <code>Screen</code> so
 definiert, dass wir Werte benötigen, auf denen wir die Methode <code>draw</code> aufrufen
 können.</p>
 <p>Der Vorteil der Verwendung von Merkmalsobjekten und des Rust-Typsystems zum
@@ -471,7 +473,7 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
  --&gt; src/main.rs:5:26
   |
 5 |         components: vec![Box::new(String::from("Hallo"))],
-  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
   = help: the trait `Draw` is implemented for `Button`
   = note: required for the cast from `Box&lt;String&gt;` to `Box&lt;dyn Draw&gt;`
@@ -491,11 +493,11 @@ Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
 von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
 generischen Typparameters verwenden. Der Code, der sich aus der
 Monomorphisierung ergibt, macht <em>statische Aufrufe</em> (static dispatch), d.h.
-wenn der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies
-steht im Gegensatz zum <em>dynamischen Aufruf</em> (dynamic dispatch), bei dem der
-Compiler zur Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen
-von dynamischem Aufruf erzeugt der Compiler Code, der zur Laufzeit
-herausfindet, welche Methode aufzurufen ist.</p>
+der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
+Gegensatz zum <em>dynamischen Aufruf</em> (dynamic dispatch), bei dem der Compiler zur
+Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen von dynamischem
+Aufruf erzeugt der Compiler Code, der zur Laufzeit herausfindet, welche Methode
+aufzurufen ist.</p>
 <p>Wenn wir Merkmalsobjekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
 Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
 Merkmalsobjekte verwendet, sodass er nicht weiß, welche Methode auf welchem Typ
@@ -507,8 +509,9 @@ dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
 Regeln, genannt <em>dyn compatibility</em>, wo man dynamische Aufrufe verwenden kann
 und wo nicht. Diese Regeln gehen über den Rahmen dieser Diskussion hinaus, aber
-du kannst mehr über sie in <a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">der Referenz</a> lesen. Wir haben
-jedoch zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
+du kannst mehr über sie in der
+<a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">Dyn-Kompatibilitäts-Referenz</a> lesen. Wir haben jedoch
+zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
 geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.</p>
 

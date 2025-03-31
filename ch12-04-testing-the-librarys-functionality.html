@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -239,7 +241,7 @@ immer einen leeren Vektor zurückgibt, wie in Codeblock 12-16 gezeigt. Dann
 sollte der Test kompiliert werden können und fehlschlagen, weil ein leerer
 Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schnell, produktiv."</code> enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span><span class="boring">use std::error::Error;
 </span><span class="boring">use std::fs;

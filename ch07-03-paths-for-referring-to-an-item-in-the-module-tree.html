@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -173,7 +175,7 @@ Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
 sie mit dem Schlüsselwort <code>pub</code>. Im Abschnitt <a href="#pfade-mit-dem-schl%C3%BCsselwort-pub-%C3%B6ffentlich-machen">„Pfade mit dem Schlüsselwort
 <code>pub</code> öffentlich machen“</a> gehen wir näher auf <code>pub</code> ein.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod front_of_house {
     mod hosting {
@@ -287,7 +289,7 @@ Schlüsselwort <code>pub</code> verwendest, um ein Element öffentlich zu machen
 untergeordneten Modul hat, also markieren wir das Modul <code>hosting</code> mit dem
 Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod front_of_house {
     pub mod hosting {
@@ -436,7 +438,7 @@ Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</cod
 ruft die im übergeordneten Modul definierte Funktion <code>deliver_order</code> auf, indem
 sie den Pfad zu <code>deliver_order</code> angibt, der mit <code>super</code> beginnt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>fn deliver_order() {}
 
@@ -474,7 +476,7 @@ Mahlzeit begleiten, je nach Saison und Vorrat. Das verfügbare Obst ändert sich
 schnell, sodass die Kunden nicht wählen oder gar sehen können, welches Obst sie
 bekommen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod back_of_house {
     pub struct Breakfast {
@@ -524,7 +526,7 @@ keine solche Funktion hätte, könnten wir keine Instanz von <code>Breakfast</co
 Varianten öffentlich. Wir brauchen nur das Schlüsselwort <code>pub</code> vor dem
 Schlüsselwort <code>enum</code>, wie in Codeblock 7-10 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">#![allow(unused)]
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>mod back_of_house {
     pub enum Appetizer {

@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -179,7 +181,7 @@ Strang senden, der die Ergebnisse zusammenfasst.</p>
 machen. Beachte, dass sich dieser Code noch nicht kompilieren lässt, weil Rust
 nicht sagen kann, welchen Typ von Werten wir über den Kanal senden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::sync::mpsc;
 
 fn main() {
     let (tx, rx) = mpsc::channel();
@@ -211,7 +213,7 @@ kommuniziert, wie in Codeblock 16-7 gezeigt. Das ist so, als würde man eine
 Gummiente flussaufwärts in den Fluss setzen oder eine Chat-Nachricht von einem
 Strang zum anderen senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::sync::mpsc;
 use std::thread;
 
 fn main() {
@@ -239,7 +241,7 @@ Kapitel 9 zurück, um Strategien für eine korrekte Fehlerbehandlung anzusehen.<
 so, als würde man die Gummiente am Ende des Flusses aus dem Wasser holen oder
 eine Chat-Nachricht erhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::sync::mpsc;
 use std::thread;
 
 fn main() {
@@ -288,7 +290,7 @@ erzeugten Strang zu verwenden, <em>nachdem</em> wir ihn in den Kanal geschickt h
 Versuche, den Code in Codeblock 16-9 zu kompilieren, um zu sehen, warum dieser
 Code nicht erlaubt ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::sync::mpsc;
 use std::thread;
 
 fn main() {
@@ -343,7 +345,7 @@ beweisen, dass der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der
 erzeugte Strang sendet nun mehrere Nachrichten und macht dazwischen eine Pause
 von einer Sekunde.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
 
@@ -394,7 +396,7 @@ einzelner Konsument</em> ist. Lass uns <code>mpsc</code> verwenden und den Code 
 Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
 Codeblock 16-11 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust"><span class="boring">use std::sync::mpsc;
+<pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::sync::mpsc;
 </span><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">

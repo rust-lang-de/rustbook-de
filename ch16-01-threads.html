@@ -31,6 +31,8 @@
         <!-- Custom theme stylesheets -->
         <link rel="stylesheet" href="theme/ferris.css">
         <link rel="stylesheet" href="theme/2018-edition.css">
+        <link rel="stylesheet" href="theme/semantic-notes.css">
+        <link rel="stylesheet" href="theme/listing.css">
 
 
         <!-- Provide site root to javascript -->
@@ -184,7 +186,7 @@ und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
 Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt einen Text im
 Hauptstrang und anderen Text im neuen Strang aus:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::thread;
 use std::time::Duration;
 
 fn main() {
@@ -242,7 +244,7 @@ Codeblock 16-2 zeigt, wie der <code>JoinHandle&lt;T&gt;</code> des Strangs, den 
 16-1 erstellt haben, verwendet und wie <code>join</code> aufgerufen wird, um
 sicherzustellen, dass der erzeugte Strang beendet wird, bevor <code>main</code> endet:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::thread;
 use std::time::Duration;
 
 fn main() {
@@ -289,7 +291,7 @@ beendet ist.</p>
 <p>Aber lass uns sehen, was passiert, wenn wir stattdessen <code>handle.join()</code> vor die
 <code>for</code>-Schleife in <code>main</code> schieben, etwa so:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::thread;
 use std::time::Duration;
 
 fn main() {
@@ -344,7 +346,7 @@ einen Vektor im Hauptstrang zu erstellen und ihn im erzeugten Strang zu
 verwenden. Dies wird jedoch noch nicht funktionieren, wie du gleich sehen
 wirst.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::thread;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::thread;
 
 fn main() {
     let v = vec![1, 2, 3];
@@ -395,7 +397,7 @@ wird, sodass es nicht weiß, ob die Referenz auf <code>v</code> immer gültig se
 <p>Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf <code>v</code> hat, die eher
 nicht gültig ist:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust does_not_compile">use std::thread;
+<pre><pre class="playground"><code class="language-rust does_not_compile edition2024">use std::thread;
 
 fn main() {
     let v = vec![1, 2, 3];
@@ -431,7 +433,7 @@ zwingen wir den Funktionsabschluss dazu, die Eigentümerschaft der Werte zu
 er sich die Werte ausleihen sollte. Die in Codeblock 16-5 gezeigte Änderung an
 Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><pre class="playground"><code class="language-rust">use std::thread;
+<pre><pre class="playground"><code class="language-rust edition2024">use std::thread;
 
 fn main() {
     let v = vec![1, 2, 3];
