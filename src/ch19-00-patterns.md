@@ -7,12 +7,12 @@ Kontrolle über den Kontrollfluss eines Programms. Ein Muster besteht aus einer
 Kombination der folgenden Elemente:
 
 - Literale
-- Destrukturierte Arrays, Aufzählungen (enums), Strukturen (structs) oder Tupel
+- Destrukturierte Arrays, Aufzählungen (enums), Strukturen (structs) und Tupel
 - Variablen
 - Wildcards
 - Platzhalter
 
-Einige Beispielmuster sind `x`, `(a, 3)`, und `Some(Color::Red)`. In den
+Einige Beispielmuster sind `x`, `(a, 3)` und `Some(Color::Red)`. In den
 Kontexten, in denen Muster gültig sind, beschreiben diese Komponenten die
 Datenform. Unser Programm gleicht dann Werte mit den Mustern ab, um
 festzustellen, ob es die richtige Datenform hat, um ein bestimmtes Stück Code
@@ -29,5 +29,5 @@ Dieses Kapitel ist eine Referenz zu allen Dingen, die mit Mustern zu tun haben.
 Wir behandeln die gültigen Stellen, an denen Muster verwendet werden können,
 den Unterschied zwischen abweisbaren (refutable) und unabweisbaren
 (irrefutable) Mustern und die verschiedenen Arten der Mustersyntax, die du
-sehen kannst. Am Ende des Kapitels wirst du wissen, wie du Muster verwenden
+sehen wirst. Am Ende des Kapitels wirst du wissen, wie du Muster verwenden
 kannst, um viele Konzepte auf klare Weise auszudrücken.

@@ -655,8 +655,8 @@ unsafe trait Foo {
 unsafe impl Foo for i32 {
     // Methoden-Implementierungen kommen hierhin
 }
-
-fn main() {}
+#
+# fn main() {}
 ```
 
 <span class="caption">Codeblock 20-12: Definition und Implementierung eines
@@ -687,7 +687,7 @@ werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code verwendet.
 Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der Daten, die
 derzeit in der Vereinigungsinstanz gespeichert sind, nicht garantieren kann.
 Weitere Informationen über Vereinigung findest du in der
-[Rust-Referenz][unions].
+[Unions-Referenz][unions].
 
 ### Miri zur Überprüfung von `unsafe`-Code verwenden
 
@@ -716,17 +716,7 @@ Codeblock 20-11:
 $ cargo +nightly miri run
    Compiling unsafe-example v0.1.0 (file:///projects/unsafe-example)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.01s
-     Running `/Users/chris/.rustup/toolchains/nightly-aarch64-apple-darwin/bin/cargo-miri runner target/miri/aarch64-apple-darwin/debug/unsafe-example`
-warning: creating a shared reference to mutable static is discouraged
-  --> src/main.rs:14:33
-   |
-14 |         println!("COUNTER: {}", COUNTER);
-   |                                 ^^^^^^^ shared reference to mutable static
-   |
-   = note: for more information, see <https://doc.rust-lang.org/nightly/edition-guide/rust-2024/static-mut-references.html>
-   = note: shared references to mutable statics are dangerous; it's undefined behavior if the static is mutated or if a mutable reference is created for it while the shared reference lives
-   = note: `#[warn(static_mut_refs)]` on by default
-
+     Running `file:///home/.rustup/toolchains/nightly/bin/cargo-miri runner target/miri/debug/unsafe-example`
 COUNTER: 3
 ```
 
