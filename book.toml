@@ -1,10 +1,13 @@
 [book]
 title = "Die Programmiersprache Rust"
-author = "Steve Klabnik und Carol Nichols, unter Mitarbeit der Rust-Gemeinschaft"
+authors = ["Steve Klabnik", "Carol Nichols", "Chris Krycho", "unter Mitarbeit der Rust-Gemeinschaft"]
 description = "Eine deutsche Gemeinschafts-Übersetzung des offiziellen Rust-Buchs."
 language = "de"
 
 [output.html]
-additional-css = ["theme/ferris.css", "theme/2018-edition.css"]
+additional-css = ["theme/ferris.css", "theme/2018-edition.css", "theme/semantic-notes.css", "theme/listing.css"]
 additional-js = ["theme/ferris.js"]
 git-repository-url = "https://github.com/rust-lang-de/rustbook-de"
+
+[rust]
+edition = "2024"
