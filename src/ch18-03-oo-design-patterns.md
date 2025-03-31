@@ -5,8 +5,8 @@ Der Kernpunkt des Musters besteht darin, dass wir eine Reihe von Zuständen
 definieren, die ein Wert intern annehmen kann. Die Zustände werden durch eine
 Reihe von _Zustandsobjekten_ (state objects) dargestellt, und das Verhalten des
 Wertes ändert sich je nach Zustand. Wir werden ein Beispiel für eine
-Blog-Post-Struktur durcharbeiten, die ein Feld für ihren Status hat, das ein
-Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
+Blog-Beitrags-Struktur durcharbeiten, die ein Feld für ihren Status hat, das
+ein Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
 „Veröffentlicht“ sein wird.
 
 Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust verwenden wir
@@ -25,7 +25,8 @@ seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.
 Zunächst werden wir das Zustandsmuster auf eine traditionellere
 objektorientierte Weise implementieren, dann werden wir einen Ansatz verwenden,
 der in Rust etwas natürlicher ist. Beginnen wir mit der inkrementellen
-Implementierung eines Blogpost-Workflows unter Verwendung des Zustandsmusters.
+Implementierung eines Blogbeitrag-Workflows unter Verwendung des
+Zustandsmusters.
 
 Die finale Funktionalität des Blogs wird wie folgt aussehen:
 
@@ -83,11 +84,11 @@ veröffentlicht werden, d.h. der Text des Beitrags wird zurückgegeben, wenn
 `content` aufgerufen wird.
 
 Beachte, dass der einzige Typ, mit dem wir von der Kiste aus interagieren, der
-`Post`-Typ ist. Dieser Typ verwendet das Zustandsmuster und enthält einen Wert,
+Typ `Post` ist. Dieser Typ verwendet das Zustandsmuster und enthält einen Wert,
 der eines von drei Zustandsobjekten ist, die die verschiedenen Zustände
 repräsentieren, in denen sich ein Beitrag im Entwurf befinden, auf eine
 Überprüfung warten oder veröffentlicht werden kann. Der Wechsel von einem
-Zustand in einen anderen wird intern innerhalb des `Post`-Typs verwaltet. Die
+Zustand in einen anderen wird intern innerhalb des Typs `Post` verwaltet. Die
 Zustände ändern sich als Reaktion auf die Methoden, die von den Benutzern
 unserer Bibliothek auf der `Post`-Instanz aufgerufen werden, aber sie müssen
 die Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
@@ -133,8 +134,8 @@ impl State for Draft {}
 ```
 
 <span class="caption">Codeblock 18-12: Definition einer Struktur `Post` und
-einer Funktion `new`, die eine neue `Post`-Instanz erzeugt, einem Merkmal
-`State` und einer Struktur `Draft`</span>
+einer Funktion `new`, die eine neue `Post`-Instanz, ein Merkmal `State` sowie
+eine Struktur `Draft` erzeugt</span>
 
 Das Merkmal `State` definiert das Verhalten, das die verschiedenen
 Beitragszustände gemeinsam haben. Die Zustandsobjekte sind `Draft`,
@@ -147,7 +148,7 @@ Wenn wir einen neuen `Post` erstellen, setzen wir sein `state`-Feld auf einen
 `Some`-Wert, der eine `Box` enthält. Diese `Box` verweist auf eine neue Instanz
 der Struktur `Draft`. Dies stellt sicher, dass jedes Mal, wenn wir eine neue
 Instanz von `Post` erzeugen, diese als Entwurf beginnt. Da das Feld `state` von
-`Post` privat ist, gibt es keine Möglichkeit, einen `Post` in einem anderen
+`Post` privat ist, gibt es keine Möglichkeit, ein `Post` in einem anderen
 Zustand zu erzeugen! In der Funktion `Post::new` setzen wir das Feld `content`
 auf einen neuen, leeren `String`.
 
@@ -260,7 +261,7 @@ bis hin zu Zeile 7 wie beabsichtigt.
 
 Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
-ändern sollte. Codeblock 18-15 zeigt diesen Code.
+ändern soll. Codeblock 18-15 zeigt diesen Code.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -320,7 +321,7 @@ impl State for PendingReview {
 
 Wir geben `Post` eine öffentliche Methode namens `request_review`, die eine
 veränderbare Referenz auf `self` nimmt. Dann rufen wir eine interne
-`request_review`-Methode über den aktuellen Zustand von `Post` auf und diese
+Methode `request_review` über den aktuellen Zustand von `Post` auf und diese
 zweite Methode `request_review` konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.
 
@@ -338,18 +339,18 @@ Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die `Option` im Feld
 `state` von `Post` ins Spiel: Wir rufen die Methode `take` auf, um den
 `Some`-Wert aus dem `state`-Feld zu nehmen und an seiner Stelle ein `None` zu
 hinterlassen, weil Rust es nicht zulässt, dass wir unbestückte Felder in
-Strukturen haben. Dadurch können wir den Wert `state` aus `Post` herausnehmen,
-anstatt ihn auszuleihen. Dann setzen wir den Wert `state` des Beitrags auf das
-Ergebnis dieser Operation.
+Strukturen haben. Dadurch können wir den Wert `state` aus `Post`
+herausverschieben, anstatt ihn auszuleihen. Dann setzen wir den Wert `state`
+des Beitrags auf das Ergebnis dieser Operation.
 
 Wir müssen `state` vorübergehend auf `None` setzen, anstatt es direkt mit Code
 wie `self.state = self.state.request_review();` zu setzen, um die
-Eigentümerschaft des `state`-Wertes zu erhalten. Das stellt sicher, dass `Post`
-nicht den alten `state`-Wert verwenden kann, nachdem wir ihn in einen neuen
-Zustand transformiert haben.
+Eigentümerschaft des Wertes in `state` zu erhalten. Das stellt sicher, dass
+`Post` nicht den alten Wert in `state` verwenden kann, nachdem wir ihn in einen
+neuen Zustand transformiert haben.
 
 Die Methode `request_review` auf `Draft` gibt eine neue, in einer Box
-gespeicherte Instanz einer neuen `PendingReview`-Struktur zurück, die den
+gespeicherte Instanz einer neuen Struktur `PendingReview` zurück, die den
 Zustand darstellt, in dem ein Beitrag auf eine Überprüfung wartet. Die Struktur
 `PendingReview` implementiert auch die Methode `request_review`, führt aber
 keine Transformationen durch. Vielmehr gibt sie sich selbst zurück, denn wenn
@@ -357,8 +358,8 @@ wir eine Überprüfung für einen Beitrag anfordern, der sich bereits im
 `PendingReview`-Zustand befindet, sollte er im `PendingReview`-Zustand bleiben.
 
 Jetzt können wir anfangen, die Vorteile des Zustandsmusters zu erkennen: Die
-Methode `request_review` auf `Post` ist die gleiche, unabhängig von ihrem
-`state`-Wert. Jeder Zustand ist für seine eigenen Regeln verantwortlich.
+Methode `request_review` auf `Post` ist die gleiche, unabhängig von ihrem Wert
+`state`. Jeder Zustand ist für seine eigenen Regeln verantwortlich.
 
 Wir lassen die Methode `content` auf `Post` so wie sie ist und geben einen
 leeren Zeichenkettenanteilstyp zurück. Wir können jetzt einen `Post` sowohl im
@@ -454,11 +455,11 @@ impl State for Published {
 }
 ```
 
-<span class="caption">Codeblock 18-16: Implementierung der Methode `approve`
-bei `Post` und des Merkmals `State`</span>
+<span class="caption">Codeblock 18-16: Implementieren der Methode `approve` auf
+`Post` und des Merkmals `State`</span>
 
 Wir fügen die Methode `approve` zum Merkmal `State` hinzu und fügen eine neue
-Struktur `Published` hinzu, die den Zustand `Published` implementiert.
+Struktur `Published` hinzu, die das Merkmal `State` implementiert.
 
 Ähnlich wie `request_review` bei `PendingReview` funktioniert, hat der Aufruf
 der Methode `approve` bei einem `Draft` keine Wirkung, weil `approve` den Wert
@@ -560,9 +561,9 @@ impl Post {
 
 Da das Ziel darin besteht, all diese Regeln innerhalb der Strukturen zu halten,
 die `State` implementieren, rufen wir eine Methode `content` auf dem Wert in
-`state` auf und übergeben die Post-Instanz (d.h. `self`) als Argument. Dann
+`state` auf und übergeben die `Post`-Instanz (d.h. `self`) als Argument. Dann
 geben wir den Wert zurück, der von der Verwendung der Methode `content` für den
-`state`-Wert zurückgegeben wird.
+Wert `state` zurückgegeben wird.
 
 Wir rufen die Methode `as_ref` auf `Option` auf, weil wir eine Referenz auf den
 Wert innerhalb `Option` wollen und nicht die Eigentümerschaft am Wert. Weil
@@ -574,18 +575,18 @@ im Funktionsparameter herausverschieben können.
 Wir rufen dann die Methode `unwrap` auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 `Post` sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese
-Methoden zu Ende sind. Dies ist einer der Fälle, über die wir in [„Fälle, in
-denen du mehr Informationen als der Compiler hast“][more-info-than-rustc] in
-Kapitel 9 gesprochen haben, wenn wir wissen, dass ein `None`-Wert niemals
-möglich ist, obwohl der Compiler nicht in der Lage ist, das zu verstehen.
+Methoden fertig ausgeführt sind. Dies ist einer der Fälle, über die wir in
+[„Fälle, in denen du mehr Informationen als der Compiler
+hast“][more-info-than-rustc] in Kapitel 9 gesprochen haben, bei denen wir
+im Unterschied zum Compiler wissen, dass ein `None`-Wert niemals möglich ist.
 
-Wenn wir nun `content` auf der `&Box<dyn State>` aufrufen, wird eine
-automatische Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass
-die Methode `content` letztlich auf dem Typ aufgerufen wird, der das Merkmal
-`State` implementiert. Das bedeutet, dass wir die Definition des Merkmals
-`State` um `content` erweitern müssen, und hier werden wir die Logik dafür
-unterbringen, welcher Inhalt je nach Zustand zurückgegeben wird, wie in
-Codeblock 18-18 gezeigt wird:
+Wenn wir nun `content` auf `&Box<dyn State>` aufrufen, wird eine automatische
+Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode
+`content` letztlich auf dem Typ aufgerufen wird, der das Merkmal `State`
+implementiert. Das bedeutet, dass wir die Definition des Merkmals `State` um
+`content` erweitern müssen, und hier werden wir die Logik dafür unterbringen,
+welcher Inhalt je nach Zustand zurückgegeben wird, wie in Codeblock 18-18 zu
+sehen ist:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -690,10 +691,10 @@ den Wert in `post.content` zurück.
 Beachte, dass wir Lebensdauer-Annotationen bei dieser Methode benötigen, wie
 wir in Kapitel 10 besprochen haben. Wir nehmen eine Referenz auf ein `post` als
 Argument und geben eine Referenz auf einen Teil dieses `post` zurück, sodass
-die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des
-`post`-Arguments zusammenhängt.
+die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
+`post` zusammenhängt.
 
-Und wir sind fertig &ndash; der Codeblock 18-11 funktioniert jetzt! Wir haben
+Nun sind wir fertig &ndash; der Codeblock 18-11 funktioniert jetzt! Wir haben
 das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
 Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
 ist nicht über den gesamten `Post` verstreut.
@@ -701,7 +702,7 @@ ist nicht über den gesamten `Post` verstreut.
 > ### Warum keine Aufzählung?
 >
 > Vielleicht hast du dich gefragt, warum wir nicht ein `enum` mit den
-> verschiedenen möglichen Poststatus als Varianten verwendet haben. Das ist
+> verschiedenen möglichen `Post`-Status als Varianten verwendet haben. Das ist
 > sicherlich eine mögliche Lösung. Probiere es aus und vergleiche die
 > Endergebnisse, um zu sehen, was du bevorzugst! Ein Nachteil der Verwendung
 > einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
@@ -725,7 +726,7 @@ Methoden auf `Post` oder sogar im `main`-Code verwenden, die den Zustand des
 Beitrags überprüfen und das Verhalten an diesen Stellen ändern. Das würde
 bedeuten, dass wir an mehreren Stellen nachschauen müssten, um alle
 Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen! Dies
-würde sich nur noch erhöhen, je mehr Zustände wir hinzufügen: Jeder dieser
+würde immer mehr werden, je mehr Zustände wir hinzufügen: Jeder dieser
 `match`-Ausdrücke würde einen weiteren Zweig benötigen.
 
 Mit dem Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir
@@ -745,7 +746,7 @@ Vorschläge aus:
 - Erlaube Benutzern das Hinzufügen von Textinhalten nur dann, wenn sich ein
   Beitrag im Zustand `Draft` befindet. Hinweis: Lasse das Zustandsobjekt dafür
   verantwortlich sein, was sich am Inhalt ändern könnte, aber nicht für die
-  Änderung des Beitrags.
+  Änderung des `Post`.
 
 Ein Nachteil des Zustandsmusters besteht darin, dass einige der Zustände
 miteinander gekoppelt sind, weil die Zustände die Übergänge zwischen den
@@ -763,7 +764,7 @@ das Merkmal `State` zu erstellen, die `self` zurückgeben; dies würde jedoch
 nicht funktionieren: Bei der Verwendung von `State` als Merkmals-Objekt weiß
 das Merkmal nicht, was das konkrete `self` genau sein wird, sodass der
 Rückgabetyp zur Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits
-erwähnten dyn-Kompatibilitätsregeln).
+erwähnten dyn-Kompatibilitätsregeln.)
 
 Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
 `request_review` und `approve` auf `Post`. Beide Methoden verwenden
@@ -859,10 +860,10 @@ und ein `DraftPost` ohne Methode `content`</span>
 
 Die beiden Strukturen `Post` und `DraftPost` haben ein privates Feld `content`,
 in dem der Text des Blog-Beitrags gespeichert wird. Die Strukturen haben nicht
-mehr das `state`-Feld, weil wir die Kodierung des Zustands auf die Typen der
+mehr das Feld `state`, weil wir die Kodierung des Zustands auf die Typen der
 Strukturen verlagert haben. Die Struktur `Post` wird einen veröffentlichten
-Beitrag repräsentieren und sie hat eine Methode `content`, die den `content`
-zurückgibt.
+Beitrag repräsentieren und sie hat eine Methode `content`, die den Wert des
+Feldes `content` zurückgibt.
 
 Wir haben immer noch die Funktion `Post::new`, aber anstatt eine Instanz von
 `Post` zurückzugeben, gibt sie eine Instanz von `DraftPost` zurück. Da
@@ -965,7 +966,7 @@ dass die Zusicherungen über den Inhalt des Entwurfs und der anstehenden
 Überprüfungsbeiträge leere Zeichenketten sind, und wir brauchen sie auch nicht:
 Wir können keinen Code mehr kompilieren, der versucht, den Inhalt von Beiträgen
 in diesen Zuständen zu verwenden. Der aktualisierte Code in `main` ist in
-Codeblock 18-21 aufgeführt.
+Codeblock 18-21 zu sehen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1010,8 +1011,8 @@ unterschiedliche Kompromisse auf. Auch wenn du mit objektorientierten Mustern
 sehr vertraut bist, kann ein Überdenken des Problems, um die Funktionen von
 Rust zu nutzen, Vorteile bringen, z.B. das Vermeiden einiger Fehler zur
 Kompilierzeit. Objektorientierte Muster werden in Rust nicht immer die beste
-Lösung sein, da objektorientierte Sprachen bestimmte Funktionalitäten, z.B.
-Eigentümerschaft, nicht haben.
+Lösung sein, da objektorientierte Sprachen bestimmte Funktionalitäten wie die
+Eigentümerschaft nicht haben.
 
 ## Zusammenfassung
 
@@ -1022,7 +1023,7 @@ erhalten. Dynamische Aufrufe können deinem Code eine gewisse Flexibilität im
 Austausch gegen ein wenig Laufzeitperformanz verleihen. Du kannst diese
 Flexibilität nutzen, um objektorientierte Muster zu implementieren, die die
 Wartbarkeit deines Codes verbessern können. Rust hat auch andere
-Funktionalitäten, z.B. Eigentümerschaft, die objektorientierte Sprachen nicht
+Funktionalitäten wie die Eigentümerschaft, die objektorientierte Sprachen nicht
 haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um
 die Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.
 

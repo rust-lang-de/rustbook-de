@@ -2,21 +2,21 @@
 
 In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
-in Codeblock 8-9 eine Abhilfe geschaffen, indem wir eine Aufzählung (enum)
+in Codeblock 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
 `SpreadsheetCell` definiert haben, die Varianten zur Aufnahme von Ganzzahlen,
 Fließkommazahlen und Text enthielt. Das bedeutete, dass wir in jeder Zelle
-verschiedene Typen von Daten speichern konnten und trotzdem einen Vektor
-hatten, der eine Reihe von Zellen darstellte. Dies ist eine perfekte Lösung,
-wenn unsere austauschbaren Elemente ein fester Satz von Typen sind, die wir
-kennen, wenn unser Code kompiliert wird.
+verschiedene Datentypen speichern konnten und trotzdem einen Vektor hatten, der
+eine Reihe von Zellen darstellte. Dies ist eine perfekte Lösung, wenn unsere
+austauschbaren Elemente ein fester Satz von Typen sind, die wir kennen, wenn
+unser Code kompiliert wird.
 
 Manchmal möchten wir jedoch, dass unsere Bibliotheksbenutzer in der Lage sind,
-die Menge der Typen, die in einer bestimmten Situation erlaubt sind, zu
+die möglichen Typen, die in einer bestimmten Situation erlaubt sind, zu
 erweitern. Um zu zeigen, wie wir dies erreichen können, werden wir ein Beispiel
 für ein GUI-Werkzeug (Graphical User Interface) erstellen, das über eine Liste
 von Elementen iteriert, wobei auf jedem Element eine Methode `draw` aufgerufen
-wird, um es auf den Bildschirm zu zeichnen &ndash; eine übliche Technik für
-GUI-Werkzeuge. Wir werden eine Bibliothekskiste (library crate) namens `gui`
+wird, um es auf den Bildschirm zu zeichnen &ndash; eine übliche Technik bei
+GUI-Werkzeugen. Wir werden eine Bibliothekskiste (library crate) namens `gui`
 erstellen, die die Struktur einer GUI-Bibliothek enthält. Diese Kiste (crate)
 könnte einige Typen enthalten, die Leute benutzen können, z.B. `Button` und
 `TextField`. Darüber hinaus werden `gui`-Benutzer ihre eigenen Typen erstellen
@@ -30,7 +30,7 @@ die andere Programmierer vielleicht erstellen möchten. Aber wir wissen, dass
 `gui` den Überblick über viele Werte unterschiedlicher Typen behalten muss, und
 es muss für jeden dieser unterschiedlich typisierten Werte eine Methode `draw`
 aufrufen. Es muss nicht genau wissen, was passieren wird, wenn wir die Methode
-`draw` aufrufen, sondern nur, dass der Wert diese Methode für uns zum Aufruf
+`draw` aufrufen, sondern nur, dass der Typ diese Methode für uns zum Aufruf
 bereithält.
 
 Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
@@ -75,8 +75,8 @@ Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
 Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
 Verhalten zu ermöglichen.
 
-In Codeblock 18-3 wird gezeigt, wie ein Merkmal namens `Draw` mit einer Methode
-namens `draw` definiert werden kann.
+In Codeblock 18-3 wird gezeigt, wie ein Merkmal `Draw` mit einer Methode `draw`
+definiert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -109,7 +109,7 @@ pub struct Screen {
 
 <span class="caption">Codeblock 18-4: Definition der Struktur `Screen` mit
 einem Feld `components`, das einen Vektor von Merkmalsobjekten enthält, die das
-`Draw`-Merkmal implementieren</span>
+Merkmal `Draw` implementieren</span>
 
 Auf der Struktur `Screen` definieren wir eine Methode namens `run`, die die
 Methode `draw` auf jeder ihrer `components` aufruft, wie in Codeblock 18-5
@@ -265,13 +265,13 @@ impl Draw for SelectBox {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 18-8: Eine weitere Kiste, die `gui` verwendet
-und das Merkmal `Draw` auf einer `SelectBox`-Struktur implementiert</span>
+<span class="caption">Codeblock 18-8: Eine andere Kiste, die `gui` verwendet
+und das Merkmal `Draw` auf einer Struktur `SelectBox` implementiert</span>
 
 Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um
 eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine
-`SelectBox` und einen `Button` hinzufügen, indem er jede in eine `Box<T>`
-setzt, um ein Merkmalsobjekt zu werden. Er kann dann die Methode `run` auf der
+`SelectBox` und einen `Button` hinzufügen, indem er sie in eine `Box<T>` legt,
+um ein Merkmalsobjekt zu werden. Er kann dann die Methode `run` auf der
 `Screen`-Instanz aufrufen, die dann `draw` auf jeder der Komponenten aufruft.
 Der Codeblock 18-9 zeigt diese Umsetzung:
 
@@ -336,7 +336,7 @@ Implementierung von `run` auf `Screen` in Codeblock 18-5 braucht `run` nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
 Komponente eine Instanz eines `Buttons` oder einer `SelectBox` ist, es ruft nur
 die Methode `draw` auf der Komponente auf. Durch die Spezifikation von
-`Box<dyn Draw>` als Typ der Werte im `components`-Vektor haben wir `Screen` so
+`Box<dyn Draw>` als Typ der Werte im Vektor `components` haben wir `Screen` so
 definiert, dass wir Werte benötigen, auf denen wir die Methode `draw` aufrufen
 können.
 
@@ -378,7 +378,7 @@ error[E0277]: the trait bound `String: Draw` is not satisfied
  --> src/main.rs:5:26
   |
 5 |         components: vec![Box::new(String::from("Hallo"))],
-  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
+  |                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ the trait `Draw` is not implemented for `String`
   |
   = help: the trait `Draw` is implemented for `Button`
   = note: required for the cast from `Box<String>` to `Box<dyn Draw>`
@@ -401,11 +401,11 @@ Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
 von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
 generischen Typparameters verwenden. Der Code, der sich aus der
 Monomorphisierung ergibt, macht *statische Aufrufe* (static dispatch), d.h.
-wenn der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies
-steht im Gegensatz zum *dynamischen Aufruf* (dynamic dispatch), bei dem der
-Compiler zur Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen
-von dynamischem Aufruf erzeugt der Compiler Code, der zur Laufzeit
-herausfindet, welche Methode aufzurufen ist.
+der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
+Gegensatz zum *dynamischen Aufruf* (dynamic dispatch), bei dem der Compiler zur
+Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen von dynamischem
+Aufruf erzeugt der Compiler Code, der zur Laufzeit herausfindet, welche Methode
+aufzurufen ist.
 
 Wenn wir Merkmalsobjekte verwenden, muss Rust dynamische Aufrufe verwenden. Der
 Compiler kennt nicht alle Typen, die mit dem Code verwendet werden könnten, der
@@ -418,8 +418,9 @@ dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
 Regeln, genannt _dyn compatibility_, wo man dynamische Aufrufe verwenden kann
 und wo nicht. Diese Regeln gehen über den Rahmen dieser Diskussion hinaus, aber
-du kannst mehr über sie in [der Referenz][dyn-compatibility] lesen. Wir haben
-jedoch zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
+du kannst mehr über sie in der
+[Dyn-Kompatibilitäts-Referenz][dyn-compatibility] lesen. Wir haben jedoch
+zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
 geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.
 

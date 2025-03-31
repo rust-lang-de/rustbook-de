@@ -3,8 +3,8 @@
 Es gibt in der Programmierergemeinschaft keinen Konsens darüber, welche
 Funktionalitäten eine Sprache haben muss, um als objektorientiert zu gelten.
 Rust wird von vielen Programmierparadigmen beeinflusst, einschließlich OOP; zum
-Beispiel haben wir in Kapitel 13 die Funktionalitäten untersucht, die aus der
-funktionalen Programmierung stammen. Die OOP-Sprachen haben wohl bestimmte
+Beispiel haben wir in Kapitel 13 Funktionalitäten untersucht, die aus der
+funktionalen Programmierung stammen. Die OOP-Sprachen haben bestimmte
 gemeinsame Charakteristiken, nämlich Objekte, Kapselung (encapsulation) und
 Vererbung (inheritance). Schauen wir uns an, was jedes dieser Charakteristiken
 bedeutet und ob Rust es unterstützt.
@@ -35,7 +35,7 @@ Idee der _Kapselung_ (encapsulation), was bedeutet, dass die
 Implementierungsdetails eines Objekts nicht zugänglich sind für Code, der
 dieses Objekt verwendet. Daher ist die einzige Möglichkeit, mit einem Objekt zu
 interagieren, seine öffentliche API; Code, der das Objekt verwendet, sollte
-nicht in der Lage sein, in die Interna des Objekts einzudringen und Daten oder
+nicht in der Lage sein, in die Interna des Objekts vorzudringen und Daten oder
 Verhalten direkt zu ändern. Dies ermöglicht es dem Programmierer, die Interna
 eines Objekts zu ändern und umzugestalten, ohne Code ändern zu müssen, der das
 Objekt verwendet.
@@ -62,8 +62,7 @@ pub struct AveragedCollection {
 ```
 
 <span class="caption">Codeblock 18-1: Eine Struktur `AveragedCollection`, die
-eine Liste von ganzen Zahlen und den Durchschnitt der Elemente in der
-Kollektion verwaltet</span>
+eine Liste von ganzen Zahlen und deren Durchschnitt verwaltet</span>
 
 Die Struktur wird als `pub` markiert, damit anderer Code sie verwenden kann,
 aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
@@ -125,9 +124,9 @@ entfernen; andernfalls könnte das Feld `average` inkonsistent werden, wenn sich
 sodass externer Code den Wert `average` lesen, aber nicht verändern kann.
 
 Da wir die Implementierungsdetails der Struktur `AveragedCollection` gekapselt
-haben, können wir Aspekte, z.B. die Datenstruktur, in Zukunft leicht ändern.
-Zum Beispiel könnten wir ein `HashSet<i32>` anstelle eines `Vec<i32>` für das
-`list`-Feld verwenden. Solange die Signaturen der öffentlichen Methoden `add`,
+haben, können wir Aspekte wie die Datenstruktur in Zukunft leicht ändern. Zum
+Beispiel könnten wir ein `HashSet<i32>` anstelle eines `Vec<i32>` für das Feld
+`list` verwenden. Solange die Signaturen der öffentlichen Methoden `add`,
 `remove` und `average` gleich bleiben, würde Code, der `AveragedCollection`
 verwendet, nicht geändert werden müssen damit er kompiliert. Wenn wir
 stattdessen `list` öffentlich machen würden, wäre dies nicht unbedingt der
@@ -166,10 +165,9 @@ Jeder Typ, der das Merkmal `Summary` implementiert, hätte die Methode
 `summarize` ohne weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit
 einer Elternklasse, die eine Implementierung einer Methode hat, und einer
 erbenden Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir
-können auch die Standard-Implementierung der Methode `summarize` außer Kraft
-setzen, wenn wir das Markmal `Summary` implementieren, die einer Kindklasse
-ähnelt, die die Implementierung einer von einer Elternklasse geerbten Methode
-außer Kraft setzt.
+können auch die Standard-Implementierung der Methode `summarize` überschreiben,
+wenn wir das Markmal `Summary` implementieren, die einer Kindklasse ähnelt, die
+die Implementierung einer von einer Elternklasse geerbten Methode überschreibt.
 
 Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
 untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
@@ -190,17 +188,17 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.
 > müssen. Dies wird manchmal als _begrenzter parametrischer Polymorphismus_
 > (bounded parametric polymorphism) bezeichnet.
 
-Die Vererbung ist in letzter Zeit als Lösung für das Programmierdesign in
-vielen Programmiersprachen in Ungnade gefallen, da sie oft das Risiko birgt,
-mehr Code als nötig zu teilen. Unterklassen sollten nicht immer alle
-Charakteristiken ihrer Elternklasse teilen, bei Vererbung tun sie es aber. Dies
-kann den Programmentwurf weniger flexibel machen. Es wird auch die Möglichkeit
+Die Vererbung als Programmierdesignlösung ist in letzter Zeit bei vielen
+Programmiersprachen in Ungnade gefallen, da sie oft das Risiko birgt, mehr Code
+als nötig zu teilen. Unterklassen sollten nicht immer alle Charakteristiken
+ihrer Elternklasse teilen, bei Vererbung tun sie es aber. Dies kann den
+Programmentwurf weniger flexibel machen. Es wird auch die Möglichkeit
 eingeführt, Methoden auf Unterklassen aufzurufen, die keinen Sinn machen oder
 die Fehler verursachen, weil die Methoden nicht auf die Unterklasse zutreffen.
 Darüber hinaus lassen einige Sprachen nur Einfachvererbung zu (d.h. eine
 Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
 Programmdesigns weiter einschränkt.
 
-Aus diesen Gründen verfolgt Rust den anderen Ansatz durch Verwendung von
+Aus diesen Gründen verfolgt Rust den anderen Ansatz mittels Verwendung von
 Merkmalsobjekten (trait objects) anstelle der Vererbung. Schauen wir uns an,
 wie Merkmalsobjekte Polymorphismus in Rust ermöglichen.

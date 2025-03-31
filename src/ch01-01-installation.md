@@ -1,13 +1,13 @@
 ## Installation
 
 Der erste Schritt ist, Rust zu installieren. Wir werden Rust mittels `rustup`
-herunterladen, einem Kommandozeilenwerkzeug für die Verwaltung von Rust-Versionen
-und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung für den Download
-benötigen.
+herunterladen, einem Kommandozeilenwerkzeug für die Verwaltung von
+Rust-Versionen und dazugehörigen Werkzeugen. Du wirst eine Internetverbindung
+für den Download benötigen.
 
 > Anmerkung: Falls du `rustup` aus irgendeinem Grund nicht verwenden möchtest,
-> schaue bitte auf der Seite [Andere Rust-Installationsmethoden][otherinstall]
-> nach anderen Möglichkeiten.
+> schaue bitte auf der Seite [„Andere
+> Rust-Installationsmethoden“][otherinstall] nach weiteren Möglichkeiten.
 
 Die folgenden Schritte installieren die neueste stabile Version des
 Rust-Compilers. Rust garantiert Stabilität und stellt somit sicher, dass alle
@@ -28,7 +28,7 @@ dieses Buchs funktionieren.
 > PowerShell-spezifische Beispiele werden außerdem `>` anstelle von `$`
 > verwenden.
 
-### Die Installation von `rustup` in Linux und macOS
+### Installation von `rustup` unter Linux und macOS
 
 Falls du Linux oder macOS verwendest, öffne ein Terminalfenster und gib den
 folgenden Befehl ein:
@@ -63,13 +63,13 @@ Linux-Benutzer sollten in der Regel GCC oder Clang installieren, je nach
 Dokumentation ihrer Distribution. Wenn du zum Beispiel Ubuntu verwendest,
 kannst du das Paket `build-essential` installieren.
 
-### Die Installation von `rustup` in Windows
+### Installation von `rustup` unter Windows
 
-Rufe [https://www.rust-lang.org/tools/install][install] auf und folge
-den Anweisungen, um Rust in Windows zu installieren. Während der Installation
+Rufe [https://www.rust-lang.org/tools/install][install] auf und folge den
+Anweisungen, um Rust unter Windows zu installieren. Während der Installation
 wirst du aufgefordert, Visual Studio zu installieren. Dieses enthält einen
 Linker und die nativen Bibliotheken, die zum Kompilieren von Programmen
-benötigt werden. Wenn du an dieser Stelle weitere Hilfe brauchst, geht zu
+benötigt werden. Wenn du an dieser Stelle weitere Hilfe brauchst, gehe zu
 [https://rust-lang.github.io/rustup/installation/windows-msvc.html][msvc].
 
 Der Rest dieses Buchs verwendet Befehle, die sowohl in _cmd.exe_ als auch
