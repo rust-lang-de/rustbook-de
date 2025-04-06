@@ -192,5 +192,3 @@ Nehmen wir zum Beispiel an, wir hätten zwei Funktionen: Eine, die das größte
 Element in einem Anteilstyp mit `i32`-Werten findet, und eine, die das größte
 Element in einem Anteilstyp mit `char`-Werten findet. Wie würden wir diese
 Duplizierung beseitigen? Lass es uns herausfinden!
-
-[ch18]: ch18-00-patterns.html
