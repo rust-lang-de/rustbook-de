@@ -536,6 +536,6 @@ Datenteilen zu einer `struct` ansehen.
 
 [ch13-2]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#muster-die-werte-binden
-[collection]: ch08-00-common-collections.md
+[collection]: ch08-00-common-collections.html
 [deref-coercions]: ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
 [strings]: ch08-02-strings.html
