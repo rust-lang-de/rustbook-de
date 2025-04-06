@@ -623,5 +623,5 @@ nützlich, wenn du Kommandozeilenprogramme schreibst.
 [validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html
 [ch11-anatomy]: ch11-01-writing-tests.html#anatomie-einer-testfunktion
 [ch10-lifetimes]: ch10-03-lifetime-syntax.html
-[ch3-iter]: ch03-05-control-flow.html#wiederholen-anhand-einer-kollektion-mit-for
+[ch3-iter]: ch03-05-control-flow.html#durchlaufen-einer-kollektion-mit-for
 [ch13-iterators]: ch13-02-iterators.html
