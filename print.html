@@ -36,10 +36,11 @@
         <link rel="stylesheet" href="theme/listing.css">
 
 
-        <!-- Provide site root to javascript -->
+        <!-- Provide site root and default themes to javascript -->
         <script>
-            var path_to_root = "";
-            var default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? "navy" : "light";
+            const path_to_root = "";
+            const default_light_theme = "light";
+            const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
         <script src="toc.js"></script>
@@ -49,8 +50,8 @@
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
             try {
-                var theme = localStorage.getItem('mdbook-theme');
-                var sidebar = localStorage.getItem('mdbook-sidebar');
+                let theme = localStorage.getItem('mdbook-theme');
+                let sidebar = localStorage.getItem('mdbook-sidebar');
 
                 if (theme.startsWith('"') && theme.endsWith('"')) {
                     localStorage.setItem('mdbook-theme', theme.slice(1, theme.length - 1));
@@ -64,7 +65,8 @@
 
         <!-- Set the theme before any content is loaded, prevents flash -->
         <script>
-            var theme;
+            const default_theme = window.matchMedia("(prefers-color-scheme: dark)").matches ? default_dark_theme : default_light_theme;
+            let theme;
             try { theme = localStorage.getItem('mdbook-theme'); } catch(e) { }
             if (theme === null || theme === undefined) { theme = default_theme; }
             const html = document.documentElement;
@@ -77,8 +79,8 @@
 
         <!-- Hide / unhide sidebar before it is displayed -->
         <script>
-            var sidebar = null;
-            var sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
+            let sidebar = null;
+            const sidebar_toggle = document.getElementById("sidebar-toggle-anchor");
             if (document.body.clientWidth >= 1080) {
                 try { sidebar = localStorage.getItem('mdbook-sidebar'); } catch(e) { }
                 sidebar = sidebar || 'visible';
@@ -114,6 +116,7 @@
                             <i class="fa fa-paint-brush"></i>
                         </button>
                         <ul id="theme-list" class="theme-popup" aria-label="Themes" role="menu">
+                            <li role="none"><button role="menuitem" class="theme" id="default_theme">Auto</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="light">Light</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="rust">Rust</button></li>
                             <li role="none"><button role="menuitem" class="theme" id="coal">Coal</button></li>
@@ -9053,7 +9056,7 @@ der <code>for</code>-Schleife dem Gültigkeitsbereich, sodass alle diese Änderu
 und gemäß der Ausleihregeln zulässig sind.</p>
 <h3 id="hash-funktionen"><a class="header" href="#hash-funktionen">Hash-Funktionen</a></h3>
 <p>Standardmäßig verwendet <code>HashMap</code> eine Hash-Funktion namens <em>SipHash</em>, die robust
-gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference"><a href="#siphash">1</a></sup> ist. Dies
+gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen<sup class="footnote-reference" id="fr-siphash-1"><a href="#footnote-siphash">1</a></sup> ist. Dies
 ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
 zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
 Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
@@ -9065,9 +9068,6 @@ Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
 implementieren; <a href="https://crates.io/">crates.io</a> verfügt über Bibliotheken, die von anderen
 Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.</p>
-<div class="footnote-definition" id="siphash"><sup class="footnote-definition-label">1</sup>
-<p><a href="https://en.wikipedia.org/wiki/SipHash">https://en.wikipedia.org/wiki/SipHash</a></p>
-</div>
 <h2 id="zusammenfassung-7"><a class="header" href="#zusammenfassung-7">Zusammenfassung</a></h2>
 <p>Vektoren, Zeichenketten und Hashtabellen bieten eine große Menge an
 Funktionalität, die in Programmen benötigt wird, wenn du Daten speichern,
@@ -9095,7 +9095,11 @@ Zeichenketten und Hashtabellen, die für diese Übungen hilfreich sind!</p>
 <p>Wir steigen in komplexere Programme ein, in denen Operationen fehlschlagen
 können, daher ist es ein perfekter Zeitpunkt, auf die Fehlerbehandlung
 einzugehen. Das werden wir als nächstes tun!</p>
-<div style="break-before: page; page-break-before: always;"></div><h1 id="fehlerbehandlung"><a class="header" href="#fehlerbehandlung">Fehlerbehandlung</a></h1>
+<hr>
+<ol class="footnote-definition"><li id="footnote-siphash">
+<p><a href="https://en.wikipedia.org/wiki/SipHash">https://en.wikipedia.org/wiki/SipHash</a> <a href="#fr-siphash-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h1 id="fehlerbehandlung"><a class="header" href="#fehlerbehandlung">Fehlerbehandlung</a></h1>
 <p>Fehler sind eine Tatsache im Software-Alltag, deshalb enthält Rust eine Reihe von
 Funktionalitäten zur Behandlung von Situationen, in denen etwas schiefgeht. In
 vielen Fällen verlangt Rust von dir, dass du die Möglichkeit eines Fehlers
@@ -15165,7 +15169,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 <code>contents</code></span></p>
 <p>Die Methode <code>lines</code> gibt einen Iterator zurück. Wir werden in <a href="ch13-02-iterators.html">Kapitel
 13</a> ausführlich über Iteratoren sprechen, aber erinnere dich
-daran, dass du diese Art der Verwendung eines Iterators in <a href="ch03-05-control-flow.html#wiederholen-anhand-einer-kollektion-mit-for">Codeblock
+daran, dass du diese Art der Verwendung eines Iterators in <a href="ch03-05-control-flow.html#durchlaufen-einer-kollektion-mit-for">Codeblock
 3-5</a> gesehen hast, wo wir eine <code>for</code>-Schleife mit einem Iterator
 benutzt haben, um etwas Code für jedes Element in einer Kollektion auszuführen.</p>
 <h4 id="durchsuchen-aller-zeilen-nach-dem-abfragetext"><a class="header" href="#durchsuchen-aller-zeilen-nach-dem-abfragetext">Durchsuchen aller Zeilen nach dem Abfragetext</a></h4>
@@ -17850,7 +17854,7 @@ wird von den anderen unabhängig konfiguriert.</p>
 du <code>cargo build</code> ausführst, und das Profil <code>release</code>, das Cargo verwendet, wenn
 <code>cargo build --release</code> ausgeführt wird. <code>dev</code> ist mit guten
 Standardeinstellungen für die Entwicklung (development) definiert und <code>release</code>
-hat gute Standardeinstellungen für Releasebuilds. <sup class="footnote-reference"><a href="#1">1</a></sup></p>
+hat gute Standardeinstellungen für Releasebuilds. <sup class="footnote-reference" id="fr-1-1"><a href="#footnote-1">1</a></sup></p>
 <p>Profilnamen die dir möglicherweise aus der Ausgabe beim Bauvorgang bekannt sind:</p>
 <pre><code class="language-console">$ cargo build
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
@@ -17898,10 +17902,11 @@ vornehmen als mit Standardeinstellungen, aber weniger als bei einem
 Releasebuild.</p>
 <p>Eine vollständige Liste der Konfigurationsoptionen und Standardeinstellungen für
 jedes Profil findest du in der <a href="https://doc.rust-lang.org/cargo/reference/profiles.html">Cargo-Dokumentation</a>.</p>
-<div class="footnote-definition" id="1"><sup class="footnote-definition-label">1</sup>
-<p><strong>Release</strong>: Veröffentlichung, <strong>Build</strong>: Kompilierter Quelltext</p>
-</div>
-<div style="break-before: page; page-break-before: always;"></div><h2 id="kisten-crate-auf-cratesio-veröffentlichen"><a class="header" href="#kisten-crate-auf-cratesio-veröffentlichen">Kisten (crate) auf crates.io veröffentlichen</a></h2>
+<hr>
+<ol class="footnote-definition"><li id="footnote-1">
+<p><strong>Release</strong>: Veröffentlichung, <strong>Build</strong>: Kompilierter Quelltext <a href="#fr-1-1">↩</a></p>
+</li>
+</ol><div style="break-before: page; page-break-before: always;"></div><h2 id="kisten-crate-auf-cratesio-veröffentlichen"><a class="header" href="#kisten-crate-auf-cratesio-veröffentlichen">Kisten (crate) auf crates.io veröffentlichen</a></h2>
 <p>Wir haben Pakete von <a href="https://crates.io/">crates.io</a> als Abhängigkeiten (dependencies)
 unseres Projekts verwendet. Du kannst deinen Programmcode jedoch auch für
 andere Personen freigeben, indem du eigene Pakete veröffentlichst. Die
