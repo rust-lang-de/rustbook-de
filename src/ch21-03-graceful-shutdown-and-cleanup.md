@@ -1,6 +1,6 @@
 ## Kontrolliertes Beenden und Aufräumen
 
-Der Code in Codeblock 20-20 antwortet auf Anfragen asynchron durch die
+Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder `workers`, `id` und `thread`, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
@@ -20,7 +20,7 @@ seinen Strang-Vorrat kontrolliert herunterfährt.
 
 Lass uns damit beginnen, `Drop` auf unseren Strang-Vorrat zu implementieren.
 Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
-warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
+warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt
 einen ersten Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.
 
@@ -103,7 +103,7 @@ impl Drop for ThreadPool {
 # }
 ```
 
-<span class="caption">Codeblock 20-22: Warten auf das Ende der einzelnen
+<span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
 Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span>
 
 Zuerst iterieren wir über alle `workers` im Strang-Vorrat. Wir verwenden dafür
@@ -265,11 +265,10 @@ Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
-`Sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
-Codeblock 20-23 zeigt die Änderungen an `ThreadPool`, um den `Absender`
-explizit aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option`
-verwenden, um den `Sender` mit `Option::take` aus dem `ThreadPool` herausnehmen
-zu können.
+`sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
+Codeblock 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
+aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option` verwenden,
+um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -363,13 +362,13 @@ impl Drop for ThreadPool {
 # }
 ```
 
-<span class="caption">Codeblock 20-23: `sender` vor dem Warten auf die
+<span class="caption">Codeblock 21-23: `sender` vor dem Warten auf die
 `Worker`-Stränge explizit aufräumen</span>
 
 Das Aufräumen von `sender` schließt den Kanal, was bedeutet, dass keine
 weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
 von `recv`, die die `Worker`-Instanzen in der Endlosschleife machen, einen
-Fehler zurück. In Codeblock 20-24 ändern wir die `Worker`-Schleife so, dass die
+Fehler zurück. In Codeblock 21-24 ändern wir die `Worker`-Schleife so, dass die
 Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
 Stränge beendet werden, wenn die Implementierung von `drop` in `ThreadPool`
 `join` für sie aufruft.
@@ -469,12 +468,12 @@ impl Worker {
 }
 ```
 
-<span class="caption">Codeblock 20-24: Explizites Verlassen der Schleife, wenn
+<span class="caption">Codeblock 21-24: Explizites Verlassen der Schleife, wenn
 `recv` einen Fehler zurückgibt</span>
 
 Um diesen Code in Aktion zu sehen, modifizieren wir `main` so, dass nur zwei
 Anfragen akzeptiert werden, bevor der Server kontrolliert heruntergefahren
-wird, wie in Codeblock 20-25 gezeigt.
+wird, wie in Codeblock 21-25 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -525,7 +524,7 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 20-25: Herunterfahren des Servers, nachdem er
+<span class="caption">Codeblock 21-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span>
 
 Du würdest nicht wollen, dass ein Webserver aus der realen Welt

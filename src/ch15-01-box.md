@@ -40,7 +40,7 @@ Bevor wir den Haldenspeicher-Anwendungsfall für `Box<T>` besprechen, werden wir
 die Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
 gespeichert sind.
 
-Codeblock 15.1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
+Codeblock 15-1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
 Haldenspeicher speichert:
 
 <span class="filename">Dateiname: src/main.rs</span>
