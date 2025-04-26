@@ -536,7 +536,7 @@ ist.</li>
 <li>Das Ergebnis von <code>rx.recv</code> ist nur dann <code>None</code>, wenn das andere Ende des
 Kanals geschlossen wurde.</li>
 <li>Der Kanal wird nur geschlossen, wenn wir <code>rx.close</code> aufrufen oder wenn die
-Absenderseite <code>tx</code> aufgeräumt (dropped) wird.</li>
+Senderseite <code>tx</code> aufgeräumt (dropped) wird.</li>
 <li>Wir rufen nirgendwo <code>rx.close</code> auf, und <code>tx</code> wird nicht aufgeräumt, bis der
 äußerste asynchrone Block, der an <code>trpl::run</code> übergeben wurde, endet.</li>
 <li>Der Block kann nicht enden, weil er auf <code>trpl::join</code> wartet, was uns wieder

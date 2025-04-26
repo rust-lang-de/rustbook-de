@@ -161,7 +161,7 @@ das Problem in Aktion ansehen.</p>
 <h3 id="simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung"><a class="header" href="#simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung">Simulieren einer langsamen Anfrage in der aktuellen Server-Implementierung</a></h3>
 <p>Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
-Codeblock 20-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
+Codeblock 21-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
 einer simulierten langsamen Antwort, die den Server veranlasst, fünf Sekunden
 lang zu schlafen, bevor er antwortet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -208,18 +208,18 @@ lang zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span>}</code></pre></pre>
-<p><span class="caption">Codeblock 20-10: Simulieren einer langsamen Anfrage durch
+<p><span class="caption">Codeblock 21-10: Simulieren einer langsamen Anfrage durch
 Schlafen von 5 Sekunden</span></p>
 <p>Wir haben von <code>if</code> zu <code>match</code> gewechselt, da wir nun drei Fälle haben. Wir
 müssen explizit auf ein Stück von <code>request_line</code> abgleichen, um einen
 Musterabgleich mit den Zeichenketten-Literalwerten durchzuführen; <code>match</code> führt
 keine automatische Referenzierung und Dereferenzierung durch, wie es die
 Gleichheitsmethode tut.</p>
-<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 20-9. Der
+<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 21-9. Der
 zweite Zweig entspricht einer Anfrage an <em>/sleep</em>. Wenn diese Anfrage empfangen
 wird, schläft der Server für fünf Sekunden, bevor er die erfolgreiche
 HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Codeblock
-20-9.</p>
+21-9.</p>
 <p>Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!</p>
 <p>Starte den Server mit <code>cargo run</code>. Öffne dann zwei Browser-Fenster: Eines für
@@ -287,7 +287,7 @@ nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
 einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
 zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
 wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen. Codeblock 20-11 zeigt die Änderungen, die an <code>main</code>
+Lösungen zu vergleichen. Codeblock 21-11 zeigt die Änderungen, die an <code>main</code>
 vorgenommen werden müssen, um einen neuen Strang zu erzeugen, der jeden Strom
 innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -332,7 +332,7 @@ innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-11: Erstellen eines neuen Strangs für jeden
+<p><span class="caption">Codeblock 21-11: Erstellen eines neuen Strangs für jeden
 Strom</span></p>
 <p>Wie du in Kapitel 16 gelernt hast, wird <code>thread::spawn</code> einen neuen Strang
 erstellen und dann den Code im Funktionsabschluss (closure) im neuen Strang
@@ -344,7 +344,7 @@ du neue Stränge ohne jede Begrenzung erstellen würdest.</p>
 <h4 id="erstellen-einer-endliche-anzahl-von-strängen"><a class="header" href="#erstellen-einer-endliche-anzahl-von-strängen">Erstellen einer endliche Anzahl von Strängen</a></h4>
 <p>Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
 arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
-Änderungen am Code erfordert, der unsere API verwendet. Codeblock 20-12 zeigt
+Änderungen am Code erfordert, der unsere API verwendet. Codeblock 21-12 zeigt
 die hypothetische Schnittstelle für eine Struktur (struct) <code>ThreadPool</code>, die
 wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -390,7 +390,7 @@ wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-12: Unsere ideale
+<p><span class="caption">Codeblock 21-12: Unsere ideale
 <code>ThreadPool</code>-Schnittstelle</span></p>
 <p>Wir verwenden <code>ThreadPool::new</code>, um einen neuen Strang-Vorrat mit einer
 konfigurierbaren Anzahl von Strängen zu erstellen, in diesem Fall vier. In der
@@ -402,7 +402,7 @@ Strang im Vorrat zur Ausführung übergibt. Dieser Code lässt sich noch nicht
 kompilieren, aber wir werden es versuchen, damit der Compiler uns anleiten
 kann, wie wir das Problem beheben können.</p>
 <h4 id="aufbau-von-threadpool-mit-compilergetriebener-entwicklung"><a class="header" href="#aufbau-von-threadpool-mit-compilergetriebener-entwicklung">Aufbau von <code>ThreadPool</code> mit compilergetriebener Entwicklung</a></h4>
-<p>Nimm die Änderungen in Codeblock 20-12 an <em>src/main.rs</em> vor und lass uns dann
+<p>Nimm die Änderungen in Codeblock 21-12 an <em>src/main.rs</em> vor und lass uns dann
 die Kompilierfehler von <code>cargo check</code> verwenden, um unsere Entwicklung
 voranzutreiben. Hier ist der erste Fehler, den wir erhalten:</p>
 <pre><code class="language-console">$ cargo check
@@ -609,7 +609,7 @@ keinen Sinn, dennoch ist null ein vollkommen gültiges <code>usize</code>. Wir f
 hinzu, um zu prüfen, ob <code>size</code> größer als null ist, bevor wir eine
 <code>ThreadPool</code>-Instanz zurückgeben, und das Programm abstürzen lassen, wenn er
 eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Codeblock
-20-13 gezeigt.</p>
+21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
@@ -635,7 +635,7 @@ eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Co
 </span><span class="boring">    {
 </span><span class="boring">    }
 </span>}</code></pre>
-<p><span class="caption">Codeblock 20-13: Implementierung von <code>ThreadPool::new</code>
+<p><span class="caption">Codeblock 21-13: Implementierung von <code>ThreadPool::new</code>
 stürzt ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
 Dokumentationskommentaren (doc comments) hinzugefügt. Beachte, dass wir uns an
@@ -668,7 +668,7 @@ den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch <code>JoinHandl
 benutzen und sehen, was passiert. In unserem Fall werden die
 Funktionsabschlüsse, die wir an den Strang-Vorrat übergeben, die Verbindung
 behandeln und nichts zurückgeben, also wird <code>T</code> der Unit-Typ <code>()</code> sein.</p>
-<p>Der Code in Codeblock 20-14 lässt sich kompilieren, erzeugt aber noch keine
+<p>Der Code in Codeblock 21-14 lässt sich kompilieren, erzeugt aber noch keine
 Stränge. Wir haben die Definition von <code>ThreadPool</code> so geändert, dass sie einen
 Vektor von <code>thread::JoinHandle&lt;()&gt;</code>-Instanzen enthält, den Vektor mit der
 Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife eingerichtet, die etwas
@@ -709,7 +709,7 @@ impl ThreadPool {
 </span><span class="boring">    {
 </span><span class="boring">    }
 </span>}</code></pre>
-<p><span class="caption">Codeblock 20-14: Erstellen eines Vektors für <code>ThreadPool</code>
+<p><span class="caption">Codeblock 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
 zum Aufnehmen der Stränge</span></p>
 <p>Wir haben <code>std::thread</code> in der Bibliothekskiste in den Gültigkeitsbereich
 gebracht, weil wir <code>thread::JoinHandle</code> als den Typ der Elemente im Vektor in
@@ -723,7 +723,7 @@ etwas effizienter als die Verwendung von <code>Vec::new</code>, das sich selbst 
 Größe verändert, wenn Elemente eingefügt werden.</p>
 <p>Wenn du <code>cargo check</code> erneut ausführst, sollte es erfolgreich sein.</p>
 <h4 id="struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang"><a class="header" href="#struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang">Struktur <code>Worker</code> zum Senden von Code vom <code>ThreadPool</code> an einen Strang</a></h4>
-<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 20-14 bezüglich
+<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 21-14 bezüglich
 der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
 tatsächlich Stränge erstellen. Die Standardbibliothek bietet <code>thread::spawn</code>
 als eine Möglichkeit, Stränge zu erstellen, und <code>thread::spawn</code> erwartet, dass
@@ -763,8 +763,8 @@ erzeugen, erzeuge einen neuen <code>Worker</code> mit dieser <code>id</code> und
 <code>Worker</code> im Vektor.</li>
 </ol>
 <p>Wenn du zu einer Herausforderung bereit bist, versuche, diese Änderungen selbst
-zu implementieren, bevor du dir den Code in Codeblock 20-15 ansiehst.</p>
-<p>Bereit? Hier ist Codeblock 20-15 mit einer Möglichkeit, die vorhergehenden
+zu implementieren, bevor du dir den Code in Codeblock 21-15 ansiehst.</p>
+<p>Bereit? Hier ist Codeblock 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">use std::thread;
@@ -814,7 +814,7 @@ impl Worker {
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-15: Modifizieren von <code>ThreadPool</code>, um
+<p><span class="caption">Codeblock 21-15: Modifizieren von <code>ThreadPool</code>, um
 <code>Worker</code>-Instanzen zu halten, anstatt Stränge direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
 geändert, weil es jetzt <code>Worker</code>-Instanzen statt <code>JoinHandle&lt;()&gt;</code>-Instanzen
@@ -869,7 +869,7 @@ den Sender.</li>
 Funktionsabschlüsse aller Aufträge, die er erhält, ausführen.</li>
 </ol>
 <p>Beginnen wir damit, einen Kanal in <code>ThreadPool::new</code> zu erstellen und den
-Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 20-16
+Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 21-16
 gezeigt. Die Struktur <code>Job</code> enthält vorerst nichts, aber sie wird die Art von
 Element sein, die wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -925,7 +925,7 @@ impl ThreadPool {
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-16: Ändern von <code>ThreadPool</code>, um den Sender
+<p><span class="caption">Codeblock 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
 <p>In <code>ThreadPool::new</code> erstellen wir unseren neuen Kanal und lassen den Pool das
 sendende Ende halten. Dies kompiliert erfolgreich.</p>
@@ -933,7 +933,7 @@ sendende Ende halten. Dies kompiliert erfolgreich.</p>
 der Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger
 im Strang verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden
 wir den Parameter <code>receiver</code> im Funktionsabschluss referenzieren. Der Code in
-Codeblock 20-17 lässt sich noch nicht ganz kompilieren.</p>
+Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
@@ -991,7 +991,7 @@ Codeblock 20-17 lässt sich noch nicht ganz kompilieren.</p>
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-17: Übergeben des Empfängers an jeden
+<p><span class="caption">Codeblock 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
 den Empfänger an <code>Worker::new</code> und dann verwenden wir ihn innerhalb des
@@ -1043,7 +1043,7 @@ besprochen wurden: Um die Eigentümerschaft über mehrere Stränge zu teilen und
 den Strängen zu erlauben, den Wert zu mutieren, müssen wir <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>
 verwenden. Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>-Instanzen, den
 Empfänger zu besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code>
-zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt
+zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 21-18 zeigt
 die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">use std::{
@@ -1110,7 +1110,7 @@ die Änderungen, die wir vornehmen müssen.</p>
 </span><span class="boring">        Worker { id, thread }
 </span>    }
 }</code></pre>
-<p><span class="caption">Codeblock 20-18: Den Empfänger unter den <code>Worker</code>
+<p><span class="caption">Codeblock 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen
 <code>Mutex</code>. Für jeden neuen <code>Worker</code> klonen wir den <code>Arc</code>, um die Referenzzählung
@@ -1124,7 +1124,7 @@ werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Merk
 <code>execute</code> erhält. Wie in <a href="ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias">„Erstellen von Typ-Synonymen mit
 Typ-Alias“</a> in Kapitel 19 besprochen, ermöglichen uns
 Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
-Siehe Codeblock 20-19.</p>
+Siehe Codeblock 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -1191,7 +1191,7 @@ impl ThreadPool {
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-19: Erstellen eines Alias vom Typ <code>Job</code> für
+<p><span class="caption">Codeblock 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
 eine <code>Box</code>, die jeden Funktionsabschluss enthält, und danach Senden des
 Auftrags in den Kanal</span></p>
 <p>Nachdem wir eine neue <code>Job</code>-Instanz unter Verwendung des Funktionsabschlusses,
@@ -1209,7 +1209,7 @@ an <code>thread::spawn</code> weitergereicht, der immer noch nur auf das empfang
 des Kanals <em>referenziert</em>. Stattdessen müssen wir den Funktionsabschluss für
 immer in einer Schleife laufen lassen, indem wir das empfangende Ende des
 Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
-bekommt. Lass uns die in Codeblock 20-20 gezeigte Änderung in <code>Worker::new</code>
+bekommt. Lass uns die in Codeblock 21-20 gezeigte Änderung in <code>Worker::new</code>
 vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -1281,7 +1281,7 @@ impl Worker {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-20: Empfangen und Ausführen der Aufträge im
+<p><span class="caption">Codeblock 21-20: Empfangen und Ausführen der Aufträge im
 Strang des <code>Worker</code></span></p>
 <p>Hier rufen wir zuerst <code>lock</code> auf <code>receiver</code> auf, um den Mutex zu erwerben, und
 dann rufen wir <code>unwrap</code> auf, um das Programm bei eventuellen Fehlern abstürzen
@@ -1351,7 +1351,7 @@ nicht durch unseren Webserver verursacht.</p>
 </blockquote>
 <p>Nachdem du die <code>while let</code>-Schleife in Kapitel 18 kennengelernt hast, fragst du
 dich vielleicht, warum wir den Code für den <code>Worker</code>-Strang nicht geschrieben
-haben, wie in Codeblock 20-21 gezeigt.</p>
+haben, wie in Codeblock 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore not_desired_behavior"><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -1418,7 +1418,7 @@ impl Worker {
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-21: Eine alternative Implementierung von
+<p><span class="caption">Codeblock 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
 Strang-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
@@ -1432,11 +1432,11 @@ zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
 Implementierung kann aber auch dazu führen, dass die Sperre länger als
 beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
 <code>MutexGuard&lt;T&gt;</code> nachdenken.</p>
-<p>Der Code in Codeblock 20-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
+<p>Der Code in Codeblock 21-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
 <code>let</code> alle temporären Werte, die in dem Ausdruck auf der rechten Seite des
 Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die
 <code>let</code>-Anweisung endet. Allerdings gibt <code>while let</code> (und <code>if let</code> und <code>match</code>)
-temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 20-21
+temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 21-21
 bleibt die Sperre für die Dauer des Aufrufs von <code>job()</code> erhalten, was bedeutet,
 dass andere <code>Worker</code>-Instanzen keine Aufträge erhalten können.</p>
 

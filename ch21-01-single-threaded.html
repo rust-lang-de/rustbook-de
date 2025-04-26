@@ -178,7 +178,7 @@ auf die übliche Art und Weise erstellen:</p>
      Created binary (application) `hello` project
 $ cd hello
 </code></pre>
-<p>Gib nun den Code in Codeblock 20-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
+<p>Gib nun den Code in Codeblock 21-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
 Code lauscht unter der lokalen Adresse <code>127.0.0.1:7878</code> auf eingehende
 TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
 <code>Verbindung hergestellt!</code> ausgeben.</p>
@@ -194,7 +194,7 @@ fn main() {
         println!("Verbindung hergestellt!");
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-1: Warten auf eingehende Ströme und Ausgeben
+<p><span class="caption">Codeblock 21-1: Warten auf eingehende Ströme und Ausgeben
 einer Nachricht, wenn wir einen Strom empfangen</span></p>
 <p>Mit <code>TcpListener</code> können wir unter der Adresse <code>127.0.0.1:7878</code> auf
 TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
@@ -275,7 +275,7 @@ und dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
 Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
 <code>handle_connection</code> lesen wir Daten aus dem TCP-Strom und geben sie aus, sodass
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
-dass er wie Codeblock 20-2 aussieht.</p>
+dass er wie Codeblock 21-2 aussieht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
     io::{prelude::*, BufReader},
@@ -302,7 +302,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     println!("Request: {http_request:#?}");
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
+<p><span class="caption">Codeblock 21-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
 <p>Wir bringen <code>std::io::prelude</code> und <code>std::io::BufReader</code> in den
 Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
@@ -421,7 +421,7 @@ Kopfzeilen, eine weitere CRLF-Sequenz und der Rumpf der Antwort.</p>
 erfolgreiche HTTP-Antwort. Lass uns dies als Antwort auf eine erfolgreiche
 Anfrage in den Strom schreiben! Entferne aus der Funktion <code>handle_connection</code>
 das <code>println!</code>, das die Anfragedaten ausgegeben hat, und ersetze es durch den
-Code in Codeblock 20-3.</p>
+Code in Codeblock 21-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    io::{prelude::*, BufReader},
@@ -450,7 +450,7 @@ Code in Codeblock 20-3.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-3: Schreiben einer kleinen erfolgreichen
+<p><span class="caption">Codeblock 21-3: Schreiben einer kleinen erfolgreichen
 HTTP-Antwort in den Strom</span></p>
 <p>Die erste neue Zeile definiert die Variable <code>response</code>, die die Daten der
 Erfolgsmeldung enthält. Dann rufen wir <code>as_bytes</code> auf unserer <code>response</code> auf,
@@ -469,7 +469,7 @@ Hand programmiert!</p>
 <p>Lass uns die Funktionalität für die Rückgabe von mehr als einer leeren Seite
 implementieren. Erstelle die neue Datei <em>hello.html</em> in der Wurzel deines
 Projektverzeichnisses, nicht im Verzeichnis <em>src</em>. Du kannst beliebiges HTML
-eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.</p>
+eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.</p>
 <p><span class="filename">Dateiname: hello.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -483,11 +483,11 @@ eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 20-4: Eine Beispiel-HTML-Datei, die in einer
+<p><span class="caption">Codeblock 21-4: Eine Beispiel-HTML-Datei, die in einer
 Antwort zurückgegeben werden soll</span></p>
 <p>Dies ist ein minimales HTML5-Dokument mit einer Überschrift und etwas Text. Um
 dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
-wir <code>handle_connection</code> wie in Codeblock 20-5 gezeigt, um die HTML-Datei zu
+wir <code>handle_connection</code> wie in Codeblock 21-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
@@ -524,7 +524,7 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-5: Senden des Inhalts von <em>hello.html</em> als
+<p><span class="caption">Codeblock 21-5: Senden des Inhalts von <em>hello.html</em> als
 Rumpf der Antwort</span></p>
 <p>Wir haben <code>fs</code> zur <code>use</code>-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
@@ -549,7 +549,7 @@ wohlgeformte Anfrage an <code>/</code> zurücksenden.</p>
 davon, was der Client angefragt hat. Fügen wir Funktionen hinzu, um zu
 überprüfen, ob der Browser <code>/</code> anfragt, bevor er die HTML-Datei zurückgibt, und
 um einen Fehler zurückzugeben, wenn der Browser etwas anderes anfragt. Dazu
-müssen wir <code>handle_connection</code> modifizieren, wie in Codeblock 20-6 gezeigt.
+müssen wir <code>handle_connection</code> modifizieren, wie in Codeblock 21-6 gezeigt.
 Dieser neue Code prüft den Inhalt der erhaltenen Anfrage, ob <code>/</code> angefragt
 wird, und fügt <code>if</code>- und <code>else</code>-Blöcke hinzu, um die Anfragen unterschiedlich
 zu behandeln.</p>
@@ -590,14 +590,14 @@ fn handle_connection(mut stream: TcpStream) {
         // eine andere Anfrage
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-6: Behandlung von Anfragen an <code>/</code> anders als
+<p><span class="caption">Codeblock 21-6: Behandlung von Anfragen an <code>/</code> anders als
 andere Anfragen</span></p>
 <p>Wir werden uns nur die erste Zeile der HTTP-Anfrage ansehen. Anstatt also die
 gesamte Anfrage in einen Vektor zu lesen, rufen wir <code>next</code> auf, um das erste
 Element aus dem Iterator zu erhalten. Das erste <code>unwrap</code> kümmert sich um die
 <code>Option</code> und hält das Programm an, wenn der Iterator keine Elemente hat. Das
 zweite <code>unwrap</code> behandelt das <code>Result</code> und hat den gleichen Effekt wie das
-<code>unwrap</code> in  <code>map</code> in Codeblock 20-2.</p>
+<code>unwrap</code> in  <code>map</code> in Codeblock 21-2.</p>
 <p>Als nächstes überprüfen wir <code>request_line</code>, um zu sehen, ob es der Anfragezeile
 einer GET-Anfrage mit dem Pfad <code>/</code> entspricht. Ist dies der Fall, gibt der
 <code>if</code>-Block den Inhalt unserer HTML-Datei zurück.</p>
@@ -607,8 +607,8 @@ bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
 <p>Führe diesen Code jetzt aus und frage <em>127.0.0.1:7878</em> an; du solltest das HTML
 in <em>hello.html</em> erhalten. Wenn du eine andere Anfrage stellst, z.B.
 <em>127.0.0.1:7878/something-else</em>, erhältst du einen Verbindungsfehler, wie du
-ihn beim Ausführen des Codes in Codeblock 20-1 und Codeblock 20-2 gesehen hast.</p>
-<p>Fügen wir nun den Code in Codeblock 20-7 in den <code>else</code>-Block ein, um eine
+ihn beim Ausführen des Codes in Codeblock 21-1 und Codeblock 21-2 gesehen hast.</p>
+<p>Fügen wir nun den Code in Codeblock 21-7 in den <code>else</code>-Block ein, um eine
 Antwort mit dem Statuscode 404 zurückzugeben, der signalisiert, dass der Inhalt
 für die Anfrage nicht gefunden wurde. Wir geben auch etwas HTML für eine Seite
 zurück, die im Browser dargestellt werden soll, um dem Endbenutzer die Antwort
@@ -657,13 +657,13 @@ anzuzeigen.</p>
         stream.write_all(response.as_bytes()).unwrap();
     }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-7: Antworten mit Statuscode 404 und einer
+<p><span class="caption">Codeblock 21-7: Antworten mit Statuscode 404 und einer
 Fehlerseite, wenn etwas anderes als <code>/</code> angefragt wurde</span></p>
 <p>Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
 Begründungsphrase <code>NOT FOUND</code> (nicht gefunden). Der Rumpf der Antwort wird das
 HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hallo.html</em> eine Datei
 <em>404.html</em> für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
-HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
+HTML verwenden oder das Beispiel-HTML in Codeblock 21-8.</p>
 <p><span class="filename">Dateiname: 404.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="de"&gt;
@@ -677,7 +677,7 @@ HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 20-8: Beispielinhalt für die Seite, die mit
+<p><span class="caption">Codeblock 21-8: Beispielinhalt für die Seite, die mit
 jeder 404-Antwort zurückgesendet werden soll</span></p>
 <p>Lass deinen Server mit diesen Änderungen erneut laufen. Die Anfrage
 <em>127.0.0.1:7878</em> sollte den Inhalt von <em>hallo.html</em> zurückgeben und jede andere
@@ -690,7 +690,7 @@ einzigen Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
 prägnanter gestalten, indem wir diese Unterschiede in separate <code>if</code>- und
 <code>else</code>-Zeilen herausziehen, die die Werte der Statuszeile und des Dateinamens
 Variablen zuweisen; wir können diese Variablen dann bedingungslos im Code
-verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 20-9
+verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 21-9
 zeigt den resultierenden Code nach dem Ersetzen der großen <code>if</code>- und
 <code>else</code>-Blöcke.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -732,7 +732,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-9: Refaktorieren der <code>if</code>- und
+<p><span class="caption">Codeblock 21-9: Refaktorieren der <code>if</code>- und
 <code>else</code>-Blöcke, sodass sie nur den Code enthalten, der sich zwischen den beiden
 Fällen unterscheidet</span></p>
 <p>Die Blöcke <code>if</code> und <code>else</code> geben jetzt nur noch die entsprechenden Werte für
@@ -745,8 +745,8 @@ wie in Kapitel 18 besprochen.</p>
 einfacher, den Unterschied zwischen den beiden Fällen zu erkennen, und es
 bedeutet, dass wir nur einen Ort haben, an dem wir den Code aktualisieren
 müssen, wenn wir ändern wollen, wie das Lesen der Datei und das Schreiben der
-Antwort funktionieren. Das Verhalten des Codes in Codeblock 20-9 ist dasselbe
-wie in Codeblock 20-7.</p>
+Antwort funktionieren. Das Verhalten des Codes in Codeblock 21-9 ist dasselbe
+wie in Codeblock 21-7.</p>
 <p>Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
 anderen Anfragen mit einer 404-Antwort.</p>

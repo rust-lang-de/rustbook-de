@@ -665,7 +665,7 @@ getrennten Schritten zu kompilieren und auszuführen. Rust ist eine <em>vorab
 kompilierte</em> (ahead-of-time compiled) Sprache, d.h. du kannst ein Programm
 kompilieren und die ausführbare Datei an jemand anderen weitergeben, und dieser
 kann das Programm auch ohne Installation von Rust ausführen. Wenn du jemandem
-eine <em>*.rb</em>-, <em>.py</em>- oder <em>.js</em>-Datei gibst, muss er eine Ruby-, Python- bzw.
+eine <em>.rb</em>-, <em>.py</em>- oder <em>.js</em>-Datei gibst, muss er eine Ruby-, Python- bzw.
 JavaScript-Implementierung installiert haben. Aber in diesen Sprachen benötigst
 du nur einen Befehl, um dein Programm zu kompilieren und auszuführen. Beim
 Sprachdesign ist alles ein Kompromiss.</p>
@@ -18812,7 +18812,7 @@ erneut anwenden!</p>
 <p>Bevor wir den Haldenspeicher-Anwendungsfall für <code>Box&lt;T&gt;</code> besprechen, werden wir
 die Syntax und die Interaktion mit Werten behandeln, die in einer <code>Box&lt;T&gt;</code>
 gespeichert sind.</p>
-<p>Codeblock 15.1 zeigt, wie man mit einer Box einen <code>i32</code>-Wert auf dem
+<p>Codeblock 15-1 zeigt, wie man mit einer Box einen <code>i32</code>-Wert auf dem
 Haldenspeicher speichert:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -23077,7 +23077,7 @@ ist.</li>
 <li>Das Ergebnis von <code>rx.recv</code> ist nur dann <code>None</code>, wenn das andere Ende des
 Kanals geschlossen wurde.</li>
 <li>Der Kanal wird nur geschlossen, wenn wir <code>rx.close</code> aufrufen oder wenn die
-Absenderseite <code>tx</code> aufgeräumt (dropped) wird.</li>
+Senderseite <code>tx</code> aufgeräumt (dropped) wird.</li>
 <li>Wir rufen nirgendwo <code>rx.close</code> auf, und <code>tx</code> wird nicht aufgeräumt, bis der
 äußerste asynchrone Block, der an <code>trpl::run</code> übergeben wurde, endet.</li>
 <li>Der Block kann nicht enden, weil er auf <code>trpl::join</code> wartet, was uns wieder
@@ -25619,7 +25619,7 @@ fn main() {
 Code in einem Strang und Warten auf die Nachrichten in einem asynchronen
 Block</span></p>
 <p>Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
-Strang an, der für die Absenderseite des Kanals zuständig ist. Innerhalb des
+Strang an, der für die Senderseite des Kanals zuständig ist. Innerhalb des
 Strangs senden wir die Zahlen 1 bis 10 und schlafen dazwischen jeweils eine
 Sekunde lang. Schließlich führen wir ein Future aus, das mit einem asynchronen
 Block erstellt wurde, der an <code>trpl::run</code> übergeben wurde, so wie wir es im
@@ -30815,7 +30815,7 @@ auf die übliche Art und Weise erstellen:</p>
      Created binary (application) `hello` project
 $ cd hello
 </code></pre>
-<p>Gib nun den Code in Codeblock 20-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
+<p>Gib nun den Code in Codeblock 21-1 in <em>src/main.rs</em> ein, um zu beginnen. Dieser
 Code lauscht unter der lokalen Adresse <code>127.0.0.1:7878</code> auf eingehende
 TCP-Ströme (TCP streams). Wenn er einen eingehenden Strom erhält, wird er
 <code>Verbindung hergestellt!</code> ausgeben.</p>
@@ -30831,7 +30831,7 @@ fn main() {
         println!("Verbindung hergestellt!");
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-1: Warten auf eingehende Ströme und Ausgeben
+<p><span class="caption">Codeblock 21-1: Warten auf eingehende Ströme und Ausgeben
 einer Nachricht, wenn wir einen Strom empfangen</span></p>
 <p>Mit <code>TcpListener</code> können wir unter der Adresse <code>127.0.0.1:7878</code> auf
 TCP-Verbindungen warten. In der Adresse ist der Abschnitt vor dem Doppelpunkt
@@ -30912,7 +30912,7 @@ und dann mit der Verbindung etwas zu machen, werden wir eine neue Funktion zur
 Verarbeitung von Verbindungen anfangen. In dieser neuen Funktion
 <code>handle_connection</code> lesen wir Daten aus dem TCP-Strom und geben sie aus, sodass
 wir sehen können, welche Daten vom Browser gesendet werden. Ändere den Code so,
-dass er wie Codeblock 20-2 aussieht.</p>
+dass er wie Codeblock 21-2 aussieht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
     io::{prelude::*, BufReader},
@@ -30939,7 +30939,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     println!("Request: {http_request:#?}");
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
+<p><span class="caption">Codeblock 21-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
 <p>Wir bringen <code>std::io::prelude</code> und <code>std::io::BufReader</code> in den
 Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
@@ -31058,7 +31058,7 @@ Kopfzeilen, eine weitere CRLF-Sequenz und der Rumpf der Antwort.</p>
 erfolgreiche HTTP-Antwort. Lass uns dies als Antwort auf eine erfolgreiche
 Anfrage in den Strom schreiben! Entferne aus der Funktion <code>handle_connection</code>
 das <code>println!</code>, das die Anfragedaten ausgegeben hat, und ersetze es durch den
-Code in Codeblock 20-3.</p>
+Code in Codeblock 21-3.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    io::{prelude::*, BufReader},
@@ -31087,7 +31087,7 @@ Code in Codeblock 20-3.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-3: Schreiben einer kleinen erfolgreichen
+<p><span class="caption">Codeblock 21-3: Schreiben einer kleinen erfolgreichen
 HTTP-Antwort in den Strom</span></p>
 <p>Die erste neue Zeile definiert die Variable <code>response</code>, die die Daten der
 Erfolgsmeldung enthält. Dann rufen wir <code>as_bytes</code> auf unserer <code>response</code> auf,
@@ -31106,7 +31106,7 @@ Hand programmiert!</p>
 <p>Lass uns die Funktionalität für die Rückgabe von mehr als einer leeren Seite
 implementieren. Erstelle die neue Datei <em>hello.html</em> in der Wurzel deines
 Projektverzeichnisses, nicht im Verzeichnis <em>src</em>. Du kannst beliebiges HTML
-eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.</p>
+eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.</p>
 <p><span class="filename">Dateiname: hello.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="en"&gt;
@@ -31120,11 +31120,11 @@ eingeben, das du willst; Codeblock 20-4 zeigt eine Möglichkeit.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 20-4: Eine Beispiel-HTML-Datei, die in einer
+<p><span class="caption">Codeblock 21-4: Eine Beispiel-HTML-Datei, die in einer
 Antwort zurückgegeben werden soll</span></p>
 <p>Dies ist ein minimales HTML5-Dokument mit einer Überschrift und etwas Text. Um
 dies vom Server zurückzugeben, wenn eine Anfrage empfangen wird, modifizieren
-wir <code>handle_connection</code> wie in Codeblock 20-5 gezeigt, um die HTML-Datei zu
+wir <code>handle_connection</code> wie in Codeblock 21-5 gezeigt, um die HTML-Datei zu
 lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust no_run edition2024">use std::{
@@ -31161,7 +31161,7 @@ lesen, sie der Antwort als Rumpf hinzuzufügen und sie zu senden.</p>
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-5: Senden des Inhalts von <em>hello.html</em> als
+<p><span class="caption">Codeblock 21-5: Senden des Inhalts von <em>hello.html</em> als
 Rumpf der Antwort</span></p>
 <p>Wir haben <code>fs</code> zur <code>use</code>-Deklaration hinzugefügt, um das Dateisystemmodul der
 Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code zum Lesen des
@@ -31186,7 +31186,7 @@ wohlgeformte Anfrage an <code>/</code> zurücksenden.</p>
 davon, was der Client angefragt hat. Fügen wir Funktionen hinzu, um zu
 überprüfen, ob der Browser <code>/</code> anfragt, bevor er die HTML-Datei zurückgibt, und
 um einen Fehler zurückzugeben, wenn der Browser etwas anderes anfragt. Dazu
-müssen wir <code>handle_connection</code> modifizieren, wie in Codeblock 20-6 gezeigt.
+müssen wir <code>handle_connection</code> modifizieren, wie in Codeblock 21-6 gezeigt.
 Dieser neue Code prüft den Inhalt der erhaltenen Anfrage, ob <code>/</code> angefragt
 wird, und fügt <code>if</code>- und <code>else</code>-Blöcke hinzu, um die Anfragen unterschiedlich
 zu behandeln.</p>
@@ -31227,14 +31227,14 @@ fn handle_connection(mut stream: TcpStream) {
         // eine andere Anfrage
     }
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-6: Behandlung von Anfragen an <code>/</code> anders als
+<p><span class="caption">Codeblock 21-6: Behandlung von Anfragen an <code>/</code> anders als
 andere Anfragen</span></p>
 <p>Wir werden uns nur die erste Zeile der HTTP-Anfrage ansehen. Anstatt also die
 gesamte Anfrage in einen Vektor zu lesen, rufen wir <code>next</code> auf, um das erste
 Element aus dem Iterator zu erhalten. Das erste <code>unwrap</code> kümmert sich um die
 <code>Option</code> und hält das Programm an, wenn der Iterator keine Elemente hat. Das
 zweite <code>unwrap</code> behandelt das <code>Result</code> und hat den gleichen Effekt wie das
-<code>unwrap</code> in  <code>map</code> in Codeblock 20-2.</p>
+<code>unwrap</code> in  <code>map</code> in Codeblock 21-2.</p>
 <p>Als nächstes überprüfen wir <code>request_line</code>, um zu sehen, ob es der Anfragezeile
 einer GET-Anfrage mit dem Pfad <code>/</code> entspricht. Ist dies der Fall, gibt der
 <code>if</code>-Block den Inhalt unserer HTML-Datei zurück.</p>
@@ -31244,8 +31244,8 @@ bedeutet das, dass wir eine andere Anfrage erhalten haben. Wir werden dem
 <p>Führe diesen Code jetzt aus und frage <em>127.0.0.1:7878</em> an; du solltest das HTML
 in <em>hello.html</em> erhalten. Wenn du eine andere Anfrage stellst, z.B.
 <em>127.0.0.1:7878/something-else</em>, erhältst du einen Verbindungsfehler, wie du
-ihn beim Ausführen des Codes in Codeblock 20-1 und Codeblock 20-2 gesehen hast.</p>
-<p>Fügen wir nun den Code in Codeblock 20-7 in den <code>else</code>-Block ein, um eine
+ihn beim Ausführen des Codes in Codeblock 21-1 und Codeblock 21-2 gesehen hast.</p>
+<p>Fügen wir nun den Code in Codeblock 21-7 in den <code>else</code>-Block ein, um eine
 Antwort mit dem Statuscode 404 zurückzugeben, der signalisiert, dass der Inhalt
 für die Anfrage nicht gefunden wurde. Wir geben auch etwas HTML für eine Seite
 zurück, die im Browser dargestellt werden soll, um dem Endbenutzer die Antwort
@@ -31294,13 +31294,13 @@ anzuzeigen.</p>
         stream.write_all(response.as_bytes()).unwrap();
     }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-7: Antworten mit Statuscode 404 und einer
+<p><span class="caption">Codeblock 21-7: Antworten mit Statuscode 404 und einer
 Fehlerseite, wenn etwas anderes als <code>/</code> angefragt wurde</span></p>
 <p>Hier hat unsere Antwort eine Statuszeile mit Statuscode 404 und der
 Begründungsphrase <code>NOT FOUND</code> (nicht gefunden). Der Rumpf der Antwort wird das
 HTML in der Datei <em>404.html</em> sein. Du musst neben <em>hallo.html</em> eine Datei
 <em>404.html</em> für die Fehlerseite erstellen; auch hier kannst du jedes beliebige
-HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
+HTML verwenden oder das Beispiel-HTML in Codeblock 21-8.</p>
 <p><span class="filename">Dateiname: 404.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
 &lt;html lang="de"&gt;
@@ -31314,7 +31314,7 @@ HTML verwenden oder das Beispiel-HTML in Codeblock 20-8.</p>
   &lt;/body&gt;
 &lt;/html&gt;
 </code></pre>
-<p><span class="caption">Codeblock 20-8: Beispielinhalt für die Seite, die mit
+<p><span class="caption">Codeblock 21-8: Beispielinhalt für die Seite, die mit
 jeder 404-Antwort zurückgesendet werden soll</span></p>
 <p>Lass deinen Server mit diesen Änderungen erneut laufen. Die Anfrage
 <em>127.0.0.1:7878</em> sollte den Inhalt von <em>hallo.html</em> zurückgeben und jede andere
@@ -31327,7 +31327,7 @@ einzigen Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
 prägnanter gestalten, indem wir diese Unterschiede in separate <code>if</code>- und
 <code>else</code>-Zeilen herausziehen, die die Werte der Statuszeile und des Dateinamens
 Variablen zuweisen; wir können diese Variablen dann bedingungslos im Code
-verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 20-9
+verwenden, um die Datei zu lesen und die Antwort zu schreiben. Codeblock 21-9
 zeigt den resultierenden Code nach dem Ersetzen der großen <code>if</code>- und
 <code>else</code>-Blöcke.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -31369,7 +31369,7 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre></pre>
-<p><span class="caption">Codeblock 20-9: Refaktorieren der <code>if</code>- und
+<p><span class="caption">Codeblock 21-9: Refaktorieren der <code>if</code>- und
 <code>else</code>-Blöcke, sodass sie nur den Code enthalten, der sich zwischen den beiden
 Fällen unterscheidet</span></p>
 <p>Die Blöcke <code>if</code> und <code>else</code> geben jetzt nur noch die entsprechenden Werte für
@@ -31382,8 +31382,8 @@ wie in Kapitel 18 besprochen.</p>
 einfacher, den Unterschied zwischen den beiden Fällen zu erkennen, und es
 bedeutet, dass wir nur einen Ort haben, an dem wir den Code aktualisieren
 müssen, wenn wir ändern wollen, wie das Lesen der Datei und das Schreiben der
-Antwort funktionieren. Das Verhalten des Codes in Codeblock 20-9 ist dasselbe
-wie in Codeblock 20-7.</p>
+Antwort funktionieren. Das Verhalten des Codes in Codeblock 21-9 ist dasselbe
+wie in Codeblock 21-7.</p>
 <p>Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
 anderen Anfragen mit einer 404-Antwort.</p>
@@ -31404,7 +31404,7 @@ das Problem in Aktion ansehen.</p>
 <h3 id="simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung"><a class="header" href="#simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung">Simulieren einer langsamen Anfrage in der aktuellen Server-Implementierung</a></h3>
 <p>Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
-Codeblock 20-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
+Codeblock 21-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
 einer simulierten langsamen Antwort, die den Server veranlasst, fünf Sekunden
 lang zu schlafen, bevor er antwortet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -31451,18 +31451,18 @@ lang zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span>}</code></pre></pre>
-<p><span class="caption">Codeblock 20-10: Simulieren einer langsamen Anfrage durch
+<p><span class="caption">Codeblock 21-10: Simulieren einer langsamen Anfrage durch
 Schlafen von 5 Sekunden</span></p>
 <p>Wir haben von <code>if</code> zu <code>match</code> gewechselt, da wir nun drei Fälle haben. Wir
 müssen explizit auf ein Stück von <code>request_line</code> abgleichen, um einen
 Musterabgleich mit den Zeichenketten-Literalwerten durchzuführen; <code>match</code> führt
 keine automatische Referenzierung und Dereferenzierung durch, wie es die
 Gleichheitsmethode tut.</p>
-<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 20-9. Der
+<p>Der erste Zweig ist der gleiche wie der <code>if</code>-Block aus Codeblock 21-9. Der
 zweite Zweig entspricht einer Anfrage an <em>/sleep</em>. Wenn diese Anfrage empfangen
 wird, schläft der Server für fünf Sekunden, bevor er die erfolgreiche
 HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus Codeblock
-20-9.</p>
+21-9.</p>
 <p>Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!</p>
 <p>Starte den Server mit <code>cargo run</code>. Öffne dann zwei Browser-Fenster: Eines für
@@ -31530,7 +31530,7 @@ nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
 einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
 zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
 wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen. Codeblock 20-11 zeigt die Änderungen, die an <code>main</code>
+Lösungen zu vergleichen. Codeblock 21-11 zeigt die Änderungen, die an <code>main</code>
 vorgenommen werden müssen, um einen neuen Strang zu erzeugen, der jeden Strom
 innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -31575,7 +31575,7 @@ innerhalb der <code>for</code>-Schleife verarbeitet.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-11: Erstellen eines neuen Strangs für jeden
+<p><span class="caption">Codeblock 21-11: Erstellen eines neuen Strangs für jeden
 Strom</span></p>
 <p>Wie du in Kapitel 16 gelernt hast, wird <code>thread::spawn</code> einen neuen Strang
 erstellen und dann den Code im Funktionsabschluss (closure) im neuen Strang
@@ -31587,7 +31587,7 @@ du neue Stränge ohne jede Begrenzung erstellen würdest.</p>
 <h4 id="erstellen-einer-endliche-anzahl-von-strängen"><a class="header" href="#erstellen-einer-endliche-anzahl-von-strängen">Erstellen einer endliche Anzahl von Strängen</a></h4>
 <p>Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
 arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
-Änderungen am Code erfordert, der unsere API verwendet. Codeblock 20-12 zeigt
+Änderungen am Code erfordert, der unsere API verwendet. Codeblock 21-12 zeigt
 die hypothetische Schnittstelle für eine Struktur (struct) <code>ThreadPool</code>, die
 wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -31633,7 +31633,7 @@ wir anstelle von <code>thread::spawn</code> verwenden wollen.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-12: Unsere ideale
+<p><span class="caption">Codeblock 21-12: Unsere ideale
 <code>ThreadPool</code>-Schnittstelle</span></p>
 <p>Wir verwenden <code>ThreadPool::new</code>, um einen neuen Strang-Vorrat mit einer
 konfigurierbaren Anzahl von Strängen zu erstellen, in diesem Fall vier. In der
@@ -31645,7 +31645,7 @@ Strang im Vorrat zur Ausführung übergibt. Dieser Code lässt sich noch nicht
 kompilieren, aber wir werden es versuchen, damit der Compiler uns anleiten
 kann, wie wir das Problem beheben können.</p>
 <h4 id="aufbau-von-threadpool-mit-compilergetriebener-entwicklung"><a class="header" href="#aufbau-von-threadpool-mit-compilergetriebener-entwicklung">Aufbau von <code>ThreadPool</code> mit compilergetriebener Entwicklung</a></h4>
-<p>Nimm die Änderungen in Codeblock 20-12 an <em>src/main.rs</em> vor und lass uns dann
+<p>Nimm die Änderungen in Codeblock 21-12 an <em>src/main.rs</em> vor und lass uns dann
 die Kompilierfehler von <code>cargo check</code> verwenden, um unsere Entwicklung
 voranzutreiben. Hier ist der erste Fehler, den wir erhalten:</p>
 <pre><code class="language-console">$ cargo check
@@ -31852,7 +31852,7 @@ keinen Sinn, dennoch ist null ein vollkommen gültiges <code>usize</code>. Wir f
 hinzu, um zu prüfen, ob <code>size</code> größer als null ist, bevor wir eine
 <code>ThreadPool</code>-Instanz zurückgeben, und das Programm abstürzen lassen, wenn er
 eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Codeblock
-20-13 gezeigt.</p>
+21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
@@ -31878,7 +31878,7 @@ eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Co
 </span><span class="boring">    {
 </span><span class="boring">    }
 </span>}</code></pre>
-<p><span class="caption">Codeblock 20-13: Implementierung von <code>ThreadPool::new</code>
+<p><span class="caption">Codeblock 21-13: Implementierung von <code>ThreadPool::new</code>
 stürzt ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
 Dokumentationskommentaren (doc comments) hinzugefügt. Beachte, dass wir uns an
@@ -31911,7 +31911,7 @@ den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch <code>JoinHandl
 benutzen und sehen, was passiert. In unserem Fall werden die
 Funktionsabschlüsse, die wir an den Strang-Vorrat übergeben, die Verbindung
 behandeln und nichts zurückgeben, also wird <code>T</code> der Unit-Typ <code>()</code> sein.</p>
-<p>Der Code in Codeblock 20-14 lässt sich kompilieren, erzeugt aber noch keine
+<p>Der Code in Codeblock 21-14 lässt sich kompilieren, erzeugt aber noch keine
 Stränge. Wir haben die Definition von <code>ThreadPool</code> so geändert, dass sie einen
 Vektor von <code>thread::JoinHandle&lt;()&gt;</code>-Instanzen enthält, den Vektor mit der
 Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife eingerichtet, die etwas
@@ -31952,7 +31952,7 @@ impl ThreadPool {
 </span><span class="boring">    {
 </span><span class="boring">    }
 </span>}</code></pre>
-<p><span class="caption">Codeblock 20-14: Erstellen eines Vektors für <code>ThreadPool</code>
+<p><span class="caption">Codeblock 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
 zum Aufnehmen der Stränge</span></p>
 <p>Wir haben <code>std::thread</code> in der Bibliothekskiste in den Gültigkeitsbereich
 gebracht, weil wir <code>thread::JoinHandle</code> als den Typ der Elemente im Vektor in
@@ -31966,7 +31966,7 @@ etwas effizienter als die Verwendung von <code>Vec::new</code>, das sich selbst 
 Größe verändert, wenn Elemente eingefügt werden.</p>
 <p>Wenn du <code>cargo check</code> erneut ausführst, sollte es erfolgreich sein.</p>
 <h4 id="struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang"><a class="header" href="#struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang">Struktur <code>Worker</code> zum Senden von Code vom <code>ThreadPool</code> an einen Strang</a></h4>
-<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 20-14 bezüglich
+<p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 21-14 bezüglich
 der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
 tatsächlich Stränge erstellen. Die Standardbibliothek bietet <code>thread::spawn</code>
 als eine Möglichkeit, Stränge zu erstellen, und <code>thread::spawn</code> erwartet, dass
@@ -32006,8 +32006,8 @@ erzeugen, erzeuge einen neuen <code>Worker</code> mit dieser <code>id</code> und
 <code>Worker</code> im Vektor.</li>
 </ol>
 <p>Wenn du zu einer Herausforderung bereit bist, versuche, diese Änderungen selbst
-zu implementieren, bevor du dir den Code in Codeblock 20-15 ansiehst.</p>
-<p>Bereit? Hier ist Codeblock 20-15 mit einer Möglichkeit, die vorhergehenden
+zu implementieren, bevor du dir den Code in Codeblock 21-15 ansiehst.</p>
+<p>Bereit? Hier ist Codeblock 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">use std::thread;
@@ -32057,7 +32057,7 @@ impl Worker {
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-15: Modifizieren von <code>ThreadPool</code>, um
+<p><span class="caption">Codeblock 21-15: Modifizieren von <code>ThreadPool</code>, um
 <code>Worker</code>-Instanzen zu halten, anstatt Stränge direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
 geändert, weil es jetzt <code>Worker</code>-Instanzen statt <code>JoinHandle&lt;()&gt;</code>-Instanzen
@@ -32112,7 +32112,7 @@ den Sender.</li>
 Funktionsabschlüsse aller Aufträge, die er erhält, ausführen.</li>
 </ol>
 <p>Beginnen wir damit, einen Kanal in <code>ThreadPool::new</code> zu erstellen und den
-Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 20-16
+Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 21-16
 gezeigt. Die Struktur <code>Job</code> enthält vorerst nichts, aber sie wird die Art von
 Element sein, die wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -32168,7 +32168,7 @@ impl ThreadPool {
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-16: Ändern von <code>ThreadPool</code>, um den Sender
+<p><span class="caption">Codeblock 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
 <p>In <code>ThreadPool::new</code> erstellen wir unseren neuen Kanal und lassen den Pool das
 sendende Ende halten. Dies kompiliert erfolgreich.</p>
@@ -32176,7 +32176,7 @@ sendende Ende halten. Dies kompiliert erfolgreich.</p>
 der Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger
 im Strang verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also werden
 wir den Parameter <code>receiver</code> im Funktionsabschluss referenzieren. Der Code in
-Codeblock 20-17 lässt sich noch nicht ganz kompilieren.</p>
+Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
@@ -32234,7 +32234,7 @@ Codeblock 20-17 lässt sich noch nicht ganz kompilieren.</p>
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-17: Übergeben des Empfängers an jeden
+<p><span class="caption">Codeblock 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
 den Empfänger an <code>Worker::new</code> und dann verwenden wir ihn innerhalb des
@@ -32286,7 +32286,7 @@ besprochen wurden: Um die Eigentümerschaft über mehrere Stränge zu teilen und
 den Strängen zu erlauben, den Wert zu mutieren, müssen wir <code>Arc&lt;Mutex&lt;T&gt;&gt;</code>
 verwenden. Der Typ <code>Arc</code> ermöglicht es mehreren <code>Worker</code>-Instanzen, den
 Empfänger zu besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein <code>Worker</code>
-zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 20-18 zeigt
+zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 21-18 zeigt
 die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground">use std::{
@@ -32353,7 +32353,7 @@ die Änderungen, die wir vornehmen müssen.</p>
 </span><span class="boring">        Worker { id, thread }
 </span>    }
 }</code></pre>
-<p><span class="caption">Codeblock 20-18: Den Empfänger unter den <code>Worker</code>
+<p><span class="caption">Codeblock 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen
 <code>Mutex</code>. Für jeden neuen <code>Worker</code> klonen wir den <code>Arc</code>, um die Referenzzählung
@@ -32367,7 +32367,7 @@ werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Merk
 <code>execute</code> erhält. Wie in <a href="ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias">„Erstellen von Typ-Synonymen mit
 Typ-Alias“</a> in Kapitel 19 besprochen, ermöglichen uns
 Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
-Siehe Codeblock 20-19.</p>
+Siehe Codeblock 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -32434,7 +32434,7 @@ impl ThreadPool {
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-19: Erstellen eines Alias vom Typ <code>Job</code> für
+<p><span class="caption">Codeblock 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
 eine <code>Box</code>, die jeden Funktionsabschluss enthält, und danach Senden des
 Auftrags in den Kanal</span></p>
 <p>Nachdem wir eine neue <code>Job</code>-Instanz unter Verwendung des Funktionsabschlusses,
@@ -32452,7 +32452,7 @@ an <code>thread::spawn</code> weitergereicht, der immer noch nur auf das empfang
 des Kanals <em>referenziert</em>. Stattdessen müssen wir den Funktionsabschluss für
 immer in einer Schleife laufen lassen, indem wir das empfangende Ende des
 Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
-bekommt. Lass uns die in Codeblock 20-20 gezeigte Änderung in <code>Worker::new</code>
+bekommt. Lass uns die in Codeblock 21-20 gezeigte Änderung in <code>Worker::new</code>
 vornehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -32524,7 +32524,7 @@ impl Worker {
     }
 }
 <span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-20: Empfangen und Ausführen der Aufträge im
+<p><span class="caption">Codeblock 21-20: Empfangen und Ausführen der Aufträge im
 Strang des <code>Worker</code></span></p>
 <p>Hier rufen wir zuerst <code>lock</code> auf <code>receiver</code> auf, um den Mutex zu erwerben, und
 dann rufen wir <code>unwrap</code> auf, um das Programm bei eventuellen Fehlern abstürzen
@@ -32594,7 +32594,7 @@ nicht durch unseren Webserver verursacht.</p>
 </blockquote>
 <p>Nachdem du die <code>while let</code>-Schleife in Kapitel 18 kennengelernt hast, fragst du
 dich vielleicht, warum wir den Code für den <code>Worker</code>-Strang nicht geschrieben
-haben, wie in Codeblock 20-21 gezeigt.</p>
+haben, wie in Codeblock 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore not_desired_behavior"><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
@@ -32661,7 +32661,7 @@ impl Worker {
         Worker { id, thread }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-21: Eine alternative Implementierung von
+<p><span class="caption">Codeblock 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
 Strang-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
@@ -32675,15 +32675,15 @@ zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
 Implementierung kann aber auch dazu führen, dass die Sperre länger als
 beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
 <code>MutexGuard&lt;T&gt;</code> nachdenken.</p>
-<p>Der Code in Codeblock 20-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
+<p>Der Code in Codeblock 21-20, der <code>let job = receiver.lock().unwrap().recv().unwrap();</code> verwendet, funktioniert, weil mit
 <code>let</code> alle temporären Werte, die in dem Ausdruck auf der rechten Seite des
 Gleichheitszeichens verwendet werden, sofort verworfen werden, wenn die
 <code>let</code>-Anweisung endet. Allerdings gibt <code>while let</code> (und <code>if let</code> und <code>match</code>)
-temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 20-21
+temporäre Werte erst am Ende des zugehörigen Blocks frei. In Codeblock 21-21
 bleibt die Sperre für die Dauer des Aufrufs von <code>job()</code> erhalten, was bedeutet,
 dass andere <code>Worker</code>-Instanzen keine Aufträge erhalten können.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="kontrolliertes-beenden-und-aufräumen"><a class="header" href="#kontrolliertes-beenden-und-aufräumen">Kontrolliertes Beenden und Aufräumen</a></h2>
-<p>Der Code in Codeblock 20-20 antwortet auf Anfragen asynchron durch die
+<p>Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
@@ -32700,7 +32700,7 @@ seinen Strang-Vorrat kontrolliert herunterfährt.</p>
 <h3 id="implementieren-des-merkmals-drop-auf-threadpool"><a class="header" href="#implementieren-des-merkmals-drop-auf-threadpool">Implementieren des Merkmals <code>Drop</code> auf <code>ThreadPool</code></a></h3>
 <p>Lass uns damit beginnen, <code>Drop</code> auf unseren Strang-Vorrat zu implementieren.
 Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
-warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
+warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt
 einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -32781,7 +32781,7 @@ ganz funktionieren.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-22: Warten auf das Ende der einzelnen
+<p><span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
 Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span></p>
 <p>Zuerst iterieren wir über alle <code>workers</code> im Strang-Vorrat. Wir verwenden dafür
 <code>&amp;mut</code>, weil <code>self</code> eine veränderbare Referenz ist und wir auch in der Lage
@@ -32926,11 +32926,10 @@ für immer blockieren und auf das Beenden des ersten Strangs warten.</p>
 <p>Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von <code>drop</code> in <code>ThreadPool</code> und dann eine Änderung in der <code>Worker</code>-Schleife.</p>
 <p>Zuerst ändern wir die Implementierung von <code>drop</code> in <code>ThreadPool</code>, um den
-<code>Sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
-Codeblock 20-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>Absender</code>
-explizit aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code>
-verwenden, um den <code>Sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen
-zu können.</p>
+<code>sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
+Codeblock 21-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>sender</code> explizit
+aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code> verwenden,
+um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -33022,12 +33021,12 @@ impl Drop for ThreadPool {
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-23: <code>sender</code> vor dem Warten auf die
+<p><span class="caption">Codeblock 21-23: <code>sender</code> vor dem Warten auf die
 <code>Worker</code>-Stränge explizit aufräumen</span></p>
 <p>Das Aufräumen von <code>sender</code> schließt den Kanal, was bedeutet, dass keine
 weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
 von <code>recv</code>, die die <code>Worker</code>-Instanzen in der Endlosschleife machen, einen
-Fehler zurück. In Codeblock 20-24 ändern wir die <code>Worker</code>-Schleife so, dass die
+Fehler zurück. In Codeblock 21-24 ändern wir die <code>Worker</code>-Schleife so, dass die
 Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
 Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code>
 <code>join</code> für sie aufruft.</p>
@@ -33122,11 +33121,11 @@ Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code
         }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-24: Explizites Verlassen der Schleife, wenn
+<p><span class="caption">Codeblock 21-24: Explizites Verlassen der Schleife, wenn
 <code>recv</code> einen Fehler zurückgibt</span></p>
 <p>Um diesen Code in Aktion zu sehen, modifizieren wir <code>main</code> so, dass nur zwei
 Anfragen akzeptiert werden, bevor der Server kontrolliert heruntergefahren
-wird, wie in Codeblock 20-25 gezeigt.</p>
+wird, wie in Codeblock 21-25 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use hello::ThreadPool;
 </span><span class="boring">use std::fs;
@@ -33172,7 +33171,7 @@ wird, wie in Codeblock 20-25 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-25: Herunterfahren des Servers, nachdem er
+<p><span class="caption">Codeblock 21-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span></p>
 <p>Du würdest nicht wollen, dass ein Webserver aus der realen Welt
 heruntergefahren wird, nachdem er nur zwei Anfragen bearbeitet hat. Dieser Code

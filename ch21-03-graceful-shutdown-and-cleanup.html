@@ -150,7 +150,7 @@
                 <div id="content" class="content">
                     <main>
                         <h2 id="kontrolliertes-beenden-und-aufräumen"><a class="header" href="#kontrolliertes-beenden-und-aufräumen">Kontrolliertes Beenden und Aufräumen</a></h2>
-<p>Der Code in Codeblock 20-20 antwortet auf Anfragen asynchron durch die
+<p>Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
 Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
 erhalten einige Warnungen über die Felder <code>workers</code>, <code>id</code> und <code>thread</code>, die wir
 nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
@@ -167,7 +167,7 @@ seinen Strang-Vorrat kontrolliert herunterfährt.</p>
 <h3 id="implementieren-des-merkmals-drop-auf-threadpool"><a class="header" href="#implementieren-des-merkmals-drop-auf-threadpool">Implementieren des Merkmals <code>Drop</code> auf <code>ThreadPool</code></a></h3>
 <p>Lass uns damit beginnen, <code>Drop</code> auf unseren Strang-Vorrat zu implementieren.
 Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
-warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 20-22 zeigt
+warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt
 einen ersten Versuch einer <code>Drop</code>-Implementierung; dieser Code wird noch nicht
 ganz funktionieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -248,7 +248,7 @@ ganz funktionieren.</p>
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-22: Warten auf das Ende der einzelnen
+<p><span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
 Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span></p>
 <p>Zuerst iterieren wir über alle <code>workers</code> im Strang-Vorrat. Wir verwenden dafür
 <code>&amp;mut</code>, weil <code>self</code> eine veränderbare Referenz ist und wir auch in der Lage
@@ -393,11 +393,10 @@ für immer blockieren und auf das Beenden des ersten Strangs warten.</p>
 <p>Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von <code>drop</code> in <code>ThreadPool</code> und dann eine Änderung in der <code>Worker</code>-Schleife.</p>
 <p>Zuerst ändern wir die Implementierung von <code>drop</code> in <code>ThreadPool</code>, um den
-<code>Sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
-Codeblock 20-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>Absender</code>
-explizit aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code>
-verwenden, um den <code>Sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen
-zu können.</p>
+<code>sender</code> explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
+Codeblock 21-23 zeigt die Änderungen an <code>ThreadPool</code>, um den <code>sender</code> explizit
+aufzuräumen. Anders als beim Strang, <em>müssen</em> wir hier eine <code>Option</code> verwenden,
+um den <code>sender</code> mit <code>Option::take</code> aus dem <code>ThreadPool</code> herausnehmen zu können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -489,12 +488,12 @@ impl Drop for ThreadPool {
 </span><span class="boring">    }
 </span><span class="boring">}
 </span><span class="boring">}</span></code></pre></pre>
-<p><span class="caption">Codeblock 20-23: <code>sender</code> vor dem Warten auf die
+<p><span class="caption">Codeblock 21-23: <code>sender</code> vor dem Warten auf die
 <code>Worker</code>-Stränge explizit aufräumen</span></p>
 <p>Das Aufräumen von <code>sender</code> schließt den Kanal, was bedeutet, dass keine
 weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
 von <code>recv</code>, die die <code>Worker</code>-Instanzen in der Endlosschleife machen, einen
-Fehler zurück. In Codeblock 20-24 ändern wir die <code>Worker</code>-Schleife so, dass die
+Fehler zurück. In Codeblock 21-24 ändern wir die <code>Worker</code>-Schleife so, dass die
 Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
 Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code>ThreadPool</code>
 <code>join</code> für sie aufruft.</p>
@@ -589,11 +588,11 @@ Stränge beendet werden, wenn die Implementierung von <code>drop</code> in <code
         }
     }
 }</code></pre>
-<p><span class="caption">Codeblock 20-24: Explizites Verlassen der Schleife, wenn
+<p><span class="caption">Codeblock 21-24: Explizites Verlassen der Schleife, wenn
 <code>recv</code> einen Fehler zurückgibt</span></p>
 <p>Um diesen Code in Aktion zu sehen, modifizieren wir <code>main</code> so, dass nur zwei
 Anfragen akzeptiert werden, bevor der Server kontrolliert heruntergefahren
-wird, wie in Codeblock 20-25 gezeigt.</p>
+wird, wie in Codeblock 21-25 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust noplayground"><span class="boring">use hello::ThreadPool;
 </span><span class="boring">use std::fs;
@@ -639,7 +638,7 @@ wird, wie in Codeblock 20-25 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 20-25: Herunterfahren des Servers, nachdem er
+<p><span class="caption">Codeblock 21-25: Herunterfahren des Servers, nachdem er
 zwei Anfragen bearbeitet hat, durch Verlassen der Schleife</span></p>
 <p>Du würdest nicht wollen, dass ein Webserver aus der realen Welt
 heruntergefahren wird, nachdem er nur zwei Anfragen bearbeitet hat. Dieser Code
