@@ -201,7 +201,7 @@ getrennten Schritten zu kompilieren und auszuführen. Rust ist eine _vorab
 kompilierte_ (ahead-of-time compiled) Sprache, d.h. du kannst ein Programm
 kompilieren und die ausführbare Datei an jemand anderen weitergeben, und dieser
 kann das Programm auch ohne Installation von Rust ausführen. Wenn du jemandem
-eine _*.rb_-, _.py_- oder _.js_-Datei gibst, muss er eine Ruby-, Python- bzw.
+eine _.rb_-, _.py_- oder _.js_-Datei gibst, muss er eine Ruby-, Python- bzw.
 JavaScript-Implementierung installiert haben. Aber in diesen Sprachen benötigst
 du nur einen Befehl, um dein Programm zu kompilieren und auszuführen. Beim
 Sprachdesign ist alles ein Kompromiss.
