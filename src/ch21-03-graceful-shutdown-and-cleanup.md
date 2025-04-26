@@ -265,11 +265,10 @@ Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
-`Sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
-Codeblock 20-23 zeigt die Änderungen an `ThreadPool`, um den `Absender`
-explizit aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option`
-verwenden, um den `Sender` mit `Option::take` aus dem `ThreadPool` herausnehmen
-zu können.
+`sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
+Codeblock 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
+aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option` verwenden,
+um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

@@ -210,7 +210,7 @@ Code in einem Strang und Warten auf die Nachrichten in einem asynchronen
 Block</span>
 
 Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
-Strang an, der für die Absenderseite des Kanals zuständig ist. Innerhalb des
+Strang an, der für die Senderseite des Kanals zuständig ist. Innerhalb des
 Strangs senden wir die Zahlen 1 bis 10 und schlafen dazwischen jeweils eine
 Sekunde lang. Schließlich führen wir ein Future aus, das mit einem asynchronen
 Block erstellt wurde, der an `trpl::run` übergeben wurde, so wie wir es im

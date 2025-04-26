@@ -451,7 +451,7 @@ mit `trpl::join` interagiert:
 - Das Ergebnis von `rx.recv` ist nur dann `None`, wenn das andere Ende des
   Kanals geschlossen wurde.
 - Der Kanal wird nur geschlossen, wenn wir `rx.close` aufrufen oder wenn die
-  Absenderseite `tx` aufgeräumt (dropped) wird.
+  Senderseite `tx` aufgeräumt (dropped) wird.
 - Wir rufen nirgendwo `rx.close` auf, und `tx` wird nicht aufgeräumt, bis der
   äußerste asynchrone Block, der an `trpl::run` übergeben wurde, endet.
 - Der Block kann nicht enden, weil er auf `trpl::join` wartet, was uns wieder
