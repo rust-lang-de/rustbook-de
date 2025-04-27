@@ -33555,7 +33555,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.</p>
 <tr><td style="text-align: left"><code>-&gt;</code></td><td style="text-align: left"><code>fn(...) -&gt; type</code>,<br> <code>|...| -&gt; type</code></td><td style="text-align: left">Funktion und Funktionsabschlussrückgabetyp</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident</code></td><td style="text-align: left">Feldzugriff</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.ident(expr, ...)</code></td><td style="text-align: left">Methodenaufruf</td><td style="text-align: left"></td></tr>
-<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.0</code>, <code>expr.1</code>, etc.</td><td style="text-align: left">Tupel-Indexzugriff</td><td style="text-align: left"></td></tr>
+<tr><td style="text-align: left"><code>.</code></td><td style="text-align: left"><code>expr.0</code>, <code>expr.1</code>, usw.</td><td style="text-align: left">Tupel-Indexzugriff</td><td style="text-align: left"></td></tr>
 <tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..</code>,<br> <code>expr..</code>,<br> <code>..expr</code>,<br> <code>expr..expr</code></td><td style="text-align: left">Rechts-ausschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
 <tr><td style="text-align: left"><code>..=</code></td><td style="text-align: left"><code>..=expr</code>,<br> <code>expr..=expr</code></td><td style="text-align: left">Rechts-einschließendes Bereichsliteral</td><td style="text-align: left"><code>PartialOrd</code></td></tr>
 <tr><td style="text-align: left"><code>..</code></td><td style="text-align: left"><code>..expr</code></td><td style="text-align: left">Aktualisierungssyntax für Strukturliterale</td><td style="text-align: left"></td></tr>
@@ -33659,7 +33659,7 @@ vorkommen.</p>
 <tr><td style="text-align: left"><code>#![meta]</code></td><td style="text-align: left">Inneres Attribut</td></tr>
 <tr><td style="text-align: left"><code>$ident</code></td><td style="text-align: left">Makro-Ersetzung</td></tr>
 <tr><td style="text-align: left"><code>$ident:kind</code></td><td style="text-align: left">Makro-Erfassung</td></tr>
-<tr><td style="text-align: left"><code>$(…)…</code></td><td style="text-align: left">Makro-Wiederholung</td></tr>
+<tr><td style="text-align: left"><code>$(...)...</code></td><td style="text-align: left">Makro-Wiederholung</td></tr>
 <tr><td style="text-align: left"><code>ident!(...)</code>,<br> <code>ident!{...}</code>,<br> <code>ident![...]</code></td><td style="text-align: left">Makro-Aufruf</td></tr>
 </tbody></table>
 </div>
@@ -33676,7 +33676,7 @@ vorkommen.</p>
 </div>
 <p>Tabelle B-8 zeigt die Kontexte, in denen Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-8: Klammern</span></p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Symbol</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Kontext</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>()</code></td><td style="text-align: left">Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ</td></tr>
 <tr><td style="text-align: left"><code>(expr)</code></td><td style="text-align: left">Eingeklammerter Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>(expr,)</code></td><td style="text-align: left">Ein-Element-Tupel-Ausdruck</td></tr>
@@ -33688,14 +33688,14 @@ vorkommen.</p>
 </div>
 <p>Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-9: Geschweifte Klammern</span></p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Kontext</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>{...}</code></td><td style="text-align: left">Block-Ausdruck</td></tr>
 <tr><td style="text-align: left"><code>Type {...}</code></td><td style="text-align: left"><code>struct</code>-Literal</td></tr>
 </tbody></table>
 </div>
 <p>Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.</p>
 <p><span class="caption">Tabelle B-10: Eckige Klammern</span></p>
-<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Context</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
+<div class="table-wrapper"><table><thead><tr><th style="text-align: left">Kontext</th><th style="text-align: left">Erklärung</th></tr></thead><tbody>
 <tr><td style="text-align: left"><code>[...]</code></td><td style="text-align: left">Array-Literal</td></tr>
 <tr><td style="text-align: left"><code>[expr; len]</code></td><td style="text-align: left">Array-Literal mit <code>len</code> Kopien von <code>expr</code></td></tr>
 <tr><td style="text-align: left"><code>[type; len]</code></td><td style="text-align: left">Array-Typ mit <code>len</code> Instanzen von <code>type</code></td></tr>
@@ -34040,9 +34040,9 @@ einige neue Funktionalitäten jedoch möglicherweise erst in späteren Ausgaben
 verfügbar. Du wirst die Ausgabe wechseln müssen, wenn du die Vorteile solcher
 Funktionalitäten nutzen möchtest.</p>
 <p>Für weitere Einzelheiten schaue in den <a href="https://doc.rust-lang.org/stable/edition-guide/"><em>Ausgabe-Leitfaden</em> (Edition
-Guide)</a>, einem vollständigen Buch über Ausgaben, das die
-Unterschiede zwischen den Ausgaben aufzählt und erklärt, wie du deinen Code
-automatisch per <code>cargo fix</code> auf eine neue Ausgabe aktualisieren kannst.</p>
+Guide)</a>, einem vollständigen Buch über die Rust-Ausgaben, das
+die Unterschiede zwischen den Ausgaben auflistet und erläutert, wie du deinen
+Code automatisch per <code>cargo fix</code> auf eine neue Ausgabe aktualisieren kannst.</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="anhang-f-Übersetzungen-des-buchs"><a class="header" href="#anhang-f-Übersetzungen-des-buchs">Anhang F: Übersetzungen des Buchs</a></h2>
 <p>Für Ressourcen in anderen Sprachen als Englisch. Die meisten sind noch in
 Arbeit; siehe das <a href="https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations">Label <code>Translations</code></a>, um zu helfen oder uns über
