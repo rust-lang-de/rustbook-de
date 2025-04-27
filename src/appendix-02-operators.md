@@ -83,66 +83,66 @@ Stellen gültig sind.
 
 <span class="caption">Tabelle B-2: Eigenständige Syntax</span>
 
-| Symbol                                                       | Erklärung                                                                                |
-|:-------------------------------------------------------------|:-----------------------------------------------------------------------------------------|
-| `'ident`                                                     | Benannte Lebensdauer oder Schleifenbeschriftung                                          |
-| `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs                                                |
-| `"..."`                                                      | Zeichenketten-Literal                                                                    |
-| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw.          | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet                       |
-| `b"..."`                                                     | Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette            |
-| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw.       | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral        |
-| `'...'`                                                      | Zeichen-Literal                                                                          |
-| `b'...'`                                                     | ASCII-Byte-Literal                                                                       |
-| <code>&vert;...&vert; expr</code>                            | Funktionsabschluss (closure)                                                             |
-| `!`                                                          | Leerer Typ (bottom type) für nicht-endende Funktionen                                    |
-| `_`                                                          | Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen |
+| Symbol | Erklärung |
+|:------------|:---------------------------------------------|
+| `'ident` | Benannte Lebensdauer oder Schleifenbeschriftung |
+| `...u8`,<br> `...i32`,<br> `...f64`,<br> `...usize`<br> usw. | Numerisches Literal eines bestimmten Typs |
+| `"..."` | Zeichenketten-Literal |
+| `r"..."`,<br> `r#"..."#`,<br> `r##"..."##`<br> usw. | Roh-Zeichenketten-Literal, Escape-Zeichen werden nicht verarbeitet |
+| `b"..."` | Byte-Zeichenkettenliteral, erzeugt ein Byte-Array anstelle einer Zeichenkette |
+| `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral |
+| `'...'` | Zeichen-Literal |
+| `b'...'` | ASCII-Byte-Literal |
+| <code>&vert;...&vert; expr</code> | Funktionsabschluss (closure) |
+| `!` | Leerer Typ (bottom type) für nicht-endende Funktionen |
+| `_` | Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen |
 
 Tabelle B-3 zeigt Symbole, die im Zusammenhang mit Pfaden für die
 Modulhierarchie eines Elements vorkommen.
 
 <span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span>
 
-| Symbol                                      | Erklärung                                                                                                                             |
-|:--------------------------------------------|:--------------------------------------------------------------------------------------------------------------------------------------|
-| `ident::ident`                              | Namensraum-Pfad                                                                                                                       |
-| `::path`                                    | Pfad relativ zum externen Präludium, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
-| `self::path`                                | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)                                                               |
-| `super::path`                               | Pfad relativ zum Elternmodul                                                                                                          |
-| `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen                                                                                       |
-| `<type>::...`                               | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.)                |
-| `trait::method(...)`                        | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen                                                                        |
-| `type::method(...)`                         | Methodenaufruf durch Angeben des<br> Typs eindeutig machen                                                                            |
-| `<type as trait>::method(...)`              | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen                                                               |
+| Symbol | Erklärung |
+|:-------|:-------------------|
+| `ident::ident` | Namensraum-Pfad |
+| `::path` | Pfad relativ zum externen Präludium, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
+| `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad) |
+| `super::path` | Pfad relativ zum Elternmodul |
+| `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |
+| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.) |
+| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen |
+| `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen |
+| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen |
 
 Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.
 
 <span class="caption">Tabelle B-4: Generische Datentypen</span>
 
-| Symbol                             | Erklärung                                                                                                                                                   |
-|:-----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `path<...>`                        | Spezifiziert Parameter zum generischen Typ in einem Typ (z.B. `Vec<u8>`)                                                                                    |
+| Symbol | Erklärung |
+|:-------|:-------------------|
+| `path<...>` | Spezifiziert Parameter zum generischen Typ in einem Typ (z.B. `Vec<u8>`) |
 | `path::<...>`,<br> `method::<...>` | Spezifiziert Parameter zu einem generischen Typ, einer Funktion oder Methode in einem Ausdruck; oft als „turbofish“ bezeichnet (z.B. `"42".parse::<i32>()`) |
-| `fn ident<...> ...`                | Generische Funktion definieren                                                                                                                              |
-| `struct ident<...> ...`            | Generische Struktur definieren                                                                                                                              |
-| `enum ident<...> ...`              | Generische Aufzählung definieren                                                                                                                            |
-| `impl<...> ...`                    | Generische Implementierung definieren                                                                                                                       |
-| `for<...> type`                    | Höherstufige Lebensdauerbegrenzungen                                                                                                                        |
-| `type<ident=type>`                 | Generischer Typ, bei dem ein oder mehrere assoziierte Typen bestimmte Zuordnungen haben (z.B. `Iterator<Item=T>`)                                           |
+| `fn ident<...> ...` | Generische Funktion definieren |
+| `struct ident<...> ...` | Generische Struktur definieren |
+| `enum ident<...> ...` | Generische Aufzählung definieren |
+| `impl<...> ...` | Generische Implementierung definieren |
+| `for<...> type` | Höherstufige Lebensdauerbegrenzungen |
+| `type<ident=type>` | Generischer Typ, bei dem ein oder mehrere assoziierte Typen bestimmte Zuordnungen haben (z.B. `Iterator<Item=T>`) |
 
 Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 mit Merkmalsabgrenzung (trait bounds) auftreten.
 
 <span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span>
 
-| Symbol                            | Erklärung                                                                                                                                                         |
-|:----------------------------------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `T: U`                            | Generischer Parameter `T`, beschränkt auf Typen,<br> die `U` implementieren                                                                                       |
-| `T: 'a`                           | Generischer Typ `T`, der die Lebensdauer `'a` überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als `'a` enthalten) |
-| `T: 'static`                      | Generischer Typ `T` mit Lebensdauer `'static`                                                                                                                     |
-| `'b: 'a`                          | Generische Lebensdauer `'b`, muss Lebensdauer `'a` überdauern                                                                                                     |
-| `T: ?Sized`                       | Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist                                                                             |
-| `'a + trait`,<br> `trait + trait` | Zusammengesetzte Typabgrenzung                                                                                                                                    |
+| Symbol | Erklärung |
+|:-------|:-------------------|
+| `T: U` | Generischer Parameter `T`, beschränkt auf Typen,<br> die `U` implementieren |
+| `T: 'a` | Generischer Typ `T`, der die Lebensdauer `'a` überdauert<br> (d.h. der Typ darf transitiv keine Referenzen mit einer<br> kürzeren Lebensdauer als `'a` enthalten) |
+| `T: 'static` | Generischer Typ `T` mit Lebensdauer `'static` |
+| `'b: 'a` | Generische Lebensdauer `'b`, muss Lebensdauer `'a` überdauern |
+| `T: ?Sized` | Erlaube einen generischen Typparameter, der ein<br> dynamisch dimensionierter Typ ist |
+| `'a + trait`,<br> `trait + trait` | Zusammengesetzte Typabgrenzung |
 
 Tabelle B-6 zeigt Symbole, die im Zusammenhang mit dem Aufruf oder der
 Definition von Makros und der Angabe von Attributen an einem Element
@@ -150,25 +150,25 @@ vorkommen.
 
 <span class="caption">Tabelle B-6: Makros und Attribute</span>
 
-| Symbol                                              | Erklärung          |
-|:----------------------------------------------------|:-------------------|
-| `#[meta]`                                           | Äußeres Attribut   |
-| `#![meta]`                                          | Inneres Attribut   |
-| `$ident`                                            | Makro-Ersetzung    |
-| `$ident:kind`                                       | Makro-Erfassung    |
-| `$(…)…`                                             | Makro-Wiederholung |
-| `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Aufruf       |
+| Symbol | Erklärung |
+|:-------|:-------------------|
+| `#[meta]` | Äußeres Attribut |
+| `#![meta]` | Inneres Attribut |
+| `$ident` | Makro-Ersetzung |
+| `$ident:kind` | Makro-Erfassung |
+| `$(...)...` | Makro-Wiederholung |
+| `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Aufruf |
 
 Tabelle B-7 zeigt Symbole, die Kommentare erzeugen.
 
 <span class="caption">Tabelle B-7: Kommentare</span>
 
-| Symbol     | Erklärung                                  |
-|:-----------|:-------------------------------------------|
-| `//`       | Einzeiliger Kommentar                      |
-| `//!`      | Einzeiliger Dokumentationskommentar innen  |
-| `///`      | Einzeiliger Dokumentationskommentar außen  |
-| `/*...*/`  | Block-Kommentar                            |
+| Symbol | Erklärung |
+|:-------|:-------------------|
+| `//` | Einzeiliger Kommentar |
+| `//!` | Einzeiliger Dokumentationskommentar innen |
+| `///` | Einzeiliger Dokumentationskommentar außen |
+| `/*...*/` | Block-Kommentar |
 | `/*!...*/` | Mehrzeiliger Dokumentationskommentar innen |
 | `/**...*/` | Mehrzeiliger Dokumentationskommentar außen |
 
@@ -176,33 +176,33 @@ Tabelle B-8 zeigt die Kontexte, in denen Klammern verwendet werden.
 
 <span class="caption">Tabelle B-8: Klammern</span>
 
-| Symbol                      | Erklärung                                                                                                              |
-|:----------------------------|:-----------------------------------------------------------------------------------------------------------------------|
-| `()`                        | Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ                                                            |
-| `(expr)`                    | Eingeklammerter Ausdruck                                                                                               |
-| `(expr,)`                   | Ein-Element-Tupel-Ausdruck                                                                                             |
-| `(type,)`                   | Ein-Element-Tupel-Typ                                                                                                  |
-| `(expr, ...)`               | Tupel-Ausdruck                                                                                                         |
-| `(type, ...)`               | Tupel-Typ                                                                                                              |
-| `expr(expr, ...)`           | Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet |
+| Kontext | Erklärung |
+|:-------|:-------------------|
+| `()` | Leeres Tupel (auch Einheit (unit) genannt), Literal und Typ |
+| `(expr)` | Eingeklammerter Ausdruck |
+| `(expr,)` | Ein-Element-Tupel-Ausdruck |
+| `(type,)` | Ein-Element-Tupel-Typ |
+| `(expr, ...)` | Tupel-Ausdruck |
+| `(type, ...)` | Tupel-Typ |
+| `expr(expr, ...)` | Funktionsaufruf-Ausdruck; wird auch zur Initialisierung von Tupel-Strukturen und Tupel-Aufzählungs-Varianten verwendet |
 
 Tabelle B-9 zeigt die Kontexte, in denen geschweifte Klammern verwendet werden.
 
 <span class="caption">Tabelle B-9: Geschweifte Klammern</span>
 
-| Context      | Erklärung        |
-|:-------------|:-----------------|
-| `{...}`      | Block-Ausdruck   |
+| Kontext | Erklärung |
+|:-------|:-------------------|
+| `{...}` | Block-Ausdruck |
 | `Type {...}` | `struct`-Literal |
 
 Tabelle B-10 zeigt die Kontexte, in denen eckige Klammern verwendet werden.
 
 <span class="caption">Tabelle B-10: Eckige Klammern</span>
 
-| Context                                                        | Erklärung                                                                                                                                      |
-|:---------------------------------------------------------------|:-----------------------------------------------------------------------------------------------------------------------------------------------|
-| `[...]`                                                        | Array-Literal                                                                                                                                  |
-| `[expr; len]`                                                  | Array-Literal mit `len` Kopien von `expr`                                                                                                      |
-| `[type; len]`                                                  | Array-Typ mit `len` Instanzen von `type`                                                                                                       |
-| `expr[expr]`                                                   | Sammlungs-Indexierung, ist überladbar (`Index`, `IndexMut`)                                                                                    |
+| Kontext | Erklärung |
+|:-------|:-------------------|
+| `[...]` | Array-Literal |
+| `[expr; len]` | Array-Literal mit `len` Kopien von `expr` |
+| `[type; len]` | Array-Typ mit `len` Instanzen von `type` |
+| `expr[expr]` | Sammlungs-Indexierung, ist überladbar (`Index`, `IndexMut`) |
 | `expr[..]`,<br> `expr[a..]`,<br> `expr[..b]`,<br> `expr[a..b]` | Sammlungs-Indexierung, die wie ein Sammlungsanteil aussieht, unter Verwendung von `Range`, `RangeFrom`, `RangeTo` oder `RangeFull` als „Index“ |
