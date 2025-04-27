@@ -62,8 +62,8 @@ verfügbar. Du wirst die Ausgabe wechseln müssen, wenn du die Vorteile solcher
 Funktionalitäten nutzen möchtest.
 
 Für weitere Einzelheiten schaue in den [*Ausgabe-Leitfaden* (Edition
-Guide)][edition-guide], einem vollständigen Buch über Ausgaben, das die
-Unterschiede zwischen den Ausgaben aufzählt und erklärt, wie du deinen Code
-automatisch per `cargo fix` auf eine neue Ausgabe aktualisieren kannst.
+Guide)][edition-guide], einem vollständigen Buch über die Rust-Ausgaben, das
+die Unterschiede zwischen den Ausgaben auflistet und erläutert, wie du deinen
+Code automatisch per `cargo fix` auf eine neue Ausgabe aktualisieren kannst.
 
 [edition-guide]: https://doc.rust-lang.org/stable/edition-guide/
