@@ -14,64 +14,64 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 
 <span class="caption">Tabelle B-1: Operatoren</span>
 
-| Operator                  | Beispiel                                                     | Erklärung                                                                         | Überladbar?    |
-|:--------------------------|:-------------------------------------------------------------|:----------------------------------------------------------------------------------|:---------------|
-| `!`                       | `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]`          | Makro-Expansion                                                                   |                |
-| `!`                       | `!expr`                                                      | Bitweises oder logisches Komplement                                               | `Not`          |
-| `!=`                      | `expr != expr`                                               | Vergleich auf Ungleichheit                                                        | `PartialEq`    |
-| `%`                       | `expr % expr`                                                | Arithmetischer Restbetrag                                                         | `Rem`          |
-| `%=`                      | `var %= expr`                                                | Arithmetischer Restbetrag und Zuweisung                                           | `RemAssign`    |
-| `&`                       | `&expr`,<br> `&mut expr`                                     | Ausleihe                                                                          |                |
-| `&`                       | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Ausleih-Referenz-Typ                                                              |                |
-| `&`                       | `expr & expr`                                                | Bitweises UND                                                                     | `BitAnd`       |
-| `&=`                      | `var &= expr`                                                | Bitweises UND und Zuweisung                                                       | `BitAndAssign` |
-| `&&`                      | `expr && expr`                                               | Logisches UND mit Kurzschlussauswertung                                           |                |
-| `*`                       | `expr * expr`                                                | Arithmetische Multiplikation                                                      | `Mul`          |
-| `*=`                      | `var *= expr`                                                | Arithmetische Multiplikation und Zuweisung                                        | `MulAssign`    |
-| `*`                       | `*expr`                                                      | Dereferenzierung                                                                  | `Deref`        |
-| `*`                       | `*const type`,<br> `*mut type`                               | Roh-Referenz                                                                      |                |
-| `+`                       | `trait + trait`,<br> `'a + trait`                            | Verbundtypabgrenzung                                                              |                |
-| `+`                       | `expr + expr`                                                | Arithmetische Addition                                                            | `Add`          |
-| `+=`                      | `var += expr`                                                | Arithmetische Addition und Zuweisung                                              | `AddAssign`    |
-| `,`                       | `expr, expr`                                                 | Argument- und Elementseparator                                                    |                |
-| `-`                       | `- expr`                                                     | Arithmetische Negation                                                            | `Neg`          |
-| `-`                       | `expr - expr`                                                | Arithmetische Subtraktion                                                         | `Sub`          |
-| `-=`                      | `var -= expr`                                                | Arithmetische Subtraktion und Zuweisung                                           | `SubAssign`    |
-| `->`                      | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code>  | Funktion und Funktionsabschlussrückgabetyp                                        |                |
-| `.`                       | `expr.ident`                                                 | Feldzugriff                                                                       |                |
-| `.`                       | `expr.ident(expr, ...)`                                      | Methodenaufruf                                                                    |                |
-| `.`                       | `expr.0`, `expr.1`, etc.                                     | Tupel-Indexzugriff                                                                |                |
-| `..`                      | `..`,<br> `expr..`,<br> `..expr`,<br> `expr..expr`           | Rechts-ausschließendes Bereichsliteral                                            | `PartialOrd`   |
-| `..=`                     | `..=expr`,<br> `expr..=expr`                                 | Rechts-einschließendes Bereichsliteral                                            | `PartialOrd`   |
-| `..`                      | `..expr`                                                     | Aktualisierungssyntax für Strukturliterale                                        |                |
-| `..`                      | `variant(x, ..)`,<br> `struct_type { x, .. }`                | „Und der Rest“-Musterbindung                                                      |                |
-| `...`                     | `expr...expr`                                                | (Veraltet, verwende stattdessen `..=`) In einem Muster: inklusives Bereichsmuster |                |
-| `/`                       | `expr / expr`                                                | Arithmetische Division                                                            | `Div`          |
-| `/=`                      | `var /= expr`                                                | Arithmetische Division und Zuweisung                                              | `DivAssign`    |
-| `:`                       | `pat: type`,<br> `ident: type`                               | Typabgrenzung                                                                     |                |
-| `:`                       | `ident: expr`                                                | Struktur-Feld-Initialisierer                                                      |                |
-| `:`                       | `'a: loop {...}`                                             | Schleifen-Label                                                                   |                |
-| `;`                       | `expr;`                                                      | Anweisungs- und Element-Endezeichen                                               |                |
-| `;`                       | `[...; len]`                                                 | Syntaxteil für Array fester Größe                                                 |                |
-| `<<`                      | `expr << expr`                                               | Bitweise Links-Schiebung                                                          | `Shl`          |
-| `<<=`                     | `var <<= expr`                                               | Bitweise Links-Schiebung und Zuweisung                                            | `ShlAssign`    |
-| `<`                       | `expr < expr`                                                | Kleiner-als-Vergleich                                                             | `PartialOrd`   |
-| `<=`                      | `expr <= expr`                                               | Kleiner-gleich-Vergleich                                                          | `PartialOrd`   |
-| `=`                       | `var = expr`,<br> `ident = type`                             | Zuweisung/Äquivalenz                                                              |                |
-| `==`                      | `expr == expr`                                               | Gleichheitsvergleich                                                              | `PartialEq`    |
-| `=>`                      | `pat => expr`                                                | Teilsyntax im Abgleichs-Zweig (match arm)                                         |                |
-| `>`                       | `expr > expr`                                                | Größer-als-Vergleich                                                              | `PartialOrd`   |
-| `>=`                      | `expr >= expr`                                               | Größer-gleich-Vergleich                                                           | `PartialOrd`   |
-| `>>`                      | `expr >> expr`                                               | Bitweise Rechts-Schiebung                                                         | `Shr`          |
-| `>>=`                     | `var >>= expr`                                               | Bitweise Rechts-Schiebung und Zuweisung                                           | `ShrAssign`    |
-| `@`                       | `ident @ pat`                                                | Muster-Bindung                                                                    |                |
-| `^`                       | `expr ^ expr`                                                | Bitweises exklusives ODER                                                         | `BitXor`       |
-| `^=`                      | `var ^= expr`                                                | Bitweises exklusives ODER und Zuweisung                                           | `BitXorAssign` |
-| <code>&vert;</code>       | <code>pat &vert; pat</code>                                  | Muster-Alternativen                                                               |                |
-| <code>&vert;</code>       | <code>expr &vert; expr</code>                                | Bitweises ODER                                                                    | `BitOr`        |
-| <code>&vert;=</code>      | <code>var &vert;= expr</code>                                | Bitweises ODER und Zuweisung                                                      | `BitOrAssign`  |
-| <code>&vert;&vert;</code> | <code>expr &vert;&vert; expr</code>                          | Logisches ODER mit Kurzschlussauswertung                                          |                |
-| `?`                       | `expr?`                                                      | Fehler-Weitergabe                                                                 |                |
+| Operator | Beispiel | Erklärung | Überladbar? |
+|:---------|:---------|:----------|:------------|
+| `!` | `ident!(...)`,<br> `ident!{...}`,<br> `ident![...]` | Makro-Expansion | |
+| `!` | `!expr` | Bitweises oder logisches Komplement | `Not` |
+| `!=` | `expr != expr` | Vergleich auf Ungleichheit | `PartialEq` |
+| `%` | `expr % expr` | Arithmetischer Restbetrag | `Rem` |
+| `%=` | `var %= expr` | Arithmetischer Restbetrag und Zuweisung | `RemAssign` |
+| `&` | `&expr`,<br> `&mut expr` | Ausleihe | |
+| `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Ausleih-Referenz-Typ | |
+| `&` | `expr & expr` | Bitweises UND | `BitAnd` |
+| `&=` | `var &= expr` | Bitweises UND und Zuweisung | `BitAndAssign` |
+| `&&` | `expr && expr` | Logisches UND mit Kurzschlussauswertung | |
+| `*` | `expr * expr` | Arithmetische Multiplikation | `Mul` |
+| `*=` | `var *= expr` | Arithmetische Multiplikation und Zuweisung | `MulAssign` |
+| `*` | `*expr` | Dereferenzierung | `Deref` |
+| `*` | `*const type`,<br> `*mut type` | Roh-Referenz | |
+| `+` | `trait + trait`,<br> `'a + trait` | Verbundtypabgrenzung | |
+| `+` | `expr + expr` | Arithmetische Addition | `Add` |
+| `+=` | `var += expr` | Arithmetische Addition und Zuweisung | `AddAssign` |
+| `,` | `expr, expr` | Argument- und Elementseparator | |
+| `-` | `- expr` | Arithmetische Negation | `Neg` |
+| `-` | `expr - expr` | Arithmetische Subtraktion | `Sub` |
+| `-=` | `var -= expr` | Arithmetische Subtraktion und Zuweisung | `SubAssign` |
+| `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Funktion und Funktionsabschlussrückgabetyp | |
+| `.` | `expr.ident` | Feldzugriff | |
+| `.` | `expr.ident(expr, ...)` | Methodenaufruf | |
+| `.` | `expr.0`, `expr.1`, usw. | Tupel-Indexzugriff | |
+| `..` | `..`,<br> `expr..`,<br> `..expr`,<br> `expr..expr` | Rechts-ausschließendes Bereichsliteral | `PartialOrd` |
+| `..=` | `..=expr`,<br> `expr..=expr` | Rechts-einschließendes Bereichsliteral | `PartialOrd` |
+| `..` | `..expr` | Aktualisierungssyntax für Strukturliterale | |
+| `..` | `variant(x, ..)`,<br> `struct_type { x, .. }` | „Und der Rest“-Musterbindung | |
+| `...` | `expr...expr` | (Veraltet, verwende stattdessen `..=`) In einem Muster: inklusives Bereichsmuster | |
+| `/` | `expr / expr` | Arithmetische Division | `Div` |
+| `/=` | `var /= expr` | Arithmetische Division und Zuweisung | `DivAssign` |
+| `:` | `pat: type`,<br> `ident: type` | Typabgrenzung | |
+| `:` | `ident: expr` | Struktur-Feld-Initialisierer | |
+| `:` | `'a: loop {...}` | Schleifen-Label | |
+| `;` | `expr;` | Anweisungs- und Element-Endezeichen | |
+| `;` | `[...; len]` | Syntaxteil für Array fester Größe | |
+| `<<` | `expr << expr` | Bitweise Links-Schiebung | `Shl` |
+| `<<=` | `var <<= expr` | Bitweise Links-Schiebung und Zuweisung | `ShlAssign` |
+| `<` | `expr < expr` | Kleiner-als-Vergleich | `PartialOrd` |
+| `<=` | `expr <= expr` | Kleiner-gleich-Vergleich | `PartialOrd` |
+| `=` | `var = expr`,<br> `ident = type` | Zuweisung/Äquivalenz | |
+| `==` | `expr == expr` | Gleichheitsvergleich | `PartialEq` |
+| `=>` | `pat => expr` | Teilsyntax im Abgleichs-Zweig (match arm) | |
+| `>` | `expr > expr` | Größer-als-Vergleich | `PartialOrd` |
+| `>=` | `expr >= expr` | Größer-gleich-Vergleich | `PartialOrd` |
+| `>>` | `expr >> expr` | Bitweise Rechts-Schiebung | `Shr` |
+| `>>=` | `var >>= expr` | Bitweise Rechts-Schiebung und Zuweisung | `ShrAssign` |
+| `@` | `ident @ pat` | Muster-Bindung | |
+| `^` | `expr ^ expr` | Bitweises exklusives ODER | `BitXor` |
+| `^=` | `var ^= expr` | Bitweises exklusives ODER und Zuweisung | `BitXorAssign` |
+| <code>&vert;</code> | <code>pat &vert; pat</code> | Muster-Alternativen | |
+| <code>&vert;</code> | <code>expr &vert; expr</code> | Bitweises ODER | `BitOr` |
+| <code>&vert;=</code> | <code>var &vert;= expr</code> | Bitweises ODER und Zuweisung | `BitOrAssign` |
+| <code>&vert;&vert;</code> | <code>expr &vert;&vert; expr</code> | Logisches ODER mit Kurzschlussauswertung | |
+| `?` | `expr?` | Fehler-Weitergabe | |
 
 ### Nicht-Operator-Symbole
 
