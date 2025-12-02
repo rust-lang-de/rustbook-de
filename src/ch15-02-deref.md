@@ -14,7 +14,7 @@ zu definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
 Dereferenzierungsoperator nicht wie eine Referenz für unseren neu definierten
 Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
 `Deref` es intelligenten Zeigern ermöglicht, auf ähnliche Weise wie Referenzen
-zu funktionieren, dann sehen wir uns an wie wir mit Rusts _automatischer
+zu funktionieren, dann sehen wir uns an, wie wir mit Rusts _automatischer
 Umwandlung_ (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.
 
@@ -80,7 +80,7 @@ error: could not compile `deref-example` (bin "deref-example") due to 1 previous
 
 Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
 da es sich um verschiedene Typen handelt. Wir müssen den
-Dereferenzierungsoperator verwenden um der Referenz auf den Wert zu folgen, auf
+Dereferenzierungsoperator verwenden, um der Referenz auf den Wert zu folgen, auf
 den sie zeigt.
 
 ### `Box<T>` wie eine Referenz verwenden
@@ -293,7 +293,7 @@ zurückgegeben wird. Die automatische Umwandlung ist eine Bequemlichkeit, die
 Rust auf Argumente für Funktionen und Methoden anwendet, und funktioniert nur
 bei Typen, die das Merkmal `Deref` implementieren. Die automatische Umwandlung
 erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
-als Argument an eine Funktion oder Methode übergeben, die nicht dem
+als Argument an eine Funktion oder Methode übergeben, die nicht mit dem
 Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
 von Aufrufen der Methode `deref` konvertiert den von uns angegebenen Typ in den
 Typ, den der Parameter benötigt.
@@ -308,7 +308,7 @@ ist.
 Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in
 Codeblock 15-8 definierten Typ `MyBox<T>` sowie die Implementierung von
 `Deref`, die wir in Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt
-die Definition einer Funktion mit einen Zeichenketten-Anteilstyp (string slice)
+die Definition einer Funktion mit einem Zeichenketten-Anteilstyp (string slice)
 Parameter.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -325,7 +325,7 @@ fn hello(name: &str) {
 `name` vom Typ `&str`</span>
 
 Wir können die Funktion `hello` mit einem Zeichenketten-Anteilstyp als Argument
-aufrufen, wie zum Beispiel `hello("Rust");`. Die automatischer Umwandlung
+aufrufen, wie zum Beispiel `hello("Rust");`. Die automatische Umwandlung
 ermöglicht es, `hello` mit einer Referenz auf einen Wert vom Typ
 `MyBox<String>` aufzurufen, wie Codeblock 15-12 zeigt.
 
@@ -410,7 +410,7 @@ fn main() {
 <span class="caption">Codeblock 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span>
 
-Das `(*m)` dereferenziert `Mybox<String>` zu einem `String`. Dann nehmen `&`
+Das `(*m)` dereferenziert `MyBox<String>` zu einem `String`. Dann nehmen `&`
 und `[..]` einen Anteilstyp des `String`, der gleich der gesamten Zeichenkette
 ist, um der Signatur von `hello` zu entsprechen. Der Programmcode ohne
 automatische Umwandlung ist mit all den Symbolen schwerer zu lesen, zu

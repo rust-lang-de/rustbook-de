@@ -23,7 +23,7 @@ ansehen, der dem inneren Veränderbarkeitsmuster folgt.
 
 Im Gegensatz zu `Rc<T>` repräsentiert der Typ `RefCell<T>` die ungeteilte
 Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
-`RefCell<T>` von einem Typ wie `Box<T>`? Erinnere dich an die Ausleihregeln die
+`RefCell<T>` von einem Typ wie `Box<T>`? Erinnere dich an die Ausleihregeln, die
 wir im Kapitel 4 gelernt haben:
 
 - Zu jeder Zeit kann man _entweder_ eine veränderbare Referenz oder eine
