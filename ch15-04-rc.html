@@ -45,6 +45,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -85,10 +95,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -164,7 +177,7 @@ Wert, um festzustellen, ob der Wert noch verwendet wird oder nicht. Wenn auf
 einen Wert keine Referenz vorhanden ist, kann der Wert aufgeräumt werden, ohne
 dass Referenzen ungültig werden.</p>
 <p>Stell dir <code>Rc&lt;T&gt;</code> als einen Fernseher im Wohnzimmer vor. Wenn eine Person zum
-Fernsehen hereinkommt, schaltet sie ein. Andere können in das Zimmer kommen und
+Fernsehen hereinkommt, schaltet sie ihn ein. Andere können in das Zimmer kommen und
 fernsehen. Wenn die letzte Person den Raum verlässt, schaltet sie den Fernseher
 aus, da er nicht mehr verwendet wird. Wenn jemand den Fernseher ausschaltet,
 während andere noch fernsehen möchten, wird es Aufruhr bei den übrigen
@@ -190,7 +203,7 @@ src="img/trpl15-03.svg" class="center" /></p>
 Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
 <p>Wir erstellen eine Liste <code>a</code>, die <code>5</code> und <code>10</code> enthält. Dann erstellen wir zwei
 weitere Listen: <code>b</code>, die mit <code>3</code> beginnt, und <code>c</code>, die mit <code>4</code> beginnt. Sowohl
-<code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren, die <code>5</code>
+<code>b</code> als auch <code>c</code> werden dann mit der ersten Liste <code>a</code> fortfahren, die <code>5</code>
 und <code>10</code> enthält. Mit anderen Worten, beide Listen teilen sich die erste Liste
 mit <code>5</code> und <code>10</code>.</p>
 <p>Der Versuch, dieses Szenario mithilfe unserer Definition von <code>List</code> mit <code>Box&lt;T&gt;</code>
@@ -394,6 +407,7 @@ Unveränderbarkeitsbeschränkung zu arbeiten.</p>
 
         <!-- Custom JS scripts -->
         <script src="theme/ferris.js"></script>
+
 
 
     </div>

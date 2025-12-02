@@ -45,6 +45,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -85,10 +95,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -326,7 +339,7 @@ sobald die Anzahl der starken Referenzen der beteiligten Werte 0 ist.</p>
 <p>Wenn man <code>Rc::downgrade</code> aufruft, erhält man einen intelligenten Zeiger vom Typ
 <code>Weak&lt;T&gt;</code>. Anstatt den <code>strong_count</code> in der <code>Rc&lt;T&gt;</code>-Instanz um 1 zu erhöhen,
 erhöht der Aufruf von <code>Rc::downgrade</code> den <code>weak_count</code> um 1. Der Typ <code>Rc&lt;T&gt;</code>
-verwendet <code>weak_count</code>, um den Überblick zu behalten wie viele
+verwendet <code>weak_count</code>, um den Überblick zu behalten, wie viele
 <code>Weak&lt;T&gt;</code>-Referenzen existieren, ähnlich wie bei <code>strong_count</code>. Der
 Unterschied besteht darin, dass <code>weak_count</code> nicht 0 sein muss, damit die
 <code>Rc&lt;T&gt;</code>-Instanz aufgeräumt wird.</p>
@@ -411,7 +424,7 @@ Strukturdefinition <code>Node</code> ein <code>parent</code>-Feld hinzufügen. D
 darin, zu entscheiden, welcher Typ <code>parent</code> sein soll. Wir wissen, dass es
 keinen <code>Rc&lt;T&gt;</code> enthalten kann, da dies einen Referenzzyklus erzeugen würde, bei
 dem <code>leaf.parent</code> auf <code>branch</code> und <code>branch.children</code> auf <code>leaf</code> zeigt, was dazu
-führen würde das die <code>strong_count</code>-Werte niemals 0 sein würden.</p>
+führen würde, dass die <code>strong_count</code>-Werte niemals 0 sein würden.</p>
 <p>Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
 die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten
 aufgeräumt wird, sollten auch seine Kind-Knoten aufgeräumt werden. Ein
@@ -665,6 +678,7 @@ Wir werden sogar einige neue intelligente Zeiger kennenlernen.</p>
 
         <!-- Custom JS scripts -->
         <script src="theme/ferris.js"></script>
+
 
 
     </div>

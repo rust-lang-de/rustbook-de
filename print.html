@@ -46,6 +46,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -86,10 +96,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -18773,7 +18786,7 @@ erzwingt.</li>
 <p>Darüber hinaus wird das <em>innere Veränderbarkeitsmuster</em> (interior mutability
 pattern) behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern
 eines inneren Werts bereitstellt. Wir werden auch <em>Referenzzyklen</em> besprechen,
-wie sie Speicherverlust verursachen können und wie wir das verhindert können.</p>
+wie sie Speicherverlust verursachen können und wie wir das verhindern können.</p>
 <p>Lass uns in die Themen eintauchen!</p>
 <div style="break-before: page; page-break-before: always;"></div><h2 id="mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen"><a class="header" href="#mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen">Mit <code>Box&lt;T&gt;</code> auf Daten im Haldenspeicher (heap) zeigen</a></h2>
 <p>Der einfachste intelligente Zeiger ist <em>Box</em>, deren Typ <code>Box&lt;T&gt;</code> lautet. In
@@ -18821,7 +18834,7 @@ Haldenspeicher speichert:</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
 im Haldenspeicher</span></p>
-<p>Wir definieren die Variable <code>b</code> so, dass sie den den Wert einer <code>Box</code> hat die
+<p>Wir definieren die Variable <code>b</code> so, dass sie den Wert einer <code>Box</code> hat, die
 auf den Wert <code>5</code> zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
 Programm gibt <code>b = 5</code> aus, in diesem Fall können wir auf die Daten in der Box
 zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
@@ -18831,7 +18844,7 @@ ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im Stapelspeicher)
 als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).</p>
 <p>Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
 speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
-Werte wie eine <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
+Werte wie einen <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
 gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
 ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
 gäbe.</p>
@@ -19032,7 +19045,7 @@ eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
 <img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" style="width: 20%;" />
 <p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ, der keine unendliche
 Größe hat, da <code>Cons</code> eine <code>Box</code> enthält</span></p>
-<p>Boxen kümmern sich nur die Dereferenzierung und Speicherallokation auf dem
+<p>Boxen kümmern sich nur um die Dereferenzierung und Speicherallokation auf dem
 Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
 sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
 keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
@@ -19061,7 +19074,7 @@ zu definieren, der sich wie <code>Box&lt;T&gt;</code> verhält, und herausfinden
 Dereferenzierungsoperator nicht wie eine Referenz für unseren neu definierten
 Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
 <code>Deref</code> es intelligenten Zeigern ermöglicht, auf ähnliche Weise wie Referenzen
-zu funktionieren, dann sehen wir uns an wie wir mit Rusts <em>automatischer
+zu funktionieren, dann sehen wir uns an, wie wir mit Rusts <em>automatischer
 Umwandlung</em> (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.</p>
 <blockquote>
@@ -19116,7 +19129,7 @@ error: could not compile `deref-example` (bin "deref-example") due to 1 previous
 </code></pre>
 <p>Das Vergleichen einer Zahl mit einer Referenz auf eine Zahl ist nicht zulässig,
 da es sich um verschiedene Typen handelt. Wir müssen den
-Dereferenzierungsoperator verwenden um der Referenz auf den Wert zu folgen, auf
+Dereferenzierungsoperator verwenden, um der Referenz auf den Wert zu folgen, auf
 den sie zeigt.</p>
 <h3 id="boxt-wie-eine-referenz-verwenden"><a class="header" href="#boxt-wie-eine-referenz-verwenden"><code>Box&lt;T&gt;</code> wie eine Referenz verwenden</a></h3>
 <p>Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
@@ -19283,7 +19296,7 @@ zurückgegeben wird. Die automatische Umwandlung ist eine Bequemlichkeit, die
 Rust auf Argumente für Funktionen und Methoden anwendet, und funktioniert nur
 bei Typen, die das Merkmal <code>Deref</code> implementieren. Die automatische Umwandlung
 erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
-als Argument an eine Funktion oder Methode übergeben, die nicht dem
+als Argument an eine Funktion oder Methode übergeben, die nicht mit dem
 Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
 von Aufrufen der Methode <code>deref</code> konvertiert den von uns angegebenen Typ in den
 Typ, den der Parameter benötigt.</p>
@@ -19296,7 +19309,7 @@ ist.</p>
 <p>Um die automatische Umwandlung in Aktion zu sehen, verwenden wir den in
 Codeblock 15-8 definierten Typ <code>MyBox&lt;T&gt;</code> sowie die Implementierung von
 <code>Deref</code>, die wir in Codeblock 15-10 hinzugefügt haben. Codeblock 15-11 zeigt
-die Definition einer Funktion mit einen Zeichenketten-Anteilstyp (string slice)
+die Definition einer Funktion mit einem Zeichenketten-Anteilstyp (string slice)
 Parameter.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><pre class="playground"><code class="language-rust edition2024">fn hello(name: &amp;str) {
@@ -19307,7 +19320,7 @@ Parameter.</p>
 <p><span class="caption">Codeblock 15-11: Eine Funktion <code>hello</code> mit dem Parameter
 <code>name</code> vom Typ <code>&amp;str</code></span></p>
 <p>Wir können die Funktion <code>hello</code> mit einem Zeichenketten-Anteilstyp als Argument
-aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatischer Umwandlung
+aufrufen, wie zum Beispiel <code>hello("Rust");</code>. Die automatische Umwandlung
 ermöglicht es, <code>hello</code> mit einer Referenz auf einen Wert vom Typ
 <code>MyBox&lt;String&gt;</code> aufzurufen, wie Codeblock 15-12 zeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -19379,7 +19392,7 @@ um <code>hello</code> mit einem Wert vom Typ <code>&amp;MyBox&lt;String&gt;</cod
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-13: Programmcode den wir schreiben
 müssten wenn Rust keine automatische Umwandlung hätte</span></p>
-<p>Das <code>(*m)</code> dereferenziert <code>Mybox&lt;String&gt;</code> zu einem <code>String</code>. Dann nehmen <code>&amp;</code>
+<p>Das <code>(*m)</code> dereferenziert <code>MyBox&lt;String&gt;</code> zu einem <code>String</code>. Dann nehmen <code>&amp;</code>
 und <code>[..]</code> einen Anteilstyp des <code>String</code>, der gleich der gesamten Zeichenkette
 ist, um der Signatur von <code>hello</code> zu entsprechen. Der Programmcode ohne
 automatische Umwandlung ist mit all den Symbolen schwerer zu lesen, zu
@@ -19505,11 +19518,11 @@ Punkt des Merkmals <code>Drop</code> ist, dass es automatisch erledigt wird. Gel
 möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du den Aufruf der Methode <code>drop</code> erzwingen, um die Sperre sofort
-freizugegeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
+freizugeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
 Sperre erhalten kann. Mit Rust kann man die Methode <code>drop</code> des Merkmals <code>Drop</code>
 nicht manuell aufrufen. Stattdessen muss man die von der Standardbibliothek
 bereitgestellte Funktion <code>std::mem::drop</code> aufrufen, wenn man das Aufräumen
-eines Werts vor dem Ende seines ültigkeitsbereichs erzwingen möchte.</p>
+eines Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.</p>
 <p>Wenn wir versuchen die Methode <code>drop</code> des Merkmals <code>Drop</code> manuell aufzurufen,
 indem wir die Funktion <code>main</code> aus Codeblock 15-14 ändern, wie im Codeblock
 15-15, gezeigt, erhalten wir einen Kompilierfehler.</p>
@@ -19611,7 +19624,7 @@ dem Eigentümerschaftssystem von Rust musst du nicht ans Aufräumen denken, da
 Rust dies automatisch tut.</p>
 <p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
 versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
-Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
+Eigentümerschaftssystem, das sicherstellt, dass Referenzen immer gültig sind,
 stellt auch sicher, dass <code>drop</code> nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.</p>
 <p>Nachdem wir nun <code>Box&lt;T&gt;</code> und einige der Merkmale von intelligenten Zeigern
@@ -19632,7 +19645,7 @@ Wert, um festzustellen, ob der Wert noch verwendet wird oder nicht. Wenn auf
 einen Wert keine Referenz vorhanden ist, kann der Wert aufgeräumt werden, ohne
 dass Referenzen ungültig werden.</p>
 <p>Stell dir <code>Rc&lt;T&gt;</code> als einen Fernseher im Wohnzimmer vor. Wenn eine Person zum
-Fernsehen hereinkommt, schaltet sie ein. Andere können in das Zimmer kommen und
+Fernsehen hereinkommt, schaltet sie ihn ein. Andere können in das Zimmer kommen und
 fernsehen. Wenn die letzte Person den Raum verlässt, schaltet sie den Fernseher
 aus, da er nicht mehr verwendet wird. Wenn jemand den Fernseher ausschaltet,
 während andere noch fernsehen möchten, wird es Aufruhr bei den übrigen
@@ -19658,7 +19671,7 @@ src="img/trpl15-03.svg" class="center" /></p>
 Eigentümerschaft über eine dritte Liste <code>a</code></span></p>
 <p>Wir erstellen eine Liste <code>a</code>, die <code>5</code> und <code>10</code> enthält. Dann erstellen wir zwei
 weitere Listen: <code>b</code>, die mit <code>3</code> beginnt, und <code>c</code>, die mit <code>4</code> beginnt. Sowohl
-<code>b</code> als auch <code>c</code> werden dann mit mit der ersten Liste <code>a</code> fortfahren, die <code>5</code>
+<code>b</code> als auch <code>c</code> werden dann mit der ersten Liste <code>a</code> fortfahren, die <code>5</code>
 und <code>10</code> enthält. Mit anderen Worten, beide Listen teilen sich die erste Liste
 mit <code>5</code> und <code>10</code>.</p>
 <p>Der Versuch, dieses Szenario mithilfe unserer Definition von <code>List</code> mit <code>Box&lt;T&gt;</code>
@@ -19837,7 +19850,7 @@ ansehen, der dem inneren Veränderbarkeitsmuster folgt.</p>
 <h3 id="mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen"><a class="header" href="#mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen">Mit <code>RefCell&lt;T&gt;</code> Ausleihregeln zur Laufzeit sicherstellen</a></h3>
 <p>Im Gegensatz zu <code>Rc&lt;T&gt;</code> repräsentiert der Typ <code>RefCell&lt;T&gt;</code> die ungeteilte
 Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
-<code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln die
+<code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln, die
 wir im Kapitel 4 gelernt haben:</p>
 <ul>
 <li>Zu jeder Zeit kann man <em>entweder</em> eine veränderbare Referenz oder eine
@@ -20649,7 +20662,7 @@ sobald die Anzahl der starken Referenzen der beteiligten Werte 0 ist.</p>
 <p>Wenn man <code>Rc::downgrade</code> aufruft, erhält man einen intelligenten Zeiger vom Typ
 <code>Weak&lt;T&gt;</code>. Anstatt den <code>strong_count</code> in der <code>Rc&lt;T&gt;</code>-Instanz um 1 zu erhöhen,
 erhöht der Aufruf von <code>Rc::downgrade</code> den <code>weak_count</code> um 1. Der Typ <code>Rc&lt;T&gt;</code>
-verwendet <code>weak_count</code>, um den Überblick zu behalten wie viele
+verwendet <code>weak_count</code>, um den Überblick zu behalten, wie viele
 <code>Weak&lt;T&gt;</code>-Referenzen existieren, ähnlich wie bei <code>strong_count</code>. Der
 Unterschied besteht darin, dass <code>weak_count</code> nicht 0 sein muss, damit die
 <code>Rc&lt;T&gt;</code>-Instanz aufgeräumt wird.</p>
@@ -20734,7 +20747,7 @@ Strukturdefinition <code>Node</code> ein <code>parent</code>-Feld hinzufügen. D
 darin, zu entscheiden, welcher Typ <code>parent</code> sein soll. Wir wissen, dass es
 keinen <code>Rc&lt;T&gt;</code> enthalten kann, da dies einen Referenzzyklus erzeugen würde, bei
 dem <code>leaf.parent</code> auf <code>branch</code> und <code>branch.children</code> auf <code>leaf</code> zeigt, was dazu
-führen würde das die <code>strong_count</code>-Werte niemals 0 sein würden.</p>
+führen würde, dass die <code>strong_count</code>-Werte niemals 0 sein würden.</p>
 <p>Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
 die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten
 aufgeräumt wird, sollten auch seine Kind-Knoten aufgeräumt werden. Ein
@@ -34295,6 +34308,7 @@ neue stabile Version von Rust.</p>
             window.setTimeout(window.print, 100);
         });
         </script>
+
 
     </div>
     </body>

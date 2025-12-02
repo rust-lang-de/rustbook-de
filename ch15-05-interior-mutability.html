@@ -45,6 +45,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -85,10 +95,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -169,7 +182,7 @@ ansehen, der dem inneren Veränderbarkeitsmuster folgt.</p>
 <h3 id="mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen"><a class="header" href="#mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen">Mit <code>RefCell&lt;T&gt;</code> Ausleihregeln zur Laufzeit sicherstellen</a></h3>
 <p>Im Gegensatz zu <code>Rc&lt;T&gt;</code> repräsentiert der Typ <code>RefCell&lt;T&gt;</code> die ungeteilte
 Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
-<code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln die
+<code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln, die
 wir im Kapitel 4 gelernt haben:</p>
 <ul>
 <li>Zu jeder Zeit kann man <em>entweder</em> eine veränderbare Referenz oder eine
@@ -849,6 +862,7 @@ funktioniert! <code>Mutex&lt;T&gt;</code> ist die Strang-sichere (thread-safe) V
 
         <!-- Custom JS scripts -->
         <script src="theme/ferris.js"></script>
+
 
 
     </div>

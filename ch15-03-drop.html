@@ -45,6 +45,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -85,10 +95,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -235,11 +248,11 @@ Punkt des Merkmals <code>Drop</code> ist, dass es automatisch erledigt wird. Gel
 möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du den Aufruf der Methode <code>drop</code> erzwingen, um die Sperre sofort
-freizugegeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
+freizugeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
 Sperre erhalten kann. Mit Rust kann man die Methode <code>drop</code> des Merkmals <code>Drop</code>
 nicht manuell aufrufen. Stattdessen muss man die von der Standardbibliothek
 bereitgestellte Funktion <code>std::mem::drop</code> aufrufen, wenn man das Aufräumen
-eines Werts vor dem Ende seines ültigkeitsbereichs erzwingen möchte.</p>
+eines Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.</p>
 <p>Wenn wir versuchen die Methode <code>drop</code> des Merkmals <code>Drop</code> manuell aufzurufen,
 indem wir die Funktion <code>main</code> aus Codeblock 15-14 ändern, wie im Codeblock
 15-15, gezeigt, erhalten wir einen Kompilierfehler.</p>
@@ -341,7 +354,7 @@ dem Eigentümerschaftssystem von Rust musst du nicht ans Aufräumen denken, da
 Rust dies automatisch tut.</p>
 <p>Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
 versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
-Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
+Eigentümerschaftssystem, das sicherstellt, dass Referenzen immer gültig sind,
 stellt auch sicher, dass <code>drop</code> nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.</p>
 <p>Nachdem wir nun <code>Box&lt;T&gt;</code> und einige der Merkmale von intelligenten Zeigern
@@ -392,6 +405,7 @@ der Standardbibliothek definiert sind.</p>
 
         <!-- Custom JS scripts -->
         <script src="theme/ferris.js"></script>
+
 
 
     </div>

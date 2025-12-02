@@ -45,6 +45,16 @@
         <script src="toc.js"></script>
     </head>
     <body>
+    <div id="mdbook-help-container">
+        <div id="mdbook-help-popup">
+            <h2 class="mdbook-help-title">Keyboard shortcuts</h2>
+            <div>
+                <p>Press <kbd>←</kbd> or <kbd>→</kbd> to navigate between chapters</p>
+                <p>Press <kbd>?</kbd> to show this help</p>
+                <p>Press <kbd>Esc</kbd> to hide this help</p>
+            </div>
+        </div>
+    </div>
     <div id="body-container">
         <!-- Work around some values being stored in localStorage wrapped in quotes -->
         <script>
@@ -85,10 +95,13 @@
                 sidebar = sidebar || 'visible';
             } else {
                 sidebar = 'hidden';
+                sidebar_toggle.checked = false;
             }
-            sidebar_toggle.checked = sidebar === 'visible';
-            html.classList.remove('sidebar-visible');
-            html.classList.add("sidebar-" + sidebar);
+            if (sidebar === 'visible') {
+                sidebar_toggle.checked = true;
+            } else {
+                html.classList.remove('sidebar-visible');
+            }
         </script>
 
         <nav id="sidebar" class="sidebar" aria-label="Table of contents">
@@ -195,7 +208,7 @@ Haldenspeicher speichert:</p>
 }</code></pre></pre>
 <p><span class="caption">Codeblock 15-1: Speichern eines <code>i32</code>-Wertes in einer Box
 im Haldenspeicher</span></p>
-<p>Wir definieren die Variable <code>b</code> so, dass sie den den Wert einer <code>Box</code> hat die
+<p>Wir definieren die Variable <code>b</code> so, dass sie den Wert einer <code>Box</code> hat, die
 auf den Wert <code>5</code> zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
 Programm gibt <code>b = 5</code> aus, in diesem Fall können wir auf die Daten in der Box
 zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
@@ -205,7 +218,7 @@ ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im Stapelspeicher)
 als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).</p>
 <p>Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
 speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
-Werte wie eine <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
+Werte wie einen <code>i32</code> auf dem Stapelspeicher zu haben, wo sie standardmäßig
 gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
 ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
 gäbe.</p>
@@ -406,7 +419,7 @@ eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
 <img alt="Eine endliche Cons-Liste" src="img/trpl15-02.svg" class="center" style="width: 20%;" />
 <p><span class="caption">Abbildung 15-2: Ein <code>List</code>-Typ, der keine unendliche
 Größe hat, da <code>Cons</code> eine <code>Box</code> enthält</span></p>
-<p>Boxen kümmern sich nur die Dereferenzierung und Speicherallokation auf dem
+<p>Boxen kümmern sich nur um die Dereferenzierung und Speicherallokation auf dem
 Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
 sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
 keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
@@ -466,6 +479,7 @@ untersuchen.</p>
 
         <!-- Custom JS scripts -->
         <script src="theme/ferris.js"></script>
+
 
 
     </div>
