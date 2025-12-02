@@ -100,11 +100,11 @@ Punkt des Merkmals `Drop` ist, dass es automatisch erledigt wird. Gelegentlich
 möchte man jedoch möglicherweise einen Wert frühzeitig aufräumen. Ein Beispiel
 ist die Verwendung intelligenter Zeiger, die Sperren verwalten: Möglicherweise
 möchtest du den Aufruf der Methode `drop` erzwingen, um die Sperre sofort
-freizugegeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
+freizugeben, damit ein anderer Programmcode im selben Gültigkeitsbereich die
 Sperre erhalten kann. Mit Rust kann man die Methode `drop` des Merkmals `Drop`
 nicht manuell aufrufen. Stattdessen muss man die von der Standardbibliothek
 bereitgestellte Funktion `std::mem::drop` aufrufen, wenn man das Aufräumen
-eines Werts vor dem Ende seines ültigkeitsbereichs erzwingen möchte.
+eines Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.
 
 Wenn wir versuchen die Methode `drop` des Merkmals `Drop` manuell aufzurufen,
 indem wir die Funktion `main` aus Codeblock 15-14 ändern, wie im Codeblock
@@ -231,7 +231,7 @@ Rust dies automatisch tut.
 
 Man muss sich auch keine Sorgen über Probleme machen, die sich aus dem
 versehentlichen Aufräumen noch verwendeter Werte ergeben: Das
-Eigentümerschaftssystem, das sicherstellt, das Referenzen immer gültig sind,
+Eigentümerschaftssystem, das sicherstellt, dass Referenzen immer gültig sind,
 stellt auch sicher, dass `drop` nur einmal aufgerufen wird, wenn der Wert nicht
 mehr verwendet wird.
 

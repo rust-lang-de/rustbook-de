@@ -64,6 +64,6 @@ behandeln:
 Darüber hinaus wird das _innere Veränderbarkeitsmuster_ (interior mutability
 pattern) behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern
 eines inneren Werts bereitstellt. Wir werden auch _Referenzzyklen_ besprechen,
-wie sie Speicherverlust verursachen können und wie wir das verhindert können.
+wie sie Speicherverlust verursachen können und wie wir das verhindern können.
 
 Lass uns in die Themen eintauchen!

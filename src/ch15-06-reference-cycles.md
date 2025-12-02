@@ -206,7 +206,7 @@ sobald die Anzahl der starken Referenzen der beteiligten Werte 0 ist.
 Wenn man `Rc::downgrade` aufruft, erhält man einen intelligenten Zeiger vom Typ
 `Weak<T>`. Anstatt den `strong_count` in der `Rc<T>`-Instanz um 1 zu erhöhen,
 erhöht der Aufruf von `Rc::downgrade` den `weak_count` um 1. Der Typ `Rc<T>`
-verwendet `weak_count`, um den Überblick zu behalten wie viele
+verwendet `weak_count`, um den Überblick zu behalten, wie viele
 `Weak<T>`-Referenzen existieren, ähnlich wie bei `strong_count`. Der
 Unterschied besteht darin, dass `weak_count` nicht 0 sein muss, damit die
 `Rc<T>`-Instanz aufgeräumt wird.
@@ -309,7 +309,7 @@ Strukturdefinition `Node` ein `parent`-Feld hinzufügen. Das Problem besteht
 darin, zu entscheiden, welcher Typ `parent` sein soll. Wir wissen, dass es
 keinen `Rc<T>` enthalten kann, da dies einen Referenzzyklus erzeugen würde, bei
 dem `leaf.parent` auf `branch` und `branch.children` auf `leaf` zeigt, was dazu
-führen würde das die `strong_count`-Werte niemals 0 sein würden.
+führen würde, dass die `strong_count`-Werte niemals 0 sein würden.
 
 Wenn man die Beziehungen auf andere Weise betrachtet, sollte ein Eltern-Knoten
 die Eigentümerschaft seiner Kind-Knoten besitzen: Wenn ein Eltern-Knoten

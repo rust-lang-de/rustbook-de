@@ -55,7 +55,7 @@ fn main() {
 <span class="caption">Codeblock 15-1: Speichern eines `i32`-Wertes in einer Box
 im Haldenspeicher</span>
 
-Wir definieren die Variable `b` so, dass sie den den Wert einer `Box` hat die
+Wir definieren die Variable `b` so, dass sie den Wert einer `Box` hat, die
 auf den Wert `5` zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
 Programm gibt `b = 5` aus, in diesem Fall können wir auf die Daten in der Box
 zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
@@ -66,7 +66,7 @@ als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).
 
 Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
 speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
-Werte wie eine `i32` auf dem Stapelspeicher zu haben, wo sie standardmäßig
+Werte wie einen `i32` auf dem Stapelspeicher zu haben, wo sie standardmäßig
 gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
 ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
 gäbe.
@@ -319,7 +319,7 @@ eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
 <span class="caption">Abbildung 15-2: Ein `List`-Typ, der keine unendliche
 Größe hat, da `Cons` eine `Box` enthält</span>
 
-Boxen kümmern sich nur die Dereferenzierung und Speicherallokation auf dem
+Boxen kümmern sich nur um die Dereferenzierung und Speicherallokation auf dem
 Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
 sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
 keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
