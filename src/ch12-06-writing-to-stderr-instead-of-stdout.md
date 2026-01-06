@@ -1,4 +1,4 @@
-## Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben
+## Fehler zur Standardfehlerausgabe umleiten
 
 Im Moment schreiben wir unsere gesamte Ausgabe mit dem Makro `println!` auf das
 Terminal. In den meisten Terminals gibt es zwei Arten von Ausgaben:

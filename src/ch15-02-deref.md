@@ -244,11 +244,11 @@ keine Gedanken machen; in Kapitel 20 werden wir sie ausführlicher behandeln.
 
 Wir füllen den Rumpf der Methode `deref` mit `&self.0`, damit `deref` eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator `*` zugreifen
-wollen. Erinnere dich an [„Verwenden von Tupel-Strukturen ohne benannte Felder
-um verschiedene Typen zu erzeugen“][tuple-structs] in Kapitel 5, wo `.0` auf
-den ersten Wert in einer Tupel-Struktur zugreift. Die Funktion `main` in
-Codeblock 15-9, die `*` für den Wert `MyBox<T>` aufruft, kompiliert nun und die
-Zusicherungen werden erfüllt!
+wollen. Erinnere dich an [„Mit Tupel-Strukturen verschiedene Typen
+erzeugen“][tuple-structs] in Kapitel 5, wo `.0` auf den ersten Wert in einer
+Tupel-Struktur zugreift. Die Funktion `main` in Codeblock 15-9, die `*` für
+den Wert `MyBox<T>` aufruft, kompiliert nun und die Zusicherungen werden
+erfüllt!
 
 Ohne das Merkmal `Deref` kann der Compiler nur `&`-Referenzen dereferenzieren.
 Die Methode `deref` gibt dem Compiler die Möglichkeit, einen Wert eines
@@ -457,4 +457,4 @@ Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
 unveränderbaren Referenz in eine veränderbare Referenz möglich ist.
 
 [impl-trait1]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
-[tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
+[tuple-structs]: ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen

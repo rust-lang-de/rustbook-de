@@ -109,7 +109,7 @@ herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
 Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
 es jetzt einfacher, Fehler zu machen.
 
-### Refaktorierung mit Strukturen: Mehr Semantik
+### Refaktorierung mit Strukturen
 
 Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
@@ -165,7 +165,7 @@ Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehun
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
-### Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)
+### Funktionalität mit abgeleiteten Merkmalen (derived traits) hinzufügen
 
 Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
@@ -307,9 +307,8 @@ Wert zurückgibt.
 > Hinweis: Der Aufruf des Makros `dbg!` schreibt in die
 > Standardfehlerausgabe (`stderr`), im Gegensatz zu `println!`, das in
 > die Standardausgabe (`stdout`) schreibt. Wir werden mehr über
-> `stderr` und `stdout` im Abschnitt [„Fehlermeldungen in die
-> Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
-> 12][err] erfahren.
+> `stderr` und `stdout` im Abschnitt [„Fehler zur Standardfehlerausgabe
+> umleiten“ in Kapitel 12][err] erfahren.
  
 Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
 `width` zugewiesen wird, als auch am Wert der gesamten Struktur in `rect1`:
@@ -372,7 +371,7 @@ Unsere Funktion `area` ist sehr spezifisch: Sie berechnet nur die Fläche von
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 `Rectangle` zu verbinden, da es zu keinem anderen Typ passt. Schauen wir uns
 an, wie wir den Code weiter umgestalten und unsere Funktion `area` in eine
-_Methode_ `area` unseres Typs `Rectangle` verwandeln können.
+Methode `area` unseres Typs `Rectangle` verwandeln können.
 
 [app-c]: appendix-03-derivable-traits.html
 [attributes]: https://doc.rust-lang.org/reference/attributes.html

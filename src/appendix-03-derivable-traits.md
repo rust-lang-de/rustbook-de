@@ -186,12 +186,11 @@ Die abgeleitete Implementierung der Funktion `default` ruft die Funktion
 müssen auch `Default` implementieren, um `Default` abzuleiten.
 
 Die Funktion `Default::default` wird häufig in Kombination mit der Syntax zur
-Aktualisierung von Strukturen verwendet, die im Abschnitt [„Instanzen aus
-anderen Instanzen erzeugen mit der
-Strukturaktualisierungssyntax“][struct-update-syntax]
-in Kapitel 5 besprochen wird. Du kannst einige Felder einer Struktur anpassen
-und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
-indem du `...Default::default()` schreibst.
+Aktualisierung von Strukturen verwendet, die im Abschnitt [„Instanzen erzeugen
+mit der Strukturaktualisierungssyntax“][struct-update-syntax] in Kapitel 5
+besprochen wird. Du kannst einige Felder einer Struktur anpassen und dann einen
+Standardwert für den Rest der Felder festlegen und verwenden, indem du
+`...Default::default()` schreibst.
 
 Das Merkmal `Default` ist erforderlich, wenn du die Methode `unwrap_or_default`
 z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
@@ -201,5 +200,5 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 [custom-derive-macros]: ch20-05-macros.html#wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
-[struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
+[struct-update-syntax]: ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
 [ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

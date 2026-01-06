@@ -1,4 +1,4 @@
-## Methodensyntax
+## Methoden
 
 _Methoden_ sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,

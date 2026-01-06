@@ -799,15 +799,14 @@ auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
 oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
 Einschränkung zu umgehen, indem man das _Newtype-Muster_ (newtype pattern)
 verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
-haben Tupelstrukturen in [„Verwenden von Tupel-Strukturen ohne benannte Felder
-um verschiedene Typen zu erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die
-Tupelstruktur wird ein Feld haben und eine dünne Verpackung um den Typ sein,
-für den wir ein Merkmal implementieren wollen. Dann ist der Verpackungstyp
-lokal in unserer Kiste und wir können das Merkmal auf dem Verpackungstyp
-(wrapper type) implementieren. _Newtype_ ist ein Begriff, der aus der
-Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es keine
-Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
-Kompilierzeit elidiert.
+haben Tupelstrukturen in [„Mit Tupel-Strukturen verschiedene Typen
+erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
+Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
+implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
+wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
+_Newtype_ ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
+Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
+und der Verpackungstyp wird zur Kompilierzeit elidiert.
 
 Nehmen wir als Beispiel an, wir wollen `Display` auf `Vec<T>` implementieren,
 was uns die Waisenregel direkt verbietet, weil das Merkmal `Display` und der
@@ -865,4 +864,4 @@ Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.
 [newtype]: #verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
 [smart-pointer-deref]: ch15-02-deref.html
 [traits-defining-shared-behavior]: ch10-02-traits.html
-[tuple-structs]: ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen
+[tuple-structs]: ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen

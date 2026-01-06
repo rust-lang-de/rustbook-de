@@ -28,7 +28,7 @@
 - [Strukturen (structs) für zusammenhängende Daten verwenden](ch05-00-structs.md)
   - [Strukturen (structs) definieren und instanziieren](ch05-01-defining-structs.md)
   - [Beispielprogramm mit Strukturen (structs)](ch05-02-example-structs.md)
-  - [Methodensyntax](ch05-03-method-syntax.md)
+  - [Methoden](ch05-03-method-syntax.md)
 
 - [Aufzählungen (enums) und Musterabgleich (pattern matching)](ch06-00-enums.md)
   - [Eine Aufzählung (enum) definieren](ch06-01-defining-an-enum.md)
@@ -70,7 +70,7 @@
   - [Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern](ch12-03-improving-error-handling-and-modularity.md)
   - [Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen](ch12-04-testing-the-librarys-functionality.md)
   - [Mit Umgebungsvariablen arbeiten](ch12-05-working-with-environment-variables.md)
-  - [Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben](ch12-06-writing-to-stderr-instead-of-stdout.md)
+  - [Fehler zur Standardfehlerausgabe umleiten](ch12-06-writing-to-stderr-instead-of-stdout.md)
 
 ## Denken in Rust
 
