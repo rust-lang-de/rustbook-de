@@ -47,7 +47,7 @@ Rust is installed now. Great!
 ```
 
 Außerdem benötigst du einen _Programmbinder_ (linker), ein Programm, das Rust
-verwendet, um die kompilierten Ausgaben in eine Datei zusammenzuführen.
+verwendet, um die kompilierten Dateien in eine Datei zusammenzuführen.
 Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
 du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
 Ein C-Compiler ist auch deshalb nützlich, weil einige gängige Rust-Pakete von
