@@ -174,7 +174,7 @@ in einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörte
 von Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C**
 ableitbare Merkmalen, die von der Standardbibliothek mitgebracht werden,
 **Anhang D** nützliche Entwicklungswerkzeuge und **Anhang E** erläutert die
-Rust-Ausgaben. In **Anhang F** findest du Übersetzungen des Buches, und in
+Rust-Editionen. In **Anhang F** findest du Übersetzungen des Buches, und in
 **Anhang G* erfährst du, wie Rust erstellt wird und was nächtliches (nightly)
 Rust ist.
 

@@ -4,8 +4,6 @@ Für Ressourcen in anderen Sprachen als Englisch. Die meisten sind noch in
 Arbeit; siehe das [Label `Translations`][label], um zu helfen oder uns über
 eine neue Übersetzung zu informieren!
 
-[label]: https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations
-
 - [Português (BR)](https://github.com/rust-br/rust-book-pt-br)
 - [Português (PT)](https://github.com/nunojesus/rust-book-pt-pt)
 - 简体中文: [KaiserY/trpl-zh-cn](https://github.com/KaiserY/trpl-zh-cn), [gnu4cn/rust-lang-Zh_CN](https://github.com/gnu4cn/rust-lang-Zh_CN)
@@ -27,3 +25,9 @@ eine neue Übersetzung zu informieren!
 - [हिंदी](https://github.com/venkatarun95/rust-book-hindi)
 - [ไทย](https://github.com/rust-lang-th/book-th)
 - [Danske](https://github.com/DanKHansen/book-dk)
+- [O'zbek](https://github.com/rust-lang-uz/book)
+- [Tiếng Việt](https://github.com/tuanemdev/rust-book-vn)
+- [Italiano](https://nixxo.github.io/rust-lang-book-it/)
+- [বাংলা](https://github.com/IsmailHosenIsmailJames/rust-book-bn)
+
+[label]: https://github.com/rust-lang/book/issues?q=is%3Aopen+is%3Aissue+label%3ATranslations

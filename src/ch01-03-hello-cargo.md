@@ -88,7 +88,7 @@ hinzufügen.
 
 Die nächsten drei Zeilen legen die Konfigurationsinformationen fest, die Cargo
 benötigt, um dein Programm zu kompilieren: Den Namen, die Version und die zu 
-verwendende Rust-Ausgabe. Über den Schlüssel `edition` sprechen wir in [Anhang
+verwendende Rust-Edition. Über den Schlüssel `edition` sprechen wir in [Anhang
 E][appendix-e].
 
 Die letzte Zeile `[dependencies]` ist der Anfang eines Abschnitts, in dem du

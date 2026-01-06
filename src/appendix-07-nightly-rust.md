@@ -21,7 +21,7 @@ Kompilierzeiten mit sich bringen.
 ### Tüff, tüff! Veröffentlichungs-Kanäle und Zugfahren
 
 Die Rust-Entwicklung erfolgt nach einem _Zugfahrplan_ (train schedule). Das
-bedeutet, dass die gesamte Entwicklung auf dem `master`-Zweig der
+bedeutet, dass die gesamte Entwicklung im Hauptzweig der
 Rust-Versionsverwaltung durchgeführt wird. Die Veröffentlichungen folgen einem
 Software-Veröffentlichungs-Zugmodell, das von Cisco IOS und anderen
 Softwareprojekten verwendet wurde. Es gibt drei _Veröffentlichungskanäle_
@@ -39,8 +39,8 @@ Hier ist ein Beispiel dafür, wie der Entwicklungs- und Veröffentlichungsprozes
 funktioniert: Nehmen wir an, das Rust-Team arbeitet an der Veröffentlichung von
 Rust 1.5. Diese Veröffentlichung erfolgte im Dezember 2015, aber sie wird uns
 realistische Versionsnummern liefern. Eine neue Funktionalität wird zu Rust
-hinzugefügt: Eine neue Änderung (commit) kommt in den `master`-Zweig. Jede
-Nacht wird eine neue nächtliche Version von Rust produziert. Jeder Tag ist ein
+hinzugefügt: Eine neue Änderung (commit) kommt in den Hauptzweig. Jede Nacht
+wird eine neue nächtliche Version von Rust produziert. Jeder Tag ist ein
 Veröffentlichungs-Tag und diese Veröffentlichungen werden automatisch von
 unserer Veröffentlichungs-Infrastruktur erstellt. Mit der Zeit sehen unsere
 Veröffentlichungen also so aus, einmal pro Nacht:
@@ -50,7 +50,7 @@ nächtlich: * - - * - - *
 ```
 
 Alle sechs Wochen ist es an der Zeit, eine neue Version vorzubereiten! Der
-`beta`-Zweig der Rust-Versionsverwaltung verzweigt vom `master`-Zweig, der von
+`beta`-Zweig der Rust-Versionsverwaltung verzweigt vom Hauptzweig, der von
 „nächtlich“ benutzt wird. Jetzt gibt es zwei Versionen:
 
 ```text
@@ -72,8 +72,8 @@ beta:                  *
 
 Sagen wir, es wird eine Regression gefunden. Gut, dass wir etwas Zeit hatten,
 die Beta-Version zu testen, bevor sich die Regression in eine stabile Version
-eingeschlichen hat! Die Fehlerkorrektur wird auf `master` angewendet, sodass
-„nächtlich“ korrigiert wird, und dann wird die Fehlerkorrektur in den
+eingeschlichen hat! Die Fehlerkorrektur wird auf den Hauptzweig angewendet,
+sodass „nächtlich“ korrigiert wird, und dann wird die Fehlerkorrektur in den
 `beta`-Zweig zurückportiert und eine neue Version der Beta erzeugt:
 
 ```text
@@ -140,7 +140,7 @@ Bei diesem Veröffentlichungsmodell gibt es noch einen weiteren Haken: instabile
 Funktionalitäten. Rust verwendet eine Technik namens „Funktionalitäts-Schalter“
 (feature flags), um festzulegen, welche Funktionalitäten in einer bestimmten
 Version aktiviert sind. Wenn eine neue Funktionalität aktiv entwickelt wird,
-landet sie auf dem `master` und damit in „nächtlich“, aber hinter einem
+landet sie auf dem Hauptzweig und damit in „nächtlich“, aber hinter einem
 _Funktionalitäts-Schalter_. Wenn du als Nutzer eine in Entwicklung befindliche
 Funktionalität ausprobieren möchtest, kannst du dies tun, aber du musst eine
 nächtliche Version von Rust verwenden und deinen Quellcode mit dem
@@ -222,9 +222,8 @@ Wenn die Funktionalität angenommen wird, wird ein Ticket (issue) in der
 Rust-Versionsverwaltung eröffnet, und jemand kann es implementieren. Die
 Person, die es sehr gut umsetzt, ist möglicherweise nicht die Person, die die
 Funktionalität ursprünglich vorgeschlagen hat! Wenn die Implementierung fertig
-ist, landet sie auf dem `master`-Zweig hinter einem Funktionalitäts-Schalter,
-wie wir im Abschnitt [„Instabile
-Funktionalitäten“](#instabile-funktionalitäten) besprochen haben.
+ist, landet im Hauptzweig hinter einem Funktionalitäts-Schalter, wie wir im
+Abschnitt [„Instabile Funktionalitäten“][instabil] besprochen haben.
 
 Nach einiger Zeit, in der Rust-Entwickler die neue Funktionalität in den
 nächtlichen Veröffentlichungen ausprobieren konnten, werden die Teammitglieder
@@ -235,3 +234,4 @@ und die Funktionalität gilt jetzt als stabil! Sie fährt mit den Zügen in eine
 neue stabile Version von Rust.
 
 [rust-website]: https://www.rust-lang.org/governance
+[instabil]: #instabile-funktionalitäten
