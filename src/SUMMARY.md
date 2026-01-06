@@ -33,7 +33,7 @@
 - [Aufzählungen (enums) und Musterabgleich (pattern matching)](ch06-00-enums.md)
   - [Eine Aufzählung (enum) definieren](ch06-01-defining-an-enum.md)
   - [Das Kontrollflusskonstrukt `match`](ch06-02-match.md)
-  - [Prägnanter Kontrollfluss mit `if let` und `let else`](ch06-03-if-let.md)
+  - [Prägnanter Kontrollfluss mit `if let` und `let...else`](ch06-03-if-let.md)
 
 ## Grundlegende Sprachelemente
 

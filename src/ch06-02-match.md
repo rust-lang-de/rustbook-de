@@ -184,7 +184,7 @@ mit jedem der `match`-Zweige ab, passt keiner von ihnen, bis wir
 `println!`-Ausdruck verwenden und so den inneren Zustandswert aus der
 `Coin`-Aufzählungsvariante für `Quarter` herausholen.
 
-### Abgleich mit `Option<T>`
+### Das Muster `Option<T>` `match`
 
 Im vorigen Abschnitt wollten wir den inneren `T`-Wert aus dem Fall `Some`
 herausholen, als wir `Option<T>` verwendet haben. Wir können `Option<T>` ebenso

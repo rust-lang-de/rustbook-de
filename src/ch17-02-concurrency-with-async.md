@@ -347,9 +347,9 @@ jedoch noch keine Möglichkeit, eine `for`-Schleife über eine _asynchrone_ Reih
 von Elementen zu schreiben. Stattdessen müssen wir eine neue Schleifenart
 verwenden, die wir bisher noch nicht gesehen haben: die `while let`-Schleife
 mit Bedingungen. Dies ist die Schleifenvariante des `if let`-Konstrukts, das
-wir in [„Prägnanter Kontrollfluss mit `if let` und `let else`“][if-let] gesehen
-haben. Die Schleife wird so lange ausgeführt, wie das angegebene Muster zum
-Wert passt.
+wir in [„Prägnanter Kontrollfluss mit `if let` und `let...else`“][if-let]
+gesehen haben. Die Schleife wird so lange ausgeführt, wie das angegebene Muster
+zum Wert passt.
 
 Der Aufruf `rx.recv` erzeugt ein Future, auf das wir warten. Die
 Laufzeitumgebung pausiert das Future, bis es bereit ist. Sobald eine Nachricht
