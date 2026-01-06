@@ -4,7 +4,7 @@ Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
 Aufruf von `calculate_length` weiter verwenden können, weil der `String` in
 `calculate_length` verschoben wurde. Stattdessen können wir eine Referenz auf
-den `String`-Wert angeben. Eine _Referenz_ ist wie ein Zeiger, d.h. eine
+den `String`-Wert angeben. Eine Referenz ist wie ein Zeiger, d.h. eine
 Adresse, der wir folgen können, um auf Daten zugreifen zu können, die an dieser
 Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
 einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
@@ -33,7 +33,7 @@ fn calculate_length(s: &String) -> usize {
 Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 `&s1` an `calculate_length` übergeben und in seiner Definition `&String` statt
-`String` steht. Das `&`-Zeichen steht für eine _Referenz_, und sie ermöglicht
+`String` steht. Das `&`-Zeichen steht für eine Referenz, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
 

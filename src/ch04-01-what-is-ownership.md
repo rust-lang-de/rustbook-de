@@ -40,7 +40,7 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
 > Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
 > Reihenfolge. Dies wird als _zuletzt herein, zuerst hinaus_ (last in, first
-> out) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
+> out (LIFO)) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
 > hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
 > nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
 > Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
@@ -74,20 +74,20 @@ die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 > großen Platz für die Daten finden und dann Buch führen muss, um die nächste
 > Allokation vorzubereiten.
 >
-> Der Zugriff auf Daten im Haldenspeicher ist langsamer als der Zugriff
-> auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um dorthin
-> zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im Speicher
-> herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner in einem
-> Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
+> Der Zugriff auf Daten im Haldenspeicher ist generell langsamer als der
+> Zugriff auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um
+> dorthin zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im
+> Speicher herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner
+> in einem Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
 > effizientesten, alle Bestellungen an einem Tisch aufzunehmen, bevor man zum
 > nächsten Tisch weitergeht. Eine Bestellung von Tisch A, dann eine Bestellung
 > von Tisch B, dann wieder eine von A und dann wieder eine von B aufzunehmen,
 > wäre ein viel langsamerer Vorgang. Umgekehrt kann ein Prozessor seine Arbeit
-> besser erledigen, wenn er mit Daten arbeitet, die nahe beieinander liegen
-> (wie sie auf dem Stapelspeicher liegen) und nicht weiter voneinander entfernt
-> (wie sie im Haldenspeicher liegen können). Das Allokieren einer großen
-> Menge an Platz im Haldenspeicher kann ebenfalls Zeit in Anspruch
-> nehmen.
+> normalerweise besser erledigen, wenn er mit Daten arbeitet, die nahe
+> beieinander liegen (wie sie auf dem Stapelspeicher liegen) und nicht weiter
+> voneinander entfernt (wie sie im Haldenspeicher liegen können). Das
+> Allokieren einer großen Menge an Platz im Haldenspeicher kann ebenfalls Zeit
+> in Anspruch nehmen.
 >
 > Wenn dein Code eine Funktion aufruft, werden die an die Funktion übergebenen
 > Werte (einschließlich potentieller Zeiger auf Daten im Haldenspeicher)
@@ -136,7 +136,7 @@ let s = "Hallo";
 Die Variable `s` bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-_Gültigkeitsbereichs_ gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+Gültigkeitsbereichs gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable `s` gültig ist.
 
 ```rust
@@ -176,8 +176,8 @@ der Typ `String` ist ein gutes Beispiel dafür.
 Wir werden uns auf die Teile von `String` konzentrieren, die sich auf die
 Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
 Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
-oder von dir erstellt wurden. Wir werden `String` in [Kapitel 8][ch8]
-eingehender behandeln.
+oder von dir erstellt wurden. Wir werden die Aspekte von `String`, die nicht
+mit der Eigentümerschaft zusammenhängen, in [Kapitel 8][ch8] besprechen.
 
 Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
 Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
@@ -185,8 +185,8 @@ sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
 verwenden möchten. Ein Grund dafür ist, dass sie unveränderbar sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
-entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: `String`. Dieser Typ verwaltet Daten, die auf dem
+entgegennehmen und speichern wollen? Für diese Situationen hat Rust den
+Zeichenkettentyp `String`. Dieser Typ verwaltet Daten, die auf dem
 Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
 zur Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem
 Zeichenkettenliteral erzeugen, indem du die Funktion `from` wie folgt
@@ -199,9 +199,9 @@ let s = String::from("Hallo");
 Der doppelte Doppelpunkt (`::`) Operator erlaubt uns, diese spezielle Funktion
 `from` mit dem Namensraum des `String`-Typs zu benennen, anstatt einen Namen
 wie `string_from` zu verwenden. Wir werden diese Syntax im Abschnitt
-[„Methodensyntax“][method-syntax] in Kapitel 5 näher betrachten, und wenn wir
-in Kapitel 7 unter [„Mit Pfaden auf ein Element im Modulbaum
-verweisen“][paths-module-tree] über den Namensraum mit Modulen sprechen. 
+[„Methoden“][methods] in Kapitel 5 näher betrachten, und wenn wir in Kapitel 7
+unter [„Mit Pfaden auf ein Element im Modulbaum verweisen“][paths-module-tree]
+über den Namensraum mit Modulen sprechen. 
 
 Diese Art von Zeichenkette kann _verändert_ werden:
 
@@ -288,8 +288,7 @@ Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.
 #### Variablen und Daten im Zusammenspiel mit Move
 
 Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
-interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
-4-2.
+interagieren. Codeblock 4-2 zeigt ein Beispiel mit einer ganzen Zahl.
 
 ```rust
 let x = 5;
@@ -465,7 +464,8 @@ Betrachte zum Beispiel diesen Code:
 Wir deklarieren zunächst eine Variable `s` und binden sie an einen `String` mit
 dem Wert `„Hallo“`. Danach erstellen wir eine neue Zeichenkette mit dem Wert
 „Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
-nichts mehr auf den ursprünglichen Wert im Haldenspeicher.
+nichts mehr auf den ursprünglichen Wert im Haldenspeicher. Abbildung 4-5 zeigt
+die aktuellen Daten im Speicher:
 
 <img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Haldenspeicher dar
 und zeigt auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem
@@ -691,13 +691,13 @@ Parametern</span>
 
 Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
 gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
-einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
-_Referenzen_ (references).
+einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen:
+_Referenzen_ (references)
 
 [ch8]: ch08-02-strings.html
 [data-types]: ch03-02-data-types.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [drop-doc]: https://doc.rust-lang.org/std/ops/trait.Drop.html#tymethod.drop
-[method-syntax]: ch05-03-method-syntax.html
+[methods]: ch05-03-method-syntax.html
 [paths-module-tree]: ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html
 [traits]: ch10-02-traits.html

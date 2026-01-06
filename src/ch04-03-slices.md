@@ -1,15 +1,19 @@
 ## Der Anteilstyp (slice)
 
 Mit _Anteilstypen_ kannst du auf eine zusammenhängende Folge von Elementen in
-einer [Kollektion][collection] referenzieren anstatt auf die gesamte
-Kollektion. Ein Anteilstyp ist eine Art Referenz und hat daher keine
-Eigentümerschaft.
+einer [Kollektion][collection] referenzieren. Ein Anteilstyp ist eine Art
+Referenz und hat daher keine Eigentümerschaft.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
 erste Wort zurückgibt, das sie in dieser Zeichenkette findet. Wenn die Funktion
 kein Leerzeichen in der Zeichenkette findet, muss die gesamte Zeichenkette ein
 Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.
+
+> Hinweis: Zur Einführung in Anteilstypen gehen wir in diesem Abschnitt nur von
+> ASCII aus. Eine ausführlichere Erörterung der UTF-8-Verarbeitung findest du
+> im Abschnitt [„UTF-8-kodierten Text in Zeichenketten (strings)
+> ablegen“][strings] in Kapitel 8.
 
 Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
 von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
@@ -19,13 +23,14 @@ Anteilstypen gelöst wird:
 fn first_word(s: &String) -> ?
 ```
 
-Die Funktion `first_word` hat `&String` als Parameter. Wir benötigen keine
-Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust übernehmen
-Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei denn, sie
-müssen es, und die Gründe dafür werden im weiteren Verlauf klar werden). Aber
-was sollen wir zurückgeben? Wir haben nicht wirklich eine Möglichkeit, über
-_einen Teil_ einer Zeichenkette zu sprechen. Wir könnten jedoch den Index des
-Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7 gezeigt.
+Die Funktion `first_word` hat einen Parameter vom Typ `&String`. Wir benötigen
+keine Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust
+übernehmen Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei
+denn, sie müssen es, und die Gründe dafür werden im weiteren Verlauf klar
+werden.) Aber was sollen wir zurückgeben? Wir haben nicht wirklich die
+Mittel, _einen Teil_ einer Zeichenkette zu referenzieren. Wir könnten jedoch
+den Index des Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7
+gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -219,8 +224,8 @@ dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
 der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
 src="img/trpl04-07.svg" class="center" style="width: 50%;" />
 
-<span class="caption">Abbildung 4-7: Zeichenkettenanteilstyp, der sich auf einen
-Teil eines `String` bezieht</span>
+<span class="caption">Abbildung 4-7: Ein Zeichenkettenanteilstyp, der auf einen
+Teil eines `String` referenziert</span>
 
 Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst,
 kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
@@ -260,11 +265,7 @@ let slice = &s[..];
 > Hinweis: Bereichsindizes bei Zeichenkettenanteilstypen müssen sich nach
 > gültigen UTF-8-Zeichengrenzen richten. Wenn du versuchst, einen
 > Zeichenkettenanteilstyp in der Mitte eines Mehrbyte-Zeichens zu erstellen,
-> wird dein Programm mit einem Fehler abbrechen. Bei der Einführung von
-> Zeichenkettenanteilstypen in diesem Abschnitt gehen wir nur von ASCII aus;
-> eine eingehendere Diskussion der UTF-8-Behandlung findet sich im Abschnitt
-> [„UTF-8-kodierten Text in Zeichenketten (strings) ablegen“][strings] in
-> Kapitel 8.
+> wird dein Programm mit einem Fehler abbrechen.
 
 Mit all diesen Informationen im Hinterkopf schreiben wir `first_word` so um,
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
@@ -446,7 +447,7 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters `s`</span>
 Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen `String` haben, können wir einen Anteilstyp des
 `String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
-nutzt die Vorteile der _automatischen Umwandlung_, eine Funktionalität, die wir
+nutzt die Vorteile der automatischen Umwandlung, eine Funktionalität, die wir
 im Abschnitt [„Implizite automatische Umwandlung mit Funktionen und
 Methoden“][deref-coercions] in Kapitel 15 behandeln.
 
