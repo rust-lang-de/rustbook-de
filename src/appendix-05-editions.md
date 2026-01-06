@@ -61,9 +61,10 @@ einige neue Funktionalitäten jedoch möglicherweise erst in späteren Editionen
 verfügbar. Du wirst die Edition wechseln müssen, wenn du die Vorteile solcher
 Funktionalitäten nutzen möchtest.
 
-Für weitere Einzelheiten schaue in den [*Editions-Leitfaden* (Edition
-Guide)][edition-guide], einem vollständigen Buch über die Rust-Editionen, das
-die Unterschiede zwischen den Editionen auflistet und erläutert, wie du deinen
-Code automatisch per `cargo fix` auf eine neue Edition aktualisieren kannst.
+Für weitere Einzelheiten schaue in den [_Editions-Leitfaden (Edition
+Guide)_][edition-guide]. Das ist ein vollständiges Buch über die Rust-Editionen,
+das die Unterschiede zwischen den Editionen auflistet und erläutert und wie du
+deinen Code automatisch per `cargo fix` auf eine neue Edition aktualisieren
+kannst.
 
 [edition-guide]: https://doc.rust-lang.org/stable/edition-guide/

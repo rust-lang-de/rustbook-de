@@ -75,7 +75,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 
 ### Nicht-Operator-Symbole
 
-Die folgende Liste enthält alle Symbole, die nicht als Operatoren fungieren,
+Die folgende Tabelle enthält alle Symbole, die nicht als Operatoren fungieren,
 d.h. sich nicht wie ein Funktions- oder Methodenaufruf verhalten.
 
 Tabelle B-2 zeigt Symbole, die für sich allein stehen und an verschiedenen
@@ -102,17 +102,17 @@ Modulhierarchie eines Elements vorkommen.
 
 <span class="caption">Tabelle B-3: Pfad-bezogene Syntax</span>
 
-| Symbol | Erklärung |
-|:-------|:-------------------|
-| `ident::ident` | Namensraum-Pfad |
-| `::path` | Pfad relativ zum externen Präludium, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
-| `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad) |
-| `super::path` | Pfad relativ zum Elternmodul |
-| `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |
-| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.) |
-| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen |
-| `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen |
-| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen |
+| Symbol | Erklärung                                                                                                                       |
+|:-------|:--------------------------------------------------------------------------------------------------------------------------------|
+| `ident::ident` | Namensraum-Pfad                                                                                                                 |
+| `::path` | Pfad relativ zur Kistenwurzel, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
+| `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad)                                                         |
+| `super::path` | Pfad relativ zum Elternmodul                                                                                                    |
+| `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen                                                                                 |
+| `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.)          |
+| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen                                                                  |
+| `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen                                                                      |
+| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen                                                         |
 
 Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.

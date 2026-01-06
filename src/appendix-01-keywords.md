@@ -3,12 +3,10 @@
 Die folgende Liste enthält Schlüsselwörter, die für die gegenwärtige oder
 zukünftige Verwendung durch die Sprache Rust reserviert sind. Als solche können
 sie nicht als Bezeichner verwendet werden (außer als Roh-Bezeichner, die wir im
-Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen werden). Bezeichner
+Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_
 sind Namen von Funktionen, Variablen, Parametern, Strukturfeldern
 (struct fields), Modulen, Kisten (crates), Konstanten, Makros, statischen
 Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).
-
-[raw-identifiers]: #roh-bezeichner
 
 ### Derzeit verwendete Schlüsselwörter
 
@@ -152,3 +150,4 @@ deinem Code in einer neueren Edition aus aufzurufen. Siehe [Anhang
 E][appendix-e] für weitere Informationen zu Editionen.
 
 [appendix-e]: appendix-05-editions.html
+[raw-identifiers]: #roh-bezeichner

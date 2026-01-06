@@ -39,7 +39,8 @@ Die Liste der ableitbaren Merkmale in diesem Anhang ist nicht vollständig:
 Bibliotheken können `derive` für ihre eigenen Merkmale implementieren, sodass
 die Liste der Merkmale, die du mit `derive` verwenden kannst, wahrlich
 unbegrenzt ist. Das Implementieren von `derive` verwendet ein prozedurales
-Makro, das im Abschnitt [„Makros“][macros] in Kapitel 20 behandelt wird.
+Makro, das im Abschnitt [„Wie man ein benutzerdefiniertes Makro mit `derive`
+schreibt“][custom-derive-macros] in Kapitel 20 behandelt wird.
 
 ### `Debug` für die Programmierer-Ausgabe
 
@@ -64,8 +65,8 @@ prüfen und ermöglicht das Verwenden der Operatoren `==` und `!=`.
 
 Das Ableiten von `PartialEq` implementiert die Methode `eq`. Wenn `PartialEq`
 für Strukturen abgeleitet wird, sind zwei Instanzen nur dann gleich, wenn
-_alle_ Felder gleich sind, und die Instanzen sind nicht gleich, wenn wenigstens
-ein Feld nicht gleich ist. Beim Ableiten für Aufzählungen ist jede Variante
+_alle_ Felder gleich sind, und die Instanzen sind nicht gleich, wenn _wenigstens
+ein_ Feld nicht gleich ist. Beim Ableiten für Aufzählungen ist jede Variante
 gleich sich selbst und nicht gleich den anderen Varianten.
 
 Das Merkmal `PartialEq` ist beispielsweise beim Verwenden des Makros
@@ -77,8 +78,8 @@ für jeden Wert des annotierten Typs der Wert gleich sich selbst ist. Das
 Merkmal `Eq` kann nur auf Typen angewandt werden, die auch `PartialEq`
 implementieren, obwohl nicht alle Typen, die `PartialEq` implementieren, `Eq`
 implementieren können. Ein Beispiel dafür sind Fließkomma-Zahlentypen: Die
-Implementierung von Fließkomma-Zahlen besagt, dass zwei Instanzen des
-Keine-Zahl-Wertes (`NaN`) nicht gleichwertig sind.
+Implementierung von Fließkomma-Zahlen besagt, dass zwei Instanzen des Wertes
+`NaN` nicht vergleichbar sind.
 
 Ein Beispiel dafür, wann `Eq` erforderlich ist, ist für Schlüssel in einer
 `HashMap<K, V>`, damit `HashMap<K, V>` erkennen kann, ob zwei Schlüssel gleich
@@ -157,7 +158,7 @@ implementieren. Du kannst das Merkmal `Copy` nur auf Typen anwenden, die auch
 Implementierung von `Clone` hat, das die gleiche Aufgabe wie `Copy` erfüllt.
 
 Das Merkmal `Copy` ist selten erforderlich; Typen, die `Copy` implementieren,
-verfügen über Optimierungen, d. h. du musst nicht `clone` aufrufen, was den
+verfügen über Optimierungen, d.h. du musst nicht `clone` aufrufen, was den
 Code prägnanter macht.
 
 Alles, was mit `Copy` möglich ist, kannst du auch mit `Clone` erreichen, aber
@@ -170,7 +171,7 @@ Das Merkmal `Hash` erlaubt es dir, eine Instanz eines Typs beliebiger Größe zu
 nehmen und diese Instanz mithilfe einer Hash-Funktion auf einen Wert fester
 Größe abzubilden. Das Ableiten von `Hash` implementiert die Methode `hash`. Die
 abgeleitete Implementierung der Methode `hash` kombiniert das Ergebnis des
-Aufrufs von `hash` für alle Teile des Typs, d. h. alle Felder oder Werte müssen
+Aufrufs von `hash` für alle Teile des Typs, d.h. alle Felder oder Werte müssen
 ebenfalls `Hash` implementieren, um `Hash` abzuleiten.
 
 Ein Beispiel dafür, wann `Hash` erforderlich ist, ist das Speichern von
@@ -181,24 +182,24 @@ Schlüsseln in einer `HashMap<K, V>`, um Daten effizient zu speichern.
 Das Merkmal `Default` erlaubt es dir, einen Standardwert für einen Typ zu
 definieren. Das Ableiten von `Default` implementiert die Funktion `default`.
 Die abgeleitete Implementierung der Funktion `default` ruft die Funktion
-`default` für jeden Teil des Typs auf, d. h. alle Felder oder Werte in dem Typ
+`default` für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
 müssen auch `Default` implementieren, um `Default` abzuleiten.
 
 Die Funktion `Default::default` wird häufig in Kombination mit der Syntax zur
 Aktualisierung von Strukturen verwendet, die im Abschnitt [„Instanzen aus
 anderen Instanzen erzeugen mit der
-Strukturaktualisierungssyntax“][creating-instances-from-other-instances-with-struct-update-syntax]
+Strukturaktualisierungssyntax“][struct-update-syntax]
 in Kapitel 5 besprochen wird. Du kannst einige Felder einer Struktur anpassen
 und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
 indem du `...Default::default()` schreibst.
 
 Das Merkmal `Default` ist erforderlich, wenn du die Methode `unwrap_or_default`
-z. B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
+z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `None` hat, gibt die Methode `unwrap_or_default` das Ergebnis von
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
-[creating-instances-from-other-instances-with-struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
-[macros]: ch20-05-macros.html
+[custom-derive-macros]: ch20-05-macros.html#wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
+[struct-update-syntax]: ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
 [ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone
