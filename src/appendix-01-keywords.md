@@ -143,12 +143,12 @@ uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
 Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
 Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
 Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
-Rust-Ausgabe, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
-`try` in Ausgabe 2015 kein Schlüsselwort, in den Ausgaben 2018, 2021 und 2024
-aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Ausgabe 2015
+Rust-Edition, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
+`try` in Edition 2015 kein Schlüsselwort, in den Editionen 2018, 2021 und 2024
+aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Edition 2015
 geschrieben wurde und eine Funktion `try` hat, musst du die
 Roh-Bezeichner-Syntax verwenden, in diesem Fall `r#try`, um diese Funktion von
-deinem Code in einer neueren Ausgabe aus aufzurufen. Siehe [Anhang
-E][appendix-e] für weitere Informationen zu Ausgaben.
+deinem Code in einer neueren Edition aus aufzurufen. Siehe [Anhang
+E][appendix-e] für weitere Informationen zu Editionen.
 
 [appendix-e]: appendix-05-editions.html

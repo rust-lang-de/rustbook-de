@@ -95,7 +95,7 @@ Die Variable `x` ist jetzt unveränderlich, und die Warnung erscheint nicht
 mehr.
 
 Du kannst den Befehl `cargo fix` auch dazu verwenden, deinen Code zwischen
-verschiedenen Rust-Ausgaben zu konvertieren. Die Ausgaben sind in [Anhang
+verschiedenen Rust-Editionen zu konvertieren. Die Editionen sind in [Anhang
 E][appendix-e] aufgeführt.
 
 ### Mehr statische Codeanalyse mit Clippy

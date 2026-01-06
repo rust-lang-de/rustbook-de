@@ -138,6 +138,6 @@
   - [B - Operatoren und Symbole](appendix-02-operators.md)
   - [C - Ableitbare Merkmale (traits)](appendix-03-derivable-traits.md)
   - [D - Nützliche Entwicklungswerkzeuge](appendix-04-useful-development-tools.md)
-  - [E - Ausgaben](appendix-05-editions.md)
+  - [E - Editionen](appendix-05-editions.md)
   - [F - Übersetzungen des Buchs](appendix-06-translation.md)
   - [G - Wie Rust erstellt wird und „nächtliches Rust“](appendix-07-nightly-rust.md)
