@@ -565,8 +565,8 @@ fn main() {
 <span class="caption">Codeblock 20-10: Definieren und Verwenden einer
 unveränderbaren, statischen Variablen</span>
 
-Statische Variablen ähneln Konstanten, die wir in
-[„Konstanten“][differences-between-variables-and-constants] in Kapitel 3
+Statische Variablen ähneln Konstanten, die wir in [„Konstanten
+deklarieren“][differences-between-variables-and-constants] in Kapitel 3
 besprochen haben. Die Namen von statischen Variablen stehen per Konvention in
 `SCHREIENDER_SCHLANGENSCHRIFT`. Statische Variablen können nur Referenzen mit
 der Lebensdauer `'static` speichern, was bedeutet, dass der Rust-Compiler die
@@ -759,7 +759,7 @@ möchtest, lies den offiziellen Rust-Leitfaden zum Thema
 
 [ABI]: https://doc.rust-lang.org/nightly/reference/items/external-blocks.html#abi
 [dangling-references]: ch04-02-references-and-borrowing.html#hängende-referenzen
-[differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#konstanten
+[differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#konstanten-deklarieren
 [extensible-concurrency-with-the-sync-and-send-traits]: ch16-04-extensible-concurrency-sync-and-send.html
 [miri]: https://github.com/rust-lang/miri
 [nightly]: appendix-07-nightly-rust.html

@@ -61,14 +61,14 @@ verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.
 
 <span class="caption">Tabelle 3-1: Ganzzahlige Typen in Rust</span>
 
-| Länge   | Vorzeichenbehaftet  | Vorzeichenlos |
-|--------:|---------------------|---------------|
-| 8 Bit   | `i8`                | `u8`          |
-| 16 Bit  | `i16`               | `u16`         |
-| 32 Bit  | `i32`               | `u32`         |
-| 64 Bit  | `i64`               | `u64`         |
-| 128 Bit | `i128`              | `u128`        |
-| arch    | `isize`             | `usize`       |
+|               Länge | Vorzeichenbehaftet  | Vorzeichenlos |
+|--------------------:|---------------------|---------------|
+|               8 Bit | `i8`                | `u8`          |
+|              16 Bit | `i16`               | `u16`         |
+|              32 Bit | `i32`               | `u32`         |
+|              64 Bit | `i64`               | `u64`         |
+|             128 Bit | `i128`              | `u128`        |
+| Architekturabhängig | `isize`             | `usize`       |
 
 Jede Variante kann entweder vorzeichenbehaftet oder vorzeichenlos sein und hat
 eine explizite Größe. _Vorzeichenbehaftet_ (signed) und _vorzeichenlos_
@@ -90,9 +90,8 @@ Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
 `u8` Zahlen von 0 bis 2<sup>8</sup> - 1 speichern, was 0 bis 255 entspricht.
 
 Zusätzlich hängen die Typen `isize` und `usize` von der Architektur des
-Computers ab, auf dem dein Programm läuft, die in der Tabelle als „arch“
-bezeichnet wird: 64 Bit wenn du dich auf einer 64-Bit-Architektur befindest und
-32 Bit auf einer 32-Bit-Architektur.
+Computers ab, auf dem dein Programm läuft: 64 Bit wenn du dich auf einer
+64-Bit-Architektur befindest und 32 Bit auf einer 32-Bit-Architektur.
 
 Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
 schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
@@ -359,10 +358,10 @@ in [Kapitel 4][stack-and-heap] näher ein) oder wenn du sicherstellen willst,
 dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
 so flexibel wie der Vektortyp. Ein _Vektor_ ist ein ähnlicher Kollektionstyp,
 der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
-Größe wachsen oder schrumpfen kann. Wenn du dir nicht sicher bist, ob du ein
-Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du einen
-Vektor verwenden solltest. In [Kapitel 8][vectors] werden Vektoren
-ausführlicher besprochen.
+Größe wachsen oder schrumpfen kann, weil sein Inhalt auf dem Haldenspeicher
+liegt. Wenn du dir nicht sicher bist, ob du ein Array oder einen Vektor
+verwenden sollst, ist es wahrscheinlich, dass du einen Vektor verwenden
+solltest. In [Kapitel 8][vectors] werden Vektoren ausführlicher besprochen.
 
 Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
@@ -397,7 +396,7 @@ Das Array mit dem Namen `a` wird `5` Elemente enthalten, die alle anfänglich
 auf den Wert `3` gesetzt werden. Dies ist dasselbe wie das Schreiben von
 `let a = [3, 3, 3, 3, 3];`, aber in einer prägnanteren Weise.
 
-##### Zugriff auf Array-Elemente
+#### Zugriff auf Array-Elemente
 
 Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
 der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
@@ -418,7 +417,7 @@ In diesem Beispiel erhält die Variable mit dem Namen `first` den Wert `1`, weil
 das der Wert am Index `[0]` im Array ist. Die Variable mit dem Namen `second`
 wird den Wert `2` vom Index `[1]` im Array erhalten.
 
-##### Ungültiger Array-Element-Zugriff
+#### Ungültiger Array-Element-Zugriff
 
 Sehen wir uns an was passiert, wenn du versuchst, auf ein Element eines Arrays
 zuzugreifen, das sich hinter dem Ende des Arrays befindet. Angenommen, du
@@ -465,7 +464,7 @@ index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Das Programm führte zu einem _Laufzeitfehler_ an der Stelle, an der ein
+Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein
 ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
 einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung
 nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
@@ -485,8 +484,7 @@ lesbaren, sicheren Code schreiben kannst, der weder abstürzt noch ungültige
 Speicherzugriffe zulässt.
 
 [appendix_b]: appendix-02-operators.html
-[comparing-the-guess-to-the-secret-number]:
-ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
+[comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [control-flow]: ch03-05-control-flow.html
 [stack-and-heap]: ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap
 [strings]: ch08-02-strings.html
