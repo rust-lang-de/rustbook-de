@@ -1,6 +1,6 @@
 ## Methoden
 
-_Methoden_ sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
+Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
 und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
@@ -10,7 +10,7 @@ Merkmalsobjektes (trait object), die wir in [Kapitel 6][enums] und [Kapitel
 `self` ist. `self` repräsentiert die Instanz der Struktur, zu der die Methode
 aufgerufen wird.
 
-### Definieren von Methoden
+### Methoden-Syntax
 
 Lass uns die Funktion `area`, die eine `Rectangle`-Instanz als Parameter hat,
 ändern und stattdessen eine Methode `area` auf der Struktur `Rectangle`

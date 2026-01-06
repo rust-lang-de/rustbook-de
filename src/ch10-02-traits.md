@@ -625,9 +625,9 @@ Durch Verwenden einer Merkmalsabgrenzung mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
 `Pair<T>` in Codeblock 10-15 immer die Funktion `new`, um eine neue Instanz von
-`Pair<T>` zurückzugeben (erinnere dich an [„Definieren von Methoden“][methods]
-in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der
-in diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
+`Pair<T>` zurückzugeben (erinnere dich an [„Methoden-Syntax“][methods] in
+Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der in
+diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
 `Pair<T>` die Methode `cmp_display` nur, wenn ihr innerer Typ `T` die Merkmale
 `PartialOrd` _und_ `Display` implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.
@@ -703,5 +703,5 @@ Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zu
 Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
 ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.
 
-[methods]: ch05-03-method-syntax.html#definieren-von-methoden
+[methods]: ch05-03-method-syntax.html#methoden-syntax
 [using-trait-objects-that-allow-for-values-of-different-types]: ch18-02-trait-objects.html

@@ -25,5 +25,5 @@ Im Einzelnen wird Folgendes behandelt:
 Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und
 Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen
 Stil beeinflusst sind. Da das Beherrschen von Funktionsabschlüssen und
-Iteratoren ein wichtiger Bestandteil für das Schreiben von idiomatischem,
-schnellem Rust-Programmcode ist, wird ihnen das gesamte Kapitel gewidmet.
+Iteratoren ein wichtiger Bestandteil für das Schreiben von schnellem,
+idiomatischem Rust-Programmcode ist, wird ihnen das gesamte Kapitel gewidmet.
