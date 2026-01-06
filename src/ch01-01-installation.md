@@ -134,7 +134,7 @@ Um Rust und `rustup` zu deinstallieren, führe folgenden Befehl aus:
 $ rustup self uninstall
 ```
 
-### Lokale Dokumentation
+### Lokale Dokumentation lesen
 
 Die Rust-Installation enthält auch eine lokale Kopie der Dokumentation, sodass
 du sie ohne Internetverbindung lesen kannst. Führe `rustup doc` aus, um die
@@ -143,7 +143,7 @@ lokale Dokumentation in deinem Browser zu öffnen.
 Falls du dir nicht sicher bist, wie du einen Typ oder eine Funktion aus der
 Standardbibliothek verwenden sollst, dann schau in der API-Dokumentation nach!
 
-### Texteditoren und integrierte Entwicklungsumgebungen
+### Texteditoren und IDEs verwenden
 
 Dieses Buch macht keine Annahmen darüber, welche Werkzeuge du für die
 Erstellung von Rust-Code verwendest. So gut wie jeder Texteditor ist dafür
