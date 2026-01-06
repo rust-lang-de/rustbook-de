@@ -6,11 +6,11 @@ Kisten.
 Eine _Kiste_ ist die kleinste Menge an Code, die der Rust-Compiler zu einem
 bestimmten Zeitpunkt berücksichtigt. Selbst wenn du `rustc` anstelle von
 `cargo` ausführst und eine einzelne Quellcodedatei übergibst (wie wir es
-bereits im Abschnitt „Schreiben und Ausführen eines Rust-Programms“ in Kapitel
-1 getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten
-können Module enthalten, und die Module können in anderen Dateien definiert
-sein, die mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten
-sehen werden.
+bereits im Abschnitt [„Grundlagen eines Rust-Programms“][basics] in Kapitel 1
+getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten können
+Module enthalten, und die Module können in anderen Dateien definiert sein, die
+mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten sehen
+werden.
 
 Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. _Binäre
 Kisten_ (binary crates) sind Programme, die du zu einer ausführbaren Datei
@@ -28,8 +28,8 @@ meinen sie meistens „Bibliothekskiste“, und sie verwenden „Kiste“ austau
 mit dem allgemeinen Programmierkonzept einer „Bibliothek“.
 
 Die _Kistenwurzel_ ist eine Quelldatei, von der der Rust-Compiler ausgeht und
-die das Wurzel-Modul deiner Kiste bildet (Module werden in [„Mit Modulen den
-Kontrollumfang und Datenschutz steuern“][modules] ausführlich erklärt).
+die das Wurzel-Modul deiner Kiste bildet (Module werden in [„Kontrollumfang und
+Datenschutz mit Modulen“][modules] ausführlich erklärt).
 
 Ein _Paket_ ist ein Bündel von einer oder mehreren Kisten, die eine Reihe von
 Funktionalitäten bereitstellen. Ein Paket enthält eine Datei _Cargo.toml_, die
@@ -58,7 +58,7 @@ main.rs
 ```
 
 Nachdem wir `cargo new my-project` ausgeführt haben, verwenden wir `ls`, um zu
-sehen, was Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei
+sehen, was Cargo erzeugt. Im Projektverzeichnis _my-project_ gibt es eine Datei
 _Cargo.toml_, die uns ein Paket gibt. Es gibt auch ein Verzeichnis _src_, das
 _main.rs_ enthält. Öffne _Cargo.toml_ in deinem Texteditor und beachte, dass
 _src/main.rs_ nicht erwähnt wird. Cargo folgt der Konvention, dass
@@ -75,5 +75,6 @@ beide mit dem gleichen Namen wie das Paket. Ein Paket kann mehrere binäre
 Kisten haben, indem es Dateien im Verzeichnis _src/bin_ ablegt: Jede Datei ist
 dann eine eigene binäre Kiste.
 
+[basics]: ch01-02-hello-world.html#grundlagen-eines-rust-programms
 [modules]: ch07-02-defining-modules-to-control-scope-and-privacy.html
 [rand]: ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl

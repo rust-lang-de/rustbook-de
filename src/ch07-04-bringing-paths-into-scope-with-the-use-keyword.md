@@ -347,7 +347,7 @@ use std::collections::HashMap;
 Dies ist ein absoluter Pfad, der mit `std`, dem Namen der
 Standard-Bibliothekskiste, beginnt.
 
-### Verschachtelte Pfade verwenden, um lange `use`-Listen zu vereinfachen
+### Verschachtelte Pfade verwenden, um `use`-Listen zu vereinfachen
 
 Wenn wir mehrere in der gleichen Kiste oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
@@ -418,7 +418,7 @@ use std::io::{self, Write};
 
 Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.
 
-### Der Stern-Operator (glob)
+### Elemente mit dem Stern-Operator (glob) importieren
 
 Wenn wir _alle_ öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
@@ -432,7 +432,11 @@ Diese `use`-Anweisung bringt alle öffentlichen Elemente, die in
 `std::collections` definiert sind, in den aktuellen Gültigkeitsbereich. Sei
 vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
 zu erkennen, welche Namen in den Gültigkeitsbereich fallen und wo ein in deinem
-Programm verwendeter Name definiert wurde.
+Programm verwendeter Name definiert wurde. Wenn die Abhängigkeit ihre
+Definitionen ändern, ändert sich auch das, was du importiert hast. Dies kann zu
+Compilerfehlern führen, wenn du die Abhängigkeit aktualisierst und die
+Abhängigkeit beispielsweise eine Definition mit dem gleichen Namen wie eine
+deiner Definitionen im gleichen Bereich hinzufügst.
 
 Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
 in das Modul `tests` zu bringen. Wir werden darüber in [„Tests

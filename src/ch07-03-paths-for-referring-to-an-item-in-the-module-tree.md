@@ -320,11 +320,12 @@ Guidelines][api-guidelines].
 Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir `super` am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax `..` beginnen. Das Verwenden von `super` erlaubt es uns, auf ein Element
-zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
-befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
-eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
-eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.
+Syntax `..` beginnen, wodurch man ins übergeordnete Verzeichnis kommt. Das
+Verwenden von `super` erlaubt es uns, auf ein Element zu referenzieren, von dem
+wir wissen, dass es sich im übergeordneten Modul befindet, was die Neuordnung
+des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten
+Modul verwandt ist, aber das übergeordnete Modul eines Tages an eine andere
+Stelle im Modulbaum verschoben werden könnte.
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die

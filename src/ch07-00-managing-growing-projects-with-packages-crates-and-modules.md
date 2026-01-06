@@ -1,4 +1,4 @@
-# Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen
+# Pakete (packages), Kisten (crates) und Module
 
 Wenn du große Programme schreibst, wird die Organisation deines Codes immer
 wichtiger. Durch die Gruppierung verwandter Funktionen und die Trennung von
@@ -14,8 +14,8 @@ kann mehrere Binär-Kisten (binary crates) und optional eine Bibliotheks-Kiste
 Kisten extrahieren, die zu externen Abhängigkeiten werden. Dieses Kapitel
 behandelt all diese Techniken. Für sehr große Projekte aus einer Reihe von
 zusammenhängenden Paketen, die sich gemeinsam weiterentwickeln, stellt Cargo
-_Arbeitsbereiche_ zur Verfügung, die wir in
-[„Cargo-Arbeitsbereiche“][workspaces] in Kapitel 14 behandeln werden.
+Arbeitsbereiche zur Verfügung, die wir in [„Cargo-Arbeitsbereiche“][workspaces]
+in Kapitel 14 behandeln werden.
 
 Wir werden auch die Kapselung von Implementierungsdetails besprechen, wodurch
 du Code auf einer höheren Ebene wiederverwenden kannst: Sobald du eine
@@ -45,13 +45,13 @@ werden, welche Details privat sind und welche Namen im jeweiligen
 Gültigkeitsbereich deines Programms sind. Zu diesen Funktionalitäten, die
 manchmal kollektiv als _Modulsystem_ bezeichnet werden, gehören:
 
-- **Pakete (packages):** Eine Cargo-Funktionalität, mit der du Kisten bauen,
+- **Pakete (packages)**: Eine Cargo-Funktionalität, mit der du Kisten bauen,
   testen und gemeinsam nutzen kannst.
-- **Kisten (crates):** Ein Baum von Modulen, der eine Bibliothek oder ein
+- **Kisten (crates)**: Ein Baum von Modulen, der eine Bibliothek oder ein
   ausführbares Programm erzeugt.
-- **Module** und **`use`**: Ermöglicht dir, die Organisation, den
+- **Module und `use`**: Ermöglicht dir, die Organisation, den
   Gültigkeitsbereich und den Datenschutz von Pfaden zu steuern.
-- **Pfade:** Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
+- **Pfade**: Eine Möglichkeit, ein Element zu benennen, z.B. eine Struktur,
   eine Funktion oder ein Modul.
 
 In diesem Kapitel gehen wir auf all diese Funktionalitäten ein, besprechen, wie

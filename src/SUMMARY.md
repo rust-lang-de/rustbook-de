@@ -37,9 +37,9 @@
 
 ## Grundlegende Sprachelemente
 
-- [Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+- [Pakete (packages), Kisten (crates) und Module](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
   - [Pakete (packages) und Kisten (crates)](ch07-01-packages-and-crates.md)
-  - [Mit Modulen den Kontrollumfang und Datenschutz steuern](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+  - [Kontrollumfang und Datenschutz mit Modulen](ch07-02-defining-modules-to-control-scope-and-privacy.md)
   - [Mit Pfaden auf ein Element im Modulbaum verweisen](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
   - [Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
   - [Module in verschiedene Dateien aufteilen](ch07-05-separating-modules-into-different-files.md)
