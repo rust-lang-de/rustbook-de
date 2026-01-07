@@ -970,7 +970,7 @@ schreiben ein paar Tests!
 
 [ch13]: ch13-00-functional-features.html
 [ch18]: ch18-00-oop.html
-[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen
+[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung
 [ch9-result]: ch09-02-recoverable-errors-with-result.html
-[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#abkürzung-zum-weitergeben-von-fehlern-der-operator-
+[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#der-operator--als-abkürzung

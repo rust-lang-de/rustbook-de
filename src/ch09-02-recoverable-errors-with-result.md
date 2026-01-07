@@ -208,7 +208,7 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 > dieser Methoden können große, verschachtelte `match`-Ausdrücke vermeiden,
 > wenn du mit Fehlern zu tun hast.
 
-#### Abkürzungen zum Abbrechen im Fehlerfall: `unwrap` und `expect`
+#### Abkürzungen zum Abbrechen im Fehlerfall
 
 Das Verwenden von `match` funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ `Result<T, E>` bietet
@@ -367,7 +367,7 @@ angemessen behandelt werden.
 Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
 Fragezeichen-Operator `?` bereitstellt, um dies zu erleichtern.
 
-#### Abkürzung zum Weitergeben von Fehlern: Der Operator `?`
+#### Der Operator `?` als Abkürzung
 
 Codeblock 9-7 zeigt eine Implementierung von `read_username_from_file`, die
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
@@ -482,7 +482,7 @@ zurückgibt. Natürlich gibt uns die Verwendung von `fs::read_to_string` nicht
 die Möglichkeit, die ganze Fehlerbehandlung zu erklären, also haben wir es
 zuerst auf dem längeren Weg gemacht.
 
-#### Wo der Operator `?` verwendet werden kann
+#### Wo der Operator `?` verwendet wird
 
 Der Operator `?` kann nur in Funktionen verwendet werden, deren Rückgabetyp mit
 dem Wert, auf den `?` angewendet wird, kompatibel ist. Das liegt daran, dass
@@ -639,8 +639,8 @@ fn main() -> Result<(), Box<dyn Error>> {
 `Result<(), E>` erlaubt die Verwendung des `?`-Operators für
 `Result`-Werte.</span>
 
-Der Typ `Box<dyn Error>` ist ein _Merkmalsobjekt_ (trait object), über das wir
-in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
+Der Typ `Box<dyn Error>` ist ein Merkmalsobjekt (trait object), über das wir in
+[„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
 erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
 `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von `?`
 auf einen `Result`-Wert in einer Funktion `main` mit dem Fehlertyp `Box<dyn

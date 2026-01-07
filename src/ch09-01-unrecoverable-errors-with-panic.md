@@ -120,7 +120,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Dieser Fehler weist auf Zeile 4 in unserer `main.rs` hin, wo wir versuchen, auf
-den Index `99` des Vektors in `v` zuzugreifen.
+den Index 99 des Vektors in `v` zuzugreifen.
 
 Die Zeile `note:` sagt uns, dass wir die Umgebungsvariable `RUST_BACKTRACE`
 setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
