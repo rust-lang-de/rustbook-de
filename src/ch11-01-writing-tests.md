@@ -712,13 +712,12 @@ Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch
 eine benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen
 ausgegeben wird. Alle Argumente, die nach den erforderlichen Argumenten
 angegeben werden, werden an das Makro `format!` übergeben (siehe
-[„Aneinanderhängen mit dem Operator `+` und dem Makro
-`format!`“][concatenation-with-the--operator-or-the-format-macro] in Kapitel
-8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die Platzhalter
-`{}` und Werte enthält, die in diese Platzhalter gehören. Benutzerdefinierte
-Nachrichten sind nützlich, um zu dokumentieren, was eine Zusicherung bedeutet;
-wenn ein Test fehlschlägt, hast du eine bessere Vorstellung davon, wo das
-Problem im Code liegt.
+[„Aneinanderhängen mit `+` und `format!`“][concatenation-plus-format] in
+Kapitel 8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die
+Platzhalter `{}` und Werte enthält, die in diese Platzhalter gehören.
+Benutzerdefinierte Nachrichten sind nützlich, um zu dokumentieren, was eine
+Zusicherung bedeutet; wenn ein Test fehlschlägt, hast du eine bessere
+Vorstellung davon, wo das Problem im Code liegt.
 
 Nehmen wir zum Beispiel an, wir haben eine Funktion, die Leute mit Namen
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
@@ -1163,7 +1162,7 @@ Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
 verschiedenen Optionen untersuchen, die wir mit `cargo test` verwenden können.
 
 [bench]: https://doc.rust-lang.org/unstable-book/library-features/test.html
-[concatenation-with-the--operator-or-the-format-macro]: ch08-02-strings.html#aneinanderhängen-mit-dem-operator--und-dem-makro-format
+[concatenation-plus-format]: ch08-02-strings.html#aneinanderhängen-mit--und-format
 [controlling-how-tests-are-run]: ch11-02-running-tests.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [doc-comments]: ch14-02-publishing-to-crates-io.html#dokumentationskommentare-als-tests

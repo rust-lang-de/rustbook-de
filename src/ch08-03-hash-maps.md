@@ -1,7 +1,7 @@
 ## Schlüssel mit zugehörigen Werten in Hashtabellen ablegen
 
-Die letzte unserer allgemeinen Kollektionen ist die _Hashtabelle_ (hash map).
-Der Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
+Die letzte unserer allgemeinen Kollektionen ist die Hashtabelle (hash map). Der
+Typ `HashMap<K, V>` speichert eine Zuordnung von Schlüsseln vom Typ `K` zu
 Werten vom Typ `V` mittels einer _Hashfunktion_ (hash function), die bestimmt,
 wie er diese Schlüssel und Werte im Speicher ablegt. Viele Programmiersprachen
 unterstützen diese Art Datenstruktur, aber sie verwenden oft einen anderen
@@ -104,7 +104,7 @@ Gelb: 50
 Blau: 10
 ```
 
-### Hashtabellen und Eigentümerschaft
+### Verwalten der Eigentümerschaft in Hashtabellen
 
 Bei Typen wie `i32`, die das Merkmal `Copy` implementieren, werden die Werte in
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte
