@@ -16,8 +16,7 @@ vom Trennzeichen `--`, und danach die der Testbinärdatei an. Wenn du `cargo
 test --help` ausführst, werden die Optionen angezeigt, die du für `cargo test`
 verwenden kannst, und wenn du `cargo test -- --help` ausführst, werden die
 Optionen angezeigt, die du nach dem Trennzeichen verwenden kannst. Diese
-Optionen sind auch im [Abschnitt „Tests“][tests] des [rustc-Buchs][rustc]
-dokumentiert.
+Optionen sind auch im [Abschnitt „Tests“ des rustc-Buchs][tests] dokumentiert.
 
 ### Tests parallel oder nacheinander ausführen
 
@@ -391,5 +390,4 @@ warten, kannst du stattdessen `cargo test -- --ignored` ausführen. Wenn du alle
 Tests ausführen willst, egal ob sie ignoriert werden oder nicht, kannst du
 `cargo test -- --include-ignored` ausführen.
 
-[rustc]: https://doc.rust-lang.org/rustc/index.html
 [tests]: https://doc.rust-lang.org/rustc/tests/index.html

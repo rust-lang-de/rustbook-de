@@ -6,7 +6,7 @@ Vorhandensein von Fehlern zu zeigen, aber sie sind hoffnungslos unzureichend,
 um deren Abwesenheit zu zeigen“. Das bedeutet nicht, dass wir nicht versuchen
 sollten, so viel wie möglich zu testen!
 
-Korrektheit unserer Programme ist das Maß, inwieweit unser Code das tut, was
+_Korrektheit_ unserer Programme ist das Maß, inwieweit unser Code das tut, was
 wir beabsichtigen. Bei der Entwicklung von Rust wird der Korrektheit von
 Programmen große Bedeutung beigemessen, aber Korrektheit ist komplex und nicht
 leicht zu beweisen. Das Typsystem von Rust trägt einen großen Teil dieser Last,
