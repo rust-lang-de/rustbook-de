@@ -56,7 +56,7 @@
 
 - [Generische Typen, Merkmale (traits) und Lebensdauer](ch10-00-generics.md)
   - [Generische Datentypen](ch10-01-syntax.md)
-  - [Merkmale (traits): Gemeinsames Verhalten definieren](ch10-02-traits.md)
+  - [Gemeinsames Verhalten definieren mit Merkmalen (traits)](ch10-02-traits.md)
   - [Referenzen validieren mit Lebensdauern](ch10-03-lifetime-syntax.md)
 
 - [Automatisierte Tests schreiben](ch11-00-testing.md)

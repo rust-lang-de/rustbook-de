@@ -1,4 +1,4 @@
-## Merkmale (traits): Gemeinsames Verhalten definieren
+## Gemeinsames Verhalten definieren mit Merkmalen (traits)
 
 Ein _Merkmal_ (trait) definiert die Funktionalität, den ein bestimmter Typ hat
 und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
@@ -172,7 +172,7 @@ umgekehrt. Ohne diese Regel könnten zwei Kisten dasselbe Merkmal für denselben
 Typ implementieren und Rust wüsste nicht, welche Implementierung es verwenden
 sollte.
 
-### Standard-Implementierungen
+### Standard-Implementierungen verwenden
 
 Manchmal ist es nützlich, ein Standardverhalten für einige oder alle Methoden
 eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
@@ -339,7 +339,7 @@ Dieser Code gibt `1 neue Nachricht: (Lies mehr von @horse_ebooks...)` aus.
 Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.
 
-### Merkmale als Parameter
+### Merkmale als Parameter verwenden
 
 Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
@@ -440,7 +440,7 @@ Der als Parametertyp für `item1` und `item2` angegebene generische Typ `T`
 schränkt die Funktion so ein, dass der konkrete Typ der als Argument für
 `item1` und `item2` übergebenen Werte derselbe sein muss.
 
-#### Angeben mehrerer Merkmalsabgrenzungen mit der Syntax `+`
+#### Mehrere Merkmalsabgrenzungen mit der Syntax `+`
 
 Wir können auch mehr als eine Merkmalsabgrenzung angeben. Nehmen wir an, wir
 wollen, dass sowohl `notify` als auch die Methode `summarize` die
@@ -616,8 +616,7 @@ Die Rückgabe entweder eines `NewsArticle` oder eines `SocialPost` ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
 wird in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“][using-trait-objects-that-allow-for-values-of-different-types] in
-Kapitel 18 behandelt.
+erlauben“][trait-objects] in Kapitel 18 behandelt.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
@@ -704,4 +703,4 @@ Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
 ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.
 
 [methods]: ch05-03-method-syntax.html#methoden-syntax
-[using-trait-objects-that-allow-for-values-of-different-types]: ch18-02-trait-objects.html
+[trait-objects]: ch18-02-trait-objects.html

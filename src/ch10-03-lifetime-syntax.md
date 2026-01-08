@@ -7,7 +7,7 @@ Referenzen so lange gültig sind, wie wir sie brauchen.
 
 Ein Detail, das wir im Abschnitt [„Referenzen und Ausleihen
 (borrowing)“][references-and-borrowing] in Kapitel 4 nicht erörtert haben, ist,
-dass jede Referenz in Rust eine _Lebensdauer_ (lifetime) hat, d.h. einen
+dass jede Referenz in Rust eine Lebensdauer (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
 Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
@@ -25,13 +25,12 @@ Gesamtheit behandeln werden, so werden wir doch allgemeine Möglichkeiten
 erörtern, mit denen du dich mit der Syntax der Lebensdauer und den Konzepten
 vertraut machen kannst.
 
-### Verhindern hängender Referenzen mit Lebensdauern
+### Hängende Referenzen
 
-Das Hauptziel der Lebensdauer ist es, _hängende Referenzen_ (dangling
-references) zu verhindern, die dazu führen, dass ein Programm auf andere
-Daten referenziert als die, auf die es referenzieren soll. Betrachte das
-Programm in Codeblock 10-16, das einen äußeren und einen inneren
-Gültigkeitsbereich hat.
+Das Hauptziel der Lebensdauer ist es, hängende Referenzen (dangling references)
+zu verhindern, die dazu führen würden, dass ein Programm auf andere Daten
+referenziert als die, auf die es referenzieren soll. Betrachte das Programm in
+Codeblock 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.
 
 ```rust,does_not_compile
 fn main() {
@@ -148,8 +147,8 @@ Referenz in `r` immer gültig sein wird, solange `x` gültig ist.
 
 Da du nun weißt, wo die Lebensdauern von Referenzen sind und wie Rust die
 Lebensdauer analysiert, um sicherzustellen, dass Referenzen immer gültig sind,
-lass uns die generischen Lebensdauern von Parametern und Rückgabewerten im
-Kontext von Funktionen untersuchen.
+lass uns generischen Lebensdauern von Funktionsparametern und Rückgabewerten
+untersuchen.
 
 ### Generische Lebensdauern in Funktionen
 
@@ -269,7 +268,7 @@ trennen.
 Hier sind einige Beispiele: Eine Referenz auf einen `i32` ohne
 Lebensdauer-Parameter, eine Referenz auf einen `i32`, die einen
 Lebensdauer-Parameter namens `'a` hat, und eine veränderbarer Referenz auf
-einen `i32`, die ebenfalls die Lebensdauer `'a` hat.
+einen `i32`, die ebenfalls die Lebensdauer `'a` hat:
 
 ```rust,ignore
 &i32        // eine Referenz
@@ -283,12 +282,12 @@ Lebensdauer-Parameter mehrerer Referenzen zueinander verhalten. Untersuchen
 wir, wie sich die Lebensdauer-Annotationen im Zusammenhang mit der Funktion
 `longest` zueinander verhalten.
 
-### Lebensdauer-Annotationen in Funktionssignaturen
+### In Funktionssignaturen
 
 Um Lebensdauer-Annotationen in Funktionssignaturen zu verwenden, müssen wir die
-generischen _Lebensdauer_-Parameter in spitzen Klammern zwischen dem
+generischen Lebensdauer-Parameter in spitzen Klammern zwischen dem
 Funktionsnamen und der Parameterliste deklarieren, genau wie wir es mit den
-generischen _Typ_-Parametern gemacht haben.
+generischen Typ-Parametern gemacht haben.
 
 Wir möchten, dass die Signatur die folgende Bedingung ausdrückt: Die
 zurückgegebene Referenz ist gültig, solange die beiden Parameter gültig sind.
@@ -474,7 +473,7 @@ wie die zurückgegebene Referenz verwendet wird. Stelle Hypothesen darüber auf,
 ob deine Experimente den Ausleihenprüfer bestehen oder nicht, bevor du
 kompilierst; prüfe dann, ob du Recht hast!
 
-### Denken in Lebensdauern
+### Beziehungen
 
 Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon
 ab, was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der
@@ -565,7 +564,7 @@ um speichersichere Operationen zu ermöglichen und Operationen zu unterbinden,
 die hängende Zeiger erzeugen oder anderweitig die Speichersicherheit verletzen
 würden.
 
-### Lebensdauer-Annotationen in Struktur-Definitionen
+### In Struktur-Definitionen
 
 Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
@@ -776,7 +775,7 @@ als nächstes die Lebensdauern in diesem Zusammenhang ansehen, um zu sehen,
 warum die dritte Regel bedeutet, dass wir die Lebensdauer in Methodensignaturen
 nicht sehr oft annotieren müssen.
 
-### Lebensdauer-Annotationen in Methodendefinitionen
+### In Methodendefinitionen
 
 Wenn wir Methoden auf einer Struktur mit Lebensdauer implementieren, verwenden
 wir die gleiche Syntax wie die in Codeblock 10-11 gezeigten generischen
@@ -827,8 +826,8 @@ impl<'a> ImportantExcerpt<'a> {
 ```
 
 Die Lebensdauer-Parameter-Deklaration nach `impl` und ihre Verwendung hinter dem
-Typnamen sind erforderlich, aber wir sind nicht verpflichtet, die Lebensdauer der
-Referenz auf `self` wegen der ersten Elisionsregel zu annotieren.
+Typnamen sind erforderlich, aber wegen der ersten Elisionsregel sind wir nicht
+verpflichtet, die Lebensdauer der Referenz auf `self` zu annotieren.
 
 Hier ist ein Beispiel, bei dem die dritte Lebensdauer-Elisionsregel gilt:
 
@@ -890,7 +889,7 @@ aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fälle
 besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
 Lebensdauer als `'static` festzulegen.
 
-## Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen
+## Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern
 
 Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
 Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!
@@ -960,4 +959,4 @@ funktioniert, wie er es soll.
 
 [references-and-borrowing]: ch04-02-references-and-borrowing.html
 [string-slices-as-parameters]: ch04-03-slices.html#zeichenkettenanteilstypen-als-parameter
-[reference]: https://doc.rust-lang.org/reference/index.html
+[reference]: https://doc.rust-lang.org/reference/trait-bounds.html

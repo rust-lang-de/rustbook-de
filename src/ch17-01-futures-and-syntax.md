@@ -227,7 +227,7 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 Gehen wir die einzelnen Teile der umgewandelten Version durch:
 
 - Sie verwendet die Syntax `impl Trait`, die wir bereits in [„Merkmale als
-  Parameter“][impl-trait] in Kapitel 10 besprochen haben.
+  Parameter verwenden“][impl-trait] in Kapitel 10 besprochen haben.
 - Das zurückgegebene Merkmal ist ein `Future` mit dem assoziierten Typ von
   `Output`. Beachte, dass der `Output`-Typ `Option<String>` ist, was dem
   ursprünglichen Rückgabetyp der `async fn`-Version von `page_title`
@@ -522,7 +522,7 @@ können, die wir mit asynchroner Programmierung tun können.
 [cli-args]: ch12-01-accepting-command-line-arguments.html
 [crate-source]: https://github.com/rust-lang/book/tree/main/packages/trpl
 [futures-crate]: https://crates.io/crates/futures
-[impl-trait]: ch10-02-traits.html#merkmale-als-parameter
+[impl-trait]: ch10-02-traits.html#merkmale-als-parameter-verwenden
 [iterators-lazy]: ch13-02-iterators.html
 [thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn
 [tokio]: https://tokio.rs

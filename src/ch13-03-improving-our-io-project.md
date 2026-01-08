@@ -342,8 +342,8 @@ implementiert das Merkmal `Iterator` und gibt `String`-Werte zurück.
 Wir haben die Signatur der Funktion `Config::build` aktualisiert, sodass der
 Parameter `args` einen generischen Typ mit den Merkmalsabgrenzungen `impl
 Iterator<Item = String>` anstelle von `&[String]` hat. Diese Verwendung der
-Syntax `impl Trait`, die wir im Abschnitt [„Merkmale als
-Parameter“][impl-trait] in Kapitel 10 besprochen haben, bedeutet, dass `args`
+Syntax `impl Trait`, die wir im Abschnitt [„Merkmale als Parameter
+verwenden“][impl-trait] in Kapitel 10 besprochen haben, bedeutet, dass `args`
 jeder Typ sein kann, der das Merkmal `Iterator` implementiert und
 `String`-Elemente zurückgibt.
 
@@ -706,4 +706,4 @@ Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über
 Performanz sprechen.
 
-[impl-trait]: ch10-02-traits.html#merkmale-als-parameter
+[impl-trait]: ch10-02-traits.html#merkmale-als-parameter-verwenden
