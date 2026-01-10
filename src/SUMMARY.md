@@ -89,7 +89,7 @@
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
   - [Mit `Box<T>` auf Daten im Haldenspeicher zeigen](ch15-01-box.md)
-  - [Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`](ch15-02-deref.md)
+  - [Intelligente Zeiger wie normale Referenzen behandeln](ch15-02-deref.md)
   - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
   - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)
   - [`RefCell<T>` und das innere Veränderbarkeitsmuster](ch15-05-interior-mutability.md)

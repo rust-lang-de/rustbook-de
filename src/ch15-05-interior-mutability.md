@@ -19,7 +19,7 @@ Typ ist immer noch unveränderbar.
 Lass uns dieses Konzept untersuchen, indem wir uns den Typ `RefCell<T>`
 ansehen, der dem inneren Veränderbarkeitsmuster folgt.
 
-### Mit `RefCell<T>` Ausleihregeln zur Laufzeit sicherstellen
+### Sicherstellen der Ausleihregeln zur Laufzeit
 
 Im Gegensatz zu `Rc<T>` repräsentiert der Typ `RefCell<T>` die ungeteilte
 Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
@@ -82,11 +82,11 @@ Eine Zusammenfassung der Gründe für die Wahl von `Box<T>`, `Rc<T>` oder
   kann man den Wert innerhalb von `RefCell<T>` auch dann ändern, wenn
   `RefCell<T>` unveränderbar ist.
 
-Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das _innere
-Veränderbarkeitsmuster_. Schauen wir uns eine Situation an, in der innere
+Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das innere
+Veränderbarkeitsmuster. Schauen wir uns eine Situation an, in der innere
 Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.
 
-### Innere Veränderbarkeit: Das veränderbare Ausleihen eines unveränderbaren Wertes
+### Innere Veränderbarkeit verwenden
 
 Eine Konsequenz der Ausleihregeln ist, dass man einen unveränderbaren Wert
 nicht veränderbar ausleihen kann. Dieser Programmcode wird beispielsweise nicht
@@ -134,7 +134,7 @@ Lass uns ein praktisches Beispiel durcharbeiten, in dem wir `RefCell<T>`
 verwenden, um einen unveränderbaren Wert zu ändern und um herauszufinden, warum
 dies nützlich ist.
 
-#### Ein Anwendungsfall für die innere Veränderbarkeit: Mock-Objekte (Mock Objects)
+#### Testen mit Mock-Objekten
 
 Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
 anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
@@ -142,9 +142,9 @@ es korrekt implementiert ist. Dieser Platzhaltertyp wird _Testdoppel_ (test
 double) genannt. Stell dir das so vor wie ein „Stunt-Double“ beim Film, bei dem
 eine Person einspringt und einen Schauspieler in einer besonders schwierigen
 Szene ersetzt. Testdoppel stehen für andere Typen ein, wenn wir Tests
-durchführen. _Mock-Objekte_ sind bestimmte Arten von Testdoppeln, die
-aufzeichnen, was während eines Tests passiert, damit man bestätigen kann, dass
-die richtigen Aktionen ausgeführt wurden.
+durchführen. _Mock-Objekte_ (mock objects) sind bestimmte Arten von
+Testdoppeln, die aufzeichnen, was während eines Tests passiert, damit man
+bestätigen kann, dass die richtigen Aktionen ausgeführt wurden.
 
 Rust verfügt nicht im gleichen Sinne wie andere Programmiersprachen über
 Objekte und in die Standardbibliothek integrierte Mock-Objekt-Funktionalität.
@@ -161,7 +161,7 @@ Unsere Bibliothek bietet nur die Funktionalität, zu verfolgen, wie nahe ein
 Wert am Maximum liegt und wie die Nachrichten zu bestimmten Zeiten sein
 sollten. Von Anwendungen, die unsere Bibliothek verwenden, wird erwartet, dass
 sie den Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung
-könnte eine Nachricht in der Anwendung anlegen, eine E-Mail senden, eine
+könnte die Nachricht dem Benutzer direkt zeigen, eine E-Mail senden, eine
 Textnachricht senden oder etwas anderes machen. Die Bibliothek muss dieses
 Detail nicht kennen. Alles, was es braucht, ist Code, der ein von uns
 bereitgestelltes Merkmal (trait) namens `Messenger` implementiert. Codeblock
@@ -224,8 +224,8 @@ können ändern, was wir für den Parameter `value` übergeben, aber `set_value`
 gibt nichts zurück, auf das wir Zusicherungen machen können. Wir wollen in der
 Lage sein zu sagen, dass, wenn wir einen `LimitTracker` mit etwas erstellen,
 das das Merkmal `Messenger` und einen bestimmten Wert für `max` implementiert,
-wenn wir verschiedene Zahlen für `value` übergeben, der Messenger angewiesen
-wird, die entsprechenden Nachrichten zu senden.
+der Messenger angewiesen wird, die entsprechenden Nachrichten zu senden. wenn
+wir verschiedene Zahlen für `value` übergeben.
 
 Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von `send` nur die Nachrichten verfolgt, die
@@ -475,7 +475,7 @@ zu erhalten.
 Nachdem du nun gesehen hast, wie du `RefCell<T>` verwendest, wollen wir uns mit
 der Funktionsweise befassen.
 
-#### Mit `RefCell<T>` den Überblick über die Ausleihen zur Laufzeit behalten
+#### Verwalten von Ausleihen zur Laufzeit
 
 Beim Erstellen unveränderbarer und veränderbarer Referenzen verwenden wir die
 Syntax `&` bzw. `&mut`. Bei `RefCell<T>` verwenden wir die Methoden `borrow` und
@@ -634,7 +634,7 @@ verwendet, in dem nur unveränderbare Werte zulässig sind. Man kann
 `RefCell<T>` trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.
 
-### Mehrere Eigentümer veränderbarer Daten mit `Rc<T>` und `RefCell<T>` erlauben
+### Mehrere Eigentümer veränderbarer Daten erlauben
 
 Eine übliche Methode zur Verwendung von `RefCell<T>` ist die Kombination mit
 `Rc<T>`. Erinnere dich, dass man mit `Rc<T>` mehrere Eigentümer einiger Daten

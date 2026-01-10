@@ -448,8 +448,8 @@ Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen `String` haben, können wir einen Anteilstyp des
 `String` oder eine Referenz auf den `String` übergeben. Diese Flexibilität
 nutzt die Vorteile der automatischen Umwandlung, eine Funktionalität, die wir
-im Abschnitt [„Implizite automatische Umwandlung mit Funktionen und
-Methoden“][deref-coercions] in Kapitel 15 behandeln.
+im Abschnitt [„Automatische Umwandlung in Funktionen und Methoden
+verwenden“][deref-coercions] in Kapitel 15 behandeln.
 
 Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
 Referenz auf einen `String` entgegennimmt, macht unsere API allgemeiner und
@@ -538,5 +538,5 @@ Datenteilen zu einer `struct` ansehen.
 [ch13-2]: ch13-02-iterators.html
 [ch6]: ch06-02-match.html#muster-die-werte-binden
 [collection]: ch08-00-common-collections.html
-[deref-coercions]: ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden
+[deref-coercions]: ch15-02-deref.html#automatische-umwandlung-in-funktionen-und-methoden-verwenden
 [strings]: ch08-02-strings.html

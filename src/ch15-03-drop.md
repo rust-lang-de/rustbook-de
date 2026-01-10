@@ -15,12 +15,13 @@ den die Box zeigt.
 In einigen Programmiersprachen muss der Programmierer für manche Datentypen
 den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
 Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
-Sockets und Sperren. Wenn er das vergisst, kann das System überlastet werden
-und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
-ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
-Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
-sich nicht darum kümmern, an allen relevanten Stellen Aufräumcode zu
-platzieren, und verschwendet trotzdem keine Ressourcen!
+Sockets und Sperren. Wenn der Programmierer das vergisst, kann das System
+überlastet werden und abstürzen. In Rust kannst du festlegen, dass ein
+bestimmter Programmcode ausgeführt wird, sobald ein Wert seinen
+Gültigkeitsbereich verlässt. Der Compiler fügt dann diesen Programmcode
+automatisch ein. Infolgedessen muss man sich nicht darum kümmern, an allen
+relevanten Stellen Aufräumcode zu platzieren, und verschwendet trotzdem keine
+Ressourcen!
 
 Du schreibst den Programmcode, der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals `Drop`. Für das
@@ -106,9 +107,9 @@ nicht manuell aufrufen. Stattdessen muss man die von der Standardbibliothek
 bereitgestellte Funktion `std::mem::drop` aufrufen, wenn man das Aufräumen
 eines Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.
 
-Wenn wir versuchen die Methode `drop` des Merkmals `Drop` manuell aufzurufen,
-indem wir die Funktion `main` aus Codeblock 15-14 ändern, wie im Codeblock
-15-15, gezeigt, erhalten wir einen Kompilierfehler.
+Der Versuch, die Methode `drop` des Merkmals `Drop` manuell aufzurufen,
+indem wir die Funktion `main` aus Codeblock 15-14 ändern, wird nicht klappen.
+Codeblock 15-15 zeigt das.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -165,7 +166,7 @@ Instanz erstellt. Die Funktion `drop` in Rust ist so ein _Destruktor_.
 
 Rust lässt uns `drop` nicht explizit aufrufen, da Rust immer noch automatisch
 für den Wert am Ende von `main` `drop` aufruft. Dies würde einen
-_Doppel-Freigabe-Fehler_ (double free error) verursachen, da Rust versuchen
+Doppel-Freigabe-Fehler (double free error) verursachen, da Rust versuchen
 würde, den gleichen Wert zweimal aufzuräumen.
 
 Wir können das automatische Einfügen von `drop` am Ende des Gültigkeitsbereichs

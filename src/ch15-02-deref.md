@@ -1,4 +1,4 @@
-## Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`
+## Intelligente Zeiger wie normale Referenzen behandeln
 
 Durch die Implementierung des Merkmals `Deref` kann man das Verhalten des
 _Dereferenzierungsoperators_ (dereference operator) `*` (nicht zu verwechseln
@@ -18,13 +18,7 @@ zu funktionieren, dann sehen wir uns an, wie wir mit Rusts _automatischer
 Umwandlung_ (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.
 
-> Hinweis: Es gibt einen großen Unterschied zwischen dem Typ `MyBox<T>`, den
-> wir gerade erstellen, und dem echten Typ `Box<T>`: Unsere Version speichert
-> ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
-> konzentrieren wir uns auf `Deref`, daher ist es weniger wichtig, wo die Daten
-> tatsächlich gespeichert sind als das zeigerähnliche Verhalten.
-
-### Dem Zeiger zum Wert folgen
+### Der Referenz zum Wert folgen
 
 Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
 Zeiger als Pfeil vorzustellen, der auf einen Wert zeigt, der an einer anderen
@@ -87,7 +81,7 @@ den sie zeigt.
 
 Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
 Referenz `Box<T>` zu verwenden. Wie Codeblock 15-7 zeigt, funktioniert der
-Dereferenzierungsoperator:
+Dereferenzierungsoperator.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -115,11 +109,17 @@ indem wir unseren eigenen Box-Typ definieren.
 
 ### Einen eigenen intelligenten Zeiger definieren
 
-Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
+Erstellen wir einen Wrapper-Typ, der dem von der Standardbibliothek
 bereitgestellten Typ `Box<T>` ähnelt, um zu erfahren, wie sich intelligente
-Zeiger standardmäßig anders als Referenzen verhalten. Anschließend sehen wir
-uns an, wie man die Möglichkeit zur Verwendung des Dereferenzierungsoperators
-hinzufügen kann.
+Zeigertypen standardmäßig anders als Referenzen verhalten. Anschließend sehen
+wir uns an, wie man die Möglichkeit zur Verwendung des
+Dereferenzierungsoperators hinzufügen kann.
+
+> Hinweis: Es gibt einen großen Unterschied zwischen dem Typ `MyBox<T>`, den
+> wir gerade erstellen, und dem echten Typ `Box<T>`: Unsere Version speichert
+> ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
+> konzentrieren wir uns auf `Deref`, daher ist es weniger wichtig, wo die Daten
+> tatsächlich gespeichert sind als das zeigerähnliche Verhalten.
 
 Der Typ `Box<T>` wird letztendlich als Tupel-Struktur (tuple struct) mit einem
 Element definiert. Codeblock 15-8 definiert den Typ `MyBox<T>` auf die gleiche
@@ -283,7 +283,7 @@ einem Aufruf des `*`-Operators ersetzt wird. Da die Ersetzung des `*`-Operators
 nicht unendlich rekursiv ist, erhalten wir Daten vom Typ `i32`, die mit der `5`
 in `assert_eq!` in Codeblock 15-9 übereinstimmen.
 
-### Implizite automatische Umwandlung mit Funktionen und Methoden
+### Automatische Umwandlung in Funktionen und Methoden verwenden
 
 Die _automatische Umwandlung_ (deref coercion) wandelt eine Referenz auf einen
 Typ, der das Merkmal `Deref` implementiert, in eine Referenz auf einen anderen
@@ -423,7 +423,7 @@ zu erhalten, die dem Typ des Parameters entspricht. Wie oft `Deref::deref`
 eingefügt werden muss, wird zur Kompilierzeit ermittelt, sodass zur Laufzeit
 kein Nachteil durch die Nutzung der automatischen Umwandlung entsteht!
 
-### Wie die automatische Umwandlung mit Veränderbarkeit umgeht
+### Automatische Umwandlung mit veränderbaren Referenzen
 
 Ähnlich wie du das Merkmal `Deref` verwendest, um den `*`-Operator bei
 unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal `DerefMut`
