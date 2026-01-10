@@ -75,10 +75,10 @@
 ## Denken in Rust
 
 - [Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)](ch13-00-functional-features.md)
-  - [Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen](ch13-01-closures.md)
+  - [Funktionsabschlüsse (closures)](ch13-01-closures.md)
   - [Eine Reihe von Elementen verarbeiten mit Iteratoren](ch13-02-iterators.md)
   - [Unser E/A-Projekt verbessern](ch13-03-improving-our-io-project.md)
-  - [Performanzvergleich: Schleifen vs. Iteratoren](ch13-04-performance.md)
+  - [Performanz von Schleifen vs. Iteratoren](ch13-04-performance.md)
 
 - [Mehr über Cargo und Crates.io](ch14-00-more-about-cargo.md)
   - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)

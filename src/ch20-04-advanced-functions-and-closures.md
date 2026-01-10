@@ -157,9 +157,9 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 <span class="caption">Codeblock 20-32: Rückgeben eines Funktionsabschlusses aus
 einer Funktion unter Verwendung der Syntax `impl Trait`</span>
 
-Wie wir jedoch in [„Funktionsabschluss-Typinferenz und
-Annotation“][closure-types] in Kapitel 13 festgestellt haben, ist jeder
-Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
+Wie wir jedoch in [„Herleiten und Annotieren von
+Funktionsabschluss-Typen“][closure-types] in Kapitel 13 festgestellt haben, ist
+jeder Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
 arbeiten musst, die dieselbe Signatur, aber unterschiedliche Implementierungen
 haben, musst du ein Merkmals-Objekt für sie verwenden. Überlege, was passiert,
 wenn du einen Code wie in Codeblock 20-33 schreibst.
@@ -260,6 +260,6 @@ Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch20-02-advanced-traits.html
 [any-number-of-futures]: ch17-03-more-futures.html
-[closure-types]: ch13-01-closures.html#funktionsabschluss-typinferenz-und-annotation
+[closure-types]: ch13-01-closures.html#herleiten-und-annotieren-von-funktionsabschluss-typen
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

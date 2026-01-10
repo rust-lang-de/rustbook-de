@@ -23,7 +23,7 @@ let v1_iter = v1.iter();
 
 Der Iterator wird in der Variable `v1_iter` gespeichert. Sobald wir einen
 Iterator erstellt haben, können wir ihn auf verschiedene Weise verwenden.
-In Codeblock 3-5 in Kapitel 3 haben wir über ein Array iteriert, indem wir eine
+In Codeblock 3-5 haben wir über ein Array iteriert, indem wir eine
 `for`-Schleife verwendet haben, um einen Code für jedes Element auszuführen.
 Unter der Haube wird dabei implizit ein Iterator erzeugt und dann konsumiert,
 aber wir haben bis jetzt übersehen, wie das genau funktioniert.
@@ -74,7 +74,7 @@ pub trait Iterator {
 }
 ```
 Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
-`Self::Item` die einen _zugeordneten Typ_ (associated type) mit diesem Merkmal 
+`Self::Item` die einen zugeordneten Typ (associated type) mit diesem Merkmal 
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des `Iterator`-Merkmals erfordert, dass du auch einen `Item`-Typ definierst und
@@ -183,7 +183,7 @@ Codeblock 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
 `map`, die einen Funktionsabschluss für jedes Element aufruft, während die
 Elemente durchlaufen werden. Die Methode `map` gibt einen neuen Iterator
 zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
-hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht:
+hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -223,8 +223,8 @@ Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
 wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
 sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
-Um das zu beheben, werden wir die Methode `collect` verwenden, die wir im Kapitel
-12 mit `env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
+Um das zu beheben, werden wir die Methode `collect` verwenden, die wir mit
+`env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
@@ -257,7 +257,7 @@ Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
 musst du eine der konsumierenden Adaptermethoden aufrufen, um Ergebnisse aus
 Aufrufen von Iteratoradaptern zu erhalten.
 
-### Verwendung von Funktionsabschlüssen die ihre Umgebung erfassen
+### Funktionsabschlüsse die ihre Umgebung erfassen
 
 Viele Iterator-Adapter nehmen Funktionsabschlüsse als Argumente, und in der
 Regel werden diese Funktionsabschlüsse solche sein, die ihre Umgebung erfassen.

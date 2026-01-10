@@ -441,14 +441,13 @@ Strang im Vorrat zur Ausführung übergibt.
 
 Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen
 Funktionsabschluss als Parameter zu nehmen. Aus [„Verschieben erfasster Werte
-aus Funktionsabschlüssen und Fn-Merkmalen“][fn-traits] in Kapitel 13 erinnern
-wir uns, dass wir Funktionsabschlüsse als Parameter mit drei verschiedenen
-Merkmalen nehmen können: `Fn`, `FnMut` und `FnOnce`. Wir müssen entscheiden,
-welche Art von Funktionsabschluss wir hier verwenden. Wir wissen, dass wir am
-Ende etwas Ähnliches wie die Implementierung `thread::spawn` der
-Standardbibliothek tun werden, sodass wir uns ansehen können, welche
-Abgrenzungen die Signatur von `thread::spawn` in ihrem Parameter hat. Die
-Dokumentation zeigt uns Folgendes:
+aus Funktionsabschlüssen“][fn-traits] in Kapitel 13 erinnern wir uns, dass wir
+Funktionsabschlüsse als Parameter mit drei verschiedenen Merkmalen nehmen
+können: `Fn`, `FnMut` und `FnOnce`. Wir müssen entscheiden, welche Art von
+Funktionsabschluss wir hier verwenden. Wir wissen, dass wir am Ende etwas
+Ähnliches wie die Implementierung `thread::spawn` der Standardbibliothek tun
+werden, sodass wir uns ansehen können, welche Abgrenzungen die Signatur von
+`thread::spawn` in ihrem Parameter hat. Die Dokumentation zeigt uns Folgendes:
 
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
@@ -1463,7 +1462,7 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 
 [builder]: https://doc.rust-lang.org/std/thread/struct.Builder.html
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
-[fn-traits]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen
+[fn-traits]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
 [type-synonyms]: ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias

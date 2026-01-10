@@ -14,7 +14,7 @@ und der `Config`-Struktur die Eigentümerschaft dieser Werte gaben. Im Codeblock
 13-17 haben wir die Implementierung der Funktion `Config::build` so reproduziert 
 wie sie im Codeblock 12-23 aussah.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,noplayground
 # use std::env;
@@ -216,11 +216,11 @@ in einem Vektor zu sammeln und dann einen Anteilstyp an `Config::build` zu
 zurückgegeben wird, direkt an `Config::build`.
 
 Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
-Ändere in der Datei _src/lib.rs_ deines E/A-Projekts die Signatur von
-`Config::build` um, damit sie so wie im Codeblock 13-26 aussieht. Dies wird
-noch immer nicht kompilieren, da der Funktionsrumpf aktualisiert werden muss.
+Ändere die Signatur von `Config::build`, damit sie so wie im Codeblock 13-26
+aussieht. Dies wird noch immer nicht kompilieren, da der Funktionsrumpf
+aktualisiert werden muss.
 
-<span class="filename">Dateiname src/lib.rs</span>
+<span class="filename">Dateiname src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 # use std::env;
@@ -351,14 +351,14 @@ Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
 verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
 Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 
-#### Verwenden von `Iterator`-Merkmalen anstelle von Indizierung
+#### Verwenden von `Iterator`-Merkmalsmethoden
 
 Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
 `args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
 `next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
 Codeblock 12-23, um die Methode `next` zu verwenden.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 # use std::env;
@@ -492,7 +492,7 @@ wir kehren vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert
 
 Wir können die Vorteile der Iteratoren auch in der Funktion `search` unseres
 E/A-Projekts nutzen, die hier im Codeblock 13-21 wiedergegeben ist, wie im
-Codeblock 12-19:
+Codeblock 12-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -563,7 +563,7 @@ die Menge der veränderbaren Werte reduziert, um den Code übersichtlicher zu
 machen. Das Entfernen des veränderbar-Status kann uns eventuell zukünftige
 Verbesserungen ermöglichen, um die Suche parallel auszuführen, da wir uns nicht
 um die Verwaltung des simultanen Zugriffs auf den Vektor `results` kümmern
-müssen. Codeblock 13-22 zeigt diese Änderung:
+müssen. Codeblock 13-22 zeigt diese Änderung.
 
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -687,20 +687,32 @@ zurückgibt. Wir sammeln dann die passenden Zeilen mit `collect` in einen
 anderen Vektor. Viel einfacher! Nimm die gleiche Änderung vor, um
 Iteratormethoden auch in der Funktion `search_case_insensitive` zu nutzen.
 
+Als weitere Verbesserung gib einen Iterator aus der Funktion `search` zurück,
+indem du den Aufruf von `collect` entfernst und den Rückgabetyp in `impl
+Iterator<Item = &'a str>` änderst, sodass die Funktion zu einem
+Iterator-Adapter wird. Beachte, dass du auch die Tests aktualisieren musst!
+Durchsuche eine große Datei mit deinem `minigrep`-Tool vor und nach dieser
+Änderung, um den Verhaltensunterschied zu beobachten. Vor dieser Änderung gibt
+das Programm keine Ergebnisse aus, bis alle Ergebnisse gesammelt wurden. Nach
+der Änderung werden die Ergebnisse jedoch ausgegeben, sobald eine
+übereinstimmende Zeile gefunden wird, da die `for`-Schleife in der Funktion
+`run` die faule Eigenschaft des Iterators nutzen kann.
+
 ### Zwischen Schleifen und Iteratoren wählen
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
 wählen solltest und warum. Die ursprüngliche Implementierung im Codeblock 13-21
-oder die Version die Iteratoren verwendet im Codeblock 13-22. Die meisten
-Rust-Programmierer bevorzugen den Iterator-Stil. Zunächst ist es zwar
-schwieriger, den Überblick zu behalten, aber sobald du ein Gefühl für die
-verschiedenen Iteratoradapter und deren Funktionsweise hast, können Iteratoren 
-einfacher zu verstehen sein. Statt mit verschiedensten Schleifen herumzuspielen
-und Vektoren zu erstellen, konzentriert sich der Programmcode auf das höhere
-Ziel der Schleife. Dadurch wird ein Teil des gewöhnlichen Programmcodes
-abstrahiert und die einzigartigen Konzepte, z.B. die Filterbedingung die
-jedes Element bestehen muss um durch den Iterator zu kommen, werden leichter
-erkennbar.
+oder die Version die Iteratoren verwendet im Codeblock 13-22 (vorausgesetzt,
+wir sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
+zurückzugeben). Die meisten Rust-Programmierer bevorzugen den Iterator-Stil.
+Zunächst ist es zwar schwieriger, den Überblick zu behalten, aber sobald du ein
+Gefühl für die verschiedenen Iteratoradapter und deren Funktionsweise hast,
+können Iteratoren einfacher zu verstehen sein. Statt mit verschiedensten
+Schleifen herumzuspielen und Vektoren zu erstellen, konzentriert sich der
+Programmcode auf das höhere Ziel der Schleife. Dadurch wird ein Teil des
+gewöhnlichen Programmcodes abstrahiert und die einzigartigen Konzepte, z.B. die
+Filterbedingung die jedes Element bestehen muss um durch den Iterator zu
+kommen, werden leichter erkennbar.
 
 Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über

@@ -1,4 +1,4 @@
-## Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen
+## Funktionsabschlüsse (closures)
 
 Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
 speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen 
@@ -8,7 +8,7 @@ und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte
 Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
 die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.
 
-### Erfassen der Umgebung mit Funktionsabschlüssen
+### Erfassen der Umgebung
 
 Wir werden zunächst untersuchen, wie wir Funktionsabschlüsse verwenden können,
 um Werte aus der Umgebung, in der sie definiert sind, zur späteren Verwendung
@@ -29,7 +29,7 @@ repräsentiert, die ein Feld mit dem Namen `shirts` hat, das ein
 `Vec<ShirtColor>` mit den derzeit vorrätigen Hemden enthält. Die Methode
 `giveaway`, die auf `Inventory` definiert ist, erhält die optionale
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
-zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:
+zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -111,7 +111,7 @@ ruft `self.most_stocked()` auf. Wir definieren den Funktionsabschluss hier, und
 die Implementierung von `unwrap_or_else` wird den Funktionsabschluss später
 auswerten, wenn das Ergebnis benötigt wird.
 
-Die Ausführung dieses Codes gibt aus:
+Die Ausführung dieses Codes gibt folgendes aus:
 
 ```console
 $ cargo run
@@ -131,7 +131,7 @@ Referenz auf die `self`-Instanz von `Inventory` erfasst und sie mit dem von uns
 angegebenen Code an die Methode `unwrap_or_else` übergeben. Funktionen sind
 andererseits nicht in der Lage, ihre Umgebung auf diese Weise zu erfassen.
 
-### Funktionsabschluss-Typinferenz und Annotation
+### Herleiten und Annotieren von Funktionsabschluss-Typen
 
 Es gibt weitere Unterschiede zwischen Funktionen und Funktionsabschlüssen. Bei
 Funktionsabschlüssen ist es normalerweise nicht erforderlich, die Typen der
@@ -297,7 +297,7 @@ erfassten Werten macht.
 
 In Codeblock 13-4 definieren wir einen Funktionsabschluss, der eine
 unveränderbare Referenz an den Vektor mit dem Namen `list` erfasst, weil er
-nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:
+nur eine unveränderbare Referenz benötigt, um den Wert auszugeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -341,7 +341,7 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
 
 In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
 dass er ein Element zum Vektor `list` hinzufügt. Der Funktionsabschluss erfasst
-nun eine veränderbare Referenz:
+nun eine veränderbare Referenz.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -395,7 +395,7 @@ sprechen, detailliert auf Stränge eingehen und erläutern, warum man sie
 verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
 Strangs mithilfe eines Funktionsabschlusses befassen, der das Schlüsselwort
 `move` benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor
-in einem neuen Strang statt im Hauptstrang auszugeben:
+in einem neuen Strang statt im Hauptstrang auszugeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -424,17 +424,19 @@ benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
 Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
 dass `list` in den Funktionsabschluss verschoben werden soll, indem wir das
 Schlüsselwort `move` an den Anfang der Funktionsabschlussdefinition setzen.
-Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
-wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
-die Eigentümerschaft von `list` beibehält, aber vor dem neuen Strang endet und
-`list` aufräumt, wäre die unveränderbare Referenz im Strang ungültig. Daher
-verlangt der Compiler, dass `list` in den Funktionsabschluss im neuen Strang
-verschoben wird, damit die Referenz gültig bleibt. Versuche, das Schlüsselwort
-`move` zu entfernen oder `list` im Hauptstrang zu verwenden, nachdem der
-Funktionsabschluss definiert wurde, um zu sehen, welche Compilerfehler du
-erhältst!
 
-### Verschieben erfasster Werte aus Funktionsabschlüssen und `Fn`-Merkmalen
+Wenn der Hauptstrang vor dem Aufruf von `join` für den neuen Strang weitere
+Operationen ausgeführt hat, könnte der neue Strang beendet werden, bevor der
+Rest des Hauptstrangs beendet wird, oder der Hauptstrang könnte zuerst beendet
+werden. Wenn der Hauptstrang die Eigentümerschaft von `list` beibehält, aber
+vor dem neuen Strang endet und `list` aufräumt, wäre die unveränderbare
+Referenz im Strang ungültig. Daher verlangt der Compiler, dass `list` in den
+Funktionsabschluss im neuen Strang verschoben wird, damit die Referenz gültig
+bleibt. Versuche, das Schlüsselwort `move` zu entfernen oder `list` im
+Hauptstrang zu verwenden, nachdem der Funktionsabschluss definiert wurde, um zu
+sehen, welche Compilerfehler du erhältst!
+
+### Verschieben erfasster Werte aus Funktionsabschlüssen
 
 Sobald ein Funktionsabschluss eine Referenz oder die Eigentümerschaft eines
 Werts aus der Umgebung, in der der Funktionsabschluss definiert ist, erfasst
@@ -455,22 +457,21 @@ können. Funktionsabschlüsse implementieren automatisch eine, zwei oder alle
 drei dieser `Fn`-Merkmale, und zwar in additiver Weise, je nachdem, wie der
 Rumpf des Funktionsabschlusses die Werte behandelt:
 
-1. `FnOnce` gilt für Funktionsabschlüsse, die einmal aufgerufen
-   werden können. Alle Funktionsabschlüsse implementieren zumindest dieses
-   Merkmal, weil alle Funktionsabschlüsse aufgerufen werden können. Ein
-   Funktionsabschluss, der erfasste Werte aus seinem Rumpf herausverschiebt,
-   implementiert nur `FnOnce` und keine der anderen `Fn`-Merkmale, weil er nur
-   einmal aufgerufen werden kann.
-2. `FnMut` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus
-   ihrem Rumpf herausverschieben, aber die erfassten Werte möglicherweise
-   verändern. Diese Funktionsabschlüsse können mehr als einmal aufgerufen
-   werden.
-3. `Fn` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
-   Rumpf herausverschieben und die erfassten Werte nicht verändern, sowie
-   Funktionsabschlüsse, die nichts aus ihrer Umgebung erfassen. Diese
-   Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
-   Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
-   mehrere Male gleichzeitig aufgerufen wird.
+* `FnOnce` gilt für Funktionsabschlüsse, die einmal aufgerufen werden können.
+  Alle Funktionsabschlüsse implementieren zumindest dieses Merkmal, weil alle
+  Funktionsabschlüsse aufgerufen werden können. Ein Funktionsabschluss, der
+  erfasste Werte aus seinem Rumpf herausverschiebt, implementiert nur `FnOnce`
+  und keine der anderen `Fn`-Merkmale, weil er nur einmal aufgerufen werden
+  kann.
+* `FnMut` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
+  Rumpf herausverschieben, aber die erfassten Werte möglicherweise verändern.
+  Diese Funktionsabschlüsse können mehr als einmal aufgerufen werden.
+* `Fn` gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
+  Rumpf herausverschieben und die erfassten Werte nicht verändern, sowie
+  Funktionsabschlüsse, die nichts aus ihrer Umgebung erfassen. Diese
+  Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
+  Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
+  mehrere Male gleichzeitig aufgerufen wird.
 
 Schauen wir uns die Definition der Methode `unwrap_or_else` auf `Option<T>` an,
 die wir in Codeblock 13-1 verwendet haben:
@@ -503,15 +504,15 @@ Die für den generischen Typ `F` spezifizierte Merkmalsabgrenzung ist `FnOnce()
 -> T`, was bedeutet, dass `F` mindestens einmal aufgerufen werden können muss,
 keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
 `FnOnce` in der Merkmalsabgrenzung drückt die Einschränkung aus, dass
-`unwrap_or_else` `f` höchstens ein Mal aufrufen wird. Im Rumpf von
+`unwrap_or_else` `f` nicht mehr als ein Mal aufrufen wird. Im Rumpf von
 `unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f`
 nicht aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal
 aufgerufen. Da alle Funktionsabschlüsse `FnOnce` implementieren, akzeptiert
 `unwrap_or_else` alle drei Arten von Funktionsabschlüssen und ist so flexibel
 wie nur möglich.
 
-> Anmerkung: Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der
-> Umgebung erfordert, können wir den Namen einer Funktion anstelle eines
+> Anmerkung: Wenn das, was wir tun wollen, keine Werte aus der Umgebung
+> erfassen muss, können wir einen Funktionsnamen anstelle eines
 > Funktionsabschlüsses verwenden. Zum Beispiel könnten wir
 > `unwrap_or_else(Vec::new)` auf einem `Option<Vec<T>>`-Wert aufrufen, um einen
 > neuen, leeren Vektor zu erhalten, wenn der Wert `None` ist. Der Compiler
@@ -585,7 +586,7 @@ er die Anforderungen der Merkmalsabgrenzung erfüllt.
 Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen
 Funktionsabschluss, der nur das Merkmal `FnOnce` implementiert, weil er einen
 Wert aus der Umgebung verschiebt. Der Compiler lässt uns diesen
-Funktionsabschluss nicht mit `sort_by_key` verwenden:
+Funktionsabschluss nicht mit `sort_by_key` verwenden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -663,7 +664,7 @@ Wert im Funktionsabschluss-Rumpf zu erhöhen, um zu zählen, wie oft
 `sort_by_key` aufgerufen wurde. Der Funktionsabschluss in Codeblock 13-9
 funktioniert mit `sort_by_key`, weil er nur eine veränderbare Referenz auf den
 `num_sort_operations`-Zähler erfasst und daher mehr als einmal aufgerufen
-werden kann:
+werden kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
