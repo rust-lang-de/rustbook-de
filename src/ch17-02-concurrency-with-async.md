@@ -147,17 +147,16 @@ kompiliert werden, können wir beide Schleifen in einen asynchronen Block packen
 und von der Laufzeitumgebung mittels der Funktion `trpl::join` bis zum Ende
 ausführen lassen.
 
-Im Abschnitt [„Warten auf das Ende aller Stränge mit `join`“][join-handles]
-haben wir gezeigt, wie man die Methode `join` auf den Typ `JoinHandle`
-anwendet, der beim Aufruf von `std::thread::spawn` zurückgegeben wird. Die
-Funktion `trpl::join` ist ähnlich, aber für Futures. Wenn du ihr zwei Futures
-gibst, erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe
-der beiden übergebenen Futures ist, sobald _beide_ abgeschlossen sind. In
-Codeblock 17-8 verwenden wir also `trpl::join`, um darauf zu warten, dass
-sowohl `fut1` als auch `fut2` fertig sind. Wir warten _nicht_ auf `fut1` und
-`fut2`, sondern auf das neue Future, das von `trpl::join` erzeugt wurde. Wir
-ignorieren die Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten
-handelt.
+Im Abschnitt [„Warten auf das Ende aller Stränge“][join-handles] haben wir
+gezeigt, wie man die Methode `join` auf den Typ `JoinHandle` anwendet, der beim
+Aufruf von `std::thread::spawn` zurückgegeben wird. Die Funktion `trpl::join`
+ist ähnlich, aber für Futures. Wenn du ihr zwei Futures gibst, erzeugt sie ein
+neues Future, dessen Ausgabe ein Tupel mit der Ausgabe der beiden übergebenen
+Futures ist, sobald _beide_ abgeschlossen sind. In Codeblock 17-8 verwenden wir
+also `trpl::join`, um darauf zu warten, dass sowohl `fut1` als auch `fut2`
+fertig sind. Wir warten _nicht_ auf `fut1` und `fut2`, sondern auf das neue
+Future, das von `trpl::join` erzeugt wurde. Wir ignorieren die Ausgabe, da es
+sich nur um ein Tupel mit zwei Einheitswerten handelt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -612,7 +611,7 @@ Futures arbeiten können.
 
 [capture-or-move]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft
 [if-let]: ch06-03-if-let.html
-[join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-stränge-mit-join
+[join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-stränge
 [message-passing-threads]: ch16-02-message-passing.html
 [move-threads]: ch16-01-threads.html#verwenden-von-move-funktionsabschlüssen-mit-strängen
 [thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn

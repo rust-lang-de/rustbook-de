@@ -1,7 +1,7 @@
 ## Nachrichtenaustausch zwischen Strängen (threads)
 
 Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
-Nebenläufigkeit (safe concurrency) ist der _Nachrichtenaustausch_ (message
+Nebenläufigkeit (safe concurrency) ist der Nachrichtenaustausch (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 der [Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
@@ -166,7 +166,7 @@ Erhalten: hallo
 
 Perfekt!
 
-### Kanäle und Eigentümerschaftsübertragung
+### Übertragen der Eigentümerschaft durch Kanäle
 
 Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
@@ -235,14 +235,16 @@ Wert verschoben wird, übernimmt der Empfänger die Eigentümerschaft an ihm.
 Dadurch wird verhindert, dass wir den Wert nach dem Senden versehentlich wieder
 verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.
 
-### Mehrere Werte senden und den Empfänger warten sehen
+### Senden mehrerer Werte
 
 Der Code in Codeblock 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
 nicht eindeutig, dass zwei getrennte Stränge über den Kanal miteinander
-sprachen. In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die
-beweisen, dass der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der
-erzeugte Strang sendet nun mehrere Nachrichten und macht dazwischen eine Pause
-von einer Sekunde.
+sprachen.
+
+In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
+der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der erzeugte Strang
+sendet nun mehrere Nachrichten und macht dazwischen eine Pause von einer
+Sekunde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -300,7 +302,7 @@ Da wir keinen Code haben, der die `for`-Schleife im Hauptstrang pausiert oder
 verzögert, können wir sagen, dass der Hauptstrang darauf wartet, Werte vom
 erzeugten Strang zu erhalten.
 
-### Erstellen mehrerer Produzenten durch Klonen des Senders
+### Erstellen mehrerer Produzenten
 
 Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für _mehrfacher Produzent,
 einzelner Konsument_ ist. Lass uns `mpsc` verwenden und den Code in Codeblock

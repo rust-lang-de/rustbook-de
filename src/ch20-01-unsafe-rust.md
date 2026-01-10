@@ -666,14 +666,13 @@ Indem wir `unsafe impl` verwenden, versprechen wir, dass wir die Invarianten
 aufrechterhalten, die der Compiler nicht verifizieren kann.
 
 Erinnere dich als Beispiel an die Marker-Merkmale `Sync` und `Send`, die wir in
-[„Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Sync` und
-`Send`“][extensible-concurrency-with-the-sync-and-send-traits] in Kapitel 16
-besprochen haben: Der Compiler implementiert diese Merkmale automatisch, wenn
-unsere Typen vollständig aus anderen Typen zusammengesetzt sind, die `Send` und
-`Sync` implementieren. Wenn wir einen Typ implementieren, der einen Typ
-enthält, der nicht `Send` oder `Sync` implementiert, z.B. Rohzeiger, und wir
-diesen Typ als `Send` oder `Sync` markieren wollen, müssen wir `unsafe`
-verwenden. Rust kann nicht überprüfen, ob unser Typ die Garantien
+[„Erweiterbare Nebenläufigkeit mit `Send` und `Sync`“][extensible-concurrency]
+in Kapitel 16 besprochen haben: Der Compiler implementiert diese Merkmale
+automatisch, wenn unsere Typen vollständig aus anderen Typen zusammengesetzt
+sind, die `Send` und `Sync` implementieren. Wenn wir einen Typ implementieren,
+der einen Typ enthält, der nicht `Send` oder `Sync` implementiert, z.B.
+Rohzeiger, und wir diesen Typ als `Send` oder `Sync` markieren wollen, müssen
+wir `unsafe` verwenden. Rust kann nicht überprüfen, ob unser Typ die Garantien
 aufrechterhält, dass er sicher über Stränge gesendet oder von mehreren Strängen
 aus zugegriffen werden kann; daher müssen wir diese Prüfungen manuell
 durchführen und als solche mit `unsafe` kennzeichnen.
@@ -760,7 +759,7 @@ möchtest, lies den offiziellen Rust-Leitfaden zum Thema
 [ABI]: https://doc.rust-lang.org/nightly/reference/items/external-blocks.html#abi
 [dangling-references]: ch04-02-references-and-borrowing.html#hängende-referenzen
 [differences-between-variables-and-constants]: ch03-01-variables-and-mutability.html#konstanten-deklarieren
-[extensible-concurrency-with-the-sync-and-send-traits]: ch16-04-extensible-concurrency-sync-and-send.html
+[extensible-concurrency]: ch16-04-extensible-concurrency-sync-and-send.html
 [miri]: https://github.com/rust-lang/miri
 [nightly]: appendix-07-nightly-rust.html
 [nomicon]: https://doc.rust-lang.org/nomicon/

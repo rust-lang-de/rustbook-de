@@ -98,7 +98,7 @@ keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
 erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Strängen
 zu wechseln.
 
-### Warten auf das Ende aller Stränge mit `join`
+### Warten auf das Ende aller Stränge
 
 Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
 vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die

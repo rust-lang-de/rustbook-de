@@ -99,7 +99,7 @@
   - [Mit Strängen (threads) Programmcode gleichzeitig ausführen](ch16-01-threads.md)
   - [Nachrichtenaustausch zwischen Strängen (threads)](ch16-02-message-passing.md)
   - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
-  - [Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
+  - [Erweiterbare Nebenläufigkeit mit `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
 
 - [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme](ch17-00-async-await.md)
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
