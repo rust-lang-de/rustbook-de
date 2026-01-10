@@ -277,8 +277,8 @@ Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
 Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
 Beispiel für `pub use` und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir in [„Mit `pub use` eine benutzerfreundliche öffentliche
-API exportieren“][ch14-pub-use] in Kapitel 14 betrachten.
+auswirkt, werden wir in [„Exportieren einer komfortablen öffentlichen
+API“][ch14-pub-use] in Kapitel 14 betrachten.
 
 ### Verwenden externer Pakete
 
@@ -445,7 +445,7 @@ manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
 [Standardbibliotheksdokumentation][std-lib-preludes] für weitere Informationen
 zu diesem Muster.
 
-[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren
+[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exportieren-einer-komfortablen-öffentlichen-api
 [rand]: ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl
 [std-lib-preludes]: https://doc.rust-lang.org/std/prelude/index.html#other-preludes
 [writing-tests]: ch11-01-writing-tests.html

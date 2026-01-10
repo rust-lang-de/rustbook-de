@@ -63,7 +63,7 @@ Wenn du `cargo doc --open` ausführst, wird der HTML-Code für die Dokumentation
 deiner aktuellen Kiste (und auch die Dokumentation aller Abhängigkeiten
 (dependencies) deiner Kiste) erstellt und das Ergebnis in einem Webbrowser
 geöffnet. Wenn du zur Funktion `add_one` navigierst, wirst du sehen wie der Text
-in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1:
+in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
 <img alt="Gerenderte HTML-Dokumentation für die Funktion `add_one` von `my_crate`" src="img/trpl14-01.png" class="center" />
 
@@ -77,9 +77,9 @@ einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
 einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
 verwenden:
 
-- **Panics**: Die Szenarien, in denen die dokumentierte Funktion `panic`
-  aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
-  `panic` aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
+- **Panics**: Das sind die Szenarien, in denen die dokumentierte Funktion
+  abstürzt. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
+  abstürzen, sollten sicherstellen, dass sie die Funktion in solchen
   Situationen nicht aufrufen.
 - **Errors**: Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
   Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
@@ -123,11 +123,10 @@ synchron miteinander sind!
 #### Enthaltene Elemente kommentieren
 
 Der Stil des Dokumentationskommentars `//!` fügt dem Element, das die
-Kommentare enthält, Dokumentation hinzu, anstatt den Elementen die auf die
-Kommentare folgen Dokumentation hinzuzufügen. Wir verwenden diese
-Dokumentationskommentare üblicherweise in der Wurzeldatei (laut Konvention
-_src/lib.rs_) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
-dokumentieren.
+Kommentare *enthält*, Dokumentation hinzu, anstatt den Elementen die auf die
+Kommentare *folgen*. Wir verwenden diese Dokumentationskommentare üblicherweise
+in der Wurzeldatei (laut Konvention _src/lib.rs_) oder in einem Modul, um die
+Kiste oder das Modul als Ganzes zu dokumentieren.
 
 Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
 `my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
@@ -170,19 +169,19 @@ Diese Kommentare beschreiben die gesamte Kiste.
 
 Wenn wir `cargo doc --open` ausführen, werden diese Kommentare auf der
 Startseite der Dokumentation für `my_crate` angezeigt, oberhalb der Liste der
-veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2:
-
-<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
-
-<span class="caption">Abbildung 14-2: Gerenderte Dokumentation für `my_crate`,
-einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span>
+veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2.
 
 Dokumentationskommentare innerhalb von Elementen sind besonders nützlich, um
 Kisten und Module zu beschreiben. Erkläre anhand dieser Informationen den
 allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Kiste
 besser verstehen können.
 
-### Mit `pub use` eine benutzerfreundliche öffentliche API exportieren
+<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
+
+<span class="caption">Abbildung 14-2: Gerenderte Dokumentation für `my_crate`,
+einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span>
+
+### Exportieren einer komfortablen öffentlichen API
 
 Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste
 eine wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur
@@ -215,7 +214,7 @@ Nehmen wir zum Beispiel an, wir haben eine Bibliothek mit dem Namen `art`
 erstellt, um künstlerische Konzepte zu modellieren. In dieser Bibliothek sind
 zwei Module enthalten: Ein Modul `kinds` mit zwei Aufzählungen (enums) namens
 `PrimaryColor` und `SecondaryColor` und ein Modul `utils` das eine Funktion
-namens `mix` beinhaltet. Siehe Codeblock 14-3:
+namens `mix` beinhaltet. Siehe Codeblock 14-3.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -258,10 +257,10 @@ Modulen `kinds` und `utils` organisiert sind</span>
 Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Kiste
 generiert von `cargo doc` aussehen würde.
 
-<img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
+<img alt="Gerenderte Dokumentation für die Kiste `art` mit den Modulen `kinds` und `utils`" src="img/trpl14-03.png" class="center" />
 
 <span class="caption">Abbildung 14-3: Startseite der Dokumentation für `art`
-die Module `kinds` und `utils` auflistet</span>
+mit den Modulen `kinds` und `utils` auflistet</span>
 
 Beachte, dass die Typen `PrimaryColor`, `SecondaryColor` und die Funktion `mix`
 nicht auf der Startseite angeführt sind. Wir müssen auf `kinds` und `utils`
@@ -271,7 +270,7 @@ Eine Kiste, die von dieser Bibliothek abhängt, würde `use`-Anweisungen
 benötigen, die die Elemente aus `art` in den Gültigkeitsbereich bringen und die
 derzeit definierte Modulstruktur angeben. Codeblock 14-4 zeigt ein Beispiel für
 eine Kiste, in der die Elemente `PrimaryColor` und `mix` aus der `art`-Kiste
-verwendet werden:
+verwendet werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -301,7 +300,7 @@ Modulnamen in den `use`-Anweisungen angeben müssen.
 Um die interne Organisation aus der öffentlichen API zu entfernen, können wir den
 Programmcode der `art`-Kiste ändern, um `pub use`-Anweisungen hinzuzufügen, um
 die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
-gezeigt:
+gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -359,7 +358,7 @@ Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen `PrimaryColor` und
 Die Benutzer der `art`-Kiste können weiterhin die interne Struktur aus
 Codeblock 14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde,
 oder sie können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden,
-wie es im Codeblock 14-6 gezeigt wurde:
+wie es im Codeblock 14-6 gezeigt wurde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -412,10 +411,11 @@ $ cargo login
 abcdefghijklmnopqrstuvwxyz012345
 ```
 
-Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
-_~/.cargo/credentials_. Beachte, dass dieses Token ein _Geheimnis_ ist: Gib es
-nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem teilst,
-solltest du es widerrufen und ein neues Token auf [crates.io][crates] erzeugen.
+Dieses Kommando informiert Cargo über dein API-Token und speichert es lokal in
+_~/.cargo/credentials.toml_. Beachte, dass dieses Token ein _eheimnis ist: Gib
+es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem
+geteils hast, solltest du es widerrufen und ein neues Token auf
+[crates.io][crates] erzeugen.
 
 ### Metadaten zu einer neuen Kiste hinzufügen
 
@@ -514,12 +514,13 @@ sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
 Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.
 
 Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
-niemals überschrieben und der Programmcode nicht gelöscht werden. Ein Hauptziel
-von [crates.io][crates] ist es, als permanentes Archiv von Code zu fungieren,
-sodass alle Projekte die erstellt werden und von Kisten aus [crates.io][crates]
-abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde
-das Erreichen dieses Ziels unmöglich machen. Die Anzahl der Kistenversionen,
-die man veröffentlichen kann, ist jedoch unbegrenzt.
+niemals überschrieben und der Programmcode nur in spezielle Fällen gelöscht
+werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
+fungieren, sodass alle Projekte die erstellt werden und von Kisten aus
+[crates.io][crates] abhängen weiter funktionieren werden. Das Zulassen von
+Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die
+Anzahl der Kistenversionen, die man veröffentlichen kann, ist jedoch
+unbegrenzt.
 
 Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 
@@ -527,11 +528,17 @@ Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 $ cargo publish
     Updating crates.io index
    Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
+    Packaged 6 files, 1.2KiB (895.0B compressed)
    Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
    Compiling guessing_game v0.1.0
 (file:///projects/guessing_game/target/package/guessing_game-0.1.0)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
+    Uploaded guessing_game v0.1.0 to registry `crates-io`
+note: waiting for `guessing_game v0.1.0` to be available at registry
+`crates-io`.
+You may press ctrl-c to skip waiting; the crate should be available shortly.
+   Published guessing_game v0.1.0 at registry `crates-io`
 ```
 Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die
 Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
@@ -546,7 +553,7 @@ semantische Versionierung][semver], um auf den von dir vorgenommenen Änderungen
 basierend welche neue Versionsnummer geeignet ist. Führe dann `cargo publish`
 aus, um die neue Version hochzuladen.
 
-### Mit `cargo yank` Versionen auf crates.io als veraltet kennzeichnen
+### Versionen auf crates.io als veraltet kennzeichnen
 
 Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
@@ -564,8 +571,8 @@ verwenden.
 Um eine Version einer Kiste herauszuziehen, rufe `cargo yank` auf und
 spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel
 eine Kiste mit dem Namen `guessing_game` in Version 1.0.1 veröffentlicht haben
-und sie löschen wollen, würden wir im Projektverzeichnis für `guessing_game`
-folgendes ausführen:
+und sie herausziehen wollen, würden wir im Projektverzeichnis für
+`guessing_game` folgendes ausführen:
 
 ```console
 $ cargo yank --vers 1.0.1
@@ -590,4 +597,4 @@ musst du diese Geheimnisse sofort zurücksetzen.
 [crates]: https://crates.io/
 [crates-me]: https://crates.io/me/
 [semver]: https://semver.org/lang/de/
-[spdx]: http://spdx.org/licenses/
+[spdx]: https://spdx.org/licenses/
