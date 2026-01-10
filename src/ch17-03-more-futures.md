@@ -163,11 +163,11 @@ verschiedene handgeschriebene Strukturen in einen `Vec` packen. Dieselbe Regel
 gilt für die verschiedenen vom Compiler erzeugten Strukturen.
 
 Damit dies funktioniert, müssen wir _Merkmalsobjekte_ (trait objects)
-verwenden, wie wir es in [„Rückgabe von Fehlern aus der Funktion `run`“][dyn]
-in Kapitel 12 getan haben. (Wir werden Merkmalsobjekte im Detail in Kapitel 18
-behandeln.) Die Verwendung von Merkmalsobjekten ermöglicht es uns, alle
-anonymen Futures, die von diesen Typen erzeugt werden, als denselben Typ zu
-behandeln, da alle von ihnen das Merkmal `Future` implementieren.
+verwenden, wie wir es in [„Fehlerrückgabe aus `run`“][dyn] in Kapitel 12 getan
+haben. (Wir werden Merkmalsobjekte im Detail in Kapitel 18 behandeln.) Die
+Verwendung von Merkmalsobjekten ermöglicht es uns, alle anonymen Futures, die
+von diesen Typen erzeugt werden, als denselben Typ zu behandeln, da alle von
+ihnen das Merkmal `Future` implementieren.
 
 > Anmerkung: In [„Verwenden einer Aufzählung zum Speichern mehrerer
 > Typen“][enum-alt] in Kapitel 8 haben wir eine andere Möglichkeit besprochen,
@@ -1165,6 +1165,6 @@ arbeiten können. Vorher solltest du aber noch ein paar Dinge beachten:
   Kollektion von Futures.)
 
 [async-program]: ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm
-[dyn]: ch12-03-improving-error-handling-and-modularity.html#rückgabe-von-fehlern-aus-der-funktion-run
+[dyn]: ch12-03-improving-error-handling-and-modularity.html#fehlerrückgabe-aus-run
 [enum-alt]: ch08-01-vectors.html#verwenden-einer-aufzählung-zum-speichern-mehrerer-typen
 [iterator-trait]: ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next

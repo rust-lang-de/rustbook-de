@@ -41,7 +41,7 @@ aussagekräftig sind.
 
 Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.
 
-### Trennen der Zuständigkeiten bei Binärprojekten
+### Trennen der Zuständigkeiten in Binärprojekten
 
 Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion `main` ist vielen Binärprojekten gemein.
@@ -546,7 +546,7 @@ nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
 uns, eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren.
 Wenn das `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie
 `unwrap`: Sie gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein
-`Err`-Wert ist, ruft diese Methode den Code im _Funktionsabschluss_ (closure)
+`Err`-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
 auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
 `unwrap_or_else` übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
 [Kapitel 13][ch13] ein. Im Moment musst du nur wissen, dass `unwrap_or_else`
@@ -579,8 +579,7 @@ Großartig! Diese Ausgabe ist viel benutzerfreundlicher.
 
 Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
 wir uns der Logik des Programms zuwenden. Wie wir in [„Trennen der
-Zuständigkeiten bei
-Binärprojekten“](#trennen-der-zuständigkeiten-bei-binärprojekten) erklärt
+Zuständigkeiten in Binärprojekten“][trennen-der-zustaendigkeiten] erklärt
 haben, werden wir eine Funktion namens `run` extrahieren, die die gesamte Logik
 enthält, die sich derzeit in der Funktion `main` befindet und nicht mit dem
 Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
@@ -650,7 +649,7 @@ Die Funktion `run` enthält nun die gesamte restliche Logik von `main`,
 beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 `Config`-Instanz als Argument.
 
-#### Rückgabe von Fehlern aus der Funktion `run`
+#### Fehlerrückgabe aus `run`
 
 Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird,
 können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in
@@ -720,9 +719,9 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das _Merkmalsobjekt_ (trait object) `Box<dyn
-Error>` verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung
-am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
+Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) `Box<dyn Error>`
+verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung am
+Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 [Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
 `Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
@@ -739,7 +738,7 @@ Drittens gibt die Funktion `run` jetzt im Erfolgsfall einen `Ok`-Wert zurück.
 Wir haben den Erfolgstyp der Funktion `run` mit `()` in der Signatur
 deklariert, was bedeutet, dass wir den Wert des Einheitstyps in den Wert `Ok`
 einpacken müssen. Diese Syntax `Ok(())` mag zunächst etwas merkwürdig
-aussehen, aber wenn wir `()` so verwenden, ist das der idiomatische Weg, um
+aussehen. Aber wenn wir `()` so verwenden, ist das der idiomatische Weg, um
 anzuzeigen, dass wir `run` nur wegen seiner Seiteneffekte aufrufen; es gibt
 keinen Wert zurück, den wir brauchen.
 
@@ -974,3 +973,4 @@ schreiben ein paar Tests!
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung
 [ch9-result]: ch09-02-recoverable-errors-with-result.html
 [ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#der-operator--als-abkürzung
+[trennen-der-zustaendigkeiten]: #trennen-der-zuständigkeiten-in-binärprojekten

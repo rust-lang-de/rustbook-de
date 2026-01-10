@@ -1,4 +1,4 @@
-## Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen
+## Funktionalität mit testgetriebener Entwicklung hinzufügen
 
 Jetzt, da wir die Logik nach _src/lib.rs_ extrahiert haben und die
 Argumentkollektion und Fehlerbehandlung in _src/main.rs_ belassen haben, ist es

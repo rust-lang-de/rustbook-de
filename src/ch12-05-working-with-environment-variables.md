@@ -10,15 +10,16 @@ unsere Benutzer die Umgebungsvariable einmal setzen und alle Suchvorgänge in
 dieser Terminalsitzung ohne Berücksichtigung der Groß-/Kleinschreibung
 durchführen.
 
-### Schreiben eines fehlschlagenden Tests für die Suche unabhängig von der Groß-/Kleinschreibung
+### Schreiben eines fehlschlagenden Tests für die Suche unabhängig von Groß-/Kleinschreibung
 
-Wir fügen zuerst eine neue Funktion `search_case_insensitive` hinzu, die
-aufgerufen wird, wenn die Umgebungsvariable einen Wert hat. Wir werden die
-TDD-Methode weiter verfolgen, sodass der erste Schritt wieder darin besteht,
-einen fehlschlagenden Test zu schreiben. Wir werden einen neuen Test für die
-neue Funktion `search_case_insensitive` hinzufügen und unseren alten Test von
-`one_result` in `case_sensitive` umbenennen, um die Unterschiede zwischen den
-beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
+Wir fügen zuerst eine neue Funktion `search_case_insensitive` zur Bibliothek
+`minigrep` hinzu, die aufgerufen wird, wenn die Umgebungsvariable einen Wert
+hat. Wir werden die TDD-Methode weiter verfolgen, sodass der erste Schritt
+wieder darin besteht, einen fehlschlagenden Test zu schreiben. Wir werden einen
+neuen Test für die neue Funktion `search_case_insensitive` hinzufügen und
+unseren alten Test von `one_result` in `case_sensitive` umbenennen, um die
+Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Codeblock 12-20
+gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -237,9 +238,9 @@ Variable `query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext
 ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
 `"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als
 ob sie `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
-`to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100% genau
-sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier etwas
-mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
+`to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100 Prozent
+genau sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier
+etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
 Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.
 
 Beachte, dass `query` jetzt ein `String` und nicht mehr ein
@@ -291,7 +292,7 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 # use std::error::Error;
@@ -399,7 +400,7 @@ auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion `search`
 oder die Funktion `search_case_insensitive` aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
 # use std::error::Error;
@@ -506,10 +507,10 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
-Standardbibliothek, daher bringen wir dieses Modul am Anfang von _src/lib.rs_
-in den Gültigkeitsbereich. Dann werden wir die Funktion `var` aus dem Modul
-`env` verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE`
-einen Wert hat, wie in Codeblock 12-23 gezeigt.
+Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
+_src/main.rs_ ist. Dann werden wir die Funktion `var` aus dem Modul `env`
+verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE` einen
+Wert hat, wie in Codeblock 12-23 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -662,7 +663,7 @@ How dreary to be somebody!
 
 Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 `IGNORE_CASE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
-_to_.
+`to`.
 
 ```console
 $ IGNORE_CASE=1 cargo run -- to poem.txt

@@ -68,7 +68,7 @@
   - [Kommandozeilenargumente entgegennehmen](ch12-01-accepting-command-line-arguments.md)
   - [Eine Datei einlesen](ch12-02-reading-a-file.md)
   - [Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern](ch12-03-improving-error-handling-and-modularity.md)
-  - [Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen](ch12-04-testing-the-librarys-functionality.md)
+  - [Funktionalität mit testgetriebener Entwicklung hinzufügen](ch12-04-testing-the-librarys-functionality.md)
   - [Mit Umgebungsvariablen arbeiten](ch12-05-working-with-environment-variables.md)
   - [Fehler zur Standardfehlerausgabe umleiten](ch12-06-writing-to-stderr-instead-of-stdout.md)
 
