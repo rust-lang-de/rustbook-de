@@ -1,4 +1,4 @@
-## Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben
+## Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten
 
 In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
@@ -23,15 +23,13 @@ könnte einige Typen enthalten, die Leute benutzen können, z.B. `Button` und
 wollen, die gezeichnet werden können: Zum Beispiel könnte ein Programmierer ein
 `Image` und ein anderer eine `SelectBox` hinzufügen.
 
-Wir werden für dieses Beispiel keine vollwertige GUI-Bibliothek implementieren,
-aber wir werden zeigen, wie die Teile zusammenpassen würden. Zum Zeitpunkt des
-Schreibens der Bibliothek können wir nicht alle Typen kennen und definieren,
-die andere Programmierer vielleicht erstellen möchten. Aber wir wissen, dass
-`gui` den Überblick über viele Werte unterschiedlicher Typen behalten muss, und
-es muss für jeden dieser unterschiedlich typisierten Werte eine Methode `draw`
-aufrufen. Es muss nicht genau wissen, was passieren wird, wenn wir die Methode
-`draw` aufrufen, sondern nur, dass der Typ diese Methode für uns zum Aufruf
-bereithält.
+Zum Zeitpunkt des Schreibens der Bibliothek können wir nicht alle Typen kennen
+und definieren, die andere Programmierer vielleicht erstellen möchten. Aber wir
+wissen, dass `gui` den Überblick über viele Werte unterschiedlicher Typen
+behalten muss, und es muss für jeden dieser unterschiedlich typisierten Werte
+eine Methode `draw` aufrufen. Es muss nicht genau wissen, was passieren wird,
+wenn wir die Methode `draw` aufrufen, sondern nur, dass der Typ diese Methode
+für uns zum Aufruf bereithält.
 
 Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
 `Component` definieren, die eine Methode namens `draw` enthält. Die anderen
@@ -41,7 +39,8 @@ und somit die Methode `draw` erben. Sie könnten jeweils die Methode `draw`
 Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
 `Component`-Instanzen, und `draw` aufrufen. Aber da Rust keine Vererbung hat,
 brauchen wir einen anderen Weg, die `gui`-Bibliothek zu strukturieren, damit
-die Benutzer sie um neue Typen erweitern können.
+die Benutzer neue Typen erstellen können, die mit der Bibliothek kompatibel
+sind.
 
 ### Definieren eines Merkmals (trait) für allgemeines Verhalten
 
@@ -67,13 +66,11 @@ Aufzählungen „Objekte“ zu nennen, um sie von den Objekten anderer Sprachen 
 unterscheiden. In einer Struktur oder Aufzählung sind die Daten in den
 Struktur-Feldern vom Verhalten in `impl`-Blöcken getrennt, während in anderen
 Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst
-sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte *sind* jedoch eher
-wie Objekte in anderen Sprachen in dem Sinne, dass sie Daten und Verhalten
-kombinieren. Aber Merkmalsobjekte unterscheiden sich von traditionellen
-Objekten dadurch, dass wir einem Merkmalsobjekt keine Daten hinzufügen können.
-Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
-Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
-Verhalten zu ermöglichen.
+sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte unterscheiden sich
+von Objekten in anderen Sprachen dadurch, dass wir einem Merkmalsobjekte keine
+Daten hinzufügen können. Merkmalsobjekte sind nicht so allgemein einsetzbar wie
+Objekte in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion
+über allgemeines Verhalten zu ermöglichen.
 
 In Codeblock 18-3 wird gezeigt, wie ein Merkmal `Draw` mit einer Methode `draw`
 definiert werden kann.
@@ -144,7 +141,7 @@ generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
 werden, während Merkmalsobjekte die Möglichkeit bieten, zur Laufzeit mehrere
 konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur `Screen` mit einem generischen Typ und einer Merkmalsabgrenzung
-wie in Codeblock 18-6 definieren können:
+wie in Codeblock 18-6 definieren können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -192,7 +189,7 @@ Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
 die Methode `draw` keine nützliche Implementierung in ihrem Rumpf haben wird.
 Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
 Struktur `Button` Felder für `width`, `height` und `label` haben, wie in
-Codeblock 18-7 gezeigt:
+Codeblock 18-7 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -273,7 +270,7 @@ eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine
 `SelectBox` und einen `Button` hinzufügen, indem er sie in eine `Box<T>` legt,
 um ein Merkmalsobjekt zu werden. Er kann dann die Methode `run` auf der
 `Screen`-Instanz aufrufen, die dann `draw` auf jeder der Komponenten aufruft.
-Der Codeblock 18-9 zeigt diese Umsetzung:
+Der Codeblock 18-9 zeigt diese Umsetzung.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -392,7 +389,7 @@ das wir nicht übergeben wollten und einen anderen Typ übergeben sollten, oder
 wir sollten `Draw` auf `String` implementieren, sodass `Screen` in der Lage
 ist, `Draw` darauf aufzurufen.
 
-### Merkmalsobjekte führen dynamischen Aufruf durch
+### Dynamischen Aufruf durchführen
 
 Erinnere dich [„Code-Performanz beim Verwenden generischer
 Datentypen“][performance-of-code-using-generics] in Kapitel 10 an unsere
@@ -416,10 +413,9 @@ aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
 beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
 dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
-Regeln, genannt _dyn compatibility_, wo man dynamische Aufrufe verwenden kann
-und wo nicht. Diese Regeln gehen über den Rahmen dieser Diskussion hinaus, aber
-du kannst mehr über sie in der
-[Dyn-Kompatibilitäts-Referenz][dyn-compatibility] lesen. Wir haben jedoch
+Regeln, wo man dynamische Aufrufe verwenden kann und wo nicht. Diese Regeln
+gehen über den Rahmen dieser Diskussion hinaus, aber du kannst mehr über sie in
+der [Dyn-Kompatibilitäts-Referenz][dyn-compatibility] lesen. Wir haben jedoch
 zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
 geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.

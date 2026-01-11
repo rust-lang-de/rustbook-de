@@ -111,7 +111,7 @@
 
 - [Objektorientierte Sprachelemente](ch18-00-oop.md)
   - [Charakteristiken objektorientierter Sprachen](ch18-01-what-is-oo.md)
-  - [Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben](ch18-02-trait-objects.md)
+  - [Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
 
 ## Fortgeschrittene Themen

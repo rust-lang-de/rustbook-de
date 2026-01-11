@@ -640,14 +640,14 @@ fn main() -> Result<(), Box<dyn Error>> {
 `Result`-Werte.</span>
 
 Der Typ `Box<dyn Error>` ist ein Merkmalsobjekt (trait object), über das wir in
-[„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
+[„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
 `Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von `?`
 auf einen `Result`-Wert in einer Funktion `main` mit dem Fehlertyp `Box<dyn
 Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser Funktion `main` nur Fehler des Typs
-`std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von
-`Box<dyn Error>` auch dann noch korrekt, wenn weiterer Code, der andere Fehler
+`std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von `Box<dyn
+Error>` auch dann noch korrekt, wenn weiterer Code, der andere Fehler
 zurückgibt, dem Rumpf von `main` hinzugefügt wird.
 
 Wenn eine Funktion `main` ein `Result<(), E>` zurückgibt, beendet sich die

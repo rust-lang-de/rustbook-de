@@ -29,8 +29,8 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-_Merkmalsobjekt_ (trait object) bekannt, und [„Merkmalsobjekte (trait objects)
-die Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18
+_Merkmalsobjekt_ (trait object) bekannt, und [„Verwendung von Merkmals-Objekten
+zur Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18
 widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
 erneut anwenden!
 

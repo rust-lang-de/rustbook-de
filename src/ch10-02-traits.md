@@ -615,8 +615,8 @@ fn returns_summarizable(switch: bool) -> impl Summary {
 Die Rückgabe entweder eines `NewsArticle` oder eines `SocialPost` ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“][trait-objects] in Kapitel 18 behandelt.
+wird in [„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“][trait-objects] in Kapitel 18 behandelt.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 

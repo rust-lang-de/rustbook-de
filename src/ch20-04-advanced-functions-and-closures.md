@@ -253,8 +253,8 @@ Funktionsabschlüssen, die durch Funktionen definiert sind, die `Box<dyn Fn>`
 zurückgeben, damit sie denselben Typ haben</span>
 
 Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
-Merkmalsobjekte findest du im Abschnitt [„Merkmalsobjekte (trait objects) die
-Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18.
+Merkmalsobjekte findest du im Abschnitt [„Verwendung von Merkmals-Objekten zur
+Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18.
 
 Als nächstes wollen wir uns Makros ansehen!
 

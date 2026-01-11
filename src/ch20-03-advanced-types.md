@@ -389,8 +389,8 @@ Wir können `str` mit allen Arten von Zeigern kombinieren: Zum Beispiel
 `Box<str>` oder `Rc<str>`. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
 ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. In [„Merkmalsobjekte (trait objects) die Werte
-unterschiedlicher Typen erlauben“][using-trait-objects] in Kapitel 18 haben wir
+des Merkmals verwenden. In [„Verwendung von Merkmals-Objekten zur Abstraktion
+über gemeinsames Verhalten“][using-trait-objects] in Kapitel 18 haben wir
 erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden, diese hinter
 einen Zeiger setzen müssen, z.B. `&dyn Trait` oder `Box<dyn Trait>` (`Rc<dyn
 Trait>` würde auch funktionieren).
