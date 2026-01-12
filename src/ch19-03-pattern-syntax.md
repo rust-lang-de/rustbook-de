@@ -19,7 +19,7 @@ abgleichen. Der folgende Code enthält einige Beispiele:
     }
 ```
 
-Dieser Code gibt `eins` aus, weil der Wert in `x` 1 ist. Diese Syntax ist
+Dieser Code gibt `eins` aus, weil `x` den Wert `1` hat. Diese Syntax ist
 nützlich, wenn du willst, dass dein Code eine Aktion ausführt, wenn er einen
 bestimmten konkreten Wert erhält.
 
@@ -30,13 +30,13 @@ Wert passen, und wir haben sie in diesem Buch schon oft verwendet. Es gibt
 jedoch eine Komplikation, wenn du benannte Variablen in `match`-, `if let`-
 oder `while let`-Ausdrücken verwendest. Da mit jeder dieser Ausdrücke ein neuer
 Gültigkeitsbereich beginnt, werden Variablen, die als Teil eines Musters
-innerhalb des Ausdrucks deklariert sind, diejenigen Variablen mit dem gleichen
-Namen außerhalb verschatten (shadow), wie es bei allen Variablen der Fall ist.
-In Codeblock 19-11 deklarieren wir eine Variable mit dem Namen `x` mit dem Wert
-`Some(5)` und eine Variable `y` mit dem Wert `10`. Dann erzeugen wir einen
-`match`-Ausdruck für den Wert `x`. Sieh dir die Muster in den `match`-Zweigen
-und `println!` am Ende an und versuche herauszufinden, was der Code ausgeben
-wird, bevor du diesen Code ausführst oder weiterliest.
+innerhalb dieser Ausdrücke deklariert sind, diejenigen Variablen mit dem
+gleichen Namen außerhalb des Konstrukts verschatten (shadow), wie es bei allen
+Variablen der Fall ist. In Codeblock 19-11 deklarieren wir eine Variable mit
+dem Namen `x` mit dem Wert `Some(5)` und eine Variable `y` mit dem Wert `10`.
+Dann erzeugen wir einen `match`-Ausdruck für den Wert `x`. Sieh dir die Muster
+in den `match`-Zweigen und `println!` am Ende an und versuche herauszufinden,
+was der Code ausgeben wird, bevor du diesen Code ausführst oder weiterliest.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -85,14 +85,14 @@ Um einen `match`-Ausdruck zu erstellen, der die Werte der äußeren Variablen `x
 und `y` abgleicht, anstatt eine neue Variable einzuführen, die die existierende
 Variable `y` verschattet, müssten wir stattdessen eine Abgleichsbedingung
 (match guard conditional) verwenden. Wir werden über Abgleichsbedingungen
-später im Abschnitt [„Extra-Bedingungen mit
-Abgleichsbedingungen“][extra-conditionals] sprechen.
+später im Abschnitt [„Abgleichsbedingungen hinzufügen“][extra-conditionals]
+sprechen.
 
-### Mehrfache Muster
+### Mehrfache Muster abgleichen
 
-Du kannst mehrere Muster mit der Syntax `|` abgleichen, die das
-*oder*-Operator-Muster darstellt. Zum Beispiel gleicht der folgende Code den
-Wert von `x` mit den `match`-Zweigen ab, wobei der erste davon eine
+In `match`-Ausdrücken kannst du mehrere Muster mit der Syntax `|` abgleichen,
+die das *oder*-Operator-Muster darstellt. Zum Beispiel gleicht der folgende
+Code den Wert von `x` mit den `match`-Zweigen ab, wobei der erste davon eine
 _oder_-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:
 
@@ -156,7 +156,7 @@ Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen (enums
 und Tupel zu destrukturieren, um verschiedene Teile dieser Werte zu verwenden.
 Lass uns jeden Wert durchgehen.
 
-#### Destrukturieren von Strukturen
+#### Strukturen
 
 Codeblock 19-12 zeigt eine Struktur `Point` mit zwei Feldern, `x` und `y`, die
 wir mit einem Muster in einer `let`-Anweisung aufteilen können.
@@ -268,14 +268,14 @@ sobald er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn der
 `Point { x: 0, y: 0}` auf der `x`-Achse und der `y`-Achse liegt, würde dieser
 Code nur `Auf der x-Achse bei 0` ausgeben.
 
-#### Destrukturieren von Aufzählungen
+#### Aufzählungen
 
 Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
-6-5), wir sind aber noch nicht explizit darauf eingegangen, dass das Muster zur
-Destrukturierung einer Aufzählung der Art und Weise entspricht, wie die in der
-Aufzählung gespeicherten Daten definiert sind. Als Beispiel verwenden wir in
-Codeblock 19-15 die Aufzählung `Message` aus Codeblock 6-2 und schreiben ein
-`match` mit Mustern, das jeden inneren Wert destrukturiert.
+6-5 in Kapitel 6), wir sind aber noch nicht explizit darauf eingegangen, dass
+das Muster zur Destrukturierung einer Aufzählung der Art und Weise entspricht,
+wie die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
+verwenden wir in Codeblock 19-15 die Aufzählung `Message` aus Codeblock 6-2 und
+schreiben ein `match` mit Mustern, das jeden inneren Wert destrukturiert.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -330,7 +330,7 @@ Elementen enthält, ähnelt das Muster dem Muster, das wir für den Abgleich von
 Tupeln angeben. Die Anzahl der Variablen im Muster muss mit der Anzahl der
 Elemente in der Variante, die wir abgleichen, übereinstimmen.
 
-#### Destrukturieren verschachtelter Strukturen und Aufzählungen
+#### Verschachtelte Strukturen und Aufzählungen
 
 Bis jetzt haben unsere Beispiele alle Strukturen oder Aufzählungen auf einer
 Ebene abgeglichen, aber der Abgleich funktioniert auch bei verschachtelten
@@ -378,7 +378,7 @@ stattdessen zur `Color::Hsv`-Variante. Wir können diese komplexen Bedingungen
 in einem einzigen `match`-Ausdruck angeben, auch wenn es sich um zwei
 Aufzählungen handelt.
 
-#### Destrukturieren von Strukturen und Tupeln
+#### Strukturen und Tupel
 
 Wir können das Abgleichen und Destrukturieren verschachtelter Muster auf noch
 komplexere Weise mischen. Das folgende Beispiel zeigt eine komplizierte
@@ -683,7 +683,7 @@ wir `2` und `4` ignorieren wollen, `second` an `8` binden und dann `16` und
 Rust nichts Besonderes, sodass wir einen Kompilierfehler erhalten, weil das
 Verwenden von `..` an zwei Stellen wie dieser mehrdeutig ist.
 
-### Extra-Bedingungen mit Abgleichsbedingungen
+### Abgleichsbedingungen hinzufügen
 
 Eine _Abgleichsbedingung_ (match guard) ist eine zusätzliche `if`-Bedingung,
 die nach dem Muster in einem `match`-Zweig angegeben wird und die zusammen mit
@@ -728,13 +728,14 @@ anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
 Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
 Abgleichsbedingungs-Ausdrücke beteiligt sind.
 
-In Codeblock 19-11 haben wir erwähnt, dass wir zur Lösung unseres
-Musterverschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
-verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
-Musters im `match`-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
-`match` zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
-Wert der äußeren Variable testen konnten. Codeblock 19-27 zeigt, wie wir eine
-Abgleichsbedingung verwenden können, um dieses Problem zu beheben.
+Als wir Codeblock 19-11 besprochen haben, haben wir erwähnt, dass wir zur
+Lösung unseres Musterverschattungsproblems (pattern-shadowing problem)
+Abgleichsbedingungen verwenden könnten. Erinnere dich daran, dass eine neue
+Variable innerhalb des Musters im `match`-Ausdruck erstellt wurde, anstatt die
+Variable außerhalb von `match` zu verwenden. Diese neue Variable bedeutete,
+dass wir nicht gegen den Wert der äußeren Variable testen konnten. Codeblock
+19-27 zeigt, wie wir eine Abgleichsbedingung verwenden können, um dieses
+Problem zu beheben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -812,16 +813,14 @@ die Abgleichsbedingung nur auf den Endwert in der mit dem `|`-Operator
 angegebenen Werteliste angewendet, hätte der Zweig gepasst und das Programm
 hätte `ja` ausgegeben.
 
-### `@`-Bindungen
+### `@`-Bindungen verwenden
 
 Mit dem _at_-Operator `@` können wir eine Variable erstellen, die einen Wert
 enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
 zu einem Muster passt. Codeblock 19-29 zeigt ein Beispiel, bei dem wir testen
 wollen, dass ein `Message::Hello`-Feld `id` innerhalb des Bereichs `3..=7`
-liegt. Wir wollen den Wert auch an die Variable `id_variable` binden, damit wir
-ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
-Variable `id` nennen, so wie das Feld, aber für dieses Beispiel werden wir
-einen anderen Namen verwenden.
+liegt. Wir wollen den Wert auch an die Variable `id` binden, damit wir ihn in
+dem mit dem Zweig verbundenen Code verwenden können.
 
 ```rust
     enum Message {
@@ -845,9 +844,9 @@ einen anderen Namen verwenden.
 einem Muster zu binden und ihn gleichzeitig zu testen</span>
 
 In diesem Beispiel wird `id im Bereich gefunden: 5` ausgegeben. Durch das
-Angeben von `id_variable @` vor dem Bereich `3..=7` erfassen wir den Wert, der
-mit dem Bereich übereinstimmt, und testen gleichzeitig, ob der Wert zum
-Bereichsmuster passt.
+Angeben von `id @` vor dem Bereich `3..=7` erfassen wir den Wert, der mit dem
+Bereich übereinstimmt, in einer Variable namens `id` und testen gleichzeitig,
+ob der Wert zum Bereichsmuster passt.
 
 Im zweiten Zweig, wo wir im Muster nur einen Bereich spezifiziert haben, hat
 der zum Zweig gehörende Code keine Variable, die den tatsächlichen Wert des
@@ -873,11 +872,11 @@ Daten zu unterscheiden. Wenn sie in `match`-Ausdrücken verwendet werden, stellt
 Rust sicher, dass deine Muster jeden möglichen Wert abdecken oder dein Programm
 sich nicht kompilieren lässt. Muster in `let`-Anweisungen und
 Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
-Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen
-dieser Teile an Variablen. Wir können einfache oder komplexe Muster erstellen,
-die unseren Bedürfnissen entsprechen.
+Destrukturieren von Werten in kleinere Teile und das Zuweisen dieser Teile an
+Variablen. Wir können einfache oder komplexe Muster erstellen, die unseren
+Bedürfnissen entsprechen.
 
 Als nächstes werden wir uns im vorletzten Kapitel des Buches mit einigen
 fortgeschrittenen Aspekten einer Vielzahl von Rusts Funktionalitäten befassen.
 
-[extra-conditionals]: #extra-bedingungen-mit-abgleichsbedingungen
+[extra-conditionals]: #abgleichsbedingungen-hinzufügen

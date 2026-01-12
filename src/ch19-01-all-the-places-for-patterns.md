@@ -33,7 +33,7 @@ match x {
 Die Muster in diesem `match`-Ausdruck sind `None` und `Some(i)` links von den
 Pfeilen.
 
-Eine Anforderung für `match`-Ausdrücke ist, dass sie _erschöpfend_ (exhaustive)
+Eine Anforderung für `match`-Ausdrücke ist, dass sie erschöpfend (exhaustive)
 in dem Sinne sein müssen, dass alle Möglichkeiten für den Wert im
 `match`-Ausdruck berücksichtigt sein müssen. Ein Weg, um sicherzustellen, dass
 alle Möglichkeiten abgedeckt sind, ist ein Sammel-Muster (catchall pattern) für
@@ -47,6 +47,91 @@ ignorieren willst. Wir werden das Muster `_` in [„Ignorieren von Werten in
 einem Muster“][ignoring-values-in-a-pattern] später in diesem Kapitel
 ausführlicher behandeln.
 
+### `let`-Ausdrücke
+
+Vor diesem Kapitel hatten wir nur explizit die Verwendung von Mustern mit
+`match` und `if let` besprochen, aber tatsächlich haben wir Muster auch an
+anderen Stellen verwendet, darunter in `let`-Anweisungen. Betrachte
+beispielsweise diese einfache Variablenzuweisung mit `let`:
+
+```rust
+let x = 5;
+```
+
+Jedes Mal, wenn du eine `let`-Anweisung wie diese verwendet hast, hast du
+Muster verwendet, auch wenn dir das vielleicht nicht bewusst war! Formal sieht
+eine `let`-Anweisung wie folgt aus:
+
+```rust
+let MUSTER = AUSDRUCK;
+```
+
+In Anweisungen wie `let x = 5;` mit einem Variablennamen an der Stelle MUSTER
+ist der Variablenname lediglich eine besonders einfache Form eines Musters.
+Rust vergleicht den Ausdruck mit dem Muster und weist alle gefundenen Namen zu.
+Im Beispiel `let x = 5;` ist `x` also ein Muster, das bedeutet: „Binde alles,
+was hier übereinstimmt, an die Variable `x`.“ Da der Name `x` das gesamte
+Muster ist, bedeutet dieses Muster effektiv: „Binde alles an die Variable `x`,
+unabhängig vom Wert.“
+
+Um den Aspekt des Musterabgleichs (pattern matching) von `let` besser zu
+verstehen, betrachte Codeblock 19-1, der ein Muster mit `let` verwendet, um ein
+Tupel zu destrukturieren.
+
+```rust
+    let (x, y, z) = (1, 2, 3);
+```
+
+<span class="caption">Codeblock 19-1: Verwenden eines Musters zum
+Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
+Variablen</span>
+
+Hier gleichen wir ein Tupel mit einem Muster ab. Rust vergleicht den Wert `(1,
+ 2, 3)` mit dem Muster `(x, y, z)` und stellt fest, dass der Wert zum Muster
+passt, weil die Anzahl der Elemente in beiden Werten dieselbe ist. Daher bindet
+Rust `1` an `x`, `2` an `y` und `3` an `z`. Man kann sich dieses Tupelmuster
+als drei darin verschachtelte einzelne Variablenmuster vorstellen.
+
+Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
+Tupel übereinstimmt, passt der Gesamttyp nicht und es kommt zu einem
+Compilerfehler. Codeblock 19-2 zeigt beispielsweise einen Versuch, ein Tupel
+mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
+funktioniert.
+
+```rust
+    let (x, y) = (1, 2, 3);
+```
+
+<span class="caption">Codeblock 19-2: Fehlerhaft aufgebautes Musters, dessen
+Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
+
+Der Versuch, diesen Code zu kompilieren, führt zu folgendem Typfehler:
+
+```console
+$ cargo run
+   Compiling patterns v0.1.0 (file:///projects/patterns)
+error[E0308]: mismatched types
+ --> src/main.rs:2:9
+  |
+2 |     let (x, y) = (1, 2, 3);
+  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
+  |         |
+  |         expected a tuple with 3 elements, found one with 2 elements
+  |
+  = note: expected tuple `({integer}, {integer}, {integer})`
+             found tuple `(_, _)`
+
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `patterns` (bin "patterns") due to 1 previous error
+```
+
+Um den Fehler zu beheben, könnten wir einen oder mehrere Werte im Tupel mit `_`
+oder `..` ignorieren, wie du im Abschnitt [„Ignorieren von Werten in einem
+Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem darin
+besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung darin,
+die Typen aufeinander abzustimmen, indem Variablen entfernt werden, sodass die
+Anzahl der Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
+
 ### Bedingte `if let`-Ausdrücke
 
 In Kapitel 6 haben wir erörtert, wie man `if let`-Ausdrücke hauptsächlich als
@@ -54,14 +139,14 @@ kürzeren Weg verwendet, um das Äquivalent eines `match`-Ausdrucks zu schreiben
 der nur einen Fall prüft. Optional kann `if let` ein entsprechendes `else`
 haben mit Code, der ausgeführt wird, wenn das Muster in `if let` nicht passt.
 
-Codeblock 19-1 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
+Codeblock 19-3 zeigt, dass es auch möglich ist, die Ausdrücke `if let`, `else
 if` und `else if let` zu mischen und anzupassen. Dies gibt uns mehr
 Flexibilität als ein `match`-Ausdruck, in dem wir nur einen Wert zum Abgleich
 mit den Mustern haben können. Auch erfordert Rust nicht, dass die Bedingungen
 in einer Reihe von `if let`-, `else if`- und `else if let`-Zweigen sich
 notwendigerweise aufeinander beziehen.
 
-Der Code in Codeblock 19-1 bestimmt die Farbe des Hintergrunds auf der
+Der Code in Codeblock 19-3 bestimmt die Farbe des Hintergrunds auf der
 Grundlage einer Reihe von Prüfungen mehrerer Bedingungen. Für dieses Beispiel
 haben wir Variablen mit hartkodierten Werten erstellt, die ein reales Programm
 von Benutzereingaben erhalten könnte.
@@ -90,7 +175,7 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 19-1: Mischen von `if let`, `else if`, `else if
+<span class="caption">Codeblock 19-3: Mischen von `if let`, `else if`, `else if
 let` und `else`</span>
 
 Wenn der Benutzer eine Lieblingsfarbe angibt, ist diese Farbe die
@@ -123,7 +208,7 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
 `while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
-ähnliche Weise zeigen wir in Codeblock 19-2 eine `while let`-Schleife, die auf
+ähnliche Weise zeigen wir in Codeblock 19-4 eine `while let`-Schleife, die auf
 Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
 prüfen wir ein `Result` statt einer einer `Option`.
 
@@ -140,14 +225,14 @@ prüfen wir ein `Result` statt einer einer `Option`.
     }
 ```
 
-<span class="caption">Codeblock 19-2: Das Verwenden einer `while let`-Schleife,
+<span class="caption">Codeblock 19-4: Das Verwenden einer `while let`-Schleife,
 um Werte so lange auszugeben, wie `rx.recv()` ein `Ok` zurückgibt</span>
 
 Dieses Beispiel gibt `1`, `2` und `3` aus. Die Methode `recv` nimmt die erste
 Nachricht von der Empfängerseite des Kanals und gibt `Ok(value)` zurück. Als
 wir `recv` das erste Mal in Kapitel 16 gesehen haben, haben wir den Fehler
 direkt ausgepackt oder mit ihm als Iterator in einer `for`-Schleife
-interagiert. Wie Codeblock 19-2 zeigt, können wir aber auch `while let`
+interagiert. Wie Codeblock 19-4 zeigt, können wir aber auch `while let`
 verwenden, da die Methode `recv` nach jeder angekommenen Nachricht den Wert
 `Ok` zurückgibt, solange der Sender existiert, und schließlich `Err`
 zurückgibt, sobald die Senderseite die Verbindung trennt.
@@ -156,7 +241,7 @@ zurückgibt, sobald die Senderseite die Verbindung trennt.
 
 In einer `for`-Schleife ist der Wert, der direkt auf das Schlüsselwort `for`
 folgt, ein Muster. Zum Beispiel ist in `for x in y` das `x` das Muster.
-Codeblock 19-3 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
+Codeblock 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
 ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
@@ -167,10 +252,10 @@ ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
     }
 ```
 
-<span class="caption">Codeblock 19-3: Verwenden eines Musters in einer
+<span class="caption">Codeblock 19-5: Verwenden eines Musters in einer
 `for`-Schleife zum Destrukturieren eines Tupels</span>
 
-Der Code in Codeblock 19-3 wird Folgendes ausgeben:
+Der Code in Codeblock 19-5 wird Folgendes ausgeben:
 
 ```console
 $ cargo run
@@ -187,91 +272,6 @@ Wert und den Index für diesen Wert erzeugt, die in einem Tupel abgelegt sind.
 Der erste Aufruf von `enumerate` erzeugt das Tupel `(0, 'a')`. Wenn dieser Wert
 zum Muster `(index, value)` passt, ist `index` gleich `0` und `value` gleich
 `'a'`, wodurch die erste Zeile der Ausgabe ausgegeben wird.
-
-### `let`-Anweisungen
-
-Vor diesem Kapitel hatten wir das Verwenden von Mustern nur explizit mit
-`match` und `if let` besprochen, aber tatsächlich haben wir Muster auch an
-anderen Stellen verwendet, auch in `let`-Anweisungen. Betrachte zum Beispiel
-diese einfache Variablenzuweisung mit `let`:
-
-```rust
-let x = 5;
-```
-
-Jedes Mal, wenn du eine `let`-Anweisung wie diese verwendet hast, hast du
-Muster verwendet, auch wenn du es vielleicht nicht bemerkt hast! Formal sieht
-eine `let`-Anweisung wie folgt aus:
-
-```text
-let PATTERN = EXPRESSION;
-```
-
-In Anweisungen wie `let x = 5;` mit einem Variablennamen an der Stelle
-_PATTERN_ ist der Variablenname nur eine besonders einfache Form eines Musters.
-Rust vergleicht den Ausdruck mit dem Muster und weist alle gefundenen Namen zu.
-Im Beispiel `let x = 5;` ist `x` also ein Muster, das bedeutet: „Binde das, was
-hier passt, an die Variable `x`.“ Da der Name `x` das gesamte Muster ist,
-bedeutet dieses Muster effektiv „Binde alles an die Variable `x`, was auch
-immer der Wert ist.“.
-
-Um den Aspekt des Musterabgleichs (pattern matching) von `let` deutlicher zu
-sehen, betrachte Codeblock 19-4, der ein Muster mit `let` verwendet, um ein
-Tupel zu destrukturieren.
-
-```rust
-    let (x, y, z) = (1, 2, 3);
-```
-
-<span class="caption">Codeblock 19-4: Verwenden eines Musters zum
-Destrukturieren eines Tupels und zum gleichzeitigen Erzeugen von drei
-Variablen</span>
-
-Hier vergleichen wir ein Tupel mit einem Muster. Rust vergleicht den Wert `(1,
-2, 3)` mit dem Muster `(x, y, z)` und sieht, dass der Wert zum Muster passt,
-weil die Anzahl der Elemente in beiden Werten dieselbe ist, und bindet `1` an
-`x`, `2` an `y` und `3` an `z`. Man kann sich dieses Tupelmuster als
-Verschachtelung von drei einzelnen Variablen-Mustern darin vorstellen.
-
-Wenn die Anzahl der Elemente im Muster nicht mit der Anzahl der Elemente im
-Tupel übereinstimmt, passt der Gesamttyp nicht, und wir erhalten einen
-Kompilierfehler. Beispielsweise zeigt Codeblock 19-5 einen Versuch, ein Tupel
-mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
-funktioniert.
-
-```rust,does_not_compile
-    let (x, y) = (1, 2, 3);
-```
-
-<span class="caption">Codeblock 19-5: Fehlerhaft aufgebautes Musters, dessen
-Variablen nicht mit der Anzahl der Elemente im Tupel übereinstimmen</span>
-
-Der Versuch, diesen Code zu kompilieren, führt zu diesem Typfehler:
-
-```console
-$ cargo run
-   Compiling patterns v0.1.0 (file:///projects/patterns)
-error[E0308]: mismatched types
- --> src/main.rs:2:9
-  |
-2 |     let (x, y) = (1, 2, 3);
-  |         ^^^^^^   --------- this expression has type `({integer}, {integer}, {integer})`
-  |         |
-  |         expected a tuple with 3 elements, found one with 2 elements
-  |
-  = note: expected tuple `({integer}, {integer}, {integer})`
-             found tuple `(_, _)`
-
-For more information about this error, try `rustc --explain E0308`.
-error: could not compile `patterns` (bin "patterns") due to 1 previous error
-```
-
-Um den Fehler zu beheben, könnten wir einen oder mehrere der Werte im Tupel
-mittels `_` oder `..` ignorieren, wie du im Abschnitt [„Ignorieren von Werten
-in einem Muster“][ignoring-values-in-a-pattern] sehen wirst. Wenn das Problem
-darin besteht, dass wir zu viele Variablen im Muster haben, besteht die Lösung
-darin, die Typen aufeinander abzustimmen, indem Variablen entfernt werden,
-sodass die Anzahl der Variablen gleich der Anzahl der Elemente im Tupel ist.
 
 ### Funktionsparameter
 
