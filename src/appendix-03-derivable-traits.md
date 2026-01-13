@@ -39,8 +39,8 @@ Die Liste der ableitbaren Merkmale in diesem Anhang ist nicht vollständig:
 Bibliotheken können `derive` für ihre eigenen Merkmale implementieren, sodass
 die Liste der Merkmale, die du mit `derive` verwenden kannst, wahrlich
 unbegrenzt ist. Das Implementieren von `derive` verwendet ein prozedurales
-Makro, das im Abschnitt [„Wie man ein benutzerdefiniertes Makro mit `derive`
-schreibt“][custom-derive-macros] in Kapitel 20 behandelt wird.
+Makro, das im Abschnitt [„Benutzerdefinierte Makro mit
+`derive`“][custom-derive-macros] in Kapitel 20 behandelt wird.
 
 ### `Debug` für die Programmierer-Ausgabe
 
@@ -197,7 +197,7 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `None` hat, gibt die Methode `unwrap_or_default` das Ergebnis von
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
-[custom-derive-macros]: ch20-05-macros.html#wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt
+[custom-derive-macros]: ch20-05-macros.html#benutzerdefinierte-makro-mit-derive
 [stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [struct-update-syntax]: ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax

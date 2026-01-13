@@ -99,19 +99,20 @@ Funktionsabschlusses. Codeblock 20-30 zeigt, wie das aussehen würde.
 `String::to_string` zur Umwandlung von Zahlen in Zeichenketten</span>
 
 Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
-die wir iin [„Fortgeschrittene Merkmale (traits)“][advanced-traits] gesprochen
-haben, weil es mehrere Funktionen namens `to_string` gibt.
+die wir in Abschnitt [„Fortgeschrittene Merkmale (traits)“][advanced-traits]
+gesprochen haben, weil es mehrere Funktionen namens `to_string` gibt.
 
 Hier verwenden wir die Funktion `to_string`, die im Merkmal `ToString`
 definiert ist, welche die Standardbibliothek für jeden Typ implementiert hat,
 der `Display` implementiert.
 
-Aus [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen wir, dass der
-Name jeder definierten Aufzählungsvariante auch eine Initialisierungsfunktion
-ist. Wir können diese Initialisierungsfunktionen als Funktionszeiger verwenden,
-die die Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
-Initialisierungsfunktionen als Argumente für Methoden angeben können, die
-Funktionsabschlüsse nehmen, wie in Codeblock 20-32 zu sehen ist.
+Aus Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen wir,
+dass der Name jeder definierten Aufzählungsvariante auch eine
+Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
+Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
+was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
+Methoden angeben können, die Funktionsabschlüsse nehmen, wie in Codeblock 20-32
+zu sehen ist.
 
 ```rust
     enum Status {
@@ -157,7 +158,7 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 <span class="caption">Codeblock 20-32: Rückgeben eines Funktionsabschlusses aus
 einer Funktion unter Verwendung der Syntax `impl Trait`</span>
 
-Wie wir jedoch in [„Herleiten und Annotieren von
+Wie wir jedoch im Abschnitt [„Herleiten und Annotieren von
 Funktionsabschluss-Typen“][closure-types] in Kapitel 13 festgestellt haben, ist
 jeder Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
 arbeiten musst, die dieselbe Signatur, aber unterschiedliche Implementierungen
@@ -219,16 +220,17 @@ $ cargo build
 
 Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein `impl Trait`
 zurückgeben, einen eindeutigen _undurchsichtigen Typ_ (opaque type) erzeugt,
-einen Typ, bei dem wir nicht in die Details dessen sehen können, was Rust für
-uns konstruiert. Obwohl diese Funktionen also beide Funktionsabschlüsse
-zurückgeben, die dasselbe Merkmal implementieren, nämlich `Fn(i32) -> i32`,
-sind die undurchsichtigen Typen, die Rust für jede Funktion erzeugt,
-unterschiedlich. (Dies ist vergleichbar mit der Art und Weise, wie Rust
-unterschiedliche konkrete Typen für verschiedene asynchrone Blöcke erzeugt,
-selbst wenn sie denselben Ausgabetyp haben, wie wir in [„Arbeiten mit einer
-beliebigen Anzahl von Futures“][any-number-of-futures] in Kapitel 17 gesehen
-haben. Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal
-gesehen: Wir können ein Merkmals-Objekt verwenden, wie in Codeblock 20-34.
+einen Typ, bei dem wir weder die Details dessen sehen können, was Rust für uns
+konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl
+diese Funktionen also beide Funktionsabschlüsse zurückgeben, die dasselbe
+Merkmal implementieren, nämlich `Fn(i32) -> i32`, sind die undurchsichtigen
+Typen, die Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist
+vergleichbar mit der Art und Weise, wie Rust unterschiedliche konkrete Typen
+für verschiedene asynchrone Blöcke erzeugt, selbst wenn sie denselben
+Ausgabetyp haben, wie wir im Abschnitt [„Die Merkmale `Pin` and
+`Unpin`“][future-types] in Kapitel 17 gesehen haben.) Eine Lösung für dieses
+Problem haben wir jetzt schon ein paar Mal gesehen: Wir können ein
+Merkmals-Objekt verwenden, wie in Codeblock 20-34.
 
 ```rust
 # fn main() {
@@ -259,7 +261,7 @@ Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18.
 Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch20-02-advanced-traits.html
-[any-number-of-futures]: ch17-03-more-futures.html
+[future-types]: ch17-05-traits-for-async.md#die-merkmale-pin-and-unpin
 [closure-types]: ch13-01-closures.html#herleiten-und-annotieren-von-funktionsabschluss-typen
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

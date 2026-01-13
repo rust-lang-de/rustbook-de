@@ -2,25 +2,24 @@
 
 Das Rust-Typsystem weist einige Funktionalitäten auf, die wir bisher erwähnt,
 aber noch nicht besprochen haben. Wir beginnen mit einer allgemeinen Diskussion
-über Newtypes, während wir untersuchen, warum Newtypes als Typen nützlich sind.
-Dann gehen wir zu Typ-Alias über, einer Funktionalität, die den Newtypes
-ähnlich ist, aber eine etwas andere Semantik hat. Wir werden auch den Typ `!`
-und dynamisch große Typen besprechen.
+über Newtypes und untersuchen, warum sie als Typen nützlich sind. Dann gehen
+wir zu Typ-Alias über, einer Funktionalität, die den Newtypes ähnlich ist, aber
+eine etwas andere Semantik hat. Wir werden auch den Typ `!` und dynamisch große
+Typen besprechen.
 
-### Verwenden des Newtype-Musters für Typsicherheit und Abstraktion
+### Typsicherheit und Abstraktion mit dem Newtype-Muster
 
-Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt
-[„Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf
-externen Typen“][using-the-newtype-pattern] gelesen hast. Das Newtype-Muster
-ist auch für Aufgaben nützlich, die über die bisher besprochenen hinausgehen,
-einschließlich statisch sicherzustellen, dass Werte niemals verwechselt werden,
-und dem Angeben von Einheiten eines Wertes. Ein Beispiel für die Verwendung von
-Newtypes zum Angeben von Einheiten hast du in Codeblock 20-16 gesehen: Erinnere
-dich daran, dass die Strukturen `Millimeters` und `Meters` `u32`-Werte in einem
-Newtype einpacken. Wenn wir eine Funktion mit einem Parameter vom Typ
-`Millimeters` schreiben würden, könnten wir kein Programm kompilieren, das
-versehentlich versucht, diese Funktion mit einem Wert vom Typ `Meters` oder
-einem einfachen `u32` aufzurufen.
+Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt [„Externe
+Merkmale mit dem Newtype-Muster implementieren“][newtype] gelesen hast. Das
+Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher besprochenen
+hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
+verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
+für die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock
+20-16 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und
+`Meters` `u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
+einem Parameter vom Typ `Millimeters` schreiben würden, könnten wir kein
+Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
+vom Typ `Meters` oder einem einfachen `u32` aufzurufen.
 
 Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
 eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
@@ -38,7 +37,7 @@ Implementierungsdetails zu verbergen, die wir in [„Kapselung, die
 Implementierungsdetails verbirgt“][encapsulation] in Kapitel 18 besprochen
 haben.
 
-### Erstellen von Typ-Synonymen mit Typ-Alias
+### Typ-Synonyme und Typ-Aliase
 
 Rust bietet die Möglichkeit, einen _Typ-Alias_ zu deklarieren, um einem
 vorhandenen Typ einen anderen Namen zu geben. Hierfür verwenden wir das
@@ -266,7 +265,7 @@ Teil davon hier in Codeblock 20-27 wiedergegeben.
 <span class="caption">Codeblock 20-27: Ein `match` mit einem Zweig, der in
 `continue` endet</span>
 
-Damals haben wir einige Details in diesem Code übersprungen. In [„Das
+Damals haben wir einige Details in diesem Code übersprungen. Im Abschnitt [„Das
 Kontrollflusskonstrukt `match`“][match-operator] in Kapitel 6 haben wir
 erwähnt, dass alle Zweige den gleichen Typ zurückgeben müssen. So funktioniert
 zum Beispiel der folgende Code nicht:
@@ -350,15 +349,15 @@ Code mit Werten zu schreiben, deren Größe wir nur zur Laufzeit kennen können.
 
 Schauen wir uns die Details eines dynamisch großen Typs namens `str` an, den
 wir im ganzen Buch verwendet haben. Das stimmt, nicht `&str`, sondern `str` an
-sich ist ein DST. Wir können nicht wissen, wie lang die Zeichenkette zur
-Laufzeit ist, d.h. wir können weder eine Variable vom Typ `str` erzeugen, noch
-können wir ein Argument vom Typ `str` nehmen. Betrachte den folgenden Code, der
-nicht funktioniert:
+sich ist ein DST. In vielen Fällen, beispielsweise beim Speichern von durch
+einen Benutzer eingegebenem Text, können wir erst zur Laufzeit feststellen, wie
+lang die Zeichenkette ist. Das bedeutet, dass wir weder eine Variable vom Typ
+`str` erzeugen, noch wir ein Argument vom Typ `str` nehmen können. Betrachte
+den folgenden Code, der nicht funktioniert:
 
 ```rust,does_not_compile
     let s1: str = "Guten Tag!";
     let s2: str = "Wie geht es dir?";
-
 ```
 
 Rust muss wissen, wie viel Speicher jedem Wert eines bestimmten Typs zuzuweisen
@@ -370,30 +369,31 @@ Bytes. Aus diesem Grund ist es nicht möglich, eine Variable zu erzeugen, die
 einen dynamisch großen Typ enthält.
 
 Was sollen wir also tun? In diesem Fall kennst du die Antwort bereits: Wir
-machen die Typen `s1` und `s2` zu einem `&str` anstatt zu einem `str`. Erinnere
-dich, dass wir in [„Zeichenkettenanteilstypen (string slices)“][string-slices]
-in Kapitel 4 gesagt haben, dass die Anteilstypen-Datenstruktur die
-Startposition und die Länge des Anteilstyps speichert. Obwohl also `&T` ein
-einzelner Wert ist, der die Speicheradresse des Ortes speichert, an dem sich
-`T` befindet, hat `&str` _zwei_ Werte: Die Adresse von `str` und seine Länge.
-Als solches können wir die Größe eines `&str`-Wertes zur Kompilierzeit kennen:
-Er ist doppelt so lang wie ein `usize`. Das heißt, wir wissen immer die Größe
-einer `&str`, egal wie lang die Zeichenkette ist, auf die sie sich bezieht. Im
-Allgemeinen werden in Rust Typen mit dynamischer Größe auf diese Weise
-verwendet: Sie haben ein zusätzliches Stück Metadaten, das die Größe der
-dynamischen Information speichert. Die goldene Regel für Typen dynamischer
-Größe lautet, dass wir Werte von Typen mit dynamischer Größe immer hinter eine
-Art Zeiger stellen müssen.
+machen die Typen `s1` und `s2` zu einem Zeichenkettenanteilstyp (`&str`)
+anstatt zu einem `str`. Erinnere dich, dass wir im Abschnitt
+[„Zeichenkettenanteilstypen (string slices)“][string-slices] in Kapitel 4
+gesagt haben, dass die Anteilstypen-Datenstruktur die Startposition und die
+Länge des Anteilstyps speichert. Obwohl also `&T` ein einzelner Wert ist, der
+die Speicheradresse des Ortes speichert, an dem sich `T` befindet, hat ein
+Zeichenkettenanteilstyp _zwei_ Werte: Die Adresse von `str` und seine Länge.
+Als solches können wir die Größe eines Zeichenkettenanteilstyp-Wertes zur
+Kompilierzeit kennen: Er ist doppelt so lang wie ein `usize`. Das heißt, wir
+wissen immer die Größe eine Zeichenkettenanteilstyps, egal wie lang die
+Zeichenkette ist, auf die er sich bezieht. Im Allgemeinen werden in Rust Typen
+mit dynamischer Größe auf diese Weise verwendet: Sie haben ein zusätzliches
+Stück Metadaten, das die Größe der dynamischen Information speichert. Die
+goldene Regel für Typen dynamischer Größe lautet, dass wir Werte von Typen mit
+dynamischer Größe immer hinter eine Art Zeiger stellen müssen.
 
 Wir können `str` mit allen Arten von Zeigern kombinieren: Zum Beispiel
 `Box<str>` oder `Rc<str>`. Tatsächlich hast du das schon einmal gesehen, aber
 mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
 ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. In [„Verwendung von Merkmals-Objekten zur Abstraktion
-über gemeinsames Verhalten“][using-trait-objects] in Kapitel 18 haben wir
-erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden, diese hinter
-einen Zeiger setzen müssen, z.B. `&dyn Trait` oder `Box<dyn Trait>` (`Rc<dyn
-Trait>` würde auch funktionieren).
+des Merkmals verwenden. Im Abschnitt [„Verwendung von Merkmals-Objekten zur
+Abstraktion über gemeinsames Verhalten“][using-trait-objects] in Kapitel 18
+haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
+diese hinter einen Zeiger setzen müssen, z.B. `&dyn Trait` oder `Box<dyn
+Trait>` (`Rc<dyn Trait>` würde auch funktionieren).
 
 Um mit DSTs zu arbeiten, hat Rust das Merkmal `Sized`, um zu bestimmen, ob die
 Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Merkmal wird
@@ -440,5 +440,5 @@ Als nächstes werden wir über Funktionen und Funktionsabschlüsse sprechen!
 [encapsulation]: ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt
 [match-operator]: ch06-02-match.html
 [string-slices]: ch04-03-slices.html#zeichenkettenanteilstypen-string-slices
-[using-the-newtype-pattern]: ch20-02-advanced-traits.html#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen
+[newtype]: ch20-02-advanced-traits.html#externe-merkmale-mit-dem-newtype-muster-implementieren
 [using-trait-objects]: ch18-02-trait-objects.html

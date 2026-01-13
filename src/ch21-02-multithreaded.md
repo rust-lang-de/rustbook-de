@@ -1116,10 +1116,9 @@ Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!
 Lass uns endlich die Methode `execute` auf `ThreadPool` implementieren. Wir
 werden auch `Job` von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
 (trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-`execute` erhält. Wie in [„Erstellen von Typ-Synonymen mit
-Typ-Alias“][type-synonyms] in Kapitel 19 besprochen, ermöglichen uns
-Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
-Siehe Codeblock 21-19.
+`execute` erhält. Wie in [„Typ-Synonyme und Typ-Aliase“][type-synonyms] in
+Kapitel 19 besprochen, ermöglichen uns Typ-Aliase, lange Typen kürzer zu
+machen, um sie einfacher nutzen zu können. Siehe Codeblock 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1465,4 +1464,4 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 [fn-traits]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
-[type-synonyms]: ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias
+[type-synonyms]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase
