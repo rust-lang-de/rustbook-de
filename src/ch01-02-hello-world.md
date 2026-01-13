@@ -83,7 +83,7 @@ Unter Windows gib den Befehl `.\main` anstelle von `./main` ein:
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` im
+Unabhängig von deinem Betriebssystem sollte die Zeichenkette `Hallo Welt!` im
 Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
 Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.

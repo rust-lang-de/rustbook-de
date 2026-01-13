@@ -289,7 +289,7 @@ darstellt.
 Die nächste Zeile `.read_line(&mut guess)` ruft die Methode
 [`read_line`][read_line] der Standardeingaberessource auf, um eine Eingabe vom
 Benutzer zu erhalten. Wir übergeben auch das Argument `&mut guess` an
-`read_line`, um ihm mitzuteilen, in welche Zeichenfolge es die Benutzereingabe
+`read_line`, um ihm mitzuteilen, in welche Zeichenkette es die Benutzereingabe
 speichern soll. Die Aufgabe von `read_line` ist es, alles, was der Benutzer in
 die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
 zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das

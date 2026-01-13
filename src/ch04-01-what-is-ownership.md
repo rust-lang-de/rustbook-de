@@ -208,7 +208,7 @@ Diese Art von Zeichenkette kann _verändert_ werden:
 ```rust
 let mut s = String::from("Hallo");
 
-s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenfolge an
+s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenkette an
 
 println!("{s}"); // Gibt `Hallo Welt!` aus
 ```

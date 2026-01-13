@@ -1110,7 +1110,7 @@ error: test failed, to rerun pass `--lib`
 
 Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenfolge `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
+Zeichenkette `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
 diesem Fall erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, ist
 200.` Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!
 
