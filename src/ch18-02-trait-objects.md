@@ -47,7 +47,7 @@ sind.
 Um das Verhalten zu implementieren, das wir in `gui` haben wollen, werden wir
 ein Merkmal namens `Draw` definieren, das eine Methode namens `draw` haben
 wird. Dann können wir einen Vektor definieren, der ein Merkmalsobjekt annimmt.
-Ein *Merkmalsobjekt* (trait object) verweist sowohl auf eine Instanz eines
+Ein _Merkmalsobjekt_ (trait object) verweist sowohl auf eine Instanz eines
 Typs, der das von uns spezifizierte Merkmal implementiert, und eine Tabelle, in
 der Merkmalsmethoden dieses Typs zur Laufzeit nachgeschlagen werden können. Wir
 erstellen ein Merkmalsobjekt, indem wir eine Art Zeiger angeben, z.B. eine
@@ -327,7 +327,7 @@ implementiert.
 
 Dieses Konzept &ndash; sich nur mit den Nachrichten zu befassen, auf die ein
 Wert reagiert, und nicht mit dem konkreten Typ des Wertes &ndash; ähnelt dem
-Konzept des *Duck-Typing* in dynamisch typisierten Sprachen: Wenn es wie eine
+Konzept des _Duck-Typing_ in dynamisch typisierten Sprachen: Wenn es wie eine
 Ente läuft und wie eine Ente quakt, dann muss es eine Ente sein! Bei der
 Implementierung von `run` auf `Screen` in Codeblock 18-5 braucht `run` nicht zu
 wissen, was der konkrete Typ jeder Komponente ist. Es prüft nicht, ob eine
@@ -397,9 +397,9 @@ Diskussion über den Monomorphisierungsprozess bei generischen Typen, den der
 Compiler durchführt: Der Compiler generiert nicht-generische Implementierungen
 von Funktionen und Methoden für jeden konkreten Typ, den wir anstelle eines
 generischen Typparameters verwenden. Der Code, der sich aus der
-Monomorphisierung ergibt, macht *statische Aufrufe* (static dispatch), d.h.
+Monomorphisierung ergibt, macht _statische Aufrufe_ (static dispatch), d.h.
 der Compiler weiß, welche Methode du zur Kompilierzeit aufrufst. Dies steht im
-Gegensatz zum *dynamischen Aufruf* (dynamic dispatch), bei dem der Compiler zur
+Gegensatz zum _dynamischen Aufruf_ (dynamic dispatch), bei dem der Compiler zur
 Kompilierzeit nicht weiß, welche Methode du aufrufst. In Fällen von dynamischem
 Aufruf erzeugt der Compiler Code, der zur Laufzeit herausfindet, welche Methode
 aufzurufen ist.

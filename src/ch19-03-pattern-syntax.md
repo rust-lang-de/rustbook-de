@@ -91,7 +91,7 @@ sprechen.
 ### Mehrfache Muster abgleichen
 
 In `match`-Ausdrücken kannst du mehrere Muster mit der Syntax `|` abgleichen,
-die das *oder*-Operator-Muster darstellt. Zum Beispiel gleicht der folgende
+die das _oder_-Operator-Muster darstellt. Zum Beispiel gleicht der folgende
 Code den Wert von `x` mit den `match`-Zweigen ab, wobei der erste davon eine
 _oder_-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:

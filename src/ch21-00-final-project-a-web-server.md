@@ -5,12 +5,8 @@ Kapitel werden wir gemeinsam ein weiteres Projekt aufbauen, um einige der
 Konzepte zu demonstrieren, die wir in den letzten Kapiteln behandelt haben, und
 einige frühere Lektionen zusammenfassen.
 
-Für unser Abschlussprojekt werden wir einen Webserver erstellen, der „Hallo“
+Für unser Abschlussprojekt werden wir einen Webserver erstellen, der „Hallo!“
 sagt und in einem Webbrowser wie Abbildung 21-1 aussieht.
-
-![Hallo von Rust](img/trpl21-01.png)
-
-<span class="caption">Abbildung 21-1: Unser letztes gemeinsames Projekt</span>
 
 Hier ist unser Plan zum Bauen des Webservers:
 
@@ -20,6 +16,10 @@ Hier ist unser Plan zum Bauen des Webservers:
 4. Erstelle eine korrekte HTTP-Antwort.
 5. Verbessere den Durchsatz unseres Servers mit einem Strang-Vorrat (thread
    pool).
+
+![Hallo von Rust](img/trpl21-01.png)
+
+<span class="caption">Abbildung 21-1: Unser letztes gemeinsames Projekt</span>
 
 Bevor wir anfangen, sollten wir ein Detail erwähnen. Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu

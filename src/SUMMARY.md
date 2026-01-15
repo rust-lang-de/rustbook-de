@@ -4,8 +4,6 @@
 [Vorwort](foreword.md)
 [Einführung](ch00-00-introduction.md)
 
-## Erste Schritte
-
 - [Erste Schritte](ch01-00-getting-started.md)
   - [Installation](ch01-01-installation.md)
   - [Hallo Welt](ch01-02-hello-world.md)
@@ -34,8 +32,6 @@
   - [Eine Aufzählung (enum) definieren](ch06-01-defining-an-enum.md)
   - [Das Kontrollflusskonstrukt `match`](ch06-02-match.md)
   - [Prägnanter Kontrollfluss mit `if let` und `let...else`](ch06-03-if-let.md)
-
-## Grundlegende Sprachelemente
 
 - [Pakete (packages), Kisten (crates) und Module](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
   - [Pakete (packages) und Kisten (crates)](ch07-01-packages-and-crates.md)
@@ -71,8 +67,6 @@
   - [Funktionalität mit testgetriebener Entwicklung hinzufügen](ch12-04-testing-the-librarys-functionality.md)
   - [Mit Umgebungsvariablen arbeiten](ch12-05-working-with-environment-variables.md)
   - [Fehler zur Standardfehlerausgabe umleiten](ch12-06-writing-to-stderr-instead-of-stdout.md)
-
-## Denken in Rust
 
 - [Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)](ch13-00-functional-features.md)
   - [Funktionsabschlüsse (closures)](ch13-01-closures.md)
@@ -114,8 +108,6 @@
   - [Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
 
-## Fortgeschrittene Themen
-
 - [Muster (patterns) und Abgleich (matching)](ch19-00-patterns.md)
   - [Alle Stellen an denen Muster (patterns) verwendet werden können](ch19-01-all-the-places-for-patterns.md)
   - [Abweisbarkeit: Falls ein Muster (pattern) mal nicht passt](ch19-02-refutability.md)
@@ -130,7 +122,7 @@
 
 - [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch21-00-final-project-a-web-server.md)
   - [Einen einsträngigen (single-threaded) Webserver erstellen](ch21-01-single-threaded.md)
-  - [Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln](ch21-02-multithreaded.md)
+  - [Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver](ch21-02-multithreaded.md)
   - [Kontrolliertes Beenden und Aufräumen](ch21-03-graceful-shutdown-and-cleanup.md)
 
 - [Anhang](appendix-00.md)

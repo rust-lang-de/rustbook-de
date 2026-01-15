@@ -152,7 +152,7 @@ aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread`
 zugreifen, mit einer `Option<thread::JoinHandle<()>>` umgehen. Idiomatisch
 verwendet Rust `Option` ziemlich oft, aber wenn du etwas in `Option` einpackst,
 von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
-alternativen Ansätzen zu suchen. Du könntest deinen Code sauberer und weniger
+alternativen Ansätzen zu suchen, die deinen Code sauberer und weniger
 fehleranfällig machen.
 
 In diesem Fall gibt es eine bessere Alternative: Die Methode `Vec::drain`. Sie
@@ -247,7 +247,12 @@ impl Drop for ThreadPool {
 ```
 
 Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
-an unserem Code erforderlich.
+an unserem Code erforderlich. Beachte, das `drop` bei einem Programmabsturz
+aufgerufen werden kann, und wenn dann auch `unwrap` abstürzt, eine doppelte
+Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
+Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
+Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
+empfehlen.
 
 ### Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen
 
@@ -563,7 +568,7 @@ ausgegebenen Nachrichten. Wir können anhand der Nachrichten sehen, wie dieser
 Code funktioniert: Die `Worker` 0 und 3 haben die ersten beiden Anfragen
 erhalten. Der Server hat nach der zweiten Verbindung aufgehört, Verbindungen
 anzunehmen, und die `Drop`-Implementierung auf `ThreadPool` beginnt mit der
-Ausführung, bevor `Worker` 3 überhaupt seinen Job beginnt. Wenn man den
+Ausführung, bevor `Worker 3` überhaupt seine Arbeit beginnt. Wenn man den
 `sender` aufräumt, werden alle `Worker`-Instanzen getrennt und angewiesen, sich
 zu beenden. Die `Worker`-Instanzen geben jeweils eine Nachricht aus, wenn sie
 die Verbindung trennen, und dann ruft der Strang-Vorrat `join` auf, um das Ende
@@ -571,11 +576,11 @@ jedes `Worker`-Strangs zu warten.
 
 Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
 `ThreadPool` hat den `sender` aufgeräumt, und bevor ein `Worker` einen Fehler
-erhalten hat, haben wir versucht, auf `Worker` 0 zu warten. `Worker` 0 hatte
+erhalten hat, haben wir versucht, auf `Worker 0` zu warten. `Worker 0` hatte
 noch keinen Fehler von `recv` erhalten, also blockierte der Hauptstrang und
-wartete darauf, dass `Worker` 0 fertig wird. In der Zwischenzeit erhielt
-`Worker` 3 einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
-`Worker` 0 fertig war, wartete der Hauptstrang darauf, dass die restlichen
+wartete darauf, dass `Worker 0` fertig wird. In der Zwischenzeit erhielt
+`Worker 3` einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
+`Worker 0` fertig war, wartete der Hauptstrang darauf, dass die restlichen
 `Worker`-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
 Schleifen verlassen und konnten sich beenden.
 
@@ -741,10 +746,9 @@ findest du hier einige Ideen:
 - Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
 - Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
   Web-Anfragen durchzuführen.
-- Suche eine Strang-Vorrats-Kiste auf [crates.io](https://crates.io/) und
-  implementiere damit einen ähnlichen Webserver unter Verwendung der Kiste.
-  Vergleiche dann dessen API und Robustheit mit dem von uns implementierten
-  Strang-Vorrat.
+- Suche eine Strang-Vorrats-Kiste auf [crates.io][crates] und   implementiere
+  damit einen ähnlichen Webserver unter Verwendung der Kiste. Vergleiche dann
+  dessen API und Robustheit mit dem von uns implementierten Strang-Vorrat.
 
 ## Zusammenfassung
 
@@ -754,3 +758,5 @@ bereit, deine eigenen Rust-Projekte umzusetzen und bei den Projekten anderer zu
 helfen. Denke daran, dass es eine gastfreundliche Gemeinschaft von anderen
 Rust-Entwicklern gibt, die dir bei allen Herausforderungen, denen du auf deiner
 Rust-Reise begegnest, gerne helfen würden.
+
+[crates]: https://crates.io/

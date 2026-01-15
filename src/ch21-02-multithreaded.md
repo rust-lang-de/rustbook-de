@@ -1,15 +1,15 @@
-## Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln
+## Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver
 
 Im Moment verarbeitet der Server jede Anfrage der Reihe nach, d.h. er wird erst
-dann eine zweite Verbindung verarbeiten, wenn die erste abgeschlossen ist.
-Würde der Server mehr und mehr Anfragen erhalten, wäre diese serielle
-Ausführung immer weniger optimal. Wenn der Server eine Anfrage erhält, deren
-Bearbeitung sehr lange dauert, müssen nachfolgende Anfragen warten, bis die
-lange dauernde Anfrage beendet ist, auch wenn die neuen Anfragen schnell
+dann eine zweite Verbindung verarbeiten, wenn die erste Verbindung
+abgeschlossen ist. Würde der Server mehr und mehr Anfragen erhalten, wäre diese
+serielle Ausführung immer weniger optimal. Wenn der Server eine Anfrage erhält,
+deren Bearbeitung sehr lange dauert, müssen nachfolgende Anfragen warten, bis
+die lange dauernde Anfrage beendet ist, auch wenn die neuen Anfragen schnell
 bearbeitet werden können. Das müssen wir beheben, aber zuerst werden wir uns
 das Problem in Aktion ansehen.
 
-### Simulieren einer langsamen Anfrage in der aktuellen Server-Implementierung
+### Simulieren einer langsamen Anfrage
 
 Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
@@ -66,7 +66,7 @@ fn handle_connection(mut stream: TcpStream) {
 ```
 
 <span class="caption">Codeblock 21-10: Simulieren einer langsamen Anfrage durch
-Schlafen von 5 Sekunden</span>
+Schlafen von fünf Sekunden</span>
 
 Wir haben von `if` zu `match` gewechselt, da wir nun drei Fälle haben. Wir
 müssen explizit auf ein Stück von `request_line` abgleichen, um einen
@@ -84,7 +84,7 @@ Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!
 
 Starte den Server mit `cargo run`. Öffne dann zwei Browser-Fenster: Eines für
-_http://127.0.0.1:7878/_ und das andere für _http://127.0.0.1:7878/sleep_. Wenn
+_http://127.0.0.1:7878_ und das andere für _http://127.0.0.1:7878/sleep_. Wenn
 du die URI `/` wie bisher ein paar Mal eingibst, wirst du sehen, dass er
 schnell reagiert. Aber wenn du _/sleep_ eingibst und dann `/` lädst, wirst du
 sehen, dass `/` wartet, bis `sleep` für volle 5 Sekunden geschlafen hat, bevor
@@ -97,7 +97,7 @@ Strang-Vorrat (thread pool).
 ### Verbessern des Durchsatzes mit einem Strang-Vorrat
 
 Ein _Strang-Vorrat_ (thread pool) ist eine Gruppe von erzeugten Strängen, die
-warten und bereit sind, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
+bereit sind und warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
 Aufgabe erhält, ordnet es einen der Stränge im Pool der Aufgabe zu, und dieser
 Strang wird die Aufgabe bearbeiten. Die verbleibenden Stränge im Pool stehen
 für alle anderen Aufgaben zur Verfügung, die während der Verarbeitung des
@@ -158,9 +158,11 @@ nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
 einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
 zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
 wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen. Codeblock 21-11 zeigt die Änderungen, die an `main`
-vorgenommen werden müssen, um einen neuen Strang zu erzeugen, der jeden Strom
-innerhalb der `for`-Schleife verarbeitet.
+Lösungen zu vergleichen.
+
+Codeblock 21-11 zeigt die Änderungen, die an `main` vorgenommen werden müssen,
+um einen neuen Strang zu erzeugen, der jeden Strom innerhalb der `for`-Schleife
+verarbeitet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -219,7 +221,7 @@ Anfragen an `/` nicht auf die Beendigung von _/sleep_ warten müssen. Aber wie
 wir bereits erwähnt haben, wird dies letztendlich das System überfordern, weil
 du neue Stränge ohne jede Begrenzung erstellen würdest.
 
-#### Erstellen einer endliche Anzahl von Strängen
+#### Erstellen einer endlichen Anzahl von Strängen
 
 Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
 arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
@@ -432,7 +434,7 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 ```
 
 Der Fehler tritt jetzt auf, weil wir keine Methode `execute` auf `ThreadPool`
-haben. Erinnere dich an [„Erstellen einer endlichen Anzahl von
+haben. Erinnere dich an Abschnitt [„Erstellen einer endlichen Anzahl von
 Strängen“][similar-interface], wo wir beschlossen haben, dass unser
 Strang-Vorrat eine ähnliche Schnittstelle wie `thread::spawn` haben sollte.
 Zusätzlich werden wir die Funktion `execute` implementieren, sodass sie den
@@ -440,14 +442,15 @@ Funktionsabschluss, der ihr gegeben wird, nimmt und sie einem unbeschäftigten
 Strang im Vorrat zur Ausführung übergibt.
 
 Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen
-Funktionsabschluss als Parameter zu nehmen. Aus [„Verschieben erfasster Werte
-aus Funktionsabschlüssen“][fn-traits] in Kapitel 13 erinnern wir uns, dass wir
-Funktionsabschlüsse als Parameter mit drei verschiedenen Merkmalen nehmen
-können: `Fn`, `FnMut` und `FnOnce`. Wir müssen entscheiden, welche Art von
-Funktionsabschluss wir hier verwenden. Wir wissen, dass wir am Ende etwas
-Ähnliches wie die Implementierung `thread::spawn` der Standardbibliothek tun
-werden, sodass wir uns ansehen können, welche Abgrenzungen die Signatur von
-`thread::spawn` in ihrem Parameter hat. Die Dokumentation zeigt uns Folgendes:
+Funktionsabschluss als Parameter zu nehmen. Aus Abschnitt [„Verschieben
+erfasster Werte aus Funktionsabschlüssen“][moving-out-of-closures] in Kapitel
+13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit drei
+verschiedenen Merkmalen nehmen können: `Fn`, `FnMut` und `FnOnce`. Wir müssen
+entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir wissen,
+dass wir am Ende etwas Ähnliches wie die Implementierung `thread::spawn` der
+Standardbibliothek tun werden, sodass wir uns ansehen können, welche
+Abgrenzungen die Signatur von `thread::spawn` in ihrem Parameter hat. Die
+Dokumentation zeigt uns Folgendes:
 
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
@@ -673,7 +676,7 @@ Größe verändert, wenn Elemente eingefügt werden.
 
 Wenn du `cargo check` erneut ausführst, sollte es erfolgreich sein.
 
-#### Struktur `Worker` zum Senden von Code vom `ThreadPool` an einen Strang
+#### Senden von Code vom `ThreadPool` an einen Strang
 
 Wir haben einen Kommentar in der `for`-Schleife in Codeblock 21-14 bezüglich
 der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
@@ -689,10 +692,11 @@ Wir werden dieses Verhalten implementieren, indem wir eine neue Datenstruktur
 zwischen dem `ThreadPool` und den Strängen, die dieses neue Verhalten verwalten
 werden, einführen. Wir nennen diese Datenstruktur `Worker`, was ein gängiger
 Begriff in Vorrats-Implementierungen ist. Der `Worker` holt den Code ab, der
-ausgeführt werden muss, und führt ihn im Strang des `Worker` aus. Denke an
-Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter warten, bis
-Bestellungen von Kunden eingehen, und dann sind sie dafür verantwortlich, diese
-Bestellungen entgegenzunehmen und auszuführen.
+ausgeführt werden muss, und führt ihn in seinem Strang aus.
+
+Denke an Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter
+warten, bis Bestellungen von Kunden eingehen, und dann sind sie dafür
+verantwortlich, diese Bestellungen entgegenzunehmen und auszuführen.
 
 Anstatt einen Vektor von `JoinHandle<()>`-Instanzen im Strang-Vorrat zu
 speichern, werden wir Instanzen der `Worker`-Struktur speichern. Jeder `Worker`
@@ -1116,9 +1120,10 @@ Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!
 Lass uns endlich die Methode `execute` auf `ThreadPool` implementieren. Wir
 werden auch `Job` von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
 (trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-`execute` erhält. Wie in [„Typ-Synonyme und Typ-Aliase“][type-synonyms] in
-Kapitel 19 besprochen, ermöglichen uns Typ-Aliase, lange Typen kürzer zu
-machen, um sie einfacher nutzen zu können. Siehe Codeblock 21-19.
+`execute` erhält. Wie im Abschnitt [„Typ-Synonyme und
+Typ-Aliase“][type-aliases] in Kapitel 19 besprochen, ermöglichen uns
+Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
+Siehe Codeblock 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1360,9 +1365,9 @@ Anfragen zu bedienen, indem er sie von einem anderen Strang ausführen lässt.
 > Instanzen der gleichen Anfrage nacheinander aus. Diese Beschränkung wird
 > nicht durch unseren Webserver verursacht.
 
-Nachdem du die `while let`-Schleife in Kapitel 18 kennengelernt hast, fragst du
-dich vielleicht, warum wir den Code für den `Worker`-Strang nicht geschrieben
-haben, wie in Codeblock 21-21 gezeigt.
+Nachdem du die `while let`-Schleife in den Kapiteln 17 und 19 kennengelernt
+hast, fragst du dich vielleicht, warum wir den Code für den `Worker`-Strang
+nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1461,7 +1466,7 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 
 [builder]: https://doc.rust-lang.org/std/thread/struct.Builder.html
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
-[fn-traits]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
+[moving-out-of-closures]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
 [similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
-[type-synonyms]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase
+[type-aliases]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase
