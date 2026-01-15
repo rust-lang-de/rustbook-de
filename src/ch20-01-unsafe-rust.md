@@ -683,7 +683,7 @@ durchführen und als solche mit `unsafe` kennzeichnen.
 ### Zugreifen auf Felder einer Vereinigung (union)
 
 Die letzte Aktion, die nur mit `unsafe` funktioniert, ist der Zugriff auf
-Felder einer Vereinigungen. Eine *Vereinigung* ähnelt einer `struct`, jedoch
+Felder einer Vereinigungen. Eine _Vereinigung_ ähnelt einer `struct`, jedoch
 wird in einer bestimmten Instanz jeweils nur ein deklariertes Feld verwendet.
 Vereinigungen werden hauptsächlich als Schnittstelle zu Vereinigungen in C-Code
 verwendet. Der Zugriff auf Vereinigungsfelder ist unsicher, da Rust den Typ der

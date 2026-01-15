@@ -280,20 +280,19 @@ Dieser Code führt zu folgendem Fehler:
 ```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
-error[E0277]: the type `String` cannot be indexed by `{integer}`
+error[E0277]: the type `str` cannot be indexed by `{integer}`
  --> src/main.rs:3:16
   |
 3 |     let h = s1[0];
-  |                ^ `String` cannot be indexed by `{integer}`
+  |                ^ string indices are ranges of `usize`
   |
-  = help: the trait `Index<{integer}>` is not implemented for `String`
-  = help: the following other types implement trait `Index<Idx>`:
-            <String as Index<RangeFull>>
-            <String as Index<std::ops::Range<usize>>>
-            <String as Index<RangeFrom<usize>>>
-            <String as Index<RangeTo<usize>>>
-            <String as Index<RangeInclusive<usize>>>
-            <String as Index<RangeToInclusive<usize>>>
+  = help: the trait `SliceIndex<str>` is not implemented for `{integer}`
+  = note: you can use `.chars().nth()` or `.bytes().nth()`
+          for more information, see chapter 8 in The Book: <https://doc.rust-lang.org/book/ch08-02-strings.html#indexing-into-strings>
+  = help: the following other types implement trait `SliceIndex<T>`:
+            `usize` implements `SliceIndex<ByteStr>`
+            `usize` implements `SliceIndex<[T]>`
+  = note: required for `String` to implement `Index<{integer}>`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` (bin "collections") due to 1 previous error
@@ -429,6 +428,7 @@ $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
+
 thread 'main' panicked at src/main.rs:4:19:
 byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace

@@ -106,6 +106,7 @@ $ cargo run
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
+
 thread 'main' panicked at src/main.rs:8:23:
 Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
@@ -141,8 +142,8 @@ fn main() {
                 Ok(fc) => fc,
                 Err(e) => panic!("Problem beim Erstellen der Datei: {e:?}"),
             },
-            other_error => {
-                panic!("Problem beim Öffnen der Datei: {other_error:?}")
+            _ => {
+                panic!("Problem beim Öffnen der Datei: {error:?}")
             }
         },
     };
@@ -516,7 +517,7 @@ kompilieren, erhalten wir folgende Fehlermeldung:
 
 ```console
 $ cargo run
-   Compiling playground v0.0.1 (/playground)
+   Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --> src/main.rs:4:48
   |
@@ -525,7 +526,6 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
 4 |     let greeting_file = File::open("hallo.txt")?;
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
-  = help: the trait `FromResidual<Result<Infallible, std::io::Error>>` is not implemented for `()`
 help: consider adding return type
   |
 3 ~ fn main() -> Result<(), Box<dyn std::error::Error>> {
