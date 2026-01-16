@@ -311,8 +311,8 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 `ThreadPool` benötigen, also werden wir jetzt eines bauen. Unsere
 `ThreadPool`-Implementierung wird unabhängig von der Art der Arbeit unseres
-Webservers sein. Lass uns also die Kiste (crate) `hello` von einer Binär-Kiste
-(binary crate) auf eine Bibliotheks-Kiste (library crate) umstellen, um unsere
+Webservers sein. Lass uns also die Kiste (crate) `hello` von einer Binärkiste
+(binary crate) auf eine Bibliothekskiste (library crate) umstellen, um unsere
 `ThreadPool`-Implementierung aufzunehmen. Nachdem wir zu einer Bibliothekskiste
 umgestellt haben, könnten wir die separate Strang-Vorrats-Bibliothek auch für
 alle Arbeiten verwenden, die wir mit einem Strang-Vorrat durchführen wollen,

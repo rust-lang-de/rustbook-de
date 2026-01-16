@@ -70,7 +70,7 @@ einen Test, der fehlschlägt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,panics,noplayground
+```rust,panics
 fn prints_and_returns_10(a: i32) -> i32 {
     println!("Ich habe den Wert {a} erhalten.");
     10
@@ -199,7 +199,7 @@ zuerst drei Tests für unsere Funktion `add_two` erstellen, wie in Codeblock
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-pub fn add_two(a: usize) -> usize {
+pub fn add_two(a: u64) -> u64 {
     a + 2
 }
 
@@ -279,7 +279,7 @@ Wir können die Namen mehrerer Tests nicht auf diese Weise angeben; es wird nur
 der erste Wert verwendet, der bei `cargo test` angegeben wird. Aber es gibt
 eine Möglichkeit, mehrere Tests auszuführen.
 
-#### Filtern um mehrerer Tests auszuführen
+#### Filtern um mehrere Tests auszuführen
 
 Wir können einen Teil eines Testnamens angeben und jeder Test, dessen Name zu
 diesem Wert passt, wird ausgeführt. Da zum Beispiel zwei der Namen unserer
@@ -314,7 +314,7 @@ aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub fn add(left: usize, right: usize) -> usize {
 #     left + right
 # }

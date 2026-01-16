@@ -570,8 +570,8 @@ Parameter `2` addiert, und dann testen wir diese Funktion mit dem Makro
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
-pub fn add_two(a: i32) -> i32 {
+```rust
+pub fn add_two(a: u64) -> u64 {
     a + 2
 }
 
@@ -595,7 +595,7 @@ Lass uns prüfen, ob sie den Test besteht!
 ```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
-    Finished test [unoptimized + debuginfo] target(s) in 0.58s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
      Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
@@ -620,8 +620,8 @@ Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie `assert_eq!`
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 `add_two`, sodass sie stattdessen `3` addiert:
 
-```rust,not_desired_behavior,noplayground
-pub fn add_two(a: i32) -> i32 {
+```rust,not_desired_behavior
+pub fn add_two(a: u64) -> u64 {
     a + 3
 }
 
@@ -726,7 +726,7 @@ in der Ausgabe auftaucht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub fn greeting(name: &str) -> String {
     format!("Hallo {name}!")
 }
@@ -754,11 +754,11 @@ Lass uns nun einen Fehler in diesen Code einbringen, indem wir `greeting` so
 ändern, dass `name` nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:
 
-```rust,not_desired_behavior,noplayground
+```rust,not_desired_behavior
 pub fn greeting(name: &str) -> String {
     String::from("Hallo!")
 }
-
+#
 # #[cfg(test)]
 # mod tests {
 #     use super::*;
@@ -877,7 +877,7 @@ Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub struct Guess {
     value: i32,
 }
@@ -933,7 +933,7 @@ Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion `new` das Programm abbricht, wenn
 der Wert größer als 100 ist:
 
-```rust,not_desired_behavior,noplayground
+```rust,not_desired_behavior
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1002,7 +1002,7 @@ nachdem, ob der Wert zu klein oder zu groß ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1121,7 +1121,7 @@ Tests schreiben, die `Result<T, E>` verwenden! Hier ist der Test aus Codeblock
 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet und `Err` zurückgibt,
 anstatt das Programm abzubrechen:
 
-```rust,noplayground
+```rust
 # pub fn add(left: usize, right: usize) -> usize {
 #     left + right
 # }
