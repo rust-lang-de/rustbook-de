@@ -1471,5 +1471,5 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [moving-out-of-closures]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
-[similar-interface]: #erstellen-einer-endliche-anzahl-von-strängen
+[similar-interface]: #erstellen-einer-endlichen-anzahl-von-strängen
 [type-aliases]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase
