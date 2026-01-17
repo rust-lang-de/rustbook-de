@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -337,7 +337,7 @@ gezeigt, die Version vier und sechs einer IP-Adresse speichern können.
 Wie sich jedoch herausstellt, ist der Wunsch, IP-Adressen inklusive deren
 Variante zu speichern, so verbreitet, dass <a href="https://doc.rust-lang.org/std/net/enum.IpAddr.html">die Standardbibliothek eine
 Definition bereitstellt</a>, die wir verwenden können! Schauen wir uns an,
-wie die Standardbibliothek <code>IpAddr</code> definiert: Es hat genau die Aufzählung und
+wie die Standardbibliothek <code>IpAddr</code> definiert. Es hat genau die Aufzählung und
 die Varianten, die wir definiert und verwendet haben, aber es bettet die
 Adressdaten innerhalb der Varianten in Form von zwei verschiedenen Strukturen
 ein, die für jede Variante unterschiedlich definiert sind:</p>
@@ -379,10 +379,10 @@ In dieser Aufzählung ist eine Vielzahl von Typen in ihren Varianten eingebettet
 jeweils eine unterschiedliche Anzahl an Werttypen speichern</span></p>
 <p>Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:</p>
 <ul>
-<li><code>Quit</code> hat überhaupt keine Daten.</li>
-<li><code>Move</code> hat benannte Felder wie eine Struktur.</li>
-<li><code>Write</code> enthält einen einzelnen <code>String</code>.</li>
-<li><code>ChangeColor</code> enthält drei <code>i32</code>-Werte.</li>
+<li><code>Quit</code>: Hat überhaupt keine Daten.</li>
+<li><code>Move</code>: Hat benannte Felder wie eine Struktur.</li>
+<li><code>Write</code>: Enthält einen einzelnen <code>String</code>.</li>
+<li><code>ChangeColor</code>: Enthält drei <code>i32</code>-Werte.</li>
 </ul>
 <p>Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
@@ -431,7 +431,7 @@ diesen Wert wird <code>self</code> im Rumpf der Methode <code>call</code> haben,
 ausgeführt wird.</p>
 <p>Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr
 verbreitet und hilfreich ist: <code>Option</code></p>
-<h3 id="die-aufzählung-option-und-ihre-vorteile-gegenüber-nullwerten"><a class="header" href="#die-aufzählung-option-und-ihre-vorteile-gegenüber-nullwerten">Die Aufzählung <code>Option</code> und ihre Vorteile gegenüber Nullwerten</a></h3>
+<h3 id="die-aufzählung-option"><a class="header" href="#die-aufzählung-option">Die Aufzählung <code>Option</code></a></h3>
 <p>Dieser Abschnitt befasst sich mit einer Fallstudie zu <code>Option</code>, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ <code>Option</code>
 kodiert das sehr häufige Szenario, in dem ein Wert etwas oder nichts sein kann.</p>
@@ -534,10 +534,10 @@ error[E0277]: cannot add `Option&lt;i8&gt;` to `i8`
   |
   = help: the trait `Add&lt;Option&lt;i8&gt;&gt;` is not implemented for `i8`
   = help: the following other types implement trait `Add&lt;Rhs&gt;`:
-            &lt;i8 as Add&gt;
-            &lt;i8 as Add&lt;&amp;i8&gt;&gt;
-            &lt;&amp;'a i8 as Add&lt;i8&gt;&gt;
-            &lt;&amp;i8 as Add&lt;&amp;i8&gt;&gt;
+            `&amp;i8` implements `Add&lt;i8&gt;`
+            `&amp;i8` implements `Add`
+            `i8` implements `Add&lt;&amp;i8&gt;`
+            `i8` implements `Add`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `enums` (bin "enums") due to 1 previous error

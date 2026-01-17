@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,7 +162,7 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="tests-schreiben"><a class="header" href="#tests-schreiben">Tests schreiben</a></h2>
-<p>Tests sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
+<p><em>Tests</em> sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
 erwarteten Weise funktioniert. Der Rumpf von Testfunktionen führt in der Regel
 diese drei Aktionen aus:</p>
 <ul>
@@ -173,7 +173,7 @@ diese drei Aktionen aus:</p>
 <p>Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
 <code>test</code>, einige Makros und das Attribut <code>should_panic</code>.</p>
-<h3 id="anatomie-einer-testfunktion"><a class="header" href="#anatomie-einer-testfunktion">Anatomie einer Testfunktion</a></h3>
+<h3 id="testfunktionen-strukturieren"><a class="header" href="#testfunktionen-strukturieren">Testfunktionen strukturieren</a></h3>
 <p>Im einfachsten Fall ist ein Test in Rust eine Funktion, die mit dem Attribut
 <code>test</code> annotiert wird. Attribute sind Metadaten über Teile des Rust-Codes; ein
 Beispiel ist das Attribut <code>derive</code>, das wir in Kapitel 5 bei Strukturen
@@ -376,8 +376,8 @@ und ein Test nicht bestanden wird</span></p>
 <p>Statt <code>ok</code> zeigt die Zeile <code>test tests::another</code> das Ergebnis <code>FAILED</code>.
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
 Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
-Test an. In diesem Fall erhalten wir Details, dass <code>another</code> scheiterte mit der
-Meldung <code>panicked at 'Lasse diesen Test fehlschlagen'</code> in Zeile 17 der Datei
+Test an. In diesem Fall erhalten wir Details, dass <code>tests::another</code> scheiterte
+mit der Meldung <code>Lasse diesen Test fehlschlagen</code> in Zeile 17 der Datei
 <em>src/lib.rs</em>. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -390,7 +390,7 @@ von Tests sprechen.</p>
 <p>Da du nun gesehen hast, wie die Testergebnisse in verschiedenen Szenarien
 aussehen, wollen wir uns einige Makros neben <code>panic!</code> ansehen, die bei Tests
 nützlich sind.</p>
-<h3 id="ergebnisse-überprüfen-mit-dem-makro-assert"><a class="header" href="#ergebnisse-überprüfen-mit-dem-makro-assert">Ergebnisse überprüfen mit dem Makro <code>assert!</code></a></h3>
+<h3 id="ergebnisse-mit-assert-überprüfen"><a class="header" href="#ergebnisse-mit-assert-überprüfen">Ergebnisse mit <code>assert!</code> überprüfen</a></h3>
 <p>Das Makro <code>assert!</code>, das von der Standardbibliothek bereitgestellt wird, ist
 nützlich, wenn du sicherstellen willst, dass eine Bedingung in einem Test als
 wahr (true) bewertet wird. Wir geben dem Makro <code>assert!</code> ein Argument, das
@@ -557,8 +557,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Zwei Tests, die erfolgreich sind! Nun wollen wir sehen, was mit unseren
 Testergebnissen passiert, wenn wir einen Fehler in unseren Code einbringen.
 Wir ändern die Implementierung der Methode <code>can_hold</code>, indem wir das
-größer-als-Zeichen durch ein kleiner-als-Zeichen ersetzen, wenn sie die Breiten
-vergleicht:</p>
+größer-als-Zeichen (<code>&gt;</code>) durch ein kleiner-als-Zeichen (<code>&lt;</code>) ersetzen, wenn sie
+die Breiten vergleicht:</p>
 <pre><code class="language-rust not_desired_behavior noplayground"><span class="boring">#[derive(Debug)]
 </span><span class="boring">struct Rectangle {
 </span><span class="boring">    width: u32,
@@ -632,7 +632,7 @@ error: test failed, to rerun pass `--lib`
 <p>Unsere Tests haben den Fehler entdeckt! Da <code>larger.width</code> gleich <code>8</code> ist und
 <code>smaller.width</code> gleich <code>5</code>, ergibt der Vergleich der Breiten in <code>can_hold</code> jetzt
 <code>false</code>: 8 ist nicht kleiner als 5.</p>
-<h3 id="prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne"><a class="header" href="#prüfung-auf-gleichheit-mit-den-makros-assert_eq-und-assert_ne">Prüfung auf Gleichheit mit den Makros <code>assert_eq!</code> und <code>assert_ne!</code></a></h3>
+<h3 id="prüfung-auf-gleichheit-mit-assert_eq-und-assert_ne"><a class="header" href="#prüfung-auf-gleichheit-mit-assert_eq-und-assert_ne">Prüfung auf Gleichheit mit <code>assert_eq!</code> und <code>assert_ne!</code></a></h3>
 <p>Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
 Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
 vom Code erwartest, um sicherzustellen. Du könntest dies mit dem Makro
@@ -646,10 +646,12 @@ fehlgeschlagen ist; umgekehrt zeigt das Makro <code>assert!</code> nur an, dass 
 Ausdruck <code>==</code> den Wert <code>false</code> ergeben hat, ohne die Werte auszugeben, die zum
 falschen Testergebnis geführt haben.</p>
 <p>In Codeblock 11-7 schreiben wir eine Funktion namens <code>add_two</code>, die zu ihrem
-Parameter <code>2</code> addiert, dann testen wir diese Funktion mit dem Makro
+Parameter <code>2</code> addiert, und dann testen wir diese Funktion mit dem Makro
 <code>assert_eq!</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub fn add_two(a: i32) -&gt; i32 {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -662,13 +664,14 @@ mod tests {
         let result = add_two(2);
         assert_eq!(result, 4);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 11-7: Testen der Funktion <code>add_two</code> mit dem
 Makro <code>assert_eq!</code></span></p>
 <p>Lass uns prüfen, ob sie den Test besteht!</p>
 <pre><code class="language-console">$ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
-    Finished test [unoptimized + debuginfo] target(s) in 0.58s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
      Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
@@ -682,13 +685,17 @@ running 0 tests
 
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 </code></pre>
-<p>Wir erstellen eine Variable namens <code>result</code>, die das Ergebnis des Aufrufs von
-<code>add_two(2)</code> enthält. Dann übergeben wir <code>result</code> und <code>4</code> als Argumente an
-<code>assert_eq!</code>. Die Ausgabezeile für diesen Test lautet <code>test tests::it_adds_two  ... ok</code>, und das Wort <code>ok</code> gibt an, dass unser Test bestanden wurde!</p>
+<p>Wir erzeugen eine Variable namens <code>result</code>, die das Ergebnis des Aufrufs von
+<code>add_two(2)</code> enthält. Dann übergeben wir <code>result</code> und <code>4</code> als Argumente an das
+Makro <code>assert_eq!</code>. Die Ausgabezeile für diesen Test lautet
+<code>test tests::it_adds_two ... ok</code>, und das Wort <code>ok</code> gibt an, dass unser Test
+bestanden wurde!</p>
 <p>Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie <code>assert_eq!</code>
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 <code>add_two</code>, sodass sie stattdessen <code>3</code> addiert:</p>
-<pre><code class="language-rust not_desired_behavior noplayground">pub fn add_two(a: i32) -&gt; i32 {
+<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add_two(a: u64) -&gt; u64 {
     a + 3
 }
 
@@ -701,6 +708,7 @@ aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 </span><span class="boring">        let result = add_two(2);
 </span><span class="boring">        assert_eq!(result, 4);
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Führe die Tests erneut aus:</p>
 <pre><code class="language-console">$ cargo test
@@ -728,11 +736,11 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 
 error: test failed, to rerun pass `--lib`
 </code></pre>
-<p>Unser Test hat den Fehler entdeckt! Der Test <code>it_adds_two</code> schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion `left == right` failed</code> ist und welche Werte <code>left</code> und <code>right</code> hatten. Diese Nachricht
-hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> mit dem
-Ergebnis von <code>add_two(2)</code> war <code>5</code>, aber das Argument <code>right</code> war <code>4</code>. Du kannst
-dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
+<p>Unser Test hat den Fehler entdeckt! Der Test <code>tests::it_adds_two</code> schlug fehl
+und die Meldung sagt uns, dass die fehlgeschlagene Zusicherung <code>assertion  `left == right` failed</code> ist und welche Werte <code>left</code> und <code>right</code> hatten. Diese
+Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument <code>left</code> mit
+dem Ergebnis von <code>add_two(2)</code> war <code>5</code>, aber das Argument <code>right</code> war <code>4</code>. Du
+kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
 durchführen.</p>
 <p>Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
 Gleichheitszusicherung <code>expected</code> und <code>actual</code> genannt werden und deren
@@ -740,7 +748,7 @@ Reihenfolge wichtig ist. In Rust werden sie jedoch <code>left</code> und <code>r
 und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
 produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
 diesem Test als <code>assert_eq!(add_two(2), result)</code> schreiben, was zur selben
-Fehlermeldung <code>assertion failed: `(left == right)` </code> führen würde.</p>
+Fehlermeldung <code>assertion `left == right` failed</code> führen würde.</p>
 <p>Das Makro <code>assert_ne!</code> prüft, ob die beiden Werte, die wir ihm übergeben,
 ungleich sind und scheitert, wenn sie gleich sind. Dieses Makro ist am
 nützlichsten in Fällen, in denen wir nicht sicher sind, <em>welchen</em> Wert wir
@@ -769,18 +777,19 @@ Einzelheiten über diese und andere ableitbare Merkmale.</p>
 eine benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen
 ausgegeben wird. Alle Argumente, die nach den erforderlichen Argumenten
 angegeben werden, werden an das Makro <code>format!</code> übergeben (siehe
-<a href="ch08-02-strings.html#aneinanderhängen-mit-dem-operator--und-dem-makro-format">„Aneinanderhängen mit dem Operator <code>+</code> und dem Makro
-<code>format!</code>“</a> in Kapitel
-8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die Platzhalter
-<code>{}</code> und Werte enthält, die in diese Platzhalter gehören. Benutzerdefinierte
-Nachrichten sind nützlich, um zu dokumentieren, was eine Zusicherung bedeutet;
-wenn ein Test fehlschlägt, hast du eine bessere Vorstellung davon, wo das
-Problem im Code liegt.</p>
+<a href="ch08-02-strings.html#aneinanderhängen-mit--und-format">„Aneinanderhängen mit <code>+</code> und <code>format!</code>“</a> in
+Kapitel 8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die
+Platzhalter <code>{}</code> und Werte enthält, die in diese Platzhalter gehören.
+Benutzerdefinierte Nachrichten sind nützlich, um zu dokumentieren, was eine
+Zusicherung bedeutet; wenn ein Test fehlschlägt, hast du eine bessere
+Vorstellung davon, wo das Problem im Code liegt.</p>
 <p>Nehmen wir zum Beispiel an, wir haben eine Funktion, die Leute mit Namen
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
 in der Ausgabe auftaucht:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub fn greeting(name: &amp;str) -&gt; String {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn greeting(name: &amp;str) -&gt; String {
     format!("Hallo {name}!")
 }
 
@@ -793,7 +802,8 @@ mod tests {
         let result = greeting("Carol");
         assert!(result.contains("Carol"));
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p>Die Anforderungen für dieses Programm sind noch nicht abgestimmt worden und wir
 sind ziemlich sicher, dass sich der Text <code>Hallo</code> zu Beginn der Begrüßung ändern
 wird. Wir haben beschlossen, dass wir den Test nicht aktualisieren wollen, wenn
@@ -803,11 +813,13 @@ einfach sicher, dass die Ausgabe den Text des Eingabeparameters enthält.</p>
 <p>Lass uns nun einen Fehler in diesen Code einbringen, indem wir <code>greeting</code> so
 ändern, dass <code>name</code> nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:</p>
-<pre><code class="language-rust not_desired_behavior noplayground">pub fn greeting(name: &amp;str) -&gt; String {
+<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn greeting(name: &amp;str) -&gt; String {
     String::from("Hallo!")
 }
-
-<span class="boring">#[cfg(test)]
+<span class="boring">
+</span><span class="boring">#[cfg(test)]
 </span><span class="boring">mod tests {
 </span><span class="boring">    use super::*;
 </span><span class="boring">
@@ -816,6 +828,7 @@ Standard-Testversagen aussieht:</p>
 </span><span class="boring">        let result = greeting("Carol");
 </span><span class="boring">        assert!(result.contains("Carol"));
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Das Ausführen dieses Tests führt zu folgender Ausgabe:</p>
 <pre><code class="language-console">$ cargo test
@@ -910,7 +923,9 @@ abbricht.</p>
 <p>Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 <code>Guess::new</code> eintreten, wenn wir dies erwarten.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">pub struct Guess {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub struct Guess {
     value: i32,
 }
 
@@ -933,7 +948,8 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 11-8: Testet, dass eine Bedingung zum
 Programmabbruch führt</span></p>
 <p>Wir setzen das Attribut <code>#[should_panic]</code> hinter das Attribut <code>#[test]</code> und vor
@@ -958,7 +974,9 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 <p>Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion <code>new</code> das Programm abbricht, wenn
 der Wert größer als 100 ist:</p>
-<pre><code class="language-rust not_desired_behavior noplayground"><span class="boring">pub struct Guess {
+<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -982,6 +1000,7 @@ impl Guess {
 </span><span class="boring">    fn greater_than_100() {
 </span><span class="boring">        Guess::new(200);
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p>Wenn wir den Test in Codeblock 11-8 ausführen, wird er fehlschlagen:</p>
 <pre><code class="language-console">$ cargo test
@@ -1018,7 +1037,9 @@ Betrachte zum Beispiel den modifizierten Code für <code>Guess</code> in Codeblo
 die Funktion <code>new</code> mit unterschiedlichen Meldungen das Programm abbricht, je
 nachdem, ob der Wert zu klein oder zu groß ist.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct Guess {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct Guess {
 </span><span class="boring">    value: i32,
 </span><span class="boring">}
 </span><span class="boring">
@@ -1044,7 +1065,8 @@ mod tests {
     fn greater_than_100() {
         Guess::new(200);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 11-9: Testen eines Programmabbruchs mit einer
 bestimmten Teilzeichenkette in der Meldung</span></p>
 <p>Dieser Test wird bestanden werden, weil der Wert, den wir beim Parameter
@@ -1117,14 +1139,16 @@ error: test failed, to rerun pass `--lib`
 </code></pre>
 <p>Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenfolge <code>"kleiner oder gleich 100"</code>. Die Abbruchsmeldung, die wir in
+Zeichenkette <code>"kleiner oder gleich 100"</code>. Die Abbruchsmeldung, die wir in
 diesem Fall erhielten, lautete: <code>Schätzwert muss größer oder gleich 1 sein, ist 200.</code> Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!</p>
 <h3 id="verwenden-von-resultt-e-in-tests"><a class="header" href="#verwenden-von-resultt-e-in-tests">Verwenden von <code>Result&lt;T, E&gt;</code> in Tests</a></h3>
-<p>Bei unseren bisherigen Tests sind alle abgebrochen, wenn sie fehlgeschlagen
-sind. Wir können auch Tests schreiben, die <code>Result&lt;T, E&gt;</code> verwenden! Hier ist
-der Test aus Codeblock 11-1 so umgeschrieben, dass er <code>Result&lt;T, E&gt;</code> verwendet
-und <code>Err</code> zurückgibt, anstatt das Programm abzubrechen:</p>
-<pre><code class="language-rust noplayground"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<p>Unsere bisherigen Tests brechen alle ab, wenn sie fehlschlagen. Wir können auch
+Tests schreiben, die <code>Result&lt;T, E&gt;</code> verwenden! Hier ist der Test aus Codeblock
+11-1 so umgeschrieben, dass er <code>Result&lt;T, E&gt;</code> verwendet und <code>Err</code> zurückgibt,
+anstatt das Programm abzubrechen:</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -1142,7 +1166,8 @@ und <code>Err</code> zurückgibt, anstatt das Programm abzubrechen:</p>
             Err(String::from("zwei plus zwei ist nicht gleich vier"))
         }
     }
-<span class="boring">}</span></code></pre>
+<span class="boring">}
+</span><span class="boring">}</span></code></pre>
 <p>Die Funktion <code>it_works</code> hat jetzt den Rückgabetyp <code>Result&lt;(), String&gt;</code>. Anstatt
 das Makro <code>assert_eq!</code> aufzurufen, geben wir im Funktionsrumpf <code>Ok(())</code> zurück,
 wenn der Test bestanden ist, und ein <code>Err</code> mit einem <code>String</code> im Inneren, wenn

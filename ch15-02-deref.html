@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) Deref - Die Programmiersprache Rust</title>
+        <title>Intelligente Zeiger wie normale Referenzen behandeln - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="intelligente-zeiger-wie-normale-referenzen-behandeln-mit-dem-merkmal-trait-deref"><a class="header" href="#intelligente-zeiger-wie-normale-referenzen-behandeln-mit-dem-merkmal-trait-deref">Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) <code>Deref</code></a></h2>
+                        <h2 id="intelligente-zeiger-wie-normale-referenzen-behandeln"><a class="header" href="#intelligente-zeiger-wie-normale-referenzen-behandeln">Intelligente Zeiger wie normale Referenzen behandeln</a></h2>
 <p>Durch die Implementierung des Merkmals <code>Deref</code> kann man das Verhalten des
 <em>Dereferenzierungsoperators</em> (dereference operator) <code>*</code> (nicht zu verwechseln
 mit dem Multiplikations- oder Stern-Operator (glob operator)) anpassen. Indem
@@ -178,14 +178,7 @@ Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
 zu funktionieren, dann sehen wir uns an, wie wir mit Rusts <em>automatischer
 Umwandlung</em> (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
 können.</p>
-<blockquote>
-<p>Hinweis: Es gibt einen großen Unterschied zwischen dem Typ <code>MyBox&lt;T&gt;</code>, den
-wir gerade erstellen, und dem echten Typ <code>Box&lt;T&gt;</code>: Unsere Version speichert
-ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
-konzentrieren wir uns auf <code>Deref</code>, daher ist es weniger wichtig, wo die Daten
-tatsächlich gespeichert sind als das zeigerähnliche Verhalten.</p>
-</blockquote>
-<h3 id="dem-zeiger-zum-wert-folgen"><a class="header" href="#dem-zeiger-zum-wert-folgen">Dem Zeiger zum Wert folgen</a></h3>
+<h3 id="der-referenz-zum-wert-folgen"><a class="header" href="#der-referenz-zum-wert-folgen">Der Referenz zum Wert folgen</a></h3>
 <p>Eine reguläre Referenz ist eine Art Zeiger, und eine Möglichkeit, sich einen
 Zeiger als Pfeil vorzustellen, der auf einen Wert zeigt, der an einer anderen
 Stelle gespeichert ist. In Codeblock 15-6 erstellen wir eine Referenz auf einen
@@ -219,11 +212,6 @@ error[E0277]: can't compare `{integer}` with `&amp;{integer}`
   |
   = help: the trait `PartialEq&lt;&amp;{integer}&gt;` is not implemented for `{integer}`
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
-help: consider dereferencing here
- --&gt; file:///home/.rustup/toolchains/1.85/lib/rustlib/src/rust/library/core/src/macros/mod.rs:46:35
-  |
-46|                 if !(*left_val == **right_val) {
-  |                                   +
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
@@ -235,7 +223,7 @@ den sie zeigt.</p>
 <h3 id="boxt-wie-eine-referenz-verwenden"><a class="header" href="#boxt-wie-eine-referenz-verwenden"><code>Box&lt;T&gt;</code> wie eine Referenz verwenden</a></h3>
 <p>Wir können den Programmcode in Codeblock 15-6 neu schreiben, um anstelle einer
 Referenz <code>Box&lt;T&gt;</code> zu verwenden. Wie Codeblock 15-7 zeigt, funktioniert der
-Dereferenzierungsoperator:</p>
+Dereferenzierungsoperator.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let x = 5;
@@ -255,11 +243,18 @@ als <code>y</code> eine Referenz war. Als Nächstes werden wir ergründen, was d
 an <code>Box&lt;T&gt;</code> ist, wodurch der Dereferenzierungsoperator verwendet werden kann,
 indem wir unseren eigenen Box-Typ definieren.</p>
 <h3 id="einen-eigenen-intelligenten-zeiger-definieren"><a class="header" href="#einen-eigenen-intelligenten-zeiger-definieren">Einen eigenen intelligenten Zeiger definieren</a></h3>
-<p>Erstellen wir einen intelligenten Zeiger, der dem von der Standardbibliothek
+<p>Erstellen wir einen Wrapper-Typ, der dem von der Standardbibliothek
 bereitgestellten Typ <code>Box&lt;T&gt;</code> ähnelt, um zu erfahren, wie sich intelligente
-Zeiger standardmäßig anders als Referenzen verhalten. Anschließend sehen wir
-uns an, wie man die Möglichkeit zur Verwendung des Dereferenzierungsoperators
-hinzufügen kann.</p>
+Zeigertypen standardmäßig anders als Referenzen verhalten. Anschließend sehen
+wir uns an, wie man die Möglichkeit zur Verwendung des
+Dereferenzierungsoperators hinzufügen kann.</p>
+<blockquote>
+<p>Hinweis: Es gibt einen großen Unterschied zwischen dem Typ <code>MyBox&lt;T&gt;</code>, den
+wir gerade erstellen, und dem echten Typ <code>Box&lt;T&gt;</code>: Unsere Version speichert
+ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
+konzentrieren wir uns auf <code>Deref</code>, daher ist es weniger wichtig, wo die Daten
+tatsächlich gespeichert sind als das zeigerähnliche Verhalten.</p>
+</blockquote>
 <p>Der Typ <code>Box&lt;T&gt;</code> wird letztendlich als Tupel-Struktur (tuple struct) mit einem
 Element definiert. Codeblock 15-8 definiert den Typ <code>MyBox&lt;T&gt;</code> auf die gleiche
 Weise. Wir werden auch eine Funktion <code>new</code> definieren, analog zu <code>Box&lt;T&gt;</code>.</p>
@@ -308,7 +303,7 @@ error[E0614]: type `MyBox&lt;{integer}&gt;` cannot be dereferenced
   --&gt; src/main.rs:14:19
    |
 14 |     assert_eq!(5, *y);
-   |                   ^^
+   |                   ^^ can't be dereferenced
 
 For more information about this error, try `rustc --explain E0614`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
@@ -358,11 +353,11 @@ generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
 keine Gedanken machen; in Kapitel 20 werden wir sie ausführlicher behandeln.</p>
 <p>Wir füllen den Rumpf der Methode <code>deref</code> mit <code>&amp;self.0</code>, damit <code>deref</code> eine
 Referenz auf den Wert zurückgibt, auf den wir mit dem Operator <code>*</code> zugreifen
-wollen. Erinnere dich an <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne benannte Felder
-um verschiedene Typen zu erzeugen“</a> in Kapitel 5, wo <code>.0</code> auf
-den ersten Wert in einer Tupel-Struktur zugreift. Die Funktion <code>main</code> in
-Codeblock 15-9, die <code>*</code> für den Wert <code>MyBox&lt;T&gt;</code> aufruft, kompiliert nun und die
-Zusicherungen werden erfüllt!</p>
+wollen. Erinnere dich an <a href="ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen">„Mit Tupel-Strukturen verschiedene Typen
+erzeugen“</a> in Kapitel 5, wo <code>.0</code> auf den ersten Wert in einer
+Tupel-Struktur zugreift. Die Funktion <code>main</code> in Codeblock 15-9, die <code>*</code> für
+den Wert <code>MyBox&lt;T&gt;</code> aufruft, kompiliert nun und die Zusicherungen werden
+erfüllt!</p>
 <p>Ohne das Merkmal <code>Deref</code> kann der Compiler nur <code>&amp;</code>-Referenzen dereferenzieren.
 Die Methode <code>deref</code> gibt dem Compiler die Möglichkeit, einen Wert eines
 beliebigen Typs zu verwenden, der <code>Deref</code> implementiert, und die Methode
@@ -388,7 +383,7 @@ die Eigentümerschaft des inneren Wertes von <code>MyBox&lt;T&gt;</code> überne
 einem Aufruf des <code>*</code>-Operators ersetzt wird. Da die Ersetzung des <code>*</code>-Operators
 nicht unendlich rekursiv ist, erhalten wir Daten vom Typ <code>i32</code>, die mit der <code>5</code>
 in <code>assert_eq!</code> in Codeblock 15-9 übereinstimmen.</p>
-<h3 id="implizite-automatische-umwandlung-mit-funktionen-und-methoden"><a class="header" href="#implizite-automatische-umwandlung-mit-funktionen-und-methoden">Implizite automatische Umwandlung mit Funktionen und Methoden</a></h3>
+<h3 id="automatische-umwandlung-in-funktionen-und-methoden-verwenden"><a class="header" href="#automatische-umwandlung-in-funktionen-und-methoden-verwenden">Automatische Umwandlung in Funktionen und Methoden verwenden</a></h3>
 <p>Die <em>automatische Umwandlung</em> (deref coercion) wandelt eine Referenz auf einen
 Typ, der das Merkmal <code>Deref</code> implementiert, in eine Referenz auf einen anderen
 Typ um. Zum Beispiel kann die automatische Umwandlung <code>&amp;String</code> in <code>&amp;str</code>
@@ -504,7 +499,7 @@ Rust die Typen und verwendet <code>Deref::deref</code> so oft wie nötig, um ein
 zu erhalten, die dem Typ des Parameters entspricht. Wie oft <code>Deref::deref</code>
 eingefügt werden muss, wird zur Kompilierzeit ermittelt, sodass zur Laufzeit
 kein Nachteil durch die Nutzung der automatischen Umwandlung entsteht!</p>
-<h3 id="wie-die-automatische-umwandlung-mit-veränderbarkeit-umgeht"><a class="header" href="#wie-die-automatische-umwandlung-mit-veränderbarkeit-umgeht">Wie die automatische Umwandlung mit Veränderbarkeit umgeht</a></h3>
+<h3 id="automatische-umwandlung-mit-veränderbaren-referenzen"><a class="header" href="#automatische-umwandlung-mit-veränderbaren-referenzen">Automatische Umwandlung mit veränderbaren Referenzen</a></h3>
 <p>Ähnlich wie du das Merkmal <code>Deref</code> verwendest, um den <code>*</code>-Operator bei
 unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal <code>DerefMut</code>
 verwenden, um den <code>*</code>-Operator bei veränderbaren Referenzen zu überschreiben.</p>

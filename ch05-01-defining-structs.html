@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -312,15 +312,15 @@ mit den Strukturfeldern sind</span></p>
 <code>email</code> der Funktion <code>build_user</code> setzen. Da das Feld <code>email</code> und der Parameter
 <code>email</code> den gleichen Namen haben, brauchen wir nur <code>email</code> statt <code>email: email</code>
 zu schreiben.</p>
-<h3 id="instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax"><a class="header" href="#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">Instanzen aus anderen Instanzen erzeugen mit der Strukturaktualisierungssyntax</a></h3>
+<h3 id="instanzen-erzeugen-mit-der-strukturaktualisierungssyntax"><a class="header" href="#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">Instanzen erzeugen mit der Strukturaktualisierungssyntax</a></h3>
 <p>Oft ist es hilfreich, eine neue Instanz einer Struktur zu erstellen, die die
-meisten Werte einer alten Instanz verwendet und nur einige davon verändert. Du
-kannst dazu die <em>Strukturaktualisierungssyntax</em> (struct update syntax)
-verwenden.</p>
-<p>Zunächst zeigt Codeblock 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> ohne
-Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für <code>email</code>,
-verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir in Codeblock
-5-2 erstellt haben.</p>
+meisten Werte einer alten Instanz desselben Typs verwendet und nur einige davon
+verändert. Du kannst dazu die Strukturaktualisierungssyntax (struct update
+syntax) verwenden.</p>
+<p>Zunächst zeigt Codeblock 5-6, wie wir eine neue <code>User</code>-Instanz <code>user2</code> auf
+normalem Wege ohne Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert
+für <code>email</code>, verwenden aber ansonsten die gleichen Werte von <code>user1</code>, die wir
+in Codeblock 5-2 erstellt haben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct User {
 </span><span class="boring">    active: bool,
@@ -397,8 +397,9 @@ somit nur die Werte <code>active</code> und <code>sign_in_count</code> von <code
 <code>sign_in_count</code> sind Typen, die das Merkmal <code>Copy</code> implementieren, sodass das
 Verhalten, das wir im Abschnitt <a href="ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy">„Nur Stapelspeicher-Daten: Kopieren
 (copy)“</a> besprochen haben, zutreffen würde. Wir können in diesem Beispiel
-immer noch <code>user1.email</code> verwenden, da sein Wert <em>nicht</em> verschoben wurde.</p>
-<h3 id="verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen"><a class="header" href="#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen</a></h3>
+immer noch <code>user1.email</code> verwenden, da sein Wert <em>nicht</em> aus <code>user1</code> verschoben
+wurde.</p>
+<h3 id="mit-tupel-strukturen-verschiedene-typen-erzeugen"><a class="header" href="#mit-tupel-strukturen-verschiedene-typen-erzeugen">Mit Tupel-Strukturen verschiedene Typen erzeugen</a></h3>
 <p>Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
 <em>Tupel-Strukturen</em> (tuple structs). Tupel-Strukturen haben den Strukturnamen
 als zusätzliche Bedeutung, allerdings haben die Felder keine Namen, sondern nur
@@ -427,8 +428,9 @@ Tupel-Struktur-Instanzen den Tupeln insofern, als dass sie in ihre einzelnen
 Teile zerlegt werden können, und du kannst ein <code>.</code> gefolgt vom Index verwenden,
 um auf einen einzelnen Wert zuzugreifen. Im Unterschied zu Tupeln musst du bei
 Tupel-Strukturen den Typ der Struktur angeben, wenn du sie destrukturierst. Wir
-würden zum Beispiel schreiben: <code>let Point(x, y, z) = point</code></p>
-<h3 id="einheitstyp-ähnliche-strukturen-ohne-felder"><a class="header" href="#einheitstyp-ähnliche-strukturen-ohne-felder">Einheitstyp-ähnliche Strukturen ohne Felder</a></h3>
+würden zum Beispiel <code>let Point(x, y, z) = origin;</code> schreiben, um die Werte in
+<code>origin</code> in die Variablen <code>x</code>, <code>y</code> und <code>z</code> zu destrukturieren.</p>
+<h3 id="einheitstyp-ähnliche-strukturen-definieren"><a class="header" href="#einheitstyp-ähnliche-strukturen-definieren">Einheitstyp-ähnliche Strukturen definieren</a></h3>
 <p>Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 <em>Einheitstyp</em> (unit-like structs) genannt, weil sie sich ähnlich zum leeren
 Tupel <code>()</code> verhalten, das wir im Abschnitt <a href="ch03-02-data-types.html#der-tupel-typ">„Der Tupel-Typ“</a> erwähnt

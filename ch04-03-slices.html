@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,25 +163,31 @@
                     <main>
                         <h2 id="der-anteilstyp-slice"><a class="header" href="#der-anteilstyp-slice">Der Anteilstyp (slice)</a></h2>
 <p>Mit <em>Anteilstypen</em> kannst du auf eine zusammenhängende Folge von Elementen in
-einer <a href="ch08-00-common-collections.html">Kollektion</a> referenzieren anstatt auf die gesamte
-Kollektion. Ein Anteilstyp ist eine Art Referenz und hat daher keine
-Eigentümerschaft.</p>
+einer <a href="ch08-00-common-collections.html">Kollektion</a> referenzieren. Ein Anteilstyp ist eine Art
+Referenz und hat daher keine Eigentümerschaft.</p>
 <p>Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die eine
 Zeichenkette mit durch Leerzeichen getrennten Wörtern entgegennimmt und das
 erste Wort zurückgibt, das sie in dieser Zeichenkette findet. Wenn die Funktion
 kein Leerzeichen in der Zeichenkette findet, muss die gesamte Zeichenkette ein
 Wort sein, also sollte die gesamte Zeichenkette zurückgegeben werden.</p>
+<blockquote>
+<p>Hinweis: Zur Einführung in Anteilstypen gehen wir in diesem Abschnitt nur von
+ASCII aus. Eine ausführlichere Erörterung der UTF-8-Verarbeitung findest du
+im Abschnitt <a href="ch08-02-strings.html">„UTF-8-kodierten Text in Zeichenketten (strings)
+ablegen“</a> in Kapitel 8.</p>
+</blockquote>
 <p>Gehen wir einmal durch, wie wir die Signatur dieser Funktion ohne Verwendung
 von Anteilstypen schreiben würden, um das Problem zu verstehen, das durch
 Anteilstypen gelöst wird:</p>
 <pre><code class="language-rust ignore">fn first_word(s: &amp;String) -&gt; ?</code></pre>
-<p>Die Funktion <code>first_word</code> hat <code>&amp;String</code> als Parameter. Wir benötigen keine
-Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust übernehmen
-Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei denn, sie
-müssen es, und die Gründe dafür werden im weiteren Verlauf klar werden). Aber
-was sollen wir zurückgeben? Wir haben nicht wirklich eine Möglichkeit, über
-<em>einen Teil</em> einer Zeichenkette zu sprechen. Wir könnten jedoch den Index des
-Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7 gezeigt.</p>
+<p>Die Funktion <code>first_word</code> hat einen Parameter vom Typ <code>&amp;String</code>. Wir benötigen
+keine Eigentümerschaft, also ist das in Ordnung. (In idiomatischem Rust
+übernehmen Funktionen nicht die Eigentümerschaft an ihren Argumenten, es sei
+denn, sie müssen es, und die Gründe dafür werden im weiteren Verlauf klar
+werden.) Aber was sollen wir zurückgeben? Wir haben nicht wirklich die
+Mittel, <em>einen Teil</em> einer Zeichenkette zu referenzieren. Wir könnten jedoch
+den Index des Wortendes zurückgeben. Versuchen wir das, wie in Codeblock 4-7
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn first_word(s: &amp;String) -&gt; usize {
     let bytes = s.as_bytes();
@@ -335,8 +341,8 @@ darstellt, die auf das Byte bei Index 0 in einer Tabelle der
 Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
 dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
 der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt." src="img/trpl04-07.svg" class="center" style="width: 50%;" /></p>
-<p><span class="caption">Abbildung 4-7: Zeichenkettenanteilstyp, der sich auf einen
-Teil eines <code>String</code> bezieht</span></p>
+<p><span class="caption">Abbildung 4-7: Ein Zeichenkettenanteilstyp, der auf einen
+Teil eines <code>String</code> referenziert</span></p>
 <p>Wenn du mit der Bereichssyntax <code>..</code> in Rust beim Index 0 beginnen willst,
 kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
 gleich:</p>
@@ -373,11 +379,7 @@ let slice = &amp;s[..];
 <p>Hinweis: Bereichsindizes bei Zeichenkettenanteilstypen müssen sich nach
 gültigen UTF-8-Zeichengrenzen richten. Wenn du versuchst, einen
 Zeichenkettenanteilstyp in der Mitte eines Mehrbyte-Zeichens zu erstellen,
-wird dein Programm mit einem Fehler abbrechen. Bei der Einführung von
-Zeichenkettenanteilstypen in diesem Abschnitt gehen wir nur von ASCII aus;
-eine eingehendere Diskussion der UTF-8-Behandlung findet sich im Abschnitt
-<a href="ch08-02-strings.html">„UTF-8-kodierten Text in Zeichenketten (strings) ablegen“</a> in
-Kapitel 8.</p>
+wird dein Programm mit einem Fehler abbrechen.</p>
 </blockquote>
 <p>Mit all diesen Informationen im Hinterkopf schreiben wir <code>first_word</code> so um,
 dass es einen Anteilstyp zurückgibt. Der Typ mit der Bedeutung
@@ -526,9 +528,9 @@ Verwenden eines Zeichenkettenanteilstyps für den Typ des Parameters <code>s</co
 <p>Wenn wir einen Zeichenkettenanteilstyp haben, können wir diesen direkt
 übergeben. Wenn wir einen <code>String</code> haben, können wir einen Anteilstyp des
 <code>String</code> oder eine Referenz auf den <code>String</code> übergeben. Diese Flexibilität
-nutzt die Vorteile der <em>automatischen Umwandlung</em>, eine Funktionalität, die wir
-im Abschnitt <a href="ch15-02-deref.html#implizite-automatische-umwandlung-mit-funktionen-und-methoden">„Implizite automatische Umwandlung mit Funktionen und
-Methoden“</a> in Kapitel 15 behandeln.</p>
+nutzt die Vorteile der automatischen Umwandlung, eine Funktionalität, die wir
+im Abschnitt <a href="ch15-02-deref.html#automatische-umwandlung-in-funktionen-und-methoden-verwenden">„Automatische Umwandlung in Funktionen und Methoden
+verwenden“</a> in Kapitel 15 behandeln.</p>
 <p>Das Definieren einer Funktion, die einen Zeichenkettenanteilstyp statt einer
 Referenz auf einen <code>String</code> entgegennimmt, macht unsere API allgemeiner und
 nützlicher, ohne an Funktionalität einzubüßen:</p>

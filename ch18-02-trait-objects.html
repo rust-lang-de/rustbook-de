@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben - Die Programmiersprache Rust</title>
+        <title>Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben"><a class="header" href="#merkmalsobjekte-trait-objects-die-werte-unterschiedlicher-typen-erlauben">Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben</a></h2>
+                        <h2 id="verwendung-von-merkmals-objekten-zur-abstraktion-über-gemeinsames-verhalten"><a class="header" href="#verwendung-von-merkmals-objekten-zur-abstraktion-über-gemeinsames-verhalten">Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten</a></h2>
 <p>In Kapitel 8 haben wir erwähnt, dass eine Einschränkung von Vektoren darin
 besteht, dass sie nur Elemente eines einzigen Typs speichern können. Wir haben
 in Codeblock 8-9 eine Abhilfe geschaffen, indem wir die Aufzählung (enum)
@@ -183,15 +183,13 @@ könnte einige Typen enthalten, die Leute benutzen können, z.B. <code>Button</c
 <code>TextField</code>. Darüber hinaus werden <code>gui</code>-Benutzer ihre eigenen Typen erstellen
 wollen, die gezeichnet werden können: Zum Beispiel könnte ein Programmierer ein
 <code>Image</code> und ein anderer eine <code>SelectBox</code> hinzufügen.</p>
-<p>Wir werden für dieses Beispiel keine vollwertige GUI-Bibliothek implementieren,
-aber wir werden zeigen, wie die Teile zusammenpassen würden. Zum Zeitpunkt des
-Schreibens der Bibliothek können wir nicht alle Typen kennen und definieren,
-die andere Programmierer vielleicht erstellen möchten. Aber wir wissen, dass
-<code>gui</code> den Überblick über viele Werte unterschiedlicher Typen behalten muss, und
-es muss für jeden dieser unterschiedlich typisierten Werte eine Methode <code>draw</code>
-aufrufen. Es muss nicht genau wissen, was passieren wird, wenn wir die Methode
-<code>draw</code> aufrufen, sondern nur, dass der Typ diese Methode für uns zum Aufruf
-bereithält.</p>
+<p>Zum Zeitpunkt des Schreibens der Bibliothek können wir nicht alle Typen kennen
+und definieren, die andere Programmierer vielleicht erstellen möchten. Aber wir
+wissen, dass <code>gui</code> den Überblick über viele Werte unterschiedlicher Typen
+behalten muss, und es muss für jeden dieser unterschiedlich typisierten Werte
+eine Methode <code>draw</code> aufrufen. Es muss nicht genau wissen, was passieren wird,
+wenn wir die Methode <code>draw</code> aufrufen, sondern nur, dass der Typ diese Methode
+für uns zum Aufruf bereithält.</p>
 <p>Um dies in einer Sprache mit Vererbung zu tun, könnten wir eine Klasse namens
 <code>Component</code> definieren, die eine Methode namens <code>draw</code> enthält. Die anderen
 Klassen, z.B. <code>Button</code>, <code>Image</code> und <code>SelectBox</code>, würden von <code>Component</code> erben
@@ -200,7 +198,8 @@ und somit die Methode <code>draw</code> erben. Sie könnten jeweils die Methode 
 Programmiergerüst (framework) könnte alle Typen so behandeln, als wären sie
 <code>Component</code>-Instanzen, und <code>draw</code> aufrufen. Aber da Rust keine Vererbung hat,
 brauchen wir einen anderen Weg, die <code>gui</code>-Bibliothek zu strukturieren, damit
-die Benutzer sie um neue Typen erweitern können.</p>
+die Benutzer neue Typen erstellen können, die mit der Bibliothek kompatibel
+sind.</p>
 <h3 id="definieren-eines-merkmals-trait-für-allgemeines-verhalten"><a class="header" href="#definieren-eines-merkmals-trait-für-allgemeines-verhalten">Definieren eines Merkmals (trait) für allgemeines Verhalten</a></h3>
 <p>Um das Verhalten zu implementieren, das wir in <code>gui</code> haben wollen, werden wir
 ein Merkmal namens <code>Draw</code> definieren, das eine Methode namens <code>draw</code> haben
@@ -223,13 +222,11 @@ Aufzählungen „Objekte“ zu nennen, um sie von den Objekten anderer Sprachen 
 unterscheiden. In einer Struktur oder Aufzählung sind die Daten in den
 Struktur-Feldern vom Verhalten in <code>impl</code>-Blöcken getrennt, während in anderen
 Sprachen die Daten und das Verhalten, die in einem Konzept zusammengefasst
-sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte <em>sind</em> jedoch eher
-wie Objekte in anderen Sprachen in dem Sinne, dass sie Daten und Verhalten
-kombinieren. Aber Merkmalsobjekte unterscheiden sich von traditionellen
-Objekten dadurch, dass wir einem Merkmalsobjekt keine Daten hinzufügen können.
-Merkmalsobjekte sind nicht so allgemein einsetzbar wie Objekte in anderen
-Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion über allgemeines
-Verhalten zu ermöglichen.</p>
+sind, oft als ein Objekt bezeichnet werden. Merkmalsobjekte unterscheiden sich
+von Objekten in anderen Sprachen dadurch, dass wir einem Merkmalsobjekte keine
+Daten hinzufügen können. Merkmalsobjekte sind nicht so allgemein einsetzbar wie
+Objekte in anderen Sprachen: Ihr spezifischer Zweck besteht darin, Abstraktion
+über allgemeines Verhalten zu ermöglichen.</p>
 <p>In Codeblock 18-3 wird gezeigt, wie ein Merkmal <code>Draw</code> mit einer Methode <code>draw</code>
 definiert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
@@ -290,7 +287,7 @@ generischer Typparameter kann jeweils nur durch einen konkreten Typ ersetzt
 werden, während Merkmalsobjekte die Möglichkeit bieten, zur Laufzeit mehrere
 konkrete Typen für das Merkmalsobjekt einzusetzen. Beispielsweise hätten wir
 die Struktur <code>Screen</code> mit einem generischen Typ und einer Merkmalsabgrenzung
-wie in Codeblock 18-6 definieren können:</p>
+wie in Codeblock 18-6 definieren können.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -332,9 +329,11 @@ Implementierung einer GUI-Bibliothek jenseits des Rahmens dieses Buches, sodass
 die Methode <code>draw</code> keine nützliche Implementierung in ihrem Rumpf haben wird.
 Um sich vorzustellen, wie die Implementierung aussehen könnte, könnte eine
 Struktur <code>Button</code> Felder für <code>width</code>, <code>height</code> und <code>label</code> haben, wie in
-Codeblock 18-7 gezeigt:</p>
+Codeblock 18-7 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub trait Draw {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub trait Draw {
 </span><span class="boring">    fn draw(&amp;self);
 </span><span class="boring">}
 </span><span class="boring">
@@ -360,7 +359,8 @@ impl Draw for Button {
     fn draw(&amp;self) {
         // Code zum tatsächlichen Zeichnen einer Schaltfläche
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 18-7: Eine Struktur <code>Button</code>, die das Merkmal
 <code>Draw</code> implementiert</span></p>
 <p>Die Felder <code>width</code>, <code>height</code> und <code>label</code> in <code>Button</code> unterscheiden sich von den
@@ -400,7 +400,7 @@ eine <code>Screen</code>-Instanz zu erzeugen. Der <code>Screen</code>-Instanz ka
 <code>SelectBox</code> und einen <code>Button</code> hinzufügen, indem er sie in eine <code>Box&lt;T&gt;</code> legt,
 um ein Merkmalsobjekt zu werden. Er kann dann die Methode <code>run</code> auf der
 <code>Screen</code>-Instanz aufrufen, die dann <code>draw</code> auf jeder der Komponenten aufruft.
-Der Codeblock 18-9 zeigt diese Umsetzung:</p>
+Der Codeblock 18-9 zeigt diese Umsetzung.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use gui::Draw;
 </span><span class="boring">
@@ -500,7 +500,7 @@ error: could not compile `gui` (bin "gui") due to 1 previous error
 das wir nicht übergeben wollten und einen anderen Typ übergeben sollten, oder
 wir sollten <code>Draw</code> auf <code>String</code> implementieren, sodass <code>Screen</code> in der Lage
 ist, <code>Draw</code> darauf aufzurufen.</p>
-<h3 id="merkmalsobjekte-führen-dynamischen-aufruf-durch"><a class="header" href="#merkmalsobjekte-führen-dynamischen-aufruf-durch">Merkmalsobjekte führen dynamischen Aufruf durch</a></h3>
+<h3 id="dynamischen-aufruf-durchführen"><a class="header" href="#dynamischen-aufruf-durchführen">Dynamischen Aufruf durchführen</a></h3>
 <p>Erinnere dich <a href="ch10-01-syntax.html#code-performanz-beim-verwenden-generischer-datentypen">„Code-Performanz beim Verwenden generischer
 Datentypen“</a> in Kapitel 10 an unsere
 Diskussion über den Monomorphisierungsprozess bei generischen Typen, den der
@@ -522,10 +522,9 @@ aufgerufen werden soll. Dieses Nachschlagen verursacht Laufzeitkosten, die
 beim statischen Aufruf nicht anfallen. Der dynamische Aufruf verhindert auch,
 dass der Compiler sich dafür entscheiden kann, den Code einer Methode inline zu
 verwenden, was wiederum einige Optimierungen verhindert. Und Rust hat einige
-Regeln, genannt <em>dyn compatibility</em>, wo man dynamische Aufrufe verwenden kann
-und wo nicht. Diese Regeln gehen über den Rahmen dieser Diskussion hinaus, aber
-du kannst mehr über sie in der
-<a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">Dyn-Kompatibilitäts-Referenz</a> lesen. Wir haben jedoch
+Regeln, wo man dynamische Aufrufe verwenden kann und wo nicht. Diese Regeln
+gehen über den Rahmen dieser Diskussion hinaus, aber du kannst mehr über sie in
+der <a href="https://doc.rust-lang.org/reference/items/traits.html#dyn-compatibility">Dyn-Kompatibilitäts-Referenz</a> lesen. Wir haben jedoch
 zusätzliche Flexibilität im Code erhalten, den wir in Codeblock 18-5
 geschrieben haben und in Codeblock 18-9 unterstützen konnten, sodass es sich um
 einen Kompromiss handelt, den es zu berücksichtigen gilt.</p>

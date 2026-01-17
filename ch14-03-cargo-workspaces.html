@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -190,7 +190,7 @@ Abschnitt <code>[package]</code>. Stattdessen beginnt sie mit einem Abschnitt
 <code>[workspace]</code>, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
 stellen außerdem sicher, dass wir die neueste und beste Version des
 Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
-<code>resolver</code> auf <code>"3"</code> setzen.</p>
+den Wert von <code>resolver</code> auf <code>"3"</code> setzen:</p>
 <p><span class="filename">Dateiname: Cargo.toml</span></p>
 <pre><code class="language-toml">[workspace]
 resolver = "3"
@@ -198,12 +198,12 @@ resolver = "3"
 <p>Als nächstes erstellen wir die Binärkiste <code>adder</code>, indem wir <code>cargo new</code> im
 Verzeichnis <em>add</em> ausführen:</p>
 <pre><code class="language-console">$ cargo new adder
-    Creating binary (application) `adder` package
+    Created binary (application) `adder` package
       Adding `adder` as member of workspace at `file:///projects/add`
 </code></pre>
 <p>Wenn du <code>cargo new</code> innerhalb eines Arbeitsbereichs ausführst, wird das neu
 erstellte Paket automatisch zum Schlüssel <code>members</code> in der Definition
-<code>[workspace]</code> der Datei <code>Cargo.toml</code> hinzugefügt, etwa so:</p>
+<code>[workspace]</code> der Datei <em>Cargo.toml</em> hinzugefügt, etwa so:</p>
 <pre><code class="language-toml">[workspace]
 resolver = "3"
 members = ["adder"]
@@ -233,7 +233,7 @@ Verzeichnisses können die Kisten unnötig wiederholte Erstellung vermeiden.</p>
 <p>Als Nächstes erstellen wir ein weiteres, dem Arbeitsbereich zugehöriges Paket
 und nennen es <code>add_one</code>. Erzeuge eine neue Bibliothekskiste namens <code>add_one</code>:</p>
 <pre><code class="language-console">$ cargo new add_one --lib
-    Creating library `add_one` package
+    Created library `add_one` package
       Adding `add_one` as member of workspace at `file:///projects/add`
 </code></pre>
 <p>Die Datei <em>Cargo.toml</em> auf der obersten Ebene enthält nun den Pfad <em>add_one</em> in
@@ -297,7 +297,7 @@ Hello, world! 10 plus one is 11!
 </code></pre>
 <p>Dadurch wird der Programmcode in <em>adder/src/main.rs</em> ausgeführt, der von der
 Kiste <code>add_one</code> abhängt.</p>
-<h4 id="abhängigkeiten-zu-externen-paketen-in-einem-arbeitsbereich"><a class="header" href="#abhängigkeiten-zu-externen-paketen-in-einem-arbeitsbereich">Abhängigkeiten zu externen Paketen in einem Arbeitsbereich</a></h4>
+<h3 id="abhängigkeiten-zu-externen-paketen"><a class="header" href="#abhängigkeiten-zu-externen-paketen">Abhängigkeiten zu externen Paketen</a></h3>
 <p>Beachte, dass der Arbeitsbereich nur eine Datei <em>Cargo.lock</em> auf der obersten
 Ebene enthält, anstatt einer in jeder Kiste. Dies stellt sicher, dass alle
 Kisten dieselbe Version aller Abhängigkeiten verwenden. Wenn wir das Paket
@@ -361,7 +361,7 @@ sicherstellt, dass die Kisten im Arbeitsbereich miteinander kompatibel sind.</p>
 <p>Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
 angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
 Versionen wie möglich aufzulösen.</p>
-<h4 id="hinzufügen-eines-tests-zu-einem-arbeitsbereich"><a class="header" href="#hinzufügen-eines-tests-zu-einem-arbeitsbereich">Hinzufügen eines Tests zu einem Arbeitsbereich</a></h4>
+<h3 id="hinzufügen-eines-tests-zu-einem-arbeitsbereich"><a class="header" href="#hinzufügen-eines-tests-zu-einem-arbeitsbereich">Hinzufügen eines Tests zu einem Arbeitsbereich</a></h3>
 <p>Füge für eine weitere Verbesserung innerhalb der <code>add_one</code>-Kiste einen Test der
 Funktion <code>add_one::add_one</code> hinzu:</p>
 <p><span class="filename">Dateiname: add_one/src/lib.rs</span></p>

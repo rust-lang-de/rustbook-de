@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Mit Modulen den Kontrollumfang und Datenschutz steuern - Die Programmiersprache Rust</title>
+        <title>Kontrollumfang und Datenschutz mit Modulen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="mit-modulen-den-kontrollumfang-und-datenschutz-steuern"><a class="header" href="#mit-modulen-den-kontrollumfang-und-datenschutz-steuern">Mit Modulen den Kontrollumfang und Datenschutz steuern</a></h2>
+                        <h2 id="kontrollumfang-und-datenschutz-mit-modulen"><a class="header" href="#kontrollumfang-und-datenschutz-mit-modulen">Kontrollumfang und Datenschutz mit Modulen</a></h2>
 <p>In diesem Abschnitt werden wir über Module und andere Teile des Modulsystems
 sprechen, nämlich <em>Pfade</em>, die es dir erlauben, Elemente zu benennen; das
 Schlüsselwort <code>use</code>, das einen Pfad in den Gültigkeitsbereich bringt; und das
@@ -178,7 +178,7 @@ erinnern, wie Module funktionieren.</p>
 <ul>
 <li><strong>Beginne bei der Kistenwurzel (crate root)</strong>: Beim Kompilieren einer Kiste
 sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
-<em>src/lib.rs</em> für eine Bibliothekskiste oder <em>src/main.rs</em> für eine
+<em>src/lib.rs</em> für eine Bibliothekskiste und <em>src/main.rs</em> für eine
 Binärkiste).</li>
 <li><strong>Module deklarieren</strong>: In der Kisten-Stammdatei kannst du neue Module
 deklarieren; z.B. deklarierst du ein „Garten“-Modul mit <code>mod garden;</code>. Der
@@ -222,7 +222,7 @@ da an braucht man nur noch <code>Asparagus</code> zu schreiben, um diesen Typ im
 Gültigkeitsbereich zu verwenden.</li>
 </ul>
 <p>Hier erstellen wir eine binäre Kiste namens <code>backyard</code> (Hinterhof), die diese
-Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls <code>backyard</code>
+Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls <em>backyard</em>
 genannt, enthält diese Dateien und Verzeichnisse:</p>
 <pre><code class="language-text">backyard
 ├── Cargo.lock
@@ -265,12 +265,13 @@ abhängen kann.</p>
 Restaurants bietet. Wir werden die Signaturen der Funktionen definieren, aber
 ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu konzentrieren
 und nicht auf die Implementierung eines Restaurants.</p>
-<p>Im Gaststättengewerbe werden einige Teile eines Restaurants als <em>Vorderseite
-des Hauses</em> und andere als <em>Hinterseite des Hauses</em> bezeichnet. Auf der
-Vorderseite des Hauses sind die Kunden; hier setzen Gastgeber ihre Kunden hin,
-Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
-Getränke. Auf der Hinterseite des Hauses arbeiten die Küchenchefs und Köche in
-der Küche, Geschirrspüler waschen ab und Manager erledigen Verwaltungsarbeiten.</p>
+<p>Im Gaststättengewerbe werden einige Teile eines Restaurants als Vorderseite
+des Hauses und andere als Hinterseite des Hauses bezeichnet. Auf der
+<em>Vorderseite des Hauses</em> sind die Kunden; hier setzen Gastgeber ihre Kunden
+hin, Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
+Getränke. Auf der <em>Hinterseite des Hauses</em> arbeiten die Küchenchefs und Köche
+in der Küche, Geschirrspüler waschen ab und Manager erledigen
+Verwaltungsarbeiten.</p>
 <p>Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
 <code>restaurant</code>, indem du <code>cargo new --lib restaurant</code> ausführst. Gib dann den
@@ -307,10 +308,10 @@ können anhand der Gruppen durch den Code navigieren, anstatt alle Definitionen
 lesen zu müssen, und finden so leichter die für sie relevanten Definitionen.
 Programmierer, die diesem Code neue Funktionalität hinzufügen, wissen, wo sie
 den Code platzieren müssen, damit das Programm übersichtlich bleibt.</p>
-<p>Vorhin haben wir erwähnt, dass <em>src/main.rs</em> und <em>src/lib.rs</em> als Kistenwurzel
-bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
-Dateien ein Modul namens <code>crate</code> an der Wurzel der Modulstruktur der Kiste
-bilden, die als <em>Modulbaum</em> bekannt ist.</p>
+<p>Vorhin haben wir erwähnt, dass <em>src/main.rs</em> und <em>src/lib.rs</em> als
+<em>Kistenwurzel</em> bezeichnet werden. Der Grund für ihren Namen ist, dass der
+Inhalt dieser beiden Dateien ein Modul namens <code>crate</code> an der Wurzel der
+Modulstruktur der Kiste bilden, die als <em>Modulbaum</em> bekannt ist.</p>
 <p>Codeblock 7-2 zeigt den Modulbaum für die Struktur in Codeblock 7-1.</p>
 <pre><code class="language-text">crate
  └── front_of_house

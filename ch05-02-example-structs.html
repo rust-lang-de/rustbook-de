@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -246,7 +246,7 @@ der Tupelindex <code>1</code> ist. Für andere wäre es noch schwieriger, dies
 herauszufinden und im Kopf zu behalten, wenn sie unseren Code verwenden würden.
 Da wir die Bedeutung unserer Daten nicht in unseren Code übertragen haben, ist
 es jetzt einfacher, Fehler zu machen.</p>
-<h3 id="refaktorierung-mit-strukturen-mehr-semantik"><a class="header" href="#refaktorierung-mit-strukturen-mehr-semantik">Refaktorierung mit Strukturen: Mehr Semantik</a></h3>
+<h3 id="refaktorierung-mit-strukturen"><a class="header" href="#refaktorierung-mit-strukturen">Refaktorierung mit Strukturen</a></h3>
 <p>Verwenden wir Strukturen, um durch die Benennung der Daten deren Bedeutung
 anzugeben. Wir können das verwendete Tupel in eine Struktur mit einem Namen
 für das Ganze sowie mit Namen für die Einzelteile umwandeln, wie in Codeblock
@@ -292,7 +292,7 @@ was wir meinen: Berechne die Fläche von <code>Rectangle</code> unter Verwendung
 Felder <code>width</code> und <code>height</code>. Dies drückt aus, dass Breite und Höhe in Beziehung
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte <code>0</code> und <code>1</code> zu verwenden. Das erhöht die Lesbarkeit.</p>
-<h3 id="hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits"><a class="header" href="#hilfreiche-funktionalität-mit-abgeleiteten-merkmalen-derived-traits">Hilfreiche Funktionalität mit abgeleiteten Merkmalen (derived traits)</a></h3>
+<h3 id="funktionalität-mit-abgeleiteten-merkmalen-derived-traits-hinzufügen"><a class="header" href="#funktionalität-mit-abgeleiteten-merkmalen-derived-traits-hinzufügen">Funktionalität mit abgeleiteten Merkmalen (derived traits) hinzufügen</a></h3>
 <p>Es wäre hilfreich, eine Instanz von <code>Rectangle</code> samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
 versuchen wir, das <a href="https://doc.rust-lang.org/std/macro.println.html">Makro <code>println!</code></a> zu verwenden, das wir in den
@@ -330,8 +330,7 @@ Standardimplementierung von <code>Display</code>, um die mit <code>println!</cod
 Platzhalter <code>{}</code> verwenden zu können.</p>
 <p>Wenn wir die Fehlerausgabe weiterlesen, werden wir diesen hilfreichen Hinweis
 finden:</p>
-<pre><code class="language-text">   = help: the trait `std::fmt::Display` is not implemented for `Rectangle`
-   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
+<pre><code class="language-text">   = note: in format strings you may be able to use `{:?}` (or {:#?} for pretty-print) instead
 </code></pre>
 <p>Lass es uns versuchen! Der Makroaufruf <code>println!</code> wird geändert in
 <code>println!("rect1 ist {rect1:?}");</code>. Wenn wir den Bezeichner <code>:?</code> innerhalb der
@@ -401,9 +400,8 @@ Wert zurückgibt.</p>
 <p>Hinweis: Der Aufruf des Makros <code>dbg!</code> schreibt in die
 Standardfehlerausgabe (<code>stderr</code>), im Gegensatz zu <code>println!</code>, das in
 die Standardausgabe (<code>stdout</code>) schreibt. Wir werden mehr über
-<code>stderr</code> und <code>stdout</code> im Abschnitt <a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehlermeldungen in die
-Standardfehlerausgabe anstatt der Standardausgabe schreiben“ in Kapitel
-12</a> erfahren.</p>
+<code>stderr</code> und <code>stdout</code> im Abschnitt <a href="ch12-06-writing-to-stderr-instead-of-stdout.html">„Fehler zur Standardfehlerausgabe
+umleiten“ in Kapitel 12</a> erfahren.</p>
 </blockquote>
 <p>Hier ist ein Beispiel, bei dem wir am Wert interessiert sind, der dem Feld
 <code>width</code> zugewiesen wird, als auch am Wert der gesamten Struktur in <code>rect1</code>:</p>
@@ -457,7 +455,7 @@ Attribute als <code>derive</code>; für weitere Informationen, siehe den <a href
 Rechtecken. Es wäre hilfreich, dieses Verhalten enger mit unserer Struktur
 <code>Rectangle</code> zu verbinden, da es zu keinem anderen Typ passt. Schauen wir uns
 an, wie wir den Code weiter umgestalten und unsere Funktion <code>area</code> in eine
-<em>Methode</em> <code>area</code> unseres Typs <code>Rectangle</code> verwandeln können.</p>
+Methode <code>area</code> unseres Typs <code>Rectangle</code> verwandeln können.</p>
 
                     </main>
 

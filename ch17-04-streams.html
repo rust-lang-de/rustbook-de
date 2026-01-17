@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,13 +162,20 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="ströme-streams-sequenz-von-futures"><a class="header" href="#ströme-streams-sequenz-von-futures">Ströme (streams): Sequenz von Futures</a></h2>
-<p>Bislang haben wir uns in diesem Kapitel hauptsächlich mit einzelnen Futures
-beschäftigt. Die einzige große Ausnahme war der von uns verwendete asynchrone
-Kanal. Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
-weiter oben in diesem Kapitel in <a href="ch17-02-concurrency-with-async.html#hochzählen-in-zwei-aufgaben-mit-nachrichtenübermittlung">„Hochzählen in zwei Aufgaben mit
-Nachrichtenübermittlung“</a> verwendet haben. Die asynchrone
-Methode <code>recv</code> erzeugt eine Sequenz von Elementen. Dies ist ein Beispiel eines
-viel allgemeineren Musters, bekannt als <em>Strom</em> (stream).</p>
+<p>Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
+weiter in Abschnitt <a href="ch17-02-concurrency-with-async.html#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung">„Datenaustausch zwischen zwei Aufgaben mit
+Nachrichtenübermittlung“</a> oben in diesem Kapitel verwendet
+haben. Die asynchrone Methode <code>recv</code> erzeugt eine Sequenz von Elementen. Dies
+ist ein Beispiel eines viel allgemeineren Musters, bekannt als <em>Strom</em>
+(stream). Viele Konzepte lassen sich ganz natürlich als Ströme darstellen:
+Elemente, die in einer Warteschlange verfügbar werden, Datenblöcke, die
+schrittweise aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
+zu große für den Arbeitsspeicher des Computers ist, oder Daten, die nach und
+nach über das Netzwerk eintreffen. Da Ströme Futures sind, können wir sie mit
+jeder anderen Art von Future verwenden und auf interessante Weise kombinieren.
+Beispielsweise können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu
+vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse
+der Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.</p>
 <p>Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Merkmal
 <code>Iterator</code> im Abschnitt <a href="ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next">„Das Merkmal (trait) <code>Iterator</code> und die Methode
 <code>next</code>“</a> betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
@@ -185,12 +192,10 @@ aber asynchron.</p>
 <p>Die Ähnlichkeit zwischen Iteratoren und Strömen in Rust bedeutet, dass wir aus
 jedem Iterator einen Strom erzeugen können. Wie bei einem Iterator können wir
 mit einem Strom arbeiten, indem wir seine Methode <code>next</code> aufrufen und dann auf
-die Ausgabe warten, wie in Codeblock 17-30.</p>
+die Ausgabe warten, wie in Codeblock 17-21.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
 </span>        let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
         let iter = values.iter().map(|n| n * 2);
         let mut stream = trpl::stream_from_iter(iter);
@@ -200,24 +205,21 @@ die Ausgabe warten, wie in Codeblock 17-30.</p>
         }
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-30: Erstellen eines Stroms aus einem
+<p><span class="caption">Codeblock 17-21: Erstellen eines Stroms aus einem
 Iterator und Ausgeben seiner Werte</span></p>
 <p>Wir beginnen mit einem Array von Zahlen, das wir in einen Iterator umwandeln
 und dann <code>map</code> aufrufen, um alle Werte zu verdoppeln. Dann wandeln wir den
 Iterator mit der Funktion <code>trpl::stream_from_iter</code> in einen Strom um.
 Schließlich durchlaufen wir mit der <code>while let</code>-Schleife die Elemente im
 Strom.</p>
-<p>Wenn wir versuchen, den Code auszuführen, lässt er sich leider nicht
-kompilieren. Stattdessen meldet der Compiler, dass keine Methode <code>next</code>
-verfügbar ist.</p>
-<pre><code class="language-console">error[E0599]: no method named `next` found for struct `Iter` in the current scope
+<p>Leider lässt sich der Code nicht kompilieren, sondern wir bekommen die
+Fehlermeldung, dass keine Methode <code>next</code> verfügbar ist:</p>
+<pre><code class="language-text">error[E0599]: no method named `next` found for struct `tokio_stream::iter::Iter` in the current scope
   --&gt; src/main.rs:10:40
    |
 10 |         while let Some(value) = stream.next().await {
    |                                        ^^^^
    |
-   = note: the full type name has been written to 'file:///projects/async_await/target/debug/deps/async_await-9de943556a6001b8.long-type-1281356139287206597.txt'
-   = note: consider using `--verbose` to print the full type name to the console
    = help: items from traits can only be used if the trait is in scope
 help: the following traits which provide `next` are implemented but not in scope; perhaps you want to import one of them
    |
@@ -241,687 +243,34 @@ erwarten, dass es sich um das Merkmal <code>Stream</code> handelt, aber ist das 
 <code>StreamExt</code>. <code>Ext</code> steht hier für „extension“ (engl. Erweiterung): Dies ist
 eine gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Merkmal mit einem
 anderen zu erweitern.</p>
-<p>Wir werden die Merkmale <code>Stream</code> und <code>StreamExt</code> am Ende des Kapitels etwas
-genauer erklären, aber für den Moment musst du nur wissen, dass das Merkmal
-<code>Stream</code> eine Low-Level-Schnittstelle definiert, die effektiv die Merkmale
-<code>Iterator</code> und <code>Future</code> kombiniert. <code>StreamExt</code> stellt eine Reihe von APIs auf
-höherer Ebene zur Verfügung, darunter die Methode <code>next</code> sowie andere
-Hilfsmethoden, die denen des Merkmals <code>Iterator</code> ähneln. <code>Stream</code> und
-<code>StreamExt</code> sind noch nicht Teil der Standardbibliothek von Rust, aber die
-meisten Ökosystemkisten verwenden dieselbe Definition.</p>
-<p>Die Behebung des Compilerfehlers besteht darin, eine <code>use</code>-Anweisung für
-<code>trpl::StreamExt</code> hinzuzufügen, wie in Codeblock 17-31.</p>
+<p>Das Merkmal <code>Stream</code> definiert eine Low-Level-Schnittstelle, die die Merkmale
+<code>Iterator</code> und <code>Future</code> effektiv kombiniert. <code>StreamExt</code> bietet eine Reihe von
+APIs auf höherer Ebene ab, die auf <code>Stream</code> basieren, darunter die Methode
+<code>next</code> sowie andere Hilfsmethoden, die denen des Merkmals <code>Iterator</code> ähneln.
+<code>Stream</code> und <code>StreamExt</code> sind noch nicht Teil der Standardbibliothek von Rust,
+aber die meisten Kisten des Ökosystems verwenden ähnliche Definitionen.</p>
+<p>Um den Compilerfehler zu beheben, fügen wir eine <code>use</code>-Anweisung für
+<code>trpl::StreamExt</code> hinzu, wie in Codeblock 17-22.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use trpl::StreamExt;
+<pre class="playground"><code class="language-rust edition2024">use trpl::StreamExt;
 
 fn main() {
-    trpl::run(async {
+    trpl::block_on(async {
         let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
-        let iter = values.iter().map(|n| n * 2);
-        let mut stream = trpl::stream_from_iter(iter);
-
-        while let Some(value) = stream.next().await {
-            println!("Der Wert war: {value}");
-        }
-    });
-}</code></pre>
-<p><span class="caption">Codeblock 17-31: Erfolgreiche Verwendung eines Iterators
+        // --abschneiden--
+<span class="boring">        let iter = values.iter().map(|n| n * 2);
+</span><span class="boring">        let mut stream = trpl::stream_from_iter(iter);
+</span><span class="boring">
+</span><span class="boring">        while let Some(value) = stream.next().await {
+</span><span class="boring">            println!("Der Wert war: {value}");
+</span><span class="boring">        }
+</span><span class="boring">    });
+</span><span class="boring">}</span></code></pre>
+<p><span class="caption">Codeblock 17-22: Erfolgreiche Verwendung eines Iterators
 als Grundlage für einen Strom</span></p>
 <p>Mit all diesen Teilen zusammen funktioniert der Code so, wie wir es wollen!
 Außerdem können wir jetzt, da wir <code>StreamExt</code> im Gültigkeitsbereich haben, alle
-seine Hilfsmethoden verwenden, genau wie bei Iteratoren. In Codeblock 17-32
-verwenden wir zum Beispiel die Methode <code>filter</code>, um alles außer Vielfache von
-drei und fünf herauszufiltern.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use trpl::StreamExt;
-
-fn main() {
-    trpl::run(async {
-        let values = 1..101;
-        let iter = values.map(|n| n * 2);
-        let stream = trpl::stream_from_iter(iter);
-
-        let mut filtered =
-            stream.filter(|value| value % 3 == 0 || value % 5 == 0);
-
-        while let Some(value) = filtered.next().await {
-            println!("Der Wert war: {value}");
-        }
-    });
-}</code></pre>
-<p><span class="caption">Codeblock 17-32: Filtern eines Stroms mit der Methode
-<code>StreamExt::filter</code></span></p>
-<p>Das ist natürlich nicht sehr interessant, da wir das auch mit normalen
-Iteratoren und ganz ohne asynchronen Code machen könnten. Schauen wir uns an,
-was für Ströme einzigartig sind.</p>
-<h3 id="komposition-von-strömen"><a class="header" href="#komposition-von-strömen">Komposition von Strömen</a></h3>
-<p>Viele Konzepte werden auf natürliche Weise als Datenströme dargestellt:
-Elemente, die in einer Warteschlange verfügbar werden, Datenpakete, die
-inkrementell aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
-zu groß für den Speicher des Computers ist, oder Daten, die im Laufe der Zeit
-über das Netz ankommen. Da es sich bei Strömen um Futures handelt, können wir
-sie auch mit jeder anderen Art von Futures verwenden und sie auf interessante
-Weise kombinieren. So können wir beispielsweise Ereignisse stapeln, um zu viele
-Netzwerkaufrufe zu vermeiden, Zeitüberschreitungen für Sequenzen lang laufender
-Vorgänge festlegen oder Ereignisse der Benutzeroberfläche drosseln, um unnötige
-Arbeit zu vermeiden.</p>
-<p>Beginnen wir damit, einen kleinen Nachrichtenstrom zu erstellen, als Ersatz für
-einen Datenstrom, den wir von einer WebSocket oder einem anderen
-Echtzeit-Kommunikationsprotokoll sehen könnten, wie in Codeblock 17-33 gezeigt.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use trpl::{ReceiverStream, Stream, StreamExt};
-
-fn main() {
-    trpl::run(async {
-        let mut messages = get_messages();
-
-        while let Some(message) = messages.next().await {
-            println!("{message}");
-        }
-    });
-}
-
-fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-    let (tx, rx) = trpl::channel();
-
-    let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-    for message in messages {
-        tx.send(format!("Nachricht: '{message}'")).unwrap();
-    }
-
-    ReceiverStream::new(rx)
-}</code></pre>
-<p><span class="caption">Codeblock 17-33: Verwenden des Empfängers <code>rx</code> als
-<code>ReceiverStream</code></span></p>
-<p>Zunächst erstellen wir eine Funktion namens <code>get_messages</code>, die <code>impl  Stream&lt;Item = String&gt;</code> zurückgibt. Für die Implementierung erstellen wir einen
-asynchronen Kanal, iterieren über die ersten 10 Buchstaben des englischen
-Alphabets und senden sie über den Kanal.</p>
-<p>Wir verwenden auch einen neuen Typ: <code>ReceiverStream</code>, der den Empfänger <code>rx</code>
-aus dem <code>trpl::channel</code> in einen <code>Stream</code> mit einer Methode <code>next</code> umwandelt.
-Zurück in <code>main</code> benutzen wir eine <code>while let</code>-Schleife, um alle Nachrichten
-aus dem Strom auszugeben.</p>
-<p>Wenn wir diesen Code ausführen, erhalten wir genau die Ergebnisse, die wir
-erwarten würden:</p>
-<pre><code class="language-text">Nachricht: 'a'
-Nachricht: 'b'
-Nachricht: 'c'
-Nachricht: 'd'
-Nachricht: 'e'
-Nachricht: 'f'
-Nachricht: 'g'
-Nachricht: 'h'
-Nachricht: 'i'
-Nachricht: 'j'
-</code></pre>
-<p>Wir könnten dies erneut mit der regulären <code>Receiver</code>-API oder sogar mit der
-regulären <code>Iterator</code>-API tun. Fügen wir also etwas hinzu, das Ströme erfordert:
-Eine Zeitüberschreitung, die für jedes Element im Strom gilt, und eine
-Verzögerung für die Elemente, die wir ausgeben, siehe Codeblock 17-34.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use std::{pin::pin, time::Duration};
-use trpl::{ReceiverStream, Stream, StreamExt};
-
-fn main() {
-    trpl::run(async {
-        let mut messages =
-            pin!(get_messages().timeout(Duration::from_millis(200)));
-
-        while let Some(result) = messages.next().await {
-            match result {
-                Ok(message) =&gt; println!("{message}"),
-                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-            }
-        }
-    })
-}
-<span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">    for message in messages {
-</span><span class="boring">        tx.send(format!("Nachricht: '{message}'")).unwrap();
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-34: Verwenden der Methode
-<code>StreamExt::timeout</code>, um ein Zeitlimit für die Elemente in einem Strom
-festzulegen</span></p>
-<p>Fügen wir zunächst mit der Methode <code>timeout</code>, die aus dem Merkmal <code>StreamExt</code>
-stammt, eine Zeitüberschreitung zum Strom hinzu. Dann aktualisieren wir den
-Rumpf der <code>while let</code>-Schleife, weil der Strom jetzt ein <code>Result</code> zurückgibt.
-Die Variante <code>Ok</code> zeigt an, dass eine Nachricht rechtzeitig angekommen ist; die
-Variante <code>Err</code> zeigt an, dass die Zeit abgelaufen ist, bevor irgendeine
-Nachricht angekommen ist. Wir gleichen dieses Ergebnis mit <code>match</code> ab und geben
-entweder die Nachricht oder eine Meldung über die Zeitüberschreitung aus.
-Schließlich ist zu beachten, dass wir die Nachrichten anpinnen, nachdem wir die
-Zeitüberschreitung auf sie angewendet haben, da die Timeout-Hilfsmethode einen
-Strom erzeugt, der angeheftet werden muss, um abgefragt zu werden.</p>
-<p>Da es jedoch keine Verzögerungen zwischen den Nachrichten gibt, ändert diese
-Zeitüberschreitung das Verhalten des Programms nicht. Fügen wir den
-Nachrichten, die wir senden, eine variable Verzögerung hinzu, wie in Codeblock
-17-35 zu sehen.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let mut messages =
-</span><span class="boring">            pin!(get_messages().timeout(Duration::from_millis(200)));
-</span><span class="boring">
-</span><span class="boring">        while let Some(result) = messages.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(message) =&gt; println!("{message}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    })
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-    let (tx, rx) = trpl::channel();
-
-    trpl::spawn_task(async move {
-        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-        for (index, message) in messages.into_iter().enumerate() {
-            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-
-            tx.send(format!("Nachricht: '{message}'")).unwrap();
-        }
-    });
-
-    ReceiverStream::new(rx)
-}</code></pre>
-<p><span class="caption">Codeblock 17-35: Senden von Nachrichten durch <code>tx</code> mit
-einer asynchronen Verzögerung, ohne <code>get_messages</code> zu einer asynchronen
-Funktion zu machen</span></p>
-<p>In <code>get_messages</code> verwenden wir die Iterator-Methode <code>enumerate</code> mit dem Array
-<code>messages</code>, sodass wir den Index jedes Elements, das wir senden, zusammen mit
-dem Element selbst erhalten können. Dann wenden wir eine Verzögerung von 100
-Millisekunden auf Elemente mit geradem Index und eine Verzögerung von 300
-Millisekunden auf Elemente mit ungeradem Index an, um die verschiedenen
-Verzögerungen zu simulieren, die wir in der realen Welt bei einem Strom von
-Nachrichten sehen könnten. Da unser Timeout 200 Millisekunden beträgt, sollte
-dies die Hälfte der Nachrichten betreffen.</p>
-<p>Um zwischen den Nachrichten in der Funktion <code>get_messages</code> zu schlafen ohne zu
-blockieren, müssen wir async verwenden. Allerdings können wir <code>get_messages</code>
-selbst nicht zu einer asynchronen Funktion machen, denn dann würden wir ein
-<code>Future&lt;Output = Stream&lt;Item = String&gt;&gt;</code> statt eines <code>Stream&lt;Item = String&gt;&gt;</code>
-zurückgeben. Der Aufrufer müsste selbst auf <code>get_messages</code> warten, um Zugriff
-auf den Strom zu erhalten. Aber denke daran: Alles in einem bestimmten Future
-geschieht linear; Nebenläufigkeit geschieht <em>zwischen</em> den Futures. Das Warten
-auf <code>get_messages</code> würde erfordern, dass es alle Nachrichten sendet,
-einschließlich einer Pause zwischen dem Senden jeder Nachricht, bevor es den
-Empfängerstrom zurückgibt. Infolgedessen wäre die Zeitüberschreitung nutzlos.
-Es gäbe keine Verzögerungen im Strom selbst: Die Verzögerungen würden alle
-auftreten, bevor der Strom überhaupt verfügbar wäre.</p>
-<p>Stattdessen belassen wir <code>get_messages</code> als reguläre Funktion, die einen Strom
-zurückgibt, und erzeugen eine Aufgabe, die die asynchronen Aufrufe von <code>sleep</code>
-durchführt.</p>
-<blockquote>
-<p>Anmerkung: Der Aufruf von <code>spawn_task</code> auf diese Weise funktioniert, weil wir
-unsere Laufzeitumgebung bereits eingerichtet haben; andernfalls würde das
-Programm abstürzen. Andere Implementierungen wählen andere Kompromisse: Sie
-könnten eine neue Laufzeitumgebung erzeugen und so den Programmabbruch
-vermeiden, müssten dafür aber zusätzlichen Overhead in Kauf nehmen, oder sie
-bieten einfach keine eigenständige Möglichkeit, Aufgaben ohne Bezug auf eine
-Laufzeitumgebung zu erzeugen. Stelle sicher, dass du weißt, welchen
-Kompromiss deine Laufzeitumgebung gewählt hat, und schreibe deinen Code
-entsprechend!</p>
-</blockquote>
-<p>Jetzt hat unser Code ein viel interessanteres Ergebnis. Zwischen jedem zweiten
-Paar von Meldungen wird der Fehler <code>Problem: Elapsed(())</code> gemeldet.</p>
-<pre><code class="language-text">Nachricht: 'a'
-Problem: Elapsed(())
-Nachricht: 'b'
-Nachricht: 'c'
-Problem: Elapsed(())
-Nachricht: 'd'
-Nachricht: 'e'
-Problem: Elapsed(())
-Nachricht: 'f'
-Nachricht: 'g'
-Problem: Elapsed(())
-Nachricht: 'h'
-Nachricht: 'i'
-Problem: Elapsed(())
-Nachricht: 'j'
-</code></pre>
-<p>Die Zeitüberschreitung verhindert nicht, dass die Nachrichten am Ende ankommen.
-Wir erhalten immer noch alle ursprünglichen Nachrichten. Das liegt daran, dass
-unser Kanal <em>unbegrenzt</em> ist: Er kann so viele Nachrichten aufnehmen, wie in
-den Arbeitsspeicher passen. Wenn die Nachricht nicht vor der Zeitüberschreitung
-eintrifft, wird unser Strom-Handler dies berücksichtigen, aber wenn er den
-Strom erneut abruft, ist die Nachricht vielleicht schon angekommen.</p>
-<p>Du kannst bei Bedarf ein anderes Verhalten erreichen, indem du andere Arten von
-Kanälen oder allgemeiner andere Arten von Strömen verwendest. Lass uns eine
-dieser Möglichkeiten in der Praxis ansehen, indem wir einen Strom von
-Zeitintervallen mit diesem Strom von Nachrichten kombinieren.</p>
-<h3 id="zusammenführen-von-strömen"><a class="header" href="#zusammenführen-von-strömen">Zusammenführen von Strömen</a></h3>
-<p>Erstellen wir zunächst einen weiteren Strom, der jede Millisekunde ein Element
-ausgibt, wenn wir ihn direkt laufen lassen. Der Einfachheit halber können wir
-die Funktion <code>sleep</code> verwenden, um eine Nachricht verzögert zu senden, und sie
-mit dem gleichen Ansatz kombinieren, den wir in <code>get_messages</code> verwendet haben,
-indem wir einen Stroms aus einem Kanal erstellen. Der Unterschied ist, dass wir
-dieses Mal die Anzahl der abgelaufenen Intervalle zurücksenden werden, also
-wird der Rückgabetyp <code>impl Stream&lt;Item = u32&gt;</code> sein, und wir können die Funktion
-<code>get_intervals</code> aufrufen (siehe Codeblock 17-36).</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let mut messages =
-</span><span class="boring">            pin!(get_messages().timeout(Duration::from_millis(200)));
-</span><span class="boring">
-</span><span class="boring">        while let Some(result) = messages.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(message) =&gt; println!("{message}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    })
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
-</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-</span><span class="boring">
-</span><span class="boring">            tx.send(format!("Nachricht: '{message}'")).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-    let (tx, rx) = trpl::channel();
-
-    trpl::spawn_task(async move {
-        let mut count = 0;
-        loop {
-            trpl::sleep(Duration::from_millis(1)).await;
-            count += 1;
-            tx.send(count).unwrap();
-        }
-    });
-
-    ReceiverStream::new(rx)
-}</code></pre>
-<p><span class="caption">Codeblock 17-36: Erstellen eines Stroms mit einem Zähler,
-der einmal pro Millisekunde eine Nachricht generiert</span></p>
-<p>Beginnen wir mit der Definition von <code>count</code> in der Aufgabe. (Wir könnten sie
-auch außerhalb der Aufgabe definieren, aber es ist klarer, den
-Gültigkeitsbereich einer bestimmten Variablen zu begrenzen.) Dann erstellen wir
-eine Endlosschleife. Jede Iteration der Schleife schläft asynchron eine
-Millisekunde lang, erhöht die Anzahl und sendet sie dann über den Kanal. Da
-dies alles in der von <code>spawn_task</code> erzeugten Aufgabe verpackt ist, wird alles
-zusammen mit der Laufzeitumgebung aufgeräumt, einschließlich der
-Endlosschleife.</p>
-<p>Eine derartige Endlosschleife, die erst endet, wenn die gesamte
-Laufzeitumgebung beendet wird, ist in asynchronem Rust recht häufig: Viele
-Programme müssen unbegrenzt weiterlaufen. Mit asynchronem Code blockiert dies
-nichts anderes, solange es in jeder Schleifeniteration mindestens einen
-await-Punkt gibt.</p>
-<p>Zurück im asynchronen Block unserer Hauptfunktion können wir nun versuchen, die
-Ströme <code>messages</code> und <code>intervals</code> zusammenzuführen, wie in Codeblock 17-37
-gezeigt.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let messages = get_messages().timeout(Duration::from_millis(200));
-        let intervals = get_intervals();
-        let merged = messages.merge(intervals);
-<span class="boring">
-</span><span class="boring">        while let Some(result) = merged.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(message) =&gt; println!("{message}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    })
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
-</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-</span><span class="boring">
-</span><span class="boring">            tx.send(format!("Nachricht: '{message}'")).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let mut count = 0;
-</span><span class="boring">        loop {
-</span><span class="boring">            trpl::sleep(Duration::from_millis(1)).await;
-</span><span class="boring">            count += 1;
-</span><span class="boring">            tx.send(count).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-37: Versuch, die Ströme <code>messages</code> and
-<code>intervals</code> zusammenzuführen</span></p>
-<p>Wir beginnen mit dem Aufruf von <code>get_intervals</code>. Dann führen wir die Ströme
-<code>messages</code> und <code>intervals</code> mit der Methode <code>merge</code> zusammen, die mehrere Ströme
-zu einem Strom kombiniert, der Elemente aus jedem der Quellströme produziert,
-sobald die Elemente verfügbar sind, ohne eine bestimmte Reihenfolge
-festzulegen. Schließlich laufen wir in einer Schleife über diesen kombinierten
-Strom anstatt über <code>messages</code>.</p>
-<p>Zu diesem Zeitpunkt müssen weder <code>messages</code> noch <code>intervals</code> angeheftet oder
-veränderbar sein, da beide zu einem einzigen Strom <code>merged</code> zusammengeführt
-werden. Allerdings lässt sich dieser Aufruf von <code>merge</code> nicht kompilieren!
-(Genauso wenig wie der <code>next</code>-Aufruf in der <code>while let</code>-Schleife, aber darauf
-kommen wir zurück.) Das liegt daran, dass die beiden Ströme unterschiedliche
-Typen haben. Der Strom <code>messages</code> hat den Typ <code>Timeout&lt;impl Stream&lt;Item =  String&gt;&gt;</code>, wobei <code>Timeout</code> der Typ ist, den <code>Stream</code> für einen
-<code>timeout</code>-Aufruf implementiert. Der Strom <code>intervals</code> hat den Typ <code>impl Stream&lt;Item = u32&gt;</code>. Um diese beiden Ströme zusammenzuführen, müssen wir
-einen von ihnen umwandeln, damit er mit dem anderen übereinstimmt. Wir
-überarbeiten den Strom <code>intervals</code>, da <code>messages</code> bereits das gewünschte
-Grundformat hat und Timeout-Fehler behandeln muss (siehe Codeblock 17-38).</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let messages = get_messages().timeout(Duration::from_millis(200));
-        let intervals = get_intervals()
-            .map(|count| format!("Intervall: {count}"))
-            .timeout(Duration::from_secs(10));
-        let merged = messages.merge(intervals);
-        let mut stream = pin!(merged);
-<span class="boring">
-</span><span class="boring">        while let Some(result) = stream.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(message) =&gt; println!("{message}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    })
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
-</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-</span><span class="boring">
-</span><span class="boring">            tx.send(format!("Nachricht: '{message}'")).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let mut count = 0;
-</span><span class="boring">        loop {
-</span><span class="boring">            trpl::sleep(Duration::from_millis(1)).await;
-</span><span class="boring">            count += 1;
-</span><span class="boring">            tx.send(count).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-38: Angleichen des Typs des Stroms
-<code>intervals</code> an den Typ des Stroms <code>messages</code></span></p>
-<p>Erstens können wir die Hilfsmethode <code>map</code> verwenden, um <code>intervals</code> in eine
-Zeichenkette umzuwandeln. Zweitens müssen wir das <code>Timeout</code> aus <code>messages</code>
-abgleichen. Da wir aber eigentlich keine Zeitüberschreitung für <code>intervals</code>
-<em>wollen</em>, können wir einfach eine Zeitüberschreitung erstellen, die länger ist
-als die anderen Zeitspannen, die wir verwenden. Hier erstellen wir eine
-10-Sekunden-Zeitüberschreitung mit <code>Duration::from_secs(10)</code>. Schließlich
-müssen wir <code>Stream</code> veränderbar machen, damit die Aufrufe von <code>next</code> in der
-<code>while let</code>-Schleife durch den Strom iterieren können, und ihn so pinnen, dass
-es sicher ist, dies zu tun. Damit sind wir <em>fast</em> da, wo wir hinwollen. Alle
-Typen passen. Wenn du das Programm ausführst, gibt es allerdings zwei Probleme.
-Erstens wird es sich nie beenden! Du musst es mit <kbd>Strg</kbd>+<kbd>c</kbd>
-abbrechen. Zweitens werden die Meldungen des englischen Alphabets inmitten all
-der Intervallzähler-Meldungen begraben sein:</p>
-<pre><code class="language-text">--abschneiden--
-Intervall: 38
-Intervall: 39
-Intervall: 40
-Nachricht: 'a'
-Intervall: 41
-Intervall: 42
-Intervall: 43
---abschneiden--
-</code></pre>
-<p>Codeblock 17-39 zeigt eine Möglichkeit, diese beiden letzten Probleme zu lösen.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let messages = get_messages().timeout(Duration::from_millis(200));
-        let intervals = get_intervals()
-            .map(|count| format!("Intervall: {count}"))
-            .throttle(Duration::from_millis(100))
-            .timeout(Duration::from_secs(10));
-        let merged = messages.merge(intervals).take(20);
-        let mut stream = pin!(merged);
-<span class="boring">
-</span><span class="boring">        while let Some(result) = stream.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(message) =&gt; println!("{message}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    })
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
-</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-</span><span class="boring">
-</span><span class="boring">            tx.send(format!("Nachricht: '{message}'")).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let mut count = 0;
-</span><span class="boring">        loop {
-</span><span class="boring">            trpl::sleep(Duration::from_millis(1)).await;
-</span><span class="boring">            count += 1;
-</span><span class="boring">            tx.send(count).unwrap();
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-39: Verwenden von <code>throttle</code> und <code>take</code> zur
-Verwaltung des zusammengeführten Stroms</span></p>
-<p>Zuerst verwenden wir die Methode <code>throttle</code> für den Strom <code>intervals</code>, sodass
-er den Strom <code>messages</code> nicht begräbt. Die <em>Drosselung</em> ist eine Möglichkeit,
-die Rate zu begrenzen, mit der eine Funktion aufgerufen wird – oder in
-diesem Fall, wie oft der Strom abgefragt wird. Einmal alle 100 Millisekunden
-sollte genügen, denn das entspricht in etwa der Häufigkeit, mit der unsere
-Nachrichten eintreffen.</p>
-<p>Um die Anzahl der Elemente zu begrenzen, die wir aus einem Strom akzeptieren,
-wenden wir die Methode <code>take</code> auf den <em>zusammengeführten</em> Strom an, da wir die
-gesamte Ausgabe begrenzen wollen, nicht nur den einen oder anderen Strom.</p>
-<p>Wenn wir das Programm jetzt ausführen, hält es nach dem Abrufen von 20
-Elementen aus dem Strom an, und die Intervalle begraben die Nachrichten nicht.
-Wir erhalten auch nicht <code>Intervall: 100</code> oder <code>Intervall: 200</code> usw., sondern
-stattdessen <code>Intervall: 1</code>, <code>Intervall: 2</code> usw. – obwohl wir einen
-Quellstrom haben, der jede Millisekunde ein Ereignis erzeugen <em>kann</em>. Das liegt
-daran, dass der Aufruf <code>throttle</code> einen neuen Strom erzeugt, der den
-ursprünglichen Strom umhüllt, sodass der ursprüngliche Strom nur mit der
-Drosselrate abgefragt wird und nicht mit seiner eigenen „nativen“ Rate. Wir
-haben keine Vielzahl von unbehandelten Intervallnachrichten, die wir ignorieren
-wollen. Stattdessen erzeugen wir diese Intervallnachrichten gar nicht erst!
-Hier haben wir wieder die inhärente „Faulheit“ von Rusts Futures, die uns
-erlaubt, die Leistungsmerkmale zu wählen.</p>
-<pre><code class="language-text">Intervall: 1
-Nachricht: 'a'
-Intervall: 2
-Intervall: 3
-Problem: Elapsed(())
-Intervall: 4
-Nachricht: 'b'
-Intervall: 5
-Nachricht: 'c'
-Intervall: 6
-Intervall: 7
-Problem: Elapsed(())
-Intervall: 8
-Nachricht: 'd'
-Intervall: 9
-Nachricht: 'e'
-Intervall: 10
-Intervall: 11
-Problem: Elapsed(())
-Intervall: 12
-</code></pre>
-<p>Es gibt noch eine letzte Sache, die wir behandeln müssen: Fehler! Bei diesen
-beiden kanalbasierten Strömen könnten die Sendeaufrufe fehlschlagen, wenn die
-andere Seite des Kanals geschlossen wird – und das ist nur eine Frage der
-Art und Weise, wie die Laufzeitumgebung die Futures ausführt, die den Strom
-bilden. Bis jetzt haben wir dies möglicherweise ignoriert, indem wir <code>unwrap</code>
-aufgerufen haben, aber in einer anständigen Anwendung sollten wir den Fehler
-explizit behandeln, zumindest indem wir die Schleife beenden, damit wir nicht
-versuchen, weitere Nachrichten zu senden! Codeblock 17-40 zeigt eine einfache
-Fehlerstrategie: Den Fehler ausgeben und dann die Schleife verlassen.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let messages = get_messages().timeout(Duration::from_millis(200));
-</span><span class="boring">        let intervals = get_intervals()
-</span><span class="boring">            .map(|count| format!("Intervall #{count}"))
-</span><span class="boring">            .throttle(Duration::from_millis(500))
-</span><span class="boring">            .timeout(Duration::from_secs(10));
-</span><span class="boring">        let merged = messages.merge(intervals).take(20);
-</span><span class="boring">        let mut stream = pin!(merged);
-</span><span class="boring">
-</span><span class="boring">        while let Some(result) = stream.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(item) =&gt; println!("{item}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-    let (tx, rx) = trpl::channel();
-
-    trpl::spawn_task(async move {
-        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-
-        for (index, message) in messages.into_iter().enumerate() {
-            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-
-            if let Err(send_error) = tx.send(format!("Nachricht: '{message}'")) {
-                eprintln!("Kann die Nachricht '{message}' nicht senden: {send_error}");
-                break;
-            }
-        }
-    });
-
-    ReceiverStream::new(rx)
-}
-
-fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-    let (tx, rx) = trpl::channel();
-
-    trpl::spawn_task(async move {
-        let mut count = 0;
-        loop {
-            trpl::sleep(Duration::from_millis(1)).await;
-            count += 1;
-
-            if let Err(send_error) = tx.send(count) {
-                eprintln!("Konnte das Intervall {count} nicht senden: {send_error}");
-                break;
-            };
-        }
-    });
-
-    ReceiverStream::new(rx)
-}</code></pre>
-<p><span class="caption">Codeblock 17-40: Behandeln von Fehlern und Beenden der
-Schleifen</span></p>
-<p>Wie üblich, gibt es verschiedene Weisen, einen Fehler beim Senden von
-Nachrichten zu behandeln, – stelle einfach sicher, dass du eine Strategie
-hast.</p>
-<p>Nachdem wir nun eine Menge asynchronen Code in der Praxis gesehen haben, wollen
-wir einen Schritt zurückgehen und uns ein paar Details, wie <code>Future</code>, <code>Stream</code>
-und andere Schlüsselmerkmale, die Rust verwendet, ansehen, die die asynchrone
-Programmierung ermöglichen.</p>
+seine Hilfsmethoden verwenden, genau wie bei Iteratoren.</p>
 
                     </main>
 

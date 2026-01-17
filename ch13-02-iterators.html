@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,7 +181,7 @@ let v1_iter = v1.iter();
 <p><span class="caption">Codeblock 13-10: Einen Iterator erstellen</span></p>
 <p>Der Iterator wird in der Variable <code>v1_iter</code> gespeichert. Sobald wir einen
 Iterator erstellt haben, können wir ihn auf verschiedene Weise verwenden.
-In Codeblock 3-5 in Kapitel 3 haben wir über ein Array iteriert, indem wir eine
+In Codeblock 3-5 haben wir über ein Array iteriert, indem wir eine
 <code>for</code>-Schleife verwendet haben, um einen Code für jedes Element auszuführen.
 Unter der Haube wird dabei implizit ein Iterator erzeugt und dann konsumiert,
 aber wir haben bis jetzt übersehen, wie das genau funktioniert.</p>
@@ -227,7 +227,7 @@ aus:</p>
 }
 <span class="boring">}</span></code></pre>
 <p>Beachte, dass in der Definition eine neue Syntax verwendet wird: <code>type Item</code> und
-<code>Self::Item</code> die einen <em>zugeordneten Typ</em> (associated type) mit diesem Merkmal
+<code>Self::Item</code> die einen zugeordneten Typ (associated type) mit diesem Merkmal
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
 des <code>Iterator</code>-Merkmals erfordert, dass du auch einen <code>Item</code>-Typ definierst und
@@ -315,13 +315,13 @@ Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.</p>
 <code>map</code>, die einen Funktionsabschluss für jedes Element aufruft, während die
 Elemente durchlaufen werden. Die Methode <code>map</code> gibt einen neuen Iterator
 zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
-hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht:</p>
+hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
+</span>let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
-    v1.iter().map(|x| x + 1);
+v1.iter().map(|x| x + 1);
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters <code>map</code> um
 einen neuen Iterator zu erzeugen</span></p>
@@ -348,8 +348,8 @@ warning: `iterators` (bin "iterators") generated 1 warning
 <p>Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
 wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
 sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.</p>
-<p>Um das zu beheben, werden wir die Methode <code>collect</code> verwenden, die wir im Kapitel
-12 mit <code>env::args</code> im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
+<p>Um das zu beheben, werden wir die Methode <code>collect</code> verwenden, die wir mit
+<code>env::args</code> im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).</p>
 <p>In Codeblock 13-15 sammeln wir die Resultate der Iterationen über den Iterator,
@@ -358,11 +358,11 @@ Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
+</span>let v1: Vec&lt;i32&gt; = vec![1, 2, 3];
 
-    let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
+let v2: Vec&lt;_&gt; = v1.iter().map(|x| x + 1).collect();
 
-    assert_eq!(v2, vec![2, 3, 4]);
+assert_eq!(v2, vec![2, 3, 4]);
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 13-15: Aufruf der Methode <code>map</code> um einen
 Iterator zu erzeugen und anschließend der Methode <code>collect</code> um den
@@ -376,7 +376,7 @@ Iterationsverhalten wiederverwendet wird.</p>
 Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
 musst du eine der konsumierenden Adaptermethoden aufrufen, um Ergebnisse aus
 Aufrufen von Iteratoradaptern zu erhalten.</p>
-<h3 id="verwendung-von-funktionsabschlüssen-die-ihre-umgebung-erfassen"><a class="header" href="#verwendung-von-funktionsabschlüssen-die-ihre-umgebung-erfassen">Verwendung von Funktionsabschlüssen die ihre Umgebung erfassen</a></h3>
+<h3 id="funktionsabschlüsse-die-ihre-umgebung-erfassen"><a class="header" href="#funktionsabschlüsse-die-ihre-umgebung-erfassen">Funktionsabschlüsse die ihre Umgebung erfassen</a></h3>
 <p>Viele Iterator-Adapter nehmen Funktionsabschlüsse als Argumente, und in der
 Regel werden diese Funktionsabschlüsse solche sein, die ihre Umgebung erfassen.</p>
 <p>In diesem Beispiel verwenden wir die Methode <code>filter</code>, die einen

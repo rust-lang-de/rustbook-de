@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -189,9 +189,10 @@ abweisbares Muster zu verwenden, wo Rust ein unabweisbares Muster erfordert und
 umgekehrt. Codeblock 19-8 zeigt eine <code>let</code>-Anweisung, allerdings haben wir für
 das Muster <code>Some(x)</code> angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.</p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn main() {
-</span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
-</span>    let Some(x) = some_option_value;
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let some_option_value: Option&lt;i32&gt; = None;
+</span>let Some(x) = some_option_value;
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit <code>let</code>
 zu verwenden</span></p>
@@ -225,24 +226,27 @@ auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.</p>
 <p>Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt <code>let</code>
 zu verwenden, können wir <code>let...else</code> verwenden. Wenn das Muster dann nicht
-passt, führt das Programm einfach den Code in den geschweiften Klammern aus und
-gibt ihm die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der
-Code in Codeblock 19-8 zu korrigieren ist.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span><span class="boring">    let some_option_value: Option&lt;i32&gt; = None;
-</span>    let Some(x) = some_option_value else {
-        return;
-    };
+passt, führt das Programm einfach den Code in den geschweiften Klammern aus.
+Codeblock 19-9 zeigt, wie der Code in Codeblock 19-8 zu korrigieren ist.</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">let some_option_value: Option&lt;i32&gt; = None;
+</span>let Some(x) = some_option_value else {
+    return;
+};
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-9: Verwenden von <code>let...else</code> und eines
 Blocks mit abweisbaren Mustern anstelle von <code>let</code></span></p>
-<p>Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
-<code>let...else</code> allerdings ein unabweisbares Muster geben, das immer passt, z.B.
-<code>x</code>, wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span>    let x = 5 else {
-        return;
-    };
+<p>Wir haben den Code repariert! Dieser Code ist vollkommen gültig, auch wenn wir
+damit kein unabweisbares Muster verwenden können, ohne eine Warnung zu
+erhalten. Wenn wir in <code>let...else</code> ein unabweisbares Muster angeben, das immer
+passt, z.B. <code>x</code> wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung
+aus.</p>
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let x = 5 else {
+    return;
+};
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster
 mit <code>let...else</code> zu verwenden</span></p>

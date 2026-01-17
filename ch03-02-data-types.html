@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -223,7 +223,7 @@ verwenden, um den Typ eines ganzzahligen Wertes zu deklarieren.</p>
 <tr><td style="text-align: right">32 Bit</td><td><code>i32</code></td><td><code>u32</code></td></tr>
 <tr><td style="text-align: right">64 Bit</td><td><code>i64</code></td><td><code>u64</code></td></tr>
 <tr><td style="text-align: right">128 Bit</td><td><code>i128</code></td><td><code>u128</code></td></tr>
-<tr><td style="text-align: right">arch</td><td><code>isize</code></td><td><code>usize</code></td></tr>
+<tr><td style="text-align: right">Architekturabhängig</td><td><code>isize</code></td><td><code>usize</code></td></tr>
 </tbody>
 </table>
 </div>
@@ -245,9 +245,8 @@ bis 2<sup>7</sup> - 1 speichern, was -128 bis 127 entspricht. Vorzeichenlose
 Varianten können Zahlen von 0 bis 2<sup>n</sup> - 1 speichern, also kann ein
 <code>u8</code> Zahlen von 0 bis 2<sup>8</sup> - 1 speichern, was 0 bis 255 entspricht.</p>
 <p>Zusätzlich hängen die Typen <code>isize</code> und <code>usize</code> von der Architektur des
-Computers ab, auf dem dein Programm läuft, die in der Tabelle als „arch“
-bezeichnet wird: 64 Bit wenn du dich auf einer 64-Bit-Architektur befindest und
-32 Bit auf einer 32-Bit-Architektur.</p>
+Computers ab, auf dem dein Programm läuft: 64 Bit wenn du dich auf einer
+64-Bit-Architektur befindest und 32 Bit auf einer 32-Bit-Architektur.</p>
 <p>Du kannst ganzzahlige Literale in jeder der in Tabelle 3-2 gezeigten Formen
 schreiben. Beachte, dass Zahlenliterale, die mehrere numerische Typen sein
 können, ein Typ-Suffix wie <code>57u8</code> zur Bezeichnung des Typs erlauben.
@@ -457,10 +456,10 @@ in <a href="ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeich
 dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
 so flexibel wie der Vektortyp. Ein <em>Vektor</em> ist ein ähnlicher Kollektionstyp,
 der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
-Größe wachsen oder schrumpfen kann. Wenn du dir nicht sicher bist, ob du ein
-Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du einen
-Vektor verwenden solltest. In <a href="ch08-01-vectors.html">Kapitel 8</a> werden Vektoren
-ausführlicher besprochen.</p>
+Größe wachsen oder schrumpfen kann, weil sein Inhalt auf dem Haldenspeicher
+liegt. Wenn du dir nicht sicher bist, ob du ein Array oder einen Vektor
+verwenden sollst, ist es wahrscheinlich, dass du einen Vektor verwenden
+solltest. In <a href="ch08-01-vectors.html">Kapitel 8</a> werden Vektoren ausführlicher besprochen.</p>
 <p>Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
 verwendest, würdest du wahrscheinlich eher ein Array als einen Vektor
@@ -489,7 +488,7 @@ die Länge des Arrays in eckigen Klammern angibst, wie hier gezeigt:</p>
 <p>Das Array mit dem Namen <code>a</code> wird <code>5</code> Elemente enthalten, die alle anfänglich
 auf den Wert <code>3</code> gesetzt werden. Dies ist dasselbe wie das Schreiben von
 <code>let a = [3, 3, 3, 3, 3];</code>, aber in einer prägnanteren Weise.</p>
-<h5 id="zugriff-auf-array-elemente"><a class="header" href="#zugriff-auf-array-elemente">Zugriff auf Array-Elemente</a></h5>
+<h4 id="zugriff-auf-array-elemente"><a class="header" href="#zugriff-auf-array-elemente">Zugriff auf Array-Elemente</a></h4>
 <p>Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
 der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
 Hilfe der Indizierung wie folgt zugreifen:</p>
@@ -503,7 +502,7 @@ Hilfe der Indizierung wie folgt zugreifen:</p>
 <p>In diesem Beispiel erhält die Variable mit dem Namen <code>first</code> den Wert <code>1</code>, weil
 das der Wert am Index <code>[0]</code> im Array ist. Die Variable mit dem Namen <code>second</code>
 wird den Wert <code>2</code> vom Index <code>[1]</code> im Array erhalten.</p>
-<h5 id="ungültiger-array-element-zugriff"><a class="header" href="#ungültiger-array-element-zugriff">Ungültiger Array-Element-Zugriff</a></h5>
+<h4 id="ungültiger-array-element-zugriff"><a class="header" href="#ungültiger-array-element-zugriff">Ungültiger Array-Element-Zugriff</a></h4>
 <p>Sehen wir uns an was passiert, wenn du versuchst, auf ein Element eines Arrays
 zuzugreifen, das sich hinter dem Ende des Arrays befindet. Angenommen, du
 führst diesen Code aus, ähnlich zum Ratespiel in Kapitel 2, um einen
@@ -541,7 +540,7 @@ wie diese:</p>
 index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
-<p>Das Programm führte zu einem <em>Laufzeitfehler</em> an der Stelle, an der ein
+<p>Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein
 ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
 einer Fehlermeldung beendet und hat die abschließende <code>println!</code>-Anweisung
 nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element

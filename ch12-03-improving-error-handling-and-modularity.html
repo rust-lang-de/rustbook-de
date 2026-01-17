@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -198,7 +198,7 @@ Wenn sich der gesamte Fehlerbehandlungscode an einer Stelle befindet, wird auch
 sichergestellt, dass wir Meldungen ausgeben, die für unsere Endbenutzer
 aussagekräftig sind.</p>
 <p>Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.</p>
-<h3 id="trennen-der-zuständigkeiten-bei-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-bei-binärprojekten">Trennen der Zuständigkeiten bei Binärprojekten</a></h3>
+<h3 id="trennen-der-zuständigkeiten-in-binärprojekten"><a class="header" href="#trennen-der-zuständigkeiten-in-binärprojekten">Trennen der Zuständigkeiten in Binärprojekten</a></h3>
 <p>Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion <code>main</code> ist vielen Binärprojekten gemein.
 Infolgedessen hat die Rust-Gemeinschaft eine Richtlinie für die Aufteilung der
@@ -489,7 +489,7 @@ ab und zeigt eine bessere Fehlermeldung an.</p>
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-8: Hinzufügen einer Prüfung für die Anzahl
 der Argumente</span></p>
-<p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen">der Funktion <code>Guess::new</code>, die wir in Codeblock
+<p>Dieser Code ähnelt <a href="ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung">der Funktion <code>Guess::new</code>, die wir in Codeblock
 9-13</a> geschrieben haben, wo wir <code>panic!</code> aufgerufen haben,
 wenn das Argument <code>value</code> außerhalb des gültigen Wertebereichs lag. Anstatt
 hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von <code>args</code>
@@ -503,6 +503,7 @@ ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:</p>
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
+
 thread 'main' panicked at src/main.rs:26:13:
 Nicht genügend Argumente
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
@@ -635,7 +636,7 @@ nicht behandelt haben: <code>unwrap_or_else</code>, die in der Standardbibliothe
 uns, eine benutzerdefinierte nicht-<code>panic!</code>-Fehlerbehandlung zu definieren.
 Wenn das <code>Result</code> ein <code>Ok</code>-Wert ist, verhält sich diese Methode ähnlich wie
 <code>unwrap</code>: Sie gibt den inneren Wert von <code>Ok</code> zurück. Wenn der Wert jedoch ein
-<code>Err</code>-Wert ist, ruft diese Methode den Code im <em>Funktionsabschluss</em> (closure)
+<code>Err</code>-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
 auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
 <code>unwrap_or_else</code> übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
 <a href="ch13-00-functional-features.html">Kapitel 13</a> ein. Im Moment musst du nur wissen, dass <code>unwrap_or_else</code>
@@ -660,9 +661,8 @@ Fehler beim Parsen der Argumente: Nicht genügend Argumente
 <p>Großartig! Diese Ausgabe ist viel benutzerfreundlicher.</p>
 <h3 id="extrahieren-von-logik-aus-main"><a class="header" href="#extrahieren-von-logik-aus-main">Extrahieren von Logik aus <code>main</code></a></h3>
 <p>Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
-wir uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-bei-binärprojekten">„Trennen der
-Zuständigkeiten bei
-Binärprojekten“</a> erklärt
+wir uns der Logik des Programms zuwenden. Wie wir in <a href="#trennen-der-zuständigkeiten-in-binärprojekten">„Trennen der
+Zuständigkeiten in Binärprojekten“</a> erklärt
 haben, werden wir eine Funktion namens <code>run</code> extrahieren, die die gesamte Logik
 enthält, die sich derzeit in der Funktion <code>main</code> befindet und nicht mit dem
 Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
@@ -724,7 +724,7 @@ den Rest der Programmlogik enthält</span></p>
 <p>Die Funktion <code>run</code> enthält nun die gesamte restliche Logik von <code>main</code>,
 beginnend mit dem Lesen der Datei. Die Funktion <code>run</code> nimmt die
 <code>Config</code>-Instanz als Argument.</p>
-<h4 id="rückgabe-von-fehlern-aus-der-funktion-run"><a class="header" href="#rückgabe-von-fehlern-aus-der-funktion-run">Rückgabe von Fehlern aus der Funktion <code>run</code></a></h4>
+<h4 id="fehlerrückgabe-aus-run"><a class="header" href="#fehlerrückgabe-aus-run">Fehlerrückgabe aus <code>run</code></a></h4>
 <p>Wenn die verbleibende Programmlogik in die Funktion <code>run</code> separiert wird,
 können wir die Fehlerbehandlung verbessern, wie wir es mit <code>Config::build</code> in
 Codeblock 12-9 getan haben. Anstatt das Programm durch den Aufruf von <code>expect</code>
@@ -786,8 +786,9 @@ Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
 Rückgabetyp der Funktion <code>run</code> in <code>Result&lt;(), Box&lt;dyn Error&gt;&gt;</code> geändert. Diese
 Funktion gab zuvor den Einheitstyp <code>()</code> zurück und wir behalten diesen als
 Rückgabewert im Fall <code>Ok</code> bei.</p>
-<p>Für den Fehlertyp haben wir das <em>Merkmalsobjekt</em> (trait object) <code>Box&lt;dyn Error&gt;</code> verwendet (und wir haben <code>std::error::Error</code> mit einer <code>use</code>-Anweisung
-am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
+<p>Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) <code>Box&lt;dyn Error&gt;</code>
+verwendet (und wir haben <code>std::error::Error</code> mit einer <code>use</code>-Anweisung am
+Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 <a href="ch18-00-oop.html">Kapitel 18</a> behandeln. Für den Moment solltest du nur wissen, dass
 <code>Box&lt;dyn Error&gt;</code> bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal <code>Error</code> implementiert, aber wir müssen nicht angeben, welcher bestimmte
@@ -795,14 +796,14 @@ Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
 können. Das Schlüsselwort <code>dyn</code> ist die Abkürzung für <em>dynamisch</em>.</p>
 <p>Zweitens haben wir den Aufruf von <code>expect</code> zugunsten des <code>?</code>-Operators
-entfernt, wie wir in <a href="ch09-02-recoverable-errors-with-result.html#abkürzung-zum-weitergeben-von-fehlern-der-operator-">Kapitel 9</a> besprochen haben. Statt
+entfernt, wie wir in <a href="ch09-02-recoverable-errors-with-result.html#der-operator--als-abkürzung">Kapitel 9</a> besprochen haben. Statt
 <code>panic!</code> bei einem Fehler aufzurufen gibt <code>?</code> den Fehlerwert aus der aktuellen
 Funktion zurück, den der Aufrufer behandeln muss.</p>
 <p>Drittens gibt die Funktion <code>run</code> jetzt im Erfolgsfall einen <code>Ok</code>-Wert zurück.
 Wir haben den Erfolgstyp der Funktion <code>run</code> mit <code>()</code> in der Signatur
 deklariert, was bedeutet, dass wir den Wert des Einheitstyps in den Wert <code>Ok</code>
 einpacken müssen. Diese Syntax <code>Ok(())</code> mag zunächst etwas merkwürdig
-aussehen, aber wenn wir <code>()</code> so verwenden, ist das der idiomatische Weg, um
+aussehen. Aber wenn wir <code>()</code> so verwenden, ist das der idiomatische Weg, um
 anzuzeigen, dass wir <code>run</code> nur wegen seiner Seiteneffekte aufrufen; es gibt
 keinen Wert zurück, den wir brauchen.</p>
 <p>Wenn du diesen Code ausführst, wird er kompiliert, aber es wird eine Warnung
@@ -911,62 +912,38 @@ Fällen gleich: Wir geben den Fehler aus und beenden.</p>
 <em>src/main.rs</em> auf und fügen etwas Code in die Datei <em>src/lib.rs</em> ein. Auf
 diese Weise können wir den Code testen und haben eine Datei <em>src/main.rs</em> mit
 weniger Verantwortlichkeiten.</p>
-<p>Lass uns den ganzen Code, der nicht in der Funktion <code>main</code> ist, von
-<em>src/main.rs</em> nach <em>src/lib.rs</em> verschieben:</p>
-<ul>
-<li>Die Definition der Funktion <code>run</code></li>
-<li>Die relevanten <code>use</code>-Anweisungen</li>
-<li>Die Definition von <code>Config</code></li>
-<li>Die Funktionsdefinition <code>Config::build</code></li>
-</ul>
-<p>Der Inhalt von <em>src/lib.rs</em> sollte die in Codeblock 12-13 gezeigten Signaturen
-haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
-Beachte, dass dies nicht kompiliert werden kann, bis wir <em>src/main.rs</em> in
-Codeblock 12-14 modifiziert haben.</p>
+<p>Definieren wir den Code, der für die Textsuche in <em>src/lib.rs</em> statt in
+<em>src/main.rs</em> zuständig ist. Dadurch können wir (oder jeder andere, der unsere
+Bibliothek <code>minigrep</code> verwendet) die Suchfunktion aus mehr Kontexten als nur
+unserer Binärdatei <code>minigrep</code> aufrufen.</p>
+<p>Zunächst definieren wir die Signatur der Funktion <code>search</code> in <em>src/lib.rs</em>, wie
+in Codeblock 12-13 gezeigt, mit einem Rumpf, der das Makro <code>unimplemented!</code>
+aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
+ausfüllen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile">use std::error::Error;
-use std::fs;
-
-pub struct Config {
-    pub query: String,
-    pub file_path: String,
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+    unimplemented!();
 }
-
-impl Config {
-    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-        // --abschneiden--
-<span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span>    }
-}
-
-pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-    // --abschneiden--
-<span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    println!("Mit text:\n{contents}");
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span>}</code></pre>
-<p><span class="caption">Codeblock 12-13: Verschieben von <code>Config</code> und <code>run</code> in
+<span class="boring">}</span></code></pre>
+<p><span class="caption">Codeblock 12-13: Definieren der Funktion <code>search</code> in
 <em>src/lib.rs</em></span></p>
-<p>Wir haben das Schlüsselwort <code>pub</code> großzügig verwendet: Bei <code>Config</code>, bei seinen
-Feldern und seiner Methode <code>build</code> und bei der Funktion <code>run</code>. Wir haben jetzt
-eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!</p>
-<p>Jetzt müssen wir den Code, den wir nach <em>src/lib.rs</em> verschoben haben, in den
-Gültigkeitsbereich der Binärkiste in <em>src/main.rs</em> bringen, wie in Codeblock
-12-14 gezeigt.</p>
+<p>Wir haben das Schlüsselwort <code>pub</code> in der Funktionsdefinition verwendet, um
+<code>search</code> als Teil der öffentlichen API unserer Bibliothekskiste zu
+kennzeichnen. Wir haben nun eine Bibliothekskiste, die wir aus unserer
+Binärkiste heraus verwenden und testen können!</p>
+<p>Jetzt müssen wir den in <em>src/lib.rs</em> definierten Code in den Gültigkeitsbereich
+der Binärkiste in <em>src/main.rs</em> bringen und ihn aufrufen, wie in Codeblock
+12-14 zu sehen ist.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore">use std::env;
-use std::process;
-
-use minigrep::Config;
+<pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
+</span><span class="boring">use std::process;
+</span><span class="boring">
+</span>// --abschneiden--
+use minigrep::search;
 
 fn main() {
     // --abschneiden--
@@ -977,21 +954,57 @@ fn main() {
 </span><span class="boring">        process::exit(1);
 </span><span class="boring">    });
 </span><span class="boring">
-</span><span class="boring">    println!("Suche nach {}", config.query);
-</span><span class="boring">    println!("In Datei {}", config.file_path);
-</span><span class="boring">
-</span>    if let Err(e) = minigrep::run(config) {
-        // --abschneiden--
-<span class="boring">        println!("Anwendungsfehler: {e}");
+</span><span class="boring">    if let Err(e) = run(config) {
+</span><span class="boring">        println!("Anwendungsfehler: {e}");
 </span><span class="boring">        process::exit(1);
-</span>    }
+</span><span class="boring">    }
+</span>}
+
+// --abschneiden--
+<span class="boring">
+</span><span class="boring">struct Config {
+</span><span class="boring">    query: String,
+</span><span class="boring">    file_path: String,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("Nicht genügend Argumente");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config { query, file_path })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span>
+fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&amp;config.query, &amp;contents) {
+        println!("{line}");
+    }
+
+    Ok(())
 }</code></pre>
 <p><span class="caption">Codeblock 12-14: Verwenden der
 <code>minigrep</code>-Bibliothekskiste in <em>src/main.rs</em></span></p>
 <p>Wir fügen eine Zeile <code>use minigrep::Config</code> hinzu, um den Typ <code>Config</code> aus der
-Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen, und wir
-stellen der Funktion <code>run</code> unseren Kistennamen voran. Nun sollte die gesamte
-Funktionalität verbunden sein und funktionieren. Starte das Programm mit <code>cargo run</code> und stelle sicher, dass alles korrekt funktioniert.</p>
+Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen. Dann
+rufen wir in der Funktion <code>run</code> anstatt den Inhalt der Datei auszugeben die
+Funktion <code>search</code> auf und übergeben den Wert <code>config.query</code> und <code>contents</code> als
+Argumente. Anschließend verwendet <code>run</code> eine <code>for</code>-Schleife, um jede von
+<code>search</code> zurückgegebene Zeile auszugeben, die zur Abfrage passt. Dies ist auch
+ein guter Zeitpunkt, um die <code>println!</code>-Aufrufe in der Funktion <code>main</code> zu
+entfernen, die die Abfrage und den Dateipfad angezeigt haben, sodass unser
+Programm nur die Suchergebnisse ausgibt (sofern keine Fehler auftreten).</p>
+<p>Beachte, dass die Suchfunktion alle Ergebnisse in einem Vektor sammelt, bevor
+sie ausgegeben werden. Diese Implementierung kann bei der Suche in großen
+Dateien zu einer langsamen Anzeige der Ergebnisse führen, da die Ergebnisse
+nicht sofort nach dem Auffinden ausgegeben werden. In Kapitel 13 werden wir
+eine mögliche Lösung für dieses Problem mithilfe von Iteratoren besprechen.</p>
 <p>Puh! Das war eine Menge Arbeit, aber wir haben uns für den Erfolg in der
 Zukunft gerüstet. Jetzt ist es viel einfacher, mit Fehlern umzugehen, und wir
 haben den Code modularer gestaltet. Fast unsere gesamte Arbeit wird von nun an

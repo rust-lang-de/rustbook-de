@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,16 +166,22 @@
 dauern, bis sie erledigt sind. Es wäre schön, wenn wir etwas anderes tun
 könnten, während wir darauf warten, bis diese lang dauernden Prozesse
 abgeschlossen sind. Moderne Computer bieten zwei Techniken, um mehr als einen
-Vorgang gleichzeitig zu bearbeiten: Parallelität und Nebenläufigkeit. Sobald
-wir jedoch anfangen, Programme zu schreiben, die parallele oder nebenläufige
-Operationen beinhalten, stoßen wir schnell auf neue Herausforderungen, die mit
-der <em>asynchronen Programmierung</em> verbunden sind, bei der Operationen nicht
-unbedingt in der Reihenfolge beendet werden, in der sie begonnen wurden. Dieses
-Kapitel baut auf der Verwendung von Strängen (threads) für Parallelität und
-Nebenläufigkeit in Kapitel 16 auf, indem es einen alternativen Ansatz zur
-asynchronen Programmierung vorstellt: Rusts Futures, Ströme (streams), die
-unterstützende Syntax <code>async</code> und <code>await</code>, und die Werkzeuge für die Verwaltung
-und Koordinierung zwischen asynchronen Operationen.</p>
+Vorgang gleichzeitig zu bearbeiten: Parallelität und Nebenläufigkeit. Die Logik
+unserer Programme ist jedoch meist linear geschrieben. Wir möchten gerne
+festlegen können, welche Operationen ein Programm ausführen soll und an welchen
+Punkten eine Funktion pausieren und stattdessen ein anderer Teil des Programms
+ausgeführt werden kann, ohne dass wir im Voraus genau festlegen müssen, in
+welcher Reihenfolge und auf welche Weise jeder einzelne Codeausschnitt
+ausgeführt werden soll. <em>Asynchrone Programmierung</em> ist eine Abstraktion, mit
+der wir unseren Code in Form von potenziellen Haltepunkten und Endergebnissen
+ausdrücken können, die die Details der Koordination für uns übernehmen.</p>
+<p>Dieses Kapitel baut auf Kapitel 16 auf, in dem Stränge (threads) für
+Parallelität und Nebenläufigkeit verwendet werden, und stellt einen
+alternativen Ansatz zum Schreiben von Code vor: Rusts Futures, Ströme (streams)
+und die Syntax <code>async</code> und <code>await</code>, mit denen wir ausdrücken können, wie
+Operationen asynchron sein könnten, sowie die Kisten (crates) von
+Drittanbietern, die asynchrone Laufzeiten implementieren: Code, der die
+Ausführung asynchroner Operationen verwaltet und koordiniert.</p>
 <p>Schauen wir uns ein Beispiel an. Nehmen wir an, du exportierst ein Video, das
 du von einer Familienfeier erstellt hast – ein Vorgang, der zwischen
 Minuten und Stunden dauern kann. Der Videoexport wird so viel CPU- und
@@ -228,18 +234,19 @@ Programm davon profitieren würde, wenn die Operation <em>nicht</em> blockierend
 wäre.</p>
 </blockquote>
 <p>Wir könnten das Blockieren unseres Hauptstrangs (main thread) vermeiden, indem
-wir für das Herunterladen jeder Datei einen eigenen Strang (thread) starten.
-Der Overhead dieser Stränge würde jedoch irgendwann zu einem Problem werden. Es
-wäre besser, wenn der Aufruf gar nicht erst blockiert würde. Es wäre auch
-besser, wenn wir in demselben direkten Stil schreiben könnten, den wir in
-blockierendem Code verwenden, ähnlich wie hier:</p>
-<pre><code class="language-rust ignore does_not_compile">let data = fetch_data_from(url).await;
-println!("{data}");</code></pre>
+wir einen dedizierten Strang zum Herunterladen jeder Datei erstellen.
+Allerdings würde der Overhead der von diesen Strang verwendeten
+Systemressourcen letztendlich zu einem Problem werden. Es wäre besser, wenn der
+Aufruf gar nicht erst blockiert würde und wir stattdessen eine Reihe von
+Aufgaben definieren könnten, die unser Programm ausführen soll, und es der
+Laufzeitumgebung überlassen könnten, die beste Reihenfolge und Art und Weise
+für deren Ausführung zu wählen.</p>
 <p>Genau das bietet uns die <em>async</em> (kurz für <em>asynchronous</em>) Abstraktion von
 Rust. In diesem Kapitel wirst du alles über async lernen, indem wir die
 folgenden Themen behandeln:</p>
 <ul>
-<li>Wie man die Syntax <code>async</code> und <code>await</code> von Rust verwendet</li>
+<li>Wie man die Syntax <code>async</code> und <code>await</code> von Rust verwendet und asynchrone
+Funktionen mit einer Laufzeitumgebung ausführt</li>
 <li>Wie man das asynchrone Modell verwendet, um einige der gleichen
 Herausforderungen zu lösen, die wir uns in Kapitel 16 angeschaut haben</li>
 <li>Wie Mehrsträngigkeit (multithreading) und async komplementäre Lösungen
@@ -248,7 +255,7 @@ bieten, die man in vielen Fällen kombinieren kann</li>
 <p>Bevor wir uns jedoch ansehen, wie async in der Praxis funktioniert, müssen wir
 einen kleinen Abstecher zu den Unterschieden zwischen Parallelität und
 Nebenläufigkeit machen.</p>
-<h3 id="parallelität-und-nebenläufigkeit"><a class="header" href="#parallelität-und-nebenläufigkeit">Parallelität und Nebenläufigkeit</a></h3>
+<h2 id="parallelität-und-nebenläufigkeit"><a class="header" href="#parallelität-und-nebenläufigkeit">Parallelität und Nebenläufigkeit</a></h2>
 <p>Bislang haben wir Parallelität und Nebenläufigkeit als weitgehend
 gleichbedeutend behandelt. Jetzt müssen wir genauer zwischen ihnen
 unterscheiden, denn die Unterschiede werden sich bei der Arbeit zeigen.</p>
@@ -257,12 +264,13 @@ Softwareprojekt aufteilen kann. Du könntest einem einzelnen Mitglied mehrere
 Aufgaben zuweisen oder jedem Teammitglied genau eine Aufgabe oder eine Mischung
 aus beiden Ansätzen verwenden.</p>
 <p>Wenn eine Person an mehreren, verschiedenen Aufgaben arbeitet, bevor eine von
-ihnen abgeschlossen ist, handelt es sich um <em>Nebenläufigkeit</em>. Vielleicht hast
-du zwei verschiedene Projekte auf deinem Computer ausgecheckt, und wenn dir bei
-einem Projekt langweilig wird oder du nicht weiterkommst, wechselst du zum
-anderen. Da du nur eine Person bist, kannst du nicht an beiden Aufgaben
-gleichzeitig arbeiten, aber du kannst an mehreren Aufgaben arbeiten, indem du
-zwischen ihnen abwechselst (siehe Abbildung 17-1).</p>
+ihnen abgeschlossen ist, handelt es sich um <em>Nebenläufigkeit</em>. Eine
+Möglichkeit, Nebenläufigkeit zu implementieren, ähnelt zwei verschiedenen
+Projekten auf deinem Computer. Und wenn dir bei einem Projekt langweilig wird
+oder du nicht weiterkommst, wechselst du zum anderen. Da du nur eine Person
+bist, kannst du nicht an beiden Aufgaben gleichzeitig arbeiten, aber du kannst
+an mehreren Aufgaben arbeiten, indem du zwischen ihnen abwechselst (siehe
+Abbildung 17-1).</p>
 <img alt="Nebenläufiger Arbeitsablauf" src="img/trpl17-01.svg" class="center" />
 <p><span class="caption">Abbildung 17-1: Ein nebenläufiger Arbeitsablauf, der
 zwischen Aufgabe A und Aufgabe B wechselt.</span></p>
@@ -274,7 +282,7 @@ Abbildung 17-2).</p>
 <p><span class="caption">Abbildung 17-2: Ein paralleler Arbeitsablauf, bei dem die
 Arbeit an Aufgabe A und Aufgabe B unabhängig voneinander erfolgt.</span></p>
 <p>Bei diesen beiden Arbeitsabläufen musst du dich möglicherweise zwischen
-verschiedenen Aufgaben abstimmen. Vielleicht <em>dachtest</em> du, die einer Person
+verschiedenen Aufgaben abstimmen. Vielleicht dachtest du, die einer Person
 zugewiesene Aufgabe sei völlig unabhängig von der Arbeit der anderen, aber in
 Wirklichkeit muss eine andere Person im Team ihre Aufgabe zuerst erledigen. Ein
 Teil der Arbeit könnte parallel erledigt werden, aber ein Teil der Arbeit war
@@ -302,10 +310,10 @@ wieder zur ersten Aktivität zurückkehrt. Auf einem Computer mit mehreren
 CPU-Kernen kann er auch parallel arbeiten. Ein Kern kann eine Aufgabe
 erledigen, während ein anderer Kern eine komplett unabhängige, andere Aufgabe
 erledigt, und das sogar zur gleichen Zeit.</p>
-<p>Wenn wir mit async in Rust arbeiten, haben wir es immer mit Nebenläufigkeit zu
-tun. Abhängig von der Hardware, dem Betriebssystem und der verwendeten
-asynchronen Laufzeitumgebung, die wir verwenden, kann die Nebenläufigkeit unter
-der Haube auch Parallelität nutzen.</p>
+<p>Die Ausführung von asynchronem Code in Rust erfolgt in der Regel nebenläufig.
+Abhängig von der Hardware, dem Betriebssystem und der verwendeten asynchronen
+Laufzeitumgebung, die wir verwenden, kann die Nebenläufigkeit unter der Haube
+auch Parallelität nutzen.</p>
 <p>Jetzt wollen wir uns ansehen, wie die asynchrone Programmierung in Rust
 tatsächlich funktioniert!</p>
 

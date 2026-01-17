@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -169,16 +169,16 @@ erörtern, warum und wann du jedes einzelne Muster verwenden solltest.</p>
 abgleichen. Der folgende Code enthält einige Beispiele:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = 1;
+</span>let x = 1;
 
-    match x {
-        1 =&gt; println!("eins"),
-        2 =&gt; println!("zwei"),
-        3 =&gt; println!("drei"),
-        _ =&gt; println!("sonstige"),
-    }
+match x {
+    1 =&gt; println!("eins"),
+    2 =&gt; println!("zwei"),
+    3 =&gt; println!("drei"),
+    _ =&gt; println!("sonstige"),
+}
 <span class="boring">}</span></code></pre>
-<p>Dieser Code gibt <code>eins</code> aus, weil der Wert in <code>x</code> 1 ist. Diese Syntax ist
+<p>Dieser Code gibt <code>eins</code> aus, weil <code>x</code> den Wert <code>1</code> hat. Diese Syntax ist
 nützlich, wenn du willst, dass dein Code eine Aktion ausführt, wenn er einen
 bestimmten konkreten Wert erhält.</p>
 <h3 id="benannte-variablen-abgleichen"><a class="header" href="#benannte-variablen-abgleichen">Benannte Variablen abgleichen</a></h3>
@@ -187,26 +187,26 @@ Wert passen, und wir haben sie in diesem Buch schon oft verwendet. Es gibt
 jedoch eine Komplikation, wenn du benannte Variablen in <code>match</code>-, <code>if let</code>-
 oder <code>while let</code>-Ausdrücken verwendest. Da mit jeder dieser Ausdrücke ein neuer
 Gültigkeitsbereich beginnt, werden Variablen, die als Teil eines Musters
-innerhalb des Ausdrucks deklariert sind, diejenigen Variablen mit dem gleichen
-Namen außerhalb verschatten (shadow), wie es bei allen Variablen der Fall ist.
-In Codeblock 19-11 deklarieren wir eine Variable mit dem Namen <code>x</code> mit dem Wert
-<code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10</code>. Dann erzeugen wir einen
-<code>match</code>-Ausdruck für den Wert <code>x</code>. Sieh dir die Muster in den <code>match</code>-Zweigen
-und <code>println!</code> am Ende an und versuche herauszufinden, was der Code ausgeben
-wird, bevor du diesen Code ausführst oder weiterliest.</p>
+innerhalb dieser Ausdrücke deklariert sind, diejenigen Variablen mit dem
+gleichen Namen außerhalb des Konstrukts verschatten (shadow), wie es bei allen
+Variablen der Fall ist. In Codeblock 19-11 deklarieren wir eine Variable mit
+dem Namen <code>x</code> mit dem Wert <code>Some(5)</code> und eine Variable <code>y</code> mit dem Wert <code>10</code>.
+Dann erzeugen wir einen <code>match</code>-Ausdruck für den Wert <code>x</code>. Sieh dir die Muster
+in den <code>match</code>-Zweigen und <code>println!</code> am Ende an und versuche herauszufinden,
+was der Code ausgeben wird, bevor du diesen Code ausführst oder weiterliest.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = Some(5);
-    let y = 10;
+</span>let x = Some(5);
+let y = 10;
 
-    match x {
-        Some(50) =&gt; println!("Habe 50 erhalten"),
-        Some(y) =&gt; println!("Passt, y = {y}"),
-        _ =&gt; println!("Standardfall, x = {x:?}"),
-    }
+match x {
+    Some(50) =&gt; println!("Habe 50 erhalten"),
+    Some(y) =&gt; println!("Passt, y = {y}"),
+    _ =&gt; println!("Standardfall, x = {x:?}"),
+}
 
-    println!("Am Ende: x = {x:?}, y = {y}");
+println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-11: Ein <code>match</code>-Ausdruck mit einem Zweig,
 der eine neue Variable einführt, die die bereits existierende Variable <code>y</code>
@@ -234,23 +234,23 @@ auch der Gültigkeitsbereich des inneren <code>y</code>. Das letzte <code>printl
 und <code>y</code> abgleicht, anstatt eine neue Variable einzuführen, die die existierende
 Variable <code>y</code> verschattet, müssten wir stattdessen eine Abgleichsbedingung
 (match guard conditional) verwenden. Wir werden über Abgleichsbedingungen
-später im Abschnitt <a href="#extra-bedingungen-mit-abgleichsbedingungen">„Extra-Bedingungen mit
-Abgleichsbedingungen“</a> sprechen.</p>
-<h3 id="mehrfache-muster"><a class="header" href="#mehrfache-muster">Mehrfache Muster</a></h3>
-<p>Du kannst mehrere Muster mit der Syntax <code>|</code> abgleichen, die das
-<em>oder</em>-Operator-Muster darstellt. Zum Beispiel gleicht der folgende Code den
-Wert von <code>x</code> mit den <code>match</code>-Zweigen ab, wobei der erste davon eine
+später im Abschnitt <a href="#abgleichsbedingungen-hinzufügen">„Abgleichsbedingungen hinzufügen“</a>
+sprechen.</p>
+<h3 id="mehrfache-muster-abgleichen"><a class="header" href="#mehrfache-muster-abgleichen">Mehrfache Muster abgleichen</a></h3>
+<p>In <code>match</code>-Ausdrücken kannst du mehrere Muster mit der Syntax <code>|</code> abgleichen,
+die das <em>oder</em>-Operator-Muster darstellt. Zum Beispiel gleicht der folgende
+Code den Wert von <code>x</code> mit den <code>match</code>-Zweigen ab, wobei der erste davon eine
 <em>oder</em>-Option hat, was bedeutet, wenn der Wert von <code>x</code> zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = 1;
+</span>let x = 1;
 
-    match x {
-        1 | 2 =&gt; println!("eins oder zwei"),
-        3 =&gt; println!("drei"),
-        _ =&gt; println!("sonstige"),
-    }
+match x {
+    1 | 2 =&gt; println!("eins oder zwei"),
+    3 =&gt; println!("drei"),
+    _ =&gt; println!("sonstige"),
+}
 <span class="boring">}</span></code></pre>
 <p>Dieser Code gibt <code>eins oder zwei</code> aus.</p>
 <h3 id="abgleichen-von-wertebereichen-mit-"><a class="header" href="#abgleichen-von-wertebereichen-mit-">Abgleichen von Wertebereichen mit <code>..=</code></a></h3>
@@ -259,12 +259,12 @@ Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des
 vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = 5;
+</span>let x = 5;
 
-    match x {
-        1..=5 =&gt; println!("eins bis fünf"),
-        _ =&gt; println!("etwas anderes"),
-    }
+match x {
+    1..=5 =&gt; println!("eins bis fünf"),
+    _ =&gt; println!("etwas anderes"),
+}
 <span class="boring">}</span></code></pre>
 <p>Wenn <code>x</code> einen der Werte <code>1</code>, <code>2</code>, <code>3</code>, <code>4</code> oder <code>5</code> hat, passt der erste
 Zweig. Diese Syntax ist bequemer bei mehreren Abgleichswerten als das Verwenden
@@ -279,13 +279,13 @@ nicht, sind <code>char</code> und numerische Werte, Bereiche sind nur mit numeri
 <p>Hier ist ein Beispiel mit Bereichen von <code>char</code>-Werten:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = 'c';
+</span>let x = 'c';
 
-    match x {
-        'a'..='j' =&gt; println!("früher ASCII-Buchstabe"),
-        'k'..='z' =&gt; println!("später ASCII-Buchstabe"),
-        _ =&gt; println!("etwas anderes"),
-    }
+match x {
+    'a'..='j' =&gt; println!("früher ASCII-Buchstabe"),
+    'k'..='z' =&gt; println!("später ASCII-Buchstabe"),
+    _ =&gt; println!("etwas anderes"),
+}
 <span class="boring">}</span></code></pre>
 <p>Rust kann erkennen, dass <code>'c'</code> innerhalb des Bereichs des ersten Musters liegt
 und gibt <code>früher ASCII-Buchstabe</code> aus.</p>
@@ -293,7 +293,7 @@ und gibt <code>früher ASCII-Buchstabe</code> aus.</p>
 <p>Wir können auch Muster verwenden, um Strukturen (structs), Aufzählungen (enums)
 und Tupel zu destrukturieren, um verschiedene Teile dieser Werte zu verwenden.
 Lass uns jeden Wert durchgehen.</p>
-<h4 id="destrukturieren-von-strukturen"><a class="header" href="#destrukturieren-von-strukturen">Destrukturieren von Strukturen</a></h4>
+<h4 id="strukturen"><a class="header" href="#strukturen">Strukturen</a></h4>
 <p>Codeblock 19-12 zeigt eine Struktur <code>Point</code> mit zwei Feldern, <code>x</code> und <code>y</code>, die
 wir mit einem Muster in einer <code>let</code>-Anweisung aufteilen können.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
@@ -379,13 +379,13 @@ hat, sodass dieser Code <code>Auf der y-Achse bei 7</code> ausgeben wird.</p>
 sobald er das erste übereinstimmende Muster gefunden hat, d.h. auch wenn der
 <code>Point { x: 0, y: 0}</code> auf der <code>x</code>-Achse und der <code>y</code>-Achse liegt, würde dieser
 Code nur <code>Auf der x-Achse bei 0</code> ausgeben.</p>
-<h4 id="destrukturieren-von-aufzählungen"><a class="header" href="#destrukturieren-von-aufzählungen">Destrukturieren von Aufzählungen</a></h4>
+<h4 id="aufzählungen"><a class="header" href="#aufzählungen">Aufzählungen</a></h4>
 <p>Wir haben in diesem Buch bereits Aufzählungen destrukturiert (z.B. Codeblock
-6-5), wir sind aber noch nicht explizit darauf eingegangen, dass das Muster zur
-Destrukturierung einer Aufzählung der Art und Weise entspricht, wie die in der
-Aufzählung gespeicherten Daten definiert sind. Als Beispiel verwenden wir in
-Codeblock 19-15 die Aufzählung <code>Message</code> aus Codeblock 6-2 und schreiben ein
-<code>match</code> mit Mustern, das jeden inneren Wert destrukturiert.</p>
+6-5 in Kapitel 6), wir sind aber noch nicht explizit darauf eingegangen, dass
+das Muster zur Destrukturierung einer Aufzählung der Art und Weise entspricht,
+wie die in der Aufzählung gespeicherten Daten definiert sind. Als Beispiel
+verwenden wir in Codeblock 19-15 die Aufzählung <code>Message</code> aus Codeblock 6-2 und
+schreiben ein <code>match</code> mit Mustern, das jeden inneren Wert destrukturiert.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">enum Message {
     Quit,
@@ -430,7 +430,7 @@ einem Element enthält, und <code>Message::ChangeColor</code>, die ein Tupel mit
 Elementen enthält, ähnelt das Muster dem Muster, das wir für den Abgleich von
 Tupeln angeben. Die Anzahl der Variablen im Muster muss mit der Anzahl der
 Elemente in der Variante, die wir abgleichen, übereinstimmen.</p>
-<h4 id="destrukturieren-verschachtelter-strukturen-und-aufzählungen"><a class="header" href="#destrukturieren-verschachtelter-strukturen-und-aufzählungen">Destrukturieren verschachtelter Strukturen und Aufzählungen</a></h4>
+<h4 id="verschachtelte-strukturen-und-aufzählungen"><a class="header" href="#verschachtelte-strukturen-und-aufzählungen">Verschachtelte Strukturen und Aufzählungen</a></h4>
 <p>Bis jetzt haben unsere Beispiele alle Strukturen oder Aufzählungen auf einer
 Ebene abgeglichen, aber der Abgleich funktioniert auch bei verschachtelten
 Elementen! Zum Beispiel können wir den Code in Codeblock 19-15 umstrukturieren,
@@ -471,18 +471,19 @@ zweiten Zweigs passt ebenfalls mit einer
 stattdessen zur <code>Color::Hsv</code>-Variante. Wir können diese komplexen Bedingungen
 in einem einzigen <code>match</code>-Ausdruck angeben, auch wenn es sich um zwei
 Aufzählungen handelt.</p>
-<h4 id="destrukturieren-von-strukturen-und-tupeln"><a class="header" href="#destrukturieren-von-strukturen-und-tupeln">Destrukturieren von Strukturen und Tupeln</a></h4>
+<h4 id="strukturen-und-tupel"><a class="header" href="#strukturen-und-tupel">Strukturen und Tupel</a></h4>
 <p>Wir können das Abgleichen und Destrukturieren verschachtelter Muster auf noch
 komplexere Weise mischen. Das folgende Beispiel zeigt eine komplizierte
 Destrukturierung, bei der wir Strukturen und Tupel innerhalb eines Tupels
 verschachteln und alle primitiven Werte herausdestrukturieren:</p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
-</span><span class="boring">    struct Point {
-</span><span class="boring">        x: i32,
-</span><span class="boring">        y: i32,
-</span><span class="boring">    }
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">struct Point {
+</span><span class="boring">    x: i32,
+</span><span class="boring">    y: i32,
+</span><span class="boring">}
 </span><span class="boring">
-</span>    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+</span>let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
 <span class="boring">}</span></code></pre>
 <p>Dieser Code ermöglicht es uns, komplexe Typen in ihre Bestandteile zu zerlegen,
 sodass wir die Werte, an denen wir interessiert sind, separat verwenden können.</p>
@@ -535,19 +536,19 @@ erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
 einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let mut setting_value = Some(5);
-    let new_setting_value = Some(10);
+</span>let mut setting_value = Some(5);
+let new_setting_value = Some(10);
 
-    match (setting_value, new_setting_value) {
-        (Some(_), Some(_)) =&gt; {
-            println!("Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.");
-        }
-        _ =&gt; {
-            setting_value = new_setting_value;
-        }
+match (setting_value, new_setting_value) {
+    (Some(_), Some(_)) =&gt; {
+        println!("Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.");
     }
+    _ =&gt; {
+        setting_value = new_setting_value;
+    }
+}
 
-    println!("Einstellung ist {setting_value:?}");
+println!("Einstellung ist {setting_value:?}");
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-18: Das Verwenden eines Unterstrichs
 innerhalb von Mustern, die zu <code>Some</code>-Varianten passen, wenn wir den Wert
@@ -568,13 +569,13 @@ für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
 Elementen.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let numbers = (2, 4, 8, 16, 32);
+</span>let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (first, _, third, _, fifth) =&gt; {
-            println!("Einige Zahlen: {first}, {third}, {fifth}")
-        }
+match numbers {
+    (first, _, third, _, fifth) =&gt; {
+        println!("Einige Zahlen: {first}, {third}, {fifth}")
     }
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-19: Ignorieren mehrerer Teile eines
 Tupels</span></p>
@@ -606,13 +607,13 @@ bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
 wird uns Codeblock 19-21 einen Fehler liefern.</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let s = Some(String::from("Hallo!"));
+</span>let s = Some(String::from("Hallo!"));
 
-    if let Some(_s) = s {
-        println!("Zeichenkette gefunden");
-    }
+if let Some(_s) = s {
+    println!("Zeichenkette gefunden");
+}
 
-    println!("{s:?}");
+println!("{s:?}");
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-21: Eine unbenutzte Variable, die mit einem
 Unterstrich beginnt, bindet immer noch den Wert, der die Eigentümerschaft des
@@ -623,13 +624,13 @@ des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 19-22 wird
 ohne Fehler kompilieren, weil <code>s</code> nicht in <code>_</code> verschoben wird.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let s = Some(String::from("Hallo!"));
+</span>let s = Some(String::from("Hallo!"));
 
-    if let Some(_) = s {
-        println!("Zeichenkette gefunden");
-    }
+if let Some(_) = s {
+    println!("Zeichenkette gefunden");
+}
 
-    println!("{s:?}");
+println!("{s:?}");
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-22: Das Verwenden eines Unterstrichs bindet
 den Wert nicht</span></p>
@@ -646,17 +647,17 @@ wollen wir nur mit der Koordinate <code>x</code> operieren und die Werte in den 
 <code>y</code> und <code>z</code> ignorieren.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    struct Point {
-        x: i32,
-        y: i32,
-        z: i32,
-    }
+</span>struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
+}
 
-    let origin = Point { x: 0, y: 0, z: 0 };
+let origin = Point { x: 0, y: 0, z: 0 };
 
-    match origin {
-        Point { x, .. } =&gt; println!("x ist {x}"),
-    }
+match origin {
+    Point { x, .. } =&gt; println!("x ist {x}"),
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-23: Ignorieren aller Felder eines <code>Point</code>
 mit Ausnahme von <code>x</code> durch Verwenden von <code>..</code></span></p>
@@ -669,13 +670,13 @@ zeigt, wie man <code>..</code> mit einem Tupel verwendet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let numbers = (2, 4, 8, 16, 32);
+</span>let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (first, .., last) =&gt; {
-            println!("Einige Zahlen: {first}, {last}");
-        }
+match numbers {
+    (first, .., last) =&gt; {
+        println!("Einige Zahlen: {first}, {last}");
     }
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-24: Nur den ersten und letzten Wert in einem
 Tupel abgleichen und alle anderen Werte ignorieren</span></p>
@@ -686,14 +687,15 @@ Werte zum Abgleich vorgesehen sind und welche ignoriert werden sollten, gibt
 uns Rust einen Fehler. Codeblock 19-25 zeigt ein Beispiel für die mehrdeutige
 Verwendung von <code>..</code>, sodass es sich nicht kompilieren lässt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">fn main() {
-</span>    let numbers = (2, 4, 8, 16, 32);
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (.., second, ..) =&gt; {
-            println!("Einige Zahlen: {second}")
-        },
-    }
+match numbers {
+    (.., second, ..) =&gt; {
+        println!("Einige Zahlen: {second}")
+    },
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-25: Ein Versuch, <code>..</code> auf mehrdeutige Weise
 zu verwenden</span></p>
@@ -718,7 +720,7 @@ wir <code>2</code> und <code>4</code> ignorieren wollen, <code>second</code> an 
 <code>32</code> ignorieren wollen; und so weiter. Der Variablenname <code>second</code> bedeutet für
 Rust nichts Besonderes, sodass wir einen Kompilierfehler erhalten, weil das
 Verwenden von <code>..</code> an zwei Stellen wie dieser mehrdeutig ist.</p>
-<h3 id="extra-bedingungen-mit-abgleichsbedingungen"><a class="header" href="#extra-bedingungen-mit-abgleichsbedingungen">Extra-Bedingungen mit Abgleichsbedingungen</a></h3>
+<h3 id="abgleichsbedingungen-hinzufügen"><a class="header" href="#abgleichsbedingungen-hinzufügen">Abgleichsbedingungen hinzufügen</a></h3>
 <p>Eine <em>Abgleichsbedingung</em> (match guard) ist eine zusätzliche <code>if</code>-Bedingung,
 die nach dem Muster in einem <code>match</code>-Zweig angegeben wird und die zusammen mit
 dem Musterabgleich ebenfalls übereinstimmen muss, damit dieser Zweig ausgewählt
@@ -731,13 +733,13 @@ und die Abgleichsbedingung <code>if x % 2 == 0</code> (die <code>true</code> ist
 gerade ist) hat.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let num = Some(4);
+</span>let num = Some(4);
 
-    match num {
-        Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {x} ist gerade"),
-        Some(x) =&gt; println!("Die Zahl {x} ist ungerade"),
-        None =&gt; (),
-    }
+match num {
+    Some(x) if x % 2 == 0 =&gt; println!("Die Zahl {x} ist gerade"),
+    Some(x) =&gt; println!("Die Zahl {x} ist ungerade"),
+    None =&gt; (),
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-26: Hinzufügen einer Abgleichsbedingung zu
 einem Muster</span></p>
@@ -755,26 +757,27 @@ auszudrücken, also gibt uns die Abgleichsbedingung die Möglichkeit, diese Logi
 anzugeben. Der Nachteil dieser zusätzlichen Ausdruckskraft ist, dass der
 Compiler nicht versucht, die Vollständigkeit zu prüfen, wenn
 Abgleichsbedingungs-Ausdrücke beteiligt sind.</p>
-<p>In Codeblock 19-11 haben wir erwähnt, dass wir zur Lösung unseres
-Musterverschattungsproblems (pattern-shadowing problem) Abgleichsbedingungen
-verwenden könnten. Erinnere dich daran, dass eine neue Variable innerhalb des
-Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die Variable außerhalb von
-<code>match</code> zu verwenden. Diese neue Variable bedeutete, dass wir nicht gegen den
-Wert der äußeren Variable testen konnten. Codeblock 19-27 zeigt, wie wir eine
-Abgleichsbedingung verwenden können, um dieses Problem zu beheben.</p>
+<p>Als wir Codeblock 19-11 besprochen haben, haben wir erwähnt, dass wir zur
+Lösung unseres Musterverschattungsproblems (pattern-shadowing problem)
+Abgleichsbedingungen verwenden könnten. Erinnere dich daran, dass eine neue
+Variable innerhalb des Musters im <code>match</code>-Ausdruck erstellt wurde, anstatt die
+Variable außerhalb von <code>match</code> zu verwenden. Diese neue Variable bedeutete,
+dass wir nicht gegen den Wert der äußeren Variable testen konnten. Codeblock
+19-27 zeigt, wie wir eine Abgleichsbedingung verwenden können, um dieses
+Problem zu beheben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = Some(5);
-    let y = 10;
+</span>let x = Some(5);
+let y = 10;
 
-    match x {
-        Some(50) =&gt; println!("Habe 50 erhalten"),
-        Some(n) if n == y =&gt; println!("Passt, n = {n}"),
-        _ =&gt; println!("Standardfall, x = {x:?}"),
-    }
+match x {
+    Some(50) =&gt; println!("Habe 50 erhalten"),
+    Some(n) if n == y =&gt; println!("Passt, n = {n}"),
+    _ =&gt; println!("Standardfall, x = {x:?}"),
+}
 
-    println!("Am Ende: x = {x:?}, y = {y}");
+println!("Am Ende: x = {x:?}, y = {y}");
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-27: Verwenden einer Abgleichsbedingung zum
 Testen der Gleichheit mit einer äußeren Variablen</span></p>
@@ -797,13 +800,13 @@ die Abgleichsbedingung <code>if y</code> auf <code>4</code>, <code>5</code> <em>
 aussehen mag, als ob <code>if y</code> nur auf <code>6</code> zutrifft.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    let x = 4;
-    let y = false;
+</span>let x = 4;
+let y = false;
 
-    match x {
-        4 | 5 | 6 if y =&gt; println!("ja"),
-        _ =&gt; println!("nein"),
-    }
+match x {
+    4 | 5 | 6 if y =&gt; println!("ja"),
+    _ =&gt; println!("nein"),
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-28: Kombinieren mehrerer Muster mit einer
 Abgleichsbedingung</span></p>
@@ -816,48 +819,44 @@ dieses Programm gibt <code>nein</code> aus. Der Grund dafür ist, dass die <code
 für das gesamte Muster <code>4 | 5 | 6</code> gilt, nicht nur für den letzten Wert <code>6</code>.
 Mit anderen Worten, der Vorrang einer Abgleichsbedingung in Bezug auf ein
 Muster verhält sich wie folgt:</p>
-<pre><code class="language-text">(4 | 5 | 6) if y =&gt; ...
-</code></pre>
+<pre><code class="language-rust ignore">(4 | 5 | 6) if y =&gt; ...</code></pre>
 <p>und nicht so:</p>
-<pre><code class="language-text">4 | 5 | (6 if y) =&gt; ...
-</code></pre>
+<pre><code class="language-rust ignore">4 | 5 | (6 if y) =&gt; ...</code></pre>
 <p>Nach dem Ausführen des Codes ist das Vorrangsverhalten offensichtlich: Würde
 die Abgleichsbedingung nur auf den Endwert in der mit dem <code>|</code>-Operator
 angegebenen Werteliste angewendet, hätte der Zweig gepasst und das Programm
 hätte <code>ja</code> ausgegeben.</p>
-<h3 id="-bindungen"><a class="header" href="#-bindungen"><code>@</code>-Bindungen</a></h3>
+<h3 id="-bindungen-verwenden"><a class="header" href="#-bindungen-verwenden"><code>@</code>-Bindungen verwenden</a></h3>
 <p>Mit dem <em>at</em>-Operator <code>@</code> können wir eine Variable erstellen, die einen Wert
 enthält, während wir gleichzeitig diesen Wert testen, um festzustellen, ob er
 zu einem Muster passt. Codeblock 19-29 zeigt ein Beispiel, bei dem wir testen
 wollen, dass ein <code>Message::Hello</code>-Feld <code>id</code> innerhalb des Bereichs <code>3..=7</code>
-liegt. Wir wollen den Wert auch an die Variable <code>id_variable</code> binden, damit wir
-ihn in dem mit dem Zweig verbundenen Code verwenden können. Wir könnten diese
-Variable <code>id</code> nennen, so wie das Feld, aber für dieses Beispiel werden wir
-einen anderen Namen verwenden.</p>
+liegt. Wir wollen den Wert auch an die Variable <code>id</code> binden, damit wir ihn in
+dem mit dem Zweig verbundenen Code verwenden können.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>    enum Message {
-        Hello { id: i32 },
-    }
+</span>enum Message {
+    Hello { id: i32 },
+}
 
-    let msg = Message::Hello { id: 5 };
+let msg = Message::Hello { id: 5 };
 
-    match msg {
-        Message::Hello {
-            id: id_variable @ 3..=7,
-        } =&gt; println!("id im Bereich gefunden: {id_variable}"),
-        Message::Hello { id: 10..=12 } =&gt; {
-            println!("id in einem anderen Bereich gefunden")
-        }
-        Message::Hello { id } =&gt; println!("Eine andere id gefunden: {id}"),
+match msg {
+    Message::Hello {
+        id: id_variable @ 3..=7,
+    } =&gt; println!("id im Bereich gefunden: {id_variable}"),
+    Message::Hello { id: 10..=12 } =&gt; {
+        println!("id in einem anderen Bereich gefunden")
     }
+    Message::Hello { id } =&gt; println!("Eine andere id gefunden: {id}"),
+}
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 19-29: Verwenden von <code>@</code>, um an einen Wert in
 einem Muster zu binden und ihn gleichzeitig zu testen</span></p>
 <p>In diesem Beispiel wird <code>id im Bereich gefunden: 5</code> ausgegeben. Durch das
-Angeben von <code>id_variable @</code> vor dem Bereich <code>3..=7</code> erfassen wir den Wert, der
-mit dem Bereich übereinstimmt, und testen gleichzeitig, ob der Wert zum
-Bereichsmuster passt.</p>
+Angeben von <code>id @</code> vor dem Bereich <code>3..=7</code> erfassen wir den Wert, der mit dem
+Bereich übereinstimmt, in einer Variable namens <code>id</code> und testen gleichzeitig,
+ob der Wert zum Bereichsmuster passt.</p>
 <p>Im zweiten Zweig, wo wir im Muster nur einen Bereich spezifiziert haben, hat
 der zum Zweig gehörende Code keine Variable, die den tatsächlichen Wert des
 <code>id</code>-Feldes enthält. Der Wert des <code>id</code>-Feldes hätte 10, 11 oder 12 sein können,
@@ -878,9 +877,9 @@ Daten zu unterscheiden. Wenn sie in <code>match</code>-Ausdrücken verwendet wer
 Rust sicher, dass deine Muster jeden möglichen Wert abdecken oder dein Programm
 sich nicht kompilieren lässt. Muster in <code>let</code>-Anweisungen und
 Funktionsparametern machen diese Konstrukte nützlicher und ermöglichen das
-Destrukturieren von Werten in kleinere Teile und gleichzeitig das Zuweisen
-dieser Teile an Variablen. Wir können einfache oder komplexe Muster erstellen,
-die unseren Bedürfnissen entsprechen.</p>
+Destrukturieren von Werten in kleinere Teile und das Zuweisen dieser Teile an
+Variablen. Wir können einfache oder komplexe Muster erstellen, die unseren
+Bedürfnissen entsprechen.</p>
 <p>Als nächstes werden wir uns im vorletzten Kapitel des Buches mit einigen
 fortgeschrittenen Aspekten einer Vielzahl von Rusts Funktionalitäten befassen.</p>
 

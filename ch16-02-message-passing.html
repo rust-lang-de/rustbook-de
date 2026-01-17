@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,7 +163,7 @@
                     <main>
                         <h2 id="nachrichtenaustausch-zwischen-strängen-threads"><a class="header" href="#nachrichtenaustausch-zwischen-strängen-threads">Nachrichtenaustausch zwischen Strängen (threads)</a></h2>
 <p>Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
-Nebenläufigkeit (safe concurrency) ist der <em>Nachrichtenaustausch</em> (message
+Nebenläufigkeit (safe concurrency) ist der Nachrichtenaustausch (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 der <a href="https://golang.org/doc/effective_go.html#concurrency">Go-Sprachdokumentation</a>: „Kommuniziere nicht, indem du
@@ -294,7 +294,7 @@ Hauptstrang ausgegebenen Wert:</p>
 <pre><code class="language-text">Erhalten: hallo
 </code></pre>
 <p>Perfekt!</p>
-<h3 id="kanäle-und-eigentümerschaftsübertragung"><a class="header" href="#kanäle-und-eigentümerschaftsübertragung">Kanäle und Eigentümerschaftsübertragung</a></h3>
+<h3 id="übertragen-der-eigentümerschaft-durch-kanäle"><a class="header" href="#übertragen-der-eigentümerschaft-durch-kanäle">Übertragen der Eigentümerschaft durch Kanäle</a></h3>
 <p>Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
 von Fehlern bei der nebenläufigen Programmierung ist der Vorteil, den du durch
@@ -333,14 +333,14 @@ kompilieren:</p>
 <pre><code class="language-console">$ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
 error[E0382]: borrow of moved value: `val`
-  --&gt; src/main.rs:10:26
+  --&gt; src/main.rs:10:27
    |
-8  |         let val = String::from("hi");
+ 8 |         let val = String::from("hallo");
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
-9  |         tx.send(val).unwrap();
+ 9 |         tx.send(val).unwrap();
    |                 --- value moved here
 10 |         println!("val is {val}");
-   |                          ^^^^^ value borrowed here after move
+   |                           ^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -352,15 +352,16 @@ Funktion <code>send</code> übernimmt die Eigentümerschaft an ihrem Parameter u
 Wert verschoben wird, übernimmt der Empfänger die Eigentümerschaft an ihm.
 Dadurch wird verhindert, dass wir den Wert nach dem Senden versehentlich wieder
 verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.</p>
-<h3 id="mehrere-werte-senden-und-den-empfänger-warten-sehen"><a class="header" href="#mehrere-werte-senden-und-den-empfänger-warten-sehen">Mehrere Werte senden und den Empfänger warten sehen</a></h3>
+<h3 id="senden-mehrerer-werte"><a class="header" href="#senden-mehrerer-werte">Senden mehrerer Werte</a></h3>
 <p>Der Code in Codeblock 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
 nicht eindeutig, dass zwei getrennte Stränge über den Kanal miteinander
-sprachen. In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die
-beweisen, dass der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der
-erzeugte Strang sendet nun mehrere Nachrichten und macht dazwischen eine Pause
-von einer Sekunde.</p>
+sprachen.</p>
+<p>In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
+der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der erzeugte Strang
+sendet nun mehrere Nachrichten und macht dazwischen eine Pause von einer
+Sekunde.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024">use std::sync::mpsc;
+<pre><code class="language-rust noplayground">use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
 
@@ -404,14 +405,14 @@ Erhalten: Strang
 <p>Da wir keinen Code haben, der die <code>for</code>-Schleife im Hauptstrang pausiert oder
 verzögert, können wir sagen, dass der Hauptstrang darauf wartet, Werte vom
 erzeugten Strang zu erhalten.</p>
-<h3 id="erstellen-mehrerer-produzenten-durch-klonen-des-senders"><a class="header" href="#erstellen-mehrerer-produzenten-durch-klonen-des-senders">Erstellen mehrerer Produzenten durch Klonen des Senders</a></h3>
+<h3 id="erstellen-mehrerer-produzenten"><a class="header" href="#erstellen-mehrerer-produzenten">Erstellen mehrerer Produzenten</a></h3>
 <p>Vorhin haben wir erwähnt, dass <code>mpsc</code> ein Akronym für <em>mehrfacher Produzent,
 einzelner Konsument</em> ist. Lass uns <code>mpsc</code> verwenden und den Code in Codeblock
 16-10 erweitern, um mehrere Stränge zu erzeugen, die alle Werte an den gleichen
 Empfänger senden. Wir können dies tun, indem wir den Sender klonen, wie in
 Codeblock 16-11 gezeigt:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::sync::mpsc;
+<pre><code class="language-rust noplayground"><span class="boring">use std::sync::mpsc;
 </span><span class="boring">use std::thread;
 </span><span class="boring">use std::time::Duration;
 </span><span class="boring">

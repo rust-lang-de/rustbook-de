@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -179,14 +179,14 @@ asynchronen Blocks oder einer asynchronen Funktion kannst du mit dem
 Schlüsselwort <code>await</code> auf ein Future warten (d.h. warten bis es fertig ist).
 Jede Stelle, an der du innerhalb eines asynchronen Blocks oder einer
 asynchronen Funktion auf ein Future wartest, ist eine Stelle, an der der
-asynchrone Block oder die asynchrone Funktion unterbrochen und fortgesetzt
-werden kann. Der Vorgang, bei dem bei einem Future geprüft wird, ob sein Wert
-bereits verfügbar ist, wird <em>polling</em> (engl. Abfragen) genannt.</p>
+Block oder die Funktion unterbrochen und fortgesetzt werden kann. Der Vorgang,
+bei dem bei einem Future geprüft wird, ob sein Wert bereits verfügbar ist, wird
+<em>polling</em> (engl. Abfragen) genannt.</p>
 <p>Andere Sprachen wie C# und JavaScript verwenden ebenfalls die Schlüsselwörter
 <code>async</code> und <code>await</code> für die asynchrone Programmierung. Wenn du mit diesen
 Sprachen vertraut bist, wirst du vielleicht einige signifikante Unterschiede
-zur Arbeitsweise von Rust bemerken, einschließlich der Art und Weise, wie es
-die Syntax handhabt. Und das aus gutem Grund, wie wir sehen werden!</p>
+bemerken, wie Rust die Syntax handhabt. Und das aus gutem Grund, wie wir sehen
+werden!</p>
 <p>Wenn wir asynchrones Rust schreiben, verwenden wir meistens die Schlüsselwörter
 <code>async</code> und <code>await</code>. Rust kompiliert sie in äquivalenten Code unter Verwendung
 des Merkmals <code>Future</code>, genauso wie es <code>for</code>-Schleifen in äquivalenten Code
@@ -236,11 +236,9 @@ die den Vorgang zuerst beendet hat.</p>
 <h3 id="definieren-der-funktion-page_title"><a class="header" href="#definieren-der-funktion-page_title">Definieren der Funktion <code>page_title</code></a></h3>
 <p>Beginnen wir mit dem Schreiben einer Funktion, die eine Seiten-URL als
 Parameter entgegennimmt, eine Anfrage an diese stellt und den Text des
-Titelelements zurückgibt (siehe Codeblock 17-1).</p>
+Elements <code>&lt;title&gt;</code> zurückgibt (siehe Codeblock 17-1).</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">fn main() {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
 </span><span class="boring">    // TODO: Wir fügen dies als nächstes hinzu!
 </span><span class="boring">}
 </span><span class="boring">
@@ -251,14 +249,14 @@ async fn page_title(url: &amp;str) -&gt; Option&lt;String&gt; {
     let response_text = response.text().await;
     Html::parse(&amp;response_text)
         .select_first("title")
-        .map(|title_element| title_element.inner_html())
+        .map(|title| title.inner_html())
 }</code></pre>
 <p><span class="caption">Codeblock 17-1: Definieren einer asynchronen Funktion zum
 Abrufen des Titelelements aus einer HTML-Seite</span></p>
 <p>Zuerst definieren wir eine Funktion <code>page_title</code> und versehen sie mit dem
 Schlüsselwort <code>async</code>. Dann verwenden wir die Funktion <code>trpl::get</code>, um die
 übergebene URL abzurufen, und geben das Schlüsselwort <code>await</code> an, um auf die
-Antwort zu warten. Um den Text aus der Antwort zu erhalten, rufen wir die
+Antwort zu warten. Um den Text aus <code>response</code> zu erhalten, rufen wir die
 Methode <code>text</code> auf und warten erneut mit dem Schlüsselwort <code>await</code>. Diese
 beiden Schritte sind asynchron. Bei der Funktion <code>get</code> müssen wir darauf
 warten, dass der Server den ersten Teil seiner Antwort sendet, der den
@@ -279,13 +277,13 @@ Futures nichts, es sei denn, man bittet sie ausdrücklich darum. Diese Faulheit
 erlaubt es Rust, die Ausführung von asynchronem Code zu vermeiden, bis er
 tatsächlich benötigt wird.</p>
 <blockquote>
-<p>Anmerkung: Dies unterscheidet sich von dem Verhalten, das wir im vorherigen
-Kapitel gesehen haben, als wir <code>thread::spawn</code> in <a href="ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn">„Erstellen eines neuen
-Strangs mit spawn“</a> verwendet haben und der Funktionsabschluss,
-den wir an einen anderen Strang übergeben haben, sofort zu laufen begann. Es
-unterscheidet sich auch davon, wie viele andere Sprachen die asynchrone
-Programmierung umsetzen! Aber es ist wichtig für Rust, dass es seine
-Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.</p>
+<p>Anmerkung: Dies unterscheidet sich von dem Verhalten, das wir gesehen haben,
+als wir <code>thread::spawn</code> im Abschnitt <a href="ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn">„Erstellen eines neuen Strangs mit
+spawn“</a> in Kapitel 16 verwendet haben und der
+Funktionsabschluss, den wir an einen anderen Strang übergeben haben, sofort
+zu laufen begann. Es unterscheidet sich auch davon, wie viele andere Sprachen
+die asynchrone Programmierung umsetzen! Aber es ist wichtig für Rust, dass es
+seine Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.</p>
 </blockquote>
 <p>Sobald wir <code>response_text</code> haben, können wir ihn mit <code>Html::parse</code> in eine
 Instanz des Typs <code>Html</code> einlesen. Anstelle einer rohen Zeichenkette haben wir
@@ -299,7 +297,7 @@ zurück. Schließlich verwenden wir die Methode <code>Option::map</code>, die un
 Element in der <code>Option</code> arbeiten lässt, wenn es vorhanden ist, und nichts tut,
 wenn es nicht vorhanden ist. (Wir könnten hier auch einen <code>match</code>-Ausdruck
 verwenden, aber <code>map</code> ist idiomatischer.) Im Rumpf der Funktion, die wir an
-<code>map</code> übergeben, rufen wir <code>inner_html</code> auf <code>title_element</code> auf, um dessen
+<code>map</code> übergeben, rufen wir <code>inner_html</code> auf <code>title</code> auf, um dessen
 Inhalt als <code>String</code> zu erhalten. Wenn alles erledigt ist, haben wir eine
 <code>Option&lt;String&gt;</code>.</p>
 <p>Beachte, dass das Rust-Schlüsselwort <code>await</code> <em>hinter</em> dem Ausdruck steht, auf
@@ -310,9 +308,7 @@ es die Arbeit mit Methodenketten viel angenehmer macht. Als Ergebnis können wir
 den Rumpf von <code>page_url_for</code> ändern, um die Funktionsaufrufe <code>trpl::get</code> und
 <code>text</code> mit <code>await</code> dazwischen zu verketten, wie in Codeblock 17-2 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use trpl::Html;
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use trpl::Html;
 </span><span class="boring">
 </span><span class="boring">fn main() {
 </span><span class="boring">    // TODO: Wir fügen dies als nächstes hinzu!
@@ -322,7 +318,7 @@ den Rumpf von <code>page_url_for</code> ändern, um die Funktionsaufrufe <code>t
 </span>    let response_text = trpl::get(url).await.text().await;
 <span class="boring">    Html::parse(&amp;response_text)
 </span><span class="boring">        .select_first("title")
-</span><span class="boring">        .map(|title_element| title_element.inner_html())
+</span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 17-2: Verketten mit dem Schlüsselwort
 <code>await</code></span></p>
@@ -338,11 +334,10 @@ asynchronen Funktion ist der Typ des anonymen Datentyps, den der Compiler für
 diesen asynchronen Block erstellt.</p>
 <p>Die Angabe von <code>async fn</code> ist also gleichbedeutend mit dem Schreiben einer
 Funktion, die ein <em>Future</em> des Rückgabetyps zurückgibt. Für den Compiler ist
-eine Funktionsdefinition wie <code>async fn page_title</code> in Codeblock 17-1
+eine Funktionsdefinition wie <code>async fn page_title</code> in Codeblock 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">extern crate trpl;
 </span>use std::future::Future;
 use trpl::Html;
 
@@ -357,12 +352,11 @@ fn page_title(url: &amp;str) -&gt; impl Future&lt;Output = Option&lt;String&gt;&
 <span class="boring">}</span></code></pre>
 <p>Gehen wir die einzelnen Teile der umgewandelten Version durch:</p>
 <ul>
-<li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="ch10-02-traits.html#merkmale-als-parameter">„Merkmale als
-Parameter“</a> in Kapitel 10 besprochen haben.</li>
-<li>Das zurückgegebene Merkmal ist ein <code>Future</code> mit dem assoziierten Typ von
-<code>Output</code>. Beachte, dass der <code>Output</code>-Typ <code>Option&lt;String&gt;</code> ist, was dem
-ursprünglichen Rückgabetyp der <code>async fn</code>-Version von <code>page_title</code>
-entspricht.</li>
+<li>Sie verwendet die Syntax <code>impl Trait</code>, die wir bereits in <a href="ch10-02-traits.html#merkmale-als-parameter-verwenden">„Merkmale als
+Parameter verwenden“</a> in Kapitel 10 besprochen haben.</li>
+<li>Das zurückgegebene Wert implementiert das Merkmal <code>Future</code> mit dem
+assoziierten Typ von <code>Output</code>. Beachte, dass der <code>Output</code>-Typ
+<code>Option&lt;String&gt;</code> ist, was dem ursprünglichen Rückgabetyp der <code>async fn</code>-Version von <code>page_title</code> entspricht.</li>
 <li>Der gesamte im Rumpf der ursprünglichen Funktion wird in einen <code>async move</code>-Block eingepackt. Denke daran, dass Blöcke Ausdrücke sind. Dieser ganze
 Block ist der Ausdruck, der von der Funktion zurückgegeben wird.</li>
 <li>Dieser asynchrone Block erzeugt einen Wert vom Typ <code>Option&lt;String&gt;</code>, wie eben
@@ -373,19 +367,11 @@ verwendet. (Wir werden mehr über <code>async</code> versus <code>async move</co
 Kapitel sprechen.)</li>
 </ul>
 <p>Jetzt können wir <code>page_title</code> in <code>main</code> aufrufen.</p>
-<h2 id="bestimmen-des-titels-einer-einzelnen-seite"><a class="header" href="#bestimmen-des-titels-einer-einzelnen-seite">Bestimmen des Titels einer einzelnen Seite</a></h2>
-<p>Für den Anfang werden wir nur den Titel einer einzelnen Seite abrufen. In
-Codeblock 17-3 folgen wir dem gleichen Muster, das wir zum Einlesen von
-Kommandozeilenargumenten in <a href="ch12-01-accepting-command-line-arguments.html">„Kommandozeilenargumente
-entgegennehmen“</a> in Kapitel 12 verwendet haben. Dann übergeben wir
-die erste URL an <code>page_title</code> und warten das Ergebnis ab. Da der vom Future
-erzeugte Wert ein <code>Option&lt;String&gt;</code> ist, verwenden wir einen <code>match</code>-Ausdruck,
-um verschiedene Meldungen auszugeben, je nachdem ob die Seite einen <code>&lt;title&gt;</code>
-hatte oder nicht.</p>
+<h2 id="ausführen-einer-asynchronen-funktion-mit-einer-laufzeitumgebung"><a class="header" href="#ausführen-einer-asynchronen-funktion-mit-einer-laufzeitumgebung">Ausführen einer asynchronen Funktion mit einer Laufzeitumgebung</a></h2>
+<p>Zunächst holen wir uns den Titel für eine einzelne Seite, wie in Codeblock 17-3
+gezeigt. Leider lässt sich dieser Code noch nicht kompilieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use trpl::Html;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use trpl::Html;
 </span><span class="boring">
 </span>async fn main() {
     let args: Vec&lt;String&gt; = std::env::args().collect();
@@ -400,14 +386,20 @@ hatte oder nicht.</p>
 </span><span class="boring">    let response_text = trpl::get(url).await.text().await;
 </span><span class="boring">    Html::parse(&amp;response_text)
 </span><span class="boring">        .select_first("title")
-</span><span class="boring">        .map(|title_element| title_element.inner_html())
+</span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 17-3: Aufruf der Funktion <code>page_title</code> aus
 <code>main</code> mit einem vom Benutzer angegebenen Argument</span></p>
-<p>Leider lässt sich dieser Code nicht kompilieren. Der einzige Ort, an dem wir
-das Schlüsselwort <code>await</code> verwenden können, ist in asynchronen Funktionen oder
-Blöcken, und Rust lässt uns die spezielle Funktion <code>main</code> nicht als <code>async</code>
-markieren.</p>
+<p>Wir folgen wir dem gleichen Muster, das wir zum Einlesen von
+Kommandozeilenargumenten in <a href="ch12-01-accepting-command-line-arguments.html">„Kommandozeilenargumente
+entgegennehmen“</a> in Kapitel 12 verwendet haben. Dann übergeben wir
+die erste URL an <code>page_title</code> und warten das Ergebnis ab. Da der vom Future
+erzeugte Wert ein <code>Option&lt;String&gt;</code> ist, verwenden wir einen <code>match</code>-Ausdruck,
+um verschiedene Meldungen auszugeben, je nachdem ob die Seite einen <code>&lt;title&gt;</code>
+hatte oder nicht.</p>
+<p>Der einzige Ort, an dem wir das Schlüsselwort <code>await</code> verwenden können, ist in
+asynchronen Funktionen oder Blöcken, und Rust lässt uns die spezielle Funktion
+<code>main</code> nicht als <code>async</code> markieren.</p>
 <pre><code class="language-text">error[E0752]: `main` function is not allowed to be `async`
  --&gt; src/main.rs:6:1
   |
@@ -420,7 +412,7 @@ Details der Ausführung von asynchronem Code verwaltet. Die Funktion <code>main<
 eines Programms kann eine Laufzeitumgebung <em>initialisieren</em>, aber sie ist
 nicht <em>selbst</em> eine Laufzeitumgebung. (Warum das so ist, werden wir später
 sehen.) Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine
-Stelle, an der es eine Laufzeitumgebung einrichtet und die Futures ausführt.</p>
+Stelle, an der es eine Laufzeitumgebung einrichtet, die die Futures ausführt.</p>
 <p>Die meisten Sprachen, die asynchrone Programmierung unterstützen, enthalten
 eine Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele
 verschiedene asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen
@@ -431,13 +423,15 @@ einer kleinen Menge an RAM und keiner Möglichkeit, Haldenspeicher-Allokationen
 (heap allocations) durchzuführen. Die Kisten, die diese Laufzeitumgebungen
 bereitstellen, bieten oft auch asynchrone Versionen gängiger Funktionen wie
 Datei- oder Netzwerkkommunikation.</p>
-<p>Hier und im Rest dieses Kapitels werden wir die Funktion <code>run</code> aus der Kiste
-<code>trpl</code> verwenden, die ein Future als Argument annimmt und es bis zum Ende
-ausführt. Hinter den Kulissen wird durch den Aufruf von <code>run</code> eine
-Laufzeitumgebung eingerichtet, die das übergebene Future ausführt. Sobald das
-Future abgeschlossen ist, gibt <code>run</code> den Wert zurück, den das Future erzeugt
-hat.</p>
-<p>Wir könnten das von <code>page_title</code> zurückgegebene Future direkt an <code>run</code>
+<p>Hier und im Rest dieses Kapitels werden wir die Funktion <code>block_on</code> aus der
+Kiste <code>trpl</code> verwenden, die ein Future als Argument nimmt und den aktuellen
+Strang blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
+wird durch den Aufruf von <code>block_on</code> eine Laufzeitumgebung mit Hilfe der Kiste
+<code>tokio</code> eingerichtet, die das übergebene Future ausführt. (Das Verhalten von
+<code>block_on</code> in der Kiste <code>trpl</code> ähnelt dem der <code>block_on</code>-Funktionen anderer
+Laufzeitumgebungs-Kisten.) Sobald das Future abgeschlossen ist, gibt <code>block_on</code>
+den Wert zurück, den das Future erzeugt hat.</p>
+<p>Wir könnten das von <code>page_title</code> zurückgegebene Future direkt an <code>block_on</code>
 übergeben. Sobald es abgeschlossen ist, könnten wir die resultierende
 <code>Option&lt;String&gt;</code> abgleichen, so wie wir es in Codeblock 17-3 versucht haben.
 Für die meisten Beispiele in diesem Kapitel (und den meisten asynchronen Code
@@ -446,14 +440,12 @@ Funktionsaufruf durchführen, also übergeben wir stattdessen einen <code>async<
 und warten explizit auf das Ergebnis des Aufrufs von <code>page_title</code>, wie in
 Codeblock 17-4.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust should_panic noplayground"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use trpl::Html;
+<pre><code class="language-rust should_panic noplayground"><span class="boring">use trpl::Html;
 </span><span class="boring">
 </span>fn main() {
     let args: Vec&lt;String&gt; = std::env::args().collect();
 
-    trpl::run(async {
+    trpl::block_on(async {
         let url = &amp;args[1];
         match page_title(url).await {
             Some(title) =&gt; println!("Der Titel von {url} ist {title}"),
@@ -466,13 +458,13 @@ Codeblock 17-4.</p>
 </span><span class="boring">    let response_text = trpl::get(url).await.text().await;
 </span><span class="boring">    Html::parse(&amp;response_text)
 </span><span class="boring">        .select_first("title")
-</span><span class="boring">        .map(|title_element| title_element.inner_html())
+</span><span class="boring">        .map(|title| title.inner_html())
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 17-4: Warten auf einen asynchronen Block mit
-<code>trpl::run</code></span></p>
+<code>trpl::block_on</code></span></p>
 <p>Wenn wir diesen Code ausführen, erhalten wir das Verhalten, das wir anfangs
 erwartet haben:</p>
-<pre><code class="language-console">$ cargo run -- https://www.rust-lang.org
+<pre><code class="language-console">$ cargo run -- "https://www.rust-lang.org"
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.05s
      Running `target/debug/async_await 'https://www.rust-lang.org'`
 Der Titel von https://www.rust-lang.org ist
@@ -490,8 +482,6 @@ Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem <code>await</code>-Punkt zu speichern:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">extern crate trpl;
-</span><span class="boring">
 </span>enum PageTitleFuture&lt;'a&gt; {
     Initial { url: &amp;'a str },
     GetAwaitPoint { url: &amp;'a str },
@@ -508,43 +498,42 @@ hier. Erfreulicherweise übernimmt der Compiler auch die Überprüfung dieser
 Regeln für uns und gibt hilfreiche Fehlermeldungen aus. Ein paar davon werden
 wir später im Kapitel durcharbeiten.</p>
 <p>Letztendlich muss etwas diese Zustandsmaschine ausführen, und dieses Etwas ist
-eine Laufzeitumgebung. (Aus diesem Grund wird auf <em>Executors</em> verwiesen, wenn
-man sich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
+eine Laufzeitumgebung. (Aus diesem Grund wirst auf <em>Executors</em> stoßen, wenn du
+dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
 Laufzeitumgebung, der für die Ausführung des asynchronen Codes verantwortlich
 ist.)</p>
 <p>Jetzt kannst du sehen, warum uns der Compiler in Codeblock 17-3 davon
 abgehalten hat, <code>main</code> selbst zu einer asynchronen Funktion zu machen. Wäre
 <code>main</code> eine asynchrone Funktion, müsste etwas anderes den Zustandsautomaten für
 das Future verwalten, das <code>main</code> zurückgibt, aber <code>main</code> ist der Startpunkt des
-Programms! Stattdessen haben wir die Funktion <code>trpl::run</code> in <code>main</code> aufgerufen,
-um eine Laufzeitumgebung einzurichten und das vom <code>async</code>-Block zurückgegebene
-Future auszuführen, bis es fertig ist.</p>
+Programms! Stattdessen haben wir die Funktion <code>trpl::block_on</code> in <code>main</code>
+aufgerufen, um eine Laufzeitumgebung einzurichten und das vom <code>async</code>-Block
+zurückgegebene Future auszuführen, bis es fertig ist.</p>
 <blockquote>
 <p>Hinweis: Einige Laufzeitumgebungen stellen Makros zur Verfügung, mit denen du
 eine asynchrone Funktion <code>main</code> schreiben <em>kannst</em>. Diese Makros wandeln
 <code>async fn main() { ... }</code> in eine normale <code>fn main</code> um, die dasselbe tut, was
 wir in Codeblock 17-4 von Hand gemacht haben: Eine Funktion aufrufen, die ein
-Future zu Ende ausführt, so wie <code>trpl::run</code> es macht.</p>
+Future zu Ende ausführt, so wie <code>trpl::block_on</code> es macht.</p>
 </blockquote>
 <p>Fügen wir die Teile zusammen und sehen wir uns an, wie wir nebenläufigen Code
 schreiben können.</p>
-<h3 id="unsere-zwei-urls-gegeneinander-antreten-lassen"><a class="header" href="#unsere-zwei-urls-gegeneinander-antreten-lassen">Unsere zwei URLs gegeneinander antreten lassen</a></h3>
+<h3 id="zwei-urls-nebenläufig-gegeneinander-antreten-lassen"><a class="header" href="#zwei-urls-nebenläufig-gegeneinander-antreten-lassen">Zwei URLs nebenläufig gegeneinander antreten lassen</a></h3>
 <p>In Codeblock 17-5 rufen wir <code>page_title</code> mit zwei verschiedenen URLs auf, die
-von der Befehlszeile übergeben werden, und lassen sie um die Wette laufen.</p>
+von der Befehlszeile übergeben werden, und lassen sie um die Wette laufen,
+indem das zuerst fertig werdende Future ausgewählt wird.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust should_panic noplayground"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use trpl::{Either, Html};
+<pre><code class="language-rust should_panic noplayground">use trpl::{Either, Html};
 
 fn main() {
     let args: Vec&lt;String&gt; = std::env::args().collect();
 
-    trpl::run(async {
+    trpl::block_on(async {
         let title_fut_1 = page_title(&amp;args[1]);
         let title_fut_2 = page_title(&amp;args[2]);
 
         let (url, maybe_title) =
-            match trpl::race(title_fut_1, title_fut_2).await {
+            match trpl::select(title_fut_1, title_fut_2).await {
                 Either::Left(left) =&gt; left,
                 Either::Right(right) =&gt; right,
             };
@@ -552,7 +541,7 @@ fn main() {
         println!("{url} wurde zuerst zurückgegeben");
         match maybe_title {
             Some(title) =&gt; println!("Der Titel ist: '{title}'"),
-            None =&gt; println!("Der Titel konnte nicht eingelesen werden."),
+            None =&gt; println!("Hat keinen Titel."),
         }
     })
 }
@@ -564,24 +553,25 @@ async fn page_title(url: &amp;str) -&gt; (&amp;str, Option&lt;String&gt;) {
         .map(|title| title.inner_html());
     (url, title)
 }</code></pre>
-<p><span class="caption">Codeblock 17-5</span></p>
+<p><span class="caption">Codeblock 17-5: Aufruf von <code>page_title</code> für zwei URLs, um
+zu sehen, welche zuerst zurückgegeben wird</span></p>
 <p>Wir beginnen mit dem Aufruf von <code>page_title</code> für jede der vom Benutzer
 angegebenen URLs. Wir speichern die erhaltenen Futures als <code>title_fut_1</code> und
 <code>title_fut_2</code>. Denke daran, dass diese noch nichts tun, denn Futures sind faul
 und wir haben noch nicht auf sie gewartet. Dann übergeben wir die Futures an
-<code>trpl::race</code>, das einen Wert zurückgibt, der anzeigt, welches der übergebenen
+<code>trpl::select</code>, das einen Wert zurückgibt, der anzeigt, welches der übergebenen
 Futures zuerst fertig wurde.</p>
 <blockquote>
-<p>Anmerkung: Unter der Haube ist <code>race</code> auf der allgemeineren Funktion <code>select</code>
-aufgebaut, der du bei realem Rust-Codes häufiger begegnen wirst. Die Funktion
-<code>select</code> kann eine Menge Dinge tun, die die Funktion <code>trpl::race</code> nicht kann,
-aber sie bringt auch zusätzliche Komplexität mit sich, die wir für den Moment
-überspringen können.</p>
+<p>Anmerkung: Unter der Haube ist <code>trpl::select</code> auf der allgemeineren Funktion
+<code>select</code> aufgebaut, die in der Kiste <code>futures</code> definiert ist. Die Funktion
+<code>select</code> der Kiste <code>futures</code> kann viele Dinge tun, die die Funktion
+<code>trpl::select</code> nicht kann, aber sie bringt auch zusätzliche Komplexität mit
+sich, was wir hier jedoch vorerst außer Acht lassen können.</p>
 </blockquote>
 <p>Jedes Future kann legitimerweise „gewinnen“, also macht es keinen Sinn, ein
-<code>Result</code> zurückzugeben. Stattdessen gibt <code>race</code> einen Typ zurück, den wir noch
-nicht gesehen haben: <code>trpl::Either</code>. Der Typ <code>Either</code> ist einem <code>Result</code>
-insofern ähnlich, als dass er zwei Fälle hat. Im Gegensatz zu <code>Result</code>
+<code>Result</code> zurückzugeben. Stattdessen gibt <code>trpl::select</code> einen Typ zurück, den
+wir noch nicht gesehen haben: <code>trpl::Either</code>. Der Typ <code>Either</code> ist einem
+<code>Result</code> insofern ähnlich, als dass er zwei Fälle hat. Im Gegensatz zu <code>Result</code>
 unterscheidet <code>Either</code> jedoch nicht zwischen Erfolg und Misserfolg.
 Stattdessen werden <code>Left</code> und <code>Right</code> verwendet, um „das eine oder das andere“
 anzuzeigen.</p>
@@ -592,7 +582,7 @@ anzuzeigen.</p>
     Right(B),
 }
 <span class="boring">}</span></code></pre>
-<p>Die Funktion <code>race</code> gibt <code>Left</code> mit der Ausgabe des ersten Futures zurück, wenn
+<p>Die Funktion <code>select</code> gibt <code>Left</code> mit der Ausgabe des ersten Futures zurück, wenn
 das erste Argument zuerst fertig ist, und <code>Right</code> mit der Ausgabe des zweiten
 Futures, wenn dieses zuerst fertig ist. Dies entspricht der Reihenfolge, in der
 die Argumente beim Aufruf der Funktion angegeben wurden: Das erste Argument

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Methodensyntax - Die Programmiersprache Rust</title>
+        <title>Methoden - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,8 +161,8 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="methodensyntax"><a class="header" href="#methodensyntax">Methodensyntax</a></h2>
-<p><em>Methoden</em> sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort <code>fn</code>
+                        <h2 id="methoden"><a class="header" href="#methoden">Methoden</a></h2>
+<p>Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort <code>fn</code>
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
 und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
@@ -171,7 +171,7 @@ Merkmalsobjektes (trait object), die wir in <a href="ch06-00-enums.html">Kapitel
 18</a> behandeln) definiert werden und ihr erster Parameter stets
 <code>self</code> ist. <code>self</code> repräsentiert die Instanz der Struktur, zu der die Methode
 aufgerufen wird.</p>
-<h3 id="definieren-von-methoden"><a class="header" href="#definieren-von-methoden">Definieren von Methoden</a></h3>
+<h3 id="methoden-syntax"><a class="header" href="#methoden-syntax">Methoden-Syntax</a></h3>
 <p>Lass uns die Funktion <code>area</code>, die eine <code>Rectangle</code>-Instanz als Parameter hat,
 ändern und stattdessen eine Methode <code>area</code> auf der Struktur <code>Rectangle</code>
 definieren, wie in Codeblock 5-13 zu sehen ist.</p>
@@ -344,16 +344,16 @@ Codeblock 5-14 gezeigte Programm zu schreiben.</p>
         height: 45,
     };
 
-    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
-    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
+    println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
+    println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 }</code></pre>
 <p><span class="caption">Codeblock 5-14: Verwendung der noch nicht geschriebenen
 Methode <code>can_hold</code></span></p>
 <p>Die erwartete Ausgabe würde wie folgt aussehen, da beide Dimensionen von
 <code>rect2</code> kleiner als die Dimensionen von <code>rect1</code> sind, aber <code>rect3</code> breiter als
 <code>rect1</code> ist:</p>
-<pre><code class="language-text">rect1 umfasst rect2? true
-rect1 umfasst rect3? false
+<pre><code class="language-text">rect1 umschließt rect2? true
+rect1 umschließt rect3? false
 </code></pre>
 <p>Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
 des Blocks <code>impl Rectangle</code> liegen. Die Methode wird <code>can_hold</code> heißen und sie
@@ -399,8 +399,8 @@ Block <code>impl</code> aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 5-15: Implementierung der Methode <code>can_hold</code>
 auf <code>Rectangle</code>, die eine weitere <code>Rectangle</code>-Instanz als Parameter hat</span></p>
@@ -487,8 +487,8 @@ impl Rectangle {
 </span><span class="boring">        height: 45,
 </span><span class="boring">    };
 </span><span class="boring">
-</span><span class="boring">    println!("rect1 umfasst rect2? {}", rect1.can_hold(&amp;rect2));
-</span><span class="boring">    println!("rect1 umfasst rect3? {}", rect1.can_hold(&amp;rect3));
+</span><span class="boring">    println!("rect1 umschließt rect2? {}", rect1.can_hold(&amp;rect2));
+</span><span class="boring">    println!("rect1 umschließt rect3? {}", rect1.can_hold(&amp;rect3));
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 5-16: Neuschreiben von Codeblock 5-15 unter
 Verwendung mehrerer <code>impl</code>-Blöcke</span></p>

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -163,10 +163,10 @@
                     <main>
                         <h2 id="kontrollfluss"><a class="header" href="#kontrollfluss">Kontrollfluss</a></h2>
 <p>Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung <code>true</code>
-ist, oder Code wiederholt auszuführen, während eine Bedingung <code>true</code> ist, sind
-grundlegende Bausteine der meisten Programmiersprachen. Die gebräuchlichsten
-Konstrukte, mit denen du den Kontrollfluss von Rust-Code kontrollieren kannst,
-sind <code>if</code>-Ausdrücke und Schleifen.</p>
+ist, und die Fähigkeit, Code wiederholt auszuführen, solange eine Bedingung
+<code>true</code> ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
+gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
+kontrollieren kannst, sind <code>if</code>-Ausdrücke und Schleifen.</p>
 <h3 id="if-ausdrücke"><a class="header" href="#if-ausdrücke"><code>if</code>-Ausdrücke</a></h3>
 <p>Ein <code>if</code>-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
@@ -398,7 +398,8 @@ nochmal!
 ^Cnochmal!
 </code></pre>
 <p>Das Symbol <code>^C</code> steht für die Stelle, an der du <kbd>Strg</kbd>+<kbd>c</kbd>
-gedrückt hast. Je nachdem, wo sich der Code in der Schleife befand, als er das
+gedrückt hast.</p>
+<p>Je nachdem, wo sich der Code in der Schleife befand, als er das
 Unterbrechungssignal empfing, siehst du nach dem <code>^C</code> das Wort <code>nochmal!</code> oder
 nicht.</p>
 <p>Glücklicherweise bietet Rust auch eine Möglichkeit, aus einer Schleife
@@ -444,7 +445,7 @@ Schließlich geben wir den Wert in <code>result</code> aus, der in diesem Fall <
 beträgt.</p>
 <p>Du kannst auch innerhalb einer Schleife <code>return</code> aufrufen. Während <code>break</code> nur
 die aktuelle Schleife verlässt, verlässt <code>return</code> immer die aktuelle Funktion.</p>
-<h4 id="schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung-mehrerer-schleifen">Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen</a></h4>
+<h4 id="schleifenlabel-zur-eindeutigen-unterscheidung"><a class="header" href="#schleifenlabel-zur-eindeutigen-unterscheidung">Schleifenlabel zur eindeutigen Unterscheidung</a></h4>
 <p>Wenn du Schleifen innerhalb von Schleifen hast, gelten <code>break</code> und <code>continue</code>
 für die innerste Schleife an diesem Punkt. Du kannst optional ein
 <em>Schleifenlabel</em> (loop label) für eine Schleife angeben, das wir dann mit
@@ -579,7 +580,9 @@ Kollektion unter Verwendung einer <code>for</code>-Schleife</span></p>
 3-4 sehen. Noch wichtiger ist, dass wir jetzt die Sicherheit des Codes erhöht
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
-gehen und einige Elemente übersehen.</p>
+gehen und einige Elemente übersehen. Der aus <code>for</code>-Schleifen generierte
+Maschinencode kann ebenfalls effizienter sein, da der Index nicht bei jeder
+Iteration mit der Länge des Arrays verglichen werden muss.</p>
 <p>Wenn du die <code>for</code>-Schleife verwendest, brauchst du nicht daran zu denken,
 irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array
 änderst, wie bei der Methode in Codeblock 3-4 verwendet.</p>

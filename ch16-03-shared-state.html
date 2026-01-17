@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -181,7 +181,7 @@ werden müssen. Das Typsystem und die Eigentumsregeln von Rust sind eine große
 Hilfe, um diese Verwaltung korrekt zu gestalten. Betrachten wir als Beispiel
 den Mutex, eines der gebräuchlicheren Nebenläufigkeitsprimitive für gemeinsam
 genutzten Speicher.</p>
-<h3 id="verwenden-von-mutex-um-datenzugriff-von-jeweils-einem-strang-zu-ermöglichen"><a class="header" href="#verwenden-von-mutex-um-datenzugriff-von-jeweils-einem-strang-zu-ermöglichen">Verwenden von Mutex, um Datenzugriff von jeweils einem Strang zu ermöglichen</a></h3>
+<h3 id="datenzugriff-steuern-mit-mutexen"><a class="header" href="#datenzugriff-steuern-mit-mutexen">Datenzugriff steuern mit Mutexen</a></h3>
 <p><em>Mutex</em> ist eine Abkürzung für <em>mutual exclusion</em> (engl. wechselseitiger
 Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
 (thread) den Zugriff auf Daten erlaubt. Um auf die Daten in einem Mutex
@@ -257,7 +257,7 @@ vergessen, die Sperre freizugeben und die Verwendung des Mutex durch andere
 Stränge zu blockieren, da die Freigabe der Sperre automatisch erfolgt.</p>
 <p>Nachdem wir die Sperre aufgehoben haben, können wir den Mutex-Wert ausgeben und
 sehen, dass wir den inneren <code>i32</code> in 6 ändern konnten.</p>
-<h4 id="gemeinsames-nutzen-eines-mutext-von-mehreren-strängen"><a class="header" href="#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen">Gemeinsames Nutzen eines <code>Mutex&lt;T&gt;</code> von mehreren Strängen</a></h4>
+<h4 id="gemeinsamer-zugriff-auf-mutext"><a class="header" href="#gemeinsamer-zugriff-auf-mutext">Gemeinsamer Zugriff auf <code>Mutex&lt;T&gt;</code></a></h4>
 <p>Versuchen wir nun, einen Wert zwischen mehreren Strängen mit <code>Mutex&lt;T&gt;</code> zu
 teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
 erhöhen, sodass der Zähler von 0 auf 10 geht. Das Beispiel in Codeblock 16-13
@@ -373,41 +373,35 @@ mehreren Strängen zu erlauben, den <code>Mutex&lt;T&gt;</code> zu besitzen</spa
 eine Menge.</p>
 <pre><code class="language-console">$ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0277]: `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-   --&gt; src/main.rs:11:36
-    |
-11  |           let handle = thread::spawn(move || {
-    |                        ------------- ^------
-    |                        |             |
-    |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
-    | |                      |
-    | |                      required by a bound introduced by this call
-12  | |             let mut num = counter.lock().unwrap();
-13  | |
-14  | |             *num += 1;
-15  | |         });
-    | |_________^ `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
-    |
-    = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc&lt;Mutex&lt;i32&gt;&gt;`
+error[E0277]: `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+  --&gt; src/main.rs:11:36
+   |
+11 |           let handle = thread::spawn(move || {
+   |                        ------------- ^------
+   |                        |             |
+   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
+   | |                      |
+   | |                      required by a bound introduced by this call
+12 | |             let mut num = counter.lock().unwrap();
+13 | |
+14 | |             *num += 1;
+15 | |         });
+   | |_________^ `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;` cannot be sent between threads safely
+   |
+   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc&lt;std::sync::Mutex&lt;i32&gt;&gt;`
 note: required because it's used within this closure
-   --&gt; src/main.rs:11:36
-    |
-11  |         let handle = thread::spawn(move || {
-    |                                    ^^^^^^^
+  --&gt; src/main.rs:11:36
+   |
+11 |         let handle = thread::spawn(move || {
+   |                                    ^^^^^^^
 note: required by a bound in `spawn`
-   --&gt; file:///home/.rustup/toolchains/1.85/lib/rustlib/src/rust/library/std/src/thread/mod.rs:731:8
-    |
-728 | pub fn spawn&lt;F, T&gt;(f: F) -&gt; JoinHandle&lt;T&gt;
-    |        ----- required by a bound in this function
-...
-731 |     F: Send + 'static,
-    |        ^^^^ required by this bound in `spawn`
+  --&gt; /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/thread/mod.rs:723:1
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
 </code></pre>
 <p>Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
-den wir uns konzentrieren müssen: <code>`Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between  threads safely</code> Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+den wir uns konzentrieren müssen: <code> `Rc&lt;Mutex&lt;i32&gt;&gt;` cannot be sent between  threads safely</code> Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
 (trait) <code>Send</code> ist für <code>Rc&lt;Mutex&lt;i32&gt;&gt;</code> nicht implementiert. Wir werden im
 nächsten Abschnitt über das Merkmal <code>Send</code> sprechen: Es ist eines der Merkmale,
 das sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
@@ -487,7 +481,7 @@ nebenläufigen und atomaren Zugriff auf primitive Typen. Wir haben uns
 entschieden, <code>Mutex&lt;T&gt;</code> mit einem primitiven Typ für dieses Beispiel zu
 verwenden, damit wir uns darauf konzentrieren können, wie <code>Mutex&lt;T&gt;</code>
 funktioniert.</p>
-<h3 id="ähnlichkeiten-zwischen-refcelltrct-und-mutextarct"><a class="header" href="#ähnlichkeiten-zwischen-refcelltrct-und-mutextarct">Ähnlichkeiten zwischen <code>RefCell&lt;T&gt;</code>/<code>Rc&lt;T&gt;</code> und <code>Mutex&lt;T&gt;</code>/<code>Arc&lt;T&gt;</code></a></h3>
+<h3 id="vergleich-von-refcelltrct-und-mutextarct"><a class="header" href="#vergleich-von-refcelltrct-und-mutextarct">Vergleich von <code>RefCell&lt;T&gt;</code>/<code>Rc&lt;T&gt;</code> und <code>Mutex&lt;T&gt;</code>/<code>Arc&lt;T&gt;</code></a></h3>
 <p>Du hast vielleicht bemerkt, dass <code>counter</code> unveränderbar (immutable) ist, aber
 wir könnten eine veränderbare (mutable) Referenz auf den Wert in seinem
 Inneren erhalten; das bedeutet, dass <code>Mutex&lt;T&gt;</code> innere Veränderbarkeit

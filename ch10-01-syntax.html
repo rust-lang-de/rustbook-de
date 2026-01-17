@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -230,7 +230,7 @@ den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
 wir werden <code>T</code> verwenden, weil die Typparameternamen gemäß Konvention in Rust
 kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
-CamelCase. Als Abkürzung für „Typ“ ist <code>T</code> die Standardwahl der meisten
+UpperCamelCase. Als Abkürzung für „Typ“ ist <code>T</code> die Standardwahl der meisten
 Rust-Programmierer.</p>
 <p>Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
 Parameternamen in der Signatur deklarieren, damit der Compiler weiß, was
@@ -240,9 +240,9 @@ generische Funktion <code>largest</code> zu definieren, platzieren wir die
 Typnamen-Deklarationen innerhalb spitzer Klammern <code>&lt;&gt;</code>, zwischen dem
 Funktionsnamen und der Parameterliste, so wie hier:</p>
 <pre><code class="language-rust ignore">fn largest&lt;T&gt;(list: &amp;[T]) -&gt; &amp;T {</code></pre>
-<p>Wir lesen diese Definition wie folgt: Die Funktion <code>largest</code> ist generisch über
-einen Typ <code>T</code>. Sie hat einen Parameter namens <code>list</code>, der ein Anteilstyp von
-Werten des Typs <code>T</code> ist. Die Funktion <code>largest</code> gibt eine Referenz auf denn
+<p>Wir lesen diese Definition wie folgt: „Die Funktion <code>largest</code> ist generisch
+über einen Typ <code>T</code>.“ Sie hat einen Parameter namens <code>list</code>, der ein Anteilstyp
+von Werten des Typs <code>T</code> ist. Die Funktion <code>largest</code> gibt eine Referenz auf denn
 Wert des gleichen Typs <code>T</code> zurück.</p>
 <p>Codeblock 10-5 zeigt die kombinierte Funktionsdefinition <code>largest</code>, die den
 generischen Datentyp in ihrer Signatur verwendet. Der Codeblock zeigt auch, wie
@@ -294,8 +294,8 @@ help: consider restricting type parameter `T`
 For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 </code></pre>
-<p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein <em>Merkmal</em> (trait) ist,
-und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
+<p>Der Hilfetext erwähnt <code>std::cmp::PartialOrd</code>, was ein Merkmal (trait) ist, und
+wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
 dieser Fehler, dass der Rumpf von <code>largest</code> nicht für alle möglichen Typen
 funktioniert, die <code>T</code> sein könnten. Da wir Werte des Typs <code>T</code> im Rumpf
 vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden

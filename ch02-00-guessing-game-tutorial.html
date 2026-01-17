@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -325,7 +325,7 @@ Wir verwenden eine <code>let</code>-Anweisung, um eine Variable zu erzeugen. Hie
 weiteres Beispiel:</p>
 <pre><code class="language-rust ignore">let apples = 5;</code></pre>
 <p>Diese Zeile erzeugt eine neue Variable namens <code>apples</code> und bindet sie an den
-Wert 5. In Rust sind Variablen standardmäßig unveränderbar (immutable), das
+Wert <code>5</code>. In Rust sind Variablen standardmäßig unveränderbar (immutable), das
 heißt, sobald wir der Variablen einen Wert gegeben haben, wird sich der Wert
 nicht mehr ändern. Wir werden dieses Konzept im Abschnitt <a href="ch03-01-variables-and-mutability.html">„Variablen und
 Veränderbarkeit“</a> in Kapitel 3 ausführlich
@@ -378,7 +378,7 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.</p>
 </span><span class="boring">
 </span><span class="boring">    println!("Du hast geschätzt: {guess}");
 </span><span class="boring">}</span></code></pre>
-<p>Hätten wir die Bibliothek <code>io</code> nicht am Anfang des Programms mit <code>use std::io;</code>
+<p>Hätten wir das Modul <code>io</code> nicht am Anfang des Programms mit <code>use std::io;</code>
 importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
 Funktionsaufruf als <code>std::io::stdin</code> schreiben. Die Funktion <code>stdin</code> gibt eine
 Instanz von <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html"><code>std::io::Stdin</code></a> zurück, was ein Typ ist, der eine
@@ -387,7 +387,7 @@ darstellt.</p>
 <p>Die nächste Zeile <code>.read_line(&amp;mut guess)</code> ruft die Methode
 <a href="https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line"><code>read_line</code></a> der Standardeingaberessource auf, um eine Eingabe vom
 Benutzer zu erhalten. Wir übergeben auch das Argument <code>&amp;mut guess</code> an
-<code>read_line</code>, um ihm mitzuteilen, in welche Zeichenfolge es die Benutzereingabe
+<code>read_line</code>, um ihm mitzuteilen, in welche Zeichenkette es die Benutzereingabe
 speichern soll. Die Aufgabe von <code>read_line</code> ist es, alles, was der Benutzer in
 die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
 zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
@@ -535,7 +535,7 @@ damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
 jedoch eine <a href="https://crates.io/crates/rand">Kiste <code>rand</code></a> mit besagter Funktionalität zur
 Verfügung.</p>
-<h3 id="verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten"><a class="header" href="#verwenden-einer-kiste-um-mehr-funktionalität-zu-erhalten">Verwenden einer Kiste, um mehr Funktionalität zu erhalten</a></h3>
+<h3 id="mehr-funktionalität-mit-einer-kiste"><a class="header" href="#mehr-funktionalität-mit-einer-kiste">Mehr Funktionalität mit einer Kiste</a></h3>
 <p>Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
 Projekt “Ratespiel” ist eine <em>binäre Kiste</em> (binary crate), die eine
 ausführbare Datei ist. Die Kiste <code>rand</code> ist eine <em>Bibliotheks-Kiste</em> (library
@@ -590,7 +590,7 @@ gezeigt.</p>
  Compiling guessing_game v0.1.0 (file:///projects/guessing_game)
   Finished `dev` profile [unoptimized + debuginfo] target(s) in 2.48s
 </code></pre>
-<p><span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von <code>cargo build</code> nach dem Hinzufügen der Kiste rand als Abhängigkeit</span></p>
+<p><span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von <code>cargo build</code> nach dem Hinzufügen der Kiste <code>rand</code> als Abhängigkeit</span></p>
 <p>Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
 sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
 Betriebssystem), und die Zeilen können in einer anderen Reihenfolge erscheinen.</p>
@@ -622,7 +622,7 @@ sie dann speicherst und neu baust, siehst du nur zwei Zeilen Ausgabe:</p>
 der Datei <em>src/main.rs</em> aktualisiert. Deine Abhängigkeiten haben sich nicht
 geändert, sodass Cargo weiß, dass es wiederverwenden kann, was es bereits
 heruntergeladen und kompiliert hat.</p>
-<h4 id="sicherstellen-reproduzierbarer-builds-mit-der-datei-cargolock"><a class="header" href="#sicherstellen-reproduzierbarer-builds-mit-der-datei-cargolock">Sicherstellen reproduzierbarer Builds mit der Datei <em>Cargo.lock</em></a></h4>
+<h4 id="sicherstellen-reproduzierbarer-builds"><a class="header" href="#sicherstellen-reproduzierbarer-builds">Sicherstellen reproduzierbarer Builds</a></h4>
 <p>Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wenn
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
 kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
@@ -645,23 +645,24 @@ Code deines Projekts in die Versionskontrolle eingecheckt.</p>
 <p>Wenn du eine Kiste aktualisieren <em>willst</em>, bietet Cargo den Befehl <code>update</code> an,
 der die Datei <em>Cargo.lock</em> ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in <em>Cargo.toml</em> herausfindet. Cargo schreibt diese
-Versionen dann in die Datei <em>Cargo.lock</em>. In diesem Fall wird Cargo nur nach
-Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Kiste <code>rand</code>
-zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
-sehen, wenn du <code>cargo update</code> ausführst:</p>
+Versionen dann in die Datei <em>Cargo.lock</em>. Andernfalls wird Cargo standardmäßig
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
+Kiste <code>rand</code> zwei neue Versionen 0.8.6 und 0.999.0 veröffentlicht hat, würdest du
+folgendes sehen, wenn du <code>cargo update</code> ausführst:</p>
 <pre><code class="language-console">$ cargo update
     Updating crates.io index
      Locking 1 package to latest Rust 1.85.0 compatible version
-    Updating rand v0.8.5 -&gt; v0.8.6 (available: v0.9.0)
+    Updating rand v0.8.5 -&gt; v0.8.6 (available: v0.999.0)
 </code></pre>
-<p>Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
+<p>Cargo ignoriert die Version 0.999.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei <em>Cargo.lock</em> bemerken, die feststellt, dass die
 Version der Kiste <code>rand</code>, die du jetzt benutzt, 0.8.6 ist. Um die
-<code>rand</code>-Version 0.9.0 oder irgendeine Version aus der 0.9.<em>x</em>-Serie zu
+<code>rand</code>-Version 0.999.0 oder irgendeine Version aus der 0.999.<em>x</em>-Serie zu
 verwenden, müsstest du stattdessen die Datei <em>Cargo.toml</em> anpassen, damit sie
-wie folgt aussieht:</p>
+wie folgt aussieht. (Führe diese Änderung nicht durch, da die folgenden
+Beispiele davon ausgehen, dass du <code>rand</code> 0.8 verwendest.)</p>
 <pre><code class="language-toml">[dependencies]
-rand = "0.9.0"
+rand = "0.999.0"
 </code></pre>
 <p>Wenn du das nächste Mal <code>cargo build</code> ausführst, wird Cargo die Registry der
 verfügbaren Kisten aktualisieren und deine <code>rand</code>-Anforderungen entsprechend

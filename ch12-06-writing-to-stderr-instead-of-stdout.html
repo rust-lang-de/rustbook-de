@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben - Die Programmiersprache Rust</title>
+        <title>Fehler zur Standardfehlerausgabe umleiten - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="fehlermeldungen-in-die-standardfehlerausgabe-anstatt-der-standardausgabe-schreiben"><a class="header" href="#fehlermeldungen-in-die-standardfehlerausgabe-anstatt-der-standardausgabe-schreiben">Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben</a></h2>
+                        <h2 id="fehler-zur-standardfehlerausgabe-umleiten"><a class="header" href="#fehler-zur-standardfehlerausgabe-umleiten">Fehler zur Standardfehlerausgabe umleiten</a></h2>
 <p>Im Moment schreiben wir unsere gesamte Ausgabe mit dem Makro <code>println!</code> auf das
 Terminal. In den meisten Terminals gibt es zwei Arten von Ausgaben:
 Die <em>Standardausgabe</em> (<code>stdout</code>) für allgemeine Informationen und die
@@ -211,9 +211,11 @@ denen wir <code>println!</code> aufgerufen haben, um Fehler auszugeben, ändern 
 stattdessen <code>eprintln!</code> verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore"><span class="boring">use std::env;
+</span><span class="boring">use std::error::Error;
+</span><span class="boring">use std::fs;
 </span><span class="boring">use std::process;
 </span><span class="boring">
-</span><span class="boring">use minigrep::Config;
+</span><span class="boring">use minigrep::{search, search_case_insensitive};
 </span><span class="boring">
 </span>fn main() {
     let args: Vec&lt;String&gt; = env::args().collect();
@@ -223,11 +225,52 @@ stattdessen <code>eprintln!</code> verwenden.</p>
         process::exit(1);
     });
 
-    if let Err(e) = minigrep::run(config) {
+    if let Err(e) = run(config) {
         eprintln!("Anwendungsfehler: {e}");
         process::exit(1);
     }
-}</code></pre>
+}
+<span class="boring">
+</span><span class="boring">pub struct Config {
+</span><span class="boring">    pub query: String,
+</span><span class="boring">    pub file_path: String,
+</span><span class="boring">    pub ignore_case: bool,
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">impl Config {
+</span><span class="boring">    fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
+</span><span class="boring">        if args.len() &lt; 3 {
+</span><span class="boring">            return Err("Nicht genügend Argumente");
+</span><span class="boring">        }
+</span><span class="boring">
+</span><span class="boring">        let query = args[1].clone();
+</span><span class="boring">        let file_path = args[2].clone();
+</span><span class="boring">
+</span><span class="boring">        let ignore_case = env::var("IGNORE_CASE").is_ok();
+</span><span class="boring">
+</span><span class="boring">        Ok(Config {
+</span><span class="boring">            query,
+</span><span class="boring">            file_path,
+</span><span class="boring">            ignore_case,
+</span><span class="boring">        })
+</span><span class="boring">    }
+</span><span class="boring">}
+</span><span class="boring">
+</span><span class="boring">fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
+</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
+</span><span class="boring">
+</span><span class="boring">    let results = if config.ignore_case {
+</span><span class="boring">        search_case_insensitive(&amp;config.query, &amp;contents)
+</span><span class="boring">    } else {
+</span><span class="boring">        search(&amp;config.query, &amp;contents)
+</span><span class="boring">    };
+</span><span class="boring">
+</span><span class="boring">    for line in results {
+</span><span class="boring">        println!("{line}");
+</span><span class="boring">    }
+</span><span class="boring">
+</span><span class="boring">    Ok(())
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-24: Schreiben von Fehlermeldungen auf die
 Standardfehlerausgabe anstelle der Standardausgabe durch Verwenden von
 <code>eprintln!</code></span></p>

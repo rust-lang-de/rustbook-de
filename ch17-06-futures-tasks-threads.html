@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -173,11 +173,10 @@ Stränge <em>und</em> asynchroner Code.</p>
 Nebenläufigkeitsmodelle an, und viele Programmiersprachen unterstützen diese
 Modelle daher. Diese Modelle sind jedoch nicht frei von Kompromissen. Auf
 vielen Betriebssystemen wird für jeden Strang ein beträchtlicher Teil an
-Arbeitsspeicher verbraucht und es entsteht ein gewisser Overhead beim Starten
-und Beenden. Stränge sind auch nur dann eine Option, wenn dein Betriebssystem
-und deine Hardware sie unterstützen. Im Gegensatz zu herkömmlichen Desktop- und
-Mobilcomputern haben einige eingebettete Systeme überhaupt kein Betriebssystem,
-sodass sie auch keine Stränge haben.</p>
+Arbeitsspeicher verbraucht. Stränge sind auch nur dann eine Option, wenn dein
+Betriebssystem und deine Hardware sie unterstützen. Im Gegensatz zu
+herkömmlichen Desktop- und Mobilcomputern haben einige eingebettete Systeme
+überhaupt kein Betriebssystem, sodass sie auch keine Stränge haben.</p>
 <p>Das asynchrone Modell bietet eine andere – und letztlich ergänzende
 – Reihe von Kompromissen. Im asynchronen Modell benötigen nebenläufige
 Vorgänge keine eigenen Stränge. Stattdessen können sie in Aufgaben laufen, so
@@ -185,101 +184,17 @@ wie wir <code>trpl::spawn_task</code> verwendet haben, um die Arbeit von einer s
 Funktion im Abschnitt „Ströme“ zu starten. Eine Aufgabe ähnelt einem Strang,
 wird aber nicht vom Betriebssystem, sondern von einem Code auf Bibliotheksebene
 verwaltet: der Laufzeitumgebung.</p>
-<p>Im vorigen Abschnitt haben wir gesehen, dass wir einen Strom erstellen können,
-indem wir einen asynchronen Kanal verwenden und eine asynchrone Aufgabe
-erzeugen, die wir von synchronem Code aus aufrufen können. Wir können genau das
-Gleiche mit einem Strang machen! In Codeblock 17-40 haben wir
-<code>trpl::spawn_task</code> und <code>trpl::sleep</code> verwendet. In Codeblock 17-41 ersetzen wir
-diese durch die APIs <code>thread::spawn</code> und <code>thread::sleep</code> aus der
-Standardbibliothek.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{pin::pin, thread, time::Duration};
-</span><span class="boring">
-</span><span class="boring">use trpl::{ReceiverStream, Stream, StreamExt};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let messages = get_messages().timeout(Duration::from_millis(200));
-</span><span class="boring">        let intervals = get_intervals()
-</span><span class="boring">            .map(|count| format!("Interval #{count}"))
-</span><span class="boring">            .throttle(Duration::from_millis(500))
-</span><span class="boring">            .timeout(Duration::from_secs(10));
-</span><span class="boring">        let merged = messages.merge(intervals).take(20);
-</span><span class="boring">        let mut stream = pin!(merged);
-</span><span class="boring">
-</span><span class="boring">        while let Some(result) = stream.next().await {
-</span><span class="boring">            match result {
-</span><span class="boring">                Ok(item) =&gt; println!("{item}"),
-</span><span class="boring">                Err(reason) =&gt; eprintln!("Problem: {reason:?}"),
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">fn get_messages() -&gt; impl Stream&lt;Item = String&gt; {
-</span><span class="boring">    let (tx, rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">    trpl::spawn_task(async move {
-</span><span class="boring">        let messages = ["a", "b", "c", "d", "e", "f", "g", "h", "i", "j"];
-</span><span class="boring">
-</span><span class="boring">        for (index, message) in messages.into_iter().enumerate() {
-</span><span class="boring">            let time_to_sleep = if index % 2 == 0 { 100 } else { 300 };
-</span><span class="boring">            trpl::sleep(Duration::from_millis(time_to_sleep)).await;
-</span><span class="boring">
-</span><span class="boring">            if let Err(send_error) = tx.send(format!("Nachricht: '{message}'")) {
-</span><span class="boring">                eprintln!("Kann die Nachricht '{message}' nicht senden: {send_error}");
-</span><span class="boring">                break;
-</span><span class="boring">            }
-</span><span class="boring">        }
-</span><span class="boring">    });
-</span><span class="boring">
-</span><span class="boring">    ReceiverStream::new(rx)
-</span><span class="boring">}
-</span><span class="boring">
-</span>fn get_intervals() -&gt; impl Stream&lt;Item = u32&gt; {
-    let (tx, rx) = trpl::channel();
-
-    // Dies ist *nicht* `trpl::spawn` sondern `std::thread::spawn`!
-    thread::spawn(move || {
-        let mut count = 0;
-        loop {
-            // Ebenso ist dies *nicht* `trpl::sleep` sondern `std::thread::sleep`!
-            thread::sleep(Duration::from_millis(1));
-            count += 1;
-
-            if let Err(send_error) = tx.send(count) {
-                eprintln!("Konnte das Intervall {count} nicht senden: {send_error}");
-                break;
-            };
-        }
-    });
-
-    ReceiverStream::new(rx)
-}</code></pre>
-<p><span class="caption">Codeblock 17-41: Verwenden der <code>std::thread</code>-APIs
-anstelle der asynchronen <code>trpl</code>-APIs für die Funktion <code>get_intervals</code></span></p>
-<p>Wenn du diesen Code ausführst, ist die Ausgabe identisch zu der von Codeblock
-17-40. Und beachte, wie wenig sich hier aus der Sicht des aufrufenden Codes
-ändert! Und obwohl eine unserer Funktionen eine asynchrone Aufgabe in der
-Laufzeitumgebung und die andere einen Betriebssystem-Strang startet, hat es
-keinen Effekt auf die resultierenden Ströme.</p>
-<p>Trotz deren Ähnlichkeiten verhalten sich diese beiden Ansätze sehr
-unterschiedlich, obwohl wir es in diesem sehr einfachen Beispiel schwer haben,
-dies zu messen. Wir könnten Millionen von asynchronen Aufgaben auf jedem
-modernen Computer ausführen. Wenn wir das mit Strängen versuchen würden, würde
-uns buchstäblich der Speicher ausgehen!</p>
-<p>Es gibt jedoch einen Grund, warum sich diese APIs so ähnlich sind. Stränge
-dienen als Grenze für Gruppen von synchronen Operationen; Nebenläufigkeit ist
-<em>zwischen</em> Strängen möglich. Aufgaben fungieren als Grenze für Gruppen von
-<em>asynchronen</em> Vorgängen; Nebenläufigkeit ist sowohl <em>zwischen</em> als auch
-<em>innerhalb</em> von Aufgaben möglich, da eine Aufgabe in ihrem Rumpf zwischen
-Futures wechseln kann. Schließlich sind Futures die granularste Einheit der
-Nebenläufigkeit in Rust, und jedes Future kann einen Baum von anderen Futures
-darstellen. Die Laufzeitumgebung – genauer gesagt ihr Executor –
-verwaltet Aufgaben, und Aufgaben verwalten Futures. In dieser Hinsicht ähneln
-Aufgaben leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
+<p>Es gibt einen Grund dafür, dass die APIs zum Erzeugen von Strängen und zum
+Erzeugen von Aufgaben so ähnlich sind. Stränge dienen als Grenze für Gruppen
+von synchronen Operationen; Nebenläufigkeit ist <em>zwischen</em> Strängen möglich.
+Aufgaben fungieren als Grenze für Gruppen von <em>asynchronen</em> Vorgängen;
+Nebenläufigkeit ist sowohl <em>zwischen</em> als auch <em>innerhalb</em> von Aufgaben
+möglich, da eine Aufgabe in ihrem Rumpf zwischen Futures wechseln kann.
+Schließlich sind Futures die granularste Einheit der Nebenläufigkeit in Rust,
+und jedes Future kann einen Baum von anderen Futures darstellen. Die
+Laufzeitumgebung – genauer gesagt ihr Executor – verwaltet
+Aufgaben, und Aufgaben verwalten Futures. In dieser Hinsicht ähneln Aufgaben
+leichtgewichtigen, von der Laufzeitumgebung verwalteten Strängen mit
 zusätzlichen Fähigkeiten, die sich daraus ergeben, dass sie von der
 Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
 <p>Das bedeutet nicht, dass asynchrone Aufgaben immer besser sind als Stränge
@@ -287,49 +202,35 @@ Laufzeitumgebung und nicht vom Betriebssystem verwaltet werden.</p>
 einfacheres Programmiermodell als Nebenläufigkeit mit <code>async</code>. Das kann eine
 Stärke und eine Schwäche sein. Stränge sind eine Art „Feuern und Vergessen“;
 sie haben kein natives Äquivalent zu einem Future, also laufen sie einfach bis
-zum Ende, ohne Unterbrechung, außer durch das Betriebssystem selbst. Das heißt,
-sie haben keine eingebaute Unterstützung für <em>Nebenläufigkeit innerhalb der
-Aufgabe</em>, wie es Futures haben. Stränge in Rust haben auch keine Mechanismen um
-die abzubrechen – ein Thema, das wir in diesem Kapitel nicht eingehend
-behandelt haben, das aber implizit in der Tatsache enthalten ist, dass immer
-dann, wenn wir ein Future beenden, sein Zustand korrekt aufgeräumt wird.</p>
-<p>Diese Einschränkungen machen es auch schwieriger, Stränge zu kombinieren, als
-Futures. Es ist zum Beispiel viel schwieriger, Stränge zu verwenden, um Helfer
-wie <code>timeout</code> und <code>throttle</code> zu erstellen, die wir weiter oben in diesem
-Kapitel erstellt haben. Die Tatsache, dass Futures reichhaltigere
-Datenstrukturen sind, bedeutet, dass sie natürlicher zusammengesetzt werden
-können, wie wir gesehen haben.</p>
-<p>Aufgaben geben uns dann <em>zusätzliche</em> Kontrolle über Futures, da man wählen
-kann, wo und wie man die Futures gruppiert. Und es stellt sich heraus, dass
-Stränge und Aufgaben oft sehr gut zusammenarbeiten, weil Aufgaben (zumindest in
-einigen Laufzeitumgebungen) zwischen Strängen verschoben werden können. Unter
-der Haube ist die Laufzeitumgebung, die wir verwenden – einschließlich
-der Funktionen <code>spawn_blocking</code> und <code>spawn_task</code> – standardmäßig
-mehrstängig (multithreaded)! Viele Laufzeitumgebungen verwenden einen Ansatz
-namens <em>Work Stealing</em>, um Aufgaben transparent zwischen Strängen zu
-verschieben, je nachdem, wie die Stränge gerade ausgelastet sind, um die
-Gesamtleistung des Systems zu verbessern. Dieser Ansatz erfordert eigentlich
-Stränge <em>und</em> Aufgaben, und damit Futures.</p>
+zum Ende, ohne Unterbrechung, außer durch das Betriebssystem selbst.</p>
+<p>Und es stellt sich heraus, dass Stränge und Aufgaben oft sehr gut
+zusammenarbeiten, weil Aufgaben (zumindest in einigen Laufzeitumgebungen)
+zwischen Strängen verschoben werden können. Unter der Haube ist die
+Laufzeitumgebung, die wir verwenden – einschließlich der Funktionen
+<code>spawn_blocking</code> und <code>spawn_task</code> – standardmäßig mehrstängig
+(multithreaded)! Viele Laufzeitumgebungen verwenden einen Ansatz namens <em>Work
+Stealing</em>, um Aufgaben transparent zwischen Strängen zu verschieben, je
+nachdem, wie die Stränge gerade ausgelastet sind, um die Gesamtleistung des
+Systems zu verbessern. Dieser Ansatz erfordert eigentlich Stränge <em>und</em>
+Aufgaben, und damit Futures.</p>
 <p>Wenn du überlegst, welche Methode du wann anwenden solltest, beachte diese
-Faustregeln:</p>
+Daumenregeln:</p>
 <ul>
-<li>Wenn die Arbeit <em>sehr parallelisierbar</em> ist, z.B. bei der Verarbeitung einer
-Menge von Daten, bei der jeder Teil separat verarbeitet werden kann, sind
-Stränge die bessere Wahl.</li>
-<li>Wenn es sich um <em>sehr nebenläufige</em> Arbeit handelt, wie die Bearbeitung von
-Nachrichten aus einer Reihe von verschiedenen Quellen, die in
-unterschiedlichen Intervallen oder mit unterschiedlicher Geschwindigkeit
-eintreffen können, ist asynchroner Code die bessere Wahl.</li>
+<li>Wenn die Arbeit <em>sehr parallelisierbar</em> ist (d.h. CPU-gebunden), z.B. bei der
+Verarbeitung einer Menge von Daten, bei der jeder Teil separat verarbeitet
+werden kann, sind Stränge die bessere Wahl.</li>
+<li>Wenn es sich um <em>sehr nebenläufige</em> Arbeit handelt (d.h. E/A-gebunden), wie
+die Bearbeitung von Nachrichten aus einer Reihe von verschiedenen Quellen,
+die in unterschiedlichen Intervallen oder mit unterschiedlicher
+Geschwindigkeit eintreffen können, ist asynchroner Code die bessere Wahl.</li>
 </ul>
 <p>Und wenn du Parallelität und Nebenläufigkeit benötigst, musst du dich nicht
 zwischen Strängen und asynchronem Code entscheiden. Du kannst beide zusammen
 verwenden, wobei jede der beiden die Aufgabe übernimmt, für die sie am besten
-geeignet ist. Codeblock 17-42 zeigt zum Beispiel ein gängiges Beispiel für
+geeignet ist. Codeblock 17-25 zeigt zum Beispiel ein gängiges Beispiel für
 dieses Zusammenspiel in echtem Rust-Code.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span>use std::{thread, time::Duration};
+<pre class="playground"><code class="language-rust edition2024">use std::{thread, time::Duration};
 
 fn main() {
     let (tx, mut rx) = trpl::channel();
@@ -341,23 +242,23 @@ fn main() {
         }
     });
 
-    trpl::run(async {
+    trpl::block_on(async {
         while let Some(message) = rx.recv().await {
             println!("{message}");
         }
     });
 }</code></pre>
-<p><span class="caption">Codeblock 17-42: Senden von Nachrichten mit blockierendem
+<p><span class="caption">Codeblock 17-25: Senden von Nachrichten mit blockierendem
 Code in einem Strang und Warten auf die Nachrichten in einem asynchronen
 Block</span></p>
 <p>Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
-Strang an, der für die Senderseite des Kanals zuständig ist. Innerhalb des
-Strangs senden wir die Zahlen 1 bis 10 und schlafen dazwischen jeweils eine
-Sekunde lang. Schließlich führen wir ein Future aus, das mit einem asynchronen
-Block erstellt wurde, der an <code>trpl::run</code> übergeben wurde, so wie wir es im
-ganzen Kapitel getan haben. In diesem Future warten wir auf diese Nachrichten,
-genau wie in den anderen Beispielen mit Nachrichten-Weitergabe, die wir gesehen
-haben.</p>
+Strang an, der für die Senderseite des Kanals zuständig ist, indem wir das
+Schlüsselword <code>move</code> verwenden. Innerhalb des Strangs senden wir die Zahlen 1
+bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen
+wir ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
+<code>trpl::block_on</code> übergeben wurde, so wie wir es im ganzen Kapitel getan haben.
+In diesem Future warten wir auf diese Nachrichten, genau wie in den anderen
+Beispielen mit Nachrichten-Weitergabe, die wir gesehen haben.</p>
 <p>Um zu den Szenarien zurückzukehren, mit denen wir das Kapitel eröffnet haben,
 könnte man sich vorstellen, dass eine Reihe von Videokodierungsaufgaben über
 einen dedizierten Strang ausgeführt wird, da die Videokodierung rechenintensiv

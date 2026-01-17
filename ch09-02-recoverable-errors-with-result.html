@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -247,6 +247,7 @@ folgende Ausgabe des Makros <code>panic!</code>:</p>
    Compiling error-handling v0.1.0 (file:///projects/error-handling)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.73s
      Running `target/debug/error-handling`
+
 thread 'main' panicked at src/main.rs:8:23:
 Problem beim Öffnen der Datei: Os { code: 2, kind: NotFound, message: "No such file or directory" }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
@@ -276,8 +277,8 @@ fn main() {
                 Ok(fc) =&gt; fc,
                 Err(e) =&gt; panic!("Problem beim Erstellen der Datei: {e:?}"),
             },
-            other_error =&gt; {
-                panic!("Problem beim Öffnen der Datei: {other_error:?}")
+            _ =&gt; {
+                panic!("Problem beim Öffnen der Datei: {error:?}")
             }
         },
     };
@@ -333,7 +334,7 @@ zurück, nachdem du Kapitel 13 gelesen hast, und schlage die Methode
 dieser Methoden können große, verschachtelte <code>match</code>-Ausdrücke vermeiden,
 wenn du mit Fehlern zu tun hast.</p>
 </blockquote>
-<h4 id="abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall-unwrap-und-expect">Abkürzungen zum Abbrechen im Fehlerfall: <code>unwrap</code> und <code>expect</code></a></h4>
+<h4 id="abkürzungen-zum-abbrechen-im-fehlerfall"><a class="header" href="#abkürzungen-zum-abbrechen-im-fehlerfall">Abkürzungen zum Abbrechen im Fehlerfall</a></h4>
 <p>Das Verwenden von <code>match</code> funktioniert gut genug, aber es kann etwas langatmig
 sein und vermittelt das Vorhaben nicht immer gut. Der Typ <code>Result&lt;T, E&gt;</code> bietet
 viele Hilfsmethoden, um verschiedene, spezifischere Aufgaben zu erledigen. Die
@@ -463,7 +464,7 @@ propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
 angemessen behandelt werden.</p>
 <p>Dieses Muster der Fehlerweitergabe ist in Rust so verbreitet, dass Rust den
 Fragezeichen-Operator <code>?</code> bereitstellt, um dies zu erleichtern.</p>
-<h4 id="abkürzung-zum-weitergeben-von-fehlern-der-operator-"><a class="header" href="#abkürzung-zum-weitergeben-von-fehlern-der-operator-">Abkürzung zum Weitergeben von Fehlern: Der Operator <code>?</code></a></h4>
+<h4 id="der-operator--als-abkürzung"><a class="header" href="#der-operator--als-abkürzung">Der Operator <code>?</code> als Abkürzung</a></h4>
 <p>Codeblock 9-7 zeigt eine Implementierung von <code>read_username_from_file</code>, die
 dasselbe Verhalten wie Codeblock 9-6 hat, aber diese Implementierung verwendet
 den <code>?</code>-Operator.</p>
@@ -562,7 +563,7 @@ den Inhalt der Datei einliest, den Inhalt in den <code>String</code> einfügt un
 zurückgibt. Natürlich gibt uns die Verwendung von <code>fs::read_to_string</code> nicht
 die Möglichkeit, die ganze Fehlerbehandlung zu erklären, also haben wir es
 zuerst auf dem längeren Weg gemacht.</p>
-<h4 id="wo-der-operator--verwendet-werden-kann"><a class="header" href="#wo-der-operator--verwendet-werden-kann">Wo der Operator <code>?</code> verwendet werden kann</a></h4>
+<h4 id="wo-der-operator--verwendet-wird"><a class="header" href="#wo-der-operator--verwendet-wird">Wo der Operator <code>?</code> verwendet wird</a></h4>
 <p>Der Operator <code>?</code> kann nur in Funktionen verwendet werden, deren Rückgabetyp mit
 dem Wert, auf den <code>?</code> angewendet wird, kompatibel ist. Das liegt daran, dass
 der Operator <code>?</code> so definiert ist, dass er einen Wert frühzeitig aus der
@@ -586,7 +587,7 @@ dem <code>Result</code>-Wert, der von <code>File::open</code> zurückgegeben wir
 <code>main</code> hat den Rückgabetyp <code>()</code>, nicht <code>Result</code>. Wenn wir diesen Code
 kompilieren, erhalten wir folgende Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling playground v0.0.1 (/playground)
+   Compiling error-handling v0.1.0 (file:///projects/error-handling)
 error[E0277]: the `?` operator can only be used in a function that returns `Result` or `Option` (or another type that implements `FromResidual`)
  --&gt; src/main.rs:4:48
   |
@@ -595,7 +596,6 @@ error[E0277]: the `?` operator can only be used in a function that returns `Resu
 4 |     let greeting_file = File::open("hallo.txt")?;
   |                                                ^ cannot use the `?` operator in a function that returns `()`
   |
-  = help: the trait `FromResidual&lt;Result&lt;Infallible, std::io::Error&gt;&gt;` is not implemented for `()`
 help: consider adding return type
   |
 3 ~ fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {
@@ -691,14 +691,13 @@ fn main() -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
 <p><span class="caption">Codeblock 9-12: Die Änderung von <code>main</code> zur Rückgabe von
 <code>Result&lt;(), E&gt;</code> erlaubt die Verwendung des <code>?</code>-Operators für
 <code>Result</code>-Werte.</span></p>
-<p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein <em>Merkmalsobjekt</em> (trait object), über das wir
-in <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“</a> in Kapitel 18 sprechen werden. Vorerst kannst du
+<p>Der Typ <code>Box&lt;dyn Error&gt;</code> ist ein Merkmalsobjekt (trait object), über das wir in
+<a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“</a> in Kapitel 18 sprechen werden. Vorerst kannst du
 <code>Box&lt;dyn Error&gt;</code> als „eine beliebige Fehlerart“ ansehen. Das Verwenden von <code>?</code>
 auf einen <code>Result</code>-Wert in einer Funktion <code>main</code> mit dem Fehlertyp <code>Box&lt;dyn Error&gt;</code> ist erlaubt, weil dadurch ein <code>Err</code>-Wert frühzeitig zurückgegeben
 werden kann. Obwohl der Rumpf dieser Funktion <code>main</code> nur Fehler des Typs
-<code>std::io::Error</code> zurückgibt, ist diese Signatur durch die Angabe von
-<code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt, wenn weiterer Code, der andere Fehler
+<code>std::io::Error</code> zurückgibt, ist diese Signatur durch die Angabe von <code>Box&lt;dyn Error&gt;</code> auch dann noch korrekt, wenn weiterer Code, der andere Fehler
 zurückgibt, dem Rumpf von <code>main</code> hinzugefügt wird.</p>
 <p>Wenn eine Funktion <code>main</code> ein <code>Result&lt;(), E&gt;</code> zurückgibt, beendet sich die
 ausführbare Datei mit einem Wert von <code>0</code>, wenn <code>main</code> den Wert <code>Ok(())</code>

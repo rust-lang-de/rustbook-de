@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,11 +162,11 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="fortgeschrittene-merkmale-traits"><a class="header" href="#fortgeschrittene-merkmale-traits">Fortgeschrittene Merkmale (traits)</a></h2>
-<p>Merkmale behandelten wir als Erstes in <a href="ch10-02-traits.html">„Merkmale (traits): Gemeinsames
-Verhalten definieren“</a> in Kapitel 10, aber wir
-haben die fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über
-Rust weißt, können wir zum Kern der Sache kommen.</p>
-<h3 id="assoziierte-typen"><a class="header" href="#assoziierte-typen">Assoziierte Typen</a></h3>
+<p>Merkmale behandelten wir als Erstes im Abschnitt <a href="ch10-02-traits.html">„Gemeinsames Verhalten
+definieren mit Merkmalen (traits)“</a> in Kapitel 10, aber wir haben die
+fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über Rust weißt,
+können wir zum Kern der Sache kommen.</p>
+<h3 id="merkmale-mit-assoziierten-typen-definieren"><a class="header" href="#merkmale-mit-assoziierten-typen-definieren">Merkmale mit assoziierten Typen definieren</a></h3>
 <p><em>Assoziierte Typen</em> (associated types) verbinden einen Typ-Platzhalter mit
 einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
 Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
@@ -263,7 +263,7 @@ Merkmals müssen einen Typ bereitstellen, der für den Platzhalter des
 assoziierten Typs steht. Assoziierte Typen haben oft einen Namen, der
 beschreibt, wie der Typ verwendet werden soll, und das Dokumentieren des
 assoziierten Typs in der API-Dokumentation ist eine gute Praxis.</p>
-<h3 id="standardparameter-für-generische-typen-und-operatorüberladung"><a class="header" href="#standardparameter-für-generische-typen-und-operatorüberladung">Standardparameter für generische Typen und Operatorüberladung</a></h3>
+<h3 id="generische-standardparameter-und-operatorüberladung-verwenden"><a class="header" href="#generische-standardparameter-und-operatorüberladung-verwenden">Generische Standardparameter und Operatorüberladung verwenden</a></h3>
 <p>Wenn wir generische Typparameter verwenden, können wir einen konkreten
 Standardtyp für den generischen Typ angeben. Dadurch entfällt die Notwendigkeit
 für Implementierer des Merkmals, einen konkreten Typ anzugeben, wenn der
@@ -335,12 +335,11 @@ Typ <code>Rhs</code> anpassen wollen, anstatt den Standardwert zu verwenden.</p>
 <p>Wir haben zwei Strukturen <code>Millimeters</code> und <code>Meters</code>, die Werte in
 verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
 in einer anderen Struktur ist als <em>Newtype-Muster</em> bekannt, das wir im
-Abschnitt <a href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">„Verwenden des Newtype-Musters zum Implementieren von externen
-Merkmalen auf externen Typen“</a> ausführlicher beschreiben. Wir wollen
-Werte in Millimeter zu Werten in Meter addieren und die Implementierung von
-<code>Add</code> die Umrechnung korrekt durchführen lassen. Wir können <code>Add</code> für
-<code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code> implementieren, wie in Codeblock 20-16
-gezeigt.</p>
+Abschnitt <a href="#externe-merkmale-mit-dem-newtype-muster-implementieren">„Externe Merkmale mit dem Newtype-Muster implementieren“</a>
+ausführlicher beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter
+addieren und die Implementierung von <code>Add</code> die Umrechnung korrekt durchführen
+lassen. Wir können <code>Add</code> für <code>Millimeters</code> mit <code>Meters</code> als <code>Rhs</code>
+implementieren, wie in Codeblock 20-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -379,7 +378,7 @@ Verwenden des Merkmals erleichtert.</p>
 vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm einen
 Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
 ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.</p>
-<h3 id="eindeutiger-aufruf-von-methoden-mit-gleichem-namen"><a class="header" href="#eindeutiger-aufruf-von-methoden-mit-gleichem-namen">Eindeutiger Aufruf von Methoden mit gleichem Namen</a></h3>
+<h3 id="eindeutiger-aufruf-von-methoden-mit-identischen-namen"><a class="header" href="#eindeutiger-aufruf-von-methoden-mit-identischen-namen">Eindeutiger Aufruf von Methoden mit identischen Namen</a></h3>
 <p>Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
 die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
 daran, beide Merkmale auf einem Typ zu implementieren. Es ist auch möglich,
@@ -527,12 +526,11 @@ verwenden ist.</p>
 <code>self</code>-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
 nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
-<em>voll-qualifizierte Syntax</em>. In Codeblock 20-20 erstellen wir zum Beispiel
-ein Merkmal für ein Tierheim, das alle Hundebabys <em>Spot</em> nennen möchte. Wir
-erstellen ein Merkmal <code>Animal</code> mit einer assoziierten Nicht-Methodenfunktion
-<code>baby_name</code>. Das Merkmal <code>Animal</code> ist für die Struktur <code>Dog</code> implementiert, für
-die wir auch direkt eine assoziierte Nicht-Methodenfunktionen <code>baby_name</code>
-bereitstellen.</p>
+voll-qualifizierte Syntax. In Codeblock 20-20 erstellen wir zum Beispiel ein
+Merkmal für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
+ein Merkmal <code>Animal</code> mit einer assoziierten Nicht-Methodenfunktion <code>baby_name</code>.
+Das Merkmal <code>Animal</code> ist für die Struktur <code>Dog</code> implementiert, für die wir auch
+direkt eine assoziierte Nicht-Methodenfunktionen <code>baby_name</code> bereitstellen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">trait Animal {
     fn baby_name() -&gt; String;
@@ -614,11 +612,11 @@ Kompilierfehler erhalten:</p>
 error[E0790]: cannot call associated function on trait without specifying the corresponding `impl` type
   --&gt; src/main.rs:20:43
    |
-2  |     fn baby_name() -&gt; String;
+ 2 |     fn baby_name() -&gt; String;
    |     ------------------------- `Animal::baby_name` defined here
 ...
 20 |     println!("Ein Hundebaby wird {} genannt.", Animal::baby_name());
-   |                                                ^^^^^^^^^^^^^^^^^ cannot call associated function of trait
+   |                                                ^^^^^^^^^^^^^^^^^^^ cannot call associated function of trait
    |
 help: use the fully-qualified path to the only available implementation
    |
@@ -834,22 +832,21 @@ impl fmt::Display for Point {
 <p>Dann wird die Implementierung des Merkmals <code>OutlinePrint</code> auf <code>Point</code>
 erfolgreich kompilieren und wir können <code>outline_print</code> auf einer
 <code>Point</code>-Instanz aufrufen, um sie in Sternchen eingerahmt anzuzeigen.</p>
-<h3 id="verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen"><a class="header" href="#verwenden-des-newtype-musters-zum-implementieren-von-externen-merkmalen-auf-externen-typen">Verwenden des Newtype-Musters zum Implementieren von externen Merkmalen auf externen Typen</a></h3>
+<h3 id="externe-merkmale-mit-dem-newtype-muster-implementieren"><a class="header" href="#externe-merkmale-mit-dem-newtype-muster-implementieren">Externe Merkmale mit dem Newtype-Muster implementieren</a></h3>
 <p>In <a href="ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren">„Ein Merkmal für einen Typ implementieren“</a>
 in Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Merkmal nur dann
 auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
 oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
 Einschränkung zu umgehen, indem man das <em>Newtype-Muster</em> (newtype pattern)
 verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
-haben Tupelstrukturen in <a href="ch05-01-defining-structs.html#verwenden-von-tupel-strukturen-ohne-benannte-felder-um-verschiedene-typen-zu-erzeugen">„Verwenden von Tupel-Strukturen ohne benannte Felder
-um verschiedene Typen zu erzeugen“</a> in Kapitel 5 behandelt.) Die
-Tupelstruktur wird ein Feld haben und eine dünne Verpackung um den Typ sein,
-für den wir ein Merkmal implementieren wollen. Dann ist der Verpackungstyp
-lokal in unserer Kiste und wir können das Merkmal auf dem Verpackungstyp
-(wrapper type) implementieren. <em>Newtype</em> ist ein Begriff, der aus der
-Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es keine
-Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
-Kompilierzeit elidiert.</p>
+haben Tupelstrukturen in <a href="ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen">„Mit Tupel-Strukturen verschiedene Typen
+erzeugen“</a> in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
+Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
+implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
+wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
+<em>Newtype</em> ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
+Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
+und der Verpackungstyp wird zur Kompilierzeit elidiert.</p>
 <p>Nehmen wir als Beispiel an, wir wollen <code>Display</code> auf <code>Vec&lt;T&gt;</code> implementieren,
 was uns die Waisenregel direkt verbietet, weil das Merkmal <code>Display</code> und der
 Typ <code>Vec&lt;T&gt;</code> außerhalb unserer Kiste definiert sind. Wir können eine Struktur
@@ -885,11 +882,10 @@ an <code>self.0</code> delegieren, was uns erlauben würde, <code>Wrapper</code>
 inneren Typs hat, wäre die Implementierung des Merkmals <code>Deref</code> auf dem
 <code>Wrapper</code> eine Lösung, um den inneren Typ zurückzugeben (wir haben die
 Implementierung des Merkmals <code>Deref</code> in <a href="ch15-02-deref.html">„Intelligente Zeiger wie normale
-Referenzen behandeln mit dem Merkmal (trait) <code>Deref</code>“</a> in
-Kapitel 15 besprochen). Wenn wir nicht wollten, dass der <code>Wrapper</code>-Typ alle
-Methoden des inneren Typs hat – zum Beispiel, um das Verhalten des
-<code>Wrapper</code>-Typs einzuschränken – müssten wir nur die Methoden, die wir
-wollen, manuell implementieren.</p>
+Referenzen behandeln“</a> in Kapitel 15 besprochen). Wenn wir
+nicht wollten, dass der <code>Wrapper</code>-Typ alle Methoden des inneren Typs hat
+– zum Beispiel, um das Verhalten des <code>Wrapper</code>-Typs einzuschränken
+– müssten wir nur die Methoden, die wir wollen, manuell implementieren.</p>
 <p>Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
 sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
 Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.</p>

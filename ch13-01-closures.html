@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen - Die Programmiersprache Rust</title>
+        <title>Funktionsabschlüsse (closures) - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen"><a class="header" href="#funktionsabschlüsse-closures-anonyme-funktionen-die-ihre-umgebung-erfassen">Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen</a></h2>
+                        <h2 id="funktionsabschlüsse-closures"><a class="header" href="#funktionsabschlüsse-closures">Funktionsabschlüsse (closures)</a></h2>
 <p>Rusts Funktionsabschlüsse sind anonyme Funktionen, die du in einer Variable
 speichern oder anderen Funktionen als Argument übergeben kannst. Du kannst einen
 Funktionsabschluss erstellen und dann in einem anderen Zusammenhang aufrufen
@@ -169,7 +169,7 @@ und auswerten. Im Gegensatz zu Funktionen können Funktionsabschlüsse auf Werte
 (values) im Gültigkeitsbereich (scope) zugreifen, in dem sie erstellt wurden.
 Wir werden im Folgenden zeigen, wie die Funktionalität von Funktionsabschlüssen
 die Wiederverwendung von Code erlaubt und sein Verhalten anpassen kann.</p>
-<h3 id="erfassen-der-umgebung-mit-funktionsabschlüssen"><a class="header" href="#erfassen-der-umgebung-mit-funktionsabschlüssen">Erfassen der Umgebung mit Funktionsabschlüssen</a></h3>
+<h3 id="erfassen-der-umgebung"><a class="header" href="#erfassen-der-umgebung">Erfassen der Umgebung</a></h3>
 <p>Wir werden zunächst untersuchen, wie wir Funktionsabschlüsse verwenden können,
 um Werte aus der Umgebung, in der sie definiert sind, zur späteren Verwendung
 zu erfassen. Hier ist das Szenario: Von Zeit zu Zeit verschenkt unsere
@@ -188,7 +188,7 @@ repräsentiert, die ein Feld mit dem Namen <code>shirts</code> hat, das ein
 <code>Vec&lt;ShirtColor&gt;</code> mit den derzeit vorrätigen Hemden enthält. Die Methode
 <code>giveaway</code>, die auf <code>Inventory</code> definiert ist, erhält die optionale
 Shirtfarbe der Person, die das kostenlose Shirt erhält, und gibt die Shirtfarbe
-zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt:</p>
+zurück, die die Person erhalten wird. Dies wird in Codeblock 13-1 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug, PartialEq, Copy, Clone)]
 enum ShirtColor {
@@ -262,7 +262,7 @@ den beiden vertikalen Strichen erscheinen). Der Rumpf des Funktionsabschlusses
 ruft <code>self.most_stocked()</code> auf. Wir definieren den Funktionsabschluss hier, und
 die Implementierung von <code>unwrap_or_else</code> wird den Funktionsabschluss später
 auswerten, wenn das Ergebnis benötigt wird.</p>
-<p>Die Ausführung dieses Codes gibt aus:</p>
+<p>Die Ausführung dieses Codes gibt folgendes aus:</p>
 <pre><code class="language-console">$ cargo run
    Compiling shirt-company v0.1.0 (file:///projects/shirt-company)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
@@ -278,7 +278,7 @@ verwenden wollen, wissen. Der Funktionsabschluss hat eine unveränderbare
 Referenz auf die <code>self</code>-Instanz von <code>Inventory</code> erfasst und sie mit dem von uns
 angegebenen Code an die Methode <code>unwrap_or_else</code> übergeben. Funktionen sind
 andererseits nicht in der Lage, ihre Umgebung auf diese Weise zu erfassen.</p>
-<h3 id="funktionsabschluss-typinferenz-und-annotation"><a class="header" href="#funktionsabschluss-typinferenz-und-annotation">Funktionsabschluss-Typinferenz und Annotation</a></h3>
+<h3 id="herleiten-und-annotieren-von-funktionsabschluss-typen"><a class="header" href="#herleiten-und-annotieren-von-funktionsabschluss-typen">Herleiten und Annotieren von Funktionsabschluss-Typen</a></h3>
 <p>Es gibt weitere Unterschiede zwischen Funktionen und Funktionsabschlüssen. Bei
 Funktionsabschlüssen ist es normalerweise nicht erforderlich, die Typen der
 Parameter oder des Rückgabewertes zu annotieren, wie es bei <code>fn</code>-Funktionen der
@@ -385,9 +385,8 @@ error[E0308]: mismatched types
  --&gt; src/main.rs:5:29
   |
 5 |     let n = example_closure(5);
-  |             --------------- ^- help: try using a conversion method: `.to_string()`
-  |             |               |
-  |             |               expected `String`, found integer
+  |             --------------- ^ expected `String`, found integer
+  |             |
   |             arguments to this function are incorrect
   |
 note: expected because the closure was earlier called with an argument of type `String`
@@ -402,6 +401,10 @@ note: closure parameter defined here
   |
 2 |     let example_closure = |x| x;
   |                            ^
+help: try using a conversion method
+  |
+5 |     let n = example_closure(5.to_string());
+  |                              ++++++++++++
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
@@ -421,7 +424,7 @@ Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
 erfassten Werten macht.</p>
 <p>In Codeblock 13-4 definieren wir einen Funktionsabschluss, der eine
 unveränderbare Referenz an den Vektor mit dem Namen <code>list</code> erfasst, weil er
-nur eine unveränderbare Referenz benötigt, um den Wert auszugeben:</p>
+nur eine unveränderbare Referenz benötigt, um den Wert auszugeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let list = vec![1, 2, 3];
@@ -455,7 +458,7 @@ Nach dem Funktionsabschluss-Aufruf: [1, 2, 3]
 </code></pre>
 <p>In Codeblock 13-5 wird die Definition des Funktionsabschlusses so geändert,
 dass er ein Element zum Vektor <code>list</code> hinzufügt. Der Funktionsabschluss erfasst
-nun eine veränderbare Referenz:</p>
+nun eine veränderbare Referenz.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
     let mut list = vec![1, 2, 3];
@@ -498,7 +501,7 @@ sprechen, detailliert auf Stränge eingehen und erläutern, warum man sie
 verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
 Strangs mithilfe eines Funktionsabschlusses befassen, der das Schlüsselwort
 <code>move</code> benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor
-in einem neuen Strang statt im Hauptstrang auszugeben:</p>
+in einem neuen Strang statt im Hauptstrang auszugeben.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">use std::thread;
 
@@ -520,17 +523,18 @@ Referenz erfasst, weil das die kleinste Zugriffmenge auf <code>list</code> ist, 
 benötigt wird, um sie auszugeben. In diesem Beispiel müssen wir, obwohl der
 Funktionsabschluss-Rumpf nur eine unveränderbare Referenz benötigt, angeben,
 dass <code>list</code> in den Funktionsabschluss verschoben werden soll, indem wir das
-Schlüsselwort <code>move</code> an den Anfang der Funktionsabschlussdefinition setzen.
-Der neue Strang könnte beendet werden, bevor der Rest des Hauptstrangs beendet
-wird, oder der Hauptstrang könnte zuerst beendet werden. Wenn der Hauptstrang
-die Eigentümerschaft von <code>list</code> beibehält, aber vor dem neuen Strang endet und
-<code>list</code> aufräumt, wäre die unveränderbare Referenz im Strang ungültig. Daher
-verlangt der Compiler, dass <code>list</code> in den Funktionsabschluss im neuen Strang
-verschoben wird, damit die Referenz gültig bleibt. Versuche, das Schlüsselwort
-<code>move</code> zu entfernen oder <code>list</code> im Hauptstrang zu verwenden, nachdem der
-Funktionsabschluss definiert wurde, um zu sehen, welche Compilerfehler du
-erhältst!</p>
-<h3 id="verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen"><a class="header" href="#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen">Verschieben erfasster Werte aus Funktionsabschlüssen und <code>Fn</code>-Merkmalen</a></h3>
+Schlüsselwort <code>move</code> an den Anfang der Funktionsabschlussdefinition setzen.</p>
+<p>Wenn der Hauptstrang vor dem Aufruf von <code>join</code> für den neuen Strang weitere
+Operationen ausgeführt hat, könnte der neue Strang beendet werden, bevor der
+Rest des Hauptstrangs beendet wird, oder der Hauptstrang könnte zuerst beendet
+werden. Wenn der Hauptstrang die Eigentümerschaft von <code>list</code> beibehält, aber
+vor dem neuen Strang endet und <code>list</code> aufräumt, wäre die unveränderbare
+Referenz im Strang ungültig. Daher verlangt der Compiler, dass <code>list</code> in den
+Funktionsabschluss im neuen Strang verschoben wird, damit die Referenz gültig
+bleibt. Versuche, das Schlüsselwort <code>move</code> zu entfernen oder <code>list</code> im
+Hauptstrang zu verwenden, nachdem der Funktionsabschluss definiert wurde, um zu
+sehen, welche Compilerfehler du erhältst!</p>
+<h3 id="verschieben-erfasster-werte-aus-funktionsabschlüssen"><a class="header" href="#verschieben-erfasster-werte-aus-funktionsabschlüssen">Verschieben erfasster Werte aus Funktionsabschlüssen</a></h3>
 <p>Sobald ein Funktionsabschluss eine Referenz oder die Eigentümerschaft eines
 Werts aus der Umgebung, in der der Funktionsabschluss definiert ist, erfasst
 hat (und damit beeinflusst, was <em>in</em> den Funktionsabschluss verschoben wird),
@@ -548,24 +552,23 @@ und Strukturen angeben, welche Arten von Funktionsabschlüssen sie verwenden
 können. Funktionsabschlüsse implementieren automatisch eine, zwei oder alle
 drei dieser <code>Fn</code>-Merkmale, und zwar in additiver Weise, je nachdem, wie der
 Rumpf des Funktionsabschlusses die Werte behandelt:</p>
-<ol>
-<li><code>FnOnce</code> gilt für Funktionsabschlüsse, die einmal aufgerufen
-werden können. Alle Funktionsabschlüsse implementieren zumindest dieses
-Merkmal, weil alle Funktionsabschlüsse aufgerufen werden können. Ein
-Funktionsabschluss, der erfasste Werte aus seinem Rumpf herausverschiebt,
-implementiert nur <code>FnOnce</code> und keine der anderen <code>Fn</code>-Merkmale, weil er nur
-einmal aufgerufen werden kann.</li>
-<li><code>FnMut</code> gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus
-ihrem Rumpf herausverschieben, aber die erfassten Werte möglicherweise
-verändern. Diese Funktionsabschlüsse können mehr als einmal aufgerufen
-werden.</li>
+<ul>
+<li><code>FnOnce</code> gilt für Funktionsabschlüsse, die einmal aufgerufen werden können.
+Alle Funktionsabschlüsse implementieren zumindest dieses Merkmal, weil alle
+Funktionsabschlüsse aufgerufen werden können. Ein Funktionsabschluss, der
+erfasste Werte aus seinem Rumpf herausverschiebt, implementiert nur <code>FnOnce</code>
+und keine der anderen <code>Fn</code>-Merkmale, weil er nur einmal aufgerufen werden
+kann.</li>
+<li><code>FnMut</code> gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
+Rumpf herausverschieben, aber die erfassten Werte möglicherweise verändern.
+Diese Funktionsabschlüsse können mehr als einmal aufgerufen werden.</li>
 <li><code>Fn</code> gilt für Funktionsabschlüsse, die die erfassten Werte nicht aus ihrem
 Rumpf herausverschieben und die erfassten Werte nicht verändern, sowie
 Funktionsabschlüsse, die nichts aus ihrer Umgebung erfassen. Diese
 Funktionsabschlüsse können mehr als einmal aufgerufen werden, ohne ihre
 Umgebung zu verändern, was wichtig ist, wenn z.B. ein Funktionsabschluss
 mehrere Male gleichzeitig aufgerufen wird.</li>
-</ol>
+</ul>
 <p>Schauen wir uns die Definition der Methode <code>unwrap_or_else</code> auf <code>Option&lt;T&gt;</code> an,
 die wir in Codeblock 13-1 verwendet haben:</p>
 <pre><code class="language-rust ignore">impl&lt;T&gt; Option&lt;T&gt; {
@@ -590,15 +593,15 @@ Parameters namens <code>f</code>, der der Funktionsabschluss ist, den wir beim A
 <p>Die für den generischen Typ <code>F</code> spezifizierte Merkmalsabgrenzung ist <code>FnOnce() -&gt; T</code>, was bedeutet, dass <code>F</code> mindestens einmal aufgerufen werden können muss,
 keine Argumente annimmt und ein <code>T</code> zurückgeben muss. Die Verwendung von
 <code>FnOnce</code> in der Merkmalsabgrenzung drückt die Einschränkung aus, dass
-<code>unwrap_or_else</code> <code>f</code> höchstens ein Mal aufrufen wird. Im Rumpf von
+<code>unwrap_or_else</code> <code>f</code> nicht mehr als ein Mal aufrufen wird. Im Rumpf von
 <code>unwrap_or_else</code> können wir sehen, dass, wenn die <code>Option</code> <code>Some</code> ist, <code>f</code>
 nicht aufgerufen wird. Wenn die <code>Option</code> <code>None</code> ist, wird <code>f</code> einmal
 aufgerufen. Da alle Funktionsabschlüsse <code>FnOnce</code> implementieren, akzeptiert
 <code>unwrap_or_else</code> alle drei Arten von Funktionsabschlüssen und ist so flexibel
 wie nur möglich.</p>
 <blockquote>
-<p>Anmerkung: Wenn das, was wir tun wollen, keine Erfassung eines Wertes aus der
-Umgebung erfordert, können wir den Namen einer Funktion anstelle eines
+<p>Anmerkung: Wenn das, was wir tun wollen, keine Werte aus der Umgebung
+erfassen muss, können wir einen Funktionsnamen anstelle eines
 Funktionsabschlüsses verwenden. Zum Beispiel könnten wir
 <code>unwrap_or_else(Vec::new)</code> auf einem <code>Option&lt;Vec&lt;T&gt;&gt;</code>-Wert aufrufen, um einen
 neuen, leeren Vektor zu erhalten, wenn der Wert <code>None</code> ist. Der Compiler
@@ -661,7 +664,7 @@ er die Anforderungen der Merkmalsabgrenzung erfüllt.</p>
 <p>Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen
 Funktionsabschluss, der nur das Merkmal <code>FnOnce</code> implementiert, weil er einen
 Wert aus der Umgebung verschiebt. Der Compiler lässt uns diesen
-Funktionsabschluss nicht mit <code>sort_by_key</code> verwenden:</p>
+Funktionsabschluss nicht mit <code>sort_by_key</code> verwenden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">#[derive(Debug)]
 struct Rectangle {
@@ -707,12 +710,14 @@ error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` clos
   --&gt; src/main.rs:18:30
    |
 15 |     let value = String::from("Funktionsabschluss aufgerufen");
-   |         ----- captured outer variable
+   |         -----   --------------------------------------------- move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |         |
+   |         captured outer variable
 16 |
 17 |     list.sort_by_key(|r| {
    |                      --- captured by this `FnMut` closure
 18 |         sort_operations.push(value);
-   |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |                              ^^^^^ `value` is moved here
    |
 help: consider cloning the value if the performance cost is acceptable
    |
@@ -730,7 +735,7 @@ Wert im Funktionsabschluss-Rumpf zu erhöhen, um zu zählen, wie oft
 <code>sort_by_key</code> aufgerufen wurde. Der Funktionsabschluss in Codeblock 13-9
 funktioniert mit <code>sort_by_key</code>, weil er nur eine veränderbare Referenz auf den
 <code>num_sort_operations</code>-Zähler erfasst und daher mehr als einmal aufgerufen
-werden kann:</p>
+werden kann.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024">#[derive(Debug)]
 struct Rectangle {

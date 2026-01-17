@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) Send und Sync - Die Programmiersprache Rust</title>
+        <title>Erweiterbare Nebenläufigkeit mit Send und Sync - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-send-und-sync"><a class="header" href="#erweiterbare-nebenläufigkeit-mit-den-merkmalen-traits-send-und-sync">Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) <code>Send</code> und <code>Sync</code></a></h2>
+                        <h2 id="erweiterbare-nebenläufigkeit-mit-send-und-sync"><a class="header" href="#erweiterbare-nebenläufigkeit-mit-send-und-sync">Erweiterbare Nebenläufigkeit mit <code>Send</code> und <code>Sync</code></a></h2>
 <p>Interessanterweise war fast jede Nebenläufigkeitsfunktionalität, über die wir
 bisher in diesem Kapitel gesprochen haben, Teil der Standardbibliothek, nicht
 der Sprache. Deine Möglichkeiten für den Umgang mit Nebenläufigkeit sind nicht
@@ -169,9 +169,9 @@ auf die Sprache oder die Standardbibliothek beschränkt; du kannst deine eigenen
 Nebenläufigkeitsfunktionalitäten schreiben oder die von anderen geschriebenen
 verwenden.</p>
 <p>Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
-die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale <code>Send</code> und
-<code>Sync</code> in <code>std::marker</code>.</p>
-<h3 id="erlauben-der-eigentümerschaftübertragung-zwischen-strängen-mit-send"><a class="header" href="#erlauben-der-eigentümerschaftübertragung-zwischen-strängen-mit-send">Erlauben der Eigentümerschaftübertragung zwischen Strängen mit <code>Send</code></a></h3>
+die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale (traits)
+<code>Send</code> und <code>Sync</code> in <code>std::marker</code>.</p>
+<h3 id="übertragen-der-eigentümerschaft-zwischen-strängen"><a class="header" href="#übertragen-der-eigentümerschaft-zwischen-strängen">Übertragen der Eigentümerschaft zwischen Strängen</a></h3>
 <p>Das Markierungsmerkmal (marker trait) <code>Send</code> zeigt an, dass die
 Eigentümerschaft an Werten des Typs, der <code>Send</code> implementiert, zwischen
 Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ implementiert
@@ -191,7 +191,7 @@ sich der Code kompilieren.</p>
 <p>Jeder Typ, der vollständig aus <code>Send</code>-Typen besteht, wird automatisch auch als
 <code>Send</code> markiert. Fast alle primitiven Typen implementieren <code>Send</code>, abgesehen
 von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.</p>
-<h3 id="erlauben-des-zugriffs-von-mehreren-strängen-mit-sync"><a class="header" href="#erlauben-des-zugriffs-von-mehreren-strängen-mit-sync">Erlauben des Zugriffs von mehreren Strängen mit <code>Sync</code></a></h3>
+<h3 id="zugriff-von-mehreren-strängen"><a class="header" href="#zugriff-von-mehreren-strängen">Zugriff von mehreren Strängen</a></h3>
 <p>Das Markierungsmerkmal <code>Sync</code> zeigt an, dass es sicher ist, den Typ, der <code>Sync</code>
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
 jeder Typ <code>T</code> implementiert <code>Sync</code>, wenn <code>&amp;T</code> (eine unveränderbare Referenz auf
@@ -206,8 +206,8 @@ denselben Gründen, warum er nicht <code>Send</code> implementiert. Der Typ <cod
 Ausleihenprüfung (borrow checking), die <code>RefCell&lt;T&gt;</code> zur Laufzeit durchführt,
 ist nicht Strang-sicher. Der intelligente Zeiger <code>Mutex&lt;T&gt;</code> implementiert
 <code>Sync</code> und kann verwendet werden, um den Zugriff mit mehreren Strängen zu
-teilen, wie du in <a href="ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen">„Gemeinsames Nutzen eines <code>Mutex&lt;T&gt;</code> von mehreren
-Strängen“</a> gesehen hast.</p>
+teilen, wie du in <a href="ch16-03-shared-state.html#gemeinsamer-zugriff-auf-mutext">„Gemeinsamer Zugriff auf <code>Mutex&lt;T&gt;</code>“</a>
+gesehen hast.</p>
 <h3 id="manuelles-implementieren-von-send-und-sync-ist-unsicher"><a class="header" href="#manuelles-implementieren-von-send-und-sync-ist-unsicher">Manuelles Implementieren von <code>Send</code> und <code>Sync</code> ist unsicher</a></h3>
 <p>Da Typen, die sich ausschließlich aus Typen zusammensetzen, die die Merkmale
 <code>Send</code> und <code>Sync</code> implementieren, automatisch auch <code>Send</code> und <code>Sync</code>

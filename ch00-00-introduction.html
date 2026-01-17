@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -168,7 +168,7 @@ Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch – Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z. B. Speichernutzung) zu kontrollieren, ohne
+Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
 den ganzen Ärger, der damit typischerweise einhergeht.</p>
 <h2 id="für-wen-rust-ist"><a class="header" href="#für-wen-rust-ist">Für wen Rust ist</a></h2>
 <p>Rust ist für viele Menschen aus einer Vielzahl von Gründen ideal. Schauen wir
@@ -189,10 +189,11 @@ Systemprogrammierung:</p>
 <li>Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
 Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
 Rust-Ökosystem schmerzlos und konsistent.</li>
-<li>Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei
+<li>Das Formatierungstool <code>rustfmt</code> sorgt für einen einheitlichen Codierstil bei
 den Entwicklern.</li>
-<li>Der rust-analyzer ermöglicht Codevervollständigung und im Code angezeigte
-Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).</li>
+<li>Der Rust-Sprachserver (Rust Language Server) ermöglicht Codevervollständigung
+und im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung
+(IDE).</li>
 </ul>
 <p>Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können
 Entwickler produktiv arbeiten, während sie Code auf Systemebene schreiben.</p>
@@ -251,57 +252,57 @@ Projektkapitel. In Konzeptkapiteln erfährst du etwas über einen Aspekt von
 Rust. In Projektkapiteln schreiben wir gemeinsam kleine Programme und wenden
 das bisher Gelernte an. Die Kapitel 2, 12 und 21 sind Projektkapitel; die
 übrigen sind Konzeptkapitel.</p>
-<p>Kapitel 1 erklärt, wie man Rust installiert, wie man ein „Hallo Welt“-Programm
-schreibt und wie man Cargo, den Paketmanager und das Bauwerkzeug von Rust,
-benutzt. Kapitel 2 ist eine praktische Einführung in die Sprache Rust. Hier
-werden Konzepte auf hohem Niveau behandelt, spätere Kapitel werden zusätzliche
-Einzelheiten liefern. Wenn du dir schon jetzt die Hände schmutzig machen
-willst, dann ist Kapitel 2 der richtige Ort dafür. Zunächst willst du
-vielleicht sogar Kapitel 3 überspringen, in dem es um Rust-Funktionen geht, die
-denen anderer Programmiersprachen ähneln, und direkt zu Kapitel 4 übergehen, um
-mehr über den Eigentümerschaftsansatz von Rust zu erfahren. Wenn du jedoch ein
-besonders akribischer Lerner bist, der lieber erst jedes Detail lernen will,
-bevor er zum nächsten übergeht, willst du vielleicht Kapitel 2 überspringen und
-direkt zu Kapitel 3 gehen und danach zu Kapitel 2 zurückkehren, um dann an
-einem Projekt zu arbeiten und die gelernten Details anzuwenden.</p>
-<p>Kapitel 5 bespricht Strukturen und Methoden, und Kapitel 6 behandelt
-Aufzählungen, <code>match</code>-Ausdrücke und das <code>if let</code>-Kontrollflusskonstrukt. Du
-wirst Strukturen und Aufzählungen verwenden, um benutzerdefinierte Typen in
-Rust zu erstellen.</p>
-<p>In Kapitel 7 erfährst du mehr über das Modulsystem von Rust und über die
+<p><strong>Kapitel 1</strong> erklärt, wie man Rust installiert, wie man ein „Hallo
+Welt“-Programm schreibt und wie man Cargo, den Paketmanager und das Bauwerkzeug
+von Rust, benutzt. <strong>Kapitel 2</strong> ist eine praktische Einführung in die Sprache
+Rust. Hier werden Konzepte auf hohem Niveau behandelt, spätere Kapitel werden
+zusätzliche Einzelheiten liefern. Wenn du dir schon jetzt die Hände schmutzig
+machen willst, dann ist Kapitel 2 der richtige Ort dafür. Wenn du ein besonders
+akribischer Lerner bist, der es vorzieht, jedes Detail zu lernen, bevor er zum
+nächsten übergeht, solltest du vielleicht Kapitel 2 überspringen und direkt zu
+<strong>Kapitel 3</strong> übergehen, das Rust-Funktionen behandelt, die denen anderer
+Programmiersprachen ähneln. Anschließend kannst du zu Kapitel 2 zurückkehren,
+wenn du an einem Projekt arbeiten möchtest, bei dem du die gelernten Details
+anwenden kannst.</p>
+<p>In <strong>Kapitel 4</strong> lernst du den Eigentümerschaftsansatz von Rust kennen.
+<strong>Kapitel 5</strong> bespricht Strukturen und Methoden, und <strong>Kapitel 6</strong> behandelt
+Aufzählungen, <code>match</code>-Ausdrücke und die Kontrollflusskonstrukte <code>if let</code> und
+<code>let...else</code>. Du wirst Strukturen und Aufzählungen verwenden, um
+benutzerdefinierte Typen zu erstellen.</p>
+<p>In <strong>Kapitel 7</strong> erfährst du mehr über das Modulsystem von Rust und über die
 Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
-zugängliche Programmierschnittstelle (API). In Kapitel 8 werden einige gängige
-Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung stellt,
-behandelt, z. B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
-sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.</p>
-<p>Kapitel 10 vertieft generische Datentypen, Merkmale und Lebensdauern, die dir
-die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
-Kapitel 11 dreht sich alles um das Testen, das selbst mit den
+zugängliche Programmierschnittstelle (API). In <strong>Kapitel 8</strong> werden einige
+gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
+stellt, behandelt: Vektoren, Zeichenketten und Hashtabellen. <strong>Kapitel 9</strong>
+befasst sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.</p>
+<p><strong>Kapitel 10</strong> vertieft generische Datentypen, Merkmale und Lebensdauern, die
+dir die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
+<strong>Kapitel 11</strong> dreht sich alles um das Testen, das selbst mit den
 Sicherheitsgarantien von Rust erforderlich ist, um eine korrekte Logik deines
-Programms sicherzustellen. In Kapitel 12 werden wir unsere eigene
+Programms sicherzustellen. In <strong>Kapitel 12</strong> werden wir unsere eigene
 Implementierung für eine Teilfunktionalität des Kommandozeilenwerkzeugs <code>grep</code>
 schreiben, das nach Text in Dateien sucht. Dazu werden wir viele Konzepte
 anwenden, die wir in den vorangegangenen Kapiteln kennengelernt haben.</p>
-<p>Kapitel 13 befasst sich mit Funktionsabschlüssen und Iteratoren, also
-Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In Kapitel
-14 werden wir einen genaueren Blick auf Cargo werfen und über bewährte
+<p><strong>Kapitel 13</strong> befasst sich mit Funktionsabschlüssen und Iteratoren, also
+Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In <strong>Kapitel
+14</strong> werden wir einen genaueren Blick auf Cargo werfen und über bewährte
 Vorgehensweisen beim Bereitstellen deiner Bibliotheken für andere sprechen. In
-Kapitel 15 werden intelligente Zeiger, die die Standardbibliothek bereitstellt,
-und Merkmale, die ihre Funktionalität ermöglichen, erörtert.</p>
-<p>In Kapitel 16 gehen wir durch verschiedene Modelle der nebenläufigen
+<strong>Kapitel 15</strong> werden intelligente Zeiger, die die Standardbibliothek
+bereitstellt, und Merkmale, die ihre Funktionalität ermöglichen, erörtert.</p>
+<p>In <strong>Kapitel 16</strong> gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. In Kapitel 17 bauen wir darauf auf, indem wir die
-async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Strängen zu programmieren. In <strong>Kapitel 17</strong> bauen wir darauf auf, indem wir
+die async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
 Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
 ermöglichen, untersuchen.</p>
-<p>Kapitel 18 befasst sich mit dem Vergleich von Rust-Idiomen mit
+<p><strong>Kapitel 18</strong> befasst sich mit dem Vergleich von Rust-Idiomen mit
 objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
-bist. Kapitel 19 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
-mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 20
-enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
-unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen, Funktionen
-und Funktionsabschlüssen.</p>
-<p>In Kapitel 21 werden wir ein Projekt abschließen, bei dem wir einen
+bist. <strong>Kapitel 19</strong> ist ein Nachschlagewerk zu Muster und Musterabgleich,
+einem mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. <strong>Kapitel
+20</strong> enthält ein Sammelsurium an interessanten fortgeschrittenen Themen,
+darunter unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen,
+Funktionen und Funktionsabschlüssen.</p>
+<p>In <em>Kapitel 21</em> werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!</p>
 <p>Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
 in einem eher referenzartigen Format. <strong>Anhang A</strong> enthält die Schlüsselwörter
@@ -321,8 +322,10 @@ werden wir viele Beispiele bringen, die nicht kompilieren, zusammen mit der
 jeweiligen Fehlermeldung des Compilers. Wenn du also ein zufälliges Beispiel
 eingibst und ausführen willst, lässt es sich möglicherweise nicht kompilieren!
 Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
-Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt
-dir einen Hinweis bei Code, der nicht funktionieren soll:</p>
+Beispiel, das du ausführen willst, einen Fehler zeigen soll. In den meisten
+Fällen führen wir dich von einem Code, der nicht kompiliert, zur
+funktionierenden Codeversion. Ferris gibt dir einen Hinweis bei Code, der nicht
+funktionieren soll:</p>
 <div class="table-wrapper">
 <table>
 <thead>

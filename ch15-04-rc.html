@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -191,7 +191,7 @@ Eigentumsregeln, die zur Kompilierzeit sichergestellt werden, würden wirksam.</
 werden kann. Wenn wir in Kapitel 16 auf Nebenläufigkeit (concurrency) eingehen,
 werden wir uns mit der Referenzzählung in mehrsträngigen (multi-threaded)
 Programmen befassen.</p>
-<h3 id="rct-zur-gemeinsamen-nutzung-von-daten-verwenden"><a class="header" href="#rct-zur-gemeinsamen-nutzung-von-daten-verwenden"><code>Rc&lt;T&gt;</code> zur gemeinsamen Nutzung von Daten verwenden</a></h3>
+<h3 id="daten-gemeinsam-nutzen"><a class="header" href="#daten-gemeinsam-nutzen">Daten gemeinsam nutzen</a></h3>
 <p>Kehren wir zu unserem Beispiel mit der Cons-Liste in Codeblock 15-5 zurück.
 Denke daran, dass wir sie mit <code>Box&lt;T&gt;</code> definiert haben. Dieses Mal erstellen
 wir zwei Listen, die beide gemeinsam eine dritte Liste besitzen. Konzeptionell
@@ -228,12 +228,21 @@ Liste zu teilen</span></p>
 error[E0382]: use of moved value: `a`
   --&gt; src/main.rs:11:30
    |
-9  |     let a = Cons(5, Box::new(Cons(10, Box::new(Nil))));
+ 9 |     let a = Cons(5, Box::new(Cons(10, Box::new(Nil))));
    |         - move occurs because `a` has type `List`, which does not implement the `Copy` trait
 10 |     let b = Cons(3, Box::new(a));
    |                              - value moved here
 11 |     let c = Cons(4, Box::new(a));
    |                              ^ value used here after move
+   |
+note: if `List` implemented `Clone`, you could clone the value
+  --&gt; src/main.rs:1:1
+   |
+ 1 | enum List {
+   | ^^^^^^^^^ consider implementing `Clone` for this type
+...
+10 |     let b = Cons(3, Box::new(a));
+   |                              - you could clone this value
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `cons-list` (bin "cons-list") due to 1 previous error
@@ -292,7 +301,7 @@ den Arten von Klonen mit tiefer Kopie und Klonen, die den Referenzzähler
 erhöhen, unterscheiden. Bei der Suche nach Performanzproblemen im Code müssen
 wir nur die Klone mit tiefer Kopie berücksichtigen und können die Aufrufe von
 <code>Rc::clone</code> ignorieren.</p>
-<h3 id="klonen-von-rct-erhöht-den-referenzzähler"><a class="header" href="#klonen-von-rct-erhöht-den-referenzzähler">Klonen von <code>Rc&lt;T&gt;</code> erhöht den Referenzzähler</a></h3>
+<h3 id="klonen-erhöht-den-referenzzähler"><a class="header" href="#klonen-erhöht-den-referenzzähler">Klonen erhöht den Referenzzähler</a></h3>
 <p>Lass uns unser Arbeitsbeispiel in Codeblock 15-18 ändern, damit sich die
 Referenzanzahl ändert, wenn wir Referenzen auf <code>Rc&lt;List&gt;</code> in <code>a</code> erstellen
 und aufräumen.</p>
@@ -308,7 +317,9 @@ wenn <code>c</code> den Gültigkeitsbereich verlässt.</p>
 </span><span class="boring">use crate::List::{Cons, Nil};
 </span><span class="boring">use std::rc::Rc;
 </span><span class="boring">
-</span>fn main() {
+</span>// --abschneiden--
+
+fn main() {
     let a = Rc::new(Cons(5, Rc::new(Cons(10, Rc::new(Nil)))));
     println!("Zähler nach der Erstellung von a = {}", Rc::strong_count(&amp;a));
     let b = Cons(3, Rc::clone(&amp;a));

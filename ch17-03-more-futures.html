@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Arbeiten mit einer beliebigen Anzahl von Futures - Die Programmiersprache Rust</title>
+        <title>Abgeben (yielding) der Kontrolle an die Laufzeitumgebung - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,592 +161,14 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="arbeiten-mit-einer-beliebigen-anzahl-von-futures"><a class="header" href="#arbeiten-mit-einer-beliebigen-anzahl-von-futures">Arbeiten mit einer beliebigen Anzahl von Futures</a></h2>
-<p>Als wir im vorigen Abschnitt von zwei auf drei Futures umgestellt haben,
-mussten wir auch von <code>join</code> auf <code>join3</code> umstellen. Es wäre lästig, jedes Mal
-eine andere Funktion aufrufen zu müssen, wenn wir die Anzahl der Futures, auf
-die wir warten wollen, ändern. Glücklicherweise gibt es eine Makroform von
-<code>join</code>, an die wir eine beliebige Anzahl von Argumenten übergeben können. Es
-kümmert sich auch um das Warten auf die Futures. Wir könnten also den Code aus
-Codeblock 17-13 umschreiben, um <code>join!</code> anstelle von <code>join3</code> zu verwenden, wie
-in Codeblock 17-14.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span><span class="boring">        let tx1_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx1.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("Erhalten: '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let tx_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span>        trpl::join!(tx1_fut, tx_fut, rx_fut);
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-14: Verwenden von <code>join!</code> zum Warten auf
-mehrere Futures</span></p>
-<p>Das ist definitiv eine Verbesserung gegenüber dem Wechsel zwischen <code>join</code> und
-<code>join3</code> und <code>join4</code> und so weiter! Allerdings funktioniert auch diese Makroform
-nur, wenn wir die Anzahl der Futures im Voraus kennen. In der realen Rust-Welt
-ist es jedoch ein gängiges Muster, Futures in eine Kollektion (collection) zu
-geben und dann darauf zu warten, dass einige oder alle Futures fertig werden.</p>
-<p>Um alle Futures in einer Kollektion zu prüfen, müssen wir über <em>alle</em> Futures
-iterieren und sie verbinden. Die Funktion <code>trpl::join_all</code> akzeptiert jeden
-Typ, der das Merkmal <code>Iterator</code> implementiert, das wir in <a href="ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next">„Das Merkmal (trait)
-<code>Iterator</code> und die Methode <code>next</code>“</a> in Kapitel 13 kennengelernt
-haben, also scheint sie genau das Richtige zu sein. Lass uns versuchen, unsere
-Futures in einen Vektor zu packen und <code>join!</code> durch <code>join_all</code> zu ersetzen, wie
-in Codeblock 17-15 gezeigt.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span><span class="boring">        let tx1_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx1.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("Erhalten: '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let tx_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span>        let futures = vec![tx1_fut, rx_fut, tx_fut];
-
-        trpl::join_all(futures).await;
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-15: Speichern anonymer Futures in einem
-Vektor und Aufrufen von <code>join_all</code></span></p>
-<p>Leider lässt sich dieser Code nicht kompilieren. Stattdessen erhalten wir
-diesen Fehler:</p>
-<pre><code class="language-text">error[E0308]: mismatched types
-  --&gt; src/main.rs:45:37
-   |
-10 |         let tx1_fut = async move {
-   |                       ---------- the expected `async` block
-...
-24 |         let rx_fut = async {
-   |                      ----- the found `async` block
-...
-45 |         let futures = vec![tx1_fut, rx_fut, tx_fut];
-   |                                     ^^^^^^ expected `async` block, found a different `async` block
-   |
-   = note: expected `async` block `{async block@src/main.rs:10:23: 10:33}`
-              found `async` block `{async block@src/main.rs:24:22: 24:27}`
-   = note: no two async blocks, even if identical, have the same type
-   = help: consider pinning your async block and casting it to a trait object
-</code></pre>
-<p>Das mag überraschend sein. Schließlich gibt keiner der asynchronen Blöcke etwas
-zurück, sodass jeder Block ein <code>Future&lt;Output = ()&gt;</code> erzeugt. Denke jedoch
-daran, dass <code>Future</code> ein Merkmal ist und dass der Compiler für jeden
-asynchronen Block eine eigene Aufzählung erstellt. Man kann nicht zwei
-verschiedene handgeschriebene Strukturen in einen <code>Vec</code> packen. Dieselbe Regel
-gilt für die verschiedenen vom Compiler erzeugten Strukturen.</p>
-<p>Damit dies funktioniert, müssen wir <em>Merkmalsobjekte</em> (trait objects)
-verwenden, wie wir es in <a href="ch12-03-improving-error-handling-and-modularity.html#rückgabe-von-fehlern-aus-der-funktion-run">„Rückgabe von Fehlern aus der Funktion <code>run</code>“</a>
-in Kapitel 12 getan haben. (Wir werden Merkmalsobjekte im Detail in Kapitel 18
-behandeln.) Die Verwendung von Merkmalsobjekten ermöglicht es uns, alle
-anonymen Futures, die von diesen Typen erzeugt werden, als denselben Typ zu
-behandeln, da alle von ihnen das Merkmal <code>Future</code> implementieren.</p>
-<blockquote>
-<p>Anmerkung: In <a href="ch08-01-vectors.html#verwenden-einer-aufzählung-zum-speichern-mehrerer-typen">„Verwenden einer Aufzählung zum Speichern mehrerer
-Typen“</a> in Kapitel 8 haben wir eine andere Möglichkeit besprochen,
-mehrere Typen in einem <code>Vec</code> aufzunehmen: Verwenden eines Enums, um jeden
-Typ, der im Vektor vorkommen kann, zu repräsentieren. Das können wir hier
-allerdings nicht tun. Zum einen haben wir keine Möglichkeit, die
-verschiedenen Typen zu benennen, da sie anonym sind. Zum anderen war der
-Grund, warum wir uns überhaupt für einen Vektor und <code>join_all</code> entschieden
-haben, dass wir mit einer dynamischen Kollektion von Futures arbeiten
-wollten, wobei wir nur darauf achten, dass sie denselben Ausgabetyp haben.</p>
-</blockquote>
-<p>Wir beginnen, indem wir jedes Future in <code>vec!</code> in eine <code>Box::new</code> packen, wie
-in Codeblock 17-16 gezeigt.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span><span class="boring">        let tx1_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx1.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("Erhalten: '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let tx_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span>        let futures =
-            vec![Box::new(tx1_fut), Box::new(rx_fut), Box::new(tx_fut)];
-
-        trpl::join_all(futures).await;
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-16: Verwenden von <code>Box::new</code>, um die Typen
-der Futures in einen <code>Vec</code> zu bringen</span></p>
-<p>Leider lässt sich dieser Code immer noch nicht kompilieren. Tatsächlich
-erhalten wir den gleichen grundlegenden Fehler wie zuvor, aber wir bekommen
-einen für den zweiten und dritten Aufruf von <code>Box::new</code>, sowie neue Fehler, die
-sich auf das Merkmal <code>Unpin</code> beziehen. Wir werden gleich auf die <code>Unpin</code>-Fehler
-zurückkommen. Lass uns zunächst die Typ-Fehler bei den Aufrufen von <code>Box::new</code>
-beheben, indem wir den Typ der Variable <code>futures</code> explizit annotieren, siehe
-Codeblock 17-17.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{future::Future, time::Duration};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span><span class="boring">        let tx1_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx1.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("Erhalten: '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span><span class="boring">        let tx_fut = async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        };
-</span><span class="boring">
-</span>        let futures: Vec&lt;Box&lt;dyn Future&lt;Output = ()&gt;&gt;&gt; =
-            vec![Box::new(tx1_fut), Box::new(rx_fut), Box::new(tx_fut)];
-
-<span class="boring">        trpl::join_all(futures).await;
-</span><span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-17: Beheben der restlichen Typfehler durch
-Verwenden einer expliziten Typdeklaration</span></p>
-<p>Diese Typdeklaration ist ein wenig kompliziert, also gehen wir sie Stück für
-Stück durch:</p>
-<ol>
-<li>Der innerste Typ ist das Future selbst. Wir geben explizit an, dass das
-Ergebnis des Future der Einheitstyp <code>()</code> ist, indem wir <code>Future&lt;Output = ()&gt;</code> schreiben.</li>
-<li>Dann annotieren wir das Merkmal mit <code>dyn</code>, um es als dynamisch zu
-kennzeichnen.</li>
-<li>Die gesamte Merkmals-Referenz wird in eine <code>Box</code> gepackt.</li>
-<li>Schließlich geben wir explizit an, dass <code>futures</code> ein <code>Vec</code> ist, der diese
-Elemente enthält.</li>
-</ol>
-<p>Das hat bereits einen großen Unterschied gemacht. Wenn wir nun den Compiler
-laufen lassen, bekommen wir nur noch die <code>Unpin</code>-Fehler. Obwohl es drei davon
-gibt, ist ihr Inhalt sehr ähnlich.</p>
-<pre><code class="language-text">error[E0277]: `dyn Future&lt;Output = ()&gt;` cannot be unpinned
-   --&gt; src/main.rs:49:24
-    |
-49  |         trpl::join_all(futures).await;
-    |         -------------- ^^^^^^^ the trait `Unpin` is not implemented for `dyn Future&lt;Output = ()&gt;`
-    |         |
-    |         required by a bound introduced by this call
-    |
-    = note: consider using the `pin!` macro
-            consider using `Box::pin` if you need to access the pinned value outside of the current scope
-    = note: required for `Box&lt;dyn Future&lt;Output = ()&gt;&gt;` to implement `Future`
-note: required by a bound in `join_all`
-   --&gt; file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:105:14
-    |
-102 | pub fn join_all&lt;I&gt;(iter: I) -&gt; JoinAll&lt;I::Item&gt;
-    |        -------- required by a bound in this function
-...
-105 |     I::Item: Future,
-    |              ^^^^^^ required by this bound in `join_all`
-
-error[E0277]: `dyn Future&lt;Output = ()&gt;` cannot be unpinned
-  --&gt; src/main.rs:49:9
-   |
-49 |         trpl::join_all(futures).await;
-   |         ^^^^^^^^^^^^^^^^^^^^^^^ the trait `Unpin` is not implemented for `dyn Future&lt;Output = ()&gt;`
-   |
-   = note: consider using the `pin!` macro
-           consider using `Box::pin` if you need to access the pinned value outside of the current scope
-   = note: required for `Box&lt;dyn Future&lt;Output = ()&gt;&gt;` to implement `Future`
-note: required by a bound in `futures_util::future::join_all::JoinAll`
-  --&gt; file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
-   |
-27 | pub struct JoinAll&lt;F&gt;
-   |            ------- required by a bound in this struct
-28 | where
-29 |     F: Future,
-   |        ^^^^^^ required by this bound in `JoinAll`
-
-error[E0277]: `dyn Future&lt;Output = ()&gt;` cannot be unpinned
-  --&gt; src/main.rs:49:33
-   |
-49 |         trpl::join_all(futures).await;
-   |                                 ^^^^^ the trait `Unpin` is not implemented for `dyn Future&lt;Output = ()&gt;`
-   |
-   = note: consider using the `pin!` macro
-           consider using `Box::pin` if you need to access the pinned value outside of the current scope
-   = note: required for `Box&lt;dyn Future&lt;Output = ()&gt;&gt;` to implement `Future`
-note: required by a bound in `futures_util::future::join_all::JoinAll`
-  --&gt; file:///home/.cargo/registry/src/index.crates.io-1949cf8c6b5b557f/futures-util-0.3.30/src/future/join_all.rs:29:8
-   |
-27 | pub struct JoinAll&lt;F&gt;
-   |            ------- required by a bound in this struct
-28 | where
-29 |     F: Future,
-   |        ^^^^^^ required by this bound in `JoinAll`
-
-For more information about this error, try `rustc --explain E0277`.
-error: could not compile `async_await` (bin "async_await") due to 3 previous errors
-</code></pre>
-<p>Das ist <em>viel</em> zu verdauen, also lass uns das auseinandernehmen. Der erste Teil
-der Meldung sagt uns, dass der erste asynchrone Block (<code>src/main.rs:8:23:  20:10</code>) das Merkmal <code>Unpin</code> nicht implementiert, und schlägt vor, <code>pin!</code> oder
-<code>Box::pin</code> zu verwenden, um das Problem zu lösen. Später in diesem Kapitel
-werden wir uns mit weiteren Details zu <code>Pin</code> und <code>Unpin</code> beschäftigen. Für den
-Moment können wir jedoch einfach dem Rat des Compilers folgen, um uns aus der
-Patsche zu helfen! In Codeblock 17-18 beginnen wir damit, <code>Pin</code> von <code>std::pin</code>
-zu importieren. Danach aktualisieren wir die Typ-Annotation für <code>futures</code>,
-indem jede <code>Box</code> mit einem <code>Pin</code> umschlossen wird. Schließlich rufen wir
-<code>Box::pin</code> bei den Futures auf.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{
-</span><span class="boring">    future::Future,
-</span><span class="boring">    pin::{pin, Pin},
-</span><span class="boring">    time::Duration,
-</span><span class="boring">};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span><span class="boring">        let tx1_fut = pin!(async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx1.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        });
-</span><span class="boring">
-</span><span class="boring">        let rx_fut = pin!(async {
-</span><span class="boring">            while let Some(value) = rx.recv().await {
-</span><span class="boring">                println!("Erhalten: '{value}'");
-</span><span class="boring">            }
-</span><span class="boring">        });
-</span><span class="boring">
-</span><span class="boring">        let tx_fut = pin!(async move {
-</span><span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span><span class="boring">        });
-</span><span class="boring">
-</span>        let futures: Vec&lt;Pin&lt;Box&lt;dyn Future&lt;Output = ()&gt;&gt;&gt;&gt; =
-            vec![Box::pin(tx1_fut), Box::pin(rx_fut), Box::pin(tx_fut)];
-
-<span class="boring">        trpl::join_all(futures).await;
-</span><span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-18: Verwenden von <code>Pin</code> und <code>Box::pin</code>, um
-den Typ <code>Vec</code> zu korrigieren</span></p>
-<p>Wenn wir dies kompilieren und ausführen, erhalten wir endlich die erhoffte Ausgabe:</p>
-<pre><code class="language-text">Erhalten: 'Hallo'
-Erhalten: 'Weitere'
-Erhalten: 'aus'
-Erhalten: 'Nachrichten'
-Erhalten: 'dem'
-Erhalten: 'für'
-Erhalten: 'Future'
-Erhalten: 'dich'
-</code></pre>
-<p>Puh!</p>
-<p>Wir können hier noch ein bisschen weiterforschen. Zum einen bringt die
-Verwendung von <code>Pin&lt;Box&lt;T&gt;&gt;</code> ein wenig zusätzlichen Overhead mit sich, da wir
-die Futures mit <code>Box</code> auf den Haldenspeicher (heap) legen – und das tun
-wir nur, um die Typen in eine Kollektion zu bringen. Wir <em>brauchen</em> die
-Haldenspeicher-Allokation eigentlich nicht: Diese Futures sind lokal in dieser
-speziellen Funktion. Wie zuvor erwähnt, ist <code>Pin</code> selbst ein Wrapper-Typ,
-sodass wir den Vorteil haben, einen einzigen Typ in <code>Vec</code> zu haben – der
-ursprüngliche Grund, warum wir uns für <code>Box</code> entschieden haben – ohne
-eine Haldenspeicher-Allokation durchzuführen. Wir können <code>Pin</code> direkt mit jedem
-Future verwenden, indem wir das Makro <code>std::pin::pin</code> benutzen.</p>
-<p>Wir müssen jedoch immer noch explizit den Typ der <code>Pin</code>-Referenz angeben, da
-Rust sonst nicht weiß, wie es diese als dynamische Merkmals-Objekte
-interpretieren soll. Wir fügen daher <code>pin</code> zu unserer Importliste von
-<code>std::pin</code> hinzu. Dann können wir <code>pin!</code> für jedes Future aufrufen und
-definieren <code>futures</code> als <code>Vec</code>, der veränderbare Referenzen mit <code>pin</code> auf den
-dynamischen Future-Typ enthält, wie in Codeblock 17-19 zu sehen.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{
-</span><span class="boring">    future::Future,
-</span><span class="boring">    pin::{pin, Pin},
-</span><span class="boring">    time::Duration,
-</span><span class="boring">};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span><span class="boring">        let (tx, mut rx) = trpl::channel();
-</span><span class="boring">
-</span><span class="boring">        let tx1 = tx.clone();
-</span>        let tx1_fut = pin!(async move {
-            // --abschneiden--
-<span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Hallo"),
-</span><span class="boring">                String::from("aus"),
-</span><span class="boring">                String::from("dem"),
-</span><span class="boring">                String::from("Future"),
-</span><span class="boring">             ];
-</span><span class="boring">
-</span><span class="boring">             for val in vals {
-</span><span class="boring">                 tx1.send(val).unwrap();
-</span><span class="boring">                 trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">             }
-</span>        });
-
-        let rx_fut = pin!(async {
-            // --abschneiden--
-<span class="boring">             while let Some(value) = rx.recv().await {
-</span><span class="boring">                 println!("Erhalten: '{value}'");
-</span><span class="boring">             }
-</span>        });
-
-        let tx_fut = pin!(async move {
-            // --abschneiden--
-<span class="boring">            let vals = vec![
-</span><span class="boring">                String::from("Weitere"),
-</span><span class="boring">                String::from("Nachrichten"),
-</span><span class="boring">                String::from("für"),
-</span><span class="boring">                String::from("dich"),
-</span><span class="boring">            ];
-</span><span class="boring">
-</span><span class="boring">            for val in vals {
-</span><span class="boring">                tx.send(val).unwrap();
-</span><span class="boring">                trpl::sleep(Duration::from_secs(1)).await;
-</span><span class="boring">            }
-</span>        });
-
-        let futures: Vec&lt;Pin&lt;&amp;mut dyn Future&lt;Output = ()&gt;&gt;&gt; =
-            vec![tx1_fut, rx_fut, tx_fut];
-<span class="boring">
-</span><span class="boring">        trpl::join_all(futures).await;
-</span><span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-19: Direktes Verwenden von <code>Pin</code> mit dem
-Makro <code>pin!</code> zum Vermeiden unnötiger Haldenspeicher-Allokation</span></p>
-<p>Wir sind so weit gekommen, indem wir die Tatsache ignoriert haben, dass wir
-verschiedene <code>Output</code>-Typen haben könnten. In Codeblock 17-20 zum Beispiel
-implementiert das anonyme Future für <code>a</code> den Typ <code>Future&lt;Output = u32&gt;</code>, das
-anonyme Future für <code>b</code> implementiert <code>Future&lt;Output = &amp;str&gt;</code>, und das anonyme
-Future für <code>c</code> implementiert <code>Future&lt;Output = bool&gt;</code>.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let a = async { 1u32 };
-        let b = async { "Hallo!" };
-        let c = async { true };
-
-        let (a_result, b_result, c_result) = trpl::join!(a, b, c);
-        println!("{a_result}, {b_result}, {c_result}");
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-20: Drei Futures mit unterschiedlichen
-Typen</span></p>
-<p>Wir können <code>trpl::join!</code> verwenden, um auf sie zu warten, weil es uns erlaubt,
-mehrere Future-Typen zu übergeben und ein Tupel dieser Typen zu erzeugen. Wir
-können <em>nicht</em> <code>trpl::join_all</code> verwenden, weil es voraussetzt, dass die
-übergebenen Futures alle denselben Typ haben. Erinnere dich, dieser Fehler war
-es, der uns zu diesem Abenteuer mit <code>Pin</code> gebracht hat!</p>
-<p>Dies ist eine grundlegende Abwägung: Wir können entweder eine dynamische Anzahl
-von Futures mit <code>join_all</code> behandeln, solange sie alle denselben Typ haben,
-oder wir können eine bestimmte Anzahl von Futures mit den Funktionen <code>join</code>
-oder dem Makro <code>join!</code> behandeln, auch wenn sie unterschiedliche Typen haben.
-Das ist das Gleiche wie mit jedem anderen Typ in Rust. Futures sind nichts
-Besonderes, auch wenn wir eine nette Syntax für die Arbeit mit ihnen haben, und
-das ist eine gute Sache.</p>
-<h3 id="future-wettlauf"><a class="header" href="#future-wettlauf">Future-Wettlauf</a></h3>
-<p>Wenn wir auf Futures mit <code>join</code> warten, müssen <em>alle</em> von ihnen beendet sein,
-bevor wir weitermachen. Manchmal müssen jedoch nur <em>einige</em> Futures fertig
-sein, bevor wir weitermachen – ähnlich wie bei einem Wettlauf zwischen
-zwei Futures.</p>
-<p>In Codeblock 17-21 verwenden wir wieder <code>trpl::race</code>, um zwei Futures <code>slow</code>
-und <code>fast</code> gegeneinander antreten zu lassen.</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let slow = async {
-            println!("'slow' gestartet.");
-            trpl::sleep(Duration::from_millis(100)).await;
-            println!("'slow' beendet.");
-        };
-
-        let fast = async {
-            println!("'fast' gestartet.");
-            trpl::sleep(Duration::from_millis(50)).await;
-            println!("'fast' beendet.");
-        };
-
-        trpl::race(slow, fast).await;
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-21: Verwenden von <code>race</code>, um das Ergebnis
-des zuerst beendeten Future zu erhalten</span></p>
-<p>Jedes Future gibt eine Nachricht aus, wenn es startet, pausiert für eine
-gewisse Zeit, indem es <code>sleep</code> aufruft und wartet, und gibt dann eine weitere
-Nachricht aus, wenn es fertig ist. Dann übergeben wir <code>slow</code> und <code>fast</code> an
-<code>trpl::race</code> und warten, bis eines von ihnen fertig ist. (Das Ergebnis ist
-nicht allzu überraschend: <code>fast</code> gewinnt!) Anders als bei der Verwendung von
-<code>race</code> in <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones Programm“</a> ignorieren wir
-hier einfach die <code>Either</code>-Instanz, die es zurückgibt, da das gesamte
-interessante Verhalten im Rumpf der asynchronen Blöcke stattfindet.</p>
-<p>Beachte, dass sich die Reihenfolge der „gestarteten“ Meldungen ändert, wenn du
-die Reihenfolge der Argumente in <code>race</code> umdrehst, obwohl das Future <code>fast</code>
-immer zuerst fertig wird. Das liegt daran, dass die Implementierung dieser
-speziellen Funktion <code>race</code> nicht fair ist. Sie führt die als Argumente
-übergebenen Futures immer in der Reihenfolge aus, in der sie übergeben werden.
-Andere Implementierungen sind <em>fair</em> und wählen zufällig, welches Future zuerst
-abgefragt wird. Unabhängig davon, ob die Implementierung von <code>race</code> fair ist,
-wird <em>eines</em> der Futures bis zum ersten <code>await</code> in seinem Rumpf laufen, bevor
-eine andere Aufgabe beginnen kann.</p>
-<p>Erinnere dich an <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones Programm“</a>, bei dem
-Rust der Laufzeitumgebung an jedem await-Punkt die Möglichkeit gibt, die
-Aufgabe anzuhalten und zu einer anderen zu wechseln, wenn das zu erwartende
-Future nicht fertig ist. Der umgekehrte Fall gilt ebenfalls: Rust hält
-asynchrone Blöcke <em>nur</em> an einem await-Punkt an und übergibt die Kontrolle der
-Laufzeitumgebung. Alles zwischen den await-Punkten ist synchron.</p>
+                        <h3 id="abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung"><a class="header" href="#abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung">Abgeben (yielding) der Kontrolle an die Laufzeitumgebung</a></h3>
+<p>Erinnere dich an den Abschnitt <a href="ch17-01-futures-and-syntax.html#unser-erstes-asynchrones-programm">„Unser erstes asynchrones
+Programm“</a>, bei dem Rust der Laufzeitumgebung an jedem
+await-Punkt die Möglichkeit gibt, die Aufgabe anzuhalten und zu einer anderen
+zu wechseln, wenn das zu erwartende Future nicht fertig ist. Der umgekehrte
+Fall gilt ebenfalls: Rust hält asynchrone Blöcke <em>nur</em> an einem await-Punkt an
+und übergibt die Kontrolle der Laufzeitumgebung. Alles zwischen den
+await-Punkten ist synchron.</p>
 <p>Das heißt, wenn du eine Menge Arbeit in einem asynchronen Block ohne einen
 await-Punkt erledigst, blockiert dieses Future alle anderen Futures an ihrem
 Fortschritt. Dies wird manchmal auch als „ein Future lässt ein anderes Future
@@ -755,18 +177,14 @@ du jedoch eine teure Initialisierung oder eine langwierige Arbeit durchführst
 oder wenn du ein Future hast, das eine bestimmte Aufgabe auf unbestimmte Zeit
 ausführt, musst du darüber nachdenken, wann und wo du die Kontrolle an die
 Laufzeitumgebung abgibst.</p>
-<p>Aber <em>wie</em> würdest du in diesen Fällen die Kontrolle an die Laufzeitumgebung
-abgeben?</p>
-<h3 id="abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung"><a class="header" href="#abgeben-yielding-der-kontrolle-an-die-laufzeitumgebung">Abgeben (yielding) der Kontrolle an die Laufzeitumgebung</a></h3>
-<p>Simulieren wir einen langlaufenden Ablauf. Codeblock 17-22 führt eine Funktion
-<code>slow</code> ein.</p>
+<p>Simulieren wir einen lang andauernden Vorgang, um das Problem des Verhungerns
+(starvation) zu veranschaulichen, und untersuchen wir anschließend, wie es
+gelöst werden kann. Codeblock 17-14 führt eine Funktion <code>slow</code> ein.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{thread, time::Duration};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span><span class="boring">        // Wir werden hier `slow` aufrufen
 </span><span class="boring">    });
 </span><span class="boring">}
@@ -775,21 +193,19 @@ abgeben?</p>
     thread::sleep(Duration::from_millis(ms));
     println!("'{name}' ist für {ms} ms gelaufen");
 }</code></pre>
-<p><span class="caption">Codeblock 17-22: Verwenden von <code>thread::sleep</code> zum
+<p><span class="caption">Codeblock 17-14: Verwenden von <code>thread::sleep</code> zum
 Simulieren langsamer Abläufe</span></p>
 <p>Dieser Code verwendet <code>std::thread::sleep</code> anstelle von <code>trpl::sleep</code>, sodass
 der Aufruf von <code>slow</code> den aktuellen Strang für eine bestimmte Anzahl von
 Millisekunden blockiert. Wir können <code>slow</code> benutzen, um reale Abläufe zu
 simulieren, die sowohl langwierig als auch blockierend sind.</p>
-<p>In Codeblock 17-23 verwenden wir <code>slow</code>, um diese Art von CPU-gebundener Arbeit
+<p>In Codeblock 17-15 verwenden wir <code>slow</code>, um diese Art von CPU-gebundener Arbeit
 in einem Paar von Futures zu emulieren.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{thread, time::Duration};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span>        let a = async {
             println!("'a' gestartet.");
             slow("a", 30);
@@ -817,7 +233,7 @@ in einem Paar von Futures zu emulieren.</p>
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-23: Verwenden von <code>thread::sleep</code> zum
+<p><span class="caption">Codeblock 17-15: Aufrufen der Funktion <code>slow</code> zum
 Simulieren langsamer Abläufe</span></p>
 <p>Zunächst gibt jedes Future die Kontrolle erst nach einer Reihe von langsamen
 Abläufen an die Laufzeitumgebung zurück. Wenn du diesen Code ausführst,
@@ -833,27 +249,26 @@ erhältst du diese Ausgabe:</p>
 'b' ist für 350 ms gelaufen
 'a' beendet.
 </code></pre>
-<p>Wie in unserem früheren Beispiel wird <code>race</code> immer noch beendet, sobald <code>a</code>
-fertig ist. Es gibt jedoch keine Abwechslung zwischen den beiden Futures. Das
-Future <code>a</code> erledigt seine gesamte Arbeit, bis auf den Aufruf von <code>trpl::sleep</code>
-gewartet wird, dann erledigt das Future <code>b</code> seine gesamte Arbeit, bis auch dort
-auf den Aufruf von <code>trpl::sleep</code> gewartet wird, und schließlich wird das Future
-<code>a</code> beendet. Damit beide Futures während ihrer langsamen Vorgänge Fortschritte
-machen können, brauchen wir await-Punkte, damit wir die Kontrolle an die
-Laufzeitumgebung abgeben können. Das heißt, wir brauchen etwas, auf das wir
-warten können!</p>
-<p>Wir können diese Art der Übergabe bereits in Codeblock 17-23 sehen: Wenn wir
+<p>Wie in Codeblock 17-5, wo wir <code>trpl::select</code> verwendet haben, um Futures beim
+Abrufen von zwei URLs gegeneinander antreten zu lassen, wird <code>select</code> immer
+noch beendet, sobald <code>a</code> fertig ist. Es gibt jedoch keine Abwechslung zwischen
+den Aufrufen von <code>slow</code> in den beiden Futures. Das Future <code>a</code> erledigt seine
+gesamte Arbeit, bis auf den Aufruf von <code>trpl::sleep</code> gewartet wird, dann
+erledigt das Future <code>b</code> seine gesamte Arbeit, bis auch dort auf den Aufruf von
+<code>trpl::sleep</code> gewartet wird, und schließlich wird das Future <code>a</code> beendet. Damit
+beide Futures während ihrer langsamen Vorgänge Fortschritte machen können,
+brauchen wir await-Punkte, damit wir die Kontrolle an die Laufzeitumgebung
+abgeben können. Das heißt, wir brauchen etwas, auf das wir warten können!</p>
+<p>Wir können diese Art der Übergabe bereits in Codeblock 17-15 sehen: Wenn wir
 <code>trpl::sleep</code> am Ende des Futures <code>a</code> entfernen, würde es fertig werden, ohne
-dass das Future <code>b</code> <em>überhaupt</em> läuft. Versuchen wir, die Funktion <code>sleep</code> als
-Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu hindern, wie in
-Codeblock 17-24 gezeigt.</p>
+dass das Future <code>b</code> <em>überhaupt</em> läuft. Versuchen wir, die Funktion
+<code>trpl::sleep</code> als Ausgangspunkt zu verwenden, um Operationen am Fortschritt zu
+hindern, wie in Codeblock 17-16 gezeigt.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{thread, time::Duration};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span>        let one_ms = Duration::from_millis(1);
 
         let a = async {
@@ -888,11 +303,10 @@ Codeblock 17-24 gezeigt.</p>
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-24: Verwenden von <code>sleep</code>, um Vorgänge zu
+<p><span class="caption">Codeblock 17-16: Verwenden von <code>sleep</code>, um Vorgänge zu
 unterbrechen</span></p>
-<p>In Codeblock 17-24 fügen wir Aufrufe von <code>trpl::sleep</code> mit await-Punkten
-zwischen den Aufrufen von <code>slow</code> ein. Nun wechseln die beiden Futures ihre
-Arbeit ab:</p>
+<p>Wir haben Aufrufe von <code>trpl::sleep</code> mit await-Punkten zwischen den Aufrufen von
+<code>slow</code> eingefügt. Nun wechseln die beiden Futures ihre Arbeit ab:</p>
 <pre><code class="language-text">'a' gestartet.
 'a' ist für 30 ms gelaufen
 'b' gestartet.
@@ -910,16 +324,14 @@ In diesem Fall haben wir das nach jedem Aufruf von <code>slow</code> gemacht, ab
 könnten die Arbeit so aufteilen, wie es für uns am sinnvollsten ist.</p>
 <p>Wir wollen hier aber nicht wirklich <em>schlafen</em>: Wir wollen so schnell wie
 möglich vorankommen. Wir müssen nur die Kontrolle an die Laufzeitumgebung
-abgeben. Das können wir direkt tun, indem wir die Funktion <code>yield_now</code>
-verwenden. In Codeblock 17-25 ersetzen wir all diese Aufrufe von <code>sleep</code> durch
-<code>yield_now</code>.</p>
+abgeben. Das können wir direkt tun, indem wir die Funktion <code>trpl::yield_now</code>
+verwenden. In Codeblock 17-17 ersetzen wir all diese Aufrufe von <code>trpl::sleep</code>
+durch <code>trpl::yield_now</code>.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{thread, time::Duration};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{thread, time::Duration};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span>        let a = async {
             println!("'a' gestartet.");
             slow("a", 30);
@@ -952,7 +364,7 @@ verwenden. In Codeblock 17-25 ersetzen wir all diese Aufrufe von <code>sleep</co
 </span><span class="boring">    thread::sleep(Duration::from_millis(ms));
 </span><span class="boring">    println!("'{name}' ist für {ms} ms gelaufen");
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-25: Verwenden von <code>yield_now</code>, um Vorgänge
+<p><span class="caption">Codeblock 17-17: Verwenden von <code>yield_now</code>, um Vorgänge
 anzuhalten</span></p>
 <p>Dieser Code ist sowohl klarer als auch wesentlich schneller als <code>sleep</code>, weil
 Zeitgeber wie <code>sleep</code> oft Grenzen haben, wie granular sie sein können. Die
@@ -960,61 +372,15 @@ Version von <code>sleep</code>, die wir benutzen, wird zum Beispiel immer mindes
 Millisekunde lang schlafen, selbst wenn wir ihr eine <code>Duration</code> von einer
 Nanosekunde übergeben. Nochmals, moderne Computer sind <em>schnell</em>: Sie können
 eine Menge in einer Millisekunde tun!</p>
-<p>Du kannst dich selbst davon überzeugen, indem du einen kleinen Benchmark wie in
-Codeblock 17-26 erstellst. (Dies ist kein besonders strenger Weg, um
-Leistungstests durchzuführen, aber es reicht aus, um den Unterschied hier zu
-zeigen.)</p>
-<p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::{Duration, Instant};
-</span><span class="boring">
-</span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
-</span>        let one_ns = Duration::from_nanos(1);
-        let start = Instant::now();
-        async {
-            for _ in 1..1000 {
-                trpl::sleep(one_ns).await;
-            }
-        }
-        .await;
-        let time = Instant::now() - start;
-        println!(
-            "'sleep'-Version beendet nach {} Sekunden.",
-            time.as_secs_f32()
-        );
-
-        let start = Instant::now();
-        async {
-            for _ in 1..1000 {
-                trpl::yield_now().await;
-            }
-        }
-        .await;
-        let time = Instant::now() - start;
-        println!(
-            "'yield'-Version beendet nach {} Sekunden.",
-            time.as_secs_f32()
-        );
-<span class="boring">    });
-</span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-26: Vergleich der Performanz von <code>sleep</code> und
-<code>yield_now</code></span></p>
-<p>Hier überspringen wir die Statusausgabe, übergeben eine <code>Duration</code> von einer
-Nanosekunde an <code>trpl::sleep</code> und lassen jedes Future für sich laufen, ohne
-zwischen den Futures zu wechseln. Dann lassen wir 1.000 Iterationen laufen und
-sehen, wie lange das Future mit <code>trpl::sleep</code> im Vergleich zum Future mit
-<code>trpl::yield_now</code> braucht.</p>
-<p>Die Version mit <code>yield_now</code> ist <em>viel</em> schneller!</p>
 <p>Das bedeutet, dass async sogar für rechengebundene Aufgaben nützlich sein kann,
 je nachdem, was dein Programm sonst noch tut, weil es ein nützliches Werkzeug
 für die Strukturierung der Beziehungen zwischen verschiedenen Teilen des
-Programms ist. Es handelt sich um eine Form von <em>kooperativem Multitasking</em>,
-bei dem jedes Future die Möglichkeit hat zu bestimmen, wann es die Kontrolle
-mittels await-Punkte abgibt. Jedes Future hat daher auch die Verantwortung, ein
-zu langes Blockieren zu vermeiden. In einigen Rust-basierten, eingebetteten
-Betriebssystemen ist dies die <em>einzige</em> Art von Multitasking!</p>
+Programms ist (jedoch mit Overhead der asynchronen Zustandsmaschine). Es
+handelt sich um eine Form von <em>kooperativem Multitasking</em>, bei dem jedes Future
+die Möglichkeit hat zu bestimmen, wann es die Kontrolle mittels await-Punkte
+abgibt. Jedes Future hat daher auch die Verantwortung, ein zu langes Blockieren
+zu vermeiden. In einigen Rust-basierten, eingebetteten Betriebssystemen ist
+dies die <em>einzige</em> Art von Multitasking!</p>
 <p>In der Praxis wirst du natürlich nicht nach jeder einzelnen Zeile
 einen await-Punkt einfügen. Obwohl die Abgabe der Kontrolle auf diese Weise
 relativ kostengünstig ist, ist sie nicht kostenlos! In vielen Fällen kann der
@@ -1030,15 +396,13 @@ nebenläufig ausgeführt werden!</p>
 können wir eine Funktion <code>timeout</code> mit bereits vorhandenen asynchronen
 Bausteinen erstellen. Wenn wir fertig sind, ist das Ergebnis ein weiterer
 Baustein, mit dem wir weitere asynchrone Abstraktionen erstellen können.</p>
-<p>Codeblock 17-27 zeigt die erwartete Arbeitsweise von <code>timeout</code> bei einem
+<p>Codeblock 17-18 zeigt die erwartete Arbeitsweise von <code>timeout</code> bei einem
 langsamen Future.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::time::Duration;
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::time::Duration;
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span>        let slow = async {
             trpl::sleep(Duration::from_millis(100)).await;
             "Bin fertig!"
@@ -1052,7 +416,7 @@ langsamen Future.</p>
         }
 <span class="boring">    });
 </span><span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-27: Verwendeng unseres imaginären <code>timeout</code>,
+<p><span class="caption">Codeblock 17-18: Verwendeng unseres imaginären <code>timeout</code>,
 um eine langsame Operation mit einem Zeitlimit durchzuführen</span></p>
 <p>Lass es uns implementieren! Denken wir zunächst über die API für <code>timeout</code>
 nach:</p>
@@ -1068,14 +432,12 @@ ist das <code>Result</code> ein <code>Ok</code> mit dem vom Future erzeugten Wer
 Zeitlimit zuerst erreicht wird, wird <code>Result</code> ein <code>Err</code> mit der Wartedauer
 sein.</li>
 </ul>
-<p>Codeblock 17-28 zeigt diese Deklaration.</p>
+<p>Codeblock 17-19 zeigt diese Deklaration.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{future::Future, time::Duration};
+<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{future::Future, time::Duration};
 </span><span class="boring">
 </span><span class="boring">fn main() {
-</span><span class="boring">    trpl::run(async {
+</span><span class="boring">    trpl::block_on(async {
 </span><span class="boring">        let slow = async {
 </span><span class="boring">            trpl::sleep(Duration::from_secs(5)).await;
 </span><span class="boring">            "Bin fertig"
@@ -1096,46 +458,38 @@ sein.</li>
 ) -&gt; Result&lt;F::Output, Duration&gt; {
     // Hier kommt die Implementierung hin
 }</code></pre>
-<p><span class="caption">Codeblock 17-28: Definieren der Signatur von
+<p><span class="caption">Codeblock 17-19: Definieren der Signatur von
 <code>timeout</code></span></p>
 <p>Damit sind unsere Ziele für die Typen erfüllt. Denken wir nun über das
 <em>Verhalten</em> nach, das wir brauchen: Wir wollen die Dauer des übergebenen Future
 überwachen. Wir können mit <code>trpl::sleep</code> einen Timer aus der Dauer machen und
-<code>trpl::race</code> verwenden, um mit diesem Timer das übergebene Future zu
+<code>trpl::select</code> verwenden, um mit diesem Timer das übergebene Future zu
 überwachen.</p>
-<p>Wir wissen auch, dass <code>race</code> nicht fair ist und die Argumente in der
-Reihenfolge abfragt, in der sie übergeben werden. Daher übergeben wir
-<code>future_to_try</code> zuerst an <code>race</code>, sodass es eine Chance bekommt, auch dann
-fertig zu werden, wenn <code>max_time</code> eine sehr kurze Dauer hat. Wenn
-<code>future_to_try</code> zuerst fertig wird, wird <code>race</code> den Wert <code>Left</code> mit der
-Ausgabe von <code>future</code> zurückgeben. Wenn <code>timer</code> zuerst fertig wird, gibt
-<code>race</code> den Wert <code>Right</code> mit der Ausgabe des Timers von <code>()</code> zurück.</p>
-<p>In Codeblock 17-29 werten wir das Ergebnis des Wartens auf <code>trpl::race</code> aus.</p>
+<p>In Codeblock 17-20 implementieren wir <code>timeout</code>, indem wir das Ergebnis von
+<code>trpl::select</code> abgleichen.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">extern crate trpl;
-</span><span class="boring">
-</span><span class="boring">use std::{future::Future, time::Duration};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">use std::{future::Future, time::Duration};
 </span><span class="boring">
 </span>use trpl::Either;
 
 // --abschneiden--
-
-fn main() {
-    trpl::run(async {
-        let slow = async {
-            trpl::sleep(Duration::from_secs(5)).await;
-            "Bin fertig"
-        };
-
-        match timeout(slow, Duration::from_secs(2)).await {
-            Ok(message) =&gt; println!("Erfolgreich mit '{message}'"),
-            Err(duration) =&gt; {
-                println!("Fehlgeschlagen nach {} Sekunden", duration.as_secs())
-            }
-        }
-    });
-}
-
+<span class="boring">
+</span><span class="boring">fn main() {
+</span><span class="boring">    trpl::block_on(async {
+</span><span class="boring">        let slow = async {
+</span><span class="boring">            trpl::sleep(Duration::from_secs(5)).await;
+</span><span class="boring">            "Bin fertig"
+</span><span class="boring">        };
+</span><span class="boring">
+</span><span class="boring">        match timeout(slow, Duration::from_secs(2)).await {
+</span><span class="boring">            Ok(message) =&gt; println!("Erfolgreich mit '{message}'"),
+</span><span class="boring">            Err(duration) =&gt; {
+</span><span class="boring">                println!("Fehlgeschlagen nach {} Sekunden", duration.as_secs())
+</span><span class="boring">            }
+</span><span class="boring">        }
+</span><span class="boring">    });
+</span><span class="boring">}
+</span>
 async fn timeout&lt;F: Future&gt;(
     future_to_try: F,
     max_time: Duration,
@@ -1145,8 +499,16 @@ async fn timeout&lt;F: Future&gt;(
         Either::Right(_) =&gt; Err(max_time),
     }
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 17-29: Definieren von <code>timeout</code> mit <code>race</code> und
+<p><span class="caption">Codeblock 17-20: Definieren von <code>timeout</code> mit <code>select</code> und
 <code>sleep</code></span></p>
+<p>Die Implementierung von <code>trpl::select</code> ist nicht fair: Sie fragt die Argumente
+immer in der Reihenfolge ab, in der sie übergeben werden (andere
+Implementierungen von <code>select</code> wählen zufällig aus, welches Argument zuerst
+abgefragt wird). Daher übergeben wir <code>future_to_try</code> zuerst an <code>select</code>, damit
+es auch dann eine Chance hat, abgeschlossen zu werden, wenn <code>max_time</code> eine
+sehr kurze Dauer hat. Wenn <code>future_to_try</code> zuerst fertig ist, gibt <code>select</code>
+<code>Left</code> mit der Ausgabe von <code>future_to_try</code> zurück. Wenn <code>timer</code> zuerst fertig
+ist, gibt <code>select</code> <code>Right</code> mit der Ausgabe des Timers <code>()</code> zurück.</p>
 <p>Wenn <code>Future_to_try</code> erfolgreich war und wir <code>Left(output)</code> erhalten, geben wir
 <code>Ok(output)</code> zurück. Wenn stattdessen der Sleep-Timer abgelaufen ist und wir
 <code>Right(())</code> erhalten, ignorieren wir der Wert <code>()</code> mit <code>_</code> und geben
@@ -1160,30 +522,14 @@ Fehlermeldung nach dem Timeout ausgeben:</p>
 kleineren asynchronen Bausteinen wirklich leistungsfähige Werkzeuge erstellen.
 So kannst du beispielsweise mit demselben Ansatz Zeitüberschreitungen mit
 Wiederholungen kombinieren und diese wiederum für Operationen wie
-Netzwerkaufrufe verwenden – eines der Beispiele vom Anfang des Kapitels!</p>
-<p>In der Praxis wirst du normalerweise direkt mit <code>async</code> und <code>await</code> arbeiten
-und in zweiter Linie mit Funktionen und Makros wie <code>join</code>, <code>join_all</code>, <code>race</code>
-und so weiter. Du wirst nur ab und zu zu <code>pin</code> greifen müssen, um Futures mit
-diesen APIs zu benutzen.</p>
-<p>Wir haben nun eine Reihe von Möglichkeiten gesehen, mit mehreren Futures
-gleichzeitig zu arbeiten. Als Nächstes werden wir uns mit Hilfe von <em>Strömen</em>
-(streams) ansehen, wie wir mit mehreren Futures in einer zeitlichen Reihenfolge
-arbeiten können. Vorher solltest du aber noch ein paar Dinge beachten:</p>
-<ul>
-<li>
-<p>Wir haben einen <code>Vec</code> mit <code>join_all</code> verwendet, um zu warten, bis alle
-Futures in einer Gruppe beendet sind. Wie könnte man stattdessen einen
-<code>Vec</code> verwenden, um eine Gruppe von Futures nacheinander zu verarbeiten?
-Was sind die Nachteile dieser Vorgehensweise?</p>
-</li>
-<li>
-<p>Wirf einen Blick auf den Typ <code>futures::stream::FuturesUnordered</code> aus der
-Kiste <code>futures</code>. Inwiefern unterscheidet sich die Verwendung dieses Typs von
-der Verwendung eines <code>Vec</code>? (Mach dir keine Sorgen über die Tatsache, dass es
-aus dem <code>stream</code>-Teil der Kiste stammt; es funktioniert problemlos mit jeder
-Kollektion von Futures.)</p>
-</li>
-</ul>
+Netzwerkaufrufe verwenden (so wie in Codeblock 17-5).</p>
+<p>In der Praxis arbeitest du in der Regel direkt mit <code>async</code> und <code>await</code> und
+seltener mit Funktionen wie <code>select</code> und Makros wie <code>join!</code>, um die Ausführung
+der äußersten Futures zu steuern.</p>
+<p>Wir haben nun verschiedene Möglichkeiten kennengelernt, wie man mit mehreren
+Futures gleichzeitig arbeiten kann. Als Nächstes werden wir uns ansehen, wie
+wir mit <em>Strömen</em> (streams) mehrere Futures in einer zeitlichen Abfolge
+arbeiten können.</p>
 
                     </main>
 

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -162,8 +162,8 @@
                 <div id="mdbook-content" class="content">
                     <main>
                         <h2 id="mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen"><a class="header" href="#mit-boxt-auf-daten-im-haldenspeicher-heap-zeigen">Mit <code>Box&lt;T&gt;</code> auf Daten im Haldenspeicher (heap) zeigen</a></h2>
-<p>Der einfachste intelligente Zeiger ist <em>Box</em>, deren Typ <code>Box&lt;T&gt;</code> lautet. In
-Boxen kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
+<p>Der einfachste intelligente Zeiger ist Box, deren Typ <code>Box&lt;T&gt;</code> lautet. In
+<em>Boxen</em> kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
 (heap) speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die
 Daten im Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
 zwischen dem Stapelspeicher und dem Haldenspeicher.</p>
@@ -190,11 +190,11 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-<em>Merkmalsobjekt</em> (trait object) bekannt, und <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects)
-die Werte unterschiedlicher Typen erlauben“</a> in Kapitel 18
+<em>Merkmalsobjekt</em> (trait object) bekannt, und <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten
+zur Abstraktion über gemeinsames Verhalten“</a> in Kapitel 18
 widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
 erneut anwenden!</p>
-<h3 id="boxt-verwenden-um-daten-im-haldenspeicher-zu-speichern"><a class="header" href="#boxt-verwenden-um-daten-im-haldenspeicher-zu-speichern"><code>Box&lt;T&gt;</code> verwenden um Daten im Haldenspeicher zu speichern</a></h3>
+<h3 id="daten-im-haldenspeicher-speichern"><a class="header" href="#daten-im-haldenspeicher-speichern">Daten im Haldenspeicher speichern</a></h3>
 <p>Bevor wir den Haldenspeicher-Anwendungsfall für <code>Box&lt;T&gt;</code> besprechen, werden wir
 die Syntax und die Interaktion mit Werten behandeln, die in einer <code>Box&lt;T&gt;</code>
 gespeichert sind.</p>
@@ -229,13 +229,13 @@ könnte die Verschachtelung von Werten rekursiver Typen theoretisch unendlich
 weitergehen, sodass Rust nicht wissen kann, wie viel Platz der Wert benötigt.
 Da Boxen eine bekannte Größe haben, können wir rekursive Typen ermöglichen,
 indem wir eine Box in die Definition des rekursiven Typs einfügen.</p>
-<p>Als Beispiel für einen rekursiven Typ wollen wir uns die <em>Cons-Liste</em> ansehen.
+<p>Als Beispiel für einen rekursiven Typ wollen wir uns die Cons-Liste ansehen.
 Dies ist ein Datentyp, den man häufig in funktionalen Programmiersprachen
 findet. Der Cons-Listen-Typ, den wir definieren werden, ist bis auf die
 Rekursion einfach; daher werden die Konzepte in dem Beispiel, mit dem wir
 arbeiten werden, immer dann nützlich sein, wenn du in komplexeren Situationen
 mit rekursiven Typen arbeitest.</p>
-<h4 id="weitere-informationen-zur-cons-liste"><a class="header" href="#weitere-informationen-zur-cons-liste">Weitere Informationen zur Cons-Liste</a></h4>
+<h4 id="die-cons-liste-verstehen"><a class="header" href="#die-cons-liste-verstehen">Die Cons-Liste verstehen</a></h4>
 <p>Eine <em>Cons-Liste</em> ist eine Datenstruktur, die aus der Programmiersprache Lisp
 und ihren Dialekten stammt und aus verschachtelten Paaren besteht. Sie ist die
 Lisp-Version einer verketteten Liste. Ihr Name stammt von der Funktion <code>cons</code>
@@ -287,7 +287,9 @@ in Codeblock 15-3 aussehen.</p>
 </span><span class="boring">    Nil,
 </span><span class="boring">}
 </span><span class="boring">
-</span>use crate::List::{Cons, Nil};
+</span>// --abschneiden--
+
+use crate::List::{Cons, Nil};
 
 fn main() {
     let list = Cons(1, Cons(2, Cons(3, Nil)));
@@ -370,7 +372,7 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.</p>
 <img alt="Eine unendliche Cons-Liste" src="img/trpl15-01.svg" class="center" style="width: 50%;" />
 <p><span class="caption">Abbildung 15-1: Ein unendlicher <code>List</code>-Typ der aus
 unendlichen <code>Cons</code>-Varianten besteht</span></p>
-<h4 id="verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten"><a class="header" href="#verwenden-von-boxt-um-einen-rekursiven-typ-mit-einer-bekannten-größe-zu-erhalten">Verwenden von <code>Box&lt;T&gt;</code>, um einen rekursiven Typ mit einer bekannten Größe zu erhalten</a></h4>
+<h4 id="einen-rekursiven-typ-mit-einer-bekannten-größe-erhalten"><a class="header" href="#einen-rekursiven-typ-mit-einer-bekannten-größe-erhalten">Einen rekursiven Typ mit einer bekannten Größe erhalten</a></h4>
 <p>Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
 Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem
 hilfreichen Vorschlag aus:</p>

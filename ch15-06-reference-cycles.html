@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -326,7 +326,7 @@ um Referenzzyklen zu verhindern.</p>
 <h3 id="verhindern-von-referenzzyklen-mit-weakt"><a class="header" href="#verhindern-von-referenzzyklen-mit-weakt">Verhindern von Referenzzyklen mit <code>Weak&lt;T&gt;</code></a></h3>
 <p>Bisher haben wir gezeigt, dass das Aufrufen von <code>Rc::clone</code> den <code>strong_count</code>
 einer <code>Rc&lt;T&gt;</code>-Instanz erhöht und eine <code>Rc&lt;T&gt;</code>-Instanz nur dann aufgeräumt wird,
-wenn ihr <code>strong_count</code> 0 ist. Man kann auch eine <em>schwache Referenz</em> (weak
+wenn ihr <code>strong_count</code> 0 ist. Man kann auch eine schwache Referenz (weak
 reference) auf den Wert innerhalb einer <code>Rc&lt;T&gt;</code>-Instanz erstellen, indem man
 <code>Rc::downgrade</code> aufruft und eine Referenz auf den <code>Rc&lt;T&gt;</code> übergibt. Starke
 Referenzen sind die Art und Weise, wie man die Eigentümerschaft an einer
@@ -353,7 +353,7 @@ Fall <code>None</code> behandelt werden und es keine ungültigen Zeiger gibt.</p
 <p>Anstatt eine Liste zu verwenden, deren Elemente nur das nächste Element kennen,
 erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente <em>und</em> die
 Eltern-Elemente kennen.</p>
-<h4 id="erstellen-einer-baumdatenstruktur-ein-knoten-mit-kind-knoten"><a class="header" href="#erstellen-einer-baumdatenstruktur-ein-knoten-mit-kind-knoten">Erstellen einer Baumdatenstruktur: Ein Knoten mit Kind-Knoten</a></h4>
+<h4 id="baumdatenstruktur-erstellen"><a class="header" href="#baumdatenstruktur-erstellen">Baumdatenstruktur erstellen</a></h4>
 <p>Zunächst erstellen wir eine Baumstruktur mit Knoten (nodes), die ihre
 Kind-Knoten kennen. Wir erstellen eine Struktur mit dem Namen <code>Node</code>, die ihren
 eigenen <code>i32</code>-Wert sowie Referenzen auf die Kind-<code>Node</code>-Werte enthält:</p>

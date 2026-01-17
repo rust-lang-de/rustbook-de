@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -194,7 +194,9 @@ nicht im kompilierten Ergebnis enthalten sein sollen.</p>
 <p>Erinnere dich daran, dass Cargo diesen Code für uns generiert hat, als wir das
 neue Projekt <code>adder</code> im ersten Abschnitt dieses Kapitels erstellt haben:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add(left: u64, right: u64) -&gt; u64 {
     left + right
 }
 
@@ -207,7 +209,8 @@ mod tests {
         let result = add(2, 2);
         assert_eq!(result, 4);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p>Im automatisch generierten Modul <code>tests</code> steht das Attribut <code>cfg</code> für
 <em>Konfiguration</em> und teilt Rust mit, dass das folgende Element nur bei einer
 bestimmten Konfigurationsoption eingebunden werden soll. In diesem Fall ist die
@@ -224,11 +227,13 @@ Testideologie du festhältst, erlauben dir Rusts Datenschutzregeln, private
 Funktionen zu testen. Betrachte den Code in Codeblock 11-12 mit der privaten
 Funktion <code>internal_adder</code>.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore">pub fn add_two(a: usize) -&gt; usize {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn add_two(a: u64) -&gt; u64 {
     internal_adder(a, 2)
 }
 
-fn internal_adder(left: usize, right: usize) -&gt; usize {
+fn internal_adder(left: u64, right: u64) -&gt; u64 {
     left + right
 }
 
@@ -241,7 +246,8 @@ mod tests {
         let result = internal_adder(2, 2);
         assert_eq!(result, 4);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 11-12: Testen einer privaten Funktion</span></p>
 <p>Beachte, dass die Funktion <code>internal_adder</code> nicht mit <code>pub</code> markiert ist. Tests
 sind einfach nur Rust-Code, und das Modul <code>tests</code> ist nur ein weiteres Modul.
@@ -374,9 +380,12 @@ Beispiel <em>tests/common.rs</em> erstellen und eine Funktion namens <code>setup
 platzieren, können wir <code>setup</code> etwas Code hinzufügen, den wir von mehreren
 Testfunktionen in mehreren Testdateien aufrufen wollen:</p>
 <p><span class="filename">Dateiname: tests/common.rs</span></p>
-<pre><code class="language-rust noplayground">pub fn setup() {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>pub fn setup() {
     // Vorbereitungscode speziell für die Tests deiner Bibliothek
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p>Wenn wir die Tests erneut ausführen, werden wir für die Datei <em>common.rs</em> einen
 neuen Abschnitt in der Testausgabe sehen, obwohl diese Datei keine
 Testfunktionen enthält und wir die Funktion <code>setup</code> nicht von irgendwo

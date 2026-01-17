@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -166,7 +166,7 @@
 Funktion den <code>String</code> zurückgeben müssen, damit wir den <code>String</code> nach dem
 Aufruf von <code>calculate_length</code> weiter verwenden können, weil der <code>String</code> in
 <code>calculate_length</code> verschoben wurde. Stattdessen können wir eine Referenz auf
-den <code>String</code>-Wert angeben. Eine <em>Referenz</em> ist wie ein Zeiger, d.h. eine
+den <code>String</code>-Wert angeben. Eine Referenz ist wie ein Zeiger, d.h. eine
 Adresse, der wir folgen können, um auf Daten zugreifen zu können, die an dieser
 Adresse gespeichert sind und einer anderen Variablen gehören. Im Gegensatz zu
 einem Zeiger ist bei einer Referenz garantiert, dass sie auf einen gültigen
@@ -189,7 +189,7 @@ fn calculate_length(s: &amp;String) -&gt; usize {
 <p>Beachte, dass der gesamte Tupelcode aus der Variablendeklaration und dem
 Rückgabewert der Funktion verschwunden ist. Beachte des Weiteren, dass wir
 <code>&amp;s1</code> an <code>calculate_length</code> übergeben und in seiner Definition <code>&amp;String</code> statt
-<code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine <em>Referenz</em>, und sie ermöglicht
+<code>String</code> steht. Das <code>&amp;</code>-Zeichen steht für eine Referenz, und sie ermöglicht
 es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.</p>
 <p><img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
@@ -452,7 +452,7 @@ fn dangle() -&gt; &amp;String {
 }</code></pre>
 <p>Hier ist die Fehlermeldung:</p>
 <pre><code class="language-console">$ cargo run
-   Compiling playground v0.0.1 (/playground)
+   Compiling ownership v0.1.0 (file:///projects/ownership)
 error[E0106]: missing lifetime specifier
  --&gt; src/main.rs:5:16
   |
@@ -470,15 +470,8 @@ help: instead, you are more likely to want to return an owned value
 5 + fn dangle() -&gt; String {
   |
 
-error[E0515]: cannot return reference to local variable `s`
- --&gt; src/main.rs:8:5
-  |
-8 |     &amp;s
-  |     ^^ returns a reference to data owned by the current function
-
-Some errors have detailed explanations: E0106, E0515.
-For more information about an error, try `rustc --explain E0106`.
-error: could not compile `playground` (bin "playground") due to 2 previous errors; 1 warning emitted
+For more information about this error, try `rustc --explain E0106`.
+error: could not compile `ownership` (bin "ownership") due to 1 previous error
 </code></pre>
 <p>Diese Fehlermeldung bezieht sich auf eine Funktionalität, die wir noch nicht
 behandelt haben: Die Lebensdauer. Wir werden die Lebensdauer in Kapitel 10 im

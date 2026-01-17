@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -197,8 +197,8 @@ kein angemessenes Standardverhalten für dich bereitstellen kann.</p>
 Bibliotheken können <code>derive</code> für ihre eigenen Merkmale implementieren, sodass
 die Liste der Merkmale, die du mit <code>derive</code> verwenden kannst, wahrlich
 unbegrenzt ist. Das Implementieren von <code>derive</code> verwendet ein prozedurales
-Makro, das im Abschnitt <a href="ch20-05-macros.html#wie-man-ein-benutzerdefiniertes-makro-mit-derive-schreibt">„Wie man ein benutzerdefiniertes Makro mit <code>derive</code>
-schreibt“</a> in Kapitel 20 behandelt wird.</p>
+Makro, das im Abschnitt <a href="ch20-05-macros.html#benutzerdefinierte-makro-mit-derive">„Benutzerdefinierte Makro mit
+<code>derive</code>“</a> in Kapitel 20 behandelt wird.</p>
 <h3 id="debug-für-die-programmierer-ausgabe"><a class="header" href="#debug-für-die-programmierer-ausgabe"><code>Debug</code> für die Programmierer-Ausgabe</a></h3>
 <p>Das Merkmal <code>Debug</code> ermöglicht das Debuggen von Formatierungen in
 Formatierungszeichenketten, die du durch Angeben von <code>:?</code> innerhalb Platzhalter
@@ -312,12 +312,11 @@ Die abgeleitete Implementierung der Funktion <code>default</code> ruft die Funkt
 <code>default</code> für jeden Teil des Typs auf, d.h. alle Felder oder Werte in dem Typ
 müssen auch <code>Default</code> implementieren, um <code>Default</code> abzuleiten.</p>
 <p>Die Funktion <code>Default::default</code> wird häufig in Kombination mit der Syntax zur
-Aktualisierung von Strukturen verwendet, die im Abschnitt <a href="ch05-01-defining-structs.html#instanzen-aus-anderen-instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">„Instanzen aus
-anderen Instanzen erzeugen mit der
-Strukturaktualisierungssyntax“</a>
-in Kapitel 5 besprochen wird. Du kannst einige Felder einer Struktur anpassen
-und dann einen Standardwert für den Rest der Felder festlegen und verwenden,
-indem du <code>...Default::default()</code> schreibst.</p>
+Aktualisierung von Strukturen verwendet, die im Abschnitt <a href="ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax">„Instanzen erzeugen
+mit der Strukturaktualisierungssyntax“</a> in Kapitel 5
+besprochen wird. Du kannst einige Felder einer Struktur anpassen und dann einen
+Standardwert für den Rest der Felder festlegen und verwenden, indem du
+<code>...Default::default()</code> schreibst.</p>
 <p>Das Merkmal <code>Default</code> ist erforderlich, wenn du die Methode <code>unwrap_or_default</code>
 z.B. auf Instanzen von <code>Option&lt;T&gt;</code> verwendest. Wenn die <code>Option&lt;T&gt;</code> den Wert
 <code>None</code> hat, gibt die Methode <code>unwrap_or_default</code> das Ergebnis von

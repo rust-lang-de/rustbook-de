@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -176,8 +176,7 @@ auseinanderzuhalten, gibst du zuerst die Argumente für <code>cargo test</code>,
 vom Trennzeichen <code>--</code>, und danach die der Testbinärdatei an. Wenn du <code>cargo test --help</code> ausführst, werden die Optionen angezeigt, die du für <code>cargo test</code>
 verwenden kannst, und wenn du <code>cargo test -- --help</code> ausführst, werden die
 Optionen angezeigt, die du nach dem Trennzeichen verwenden kannst. Diese
-Optionen sind auch im <a href="https://doc.rust-lang.org/rustc/tests/index.html">Abschnitt „Tests“</a> des <a href="https://doc.rust-lang.org/rustc/index.html">rustc-Buchs</a>
-dokumentiert.</p>
+Optionen sind auch im <a href="https://doc.rust-lang.org/rustc/tests/index.html">Abschnitt „Tests“ des rustc-Buchs</a> dokumentiert.</p>
 <h3 id="tests-parallel-oder-nacheinander-ausführen"><a class="header" href="#tests-parallel-oder-nacheinander-ausführen">Tests parallel oder nacheinander ausführen</a></h3>
 <p>Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in
 Strängen (threads) ausgeführt, das bedeutet, dass die Tests schneller
@@ -219,7 +218,9 @@ Standardausgabe ausgegeben wurde, mit dem Rest der Fehlermeldung.</p>
 Parameters ausgibt und 10 zurückgibt, sowie einen Test, der bestanden wird, und
 einen Test, der fehlschlägt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust panics noplayground">fn prints_and_returns_10(a: i32) -&gt; i32 {
+<pre class="playground"><code class="language-rust panics edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>fn prints_and_returns_10(a: i32) -&gt; i32 {
     println!("Ich habe den Wert {a} erhalten.");
     10
 }
@@ -239,7 +240,8 @@ mod tests {
         let value = prints_and_returns_10(8);
         assert_eq!(value, 5);
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codebock 11-10: Tests einer Funktion, die <code>println!</code>
 aufruft</span></p>
 <p>Wenn wir diese Tests mit <code>cargo test</code> ausführen, werden wir folgende Ausgabe
@@ -331,7 +333,7 @@ zuerst drei Tests für unsere Funktion <code>add_two</code> erstellen, wie in Co
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span>pub fn add_two(a: usize) -&gt; usize {
+</span>pub fn add_two(a: u64) -&gt; u64 {
     a + 2
 }
 
@@ -400,7 +402,7 @@ Zusammenfassungszeile <code>2 filtered out</code> angezeigt wird.</p>
 <p>Wir können die Namen mehrerer Tests nicht auf diese Weise angeben; es wird nur
 der erste Wert verwendet, der bei <code>cargo test</code> angegeben wird. Aber es gibt
 eine Möglichkeit, mehrere Tests auszuführen.</p>
-<h4 id="filtern-um-mehrerer-tests-auszuführen"><a class="header" href="#filtern-um-mehrerer-tests-auszuführen">Filtern um mehrerer Tests auszuführen</a></h4>
+<h4 id="filtern-um-mehrere-tests-auszuführen"><a class="header" href="#filtern-um-mehrere-tests-auszuführen">Filtern um mehrere Tests auszuführen</a></h4>
 <p>Wir können einen Teil eines Testnamens angeben und jeder Test, dessen Name zu
 diesem Wert passt, wird ausgeführt. Da zum Beispiel zwei der Namen unserer
 Tests <code>add</code> enthalten, können wir diese beiden Tests ausführen, indem wir
@@ -427,7 +429,9 @@ solltest. Anstatt alle Tests, die du ausführen möchtest, als Argumente
 aufzulisten, kannst du die zeitaufwendigen Tests stattdessen mit dem Attribut
 <code>ignore</code> annotieren, um sie auszuschließen, wie hier gezeigt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub fn add(left: usize, right: usize) -&gt; usize {
 </span><span class="boring">    left + right
 </span><span class="boring">}
 </span><span class="boring">
@@ -446,7 +450,8 @@ mod tests {
     fn expensive_test() {
         // code that takes an hour to run
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p>Unterhalb <code>#[test]</code> fügen wir die Zeile <code>#[ignore]</code> beim Test ein, den wir
 ausschließen wollen. Wenn wir nun unsere Tests ausführen, läuft <code>it_works</code>,
 aber <code>expensive_test</code> nicht:</p>

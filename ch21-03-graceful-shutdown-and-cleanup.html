@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -303,7 +303,7 @@ aufräumt. Im Gegenzug müssten wir überall, wo wir auf <code>Worker.thread</co
 zugreifen, mit einer <code>Option&lt;thread::JoinHandle&lt;()&gt;&gt;</code> umgehen. Idiomatisch
 verwendet Rust <code>Option</code> ziemlich oft, aber wenn du etwas in <code>Option</code> einpackst,
 von dem du weißt dass es immer vorhanden sein wird, ist es eine gute Idee, nach
-alternativen Ansätzen zu suchen. Du könntest deinen Code sauberer und weniger
+alternativen Ansätzen zu suchen, die deinen Code sauberer und weniger
 fehleranfällig machen.</p>
 <p>In diesem Fall gibt es eine bessere Alternative: Die Methode <code>Vec::drain</code>. Sie
 akzeptiert einen Bereichsparameter, um anzugeben, welche Elemente aus dem <code>Vec</code>
@@ -312,9 +312,7 @@ Angabe der Bereichssyntax <code>..</code> entfernt <em>alle</em> Werte aus dem <
 <p>Wir müssen also die <code>drop</code>-Implementierung von <code>ThreadPool</code> wie folgt
 aktualisieren:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
-</span><span class="boring">fn main() {
-</span><span class="boring">use std::{
+<pre><code class="language-rust ignore"><span class="boring">use std::{
 </span><span class="boring">    sync::{Arc, Mutex, mpsc},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -391,7 +389,12 @@ aktualisieren:</p>
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p>Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
-an unserem Code erforderlich.</p>
+an unserem Code erforderlich. Beachte, das <code>drop</code> bei einem Programmabsturz
+aufgerufen werden kann, und wenn dann auch <code>unwrap</code> abstürzt, eine doppelte
+Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
+Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
+Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
+empfehlen.</p>
 <h3 id="den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen"><a class="header" href="#den-strängen-signalisieren-nicht-mehr-nach-aufträgen-zu-lauschen">Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen</a></h3>
 <p>Mit all den Änderungen, die wir vorgenommen haben, lässt sich unser Code ohne
 jede Warnung kompilieren. Aber die schlechte Nachricht ist, dass dieser Code
@@ -683,18 +686,18 @@ ausgegebenen Nachrichten. Wir können anhand der Nachrichten sehen, wie dieser
 Code funktioniert: Die <code>Worker</code> 0 und 3 haben die ersten beiden Anfragen
 erhalten. Der Server hat nach der zweiten Verbindung aufgehört, Verbindungen
 anzunehmen, und die <code>Drop</code>-Implementierung auf <code>ThreadPool</code> beginnt mit der
-Ausführung, bevor <code>Worker</code> 3 überhaupt seinen Job beginnt. Wenn man den
+Ausführung, bevor <code>Worker 3</code> überhaupt seine Arbeit beginnt. Wenn man den
 <code>sender</code> aufräumt, werden alle <code>Worker</code>-Instanzen getrennt und angewiesen, sich
 zu beenden. Die <code>Worker</code>-Instanzen geben jeweils eine Nachricht aus, wenn sie
 die Verbindung trennen, und dann ruft der Strang-Vorrat <code>join</code> auf, um das Ende
 jedes <code>Worker</code>-Strangs zu warten.</p>
 <p>Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
 <code>ThreadPool</code> hat den <code>sender</code> aufgeräumt, und bevor ein <code>Worker</code> einen Fehler
-erhalten hat, haben wir versucht, auf <code>Worker</code> 0 zu warten. <code>Worker</code> 0 hatte
+erhalten hat, haben wir versucht, auf <code>Worker 0</code> zu warten. <code>Worker 0</code> hatte
 noch keinen Fehler von <code>recv</code> erhalten, also blockierte der Hauptstrang und
-wartete darauf, dass <code>Worker</code> 0 fertig wird. In der Zwischenzeit erhielt
-<code>Worker</code> 3 einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
-<code>Worker</code> 0 fertig war, wartete der Hauptstrang darauf, dass die restlichen
+wartete darauf, dass <code>Worker 0</code> fertig wird. In der Zwischenzeit erhielt
+<code>Worker 3</code> einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
+<code>Worker 0</code> fertig war, wartete der Hauptstrang darauf, dass die restlichen
 <code>Worker</code>-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
 Schleifen verlassen und konnten sich beenden.</p>
 <p>Herzlichen Glückwunsch! Wir haben jetzt unser Projekt abgeschlossen; wir haben
@@ -704,18 +707,19 @@ wodurch alle Stränge im Vorrat aufgeräumt werden.</p>
 <p>Hier ist der vollständige Code als Referenz:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use hello::ThreadPool;
-use std::fs;
-use std::io::prelude::*;
-use std::net::TcpListener;
-use std::net::TcpStream;
-use std::thread;
-use std::time::Duration;
+use std::{
+    fs,
+    io::{BufReader, prelude::*},
+    net::{TcpListener, TcpStream},
+    thread,
+    time::Duration,
+};
 
 fn main() {
     let listener = TcpListener::bind("127.0.0.1:7878").unwrap();
     let pool = ThreadPool::new(4);
 
-    for stream in listener.incoming() {
+    for stream in listener.incoming().take(2) {
         let stream = stream.unwrap();
 
         pool.execute(|| {
@@ -727,7 +731,7 @@ fn main() {
 }
 
 fn handle_connection(mut stream: TcpStream) {
-    let buf_reader = BufReader::new(&amp;mut stream);
+    let buf_reader = BufReader::new(&amp;stream);
     let request_line = buf_reader.lines().next().unwrap().unwrap();
 
     let (status_line, filename) = match &amp;request_line[..] {
@@ -852,10 +856,9 @@ hinzu.</li>
 <li>Ändere Aufrufe von <code>unwrap</code> in eine robustere Fehlerbehandlung.</li>
 <li>Verwende <code>ThreadPool</code>, um eine andere Aufgabe als das Beantworten von
 Web-Anfragen durchzuführen.</li>
-<li>Suche eine Strang-Vorrats-Kiste auf <a href="https://crates.io/">crates.io</a> und
-implementiere damit einen ähnlichen Webserver unter Verwendung der Kiste.
-Vergleiche dann dessen API und Robustheit mit dem von uns implementierten
-Strang-Vorrat.</li>
+<li>Suche eine Strang-Vorrats-Kiste auf <a href="https://crates.io/">crates.io</a> und   implementiere
+damit einen ähnlichen Webserver unter Verwendung der Kiste. Vergleiche dann
+dessen API und Robustheit mit dem von uns implementierten Strang-Vorrat.</li>
 </ul>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Gut gemacht! Du hast es bis ans Ende des Buchs geschafft! Wir möchten dir

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen - Die Programmiersprache Rust</title>
+        <title>Funktionalität mit testgetriebener Entwicklung hinzufügen - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="bibliotheksfunktionalität-mit-testgetriebener-entwicklung-erstellen"><a class="header" href="#bibliotheksfunktionalität-mit-testgetriebener-entwicklung-erstellen">Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen</a></h2>
+                        <h2 id="funktionalität-mit-testgetriebener-entwicklung-hinzufügen"><a class="header" href="#funktionalität-mit-testgetriebener-entwicklung-hinzufügen">Funktionalität mit testgetriebener Entwicklung hinzufügen</a></h2>
 <p>Jetzt, da wir die Logik nach <em>src/lib.rs</em> extrahiert haben und die
 Argumentkollektion und Fehlerbehandlung in <em>src/main.rs</em> belassen haben, ist es
 viel einfacher, Tests für die Kernfunktionalität unseres Codes zu schreiben.
@@ -188,43 +188,22 @@ Suche nach der Suchzeichenkette im Dateiinhalt durchführt und eine Liste von
 Zeilen erzeugt, die der Suchabfrage entsprechen. Wir werden diese
 Funktionalität in einer Funktion namens <code>search</code> hinzufügen.</p>
 <h3 id="schreiben-eines-fehlschlagenden-tests"><a class="header" href="#schreiben-eines-fehlschlagenden-tests">Schreiben eines fehlschlagenden Tests</a></h3>
-<p>Da wir sie nicht mehr benötigen, entfernen wir die <code>println!</code> -Anweisungen aus
-<em>src/lib.rs</em> und <em>src/main.rs</em>, die wir zum Überprüfen des Programmverhaltens
-verwendet haben. Dann füge in <em>src/lib.rs</em> ein Modul <code>tests</code> mit einer
-Testfunktion hinzu, wie wir es in <a href="ch11-01-writing-tests.html#anatomie-einer-testfunktion">Kapitel 11</a> getan haben. Die
-Testfunktion spezifiziert das Verhalten, das die Funktion <code>search</code> haben soll:
-Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
-und gibt nur die Zeilen aus dem Text zurück, die die Suchabfrage enthalten.
-Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.</p>
+<p>In <em>src/lib.rs</em> fügen wir ein Modul <code>tests</code> mit einer Testfunktion hinzu, wie
+wir es in <a href="ch11-01-writing-tests.html#testfunktionen-strukturieren">Kapitel 11</a> getan haben. Die Testfunktion spezifiziert
+das Verhalten, das die Funktion <code>search</code> haben soll: Sie nimmt eine Suchabfrage
+und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
+dem Text zurück, die die Suchabfrage enthalten. Codeblock 12-15 zeigt diesen
+Test.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
+</span><span class="boring">    unimplemented!();
 </span><span class="boring">}
 </span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}
-</span><span class="boring">
-</span>#[cfg(test)]
+</span>// --snip--
+
+#[cfg(test)]
 mod tests {
     use super::*;
 
@@ -238,7 +217,8 @@ Nimm drei.";
 
         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-15: Erstellen eines fehlschlagenden Tests
 für die Funktion <code>search</code>, die wir uns wünschen</span></p>
 <p>Dieser Test sucht nach der Zeichenkette <code>"dukt"</code>. Der Text, den wir
@@ -258,33 +238,6 @@ Vektor nicht mit einem Vektor übereinstimmt, der die Zeile <code>"sicher, schne
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
-</span><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn new(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}
-</span><span class="boring">
 </span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     vec![]
 }
@@ -351,34 +304,6 @@ verbinden, um Werte in der Signatur zurückzugeben, aber dieses Vorgehen wird
 mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit den Beispielen im
 Abschnitt <a href="ch10-03-lifetime-syntax.html">„Referenzen validieren mit
 Lebensdauern“</a> in Kapitel 10.</p>
-<p>Lass uns jetzt den Test ausführen:</p>
-<pre><code class="language-console">$ cargo test
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished test [unoptimized + debuginfo] target(s) in 0.97s
-     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 1 test
-test tests::one_result ... FAILED
-
-failures:
-
----- tests::one_result stdout ----
-thread 'tests::one_result' panicked at src/lib.rs:44:9:
-assertion `left == right` failed
-  left: ["sicher, schnell, produktiv."]
- right: []
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::one_result
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
-</code></pre>
-<p>Toll, der Test schlägt fehl, genau wie wir erwartet haben. Bringen wir den Test
-zum Bestehen!</p>
 <h3 id="code-schreiben-um-den-test-zu-bestehen"><a class="header" href="#code-schreiben-um-den-test-zu-bestehen">Code schreiben, um den Test zu bestehen</a></h3>
 <p>Derzeit scheitert unser Test, weil wir immer einen leeren Vektor zurückgeben.
 Um dies zu korrigieren und <code>search</code> zu implementieren, muss unser Programm die
@@ -397,33 +322,8 @@ Zeilen.</p>
 bequemerweise <code>lines</code> genannt, die wie in Codeblock 12-17 gezeigt funktioniert.
 Beachte, dass dies noch nicht kompiliert.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}
-</span><span class="boring">
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
 </span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     for line in contents.lines() {
         // mache etwas mit line
@@ -444,6 +344,7 @@ Beachte, dass dies noch nicht kompiliert.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-17: Iteriere über jede Zeile in
 <code>contents</code></span></p>
@@ -459,33 +360,8 @@ enthält. Glücklicherweise haben Zeichenketten eine hilfreiche Methode namens
 in der Funktion <code>search</code> hinzu, wie in Codeblock 12-18 gezeigt. Beachte, dass
 dies noch nicht kompiliert werden kann.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}
-</span><span class="boring">
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
 </span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     for line in contents.lines() {
         if line.contains(query) {
@@ -508,6 +384,7 @@ dies noch nicht kompiliert werden kann.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-18: Hinzufügen von Funktionalität, um zu
 sehen, ob die Zeile die Zeichenkette in <code>query</code> enthält</span></p>
@@ -521,33 +398,8 @@ einen veränderbaren Vektor vor der <code>for</code>-Schleife erstellen und die 
 <code>push</code> aufrufen, um eine <code>line</code> im Vektor zu speichern. Nach der <code>for</code>-Schleife
 geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-</span><span class="boring">    let contents = fs::read_to_string(config.file_path)?;
-</span><span class="boring">
-</span><span class="boring">    Ok(())
-</span><span class="boring">}
-</span><span class="boring">
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
 </span>pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
     let mut results = Vec::new();
 
@@ -574,6 +426,7 @@ geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.</p>
 </span><span class="boring">
 </span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 12-19: Speichern der passenden Zeilen, damit
 wir sie zurückgeben können</span></p>
@@ -609,72 +462,6 @@ Suchfunktion ist nicht allzu schlecht, aber er macht sich einige nützliche
 Funktionen der Iteratoren nicht zunutze. Wir kehren zu diesem Beispiel in
 <a href="ch13-02-iterators.html">Kapitel 13</a> zurück, wo wir Iteratoren im Detail untersuchen
 und uns ansehen, wie man sie verbessern kann.</p>
-<h4 id="verwenden-der-funktion-search-in-der-funktion-run"><a class="header" href="#verwenden-der-funktion-search-in-der-funktion-run">Verwenden der Funktion <code>search</code> in der Funktion <code>run</code></a></h4>
-<p>Da die Funktion <code>search</code> nun funktioniert und getestet ist, müssen wir <code>search</code>
-von unserer Funktion <code>run</code> aus aufrufen. Wir müssen den Wert <code>config.query</code> und
-den Wert <code>contents</code>, den <code>run</code> aus der Datei liest, an die Funktion <code>search</code>
-übergeben. Dann wird <code>run</code> jede von <code>search</code> zurückgegebene Zeile ausgeben:</p>
-<p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore"><span class="boring">use std::error::Error;
-</span><span class="boring">use std::fs;
-</span><span class="boring">
-</span><span class="boring">pub struct Config {
-</span><span class="boring">    pub query: String,
-</span><span class="boring">    pub file_path: String,
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">impl Config {
-</span><span class="boring">    pub fn build(args: &amp;[String]) -&gt; Result&lt;Config, &amp;'static str&gt; {
-</span><span class="boring">        if args.len() &lt; 3 {
-</span><span class="boring">            return Err("Nicht genügend Argumente");
-</span><span class="boring">        }
-</span><span class="boring">
-</span><span class="boring">        let query = args[1].clone();
-</span><span class="boring">        let file_path = args[2].clone();
-</span><span class="boring">
-</span><span class="boring">        Ok(Config { query, file_path })
-</span><span class="boring">    }
-</span><span class="boring">}
-</span><span class="boring">
-</span>pub fn run(config: Config) -&gt; Result&lt;(), Box&lt;dyn Error&gt;&gt; {
-    let contents = fs::read_to_string(config.file_path)?;
-
-    for line in search(&amp;config.query, &amp;contents) {
-        println!("{line}");
-    }
-
-    Ok(())
-}
-<span class="boring">
-</span><span class="boring">pub fn search&lt;'a&gt;(query: &amp;str, contents: &amp;'a str) -&gt; Vec&lt;&amp;'a str&gt; {
-</span><span class="boring">    let mut results = Vec::new();
-</span><span class="boring">
-</span><span class="boring">    for line in contents.lines() {
-</span><span class="boring">        if line.contains(query) {
-</span><span class="boring">            results.push(line);
-</span><span class="boring">        }
-</span><span class="boring">    }
-</span><span class="boring">
-</span><span class="boring">    results
-</span><span class="boring">}
-</span><span class="boring">
-</span><span class="boring">#[cfg(test)]
-</span><span class="boring">mod tests {
-</span><span class="boring">    use super::*;
-</span><span class="boring">
-</span><span class="boring">    #[test]
-</span><span class="boring">    fn one_result() {
-</span><span class="boring">        let query = "dukt";
-</span><span class="boring">        let contents = "\
-</span><span class="boring">Rust:
-</span><span class="boring">sicher, schnell, produktiv.
-</span><span class="boring">Nimm drei.";
-</span><span class="boring">
-</span><span class="boring">        assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
-</span><span class="boring">    }
-</span><span class="boring">}</span></code></pre>
-<p>Wir benutzen immer noch eine <code>for</code>-Schleife, um jede Zeile von <code>search</code>
-zurückzugeben und auszugeben.</p>
 <p>Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
 wiedergeben sollte: <em>frog</em></p>

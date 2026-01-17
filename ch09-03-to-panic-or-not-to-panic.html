@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -197,7 +197,7 @@ Programm robuster machst.</p>
 gesamte Test fehlschlägt, auch wenn diese Methode nicht die zu testende
 Funktionalität ist. Da ein Test mit <code>panic!</code> als fehlgeschlagen markiert wird,
 ist der Aufruf von <code>unwrap</code> und <code>expect</code> genau das, was passieren sollte.</p>
-<h3 id="fälle-in-denen-du-mehr-informationen-als-der-compiler-hast"><a class="header" href="#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast">Fälle, in denen du mehr Informationen als der Compiler hast</a></h3>
+<h3 id="wenn-du-mehr-informationen-als-der-compiler-hast"><a class="header" href="#wenn-du-mehr-informationen-als-der-compiler-hast">Wenn du mehr Informationen als der Compiler hast</a></h3>
 <p>Es wäre auch sinnvoll, <code>unwrap</code> oder <code>expect</code> aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass <code>Result</code> einen <code>Ok</code>-Wert hat, aber die Logik
 kann vom Compiler nicht verstanden werden. Du wirst immer noch ein <code>Result</code>
@@ -205,9 +205,9 @@ haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
 besteht immer noch die Möglichkeit, dass sie im Allgemeinen scheitert, auch
 wenn es in deiner speziellen Situation logischerweise unmöglich ist. Wenn du
 durch manuelle Codeinspektion sicherstellen kannst, dass du niemals eine
-<code>Err</code>-Variante haben wirst, ist es vollkommen akzeptabel, <code>unwrap</code> aufzurufen,
-und noch besser ist es, den Grund, warum du glaubst, dass du niemals eine
-<code>Err</code>-Variante haben wirst, im <code>expect</code>-Text zu dokumentieren. Hier ist ein
+<code>Err</code>-Variante haben wirst, ist es vollkommen akzeptabel, <code>expect</code> aufzurufen,
+und noch besser ist es, den Grund, warum deiner Meinung nach niemals eine
+<code>Err</code>-Variante auftreten wird, im Parametertext zu dokumentieren. Hier ist ein
 Beispiel:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -295,7 +295,7 @@ einmal kompilieren, sodass deine Funktion diesen Fall zur Laufzeit nicht prüfen
 muss. Ein anderes Beispiel ist die Verwendung eines vorzeichenlosen
 Ganzzahl-Typs wie <code>u32</code>, der sicherstellt, dass der Parameter niemals negativ
 ist.</p>
-<h3 id="benutzerdefinierte-typen-für-die-validierung-erstellen"><a class="header" href="#benutzerdefinierte-typen-für-die-validierung-erstellen">Benutzerdefinierte Typen für die Validierung erstellen</a></h3>
+<h3 id="benutzerdefinierte-typen-für-die-validierung"><a class="header" href="#benutzerdefinierte-typen-für-die-validierung">Benutzerdefinierte Typen für die Validierung</a></h3>
 <p>Gehen wir noch einen Schritt weiter, indem wir das Typsystem von Rust verwenden,
 um sicherzustellen, dass wir einen gültigen Wert haben, und betrachten wir die
 Erstellung eines benutzerdefinierten Typs für die Validierung. Erinnere
@@ -393,9 +393,11 @@ impl Guess {
 <span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 9-13: Ein Typ <code>Guess</code>, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span></p>
-<p>Zuerst erstellen wir ein neues Modul namens <code>guessing_game</code>. Danach definieren
-wir in diesem Modul eine Struktur <code>Guess</code>, die ein Feld <code>value</code> hat, das einen
-<code>i32</code> enthält. Hier wird die Nummer gespeichert.</p>
+<p>Beachte, dass dieser Code in <em>src/guessing_game.rs</em> davon abhängt, dass in
+<em>src/lib.rs</em> eine Moduldeklaration <code>mod guessing_game;</code> hinzugefügt wird, die
+wir hier nicht gezeigt haben. In dieser neuen Moduldatei definieren wir eine
+Struktur namens <code>Guess</code> mit einem Feld <code>value</code>, das einen <code>i32</code> enthält. Hier
+wird die Zahl gespeichert.</p>
 <p>Dann implementieren wir die zugehörige Funktion <code>new</code> für <code>Guess</code>, die
 Instanzen von <code>Guess</code> erzeugt. Die Funktion <code>new</code> ist so definiert, dass sie
 einen Parameter <code>value</code> vom Typ <code>i32</code> entgegen nimmt und eine <code>Guess</code>-Instanz

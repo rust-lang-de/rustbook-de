@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln - Die Programmiersprache Rust</title>
+        <title>Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,16 +161,16 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="unseren-einsträngigen-single-threaded-webserver-in-einen-mehrsträngigen-multi-threaded-webserver-verwandeln"><a class="header" href="#unseren-einsträngigen-single-threaded-webserver-in-einen-mehrsträngigen-multi-threaded-webserver-verwandeln">Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln</a></h2>
+                        <h2 id="von-einem-einsträngigen-single-threaded-zu-einem-mehrsträngigen-multi-threaded-webserver"><a class="header" href="#von-einem-einsträngigen-single-threaded-zu-einem-mehrsträngigen-multi-threaded-webserver">Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver</a></h2>
 <p>Im Moment verarbeitet der Server jede Anfrage der Reihe nach, d.h. er wird erst
-dann eine zweite Verbindung verarbeiten, wenn die erste abgeschlossen ist.
-Würde der Server mehr und mehr Anfragen erhalten, wäre diese serielle
-Ausführung immer weniger optimal. Wenn der Server eine Anfrage erhält, deren
-Bearbeitung sehr lange dauert, müssen nachfolgende Anfragen warten, bis die
-lange dauernde Anfrage beendet ist, auch wenn die neuen Anfragen schnell
+dann eine zweite Verbindung verarbeiten, wenn die erste Verbindung
+abgeschlossen ist. Würde der Server mehr und mehr Anfragen erhalten, wäre diese
+serielle Ausführung immer weniger optimal. Wenn der Server eine Anfrage erhält,
+deren Bearbeitung sehr lange dauert, müssen nachfolgende Anfragen warten, bis
+die lange dauernde Anfrage beendet ist, auch wenn die neuen Anfragen schnell
 bearbeitet werden können. Das müssen wir beheben, aber zuerst werden wir uns
 das Problem in Aktion ansehen.</p>
-<h3 id="simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung"><a class="header" href="#simulieren-einer-langsamen-anfrage-in-der-aktuellen-server-implementierung">Simulieren einer langsamen Anfrage in der aktuellen Server-Implementierung</a></h3>
+<h3 id="simulieren-einer-langsamen-anfrage"><a class="header" href="#simulieren-einer-langsamen-anfrage">Simulieren einer langsamen Anfrage</a></h3>
 <p>Wir werden untersuchen, wie sich eine Anfrage mit langsamer Verarbeitung auf
 andere Anfragen an unsere aktuelle Server-Implementierung auswirken kann.
 Codeblock 21-10 implementiert die Behandlung einer Anfrage an <em>/sleep</em> mit
@@ -221,7 +221,7 @@ lang zu schlafen, bevor er antwortet.</p>
 </span><span class="boring">    stream.write_all(response.as_bytes()).unwrap();
 </span>}</code></pre>
 <p><span class="caption">Codeblock 21-10: Simulieren einer langsamen Anfrage durch
-Schlafen von 5 Sekunden</span></p>
+Schlafen von fünf Sekunden</span></p>
 <p>Wir haben von <code>if</code> zu <code>match</code> gewechselt, da wir nun drei Fälle haben. Wir
 müssen explizit auf ein Stück von <code>request_line</code> abgleichen, um einen
 Musterabgleich mit den Zeichenketten-Literalwerten durchzuführen; <code>match</code> führt
@@ -235,7 +235,7 @@ HTML-Seite rendert. Der dritte Zweig entspricht dem <code>else</code>-Block aus 
 <p>Du kannst sehen, wie primitiv unser Server ist: Echte Bibliotheken würden das
 Erkennen mehrerer Anfragen viel weniger wortreich handhaben!</p>
 <p>Starte den Server mit <code>cargo run</code>. Öffne dann zwei Browser-Fenster: Eines für
-<em>http://127.0.0.1:7878/</em> und das andere für <em>http://127.0.0.1:7878/sleep</em>. Wenn
+<em>http://127.0.0.1:7878</em> und das andere für <em>http://127.0.0.1:7878/sleep</em>. Wenn
 du die URI <code>/</code> wie bisher ein paar Mal eingibst, wirst du sehen, dass er
 schnell reagiert. Aber wenn du <em>/sleep</em> eingibst und dann <code>/</code> lädst, wirst du
 sehen, dass <code>/</code> wartet, bis <code>sleep</code> für volle 5 Sekunden geschlafen hat, bevor
@@ -245,7 +245,7 @@ langsamen Anfrage stauen; diejenige, die wir implementieren werden, ist ein
 Strang-Vorrat (thread pool).</p>
 <h3 id="verbessern-des-durchsatzes-mit-einem-strang-vorrat"><a class="header" href="#verbessern-des-durchsatzes-mit-einem-strang-vorrat">Verbessern des Durchsatzes mit einem Strang-Vorrat</a></h3>
 <p>Ein <em>Strang-Vorrat</em> (thread pool) ist eine Gruppe von erzeugten Strängen, die
-warten und bereit sind, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
+bereit sind und warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
 Aufgabe erhält, ordnet es einen der Stränge im Pool der Aufgabe zu, und dieser
 Strang wird die Aufgabe bearbeiten. Die verbleibenden Stränge im Pool stehen
 für alle anderen Aufgaben zur Verfügung, die während der Verarbeitung des
@@ -299,9 +299,10 @@ nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
 einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
 zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
 wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen. Codeblock 21-11 zeigt die Änderungen, die an <code>main</code>
-vorgenommen werden müssen, um einen neuen Strang zu erzeugen, der jeden Strom
-innerhalb der <code>for</code>-Schleife verarbeitet.</p>
+Lösungen zu vergleichen.</p>
+<p>Codeblock 21-11 zeigt die Änderungen, die an <code>main</code> vorgenommen werden müssen,
+um einen neuen Strang zu erzeugen, der jeden Strom innerhalb der <code>for</code>-Schleife
+verarbeitet.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust no_run edition2024"><span class="boring">use std::{
 </span><span class="boring">    fs,
@@ -353,7 +354,7 @@ dann <code>/</code> in zwei weiteren Browser-Tabs, wirst du in der Tat sehen, da
 Anfragen an <code>/</code> nicht auf die Beendigung von <em>/sleep</em> warten müssen. Aber wie
 wir bereits erwähnt haben, wird dies letztendlich das System überfordern, weil
 du neue Stränge ohne jede Begrenzung erstellen würdest.</p>
-<h4 id="erstellen-einer-endliche-anzahl-von-strängen"><a class="header" href="#erstellen-einer-endliche-anzahl-von-strängen">Erstellen einer endliche Anzahl von Strängen</a></h4>
+<h4 id="erstellen-einer-endlichen-anzahl-von-strängen"><a class="header" href="#erstellen-einer-endlichen-anzahl-von-strängen">Erstellen einer endlichen Anzahl von Strängen</a></h4>
 <p>Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
 arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
 Änderungen am Code erfordert, der unsere API verwendet. Codeblock 21-12 zeigt
@@ -431,8 +432,8 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 <p>Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 <code>ThreadPool</code> benötigen, also werden wir jetzt eines bauen. Unsere
 <code>ThreadPool</code>-Implementierung wird unabhängig von der Art der Arbeit unseres
-Webservers sein. Lass uns also die Kiste (crate) <code>hello</code> von einer Binär-Kiste
-(binary crate) auf eine Bibliotheks-Kiste (library crate) umstellen, um unsere
+Webservers sein. Lass uns also die Kiste (crate) <code>hello</code> von einer Binärkiste
+(binary crate) auf eine Bibliothekskiste (library crate) umstellen, um unsere
 <code>ThreadPool</code>-Implementierung aufzunehmen. Nachdem wir zu einer Bibliothekskiste
 umgestellt haben, könnten wir die separate Strang-Vorrats-Bibliothek auch für
 alle Arbeiten verwenden, die wir mit einem Strang-Vorrat durchführen wollen,
@@ -534,19 +535,19 @@ For more information about this error, try `rustc --explain E0599`.
 error: could not compile `hello` (bin "hello") due to 1 previous error
 </code></pre>
 <p>Der Fehler tritt jetzt auf, weil wir keine Methode <code>execute</code> auf <code>ThreadPool</code>
-haben. Erinnere dich an <a href="#erstellen-einer-endliche-anzahl-von-strängen">„Erstellen einer endlichen Anzahl von
+haben. Erinnere dich an Abschnitt <a href="#erstellen-einer-endliche-anzahl-von-strängen">„Erstellen einer endlichen Anzahl von
 Strängen“</a>, wo wir beschlossen haben, dass unser
 Strang-Vorrat eine ähnliche Schnittstelle wie <code>thread::spawn</code> haben sollte.
 Zusätzlich werden wir die Funktion <code>execute</code> implementieren, sodass sie den
 Funktionsabschluss, der ihr gegeben wird, nimmt und sie einem unbeschäftigten
 Strang im Vorrat zur Ausführung übergibt.</p>
 <p>Wir werden die Methode <code>execute</code> auf <code>ThreadPool</code> definieren, um einen
-Funktionsabschluss als Parameter zu nehmen. Aus <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen-und-fn-merkmalen">„Verschieben erfasster Werte
-aus Funktionsabschlüssen und Fn-Merkmalen“</a> in Kapitel 13 erinnern
-wir uns, dass wir Funktionsabschlüsse als Parameter mit drei verschiedenen
-Merkmalen nehmen können: <code>Fn</code>, <code>FnMut</code> und <code>FnOnce</code>. Wir müssen entscheiden,
-welche Art von Funktionsabschluss wir hier verwenden. Wir wissen, dass wir am
-Ende etwas Ähnliches wie die Implementierung <code>thread::spawn</code> der
+Funktionsabschluss als Parameter zu nehmen. Aus Abschnitt <a href="ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen">„Verschieben
+erfasster Werte aus Funktionsabschlüssen“</a> in Kapitel
+13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit drei
+verschiedenen Merkmalen nehmen können: <code>Fn</code>, <code>FnMut</code> und <code>FnOnce</code>. Wir müssen
+entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir wissen,
+dass wir am Ende etwas Ähnliches wie die Implementierung <code>thread::spawn</code> der
 Standardbibliothek tun werden, sodass wir uns ansehen können, welche
 Abgrenzungen die Signatur von <code>thread::spawn</code> in ihrem Parameter hat. Die
 Dokumentation zeigt uns Folgendes:</p>
@@ -572,7 +573,9 @@ Strangs dauern wird. Lass uns eine Methode <code>execute</code> auf <code>Thread
 erstellen, die einen generischen Parameter vom Typ <code>F</code> mit diesen Abgrenzungen
 annimmt:</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     // --abschneiden--
@@ -585,7 +588,8 @@ annimmt:</p>
         F: FnOnce() + Send + 'static,
     {
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p>Wir verwenden immer noch <code>()</code> nach <code>FnOnce</code>, weil dieses <code>FnOnce</code> einen
 Funktionsabschluss darstellt, der keine Parameter benötigt und den Einheitstyp
 <code>()</code> zurückgibt. Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in
@@ -611,6 +615,8 @@ vollständiges Projekt aufbauen würden, wäre dies ein guter Zeitpunkt, mit dem
 Schreiben von Modultests zu beginnen, um zu überprüfen, ob der Code
 kompiliert <em>und</em> das von uns gewünschte Verhalten aufweist.</p>
 </blockquote>
+<p>Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines
+Funktionsabschlusses eine Future ausführen würden?</p>
 <h4 id="validieren-der-anzahl-der-stränge-in-new"><a class="header" href="#validieren-der-anzahl-der-stränge-in-new">Validieren der Anzahl der Stränge in <code>new</code></a></h4>
 <p>Wir tun nichts mit den Parametern von <code>new</code> und <code>execute</code>. Lass uns die Rümpfe
 dieser Funktionen mit dem Verhalten implementieren, das wir wollen. Lass uns
@@ -623,7 +629,9 @@ hinzu, um zu prüfen, ob <code>size</code> größer als null ist, bevor wir eine
 eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Codeblock
 21-13 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">pub struct ThreadPool;
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">pub struct ThreadPool;
 </span><span class="boring">
 </span>impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
@@ -646,7 +654,8 @@ eine Null erhält, indem wir das Makro <code>assert!</code> verwenden, wie in Co
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}</code></pre>
+</span>}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-13: Implementierung von <code>ThreadPool::new</code>
 stürzt ab, wenn <code>size</code> gleich Null ist</span></p>
 <p>Wir haben auch etwas Dokumentation für unseren <code>ThreadPool</code> mit
@@ -687,7 +696,9 @@ Kapazität <code>size</code> initialisiert, eine <code>for</code>-Schleife einge
 Code zum Erzeugen der Stränge ausführt, und eine <code>ThreadPool</code>-Instanz
 zurückgibt, die diese enthält.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore not_desired_behavior">use std::thread;
+<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::thread;
 
 pub struct ThreadPool {
     threads: Vec&lt;thread::JoinHandle&lt;()&gt;&gt;,
@@ -720,7 +731,8 @@ impl ThreadPool {
 </span><span class="boring">        F: FnOnce() + Send + 'static,
 </span><span class="boring">    {
 </span><span class="boring">    }
-</span>}</code></pre>
+</span>}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-14: Erstellen eines Vektors für <code>ThreadPool</code>
 zum Aufnehmen der Stränge</span></p>
 <p>Wir haben <code>std::thread</code> in der Bibliothekskiste in den Gültigkeitsbereich
@@ -734,7 +746,7 @@ Unterschied: Sie weist dem Vektor Platz im Voraus zu. Da wir wissen, dass wir
 etwas effizienter als die Verwendung von <code>Vec::new</code>, das sich selbst in der
 Größe verändert, wenn Elemente eingefügt werden.</p>
 <p>Wenn du <code>cargo check</code> erneut ausführst, sollte es erfolgreich sein.</p>
-<h4 id="struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang"><a class="header" href="#struktur-worker-zum-senden-von-code-vom-threadpool-an-einen-strang">Struktur <code>Worker</code> zum Senden von Code vom <code>ThreadPool</code> an einen Strang</a></h4>
+<h4 id="senden-von-code-vom-threadpool-an-einen-strang"><a class="header" href="#senden-von-code-vom-threadpool-an-einen-strang">Senden von Code vom <code>ThreadPool</code> an einen Strang</a></h4>
 <p>Wir haben einen Kommentar in der <code>for</code>-Schleife in Codeblock 21-14 bezüglich
 der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
 tatsächlich Stränge erstellen. Die Standardbibliothek bietet <code>thread::spawn</code>
@@ -748,10 +760,10 @@ sie manuell implementieren.</p>
 zwischen dem <code>ThreadPool</code> und den Strängen, die dieses neue Verhalten verwalten
 werden, einführen. Wir nennen diese Datenstruktur <code>Worker</code>, was ein gängiger
 Begriff in Vorrats-Implementierungen ist. Der <code>Worker</code> holt den Code ab, der
-ausgeführt werden muss, und führt ihn im Strang des <code>Worker</code> aus. Denke an
-Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter warten, bis
-Bestellungen von Kunden eingehen, und dann sind sie dafür verantwortlich, diese
-Bestellungen entgegenzunehmen und auszuführen.</p>
+ausgeführt werden muss, und führt ihn in seinem Strang aus.</p>
+<p>Denke an Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter
+warten, bis Bestellungen von Kunden eingehen, und dann sind sie dafür
+verantwortlich, diese Bestellungen entgegenzunehmen und auszuführen.</p>
 <p>Anstatt einen Vektor von <code>JoinHandle&lt;()&gt;</code>-Instanzen im Strang-Vorrat zu
 speichern, werden wir Instanzen der <code>Worker</code>-Struktur speichern. Jeder <code>Worker</code>
 wird eine einzelne <code>JoinHandle&lt;()&gt;</code>-Instanz speichern. Dann werden wir eine
@@ -779,7 +791,9 @@ zu implementieren, bevor du dir den Code in Codeblock 21-15 ansiehst.</p>
 <p>Bereit? Hier ist Codeblock 21-15 mit einer Möglichkeit, die vorhergehenden
 Änderungen vorzunehmen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">use std::thread;
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::thread;
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -825,7 +839,8 @@ impl Worker {
 
         Worker { id, thread }
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-15: Modifizieren von <code>ThreadPool</code>, um
 <code>Worker</code>-Instanzen zu halten, anstatt Stränge direkt zu halten</span></p>
 <p>Wir haben den Namen des Feldes in <code>ThreadPool</code> von <code>threads</code> in <code>workers</code>
@@ -885,7 +900,9 @@ Sender in der <code>ThreadPool</code>-Instanz zu halten, wie in Codeblock 21-16
 gezeigt. Die Struktur <code>Job</code> enthält vorerst nichts, aber sie wird die Art von
 Element sein, die wir in den Kanal senden.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">use std::{sync::mpsc, thread};
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
     workers: Vec&lt;Worker&gt;,
@@ -936,6 +953,7 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-16: Ändern von <code>ThreadPool</code>, um den Sender
 zu speichern, der <code>Job</code>-Instanzen übermittelt</span></p>
@@ -947,7 +965,9 @@ im Strang verwenden wollen, den die <code>Worker</code>-Instanzen erzeugen, also
 wir den Parameter <code>receiver</code> im Funktionsabschluss referenzieren. Der Code in
 Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore does_not_compile"><span class="boring">use std::{sync::mpsc, thread};
+<pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{sync::mpsc, thread};
 </span><span class="boring">
 </span><span class="boring">pub struct ThreadPool {
 </span><span class="boring">    workers: Vec&lt;Worker&gt;,
@@ -1002,7 +1022,8 @@ Codeblock 21-17 lässt sich noch nicht ganz kompilieren.</p>
 
         Worker { id, thread }
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-17: Übergeben des Empfängers an jeden
 <code>Worker</code></span></p>
 <p>Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
@@ -1058,7 +1079,9 @@ Empfänger zu besitzen, und <code>Mutex</code> stellt sicher, dass immer nur ein
 zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 21-18 zeigt
 die Änderungen, die wir vornehmen müssen.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground">use std::{
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span>use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
 };
@@ -1121,7 +1144,8 @@ die Änderungen, die wir vornehmen müssen.</p>
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span>    }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-18: Den Empfänger unter den <code>Worker</code>
 teilen, die <code>Arc</code> und <code>Mutex</code> benutzen</span></p>
 <p>In <code>ThreadPool::new</code> setzen wir den Empfänger in einen <code>Arc</code> und einen
@@ -1133,12 +1157,14 @@ teilen können.</p>
 <p>Lass uns endlich die Methode <code>execute</code> auf <code>ThreadPool</code> implementieren. Wir
 werden auch <code>Job</code> von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
 (trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-<code>execute</code> erhält. Wie in <a href="ch20-03-advanced-types.html#erstellen-von-typ-synonymen-mit-typ-alias">„Erstellen von Typ-Synonymen mit
-Typ-Alias“</a> in Kapitel 19 besprochen, ermöglichen uns
+<code>execute</code> erhält. Wie im Abschnitt <a href="ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase">„Typ-Synonyme und
+Typ-Aliase“</a> in Kapitel 19 besprochen, ermöglichen uns
 Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
 Siehe Codeblock 21-19.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust noplayground"><span class="boring">use std::{
+<pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -1202,6 +1228,7 @@ impl ThreadPool {
 </span><span class="boring">
 </span><span class="boring">        Worker { id, thread }
 </span><span class="boring">    }
+</span><span class="boring">}
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-19: Erstellen eines Alias vom Typ <code>Job</code> für
 eine <code>Box</code>, die jeden Funktionsabschluss enthält, und danach Senden des
@@ -1361,11 +1388,13 @@ Einige Web-Browser führen aus Gründen der Zwischenspeicherung mehrere
 Instanzen der gleichen Anfrage nacheinander aus. Diese Beschränkung wird
 nicht durch unseren Webserver verursacht.</p>
 </blockquote>
-<p>Nachdem du die <code>while let</code>-Schleife in Kapitel 18 kennengelernt hast, fragst du
-dich vielleicht, warum wir den Code für den <code>Worker</code>-Strang nicht geschrieben
-haben, wie in Codeblock 21-21 gezeigt.</p>
+<p>Nachdem du die <code>while let</code>-Schleife in den Kapiteln 17 und 19 kennengelernt
+hast, fragst du dich vielleicht, warum wir den Code für den <code>Worker</code>-Strang
+nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
-<pre><code class="language-rust ignore not_desired_behavior"><span class="boring">use std::{
+<pre class="playground"><code class="language-rust not_desired_behavior edition2024"><span class="boring">#![allow(unused)]
+</span><span class="boring">fn main() {
+</span><span class="boring">use std::{
 </span><span class="boring">    sync::{mpsc, Arc, Mutex},
 </span><span class="boring">    thread,
 </span><span class="boring">};
@@ -1429,7 +1458,8 @@ impl Worker {
 
         Worker { id, thread }
     }
-}</code></pre>
+}
+<span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 21-21: Eine alternative Implementierung von
 <code>Worker::new</code> unter Verwendung von <code>while let</code></span></p>
 <p>Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten

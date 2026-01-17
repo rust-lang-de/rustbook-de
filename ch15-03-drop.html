@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -175,12 +175,13 @@ den die Box zeigt.</p>
 <p>In einigen Programmiersprachen muss der Programmierer für manche Datentypen
 den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen
 Instanzen nicht mehr benötigt werden. Beispiele hierfür sind Dateiressourcen,
-Sockets und Sperren. Wenn er das vergisst, kann das System überlastet werden
-und abstürzen. In Rust kannst du festlegen, dass ein bestimmter Programmcode
-ausgeführt wird, sobald ein Wert seinen Gültigkeitsbereich verlässt. Der
-Compiler fügt dann diesen Programmcode automatisch ein. Infolgedessen muss man
-sich nicht darum kümmern, an allen relevanten Stellen Aufräumcode zu
-platzieren, und verschwendet trotzdem keine Ressourcen!</p>
+Sockets und Sperren. Wenn der Programmierer das vergisst, kann das System
+überlastet werden und abstürzen. In Rust kannst du festlegen, dass ein
+bestimmter Programmcode ausgeführt wird, sobald ein Wert seinen
+Gültigkeitsbereich verlässt. Der Compiler fügt dann diesen Programmcode
+automatisch ein. Infolgedessen muss man sich nicht darum kümmern, an allen
+relevanten Stellen Aufräumcode zu platzieren, und verschwendet trotzdem keine
+Ressourcen!</p>
 <p>Du schreibst den Programmcode, der ausgeführt wird, wenn ein Wert den
 Gültigkeitsbereich verlässt, durch Implementieren des Merkmals <code>Drop</code>. Für das
 Merkmal <code>Drop</code> muss man eine Methode <code>drop</code> implementieren, die eine
@@ -252,9 +253,9 @@ Sperre erhalten kann. Mit Rust kann man die Methode <code>drop</code> des Merkma
 nicht manuell aufrufen. Stattdessen muss man die von der Standardbibliothek
 bereitgestellte Funktion <code>std::mem::drop</code> aufrufen, wenn man das Aufräumen
 eines Werts vor dem Ende seines Gültigkeitsbereichs erzwingen möchte.</p>
-<p>Wenn wir versuchen die Methode <code>drop</code> des Merkmals <code>Drop</code> manuell aufzurufen,
-indem wir die Funktion <code>main</code> aus Codeblock 15-14 ändern, wie im Codeblock
-15-15, gezeigt, erhalten wir einen Kompilierfehler.</p>
+<p>Der Versuch, die Methode <code>drop</code> des Merkmals <code>Drop</code> manuell aufzurufen,
+indem wir die Funktion <code>main</code> aus Codeblock 15-14 ändern, wird nicht klappen.
+Codeblock 15-15 zeigt das.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024"><span class="boring">struct CustomSmartPointer {
 </span><span class="boring">    data: String,
@@ -288,8 +289,9 @@ error[E0040]: explicit use of destructor method
    |
 help: consider using `drop` function
    |
-16 |     drop(c);
-   |     +++++ ~
+16 -     c.drop();
+16 +     drop(c);
+   |
 
 For more information about this error, try `rustc --explain E0040`.
 error: could not compile `drop-example` (bin "drop-example") due to 1 previous error
@@ -301,7 +303,7 @@ Ein <em>Destruktor</em> ist analog zu einem <em>Konstruktor</em> (constructor), 
 Instanz erstellt. Die Funktion <code>drop</code> in Rust ist so ein <em>Destruktor</em>.</p>
 <p>Rust lässt uns <code>drop</code> nicht explizit aufrufen, da Rust immer noch automatisch
 für den Wert am Ende von <code>main</code> <code>drop</code> aufruft. Dies würde einen
-<em>Doppel-Freigabe-Fehler</em> (double free error) verursachen, da Rust versuchen
+Doppel-Freigabe-Fehler (double free error) verursachen, da Rust versuchen
 würde, den gleichen Wert zweimal aufzuräumen.</p>
 <p>Wir können das automatische Einfügen von <code>drop</code> am Ende des Gültigkeitsbereichs
 nicht deaktivieren und wir können die Methode <code>drop</code> nicht explizit aufrufen.

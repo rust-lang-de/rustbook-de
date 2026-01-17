@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -387,8 +387,8 @@ Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
 Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
 Beispiel für <code>pub use</code> und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir in <a href="ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren">„Mit <code>pub use</code> eine benutzerfreundliche öffentliche
-API exportieren“</a> in Kapitel 14 betrachten.</p>
+auswirkt, werden wir in <a href="ch14-02-publishing-to-crates-io.html#exportieren-einer-komfortablen-öffentlichen-api">„Exportieren einer komfortablen öffentlichen
+API“</a> in Kapitel 14 betrachten.</p>
 <h3 id="verwenden-externer-pakete"><a class="header" href="#verwenden-externer-pakete">Verwenden externer Pakete</a></h3>
 <p>In Kapitel 2 programmierten wir ein Ratespielprojekt, das ein externes Paket
 namens <code>rand</code> benutzte, um Zufallszahlen zu generieren. Um <code>rand</code> in unserem
@@ -443,7 +443,7 @@ Gültigkeitsbereich unseres Pakets zu bringen. Zum Beispiel würden wir für
 <span class="boring">}</span></code></pre>
 <p>Dies ist ein absoluter Pfad, der mit <code>std</code>, dem Namen der
 Standard-Bibliothekskiste, beginnt.</p>
-<h3 id="verschachtelte-pfade-verwenden-um-lange-use-listen-zu-vereinfachen"><a class="header" href="#verschachtelte-pfade-verwenden-um-lange-use-listen-zu-vereinfachen">Verschachtelte Pfade verwenden, um lange <code>use</code>-Listen zu vereinfachen</a></h3>
+<h3 id="verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen"><a class="header" href="#verschachtelte-pfade-verwenden-um-use-listen-zu-vereinfachen">Verschachtelte Pfade verwenden, um <code>use</code>-Listen zu vereinfachen</a></h3>
 <p>Wenn wir mehrere in der gleichen Kiste oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
 viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
@@ -500,7 +500,7 @@ verwenden, wie in Codeblock 7-20 gezeigt wird.</p>
 <p><span class="caption">Codeblock 7-20: Zusammenfassen der Pfade aus Codeblock
 7-19 zu einer <code>use</code>-Anweisung</span></p>
 <p>Diese Zeile bringt <code>std::io</code> und <code>std::io::Write</code> in den Gültigkeitsbereich.</p>
-<h3 id="der-stern-operator-glob"><a class="header" href="#der-stern-operator-glob">Der Stern-Operator (glob)</a></h3>
+<h3 id="elemente-mit-dem-stern-operator-glob-importieren"><a class="header" href="#elemente-mit-dem-stern-operator-glob-importieren">Elemente mit dem Stern-Operator (glob) importieren</a></h3>
 <p>Wenn wir <em>alle</em> öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
 Stern-Operator <code>*</code> angeben:</p>
@@ -512,7 +512,11 @@ Stern-Operator <code>*</code> angeben:</p>
 <code>std::collections</code> definiert sind, in den aktuellen Gültigkeitsbereich. Sei
 vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
 zu erkennen, welche Namen in den Gültigkeitsbereich fallen und wo ein in deinem
-Programm verwendeter Name definiert wurde.</p>
+Programm verwendeter Name definiert wurde. Wenn die Abhängigkeit ihre
+Definitionen ändern, ändert sich auch das, was du importiert hast. Dies kann zu
+Compilerfehlern führen, wenn du die Abhängigkeit aktualisierst und die
+Abhängigkeit beispielsweise eine Definition mit dem gleichen Namen wie eine
+deiner Definitionen im gleichen Bereich hinzufügst.</p>
 <p>Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
 in das Modul <code>tests</code> zu bringen. Wir werden darüber in <a href="ch11-01-writing-tests.html">„Tests
 schreiben“</a> in Kapitel 11 sprechen. Der Stern-Operator wird

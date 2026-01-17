@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -212,10 +212,6 @@ warning: variable does not need to be mutable
 <p>Die Warnung empfiehlt, dass wir das Schlüsselwort <code>mut</code> entfernen. Wir können
 diesen Vorschlag automatisch mit dem Werkzeug <code>rustfix</code> übernehmen, indem wir
 den Befehl <code>cargo fix</code> ausführen:</p>
-<p>Die Warnung empfiehlt, stattdessen <code>_i</code> als Namen zu verwenden: Der Unterstrich
-zeigt an, dass wir diese Variable nicht verwenden wollen. Wir können diesen
-Vorschlag mit dem Werkzeug <code>rustfix</code> automatisch übernehmen, indem wir das
-Kommando <code>cargo fix</code> ausführen:</p>
 <pre><code class="language-console">$ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
       Fixing src/main.rs (1 fix)
@@ -228,8 +224,7 @@ Kommando <code>cargo fix</code> ausführen:</p>
     let x = 42;
     println!("{x}");
 }</code></pre>
-<p>Die Variable <code>x</code> ist jetzt unveränderlich, und die Warnung erscheint nicht
-mehr.</p>
+<p>Die Variable <code>x</code> ist jetzt unveränderbar, und die Warnung erscheint nicht mehr.</p>
 <p>Du kannst den Befehl <code>cargo fix</code> auch dazu verwenden, deinen Code zwischen
 verschiedenen Rust-Editionen zu konvertieren. Die Editionen sind in <a href="appendix-05-editions.html">Anhang
 E</a> aufgeführt.</p>
@@ -270,7 +265,7 @@ Fehlern oder Warnungen von Clippy:</p>
     let r = 8.0;
     println!("Die Kreisfläche ist {}", x * r * r);
 }</code></pre>
-<p>Für weitere Informationen über Clippy siehe <a href="https://github.com/rust-lang/rust-clippy">seine Dokumentation</a>.</p>
+<p>Weitere Informationen findest du in der <a href="https://github.com/rust-lang/rust-clippy">Clippy-Dokumentation</a>.</p>
 <h3 id="ide-integration-mittels-rust-analyzer"><a class="header" href="#ide-integration-mittels-rust-analyzer">IDE-Integration mittels <code>rust-analyzer</code></a></h3>
 <p>Um die IDE-Integration zu erleichtern, empfiehlt die Rust-Gemeinschaft die
 Verwendung des <a href="https://rust-analyzer.github.io"><code>rust-analyzer</code></a>. Bei diesem Werkzeug handelt es

@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -178,7 +178,7 @@ unsichere Programmcode wird dann in eine sichere API eingepackt und der äußere
 Typ ist immer noch unveränderbar.</p>
 <p>Lass uns dieses Konzept untersuchen, indem wir uns den Typ <code>RefCell&lt;T&gt;</code>
 ansehen, der dem inneren Veränderbarkeitsmuster folgt.</p>
-<h3 id="mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen"><a class="header" href="#mit-refcellt-ausleihregeln-zur-laufzeit-sicherstellen">Mit <code>RefCell&lt;T&gt;</code> Ausleihregeln zur Laufzeit sicherstellen</a></h3>
+<h3 id="sicherstellen-der-ausleihregeln-zur-laufzeit"><a class="header" href="#sicherstellen-der-ausleihregeln-zur-laufzeit">Sicherstellen der Ausleihregeln zur Laufzeit</a></h3>
 <p>Im Gegensatz zu <code>Rc&lt;T&gt;</code> repräsentiert der Typ <code>RefCell&lt;T&gt;</code> die ungeteilte
 Eigentümerschaft (ownership) für die darin enthaltenen Daten. Was unterscheidet
 <code>RefCell&lt;T&gt;</code> von einem Typ wie <code>Box&lt;T&gt;</code>? Erinnere dich an die Ausleihregeln, die
@@ -235,10 +235,10 @@ erlaubt unveränderbares oder veränderbares Ausleihen, das zur Laufzeit
 kann man den Wert innerhalb von <code>RefCell&lt;T&gt;</code> auch dann ändern, wenn
 <code>RefCell&lt;T&gt;</code> unveränderbar ist.</li>
 </ul>
-<p>Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das <em>innere
-Veränderbarkeitsmuster</em>. Schauen wir uns eine Situation an, in der innere
+<p>Das Ändern des Werts innerhalb eines unveränderbaren Werts ist das innere
+Veränderbarkeitsmuster. Schauen wir uns eine Situation an, in der innere
 Veränderbarkeit nützlich ist, und untersuchen, wie dies möglich ist.</p>
-<h3 id="innere-veränderbarkeit-das-veränderbare-ausleihen-eines-unveränderbaren-wertes"><a class="header" href="#innere-veränderbarkeit-das-veränderbare-ausleihen-eines-unveränderbaren-wertes">Innere Veränderbarkeit: Das veränderbare Ausleihen eines unveränderbaren Wertes</a></h3>
+<h3 id="innere-veränderbarkeit-verwenden"><a class="header" href="#innere-veränderbarkeit-verwenden">Innere Veränderbarkeit verwenden</a></h3>
 <p>Eine Konsequenz der Ausleihregeln ist, dass man einen unveränderbaren Wert
 nicht veränderbar ausleihen kann. Dieser Programmcode wird beispielsweise nicht
 kompilieren:</p>
@@ -276,16 +276,16 @@ Regeln verstößt, führt das zu <code>panic!</code> anstelle eines Kompilierfeh
 <p>Lass uns ein praktisches Beispiel durcharbeiten, in dem wir <code>RefCell&lt;T&gt;</code>
 verwenden, um einen unveränderbaren Wert zu ändern und um herauszufinden, warum
 dies nützlich ist.</p>
-<h4 id="ein-anwendungsfall-für-die-innere-veränderbarkeit-mock-objekte-mock-objects"><a class="header" href="#ein-anwendungsfall-für-die-innere-veränderbarkeit-mock-objekte-mock-objects">Ein Anwendungsfall für die innere Veränderbarkeit: Mock-Objekte (Mock Objects)</a></h4>
+<h4 id="testen-mit-mock-objekten"><a class="header" href="#testen-mit-mock-objekten">Testen mit Mock-Objekten</a></h4>
 <p>Manchmal verwendet ein Programmierer beim Testen einen Typ anstelle eines
 anderen Typs, um ein bestimmtes Verhalten zu beobachten und festzustellen, ob
 es korrekt implementiert ist. Dieser Platzhaltertyp wird <em>Testdoppel</em> (test
 double) genannt. Stell dir das so vor wie ein „Stunt-Double“ beim Film, bei dem
 eine Person einspringt und einen Schauspieler in einer besonders schwierigen
 Szene ersetzt. Testdoppel stehen für andere Typen ein, wenn wir Tests
-durchführen. <em>Mock-Objekte</em> sind bestimmte Arten von Testdoppeln, die
-aufzeichnen, was während eines Tests passiert, damit man bestätigen kann, dass
-die richtigen Aktionen ausgeführt wurden.</p>
+durchführen. <em>Mock-Objekte</em> (mock objects) sind bestimmte Arten von
+Testdoppeln, die aufzeichnen, was während eines Tests passiert, damit man
+bestätigen kann, dass die richtigen Aktionen ausgeführt wurden.</p>
 <p>Rust verfügt nicht im gleichen Sinne wie andere Programmiersprachen über
 Objekte und in die Standardbibliothek integrierte Mock-Objekt-Funktionalität.
 Man kann jedoch definitiv eine Struktur erstellen, die denselben Zwecken dient
@@ -299,7 +299,7 @@ Anzahl der API-Aufrufe zu verfolgen, die er beispielsweise ausführen darf.</p>
 Wert am Maximum liegt und wie die Nachrichten zu bestimmten Zeiten sein
 sollten. Von Anwendungen, die unsere Bibliothek verwenden, wird erwartet, dass
 sie den Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung
-könnte eine Nachricht in der Anwendung anlegen, eine E-Mail senden, eine
+könnte die Nachricht dem Benutzer direkt zeigen, eine E-Mail senden, eine
 Textnachricht senden oder etwas anderes machen. Die Bibliothek muss dieses
 Detail nicht kennen. Alles, was es braucht, ist Code, der ein von uns
 bereitgestelltes Merkmal (trait) namens <code>Messenger</code> implementiert. Codeblock
@@ -359,8 +359,8 @@ können ändern, was wir für den Parameter <code>value</code> übergeben, aber 
 gibt nichts zurück, auf das wir Zusicherungen machen können. Wir wollen in der
 Lage sein zu sagen, dass, wenn wir einen <code>LimitTracker</code> mit etwas erstellen,
 das das Merkmal <code>Messenger</code> und einen bestimmten Wert für <code>max</code> implementiert,
-wenn wir verschiedene Zahlen für <code>value</code> übergeben, der Messenger angewiesen
-wird, die entsprechenden Nachrichten zu senden.</p>
+der Messenger angewiesen wird, die entsprechenden Nachrichten zu senden. wenn
+wir verschiedene Zahlen für <code>value</code> übergeben.</p>
 <p>Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von <code>send</code> nur die Nachrichten verfolgt, die
 gesendet werden sollen. Wir können eine neue Instanz des Mock-Objekts estellen,
@@ -590,7 +590,7 @@ auf <code>RefCell&lt;Vec&lt;String&gt;&gt;</code> auf, um eine unveränderbare R
 zu erhalten.</p>
 <p>Nachdem du nun gesehen hast, wie du <code>RefCell&lt;T&gt;</code> verwendest, wollen wir uns mit
 der Funktionsweise befassen.</p>
-<h4 id="mit-refcellt-den-überblick-über-die-ausleihen-zur-laufzeit-behalten"><a class="header" href="#mit-refcellt-den-überblick-über-die-ausleihen-zur-laufzeit-behalten">Mit <code>RefCell&lt;T&gt;</code> den Überblick über die Ausleihen zur Laufzeit behalten</a></h4>
+<h4 id="verwalten-von-ausleihen-zur-laufzeit"><a class="header" href="#verwalten-von-ausleihen-zur-laufzeit">Verwalten von Ausleihen zur Laufzeit</a></h4>
 <p>Beim Erstellen unveränderbarer und veränderbarer Referenzen verwenden wir die
 Syntax <code>&amp;</code> bzw. <code>&amp;mut</code>. Bei <code>RefCell&lt;T&gt;</code> verwenden wir die Methoden <code>borrow</code> und
 <code>borrow_mut</code>, die Teil der sicheren API sind, die zu <code>RefCell&lt;T&gt;</code> gehört. Die
@@ -739,7 +739,7 @@ Nachrichten zu verfolgen, die es gesehen hat, während man es in einem Kontext
 verwendet, in dem nur unveränderbare Werte zulässig sind. Man kann
 <code>RefCell&lt;T&gt;</code> trotz seiner Kompromisse verwenden, um mehr Funktionen zu
 erhalten, als reguläre Referenzen bieten.</p>
-<h3 id="mehrere-eigentümer-veränderbarer-daten-mit-rct-und-refcellt-erlauben"><a class="header" href="#mehrere-eigentümer-veränderbarer-daten-mit-rct-und-refcellt-erlauben">Mehrere Eigentümer veränderbarer Daten mit <code>Rc&lt;T&gt;</code> und <code>RefCell&lt;T&gt;</code> erlauben</a></h3>
+<h3 id="mehrere-eigentümer-veränderbarer-daten-erlauben"><a class="header" href="#mehrere-eigentümer-veränderbarer-daten-erlauben">Mehrere Eigentümer veränderbarer Daten erlauben</a></h3>
 <p>Eine übliche Methode zur Verwendung von <code>RefCell&lt;T&gt;</code> ist die Kombination mit
 <code>Rc&lt;T&gt;</code>. Erinnere dich, dass man mit <code>Rc&lt;T&gt;</code> mehrere Eigentümer einiger Daten
 haben kann, aber nur unveränderbaren Zugriff auf diese Daten erhält. Wenn

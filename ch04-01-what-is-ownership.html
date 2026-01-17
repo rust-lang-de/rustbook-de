@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -198,7 +198,7 @@ Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
 sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
 Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
 Reihenfolge. Dies wird als <em>zuletzt herein, zuerst hinaus</em> (last in, first
-out) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
+out (LIFO)) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
 hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
 nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
 Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
@@ -229,20 +229,20 @@ Vergleich dazu erfordert das Allokieren von Speicherplatz im dynamischen
 Speicher mehr Arbeit, da der Speicher-Allokator zunächst einen ausreichend
 großen Platz für die Daten finden und dann Buch führen muss, um die nächste
 Allokation vorzubereiten.</p>
-<p>Der Zugriff auf Daten im Haldenspeicher ist langsamer als der Zugriff
-auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um dorthin
-zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im Speicher
-herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner in einem
-Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
+<p>Der Zugriff auf Daten im Haldenspeicher ist generell langsamer als der
+Zugriff auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um
+dorthin zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im
+Speicher herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner
+in einem Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
 effizientesten, alle Bestellungen an einem Tisch aufzunehmen, bevor man zum
 nächsten Tisch weitergeht. Eine Bestellung von Tisch A, dann eine Bestellung
 von Tisch B, dann wieder eine von A und dann wieder eine von B aufzunehmen,
 wäre ein viel langsamerer Vorgang. Umgekehrt kann ein Prozessor seine Arbeit
-besser erledigen, wenn er mit Daten arbeitet, die nahe beieinander liegen
-(wie sie auf dem Stapelspeicher liegen) und nicht weiter voneinander entfernt
-(wie sie im Haldenspeicher liegen können). Das Allokieren einer großen
-Menge an Platz im Haldenspeicher kann ebenfalls Zeit in Anspruch
-nehmen.</p>
+normalerweise besser erledigen, wenn er mit Daten arbeitet, die nahe
+beieinander liegen (wie sie auf dem Stapelspeicher liegen) und nicht weiter
+voneinander entfernt (wie sie im Haldenspeicher liegen können). Das
+Allokieren einer großen Menge an Platz im Haldenspeicher kann ebenfalls Zeit
+in Anspruch nehmen.</p>
 <p>Wenn dein Code eine Funktion aufruft, werden die an die Funktion übergebenen
 Werte (einschließlich potentieller Zeiger auf Daten im Haldenspeicher)
 und die lokalen Variablen der Funktion auf den Stapelspeicher gelegt. Wenn
@@ -285,7 +285,7 @@ Variable an:</p>
 <p>Die Variable <code>s</code> bezieht sich auf ein Zeichenkettenliteral, wobei der Wert der
 Zeichenkette fest in den Text unseres Programms kodiert ist. Die Variable ist
 ab der Stelle, an der sie deklariert wurde, bis zum Ende des aktuellen
-<em>Gültigkeitsbereichs</em> gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
+Gültigkeitsbereichs gültig. Codeblock 4-1 zeigt ein Programm mit Kommentaren,
 die zeigen wo die Variable <code>s</code> gültig ist.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
@@ -320,16 +320,16 @@ der Typ <code>String</code> ist ein gutes Beispiel dafür.</p>
 <p>Wir werden uns auf die Teile von <code>String</code> konzentrieren, die sich auf die
 Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
 Datentypen, unabhängig davon, ob sie von der Standardbibliothek bereitgestellt
-oder von dir erstellt wurden. Wir werden <code>String</code> in <a href="ch08-02-strings.html">Kapitel 8</a>
-eingehender behandeln.</p>
+oder von dir erstellt wurden. Wir werden die Aspekte von <code>String</code>, die nicht
+mit der Eigentümerschaft zusammenhängen, in <a href="ch08-02-strings.html">Kapitel 8</a> besprechen.</p>
 <p>Wir haben bereits Zeichenkettenliterale gesehen, bei denen ein
 Zeichenkettenwert fest in unserem Programm kodiert ist. Zeichenkettenliterale
 sind praktisch, aber sie eignen sich nicht für jede Situation, in der wir Text
 verwenden möchten. Ein Grund dafür ist, dass sie unveränderbar sind. Ein
 anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
-entgegennehmen und speichern wollen? Für diese Situationen hat Rust einen
-zweiten Zeichenkettentyp: <code>String</code>. Dieser Typ verwaltet Daten, die auf dem
+entgegennehmen und speichern wollen? Für diese Situationen hat Rust den
+Zeichenkettentyp <code>String</code>. Dieser Typ verwaltet Daten, die auf dem
 Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
 zur Kompilierzeit unbekannt ist. Du kannst einen <code>String</code> aus einem
 Zeichenkettenliteral erzeugen, indem du die Funktion <code>from</code> wie folgt
@@ -341,15 +341,15 @@ verwendest:</p>
 <p>Der doppelte Doppelpunkt (<code>::</code>) Operator erlaubt uns, diese spezielle Funktion
 <code>from</code> mit dem Namensraum des <code>String</code>-Typs zu benennen, anstatt einen Namen
 wie <code>string_from</code> zu verwenden. Wir werden diese Syntax im Abschnitt
-<a href="ch05-03-method-syntax.html">„Methodensyntax“</a> in Kapitel 5 näher betrachten, und wenn wir
-in Kapitel 7 unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum
-verweisen“</a> über den Namensraum mit Modulen sprechen.</p>
+<a href="ch05-03-method-syntax.html">„Methoden“</a> in Kapitel 5 näher betrachten, und wenn wir in Kapitel 7
+unter <a href="ch07-03-paths-for-referring-to-an-item-in-the-module-tree.html">„Mit Pfaden auf ein Element im Modulbaum verweisen“</a>
+über den Namensraum mit Modulen sprechen.</p>
 <p>Diese Art von Zeichenkette kann <em>verändert</em> werden:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let mut s = String::from("Hallo");
 
-s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenfolge an
+s.push_str(" Welt!"); // push_str() hängt ein Literal an eine Zeichenkette an
 
 println!("{s}"); // Gibt `Hallo Welt!` aus
 <span class="boring">}</span></code></pre>
@@ -420,8 +420,7 @@ wir wollen, dass mehrere Variablen Daten verwenden, die wir im dynamischen
 Speicher allokiert haben. Lass uns jetzt einige dieser Situationen untersuchen.</p>
 <h4 id="variablen-und-daten-im-zusammenspiel-mit-move"><a class="header" href="#variablen-und-daten-im-zusammenspiel-mit-move">Variablen und Daten im Zusammenspiel mit Move</a></h4>
 <p>Mehrere Variablen können in Rust auf unterschiedliche Weise mit denselben Daten
-interagieren. Betrachten wir ein Beispiel mit einer ganzen Zahl in Codeblock
-4-2.</p>
+interagieren. Codeblock 4-2 zeigt ein Beispiel mit einer ganzen Zahl.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
 </span><span class="boring">fn main() {
 </span>let x = 5;
@@ -563,7 +562,8 @@ Betrachte zum Beispiel diesen Code:</p>
 <p>Wir deklarieren zunächst eine Variable <code>s</code> und binden sie an einen <code>String</code> mit
 dem Wert <code>„Hallo“</code>. Danach erstellen wir eine neue Zeichenkette mit dem Wert
 „Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
-nichts mehr auf den ursprünglichen Wert im Haldenspeicher.</p>
+nichts mehr auf den ursprünglichen Wert im Haldenspeicher. Abbildung 4-5 zeigt
+die aktuellen Daten im Speicher:</p>
 <p><img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Haldenspeicher dar
 und zeigt auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem
 Haldenspeicher, wobei die ursprünglichen Zeichenketten-Daten (Hallo)
@@ -750,8 +750,8 @@ fn calculate_length(s: String) -&gt; (String, usize) {
 Parametern</span></p>
 <p>Aber das ist zu viel Zeremonie und zu viel Arbeit für ein Konzept, das
 gebräuchlich sein sollte. Zum Glück gibt es in Rust eine Funktion, mit der man
-einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen, nämlich
-<em>Referenzen</em> (references).</p>
+einen Wert verwenden kann, ohne die Eigentümerschaft zu übertragen:
+<em>Referenzen</em> (references)</p>
 
                     </main>
 

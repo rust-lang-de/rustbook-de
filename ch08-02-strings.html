@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -177,12 +177,12 @@ Kollektionstyp hat, wie das Erstellen, Aktualisieren und Lesen. Wir werden auch
 die Art und Weise besprechen, in der sich <code>String</code> von den anderen Kollektionen
 unterscheidet, nämlich warum die Indexierung bei einem <code>String</code> kompliziert
 ist, weil Menschen und Computer <code>String</code>-Daten unterschiedlich interpretieren.</p>
-<h3 id="was-ist-eine-zeichenkette"><a class="header" href="#was-ist-eine-zeichenkette">Was ist eine Zeichenkette?</a></h3>
+<h3 id="zeichenketten-definieren"><a class="header" href="#zeichenketten-definieren">Zeichenketten definieren</a></h3>
 <p>Zuerst werden wir definieren, was wir mit dem Begriff <em>Zeichenkette</em> (string)
 meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
 nämlich den Zeichenkettenanteilstyp <code>str</code>, der üblicherweise in seiner
 Ausleihenform <code>&amp;str</code> zu sehen ist. In Kapitel 4 sprachen wir über
-<em>Zeichenkettenanteilstypen</em> (string slices), die Referenzen auf einige
+Zeichenkettenanteilstypen (string slices), die Referenzen auf einige
 UTF-8-kodierte Zeichenkettendaten sind, die anderswo gespeichert sind.
 Zeichenkettenliterale werden beispielsweise in der Binärdatei des Programms
 gespeichert und sind daher Zeichenkettenanteilstypen.</p>
@@ -265,7 +265,7 @@ verschiedenen Sprachen in Zeichenketten</span></p>
 der Inhalt eines <code>Vec&lt;T&gt;</code>, wenn du mehr Daten hineinschiebst. Darüber hinaus
 kannst du bequem den Operator <code>+</code> oder das Makro <code>format!</code> verwenden, um
 <code>String</code>-Werte aneinanderzuhängen.</p>
-<h4 id="anhängen-an-eine-zeichenkette-mit-push_str-und-push"><a class="header" href="#anhängen-an-eine-zeichenkette-mit-push_str-und-push">Anhängen an eine Zeichenkette mit <code>push_str</code> und <code>push</code></a></h4>
+<h4 id="anhängen-mit-push_str-und-push"><a class="header" href="#anhängen-mit-push_str-und-push">Anhängen mit <code>push_str</code> und <code>push</code></a></h4>
 <p>Wir können einen <code>String</code> wachsen lassen, indem wir die Methode <code>push_str</code>
 verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
 zu sehen ist.</p>
@@ -304,7 +304,7 @@ s.push('l');
 <p><span class="caption">Codeblock 8-17: Hinzufügen eines Zeichens zu einem
 <code>String</code>-Wert mit <code>push</code></span></p>
 <p>Als Ergebnis wird <code>s</code> den Wert <code>lol</code> enthalten.</p>
-<h4 id="aneinanderhängen-mit-dem-operator--und-dem-makro-format"><a class="header" href="#aneinanderhängen-mit-dem-operator--und-dem-makro-format">Aneinanderhängen mit dem Operator <code>+</code> und dem Makro <code>format!</code></a></h4>
+<h4 id="aneinanderhängen-mit--und-format"><a class="header" href="#aneinanderhängen-mit--und-format">Aneinanderhängen mit <code>+</code> und <code>format!</code></a></h4>
 <p>Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
 das zu tun ist, den Operator <code>+</code> zu verwenden, wie in Codeblock 8-18 gezeigt.</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#![allow(unused)]
@@ -328,19 +328,20 @@ geschieht, wenn wir diese Methode mit <code>String</code>-Werten aufrufen. Wir w
 generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
 entscheidenden Hinweis, um die kniffligen Stellen des Operators <code>+</code> zu
 verstehen.</p>
-<p>Erstens hat <code>s2</code> ein <code>&amp;</code>, was bedeutet, dass wir eine <em>Referenz</em> der zweiten
+<p>Erstens hat <code>s2</code> ein <code>&amp;</code>, was bedeutet, dass wir eine Referenz der zweiten
 Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
-Parameter <code>s</code> in der Funktion <code>add</code>: Wir können nur einen <code>&amp;str</code> zu einem
-<code>String</code> hinzufügen; wir können nicht zwei <code>String</code>-Werte aneinanderhängen.
-Aber warte – der Typ von <code>&amp;s2</code> ist <code>&amp;String</code>, nicht <code>&amp;str</code>, wie im
-zweiten Parameter von <code>add</code> spezifiziert. Warum kompiliert also Codeblock 8-18?</p>
+Parameter <code>s</code> in der Funktion <code>add</code>: Wir können nur einen
+Zeichkettenanteilstyp an einen <code>String</code> anhängen; wir können nicht zwei
+<code>String</code>-Werte aneinanderhängen. Aber warte – der Typ von <code>&amp;s2</code> ist
+<code>&amp;String</code>, nicht <code>&amp;str</code>, wie im zweiten Parameter von <code>add</code> spezifiziert.
+Warum kompiliert also Codeblock 8-18?</p>
 <p>Der Grund, warum wir <code>&amp;s2</code> im Aufruf von <code>add</code> verwenden können, ist, dass der
 Compiler das Argument <code>&amp;String</code> in einen <code>&amp;str</code> umwandeln (coerce) kann.
-Wenn wir die Methode <code>add</code> aufrufen, benutzt Rust eine <em>automatische
-Umwandlung</em> (deref coercion), die hier <code>&amp;s2</code> in <code>&amp;s2[...]</code> umwandelt. Auf die
-automatische Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da <code>add</code>
-nicht die Eigentümerschaft des Parameters <code>s</code> übernimmt, ist <code>s2</code> auch nach
-dieser Operation immer noch ein gültiger <code>String</code>.</p>
+Wenn wir die Methode <code>add</code> aufrufen, benutzt Rust eine automatische Umwandlung
+(deref coercion), die hier <code>&amp;s2</code> in <code>&amp;s2[...]</code> umwandelt. Auf die automatische
+Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da <code>add</code> nicht die
+Eigentümerschaft des Parameters <code>s</code> übernimmt, ist <code>s2</code> auch nach dieser
+Operation immer noch ein gültiger <code>String</code>.</p>
 <p>Zweitens können wir in der Signatur sehen, dass <code>add</code> die Eigentümerschaft von
 <code>self</code> übernimmt, weil <code>self</code> <em>kein</em> <code>&amp;</code> hat. Das bedeutet, dass <code>s1</code> in
 Codeblock 8-18 in den Aufruf von <code>add</code> verschoben wird und danach nicht mehr
@@ -389,32 +390,31 @@ ungültigen Code in Codeblock 8-19.</p>
 </span>let s1 = String::from("Hallo");
 let h = s1[0];
 <span class="boring">}</span></code></pre>
-<p><span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
-Zeichenkette zu verwenden</span></p>
+<p><span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einem
+<code>String</code> zu verwenden</span></p>
 <p>Dieser Code führt zu folgendem Fehler:</p>
 <pre><code class="language-console">$ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
-error[E0277]: the type `String` cannot be indexed by `{integer}`
+error[E0277]: the type `str` cannot be indexed by `{integer}`
  --&gt; src/main.rs:3:16
   |
 3 |     let h = s1[0];
-  |                ^ `String` cannot be indexed by `{integer}`
+  |                ^ string indices are ranges of `usize`
   |
-  = help: the trait `Index&lt;{integer}&gt;` is not implemented for `String`
-  = help: the following other types implement trait `Index&lt;Idx&gt;`:
-            &lt;String as Index&lt;RangeFull&gt;&gt;
-            &lt;String as Index&lt;std::ops::Range&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeFrom&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeTo&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeInclusive&lt;usize&gt;&gt;&gt;
-            &lt;String as Index&lt;RangeToInclusive&lt;usize&gt;&gt;&gt;
+  = help: the trait `SliceIndex&lt;str&gt;` is not implemented for `{integer}`
+  = note: you can use `.chars().nth()` or `.bytes().nth()`
+          for more information, see chapter 8 in The Book: &lt;https://doc.rust-lang.org/book/ch08-02-strings.html#indexing-into-strings&gt;
+  = help: the following other types implement trait `SliceIndex&lt;T&gt;`:
+            `usize` implements `SliceIndex&lt;ByteStr&gt;`
+            `usize` implements `SliceIndex&lt;[T]&gt;`
+  = note: required for `String` to implement `Index&lt;{integer}&gt;`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` (bin "collections") due to 1 previous error
 </code></pre>
-<p>Die Fehlermeldung und der Hinweis erzählen die Geschichte: Zeichenketten in
-Rust unterstützen keine Indexierung. Aber warum nicht? Um diese Frage zu
-beantworten, müssen wir uns ansehen, wie Rust Zeichenketten im Speicher ablegt.</p>
+<p>Die Fehlermeldung erklärt es: Zeichenketten in Rust unterstützen keine
+Indexierung. Aber warum nicht? Um diese Frage zu beantworten, müssen wir uns
+ansehen, wie Rust Zeichenketten im Speicher ablegt.</p>
 <h4 id="interne-darstellung"><a class="header" href="#interne-darstellung">Interne Darstellung</a></h4>
 <p>Ein <code>String</code> ist eine Hülle um einen <code>Vec&lt;u8&gt;</code>. Sehen wir uns einige unserer
 korrekt kodierten UTF-8-Beispielzeichenketten aus Codeblock 8-14 an. Zuerst
@@ -457,7 +457,7 @@ zurückgeben, nicht <code>h</code>.</p>
 Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
 Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
 frühen Stadium des Entwicklungsprozesses.</p>
-<h4 id="bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen-grapheme-clusters-oje">Bytes, skalare Werte und Graphemgruppen (grapheme clusters)! Oje!</a></h4>
+<h4 id="bytes-skalare-werte-und-graphemgruppen-grapheme-clusters"><a class="header" href="#bytes-skalare-werte-und-graphemgruppen-grapheme-clusters">Bytes, skalare Werte und Graphemgruppen (grapheme clusters)</a></h4>
 <p>Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
 Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
 Bytes, als skalare Werte und als Graphemgruppen (das, was wir am ehesten als
@@ -505,9 +505,9 @@ Bytes enthält:</p>
 
 let s = &amp;hello[0..4];
 <span class="boring">}</span></code></pre>
-<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten vier Bytes der Zeichenkette
-enthält. Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen zwei Bytes
-lang ist, was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
+<p>Hier wird <code>s</code> ein <code>&amp;str</code> sein, das die ersten 4 Bytes der Zeichenkette enthält.
+Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
+was bedeutet, dass <code>s</code> gleich <code>Зд</code> ist.</p>
 <p>Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
 wie <code>&amp;hello[0..1]</code> zu zerschneiden, würde Rust das Programm zur Laufzeit
 abbrechen, genauso als wenn mit einem ungültigen Index auf einen Vektor
@@ -516,13 +516,14 @@ zugegriffen würde:</p>
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
+
 thread 'main' panicked at src/main.rs:4:19:
 byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
 ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.</p>
-<h3 id="methoden-zum-iterieren-über-zeichenketten"><a class="header" href="#methoden-zum-iterieren-über-zeichenketten">Methoden zum Iterieren über Zeichenketten</a></h3>
+<h3 id="iterieren-über-zeichenketten"><a class="header" href="#iterieren-über-zeichenketten">Iterieren über Zeichenketten</a></h3>
 <p>Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
 explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
 Unicode-Skalarwerte ist die Methode <code>chars</code> zu verwenden. Der Aufruf von
@@ -547,20 +548,20 @@ Verwendungszweck benötigt wird:</p>
     println!("{b}");
 }
 <span class="boring">}</span></code></pre>
-<p>Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:</p>
+<p>Dieser Code gibt die 4 Bytes aus, aus denen diese Zeichenkette besteht:</p>
 <pre><code class="language-text">208
 151
 208
 180
 </code></pre>
-<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als ein Byte
-bestehen können.</p>
+<p>Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
+können.</p>
 <p>Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
 Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter
 <a href="https://crates.io/">crates.io</a> verfügbar, falls du diese Funktionalität
 benötigst.</p>
-<h3 id="zeichenketten-sind-nicht-so-einfach"><a class="header" href="#zeichenketten-sind-nicht-so-einfach">Zeichenketten sind nicht so einfach</a></h3>
+<h3 id="umgang-mit-der-komplexität-von-zeichenketten"><a class="header" href="#umgang-mit-der-komplexität-von-zeichenketten">Umgang mit der Komplexität von Zeichenketten</a></h3>
 <p>Zusammenfassend kann man sagen, dass Zeichenketten kompliziert sind.
 Verschiedene Programmiersprachen treffen unterschiedliche Entscheidungen
 darüber, wie diese Komplexität dem Programmierer angezeigt wird. Rust hat sich

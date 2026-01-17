@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -275,9 +275,9 @@ nicht dieselben Unterscheidungen, deshalb wollen wir uns ansehen, was
 Anweisungen und Ausdrücke sind und wie sich ihre Unterschiede auf die
 Funktionsrümpfe auswirken.</p>
 <ul>
-<li><strong>Anweisungen</strong> (statements) sind Instruktionen, die eine Aktion ausführen
+<li><em>Anweisungen</em> (statements) sind Instruktionen, die eine Aktion ausführen
 und keinen Wert zurückgeben.</li>
-<li><strong>Ausdrücke</strong> (expressions) werden zu einem Ergebniswert ausgewertet.
+<li><em>Ausdrücke</em> (expressions) werden zu einem Ergebniswert ausgewertet.
 Schauen wir uns einige Beispiele an.</li>
 </ul>
 <p>Eine Variable zu erstellen und ihr mit dem Schlüsselwort <code>let</code> einen Wert
@@ -291,7 +291,7 @@ Anweisung.</p>
 Anweisung enthält</span></p>
 <p>Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
 ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
-<em>Aufruf</em> einer Funktion keine Anweisung.)</p>
+<em>Aufruf</em> einer Funktion jedoch keine Anweisung.)</p>
 <p>Anweisungen geben keine Werte zurück. Daher kannst du keine <code>let</code>-Anweisung
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst
 einen Fehler erhalten:</p>
@@ -413,9 +413,9 @@ weil es ein Ausdruck ist, dessen Wert wir zurückgeben wollen.</p>
 fn plus_one(x: i32) -&gt; i32 {
     x + 1
 }</code></pre>
-<p>Beim Ausführen dieses Codes wird <code>Der Wert von x ist: 6</code> ausgegeben. Wenn wir
-aber ein Semikolon an das Ende der Zeile mit <code>x + 1</code> setzen und es von einem
-Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:</p>
+<p>Beim Ausführen dieses Codes wird <code>Der Wert von x ist: 6</code> ausgegeben. Was
+passiert jedoch, wenn wir ein Semikolon an das Ende der Zeile <code>x + 1</code> setzen?
+Wir ändern es von einem Ausdruck in eine Anweisung und erhalten einen Fehler:</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let x = plus_one(5);

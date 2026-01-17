@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -221,15 +221,12 @@ sie eine neue <code>TcpListener</code>-Instanz zurückgibt. Die Funktion wird <c
 genannt, weil in Netzwerken das Verbinden mit einem Port zum Lauschen als
 „Binden (binding) an einen Port“ bezeichnet wird.</p>
 <p>Die Funktion <code>bind</code> gibt ein <code>Result&lt;T, E&gt;</code> zurück, was anzeigt, dass es
-möglich ist, dass das Binden fehlschlagen könnte. Zum Beispiel erfordert das
-Binden an Port 80 Administrator-Rechte (Nicht-Administratoren können nur auf
-Ports größer als 1023 lauschen). Wenn wir also versuchen würden, an Port 80 zu
-lauschen, ohne Administrator zu sein, würde das Binden nicht funktionieren. Das
-Binden wäre beispielsweise auch nicht möglich, wenn wir zwei Instanzen unseres
-Programms laufen lassen und somit zwei Programme auf dem gleichen Port lauschen
-würden. Da wir einen einfachen Server nur für Lernzwecke schreiben, werden wir
-uns nicht um die Behandlung dieser Art von Fehlern kümmern; stattdessen
-verwenden wir <code>unwrap</code>, um das Programm zu stoppen, wenn Fehler auftreten.</p>
+möglich ist, dass das Binden fehlschlagen könnte, wie etwa wenn wir zwei
+Instanzen unseres Programms laufen lassen und somit zwei Programme auf
+demselben Port lauschen. Da wir einen einfachen Server nur für Lernzwecke
+schreiben, werden wir uns nicht um die Behandlung dieser Art von Fehlern
+kümmern; stattdessen verwenden wir <code>unwrap</code>, um das Programm zu stoppen, wenn
+Fehler auftreten.</p>
 <p>Die Methode <code>incoming</code> von <code>TcpListener</code> gibt einen Iterator zurück, der uns
 eine Sequenz von Strömen (genauer gesagt Ströme vom Typ <code>TcpStream</code>) liefert.
 Ein einzelner <em>Strom</em> (stream) stellt eine offene Verbindung zwischen dem
@@ -273,8 +270,15 @@ dem Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn
 <code>stream</code> den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt
 wird, wird die Verbindung als Teil der <code>drop</code>-Implementierung geschlossen.
 Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
-versuchen, weil das Problem möglicherweise nur vorübergehend ist. Der wichtige
-Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!</p>
+versuchen, weil das Problem möglicherweise nur vorübergehend ist.</p>
+<p>Browser öffnen manchmal auch mehrere Verbindungen zum Server, ohne Anfragen zu
+senden, damit <em>spätere</em> Anfragen schneller bearbeitet werden können. In diesem
+Fall sieht unser Server alle Verbindungen, unabhängig davon, ob über diese
+Verbindung Anfragen gesendet werden. Viele Versionen Chrome-basierter Browser
+verhalten sich beispielsweise so. Du kannst diese Optimierung deaktivieren,
+indem du den privaten Modus verwendest oder einen anderen Browser nutzt.</p>
+<p>Der wichtige Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt
+haben!</p>
 <p>Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
 beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
 bist. Starte dann das Programm neu, indem du den Befehl <code>cargo run</code> aufrufst,
@@ -316,7 +320,7 @@ fn handle_connection(mut stream: TcpStream) {
 }</code></pre>
 <p><span class="caption">Codeblock 21-2: Lesen aus dem <code>TcpStream</code> und Ausgeben
 der Daten</span></p>
-<p>Wir bringen <code>std::io::prelude</code> und <code>std::io::BufReader</code> in den
+<p>Wir bringen <code>std::io::BufReader</code> und <code>std::io::prelude</code> in den
 Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
 es uns ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In
 der <code>for</code>-Schleife in der Funktion <code>main</code> rufen wir jetzt, statt eine Nachricht
@@ -334,9 +338,9 @@ diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
 <code>lines</code> bereitstellt. Die Methode <code>lines</code> gibt einen Iterator von
 <code>Result&lt;String, std::io::Error&gt;</code> zurück, indem sie den Datenstrom immer dann
 aufteilt, wenn sie ein Neue-Zeile-Byte sieht. Um jeden <code>String</code> zu erhalten,
-wird jedes <code>Result</code> abgebildet und <code>unwrap</code> aufgerufen. Das <code>Result</code> könnte
-einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es
-ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
+wird jedes <code>Result</code> mit <code>map</code> abgebildet und <code>unwrap</code> aufgerufen. Das <code>Result</code>
+könnte einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder
+wenn es ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
 Produktivprogramm diese Fehler besser behandeln, aber der Einfachheit halber
 brechen wir das Programm im Fehlerfall ab.</p>
 <p>Der Browser signalisiert das Ende einer HTTP-Anfrage, indem er zwei
@@ -357,7 +361,7 @@ Request: [
     "GET / HTTP/1.1",
     "Host: 127.0.0.1:7878",
     "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
-    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/_;q=0.8",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Accept-Language: en-US,en;q=0.5",
     "Accept-Encoding: gzip, deflate, br",
     "DNT: 1",
@@ -386,18 +390,18 @@ message-body
 </code></pre>
 <p>Die erste Zeile ist die <em>Anfragezeile</em> (request line), die Informationen
 darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
-die <em>Methode</em> an, die verwendet wird, z.B. <code>GET</code> oder <code>POST</code>, die beschreibt,
-wie der Client diese Anfrage stellt. Unser Client benutzte eine <code>GET</code>-Anfrage,
-was bedeutet, dass er nach Informationen fragt.</p>
+die Methode an, die verwendet wird, z.B. <code>GET</code> oder <code>POST</code>, die beschreibt, wie
+der Client diese Anfrage stellt. Unser Client benutzte eine <code>GET</code>-Anfrage, was
+bedeutet, dass er nach Informationen fragt.</p>
 <p>Der nächste Teil der Anfragezeile ist <code>/</code>, der den <em>einheitlichen
 Ressourcenbezeichner</em> (Uniform Resource Identifier, kurz <em>URI</em>) angibt, den der
 Client anfragt: Ein URI ist fast, aber nicht ganz dasselbe wie ein
 <em>einheitlicher Ressourcenzeiger</em> (Uniform Resource Locator, kurz <em>URL</em>). Der
 Unterschied zwischen URIs und URLs ist für unsere Zwecke in diesem Kapitel
-nicht wichtig, aber die HTTP-Spezifikation verwendet den Begriff URI, sodass
-wir hier einfach gedanklich URL durch URI ersetzen können.</p>
+nicht wichtig, aber die HTTP-Spezifikation verwendet den Begriff <em>URI</em>, sodass
+wir hier einfach gedanklich <em>URL</em> durch <em>URI</em> ersetzen können.</p>
 <p>Der letzte Teil ist die HTTP-Version, die der Client verwendet, und dann endet
-die Anfragezeile mit einer <em>CRLF-Sequenz</em>. (CRLF steht für <em>carriage return</em>
+die Anfragezeile mit einer <em>CRLF-Sequenz</em>. (<em>CRLF</em> steht für <em>carriage return</em>
 (Wagenrücklauf) und <em>line feed</em> (Zeilenvorschub), das sind Begriffe aus der
 Schreibmaschinenzeit!) Die CRLF-Sequenz kann auch als <code>\r\n</code> geschrieben
 werden, wobei <code>\r</code> ein Wagenrücklauf und <code>\n</code> ein Zeilenvorschub ist. Die
@@ -484,7 +488,7 @@ Projektverzeichnisses, nicht im Verzeichnis <em>src</em>. Du kannst beliebiges H
 eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.</p>
 <p><span class="filename">Dateiname: hello.html</span></p>
 <pre><code class="language-html">&lt;!DOCTYPE html&gt;
-&lt;html lang="en"&gt;
+&lt;html lang="de"&gt;
   &lt;head&gt;
     &lt;meta charset="utf-8"&gt;
     &lt;title&gt;Hallo!&lt;/title&gt;
@@ -695,7 +699,7 @@ jeder 404-Antwort zurückgesendet werden soll</span></p>
 <em>127.0.0.1:7878</em> sollte den Inhalt von <em>hallo.html</em> zurückgeben und jede andere
 Anfrage, wie <em>127.0.0.1:7878/foo</em>, sollte das Fehler-HTML von <em>404.html</em>
 zurückgeben.</p>
-<h3 id="ein-hauch-von-refaktorierung"><a class="header" href="#ein-hauch-von-refaktorierung">Ein Hauch von Refaktorierung</a></h3>
+<h3 id="refactoring"><a class="header" href="#refactoring">Refactoring</a></h3>
 <p>Im Moment haben die <code>if</code>- und <code>else</code>-Blöcke eine Menge Wiederholungen: Sie
 lesen beide Dateien und schreiben den Inhalt der Dateien in den Strom. Die
 einzigen Unterschiede sind die Statuszeile und der Dateiname. Lass uns den Code
@@ -744,9 +748,9 @@ fn handle_connection(mut stream: TcpStream) {
 
     stream.write_all(response.as_bytes()).unwrap();
 }</code></pre>
-<p><span class="caption">Codeblock 21-9: Refaktorieren der <code>if</code>- und
-<code>else</code>-Blöcke, sodass sie nur den Code enthalten, der sich zwischen den beiden
-Fällen unterscheidet</span></p>
+<p><span class="caption">Codeblock 21-9: Refactoring der <code>if</code>- und <code>else</code>-Blöcke,
+damit sie nur den Code enthalten, der sich zwischen den beiden Fällen
+unterscheidet</span></p>
 <p>Die Blöcke <code>if</code> und <code>else</code> geben jetzt nur noch die entsprechenden Werte für
 die Statuszeile und den Dateinamen in einem Tupel zurück; wir verwenden dann
 die Destrukturierung, um diese beiden Werte den Variablen <code>status_line</code> und

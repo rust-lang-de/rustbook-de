@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -168,7 +168,7 @@ gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
 Referenzen so lange gültig sind, wie wir sie brauchen.</p>
 <p>Ein Detail, das wir im Abschnitt <a href="ch04-02-references-and-borrowing.html">„Referenzen und Ausleihen
 (borrowing)“</a> in Kapitel 4 nicht erörtert haben, ist,
-dass jede Referenz in Rust eine <em>Lebensdauer</em> (lifetime) hat, d.h. einen
+dass jede Referenz in Rust eine Lebensdauer (lifetime) hat, d.h. einen
 Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
 sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
 Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
@@ -184,12 +184,11 @@ wird. Auch wenn wir in diesem Kapitel die Lebensdauern nicht in ihrer
 Gesamtheit behandeln werden, so werden wir doch allgemeine Möglichkeiten
 erörtern, mit denen du dich mit der Syntax der Lebensdauer und den Konzepten
 vertraut machen kannst.</p>
-<h3 id="verhindern-hängender-referenzen-mit-lebensdauern"><a class="header" href="#verhindern-hängender-referenzen-mit-lebensdauern">Verhindern hängender Referenzen mit Lebensdauern</a></h3>
-<p>Das Hauptziel der Lebensdauer ist es, <em>hängende Referenzen</em> (dangling
-references) zu verhindern, die dazu führen, dass ein Programm auf andere
-Daten referenziert als die, auf die es referenzieren soll. Betrachte das
-Programm in Codeblock 10-16, das einen äußeren und einen inneren
-Gültigkeitsbereich hat.</p>
+<h3 id="hängende-referenzen"><a class="header" href="#hängende-referenzen">Hängende Referenzen</a></h3>
+<p>Das Hauptziel der Lebensdauer ist es, hängende Referenzen (dangling references)
+zu verhindern, die dazu führen würden, dass ein Programm auf andere Daten
+referenziert als die, auf die es referenzieren soll. Betrachte das Programm in
+Codeblock 10-16, das einen äußeren und einen inneren Gültigkeitsbereich hat.</p>
 <pre class="playground"><code class="language-rust does_not_compile edition2024">fn main() {
     let r;
 
@@ -230,7 +229,7 @@ error[E0597]: `x` does not live long enough
   |     - `x` dropped here while still borrowed
 8 |
 9 |     println!("r: {r}");
-  |                  --- borrow later used here
+  |                   - borrow later used here
 
 For more information about this error, try `rustc --explain E0597`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
@@ -285,8 +284,8 @@ bedeutet, dass <code>r</code> auf <code>x</code> referenzieren kann, weil Rust w
 Referenz in <code>r</code> immer gültig sein wird, solange <code>x</code> gültig ist.</p>
 <p>Da du nun weißt, wo die Lebensdauern von Referenzen sind und wie Rust die
 Lebensdauer analysiert, um sicherzustellen, dass Referenzen immer gültig sind,
-lass uns die generischen Lebensdauern von Parametern und Rückgabewerten im
-Kontext von Funktionen untersuchen.</p>
+lass uns generischen Lebensdauern von Funktionsparametern und Rückgabewerten
+untersuchen.</p>
 <h3 id="generische-lebensdauern-in-funktionen"><a class="header" href="#generische-lebensdauern-in-funktionen">Generische Lebensdauern in Funktionen</a></h3>
 <p>Wir schreiben eine Funktion, die den längeren von zwei
 Zeichenkettenanteilstypen zurückgibt. Diese Funktion nimmt zwei
@@ -382,7 +381,7 @@ trennen.</p>
 <p>Hier sind einige Beispiele: Eine Referenz auf einen <code>i32</code> ohne
 Lebensdauer-Parameter, eine Referenz auf einen <code>i32</code>, die einen
 Lebensdauer-Parameter namens <code>'a</code> hat, und eine veränderbarer Referenz auf
-einen <code>i32</code>, die ebenfalls die Lebensdauer <code>'a</code> hat.</p>
+einen <code>i32</code>, die ebenfalls die Lebensdauer <code>'a</code> hat:</p>
 <pre><code class="language-rust ignore">&amp;i32        // eine Referenz
 &amp;'a i32     // eine Referenz mit expliziter Lebensdauer
 &amp;'a mut i32 // eine veränderbare Referenz mit expliziter Lebensdauer</code></pre>
@@ -391,11 +390,11 @@ Annotationen Rust mitteilen sollen, wie sich generische
 Lebensdauer-Parameter mehrerer Referenzen zueinander verhalten. Untersuchen
 wir, wie sich die Lebensdauer-Annotationen im Zusammenhang mit der Funktion
 <code>longest</code> zueinander verhalten.</p>
-<h3 id="lebensdauer-annotationen-in-funktionssignaturen"><a class="header" href="#lebensdauer-annotationen-in-funktionssignaturen">Lebensdauer-Annotationen in Funktionssignaturen</a></h3>
+<h3 id="in-funktionssignaturen"><a class="header" href="#in-funktionssignaturen">In Funktionssignaturen</a></h3>
 <p>Um Lebensdauer-Annotationen in Funktionssignaturen zu verwenden, müssen wir die
-generischen <em>Lebensdauer</em>-Parameter in spitzen Klammern zwischen dem
+generischen Lebensdauer-Parameter in spitzen Klammern zwischen dem
 Funktionsnamen und der Parameterliste deklarieren, genau wie wir es mit den
-generischen <em>Typ</em>-Parametern gemacht haben.</p>
+generischen Typ-Parametern gemacht haben.</p>
 <p>Wir möchten, dass die Signatur die folgende Bedingung ausdrückt: Die
 zurückgegebene Referenz ist gültig, solange die beiden Parameter gültig sind.
 Dies ist die Beziehung zwischen den Lebensdauern der Parameter und des
@@ -549,7 +548,7 @@ Lebensdauern der an die Funktion <code>longest</code> übergebenen Referenzen va
 wie die zurückgegebene Referenz verwendet wird. Stelle Hypothesen darüber auf,
 ob deine Experimente den Ausleihenprüfer bestehen oder nicht, bevor du
 kompilierst; prüfe dann, ob du Recht hast!</p>
-<h3 id="denken-in-lebensdauern"><a class="header" href="#denken-in-lebensdauern">Denken in Lebensdauern</a></h3>
+<h3 id="beziehungen"><a class="header" href="#beziehungen">Beziehungen</a></h3>
 <p>Die Art und Weise, in der du Lebensdauerparameter angeben musst, hängt davon
 ab, was deine Funktion tut. Wenn wir zum Beispiel die Implementierung der
 Funktion <code>longest</code> so ändern würden, dass sie immer den ersten Parameter
@@ -623,7 +622,7 @@ verbinden. Sobald sie verbunden sind, verfügt Rust über genügend Informatione
 um speichersichere Operationen zu ermöglichen und Operationen zu unterbinden,
 die hängende Zeiger erzeugen oder anderweitig die Speichersicherheit verletzen
 würden.</p>
-<h3 id="lebensdauer-annotationen-in-struktur-definitionen"><a class="header" href="#lebensdauer-annotationen-in-struktur-definitionen">Lebensdauer-Annotationen in Struktur-Definitionen</a></h3>
+<h3 id="in-struktur-definitionen"><a class="header" href="#in-struktur-definitionen">In Struktur-Definitionen</a></h3>
 <p>Bisher haben wir nur Strukturen (structs) definiert, die aneigenbare Typen
 enthalten. Es ist möglich, dass Strukturen Referenzen enthalten, aber in diesem
 Fall müssten wir Lebensdauer-Annotationen zu jeder Referenz in der
@@ -781,7 +780,7 @@ Signatur ermitteln.</p>
 als nächstes die Lebensdauern in diesem Zusammenhang ansehen, um zu sehen,
 warum die dritte Regel bedeutet, dass wir die Lebensdauer in Methodensignaturen
 nicht sehr oft annotieren müssen.</p>
-<h3 id="lebensdauer-annotationen-in-methodendefinitionen"><a class="header" href="#lebensdauer-annotationen-in-methodendefinitionen">Lebensdauer-Annotationen in Methodendefinitionen</a></h3>
+<h3 id="in-methodendefinitionen"><a class="header" href="#in-methodendefinitionen">In Methodendefinitionen</a></h3>
 <p>Wenn wir Methoden auf einer Struktur mit Lebensdauer implementieren, verwenden
 wir die gleiche Syntax wie die in Codeblock 10-11 gezeigten generischen
 Typparameter. Wo wir die Lebensdauerparameter deklarieren und verwenden, hängt
@@ -824,8 +823,8 @@ was keine Referenz ist:</p>
 </span><span class="boring">    };
 </span><span class="boring">}</span></code></pre>
 <p>Die Lebensdauer-Parameter-Deklaration nach <code>impl</code> und ihre Verwendung hinter dem
-Typnamen sind erforderlich, aber wir sind nicht verpflichtet, die Lebensdauer der
-Referenz auf <code>self</code> wegen der ersten Elisionsregel zu annotieren.</p>
+Typnamen sind erforderlich, aber wegen der ersten Elisionsregel sind wir nicht
+verpflichtet, die Lebensdauer der Referenz auf <code>self</code> zu annotieren.</p>
 <p>Hier ist ein Beispiel, bei dem die dritte Lebensdauer-Elisionsregel gilt:</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">struct ImportantExcerpt&lt;'a&gt; {
 </span><span class="boring">    part: &amp;'a str,
@@ -877,7 +876,7 @@ In den meisten Fällen resultiert eine Fehlermeldung, die auf die Lebensdauer
 aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fällen
 besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
 Lebensdauer als <code>'static</code> festzulegen.</p>
-<h2 id="generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen"><a class="header" href="#generische-typparameter-merkmalsabgrenzungen-und-lebensdauern-zusammen">Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern zusammen</a></h2>
+<h2 id="generische-typparameter-merkmalsabgrenzungen-und-lebensdauern"><a class="header" href="#generische-typparameter-merkmalsabgrenzungen-und-lebensdauern">Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern</a></h2>
 <p>Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
 Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">fn main() {
@@ -933,7 +932,7 @@ besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Merkmalsobjekte
 erörtert, die eine weitere Möglichkeit zur Verwendung von Merkmalen darstellen.
 Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
 sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
-<a href="https://doc.rust-lang.org/reference/index.html">Rust-Referenz</a> lesen. Aber als Nächstes wirst du lernen, wie man
+<a href="https://doc.rust-lang.org/reference/trait-bounds.html">Rust-Referenz</a> lesen. Aber als Nächstes wirst du lernen, wie man
 Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
 funktioniert, wie er es soll.</p>
 

@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Merkmale (traits): Gemeinsames Verhalten definieren - Die Programmiersprache Rust</title>
+        <title>Gemeinsames Verhalten definieren mit Merkmalen (traits) - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="merkmale-traits-gemeinsames-verhalten-definieren"><a class="header" href="#merkmale-traits-gemeinsames-verhalten-definieren">Merkmale (traits): Gemeinsames Verhalten definieren</a></h2>
+                        <h2 id="gemeinsames-verhalten-definieren-mit-merkmalen-traits"><a class="header" href="#gemeinsames-verhalten-definieren-mit-merkmalen-traits">Gemeinsames Verhalten definieren mit Merkmalen (traits)</a></h2>
 <p>Ein <em>Merkmal</em> (trait) definiert die Funktionalität, den ein bestimmter Typ hat
 und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
 gemeinsames Verhalten auf abstrakte Weise zu definieren. Wir können
@@ -312,7 +312,7 @@ sicher, dass der Code anderer Personen deinen Code nicht brechen kann und
 umgekehrt. Ohne diese Regel könnten zwei Kisten dasselbe Merkmal für denselben
 Typ implementieren und Rust wüsste nicht, welche Implementierung es verwenden
 sollte.</p>
-<h3 id="standard-implementierungen"><a class="header" href="#standard-implementierungen">Standard-Implementierungen</a></h3>
+<h3 id="standard-implementierungen-verwenden"><a class="header" href="#standard-implementierungen-verwenden">Standard-Implementierungen verwenden</a></h3>
 <p>Manchmal ist es nützlich, ein Standardverhalten für einige oder alle Methoden
 eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
 Typ zu verlangen. Wenn wir dann das Merkmal für einen bestimmten Typ
@@ -458,7 +458,7 @@ dass wir weiteren Code schreiben müssen. Das sieht dann so aus:</p>
 <p>Dieser Code gibt <code>1 neue Nachricht: (Lies mehr von @horse_ebooks...)</code> aus.</p>
 <p>Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.</p>
-<h3 id="merkmale-als-parameter"><a class="header" href="#merkmale-als-parameter">Merkmale als Parameter</a></h3>
+<h3 id="merkmale-als-parameter-verwenden"><a class="header" href="#merkmale-als-parameter-verwenden">Merkmale als Parameter verwenden</a></h3>
 <p>Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
 viele verschiedene Typen akzeptieren. Wir verwenden das Merkmal <code>Summary</code>, das
@@ -542,7 +542,7 @@ Typ haben sollen, müssen wir eine Merkmalsabgrenzung verwenden, so wie hier:</p
 <p>Der als Parametertyp für <code>item1</code> und <code>item2</code> angegebene generische Typ <code>T</code>
 schränkt die Funktion so ein, dass der konkrete Typ der als Argument für
 <code>item1</code> und <code>item2</code> übergebenen Werte derselbe sein muss.</p>
-<h4 id="angeben-mehrerer-merkmalsabgrenzungen-mit-der-syntax-"><a class="header" href="#angeben-mehrerer-merkmalsabgrenzungen-mit-der-syntax-">Angeben mehrerer Merkmalsabgrenzungen mit der Syntax <code>+</code></a></h4>
+<h4 id="mehrere-merkmalsabgrenzungen-mit-der-syntax-"><a class="header" href="#mehrere-merkmalsabgrenzungen-mit-der-syntax-">Mehrere Merkmalsabgrenzungen mit der Syntax <code>+</code></a></h4>
 <p>Wir können auch mehr als eine Merkmalsabgrenzung angeben. Nehmen wir an, wir
 wollen, dass sowohl <code>notify</code> als auch die Methode <code>summarize</code> die
 Bildschirmausgabe für <code>item</code> formatieren: Spezifizieren wir in der
@@ -692,17 +692,16 @@ funktionieren:</p>
 <p>Die Rückgabe entweder eines <code>NewsArticle</code> oder eines <code>SocialPost</code> ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax <code>impl Trait</code> im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird in <a href="ch18-02-trait-objects.html">„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“</a> in
-Kapitel 18 behandelt.</p>
+wird in <a href="ch18-02-trait-objects.html">„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“</a> in Kapitel 18 behandelt.</p>
 <h3 id="verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden"><a class="header" href="#verwenden-von-merkmalsabgrenzungen-zur-bedingten-implementierung-von-methoden">Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden</a></h3>
 <p>Durch Verwenden einer Merkmalsabgrenzung mit einem <code>impl</code>-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
 <code>Pair&lt;T&gt;</code> in Codeblock 10-15 immer die Funktion <code>new</code>, um eine neue Instanz von
-<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an <a href="ch05-03-method-syntax.html#definieren-von-methoden">„Definieren von Methoden“</a>
-in Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des <code>impl</code>-Blocks ist, der
-in diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>-Block implementiert
+<code>Pair&lt;T&gt;</code> zurückzugeben (erinnere dich an <a href="ch05-03-method-syntax.html#methoden-syntax">„Methoden-Syntax“</a> in
+Kapitel 5, dass <code>Self</code> ein Typ-Alias für den Typ des <code>impl</code>-Blocks ist, der in
+diesem Fall <code>Pair&lt;T&gt;</code> ist). Aber im nächsten <code>impl</code>-Block implementiert
 <code>Pair&lt;T&gt;</code> die Methode <code>cmp_display</code> nur, wenn ihr innerer Typ <code>T</code> die Merkmale
 <code>PartialOrd</code> <em>und</em> <code>Display</code> implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.</p>

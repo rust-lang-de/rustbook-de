@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Performanzvergleich: Schleifen vs. Iteratoren - Die Programmiersprache Rust</title>
+        <title>Performanz von Schleifen vs. Iteratoren - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="performanzvergleich-schleifen-vs-iteratoren"><a class="header" href="#performanzvergleich-schleifen-vs-iteratoren">Performanzvergleich: Schleifen vs. Iteratoren</a></h2>
+                        <h2 id="performanz-von-schleifen-vs-iteratoren"><a class="header" href="#performanz-von-schleifen-vs-iteratoren">Performanz von Schleifen vs. Iteratoren</a></h2>
 <p>Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest
 du wissen, welche Implementierung schneller ist: Die Version der Funktion
 <code>search</code> mit einer expliziten <code>for</code>-Schleife oder die Version mit Iteratoren.</p>
@@ -186,59 +186,21 @@ hochrangige Abstraktion sind, werden sie ungefähr auf denselben Programmcode
 kompiliert, als hättest du diesen selbst auf niedriger Ebene geschrieben.
 Iteratoren sind eine von Rusts <em>Zero-Cost Abstraktionen</em>, damit ist gemeint,
 dass die Verwendung keinen zusätzlichen Laufzeitaufwand verursacht. Dies
-entspricht der Definition von <em>Zero-Overhead</em> in C++ von Bjarne Stroustrup in
-“Foundations of C++” (2012):</p>
+entspricht der Definition von Zero-Overhead, die Bjarne Stroustrup, der
+ursprüngliche Entwickler und Implementierer von C++, in seiner
+ETAPS-Keynote-Präsentation „Foundations of C++” aus dem Jahr 2012 gegeben hat:</p>
 <blockquote>
 <p>Im Allgemeinen folgen C++-Implementierungen dem Zero-Overhead-Prinzip: Was
 du nicht verwendest, bezahlst du nicht. Und darüber hinaus: Was du verwendest,
 hättest du von Hand nicht besser programmieren können.</p>
 </blockquote>
-<p>Als anderes Beispiel wird der folgende Programmcode eines Audiodecoders
-übernommen. Der Decodierungsalgorithmus verwendet die mathematische Operation
-der linearen Vorhersage (linear prediction), um zukünftige Werte aufgrund einer
-linearen Funktion der vergangenen Abtastwerte zu schätzen. Der Programmcode
-verwendet eine Iteratorkette, die drei Variablen im Gültigkeitsbereich
-berechnet, einen Anteilstyp <code>buffer</code>, ein Array mit 12 <code>coefficients</code> und einen
-Wert um den die Daten die nach <code>glp_shift</code> verschoben werden sollen. Wir haben
-die Variablen in diesem Beispiel deklariert, diesen jedoch keine Werte
-zugewiesen, obwohl dieser Programmcode aus seinem Kontext gerissen keine große
-Bedeutung hat, ist er dennoch ein gutes Beispiel dafür, wie Rust abstrakte Ideen
-im Programmcode auf Code niedriger Ebene übersetzt.</p>
-<pre><code class="language-rust ignore">let buffer: &amp;mut [i32];
-let coefficients: [i64; 12];
-let qlp_shift: i16;
-
-for i in 12..buffer.len() {
-    let prediction = coefficients.iter()
-                                 .zip(&amp;buffer[i - 12..i])
-                                 .map(|(&amp;c, &amp;s)| c * s as i64)
-                                 .sum::&lt;i64&gt;() &gt;&gt; qlp_shift;
-    let delta = buffer[i];
-    buffer[i] = prediction as i32 + delta;
-}</code></pre>
-<p>Um den Wert von <code>prediction</code> zu berechnen, durchläuft dieser Code jeden der 12
-Werte in <code>coefficients</code> und verwendet die Methode <code>zip</code>, um die Werte der
-Koeffizienten mit den vorherigen 12 Werten in <code>buffer</code> zu paaren. Anschließend
-multiplizieren wir die Werte jedes Paars miteinander, summieren alle
-Ergebnisse und verschieben die Bits in der Summe um den Wert von <code>glp_shift</code> nach
-rechts.</p>
-<p>Bei Berechnungen in Anwendungen wie Audiodecodern wird die Performanz häufig
-priorisiert. Hier erstellen wir einen Iterator mit zwei Adaptern und verbrauchen
-dann den Wert. Zu welchen Assemblercode würde dieser Rustprogrammcode
-kompiliert werden? Er würde auf denselben Programmcode kompiliert werden, als
-hättest du das Programm selbst in Assemblersprache geschrieben. Es gibt keine
-Schleife, die der Iteration über die Werte von <code>coefficients</code> entsprechen würde.
-Rust weiß, dass es 12 Iterationen gibt und „rollt“ daher die Schleife ab.
-<em>Abrollen</em> (unrolling) ist eine Optimierung, die den Mehraufwand (overhead) der
-Steuerung der Schleife beseitigt und stattdessen sich wiederholenden
-Programmcode für jede Iteration der Schleife generiert.</p>
-<p>Alle Koeffizienten werden in Registern gespeichert, das bedeutet, dass der
-Zugriff auf die Werte sehr schnell ist. Es gibt keine Begrenzungsprüfungen (bounds
-checks) für den Zugriff auf Arrays zur Laufzeit. Durch diese Optimierungen, die
-Rust anwenden kann, ist der resultierende Programmcode äußerst effizient. Nun,
-da du das weißt, kannst du, ohne Angst zu haben, Funktionsabschlüsse und
-Iteratoren verwenden! Sie lassen den Code abstrakter erscheinen, verursachen
-aber keine Performanzeinbußen zur Laufzeit.</p>
+<p>In vielen Fällen wird Rust-Code, der Iteratoren verwendet, zu demselben
+Assembler-Code kompiliert, die du von Hand schreiben würdest. Optimierungen wie
+Schleifen-Abrollen und Entfernen von Bereichsprüfungen beim Array-Zugriff
+machen den resultierenden Code äußerst effizient. Jetzt, da du das weißt,
+kannst du Iteratoren und Funktionsabschlüsse ohne Bedenken verwenden! Sie
+lassen den Code abstrakter erscheinen, verursachen aber keine
+Performanzeinbußen zur Laufzeit.</p>
 <h2 id="zusammenfassung"><a class="header" href="#zusammenfassung">Zusammenfassung</a></h2>
 <p>Funktionsabschlüsse und Iteratoren sind Rust-Funktionalitäten, die von Ideen der
 funktionalen Programmierung inspiriert sind. Sie tragen zu Rusts Fähigkeit bei,

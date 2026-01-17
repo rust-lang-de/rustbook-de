@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -200,8 +200,9 @@ panic = 'abort'
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
      Running `target/debug/panic`
+
 thread 'main' panicked at src/main.rs:2:5:
-abstürzen und verbrennen
+crash and burn
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Der Aufruf von <code>panic!</code> verursacht die in den letzten beiden Zeilen enthaltene
@@ -252,12 +253,13 @@ was passiert:</p>
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/panic`
+
 thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 </code></pre>
 <p>Dieser Fehler weist auf Zeile 4 in unserer <code>main.rs</code> hin, wo wir versuchen, auf
-den Index <code>99</code> des Vektors in <code>v</code> zuzugreifen.</p>
+den Index 99 des Vektors in <code>v</code> zuzugreifen.</p>
 <p>Die Zeile <code>note:</code> sagt uns, dass wir die Umgebungsvariable <code>RUST_BACKTRACE</code>
 setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
 den Fehler verursacht hat. Eine <em>Aufrufhistorie</em> ist eine Liste aller

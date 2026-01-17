@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -312,14 +312,15 @@ Schlüsselwort <code>pub</code>, wie in Codeblock 7-5 gezeigt.</p>
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Absoluter Pfad
-    crate::front_of_house::hosting::add_to_waitlist();
-
-    // Relativer Pfad
-    front_of_house::hosting::add_to_waitlist();
-}
-<span class="boring">}</span></code></pre>
+// --abschneiden--
+<span class="boring">pub fn eat_at_restaurant() {
+</span><span class="boring">    // Absoluter Pfad
+</span><span class="boring">    crate::front_of_house::hosting::add_to_waitlist();
+</span><span class="boring">
+</span><span class="boring">    // Relativer Pfad
+</span><span class="boring">    front_of_house::hosting::add_to_waitlist();
+</span><span class="boring">}
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 7-5: Deklarieren des Moduls <code>hosting</code> als
 <code>pub</code>, um es von <code>eat_at_restaurant</code> aus zu benutzen</span></p>
 <p>Leider führt der Code in Codeblock 7-5 immer noch zu Kompilierfehlern, wie
@@ -327,27 +328,27 @@ Codeblock 7-6 zeigt.</p>
 <pre><code class="language-console">$ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: function `add_to_waitlist` is private
- --&gt; src/lib.rs:9:37
-  |
-9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                                     ^^^^^^^^^^^^^^^ private function
-  |
+  --&gt; src/lib.rs:10:37
+   |
+10 |     crate::front_of_house::hosting::add_to_waitlist();
+   |                                     ^^^^^^^^^^^^^^^ private function
+   |
 note: the function `add_to_waitlist` is defined here
- --&gt; src/lib.rs:3:9
-  |
-3 |         fn add_to_waitlist() {}
-  |         ^^^^^^^^^^^^^^^^^^^^
+  --&gt; src/lib.rs:3:9
+   |
+ 3 |         fn add_to_waitlist() {}
+   |         ^^^^^^^^^^^^^^^^^^^^
 
 error[E0603]: function `add_to_waitlist` is private
-  --&gt; src/lib.rs:12:30
+  --&gt; src/lib.rs:13:30
    |
-12 |     front_of_house::hosting::add_to_waitlist();
+13 |     front_of_house::hosting::add_to_waitlist();
    |                              ^^^^^^^^^^^^^^^ private function
    |
 note: the function `add_to_waitlist` is defined here
   --&gt; src/lib.rs:3:9
    |
-3  |         fn add_to_waitlist() {}
+ 3 |         fn add_to_waitlist() {}
    |         ^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
@@ -377,13 +378,14 @@ Schlüsselwort <code>pub</code> vor ihre Definition hinzufügen, wie in Codebloc
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Absoluter Pfad
-    crate::front_of_house::hosting::add_to_waitlist();
-
-    // Relativer Pfad
-    front_of_house::hosting::add_to_waitlist();
-}</code></pre>
+// --abschneiden--
+<span class="boring">pub fn eat_at_restaurant() {
+</span><span class="boring">    // Absoluter Pfad
+</span><span class="boring">    crate::front_of_house::hosting::add_to_waitlist();
+</span><span class="boring">
+</span><span class="boring">    // Relativer Pfad
+</span><span class="boring">    front_of_house::hosting::add_to_waitlist();
+</span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts <code>pub</code> zu
 <code>mod hosting</code> und <code>fn add_to_waitlist</code> lässt uns die Funktion in
 <code>eat_at_restaurant</code> aufrufen</span></p>
@@ -442,11 +444,12 @@ eine Bibliothekskiste enthält.</p>
 <p>Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir <code>super</code> am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax <code>..</code> beginnen. Das Verwenden von <code>super</code> erlaubt es uns, auf ein Element
-zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
-befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
-eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
-eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.</p>
+Syntax <code>..</code> beginnen, wodurch man ins übergeordnete Verzeichnis kommt. Das
+Verwenden von <code>super</code> erlaubt es uns, auf ein Element zu referenzieren, von dem
+wir wissen, dass es sich im übergeordneten Modul befindet, was die Neuordnung
+des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten
+Modul verwandt ist, aber das übergeordnete Modul eines Tages an eine andere
+Stelle im Modulbaum verschoben werden könnte.</p>
 <p>Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
 Funktion <code>fix_incorrect_order</code>, die im Modul <code>back_of_house</code> definiert ist,

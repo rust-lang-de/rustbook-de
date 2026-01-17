@@ -3,7 +3,7 @@
     <head>
         <!-- Book generated using mdBook -->
         <meta charset="UTF-8">
-        <title>Prägnanter Kontrollfluss mit if let und let else - Die Programmiersprache Rust</title>
+        <title>Prägnanter Kontrollfluss mit if let und let...else - Die Programmiersprache Rust</title>
 
 
         <!-- Custom HTML head -->
@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -161,7 +161,7 @@
 
                 <div id="mdbook-content" class="content">
                     <main>
-                        <h2 id="prägnanter-kontrollfluss-mit-if-let-und-let-else"><a class="header" href="#prägnanter-kontrollfluss-mit-if-let-und-let-else">Prägnanter Kontrollfluss mit <code>if let</code> und <code>let else</code></a></h2>
+                        <h2 id="prägnanter-kontrollfluss-mit-if-let-und-letelse"><a class="header" href="#prägnanter-kontrollfluss-mit-if-let-und-letelse">Prägnanter Kontrollfluss mit <code>if let</code> und <code>let...else</code></a></h2>
 <p>Mit der Syntax <code>if let</code> kannst du <code>if</code> und <code>let</code> in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
 während der Rest ignoriert wird. Betrachte das Programm in Codeblock 6-6, das
@@ -201,9 +201,10 @@ gleiche Weise verwenden, wie <code>max</code> im entsprechenden <code>match</cod
 <code>if let</code>-Block wird nur ausgeführt, wenn der Wert zum Muster passt.</p>
 <p>Die Verwendung von <code>if let</code> bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die
-<code>match</code> erzwingt. Die Wahl zwischen <code>match</code> und <code>if let</code> hängt davon ab, was
-du in der speziellen Situation machst, und davon, ob ein Gewinn an Prägnanz ein
-angemessener Kompromiss für den Verlust einer Prüfung auf Vollständigkeit ist.</p>
+<code>match</code> erzwingt, die sicherstellt, dass du keinen Fall vergisst. Die Wahl
+zwischen <code>match</code> und <code>if let</code> hängt davon ab, was du in der speziellen
+Situation machst, und davon, ob ein Gewinn an Prägnanz ein angemessener
+Kompromiss für den Verlust einer Prüfung auf Vollständigkeit ist.</p>
 <p>Anders gesagt kannst du dir <code>if let</code> als syntaktischen Zucker für einen
 <code>match</code>-Ausdruck vorstellen, der Code nur bei Übereinstimmung mit einem Muster
 ausführt und alle anderen Werte ignoriert.</p>
@@ -354,7 +355,7 @@ eine Variable <code>state</code> in den Rumpf der Bedingung einfügen, wie in Co
 </span><span class="boring">    }
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
-existiert, durch Verwenden von Bedingungen, die in <code>if let</code> verschachtelt
+existierte, durch Verwenden von Bedingungen, die in <code>if let</code> verschachtelt
 sind.</span></p>
 <p>Damit ist die Aufgabe erledigt, aber die Arbeit wurde in den Rumpf der <code>if  let</code>-Anweisung verlagert. Und wenn die zu erledigende Arbeit komplizierter
 ist, könnte es schwierig sein, genau zu verfolgen, wie die Verzweigungen der
@@ -415,9 +416,7 @@ auf der rechten Seite, sehr ähnlich zu <code>if let</code>, aber sie hat keinen
 Musters im äußeren Gültigkeitsbereich gebunden. Wenn das Muster <em>nicht</em> passt,
 wird das Programm im <code>else</code>-Zweig fortgesetzt, der die Funktion beendet.</p>
 <p>In Codeblock 6-9 kannst du sehen, wie Codeblock 6-8 aussieht, wenn du
-<code>let...else</code> anstelle von <code>if let</code> verwendest. Beachte, dass der Funktionsrumpf
-auf diese Weise „auf dem richtigen Weg“ bleibt, ohne dass sich der
-Kontrollfluss für zwei Verzweigungen signifikant unterscheidet, wie es bei <code>if  let</code> der Fall war.</p>
+<code>let...else</code> anstelle von <code>if let</code> verwendest.</p>
 <p>Dateiname: src/main.rs</p>
 <pre class="playground"><code class="language-rust edition2024"><span class="boring">#[derive(Debug)]
 </span><span class="boring">enum UsState {
@@ -462,6 +461,9 @@ Kontrollfluss für zwei Verzweigungen signifikant unterscheidet, wie es bei <cod
 </span><span class="boring">}</span></code></pre>
 <p><span class="caption">Codeblock 6-9: Verwenden von <code>let...else</code>, um den Fluss
 durch die Funktion klarer darzustellen.</span></p>
+<p>Beachte, dass der Funktionsrumpf auf diese Weise „auf dem richtigen Weg“
+bleibt, ohne dass sich der Kontrollfluss für zwei Verzweigungen signifikant
+unterscheidet, wie es bei <code>if let</code> der Fall war.</p>
 <p>Wenn du eine Situation hast, in der dein Programm über eine Logik verfügt, die
 mit einem <code>match</code>-Ausdruck zu wortreich auszudrücken wäre, denke daran, dass
 <code>if let</code> und <code>let...else</code> ebenfalls in deinem Rust-Werkzeugkasten enthalten

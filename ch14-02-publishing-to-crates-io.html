@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -214,7 +214,7 @@ die HTML-Dokumentation aus diesem Dokumentationskommentar generieren, indem wir
 deiner aktuellen Kiste (und auch die Dokumentation aller Abhängigkeiten
 (dependencies) deiner Kiste) erstellt und das Ergebnis in einem Webbrowser
 geöffnet. Wenn du zur Funktion <code>add_one</code> navigierst, wirst du sehen wie der Text
-in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1:</p>
+in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.</p>
 <img alt="Gerenderte HTML-Dokumentation für die Funktion `add_one` von `my_crate`" src="img/trpl14-01.png" class="center" />
 <p><span class="caption">Abbildung 14-1: HTML-Dokumentation für die Funktion
 <code>add_one</code></span></p>
@@ -224,9 +224,9 @@ einen Abschnitt im HTML-Code mit dem Titel <code>Examples</code> zu erstellen. H
 einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
 verwenden:</p>
 <ul>
-<li><strong>Panics</strong>: Die Szenarien, in denen die dokumentierte Funktion <code>panic</code>
-aufruft. Anwender der Funktion, die nicht möchten, dass ihre Programme
-<code>panic</code> aufrufen, sollten sicherstellen, dass sie die Funktion in solchen
+<li><strong>Panics</strong>: Das sind die Szenarien, in denen die dokumentierte Funktion
+abstürzt. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
+abstürzen, sollten sicherstellen, dass sie die Funktion in solchen
 Situationen nicht aufrufen.</li>
 <li><strong>Errors</strong>: Wenn die Funktion einen Typ <code>Result</code> zurückgibt, der die Arten von
 Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
@@ -264,11 +264,10 @@ bemerken, das <code>cargo test</code> feststellt, dass das Beispiel und der Code
 synchron miteinander sind!</p>
 <h4 id="enthaltene-elemente-kommentieren"><a class="header" href="#enthaltene-elemente-kommentieren">Enthaltene Elemente kommentieren</a></h4>
 <p>Der Stil des Dokumentationskommentars <code>//!</code> fügt dem Element, das die
-Kommentare enthält, Dokumentation hinzu, anstatt den Elementen die auf die
-Kommentare folgen Dokumentation hinzuzufügen. Wir verwenden diese
-Dokumentationskommentare üblicherweise in der Wurzeldatei (laut Konvention
-<em>src/lib.rs</em>) oder in einem Modul, um die Kiste oder das Modul als Ganzes zu
-dokumentieren.</p>
+Kommentare <em>enthält</em>, Dokumentation hinzu, anstatt den Elementen die auf die
+Kommentare <em>folgen</em>. Wir verwenden diese Dokumentationskommentare üblicherweise
+in der Wurzeldatei (laut Konvention <em>src/lib.rs</em>) oder in einem Modul, um die
+Kiste oder das Modul als Ganzes zu dokumentieren.</p>
 <p>Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
 <code>my_crate</code> beschreibt, die die Funktion <code>add_one</code> enthält, können wir am Anfang
 der Datei <em>src/lib.rs</em> Dokumentationskommentare hinzufügen die mit <code>//!</code>
@@ -303,15 +302,15 @@ Datei <em>src/lib.rs</em>, dabei handelt es sich um das Wurzelverzeichnis der Ki
 Diese Kommentare beschreiben die gesamte Kiste.</p>
 <p>Wenn wir <code>cargo doc --open</code> ausführen, werden diese Kommentare auf der
 Startseite der Dokumentation für <code>my_crate</code> angezeigt, oberhalb der Liste der
-veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2:</p>
-<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
-<p><span class="caption">Abbildung 14-2: Gerenderte Dokumentation für <code>my_crate</code>,
-einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span></p>
+veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2.</p>
 <p>Dokumentationskommentare innerhalb von Elementen sind besonders nützlich, um
 Kisten und Module zu beschreiben. Erkläre anhand dieser Informationen den
 allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Kiste
 besser verstehen können.</p>
-<h3 id="mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren"><a class="header" href="#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren">Mit <code>pub use</code> eine benutzerfreundliche öffentliche API exportieren</a></h3>
+<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
+<p><span class="caption">Abbildung 14-2: Gerenderte Dokumentation für <code>my_crate</code>,
+einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span></p>
+<h3 id="exportieren-einer-komfortablen-öffentlichen-api"><a class="header" href="#exportieren-einer-komfortablen-öffentlichen-api">Exportieren einer komfortablen öffentlichen API</a></h3>
 <p>Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste
 eine wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur
 weniger vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu
@@ -340,7 +339,7 @@ anderen Speicherort definiert worden wäre.</p>
 erstellt, um künstlerische Konzepte zu modellieren. In dieser Bibliothek sind
 zwei Module enthalten: Ein Modul <code>kinds</code> mit zwei Aufzählungen (enums) namens
 <code>PrimaryColor</code> und <code>SecondaryColor</code> und ein Modul <code>utils</code> das eine Funktion
-namens <code>mix</code> beinhaltet. Siehe Codeblock 14-3:</p>
+namens <code>mix</code> beinhaltet. Siehe Codeblock 14-3.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust noplayground test_harness">//! # Art
 //!
@@ -376,9 +375,9 @@ pub mod utils {
 Modulen <code>kinds</code> und <code>utils</code> organisiert sind</span></p>
 <p>Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Kiste
 generiert von <code>cargo doc</code> aussehen würde.</p>
-<img alt="Rendered documentation for the `art` crate that lists the `kinds` and `utils` modules" src="img/trpl14-03.png" class="center" />
+<img alt="Gerenderte Dokumentation für die Kiste `art` mit den Modulen `kinds` und `utils`" src="img/trpl14-03.png" class="center" />
 <p><span class="caption">Abbildung 14-3: Startseite der Dokumentation für <code>art</code>
-die Module <code>kinds</code> und <code>utils</code> auflistet</span></p>
+mit den Modulen <code>kinds</code> und <code>utils</code> auflistet</span></p>
 <p>Beachte, dass die Typen <code>PrimaryColor</code>, <code>SecondaryColor</code> und die Funktion <code>mix</code>
 nicht auf der Startseite angeführt sind. Wir müssen auf <code>kinds</code> und <code>utils</code>
 klicken um sie zu sehen.</p>
@@ -386,7 +385,7 @@ klicken um sie zu sehen.</p>
 benötigen, die die Elemente aus <code>art</code> in den Gültigkeitsbereich bringen und die
 derzeit definierte Modulstruktur angeben. Codeblock 14-4 zeigt ein Beispiel für
 eine Kiste, in der die Elemente <code>PrimaryColor</code> und <code>mix</code> aus der <code>art</code>-Kiste
-verwendet werden:</p>
+verwendet werden.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use art::kinds::PrimaryColor;
 use art::utils::mix;
@@ -409,7 +408,7 @@ Modulnamen in den <code>use</code>-Anweisungen angeben müssen.</p>
 <p>Um die interne Organisation aus der öffentlichen API zu entfernen, können wir den
 Programmcode der <code>art</code>-Kiste ändern, um <code>pub use</code>-Anweisungen hinzuzufügen, um
 die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
-gezeigt:</p>
+gezeigt.</p>
 <p><span class="filename">Dateiname: src/lib.rs</span></p>
 <pre><code class="language-rust ignore">//! # Art
 //!
@@ -458,7 +457,7 @@ Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen <code>PrimaryColor</cod
 <p>Die Benutzer der <code>art</code>-Kiste können weiterhin die interne Struktur aus
 Codeblock 14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde,
 oder sie können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden,
-wie es im Codeblock 14-6 gezeigt wurde:</p>
+wie es im Codeblock 14-6 gezeigt wurde.</p>
 <p><span class="filename">Dateiname: src/main.rs</span></p>
 <pre><code class="language-rust ignore">use art::mix;
 use art::PrimaryColor;
@@ -485,22 +484,23 @@ interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir
 einige der Programmcodes von Kisten an die du installiert hast, um
 festzustellen, ob sie intern strukturiert sind und ob sich ihre interne
 Struktur von der öffentlichen API unterscheidet.</p>
-<h3 id="einrichten-eines-kontos-auf-cratesio"><a class="header" href="#einrichten-eines-kontos-auf-cratesio">Einrichten eines Kontos auf crates.io</a></h3>
-<p>Bevor man eine Kiste veröffentlichen kann, muss man ein Konto auf
-<a href="https://crates.io/">crates.io</a> erstellen um ein API-Token zu erhalten. Besuche dazu die
-Homepage auf <a href="https://crates.io/">crates.io</a> und melde dich über ein GitHub-Konto an.
-(Derzeit ist ein GitHub-Konto eine Voraussetzung, aber die Seite wird
-möglicherweise in Zukunft andere Wege einen Account zu erstellen ermöglichen.)
+<h3 id="einrichten-eines-accounts-auf-cratesio"><a class="header" href="#einrichten-eines-accounts-auf-cratesio">Einrichten eines Accounts auf crates.io</a></h3>
+<p>Bevor man eine Kiste veröffentlichen kann, muss man einen Account auf
+<a href="https://crates.io/">crates.io</a> erstellen, um ein API-Token zu erhalten. Besuche dazu die
+Homepage auf <a href="https://crates.io/">crates.io</a> und melde dich über einen GitHub-Account an.
+(Derzeit ist ein GitHub-Account eine Voraussetzung, aber die Seite wird
+möglicherweise in Zukunft andere Wege anbieten, um einen Account zu erstellen.)
 Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf
 <a href="https://crates.io/me/">https://crates.io/me/</a> und erhalte deinen API-Schlüssel. Rufe
 anschließend das Kommando <code>cargo login</code> mit deinem API-Schlüssel auf:</p>
 <pre><code class="language-console">$ cargo login
 abcdefghijklmnopqrstuvwxyz012345
 </code></pre>
-<p>Diese Kommando informiert Cargo über dein API-Token und speichert es lokal in
-<em>~/.cargo/credentials</em>. Beachte, dass dieses Token ein <em>Geheimnis</em> ist: Gib es
-nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem teilst,
-solltest du es widerrufen und ein neues Token auf <a href="https://crates.io/">crates.io</a> erzeugen.</p>
+<p>Dieses Kommando informiert Cargo über dein API-Token und speichert es lokal in
+<em>~/.cargo/credentials.toml</em>. Beachte, dass dieses Token ein _eheimnis ist: Gib
+es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem
+geteils hast, solltest du es widerrufen und ein neues Token auf
+<a href="https://crates.io/">crates.io</a> erzeugen.</p>
 <h3 id="metadaten-zu-einer-neuen-kiste-hinzufügen"><a class="header" href="#metadaten-zu-einer-neuen-kiste-hinzufügen">Metadaten zu einer neuen Kiste hinzufügen</a></h3>
 <p>Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem
 Veröffentlichen musst du deiner Kiste einige Metadaten im Abschnitt <code>[package]</code>
@@ -537,7 +537,7 @@ deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Ergänze
 in der Datei <em>Cargo.toml</em> eine Beschreibung hinzu, die nur ein oder zwei Sätze
 umfasst, da sie zusammen mit deiner Kiste in den Suchergebnissen angezeigt
 wird. Für das Feld <code>license</code> musst du einen <em>Lizenzkennungswert</em> (licence
-identifier value) angeben. In <a href="http://spdx.org/licenses/">Linux Foundation’s Software Package Data
+identifier value) angeben. In <a href="https://spdx.org/licenses/">Linux Foundation’s Software Package Data
 Exchange (SPDX)</a> sind die Bezeichner aufgeführt, die Sie für diesen Wert
 verwenden können. Um beispielsweise anzugeben, dass du deine Kiste mit der
 MIT-Lizenz lizenziert hast, füge die <code>MIT</code>-Identifikation hinzu:</p>
@@ -572,26 +572,33 @@ license = "MIT OR Apache-2.0"
 angeben kannst, um sicherzustellen, dass andere deine Kiste leichter entdecken
 und verwenden können.</p>
 <h3 id="veröffentlichen-auf-cratesio"><a class="header" href="#veröffentlichen-auf-cratesio">Veröffentlichen auf crates.io</a></h3>
-<p>Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für
+<p>Nachdem man einen Account erstellt, den API-Token gespeichert, einen Namen für
 seine Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
 Version auf <a href="https://crates.io/">crates.io</a> hochgeladen, damit andere sie verwenden können.</p>
 <p>Sei vorsichtig, da eine Veröffentlichung <em>dauerhaft</em> ist. Die Version kann
-niemals überschrieben und der Programmcode nicht gelöscht werden. Ein Hauptziel
-von <a href="https://crates.io/">crates.io</a> ist es, als permanentes Archiv von Code zu fungieren,
-sodass alle Projekte die erstellt werden und von Kisten aus <a href="https://crates.io/">crates.io</a>
-abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde
-das Erreichen dieses Ziels unmöglich machen. Die Anzahl der Kistenversionen,
-die man veröffentlichen kann, ist jedoch unbegrenzt.</p>
+niemals überschrieben und der Programmcode nur in spezielle Fällen gelöscht
+werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
+fungieren, sodass alle Projekte die erstellt werden und von Kisten aus
+<a href="https://crates.io/">crates.io</a> abhängen weiter funktionieren werden. Das Zulassen von
+Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die
+Anzahl der Kistenversionen, die man veröffentlichen kann, ist jedoch
+unbegrenzt.</p>
 <p>Rufe <code>cargo publish</code> erneut auf. Diesmal sollte es funktionieren:</p>
 <pre><code class="language-console">$ cargo publish
     Updating crates.io index
    Packaging guessing_game v0.1.0 (file:///projects/guessing_game)
+    Packaged 6 files, 1.2KiB (895.0B compressed)
    Verifying guessing_game v0.1.0 (file:///projects/guessing_game)
    Compiling guessing_game v0.1.0
 (file:///projects/guessing_game/target/package/guessing_game-0.1.0)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.19s
    Uploading guessing_game v0.1.0 (file:///projects/guessing_game)
+    Uploaded guessing_game v0.1.0 to registry `crates-io`
+note: waiting for `guessing_game v0.1.0` to be available at registry
+`crates-io`.
+You may press ctrl-c to skip waiting; the crate should be available shortly.
+   Published guessing_game v0.1.0 at registry `crates-io`
 </code></pre>
 <p>Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die
 Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
@@ -603,7 +610,7 @@ Versionswert und veröffentliche ihn erneut. Verwende die <a href="https://semve
 semantische Versionierung</a>, um auf den von dir vorgenommenen Änderungen
 basierend welche neue Versionsnummer geeignet ist. Führe dann <code>cargo publish</code>
 aus, um die neue Version hochzuladen.</p>
-<h3 id="mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen"><a class="header" href="#mit-cargo-yank-versionen-auf-cratesio-als-veraltet-kennzeichnen">Mit <code>cargo yank</code> Versionen auf crates.io als veraltet kennzeichnen</a></h3>
+<h3 id="versionen-auf-cratesio-als-veraltet-kennzeichnen"><a class="header" href="#versionen-auf-cratesio-als-veraltet-kennzeichnen">Versionen auf crates.io als veraltet kennzeichnen</a></h3>
 <p>Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
 ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt
@@ -618,8 +625,8 @@ verwenden.</p>
 <p>Um eine Version einer Kiste herauszuziehen, rufe <code>cargo yank</code> auf und
 spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel
 eine Kiste mit dem Namen <code>guessing_game</code> in Version 1.0.1 veröffentlicht haben
-und sie löschen wollen, würden wir im Projektverzeichnis für <code>guessing_game</code>
-folgendes ausführen:</p>
+und sie herausziehen wollen, würden wir im Projektverzeichnis für
+<code>guessing_game</code> folgendes ausführen:</p>
 <pre><code class="language-console">$ cargo yank --vers 1.0.1
     Updating crates.io index
         Yank guessing_game@1.0.1

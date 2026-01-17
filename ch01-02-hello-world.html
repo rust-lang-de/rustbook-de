@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -170,14 +170,14 @@ wir hier das gleiche tun!</p>
 <p>Hinweis: Dieses Buch setzt grundlegende Vertrautheit mit der Kommandozeile
 voraus. Rust stellt keine besonderen Anforderungen an deine Textbearbeitung
 oder Werkzeuge oder an den Ort, an dem dein Code lebt. Wenn du also lieber
-eine integrierte Entwicklungsumgebung (IDE) statt der Kommandozeile verwenden
-möchtest, kannst du deine bevorzugte IDE verwenden. Viele IDEs bieten
-mittlerweile einen gewissen Grad an Rust-Unterstützung; Einzelheiten findest
-du in der Dokumentation der IDE. Das Rust-Team hat sich darauf konzentriert,
-eine großartige IDE-Unterstützung mittels <code>rust-analyzer</code> zu ermöglichen.
-Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für weitere Details.</p>
+eine IDE statt der Kommandozeile verwenden möchtest, kannst du deine
+bevorzugte IDE verwenden. Viele IDEs bieten mittlerweile einen gewissen Grad
+an Rust-Unterstützung; Einzelheiten findest du in der Dokumentation der IDE.
+Das Rust-Team hat sich darauf konzentriert, eine großartige IDE-Unterstützung
+mittels <code>rust-analyzer</code> zu ermöglichen. Siehe <a href="appendix-04-useful-development-tools.html">Anhang D</a> für
+weitere Details.</p>
 </blockquote>
-<h3 id="erstellen-eines-projektverzeichnisses"><a class="header" href="#erstellen-eines-projektverzeichnisses">Erstellen eines Projektverzeichnisses</a></h3>
+<h3 id="projektverzeichniss-aufsetzen"><a class="header" href="#projektverzeichniss-aufsetzen">Projektverzeichniss aufsetzen</a></h3>
 <p>Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
 Projekte in diesem Buch schlagen wir vor, ein Verzeichnis <em>projects</em> in deinem
@@ -197,7 +197,7 @@ $ cd hello_world
 &gt; mkdir hello_world
 &gt; cd hello_world
 </code></pre>
-<h3 id="schreiben-und-ausführen-eines-rust-programms"><a class="header" href="#schreiben-und-ausführen-eines-rust-programms">Schreiben und Ausführen eines Rust-Programms</a></h3>
+<h3 id="grundlagen-eines-rust-programms"><a class="header" href="#grundlagen-eines-rust-programms">Grundlagen eines Rust-Programms</a></h3>
 <p>Als nächstes erstelle eine neue Quelldatei und nenne sie <em>main.rs</em>.
 Rust-Dateien enden immer mit der Erweiterung <em>.rs</em>. Wenn du mehr als ein Wort
 in deinem Dateinamen verwendest, verwende einen Unterstrich, um sie zu trennen.
@@ -217,19 +217,19 @@ um die Datei zu kompilieren und auszuführen:</p>
 $ ./main
 Hallo Welt!
 </code></pre>
-<p>Unter Windows gib den Befehl <code>.\main.exe</code> anstelle von <code>./main</code> ein:</p>
+<p>Unter Windows gib den Befehl <code>.\main</code> anstelle von <code>./main</code> ein:</p>
 <pre><code class="language-powershell">&gt; rustc main.rs
-&gt; .\main.exe
+&gt; .\main
 Hallo Welt!
 </code></pre>
-<p>Unabhängig von deinem Betriebssystem sollte die Zeichenfolge <code>Hallo Welt!</code> im
+<p>Unabhängig von deinem Betriebssystem sollte die Zeichenkette <code>Hallo Welt!</code> im
 Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
 Abschnitt <a href="ch01-01-installation.html#fehlersuche">„Fehlersuche“</a> des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.</p>
 <p>Wenn <code>Hallo Welt!</code> ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 – willkommen!</p>
-<h3 id="anatomie-eines-rust-programms"><a class="header" href="#anatomie-eines-rust-programms">Anatomie eines Rust-Programms</a></h3>
+<h3 id="die-anatomie-eines-rust-programms"><a class="header" href="#die-anatomie-eines-rust-programms">Die Anatomie eines Rust-Programms</a></h3>
 <p>Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:</p>
 <pre class="playground"><code class="language-rust edition2024">fn main() {
@@ -261,18 +261,19 @@ deinem Computer installiert sein!</p>
 <p>Diese Zeile erledigt die ganze Arbeit in diesem kleinen Programm: Sie gibt Text
 auf dem Bildschirm aus. Hier gibt es drei wichtige Details zu beachten.</p>
 <p>Erstens ruft <code>println!</code> ein Rust-Makro auf. Wenn es stattdessen eine Funktion
-aufrufte, würde diese als <code>println</code> (ohne <code>!</code>) angegeben werden. Wir werden die
-Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
-wissen, dass die Verwendung eines <code>!</code> bedeutet, dass du ein Makro anstelle
-einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
-folgen wie Funktionen.</p>
+aufrufte, würde diese als <code>println</code> (ohne <code>!</code>) angegeben werden. Rust-Makros
+sind eine Möglichkeit, Code zu schreiben, der Code zur Erweiterung der
+Rust-Syntax generiert. Wir werden sie in <a href="ch20-05-macros.html">Kapitel 20</a> näher
+erläutern. Im Moment musst du nur wissen, dass die Verwendung eines <code>!</code>
+bedeutet, dass du ein Makro anstelle einer normalen Funktion aufrufst und dass
+Makros nicht immer denselben Regeln folgen wie Funktionen.</p>
 <p>Zweitens siehst du die Zeichenkette <code>"Hallo Welt!"</code>. Wir übergeben diese
 Zeichenkette als Argument an <code>println!</code>, und die Zeichenkette wird auf dem
 Bildschirm ausgegeben.</p>
 <p>Drittens beenden wir die Zeile mit einem Semikolon (<code>;</code>), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.</p>
-<h3 id="kompilieren-und-ausführen-sind-getrennte-schritte"><a class="header" href="#kompilieren-und-ausführen-sind-getrennte-schritte">Kompilieren und Ausführen sind getrennte Schritte</a></h3>
+<h3 id="compilierung-und-ausführung"><a class="header" href="#compilierung-und-ausführung">Compilierung und Ausführung</a></h3>
 <p>Du hast gerade ein neu erstelltes Programm ausgeführt, also lass uns jeden
 Schritt in diesem Prozess untersuchen.</p>
 <p>Bevor du ein Rust-Programm ausführst, musst du es mit dem Rust-Compiler
@@ -301,7 +302,7 @@ main.rs
 Verwendung von Windows, eine Datei mit Debugging-Informationen mit der
 Erweiterung <em>.pdb</em>. Von hier aus führst du die Datei <em>main</em> oder <em>main.exe</em>
 aus, so wie hier:</p>
-<pre><code class="language-console">$ ./main # oder .\main.exe unter Windows
+<pre><code class="language-console">$ ./main # oder .\main unter Windows
 </code></pre>
 <p>Wenn <em>main.rs</em> dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
 Welt!“ in deinem Terminal ausgeben.</p>

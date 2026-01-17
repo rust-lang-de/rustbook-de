@@ -41,7 +41,7 @@
             const default_dark_theme = "navy";
         </script>
         <!-- Start loading toc.js asap -->
-        <script src="toc-ebe9fd2a.js"></script>
+        <script src="toc-5070249d.js"></script>
     </head>
     <body>
     <div id="mdbook-help-container">
@@ -167,11 +167,11 @@ Kisten.</p>
 <p>Eine <em>Kiste</em> ist die kleinste Menge an Code, die der Rust-Compiler zu einem
 bestimmten Zeitpunkt berücksichtigt. Selbst wenn du <code>rustc</code> anstelle von
 <code>cargo</code> ausführst und eine einzelne Quellcodedatei übergibst (wie wir es
-bereits im Abschnitt „Schreiben und Ausführen eines Rust-Programms“ in Kapitel
-1 getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten
-können Module enthalten, und die Module können in anderen Dateien definiert
-sein, die mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten
-sehen werden.</p>
+bereits im Abschnitt <a href="ch01-02-hello-world.html#grundlagen-eines-rust-programms">„Grundlagen eines Rust-Programms“</a> in Kapitel 1
+getan haben), betrachtet der Compiler diese Datei als eine Kiste. Kisten können
+Module enthalten, und die Module können in anderen Dateien definiert sein, die
+mit der Kiste kompiliert werden, wie wir in den nächsten Abschnitten sehen
+werden.</p>
 <p>Es gibt zwei Arten von Kisten: Binäre Kisten und Bibliothekskisten. <em>Binäre
 Kisten</em> (binary crates) sind Programme, die du zu einer ausführbaren Datei
 kompilieren und starten kannst, z.B. ein Befehlszeilenprogramm
@@ -186,8 +186,8 @@ Funktionalität, die Zufallszahlen erzeugt. Wenn Rust-Entwickler „Kiste“ sag
 meinen sie meistens „Bibliothekskiste“, und sie verwenden „Kiste“ austauschbar
 mit dem allgemeinen Programmierkonzept einer „Bibliothek“.</p>
 <p>Die <em>Kistenwurzel</em> ist eine Quelldatei, von der der Rust-Compiler ausgeht und
-die das Wurzel-Modul deiner Kiste bildet (Module werden in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Mit Modulen den
-Kontrollumfang und Datenschutz steuern“</a> ausführlich erklärt).</p>
+die das Wurzel-Modul deiner Kiste bildet (Module werden in <a href="ch07-02-defining-modules-to-control-scope-and-privacy.html">„Kontrollumfang und
+Datenschutz mit Modulen“</a> ausführlich erklärt).</p>
 <p>Ein <em>Paket</em> ist ein Bündel von einer oder mehreren Kisten, die eine Reihe von
 Funktionalitäten bereitstellen. Ein Paket enthält eine Datei <em>Cargo.toml</em>, die
 beschreibt, wie diese Kisten zu bauen sind. Cargo ist eigentlich ein Paket, das
@@ -210,7 +210,7 @@ $ ls my-project/src
 main.rs
 </code></pre>
 <p>Nachdem wir <code>cargo new my-project</code> ausgeführt haben, verwenden wir <code>ls</code>, um zu
-sehen, was Cargo erzeugt. Im Projektverzeichnis gibt es eine Datei
+sehen, was Cargo erzeugt. Im Projektverzeichnis <em>my-project</em> gibt es eine Datei
 <em>Cargo.toml</em>, die uns ein Paket gibt. Es gibt auch ein Verzeichnis <em>src</em>, das
 <em>main.rs</em> enthält. Öffne <em>Cargo.toml</em> in deinem Texteditor und beachte, dass
 <em>src/main.rs</em> nicht erwähnt wird. Cargo folgt der Konvention, dass
