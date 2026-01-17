@@ -1,4 +1,4 @@
-## Mit Modulen den Kontrollumfang und Datenschutz steuern
+## Kontrollumfang und Datenschutz mit Modulen
 
 In diesem Abschnitt werden wir über Module und andere Teile des Modulsystems
 sprechen, nämlich _Pfade_, die es dir erlauben, Elemente zu benennen; das
@@ -18,7 +18,7 @@ erinnern, wie Module funktionieren.
 
 - **Beginne bei der Kistenwurzel (crate root)**: Beim Kompilieren einer Kiste
   sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
-  _src/lib.rs_ für eine Bibliothekskiste oder _src/main.rs_ für eine
+  _src/lib.rs_ für eine Bibliothekskiste und _src/main.rs_ für eine
   Binärkiste).
 - **Module deklarieren**: In der Kisten-Stammdatei kannst du neue Module
   deklarieren; z.B. deklarierst du ein „Garten“-Modul mit `mod garden;`. Der
@@ -56,7 +56,7 @@ erinnern, wie Module funktionieren.
   Gültigkeitsbereich zu verwenden.
 
 Hier erstellen wir eine binäre Kiste namens `backyard` (Hinterhof), die diese
-Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls `backyard`
+Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls _backyard_
 genannt, enthält diese Dateien und Verzeichnisse:
 
 ```text
@@ -120,12 +120,13 @@ Restaurants bietet. Wir werden die Signaturen der Funktionen definieren, aber
 ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu konzentrieren
 und nicht auf die Implementierung eines Restaurants.
 
-Im Gaststättengewerbe werden einige Teile eines Restaurants als _Vorderseite
-des Hauses_ und andere als _Hinterseite des Hauses_ bezeichnet. Auf der
-Vorderseite des Hauses sind die Kunden; hier setzen Gastgeber ihre Kunden hin,
-Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
-Getränke. Auf der Hinterseite des Hauses arbeiten die Küchenchefs und Köche in
-der Küche, Geschirrspüler waschen ab und Manager erledigen Verwaltungsarbeiten.
+Im Gaststättengewerbe werden einige Teile eines Restaurants als Vorderseite
+des Hauses und andere als Hinterseite des Hauses bezeichnet. Auf der
+_Vorderseite des Hauses_ sind die Kunden; hier setzen Gastgeber ihre Kunden
+hin, Kellner nehmen Bestellungen auf und rechnen ab und Barkeeper machen die
+Getränke. Auf der _Hinterseite des Hauses_ arbeiten die Küchenchefs und Köche
+in der Küche, Geschirrspüler waschen ab und Manager erledigen
+Verwaltungsarbeiten.
 
 Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
@@ -171,10 +172,10 @@ lesen zu müssen, und finden so leichter die für sie relevanten Definitionen.
 Programmierer, die diesem Code neue Funktionalität hinzufügen, wissen, wo sie
 den Code platzieren müssen, damit das Programm übersichtlich bleibt.
 
-Vorhin haben wir erwähnt, dass _src/main.rs_ und _src/lib.rs_ als Kistenwurzel
-bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
-Dateien ein Modul namens `crate` an der Wurzel der Modulstruktur der Kiste
-bilden, die als _Modulbaum_ bekannt ist.
+Vorhin haben wir erwähnt, dass _src/main.rs_ und _src/lib.rs_ als
+_Kistenwurzel_ bezeichnet werden. Der Grund für ihren Namen ist, dass der
+Inhalt dieser beiden Dateien ein Modul namens `crate` an der Wurzel der
+Modulstruktur der Kiste bilden, die als _Modulbaum_ bekannt ist.
 
 Codeblock 7-2 zeigt den Modulbaum für die Struktur in Codeblock 7-1.
 

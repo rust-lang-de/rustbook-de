@@ -202,7 +202,7 @@ gezeigt, die Version vier und sechs einer IP-Adresse speichern können.
 Wie sich jedoch herausstellt, ist der Wunsch, IP-Adressen inklusive deren
 Variante zu speichern, so verbreitet, dass [die Standardbibliothek eine
 Definition bereitstellt][IpAddr], die wir verwenden können! Schauen wir uns an,
-wie die Standardbibliothek `IpAddr` definiert: Es hat genau die Aufzählung und
+wie die Standardbibliothek `IpAddr` definiert. Es hat genau die Aufzählung und
 die Varianten, die wir definiert und verwendet haben, aber es bettet die
 Adressdaten innerhalb der Varianten in Form von zwei verschiedenen Strukturen
 ein, die für jede Variante unterschiedlich definiert sind:
@@ -251,10 +251,10 @@ jeweils eine unterschiedliche Anzahl an Werttypen speichern</span>
 
 Diese Aufzählung hat vier Varianten mit unterschiedlichen Typen:
 
-- `Quit` hat überhaupt keine Daten.
-- `Move` hat benannte Felder wie eine Struktur.
-- `Write` enthält einen einzelnen `String`.
-- `ChangeColor` enthält drei `i32`-Werte.
+- `Quit`: Hat überhaupt keine Daten.
+- `Move`: Hat benannte Felder wie eine Struktur.
+- `Write`: Enthält einen einzelnen `String`.
+- `ChangeColor`: Enthält drei `i32`-Werte.
 
 Die Definition einer Aufzählung mit Varianten wie in Codeblock 6-2 ist ähnlich
 zur Definition verschiedener Arten von Strukturdefinitionen, außer dass die
@@ -314,7 +314,7 @@ ausgeführt wird.
 Sehen wir uns eine weitere Aufzählung in der Standardbibliothek an, die sehr
 verbreitet und hilfreich ist: `Option`
 
-### Die Aufzählung `Option` und ihre Vorteile gegenüber Nullwerten
+### Die Aufzählung `Option`
 
 Dieser Abschnitt befasst sich mit einer Fallstudie zu `Option`, einer weiteren
 Aufzählung, die von der Standardbibliothek definiert wird. Der Typ `Option`
@@ -431,10 +431,10 @@ error[E0277]: cannot add `Option<i8>` to `i8`
   |
   = help: the trait `Add<Option<i8>>` is not implemented for `i8`
   = help: the following other types implement trait `Add<Rhs>`:
-            <i8 as Add>
-            <i8 as Add<&i8>>
-            <&'a i8 as Add<i8>>
-            <&i8 as Add<&i8>>
+            `&i8` implements `Add<i8>`
+            `&i8` implements `Add`
+            `i8` implements `Add<&i8>`
+            `i8` implements `Add`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `enums` (bin "enums") due to 1 previous error

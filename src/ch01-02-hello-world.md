@@ -8,14 +8,14 @@ wir hier das gleiche tun!
 > Hinweis: Dieses Buch setzt grundlegende Vertrautheit mit der Kommandozeile
 > voraus. Rust stellt keine besonderen Anforderungen an deine Textbearbeitung
 > oder Werkzeuge oder an den Ort, an dem dein Code lebt. Wenn du also lieber
-> eine integrierte Entwicklungsumgebung (IDE) statt der Kommandozeile verwenden
-> möchtest, kannst du deine bevorzugte IDE verwenden. Viele IDEs bieten
-> mittlerweile einen gewissen Grad an Rust-Unterstützung; Einzelheiten findest
-> du in der Dokumentation der IDE. Das Rust-Team hat sich darauf konzentriert,
-> eine großartige IDE-Unterstützung mittels `rust-analyzer` zu ermöglichen.
-> Siehe [Anhang D][devtools] für weitere Details.
+> eine IDE statt der Kommandozeile verwenden möchtest, kannst du deine
+> bevorzugte IDE verwenden. Viele IDEs bieten mittlerweile einen gewissen Grad
+> an Rust-Unterstützung; Einzelheiten findest du in der Dokumentation der IDE.
+> Das Rust-Team hat sich darauf konzentriert, eine großartige IDE-Unterstützung
+> mittels `rust-analyzer` zu ermöglichen. Siehe [Anhang D][devtools] für
+> weitere Details.
 
-### Erstellen eines Projektverzeichnisses
+### Projektverzeichniss aufsetzen
 
 Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
@@ -44,7 +44,7 @@ Bei Windows CMD gib dies ein:
 > cd hello_world
 ```
 
-### Schreiben und Ausführen eines Rust-Programms
+### Grundlagen eines Rust-Programms
 
 Als nächstes erstelle eine neue Quelldatei und nenne sie _main.rs_.
 Rust-Dateien enden immer mit der Erweiterung _.rs_. Wenn du mehr als ein Wort
@@ -75,15 +75,15 @@ $ ./main
 Hallo Welt!
 ```
 
-Unter Windows gib den Befehl `.\main.exe` anstelle von `./main` ein:
+Unter Windows gib den Befehl `.\main` anstelle von `./main` ein:
 
 ```powershell
 > rustc main.rs
-> .\main.exe
+> .\main
 Hallo Welt!
 ```
 
-Unabhängig von deinem Betriebssystem sollte die Zeichenfolge `Hallo Welt!` im
+Unabhängig von deinem Betriebssystem sollte die Zeichenkette `Hallo Welt!` im
 Terminal ausgegeben werden. Wenn du diese Ausgabe nicht siehst, lies im
 Abschnitt [„Fehlersuche“][troubleshooting] des Installationsabschnitts nach,
 wie du Hilfe erhalten kannst.
@@ -92,7 +92,7 @@ Wenn `Hallo Welt!` ausgegeben wurde, herzlichen Glückwunsch! Du hast offiziell
 ein Rust-Programm geschrieben. Das macht dich zu einem Rust-Programmierer
 &ndash; willkommen!
 
-### Anatomie eines Rust-Programms
+### Die Anatomie eines Rust-Programms
 
 Lass uns im Detail Revue passieren, was gerade in deinem „Hallo Welt!“-Programm
 passiert ist. Hier ist das erste Teil des Puzzles:
@@ -132,11 +132,12 @@ Diese Zeile erledigt die ganze Arbeit in diesem kleinen Programm: Sie gibt Text
 auf dem Bildschirm aus. Hier gibt es drei wichtige Details zu beachten.
 
 Erstens ruft `println!` ein Rust-Makro auf. Wenn es stattdessen eine Funktion
-aufrufte, würde diese als `println` (ohne `!`) angegeben werden. Wir werden die
-Rust-Makros in Kapitel 19 ausführlicher besprechen. Im Moment musst du nur
-wissen, dass die Verwendung eines `!` bedeutet, dass du ein Makro anstelle
-einer normalen Funktion aufrufst und dass Makros nicht immer denselben Regeln
-folgen wie Funktionen.
+aufrufte, würde diese als `println` (ohne `!`) angegeben werden. Rust-Makros
+sind eine Möglichkeit, Code zu schreiben, der Code zur Erweiterung der
+Rust-Syntax generiert. Wir werden sie in [Kapitel 20][ch20-macros] näher
+erläutern. Im Moment musst du nur wissen, dass die Verwendung eines `!`
+bedeutet, dass du ein Makro anstelle einer normalen Funktion aufrufst und dass
+Makros nicht immer denselben Regeln folgen wie Funktionen.
 
 Zweitens siehst du die Zeichenkette `"Hallo Welt!"`. Wir übergeben diese
 Zeichenkette als Argument an `println!`, und die Zeichenkette wird auf dem
@@ -146,7 +147,7 @@ Drittens beenden wir die Zeile mit einem Semikolon (`;`), was anzeigt, dass
 dieser Ausdruck beendet ist und der nächste beginnen kann. Die meisten Zeilen
 eines Rust-Codes enden mit einem Semikolon.
 
-### Kompilieren und Ausführen sind getrennte Schritte
+### Compilierung und Ausführung
 
 Du hast gerade ein neu erstelltes Programm ausgeführt, also lass uns jeden
 Schritt in diesem Prozess untersuchen.
@@ -189,7 +190,7 @@ Erweiterung _.pdb_. Von hier aus führst du die Datei _main_ oder _main.exe_
 aus, so wie hier:
 
 ```console
-$ ./main # oder .\main.exe unter Windows
+$ ./main # oder .\main unter Windows
 ```
 
 Wenn _main.rs_ dein „Hallo Welt!“-Programm wäre, würde diese Zeile „Hallo
@@ -212,5 +213,6 @@ machen wollen, deinen Code weiterzugeben. Als Nächstes stellen wir dir das
 Cargo-Tool vor, das dir beim Schreiben von Rust-Programmen aus der realen Welt
 helfen wird.
 
+[ch20-macros]: ch20-05-macros.html
 [devtools]: appendix-04-useful-development-tools.html
 [troubleshooting]: ch01-01-installation.html#fehlersuche

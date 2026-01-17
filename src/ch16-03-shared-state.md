@@ -22,7 +22,7 @@ Hilfe, um diese Verwaltung korrekt zu gestalten. Betrachten wir als Beispiel
 den Mutex, eines der gebräuchlicheren Nebenläufigkeitsprimitive für gemeinsam
 genutzten Speicher.
 
-### Verwenden von Mutex, um Datenzugriff von jeweils einem Strang zu ermöglichen
+### Datenzugriff steuern mit Mutexen
 
 _Mutex_ ist eine Abkürzung für _mutual exclusion_ (engl. wechselseitiger
 Ausschluss), da ein Mutex zu einem bestimmten Zeitpunkt nur einem Strang
@@ -114,7 +114,7 @@ Stränge zu blockieren, da die Freigabe der Sperre automatisch erfolgt.
 Nachdem wir die Sperre aufgehoben haben, können wir den Mutex-Wert ausgeben und
 sehen, dass wir den inneren `i32` in 6 ändern konnten.
 
-#### Gemeinsames Nutzen eines `Mutex<T>` von mehreren Strängen
+#### Gemeinsamer Zugriff auf `Mutex<T>`
 
 Versuchen wir nun, einen Wert zwischen mehreren Strängen mit `Mutex<T>` zu
 teilen. Wir starten 10 Stränge und lassen sie jeweils einen Zählerwert um 1
@@ -252,35 +252,29 @@ eine Menge.
 ```console
 $ cargo run
    Compiling shared-state v0.1.0 (file:///projects/shared-state)
-error[E0277]: `Rc<Mutex<i32>>` cannot be sent between threads safely
-   --> src/main.rs:11:36
-    |
-11  |           let handle = thread::spawn(move || {
-    |                        ------------- ^------
-    |                        |             |
-    |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
-    | |                      |
-    | |                      required by a bound introduced by this call
-12  | |             let mut num = counter.lock().unwrap();
-13  | |
-14  | |             *num += 1;
-15  | |         });
-    | |_________^ `Rc<Mutex<i32>>` cannot be sent between threads safely
-    |
-    = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc<Mutex<i32>>`
+error[E0277]: `Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
+  --> src/main.rs:11:36
+   |
+11 |           let handle = thread::spawn(move || {
+   |                        ------------- ^------
+   |                        |             |
+   |  ______________________|_____________within this `{closure@src/main.rs:11:36: 11:43}`
+   | |                      |
+   | |                      required by a bound introduced by this call
+12 | |             let mut num = counter.lock().unwrap();
+13 | |
+14 | |             *num += 1;
+15 | |         });
+   | |_________^ `Rc<std::sync::Mutex<i32>>` cannot be sent between threads safely
+   |
+   = help: within `{closure@src/main.rs:11:36: 11:43}`, the trait `Send` is not implemented for `Rc<std::sync::Mutex<i32>>`
 note: required because it's used within this closure
-   --> src/main.rs:11:36
-    |
-11  |         let handle = thread::spawn(move || {
-    |                                    ^^^^^^^
+  --> src/main.rs:11:36
+   |
+11 |         let handle = thread::spawn(move || {
+   |                                    ^^^^^^^
 note: required by a bound in `spawn`
-   --> file:///home/.rustup/toolchains/1.85/lib/rustlib/src/rust/library/std/src/thread/mod.rs:731:8
-    |
-728 | pub fn spawn<F, T>(f: F) -> JoinHandle<T>
-    |        ----- required by a bound in this function
-...
-731 |     F: Send + 'static,
-    |        ^^^^ required by this bound in `spawn`
+  --> /rustc/1159e78c4747b02ef996e55082b704c09b970588/library/std/src/thread/mod.rs:723:1
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `shared-state` (bin "shared-state") due to 1 previous error
@@ -288,7 +282,7 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
 den wir uns konzentrieren müssen: `` `Rc<Mutex<i32>>` cannot be sent between
- threads safely `` Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+ threads safely`` Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
 (trait) `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Wir werden im
 nächsten Abschnitt über das Merkmal `Send` sprechen: Es ist eines der Merkmale,
 das sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
@@ -384,7 +378,7 @@ entschieden, `Mutex<T>` mit einem primitiven Typ für dieses Beispiel zu
 verwenden, damit wir uns darauf konzentrieren können, wie `Mutex<T>`
 funktioniert.
 
-### Ähnlichkeiten zwischen `RefCell<T>`/`Rc<T>` und `Mutex<T>`/`Arc<T>`
+### Vergleich von `RefCell<T>`/`Rc<T>` und `Mutex<T>`/`Arc<T>`
 
 Du hast vielleicht bemerkt, dass `counter` unveränderbar (immutable) ist, aber
 wir könnten eine veränderbare (mutable) Referenz auf den Wert in seinem

@@ -1,4 +1,4 @@
-## Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen
+## Funktionalität mit testgetriebener Entwicklung hinzufügen
 
 Jetzt, da wir die Logik nach _src/lib.rs_ extrahiert haben und die
 Argumentkollektion und Fehlerbehandlung in _src/main.rs_ belassen haben, ist es
@@ -30,45 +30,22 @@ Funktionalität in einer Funktion namens `search` hinzufügen.
 
 ### Schreiben eines fehlschlagenden Tests
 
-Da wir sie nicht mehr benötigen, entfernen wir die `println!` -Anweisungen aus
-_src/lib.rs_ und _src/main.rs_, die wir zum Überprüfen des Programmverhaltens
-verwendet haben. Dann füge in _src/lib.rs_ ein Modul `tests` mit einer
-Testfunktion hinzu, wie wir es in [Kapitel 11][ch11-anatomy] getan haben. Die
-Testfunktion spezifiziert das Verhalten, das die Funktion `search` haben soll:
-Sie nimmt eine Suchabfrage und den Text, in dem gesucht werden soll, entgegen
-und gibt nur die Zeilen aus dem Text zurück, die die Suchabfrage enthalten.
-Codeblock 12-15 zeigt diesen Test, der sich noch nicht kompilieren lässt.
+In _src/lib.rs_ fügen wir ein Modul `tests` mit einer Testfunktion hinzu, wie
+wir es in [Kapitel 11][ch11-anatomy] getan haben. Die Testfunktion spezifiziert
+das Verhalten, das die Funktion `search` haben soll: Sie nimmt eine Suchabfrage
+und den Text, in dem gesucht werden soll, entgegen und gibt nur die Zeilen aus
+dem Text zurück, die die Suchabfrage enthalten. Codeblock 12-15 zeigt diesen
+Test.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
+```rust,does_not_compile
+# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+#     unimplemented!();
 # }
 #
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     Ok(())
-# }
-#
+// --snip--
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -109,33 +86,6 @@ produktiv."` enthält.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn new(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     Ok(())
-# }
-#
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     vec![]
 }
@@ -211,38 +161,6 @@ mit der Zeit einfacher werden. Vergleiche dieses Beispiel mit den Beispielen im
 Abschnitt [„Referenzen validieren mit
 Lebensdauern“][validating-references-with-lifetimes] in Kapitel 10.
 
-Lass uns jetzt den Test ausführen:
-
-```console
-$ cargo test
-   Compiling minigrep v0.1.0 (file:///projects/minigrep)
-    Finished test [unoptimized + debuginfo] target(s) in 0.97s
-     Running unittests src/lib.rs (target/debug/deps/minigrep-9cd200e5fac0fc94)
-
-running 1 test
-test tests::one_result ... FAILED
-
-failures:
-
----- tests::one_result stdout ----
-thread 'tests::one_result' panicked at src/lib.rs:44:9:
-assertion `left == right` failed
-  left: ["sicher, schnell, produktiv."]
- right: []
-note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
-
-
-failures:
-    tests::one_result
-
-test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
-
-error: test failed, to rerun pass `--lib`
-```
-
-Toll, der Test schlägt fehl, genau wie wir erwartet haben. Bringen wir den Test
-zum Bestehen!
-
 ### Code schreiben, um den Test zu bestehen
 
 Derzeit scheitert unser Test, weil wir immer einen leeren Vektor zurückgeben.
@@ -266,34 +184,7 @@ Beachte, dass dies noch nicht kompiliert.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     Ok(())
-# }
-#
+```rust,does_not_compile
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
         // mache etwas mit line
@@ -336,34 +227,7 @@ dies noch nicht kompiliert werden kann.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     Ok(())
-# }
-#
+```rust,does_not_compile
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     for line in contents.lines() {
         if line.contains(query) {
@@ -406,34 +270,7 @@ geben wir den Vektor zurück, wie in Codeblock 12-19 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     Ok(())
-# }
-#
+```rust
 pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
     let mut results = Vec::new();
 
@@ -503,79 +340,6 @@ Funktionen der Iteratoren nicht zunutze. Wir kehren zu diesem Beispiel in
 [Kapitel 13][ch13-iterators] zurück, wo wir Iteratoren im Detail untersuchen
 und uns ansehen, wie man sie verbessern kann.
 
-#### Verwenden der Funktion `search` in der Funktion `run`
-
-Da die Funktion `search` nun funktioniert und getestet ist, müssen wir `search`
-von unserer Funktion `run` aus aufrufen. Wir müssen den Wert `config.query` und
-den Wert `contents`, den `run` aus der Datei liest, an die Funktion `search`
-übergeben. Dann wird `run` jede von `search` zurückgegebene Zeile ausgeben:
-
-<span class="filename">Dateiname: src/lib.rs</span>
-
-```rust,ignore
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    let contents = fs::read_to_string(config.file_path)?;
-
-    for line in search(&config.query, &contents) {
-        println!("{line}");
-    }
-
-    Ok(())
-}
-#
-# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.contains(query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-#     #[test]
-#     fn one_result() {
-#         let query = "dukt";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.";
-#
-#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
-#     }
-# }
-```
-
-Wir benutzen immer noch eine `for`-Schleife, um jede Zeile von `search`
-zurückzugeben und auszugeben.
-
 Jetzt sollte das gesamte Programm funktionieren! Lass es uns ausprobieren,
 zunächst mit einem Wort, das genau eine Zeile aus dem Emily-Dickinson-Gedicht
 wiedergeben sollte: _frog_
@@ -621,7 +385,7 @@ Umgebungsvariablen arbeitet und wie man Standardfehler ausgibt, beides ist
 nützlich, wenn du Kommandozeilenprogramme schreibst.
 
 [validating-references-with-lifetimes]: ch10-03-lifetime-syntax.html
-[ch11-anatomy]: ch11-01-writing-tests.html#anatomie-einer-testfunktion
+[ch11-anatomy]: ch11-01-writing-tests.html#testfunktionen-strukturieren
 [ch10-lifetimes]: ch10-03-lifetime-syntax.html
 [ch3-iter]: ch03-05-control-flow.html#durchlaufen-einer-kollektion-mit-for
 [ch13-iterators]: ch13-02-iterators.html

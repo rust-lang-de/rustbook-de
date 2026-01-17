@@ -78,7 +78,7 @@ den Typparameter benennen, so wie wir es für die Wertparameter einer Funktion
 tun. Du kannst jeden beliebigen Bezeichner als Typparametername verwenden. Aber
 wir werden `T` verwenden, weil die Typparameternamen gemäß Konvention in Rust
 kurz sind, oft nur ein Buchstabe, und Rusts Typbezeichnungskonvention verwendet
-CamelCase. Als Abkürzung für „Typ“ ist `T` die Standardwahl der meisten
+UpperCamelCase. Als Abkürzung für „Typ“ ist `T` die Standardwahl der meisten
 Rust-Programmierer.
 
 Wenn wir einen Parameter im Funktionsrumpf verwenden, müssen wir den
@@ -93,9 +93,9 @@ Funktionsnamen und der Parameterliste, so wie hier:
 fn largest<T>(list: &[T]) -> &T {
 ```
 
-Wir lesen diese Definition wie folgt: Die Funktion `largest` ist generisch über
-einen Typ `T`. Sie hat einen Parameter namens `list`, der ein Anteilstyp von
-Werten des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn
+Wir lesen diese Definition wie folgt: „Die Funktion `largest` ist generisch
+über einen Typ `T`.“ Sie hat einen Parameter namens `list`, der ein Anteilstyp
+von Werten des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn
 Wert des gleichen Typs `T` zurück.
 
 Codeblock 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
@@ -157,8 +157,8 @@ For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
-Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein _Merkmal_ (trait) ist,
-und wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
+Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein Merkmal (trait) ist, und
+wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
 dieser Fehler, dass der Rumpf von `largest` nicht für alle möglichen Typen
 funktioniert, die `T` sein könnten. Da wir Werte des Typs `T` im Rumpf
 vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
@@ -525,5 +525,3 @@ Verwenden von generischen Datentypen. Wenn der Code läuft, verhält er sich
 genauso, wie wenn wir jede Definition von Hand dupliziert hätten. Der Vorgang
 der Codeduplizierung macht Rusts generische Datentypen zur Laufzeit äußerst
 effizient.
-
-[traits-as-parameters]: ch10-02-traits.html#merkmale-als-parameter

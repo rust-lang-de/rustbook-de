@@ -1,6 +1,6 @@
 ## Tests schreiben
 
-Tests sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
+_Tests_ sind Funktionen in Rust, die überprüfen, ob der zu testende Code in der
 erwarteten Weise funktioniert. Der Rumpf von Testfunktionen führt in der Regel
 diese drei Aktionen aus:
 
@@ -12,7 +12,7 @@ Schauen wir uns die Funktionalität an, die Rust speziell für das Schreiben von
 Tests bereitstellt, die diese Aktionen ausführen. Dazu gehören das Attribut
 `test`, einige Makros und das Attribut `should_panic`.
 
-### Anatomie einer Testfunktion
+### Testfunktionen strukturieren
 
 Im einfachsten Fall ist ein Test in Rust eine Funktion, die mit dem Attribut
 `test` annotiert wird. Attribute sind Metadaten über Teile des Rust-Codes; ein
@@ -256,8 +256,8 @@ und ein Test nicht bestanden wird</span>
 Statt `ok` zeigt die Zeile `test tests::another` das Ergebnis `FAILED`.
 Zwischen den Einzelergebnissen und der Zusammenfassung erscheinen zwei neue
 Abschnitte: Der erste zeigt die detaillierte Ursache für jeden fehlgeschlagenen
-Test an. In diesem Fall erhalten wir Details, dass `another` scheiterte mit der
-Meldung `panicked at 'Lasse diesen Test fehlschlagen'` in Zeile 17 der Datei
+Test an. In diesem Fall erhalten wir Details, dass `tests::another` scheiterte
+mit der Meldung `Lasse diesen Test fehlschlagen` in Zeile 17 der Datei
 _src/lib.rs_. Der nächste Abschnitt listet nur die Namen aller fehlgeschlagenen
 Tests auf, was nützlich ist, wenn es viele Tests und viele detaillierte
 Ausgaben von fehlgeschlagenen Tests gibt. Wir können den Namen eines
@@ -273,7 +273,7 @@ Da du nun gesehen hast, wie die Testergebnisse in verschiedenen Szenarien
 aussehen, wollen wir uns einige Makros neben `panic!` ansehen, die bei Tests
 nützlich sind.
 
-### Ergebnisse überprüfen mit dem Makro `assert!`
+### Ergebnisse mit `assert!` überprüfen
 
 Das Makro `assert!`, das von der Standardbibliothek bereitgestellt wird, ist
 nützlich, wenn du sicherstellen willst, dass eine Bedingung in einem Test als
@@ -466,8 +466,8 @@ test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; fini
 Zwei Tests, die erfolgreich sind! Nun wollen wir sehen, was mit unseren
 Testergebnissen passiert, wenn wir einen Fehler in unseren Code einbringen.
 Wir ändern die Implementierung der Methode `can_hold`, indem wir das
-größer-als-Zeichen durch ein kleiner-als-Zeichen ersetzen, wenn sie die Breiten
-vergleicht:
+größer-als-Zeichen (`>`) durch ein kleiner-als-Zeichen (`<`) ersetzen, wenn sie
+die Breiten vergleicht:
 
 ```rust,not_desired_behavior,noplayground
 # #[derive(Debug)]
@@ -549,7 +549,7 @@ Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich `8` ist und
 `smaller.width` gleich `5`, ergibt der Vergleich der Breiten in `can_hold` jetzt
 `false`: 8 ist nicht kleiner als 5.
 
-### Prüfung auf Gleichheit mit den Makros `assert_eq!` und `assert_ne!`
+### Prüfung auf Gleichheit mit `assert_eq!` und `assert_ne!`
 
 Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
 Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
@@ -565,13 +565,13 @@ Ausdruck `==` den Wert `false` ergeben hat, ohne die Werte auszugeben, die zum
 falschen Testergebnis geführt haben.
 
 In Codeblock 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
-Parameter `2` addiert, dann testen wir diese Funktion mit dem Makro
+Parameter `2` addiert, und dann testen wir diese Funktion mit dem Makro
 `assert_eq!`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
-pub fn add_two(a: i32) -> i32 {
+```rust
+pub fn add_two(a: u64) -> u64 {
     a + 2
 }
 
@@ -595,7 +595,7 @@ Lass uns prüfen, ob sie den Test besteht!
 ```console
 $ cargo test
    Compiling adder v0.1.0 (file:///projects/adder)
-    Finished test [unoptimized + debuginfo] target(s) in 0.58s
+    Finished `test` profile [unoptimized + debuginfo] target(s) in 0.58s
      Running unittests src/lib.rs (target/debug/deps/adder-92948b65e88960b4)
 
 running 1 test
@@ -610,17 +610,18 @@ running 0 tests
 test result: ok. 0 passed; 0 failed; 0 ignored; 0 measured; 0 filtered out; finished in 0.00s
 ```
 
-Wir erstellen eine Variable namens `result`, die das Ergebnis des Aufrufs von
-`add_two(2)` enthält. Dann übergeben wir `result` und `4` als Argumente an
-`assert_eq!`. Die Ausgabezeile für diesen Test lautet `test tests::it_adds_two
- ... ok`, und das Wort `ok` gibt an, dass unser Test bestanden wurde!
+Wir erzeugen eine Variable namens `result`, die das Ergebnis des Aufrufs von
+`add_two(2)` enthält. Dann übergeben wir `result` und `4` als Argumente an das
+Makro `assert_eq!`. Die Ausgabezeile für diesen Test lautet
+`test tests::it_adds_two ... ok`, und das Wort `ok` gibt an, dass unser Test
+bestanden wurde!
 
 Lass uns einen Fehler in unseren Code einbringen, um zu sehen, wie `assert_eq!`
 aussieht, wenn es fehlschlägt. Ändern wir die Implementierung der Funktion
 `add_two`, sodass sie stattdessen `3` addiert:
 
-```rust,not_desired_behavior,noplayground
-pub fn add_two(a: i32) -> i32 {
+```rust,not_desired_behavior
+pub fn add_two(a: u64) -> u64 {
     a + 3
 }
 
@@ -665,12 +666,12 @@ test result: FAILED. 0 passed; 1 failed; 0 ignored; 0 measured; 0 filtered out; 
 error: test failed, to rerun pass `--lib`
 ```
 
-Unser Test hat den Fehler entdeckt! Der Test `it_adds_two` schlug fehl und die
-Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion `left ==
-right` failed`` ist und welche Werte `left` und `right` hatten. Diese Nachricht
-hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` mit dem
-Ergebnis von `add_two(2)` war `5`, aber das Argument `right` war `4`. Du kannst
-dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
+Unser Test hat den Fehler entdeckt! Der Test `tests::it_adds_two` schlug fehl
+und die Meldung sagt uns, dass die fehlgeschlagene Zusicherung ``assertion
+ `left == right` failed`` ist und welche Werte `left` und `right` hatten. Diese
+Nachricht hilft uns, mit der Fehlersuche zu beginnen: Das Argument `left` mit
+dem Ergebnis von `add_two(2)` war `5`, aber das Argument `right` war `4`. Du
+kannst dir vorstellen, dass dies besonders hilfreich ist, wenn wir viele Tests
 durchführen.
 
 Beachte, dass in einigen Sprachen und Test-Bibliotheken die Parameter der
@@ -679,7 +680,7 @@ Reihenfolge wichtig ist. In Rust werden sie jedoch `left` und `right` genannt
 und die Reihenfolge, in der wir den erwarteten Wert und den vom Code
 produzierten Wert angeben, spielt keine Rolle. Wir könnten die Zusicherung in
 diesem Test als `assert_eq!(add_two(2), result)` schreiben, was zur selben
-Fehlermeldung ``assertion failed: `(left == right)` `` führen würde.
+Fehlermeldung ``assertion `left == right` failed`` führen würde.
 
 Das Makro `assert_ne!` prüft, ob die beiden Werte, die wir ihm übergeben,
 ungleich sind und scheitert, wenn sie gleich sind. Dieses Makro ist am
@@ -712,13 +713,12 @@ Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch
 eine benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen
 ausgegeben wird. Alle Argumente, die nach den erforderlichen Argumenten
 angegeben werden, werden an das Makro `format!` übergeben (siehe
-[„Aneinanderhängen mit dem Operator `+` und dem Makro
-`format!`“][concatenation-with-the--operator-or-the-format-macro] in Kapitel
-8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die Platzhalter
-`{}` und Werte enthält, die in diese Platzhalter gehören. Benutzerdefinierte
-Nachrichten sind nützlich, um zu dokumentieren, was eine Zusicherung bedeutet;
-wenn ein Test fehlschlägt, hast du eine bessere Vorstellung davon, wo das
-Problem im Code liegt.
+[„Aneinanderhängen mit `+` und `format!`“][concatenation-plus-format] in
+Kapitel 8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die
+Platzhalter `{}` und Werte enthält, die in diese Platzhalter gehören.
+Benutzerdefinierte Nachrichten sind nützlich, um zu dokumentieren, was eine
+Zusicherung bedeutet; wenn ein Test fehlschlägt, hast du eine bessere
+Vorstellung davon, wo das Problem im Code liegt.
 
 Nehmen wir zum Beispiel an, wir haben eine Funktion, die Leute mit Namen
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,
@@ -726,7 +726,7 @@ in der Ausgabe auftaucht:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub fn greeting(name: &str) -> String {
     format!("Hallo {name}!")
 }
@@ -754,11 +754,11 @@ Lass uns nun einen Fehler in diesen Code einbringen, indem wir `greeting` so
 ändern, dass `name` nicht enthalten ist, um zu sehen, wie das
 Standard-Testversagen aussieht:
 
-```rust,not_desired_behavior,noplayground
+```rust,not_desired_behavior
 pub fn greeting(name: &str) -> String {
     String::from("Hallo!")
 }
-
+#
 # #[cfg(test)]
 # mod tests {
 #     use super::*;
@@ -877,7 +877,7 @@ Codeblock 11-8 zeigt einen Test, der prüft, ob die Fehlerbedingungen von
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 pub struct Guess {
     value: i32,
 }
@@ -933,7 +933,7 @@ Sieht gut aus! Lass uns nun einen Fehler in unseren Code einbringen, indem wir
 die Bedingung entfernen, bei der die Funktion `new` das Programm abbricht, wenn
 der Wert größer als 100 ist:
 
-```rust,not_desired_behavior,noplayground
+```rust,not_desired_behavior
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1002,7 +1002,7 @@ nachdem, ob der Wert zu klein oder zu groß ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct Guess {
 #     value: i32,
 # }
@@ -1110,18 +1110,18 @@ error: test failed, to rerun pass `--lib`
 
 Die Fehlermeldung zeigt an, dass dieser Test tatsächlich wie erwartet das
 Programm abgebrochen hat, aber die Abbruchsmeldung enthielt nicht die erwartete
-Zeichenfolge `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
+Zeichenkette `"kleiner oder gleich 100"`. Die Abbruchsmeldung, die wir in
 diesem Fall erhielten, lautete: `Schätzwert muss größer oder gleich 1 sein, ist
 200.` Jetzt können wir anfangen herauszufinden, wo unser Fehler liegt!
 
 ### Verwenden von `Result<T, E>` in Tests
 
-Bei unseren bisherigen Tests sind alle abgebrochen, wenn sie fehlgeschlagen
-sind. Wir können auch Tests schreiben, die `Result<T, E>` verwenden! Hier ist
-der Test aus Codeblock 11-1 so umgeschrieben, dass er `Result<T, E>` verwendet
-und `Err` zurückgibt, anstatt das Programm abzubrechen:
+Unsere bisherigen Tests brechen alle ab, wenn sie fehlschlagen. Wir können auch
+Tests schreiben, die `Result<T, E>` verwenden! Hier ist der Test aus Codeblock
+11-1 so umgeschrieben, dass er `Result<T, E>` verwendet und `Err` zurückgibt,
+anstatt das Programm abzubrechen:
 
-```rust,noplayground
+```rust
 # pub fn add(left: usize, right: usize) -> usize {
 #     left + right
 # }
@@ -1163,7 +1163,7 @@ Blick darauf werfen, was passiert, wenn wir unsere Tests ausführen, und die
 verschiedenen Optionen untersuchen, die wir mit `cargo test` verwenden können.
 
 [bench]: https://doc.rust-lang.org/unstable-book/library-features/test.html
-[concatenation-with-the--operator-or-the-format-macro]: ch08-02-strings.html#aneinanderhängen-mit-dem-operator--und-dem-makro-format
+[concatenation-plus-format]: ch08-02-strings.html#aneinanderhängen-mit--und-format
 [controlling-how-tests-are-run]: ch11-02-running-tests.html
 [derivable-traits]: appendix-03-derivable-traits.html
 [doc-comments]: ch14-02-publishing-to-crates-io.html#dokumentationskommentare-als-tests

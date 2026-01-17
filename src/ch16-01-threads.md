@@ -98,7 +98,7 @@ keine Überschneidungen feststellst, versuche, die Zahlen in den Bereichen zu
 erhöhen, um dem Betriebssystem mehr Gelegenheit zu geben, zwischen den Strängen
 zu wechseln.
 
-### Warten auf das Ende aller Stränge mit `join`
+### Warten auf das Ende aller Stränge
 
 Der Code in Codeblock 16-1 beendet nicht nur den erzeugten Strang meist
 vorzeitig, weil der Hauptstrangs endet, sondern weil es keine Garantie für die
@@ -379,16 +379,23 @@ $ cargo run
 error[E0382]: use of moved value: `v`
   --> src/main.rs:10:10
    |
-4  |     let v = vec![1, 2, 3];
+ 4 |     let v = vec![1, 2, 3];
    |         - move occurs because `v` has type `Vec<i32>`, which does not implement the `Copy` trait
-5  | 
-6  |     let handle = thread::spawn(move || {
+ 5 |
+ 6 |     let handle = thread::spawn(move || {
    |                                ------- value moved into closure here
-7  |         println!("Hier ist ein Vektor: {v:?}");
-   |                                         - variable moved due to use in closure
+ 7 |         println!("Here's a vector: {v:?}");
+   |                                     - variable moved due to use in closure
 ...
-10 |     drop(v); // Oh nein!
+10 |     drop(v); // oh no!
    |          ^ value used here after move
+   |
+help: consider cloning the value before moving it into the closure
+   |
+ 6 ~     let value = v.clone();
+ 7 ~     let handle = thread::spawn(move || {
+ 8 ~         println!("Here's a vector: {value:?}");
+   |
 
 For more information about this error, try `rustc --explain E0382`.
 error: could not compile `threads` (bin "threads") due to 1 previous error

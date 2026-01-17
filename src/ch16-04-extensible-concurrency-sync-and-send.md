@@ -1,4 +1,4 @@
-## Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Send` und `Sync`
+## Erweiterbare Nebenläufigkeit mit `Send` und `Sync`
 
 Interessanterweise war fast jede Nebenläufigkeitsfunktionalität, über die wir
 bisher in diesem Kapitel gesprochen haben, Teil der Standardbibliothek, nicht
@@ -8,10 +8,10 @@ Nebenläufigkeitsfunktionalitäten schreiben oder die von anderen geschriebenen
 verwenden.
 
 Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
-die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale `Send` und
-`Sync` in `std::marker`.
+die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale (traits)
+`Send` und `Sync` in `std::marker`.
 
-### Erlauben der Eigentümerschaftübertragung zwischen Strängen mit `Send`
+### Übertragen der Eigentümerschaft zwischen Strängen
 
 Das Markierungsmerkmal (marker trait) `Send` zeigt an, dass die
 Eigentümerschaft an Werten des Typs, der `Send` implementiert, zwischen
@@ -35,7 +35,7 @@ Jeder Typ, der vollständig aus `Send`-Typen besteht, wird automatisch auch als
 `Send` markiert. Fast alle primitiven Typen implementieren `Send`, abgesehen
 von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
 
-### Erlauben des Zugriffs von mehreren Strängen mit `Sync`
+### Zugriff von mehreren Strängen
 
 Das Markierungsmerkmal `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
 implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
@@ -52,8 +52,8 @@ denselben Gründen, warum er nicht `Send` implementiert. Der Typ `RefCell<T>`
 Ausleihenprüfung (borrow checking), die `RefCell<T>` zur Laufzeit durchführt,
 ist nicht Strang-sicher. Der intelligente Zeiger `Mutex<T>` implementiert
 `Sync` und kann verwendet werden, um den Zugriff mit mehreren Strängen zu
-teilen, wie du in [„Gemeinsames Nutzen eines `Mutex<T>` von mehreren
-Strängen“][sharing-mutext] gesehen hast.
+teilen, wie du in [„Gemeinsamer Zugriff auf `Mutex<T>`“][sharing-mutext]
+gesehen hast.
 
 ### Manuelles Implementieren von `Send` und `Sync` ist unsicher
 
@@ -98,6 +98,5 @@ ohne die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig &ndash; furchtlos!
 
-[sharing-mutext]:
-ch16-03-shared-state.html#gemeinsames-nutzen-eines-mutext-von-mehreren-strängen
+[sharing-mutext]: ch16-03-shared-state.html#gemeinsamer-zugriff-auf-mutext
 [nomicon3]: https://doc.rust-lang.org/nomicon/index.html

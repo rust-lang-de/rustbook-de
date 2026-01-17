@@ -10,50 +10,20 @@ unsere Benutzer die Umgebungsvariable einmal setzen und alle Suchvorgänge in
 dieser Terminalsitzung ohne Berücksichtigung der Groß-/Kleinschreibung
 durchführen.
 
-### Schreiben eines fehlschlagenden Tests für die Suche unabhängig von der Groß-/Kleinschreibung
+### Schreiben eines fehlschlagenden Tests für die Suche unabhängig von Groß-/Kleinschreibung
 
-Wir fügen zuerst eine neue Funktion `search_case_insensitive` hinzu, die
-aufgerufen wird, wenn die Umgebungsvariable einen Wert hat. Wir werden die
-TDD-Methode weiter verfolgen, sodass der erste Schritt wieder darin besteht,
-einen fehlschlagenden Test zu schreiben. Wir werden einen neuen Test für die
-neue Funktion `search_case_insensitive` hinzufügen und unseren alten Test von
-`one_result` in `case_sensitive` umbenennen, um die Unterschiede zwischen den
-beiden Tests zu verdeutlichen, wie in Codeblock 12-20 gezeigt wird.
+Wir fügen zuerst eine neue Funktion `search_case_insensitive` zur Bibliothek
+`minigrep` hinzu, die aufgerufen wird, wenn die Umgebungsvariable einen Wert
+hat. Wir werden die TDD-Methode weiter verfolgen, sodass der erste Schritt
+wieder darin besteht, einen fehlschlagenden Test zu schreiben. Wir werden einen
+neuen Test für die neue Funktion `search_case_insensitive` hinzufügen und
+unseren alten Test von `one_result` in `case_sensitive` umbenennen, um die
+Unterschiede zwischen den beiden Tests zu verdeutlichen, wie in Codeblock 12-20
+gezeigt wird.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     for line in search(&config.query, &contents) {
-#         println!("{line}");
-#     }
-#
-#     Ok(())
-# }
-#
+```rust,does_not_compile
 # pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     let mut results = Vec::new();
 #
@@ -134,38 +104,7 @@ wir prüfen, ob die Zeile die Abfrage enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
-# use std::error::Error;
-# use std::fs;
-#
-# pub struct Config {
-#     pub query: String,
-#     pub file_path: String,
-# }
-#
-# impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-#     }
-# }
-#
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     for line in search(&config.query, &contents) {
-#         println!("{line}");
-#     }
-#
-#     Ok(())
-# }
-#
+```rust
 # pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 #     let mut results = Vec::new();
 #
@@ -237,9 +176,9 @@ Variable `query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext
 ist notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers
 `"rust"`, `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als
 ob sie `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl
-`to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100% genau
-sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier etwas
-mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
+`to_lowercase` mit einfachem Unicode umgehen kann, wird es nicht 100 Prozent
+genau sein. Wenn wir eine echte Anwendung schreiben würden, würden wir hier
+etwas mehr Arbeit spendieren wollen, aber in diesem Abschnitt geht es um
 Umgebungsvariablen, nicht um Unicode, also belassen wir es hier dabei.
 
 Beachte, dass `query` jetzt ein `String` und nicht mehr ein
@@ -291,20 +230,40 @@ mit und ohne Berücksichtigung der Groß- und Kleinschreibung umzuschalten. Das
 Hinzufügen dieses Feldes führt zu Kompilierfehlern, da wir dieses Feld noch
 nirgendwo initialisiert haben:
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
+# use std::env;
 # use std::error::Error;
 # use std::fs;
+# use std::process;
+#
+# use minigrep::{search, search_case_insensitive};
+#
+# // --abschneiden--
+#
+# fn main() {
+#     let args: Vec<String> = env::args().collect();
+#
+#     let config = Config::build(&args).unwrap_or_else(|err| {
+#         println!("Fehler beim Parsen der Argumente: {err}");
+#         process::exit(1);
+#     });
+#
+#     if let Err(e) = run(config) {
+#         println!("Anwendungsfehler: {e}");
+#         process::exit(1);
+#     }
+# }
 #
 pub struct Config {
     pub query: String,
     pub file_path: String,
     pub ignore_case: bool,
 }
-# 
+#
 # impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -316,7 +275,7 @@ pub struct Config {
 #     }
 # }
 #
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+# fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.ignore_case {
@@ -331,66 +290,6 @@ pub struct Config {
 #
 #     Ok(())
 # }
-#
-# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.contains(query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# pub fn search_case_insensitive<'a>(
-#     query: &str,
-#     contents: &'a str,
-# ) -> Vec<&'a str> {
-#     let query = query.to_lowercase();
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.to_lowercase().contains(&query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-#     #[test]
-#     fn case_sensitive() {
-#         let query = "dukt";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# PRODUKTION.";
-#
-#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
-#     }
-#
-#     #[test]
-#     fn case_insensitive() {
-#         let query = "rUsT";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# Trust me.";
-#
-#         assert_eq!(
-#             vec!["Rust:", "Trust me."],
-#             search_case_insensitive(query, contents)
-#         );
-#     }
-# }
 ```
 
 Wir haben das Feld `ignore_case` hinzugefügt, das ein Boolean enthält. Als
@@ -399,20 +298,40 @@ auszuwerten, und verwenden diese, um zu entscheiden, ob die Funktion `search`
 oder die Funktion `search_case_insensitive` aufgerufen werden soll, wie in
 Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 
-<span class="filename">Dateiname: src/lib.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
+# use std::env;
 # use std::error::Error;
 # use std::fs;
+# use std::process;
+#
+use minigrep::{search, search_case_insensitive};
+
+// --abschneiden--
+
+# fn main() {
+#     let args: Vec<String> = env::args().collect();
+#
+#     let config = Config::build(&args).unwrap_or_else(|err| {
+#         println!("Fehler beim Parsen der Argumente: {err}");
+#         process::exit(1);
+#     });
+#
+#     if let Err(e) = run(config) {
+#         println!("Anwendungsfehler: {e}");
+#         process::exit(1);
+#     }
+# }
 #
 # pub struct Config {
 #     pub query: String,
 #     pub file_path: String,
 #     pub ignore_case: bool,
 # }
-# 
+#
 # impl Config {
-#     pub fn build(args: &[String]) -> Result<Config, &'static str> {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
 #         if args.len() < 3 {
 #             return Err("Nicht genügend Argumente");
 #         }
@@ -424,7 +343,7 @@ Codeblock 12-22 gezeigt. Dies kompiliert noch immer nicht.
 #     }
 # }
 #
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
     let results = if config.ignore_case {
@@ -439,66 +358,6 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
     Ok(())
 }
-#
-# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.contains(query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# pub fn search_case_insensitive<'a>(
-#     query: &str,
-#     contents: &'a str,
-# ) -> Vec<&'a str> {
-#     let query = query.to_lowercase();
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.to_lowercase().contains(&query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-#     #[test]
-#     fn case_sensitive() {
-#         let query = "dukt";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# PRODUKTION.";
-#
-#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
-#     }
-#
-#     #[test]
-#     fn case_insensitive() {
-#         let query = "rUsT";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# Trust me.";
-#
-#         assert_eq!(
-#             vec!["Rust:", "Trust me."],
-#             search_case_insensitive(query, contents)
-#         );
-#     }
-# }
 ```
 
 <span class="caption">Codeblock 12-22: Aufruf von entweder `search` oder
@@ -506,19 +365,34 @@ pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
 
 Schließlich müssen wir nach der Umgebungsvariablen suchen. Die Funktionen zum
 Arbeiten mit Umgebungsvariablen befinden sich im Modul `env` in der
-Standardbibliothek, daher bringen wir dieses Modul am Anfang von _src/lib.rs_
-in den Gültigkeitsbereich. Dann werden wir die Funktion `var` aus dem Modul
-`env` verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE`
-einen Wert hat, wie in Codeblock 12-23 gezeigt.
+Standardbibliothek, die bereits im Gültigkeitsbereich am Anfang von
+_src/main.rs_ ist. Dann werden wir die Funktion `var` aus dem Modul `env`
+verwenden, um zu prüfen ob eine Umgebungsvariable namens `IGNORE_CASE` einen
+Wert hat, wie in Codeblock 12-23 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
-use std::env;
-// --abschneiden--
-
+```rust,ignore
+# use std::env;
 # use std::error::Error;
 # use std::fs;
+# use std::process;
+#
+# use minigrep::{search, search_case_insensitive};
+#
+# fn main() {
+#     let args: Vec<String> = env::args().collect();
+#
+#     let config = Config::build(&args).unwrap_or_else(|err| {
+#         println!("Fehler beim Parsen der Argumente: {err}");
+#         process::exit(1);
+#     });
+#
+#     if let Err(e) = run(config) {
+#         println!("Anwendungsfehler: {e}");
+#         process::exit(1);
+#     }
+# }
 #
 # pub struct Config {
 #     pub query: String,
@@ -527,7 +401,7 @@ use std::env;
 # }
 #
 impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
+    fn build(args: &[String]) -> Result<Config, &'static str> {
         if args.len() < 3 {
             return Err("Nicht genügend Argumente");
         }
@@ -545,7 +419,7 @@ impl Config {
     }
 }
 #
-# pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
+# fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
 #     let results = if config.ignore_case {
@@ -559,66 +433,6 @@ impl Config {
 #     }
 #
 #     Ok(())
-# }
-#
-# pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.contains(query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# pub fn search_case_insensitive<'a>(
-#     query: &str,
-#     contents: &'a str,
-# ) -> Vec<&'a str> {
-#     let query = query.to_lowercase();
-#     let mut results = Vec::new();
-#
-#     for line in contents.lines() {
-#         if line.to_lowercase().contains(&query) {
-#             results.push(line);
-#         }
-#     }
-#
-#     results
-# }
-#
-# #[cfg(test)]
-# mod tests {
-#     use super::*;
-#
-#     #[test]
-#     fn case_sensitive() {
-#         let query = "dukt";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# PRODUKTION.";
-#
-#         assert_eq!(vec!["sicher, schnell, produktiv."], search(query, contents));
-#     }
-#
-#     #[test]
-#     fn case_insensitive() {
-#         let query = "rUsT";
-#         let contents = "\
-# Rust:
-# sicher, schnell, produktiv.
-# Nimm drei.
-# Trust me.";
-#
-#         assert_eq!(
-#             vec!["Rust:", "Trust me."],
-#             search_case_insensitive(query, contents)
-#         );
-#     }
 # }
 ```
 
@@ -662,7 +476,7 @@ How dreary to be somebody!
 
 Sieht so aus, als ob das immer noch funktioniert! Lass uns nun das Programm mit
 `IGNORE_CASE` auf `1` gesetzt ausführen, aber mit dem gleichen Abfragetext
-_to_.
+`to`.
 
 ```console
 $ IGNORE_CASE=1 cargo run -- to poem.txt

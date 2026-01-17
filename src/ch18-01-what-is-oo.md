@@ -50,7 +50,7 @@ der Werte im Vektor enthält, was bedeutet, dass der Mittelwert nicht auf
 Anfrage berechnet werden muss, wenn jemand ihn braucht. Mit anderen Worten:
 `AveragedCollection` wird den errechneten Durchschnitt für uns
 zwischenspeichern. Codeblock 18-1 zeigt die Definition der Struktur
-`AveragedCollection`:
+`AveragedCollection`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -69,7 +69,7 @@ aber die Felder innerhalb der Struktur bleiben privat. Dies ist in diesem Fall
 wichtig, weil wir sicherstellen wollen, dass immer dann, wenn ein Wert
 hinzugefügt oder aus der Liste entfernt wird, auch der Durchschnitt
 aktualisiert wird. Wir tun dies, indem wir die Methoden `add`, `remove` und
-`average` auf der Struktur implementieren, wie in Codeblock 18-2 gezeigt:
+`average` auf der Struktur implementieren, wie in Codeblock 18-2 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -188,17 +188,17 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.
 > müssen. Dies wird manchmal als _begrenzter parametrischer Polymorphismus_
 > (bounded parametric polymorphism) bezeichnet.
 
-Die Vererbung als Programmierdesignlösung ist in letzter Zeit bei vielen
-Programmiersprachen in Ungnade gefallen, da sie oft das Risiko birgt, mehr Code
-als nötig zu teilen. Unterklassen sollten nicht immer alle Charakteristiken
+Rust hat sich für andere Kompromisse entschieden, indem es keine Vererbung
+anbietet. Bei der Vererbung besteht oft die Gefahr, dass mehr Code als nötig
+gemeinsam genutzt wird. Unterklassen sollten nicht immer alle Charakteristiken
 ihrer Elternklasse teilen, bei Vererbung tun sie es aber. Dies kann den
 Programmentwurf weniger flexibel machen. Es wird auch die Möglichkeit
 eingeführt, Methoden auf Unterklassen aufzurufen, die keinen Sinn machen oder
 die Fehler verursachen, weil die Methoden nicht auf die Unterklasse zutreffen.
-Darüber hinaus lassen einige Sprachen nur Einfachvererbung zu (d.h. eine
+Darüber hinaus lassen einige Sprachen nur _Einfachvererbung_ zu (d.h. eine
 Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
 Programmdesigns weiter einschränkt.
 
 Aus diesen Gründen verfolgt Rust den anderen Ansatz mittels Verwendung von
-Merkmalsobjekten (trait objects) anstelle der Vererbung. Schauen wir uns an,
-wie Merkmalsobjekte Polymorphismus in Rust ermöglichen.
+Merkmalsobjekten (trait objects) anstelle der Vererbung, um Polymorphismus zur
+Laufzeit zu realisieren. Schauen wir uns an, wie Merkmalsobjekte funktionieren.

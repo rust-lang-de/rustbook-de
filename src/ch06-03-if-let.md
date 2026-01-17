@@ -1,4 +1,4 @@
-## Prägnanter Kontrollfluss mit `if let` und `let else`
+## Prägnanter Kontrollfluss mit `if let` und `let...else`
 
 Mit der Syntax `if let` kannst du `if` und `let` in einer weniger wortreichen
 Weise kombinieren, um mit Werten umzugehen, die einem Muster entsprechen,
@@ -44,9 +44,10 @@ gleiche Weise verwenden, wie `max` im entsprechenden `match`-Zweig. Der Code im
 
 Die Verwendung von `if let` bedeutet weniger Tipparbeit, weniger Einrückung und
 weniger Codeanteil. Du verlierst jedoch die Prüfung auf Vollständigkeit, die
-`match` erzwingt. Die Wahl zwischen `match` und `if let` hängt davon ab, was
-du in der speziellen Situation machst, und davon, ob ein Gewinn an Prägnanz ein
-angemessener Kompromiss für den Verlust einer Prüfung auf Vollständigkeit ist.
+`match` erzwingt, die sicherstellt, dass du keinen Fall vergisst. Die Wahl
+zwischen `match` und `if let` hängt davon ab, was du in der speziellen
+Situation machst, und davon, ob ein Gewinn an Prägnanz ein angemessener
+Kompromiss für den Verlust einer Prüfung auf Vollständigkeit ist.
 
 Anders gesagt kannst du dir `if let` als syntaktischen Zucker für einen
 `match`-Ausdruck vorstellen, der Code nur bei Übereinstimmung mit einem Muster
@@ -217,7 +218,7 @@ fn describe_state_quarter(coin: Coin) -> Option<String> {
 ```
 
 <span class="caption">Codeblock 6-7: Prüfen, ob ein Bundesstaat im Jahr 1900
-existiert, durch Verwenden von Bedingungen, die in `if let` verschachtelt
+existierte, durch Verwenden von Bedingungen, die in `if let` verschachtelt
 sind.</span>
 
 Damit ist die Aufgabe erledigt, aber die Arbeit wurde in den Rumpf der `if
@@ -290,10 +291,7 @@ Musters im äußeren Gültigkeitsbereich gebunden. Wenn das Muster _nicht_ passt
 wird das Programm im `else`-Zweig fortgesetzt, der die Funktion beendet.
 
 In Codeblock 6-9 kannst du sehen, wie Codeblock 6-8 aussieht, wenn du
-`let...else` anstelle von `if let` verwendest. Beachte, dass der Funktionsrumpf
-auf diese Weise „auf dem richtigen Weg“ bleibt, ohne dass sich der
-Kontrollfluss für zwei Verzweigungen signifikant unterscheidet, wie es bei `if
- let` der Fall war.
+`let...else` anstelle von `if let` verwendest.
 
 Dateiname: src/main.rs
 
@@ -343,6 +341,10 @@ fn describe_state_quarter(coin: Coin) -> Option<String> {
 
 <span class="caption">Codeblock 6-9: Verwenden von `let...else`, um den Fluss
 durch die Funktion klarer darzustellen.</span>
+
+Beachte, dass der Funktionsrumpf auf diese Weise „auf dem richtigen Weg“
+bleibt, ohne dass sich der Kontrollfluss für zwei Verzweigungen signifikant
+unterscheidet, wie es bei `if let` der Fall war.
 
 Wenn du eine Situation hast, in der dein Programm über eine Logik verfügt, die
 mit einem `match`-Ausdruck zu wortreich auszudrücken wäre, denke daran, dass

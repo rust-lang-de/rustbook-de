@@ -2,7 +2,7 @@
 
 Lass uns ein neues Projekt, wie immer, mit `cargo new` erstellen. Wir werden
 unser Projekt `minigrep` nennen, um es vom `grep`-Werkzeug zu unterscheiden,
-das du vielleicht schon auf deinem System hast.
+das du vielleicht schon auf deinem System hast:
 
 ```console
 $ cargo new minigrep

@@ -17,13 +17,13 @@ die Art und Weise besprechen, in der sich `String` von den anderen Kollektionen
 unterscheidet, nämlich warum die Indexierung bei einem `String` kompliziert
 ist, weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
 
-### Was ist eine Zeichenkette?
+### Zeichenketten definieren
 
 Zuerst werden wir definieren, was wir mit dem Begriff _Zeichenkette_ (string)
 meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
 nämlich den Zeichenkettenanteilstyp `str`, der üblicherweise in seiner
 Ausleihenform `&str` zu sehen ist. In Kapitel 4 sprachen wir über
-_Zeichenkettenanteilstypen_ (string slices), die Referenzen auf einige
+Zeichenkettenanteilstypen (string slices), die Referenzen auf einige
 UTF-8-kodierte Zeichenkettendaten sind, die anderswo gespeichert sind.
 Zeichenkettenliterale werden beispielsweise in der Binärdatei des Programms
 gespeichert und sind daher Zeichenkettenanteilstypen.
@@ -122,7 +122,7 @@ der Inhalt eines `Vec<T>`, wenn du mehr Daten hineinschiebst. Darüber hinaus
 kannst du bequem den Operator `+` oder das Makro `format!` verwenden, um
 `String`-Werte aneinanderzuhängen.
 
-#### Anhängen an eine Zeichenkette mit `push_str` und `push`
+#### Anhängen mit `push_str` und `push`
 
 Wir können einen `String` wachsen lassen, indem wir die Methode `push_str`
 verwenden, um einen Zeichenkettenanteilstyp anzuhängen, wie in Codeblock 8-15
@@ -170,7 +170,7 @@ s.push('l');
 
 Als Ergebnis wird `s` den Wert `lol` enthalten.
 
-#### Aneinanderhängen mit dem Operator `+` und dem Makro `format!`
+#### Aneinanderhängen mit `+` und `format!`
 
 Häufig möchtest du zwei vorhandene Zeichenketten kombinieren. Eine Möglichkeit
 das zu tun ist, den Operator `+` zu verwenden, wie in Codeblock 8-18 gezeigt.
@@ -202,20 +202,21 @@ generische Datentypen in Kapitel 10 besprechen. Diese Signatur gibt uns den
 entscheidenden Hinweis, um die kniffligen Stellen des Operators `+` zu
 verstehen.
 
-Erstens hat `s2` ein `&`, was bedeutet, dass wir eine _Referenz_ der zweiten
+Erstens hat `s2` ein `&`, was bedeutet, dass wir eine Referenz der zweiten
 Zeichenkette an die erste Zeichenkette anhängen. Der Grund dafür ist der
-Parameter `s` in der Funktion `add`: Wir können nur einen `&str` zu einem
-`String` hinzufügen; wir können nicht zwei `String`-Werte aneinanderhängen.
-Aber warte &ndash; der Typ von `&s2` ist `&String`, nicht `&str`, wie im
-zweiten Parameter von `add` spezifiziert. Warum kompiliert also Codeblock 8-18?
+Parameter `s` in der Funktion `add`: Wir können nur einen
+Zeichkettenanteilstyp an einen `String` anhängen; wir können nicht zwei
+`String`-Werte aneinanderhängen. Aber warte &ndash; der Typ von `&s2` ist
+`&String`, nicht `&str`, wie im zweiten Parameter von `add` spezifiziert.
+Warum kompiliert also Codeblock 8-18?
 
 Der Grund, warum wir `&s2` im Aufruf von `add` verwenden können, ist, dass der
 Compiler das Argument `&String` in einen `&str` umwandeln (coerce) kann.
-Wenn wir die Methode `add` aufrufen, benutzt Rust eine _automatische
-Umwandlung_ (deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die
-automatische Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add`
-nicht die Eigentümerschaft des Parameters `s` übernimmt, ist `s2` auch nach
-dieser Operation immer noch ein gültiger `String`.
+Wenn wir die Methode `add` aufrufen, benutzt Rust eine automatische Umwandlung
+(deref coercion), die hier `&s2` in `&s2[...]` umwandelt. Auf die automatische
+Umwandlung werden wir in Kapitel 15 tiefer eingehen. Da `add` nicht die
+Eigentümerschaft des Parameters `s` übernimmt, ist `s2` auch nach dieser
+Operation immer noch ein gültiger `String`.
 
 Zweitens können wir in der Signatur sehen, dass `add` die Eigentümerschaft von
 `self` übernimmt, weil `self` _kein_ `&` hat. Das bedeutet, dass `s1` in
@@ -271,36 +272,35 @@ let s1 = String::from("Hallo");
 let h = s1[0];
 ```
 
-<span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einer
-Zeichenkette zu verwenden</span>
+<span class="caption">Codeblock 8-19: Versuch, die Indexierungssyntax bei einem
+`String` zu verwenden</span>
 
 Dieser Code führt zu folgendem Fehler:
 
 ```console
 $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
-error[E0277]: the type `String` cannot be indexed by `{integer}`
+error[E0277]: the type `str` cannot be indexed by `{integer}`
  --> src/main.rs:3:16
   |
 3 |     let h = s1[0];
-  |                ^ `String` cannot be indexed by `{integer}`
+  |                ^ string indices are ranges of `usize`
   |
-  = help: the trait `Index<{integer}>` is not implemented for `String`
-  = help: the following other types implement trait `Index<Idx>`:
-            <String as Index<RangeFull>>
-            <String as Index<std::ops::Range<usize>>>
-            <String as Index<RangeFrom<usize>>>
-            <String as Index<RangeTo<usize>>>
-            <String as Index<RangeInclusive<usize>>>
-            <String as Index<RangeToInclusive<usize>>>
+  = help: the trait `SliceIndex<str>` is not implemented for `{integer}`
+  = note: you can use `.chars().nth()` or `.bytes().nth()`
+          for more information, see chapter 8 in The Book: <https://doc.rust-lang.org/book/ch08-02-strings.html#indexing-into-strings>
+  = help: the following other types implement trait `SliceIndex<T>`:
+            `usize` implements `SliceIndex<ByteStr>`
+            `usize` implements `SliceIndex<[T]>`
+  = note: required for `String` to implement `Index<{integer}>`
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `collections` (bin "collections") due to 1 previous error
 ```
 
-Die Fehlermeldung und der Hinweis erzählen die Geschichte: Zeichenketten in
-Rust unterstützen keine Indexierung. Aber warum nicht? Um diese Frage zu
-beantworten, müssen wir uns ansehen, wie Rust Zeichenketten im Speicher ablegt.
+Die Fehlermeldung erklärt es: Zeichenketten in Rust unterstützen keine
+Indexierung. Aber warum nicht? Um diese Frage zu beantworten, müssen wir uns
+ansehen, wie Rust Zeichenketten im Speicher ablegt.
 
 #### Interne Darstellung
 
@@ -350,7 +350,7 @@ Fehler entstehen, die möglicherweise nicht sofort entdeckt werden, kompiliert
 Rust diesen Code überhaupt nicht und verhindert so Missverständnisse in einem
 frühen Stadium des Entwicklungsprozesses.
 
-#### Bytes, skalare Werte und Graphemgruppen (grapheme clusters)! Oje!
+#### Bytes, skalare Werte und Graphemgruppen (grapheme clusters)
 
 Ein weiterer Punkt bei UTF-8 ist, dass es eigentlich drei relevante
 Möglichkeiten gibt, Zeichenketten aus Rusts Perspektive zu betrachten: Als
@@ -414,9 +414,9 @@ let hello = "Здравствуйте";
 let s = &hello[0..4];
 ```
 
-Hier wird `s` ein `&str` sein, das die ersten vier Bytes der Zeichenkette
-enthält. Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen zwei Bytes
-lang ist, was bedeutet, dass `s` gleich `Зд` ist.
+Hier wird `s` ein `&str` sein, das die ersten 4 Bytes der Zeichenkette enthält.
+Vorhin haben wir bereits erwähnt, dass jedes dieser Zeichen 2 Bytes lang ist,
+was bedeutet, dass `s` gleich `Зд` ist.
 
 Wenn wir versuchen würden, nur einen Teil der Bytes eines Zeichens mit etwas
 wie `&hello[0..1]` zu zerschneiden, würde Rust das Programm zur Laufzeit
@@ -428,6 +428,7 @@ $ cargo run
    Compiling collections v0.1.0 (file:///projects/collections)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.43s
      Running `target/debug/collections`
+
 thread 'main' panicked at src/main.rs:4:19:
 byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здравствуйте`
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
@@ -436,7 +437,7 @@ note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
 ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.
 
-### Methoden zum Iterieren über Zeichenketten
+### Iterieren über Zeichenketten
 
 Der beste Weg, um mit Teilen von Zeichenketten zu arbeiten, besteht darin,
 explizit anzugeben, ob du Zeichen oder Bytes benötigst. Für einzelne
@@ -467,7 +468,7 @@ for b in "Зд".bytes() {
 }
 ```
 
-Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:
+Dieser Code gibt die 4 Bytes aus, aus denen diese Zeichenkette besteht:
 
 ```text
 208
@@ -476,8 +477,8 @@ Dieser Code gibt die vier Bytes aus, aus denen diese Zeichenkette besteht:
 180
 ```
 
-Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als ein Byte
-bestehen können.
+Aber denke daran, dass gültige Unicode-Skalarwerte aus mehr als 1 Byte bestehen
+können.
 
 Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
@@ -485,7 +486,7 @@ Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter
 [crates.io](https://crates.io/) verfügbar, falls du diese Funktionalität
 benötigst.
 
-### Zeichenketten sind nicht so einfach
+### Umgang mit der Komplexität von Zeichenketten
 
 Zusammenfassend kann man sagen, dass Zeichenketten kompliziert sind.
 Verschiedene Programmiersprachen treffen unterschiedliche Entscheidungen

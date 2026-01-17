@@ -1,6 +1,6 @@
 ## Bauvorgang anpassen mit Freigabeprofilen (release profiles)
 
-In Rust sind _Freigabeprofile_ vordefinierte, anpassbare Profile mit
+In Rust sind _Freigabeprofile_ vordefinierte und anpassbare Profile mit
 unterschiedlichen Konfigurationen, durch die ein Programmierer mehr Kontrolle
 über verschiedene Optionen zum Kompilieren von Programmcode hat. Jedes Profil
 wird von den anderen unabhängig konfiguriert.

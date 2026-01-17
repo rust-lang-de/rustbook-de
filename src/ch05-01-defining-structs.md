@@ -185,17 +185,17 @@ Hier erzeugen wir eine neue Instanz der Struktur `User`, die ein Feld namens
 `email` den gleichen Namen haben, brauchen wir nur `email` statt `email: email`
 zu schreiben.
 
-### Instanzen aus anderen Instanzen erzeugen mit der Strukturaktualisierungssyntax
+### Instanzen erzeugen mit der Strukturaktualisierungssyntax
 
 Oft ist es hilfreich, eine neue Instanz einer Struktur zu erstellen, die die
-meisten Werte einer alten Instanz verwendet und nur einige davon verändert. Du
-kannst dazu die _Strukturaktualisierungssyntax_ (struct update syntax)
-verwenden.
+meisten Werte einer alten Instanz desselben Typs verwendet und nur einige davon
+verändert. Du kannst dazu die Strukturaktualisierungssyntax (struct update
+syntax) verwenden.
 
-Zunächst zeigt Codeblock 5-6, wie wir eine neue `User`-Instanz `user2` ohne
-Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert für `email`,
-verwenden aber ansonsten die gleichen Werte von `user1`, die wir in Codeblock
-5-2 erstellt haben.
+Zunächst zeigt Codeblock 5-6, wie wir eine neue `User`-Instanz `user2` auf
+normalem Wege ohne Aktualisierungssyntax erstellen. Wir setzen einen neuen Wert
+für `email`, verwenden aber ansonsten die gleichen Werte von `user1`, die wir
+in Codeblock 5-2 erstellt haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -285,9 +285,10 @@ somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
 `sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
 Verhalten, das wir im Abschnitt [„Nur Stapelspeicher-Daten: Kopieren
 (copy)“][copy] besprochen haben, zutreffen würde. Wir können in diesem Beispiel
-immer noch `user1.email` verwenden, da sein Wert _nicht_ verschoben wurde.
+immer noch `user1.email` verwenden, da sein Wert _nicht_ aus `user1` verschoben
+wurde.
 
-### Verwenden von Tupel-Strukturen ohne benannte Felder um verschiedene Typen zu erzeugen
+### Mit Tupel-Strukturen verschiedene Typen erzeugen
 
 Rust unterstützt auch Strukturen, die ähnlich wie Tupel aussehen, genannt
 _Tupel-Strukturen_ (tuple structs). Tupel-Strukturen haben den Strukturnamen
@@ -323,9 +324,10 @@ Tupel-Struktur-Instanzen den Tupeln insofern, als dass sie in ihre einzelnen
 Teile zerlegt werden können, und du kannst ein `.` gefolgt vom Index verwenden,
 um auf einen einzelnen Wert zuzugreifen. Im Unterschied zu Tupeln musst du bei
 Tupel-Strukturen den Typ der Struktur angeben, wenn du sie destrukturierst. Wir
-würden zum Beispiel schreiben: `let Point(x, y, z) = point`
+würden zum Beispiel `let Point(x, y, z) = origin;` schreiben, um die Werte in
+`origin` in die Variablen `x`, `y` und `z` zu destrukturieren.
 
-### Einheitstyp-ähnliche Strukturen ohne Felder
+### Einheitstyp-ähnliche Strukturen definieren
 
 Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 _Einheitstyp_ (unit-like structs) genannt, weil sie sich ähnlich zum leeren

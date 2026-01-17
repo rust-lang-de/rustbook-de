@@ -1,48 +1,53 @@
 # Vorwort
 
-Es war nicht immer so klar, aber bei der Programmiersprache Rust geht es im
-Grunde um _Befähigung_: Egal, welche Art von Code du jetzt schreibst, Rust
-befähigt dich dazu, weiter zu gehen, mit Vertrauen in einer größeren Vielfalt
-von Bereichen zu programmieren, als du es zuvor getan hast.
+Die Programmiersprache Rust hat in wenigen Jahren einen langen Weg
+zurückgelegt, von ihrer Entstehung und Entwicklung durch eine kleine, noch
+junge Gemeinschaft von Enthusiasten bis hin zu einer der beliebtesten und
+gefragtesten Programmiersprachen der Welt. Rückblickend war es unvermeidlich,
+dass die Leistungsfähigkeit und das Potenzial von Rust Aufmerksamkeit erregten
+und sich in der Systemprogrammierung etablierten. Nicht unvermeidlich war
+jedoch das weltweit wachsende Interesse und die Innovationskraft, die sich in
+Open-Source-Gemeinschaften verbreiteten und eine breite Akzeptanz in
+verschiedenen Branchen begünstigten.
 
-Denken wir zum Beispiel an systemnahe Arbeiten, bei denen Details wie
-Speicherverwaltung, Datenrepräsentation und Nebenläufigkeit wichtig sind.
-Traditionellerweise gilt dieser Bereich der Programmierung als geheimnisvoll
-und nur wenigen Auserwählten zugänglich, die die erforderliche Erfahrung
-gesammelt haben, um berüchtigte Fallstricke vermeiden zu können. Und selbst
-diejenigen, die damit arbeiten, tun dies mit Sorgfalt, damit ihr Code nicht
-angreifbar ist, abstürzt oder fehlerhaft ist.
+Zum jetzigen Zeitpunkt ist es einfach, auf die wunderbaren Funktionen
+hinzuweisen, die Rust zu bieten hat, um diese explosionsartige Zunahme des
+Interesses und der Akzeptanz zu erklären. Wer möchte nicht Speichersicherheit,
+_und_ schnelle Leistung, _und_ einen benutzerfreundlichen Compiler, _und_
+großartige Werkzeuge, neben einer Vielzahl anderer wunderbarer Funktionen? Die
+Sprache Rust, wie du sie heute kennst, vereint jahrelange Forschung im Bereich
+der Systemprogrammierung mit dem praktischen Wissen einer lebendigen und
+leidenschaftlichen Gemeinschaft. Diese Sprache wurde mit Bedacht entwickelt und
+sorgfältig gestaltet, um Entwicklern ein Werkzeug an die Hand zu geben, mit dem
+sie einfacher sicheren, schnellen und zuverlässigen Code schreiben können.
 
-Rust baut diese Barrieren ab, indem es die alten Fallstricke beseitigt und ein
-freundliches, ausgefeiltes Instrumentarium zur Verfügung stellt, das dich auf
-deinem Weg unterstützt. Programmierer, die in die systemnahen Kontrollebenen
-„eintauchen“ müssen, können dies mit Rust tun, ohne das übliche Risiko von
-Abstürzen oder Sicherheitslücken einzugehen und ohne die Finessen einer
-wankelmütigen Werkzeugkette erlernen zu müssen. Besser noch, die Sprache ist so
-konzipiert, dass sie dich auf natürliche Weise zu zuverlässigem Code führt, der
-effizient in Bezug auf Geschwindigkeit und Speichernutzung ist.
+Was Rust jedoch wirklich besonders macht, sind seine Wurzeln, die dir, dem
+Benutzer, die Möglichkeit geben, deine Ziele zu erreichen. Diese Sprache
+möchte, dass du erfolgreich bist, und das Prinzip der Befähigung zieht sich wie
+ein roter Faden durch die Gemeinschaft, die diese Sprache entwickelt, pflegt
+und fördert. Seit der letzten Ausgabe dieses Standardwerks hat sich Rust zu
+einer wirklich globalen und vertrauenswürdigen Sprache weiterentwickelt. Das
+Rust-Projekt wird nun tatkräftig von der Rust Foundation unterstützt, die auch
+in wichtige Initiativen investiert, um die Sicherheit, Stabilität und
+Nachhaltigkeit von Rust zu gewährleisten.
 
-Programmierer, die bereits mit systemnahem Code arbeiten, können Rust nutzen,
-um ihre Ambitionen zu steigern. Beispielsweise ist die Einführung von
-Parallelität in Rust ein relativ risikoarmes Unterfangen: Der Compiler fängt
-die klassischen Fehler für dich ab. Und du kannst aggressivere Optimierungen in
-deinem Code wagen mit der Gewissheit, keine versehentlichen Abstürze oder
-Verwundbarkeiten einzuführen.
+Diese Ausgabe von „Die Programmiersprache Rust“ ist eine umfassende
+Aktualisierung, die die Entwicklung der Sprache im Laufe der Jahre
+widerspiegelt und wertvolle neue Informationen liefert. Aber es ist nicht nur
+ein Leitfaden für Syntax und Bibliotheken &ndash; es ist eine Einladung, Teil
+einer Gemeinschaft zu werden, die Wert auf Qualität, Leistung und durchdachtes
+Design legt. Egal, ob du ein erfahrener Entwickler bist, der Rust zum ersten
+Mal ausprobieren möchte, oder ein erfahrener Rust-Entwickler, der seine
+Fähigkeiten verfeinern möchte, diese Ausgabe bietet für jeden etwas.
 
-Aber Rust ist nicht auf systemnahe Programmierung beschränkt. Es ist
-ausdrucksstark und ergonomisch genug, um das Schreiben von
-Kommandozeilen-Anwendungen, Webservern und vielen anderen Arten an Code recht
-angenehm zu machen &ndash; du wirst später in diesem Buch einfache Beispiele
-dazu finden. Die Arbeit mit Rust ermöglicht es dir, Fähigkeiten zu entwickeln,
-die von einer Domäne auf eine andere übertragen werden können; du kannst Rust
-durch Schreiben einer Webanwendung erlernen und dann diese Fähigkeiten auf
-deinem Raspberry Pi anwenden.
+Die Entwicklung von Rust war geprägt von Zusammenarbeit, Lernen und Iteration.
+Das Wachstum der Sprache und ihres Ökosystems spiegelt direkt die lebendige,
+vielfältige Gemeinschaft wider, die dahinter steht. Die Beiträge Tausender
+Entwickler, von Kernsprachenentwicklern bis hin zu gelegentlichen Mitwirkenden,
+machen Rust zu einem so einzigartigen und leistungsstarken Werkzeug. Mit diesem
+Buch lernst du nicht nur eine neue Programmiersprache, sondern schließt dich
+einer Bewegung an, die Software besser, sicherer und angenehmer macht.
 
-In diesem Buch wird das Potenzial von Rust zur Befähigung seiner Nutzer voll
-ausgeschöpft. Es ist ein freundlicher und zugänglicher Text, der dir helfen
-soll, nicht nur dein Wissen über Rust zu erweitern, sondern auch deine
-Reichweite und dein Selbstvertrauen als Programmierer im Allgemeinen. Also
-tauche ein, mach dich bereit zum Lernen &ndash; und willkommen in der
-Rust-Gemeinschaft!
+Willkommen in der Rust-Gemeinschaft!
 
-&ndash; Nicholas Matsakis und Aaron Turon
+&ndash; Bec Rumbul, Geschäftsführerin der Rust Foundation

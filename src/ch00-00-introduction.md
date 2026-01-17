@@ -6,7 +6,7 @@ Software zu schreiben. Ergonomie und systemnahe Kontrolle stehen beim Entwurf
 von Programmiersprachen oft im Widerspruch &ndash; Rust stellt sich diesem
 Konflikt. Durch den Ausgleich zwischen leistungsstarken, technischen
 Möglichkeiten und einer großartigen Entwicklererfahrung bietet dir Rust die
-Möglichkeit, Details systemnah (z. B. Speichernutzung) zu kontrollieren, ohne
+Möglichkeit, Details systemnah (z.B. Speichernutzung) zu kontrollieren, ohne
 den ganzen Ärger, der damit typischerweise einhergeht.
 
 ## Für wen Rust ist
@@ -32,10 +32,11 @@ Systemprogrammierung:
 - Cargo, das mitgelieferte Abhängigkeitsmanagement- und Bau-Werkzeug, macht das
   Hinzufügen, Kompilieren und Verwalten von Abhängigkeiten im gesamten
   Rust-Ökosystem schmerzlos und konsistent.
-- Das Formatierungstool Rustfmt sorgt für einen einheitlichen Codierstil bei 
+- Das Formatierungstool `rustfmt` sorgt für einen einheitlichen Codierstil bei
   den Entwicklern.
-- Der rust-analyzer ermöglicht Codevervollständigung und im Code angezeigte
-  Fehlermeldungen innerhalb der Entwicklungsumgebung (IDE).
+- Der Rust-Sprachserver (Rust Language Server) ermöglicht Codevervollständigung
+  und im Code angezeigte Fehlermeldungen innerhalb der Entwicklungsumgebung
+  (IDE).
 
 Durch den Einsatz dieser und anderer Werkzeuge des Rust-Ökosystems können
 Entwickler produktiv arbeiten, während sie Code auf Systemebene schreiben.
@@ -109,64 +110,64 @@ Rust. In Projektkapiteln schreiben wir gemeinsam kleine Programme und wenden
 das bisher Gelernte an. Die Kapitel 2, 12 und 21 sind Projektkapitel; die
 übrigen sind Konzeptkapitel.
 
-Kapitel 1 erklärt, wie man Rust installiert, wie man ein „Hallo Welt“-Programm
-schreibt und wie man Cargo, den Paketmanager und das Bauwerkzeug von Rust,
-benutzt. Kapitel 2 ist eine praktische Einführung in die Sprache Rust. Hier
-werden Konzepte auf hohem Niveau behandelt, spätere Kapitel werden zusätzliche
-Einzelheiten liefern. Wenn du dir schon jetzt die Hände schmutzig machen
-willst, dann ist Kapitel 2 der richtige Ort dafür. Zunächst willst du
-vielleicht sogar Kapitel 3 überspringen, in dem es um Rust-Funktionen geht, die
-denen anderer Programmiersprachen ähneln, und direkt zu Kapitel 4 übergehen, um
-mehr über den Eigentümerschaftsansatz von Rust zu erfahren. Wenn du jedoch ein
-besonders akribischer Lerner bist, der lieber erst jedes Detail lernen will,
-bevor er zum nächsten übergeht, willst du vielleicht Kapitel 2 überspringen und
-direkt zu Kapitel 3 gehen und danach zu Kapitel 2 zurückkehren, um dann an
-einem Projekt zu arbeiten und die gelernten Details anzuwenden.
- 
-Kapitel 5 bespricht Strukturen und Methoden, und Kapitel 6 behandelt
-Aufzählungen, `match`-Ausdrücke und das `if let`-Kontrollflusskonstrukt. Du
-wirst Strukturen und Aufzählungen verwenden, um benutzerdefinierte Typen in
-Rust zu erstellen.
+**Kapitel 1** erklärt, wie man Rust installiert, wie man ein „Hallo
+Welt“-Programm schreibt und wie man Cargo, den Paketmanager und das Bauwerkzeug
+von Rust, benutzt. **Kapitel 2** ist eine praktische Einführung in die Sprache
+Rust. Hier werden Konzepte auf hohem Niveau behandelt, spätere Kapitel werden
+zusätzliche Einzelheiten liefern. Wenn du dir schon jetzt die Hände schmutzig
+machen willst, dann ist Kapitel 2 der richtige Ort dafür. Wenn du ein besonders
+akribischer Lerner bist, der es vorzieht, jedes Detail zu lernen, bevor er zum
+nächsten übergeht, solltest du vielleicht Kapitel 2 überspringen und direkt zu
+**Kapitel 3** übergehen, das Rust-Funktionen behandelt, die denen anderer
+Programmiersprachen ähneln. Anschließend kannst du zu Kapitel 2 zurückkehren,
+wenn du an einem Projekt arbeiten möchtest, bei dem du die gelernten Details
+anwenden kannst.
 
-In Kapitel 7 erfährst du mehr über das Modulsystem von Rust und über die
+In **Kapitel 4** lernst du den Eigentümerschaftsansatz von Rust kennen.
+**Kapitel 5** bespricht Strukturen und Methoden, und **Kapitel 6** behandelt
+Aufzählungen, `match`-Ausdrücke und die Kontrollflusskonstrukte `if let` und
+`let...else`. Du wirst Strukturen und Aufzählungen verwenden, um
+benutzerdefinierte Typen zu erstellen.
+
+In **Kapitel 7** erfährst du mehr über das Modulsystem von Rust und über die
 Datenschutzregeln zum Organisieren deines Codes und dessen öffentlich
-zugängliche Programmierschnittstelle (API). In Kapitel 8 werden einige gängige
-Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung stellt,
-behandelt, z. B. Vektoren, Zeichenketten und Hashtabellen. Kapitel 9 befasst
-sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
+zugängliche Programmierschnittstelle (API). In **Kapitel 8** werden einige
+gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
+stellt, behandelt: Vektoren, Zeichenketten und Hashtabellen. **Kapitel 9**
+befasst sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
 
-Kapitel 10 vertieft generische Datentypen, Merkmale und Lebensdauern, die dir
-die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
-Kapitel 11 dreht sich alles um das Testen, das selbst mit den
+**Kapitel 10** vertieft generische Datentypen, Merkmale und Lebensdauern, die
+dir die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
+**Kapitel 11** dreht sich alles um das Testen, das selbst mit den
 Sicherheitsgarantien von Rust erforderlich ist, um eine korrekte Logik deines
-Programms sicherzustellen. In Kapitel 12 werden wir unsere eigene
+Programms sicherzustellen. In **Kapitel 12** werden wir unsere eigene
 Implementierung für eine Teilfunktionalität des Kommandozeilenwerkzeugs `grep`
 schreiben, das nach Text in Dateien sucht. Dazu werden wir viele Konzepte
 anwenden, die wir in den vorangegangenen Kapiteln kennengelernt haben.
 
-Kapitel 13 befasst sich mit Funktionsabschlüssen und Iteratoren, also
-Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In Kapitel
-14 werden wir einen genaueren Blick auf Cargo werfen und über bewährte
+**Kapitel 13** befasst sich mit Funktionsabschlüssen und Iteratoren, also
+Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In **Kapitel
+14** werden wir einen genaueren Blick auf Cargo werfen und über bewährte
 Vorgehensweisen beim Bereitstellen deiner Bibliotheken für andere sprechen. In
-Kapitel 15 werden intelligente Zeiger, die die Standardbibliothek bereitstellt,
-und Merkmale, die ihre Funktionalität ermöglichen, erörtert.
+**Kapitel 15** werden intelligente Zeiger, die die Standardbibliothek
+bereitstellt, und Merkmale, die ihre Funktionalität ermöglichen, erörtert.
 
-In Kapitel 16 gehen wir durch verschiedene Modelle der nebenläufigen
+In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. In Kapitel 17 bauen wir darauf auf, indem wir die
-async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Strängen zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir
+die async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
 Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
 ermöglichen, untersuchen.
 
-Kapitel 18 befasst sich mit dem Vergleich von Rust-Idiomen mit
+**Kapitel 18** befasst sich mit dem Vergleich von Rust-Idiomen mit
 objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
-bist. Kapitel 19 ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
-mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. Kapitel 20
-enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
-unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen, Funktionen
-und Funktionsabschlüssen.
+bist. **Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich,
+einem mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel
+20** enthält ein Sammelsurium an interessanten fortgeschrittenen Themen,
+darunter unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen,
+Funktionen und Funktionsabschlüssen.
 
-In Kapitel 21 werden wir ein Projekt abschließen, bei dem wir einen
+In *Kapitel 21* werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!
 
 Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
@@ -190,8 +191,10 @@ werden wir viele Beispiele bringen, die nicht kompilieren, zusammen mit der
 jeweiligen Fehlermeldung des Compilers. Wenn du also ein zufälliges Beispiel
 eingibst und ausführen willst, lässt es sich möglicherweise nicht kompilieren!
 Stelle sicher, dass du den umgebenden Text liest, um zu wissen, ob das
-Beispiel, das du ausführen willst, für einen Fehler gedacht ist. Ferris gibt
-dir einen Hinweis bei Code, der nicht funktionieren soll:
+Beispiel, das du ausführen willst, einen Fehler zeigen soll. In den meisten
+Fällen führen wir dich von einem Code, der nicht kompiliert, zur
+funktionierenden Codeversion. Ferris gibt dir einen Hinweis bei Code, der nicht
+funktionieren soll:
 
 | Ferris     | Bedeutung                                    |
 |------------|----------------------------------------------|

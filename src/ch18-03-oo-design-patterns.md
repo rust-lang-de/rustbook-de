@@ -23,7 +23,7 @@ müssen. Wir müssen nur den Code in einem der Zustandsobjekte aktualisieren, um
 seine Regeln zu ändern oder vielleicht weitere Zustandsobjekte hinzuzufügen.
 
 Zunächst werden wir das Zustandsmuster auf eine traditionellere
-objektorientierte Weise implementieren, dann werden wir einen Ansatz verwenden,
+objektorientierte Weise implementieren. Dann werden wir einen Ansatz verwenden,
 der in Rust etwas natürlicher ist. Beginnen wir mit der inkrementellen
 Implementierung eines Blogbeitrag-Workflows unter Verwendung des
 Zustandsmusters.
@@ -40,6 +40,19 @@ Alle anderen Änderungen, die an einem Beitrag versucht werden, sollten keine
 Auswirkungen haben. Wenn wir zum Beispiel versuchen, den Entwurf eines
 Blog-Beitrags zu genehmigen, bevor wir eine Überprüfung beantragt haben, sollte
 der Beitrag ein unveröffentlichter Entwurf bleiben.
+
+### Versuch eines traditionellen objektorientierten Stils
+
+Es gibt unendlich viele Möglichkeiten, Code zu strukturieren, um dasselbe
+Problem zu lösen, wobei jede davon unterschiedliche Vor- und Nachteile hat. Die
+Implementierung in diesem Abschnitt entspricht eher einem traditionellen
+objektorientierten Stil, der zwar in Rust geschrieben werden kann, aber einige
+der Stärken von Rust nicht nutzt. Später werden wir eine andere Lösung
+vorstellen, die zwar ebenfalls das objektorientierte Entwurfsnmuster verwendet,
+aber so strukturiert ist, dass sie Programmierern mit objektorientierter
+Erfahrung möglicherweise weniger vertraut erscheint. Wir werden die beiden
+Lösungen vergleichen, um die Vor- und Nachteile einer anderen Gestaltung von
+Rust-Code im Vergleich zu Code in anderen Sprachen zu verdeutlichen.
 
 Codeblock 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
 Beispielverwendung der API, die wir in einer Bibliothekskiste (library crate)
@@ -95,7 +108,7 @@ die Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
 Fehler mit den Zuständen machen, z.B. einen Beitrag veröffentlichen, bevor er
 überprüft wurde.
 
-### Definieren von `Post` und Erstellen einer neuen Instanz im Entwurfszustand
+#### Definieren von `Post` und Erstellen einer neuen Instanz
 
 Fangen wir mit der Implementierung der Bibliothek an! Wir wissen, dass wir eine
 öffentliche Struktur `Post` benötigen, die einige Inhalte enthält, also
@@ -152,7 +165,7 @@ Instanz von `Post` erzeugen, diese als Entwurf beginnt. Da das Feld `state` von
 Zustand zu erzeugen! In der Funktion `Post::new` setzen wir das Feld `content`
 auf einen neuen, leeren `String`.
 
-### Speichern des Textes des Beitragsinhalts
+#### Speichern des Textes des Beitragsinhalts
 
 Wir haben in Codeblock 18-11 gesehen, dass wir in der Lage sein wollen, eine
 Methode namens `add_text` aufzurufen und ihr einen `&str` zu übergeben, die
@@ -203,17 +216,17 @@ vom Zustand ab, in dem sich der Beitrag befindet, es ist also nicht Teil des
 Zustandsmusters. Die Methode `add_text` interagiert überhaupt nicht mit dem
 Feld `state`, aber sie ist Teil des Verhaltens, das wir unterstützen wollen.
 
-### Sicherstellen, dass der Inhalt eines Beitragsentwurfs leer ist
+#### Sicherstellen, dass der Inhalt eines Beitragsentwurfs leer ist
 
 Selbst nachdem wir `add_text` aufgerufen und unserem Beitrag etwas Inhalt
 hinzugefügt haben, wollen wir immer noch, dass die Methode `content` einen
 leeren Zeichenkettenanteilstyp (string slice) zurückgibt, weil sich der Beitrag
-noch im Entwurfszustand befindet, wie in Zeile 7 von Codeblock 18-11 gezeigt
-wird. Lass uns fürs Erste die Methode `content` mit der einfachsten Sache
-implementieren, die diese Anforderung erfüllt: Immer einen leeren
-Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern, sobald wir
-die Möglichkeit implementiert haben, den Zustand eines Beitrags zu ändern,
-damit er veröffentlicht werden kann. Bislang können Beiträge nur im
+noch im Entwurfszustand befindet, wie beim ersten `assert_eq!` in Codeblock
+18-11 gezeigt wird. Lass uns fürs Erste die Methode `content` mit der
+einfachsten Sache implementieren, die diese Anforderung erfüllt: Immer einen
+leeren Zeichenkettenanteilstyp zurückgeben. Wir werden dies später ändern,
+sobald wir die Möglichkeit implementiert haben, den Zustand eines Beitrags zu
+ändern, damit er veröffentlicht werden kann. Bislang können Beiträge nur im
 Entwurfszustand sein, daher sollte der Beitragsinhalt immer leer sein.
 Codeblock 18-14 zeigt diese Platzhalter-Implementierung.
 
@@ -255,9 +268,9 @@ Platzhalter-Implementierung für die Methode `content` auf `Post`, die immer
 einen leeren Zeichenkettenanteilstyp zurückgibt</span>
 
 Mit dieser zusätzlichen Methode `content` funktioniert alles in Codeblock 18-11
-bis hin zu Zeile 7 wie beabsichtigt.
+bis hin zum ersten `assert_eq!` wie beabsichtigt.
 
-### Antrag auf Überprüfung ändert den Zustand des Beitrags
+#### Antrag auf Überprüfung, der den Zustand des Beitrags ändert
 
 Als nächstes müssen wir eine Funktionalität hinzufügen, um eine Überprüfung
 eines Beitrags zu beantragen, die seinen Zustand von `Draft` in `PendingReview`
@@ -365,9 +378,9 @@ Wir lassen die Methode `content` auf `Post` so wie sie ist und geben einen
 leeren Zeichenkettenanteilstyp zurück. Wir können jetzt einen `Post` sowohl im
 Zustand `PendingReview` als auch im Zustand `Draft` haben, aber wir wollen das
 gleiche Verhalten im Zustand `PendingReview`. Codeblock 18-11 funktioniert
-jetzt bis Zeile 10!
+jetzt bis zum zweiten `assert_eq!`-Aufruf!
 
-### Hinzufügen von `approve`, um das Verhalten von `content` zu ändern
+#### Hinzufügen von `approve`, um das Verhalten von `content` zu ändern
 
 Die Methode `approve` ähnelt der Methode `request_review`: Sie setzt den
 `state` auf den Wert, den der aktuelle Zustand nach der Genehmigung haben
@@ -575,10 +588,10 @@ im Funktionsparameter herausverschieben können.
 Wir rufen dann die Methode `unwrap` auf, von der wir wissen, dass sie das
 Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
 `Post` sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese
-Methoden fertig ausgeführt sind. Dies ist einer der Fälle, über die wir in
-[„Fälle, in denen du mehr Informationen als der Compiler
-hast“][more-info-than-rustc] in Kapitel 9 gesprochen haben, bei denen wir
-im Unterschied zum Compiler wissen, dass ein `None`-Wert niemals möglich ist.
+Methoden fertig ausgeführt sind. Dies ist einer der Fälle, über die wir im
+Abschnitt [„Wenn du mehr Informationen als der Compiler
+hast“][more-info-than-rustc] in Kapitel 9 gesprochen haben, bei denen wir im
+Unterschied zum Compiler wissen, dass ein `None`-Wert niemals möglich ist.
 
 Wenn wir nun `content` auf `&Box<dyn State>` aufrufen, wird eine automatische
 Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode
@@ -586,7 +599,7 @@ Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode
 implementiert. Das bedeutet, dass wir die Definition des Merkmals `State` um
 `content` erweitern müssen, und hier werden wir die Logik dafür unterbringen,
 welcher Inhalt je nach Zustand zurückgegeben wird, wie in Codeblock 18-18 zu
-sehen ist:
+sehen ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -686,7 +699,9 @@ Wir fügen eine Standard-Implementierung für die Methode `content` hinzu, die
 einen leeren Zeichenkettenanteilstyp zurückgibt. Das bedeutet, dass wir
 `content` in den Strukturen `Draft` und `PendingReview` nicht implementieren
 müssen. Die Struktur `Published` überschreibt die Methode `content` und gibt
-den Wert in `post.content` zurück.
+den Wert in `post.content` zurück. Die Verwendung der Methode `content` in
+`State` zur Bestimmung des Inhalts von `Post` ist zwar praktisch, verwischt
+jedoch die Grenzen zwischen den Verantwortlichkeiten von `State` und `Post`.
 
 Beachte, dass wir Lebensdauer-Annotationen bei dieser Methode benötigen, wie
 wir in Kapitel 10 besprochen haben. Wir nehmen eine Referenz auf ein `post` als
@@ -710,7 +725,7 @@ ist nicht über den gesamten `Post` verstreut.
 > behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
 > Merkmals-Objekt.
 
-### Kompromisse des Zustandsmusters
+#### Bewerten des Zustandsmusters
 
 Wir haben gezeigt, dass Rust in der Lage ist, das objektorientierte
 Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die
@@ -725,14 +740,12 @@ Zustandsmuster verwendet, könnten wir stattdessen `match`-Ausdrücke in den
 Methoden auf `Post` oder sogar im `main`-Code verwenden, die den Zustand des
 Beitrags überprüfen und das Verhalten an diesen Stellen ändern. Das würde
 bedeuten, dass wir an mehreren Stellen nachschauen müssten, um alle
-Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen! Dies
-würde immer mehr werden, je mehr Zustände wir hinzufügen: Jeder dieser
-`match`-Ausdrücke würde einen weiteren Zweig benötigen.
+Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen!
 
 Mit dem Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir
 `Post` verwenden, brauchen wir keine `match`-Ausdrücke, und um einen neuen
 Zustand hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
-Merkmalsmethoden auf dieser einen Struktur implementieren.
+Merkmalsmethoden auf dieser einen Struktur an einer Stelle implementieren.
 
 Die Implementierung unter Verwendung des Zustandsmusters ist leicht zu
 erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
@@ -768,11 +781,11 @@ erwähnten dyn-Kompatibilitätsregeln.)
 
 Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
 `request_review` und `approve` auf `Post`. Beide Methoden verwenden
-`Option::take` mit dem Feld `state` von `Post`, und wenn `state` den Wert
-`Some` hat, delegieren sie den Aufruf an die gleiche Methode des umschlossenen
+`Option::take` mit dem Feld `state` von `Post`, und wenn `state` `Some` ist,
+delegieren sie an die Implementierung derselben Methode des umschlossenen
 Werts und speichern das Ergebnis im Feld `state`. Wenn wir viele Methoden auf
 `Post` hätten, die diesem Muster folgen, könnten wir in Erwägung ziehen, ein
-Makro zu definieren, um die Wiederholung zu eliminieren (siehe
+Makro zu definieren, um die Wiederholung zu eliminieren (siehe Abschnitt
 [„Makros“][macros] in Kapitel 20).
 
 Indem wir das Zustandsmuster genau so implementieren, wie es für
@@ -781,7 +794,7 @@ aus, wie wir es könnten. Sehen wir uns einige Änderungen an, die wir an der
 Kiste `blog` vornehmen können, die ungültige Zustände und Übergänge in
 Kompilierzeitfehler verwandeln können.
 
-#### Kodieren von Zuständen und Verhalten als Typen
+### Kodieren von Zuständen und Verhalten als Typen
 
 Wir werden dir zeigen, wie du das Zustandsmuster überdenken kannst, um andere
 Kompromisse zu erzielen. Anstatt die Zustände und Übergänge vollständig zu
@@ -876,8 +889,6 @@ Methode `content` definiert hat! Daher stellt das Programm jetzt sicher, dass
 alle Beiträge als Beitragsentwürfe beginnen und dass der Inhalt von
 Beitragsentwürfen nicht zur Anzeige verfügbar ist. Jeder Versuch, diese
 Einschränkungen zu umgehen, führt zu einem Kompilierfehler.
-
-#### Umsetzen von Übergängen als Transformationen in verschiedene Typen
 
 Wie bekommen wir also einen veröffentlichten Beitrag? Wir wollen die Regel
 durchsetzen, dass ein Beitragsentwurf geprüft und genehmigt werden muss, bevor
@@ -1032,5 +1043,5 @@ Funktionalität von Rust sind und viel Flexibilität ermöglichen. Wir haben sie
 uns im Laufe des Buches kurz angeschaut, haben aber noch nicht ihre volle
 Leistungsfähigkeit gesehen. Los geht's!
 
-[more-info-than-rustc]: ch09-03-to-panic-or-not-to-panic.html#fälle-in-denen-du-mehr-informationen-als-der-compiler-hast
+[more-info-than-rustc]: ch09-03-to-panic-or-not-to-panic.html#wenn-du-mehr-informationen-als-der-compiler-hast
 [macros]: ch20-05-macros.html

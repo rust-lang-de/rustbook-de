@@ -49,8 +49,9 @@ $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.25s
      Running `target/debug/panic`
+
 thread 'main' panicked at src/main.rs:2:5:
-abstürzen und verbrennen
+crash and burn
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
@@ -114,13 +115,14 @@ $ cargo run
    Compiling panic v0.1.0 (file:///projects/panic)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.27s
      Running `target/debug/panic`
+
 thread 'main' panicked at src/main.rs:4:6:
 index out of bounds: the len is 3 but the index is 99
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
 Dieser Fehler weist auf Zeile 4 in unserer `main.rs` hin, wo wir versuchen, auf
-den Index `99` des Vektors in `v` zuzugreifen.
+den Index 99 des Vektors in `v` zuzugreifen.
 
 Die Zeile `note:` sagt uns, dass wir die Umgebungsvariable `RUST_BACKTRACE`
 setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und

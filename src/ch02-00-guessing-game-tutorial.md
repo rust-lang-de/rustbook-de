@@ -216,7 +216,7 @@ let apples = 5;
 ```
 
 Diese Zeile erzeugt eine neue Variable namens `apples` und bindet sie an den
-Wert 5. In Rust sind Variablen standardmäßig unveränderbar (immutable), das
+Wert `5`. In Rust sind Variablen standardmäßig unveränderbar (immutable), das
 heißt, sobald wir der Variablen einen Wert gegeben haben, wird sich der Wert
 nicht mehr ändern. Wir werden dieses Konzept im Abschnitt [„Variablen und
 Veränderbarkeit“][variables-and-mutability] in Kapitel 3 ausführlich
@@ -279,7 +279,7 @@ die es uns ermöglichen wird, Benutzereingaben zu verarbeiten.
 # }
 ```
 
-Hätten wir die Bibliothek `io` nicht am Anfang des Programms mit `use std::io;`
+Hätten wir das Modul `io` nicht am Anfang des Programms mit `use std::io;`
 importiert, könnten wir die Funktion trotzdem verwenden, indem wir den
 Funktionsaufruf als `std::io::stdin` schreiben. Die Funktion `stdin` gibt eine
 Instanz von [`std::io::Stdin`][iostdin] zurück, was ein Typ ist, der eine
@@ -289,7 +289,7 @@ darstellt.
 Die nächste Zeile `.read_line(&mut guess)` ruft die Methode
 [`read_line`][read_line] der Standardeingaberessource auf, um eine Eingabe vom
 Benutzer zu erhalten. Wir übergeben auch das Argument `&mut guess` an
-`read_line`, um ihm mitzuteilen, in welche Zeichenfolge es die Benutzereingabe
+`read_line`, um ihm mitzuteilen, in welche Zeichenkette es die Benutzereingabe
 speichern soll. Die Aufgabe von `read_line` ist es, alles, was der Benutzer in
 die Standardeingabe eingibt, an eine Zeichenkette anzuhängen (ohne deren Inhalt
 zu überschreiben), daher übergeben wir diese Zeichenkette als Argument. Das
@@ -472,7 +472,7 @@ Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
 jedoch eine [Kiste `rand`][randcrate] mit besagter Funktionalität zur
 Verfügung.
 
-### Verwenden einer Kiste, um mehr Funktionalität zu erhalten
+### Mehr Funktionalität mit einer Kiste
 
 Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
 Projekt "Ratespiel" ist eine _binäre Kiste_ (binary crate), die eine
@@ -539,7 +539,7 @@ $ cargo build
 ```
 
 <span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von `cargo
-build` nach dem Hinzufügen der Kiste rand als Abhängigkeit</span>
+build` nach dem Hinzufügen der Kiste `rand` als Abhängigkeit</span>
 
 Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
 sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
@@ -580,7 +580,7 @@ der Datei _src/main.rs_ aktualisiert. Deine Abhängigkeiten haben sich nicht
 geändert, sodass Cargo weiß, dass es wiederverwenden kann, was es bereits
 heruntergeladen und kompiliert hat.
 
-#### Sicherstellen reproduzierbarer Builds mit der Datei _Cargo.lock_
+#### Sicherstellen reproduzierbarer Builds
 
 Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wenn
 du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
@@ -607,28 +607,29 @@ Code deines Projekts in die Versionskontrolle eingecheckt.
 Wenn du eine Kiste aktualisieren _willst_, bietet Cargo den Befehl `update` an,
 der die Datei _Cargo.lock_ ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in _Cargo.toml_ herausfindet. Cargo schreibt diese
-Versionen dann in die Datei _Cargo.lock_. In diesem Fall wird Cargo nur nach
-Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Kiste `rand`
-zwei neue Versionen 0.8.6 und 0.9.0 veröffentlicht hat, würdest du folgendes
-sehen, wenn du `cargo update` ausführst:
+Versionen dann in die Datei _Cargo.lock_. Andernfalls wird Cargo standardmäßig
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
+Kiste `rand` zwei neue Versionen 0.8.6 und 0.999.0 veröffentlicht hat, würdest du
+folgendes sehen, wenn du `cargo update` ausführst:
 
 ```console
 $ cargo update
     Updating crates.io index
      Locking 1 package to latest Rust 1.85.0 compatible version
-    Updating rand v0.8.5 -> v0.8.6 (available: v0.9.0)
+    Updating rand v0.8.5 -> v0.8.6 (available: v0.999.0)
 ```
 
-Cargo ignoriert die Version 0.9.0. An diesem Punkt würdest du auch eine
+Cargo ignoriert die Version 0.999.0. An diesem Punkt würdest du auch eine
 Änderung in deiner Datei _Cargo.lock_ bemerken, die feststellt, dass die
 Version der Kiste `rand`, die du jetzt benutzt, 0.8.6 ist. Um die
-`rand`-Version 0.9.0 oder irgendeine Version aus der 0.9._x_-Serie zu
+`rand`-Version 0.999.0 oder irgendeine Version aus der 0.999._x_-Serie zu
 verwenden, müsstest du stattdessen die Datei _Cargo.toml_ anpassen, damit sie
-wie folgt aussieht:
+wie folgt aussieht. (Führe diese Änderung nicht durch, da die folgenden
+Beispiele davon ausgehen, dass du `rand` 0.8 verwendest.)
 
 ```toml
 [dependencies]
-rand = "0.9.0"
+rand = "0.999.0"
 ```
 
 Wenn du das nächste Mal `cargo build` ausführst, wird Cargo die Registry der

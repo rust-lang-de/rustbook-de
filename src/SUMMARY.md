@@ -4,8 +4,6 @@
 [Vorwort](foreword.md)
 [Einführung](ch00-00-introduction.md)
 
-## Erste Schritte
-
 - [Erste Schritte](ch01-00-getting-started.md)
   - [Installation](ch01-01-installation.md)
   - [Hallo Welt](ch01-02-hello-world.md)
@@ -28,18 +26,16 @@
 - [Strukturen (structs) für zusammenhängende Daten verwenden](ch05-00-structs.md)
   - [Strukturen (structs) definieren und instanziieren](ch05-01-defining-structs.md)
   - [Beispielprogramm mit Strukturen (structs)](ch05-02-example-structs.md)
-  - [Methodensyntax](ch05-03-method-syntax.md)
+  - [Methoden](ch05-03-method-syntax.md)
 
 - [Aufzählungen (enums) und Musterabgleich (pattern matching)](ch06-00-enums.md)
   - [Eine Aufzählung (enum) definieren](ch06-01-defining-an-enum.md)
   - [Das Kontrollflusskonstrukt `match`](ch06-02-match.md)
-  - [Prägnanter Kontrollfluss mit `if let` und `let else`](ch06-03-if-let.md)
+  - [Prägnanter Kontrollfluss mit `if let` und `let...else`](ch06-03-if-let.md)
 
-## Grundlegende Sprachelemente
-
-- [Wachsende Projekte verwalten mit Paketen (packages), Kisten (crates) und Modulen](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+- [Pakete (packages), Kisten (crates) und Module](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
   - [Pakete (packages) und Kisten (crates)](ch07-01-packages-and-crates.md)
-  - [Mit Modulen den Kontrollumfang und Datenschutz steuern](ch07-02-defining-modules-to-control-scope-and-privacy.md)
+  - [Kontrollumfang und Datenschutz mit Modulen](ch07-02-defining-modules-to-control-scope-and-privacy.md)
   - [Mit Pfaden auf ein Element im Modulbaum verweisen](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
   - [Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
   - [Module in verschiedene Dateien aufteilen](ch07-05-separating-modules-into-different-files.md)
@@ -56,7 +52,7 @@
 
 - [Generische Typen, Merkmale (traits) und Lebensdauer](ch10-00-generics.md)
   - [Generische Datentypen](ch10-01-syntax.md)
-  - [Merkmale (traits): Gemeinsames Verhalten definieren](ch10-02-traits.md)
+  - [Gemeinsames Verhalten definieren mit Merkmalen (traits)](ch10-02-traits.md)
   - [Referenzen validieren mit Lebensdauern](ch10-03-lifetime-syntax.md)
 
 - [Automatisierte Tests schreiben](ch11-00-testing.md)
@@ -68,17 +64,15 @@
   - [Kommandozeilenargumente entgegennehmen](ch12-01-accepting-command-line-arguments.md)
   - [Eine Datei einlesen](ch12-02-reading-a-file.md)
   - [Refaktorierung um die Modularität und Fehlerbehandlung zu verbessern](ch12-03-improving-error-handling-and-modularity.md)
-  - [Bibliotheksfunktionalität mit testgetriebener Entwicklung erstellen](ch12-04-testing-the-librarys-functionality.md)
+  - [Funktionalität mit testgetriebener Entwicklung hinzufügen](ch12-04-testing-the-librarys-functionality.md)
   - [Mit Umgebungsvariablen arbeiten](ch12-05-working-with-environment-variables.md)
-  - [Fehlermeldungen in die Standardfehlerausgabe anstatt der Standardausgabe schreiben](ch12-06-writing-to-stderr-instead-of-stdout.md)
-
-## Denken in Rust
+  - [Fehler zur Standardfehlerausgabe umleiten](ch12-06-writing-to-stderr-instead-of-stdout.md)
 
 - [Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)](ch13-00-functional-features.md)
-  - [Funktionsabschlüsse (closures): Anonyme Funktionen, die ihre Umgebung erfassen](ch13-01-closures.md)
+  - [Funktionsabschlüsse (closures)](ch13-01-closures.md)
   - [Eine Reihe von Elementen verarbeiten mit Iteratoren](ch13-02-iterators.md)
   - [Unser E/A-Projekt verbessern](ch13-03-improving-our-io-project.md)
-  - [Performanzvergleich: Schleifen vs. Iteratoren](ch13-04-performance.md)
+  - [Performanz von Schleifen vs. Iteratoren](ch13-04-performance.md)
 
 - [Mehr über Cargo und Crates.io](ch14-00-more-about-cargo.md)
   - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)
@@ -89,7 +83,7 @@
 
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
   - [Mit `Box<T>` auf Daten im Haldenspeicher zeigen](ch15-01-box.md)
-  - [Intelligente Zeiger wie normale Referenzen behandeln mit dem Merkmal (trait) `Deref`](ch15-02-deref.md)
+  - [Intelligente Zeiger wie normale Referenzen behandeln](ch15-02-deref.md)
   - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
   - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)
   - [`RefCell<T>` und das innere Veränderbarkeitsmuster](ch15-05-interior-mutability.md)
@@ -99,22 +93,20 @@
   - [Mit Strängen (threads) Programmcode gleichzeitig ausführen](ch16-01-threads.md)
   - [Nachrichtenaustausch zwischen Strängen (threads)](ch16-02-message-passing.md)
   - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
-  - [Erweiterbare Nebenläufigkeit mit den Merkmalen (traits) `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
+  - [Erweiterbare Nebenläufigkeit mit `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
 
 - [Grundlagen der asynchronen Programmierung: Async, Await, Futures und Ströme](ch17-00-async-await.md)
   - [Futures und die asynchrone Syntax](ch17-01-futures-and-syntax.md)
   - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
-  - [Arbeiten mit einer beliebigen Anzahl von Futures](ch17-03-more-futures.md)
+  - [Abgeben (yielding) der Kontrolle an die Laufzeitumgebung](ch17-03-more-futures.md)
   - [Ströme (streams): Sequenz von Futures](ch17-04-streams.md)
   - [Ein genauerer Blick auf die Merkmale für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
 
 - [Objektorientierte Sprachelemente](ch18-00-oop.md)
   - [Charakteristiken objektorientierter Sprachen](ch18-01-what-is-oo.md)
-  - [Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen erlauben](ch18-02-trait-objects.md)
+  - [Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
-
-## Fortgeschrittene Themen
 
 - [Muster (patterns) und Abgleich (matching)](ch19-00-patterns.md)
   - [Alle Stellen an denen Muster (patterns) verwendet werden können](ch19-01-all-the-places-for-patterns.md)
@@ -130,7 +122,7 @@
 
 - [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch21-00-final-project-a-web-server.md)
   - [Einen einsträngigen (single-threaded) Webserver erstellen](ch21-01-single-threaded.md)
-  - [Unseren einsträngigen (single-threaded) Webserver in einen mehrsträngigen (multi-threaded) Webserver verwandeln](ch21-02-multithreaded.md)
+  - [Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver](ch21-02-multithreaded.md)
   - [Kontrolliertes Beenden und Aufräumen](ch21-03-graceful-shutdown-and-cleanup.md)
 
 - [Anhang](appendix-00.md)

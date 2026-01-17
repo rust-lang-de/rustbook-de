@@ -3,7 +3,7 @@
 Wir haben in diesem Buch Makros wie `println!` verwendet, aber wir haben noch
 nicht vollständig erforscht, was ein Makro ist und wie es funktioniert. Der
 Begriff _Makro_ bezieht sich auf eine Familie von Funktionalitäten in Rust:
-_Deklarative_ Makros mit `macro_rules!` und drei Arten _prozeduraler_ Makros:
+Deklarative Makros mit `macro_rules!` und drei Arten prozeduraler Makros:
 
 - Benutzerdefinierte Makros mit `#[derive]`, die Code spezifizieren, der mit
   dem Attribut `derive` hinzugefügt wurde, das bei Strukturen (structs) und
@@ -50,7 +50,7 @@ darin, dass du Makros definieren oder in den Gültigkeitsbereich bringen musst,
 _bevor_ du sie in einer Datei aufrufst, im Gegensatz zu Funktionen, die du
 überall definieren und überall aufrufen kannst.
 
-### Deklarative Makros mit `macro_rules!` für allgemeine Metaprogrammierung
+### Deklarative Makros für allgemeine Metaprogrammierung
 
 Die am häufigsten verwendete Form von Makros in Rust ist das _deklarative
 Makro_. Diese werden manchmal auch als „Makros am Beispiel“ (macros by
@@ -195,7 +195,7 @@ bestimmten Makro-Variante ist.
 <span class="filename">Dateiname: src/lib.rs</span>
 
 ```rust,ignore
-use proc_macro;
+use proc_macro::TokenStream;
 
 #[some_attribute]
 pub fn some_name(input: TokenStream) -> TokenStream {
@@ -218,7 +218,7 @@ Schauen wir uns die verschiedenen Arten prozeduraler Makros an. Wir beginnen
 mit einem benutzerdefinierten `derive`-Makro und erklären dann die kleinen
 Unterschiede, in denen sich die anderen Formen unterscheiden.
 
-### Wie man ein benutzerdefiniertes Makro mit `derive` schreibt
+### Benutzerdefinierte Makro mit `derive`
 
 Lass uns eine Kiste namens `hello_macro` erstellen, die ein Merkmal namens
 `HelloMacro` mit einer assoziierten Funktion namens `hello_macro` definiert.
@@ -257,8 +257,8 @@ crate), etwa so:
 $ cargo new hello_macro --lib
 ```
 
-Als Nächstes definieren wir das Merkmal `HelloMacro` und die damit assoziierte
-Funktion:
+Als Nächstes definieren wir in Codeblock 20-38 das Merkmal `HelloMacro` und die
+damit assoziierte Funktion.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -356,11 +356,8 @@ für die Funktion `impl_hello_macro` hinzufügen.
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
-extern crate proc_macro;
-
 use proc_macro::TokenStream;
 use quote::quote;
-use syn;
 
 #[proc_macro_derive(HelloMacro)]
 pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
@@ -470,11 +467,8 @@ Codeblock 20-42 gezeigt.
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore
-# extern crate proc_macro;
-#
 # use proc_macro::TokenStream;
 # use quote::quote;
-# use syn;
 #
 # #[proc_macro_derive(HelloMacro)]
 # pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
@@ -488,14 +482,14 @@ Codeblock 20-42 gezeigt.
 #
 fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let gen = quote! {
+    let generated = quote! {
         impl HelloMacro for #name {
             fn hello_macro() {
                 println!("Hallo Makro! Mein Name ist {}!", stringify!(#name));
             }
         }
     };
-    gen.into()
+    generated.into()
 }
 ```
 
@@ -504,9 +498,9 @@ fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
 
 Wir erhalten eine `Ident`-Strukturinstanz, die den Namen (Bezeichner) des
 annotierten Typs enthält, indem wir `ast.ident` verwenden. Die Struktur in
-Codeblock 20-33 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den
-Code in Codeblock 20-31 anwenden, das erhaltene `ident` ein Feld `ident` mit
-dem Wert `"Pancakes"` enthält. So wird die Variable `name` in Codeblock 20-34
+Codeblock 20-41 zeigt, dass, wenn wir die Funktion `impl_hello_macro` auf den
+Code in Codeblock 20-37 anwenden, das erhaltene `ident` ein Feld `ident` mit
+dem Wert `"Pancakes"` enthält. So wird die Variable `name` in Codeblock 20-42
 eine Instanz der Struktur `Ident` enthalten, die die Zeichenkette `"Pancakes"`
 ausgibt, der Name der Struktur in Codeblock 20-37.
 
@@ -602,13 +596,13 @@ Code generiert!
 Funktions-ähnliche Makros definieren Makros, die wie Funktionsaufrufe aussehen.
 Ähnlich wie `macro_rules!`-Makros sind sie flexibler als Funktionen; sie können
 zum Beispiel eine unbekannte Anzahl von Argumenten aufnehmen. Makros können
-jedoch nur mit der `match`-ähnlichen Syntax definiert werden, die wir in
-[„Deklarative Makros mit `macro_rules!` für allgemeine
-Metaprogrammierung“][decl] besprochen haben. Funktions-ähnliche Makros nehmen
-einen `TokenStream`-Parameter und ihre Definition manipuliert diesen
-`TokenStream` unter Verwendung von Rust-Code, wie es die beiden anderen Arten
-prozeduraler Makros tun. Ein Beispiel für ein Funktions-ähnliches Makro ist ein
-Makro `sql!`, das auf diese Weise aufgerufen werden könnte:
+jedoch nur mit der `match`-ähnlichen Syntax definiert werden, die wir im
+Abschnitt [„Deklarative Makros für allgemeine Metaprogrammierung“][decl]
+besprochen haben. Funktions-ähnliche Makros nehmen einen
+`TokenStream`-Parameter und ihre Definition manipuliert diesen `TokenStream`
+unter Verwendung von Rust-Code, wie es die beiden anderen Arten prozeduraler
+Makros tun. Ein Beispiel für ein Funktions-ähnliches Makro ist ein Makro
+`sql!`, das auf diese Weise aufgerufen werden könnte:
 
 ```rust,ignore
 let sql = sql!(SELECT * FROM posts WHERE id=1);
@@ -641,7 +635,7 @@ Als Nächstes werden wir alles, was wir im Laufe des Buches besprochen haben, in
 die Praxis umsetzen und ein weiteres Projekt durchführen!
 
 [crates]: https://crates.io/
-[decl]: #deklarative-makros-mit-macro_rules-für-allgemeine-metaprogrammierung
+[decl]: #deklarative-makros-für-allgemeine-metaprogrammierung
 [macro-reference]: https://doc.rust-lang.org/reference/macros-by-example.html
 [quote-crates]: https://crates.io/crates/quote
 [quote-docs]: https://docs.rs/quote

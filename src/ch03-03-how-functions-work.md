@@ -148,9 +148,9 @@ nicht dieselben Unterscheidungen, deshalb wollen wir uns ansehen, was
 Anweisungen und Ausdrücke sind und wie sich ihre Unterschiede auf die
 Funktionsrümpfe auswirken.
 
-- **Anweisungen** (statements) sind Instruktionen, die eine Aktion ausführen
+- _Anweisungen_ (statements) sind Instruktionen, die eine Aktion ausführen
   und keinen Wert zurückgeben.
-- **Ausdrücke** (expressions) werden zu einem Ergebniswert ausgewertet.
+- _Ausdrücke_ (expressions) werden zu einem Ergebniswert ausgewertet.
   Schauen wir uns einige Beispiele an.
 
 Eine Variable zu erstellen und ihr mit dem Schlüsselwort `let` einen Wert
@@ -170,7 +170,7 @@ Anweisung enthält</span>
 
 Auch Funktionsdefinitionen sind Anweisungen; das gesamte vorhergehende Beispiel
 ist eine Anweisung für sich. (Wie wir weiter unten sehen werden, ist der
-_Aufruf_ einer Funktion keine Anweisung.)
+_Aufruf_ einer Funktion jedoch keine Anweisung.)
 
 Anweisungen geben keine Werte zurück. Daher kannst du keine `let`-Anweisung
 einer anderen Variablen zuweisen, wie es der folgende Code versucht; du wirst
@@ -328,9 +328,9 @@ fn plus_one(x: i32) -> i32 {
 }
 ```
 
-Beim Ausführen dieses Codes wird `Der Wert von x ist: 6` ausgegeben. Wenn wir
-aber ein Semikolon an das Ende der Zeile mit `x + 1` setzen und es von einem
-Ausdruck in eine Anweisung ändern, erhalten wir einen Fehler:
+Beim Ausführen dieses Codes wird `Der Wert von x ist: 6` ausgegeben. Was
+passiert jedoch, wenn wir ein Semikolon an das Ende der Zeile `x + 1` setzen?
+Wir ändern es von einem Ausdruck in eine Anweisung und erhalten einen Fehler:
 
 <span class="filename">Dateiname: src/main.rs</span>
 

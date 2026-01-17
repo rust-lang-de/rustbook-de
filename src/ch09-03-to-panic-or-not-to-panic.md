@@ -41,7 +41,7 @@ gesamte Test fehlschlägt, auch wenn diese Methode nicht die zu testende
 Funktionalität ist. Da ein Test mit `panic!` als fehlgeschlagen markiert wird,
 ist der Aufruf von `unwrap` und `expect` genau das, was passieren sollte.
 
-### Fälle, in denen du mehr Informationen als der Compiler hast
+### Wenn du mehr Informationen als der Compiler hast
 
 Es wäre auch sinnvoll, `unwrap` oder `expect` aufzurufen, wenn du eine andere
 Logik hast, die sicherstellt, dass `Result` einen `Ok`-Wert hat, aber die Logik
@@ -50,9 +50,9 @@ haben, mit dem du umgehen musst: Welche Operation auch immer du aufrufst, es
 besteht immer noch die Möglichkeit, dass sie im Allgemeinen scheitert, auch
 wenn es in deiner speziellen Situation logischerweise unmöglich ist. Wenn du
 durch manuelle Codeinspektion sicherstellen kannst, dass du niemals eine
-`Err`-Variante haben wirst, ist es vollkommen akzeptabel, `unwrap` aufzurufen,
-und noch besser ist es, den Grund, warum du glaubst, dass du niemals eine
-`Err`-Variante haben wirst, im `expect`-Text zu dokumentieren. Hier ist ein
+`Err`-Variante haben wirst, ist es vollkommen akzeptabel, `expect` aufzurufen,
+und noch besser ist es, den Grund, warum deiner Meinung nach niemals eine
+`Err`-Variante auftreten wird, im Parametertext zu dokumentieren. Hier ist ein
 Beispiel:
 
 ```rust
@@ -147,7 +147,7 @@ muss. Ein anderes Beispiel ist die Verwendung eines vorzeichenlosen
 Ganzzahl-Typs wie `u32`, der sicherstellt, dass der Parameter niemals negativ
 ist.
 
-### Benutzerdefinierte Typen für die Validierung erstellen
+### Benutzerdefinierte Typen für die Validierung
 
 Gehen wir noch einen Schritt weiter, indem wir das Typsystem von Rust verwenden,
 um sicherzustellen, dass wir einen gültigen Wert haben, und betrachten wir die
@@ -257,9 +257,11 @@ impl Guess {
 <span class="caption">Codeblock 9-13: Ein Typ `Guess`, der nur bei Werten
 zwischen 1 und 100 fortsetzt</span>
 
-Zuerst erstellen wir ein neues Modul namens `guessing_game`. Danach definieren
-wir in diesem Modul eine Struktur `Guess`, die ein Feld `value` hat, das einen
-`i32` enthält. Hier wird die Nummer gespeichert.
+Beachte, dass dieser Code in *src/guessing_game.rs* davon abhängt, dass in
+*src/lib.rs* eine Moduldeklaration `mod guessing_game;` hinzugefügt wird, die
+wir hier nicht gezeigt haben. In dieser neuen Moduldatei definieren wir eine
+Struktur namens `Guess` mit einem Feld `value`, das einen `i32` enthält. Hier
+wird die Zahl gespeichert.
 
 Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
 Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie

@@ -3,7 +3,7 @@
 Eine _Struktur_ (struct) ist ein benutzerdefinierter Datentyp, mit dem man
 mehrere zusammenhängende Werte, die eine sinnvolle Gruppe bilden,
 zusammenpacken und benennen kann. Wenn du mit einer objektorientierten Sprache
-vertraut bist, ist eine _Struktur_ analog zu den Datenattributen eines Objekts.
+vertraut bist, ist eine Struktur analog zu den Datenattributen eines Objekts.
 In diesem Kapitel werden wir Tupel mit Strukturen vergleichen und
 gegenüberstellen, um auf den bereits vorhandenen Kenntnissen aufzubauen und zu
 zeigen, wann Strukturen eine bessere Möglichkeit zur Gruppierung von Daten

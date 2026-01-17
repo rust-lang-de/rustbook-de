@@ -40,8 +40,8 @@ neue Projekt `adder` im ersten Abschnitt dieses Kapitels erstellt haben:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore
-pub fn add(left: usize, right: usize) -> usize {
+```rust
+pub fn add(left: u64, right: u64) -> u64 {
     left + right
 }
 
@@ -77,12 +77,12 @@ Funktion `internal_adder`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore
-pub fn add_two(a: usize) -> usize {
+```rust
+pub fn add_two(a: u64) -> u64 {
     internal_adder(a, 2)
 }
 
-fn internal_adder(left: usize, right: usize) -> usize {
+fn internal_adder(left: u64, right: u64) -> u64 {
     left + right
 }
 
@@ -262,7 +262,7 @@ Testfunktionen in mehreren Testdateien aufrufen wollen:
 
 <span class="filename">Dateiname: tests/common.rs</span>
 
-```rust,noplayground
+```rust
 pub fn setup() {
     // Vorbereitungscode speziell für die Tests deiner Bibliothek
 }

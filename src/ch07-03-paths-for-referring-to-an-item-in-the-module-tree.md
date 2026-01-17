@@ -169,13 +169,14 @@ mod front_of_house {
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Absoluter Pfad
-    crate::front_of_house::hosting::add_to_waitlist();
-
-    // Relativer Pfad
-    front_of_house::hosting::add_to_waitlist();
-}
+// --abschneiden--
+# pub fn eat_at_restaurant() {
+#     // Absoluter Pfad
+#     crate::front_of_house::hosting::add_to_waitlist();
+#
+#     // Relativer Pfad
+#     front_of_house::hosting::add_to_waitlist();
+# }
 ```
 
 <span class="caption">Codeblock 7-5: Deklarieren des Moduls `hosting` als
@@ -188,27 +189,27 @@ Codeblock 7-6 zeigt.
 $ cargo build
    Compiling restaurant v0.1.0 (file:///projects/restaurant)
 error[E0603]: function `add_to_waitlist` is private
- --> src/lib.rs:9:37
-  |
-9 |     crate::front_of_house::hosting::add_to_waitlist();
-  |                                     ^^^^^^^^^^^^^^^ private function
-  |
+  --> src/lib.rs:10:37
+   |
+10 |     crate::front_of_house::hosting::add_to_waitlist();
+   |                                     ^^^^^^^^^^^^^^^ private function
+   |
 note: the function `add_to_waitlist` is defined here
- --> src/lib.rs:3:9
-  |
-3 |         fn add_to_waitlist() {}
-  |         ^^^^^^^^^^^^^^^^^^^^
+  --> src/lib.rs:3:9
+   |
+ 3 |         fn add_to_waitlist() {}
+   |         ^^^^^^^^^^^^^^^^^^^^
 
 error[E0603]: function `add_to_waitlist` is private
-  --> src/lib.rs:12:30
+  --> src/lib.rs:13:30
    |
-12 |     front_of_house::hosting::add_to_waitlist();
+13 |     front_of_house::hosting::add_to_waitlist();
    |                              ^^^^^^^^^^^^^^^ private function
    |
 note: the function `add_to_waitlist` is defined here
   --> src/lib.rs:3:9
    |
-3  |         fn add_to_waitlist() {}
+ 3 |         fn add_to_waitlist() {}
    |         ^^^^^^^^^^^^^^^^^^^^
 
 For more information about this error, try `rustc --explain E0603`.
@@ -245,13 +246,14 @@ mod front_of_house {
     }
 }
 
-pub fn eat_at_restaurant() {
-    // Absoluter Pfad
-    crate::front_of_house::hosting::add_to_waitlist();
-
-    // Relativer Pfad
-    front_of_house::hosting::add_to_waitlist();
-}
+// --abschneiden--
+# pub fn eat_at_restaurant() {
+#     // Absoluter Pfad
+#     crate::front_of_house::hosting::add_to_waitlist();
+#
+#     // Relativer Pfad
+#     front_of_house::hosting::add_to_waitlist();
+# }
 ```
 
 <span class="caption">Codeblock 7-7: Das Hinzufügen des Schlüsselworts `pub` zu
@@ -320,11 +322,12 @@ Guidelines][api-guidelines].
 Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
 und nicht im aktuellen Modul oder der Kistenwurzel, indem wir `super` am Anfang
 des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
-Syntax `..` beginnen. Das Verwenden von `super` erlaubt es uns, auf ein Element
-zu referenzieren, von dem wir wissen, dass es sich im übergeordneten Modul
-befindet, was die Neuordnung des Modulbaums erleichtern kann, wenn das Modul
-eng mit dem übergeordneten Modul verwandt ist, aber das übergeordnete Modul
-eines Tages an eine andere Stelle im Modulbaum verschoben werden könnte.
+Syntax `..` beginnen, wodurch man ins übergeordnete Verzeichnis kommt. Das
+Verwenden von `super` erlaubt es uns, auf ein Element zu referenzieren, von dem
+wir wissen, dass es sich im übergeordneten Modul befindet, was die Neuordnung
+des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten
+Modul verwandt ist, aber das übergeordnete Modul eines Tages an eine andere
+Stelle im Modulbaum verschoben werden könnte.
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die

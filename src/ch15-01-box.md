@@ -1,7 +1,7 @@
 ## Mit `Box<T>` auf Daten im Haldenspeicher (heap) zeigen
 
-Der einfachste intelligente Zeiger ist *Box*, deren Typ `Box<T>` lautet. In
-Boxen kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
+Der einfachste intelligente Zeiger ist Box, deren Typ `Box<T>` lautet. In
+_Boxen_ kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
 (heap) speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die
 Daten im Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
 zwischen dem Stapelspeicher und dem Haldenspeicher.
@@ -29,12 +29,12 @@ Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeiche
 in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
 Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
 Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-_Merkmalsobjekt_ (trait object) bekannt, und [„Merkmalsobjekte (trait objects)
-die Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18
+_Merkmalsobjekt_ (trait object) bekannt, und [„Verwendung von Merkmals-Objekten
+zur Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18
 widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
 erneut anwenden!
 
-### `Box<T>` verwenden um Daten im Haldenspeicher zu speichern
+### Daten im Haldenspeicher speichern
 
 Bevor wir den Haldenspeicher-Anwendungsfall für `Box<T>` besprechen, werden wir
 die Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
@@ -81,14 +81,14 @@ weitergehen, sodass Rust nicht wissen kann, wie viel Platz der Wert benötigt.
 Da Boxen eine bekannte Größe haben, können wir rekursive Typen ermöglichen,
 indem wir eine Box in die Definition des rekursiven Typs einfügen.
 
-Als Beispiel für einen rekursiven Typ wollen wir uns die _Cons-Liste_ ansehen.
+Als Beispiel für einen rekursiven Typ wollen wir uns die Cons-Liste ansehen.
 Dies ist ein Datentyp, den man häufig in funktionalen Programmiersprachen
 findet. Der Cons-Listen-Typ, den wir definieren werden, ist bis auf die
 Rekursion einfach; daher werden die Konzepte in dem Beispiel, mit dem wir
 arbeiten werden, immer dann nützlich sein, wenn du in komplexeren Situationen
 mit rekursiven Typen arbeitest.
 
-#### Weitere Informationen zur Cons-Liste
+#### Die Cons-Liste verstehen
 
 Eine _Cons-Liste_ ist eine Datenstruktur, die aus der Programmiersprache Lisp
 und ihren Dialekten stammt und aus verschachtelten Paaren besteht. Sie ist die
@@ -155,6 +155,8 @@ in Codeblock 15-3 aussehen.
 #     Nil,
 # }
 #
+// --abschneiden--
+
 use crate::List::{Cons, Nil};
 
 fn main() {
@@ -256,7 +258,7 @@ Vorgang wird wie in Abbildung 15-1 dargestellt, unendlich fortgesetzt.
 <span class="caption">Abbildung 15-1: Ein unendlicher `List`-Typ der aus
 unendlichen `Cons`-Varianten besteht</span>
 
-#### Verwenden von `Box<T>`, um einen rekursiven Typ mit einer bekannten Größe zu erhalten
+#### Einen rekursiven Typ mit einer bekannten Größe erhalten
 
 Da Rust nicht herausfinden kann, wie viel Speicherplatz für rekursiv definierte
 Typen reserviert werden muss, gibt der Compiler eine Fehlermeldung mit diesem

@@ -78,9 +78,9 @@ Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss verwenden, wie in Codeblock 20-29.
 
 ```rust
-    let list_of_numbers = vec![1, 2, 3];
-    let list_of_strings: Vec<String> =
-        list_of_numbers.iter().map(|i| i.to_string()).collect();
+let list_of_numbers = vec![1, 2, 3];
+let list_of_strings: Vec<String> =
+    list_of_numbers.iter().map(|i| i.to_string()).collect();
 ```
 
 <span class="caption">Codeblock 20-29: Verwendung eines Funktionsabschlusses
@@ -90,36 +90,37 @@ Oder wir könnten eine Funktion als Argument für `map` angeben anstelle des
 Funktionsabschlusses. Codeblock 20-30 zeigt, wie das aussehen würde.
 
 ```rust
-    let list_of_numbers = vec![1, 2, 3];
-    let list_of_strings: Vec<String> =
-        list_of_numbers.iter().map(ToString::to_string).collect();
+let list_of_numbers = vec![1, 2, 3];
+let list_of_strings: Vec<String> =
+    list_of_numbers.iter().map(ToString::to_string).collect();
 ```
 
 <span class="caption">Codeblock 20-30: Verwenden der Methode
 `String::to_string` zur Umwandlung von Zahlen in Zeichenketten</span>
 
 Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
-die wir iin [„Fortgeschrittene Merkmale (traits)“][advanced-traits] gesprochen
-haben, weil es mehrere Funktionen namens `to_string` gibt.
+die wir in Abschnitt [„Fortgeschrittene Merkmale (traits)“][advanced-traits]
+gesprochen haben, weil es mehrere Funktionen namens `to_string` gibt.
 
 Hier verwenden wir die Funktion `to_string`, die im Merkmal `ToString`
 definiert ist, welche die Standardbibliothek für jeden Typ implementiert hat,
 der `Display` implementiert.
 
-Aus [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen wir, dass der
-Name jeder definierten Aufzählungsvariante auch eine Initialisierungsfunktion
-ist. Wir können diese Initialisierungsfunktionen als Funktionszeiger verwenden,
-die die Funktionsabschlussmerkmale implementieren, was bedeutet, dass wir die
-Initialisierungsfunktionen als Argumente für Methoden angeben können, die
-Funktionsabschlüsse nehmen, wie in Codeblock 20-32 zu sehen ist.
+Aus Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen wir,
+dass der Name jeder definierten Aufzählungsvariante auch eine
+Initialisierungsfunktion ist. Wir können diese Initialisierungsfunktionen als
+Funktionszeiger verwenden, die die Funktionsabschlussmerkmale implementieren,
+was bedeutet, dass wir die Initialisierungsfunktionen als Argumente für
+Methoden angeben können, die Funktionsabschlüsse nehmen, wie in Codeblock 20-32
+zu sehen ist.
 
 ```rust
-    enum Status {
-        Value(u32),
-        Stop,
-    }
+enum Status {
+    Value(u32),
+    Stop,
+}
 
-    let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
+let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
 ```
 
 <span class="caption">Codeblock 20-31: Verwenden eines
@@ -157,9 +158,9 @@ fn returns_closure() -> impl Fn(i32) -> i32 {
 <span class="caption">Codeblock 20-32: Rückgeben eines Funktionsabschlusses aus
 einer Funktion unter Verwendung der Syntax `impl Trait`</span>
 
-Wie wir jedoch in [„Funktionsabschluss-Typinferenz und
-Annotation“][closure-types] in Kapitel 13 festgestellt haben, ist jeder
-Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
+Wie wir jedoch im Abschnitt [„Herleiten und Annotieren von
+Funktionsabschluss-Typen“][closure-types] in Kapitel 13 festgestellt haben, ist
+jeder Funktionsabschluss auch ein eigener Typ. Wenn du mit mehreren Funktionen
 arbeiten musst, die dieselbe Signatur, aber unterschiedliche Implementierungen
 haben, musst du ein Merkmals-Objekt für sie verwenden. Überlege, was passiert,
 wenn du einen Code wie in Codeblock 20-33 schreibst.
@@ -197,38 +198,39 @@ kompilieren, lässt uns Rust wissen, dass es nicht funktionieren wird:
 ```console
 $ cargo build
    Compiling functions-example v0.1.0 (file:///projects/functions-example)
-    error[E0308]: mismatched types
-    --> src/main.rs:4:9
-       |
-    4  |         returns_initialized_closure(123)
-       |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected opaque type, found a different opaque type
-    ...
-    12 | fn returns_closure() -> impl Fn(i32) -> i32 {
-       |                         ------------------- the expected opaque type
-    ...
-    16 | fn returns_initialized_closure(init: i32) -> impl Fn(i32) -> i32 {
-       |                                              ------------------- the found opaque type
-       |
-    = note: expected opaque type `impl Fn(i32) -> i32` (opaque type at <src/main.rs:12:25>)
-                found opaque type `impl Fn(i32) -> i32` (opaque type at <src/main.rs:16:46>)
-    = note: distinct uses of `impl Trait` result in different opaque types
+error[E0308]: mismatched types
+  --> src/main.rs:2:44
+   |
+ 2 |     let handlers = vec![returns_closure(), returns_initialized_closure(123)];
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected opaque type, found a different opaque type
+...
+ 9 | fn returns_closure() -> impl Fn(i32) -> i32 {
+   |                         ------------------- the expected opaque type
+...
+13 | fn returns_initialized_closure(init: i32) -> impl Fn(i32) -> i32 {
+   |                                              ------------------- the found opaque type
+   |
+   = note: expected opaque type `impl Fn(i32) -> i32`
+              found opaque type `impl Fn(i32) -> i32`
+   = note: distinct uses of `impl Trait` result in different opaque types
 
-    For more information about this error, try `rustc --explain E0308`.
-    error: could not compile `functions-example` (bin "functions-example") due to 1 previous error
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `functions-example` (bin "functions-example") due to 1 previous error
 ```
 
 Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein `impl Trait`
 zurückgeben, einen eindeutigen _undurchsichtigen Typ_ (opaque type) erzeugt,
-einen Typ, bei dem wir nicht in die Details dessen sehen können, was Rust für
-uns konstruiert. Obwohl diese Funktionen also beide Funktionsabschlüsse
-zurückgeben, die dasselbe Merkmal implementieren, nämlich `Fn(i32) -> i32`,
-sind die undurchsichtigen Typen, die Rust für jede Funktion erzeugt,
-unterschiedlich. (Dies ist vergleichbar mit der Art und Weise, wie Rust
-unterschiedliche konkrete Typen für verschiedene asynchrone Blöcke erzeugt,
-selbst wenn sie denselben Ausgabetyp haben, wie wir in [„Arbeiten mit einer
-beliebigen Anzahl von Futures“][any-number-of-futures] in Kapitel 17 gesehen
-haben. Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal
-gesehen: Wir können ein Merkmals-Objekt verwenden, wie in Codeblock 20-34.
+einen Typ, bei dem wir weder die Details dessen sehen können, was Rust für uns
+konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl
+diese Funktionen also beide Funktionsabschlüsse zurückgeben, die dasselbe
+Merkmal implementieren, nämlich `Fn(i32) -> i32`, sind die undurchsichtigen
+Typen, die Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist
+vergleichbar mit der Art und Weise, wie Rust unterschiedliche konkrete Typen
+für verschiedene asynchrone Blöcke erzeugt, selbst wenn sie denselben
+Ausgabetyp haben, wie wir im Abschnitt [„Der Typ `Pin` und das Merkmal
+`Unpin`“][future-types] in Kapitel 17 gesehen haben.) Eine Lösung für dieses
+Problem haben wir jetzt schon ein paar Mal gesehen: Wir können ein
+Merkmals-Objekt verwenden, wie in Codeblock 20-34.
 
 ```rust
 # fn main() {
@@ -253,13 +255,13 @@ Funktionsabschlüssen, die durch Funktionen definiert sind, die `Box<dyn Fn>`
 zurückgeben, damit sie denselben Typ haben</span>
 
 Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
-Merkmalsobjekte findest du im Abschnitt [„Merkmalsobjekte (trait objects) die
-Werte unterschiedlicher Typen erlauben“][trait-objects] in Kapitel 18.
+Merkmalsobjekte findest du im Abschnitt [„Verwendung von Merkmals-Objekten zur
+Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18.
 
 Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch20-02-advanced-traits.html
-[any-number-of-futures]: ch17-03-more-futures.html
-[closure-types]: ch13-01-closures.html#funktionsabschluss-typinferenz-und-annotation
+[future-types]: ch17-05-traits-for-async.md#der-typ-pin-und-das-merkmal-unpin
+[closure-types]: ch13-01-closures.html#herleiten-und-annotieren-von-funktionsabschluss-typen
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

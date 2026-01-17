@@ -20,7 +20,7 @@ Codeblock 7-22 erstellen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore
+```rust,ignore,does_not_compile
 mod front_of_house;
 
 pub use crate::front_of_house::hosting;

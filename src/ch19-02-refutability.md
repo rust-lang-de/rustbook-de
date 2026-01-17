@@ -32,10 +32,8 @@ das Muster `Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.
 
 ```rust,does_not_compile
-# fn main() {
-#     let some_option_value: Option<i32> = None;
-    let Some(x) = some_option_value;
-# }
+# let some_option_value: Option<i32> = None;
+let Some(x) = some_option_value;
 ```
 
 <span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit `let`
@@ -75,32 +73,29 @@ auch nicht abdecken konnten!), erzeugt Rust zu Recht einen Kompilierfehler.
 Wenn wir ein abweisbares Muster haben, obwohl ein unabweisbares Muster benötigt
 wird, können wir den Code, der das Muster verwendet, korrigieren: Anstatt `let`
 zu verwenden, können wir `let...else` verwenden. Wenn das Muster dann nicht
-passt, führt das Programm einfach den Code in den geschweiften Klammern aus und
-gibt ihm die Möglichkeit, gültig fortzufahren. Codeblock 19-9 zeigt, wie der
-Code in Codeblock 19-8 zu korrigieren ist.
+passt, führt das Programm einfach den Code in den geschweiften Klammern aus.
+Codeblock 19-9 zeigt, wie der Code in Codeblock 19-8 zu korrigieren ist.
 
 ```rust
-# fn main() {
-#     let some_option_value: Option<i32> = None;
-    let Some(x) = some_option_value else {
-        return;
-    };
-# }
+# let some_option_value: Option<i32> = None;
+let Some(x) = some_option_value else {
+    return;
+};
 ```
 
 <span class="caption">Codeblock 19-9: Verwenden von `let...else` und eines
 Blocks mit abweisbaren Mustern anstelle von `let`</span>
 
-Wir haben den Code repariert! Dieser Code ist jetzt vollkommen gültig. Wenn wir
-`let...else` allerdings ein unabweisbares Muster geben, das immer passt, z.B.
-`x`, wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung aus.
+Wir haben den Code repariert! Dieser Code ist vollkommen gültig, auch wenn wir
+damit kein unabweisbares Muster verwenden können, ohne eine Warnung zu
+erhalten. Wenn wir in `let...else` ein unabweisbares Muster angeben, das immer
+passt, z.B. `x` wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung
+aus.
 
 ```rust
-# fn main() {
-    let x = 5 else {
-        return;
-    };
-# }
+let x = 5 else {
+    return;
+};
 ```
 
 <span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster

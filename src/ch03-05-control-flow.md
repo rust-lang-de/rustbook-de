@@ -1,10 +1,10 @@
 ## Kontrollfluss
 
 Die Fähigkeit, Code auszuführen, der davon abhängt, ob eine Bedingung `true`
-ist, oder Code wiederholt auszuführen, während eine Bedingung `true` ist, sind
-grundlegende Bausteine der meisten Programmiersprachen. Die gebräuchlichsten
-Konstrukte, mit denen du den Kontrollfluss von Rust-Code kontrollieren kannst,
-sind `if`-Ausdrücke und Schleifen.
+ist, und die Fähigkeit, Code wiederholt auszuführen, solange eine Bedingung
+`true` ist, sind grundlegende Bausteine der meisten Programmiersprachen. Die
+gebräuchlichsten Konstrukte, mit denen du den Kontrollfluss von Rust-Code
+kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
 
 ### `if`-Ausdrücke
 
@@ -314,7 +314,9 @@ nochmal!
 ```
 
 Das Symbol `^C` steht für die Stelle, an der du <kbd>Strg</kbd>+<kbd>c</kbd>
-gedrückt hast. Je nachdem, wo sich der Code in der Schleife befand, als er das
+gedrückt hast.
+
+Je nachdem, wo sich der Code in der Schleife befand, als er das
 Unterbrechungssignal empfing, siehst du nach dem `^C` das Wort `nochmal!` oder
 nicht.
 
@@ -370,7 +372,7 @@ beträgt.
 Du kannst auch innerhalb einer Schleife `return` aufrufen. Während `break` nur
 die aktuelle Schleife verlässt, verlässt `return` immer die aktuelle Funktion.
 
-#### Schleifenlabel zur eindeutigen Unterscheidung mehrerer Schleifen
+#### Schleifenlabel zur eindeutigen Unterscheidung
 
 Wenn du Schleifen innerhalb von Schleifen hast, gelten `break` und `continue`
 für die innerste Schleife an diesem Punkt. Du kannst optional ein
@@ -539,7 +541,10 @@ Wenn wir diesen Code ausführen, werden wir die gleiche Ausgabe wie in Codeblock
 3-4 sehen. Noch wichtiger ist, dass wir jetzt die Sicherheit des Codes erhöht
 und die Möglichkeit von Fehlern eliminiert haben, die dadurch entstehen
 könnten, dass wir über das Ende des Arrays hinausgehen oder nicht weit genug
-gehen und einige Elemente übersehen.
+gehen und einige Elemente übersehen. Der aus `for`-Schleifen generierte
+Maschinencode kann ebenfalls effizienter sein, da der Index nicht bei jeder
+Iteration mit der Länge des Arrays verglichen werden muss.
+
 
 Wenn du die `for`-Schleife verwendest, brauchst du nicht daran zu denken,
 irgendeinen anderen Code zu ändern, wenn du die Anzahl der Werte im Array

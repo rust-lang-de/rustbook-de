@@ -1,4 +1,4 @@
-## Merkmale (traits): Gemeinsames Verhalten definieren
+## Gemeinsames Verhalten definieren mit Merkmalen (traits)
 
 Ein _Merkmal_ (trait) definiert die Funktionalität, den ein bestimmter Typ hat
 und mit anderen Typen teilen kann. Wir können Merkmale verwenden, um
@@ -172,7 +172,7 @@ umgekehrt. Ohne diese Regel könnten zwei Kisten dasselbe Merkmal für denselben
 Typ implementieren und Rust wüsste nicht, welche Implementierung es verwenden
 sollte.
 
-### Standard-Implementierungen
+### Standard-Implementierungen verwenden
 
 Manchmal ist es nützlich, ein Standardverhalten für einige oder alle Methoden
 eines Merkmals zu haben, anstatt Implementierungen für alle Methoden für jeden
@@ -339,7 +339,7 @@ Dieser Code gibt `1 neue Nachricht: (Lies mehr von @horse_ebooks...)` aus.
 Beachte, dass es nicht möglich ist, die Standardimplementierung von einer
 übergeordneten Implementierung derselben Methode aus aufzurufen.
 
-### Merkmale als Parameter
+### Merkmale als Parameter verwenden
 
 Da du jetzt weißt, wie man Merkmale definiert und implementiert, können wir
 untersuchen, wie man Merkmale zur Definition von Funktionen verwendet, die
@@ -440,7 +440,7 @@ Der als Parametertyp für `item1` und `item2` angegebene generische Typ `T`
 schränkt die Funktion so ein, dass der konkrete Typ der als Argument für
 `item1` und `item2` übergebenen Werte derselbe sein muss.
 
-#### Angeben mehrerer Merkmalsabgrenzungen mit der Syntax `+`
+#### Mehrere Merkmalsabgrenzungen mit der Syntax `+`
 
 Wir können auch mehr als eine Merkmalsabgrenzung angeben. Nehmen wir an, wir
 wollen, dass sowohl `notify` als auch die Methode `summarize` die
@@ -615,9 +615,8 @@ fn returns_summarizable(switch: bool) -> impl Summary {
 Die Rückgabe entweder eines `NewsArticle` oder eines `SocialPost` ist aufgrund
 von Einschränkungen hinsichtlich der Implementierung der Syntax `impl Trait` im
 Compiler nicht erlaubt. Wie man eine Funktion mit diesem Verhalten schreibt,
-wird in [„Merkmalsobjekte (trait objects) die Werte unterschiedlicher Typen
-erlauben“][using-trait-objects-that-allow-for-values-of-different-types] in
-Kapitel 18 behandelt.
+wird in [„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“][trait-objects] in Kapitel 18 behandelt.
 
 ### Verwenden von Merkmalsabgrenzungen zur bedingten Implementierung von Methoden
 
@@ -625,9 +624,9 @@ Durch Verwenden einer Merkmalsabgrenzung mit einem `impl`-Block, der generische
 Typparameter verwendet, können wir Methoden bedingt für Typen implementieren,
 die das angegebene Merkmal implementieren. Beispielsweise implementiert der Typ
 `Pair<T>` in Codeblock 10-15 immer die Funktion `new`, um eine neue Instanz von
-`Pair<T>` zurückzugeben (erinnere dich an [„Definieren von Methoden“][methods]
-in Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der
-in diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
+`Pair<T>` zurückzugeben (erinnere dich an [„Methoden-Syntax“][methods] in
+Kapitel 5, dass `Self` ein Typ-Alias für den Typ des `impl`-Blocks ist, der in
+diesem Fall `Pair<T>` ist). Aber im nächsten `impl`-Block implementiert
 `Pair<T>` die Methode `cmp_display` nur, wenn ihr innerer Typ `T` die Merkmale
 `PartialOrd` _und_ `Display` implementiert, die den Vergleich bzw. eine Ausgabe
 ermöglichen.
@@ -703,5 +702,5 @@ Code schreiben, der das Verhalten zur Laufzeit überprüft, da wir es bereits zu
 Kompilierzeit überprüft haben. Auf diese Weise wird die Performanz verbessert,
 ohne die Flexibilität der generischen Datentypen aufgeben zu müssen.
 
-[methods]: ch05-03-method-syntax.html#definieren-von-methoden
-[using-trait-objects-that-allow-for-values-of-different-types]: ch18-02-trait-objects.html
+[methods]: ch05-03-method-syntax.html#methoden-syntax
+[trait-objects]: ch18-02-trait-objects.html

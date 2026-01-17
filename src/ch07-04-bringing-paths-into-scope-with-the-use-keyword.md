@@ -277,8 +277,8 @@ Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
 ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
 Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
 Beispiel für `pub use` und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir in [„Mit `pub use` eine benutzerfreundliche öffentliche
-API exportieren“][ch14-pub-use] in Kapitel 14 betrachten.
+auswirkt, werden wir in [„Exportieren einer komfortablen öffentlichen
+API“][ch14-pub-use] in Kapitel 14 betrachten.
 
 ### Verwenden externer Pakete
 
@@ -347,7 +347,7 @@ use std::collections::HashMap;
 Dies ist ein absoluter Pfad, der mit `std`, dem Namen der
 Standard-Bibliothekskiste, beginnt.
 
-### Verschachtelte Pfade verwenden, um lange `use`-Listen zu vereinfachen
+### Verschachtelte Pfade verwenden, um `use`-Listen zu vereinfachen
 
 Wenn wir mehrere in der gleichen Kiste oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
@@ -418,7 +418,7 @@ use std::io::{self, Write};
 
 Diese Zeile bringt `std::io` und `std::io::Write` in den Gültigkeitsbereich.
 
-### Der Stern-Operator (glob)
+### Elemente mit dem Stern-Operator (glob) importieren
 
 Wenn wir _alle_ öffentlichen Elemente, die in einem Pfad definiert sind, in den
 Gültigkeitsbereich bringen wollen, können wir diesen Pfad gefolgt vom
@@ -432,7 +432,11 @@ Diese `use`-Anweisung bringt alle öffentlichen Elemente, die in
 `std::collections` definiert sind, in den aktuellen Gültigkeitsbereich. Sei
 vorsichtig beim Verwenden des Stern-Operators! Er kann es schwieriger machen,
 zu erkennen, welche Namen in den Gültigkeitsbereich fallen und wo ein in deinem
-Programm verwendeter Name definiert wurde.
+Programm verwendeter Name definiert wurde. Wenn die Abhängigkeit ihre
+Definitionen ändern, ändert sich auch das, was du importiert hast. Dies kann zu
+Compilerfehlern führen, wenn du die Abhängigkeit aktualisierst und die
+Abhängigkeit beispielsweise eine Definition mit dem gleichen Namen wie eine
+deiner Definitionen im gleichen Bereich hinzufügst.
 
 Der Stern-Operator wird oft beim Testen verwendet, um alles, was getestet wird,
 in das Modul `tests` zu bringen. Wir werden darüber in [„Tests
@@ -441,7 +445,7 @@ manchmal auch als Teil des Präludiumsmusters (prelude pattern) verwendet: Siehe
 [Standardbibliotheksdokumentation][std-lib-preludes] für weitere Informationen
 zu diesem Muster.
 
-[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#mit-pub-use-eine-benutzerfreundliche-öffentliche-api-exportieren
+[ch14-pub-use]: ch14-02-publishing-to-crates-io.html#exportieren-einer-komfortablen-öffentlichen-api
 [rand]: ch02-00-guessing-game-tutorial.html#generieren-einer-geheimzahl
 [std-lib-preludes]: https://doc.rust-lang.org/std/prelude/index.html#other-preludes
 [writing-tests]: ch11-01-writing-tests.html

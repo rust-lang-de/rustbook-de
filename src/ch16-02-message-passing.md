@@ -1,7 +1,7 @@
 ## Nachrichtenaustausch zwischen Strängen (threads)
 
 Ein immer beliebter werdender Ansatz zur Gewährleistung einer sicheren
-Nebenläufigkeit (safe concurrency) ist der _Nachrichtenaustausch_ (message
+Nebenläufigkeit (safe concurrency) ist der Nachrichtenaustausch (message
 passing), bei dem Stränge oder Akteure kommunizieren, indem sie sich
 gegenseitig Nachrichten mit Daten senden. Hier ist die Idee in einem Slogan aus
 der [Go-Sprachdokumentation][go-lang]: „Kommuniziere nicht, indem du
@@ -166,7 +166,7 @@ Erhalten: hallo
 
 Perfekt!
 
-### Kanäle und Eigentümerschaftsübertragung
+### Übertragen der Eigentümerschaft durch Kanäle
 
 Die Eigentumsregeln spielen beim Nachrichtenversand eine entscheidende Rolle,
 da sie dir helfen, sicheren, nebenläufigen Code zu schreiben. Die Vermeidung
@@ -214,14 +214,14 @@ kompilieren:
 $ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
 error[E0382]: borrow of moved value: `val`
-  --> src/main.rs:10:26
+  --> src/main.rs:10:27
    |
-8  |         let val = String::from("hi");
+ 8 |         let val = String::from("hallo");
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
-9  |         tx.send(val).unwrap();
+ 9 |         tx.send(val).unwrap();
    |                 --- value moved here
 10 |         println!("val is {val}");
-   |                          ^^^^^ value borrowed here after move
+   |                           ^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -235,18 +235,20 @@ Wert verschoben wird, übernimmt der Empfänger die Eigentümerschaft an ihm.
 Dadurch wird verhindert, dass wir den Wert nach dem Senden versehentlich wieder
 verwenden; das Eigentumssystem prüft, ob alles in Ordnung ist.
 
-### Mehrere Werte senden und den Empfänger warten sehen
+### Senden mehrerer Werte
 
 Der Code in Codeblock 16-8 wurde kompiliert und ausgeführt, aber er zeigte uns
 nicht eindeutig, dass zwei getrennte Stränge über den Kanal miteinander
-sprachen. In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die
-beweisen, dass der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der
-erzeugte Strang sendet nun mehrere Nachrichten und macht dazwischen eine Pause
-von einer Sekunde.
+sprachen.
+
+In Codeblock 16-10 haben wir einige Änderungen vorgenommen, die beweisen, dass
+der Code in Codeblock 16-8 nebenläufig ausgeführt wird: Der erzeugte Strang
+sendet nun mehrere Nachrichten und macht dazwischen eine Pause von einer
+Sekunde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,noplayground
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
@@ -300,7 +302,7 @@ Da wir keinen Code haben, der die `for`-Schleife im Hauptstrang pausiert oder
 verzögert, können wir sagen, dass der Hauptstrang darauf wartet, Werte vom
 erzeugten Strang zu erhalten.
 
-### Erstellen mehrerer Produzenten durch Klonen des Senders
+### Erstellen mehrerer Produzenten
 
 Vorhin haben wir erwähnt, dass `mpsc` ein Akronym für _mehrfacher Produzent,
 einzelner Konsument_ ist. Lass uns `mpsc` verwenden und den Code in Codeblock
@@ -310,7 +312,7 @@ Codeblock 16-11 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,noplayground
 # use std::sync::mpsc;
 # use std::thread;
 # use std::time::Duration;

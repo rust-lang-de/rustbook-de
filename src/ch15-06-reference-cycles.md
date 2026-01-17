@@ -193,7 +193,7 @@ um Referenzzyklen zu verhindern.
 
 Bisher haben wir gezeigt, dass das Aufrufen von `Rc::clone` den `strong_count`
 einer `Rc<T>`-Instanz erhöht und eine `Rc<T>`-Instanz nur dann aufgeräumt wird,
-wenn ihr `strong_count` 0 ist. Man kann auch eine _schwache Referenz_ (weak
+wenn ihr `strong_count` 0 ist. Man kann auch eine schwache Referenz (weak
 reference) auf den Wert innerhalb einer `Rc<T>`-Instanz erstellen, indem man
 `Rc::downgrade` aufruft und eine Referenz auf den `Rc<T>` übergibt. Starke
 Referenzen sind die Art und Weise, wie man die Eigentümerschaft an einer
@@ -224,7 +224,7 @@ Anstatt eine Liste zu verwenden, deren Elemente nur das nächste Element kennen,
 erstellen wir eine Baumstruktur, deren Elemente die Kind-Elemente _und_ die
 Eltern-Elemente kennen.
 	
-#### Erstellen einer Baumdatenstruktur: Ein Knoten mit Kind-Knoten
+#### Baumdatenstruktur erstellen
 
 Zunächst erstellen wir eine Baumstruktur mit Knoten (nodes), die ihre
 Kind-Knoten kennen. Wir erstellen eine Struktur mit dem Namen `Node`, die ihren

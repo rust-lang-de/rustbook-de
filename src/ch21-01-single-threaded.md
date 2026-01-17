@@ -74,15 +74,12 @@ genannt, weil in Netzwerken das Verbinden mit einem Port zum Lauschen als
 „Binden (binding) an einen Port“ bezeichnet wird.
 
 Die Funktion `bind` gibt ein `Result<T, E>` zurück, was anzeigt, dass es
-möglich ist, dass das Binden fehlschlagen könnte. Zum Beispiel erfordert das
-Binden an Port 80 Administrator-Rechte (Nicht-Administratoren können nur auf
-Ports größer als 1023 lauschen). Wenn wir also versuchen würden, an Port 80 zu
-lauschen, ohne Administrator zu sein, würde das Binden nicht funktionieren. Das
-Binden wäre beispielsweise auch nicht möglich, wenn wir zwei Instanzen unseres
-Programms laufen lassen und somit zwei Programme auf dem gleichen Port lauschen
-würden. Da wir einen einfachen Server nur für Lernzwecke schreiben, werden wir
-uns nicht um die Behandlung dieser Art von Fehlern kümmern; stattdessen
-verwenden wir `unwrap`, um das Programm zu stoppen, wenn Fehler auftreten.
+möglich ist, dass das Binden fehlschlagen könnte, wie etwa wenn wir zwei
+Instanzen unseres Programms laufen lassen und somit zwei Programme auf
+demselben Port lauschen. Da wir einen einfachen Server nur für Lernzwecke
+schreiben, werden wir uns nicht um die Behandlung dieser Art von Fehlern
+kümmern; stattdessen verwenden wir `unwrap`, um das Programm zu stoppen, wenn
+Fehler auftreten.
 
 Die Methode `incoming` von `TcpListener` gibt einen Iterator zurück, der uns
 eine Sequenz von Strömen (genauer gesagt Ströme vom Typ `TcpStream`) liefert.
@@ -133,8 +130,17 @@ dem Server herzustellen, weil der Server nicht mit Daten antwortet. Wenn
 `stream` den Gültigkeitsbereich verlässt und am Ende der Schleife aufgeräumt
 wird, wird die Verbindung als Teil der `drop`-Implementierung geschlossen.
 Browser reagieren auf geschlossene Verbindungen manchmal damit, es erneut zu
-versuchen, weil das Problem möglicherweise nur vorübergehend ist. Der wichtige
-Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt haben!
+versuchen, weil das Problem möglicherweise nur vorübergehend ist.
+
+Browser öffnen manchmal auch mehrere Verbindungen zum Server, ohne Anfragen zu
+senden, damit _spätere_ Anfragen schneller bearbeitet werden können. In diesem
+Fall sieht unser Server alle Verbindungen, unabhängig davon, ob über diese
+Verbindung Anfragen gesendet werden. Viele Versionen Chrome-basierter Browser
+verhalten sich beispielsweise so. Du kannst diese Optimierung deaktivieren,
+indem du den privaten Modus verwendest oder einen anderen Browser nutzt.
+
+Der wichtige Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt
+haben!
 
 Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
 beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
@@ -185,7 +191,7 @@ fn handle_connection(mut stream: TcpStream) {
 <span class="caption">Codeblock 21-2: Lesen aus dem `TcpStream` und Ausgeben
 der Daten</span>
 
-Wir bringen `std::io::prelude` und `std::io::BufReader` in den
+Wir bringen `std::io::BufReader` und `std::io::prelude` in den
 Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
 es uns ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In
 der `for`-Schleife in der Funktion `main` rufen wir jetzt, statt eine Nachricht
@@ -206,9 +212,9 @@ diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
 `lines` bereitstellt. Die Methode `lines` gibt einen Iterator von
 `Result<String, std::io::Error>` zurück, indem sie den Datenstrom immer dann
 aufteilt, wenn sie ein Neue-Zeile-Byte sieht. Um jeden `String` zu erhalten,
-wird jedes `Result` abgebildet und `unwrap` aufgerufen. Das `Result` könnte
-einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es
-ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
+wird jedes `Result` mit `map` abgebildet und `unwrap` aufgerufen. Das `Result`
+könnte einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder
+wenn es ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
 Produktivprogramm diese Fehler besser behandeln, aber der Einfachheit halber
 brechen wir das Programm im Fehlerfall ab.
 
@@ -233,7 +239,7 @@ Request: [
     "GET / HTTP/1.1",
     "Host: 127.0.0.1:7878",
     "User-Agent: Mozilla/5.0 (Macintosh; Intel Mac OS X 10.15; rv:99.0) Gecko/20100101 Firefox/99.0",
-    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/_;q=0.8",
+    "Accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,*/*;q=0.8",
     "Accept-Language: en-US,en;q=0.5",
     "Accept-Encoding: gzip, deflate, br",
     "DNT: 1",
@@ -269,20 +275,20 @@ message-body
 
 Die erste Zeile ist die _Anfragezeile_ (request line), die Informationen
 darüber enthält, was der Client anfragt. Der erste Teil der Anfragezeile gibt
-die _Methode_ an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt,
-wie der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage,
-was bedeutet, dass er nach Informationen fragt.
+die Methode an, die verwendet wird, z.B. `GET` oder `POST`, die beschreibt, wie
+der Client diese Anfrage stellt. Unser Client benutzte eine `GET`-Anfrage, was
+bedeutet, dass er nach Informationen fragt.
 
 Der nächste Teil der Anfragezeile ist `/`, der den _einheitlichen
 Ressourcenbezeichner_ (Uniform Resource Identifier, kurz _URI_) angibt, den der
 Client anfragt: Ein URI ist fast, aber nicht ganz dasselbe wie ein
 _einheitlicher Ressourcenzeiger_ (Uniform Resource Locator, kurz _URL_). Der
 Unterschied zwischen URIs und URLs ist für unsere Zwecke in diesem Kapitel
-nicht wichtig, aber die HTTP-Spezifikation verwendet den Begriff URI, sodass
-wir hier einfach gedanklich URL durch URI ersetzen können.
+nicht wichtig, aber die HTTP-Spezifikation verwendet den Begriff _URI_, sodass
+wir hier einfach gedanklich _URL_ durch _URI_ ersetzen können.
 
 Der letzte Teil ist die HTTP-Version, die der Client verwendet, und dann endet
-die Anfragezeile mit einer _CRLF-Sequenz_. (CRLF steht für _carriage return_
+die Anfragezeile mit einer _CRLF-Sequenz_. (_CRLF_ steht für _carriage return_
 (Wagenrücklauf) und _line feed_ (Zeilenvorschub), das sind Begriffe aus der
 Schreibmaschinenzeit!) Die CRLF-Sequenz kann auch als `\r\n` geschrieben
 werden, wobei `\r` ein Wagenrücklauf und `\n` ein Zeilenvorschub ist. Die
@@ -394,7 +400,7 @@ eingeben, das du willst; Codeblock 21-4 zeigt eine Möglichkeit.
 
 ```html
 <!DOCTYPE html>
-<html lang="en">
+<html lang="de">
   <head>
     <meta charset="utf-8">
     <title>Hallo!</title>
@@ -640,7 +646,7 @@ _127.0.0.1:7878_ sollte den Inhalt von _hallo.html_ zurückgeben und jede andere
 Anfrage, wie _127.0.0.1:7878/foo_, sollte das Fehler-HTML von _404.html_
 zurückgeben.
 
-### Ein Hauch von Refaktorierung
+### Refactoring
 
 Im Moment haben die `if`- und `else`-Blöcke eine Menge Wiederholungen: Sie
 lesen beide Dateien und schreiben den Inhalt der Dateien in den Strom. Die
@@ -695,9 +701,9 @@ fn handle_connection(mut stream: TcpStream) {
 }
 ```
 
-<span class="caption">Codeblock 21-9: Refaktorieren der `if`- und
-`else`-Blöcke, sodass sie nur den Code enthalten, der sich zwischen den beiden
-Fällen unterscheidet</span>
+<span class="caption">Codeblock 21-9: Refactoring der `if`- und `else`-Blöcke,
+damit sie nur den Code enthalten, der sich zwischen den beiden Fällen
+unterscheidet</span>
 
 Die Blöcke `if` und `else` geben jetzt nur noch die entsprechenden Werte für
 die Statuszeile und den Dateinamen in einem Tupel zurück; wir verwenden dann

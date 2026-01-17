@@ -41,7 +41,7 @@ aussagekräftig sind.
 
 Lass uns diese vier Probleme angehen, indem wir unser Projekt refaktorieren.
 
-### Trennen der Zuständigkeiten bei Binärprojekten
+### Trennen der Zuständigkeiten in Binärprojekten
 
 Das organisatorische Problem der Zuweisung der Verantwortung für mehrere
 Aufgaben an die Funktion `main` ist vielen Binärprojekten gemein.
@@ -394,6 +394,7 @@ $ cargo run
    Compiling minigrep v0.1.0 (file:///projects/minigrep)
     Finished `dev` profile [unoptimized + debuginfo] target(s) in 0.0s
      Running `target/debug/minigrep`
+
 thread 'main' panicked at src/main.rs:26:13:
 Nicht genügend Argumente
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
@@ -546,7 +547,7 @@ nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
 uns, eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren.
 Wenn das `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie
 `unwrap`: Sie gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein
-`Err`-Wert ist, ruft diese Methode den Code im _Funktionsabschluss_ (closure)
+`Err`-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
 auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
 `unwrap_or_else` übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
 [Kapitel 13][ch13] ein. Im Moment musst du nur wissen, dass `unwrap_or_else`
@@ -579,8 +580,7 @@ Großartig! Diese Ausgabe ist viel benutzerfreundlicher.
 
 Da wir mit dem Refaktorieren des Konfigurations-Parsers nun fertig sind, wollen
 wir uns der Logik des Programms zuwenden. Wie wir in [„Trennen der
-Zuständigkeiten bei
-Binärprojekten“](#trennen-der-zuständigkeiten-bei-binärprojekten) erklärt
+Zuständigkeiten in Binärprojekten“][trennen-der-zustaendigkeiten] erklärt
 haben, werden wir eine Funktion namens `run` extrahieren, die die gesamte Logik
 enthält, die sich derzeit in der Funktion `main` befindet und nicht mit dem
 Aufsetzen der Konfiguration oder dem Behandeln von Fehlern zu tun hat. Wenn wir
@@ -650,7 +650,7 @@ Die Funktion `run` enthält nun die gesamte restliche Logik von `main`,
 beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 `Config`-Instanz als Argument.
 
-#### Rückgabe von Fehlern aus der Funktion `run`
+#### Fehlerrückgabe aus `run`
 
 Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird,
 können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in
@@ -720,9 +720,9 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das _Merkmalsobjekt_ (trait object) `Box<dyn
-Error>` verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung
-am Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
+Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) `Box<dyn Error>`
+verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung am
+Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
 [Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
 `Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
 Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
@@ -739,7 +739,7 @@ Drittens gibt die Funktion `run` jetzt im Erfolgsfall einen `Ok`-Wert zurück.
 Wir haben den Erfolgstyp der Funktion `run` mit `()` in der Signatur
 deklariert, was bedeutet, dass wir den Wert des Einheitstyps in den Wert `Ok`
 einpacken müssen. Diese Syntax `Ok(())` mag zunächst etwas merkwürdig
-aussehen, aber wenn wir `()` so verwenden, ist das der idiomatische Weg, um
+aussehen. Aber wenn wir `()` so verwenden, ist das der idiomatische Weg, um
 anzuzeigen, dass wir `run` nur wegen seiner Seiteneffekte aufrufen; es gibt
 keinen Wert zurück, den wir brauchen.
 
@@ -863,72 +863,46 @@ _src/main.rs_ auf und fügen etwas Code in die Datei _src/lib.rs_ ein. Auf
 diese Weise können wir den Code testen und haben eine Datei _src/main.rs_ mit
 weniger Verantwortlichkeiten.
 
-Lass uns den ganzen Code, der nicht in der Funktion `main` ist, von
-_src/main.rs_ nach _src/lib.rs_ verschieben:
+Definieren wir den Code, der für die Textsuche in _src/lib.rs_ statt in
+_src/main.rs_ zuständig ist. Dadurch können wir (oder jeder andere, der unsere
+Bibliothek `minigrep` verwendet) die Suchfunktion aus mehr Kontexten als nur
+unserer Binärdatei `minigrep` aufrufen.
 
-- Die Definition der Funktion `run`
-- Die relevanten `use`-Anweisungen
-- Die Definition von `Config`
-- Die Funktionsdefinition `Config::build`
-
-Der Inhalt von _src/lib.rs_ sollte die in Codeblock 12-13 gezeigten Signaturen
-haben (wir haben die Rümpfe der Funktionen der Kürze halber weggelassen).
-Beachte, dass dies nicht kompiliert werden kann, bis wir _src/main.rs_ in
-Codeblock 12-14 modifiziert haben.
+Zunächst definieren wir die Signatur der Funktion `search` in _src/lib.rs_, wie
+in Codeblock 12-13 gezeigt, mit einem Rumpf, der das Makro `unimplemented!`
+aufruft. Wir werden die Signatur genauer erklären, wenn wir die Implementierung
+ausfüllen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
-use std::error::Error;
-use std::fs;
-
-pub struct Config {
-    pub query: String,
-    pub file_path: String,
-}
-
-impl Config {
-    pub fn build(args: &[String]) -> Result<Config, &'static str> {
-        // --abschneiden--
-#         if args.len() < 3 {
-#             return Err("Nicht genügend Argumente");
-#         }
-#
-#         let query = args[1].clone();
-#         let file_path = args[2].clone();
-#
-#         Ok(Config { query, file_path })
-    }
-}
-
-pub fn run(config: Config) -> Result<(), Box<dyn Error>> {
-    // --abschneiden--
-#     let contents = fs::read_to_string(config.file_path)?;
-#
-#     println!("Mit text:\n{contents}");
-#
-#     Ok(())
+```rust,does_not_compile
+pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
+    unimplemented!();
 }
 ```
 
-<span class="caption">Codeblock 12-13: Verschieben von `Config` und `run` in
+<span class="caption">Codeblock 12-13: Definieren der Funktion `search` in
 _src/lib.rs_</span>
 
-Wir haben das Schlüsselwort `pub` großzügig verwendet: Bei `Config`, bei seinen
-Feldern und seiner Methode `build` und bei der Funktion `run`. Wir haben jetzt
-eine Bibliothekskiste, die eine öffentliche API hat, die wir testen können!
+Wir haben das Schlüsselwort `pub` in der Funktionsdefinition verwendet, um
+`search` als Teil der öffentlichen API unserer Bibliothekskiste zu
+kennzeichnen. Wir haben nun eine Bibliothekskiste, die wir aus unserer
+Binärkiste heraus verwenden und testen können!
 
-Jetzt müssen wir den Code, den wir nach _src/lib.rs_ verschoben haben, in den
-Gültigkeitsbereich der Binärkiste in _src/main.rs_ bringen, wie in Codeblock
-12-14 gezeigt.
+Jetzt müssen wir den in _src/lib.rs_ definierten Code in den Gültigkeitsbereich
+der Binärkiste in _src/main.rs_ bringen und ihn aufrufen, wie in Codeblock
+12-14 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-use std::env;
-use std::process;
-
-use minigrep::Config;
+# use std::env;
+# use std::error::Error;
+# use std::fs;
+# use std::process;
+#
+// --abschneiden--
+use minigrep::search;
 
 fn main() {
     // --abschneiden--
@@ -939,14 +913,40 @@ fn main() {
 #         process::exit(1);
 #     });
 #
-#     println!("Suche nach {}", config.query);
-#     println!("In Datei {}", config.file_path);
-#
-    if let Err(e) = minigrep::run(config) {
-        // --abschneiden--
+#     if let Err(e) = run(config) {
 #         println!("Anwendungsfehler: {e}");
 #         process::exit(1);
+#     }
+}
+
+// --abschneiden--
+#
+# struct Config {
+#     query: String,
+#     file_path: String,
+# }
+#
+# impl Config {
+#     fn build(args: &[String]) -> Result<Config, &'static str> {
+#         if args.len() < 3 {
+#             return Err("Nicht genügend Argumente");
+#         }
+#
+#         let query = args[1].clone();
+#         let file_path = args[2].clone();
+#
+#         Ok(Config { query, file_path })
+#     }
+# }
+
+fn run(config: Config) -> Result<(), Box<dyn Error>> {
+    let contents = fs::read_to_string(config.file_path)?;
+
+    for line in search(&config.query, &contents) {
+        println!("{line}");
     }
+
+    Ok(())
 }
 ```
 
@@ -954,10 +954,20 @@ fn main() {
 `minigrep`-Bibliothekskiste in _src/main.rs_</span>
 
 Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der
-Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen, und wir
-stellen der Funktion `run` unseren Kistennamen voran. Nun sollte die gesamte
-Funktionalität verbunden sein und funktionieren. Starte das Programm mit `cargo
-run` und stelle sicher, dass alles korrekt funktioniert.
+Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen. Dann
+rufen wir in der Funktion `run` anstatt den Inhalt der Datei auszugeben die
+Funktion `search` auf und übergeben den Wert `config.query` und `contents` als
+Argumente. Anschließend verwendet `run` eine `for`-Schleife, um jede von
+`search` zurückgegebene Zeile auszugeben, die zur Abfrage passt. Dies ist auch
+ein guter Zeitpunkt, um die `println!`-Aufrufe in der Funktion `main` zu
+entfernen, die die Abfrage und den Dateipfad angezeigt haben, sodass unser
+Programm nur die Suchergebnisse ausgibt (sofern keine Fehler auftreten).
+
+Beachte, dass die Suchfunktion alle Ergebnisse in einem Vektor sammelt, bevor
+sie ausgegeben werden. Diese Implementierung kann bei der Suche in großen
+Dateien zu einer langsamen Anzeige der Ergebnisse führen, da die Ergebnisse
+nicht sofort nach dem Auffinden ausgegeben werden. In Kapitel 13 werden wir
+eine mögliche Lösung für dieses Problem mithilfe von Iteratoren besprechen.
 
 Puh! Das war eine Menge Arbeit, aber wir haben uns für den Erfolg in der
 Zukunft gerüstet. Jetzt ist es viel einfacher, mit Fehlern umzugehen, und wir
@@ -970,7 +980,8 @@ schreiben ein paar Tests!
 
 [ch13]: ch13-00-functional-features.html
 [ch18]: ch18-00-oop.html
-[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung-erstellen
+[ch9-custom-types]: ch09-03-to-panic-or-not-to-panic.html#benutzerdefinierte-typen-für-die-validierung
 [ch9-error-guidelines]: ch09-03-to-panic-or-not-to-panic.html#richtlinien-zur-fehlerbehandlung
 [ch9-result]: ch09-02-recoverable-errors-with-result.html
-[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#abkürzung-zum-weitergeben-von-fehlern-der-operator-
+[ch9-question-mark]: ch09-02-recoverable-errors-with-result.html#der-operator--als-abkürzung
+[trennen-der-zustaendigkeiten]: #trennen-der-zuständigkeiten-in-binärprojekten

@@ -113,7 +113,7 @@ verwendet wird. Letztendlich ist es deine Entscheidung, ob du Veränderbarkeit
 einsetzen willst oder nicht, und es hängt davon ab, was du in der jeweiligen
 Situation für am sinnvollsten hältst.
 
-### Konstanten
+### Konstanten deklarieren
 
 Wie unveränderbare Variablen sind _Konstanten_ Werte, die an einen Namen
 gebunden sind und sich nicht ändern dürfen, aber es gibt einige Unterschiede

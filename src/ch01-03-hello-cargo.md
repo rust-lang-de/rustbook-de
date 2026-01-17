@@ -235,7 +235,7 @@ Laufzeit-Benchmark deines Codes durchführst, stelle sicher, dass du `cargo
 build --release` ausführst und den Benchmark mit der ausführbaren Datei in
 _target/release_ durchführst.
 
-### Cargo als Konvention
+### Konventionen von Cargo nutzen
 
 Bei einfachen Projekten bietet Cargo nicht viel mehr Wert als das bloße
 Verwenden von `rustc`, aber es wird sich in dem Maße bewähren, wie deine

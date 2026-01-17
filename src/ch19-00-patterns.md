@@ -1,8 +1,8 @@
 # Muster (patterns) und Abgleich (matching)
 
-_Muster_ sind eine spezielle Syntax in Rust für den Abgleich mit der Struktur
-von Typen, sowohl komplexen als auch einfachen Typen. Das Verwenden von Mustern
-in Verbindung mit `match`-Ausdrücken und anderen Konstrukten gibt dir mehr
+Muster sind eine spezielle Syntax in Rust für den Abgleich mit der Struktur von
+Typen, sowohl komplexen als auch einfachen Typen. Das Verwenden von Mustern in
+Verbindung mit `match`-Ausdrücken und anderen Konstrukten gibt dir mehr
 Kontrolle über den Kontrollfluss eines Programms. Ein Muster besteht aus einer
 Kombination der folgenden Elemente:
 

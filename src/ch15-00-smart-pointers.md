@@ -1,6 +1,6 @@
 # Intelligente Zeiger
 
-Ein _Zeiger_ ist im Allgemeinen ein Konzept für eine Variable, die eine
+Ein Zeiger ist im Allgemeinen ein Konzept für eine Variable, die eine
 Speicheradresse enthält. Diese Adresse referenziert oder „zeigt“ auf andere
 Daten. Die häufigste Art von Zeigern in Rust ist eine Referenz, die wir bereits
 in Kapitel 4 kennengelernt haben. Referenzen werden durch das Symbol `&`
@@ -26,15 +26,6 @@ Da Rust das Konzept der Eigentümerschaft (ownership) und Ausleihen
 und intelligenten Zeigern: Während Referenzen Zeiger sind, die Daten nur
 ausleihen, _besitzen_ intelligente Zeiger in vielen Fällen die Eigentümerschaft
 der Daten, auf die sie zeigen.
-
-Obwohl wir sie nicht so genannt haben, sind wir in diesem Buch bereits auf
-einige intelligente Zeiger gestoßen, z.B. `String` und `Vec<T>` in Kapitel 8.
-Diese beiden Typen zählen zu den intelligenten Zeigern, da sie etwas
-Arbeitsspeicher besitzen und es dir ermöglichen, diesen zu manipulieren. Sie
-verfügen auch über Metadaten und zusätzliche Fähigkeiten oder Garantien.
-`String` speichert beispielsweise seine Kapazität als Metadaten und hat die
-zusätzliche Fähigkeit, sicherzustellen, dass seine Daten immer gültiges UTF-8
-enthalten.
 
 Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
 Im Unterschied zu einer gewöhnlichen Struktur (struct) implementieren
@@ -63,7 +54,7 @@ behandeln:
 
 Darüber hinaus wird das _innere Veränderbarkeitsmuster_ (interior mutability
 pattern) behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern
-eines inneren Werts bereitstellt. Wir werden auch _Referenzzyklen_ besprechen,
+eines inneren Werts bereitstellt. Wir werden auch Referenzzyklen besprechen,
 wie sie Speicherverlust verursachen können und wie wir das verhindern können.
 
 Lass uns in die Themen eintauchen!
