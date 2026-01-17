@@ -45,12 +45,12 @@ Schlüsselwort `type`. Zum Beispiel können wir den Alias `Kilometers` für `i32
 so anlegen:
 
 ```rust
-    type Kilometers = i32;
+type Kilometers = i32;
 #
-#     let x: i32 = 5;
-#     let y: Kilometers = 5;
+# let x: i32 = 5;
+# let y: Kilometers = 5;
 #
-#     println!("x + y = {}", x + y);
+# println!("x + y = {}", x + y);
 ```
 
 Der Alias `Kilometers` ist ein _Synonym_ für `i32`; im Gegensatz zu den Typen
@@ -59,12 +59,12 @@ Der Alias `Kilometers` ist ein _Synonym_ für `i32`; im Gegensatz zu den Typen
 werden genauso behandelt wie Werte des Typs `i32`:
 
 ```rust
-    type Kilometers = i32;
+type Kilometers = i32;
 
-    let x: i32 = 5;
-    let y: Kilometers = 5;
+let x: i32 = 5;
+let y: Kilometers = 5;
 
-    println!("x + y = {}", x + y);
+println!("x + y = {}", x + y);
 ```
 
 Da `Kilometers` und `i32` vom gleichen Typ sind, können wir Werte beider Typen
@@ -86,16 +86,16 @@ Typ-Annotationen im gesamten Code kann ermüdend und fehleranfällig sein. Stell
 dir vor, du hättest ein Projekt voller Code wie das in Codeblock 20-25.
 
 ```rust
-    let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hallo"));
+let f: Box<dyn Fn() + Send + 'static> = Box::new(|| println!("hallo"));
 
-    fn takes_long_type(f: Box<dyn Fn() + Send + 'static>) {
-        // --abschneiden--
-    }
+fn takes_long_type(f: Box<dyn Fn() + Send + 'static>) {
+    // --abschneiden--
+}
 
-    fn returns_long_type() -> Box<dyn Fn() + Send + 'static> {
-        // --abschneiden--
-#         Box::new(|| ())
-    }
+fn returns_long_type() -> Box<dyn Fn() + Send + 'static> {
+    // --abschneiden--
+#     Box::new(|| ())
+}
 ```
 
 <span class="caption">Codeblock 20-25: Verwenden eines langen Typs an vielen
@@ -107,18 +107,18 @@ verbosen Typ eingeführt und können alle Verwendungen des Typs durch den
 kürzeren Alias `Thunk` ersetzen.
 
 ```rust
-    type Thunk = Box<dyn Fn() + Send + 'static>;
+type Thunk = Box<dyn Fn() + Send + 'static>;
 
-    let f: Thunk = Box::new(|| println!("hallo"));
+let f: Thunk = Box::new(|| println!("hallo"));
 
-    fn takes_long_type(f: Thunk) {
-        // --abschneiden--
-    }
+fn takes_long_type(f: Thunk) {
+    // --abschneiden--
+}
 
-    fn returns_long_type() -> Thunk {
-        // --abschneiden--
-#         Box::new(|| ())
-    }
+fn returns_long_type() -> Thunk {
+    // --abschneiden--
+#     Box::new(|| ())
+}
 ```
 
 <span class="caption">Codeblock 20-26: Einführen eines Typ-Alias `Thunk` zur
@@ -155,7 +155,7 @@ pub trait Write {
 `Result<..., Error>` wird oft wiederholt. Daher hat `std::io` diese Art von
 Alias-Deklaration:
 
-```rust,noplayground
+```rust
 # use std::fmt;
 #
 type Result<T> = std::result::Result<T, std::io::Error>;
@@ -174,7 +174,7 @@ vollständig qualifizierten Alias `std::io::Result<T>` verwenden; das ist
 ein `Result<T, E>` mit `E` als `std::io::Error`. Die Funktionssignaturen des
 Merkmals `Write` sehen am Ende so aus:
 
-```rust,noplayground
+```rust
 # use std::fmt;
 #
 # type Result<T> = std::result::Result<T, std::io::Error>;
@@ -202,7 +202,7 @@ vor, ihn den _Niemals-Typ_ (never type) zu nennen, weil er an der Stelle des
 Rückgabetyps steht, wenn eine Funktion niemals zurückkehrt. Hier ist ein
 Beispiel:
 
-```rust,noplayground
+```rust
 fn bar() -> ! {
     // --abschneiden--
 #     panic!();
@@ -218,15 +218,16 @@ Aber was nützt ein Typ, für den man nie Werte erzeugen kann? Erinnere dich an
 den Code aus Codeblock 2-5, der Teil des Zahlenratespiels ist; wir haben einen
 Teil davon hier in Codeblock 20-27 wiedergegeben.
 
-```rust,ignore
-# use rand::Rng;
+```rust,noplayground
 # use std::cmp::Ordering;
 # use std::io;
 #
-# fn main() {
-#     println!("Rate die Zahl!");
+# use rand::Rng;
 #
-#     let secret_number = rand::thread_rng().gen_range(1, 101);
+# fn main() {
+#     println!("Guess the number!");
+#
+#     let secret_number = rand::thread_rng().gen_range(1..=100);
 #
 #     println!("Die Geheimzahl ist: {secret_number}");
 #
@@ -281,7 +282,7 @@ zum Beispiel der folgende Code nicht:
 Der Typ von `guess` in diesem Code müsste eine ganze Zahl _und_ eine
 Zeichenkette sein und Rust verlangt, dass `guess` nur einen Typ hat. Was gibt
 also `continue` zurück? Wie war es uns erlaubt, ein `u32` von einem Zweig
-zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 20-26 mit
+zurückzugeben und einen anderen Zweig zu haben, der in Codeblock 20-27 mit
 `continue` endet?
 
 Wie du vielleicht schon vermutet hast, hat `continue` einen `!`-Wert. Das
@@ -300,7 +301,7 @@ Der Niemals-Typ ist auch beim Makro `panic!` nützlich. Erinnere dich an die
 Funktion `unwrap`, die wir auf `Option<T>` Werte aufrufen, um einen Wert zu
 erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:
 
-```rust
+```rust,ignore
 # enum Option<T> {
 #     Some(T),
 #     None,
@@ -326,12 +327,12 @@ keinen Wert von `unwrap` zurück, also ist dieser Code gültig.
 
 Ein letzter Ausdruck, der den Typ `!` hat, ist `loop`:
 
-```rust
-    print!("für immer ");
+```rust,noplayground
+print!("für immer ");
 
-    loop {
-        print!("und ewig ");
-    }
+loop {
+    print!("und ewig ");
+}
 ```
 
 Hier endet die Schleife nie, also ist `!` der Typ des Ausdrucks. Dies wäre
@@ -356,8 +357,8 @@ lang die Zeichenkette ist. Das bedeutet, dass wir weder eine Variable vom Typ
 den folgenden Code, der nicht funktioniert:
 
 ```rust,does_not_compile
-    let s1: str = "Guten Tag!";
-    let s2: str = "Wie geht es dir?";
+let s1: str = "Guten Tag!";
+let s2: str = "Wie geht es dir?";
 ```
 
 Rust muss wissen, wie viel Speicher jedem Wert eines bestimmten Typs zuzuweisen

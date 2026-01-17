@@ -77,8 +77,6 @@ dieses Zusammenspiel in echtem Rust-Code.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 use std::{thread, time::Duration};
 
 fn main() {

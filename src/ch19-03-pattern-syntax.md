@@ -9,14 +9,14 @@ Wie du in Kapitel 6 gesehen hast, kannst du Muster direkt mit Literalen
 abgleichen. Der folgende Code enthält einige Beispiele:
 
 ```rust
-    let x = 1;
+let x = 1;
 
-    match x {
-        1 => println!("eins"),
-        2 => println!("zwei"),
-        3 => println!("drei"),
-        _ => println!("sonstige"),
-    }
+match x {
+    1 => println!("eins"),
+    2 => println!("zwei"),
+    3 => println!("drei"),
+    _ => println!("sonstige"),
+}
 ```
 
 Dieser Code gibt `eins` aus, weil `x` den Wert `1` hat. Diese Syntax ist
@@ -41,16 +41,16 @@ was der Code ausgeben wird, bevor du diesen Code ausführst oder weiterliest.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-    let x = Some(5);
-    let y = 10;
+let x = Some(5);
+let y = 10;
 
-    match x {
-        Some(50) => println!("Habe 50 erhalten"),
-        Some(y) => println!("Passt, y = {y}"),
-        _ => println!("Standardfall, x = {x:?}"),
-    }
+match x {
+    Some(50) => println!("Habe 50 erhalten"),
+    Some(y) => println!("Passt, y = {y}"),
+    _ => println!("Standardfall, x = {x:?}"),
+}
 
-    println!("Am Ende: x = {x:?}, y = {y}");
+println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
 <span class="caption">Codeblock 19-11: Ein `match`-Ausdruck mit einem Zweig,
@@ -97,13 +97,13 @@ _oder_-Option hat, was bedeutet, wenn der Wert von `x` zu einem der Werte in
 diesem Zweig passt, wird der Code dieses Zweigs ausgeführt:
 
 ```rust
-    let x = 1;
+let x = 1;
 
-    match x {
-        1 | 2 => println!("eins oder zwei"),
-        3 => println!("drei"),
-        _ => println!("sonstige"),
-    }
+match x {
+    1 | 2 => println!("eins oder zwei"),
+    3 => println!("drei"),
+    _ => println!("sonstige"),
+}
 ```
 
 Dieser Code gibt `eins oder zwei` aus.
@@ -115,12 +115,12 @@ Wenn im folgenden Code ein Muster zu einem der Werte innerhalb des
 vorgegebenen Bereichs passt, wird dieser Zweig ausgeführt:
 
 ```rust
-    let x = 5;
+let x = 5;
 
-    match x {
-        1..=5 => println!("eins bis fünf"),
-        _ => println!("etwas anderes"),
-    }
+match x {
+    1..=5 => println!("eins bis fünf"),
+    _ => println!("etwas anderes"),
+}
 ```
 
 Wenn `x` einen der Werte `1`, `2`, `3`, `4` oder `5` hat, passt der erste
@@ -138,13 +138,13 @@ nicht, sind `char` und numerische Werte, Bereiche sind nur mit numerischen oder
 Hier ist ein Beispiel mit Bereichen von `char`-Werten:
 
 ```rust
-    let x = 'c';
+let x = 'c';
 
-    match x {
-        'a'..='j' => println!("früher ASCII-Buchstabe"),
-        'k'..='z' => println!("später ASCII-Buchstabe"),
-        _ => println!("etwas anderes"),
-    }
+match x {
+    'a'..='j' => println!("früher ASCII-Buchstabe"),
+    'k'..='z' => println!("später ASCII-Buchstabe"),
+    _ => println!("etwas anderes"),
+}
 ```
 
 Rust kann erkennen, dass `'c'` innerhalb des Bereichs des ersten Musters liegt
@@ -386,14 +386,12 @@ Destrukturierung, bei der wir Strukturen und Tupel innerhalb eines Tupels
 verschachteln und alle primitiven Werte herausdestrukturieren:
 
 ```rust
-# fn main() {
-#     struct Point {
-#         x: i32,
-#         y: i32,
-#     }
-#
-    let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
+# struct Point {
+#     x: i32,
+#     y: i32,
 # }
+#
+let ((feet, inches), Point { x, y }) = ((3, 10), Point { x: 3, y: -10 });
 ```
 
 Dieser Code ermöglicht es uns, komplexe Typen in ihre Bestandteile zu zerlegen,
@@ -461,19 +459,19 @@ erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
 einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.
 
 ```rust
-    let mut setting_value = Some(5);
-    let new_setting_value = Some(10);
+let mut setting_value = Some(5);
+let new_setting_value = Some(10);
 
-    match (setting_value, new_setting_value) {
-        (Some(_), Some(_)) => {
-            println!("Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.");
-        }
-        _ => {
-            setting_value = new_setting_value;
-        }
+match (setting_value, new_setting_value) {
+    (Some(_), Some(_)) => {
+        println!("Kann einen vorhandenen benutzerdefinierten Wert nicht überschreiben.");
     }
+    _ => {
+        setting_value = new_setting_value;
+    }
+}
 
-    println!("Einstellung ist {setting_value:?}");
+println!("Einstellung ist {setting_value:?}");
 ```
 
 <span class="caption">Codeblock 19-18: Das Verwenden eines Unterstrichs
@@ -499,13 +497,13 @@ für das Ignorieren des zweiten und vierten Wertes in einem Tupel von fünf
 Elementen.
 
 ```rust
-    let numbers = (2, 4, 8, 16, 32);
+let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (first, _, third, _, fifth) => {
-            println!("Einige Zahlen: {first}, {third}, {fifth}")
-        }
+match numbers {
+    (first, _, third, _, fifth) => {
+        println!("Einige Zahlen: {first}, {third}, {fifth}")
     }
+}
 ```
 
 <span class="caption">Codeblock 19-19: Ignorieren mehrerer Teile eines
@@ -548,13 +546,13 @@ bindet. Um einen Fall zu zeigen, in dem diese Unterscheidung von Bedeutung ist,
 wird uns Codeblock 19-21 einen Fehler liefern.
 
 ```rust,does_not_compile
-    let s = Some(String::from("Hallo!"));
+let s = Some(String::from("Hallo!"));
 
-    if let Some(_s) = s {
-        println!("Zeichenkette gefunden");
-    }
+if let Some(_s) = s {
+    println!("Zeichenkette gefunden");
+}
 
-    println!("{s:?}");
+println!("{s:?}");
 ```
 
 <span class="caption">Codeblock 19-21: Eine unbenutzte Variable, die mit einem
@@ -567,13 +565,13 @@ des Unterstrichs an sich bindet jedoch niemals einen Wert. Codeblock 19-22 wird
 ohne Fehler kompilieren, weil `s` nicht in `_` verschoben wird.
 
 ```rust
-    let s = Some(String::from("Hallo!"));
+let s = Some(String::from("Hallo!"));
 
-    if let Some(_) = s {
-        println!("Zeichenkette gefunden");
-    }
+if let Some(_) = s {
+    println!("Zeichenkette gefunden");
+}
 
-    println!("{s:?}");
+println!("{s:?}");
 ```
 
 <span class="caption">Codeblock 19-22: Das Verwenden eines Unterstrichs bindet
@@ -594,17 +592,17 @@ wollen wir nur mit der Koordinate `x` operieren und die Werte in den Feldern
 `y` und `z` ignorieren.
 
 ```rust
-    struct Point {
-        x: i32,
-        y: i32,
-        z: i32,
-    }
+struct Point {
+    x: i32,
+    y: i32,
+    z: i32,
+}
 
-    let origin = Point { x: 0, y: 0, z: 0 };
+let origin = Point { x: 0, y: 0, z: 0 };
 
-    match origin {
-        Point { x, .. } => println!("x ist {x}"),
-    }
+match origin {
+    Point { x, .. } => println!("x ist {x}"),
+}
 ```
 
 <span class="caption">Codeblock 19-23: Ignorieren aller Felder eines `Point`
@@ -621,13 +619,13 @@ zeigt, wie man `..` mit einem Tupel verwendet.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-    let numbers = (2, 4, 8, 16, 32);
+let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (first, .., last) => {
-            println!("Einige Zahlen: {first}, {last}");
-        }
+match numbers {
+    (first, .., last) => {
+        println!("Einige Zahlen: {first}, {last}");
     }
+}
 ```
 
 <span class="caption">Codeblock 19-24: Nur den ersten und letzten Wert in einem
@@ -644,15 +642,13 @@ Verwendung von `..`, sodass es sich nicht kompilieren lässt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,does_not_compile
-# fn main() {
-    let numbers = (2, 4, 8, 16, 32);
+let numbers = (2, 4, 8, 16, 32);
 
-    match numbers {
-        (.., second, ..) => {
-            println!("Einige Zahlen: {second}")
-        },
-    }
-# }
+match numbers {
+    (.., second, ..) => {
+        println!("Einige Zahlen: {second}")
+    },
+}
 ```
 
 <span class="caption">Codeblock 19-25: Ein Versuch, `..` auf mehrdeutige Weise
@@ -699,13 +695,13 @@ und die Abgleichsbedingung `if x % 2 == 0` (die `true` ist, wenn die Zahl
 gerade ist) hat.
 
 ```rust
-    let num = Some(4);
+let num = Some(4);
 
-    match num {
-        Some(x) if x % 2 == 0 => println!("Die Zahl {x} ist gerade"),
-        Some(x) => println!("Die Zahl {x} ist ungerade"),
-        None => (),
-    }
+match num {
+    Some(x) if x % 2 == 0 => println!("Die Zahl {x} ist gerade"),
+    Some(x) => println!("Die Zahl {x} ist ungerade"),
+    None => (),
+}
 ```
 
 <span class="caption">Codeblock 19-26: Hinzufügen einer Abgleichsbedingung zu
@@ -740,16 +736,16 @@ Problem zu beheben.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-    let x = Some(5);
-    let y = 10;
+let x = Some(5);
+let y = 10;
 
-    match x {
-        Some(50) => println!("Habe 50 erhalten"),
-        Some(n) if n == y => println!("Passt, n = {n}"),
-        _ => println!("Standardfall, x = {x:?}"),
-    }
+match x {
+    Some(50) => println!("Habe 50 erhalten"),
+    Some(n) if n == y => println!("Passt, n = {n}"),
+    _ => println!("Standardfall, x = {x:?}"),
+}
 
-    println!("Am Ende: x = {x:?}, y = {y}");
+println!("Am Ende: x = {x:?}, y = {y}");
 ```
 
 <span class="caption">Codeblock 19-27: Verwenden einer Abgleichsbedingung zum
@@ -776,13 +772,13 @@ die Abgleichsbedingung `if y` auf `4`, `5` _und_ `6` zutrifft, auch wenn es so
 aussehen mag, als ob `if y` nur auf `6` zutrifft.
 
 ```rust
-    let x = 4;
-    let y = false;
+let x = 4;
+let y = false;
 
-    match x {
-        4 | 5 | 6 if y => println!("ja"),
-        _ => println!("nein"),
-    }
+match x {
+    4 | 5 | 6 if y => println!("ja"),
+    _ => println!("nein"),
+}
 ```
 
 <span class="caption">Codeblock 19-28: Kombinieren mehrerer Muster mit einer
@@ -798,13 +794,13 @@ für das gesamte Muster `4 | 5 | 6` gilt, nicht nur für den letzten Wert `6`.
 Mit anderen Worten, der Vorrang einer Abgleichsbedingung in Bezug auf ein
 Muster verhält sich wie folgt:
 
-```text
+```rust,ignore
 (4 | 5 | 6) if y => ...
 ```
 
 und nicht so:
 
-```text
+```rust,ignore
 4 | 5 | (6 if y) => ...
 ```
 
@@ -823,21 +819,21 @@ liegt. Wir wollen den Wert auch an die Variable `id` binden, damit wir ihn in
 dem mit dem Zweig verbundenen Code verwenden können.
 
 ```rust
-    enum Message {
-        Hello { id: i32 },
-    }
+enum Message {
+    Hello { id: i32 },
+}
 
-    let msg = Message::Hello { id: 5 };
+let msg = Message::Hello { id: 5 };
 
-    match msg {
-        Message::Hello {
-            id: id_variable @ 3..=7,
-        } => println!("id im Bereich gefunden: {id_variable}"),
-        Message::Hello { id: 10..=12 } => {
-            println!("id in einem anderen Bereich gefunden")
-        }
-        Message::Hello { id } => println!("Eine andere id gefunden: {id}"),
+match msg {
+    Message::Hello {
+        id: id_variable @ 3..=7,
+    } => println!("id im Bereich gefunden: {id_variable}"),
+    Message::Hello { id: 10..=12 } => {
+        println!("id in einem anderen Bereich gefunden")
     }
+    Message::Hello { id } => println!("Eine andere id gefunden: {id}"),
+}
 ```
 
 <span class="caption">Codeblock 19-29: Verwenden von `@`, um an einen Wert in

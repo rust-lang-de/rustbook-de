@@ -37,8 +37,6 @@ die Ausgabe warten, wie in Codeblock 17-21.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# extern crate trpl;
-#
 # fn main() {
 #     trpl::block_on(async {
         let values = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10];
@@ -109,8 +107,6 @@ Um den Compilerfehler zu beheben, fügen wir eine `use`-Anweisung für
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 use trpl::StreamExt;
 
 fn main() {

@@ -188,9 +188,9 @@ hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,not_desired_behavior
-    let v1: Vec<i32> = vec![1, 2, 3];
+let v1: Vec<i32> = vec![1, 2, 3];
 
-    v1.iter().map(|x| x + 1);
+v1.iter().map(|x| x + 1);
 ```
 
 <span class="caption">Codeblock 13-14: Aufruf des Iteratoradapters `map` um
@@ -235,11 +235,11 @@ Vektor wird dann alle Elemente vom Originalvektor erhöht um 1 beinhalten.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-    let v1: Vec<i32> = vec![1, 2, 3];
+let v1: Vec<i32> = vec![1, 2, 3];
 
-    let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
+let v2: Vec<_> = v1.iter().map(|x| x + 1).collect();
 
-    assert_eq!(v2, vec![2, 3, 4]);
+assert_eq!(v2, vec![2, 3, 4]);
 ```
 
 <span class="caption">Codeblock 13-15: Aufruf der Methode `map` um einen

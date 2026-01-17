@@ -155,6 +155,8 @@ in Codeblock 15-3 aussehen.
 #     Nil,
 # }
 #
+// --abschneiden--
+
 use crate::List::{Cons, Nil};
 
 fn main() {

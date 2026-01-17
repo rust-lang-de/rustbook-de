@@ -214,14 +214,14 @@ kompilieren:
 $ cargo run
    Compiling message-passing v0.1.0 (file:///projects/message-passing)
 error[E0382]: borrow of moved value: `val`
-  --> src/main.rs:10:26
+  --> src/main.rs:10:27
    |
-8  |         let val = String::from("hi");
+ 8 |         let val = String::from("hallo");
    |             --- move occurs because `val` has type `String`, which does not implement the `Copy` trait
-9  |         tx.send(val).unwrap();
+ 9 |         tx.send(val).unwrap();
    |                 --- value moved here
 10 |         println!("val is {val}");
-   |                          ^^^^^ value borrowed here after move
+   |                           ^^^ value borrowed here after move
    |
    = note: this error originates in the macro `$crate::format_args_nl` which comes from the expansion of the macro `println` (in Nightly builds, run with -Z macro-backtrace for more info)
 
@@ -248,7 +248,7 @@ Sekunde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,noplayground
 use std::sync::mpsc;
 use std::thread;
 use std::time::Duration;
@@ -312,7 +312,7 @@ Codeblock 16-11 gezeigt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
-```rust
+```rust,noplayground
 # use std::sync::mpsc;
 # use std::thread;
 # use std::time::Duration;

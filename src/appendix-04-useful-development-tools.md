@@ -67,11 +67,6 @@ Die Warnung empfiehlt, dass wir das Schlüsselwort `mut` entfernen. Wir können
 diesen Vorschlag automatisch mit dem Werkzeug `rustfix` übernehmen, indem wir
 den Befehl `cargo fix` ausführen:
 
-Die Warnung empfiehlt, stattdessen `_i` als Namen zu verwenden: Der Unterstrich
-zeigt an, dass wir diese Variable nicht verwenden wollen. Wir können diesen
-Vorschlag mit dem Werkzeug `rustfix` automatisch übernehmen, indem wir das
-Kommando `cargo fix` ausführen:
-
 ```console
 $ cargo fix
     Checking myprogram v0.1.0 (file:///projects/myprogram)
@@ -91,8 +86,7 @@ fn main() {
 }
 ```
 
-Die Variable `x` ist jetzt unveränderlich, und die Warnung erscheint nicht
-mehr.
+Die Variable `x` ist jetzt unveränderbar, und die Warnung erscheint nicht mehr.
 
 Du kannst den Befehl `cargo fix` auch dazu verwenden, deinen Code zwischen
 verschiedenen Rust-Editionen zu konvertieren. Die Editionen sind in [Anhang
@@ -153,7 +147,7 @@ fn main() {
 }
 ```
 
-Für weitere Informationen über Clippy siehe [seine Dokumentation][clippy].
+Weitere Informationen findest du in der [Clippy-Dokumentation][clippy].
 
 ### IDE-Integration mittels `rust-analyzer`
 

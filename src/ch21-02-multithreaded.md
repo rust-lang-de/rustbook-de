@@ -480,7 +480,7 @@ annimmt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -526,6 +526,9 @@ Funktionsabschluss, den wir an `execute` übergeben, noch nicht wirklich auf!
 > Schreiben von Modultests zu beginnen, um zu überprüfen, ob der Code
 > kompiliert _und_ das von uns gewünschte Verhalten aufweist.
 
+Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines
+Funktionsabschlusses eine Future ausführen würden?
+
 #### Validieren der Anzahl der Stränge in `new`
 
 Wir tun nichts mit den Parametern von `new` und `execute`. Lass uns die Rümpfe
@@ -541,7 +544,7 @@ eine Null erhält, indem wir das Makro `assert!` verwenden, wie in Codeblock
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub struct ThreadPool;
 #
 impl ThreadPool {
@@ -622,7 +625,7 @@ zurückgibt, die diese enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,not_desired_behavior
+```rust,not_desired_behavior
 use std::thread;
 
 pub struct ThreadPool {
@@ -729,7 +732,7 @@ Bereit? Hier ist Codeblock 21-15 mit einer Möglichkeit, die vorhergehenden
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 use std::thread;
 
 pub struct ThreadPool {
@@ -846,7 +849,7 @@ Element sein, die wir in den Kanal senden.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 use std::{sync::mpsc, thread};
 
 pub struct ThreadPool {
@@ -915,7 +918,7 @@ Codeblock 21-17 lässt sich noch nicht ganz kompilieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,does_not_compile
+```rust,does_not_compile
 # use std::{sync::mpsc, thread};
 #
 # pub struct ThreadPool {
@@ -1038,7 +1041,7 @@ die Änderungen, die wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 use std::{
     sync::{mpsc, Arc, Mutex},
     thread,
@@ -1127,7 +1130,7 @@ Siehe Codeblock 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # use std::{
 #     sync::{mpsc, Arc, Mutex},
 #     thread,
@@ -1371,7 +1374,7 @@ nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,ignore,not_desired_behavior
+```rust,not_desired_behavior
 # use std::{
 #     sync::{mpsc, Arc, Mutex},
 #     thread,

@@ -24,8 +24,6 @@ gelöst werden kann. Codeblock 17-14 führt eine Funktion `slow` ein.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::{thread, time::Duration};
 #
 # fn main() {
@@ -54,8 +52,6 @@ in einem Paar von Futures zu emulieren.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::{thread, time::Duration};
 #
 # fn main() {
@@ -128,8 +124,6 @@ hindern, wie in Codeblock 17-16 gezeigt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::{thread, time::Duration};
 #
 # fn main() {
@@ -203,8 +197,6 @@ durch `trpl::yield_now`.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::{thread, time::Duration};
 #
 # fn main() {
@@ -287,8 +279,6 @@ langsamen Future.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -330,8 +320,6 @@ Codeblock 17-19 zeigt diese Deklaration.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# extern crate trpl;
-#
 # use std::{future::Future, time::Duration};
 #
 # fn main() {
@@ -373,8 +361,6 @@ In Codeblock 17-20 implementieren wir `timeout`, indem wir das Ergebnis von
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::{future::Future, time::Duration};
 #
 use trpl::Either;

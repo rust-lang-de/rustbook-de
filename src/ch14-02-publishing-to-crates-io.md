@@ -395,13 +395,13 @@ festzustellen, ob sie intern strukturiert sind und ob sich ihre interne
 Struktur von der öffentlichen API unterscheidet.
 
 
-### Einrichten eines Kontos auf crates.io
+### Einrichten eines Accounts auf crates.io
 
-Bevor man eine Kiste veröffentlichen kann, muss man ein Konto auf 
-[crates.io][crates] erstellen um ein API-Token zu erhalten. Besuche dazu die
-Homepage auf [crates.io][crates] und melde dich über ein GitHub-Konto an.
-(Derzeit ist ein GitHub-Konto eine Voraussetzung, aber die Seite wird
-möglicherweise in Zukunft andere Wege einen Account zu erstellen ermöglichen.)
+Bevor man eine Kiste veröffentlichen kann, muss man einen Account auf 
+[crates.io][crates] erstellen, um ein API-Token zu erhalten. Besuche dazu die
+Homepage auf [crates.io][crates] und melde dich über einen GitHub-Account an.
+(Derzeit ist ein GitHub-Account eine Voraussetzung, aber die Seite wird
+möglicherweise in Zukunft andere Wege anbieten, um einen Account zu erstellen.)
 Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf 
 [https://crates.io/me/][crates-me] und erhalte deinen API-Schlüssel. Rufe
 anschließend das Kommando `cargo login` mit deinem API-Schlüssel auf:
@@ -508,7 +508,7 @@ und verwenden können.
 
 ### Veröffentlichen auf crates.io
 
-Nachdem man ein Konto erstellt, den API-Token gespeichert, einen Namen für
+Nachdem man einen Account erstellt, den API-Token gespeichert, einen Namen für
 seine Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
 sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
 Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.

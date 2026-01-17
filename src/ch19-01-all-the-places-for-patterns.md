@@ -12,11 +12,11 @@ Schlüsselwort `match`, einem Wert, mit dem verglichen wird, und einem oder
 mehreren `match`-Zweigen, die aus einem Muster und einem Ausdruck bestehen, der
 ausgeführt wird, wenn der Wert zum Muster dieses Zweigs passt, wie hier:
 
-```text
-match VALUE {
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
-    PATTERN => EXPRESSION,
+```rust,ignore
+match WERT {
+    MUSTER => AUSDRUCK,
+    MUSTER => AUSDRUCK,
+    MUSTER => AUSDRUCK,
 }
 ```
 
@@ -62,7 +62,7 @@ Jedes Mal, wenn du eine `let`-Anweisung wie diese verwendet hast, hast du
 Muster verwendet, auch wenn dir das vielleicht nicht bewusst war! Formal sieht
 eine `let`-Anweisung wie folgt aus:
 
-```rust
+```rust,ignore
 let MUSTER = AUSDRUCK;
 ```
 
@@ -79,7 +79,7 @@ verstehen, betrachte Codeblock 19-1, der ein Muster mit `let` verwendet, um ein
 Tupel zu destrukturieren.
 
 ```rust
-    let (x, y, z) = (1, 2, 3);
+let (x, y, z) = (1, 2, 3);
 ```
 
 <span class="caption">Codeblock 19-1: Verwenden eines Musters zum
@@ -99,7 +99,7 @@ mit drei Elementen in zwei Variablen zu destrukturieren, was nicht
 funktioniert.
 
 ```rust
-    let (x, y) = (1, 2, 3);
+let (x, y) = (1, 2, 3);
 ```
 
 <span class="caption">Codeblock 19-2: Fehlerhaft aufgebautes Musters, dessen
@@ -213,16 +213,16 @@ Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
 prüfen wir ein `Result` statt einer einer `Option`.
 
 ```rust
-    let (tx, rx) = std::sync::mpsc::channel();
-    std::thread::spawn(move || {
-        for val in [1, 2, 3] {
-            tx.send(val).unwrap();
-        }
-    });
-
-    while let Ok(value) = rx.recv() {
-        println!("{value}");
+let (tx, rx) = std::sync::mpsc::channel();
+std::thread::spawn(move || {
+    for val in [1, 2, 3] {
+        tx.send(val).unwrap();
     }
+});
+
+while let Ok(value) = rx.recv() {
+    println!("{value}");
+}
 ```
 
 <span class="caption">Codeblock 19-4: Das Verwenden einer `while let`-Schleife,
@@ -245,11 +245,11 @@ Codeblock 19-5 zeigt, wie man ein Muster in einer `for`-Schleife verwendet, um
 ein Tupel als Teil der `for`-Schleife zu destrukturieren oder zu zerlegen.
 
 ```rust
-    let v = vec!['a', 'b', 'c'];
+let v = vec!['a', 'b', 'c'];
 
-    for (index, value) in v.iter().enumerate() {
-        println!("{value} ist beim Index {index}");
-    }
+for (index, value) in v.iter().enumerate() {
+    println!("{value} ist beim Index {index}");
+}
 ```
 
 <span class="caption">Codeblock 19-5: Verwenden eines Musters in einer

@@ -189,7 +189,7 @@ Hello, world! 10 plus one is 11!
 Dadurch wird der Programmcode in _adder/src/main.rs_ ausgeführt, der von der
 Kiste `add_one` abhängt.
 
-#### Abhängigkeiten zu externen Paketen
+### Abhängigkeiten zu externen Paketen
 
 Beachte, dass der Arbeitsbereich nur eine Datei _Cargo.lock_ auf der obersten
 Ebene enthält, anstatt einer in jeder Kiste. Dies stellt sicher, dass alle
@@ -267,7 +267,7 @@ Wenn Kisten im Arbeitsbereich inkompatible Versionen der gleichen Abhängigkeit
 angeben, löst Cargo jede von ihnen auf, versucht aber trotzdem, so wenige
 Versionen wie möglich aufzulösen.
 
-#### Hinzufügen eines Tests zu einem Arbeitsbereich
+### Hinzufügen eines Tests zu einem Arbeitsbereich
 
 Füge für eine weitere Verbesserung innerhalb der `add_one`-Kiste einen Test der
 Funktion `add_one::add_one` hinzu:

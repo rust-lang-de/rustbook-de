@@ -106,12 +106,10 @@ Codeblock 20-1 zeigt, wie man aus Referenzen einen unveränderbaren und einen
 veränderbaren Rohzeiger erzeugt.
 
 ```rust
-# fn main() {
-    let mut num = 5;
+let mut num = 5;
 
-    let r1 = &raw const num;
-    let r2 = &raw mut num;
-# }
+let r1 = &raw const num;
+let r2 = &raw mut num;
 ```
 
 <span class="caption">Codeblock 20-1: Erstellen von Rohzeigern aus
@@ -141,10 +139,8 @@ solchen Code zu schreiben, vor allem, wenn man stattdessen den Operator `&raw`
 verwenden kann, aber es ist möglich.
 
 ```rust
-# fn main() {
-    let address = 0x012345usize;
-    let r = address as *const i32;
-# }
+let address = 0x012345usize;
+let r = address as *const i32;
 ```
 
 <span class="caption">Codeblock 20-2: Erzeugen eines Rohzeigers auf eine
@@ -156,17 +152,15 @@ wird. In Codeblock 20-3 wenden wir den Dereferenzierungsoperator `*` auf einen
 Rohzeiger an, was einen `unsafe`-Block erfordert.
 
 ```rust
-# fn main() {
-    let mut num = 5;
+let mut num = 5;
 
-    let r1 = &num as *const i32;
-    let r2 = &mut num as *mut i32;
+let r1 = &num as *const i32;
+let r2 = &mut num as *mut i32;
 
-    unsafe {
-        println!("r1 ist: {}", *r1);
-        println!("r2 ist: {}", *r2);
-    }
-# }
+unsafe {
+    println!("r1 ist: {}", *r1);
+    println!("r2 ist: {}", *r2);
+}
 ```
 
 <span class="caption">Codeblock 20-3: Dereferenzieren von Rohzeigern innerhalb
@@ -211,13 +205,11 @@ Hier ist eine unsichere Funktion namens `dangerous`, die in ihrem Rumpf nichts
 tut:
 
 ```rust
-# fn main() {
-    unsafe fn dangerous() {}
+unsafe fn dangerous() {}
 
-    unsafe {
-        dangerous();
-    }
-# }
+unsafe {
+    dangerous();
+}
 ```
 
 Wir müssen die Funktion `dangerous` innerhalb eines separaten `unsafe`-Blocks
@@ -262,16 +254,14 @@ sie den Anteilstyp an dem als Argument angegebenen Index teilt. Codeblock 20-4
 zeigt, wie man `split_at_mut` verwendet.
 
 ```rust
-# fn main() {
-    let mut v = vec![1, 2, 3, 4, 5, 6];
+let mut v = vec![1, 2, 3, 4, 5, 6];
 
-    let r = &mut v[..];
+let r = &mut v[..];
 
-    let (a, b) = r.split_at_mut(3);
+let (a, b) = r.split_at_mut(3);
 
-    assert_eq!(a, &mut [1, 2, 3]);
-    assert_eq!(b, &mut [4, 5, 6]);
-# }
+assert_eq!(a, &mut [1, 2, 3]);
+assert_eq!(b, &mut [4, 5, 6]);
 ```
 
 <span class="caption">Codeblock 20-4: Verwenden der sicheren Funktion
@@ -414,14 +404,12 @@ Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
 mit einer Länge von 10.000 Elementen.
 
 ```rust
-# fn main() {
-    use std::slice;
+use std::slice;
 
-    let address = 0x01234usize;
-    let r = address as *mut i32;
+let address = 0x01234usize;
+let r = address as *mut i32;
 
-    let values: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
-# }
+let values: &[i32] = unsafe { slice::from_raw_parts_mut(r, 10000) };
 ```
 
 <span class="caption">Codeblock 20-7: Erstellen eines Anteilstyps aus einer
@@ -452,7 +440,7 @@ Programmierer liegt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-extern "C" {
+unsafe extern "C" {
     fn abs(input: i32) -> i32;
 }
 
@@ -506,39 +494,38 @@ sicher! Vielmehr ist es ein Versprechen, das du Rust gegenüber abgibst, dass
 sie sicher ist. Es bleibt in deiner Verantwortung, dafür zu sorgen, dass dieses
 Versprechen eingehalten wird!
 
-> #### Aufrufen von Rust-Funktionen aus anderen Sprachen
->
-> Wir können auch `extern` verwenden, um eine Schnittstelle zu schaffen, die es
-> anderen Sprachen erlaubt, Rust-Funktionen aufzurufen. Anstelle eines
-> `extern`-Blocks fügen wir das Schlüsselwort `extern` hinzu und geben die zu
-> verwendende ABI unmittelbar vor dem Schlüsselwort `fn` der relevanten
-> Funktion an. Wir müssen auch eine Annotation `#[unsafe(no_mangle)]`
-> hinzufügen, um dem Rust-Compiler mitzuteilen, dass er den Namen dieser
-> Funktion nicht verändern soll. _Mangling_ bedeutet, dass ein Compiler den
-> Namen, den wir einer Funktion gegeben haben, in einen anderen Namen ändert,
-> der mehr Informationen für andere Teile des Kompiliervorgangs enthält, aber
-> weniger menschenlesbar ist. Jeder Programmiersprachen-Compiler verändert
-> Namen etwas anders. Damit eine Rust-Funktion von anderen Sprachen aufgerufen
-> werden kann, müssen wir also die Namensveränderung des Rust-Compilers
-> deaktivieren. Dies ist unsicher, da es ohne die eingebaute
-> Namensveränderung-Funktion zu Namenskollisionen in verschiedenen Bibliotheken
-> kommen kann. Es liegt also in unserer Verantwortung, sicherzustellen, dass
-> der von uns gewählte Name ohne Namensveränderung sicher exportiert werden
-> kann.
->
-> Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
-> zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
-> gelinkt wurde:
->
-> ```rust
-> #[unsafe(no_mangle)]
-> pub extern "C" fn call_from_c() {
->     println!("Rust-Funktion von C aufgerufen!");
-> }
-> ```
->
-> Diese Verwendung von `extern` erfordert `unsafe` nur im Attribut, nicht im
-> `extern`-Block.
+#### Aufrufen von Rust-Funktionen aus anderen Sprachen
+
+Wir können auch `extern` verwenden, um eine Schnittstelle zu schaffen, die es
+anderen Sprachen erlaubt, Rust-Funktionen aufzurufen. Anstelle eines
+`extern`-Blocks fügen wir das Schlüsselwort `extern` hinzu und geben die zu
+verwendende ABI unmittelbar vor dem Schlüsselwort `fn` der relevanten Funktion
+an. Wir müssen auch eine Annotation `#[unsafe(no_mangle)]` hinzufügen, um dem
+Rust-Compiler mitzuteilen, dass er den Namen dieser Funktion nicht verändern
+soll. _Mangling_ bedeutet, dass ein Compiler den Namen, den wir einer Funktion
+gegeben haben, in einen anderen Namen ändert, der mehr Informationen für andere
+Teile des Kompiliervorgangs enthält, aber weniger menschenlesbar ist. Jeder
+Programmiersprachen-Compiler verändert Namen etwas anders. Damit eine
+Rust-Funktion von anderen Sprachen aufgerufen werden kann, müssen wir also die
+Namensveränderung des Rust-Compilers deaktivieren. Dies ist unsicher, da es
+ohne die eingebaute Namensveränderung-Funktion zu Namenskollisionen in
+verschiedenen Bibliotheken kommen kann. Es liegt also in unserer Verantwortung,
+sicherzustellen, dass der von uns gewählte Name ohne Namensveränderung sicher
+exportiert werden kann.
+
+Im folgenden Beispiel machen wir die Funktion `call_from_c` von C-Code aus
+zugänglich, nachdem sie in eine gemeinsame Bibliothek kompiliert und von C
+gelinkt wurde:
+
+```rust
+#[unsafe(no_mangle)]
+pub extern "C" fn call_from_c() {
+    println!("Rust-Funktion von C aufgerufen!");
+}
+```
+
+Diese Verwendung von `extern` erfordert `unsafe` nur im Attribut, nicht im
+`extern`-Block.
 
 ### Zugreifen oder Ändern einer veränderbaren, statischen Variable
 
@@ -588,18 +575,20 @@ sie zugreift und sie modifiziert.
 ```rust
 static mut COUNTER: u32 = 0;
 
-/// SAFETY: Calling this from more than a single thread at a time is undefined
-/// behavior, so you *must* guarantee you only call it from a single thread at
-/// a time.
+/// SAFETY: Der Aufruf aus mehr als einem Strang gleichzeitig führt zu
+/// undefiniertem Verhalten, daher *musst* du sicherstellen, dass du sie nur
+/// aus einem einzigen Strang gleichzeitig aufrufst.
 unsafe fn add_to_count(inc: u32) {
-    COUNTER += inc;
+    unsafe {
+        COUNTER += inc;
+    }
 }
 
 fn main() {
     unsafe {
-        // SAFETY: This is only called from a single thread in `main`.
+        // SAFETY: Aufruf aus nur von einem einzigen Strang in `main`.
         add_to_count(3);
-        println!("COUNTER: {}", COUNTER);
+        println!("COUNTER: {}", *(&raw const COUNTER));
     }
 }
 ```

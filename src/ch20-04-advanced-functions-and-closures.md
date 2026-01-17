@@ -78,9 +78,9 @@ Zahlen in einen Vektor von Zeichenketten zu verwandeln, könnten wir einen
 Funktionsabschluss verwenden, wie in Codeblock 20-29.
 
 ```rust
-    let list_of_numbers = vec![1, 2, 3];
-    let list_of_strings: Vec<String> =
-        list_of_numbers.iter().map(|i| i.to_string()).collect();
+let list_of_numbers = vec![1, 2, 3];
+let list_of_strings: Vec<String> =
+    list_of_numbers.iter().map(|i| i.to_string()).collect();
 ```
 
 <span class="caption">Codeblock 20-29: Verwendung eines Funktionsabschlusses
@@ -90,9 +90,9 @@ Oder wir könnten eine Funktion als Argument für `map` angeben anstelle des
 Funktionsabschlusses. Codeblock 20-30 zeigt, wie das aussehen würde.
 
 ```rust
-    let list_of_numbers = vec![1, 2, 3];
-    let list_of_strings: Vec<String> =
-        list_of_numbers.iter().map(ToString::to_string).collect();
+let list_of_numbers = vec![1, 2, 3];
+let list_of_strings: Vec<String> =
+    list_of_numbers.iter().map(ToString::to_string).collect();
 ```
 
 <span class="caption">Codeblock 20-30: Verwenden der Methode
@@ -115,12 +115,12 @@ Methoden angeben können, die Funktionsabschlüsse nehmen, wie in Codeblock 20-3
 zu sehen ist.
 
 ```rust
-    enum Status {
-        Value(u32),
-        Stop,
-    }
+enum Status {
+    Value(u32),
+    Stop,
+}
 
-    let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
+let list_of_statuses: Vec<Status> = (0u32..20).map(Status::Value).collect();
 ```
 
 <span class="caption">Codeblock 20-31: Verwenden eines
@@ -198,24 +198,24 @@ kompilieren, lässt uns Rust wissen, dass es nicht funktionieren wird:
 ```console
 $ cargo build
    Compiling functions-example v0.1.0 (file:///projects/functions-example)
-    error[E0308]: mismatched types
-    --> src/main.rs:4:9
-       |
-    4  |         returns_initialized_closure(123)
-       |         ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected opaque type, found a different opaque type
-    ...
-    12 | fn returns_closure() -> impl Fn(i32) -> i32 {
-       |                         ------------------- the expected opaque type
-    ...
-    16 | fn returns_initialized_closure(init: i32) -> impl Fn(i32) -> i32 {
-       |                                              ------------------- the found opaque type
-       |
-    = note: expected opaque type `impl Fn(i32) -> i32` (opaque type at <src/main.rs:12:25>)
-                found opaque type `impl Fn(i32) -> i32` (opaque type at <src/main.rs:16:46>)
-    = note: distinct uses of `impl Trait` result in different opaque types
+error[E0308]: mismatched types
+  --> src/main.rs:2:44
+   |
+ 2 |     let handlers = vec![returns_closure(), returns_initialized_closure(123)];
+   |                                            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^ expected opaque type, found a different opaque type
+...
+ 9 | fn returns_closure() -> impl Fn(i32) -> i32 {
+   |                         ------------------- the expected opaque type
+...
+13 | fn returns_initialized_closure(init: i32) -> impl Fn(i32) -> i32 {
+   |                                              ------------------- the found opaque type
+   |
+   = note: expected opaque type `impl Fn(i32) -> i32`
+              found opaque type `impl Fn(i32) -> i32`
+   = note: distinct uses of `impl Trait` result in different opaque types
 
-    For more information about this error, try `rustc --explain E0308`.
-    error: could not compile `functions-example` (bin "functions-example") due to 1 previous error
+For more information about this error, try `rustc --explain E0308`.
+error: could not compile `functions-example` (bin "functions-example") due to 1 previous error
 ```
 
 Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein `impl Trait`
@@ -227,7 +227,7 @@ Merkmal implementieren, nämlich `Fn(i32) -> i32`, sind die undurchsichtigen
 Typen, die Rust für jede Funktion erzeugt, unterschiedlich. (Dies ist
 vergleichbar mit der Art und Weise, wie Rust unterschiedliche konkrete Typen
 für verschiedene asynchrone Blöcke erzeugt, selbst wenn sie denselben
-Ausgabetyp haben, wie wir im Abschnitt [„Die Merkmale `Pin` and
+Ausgabetyp haben, wie wir im Abschnitt [„Der Typ `Pin` und das Merkmal
 `Unpin`“][future-types] in Kapitel 17 gesehen haben.) Eine Lösung für dieses
 Problem haben wir jetzt schon ein paar Mal gesehen: Wir können ein
 Merkmals-Objekt verwenden, wie in Codeblock 20-34.
@@ -261,7 +261,7 @@ Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18.
 Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch20-02-advanced-traits.html
-[future-types]: ch17-05-traits-for-async.md#die-merkmale-pin-and-unpin
+[future-types]: ch17-05-traits-for-async.md#der-typ-pin-und-das-merkmal-unpin
 [closure-types]: ch13-01-closures.html#herleiten-und-annotieren-von-funktionsabschluss-typen
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

@@ -1,13 +1,14 @@
 ## Ein genauerer Blick auf die Merkmale für Async
 
-Im Laufe des Kapitels haben wir die Merkmale `Future`, `Pin`, `Unpin`, `Stream`
-und `StreamExt` auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch
-vermieden, zu sehr ins Detail zu gehen, wie sie funktionieren oder wie sie
-zusammenpassen. Wenn wir Rust für den Alltag schreiben, ist das meist
-ausreichend. Manchmal stößt man jedoch auf Situationen, in denen du
-weitergehende Details verstehen musst. In diesem Abschnitt werden wir nur so
-weit ins Detail gehen, wie es für diese Szenarien nötig ist, und überlassen die
-_wirklich_ tiefen Einblicke der weiteren Dokumentation.
+Im Laufe des Kapitels haben wir die Merkmale `Future`, `Stream` und `StreamExt`
+auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch vermieden, zu
+sehr ins Detail zu gehen, wie sie funktionieren oder wie sie zusammenpassen.
+Wenn wir Rust für den Alltag schreiben, ist das meist ausreichend. Manchmal
+stößt man jedoch auf Situationen, in denen du weitergehende Details dieser
+Merkmale verstehen musst, beispielsweise zum Typ `Pin` und zum Merkmal `Unpin`.
+In diesem Abschnitt werden wir nur so weit ins Detail gehen, wie es für diese
+Szenarien nötig ist, und überlassen die _wirklich_ tiefen Einblicke der
+weiteren Dokumentation.
 
 ### Das Merkmal `Future`
 
@@ -38,7 +39,7 @@ mehr über `Pin` und `Context` sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ `Poll`:
 
 ```rust
-enum Poll<T> {
+pub enum Poll<T> {
     Ready(T),
     Pending,
 }
@@ -51,12 +52,13 @@ das Future noch Arbeit zu erledigen hat, sodass der Aufrufer später noch einmal
 nachsehen muss. Die Variante `Ready` zeigt an, dass das `Future` seine Arbeit
 beendet hat und der Wert `T` verfügbar ist.
 
-> Hinweis: Bei den meisten Futures sollte der Aufrufer die Methode `poll` nicht
-> erneut aufrufen, nachdem das Future `Ready` zurückgegeben hat. Viele Futures
-> werden das Programm zum Absturz bringen, wenn sie erneut abgefragt werden,
-> obwohl sie bereit sind! Futures, bei denen eine erneute Abfrage sicher ist,
-> werden dies in ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum
-> Verhalten von `Iterator::next`!
+> Hinweis: Es kommt selten vor, dass man `poll` direkt aufrufen muss, aber wenn
+> doch, sollte man bedenken, dass man bei den meisten Futures `poll` nicht
+> erneut aufrufen darf, nachdem das Future `Ready` zurückgegeben hat. Viele
+> Futures werden das Programm zum Absturz bringen, wenn sie erneut abgefragt
+> werden, obwohl sie bereit sind! Futures, bei denen eine erneute Abfrage
+> sicher ist, werden dies in ihrer Dokumentation explizit erwähnen. Dies ist
+> ähnlich zum Verhalten von `Iterator::next`!
 
 Rust kompiliert Code mit `await` unter der Haube zu Code, der `poll` aufruft.
 Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne
@@ -120,7 +122,7 @@ Futures zu verstehen: Eine Laufzeitumgebung fragt jedes Future ab, für das sie
 verantwortlich ist, und versetzt das Future zurück in den Schlaf, wenn es noch
 nicht bereit ist.
 
-### Die Merkmale `Pin` and `Unpin`
+### Der Typ `Pin` und das Merkmal `Unpin`
 
 In Codeblock 17-13 haben wir das Makro `trpl::join!` verwendet, um auf drei
 Futures zu warten. Es ist jedoch üblich, eine Sammlung wie einen Vektor zu
@@ -132,8 +134,6 @@ drei Futures in einen Vektor einfügt und stattdessen die Funktion
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -187,7 +187,7 @@ drei Futures in einen Vektor einfügt und stattdessen die Funktion
 <span class="caption">Codeblock 17-23: Warten auf Futures in einer
 Sammlung</span>
 
-Wir legen jede Future in eine `Box`, um sie zu _Merkmals-Objekten_ (trait
+Wir legen jedes Future in eine `Box`, um es zu _Merkmals-Objekten_ (trait
 objects) zu machen, genau wie wir es im Abschnitt [„Fehlerrückgabe aus
 `run`”][returning-errors] in Kapitel 12 getan haben. (Wir werden
 Merkmals-Objekte in Kapitel 18 ausführlich behandeln.) Durch die Verwendung von
@@ -455,8 +455,6 @@ angepasst wird.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 use std::pin::{Pin, pin};
 
 // --abschneiden--

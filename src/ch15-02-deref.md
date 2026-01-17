@@ -62,11 +62,6 @@ error[E0277]: can't compare `{integer}` with `&{integer}`
   |
   = help: the trait `PartialEq<&{integer}>` is not implemented for `{integer}`
   = note: this error originates in the macro `assert_eq` (in Nightly builds, run with -Z macro-backtrace for more info)
-help: consider dereferencing here
- --> file:///home/.rustup/toolchains/1.85/lib/rustlib/src/rust/library/core/src/macros/mod.rs:46:35
-  |
-46|                 if !(*left_val == **right_val) {
-  |                                   +
 
 For more information about this error, try `rustc --explain E0277`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error
@@ -184,7 +179,7 @@ error[E0614]: type `MyBox<{integer}>` cannot be dereferenced
   --> src/main.rs:14:19
    |
 14 |     assert_eq!(5, *y);
-   |                   ^^
+   |                   ^^ can't be dereferenced
 
 For more information about this error, try `rustc --explain E0614`.
 error: could not compile `deref-example` (bin "deref-example") due to 1 previous error

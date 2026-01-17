@@ -32,10 +32,8 @@ das Muster `Some(x)` angegeben, ein abweisbares Muster. Wie zu erwarten ist,
 lässt sich dieser Code nicht kompilieren.
 
 ```rust,does_not_compile
-# fn main() {
-#     let some_option_value: Option<i32> = None;
-    let Some(x) = some_option_value;
-# }
+# let some_option_value: Option<i32> = None;
+let Some(x) = some_option_value;
 ```
 
 <span class="caption">Codeblock 19-8: Versuch, ein abweisbares Muster mit `let`
@@ -79,12 +77,10 @@ passt, führt das Programm einfach den Code in den geschweiften Klammern aus.
 Codeblock 19-9 zeigt, wie der Code in Codeblock 19-8 zu korrigieren ist.
 
 ```rust
-# fn main() {
-#     let some_option_value: Option<i32> = None;
-    let Some(x) = some_option_value else {
-        return;
-    };
-# }
+# let some_option_value: Option<i32> = None;
+let Some(x) = some_option_value else {
+    return;
+};
 ```
 
 <span class="caption">Codeblock 19-9: Verwenden von `let...else` und eines
@@ -97,11 +93,9 @@ passt, z.B. `x` wie in Codeblock 19-10 gezeigt, gibt der Compiler eine Warnung
 aus.
 
 ```rust
-# fn main() {
-    let x = 5 else {
-        return;
-    };
-# }
+let x = 5 else {
+    return;
+};
 ```
 
 <span class="caption">Codeblock 19-10: Der Versuch, ein unabweisbares Muster

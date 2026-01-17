@@ -257,9 +257,8 @@ error[E0308]: mismatched types
  --> src/main.rs:5:29
   |
 5 |     let n = example_closure(5);
-  |             --------------- ^- help: try using a conversion method: `.to_string()`
-  |             |               |
-  |             |               expected `String`, found integer
+  |             --------------- ^ expected `String`, found integer
+  |             |
   |             arguments to this function are incorrect
   |
 note: expected because the closure was earlier called with an argument of type `String`
@@ -274,6 +273,10 @@ note: closure parameter defined here
   |
 2 |     let example_closure = |x| x;
   |                            ^
+help: try using a conversion method
+  |
+5 |     let n = example_closure(5.to_string());
+  |                              ++++++++++++
 
 For more information about this error, try `rustc --explain E0308`.
 error: could not compile `closure-example` (bin "closure-example") due to 1 previous error
@@ -640,12 +643,14 @@ error[E0507]: cannot move out of `value`, a captured variable in an `FnMut` clos
   --> src/main.rs:18:30
    |
 15 |     let value = String::from("Funktionsabschluss aufgerufen");
-   |         ----- captured outer variable
+   |         -----   --------------------------------------------- move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |         |
+   |         captured outer variable
 16 |
 17 |     list.sort_by_key(|r| {
    |                      --- captured by this `FnMut` closure
 18 |         sort_operations.push(value);
-   |                              ^^^^^ move occurs because `value` has type `String`, which does not implement the `Copy` trait
+   |                              ^^^^^ `value` is moved here
    |
 help: consider cloning the value if the performance cost is acceptable
    |

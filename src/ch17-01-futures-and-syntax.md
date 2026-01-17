@@ -93,8 +93,6 @@ Elements `<title>` zurückgibt (siehe Codeblock 17-1).
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # fn main() {
 #     // TODO: Wir fügen dies als nächstes hinzu!
 # }
@@ -173,8 +171,6 @@ den Rumpf von `page_url_for` ändern, um die Funktionsaufrufe `trpl::get` und
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use trpl::Html;
 #
 # fn main() {
@@ -210,7 +206,6 @@ eine Funktionsdefinition wie `async fn page_title` in Codeblock 17-1 fast
 äquivalent zu einer nicht-asynchronen Funktion, die wie folgt definiert ist:
 
 ```rust
-# extern crate trpl;
 use std::future::Future;
 use trpl::Html;
 
@@ -252,8 +247,6 @@ gezeigt. Leider lässt sich dieser Code noch nicht kompilieren.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore,does_not_compile
-# extern crate trpl;
-#
 # use trpl::Html;
 #
 async fn main() {
@@ -336,8 +329,6 @@ Codeblock 17-4.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,should_panic,noplayground
-# extern crate trpl;
-#
 # use trpl::Html;
 #
 fn main() {
@@ -387,8 +378,6 @@ Zustandsmaschine, so als ob du eine Aufzählung auf diese Weise geschrieben
 hättest, um den aktuellen Zustand an jedem `await`-Punkt zu speichern:
 
 ```rust
-# extern crate trpl;
-#
 enum PageTitleFuture<'a> {
     Initial { url: &'a str },
     GetAwaitPoint { url: &'a str },
@@ -438,8 +427,6 @@ indem das zuerst fertig werdende Future ausgewählt wird.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,should_panic,noplayground
-# extern crate trpl;
-#
 use trpl::{Either, Html};
 
 fn main() {

@@ -193,7 +193,7 @@ Codeblock 18-7 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
-```rust,noplayground
+```rust
 # pub trait Draw {
 #     fn draw(&self);
 # }

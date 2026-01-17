@@ -25,8 +25,6 @@ um das Zählbeispiel zu implementieren, siehe Codeblock 17-6.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 use std::time::Duration;
 
 fn main() {
@@ -91,8 +89,6 @@ dasselbe zu tun, weil `JoinHandle` selbst ein Future ist. Sein `Output`-Typ ist
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -162,8 +158,6 @@ handelt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -249,8 +243,6 @@ da wir einen separaten Strang erstellt haben.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # fn main() {
 #     trpl::block_on(async {
         let (tx, mut rx) = trpl::channel();
@@ -303,8 +295,6 @@ dazwischen zu schlafen, wie in Codeblock 17-10 gezeigt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -400,8 +390,6 @@ _nicht_ wollen.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -480,8 +468,6 @@ zu `async move`.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {
@@ -531,8 +517,6 @@ senden wollen, wie in Codeblock 17-13 gezeigt.
 <span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
-# extern crate trpl;
-#
 # use std::time::Duration;
 #
 # fn main() {

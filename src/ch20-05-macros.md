@@ -356,11 +356,8 @@ für die Funktion `impl_hello_macro` hinzufügen.
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore,does_not_compile
-extern crate proc_macro;
-
 use proc_macro::TokenStream;
 use quote::quote;
-use syn;
 
 #[proc_macro_derive(HelloMacro)]
 pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
@@ -470,11 +467,8 @@ Codeblock 20-42 gezeigt.
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
 
 ```rust,ignore
-# extern crate proc_macro;
-#
 # use proc_macro::TokenStream;
 # use quote::quote;
-# use syn;
 #
 # #[proc_macro_derive(HelloMacro)]
 # pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
@@ -488,14 +482,14 @@ Codeblock 20-42 gezeigt.
 #
 fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
     let name = &ast.ident;
-    let gen = quote! {
+    let generated = quote! {
         impl HelloMacro for #name {
             fn hello_macro() {
                 println!("Hallo Makro! Mein Name ist {}!", stringify!(#name));
             }
         }
     };
-    gen.into()
+    generated.into()
 }
 ```
 
