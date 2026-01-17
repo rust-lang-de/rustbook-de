@@ -6,7 +6,8 @@ alle Änderungen des englischen Originals bis einschließlich zum **06.01.2026**
 
 ## [📖 > Hier online lesen < 📖][rustbook-de]
 
-Die deutsche Übersetzung gibt es auch als **Taschenbuch** und als **E-Book**:
+Die deutsche Übersetzung gibt es auch als gedrucktes **Taschenbuch** und als
+**E-Book**:
 
 [![Taschenbuch und E-Book][printbook-image]][printbook-url]
 
@@ -22,13 +23,13 @@ Schritte zum Bauen und Anschauen des Buchs:
 
 ## Mithelfen
 
-Vorschläge und Korrekturen oder gar Übersetzungen sind jederzeit gerne
-gewünscht. Falls du helfen möchtest, dann am besten per Pull Request oder
-Issue. Bitte beachte die [Übersetzungskonventionen][konventionen].
+Aktualisierungen und Korrekturen sind jederzeit willkommen. Falls du mithelfen
+möchtest, dann am besten per Pull Request oder Issue. Bitte beachte die
+[Übersetzungskonventionen][konventionen].
 
 Für jeden Beitrag zu diesem Buch gibt es das aktuelle E-Book kostenlos für den
-persönlichen Gebrauch. Bei Interesse bitte eine E-Mail an [damoasda][damoasda]
-senden, dann schicke ich den Download-Link.
+persönlichen Gebrauch. Bei Interesse sende eine E-Mail an [damoasda][damoasda],
+dann bekommst du Download-Link.
 
 [damoasda]: https://github.com/damoasda
 [konventionen]: https://github.com/rust-lang-de/rustbook-de/wiki/%C3%9Cbersetzungskonventionen
