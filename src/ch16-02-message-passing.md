@@ -99,9 +99,9 @@ fn main() {
 Strang und Senden von „hallo“</span>
 
 Wieder verwenden wir `thread::spawn`, um einen neuen Strang zu erstellen, und
-dann `move`, um `tx` in den Funktionsabschluss zu verschieben, sodass der
-erzeugte Strang `tx` besitzt. Der erzeugte Strang muss den Sender besitzen, um
-in der Lage zu sein, Nachrichten durch den Kanal zu senden.
+dann `move`, um `tx` in den Closure zu verschieben, sodass der erzeugte Strang
+`tx` besitzt. Der erzeugte Strang muss den Sender besitzen, um in der Lage zu
+sein, Nachrichten durch den Kanal zu senden.
 
 Der Sender hat eine Methode `send`, die den Wert entgegennimmt, den wir senden
 wollen. Die Methode `send` gibt ein `Result<T, E>` zurück; wenn also die

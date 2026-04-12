@@ -257,7 +257,7 @@ empfehlen.
 Mit all den Änderungen, die wir vorgenommen haben, lässt sich unser Code ohne
 jede Warnung kompilieren. Aber die schlechte Nachricht ist, dass dieser Code
 noch nicht so funktioniert, wie wir es uns wünschen. Der Schlüssel ist die
-Logik in den Funktionsabschlüssen, die von den Strängen der `Worker`-Instanzen
+Logik in den Closures, die von den Strängen der `Worker`-Instanzen
 ausgeführt werden: Im Moment rufen wir `join` auf, aber das wird die Stränge
 nicht herunterfahren, weil sie sich in einer Endlosschleife auf der Suche nach
 Aufträgen befinden. Wenn wir versuchen, unseren `ThreadPool` mit unserer

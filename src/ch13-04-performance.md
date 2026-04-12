@@ -38,20 +38,19 @@ ETAPS-Keynote-Präsentation „Foundations of C++” aus dem Jahr 2012 gegeben h
 
 In vielen Fällen wird Rust-Code, der Iteratoren verwendet, zu demselben
 Assembler-Code kompiliert, die du von Hand schreiben würdest. Optimierungen wie
-Schleifen-Abrollen und Entfernen von Bereichsprüfungen beim Array-Zugriff
-machen den resultierenden Code äußerst effizient. Jetzt, da du das weißt,
-kannst du Iteratoren und Funktionsabschlüsse ohne Bedenken verwenden! Sie
-lassen den Code abstrakter erscheinen, verursachen aber keine
-Performanzeinbußen zur Laufzeit.
+Schleifen-Abrollen und Entfernen von Bereichsprüfungen beim Array-Zugriff machen
+den resultierenden Code äußerst effizient. Jetzt, da du das weißt, kannst du
+Iteratoren und Closures ohne Bedenken verwenden! Sie lassen den Code abstrakter
+erscheinen, verursachen aber keine Performanzeinbußen zur Laufzeit.
 
 ## Zusammenfassung
 
-Funktionsabschlüsse und Iteratoren sind Rust-Funktionalitäten, die von Ideen der
+Closures und Iteratoren sind Rust-Funktionalitäten, die von Ideen der
 funktionalen Programmierung inspiriert sind. Sie tragen zu Rusts Fähigkeit bei,
 abstrakte Ideen bei guter Performanz zu ermöglichen. Die Implementierungen von
-Iteratoren und Funktionsabschlüssen sind so, dass die Performanz der Laufzeit
-nicht beeinträchtigt wird. Dies ist ein Teil von Rusts Ziel,
-Zero-Cost-Abstraktionen zu ermöglichen.
+Iteratoren und Closures sind so, dass die Performanz der Laufzeit nicht
+beeinträchtigt wird. Dies ist ein Teil von Rusts Ziel, Zero-Cost-Abstraktionen
+zu ermöglichen.
 
 Nachdem wir die Ausdruckskraft unseres E/A-Projekts verbessert haben, wollen
 wir uns nun einige weitere Funktionalitäten von `cargo` ansehen, die uns helfen

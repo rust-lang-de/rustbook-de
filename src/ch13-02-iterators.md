@@ -180,10 +180,10 @@ sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
 Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.
 
 Codeblock 13-14 zeigt ein Beispiel für den Aufruf der Iterator-Adaptor-Methode
-`map`, die einen Funktionsabschluss für jedes Element aufruft, während die
-Elemente durchlaufen werden. Die Methode `map` gibt einen neuen Iterator
-zurück, der die geänderten Elemente erzeugt. Der Funktionsabschluss erzeugt
-hier einen neuen Iterator, der jedes Element des Vektors um 1 erhöht.
+`map`, die einen Closure für jedes Element aufruft, während die Elemente
+durchlaufen werden. Die Methode `map` gibt einen neuen Iterator zurück, der die
+geänderten Elemente erzeugt. Der Closure erzeugt hier einen neuen Iterator, der
+jedes Element des Vektors um 1 erhöht.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -219,9 +219,9 @@ warning: `iterators` (bin "iterators") generated 1 warning
      Running `target/debug/iterators`
 ```
 
-Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Funktionsabschluss
-wird nie aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul
-sind und dass wir den Iterator verwenden müssen, um etwas zu bewirken.
+Der Programmcode in Codeblock 13-14 hat keine Wirkung, der Closure wird nie
+aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul sind und
+dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
 Um das zu beheben, werden wir die Methode `collect` verwenden, die wir mit
 `env::args` im Codeblock 12-1 benutzt haben. Diese Methode konsumiert den
@@ -246,31 +246,30 @@ assert_eq!(v2, vec![2, 3, 4]);
 Iterator zu erzeugen und anschließend der Methode `collect` um den
 Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 
-Da `map` einen Funktionsabschluss als Parameter annimmt, können wir eine
-beliebige Operation spezifizieren, die wir auf jedes Element anwenden wollen.
-Dies ist ein gutes Beispiel dafür, wie man mit Funktionsabschlüssen ein
-Verhalten anpassen kann, während das vom `Iterator`-Merkmal bereitgestellte 
-Iterationsverhalten wiederverwendet wird.
+Da `map` einen Closure als Parameter annimmt, können wir eine beliebige
+Operation spezifizieren, die wir auf jedes Element anwenden wollen. Dies ist ein
+gutes Beispiel dafür, wie man mit Closures ein Verhalten anpassen kann, während
+das vom `Iterator`-Merkmal bereitgestellte Iterationsverhalten wiederverwendet
+wird.
 
 Du kannst mehrere Aufrufe von Iterator-Adaptoren verketten, um komplexe
 Aktionen auf lesbare Weise durchzuführen. Da jedoch alle Iteratoren faul sind,
 musst du eine der konsumierenden Adaptermethoden aufrufen, um Ergebnisse aus
 Aufrufen von Iteratoradaptern zu erhalten.
 
-### Funktionsabschlüsse die ihre Umgebung erfassen
+### Closures die ihre Umgebung erfassen
 
-Viele Iterator-Adapter nehmen Funktionsabschlüsse als Argumente, und in der
-Regel werden diese Funktionsabschlüsse solche sein, die ihre Umgebung erfassen.
+Viele Iterator-Adapter nehmen Closures als Argumente, und in der Regel werden
+diese Closures solche sein, die ihre Umgebung erfassen.
 
-In diesem Beispiel verwenden wir die Methode `filter`, die einen
-Funktionsabschluss entgegennimmt. Der Funktionsabschluss holt ein Element aus
-dem Iterator und gibt ein `bool` zurück. Wenn der Funktionsabschluss `true`
-zurückgibt, wird der Wert in die von `filter` erzeugte Iteration aufgenommen.
-Wenn der Funktionsabschluss `false` zurückgibt, wird der Wert nicht
-aufgenommen.
+In diesem Beispiel verwenden wir die Methode `filter`, die einen Closure
+entgegennimmt. Der Closure holt ein Element aus dem Iterator und gibt ein `bool`
+zurück. Wenn der Closure `true` zurückgibt, wird der Wert in die von `filter`
+erzeugte Iteration aufgenommen. Wenn der Closure `false` zurückgibt, wird der
+Wert nicht aufgenommen.
 
-Im Codeblock 13-16 benutzen wir `filter` mit einem Funktionsabschluss, der die
-Variable `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
+Im Codeblock 13-16 benutzen wir `filter` mit einem Closure, der die Variable
+`shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
 `Shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
 
@@ -327,8 +326,8 @@ mod tests {
 }
 ```
 
-<span class="caption">Codeblock 13-16: Die Methode `filter` mit einen
-Funktionsabschluss benutzen, der `shoe_size` erfasst</span>
+<span class="caption">Codeblock 13-16: Die Methode `filter` mit einen Closure
+benutzen, der `shoe_size` erfasst</span>
 
 Die Funktion `shoes_in_size` übernimmt die Eigentümerschaft über einen Vektor
 aus Schuhen mit der Schuhgröße als Parameter und gibt einen Vektor zurück, der
@@ -337,13 +336,13 @@ nur Schuhe einer bestimmten Größe enthält.
 Im Funktionsrumpf von `shoes_in_size` rufen wir `into_iter` auf, um einen
 Iterator zu erzeugen, der die Eigentümerschaft vom Vektor übernimmt. Im Anschluss
 rufen wir den `filter`-Adapter auf, um einen neuen Iterator zu erzeugen, der nur
-Elemente enthält, für die der Funktionsabschluss `true` zurückgibt.
+Elemente enthält, für die der Closure `true` zurückgibt.
 
-Der Funktionsabschluss erfasst den `shoe_size`-Parameter aus seiner Umgebung und
-vergleicht dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der
-gewählten Größe. Zuletzt sammelt der Aufruf der Methode `collect` die
-zurückgegeben Werte des angeschlossenen Adapters in den Vektor, der von der
-Funktion zurückgegeben wird.
+Der Closure erfasst den `shoe_size`-Parameter aus seiner Umgebung und vergleicht
+dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der gewählten
+Größe. Zuletzt sammelt der Aufruf der Methode `collect` die zurückgegeben Werte
+des angeschlossenen Adapters in den Vektor, der von der Funktion zurückgegeben
+wird.
 
 Der Test zeigt, wenn wir `shoes_in_size` aufrufen, bekommen wir nur Schuhe
 der spezifizierten Größe zurück.

@@ -313,9 +313,9 @@ Tupel destrukturieren</span>
 Dieser Code gibt `Aktuelle Position: (3, 5)` aus. Die Werte `&(3, 5)` passen
 zum Muster `&(x, y)`, sodass `x` den Wert `3` und `y` den Wert `5` hat.
 
-Wir können auch Muster in Funktionsabschlussparameterlisten (closure parameter
-lists) auf die gleiche Weise wie in Funktionsparameterlisten verwenden, da
-Funktionsabschlüsse ähnlich wie Funktionen sind, wie in Kapitel 13 besprochen.
+Wir können auch Muster in Closure-Parameterlisten auf die gleiche Weise wie in
+Funktionsparameterlisten verwenden, da Closures ähnlich wie Funktionen sind, wie
+in Kapitel 13 besprochen.
 
 An diesem Punkt hast du verschiedene Möglichkeiten der Verwendung von Mustern
 gesehen, aber Muster funktionieren nicht an allen Stellen, an denen wir sie

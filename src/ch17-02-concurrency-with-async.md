@@ -450,17 +450,16 @@ mit `trpl::join` interagiert:
   an den Anfang dieser Liste bringt.
 
 Im Moment _leiht_ sich der async-Block, in dem wir die Nachrichten senden, nur
-`tx` aus, weil das Senden einer Nachricht keine Eigentümerschaft erfordert.
-Wenn wir `tx` aber in den async-Block _verschieben_ könnten, würde es
-aufgeräumt werden, sobald der Block endet. Im Abschnitt [„Erfassen von
-Referenzen oder Verschieben der Eigentümerschaft“][capture-or-move] in Kapitel
-13 haben wir gelernt, wie man das Schlüsselwort `move` mit Funktionsabschlüssen
-verwendet, und im Abschnitt [„Verwenden von `move`-Funktionsabschlüssen mit
-Strängen“][move-threads] in Kapitel 16 haben wir gesehen, dass wir oft Daten in
-Funktionsabschlüsse verschieben müssen, wenn wir mit Strängen arbeiten. Für
-asynchrone Blöcke gilt dieselbe grundlegende Dynamik, sodass das Schlüsselwort
-`move` mit asynchronen Blöcken genauso funktioniert wie mit
-Funktionsabschlüssen.
+`tx` aus, weil das Senden einer Nachricht keine Eigentümerschaft erfordert. Wenn
+wir `tx` aber in den async-Block _verschieben_ könnten, würde es aufgeräumt
+werden, sobald der Block endet. Im Abschnitt [„Erfassen von Referenzen oder
+Verschieben der Eigentümerschaft“][capture-or-move] in Kapitel 13 haben wir
+gelernt, wie man das Schlüsselwort `move` mit Closures verwendet, und im
+Abschnitt [„Verwenden von `move`-Closures mit Strängen“][move-threads] in
+Kapitel 16 haben wir gesehen, dass wir oft Daten in Closures verschieben müssen,
+wenn wir mit Strängen arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende
+Dynamik, sodass das Schlüsselwort `move` mit asynchronen Blöcken genauso
+funktioniert wie mit Closures.
 
 In Codeblock 17-12 ändern wir den Block zum Senden von Nachrichten von `async`
 zu `async move`.
@@ -611,5 +610,5 @@ einer anderen Aufgabe wechseln kann.
 [if-let]: ch06-03-if-let.html
 [join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-stränge
 [message-passing-threads]: ch16-02-message-passing.html
-[move-threads]: ch16-01-threads.html#verwenden-von-move-funktionsabschlüssen-mit-strängen
+[move-threads]: ch16-01-threads.html#verwenden-von-move-closures-mit-strängen
 [thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn

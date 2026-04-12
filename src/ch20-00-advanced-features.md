@@ -18,8 +18,8 @@ In diesem Kapitel werden wir behandeln:
   in Bezug auf Merkmale
 - Fortgeschrittene Typen: Mehr über das Newtype-Muster, Typ-Aliase, den Typ
   never und Typen dynamischer Größe
-- Erweiterte Funktionen und Funktionsabschlüsse: Funktionszeiger und
-  Zurückgeben von Funktionsabschlüssen
+- Erweiterte Funktionen und Closures: Funktionszeiger und Zurückgeben von
+  Closures
 - Makros: Möglichkeiten, Code zu definieren, der zur Kompilierzeit mehr Code
   definiert
 

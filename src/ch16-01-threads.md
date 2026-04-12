@@ -38,10 +38,10 @@ ebenfalls einen anderen Ansatz der Nebenläufigkeit.)
 ### Erstellen eines neuen Strangs mit `spawn`
 
 Um einen neuen Strang zu erstellen, rufen wir die Funktion `thread::spawn` auf
-und übergeben ihr einen Funktionsabschluss (closure) (wir haben in Kapitel 13
-über Funktionsabschlüsse gesprochen), der den Code enthält, den wir im neuen
-Strang ausführen wollen. Das Beispiel in Codeblock 16-1 gibt einen Text im
-Hauptstrang und anderen Text im neuen Strang aus:
+und übergeben ihr einen Closure (wir haben in Kapitel 13 über Closures
+gesprochen), der den Code enthält, den wir im neuen Strang ausführen wollen. Das
+Beispiel in Codeblock 16-1 gibt einen Text im Hauptstrang und anderen Text im
+neuen Strang aus:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -217,25 +217,24 @@ Hallo Zahl 4 aus dem Hauptstrang!
 Kleine Details, z.B. wo `join` aufgerufen wird, können beeinflussen, ob deine
 Stränge zur gleichen Zeit laufen oder nicht.
 
-### Verwenden von `move`-Funktionsabschlüssen mit Strängen
+### Verwenden von `move`-Closures mit Strängen
 
-Wir werden oft das Schlüsselwort `move` mit Funktionsabschlüssen verwenden, die
-an `thread::spawn` übergeben werden, weil der Funktionsabschluss dann die
-Eigentümerschaft an den Werten, die sie benutzt, von der Umgebung übernimmt und
-damit die Eigentümerschaft an diesen Werten von einem Strang auf einen anderen
-überträgt. In [„Erfassen von Referenzen oder Verschieben der
-Eigentümerschaft“][capture] in Kapitel 13 haben wir `move` im Zusammenhang mit
-Funktionsabschlüssen besprochen. Jetzt werden wir uns mehr auf die Interaktion
-zwischen `move` und `thread::spawn` konzentrieren.
+Wir werden oft das Schlüsselwort `move` mit Closures verwenden, die an
+`thread::spawn` übergeben werden, weil der Closure dann die Eigentümerschaft an
+den Werten, die sie benutzt, von der Umgebung übernimmt und damit die
+Eigentümerschaft an diesen Werten von einem Strang auf einen anderen überträgt.
+In [„Erfassen von Referenzen oder Verschieben der Eigentümerschaft“][capture] in
+Kapitel 13 haben wir `move` im Zusammenhang mit Closures besprochen. Jetzt
+werden wir uns mehr auf die Interaktion zwischen `move` und `thread::spawn`
+konzentrieren.
 
-Beachte in Codeblock 16-1, dass der Funktionsabschluss, den wir an
-`thread::spawn` übergeben, keine Argumente erfordert: Wir verwenden keine Daten
-aus dem Hauptstrang im Code des erzeugten Strangs. Um Daten aus dem Hauptstrang
-im erzeugten Strang zu verwenden, muss der Funktionsabschluss des erzeugten
-Strangs die benötigten Werte erfassen. Codeblock 16-3 zeigt einen Versuch,
-einen Vektor im Hauptstrang zu erstellen und ihn im erzeugten Strang zu
-verwenden. Dies wird jedoch noch nicht funktionieren, wie du gleich sehen
-wirst.
+Beachte in Codeblock 16-1, dass der Closure, den wir an `thread::spawn`
+übergeben, keine Argumente erfordert: Wir verwenden keine Daten aus dem
+Hauptstrang im Code des erzeugten Strangs. Um Daten aus dem Hauptstrang im
+erzeugten Strang zu verwenden, muss der Closure des erzeugten Strangs die
+benötigten Werte erfassen. Codeblock 16-3 zeigt einen Versuch, einen Vektor im
+Hauptstrang zu erstellen und ihn im erzeugten Strang zu verwenden. Dies wird
+jedoch noch nicht funktionieren, wie du gleich sehen wirst.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -256,11 +255,11 @@ fn main() {
 <span class="caption">Codeblock 16-3: Versuch, einen im Hauptstrang erzeugten
 Vektor in einem anderen Strang zu verwenden</span>
 
-Der Funktionsabschluss verwendet `v`, sodass er `v` erfasst und zum Teil der
-Umgebung des Funktionsabschlusses macht. Da `thread::spawn` diesen
-Funktionsabschluss in einem neuen Strang ausführt, sollten wir in der Lage
-sein, auf `v` innerhalb dieses neuen Strangs zuzugreifen. Aber wenn wir dieses
-Beispiel kompilieren, erhalten wir den folgenden Fehler:
+Der Closure verwendet `v`, sodass er `v` erfasst und zum Teil der Umgebung des
+Closures macht. Da `thread::spawn` diesen Closure in einem neuen Strang
+ausführt, sollten wir in der Lage sein, auf `v` innerhalb dieses neuen Strangs
+zuzugreifen. Aber wenn wir dieses Beispiel kompilieren, erhalten wir den
+folgenden Fehler:
 
 ```console
 $ cargo run
@@ -291,9 +290,9 @@ error: could not compile `playground` (bin "playground") due to 1 previous error
 ```
 
 Rust _folgert_, wie `v` zu erfassen ist, und weil `println!` nur eine Referenz
-auf `v` benötigt, versucht der Funktionsabschluss, `v` auszuleihen. Es gibt
-jedoch ein Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen
-wird, sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
+auf `v` benötigt, versucht der Closure, `v` auszuleihen. Es gibt jedoch ein
+Problem: Rust kann nicht sagen, wie lange der erzeugte Strang laufen wird,
+sodass es nicht weiß, ob die Referenz auf `v` immer gültig sein wird.
 
 Codeblock 16-4 zeigt ein Szenario, das eine Referenz auf `v` hat, die eher
 nicht gültig ist:
@@ -316,8 +315,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-4: Ein Strang mit einem Funktionsabschluss,
-der versucht, eine Referenz auf `v` vom Hauptstrang zu erfassen, der `v`
+<span class="caption">Codeblock 16-4: Ein Strang mit einem Closure, der
+versucht, eine Referenz auf `v` vom Hauptstrang zu erfassen, der `v`
 aufräumt</span>
 
 Wenn Rust uns erlauben würde, diesen Code auszuführen, bestünde die
@@ -338,11 +337,11 @@ help: to force the closure to take ownership of `v` (and any other referenced va
   |                                ++++
 ```
 
-Indem wir vor dem Funktionsabschluss das Schlüsselwort `move` hinzufügen,
-zwingen wir den Funktionsabschluss dazu, die Eigentümerschaft der Werte zu
-übernehmen, die er benutzt, anstatt zuzulassen, dass Rust daraus ableitet, dass
-er sich die Werte ausleihen sollte. Die in Codeblock 16-5 gezeigte Änderung an
-Codeblock 16-3 wird wie von uns beabsichtigt kompilieren und ausgeführt.
+Indem wir vor dem Closure das Schlüsselwort `move` hinzufügen, zwingen wir den
+Closure dazu, die Eigentümerschaft der Werte zu übernehmen, die er benutzt,
+anstatt zuzulassen, dass Rust daraus ableitet, dass er sich die Werte ausleihen
+sollte. Die in Codeblock 16-5 gezeigte Änderung an Codeblock 16-3 wird wie von
+uns beabsichtigt kompilieren und ausgeführt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -360,18 +359,17 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 16-5: Durch Verwenden des Schlüsselwortes
-`move` zwigen wir den Funktionsabschluss, die Eigentümerschaft der von ihm
-verwendeten Werte zu übernehmen</span>
+<span class="caption">Codeblock 16-5: Durch Verwenden des Schlüsselwortes `move`
+zwigen wir den Closure, die Eigentümerschaft der von ihm verwendeten Werte zu
+übernehmen</span>
 
 Wir könnten versuchen, den Code in Codeblock 16-4 auf diesselbe Weise zu
-reparieren, wo der Hauptstrang `drop` aufruft, während wir einen
-`move`-Funktionsabschluss verwenden. Diese Lösung wird jedoch nicht
-funktionieren, weil das, was Codeblock 16-4 versucht, aus einem anderen Grund
-nicht erlaubt ist. Wenn wir dem Funktionsabschluss `move` hinzufügen, würden
-wir `v` in die Umgebung des Funktionsabschlusses verschieben, und wir könnten
-im Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden stattdessen diesen
-Kompilierfehler erhalten:
+reparieren, wo der Hauptstrang `drop` aufruft, während wir einen `move`-Closure
+verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Codeblock
+16-4 versucht, aus einem anderen Grund nicht erlaubt ist. Wenn wir dem Closure
+`move` hinzufügen, würden wir `v` in die Umgebung des Closures verschieben, und
+wir könnten im Hauptstrang nicht mehr `drop` darauf aufrufen. Wir würden
+stattdessen diesen Kompilierfehler erhalten:
 
 ```console
 $ cargo run

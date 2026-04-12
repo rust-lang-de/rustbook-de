@@ -41,9 +41,9 @@ gelernt hast:
   ([Kapitel 10][chap10])
 - Schreiben von Tests ([Kapitel 11][chap11])
 
-Wir werden auch kurz Funktionsabschlüsse (closures), Iteratoren und
-Merkmalsobjekte (trait objects) vorstellen, die in den [Kapitel 13][chap13]
-und [Kapitel 18][chap18] ausführlich behandelt werden.
+Wir werden auch kurz Closures, Iteratoren und Merkmalsobjekte (trait objects)
+vorstellen, die in den [Kapitel 13][chap13] und [Kapitel 18][chap18]
+ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html
 [chap8]: ch08-00-common-collections.html

@@ -68,8 +68,8 @@
   - [Mit Umgebungsvariablen arbeiten](ch12-05-working-with-environment-variables.md)
   - [Fehler zur Standardfehlerausgabe umleiten](ch12-06-writing-to-stderr-instead-of-stdout.md)
 
-- [Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)](ch13-00-functional-features.md)
-  - [Funktionsabschlüsse (closures)](ch13-01-closures.md)
+- [Funktionale Sprachelemente: Iteratoren und Closures](ch13-00-functional-features.md)
+  - [Closures](ch13-01-closures.md)
   - [Eine Reihe von Elementen verarbeiten mit Iteratoren](ch13-02-iterators.md)
   - [Unser E/A-Projekt verbessern](ch13-03-improving-our-io-project.md)
   - [Performanz von Schleifen vs. Iteratoren](ch13-04-performance.md)
@@ -117,7 +117,7 @@
   - [Unsicheres (unsafe) Rust](ch20-01-unsafe-rust.md)
   - [Fortgeschrittene Merkmale (traits)](ch20-02-advanced-traits.md)
   - [Fortgeschrittene Typen](ch20-03-advanced-types.md)
-  - [Erweiterte Funktionen und Funktionsabschlüsse (closures)](ch20-04-advanced-functions-and-closures.md)
+  - [Erweiterte Funktionen und Closures](ch20-04-advanced-functions-and-closures.md)
   - [Makros](ch20-05-macros.md)
 
 - [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch21-00-final-project-a-web-server.md)

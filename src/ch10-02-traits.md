@@ -544,13 +544,12 @@ implementiert, ohne den konkreten Typ zu nennen. In diesem Fall gibt
 Funktion aufruft, muss das nicht wissen.
 
 Die Fähigkeit, einen Rückgabetyp nur durch das Merkmal, das er implementiert,
-zu spezifizieren, ist besonders nützlich im Zusammenhang mit
-Funktionsabschlüssen und Iteratoren, die wir in Kapitel 13 behandeln.
-Funktionsabschlüsse und Iteratoren erzeugen Typen, die nur der Compiler
-kennt oder deren Spezifikation sehr lang ist. Mit der Syntax `impl Trait`
-kannst du prägnant angeben, dass eine Funktion einen Typ zurückgibt, der das
-Merkmal `Iterator` implementiert, ohne dass du einen sehr langen Typ schreiben
-musst.
+zu spezifizieren, ist besonders nützlich im Zusammenhang mit Closures und
+Iteratoren, die wir in Kapitel 13 behandeln. Closures und Iteratoren erzeugen
+Typen, die nur der Compiler kennt oder deren Spezifikation sehr lang ist. Mit
+der Syntax `impl Trait` kannst du prägnant angeben, dass eine Funktion einen
+Typ zurückgibt, der das Merkmal `Iterator` implementiert, ohne dass du einen
+sehr langen Typ schreiben musst.
 
 Du kannst `impl Trait` jedoch nur verwenden, wenn du einen einzigen Typ
 zurückgibst. Beispielsweise würde dieser Code, der entweder einen `NewsArticle`

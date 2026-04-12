@@ -1,4 +1,4 @@
-# Funktionale Sprachelemente: Iteratoren und Funktionsabschlüsse (closures)
+# Funktionale Sprachelemente: Iteratoren und Closures
 
 Das Design von Rust wurde von einer Vielzahl von vorhandenen Programmiersprachen
 und Techniken beeinflusst und einen signifikanter Einfluss hat die _funktionale
@@ -14,16 +14,16 @@ funktional bezeichnet werden.
 
 Im Einzelnen wird Folgendes behandelt:
 
-- _Funktionsabschlüsse_, ein Konstrukt, das einer Funktion ähnelt und in einer
-  Variable gespeichert werden kann.
+- _Closures_, ein Konstrukt, das einer Funktion ähnelt und in einer Variable
+  gespeichert werden kann.
 - _Iteratoren_, ein Mechanismus, eine Reihe von Elementen abzuarbeiten.
-- Wie wir Funktionsabschlüsse und Iteratoren einsetzen, um unser E/A-Projekt
-  aus Kapitel 12 zu verbessern
-- Die Performanz von Funktionsabschlüssen und Iteratoren (Spoiler-Alarm: Sie
-  sind schneller, als du vielleicht denken magst!)
+- Wie wir Closures und Iteratoren einsetzen, um unser E/A-Projekt aus Kapitel 12
+  zu verbessern
+- Die Performanz von Closured und Iteratoren (Spoiler-Alarm: Sie sind schneller,
+  als du vielleicht denken magst!)
 
 Wir haben uns bereits andere Rust-Funktionalitäten wie Aufzählungen (enums) und
-Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen
-Stil beeinflusst sind. Da das Beherrschen von Funktionsabschlüssen und
-Iteratoren ein wichtiger Bestandteil für das Schreiben von schnellem,
-idiomatischem Rust-Programmcode ist, wird ihnen das gesamte Kapitel gewidmet.
+Musterabgleich (pattern matching) angesehen, die ebenfalls vom funktionalen Stil
+beeinflusst sind. Da das Beherrschen von Closures und Iteratoren ein wichtiger
+Bestandteil für das Schreiben von schnellem, idiomatischem Rust-Programmcode
+ist, wird ihnen das gesamte Kapitel gewidmet.

@@ -127,8 +127,8 @@ Reduzierung von Wiederholungen</span>
 Dieser Code ist viel einfacher zu lesen und zu schreiben! Die Wahl eines
 aussagekräftigen Namens für einen Typ-Alias kann auch helfen, deine Absicht zu
 kommunizieren (_thunk_ ist ein Wort für Code, der zu einem späteren Zeitpunkt
-ausgewertet wird, also ein passender Name für einen Funktionsabschluss
-(closure), der gespeichert wird).
+ausgewertet wird, also ein passender Name für einen Closure, der gespeichert
+wird).
 
 Typ-Alias werden auch häufig mit dem Typ `Result<T, E>` verwendet, um
 Wiederholungen zu reduzieren. Betrachte das Modul `std::io` in der
@@ -436,7 +436,7 @@ Beachte auch, dass wir den Typ des Parameters `t` von `T` auf `&T` geändert
 haben. Da der Typ möglicherweise nicht `Sized` ist, müssen wir ihn hinter einer
 Art Zeiger verwenden. In diesem Fall haben wir eine Referenz gewählt.
 
-Als nächstes werden wir über Funktionen und Funktionsabschlüsse sprechen!
+Als nächstes werden wir über Funktionen und Closures sprechen!
 
 [encapsulation]: ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt
 [match-operator]: ch06-02-match.html

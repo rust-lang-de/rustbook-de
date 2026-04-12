@@ -174,5 +174,4 @@ effektiv in den entsprechenden Datenstrukturen speichern, Fehler gut behandeln
 und gut getestet sein.
 
 Als Nächstes werden wir einige Rust-Funktionalitäten untersuchen, die von
-funktionalen Sprachen beeinflusst wurden: Funktionsabschlüsse (closures) und
-Iteratoren.
+funktionalen Sprachen beeinflusst wurden: Closures und Iteratoren.

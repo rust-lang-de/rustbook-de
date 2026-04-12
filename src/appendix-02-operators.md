@@ -37,7 +37,7 @@ Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
 | `-` | `- expr` | Arithmetische Negation | `Neg` |
 | `-` | `expr - expr` | Arithmetische Subtraktion | `Sub` |
 | `-=` | `var -= expr` | Arithmetische Subtraktion und Zuweisung | `SubAssign` |
-| `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Funktion und Funktionsabschlussrückgabetyp | |
+| `->` | `fn(...) -> type`,<br> <code>&vert;...&vert; -> type</code> | Rückgabetyp einer Funktion und eines Closures | |
 | `.` | `expr.ident` | Feldzugriff | |
 | `.` | `expr.ident(expr, ...)` | Methodenaufruf | |
 | `.` | `expr.0`, `expr.1`, usw. | Tupel-Indexzugriff | |
@@ -93,7 +93,7 @@ Stellen gültig sind.
 | `br"..."`,<br> `br#"..."#`,<br> `br##"..."##`<br> usw. | Roh-Byte-Zeichenkettenliteral, Kombination aus Roh- und Byte-Zeichenkettenliteral |
 | `'...'` | Zeichen-Literal |
 | `b'...'` | ASCII-Byte-Literal |
-| <code>&vert;...&vert; expr</code> | Funktionsabschluss (closure) |
+| <code>&vert;...&vert; expr</code> | Closure |
 | `!` | Leerer Typ (bottom type) für nicht-endende Funktionen |
 | `_` | Musterbindung für „sonstige“; wird auch verwendet, um Ganzzahl-Literale lesbar zu machen |
 

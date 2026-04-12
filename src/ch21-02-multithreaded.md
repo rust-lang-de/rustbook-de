@@ -214,12 +214,12 @@ fn main() {
 Strom</span>
 
 Wie du in Kapitel 16 gelernt hast, wird `thread::spawn` einen neuen Strang
-erstellen und dann den Code im Funktionsabschluss (closure) im neuen Strang
-ausführen. Wenn du diesen Code ausführst und _/sleep_ in deinem Browser lädst,
-dann `/` in zwei weiteren Browser-Tabs, wirst du in der Tat sehen, dass die
-Anfragen an `/` nicht auf die Beendigung von _/sleep_ warten müssen. Aber wie
-wir bereits erwähnt haben, wird dies letztendlich das System überfordern, weil
-du neue Stränge ohne jede Begrenzung erstellen würdest.
+erstellen und dann den Code im Closure im neuen Strang ausführen. Wenn du diesen
+Code ausführst und _/sleep_ in deinem Browser lädst, dann `/` in zwei weiteren
+Browser-Tabs, wirst du in der Tat sehen, dass die Anfragen an `/` nicht auf die
+Beendigung von _/sleep_ warten müssen. Aber wie wir bereits erwähnt haben, wird
+dies letztendlich das System überfordern, weil du neue Stränge ohne jede
+Begrenzung erstellen würdest.
 
 #### Erstellen einer endlichen Anzahl von Strängen
 
@@ -282,12 +282,11 @@ fn main() {
 Wir verwenden `ThreadPool::new`, um einen neuen Strang-Vorrat mit einer
 konfigurierbaren Anzahl von Strängen zu erstellen, in diesem Fall vier. In der
 `for`-Schleife hat `pool.execute` eine ähnliche Schnittstelle wie
-`thread::spawn`, indem es einen Funktionsabschluss entgegennimmt, den der
-Vorrat für jeden Strom ausführen soll. Wir müssen `pool.execute`
-implementieren, sodass es den Funktionsabschluss entgegennimmt und ihn einem
-Strang im Vorrat zur Ausführung übergibt. Dieser Code lässt sich noch nicht
-kompilieren, aber wir werden es versuchen, damit der Compiler uns anleiten
-kann, wie wir das Problem beheben können.
+`thread::spawn`, indem es einen Closure entgegennimmt, den der Vorrat für jeden
+Strom ausführen soll. Wir müssen `pool.execute` implementieren, sodass es den
+Closure entgegennimmt und ihn einem Strang im Vorrat zur Ausführung übergibt.
+Dieser Code lässt sich noch nicht kompilieren, aber wir werden es versuchen,
+damit der Compiler uns anleiten kann, wie wir das Problem beheben können.
 
 #### Aufbau von `ThreadPool` mit compilergetriebener Entwicklung
 
@@ -438,19 +437,18 @@ haben. Erinnere dich an Abschnitt [„Erstellen einer endlichen Anzahl von
 Strängen“][similar-interface], wo wir beschlossen haben, dass unser
 Strang-Vorrat eine ähnliche Schnittstelle wie `thread::spawn` haben sollte.
 Zusätzlich werden wir die Funktion `execute` implementieren, sodass sie den
-Funktionsabschluss, der ihr gegeben wird, nimmt und sie einem unbeschäftigten
-Strang im Vorrat zur Ausführung übergibt.
+Closure, der ihr gegeben wird, nimmt und sie einem unbeschäftigten Strang im
+Vorrat zur Ausführung übergibt.
 
-Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen
-Funktionsabschluss als Parameter zu nehmen. Aus Abschnitt [„Verschieben
-erfasster Werte aus Funktionsabschlüssen“][moving-out-of-closures] in Kapitel
-13 erinnern wir uns, dass wir Funktionsabschlüsse als Parameter mit drei
-verschiedenen Merkmalen nehmen können: `Fn`, `FnMut` und `FnOnce`. Wir müssen
-entscheiden, welche Art von Funktionsabschluss wir hier verwenden. Wir wissen,
-dass wir am Ende etwas Ähnliches wie die Implementierung `thread::spawn` der
-Standardbibliothek tun werden, sodass wir uns ansehen können, welche
-Abgrenzungen die Signatur von `thread::spawn` in ihrem Parameter hat. Die
-Dokumentation zeigt uns Folgendes:
+Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen Closure
+als Parameter zu nehmen. Aus Abschnitt [„Verschieben erfasster Werte aus
+Closures“][moving-out-of-closures] in Kapitel 13 erinnern wir uns, dass wir
+Closures als Parameter mit drei verschiedenen Merkmalen nehmen können: `Fn`,
+`FnMut` und `FnOnce`. Wir müssen entscheiden, welche Art von Closure wir hier
+verwenden. Wir wissen, dass wir am Ende etwas Ähnliches wie die Implementierung
+`thread::spawn` der Standardbibliothek tun werden, sodass wir uns ansehen
+können, welche Abgrenzungen die Signatur von `thread::spawn` in ihrem Parameter
+hat. Die Dokumentation zeigt uns Folgendes:
 
 ```rust,ignore
 pub fn spawn<F, T>(f: F) -> JoinHandle<T>
@@ -465,10 +463,9 @@ Typ `T` bezieht sich auf den Rückgabewert, und darum geht es uns nicht. Wir
 können sehen, dass `spawn` `FnOnce` als Merkmal (trait) verwendet, das an `F`
 gebunden ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden
 das Argument, das wir bei `execute` bekommen, letztendlich an `spawn`
-weitergeben. Wir können weiterhin zuversichtlich sein, dass `FnOnce` das
-Merkmal ist, das wir verwenden wollen, weil der Strang zum Ausführen einer
-Anfrage den Funktionsabschluss dieser Anfrage nur einmal ausführt, was zu
-`Once` in `FnOnce` passt.
+weitergeben. Wir können weiterhin zuversichtlich sein, dass `FnOnce` das Merkmal
+ist, das wir verwenden wollen, weil der Strang zum Ausführen einer Anfrage den
+Closure dieser Anfrage nur einmal ausführt, was zu `Once` in `FnOnce` passt.
 
 Der Parameter vom Typ `F` hat auch die Merkmalsabgrenzung `Send` und die
 Lebensdauer `'static`, die in unserer Situation nützlich sind: Wir brauchen
@@ -497,11 +494,11 @@ impl ThreadPool {
 }
 ```
 
-Wir verwenden immer noch `()` nach `FnOnce`, weil dieses `FnOnce` einen
-Funktionsabschluss darstellt, der keine Parameter benötigt und den Einheitstyp
-`()` zurückgibt. Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in
-der Signatur weggelassen werden, aber selbst wenn wir keine Parameter haben,
-benötigen wir immer noch die Klammern.
+Wir verwenden immer noch `()` nach `FnOnce`, weil dieses `FnOnce` einen Closure
+darstellt, der keine Parameter benötigt und den Einheitstyp `()` zurückgibt.
+Genau wie bei Funktionsdefinitionen kann der Rückgabetyp in der Signatur
+weggelassen werden, aber selbst wenn wir keine Parameter haben, benötigen wir
+immer noch die Klammern.
 
 Auch hier handelt es sich um die einfachste Implementierung der Methode
 `execute`: Sie tut nichts, aber wir versuchen nur, unseren Code kompilieren zu
@@ -514,9 +511,9 @@ $ cargo check
 ```
 
 Er kompiliert! Aber beachte, dass du, wenn du `cargo run` versuchst und eine
-Anfrage im Browser stellst, die Fehler im Browser sehen wirst, die wir am
-Anfang des Kapitels gesehen haben. Unsere Bibliothek ruft den
-Funktionsabschluss, den wir an `execute` übergeben, noch nicht wirklich auf!
+Anfrage im Browser stellst, die Fehler im Browser sehen wirst, die wir am Anfang
+des Kapitels gesehen haben. Unsere Bibliothek ruft den Closure, den wir an
+`execute` übergeben, noch nicht wirklich auf!
 
 > Hinweis: Ein Sprichwort, das man möglicherweise über Sprachen mit strengen
 > Compilern wie Haskell und Rust hört, lautet: „Wenn der Code kompiliert,
@@ -526,8 +523,8 @@ Funktionsabschluss, den wir an `execute` übergeben, noch nicht wirklich auf!
 > Schreiben von Modultests zu beginnen, um zu überprüfen, ob der Code
 > kompiliert _und_ das von uns gewünschte Verhalten aufweist.
 
-Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines
-Funktionsabschlusses eine Future ausführen würden?
+Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines Closures eine
+Future ausführen würden?
 
 #### Validieren der Anzahl der Stränge in `new`
 
@@ -611,10 +608,10 @@ pub fn spawn<F, T>(f: F) -> JoinHandle<T>
 ```
 
 Die Funktion `spawn` gibt einen `JoinHandle<T>` zurück, wobei `T` der Typ ist,
-den der Funktionsabschluss zurückgibt. Lass uns versuchen, auch `JoinHandle` zu
-benutzen und sehen, was passiert. In unserem Fall werden die
-Funktionsabschlüsse, die wir an den Strang-Vorrat übergeben, die Verbindung
-behandeln und nichts zurückgeben, also wird `T` der Unit-Typ `()` sein.
+den der Closure zurückgibt. Lass uns versuchen, auch `JoinHandle` zu benutzen
+und sehen, was passiert. In unserem Fall werden die Closures, die wir an den
+Strang-Vorrat übergeben, die Verbindung behandeln und nichts zurückgeben, also
+wird `T` der Unit-Typ `()` sein.
 
 Der Code in Codeblock 21-14 lässt sich kompilieren, erzeugt aber noch keine
 Stränge. Wir haben die Definition von `ThreadPool` so geändert, dass sie einen
@@ -704,22 +701,21 @@ verantwortlich, diese Bestellungen entgegenzunehmen und auszuführen.
 Anstatt einen Vektor von `JoinHandle<()>`-Instanzen im Strang-Vorrat zu
 speichern, werden wir Instanzen der `Worker`-Struktur speichern. Jeder `Worker`
 wird eine einzelne `JoinHandle<()>`-Instanz speichern. Dann werden wir eine
-Methode auf `Worker` implementieren, die einen Funktionsabschluss zur
-Ausführung benötigt und ihn zur Ausführung an den bereits laufenden Strang
-sendet. Wir werden auch jedem `Worker` eine `id` geben, damit wir beim
-Protokollieren oder Debuggen zwischen den verschiedenen `Worker`-Instanzen im
-Vorrat unterscheiden können.
+Methode auf `Worker` implementieren, die einen Closure zur Ausführung benötigt
+und ihn zur Ausführung an den bereits laufenden Strang sendet. Wir werden auch
+jedem `Worker` eine `id` geben, damit wir beim Protokollieren oder Debuggen
+zwischen den verschiedenen `Worker`-Instanzen im Vorrat unterscheiden können.
 
 Hier ist der neue Prozess, der abläuft, wenn wir einen `ThreadPool` erstellen.
-Wir werden den Code implementieren, der den Funktionsabschluss an den Strang
-sendet, nachdem wir `Worker` auf diese Weise eingerichtet haben:
+Wir werden den Code implementieren, der den Closure an den Strang sendet,
+nachdem wir `Worker` auf diese Weise eingerichtet haben:
 
 1. Definiere eine Struktur `Worker`, die eine `id` und einen `JoinHandle<()>`
    enthält.
 2. Ändere `ThreadPool`, um einen Vektor von `Worker`-Instanzen zu halten.
 3. Definiere eine Funktion `Worker::new`, die eine `id`-Nummer nimmt und eine
    `Worker`-Instanz zurückgibt, die die `id` enthält, sowie einen Strang, der
-    mit einem leeren Funktionsabschluss erzeugt wurde.
+    mit einem leeren Closure erzeugt wurde.
 4. Verwende in `ThreadPool::new` den `for`-Schleifenzähler, um eine `id` zu
    erzeugen, erzeuge einen neuen `Worker` mit dieser `id` und speichere den
    `Worker` im Vektor.
@@ -796,8 +792,8 @@ Implementierungsdetails bezüglich der Verwendung einer `Worker`-Struktur
 innerhalb von `ThreadPool` nicht kennen, also machen wir die `Worker`-Struktur
 und ihre Funktion `new` privat. Die Funktion `Worker::new` verwendet die `id`,
 die wir ihr geben, und speichert eine `JoinHandle<()>`-Instanz, die durch das
-Erzeugen eines neuen Strangs unter Verwendung eines leeren Funktionsabschlusses
-erzeugt wird.
+Erzeugen eines neuen Strangs unter Verwendung eines leeren Closures erzeugt
+wird.
 
 > Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
 > genügend Systemressourcen vorhanden sind, bringt `thread::spawn` das Programm
@@ -810,17 +806,16 @@ erzeugt wird.
 
 Dieser Code kompiliert und speichert die Anzahl der `Worker`-Instanzen, die wir
 als Argument für `ThreadPool::new` angegeben haben. Aber wir _verarbeiten_ noch
-nicht den Funktionsabschluss, den wir in `execute` erhalten. Schauen wir uns
-als Nächstes an, wie wir das machen.
+nicht den Closure, den wir in `execute` erhalten. Schauen wir uns als Nächstes
+an, wie wir das machen.
 
 #### Senden von Anfragen an Stränge über Kanäle
 
-Das nächste Problem, das wir angehen, ist dass die Funktionsabschlüsse bei
-`thread::spawn` absolut nichts bewirken. Gegenwärtig erhalten wir den
-Funktionsabschluss, den wir ausführen wollen, mit der Methode `execute`. Aber
-wir müssen `thread::spawn` einen Funktionsabschluss geben, der ausgeführt
-werden soll, wenn wir jeden `Worker` während der Erstellung des `ThreadPool`
-erstellen.
+Das nächste Problem, das wir angehen, ist dass die Closures bei `thread::spawn`
+absolut nichts bewirken. Gegenwärtig erhalten wir den Closure, den wir ausführen
+wollen, mit der Methode `execute`. Aber wir müssen `thread::spawn` einen Closure
+geben, der ausgeführt werden soll, wenn wir jeden `Worker` während der
+Erstellung des `ThreadPool` erstellen.
 
 Wir möchten, dass die Struktur `Worker`, die wir gerade erstellt haben, um den
 Code aus einer Warteschlange im `ThreadPool` zu holen, diesen Code zur
@@ -835,12 +830,12 @@ sendet. Hier ist der Plan:
 
 1. Der `ThreadPool` erstellt einen Kanal und hält den Sender.
 2. Jeder `Worker` hält den Empfänger.
-3. Wir werden eine neue Struktur `Job` erstellen, die den Funktionsabschluss
-   aufnimmt, den wir über den Kanal senden wollen.
+3. Wir werden eine neue Struktur `Job` erstellen, die den Closure aufnimmt, den
+   wir über den Kanal senden wollen.
 4. Die Methode `execute` sendet den Auftrag, der ausgeführt werden soll, durch
    den Sender.
-5. In seinem Strang wird der `Worker` auf den Empfänger warten und die
-   Funktionsabschlüsse aller Aufträge, die er erhält, ausführen.
+5. In seinem Strang wird der `Worker` auf den Empfänger warten und die Closures
+   aller Aufträge, die er erhält, ausführen.
 
 Beginnen wir damit, einen Kanal in `ThreadPool::new` zu erstellen und den
 Sender in der `ThreadPool`-Instanz zu halten, wie in Codeblock 21-16
@@ -910,11 +905,11 @@ zu speichern, der `Job`-Instanzen übermittelt</span>
 In `ThreadPool::new` erstellen wir unseren neuen Kanal und lassen den Pool das
 sendende Ende halten. Dies kompiliert erfolgreich.
 
-Lass uns versuchen, einen Empfänger an jeden `Worker` weiterzugeben, während
-der Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger
-im Strang verwenden wollen, den die `Worker`-Instanzen erzeugen, also werden
-wir den Parameter `receiver` im Funktionsabschluss referenzieren. Der Code in
-Codeblock 21-17 lässt sich noch nicht ganz kompilieren.
+Lass uns versuchen, einen Empfänger an jeden `Worker` weiterzugeben, während der
+Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger im Strang
+verwenden wollen, den die `Worker`-Instanzen erzeugen, also werden wir den
+Parameter `receiver` im Closure referenzieren. Der Code in Codeblock 21-17 lässt
+sich noch nicht ganz kompilieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -980,9 +975,8 @@ impl Worker {
 <span class="caption">Codeblock 21-17: Übergeben des Empfängers an jeden
 `Worker`</span>
 
-Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben
-den Empfänger an `Worker::new` und dann verwenden wir ihn innerhalb des
-Funktionsabschlusses.
+Wir haben einige kleine und unkomplizierte Änderungen vorgenommen: Wir geben den
+Empfänger an `Worker::new` und dann verwenden wir ihn innerhalb des Closures.
 
 Wenn wir versuchen, diesen Code zu überprüfen, erhalten wir diesen Fehler:
 
@@ -1122,11 +1116,10 @@ Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!
 
 Lass uns endlich die Methode `execute` auf `ThreadPool` implementieren. Wir
 werden auch `Job` von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
-(trait object) ändern, das den Typ des Funktionsabschlusses enthält, den
-`execute` erhält. Wie im Abschnitt [„Typ-Synonyme und
-Typ-Aliase“][type-aliases] in Kapitel 19 besprochen, ermöglichen uns
-Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher nutzen zu können.
-Siehe Codeblock 21-19.
+(trait object) ändern, das den Typ des Closures enthält, den `execute` erhält.
+Wie im Abschnitt [„Typ-Synonyme und Typ-Aliase“][type-aliases] in Kapitel 19
+besprochen, ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie
+einfacher nutzen zu können. Siehe Codeblock 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1199,27 +1192,25 @@ impl ThreadPool {
 ```
 
 <span class="caption">Codeblock 21-19: Erstellen eines Alias vom Typ `Job` für
-eine `Box`, die jeden Funktionsabschluss enthält, und danach Senden des
-Auftrags in den Kanal</span>
+eine `Box`, die jeden Closure enthält, und danach Senden des Auftrags in den
+Kanal</span>
 
-Nachdem wir eine neue `Job`-Instanz unter Verwendung des Funktionsabschlusses,
-den wir in `execute` erhalten, erstellt haben, senden wir diesen Auftrag an das
-sendende Ende des Kanals. Wir rufen `unwrap` auf `send` auf für den Fall, dass
-das Senden fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere
-Stränge von der Ausführung abhalten, was bedeutet, dass das empfangende Ende
-keine neuen Nachrichten mehr empfängt. Im Moment können wir die Ausführung
-unserer Stränge nicht stoppen: Unsere Stränge werden so lange ausgeführt, wie
-der Vorrat existiert. Der Grund, warum wir `unwrap` verwenden, ist, dass wir
-wissen, dass der Fehlerfall nicht passieren wird, aber der Compiler das nicht
-weiß.
+Nachdem wir eine neue `Job`-Instanz unter Verwendung des Closures, den wir in
+`execute` erhalten, erstellt haben, senden wir diesen Auftrag an das sendende
+Ende des Kanals. Wir rufen `unwrap` auf `send` auf für den Fall, dass das Senden
+fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere Stränge von
+der Ausführung abhalten, was bedeutet, dass das empfangende Ende keine neuen
+Nachrichten mehr empfängt. Im Moment können wir die Ausführung unserer Stränge
+nicht stoppen: Unsere Stränge werden so lange ausgeführt, wie der Vorrat
+existiert. Der Grund, warum wir `unwrap` verwenden, ist, dass wir wissen, dass
+der Fehlerfall nicht passieren wird, aber der Compiler das nicht weiß.
 
-Aber wir sind noch nicht ganz fertig! Im `Worker` wird unser Funktionsabschluss
-an `thread::spawn` weitergereicht, der immer noch nur auf das empfangende Ende
-des Kanals _referenziert_. Stattdessen müssen wir den Funktionsabschluss für
-immer in einer Schleife laufen lassen, indem wir das empfangende Ende des
-Kanals um einen Auftrag bitten und den Auftrag ausführen, wenn er einen
-bekommt. Lass uns die in Codeblock 21-20 gezeigte Änderung in `Worker::new`
-vornehmen.
+Aber wir sind noch nicht ganz fertig! Im `Worker` wird unser Closure an
+`thread::spawn` weitergereicht, der immer noch nur auf das empfangende Ende des
+Kanals _referenziert_. Stattdessen müssen wir den Closure für immer in einer
+Schleife laufen lassen, indem wir das empfangende Ende des Kanals um einen
+Auftrag bitten und den Auftrag ausführen, wenn er einen bekommt. Lass uns die in
+Codeblock 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1470,6 +1461,6 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 [builder]: https://doc.rust-lang.org/std/thread/struct.Builder.html
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
-[moving-out-of-closures]: ch13-01-closures.html#verschieben-erfasster-werte-aus-funktionsabschlüssen
+[moving-out-of-closures]: ch13-01-closures.html#verschieben-erfasster-werte-aus-closures
 [similar-interface]: #erstellen-einer-endlichen-anzahl-von-strängen
 [type-aliases]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase

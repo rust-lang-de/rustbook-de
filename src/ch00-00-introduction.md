@@ -145,12 +145,12 @@ Implementierung für eine Teilfunktionalität des Kommandozeilenwerkzeugs `grep`
 schreiben, das nach Text in Dateien sucht. Dazu werden wir viele Konzepte
 anwenden, die wir in den vorangegangenen Kapiteln kennengelernt haben.
 
-**Kapitel 13** befasst sich mit Funktionsabschlüssen und Iteratoren, also
-Sprachmerkmalen, die von funktionalen Programmiersprachen stammen. In **Kapitel
-14** werden wir einen genaueren Blick auf Cargo werfen und über bewährte
-Vorgehensweisen beim Bereitstellen deiner Bibliotheken für andere sprechen. In
-**Kapitel 15** werden intelligente Zeiger, die die Standardbibliothek
-bereitstellt, und Merkmale, die ihre Funktionalität ermöglichen, erörtert.
+**Kapitel 13** befasst sich mit Closures und Iteratoren, also Sprachmerkmalen,
+die von funktionalen Programmiersprachen stammen. In **Kapitel 14** werden wir
+einen genaueren Blick auf Cargo werfen und über bewährte Vorgehensweisen beim
+Bereitstellen deiner Bibliotheken für andere sprechen. In **Kapitel 15** werden
+intelligente Zeiger, die die Standardbibliothek bereitstellt, und Merkmale, die
+ihre Funktionalität ermöglichen, erörtert.
 
 In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
@@ -165,7 +165,7 @@ bist. **Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich,
 einem mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel
 20** enthält ein Sammelsurium an interessanten fortgeschrittenen Themen,
 darunter unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen,
-Funktionen und Funktionsabschlüssen.
+Funktionen und Closures.
 
 In *Kapitel 21* werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!

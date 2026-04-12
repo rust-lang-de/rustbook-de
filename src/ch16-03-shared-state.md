@@ -154,14 +154,13 @@ fn main() {
 einen Zähler, der durch einen `Mutex<T>` geschützt ist</span>
 
 Wir erstellen eine Variable `counter`, um ein `i32` innerhalb eines `Mutex<T>`
-zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen
-wir 10 Stränge, indem wir über einen Zahlenbereich iterieren. Wir verwenden
-`thread::spawn` und geben allen Strängen den gleichen Funktionsabschluss
-(closure), der den Zähler in den Strang verschiebt, eine Sperre auf dem
-`Mutex<T>` durch Aufrufen der Methode `lock` erwirbt und dann 1 zum Wert im
-Mutex addiert. Wenn ein Strang die Ausführung seines Funktionsabschlusses
-beendet hat, verlässt `num` den Gültigkeitsbereich und gibt die Sperre frei,
-sodass ein anderer Strang sie erwerben kann.
+zu halten, wie wir es in Codeblock 16-12 getan haben. Als Nächstes erstellen wir
+10 Stränge, indem wir über einen Zahlenbereich iterieren. Wir verwenden
+`thread::spawn` und geben allen Strängen den gleichen Closure, der den Zähler in
+den Strang verschiebt, eine Sperre auf dem `Mutex<T>` durch Aufrufen der Methode
+`lock` erwirbt und dann 1 zum Wert im Mutex addiert. Wenn ein Strang die
+Ausführung seines Closures beendet hat, verlässt `num` den Gültigkeitsbereich
+und gibt die Sperre frei, sodass ein anderer Strang sie erwerben kann.
 
 Im Hauptstrang sammeln wir alle `JoinHandle`. Dann rufen wir analog zu
 Codeblock 16-2 `join` auf jedem Strang auf, um sicherzustellen, dass alle

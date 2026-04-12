@@ -39,7 +39,7 @@ einer Beschreibung ihrer Funktion.
 - `loop` &ndash; wiederhole bedingungslos
 - `match` &ndash; einen Wert mit Muster abgleichen
 - `mod` &ndash; ein Modul definieren
-- `move` &ndash; Funktionsabschluss (closure) übernimmt Eigentümerschaft
+- `move` &ndash; Closure übernimmt Eigentümerschaft
   (ownership) all seiner Parameter
 - `mut` &ndash; Referenzen, Roh-Referenzen und Variablenbindungen als
   veränderbar kennzeichnen

@@ -138,11 +138,11 @@ tatsächlich benötigt wird.
 
 > Anmerkung: Dies unterscheidet sich von dem Verhalten, das wir gesehen haben,
 > als wir `thread::spawn` im Abschnitt [„Erstellen eines neuen Strangs mit
-> spawn“][thread-spawn] in Kapitel 16 verwendet haben und der
-> Funktionsabschluss, den wir an einen anderen Strang übergeben haben, sofort
-> zu laufen begann. Es unterscheidet sich auch davon, wie viele andere Sprachen
-> die asynchrone Programmierung umsetzen! Aber es ist wichtig für Rust, dass es
-> seine Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.
+> spawn“][thread-spawn] in Kapitel 16 verwendet haben und der Closure, den wir
+> an einen anderen Strang übergeben haben, sofort zu laufen begann. Es
+> unterscheidet sich auch davon, wie viele andere Sprachen die asynchrone
+> Programmierung umsetzen! Aber es ist wichtig für Rust, dass es seine
+> Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.
 
 Sobald wir `response_text` haben, können wir ihn mit `Html::parse` in eine
 Instanz des Typs `Html` einlesen. Anstelle einer rohen Zeichenkette haben wir

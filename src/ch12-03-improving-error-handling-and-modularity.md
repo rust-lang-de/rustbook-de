@@ -541,30 +541,29 @@ fn main() {
 <span class="caption">Codeblock 12-10: Beenden mit einem Fehlercode, wenn das
 Erstellen einer `Config` fehlschlägt</span>
 
-In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch
-nicht behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
-`Result<T, E>` definiert ist. Das Verwenden von `unwrap_or_else` erlaubt es
-uns, eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren.
-Wenn das `Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie
-`unwrap`: Sie gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein
-`Err`-Wert ist, ruft diese Methode den Code im Funktionsabschluss (closure)
-auf, die eine anonyme Funktion ist, die wir definieren und als Argument an
-`unwrap_or_else` übergeben. Auf Funktionsabschlüsse gehen wir ausführlicher in
-[Kapitel 13][ch13] ein. Im Moment musst du nur wissen, dass `unwrap_or_else`
-den inneren Wert des `Err`, in diesem Fall die statische Zeichenkette `Nicht
-genügend Argumente`, die wir in Codeblock 12-9 hinzugefügt haben, an unseren
-Funktionsabschluss im Argument `err`, das zwischen den senkrechten Strichen
-erscheint, weitergibt. Der Code im Funktionsabschluss kann dann den `err`-Wert
-verwenden, wenn sie ausgeführt wird.
+In diesem Codeblock haben wir eine Methode verwendet, die wir bisher noch nicht
+behandelt haben: `unwrap_or_else`, die in der Standardbibliothek unter
+`Result<T, E>` definiert ist. Das Verwenden von `unwrap_or_else` erlaubt es uns,
+eine benutzerdefinierte nicht-`panic!`-Fehlerbehandlung zu definieren. Wenn das
+`Result` ein `Ok`-Wert ist, verhält sich diese Methode ähnlich wie `unwrap`: Sie
+gibt den inneren Wert von `Ok` zurück. Wenn der Wert jedoch ein `Err`-Wert ist,
+ruft diese Methode den Code im Closure auf, die eine anonyme Funktion ist, die
+wir definieren und als Argument an `unwrap_or_else` übergeben. Auf Closures
+gehen wir ausführlicher in [Kapitel 13][ch13] ein. Im Moment musst du nur
+wissen, dass `unwrap_or_else` den inneren Wert des `Err`, in diesem Fall die
+statische Zeichenkette `Nicht genügend Argumente`, die wir in Codeblock 12-9
+hinzugefügt haben, an unseren Closure im Argument `err`, das zwischen den
+senkrechten Strichen erscheint, weitergibt. Der Code im Closure kann dann den
+`err`-Wert verwenden, wenn sie ausgeführt wird.
 
 Wir haben eine neue Zeile `use` hinzugefügt, um `process` aus der
-Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im
-Funktionsabschluss, der im Fehlerfall ausgeführt wird, besteht nur aus zwei
-Zeilen: Wir geben den `err`-Wert aus und rufen dann `process::exit` auf. Die
-Funktion `process::exit` stoppt das Programm sofort und gibt die Zahl zurück,
-die als Exit-Statuscode übergeben wurde. Dies ähnelt der `panic!`-basierten
-Behandlung, die wir in Codeblock 12-8 verwendet haben, aber wir erhalten nicht
-mehr die gesamte zusätzliche Ausgabe. Lass es uns versuchen:
+Standardbibliothek in den Gültigkeitsbereich zu bringen. Der Code im Closure,
+der im Fehlerfall ausgeführt wird, besteht nur aus zwei Zeilen: Wir geben den
+`err`-Wert aus und rufen dann `process::exit` auf. Die Funktion `process::exit`
+stoppt das Programm sofort und gibt die Zahl zurück, die als Exit-Statuscode
+übergeben wurde. Dies ähnelt der `panic!`-basierten Behandlung, die wir in
+Codeblock 12-8 verwendet haben, aber wir erhalten nicht mehr die gesamte
+zusätzliche Ausgabe. Lass es uns versuchen:
 
 ```console
 $ cargo run

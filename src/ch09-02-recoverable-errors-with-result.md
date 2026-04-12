@@ -176,14 +176,14 @@ Fehler, außer dem Fehler der fehlenden Datei, abbricht.
 > #### Alternativen zur Verwendung von `match` mit `Result<T, E>`
 >
 > Das sind viele `match`! Der Ausdruck `match` ist sehr nützlich, aber auch
-> sehr primitiv. In Kapitel 13 wirst du etwas über Funktionsabschlüsse
-> (closures) lernen, die mit vielen der auf `Result<T, E>` definierten Methoden
-> verwendet werden. Diese Methoden können prägnanter sein als die Verwendung
-> von `match` bei der Behandlung von `Result<T, E>`-Werten in deinem Code.
+> sehr primitiv. In Kapitel 13 wirst du etwas über Closures lernen, die mit
+> vielen der auf `Result<T, E>` definierten Methoden verwendet werden. Diese
+> Methoden können prägnanter sein als die Verwendung von `match` bei der
+> Behandlung von `Result<T, E>`-Werten in deinem Code.
 >
 > Hier ist zum Beispiel eine andere Möglichkeit, die gleiche Logik wie in
-> Codeblock 9-5 zu schreiben, aber unter Verwendung von Funktionsabschlüssen
-> und der Methode `unwrap_or_else`:
+> Codeblock 9-5 zu schreiben, aber unter Verwendung von Closures und der Methode
+`unwrap_or_else`:
 >
 > ```rust
 > use std::fs::File;
