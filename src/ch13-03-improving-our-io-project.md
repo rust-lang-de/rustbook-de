@@ -333,25 +333,24 @@ impl Config {
 `Config::build` damit sie einen Iterator annimmt</span>
 
 Laut Dokumentation der Standardbibliothek für die Funktion `env::args` ist der
-Typ des zurückgegebenen Iterators `std::env::Args`, und dieser Typ
-implementiert das Merkmal `Iterator` und gibt `String`-Werte zurück.
+Typ des zurückgegebenen Iterators `std::env::Args`, und dieser Typ implementiert
+das Trait `Iterator` und gibt `String`-Werte zurück.
 
 Wir haben die Signatur der Funktion `Config::build` aktualisiert, sodass der
-Parameter `args` einen generischen Typ mit den Merkmalsabgrenzungen `impl
-Iterator<Item = String>` anstelle von `&[String]` hat. Diese Verwendung der
-Syntax `impl Trait`, die wir im Abschnitt [„Merkmale als Parameter
-verwenden“][impl-trait] in Kapitel 10 besprochen haben, bedeutet, dass `args`
-jeder Typ sein kann, der das Merkmal `Iterator` implementiert und
-`String`-Elemente zurückgibt.
+Parameter `args` einen generischen Typ mit den Trait Bound `impl Iterator<Item =
+String>` anstelle von `&[String]` hat. Diese Verwendung der Syntax `impl Trait`,
+die wir im Abschnitt [„Traits als Parameter verwenden“][impl-trait] in Kapitel
+10 besprochen haben, bedeutet, dass `args` jeder Typ sein kann, der das Trait
+`Iterator` implementiert und `String`-Elemente zurückgibt.
 
 Da wir die Eigentümerschaft von `args` übernehmen und `args` beim Iterieren
 verändern werden, können wir das Schlüsselwort `mut` in die Spezifikation des
 Parameters `args` eintragen, um ihn veränderbar (mutable) zu machen.
 
-#### Verwenden von `Iterator`-Merkmalsmethoden
+#### Verwenden von `Iterator`-Trait-Methoden
 
 Als Nächstes werden wir den Rumpf von `Config::build` in Ordnung bringen. Da
-`args` das Merkmal `Iterator` implementiert, wissen wir, dass wir die Methode
+`args` das Trait `Iterator` implementiert, wissen wir, dass wir die Methode
 `next` darauf aufrufen können! Codeblock 13-20 aktualisiert den Code aus
 Codeblock 12-23, um die Methode `next` zu verwenden.
 
@@ -591,4 +590,4 @@ Aber sind beide Implementierungen wirklich gleichwertig? Die intuitive Annahme
 könnte sein, dass die weniger abstrakte Schleife schneller ist. Lass uns über
 Performanz sprechen.
 
-[impl-trait]: ch10-02-traits.html#merkmale-als-parameter-verwenden
+[impl-trait]: ch10-02-traits.html#traits-als-parameter-verwenden

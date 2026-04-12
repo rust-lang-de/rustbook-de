@@ -517,20 +517,19 @@ keinen Unterschied zwischen tiefen und flachen Kopien, also würde der Aufruf
 `clone` nichts anderes tun als das übliche flache Kopieren, und wir können es
 weglassen.
 
-Rust hat eine spezielle Annotation, das Merkmal `Copy`, die wir an Typen hängen
+Rust hat eine spezielle Annotation, das Trait `Copy`, die wir an Typen hängen
 können, die auf dem Stack wie ganze Zahlen gespeichert sind (wir werden in
-[Kapitel 10][traits] mehr über Merkmale sprechen). Wenn ein Typ das Merkmal
-`Copy` implementiert, werden Variablen, die dieses Merkmal verwenden, nicht
-verschoben, sondern trivialerweise kopiert, sodass sie auch nach der Zuweisung
-an eine andere Variable noch gültig sind.
+[Kapitel 10][traits] mehr über Traits sprechen). Wenn ein Typ das Trait `Copy`
+implementiert, werden Variablen, die dieses Trait verwenden, nicht verschoben,
+sondern trivialerweise kopiert, sodass sie auch nach der Zuweisung an eine
+andere Variable noch gültig sind.
 
-Rust lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren, wenn der Typ
-oder einer seiner Teile das Merkmal `Drop` implementiert. Wenn der Typ eine
-Sonderbehandlung benötigt, wenn der Wert den Gültigkeitsbereich verlässt und
-wir die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir einen
+Rust lässt uns einen Typ nicht mit dem Trait `Copy` annotieren, wenn der Typ
+oder einer seiner Teile das Trait `Drop` implementiert. Wenn der Typ eine
+Sonderbehandlung benötigt, wenn der Wert den Gültigkeitsbereich verlässt und wir
+die Annotation `Copy` zu diesem Typ hinzufügen, erhalten wir einen
 Kompilierfehler. Um zu erfahren, wie du die `Copy`-Annotation zu deinem Typ
-hinzufügen kannst, siehe [„Ableitbare Merkmale (traits)“][derivable-traits] in
-Anhang C.
+hinzufügen kannst, siehe [„Ableitbare Traits“][derivable-traits] in Anhang C.
 
 Welche Typen unterstützen also `Copy`? Du kannst die Dokumentation für einen
 gegebenen Typ überprüfen, um sicherzugehen, aber als allgemeine Regel gilt:

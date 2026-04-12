@@ -158,16 +158,16 @@ Du würdest dich aus zwei Hauptgründen für die Vererbung entscheiden. Einer is
 die Wiederverwendung von Code: Du kannst ein bestimmtes Verhalten für einen Typ
 implementieren und die Vererbung ermöglicht es dir, diese Implementierung für
 einen anderen Typ wiederzuverwenden. Du kannst das auf begrenzte Weise in
-Rust-Code unter Verwendung von Standard-Merkmalsmethoden-Implementierungen tun,
+Rust-Code unter Verwendung von Standard-Trait-Mmethodenimplementierungen tun,
 was du in Codeblock 10-14 gesehen hast, als wir eine Standard-Implementierung
-der Methode `summarize` für das Merkmal (trait) `Summary` hinzugefügt haben.
-Jeder Typ, der das Merkmal `Summary` implementiert, hätte die Methode
-`summarize` ohne weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit
-einer Elternklasse, die eine Implementierung einer Methode hat, und einer
-erbenden Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir
-können auch die Standard-Implementierung der Methode `summarize` überschreiben,
-wenn wir das Markmal `Summary` implementieren, die einer Kindklasse ähnelt, die
-die Implementierung einer von einer Elternklasse geerbten Methode überschreibt.
+der Methode `summarize` für das Trait `Summary` hinzugefügt haben. Jeder Typ,
+der das Trait `Summary` implementiert, hätte die Methode `summarize` ohne
+weiteren Code darauf zur Verfügung. Dies ist vergleichbar mit einer
+Elternklasse, die eine Implementierung einer Methode hat, und einer erbenden
+Kindklasse, die ebenfalls die Implementierung der Methode hat. Wir können auch
+die Standard-Implementierung der Methode `summarize` überschreiben, wenn wir das
+Markmal `Summary` implementieren, die einer Kindklasse ähnelt, die die
+Implementierung einer von einer Elternklasse geerbten Methode überschreibt.
 
 Der andere Grund, Vererbung zu verwenden, bezieht sich auf das Typsystem: Ein
 untergeordneter Typ soll an den gleichen Stellen wie der übergeordnete Typ
@@ -183,10 +183,10 @@ wenn sie bestimmte Eigenschaften gemeinsam haben.
 > Typen im Allgemeinen Unterklassen.
 >
 > Rust verwendet stattdessen generische Datentypen (generics), um über
-> verschiedene mögliche Typen und Merkmalsabgrenzungen (trait bounds) zu
-> abstrahieren, um Beschränkungen für das aufzuerlegen, was diese Typen bieten
-> müssen. Dies wird manchmal als _begrenzter parametrischer Polymorphismus_
-> (bounded parametric polymorphism) bezeichnet.
+> verschiedene mögliche Typen und Trait Bounds zu abstrahieren, um
+> Beschränkungen für das aufzuerlegen, was diese Typen bieten müssen. Dies wird
+> manchmal als _begrenzter parametrischer Polymorphismus_ (bounded parametric
+> polymorphism) bezeichnet.
 
 Rust hat sich für andere Kompromisse entschieden, indem es keine Vererbung
 anbietet. Bei der Vererbung besteht oft die Gefahr, dass mehr Code als nötig
@@ -200,5 +200,5 @@ Unterklasse kann nur von einer Klasse erben), was die Flexibilität des
 Programmdesigns weiter einschränkt.
 
 Aus diesen Gründen verfolgt Rust den anderen Ansatz mittels Verwendung von
-Merkmalsobjekten (trait objects) anstelle der Vererbung, um Polymorphismus zur
-Laufzeit zu realisieren. Schauen wir uns an, wie Merkmalsobjekte funktionieren.
+Trait-Objekten anstelle der Vererbung, um Polymorphismus zur Laufzeit zu
+realisieren. Schauen wir uns an, wie Trait-Objekte funktionieren.

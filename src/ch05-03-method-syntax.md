@@ -2,13 +2,12 @@
 
 Methoden sind Funktionen recht ähnlich: Sie werden mit dem Schlüsselwort `fn`
 und ihrem Namen deklariert, sie können Parameter und einen Rückgabewert haben,
-und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden. 
+und sie enthalten etwas Code, der ausgeführt wird, wenn sie aufgerufen werden.
 Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
-einer Struktur (struct) (oder einer Aufzählung (enum) oder eines
-Merkmalsobjektes (trait object), die wir in [Kapitel 6][enums] und [Kapitel
-18][trait-objects] behandeln) definiert werden und ihr erster Parameter stets
-`self` ist. `self` repräsentiert die Instanz der Struktur, zu der die Methode
-aufgerufen wird.
+einer Struktur (struct) (oder einer Aufzählung (enum) oder eines Trait-Objekts,
+die wir in [Kapitel 6][enums] und [Kapitel 18][trait-objects] behandeln)
+definiert werden und ihr erster Parameter stets `self` ist. `self` repräsentiert
+die Instanz der Struktur, zu der die Methode aufgerufen wird.
 
 ### Methoden-Syntax
 
@@ -388,7 +387,7 @@ Verwendung mehrerer `impl`-Blöcke</span>
 Es ist nicht nötig, diese Methoden hier auf mehrere `impl`-Blöcke zu verteilen,
 aber es handelt sich um eine gültige Syntax. Wir werden in Kapitel 10 einen
 Fall sehen, bei dem mehrere `impl`-Blöcke hilfreich sind, wenn wir generische
-Typen und Merkmale behandeln.
+Typen und Traits behandeln.
 
 ## Zusammenfassung
 

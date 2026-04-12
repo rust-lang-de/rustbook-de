@@ -443,7 +443,7 @@ Vorrat zur Ausführung übergibt.
 Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen Closure
 als Parameter zu nehmen. Aus Abschnitt [„Verschieben erfasster Werte aus
 Closures“][moving-out-of-closures] in Kapitel 13 erinnern wir uns, dass wir
-Closures als Parameter mit drei verschiedenen Merkmalen nehmen können: `Fn`,
+Closures als Parameter mit drei verschiedenen Traits nehmen können: `Fn`,
 `FnMut` und `FnOnce`. Wir müssen entscheiden, welche Art von Closure wir hier
 verwenden. Wir wissen, dass wir am Ende etwas Ähnliches wie die Implementierung
 `thread::spawn` der Standardbibliothek tun werden, sodass wir uns ansehen
@@ -460,20 +460,19 @@ pub fn spawn<F, T>(f: F) -> JoinHandle<T>
 
 Der Parameter vom Typ `F` ist derjenige, um den es hier geht; der Parameter vom
 Typ `T` bezieht sich auf den Rückgabewert, und darum geht es uns nicht. Wir
-können sehen, dass `spawn` `FnOnce` als Merkmal (trait) verwendet, das an `F`
-gebunden ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden
-das Argument, das wir bei `execute` bekommen, letztendlich an `spawn`
-weitergeben. Wir können weiterhin zuversichtlich sein, dass `FnOnce` das Merkmal
-ist, das wir verwenden wollen, weil der Strang zum Ausführen einer Anfrage den
-Closure dieser Anfrage nur einmal ausführt, was zu `Once` in `FnOnce` passt.
+können sehen, dass `spawn` `FnOnce` als Trait verwendet, das an `F` gebunden
+ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden das
+Argument, das wir bei `execute` bekommen, letztendlich an `spawn` weitergeben.
+Wir können weiterhin zuversichtlich sein, dass `FnOnce` das Trait ist, das wir
+verwenden wollen, weil der Strang zum Ausführen einer Anfrage den Closure dieser
+Anfrage nur einmal ausführt, was zu `Once` in `FnOnce` passt.
 
-Der Parameter vom Typ `F` hat auch die Merkmalsabgrenzung `Send` und die
-Lebensdauer `'static`, die in unserer Situation nützlich sind: Wir brauchen
-`Send`, um die Merkmalsabgrenzung von einem Strang zu einem anderen zu
-übertragen und `'static`, weil wir nicht wissen, wie lange die Ausführung des
-Strangs dauern wird. Lass uns eine Methode `execute` auf `ThreadPool`
-erstellen, die einen generischen Parameter vom Typ `F` mit diesen Abgrenzungen
-annimmt:
+Der Parameter vom Typ `F` hat auch die Trait Bound `Send` und die Lebensdauer
+`'static`, die in unserer Situation nützlich sind: Wir brauchen `Send`, um die
+Trait Bound von einem Strang zu einem anderen zu übertragen und `'static`, weil
+wir nicht wissen, wie lange die Ausführung des Strangs dauern wird. Lass uns
+eine Methode `execute` auf `ThreadPool` erstellen, die einen generischen
+Parameter vom Typ `F` mit diesen Abgrenzungen annimmt:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -1115,11 +1114,11 @@ Mit diesen Änderungen kompiliert der Code! Wir haben es geschafft!
 #### Implementieren der Methode `execute`
 
 Lass uns endlich die Methode `execute` auf `ThreadPool` implementieren. Wir
-werden auch `Job` von einer Struktur in einen Typ-Alias für ein Merkmalsobjekt
-(trait object) ändern, das den Typ des Closures enthält, den `execute` erhält.
-Wie im Abschnitt [„Typ-Synonyme und Typ-Aliase“][type-aliases] in Kapitel 19
-besprochen, ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie
-einfacher nutzen zu können. Siehe Codeblock 21-19.
+werden auch `Job` von einer Struktur in einen Typ-Alias für ein Trait-Objekt
+ändern, das den Typ des Closures enthält, den `execute` erhält. Wie im Abschnitt
+[„Typ-Synonyme und Typ-Aliase“][type-aliases] in Kapitel 19 besprochen,
+ermöglichen uns Typ-Aliase, lange Typen kürzer zu machen, um sie einfacher
+nutzen zu können. Siehe Codeblock 21-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

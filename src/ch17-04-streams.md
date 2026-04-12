@@ -15,8 +15,8 @@ Beispielsweise können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu
 vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse
 der Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.
 
-Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Merkmal
-`Iterator` im Abschnitt [„Das Merkmal (trait) `Iterator` und die Methode
+Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Trait
+`Iterator` im Abschnitt [„Das Trait `Iterator` und die Methode
 `next`“][iterator] betrachtet haben. Es gibt jedoch zwei Unterschiede zwischen
 Iteratoren und dem asynchronen Kanalempfänger. Der erste ist die Zeit:
 Iteratoren sind synchron, während der Kanalempfänger asynchron ist. Der zweite
@@ -87,17 +87,17 @@ help: there is a method `try_next` with a similar name
 ```
 
 Wie diese Ausgabe erklärt, liegt der Grund für den Compilerfehler darin, dass
-wir das richtige Merkmal im Gültigkeitsbereich benötigen, um die Methode `next`
+wir das richtige Trait im Gültigkeitsbereich benötigen, um die Methode `next`
 verwenden zu können. In Anbetracht der bisherigen Diskussion könnte man
-erwarten, dass es sich um das Merkmal `Stream` handelt, aber ist das Merkmal
-`StreamExt`. `Ext` steht hier für „extension“ (engl. Erweiterung): Dies ist
-eine gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Merkmal mit einem
-anderen zu erweitern.
+erwarten, dass es sich um das Trait `Stream` handelt, aber ist das Trait
+`StreamExt`. `Ext` steht hier für „extension“ (engl. Erweiterung): Dies ist eine
+gängige Vorgehensweise in der Rust-Gemeinschaft, um ein Trait mit einem anderen
+zu erweitern.
 
-Das Merkmal `Stream` definiert eine Low-Level-Schnittstelle, die die Merkmale
+Das Trait `Stream` definiert eine Low-Level-Schnittstelle, die die Traits
 `Iterator` und `Future` effektiv kombiniert. `StreamExt` bietet eine Reihe von
 APIs auf höherer Ebene ab, die auf `Stream` basieren, darunter die Methode
-`next` sowie andere Hilfsmethoden, die denen des Merkmals `Iterator` ähneln.
+`next` sowie andere Hilfsmethoden, die denen des Traits `Iterator` ähneln.
 `Stream` und `StreamExt` sind noch nicht Teil der Standardbibliothek von Rust,
 aber die meisten Kisten des Ökosystems verwenden ähnliche Definitionen.
 
@@ -131,4 +131,4 @@ Außerdem können wir jetzt, da wir `StreamExt` im Gültigkeitsbereich haben, al
 seine Hilfsmethoden verwenden, genau wie bei Iteratoren.
 
 [17-02-messages]: ch17-02-concurrency-with-async.html#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung
-[iterator]: ch13-02-iterators.html#das-merkmal-trait-iterator-und-die-methode-next
+[iterator]: ch13-02-iterators.html#das-trait-iterator-und-die-methode-next

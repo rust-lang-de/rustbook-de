@@ -694,31 +694,31 @@ gleich der Eingabe ist.
 
 Unter der Haube verwenden die Makros `assert_eq!` und `assert_ne!` die
 Operatoren `==` bzw. `!=`. Wenn die Zusicherungen fehlschlagen, geben diese
-Makros ihre Argumente unter Verwendung der Debug-Formatierung aus, was
-bedeutet, dass die zu vergleichenden Werte die Merkmale `PartialEq` und
-`Debug` implementieren müssen. Alle primitiven Typen und die meisten
-Standardbibliothekstypen implementieren diese Merkmale. Für Strukturen und
-Aufzählungen, die du definierst, musst du `PartialEq` implementieren, um
-die Gleichheit dieser Typen sicherzustellen. Du musst auch `Debug`
-implementieren, um die Werte auszugeben, wenn die Zusicherung fehlschlägt. Da
-es sich bei beiden Merkmalen um ableitbare Merkmale handelt, wie in Codeblock
-5-12 in Kapitel 5 erwähnt, genügt normalerweise das Ergänzen der Annotation
-`#[derive(PartialEq, Debug)]` bei deiner Struktur- und Aufzählungsdefinition.
-Siehe Anhang C [„Ableitbare Merkmale (traits)“][derivable-traits] für weitere
-Einzelheiten über diese und andere ableitbare Merkmale.
+Makros ihre Argumente unter Verwendung der Debug-Formatierung aus, was bedeutet,
+dass die zu vergleichenden Werte die Traits `PartialEq` und `Debug`
+implementieren müssen. Alle primitiven Typen und die meisten
+Standardbibliothekstypen implementieren diese Traits. Für Strukturen und
+Aufzählungen, die du definierst, musst du `PartialEq` implementieren, um die
+Gleichheit dieser Typen sicherzustellen. Du musst auch `Debug` implementieren,
+um die Werte auszugeben, wenn die Zusicherung fehlschlägt. Da es sich bei beiden
+Traits um ableitbare Traits handelt, wie in Codeblock 5-12 in Kapitel 5 erwähnt,
+genügt normalerweise das Ergänzen der Annotation `#[derive(PartialEq, Debug)]`
+bei deiner Struktur- und Aufzählungsdefinition. Siehe Anhang C [„Ableitbare
+Traits“][derivable-traits] für weitere Einzelheiten über diese und andere
+ableitbare Traits.
 
 ### Benutzerdefinierte Fehlermeldungen angeben
 
-Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch
-eine benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen
-ausgegeben wird. Alle Argumente, die nach den erforderlichen Argumenten
-angegeben werden, werden an das Makro `format!` übergeben (siehe
-[„Aneinanderhängen mit `+` und `format!`“][concatenation-plus-format] in
-Kapitel 8), sodass du eine Formatierungs-Zeichenkette übergeben kannst, die
-Platzhalter `{}` und Werte enthält, die in diese Platzhalter gehören.
-Benutzerdefinierte Nachrichten sind nützlich, um zu dokumentieren, was eine
-Zusicherung bedeutet; wenn ein Test fehlschlägt, hast du eine bessere
-Vorstellung davon, wo das Problem im Code liegt.
+Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch eine
+benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen ausgegeben
+wird. Alle Argumente, die nach den erforderlichen Argumenten angegeben werden,
+werden an das Makro `format!` übergeben (siehe [„Aneinanderhängen mit `+` und
+`format!`“][concatenation-plus-format] in Kapitel 8), sodass du eine
+Formatierungs-Zeichenkette übergeben kannst, die Platzhalter `{}` und Werte
+enthält, die in diese Platzhalter gehören. Benutzerdefinierte Nachrichten sind
+nützlich, um zu dokumentieren, was eine Zusicherung bedeutet; wenn ein Test
+fehlschlägt, hast du eine bessere Vorstellung davon, wo das Problem im Code
+liegt.
 
 Nehmen wir zum Beispiel an, wir haben eine Funktion, die Leute mit Namen
 begrüßt, und wir wollen testen, ob der Name, den wir an die Funktion übergeben,

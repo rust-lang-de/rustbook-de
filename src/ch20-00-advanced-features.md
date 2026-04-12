@@ -13,9 +13,8 @@ In diesem Kapitel werden wir behandeln:
 
 - Unsicheres Rust: Wie kann man einige der Garantien von Rust ausschalten und
   Verantwortung für das manuelle Aufrechterhalten dieser Garantien übernehmen?
-- Fortgeschrittene Merkmale (traits): Assoziierte Typen, Standardtypparameter,
-  voll qualifizierte Syntax, Supermerkmale (supertraits) und das Newtype-Muster
-  in Bezug auf Merkmale
+- Fortgeschrittene Traits: Assoziierte Typen, Standardtypparameter, voll
+  qualifizierte Syntax, Supertraits und das Newtype-Muster in Bezug auf Traits
 - Fortgeschrittene Typen: Mehr über das Newtype-Muster, Typ-Aliase, den Typ
   never und Typen dynamischer Größe
 - Erweiterte Funktionen und Closures: Funktionszeiger und Zurückgeben von

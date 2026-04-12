@@ -1,20 +1,19 @@
-## Fortgeschrittene Merkmale (traits)
+## Fortgeschrittene Traits
 
-Merkmale behandelten wir als Erstes im Abschnitt [„Gemeinsames Verhalten
-definieren mit Merkmalen (traits)“][traits] in Kapitel 10, aber wir haben die
+Traits behandelten wir als Erstes im Abschnitt [„Gemeinsames Verhalten
+definieren mit Traits“][traits] in Kapitel 10, aber wir haben die
 fortgeschrittenen Details nicht besprochen. Jetzt, da du mehr über Rust weißt,
 können wir zum Kern der Sache kommen.
 
-### Merkmale mit assoziierten Typen definieren
+### Traits mit assoziierten Typen definieren
 
-_Assoziierte Typen_ (associated types) verbinden einen Typ-Platzhalter mit
-einem Merkmal, sodass die Definitionen der Merkmalsmethoden diese
-Platzhaltertypen in ihren Signaturen verwenden können. Der Implementierer eines
-Merkmals gibt den konkreten Typ an, der anstelle des Platzhaltertyps für die
-jeweilige Implementierung verwendet werden soll. Auf diese Weise können wir ein
-Merkmal definieren, das einige Typen verwendet, ohne dass wir genau wissen
-müssen, um welche Typen es sich dabei handelt, bis das Merkmal implementiert
-ist.
+_Assoziierte Typen_ (associated types) verbinden einen Typ-Platzhalter mit einem
+Trait, sodass die Definitionen der Trait-Methoden diese Platzhaltertypen in
+ihren Signaturen verwenden können. Der Implementierer eines Traits gibt den
+konkreten Typ an, der anstelle des Platzhaltertyps für die jeweilige
+Implementierung verwendet werden soll. Auf diese Weise können wir ein Trait
+definieren, das einige Typen verwendet, ohne dass wir genau wissen müssen, um
+welche Typen es sich dabei handelt, bis das Trait implementiert ist.
 
 Wir haben die meisten der fortgeschrittenen Funktionalitäten in diesem Kapitel
 als selten benötigt beschrieben. Assoziierte Typen liegen irgendwo dazwischen:
@@ -22,11 +21,11 @@ Sie werden seltener verwendet als die im Rest des Buches erläuterten
 Funktionalitäten, aber häufiger als viele der anderen in diesem Kapitel
 besprochenen Funktionalitäten.
 
-Ein Beispiel für ein Merkmal mit einem assoziierten Typ ist das Merkmal
-`Iterator`, das die Standardbibliothek zur Verfügung stellt. Der assoziierte
-Typ wird `Item` genannt und steht für den Typ der Werte, über die der Typ, der
-das Merkmal `Iterator` implementiert, iteriert. Die Definition des Merkmals
-`Iterator` ist in Codeblock 20-13 zu sehen.
+Ein Beispiel für ein Trait mit einem assoziierten Typ ist das Trait `Iterator`,
+das die Standardbibliothek zur Verfügung stellt. Der assoziierte Typ wird `Item`
+genannt und steht für den Typ der Werte, über die der Typ, der das Trait
+`Iterator` implementiert, iteriert. Die Definition des Traits `Iterator` ist in
+Codeblock 20-13 zu sehen.
 
 ```rust
 pub trait Iterator {
@@ -36,20 +35,20 @@ pub trait Iterator {
 }
 ```
 
-<span class="caption">Codeblock 20-13: Definition des Merkmals `Iterator`, das
+<span class="caption">Codeblock 20-13: Definition des Traits `Iterator`, das
 einen assoziierten Typ `Item` hat</span>
 
 Der Typ `Item` ist ein Platzhalter und die Definition der Methode `next` zeigt,
 dass sie Werte vom Typ `Option<Self::Item>` zurückgibt. Implementierungen des
-Merkmals `Iterator` geben den konkreten Typ für `Item` an und die Methode
-`next` gibt eine `Option` zurück, die einen Wert dieses konkreten Typs enthält.
+Traits `Iterator` geben den konkreten Typ für `Item` an und die Methode `next`
+gibt eine `Option` zurück, die einen Wert dieses konkreten Typs enthält.
 
 Assoziierte Typen scheinen ein ähnliches Konzept wie generische Datentypen
-(generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu
-definieren, ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied
-zwischen den beiden Konzepten zu untersuchen, betrachten wir eine
-Implementierung des Merkmals `Iterator` für einen Typ namens `Counter`, der
-angibt, dass der `Item`-Typ `u32` ist:
+(generics) zu sein, da letztere es uns ermöglichen, eine Funktion zu definieren,
+ohne anzugeben, welche Typen sie handhaben kann. Um den Unterschied zwischen den
+beiden Konzepten zu untersuchen, betrachten wir eine Implementierung des Traits
+`Iterator` für einen Typ namens `Counter`, der angibt, dass der `Item`-Typ `u32`
+ist:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -80,7 +79,7 @@ impl Iterator for Counter {
 ```
 
 Diese Syntax scheint mit der von generischen Datentypen vergleichbar zu sein.
-Warum also nicht einfach das Merkmal `Iterator` mit generischen Datentypen
+Warum also nicht einfach das Trait `Iterator` mit generischen Datentypen
 definieren, wie in Codeblock 20-14 gezeigt?
 
 ```rust
@@ -89,38 +88,37 @@ pub trait Iterator<T> {
 }
 ```
 
-<span class="caption">Codeblock 20-14: Eine hypothetische Definition des
-Merkmals `Iterator` unter Verwendung eines generischen Datentyps</span>
+<span class="caption">Codeblock 20-14: Eine hypothetische Definition des Traits
+`Iterator` unter Verwendung eines generischen Datentyps</span>
 
 Der Unterschied ist, dass wir beim Verwenden von generischen Datentypen, wie in
 Codeblock 20-14, die Typen in jeder Implementierung annotieren müssen; da wir
 auch `Iterator<String> for Counter` oder jeden anderen Typ implementieren
 können, könnten wir mehrere Implementierungen von `Iterator` für `Counter`
-haben. Mit anderen Worten, wenn ein Merkmal einen generischen Parameter hat,
-kann es für einen Typ mehrfach implementiert werden, wobei die konkreten Typen
-der generischen Typparameter jedes Mal geändert werden können. Wenn wir die
-Methode `next` auf `Counter` verwenden, müssten wir Typ-Annotationen
-bereitstellen, um anzugeben, welche Implementierung des `Iterators` wir
-verwenden wollen.
+haben. Mit anderen Worten, wenn ein Trait einen generischen Parameter hat, kann
+es für einen Typ mehrfach implementiert werden, wobei die konkreten Typen der
+generischen Typparameter jedes Mal geändert werden können. Wenn wir die Methode
+`next` auf `Counter` verwenden, müssten wir Typ-Annotationen bereitstellen, um
+anzugeben, welche Implementierung des `Iterators` wir verwenden wollen.
 
 Bei assoziierten Typen brauchen wir Typen nicht zu annotieren, weil wir ein
-Merkmal auf einem Typ nicht mehrfach implementieren können. In Codeblock 20-13
-mit der Definition, die assoziierte Typen verwendet, können wir nur einmal
-wählen, was der Typ von `Item` sein wird, weil es nur einen `impl Iterator for
-Counter` geben kann. Wir müssen nicht angeben, dass wir einen Iterator von
-`u32`-Werten überall dort haben wollen, wo wir `next` auf `Counter` aufrufen.
+Trait auf einem Typ nicht mehrfach implementieren können. In Codeblock 20-13 mit
+der Definition, die assoziierte Typen verwendet, können wir nur einmal wählen,
+was der Typ von `Item` sein wird, weil es nur einen `impl Iterator for Counter`
+geben kann. Wir müssen nicht angeben, dass wir einen Iterator von `u32`-Werten
+überall dort haben wollen, wo wir `next` auf `Counter` aufrufen.
 
-Assoziierte Typen werden auch Teil des Merkmal-Vertrags: Implementierer des
-Merkmals müssen einen Typ bereitstellen, der für den Platzhalter des
-assoziierten Typs steht. Assoziierte Typen haben oft einen Namen, der
-beschreibt, wie der Typ verwendet werden soll, und das Dokumentieren des
-assoziierten Typs in der API-Dokumentation ist eine gute Praxis.
+Assoziierte Typen werden auch Teil des Trait-Vertrags: Implementierer des Traits
+müssen einen Typ bereitstellen, der für den Platzhalter des assoziierten Typs
+steht. Assoziierte Typen haben oft einen Namen, der beschreibt, wie der Typ
+verwendet werden soll, und das Dokumentieren des assoziierten Typs in der
+API-Dokumentation ist eine gute Praxis.
 
 ### Generische Standardparameter und Operatorüberladung verwenden
 
 Wenn wir generische Typparameter verwenden, können wir einen konkreten
 Standardtyp für den generischen Typ angeben. Dadurch entfällt die Notwendigkeit
-für Implementierer des Merkmals, einen konkreten Typ anzugeben, wenn der
+für Implementierer des Traits, einen konkreten Typ anzugeben, wenn der
 Standardtyp passt. Du gibst einen Standardtyp an, wenn du einen generischen Typ
 mit der Syntax `<PlaceholderType=ConcreteType>` deklarierst.
 
@@ -130,10 +128,10 @@ Operators (wie `+`) in bestimmten Situationen anpasst.
 
 Rust erlaubt es dir nicht, eigene Operatoren zu erstellen oder beliebige
 Operatoren zu überladen. Aber du kannst die in `std::ops` aufgeführten
-Operationen und entsprechenden Merkmale überladen, indem du die mit dem
-Operator assoziierten Merkmale implementierst. Beispielsweise überladen wir in
-Codeblock 20-15 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir
-tun dies, indem wir das Merkmal `Add` auf eine `Point`-Struktur implementieren.
+Operationen und entsprechenden Traits überladen, indem du die mit dem Operator
+assoziierten Traits implementierst. Beispielsweise überladen wir in Codeblock
+20-15 den Operator `+`, um zwei `Point`-Instanzen zu addieren. Wir tun dies,
+indem wir das Trait `Add` auf eine `Point`-Struktur implementieren.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -165,15 +163,15 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-15: Implementieren des Merkmals `Add`, um
-den Operator `+` für `Point`-Instanzen zu überladen</span>
+<span class="caption">Codeblock 20-15: Implementieren des Traits `Add`, um den
+Operator `+` für `Point`-Instanzen zu überladen</span>
 
 Die Methode `add` addiert die `x`-Werte zweier `Point`-Instanzen und die
 `y`-Werte zweier `Point`-Instanzen, um einen neuen `Point` zu erzeugen. Das
-Merkmal `Add` hat einen assoziierten Typ namens `Output`, der den von der
-Methode `add` zurückgegebenen Typ bestimmt.
+Trait `Add` hat einen assoziierten Typ namens `Output`, der den von der Methode
+`add` zurückgegebenen Typ bestimmt.
 
-Der generische Standardtyp in diesem Code befindet sich innerhalb des Merkmals
+Der generische Standardtyp in diesem Code befindet sich innerhalb des Traits
 `Add`. Hier ist seine Definition:
 
 ```rust
@@ -184,28 +182,28 @@ trait Add<Rhs=Self> {
 }
 ```
 
-Dieser Code sollte allgemein bekannt aussehen: Ein Merkmal mit einer Methode
-und einem assoziierten Typ. Der neue Teil ist `Rhs=Self`: Diese Syntax heißt
+Dieser Code sollte allgemein bekannt aussehen: Ein Trait mit einer Methode und
+einem assoziierten Typ. Der neue Teil ist `Rhs=Self`: Diese Syntax heißt
 _Standardtypparameter_ (default type parameters). Der generische Typparameter
 `Rhs` (kurz für „right hand side“, engl. „rechte Seite“) definiert den Typ des
 Parameters `rhs` in der Methode `add`. Wenn wir keinen konkreten Typ für `Rhs`
-angeben, wenn wir das Merkmal `Add` implementieren, wird der Typ `Rhs`
+angeben, wenn wir das Trait `Add` implementieren, wird der Typ `Rhs`
 standardmäßig auf `Self` gesetzt, was der Typ sein wird, auf dem wir `Add`
 implementieren.
 
 Als wir `Add` für `Point` implementiert haben, haben wir den Standardwert für
 `Rhs` verwendet, weil wir zwei `Point`-Instanzen addieren wollten. Schauen wir
-uns ein Beispiel für die Implementierung des Merkmals `Add` an, bei dem wir den
+uns ein Beispiel für die Implementierung des Traits `Add` an, bei dem wir den
 Typ `Rhs` anpassen wollen, anstatt den Standardwert zu verwenden.
 
-Wir haben zwei Strukturen `Millimeters` und `Meters`, die Werte in
-verschiedenen Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs
-in einer anderen Struktur ist als _Newtype-Muster_ bekannt, das wir im
-Abschnitt [„Externe Merkmale mit dem Newtype-Muster implementieren“][newtype]
-ausführlicher beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter
-addieren und die Implementierung von `Add` die Umrechnung korrekt durchführen
-lassen. Wir können `Add` für `Millimeters` mit `Meters` als `Rhs`
-implementieren, wie in Codeblock 20-16 gezeigt.
+Wir haben zwei Strukturen `Millimeters` und `Meters`, die Werte in verschiedenen
+Einheiten enthalten. Diese dünne Umhüllung eines bestehenden Typs in einer
+anderen Struktur ist als _Newtype-Muster_ bekannt, das wir im Abschnitt
+[„Externe Traits mit dem Newtype-Muster implementieren“][newtype] ausführlicher
+beschreiben. Wir wollen Werte in Millimeter zu Werten in Meter addieren und die
+Implementierung von `Add` die Umrechnung korrekt durchführen lassen. Wir können
+`Add` für `Millimeters` mit `Meters` als `Rhs` implementieren, wie in Codeblock
+20-16 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -224,7 +222,7 @@ impl Add<Meters> for Millimeters {
 }
 ```
 
-<span class="caption">Codeblock 20-16: Implementieren des Merkmals `Add` auf
+<span class="caption">Codeblock 20-16: Implementieren des Traits `Add` auf
 `Millimeters`, um `Millimeters` zu `Meters` zu addieren</span>
 
 Um `Millimeters` und `Meters` zu addieren, geben wir `impl Add<Meters>` an, um
@@ -237,33 +235,33 @@ Du wirst Standardtypparameter auf zwei Arten verwenden:
 2. Um eine Anpassung in bestimmten Fällen zu ermöglichen, die die meisten
    Benutzer nicht benötigen.
 
-Das Merkmal `Add` der Standardbibliothek ist ein Beispiel für den zweiten
-Zweck: Normalerweise addierst du zwei ähnliche Typen, aber das Merkmal `Add`
-bietet die Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das
-Verwenden eines Standardtypparameters in der Merkmalsdefinition `Add` bedeutet,
-dass du den zusätzlichen Parameter die meiste Zeit nicht angeben musst. Mit
-anderen Worten kann etwas Implementierungscode eingespart werden, was das
-Verwenden des Merkmals erleichtert.
+Das Trait `Add` der Standardbibliothek ist ein Beispiel für den zweiten Zweck:
+Normalerweise addierst du zwei ähnliche Typen, aber das Trait `Add` bietet die
+Möglichkeit, darüber hinausgehende Anpassungen vorzunehmen. Das Verwenden eines
+Standardtypparameters in der Trait-Definition `Add` bedeutet, dass du den
+zusätzlichen Parameter die meiste Zeit nicht angeben musst. Mit anderen Worten
+kann etwas Implementierungscode eingespart werden, was das Verwenden des Traits
+erleichtert.
 
 Der erste Zweck ist ähnlich zum zweiten, nur umgekehrt: Wenn du einem
-vorhandenen Merkmal einen Typparameter hinzufügen möchtest, kannst du ihm einen
-Standardwert geben, um eine Erweiterung der Funktionalität des Merkmals zu
+vorhandenen Trait einen Typparameter hinzufügen möchtest, kannst du ihm einen
+Standardwert geben, um eine Erweiterung der Funktionalität des Traits zu
 ermöglichen, ohne den vorhandenen Implementierungscode zu brechen.
 
 ### Eindeutiger Aufruf von Methoden mit identischen Namen
 
-Nichts in Rust hindert ein Merkmal daran, eine Methode mit demselben Namen wie
-die Methode eines anderen Merkmals zu haben, und Rust hindert dich auch nicht
-daran, beide Merkmale auf einem Typ zu implementieren. Es ist auch möglich,
-eine Methode direkt auf dem Typ mit dem gleichen Namen wie Methoden von
-Merkmalen zu implementieren.
+Nichts in Rust hindert ein Trait daran, eine Methode mit demselben Namen wie die
+Methode eines anderen Traits zu haben, und Rust hindert dich auch nicht daran,
+beide Traits auf einem Typ zu implementieren. Es ist auch möglich, eine Methode
+direkt auf dem Typ mit dem gleichen Namen wie Methoden von Traits zu
+implementieren.
 
 Wenn du Methoden mit dem gleichen Namen aufrufst, musst du Rust mitteilen,
 welche du verwenden willst. Betrachte den Code in Codeblock 20-17, wo wir zwei
-Merkmale `Pilot` und `Wizard` definiert haben, die beide eine Methode namens
-`fly` haben. Wir implementieren dann beide Merkmale auf einem Typ `Human`, der
-bereits eine Methode namens `fly` implementiert hat. Jede Methode `fly` macht
-etwas anderes.
+Traits `Pilot` und `Wizard` definiert haben, die beide eine Methode namens `fly`
+haben. Wir implementieren dann beide Traits auf einem Typ `Human`, der bereits
+eine Methode namens `fly` implementiert hat. Jede Methode `fly` macht etwas
+anderes.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -299,9 +297,9 @@ impl Human {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 20-17: Zwei Merkmale sind so definiert, dass
-sie eine Methode `fly` haben und auf dem Typ `Human` implementiert sind, und
-eine Methode `fly` ist direkt auf dem Typ `Human` implementiert</span>
+<span class="caption">Codeblock 20-17: Zwei Traits sind so definiert, dass sie
+eine Methode `fly` haben und auf dem Typ `Human` implementiert sind, und eine
+Methode `fly` ist direkt auf dem Typ `Human` implementiert</span>
 
 Wenn wir `fly` auf einer Instanz von `Human` aufrufen, ruft der Compiler
 standardmäßig die Methode auf, die direkt auf dem Typ implementiert ist, wie in
@@ -351,7 +349,7 @@ Wenn man diesen Code ausführt, wird `*Wütend mit den Armen wedeln*` ausgegeben
 was zeigt, dass Rust die Methode `fly`, die direkt auf `Human` implementiert
 wurde, aufgerufen hat.
 
-Um die Methoden `fly` entweder vom Merkmal `Pilot` oder vom Merkmal `Wizard`
+Um die Methoden `fly` entweder vom Trait `Pilot` oder vom Trait `Wizard`
 aufzurufen, müssen wir eine explizitere Syntax verwenden, um anzugeben, welche
 Methode `fly` wir meinen. Codeblock 20-19 demonstriert diese Syntax.
 
@@ -397,7 +395,7 @@ fn main() {
 <span class="caption">Codeblock 20-19: Angeben, welche Methode `fly` wir
 aufrufen wollen</span>
 
-Das Angeben des Merkmalsnamens vor dem Methodennamen verdeutlicht Rust, welche
+Das Angeben des Trait-Namens vor dem Methodennamen verdeutlicht Rust, welche
 Implementierung von `fly` wir aufrufen wollen. Wir könnten auch
 `Human::fly(&person)` schreiben, was äquivalent zu `person.fly()` ist, das wir
 in Codeblock 20-19 verwendet haben, aber das ist etwas länger zu schreiben, wenn
@@ -415,19 +413,18 @@ Hoch!
 *Wütend mit den Armen wedeln*
 ```
 
-Da die Methode `fly` einen Parameter `self` benötigt, könnte Rust, wenn wir
-zwei _Typen_ hätten, die beide ein _Merkmal_ implementieren, herausfinden,
-welche Implementierung eines Merkmals basierend auf dem Typ von `self` zu
-verwenden ist.
+Da die Methode `fly` einen Parameter `self` benötigt, könnte Rust, wenn wir zwei
+_Typen_ hätten, die beide ein _Trait_ implementieren, herausfinden, welche
+Implementierung eines Traits basierend auf dem Typ von `self` zu verwenden ist.
 
 Assoziierte Funktionen, die keine Methoden sind, haben jedoch keinen
-`self`-Parameter. Wenn es mehrere Typen oder Merkmale gibt, die
+`self`-Parameter. Wenn es mehrere Typen oder Traits gibt, die
 Nicht-Methodenfunktionen mit demselben Funktionsnamen definieren, weiß Rust
 nicht immer, welchen Typ du meinst, es sei denn, du verwendest eine
 voll-qualifizierte Syntax. In Codeblock 20-20 erstellen wir zum Beispiel ein
-Merkmal für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
-ein Merkmal `Animal` mit einer assoziierten Nicht-Methodenfunktion `baby_name`.
-Das Merkmal `Animal` ist für die Struktur `Dog` implementiert, für die wir auch
+Trait für ein Tierheim, das alle Hundebabys Spot nennen möchte. Wir erstellen
+ein Trait `Animal` mit einer assoziierten Nicht-Methodenfunktion `baby_name`.
+Das Trait `Animal` ist für die Struktur `Dog` implementiert, für die wir auch
 direkt eine assoziierte Nicht-Methodenfunktionen `baby_name` bereitstellen.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -456,16 +453,16 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-20: Ein Merkmal mit einer assoziierten
-Funktion und ein Typ mit einer assoziierten Funktion desselben Namens, der das
-Merkmal ebenfalls implementiert</span>
+<span class="caption">Codeblock 20-20: Ein Trait mit einer assoziierten Funktion
+und ein Typ mit einer assoziierten Funktion desselben Namens, der das Trait
+ebenfalls implementiert</span>
 
 Wir implementieren den Code für die Benennung aller Welpen Spot in der
 assoziierten Funktion `baby_name`, die auf `Dog` definiert ist. Der Typ `Dog`
-implementiert auch das Merkmal `Animal`, das Charakteristiken beschreibt, die
-alle Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
-Implementierung des Merkmals `Animal` auf `Dog` in der Funktion `baby_name`
-aus, die mit dem Merkmal `Animal` assoziiert ist.
+implementiert auch das Trait `Animal`, das Charakteristiken beschreibt, die alle
+Tiere haben. Hundebabys werden Welpen genannt und das drückt sich in der
+Implementierung des Traits `Animal` auf `Dog` in der Funktion `baby_name` aus,
+die mit dem Trait `Animal` assoziiert ist.
 
 In `main` rufen wir die Funktion `Dog::baby_name` auf, die die assoziierte
 Funktion, die auf `Dog` definiert ist, direkt aufruft. Dieser Code gibt
@@ -480,11 +477,11 @@ Ein Hundebaby wird Spot genannt.
 ```
 
 Diese Ausgabe ist nicht das, was wir wollten. Wir wollen die Funktion
-`baby_name` aufrufen, die Teil des Merkmals `Animal` ist, das wir auf `Dog`
-implementiert haben, sodass der Code `Ein Hundebaby wird Welpe genannt`
-ausgibt. Die Technik der Angabe des Merkmalsnamens, die wir in Codeblock 20-19
-verwendet haben, hilft hier nicht weiter; wenn wir `main` in den Code in
-Codeblock 20-21 ändern, erhalten wir einen Kompilierfehler.
+`baby_name` aufrufen, die Teil des Traits `Animal` ist, das wir auf `Dog`
+implementiert haben, sodass der Code `Ein Hundebaby wird Welpe genannt` ausgibt.
+Die Technik der Angabe des Trait-Namens, die wir in Codeblock 20-19 verwendet
+haben, hilft hier nicht weiter; wenn wir `main` in den Code in Codeblock 20-21
+ändern, erhalten wir einen Kompilierfehler.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -514,11 +511,11 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 20-21: Versuch, die Funktion `baby_name` des
-Merkmals `Animal` aufzurufen, aber Rust weiß nicht, welche Implementierung es
+Traits `Animal` aufzurufen, aber Rust weiß nicht, welche Implementierung es
 verwenden soll</span>
 
 Da `Animal::baby_name` keinen `self`-Parameter hat, und es andere Typen geben
-könnte, die das Merkmal `Animal` implementieren, kann Rust nicht herausfinden,
+könnte, die das Trait `Animal` implementieren, kann Rust nicht herausfinden,
 welche Implementierung von `Animal::baby_name` wir wollen. Wir werden diesen
 Kompilierfehler erhalten:
 
@@ -577,10 +574,10 @@ fn main() {
 
 <span class="caption">Codeblock 20-22: Verwenden einer vollständig
 qualifizierten Syntax, um anzugeben, dass wir die Funktion `baby_name` des
-Merkmals `Animal` aufrufen wollen, wie sie auf `Dog` implementiert ist</span>
+Traits `Animal` aufrufen wollen, wie sie auf `Dog` implementiert ist</span>
 
 Wir geben Rust mit einer Typ-Annotation innerhalb spitzer Klammern an, dass wir
-die Methode `baby_name` des Merkmals `Animal`, die auf `Dog` implementiert ist,
+die Methode `baby_name` des Traits `Animal`, die auf `Dog` implementiert ist,
 aufrufen wollen, indem wir sagen, dass wir den Typ `Dog` für diesen
 Funktionsaufruf als `Animal` behandeln wollen. Dieser Code wird nun ausgeben,
 was wir wollen:
@@ -608,21 +605,21 @@ ausführlichere Syntax nur in Fällen verwenden, in denen es mehrere
 Implementierungen gibt, die denselben Namen verwenden, und Rust Hilfe benötigt,
 um herauszufinden, welche Implementierung du aufrufen möchtest.
 
-### Verwenden von Supermerkmalen
+### Verwenden von Supertraits
 
-Manchmal kann es vorkommen, dass man eine Merkmals-Definition schreibt, die von
-einem anderen Merkmal abhängt: Damit ein Typ das erste Merkmal implementieren
-kann, muss dieser Typ auch das zweite Merkmal implementieren. Du würdest dies
-tun, damit deine Merkmalsdefinition die zugehörigen Elemente des zweiten
-Merkmals verwenden kann. Das Merkmal, auf das sich deine Merkmalsdefinition
-stützt, wird als _Supermerkmal_ (supertrait) deines Merkmals bezeichnet.
+Manchmal kann es vorkommen, dass man eine Trait-Definition schreibt, die von
+einem anderen Trait abhängt: Damit ein Typ das erste Trait implementieren kann,
+muss dieser Typ auch das zweite Trait implementieren. Du würdest dies tun, damit
+deine Trait-Definition die zugehörigen Elemente des zweiten Traits verwenden
+kann. Das Trait, auf das sich deine Trait-Definition stützt, wird als
+_Supertrait_ deines Traits bezeichnet.
 
-Nehmen wir zum Beispiel an, wir wollen ein Merkmal `OutlinePrint` mit einer
-Methode `outline_print` erstellen, das einen bestimmten Wert so formatiert,
-dass er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine
-Struktur `Point` haben, die `Display` so implementiert, dass sie `(x, y)`
-ausgibt, dann gibt der Aufruf von `outline_print` einer `Point`-Instanz, die
-`1` für `x` und `3` für `y` hat, folgendes aus:
+Nehmen wir zum Beispiel an, wir wollen ein Trait `OutlinePrint` mit einer
+Methode `outline_print` erstellen, das einen bestimmten Wert so formatiert, dass
+er in Sternchen eingerahmt ausgegeben wird. Das heißt, wenn wir eine Struktur
+`Point` haben, die `Display` so implementiert, dass sie `(x, y)` ausgibt, dann
+gibt der Aufruf von `outline_print` einer `Point`-Instanz, die `1` für `x` und
+`3` für `y` hat, folgendes aus:
 
 ```text
 **********
@@ -633,13 +630,12 @@ ausgibt, dann gibt der Aufruf von `outline_print` einer `Point`-Instanz, die
 ```
 
 Bei der Implementierung der Methode `outline_print` wollen wir die
-Funktionalität des Merkmals `Display` nutzen. Daher müssen wir festlegen, dass
-das Merkmal `OutlinePrint` nur bei Typen funktioniert, die auch `Display`
+Funktionalität des Traits `Display` nutzen. Daher müssen wir festlegen, dass das
+Trait `OutlinePrint` nur bei Typen funktioniert, die auch `Display`
 implementieren und die Funktionalität bieten, die `OutlinePrint` benötigt. Wir
-können dies in der Merkmalsdefinition tun, indem wir `OutlinePrint: Display`
-angeben. Diese Technik ähnelt dem Angeben einer Merkmalsabgrenzung (trait
-bound) bei einem Merkmal. Codeblock 20-23 zeigt eine Implementierung des
-Merkmals `OutlinePrint`.
+können dies in der Trait-Definition tun, indem wir `OutlinePrint: Display`
+angeben. Diese Technik ähnelt dem Angeben einer Trait Bound bei einem Trait.
+Codeblock 20-23 zeigt eine Implementierung des Traits `OutlinePrint`.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -661,16 +657,16 @@ trait OutlinePrint: fmt::Display {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 20-23: Implementieren des Merkmals
-`OutlinePrint`, das die Funktionalität von `Display` erfordert</span>
+<span class="caption">Codeblock 20-23: Implementieren des Traits `OutlinePrint`,
+das die Funktionalität von `Display` erfordert</span>
 
-Da wir festgelegt haben, dass `OutlinePrint` das Merkmal `Display` erfordert,
+Da wir festgelegt haben, dass `OutlinePrint` das Trait `Display` erfordert,
 können wir die Funktion `to_string` verwenden, die automatisch für jeden Typ
 implementiert wird, der `Display` implementiert. Wenn wir versuchen würden,
-`to_string` zu verwenden, ohne einen Doppelpunkt und das Merkmal `Display` nach
-dem Merkmalsnamen anzugeben, würden wir eine Fehlermeldung erhalten, die
-besagt, dass keine Methode mit dem Namen `to_string` für den Typ `&Self` im
-aktuellen Gültigkeitsbereich gefunden wurde.
+`to_string` zu verwenden, ohne einen Doppelpunkt und das Trait `Display` nach
+dem Trait-Namen anzugeben, würden wir eine Fehlermeldung erhalten, die besagt,
+dass keine Methode mit dem Namen `to_string` für den Typ `&Self` im aktuellen
+Gültigkeitsbereich gefunden wurde.
 
 Lass uns sehen, was passiert, wenn wir versuchen, `OutlinePrint` auf einem Typ
 zu implementieren, der `Display` nicht implementiert, z.B. die Struktur
@@ -785,30 +781,30 @@ impl fmt::Display for Point {
 # }
 ```
 
-Dann wird die Implementierung des Merkmals `OutlinePrint` auf `Point`
-erfolgreich kompilieren und wir können `outline_print` auf einer
-`Point`-Instanz aufrufen, um sie in Sternchen eingerahmt anzuzeigen.
+Dann wird die Implementierung des Traits `OutlinePrint` auf `Point` erfolgreich
+kompilieren und wir können `outline_print` auf einer `Point`-Instanz aufrufen,
+um sie in Sternchen eingerahmt anzuzeigen.
 
-### Externe Merkmale mit dem Newtype-Muster implementieren
+### Externe Traits mit dem Newtype-Muster implementieren
 
-In [„Ein Merkmal für einen Typ implementieren“][implementing-a-trait-on-a-type]
-in Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Merkmal nur dann
-auf einem Typ implementieren dürfen, wenn entweder das Merkmal oder der Typ
-oder beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
+In [„Ein Trait für einen Typ implementieren“][implementing-a-trait-on-a-type] in
+Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Trait nur dann auf
+einem Typ implementieren dürfen, wenn entweder das Trait oder der Typ oder
+beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
 Einschränkung zu umgehen, indem man das _Newtype-Muster_ (newtype pattern)
-verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir
-haben Tupelstrukturen in [„Mit Tupel-Strukturen verschiedene Typen
+verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir haben
+Tupelstrukturen in [„Mit Tupel-Strukturen verschiedene Typen
 erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
-Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Merkmal
+Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Trait
 implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
-wir können das Merkmal auf dem Verpackungstyp (wrapper type) implementieren.
+wir können das Trait auf dem Verpackungstyp (wrapper type) implementieren.
 _Newtype_ ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
 Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
 und der Verpackungstyp wird zur Kompilierzeit elidiert.
 
 Nehmen wir als Beispiel an, wir wollen `Display` auf `Vec<T>` implementieren,
-was uns die Waisenregel direkt verbietet, weil das Merkmal `Display` und der
-Typ `Vec<T>` außerhalb unserer Kiste definiert sind. Wir können eine Struktur
+was uns die Waisenregel direkt verbietet, weil das Trait `Display` und der Typ
+`Vec<T>` außerhalb unserer Kiste definiert sind. Wir können eine Struktur
 `Wrapper` erstellen, die eine Instanz von `Vec<T>` enthält; dann können wir
 `Display` auf `Wrapper` implementieren und den Wert `Vec<T>` verwenden, wie in
 Codeblock 20-24 gezeigt.
@@ -845,20 +841,20 @@ ist, sodass er nicht die Methoden des Wertes hat, den er hält. Wir müssten all
 Methoden von `Vec<T>` direkt auf `Wrapper` implementieren, sodass die Methoden
 an `self.0` delegieren, was uns erlauben würde, `Wrapper` genau wie einen
 `Vec<T>` zu behandeln. Wenn wir wollten, dass der neue Typ jede Methode des
-inneren Typs hat, wäre die Implementierung des Merkmals `Deref` auf dem
+inneren Typs hat, wäre die Implementierung des Traits `Deref` auf dem
 `Wrapper` eine Lösung, um den inneren Typ zurückzugeben (wir haben die
-Implementierung des Merkmals `Deref` in [„Intelligente Zeiger wie normale
+Implementierung des Traits `Deref` in [„Intelligente Zeiger wie normale
 Referenzen behandeln“][smart-pointer-deref] in Kapitel 15 besprochen). Wenn wir
 nicht wollten, dass der `Wrapper`-Typ alle Methoden des inneren Typs hat
 &ndash; zum Beispiel, um das Verhalten des `Wrapper`-Typs einzuschränken
 &ndash; müssten wir nur die Methoden, die wir wollen, manuell implementieren.
 
-Dieses Newtype-Muster ist auch dann nützlich, wenn keine Merkmale beteiligt
+Dieses Newtype-Muster ist auch dann nützlich, wenn keine Traits beteiligt
 sind. Wechseln wir den Fokus und schauen wir uns einige fortgeschrittene
 Möglichkeiten an, mit dem Typsystem von Rust zu interagieren.
 
-[implementing-a-trait-on-a-type]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
-[newtype]: #externe-merkmale-mit-dem-newtype-muster-implementieren
+[implementing-a-trait-on-a-type]: ch10-02-traits.html#ein-trait-für-einen-typ-implementieren
+[newtype]: #externe-traits-mit-dem-newtype-muster-implementieren
 [smart-pointer-deref]: ch15-02-deref.html
 [traits]: ch10-02-traits.html
 [tuple-structs]: ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen

@@ -56,9 +56,8 @@ Zeichenkette</span>
 Diese Zeile erzeugt eine neue, leere Zeichenkette namens `s`, in die wir dann
 Daten aufnehmen können. Oft werden wir einige initiale Daten haben, mit denen
 wir die Zeichenkette füllen wollen. Dazu verwenden wir die Methode `to_string`,
-die für jeden Typ verfügbar ist, der das Merkmal `Display` implementiert, wie
-es bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei
-Beispiele.
+die für jeden Typ verfügbar ist, der das Trait `Display` implementiert, wie es
+bei Zeichenkettenliteralen der Fall ist. Codeblock 8-12 zeigt zwei Beispiele.
 
 ```rust
 let data = "initialer Inhalt";

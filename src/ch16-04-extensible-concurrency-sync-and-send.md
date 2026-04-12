@@ -8,28 +8,27 @@ Nebenläufigkeitsfunktionalitäten schreiben oder die von anderen geschriebenen
 verwenden.
 
 Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
-die Standardbibliothek eingebettet sind, gehören jedoch die Merkmale (traits)
-`Send` und `Sync` in `std::marker`.
+die Standardbibliothek eingebettet sind, gehören jedoch die Traits `Send` und
+`Sync` in `std::marker`.
 
 ### Übertragen der Eigentümerschaft zwischen Strängen
 
-Das Markierungsmerkmal (marker trait) `Send` zeigt an, dass die
-Eigentümerschaft an Werten des Typs, der `Send` implementiert, zwischen
-Strängen (threads) übertragen werden kann. Fast jeder Rust-Typ implementiert
-`Send`, aber es gibt einige Ausnahmen, einschließlich `Rc<T>`: Dieser kann
-nicht `Send` sein, denn wenn du einen `Rc<T>`-Wert geklont hast und versucht
-hast, die Eigentümerschaft am Klon auf einen anderen Strang zu übertragen,
-könnten beide Stränge gleichzeitig den Referenzzähler aktualisieren. Aus diesem
-Grund ist `Rc<T>` für die Verwendung in einsträngigen Situationen
-implementiert, in denen du nicht die Strang-sichere Performanzeinbuße zahlen
-willst.
+Das Marker Trait `Send` zeigt an, dass die Eigentümerschaft an Werten des Typs,
+der `Send` implementiert, zwischen Strängen (threads) übertragen werden kann.
+Fast jeder Rust-Typ implementiert `Send`, aber es gibt einige Ausnahmen,
+einschließlich `Rc<T>`: Dieser kann nicht `Send` sein, denn wenn du einen
+`Rc<T>`-Wert geklont hast und versucht hast, die Eigentümerschaft am Klon auf
+einen anderen Strang zu übertragen, könnten beide Stränge gleichzeitig den
+Referenzzähler aktualisieren. Aus diesem Grund ist `Rc<T>` für die Verwendung in
+einsträngigen Situationen implementiert, in denen du nicht die Strang-sichere
+Performanzeinbuße zahlen willst.
 
-Daher stellen das Typsystem und die Merkmalsabgrenzungen (trait bounds) von
-Rust sicher, dass du niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen
-Strängen senden kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten
-wir folgenden Fehler: Das Merkmal `Send` ist für `Rc<Mutex<i32>>` nicht
-implementiert. Als wir zu `Arc<T>` wechselten, das `Send` implementiert, ließ
-sich der Code kompilieren.
+Daher stellen das Typsystem und die Trait Bounds von Rust sicher, dass du
+niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen Strängen senden
+kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten wir folgenden
+Fehler: Das Trait `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Als wir
+zu `Arc<T>` wechselten, das `Send` implementiert, ließ sich der Code
+kompilieren.
 
 Jeder Typ, der vollständig aus `Send`-Typen besteht, wird automatisch auch als
 `Send` markiert. Fast alle primitiven Typen implementieren `Send`, abgesehen
@@ -37,13 +36,13 @@ von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
 
 ### Zugriff von mehreren Strängen
 
-Das Markierungsmerkmal `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
-implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten,
-jeder Typ `T` implementiert `Sync`, wenn `&T` (eine unveränderbare Referenz auf
-`T`) `Send` implementiert, was bedeutet, dass die Referenz sicher an einen
-anderen Strang gesendet werden kann. Ähnlich wie bei `Send` implementieren
-primitive Typen `Sync`, und Typen, die vollständig aus Typen bestehen, die
-`Sync` implementieren, implementieren ebenfalls `Sync`.
+Das Marker Trait `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
+implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten, jeder
+Typ `T` implementiert `Sync`, wenn `&T` (eine unveränderbare Referenz auf `T`)
+`Send` implementiert, was bedeutet, dass die Referenz sicher an einen anderen
+Strang gesendet werden kann. Ähnlich wie bei `Send` implementieren primitive
+Typen `Sync`, und Typen, die vollständig aus Typen bestehen, die `Sync`
+implementieren, implementieren ebenfalls `Sync`.
 
 Der intelligente Zeiger `Rc<T>` implementiert ebenfalls nicht `Sync`, aus
 denselben Gründen, warum er nicht `Send` implementiert. Der Typ `RefCell<T>`
@@ -57,20 +56,20 @@ gesehen hast.
 
 ### Manuelles Implementieren von `Send` und `Sync` ist unsicher
 
-Da Typen, die sich ausschließlich aus Typen zusammensetzen, die die Merkmale
+Da Typen, die sich ausschließlich aus Typen zusammensetzen, die die Traits
 `Send` und `Sync` implementieren, automatisch auch `Send` und `Sync`
-implementieren, müssen wir diese Merkmale nicht manuell implementieren. Als
-Markierungsmerkmale haben sie noch nicht einmal irgendwelche Methoden, um sie
-zu implementieren. Sie sind nur nützlich, um Invarianten in Bezug auf die
+implementieren, müssen wir diese Traits nicht manuell implementieren. Als Marker
+Traits haben sie noch nicht einmal irgendwelche Methoden, um sie zu
+implementieren. Sie sind nur nützlich, um Invarianten in Bezug auf die
 Nebenläufigkeit zu erzwingen.
 
-Das manuelle Implementieren dieser Merkmale beinhaltet das Schreiben von
+Das manuelle Implementieren dieser Traits beinhaltet das Schreiben von
 unsicherem Rust-Code. Wir werden über das Verwenden von unsicherem Rust-Code in
 Kapitel 20 sprechen; für den Moment ist die wichtige Information, dass das
 Erstellen neuer nebenläufiger Typen, die nicht aus `Send`- und `Sync`-Teilen
 bestehen, sorgfältige Überlegungen erfordert, um die Sicherheitsgarantien
-aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere
-Informationen über diese Garantien und wie man sie aufrechterhalten kann.
+aufrechtzuerhalten. [„Das Rustonomicon“][nomicon3] enthält weitere Informationen
+über diese Garantien und wie man sie aufrechterhalten kann.
 
 ## Zusammenfassung
 

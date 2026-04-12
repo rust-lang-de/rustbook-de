@@ -157,18 +157,18 @@ For more information about this error, try `rustc --explain E0369`.
 error: could not compile `chapter10` (bin "chapter10") due to 1 previous error
 ```
 
-Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein Merkmal (trait) ist, und
-wir werden im nächsten Abschnitt über Merkmale sprechen. Vorerst bedeutet
-dieser Fehler, dass der Rumpf von `largest` nicht für alle möglichen Typen
-funktioniert, die `T` sein könnten. Da wir Werte des Typs `T` im Rumpf
-vergleichen wollen, können wir nur Typen verwenden, deren Werte sortiert werden
-können. Um Vergleiche zu ermöglichen, hat die Standardbibliothek das Merkmal
-`std::cmp::PartialOrd`, das du auf Typen implementieren kannst (siehe Anhang C
-für weitere Informationen zu diesem Merkmal). Um den obigen Beispielcode zu
-korrigieren, müssten wir den Vorschlägen des Hilfetextes folgen und die für `T`
-gültigen Typen auf diejenigen beschränken, die `PartialOrd` implementieren. Das
-Beispiel würde dann kompilieren, weil die Standardbibliothek `PartialOrd`
-sowohl für `i32` als auch für `char` implementiert.
+Der Hilfetext erwähnt `std::cmp::PartialOrd`, was ein Trait ist, und wir werden
+im nächsten Abschnitt über Traits sprechen. Vorerst bedeutet dieser Fehler, dass
+der Rumpf von `largest` nicht für alle möglichen Typen funktioniert, die `T`
+sein könnten. Da wir Werte des Typs `T` im Rumpf vergleichen wollen, können wir
+nur Typen verwenden, deren Werte sortiert werden können. Um Vergleiche zu
+ermöglichen, hat die Standardbibliothek das Trait `std::cmp::PartialOrd`, das du
+auf Typen implementieren kannst (siehe Anhang C für weitere Informationen zu
+diesem Trait). Um den obigen Beispielcode zu korrigieren, müssten wir den
+Vorschlägen des Hilfetextes folgen und die für `T` gültigen Typen auf diejenigen
+beschränken, die `PartialOrd` implementieren. Das Beispiel würde dann
+kompilieren, weil die Standardbibliothek `PartialOrd` sowohl für `i32` als auch
+für `char` implementiert.
 
 ### In Struktur-Definitionen
 

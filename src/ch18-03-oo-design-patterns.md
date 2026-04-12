@@ -10,11 +10,11 @@ ein Statusobjekt mit den Möglichkeiten „Entwurf“, „Überprüfung“ und
 „Veröffentlicht“ sein wird.
 
 Die Zustandsobjekte haben eine gemeinsame Funktionalität: In Rust verwenden wir
-Strukturen (structs) und Merkmale (traits) und nicht Objekte und Vererbung.
-Jedes Zustandsobjekt ist für sein eigenes Verhalten verantwortlich und
-bestimmt, wann es in einen anderen Zustand übergehen soll. Der Wert, den ein
-Zustandsobjekt enthält, weiß nichts über das unterschiedliche Verhalten der
-Zustände oder den Zeitpunkt des Übergangs zwischen den Zuständen.
+Strukturen (structs) und Traits und nicht Objekte und Vererbung. Jedes
+Zustandsobjekt ist für sein eigenes Verhalten verantwortlich und bestimmt, wann
+es in einen anderen Zustand übergehen soll. Der Wert, den ein Zustandsobjekt
+enthält, weiß nichts über das unterschiedliche Verhalten der Zustände oder den
+Zeitpunkt des Übergangs zwischen den Zuständen.
 
 Der Vorteil der Verwendung des Zustandsmusters besteht darin, dass wir, wenn
 sich die geschäftlichen Anforderungen des Programms ändern, weder den Code des
@@ -111,16 +111,15 @@ Fehler mit den Zuständen machen, z.B. einen Beitrag veröffentlichen, bevor er
 #### Definieren von `Post` und Erstellen einer neuen Instanz
 
 Fangen wir mit der Implementierung der Bibliothek an! Wir wissen, dass wir eine
-öffentliche Struktur `Post` benötigen, die einige Inhalte enthält, also
-beginnen wir mit der Definition der Struktur und einer zugehörigen öffentlichen
-Funktion `new`, um eine Instanz von `Post` zu erzeugen, wie in Codeblock 18-12
-gezeigt. Wir werden auch ein privates Merkmal `State` erstellen, das das
-Verhalten definiert, das alle Zustandsobjekte für einen `Post` haben müssen.
+öffentliche Struktur `Post` benötigen, die einige Inhalte enthält, also beginnen
+wir mit der Definition der Struktur und einer zugehörigen öffentlichen Funktion
+`new`, um eine Instanz von `Post` zu erzeugen, wie in Codeblock 18-12 gezeigt.
+Wir werden auch ein privates Trait `State` erstellen, das das Verhalten
+definiert, das alle Zustandsobjekte für einen `Post` haben müssen.
 
-Dann wird `Post` ein Merkmalsobjekt (trait object) von `Box<dyn State>`
-innerhalb einer `Option<T>` in einem privaten Feld namens `state` halten, um
-das Zustandsobjekt zu halten. Du wirst gleich sehen, warum die `Option<T>`
-notwendig ist.
+Dann wird `Post` ein Trait-Objekt von `Box<dyn State>` innerhalb einer
+`Option<T>` in einem privaten Feld namens `state` halten, um das Zustandsobjekt
+zu halten. Du wirst gleich sehen, warum die `Option<T>` notwendig ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -147,15 +146,15 @@ impl State for Draft {}
 ```
 
 <span class="caption">Codeblock 18-12: Definition einer Struktur `Post` und
-einer Funktion `new`, die eine neue `Post`-Instanz, ein Merkmal `State` sowie
-eine Struktur `Draft` erzeugt</span>
+einer Funktion `new`, die eine neue `Post`-Instanz, ein Trait `State` sowie eine
+Struktur `Draft` erzeugt</span>
 
-Das Merkmal `State` definiert das Verhalten, das die verschiedenen
+Das Trait `State` definiert das Verhalten, das die verschiedenen
 Beitragszustände gemeinsam haben. Die Zustandsobjekte sind `Draft`,
-`PendingReview` und `Published` und sie werden alle das Merkmal `State`
-implementieren. Im Moment hat das Merkmal noch keine Methoden und wir werden
-damit beginnen, nur den Zustand `Draft` zu definieren, weil das der Zustand
-ist, in dem ein Beitrag beginnen soll.
+`PendingReview` und `Published` und sie werden alle das Trait `State`
+implementieren. Im Moment hat das Trait noch keine Methoden und wir werden damit
+beginnen, nur den Zustand `Draft` zu definieren, weil das der Zustand ist, in
+dem ein Beitrag beginnen soll.
 
 Wenn wir einen neuen `Post` erstellen, setzen wir sein `state`-Feld auf einen
 `Some`-Wert, der eine `Box` enthält. Diese `Box` verweist auf eine neue Instanz
@@ -330,7 +329,7 @@ impl State for PendingReview {
 ```
 
 <span class="caption">Codeblock 18-15: Implementierung der Methoden
-`request_review` für `Post` und des Merkmals `State`</span>
+`request_review` für `Post` und des Traits `State`</span>
 
 Wir geben `Post` eine öffentliche Methode namens `request_review`, die eine
 veränderbare Referenz auf `self` nimmt. Dann rufen wir eine interne
@@ -338,14 +337,14 @@ Methode `request_review` über den aktuellen Zustand von `Post` auf und diese
 zweite Methode `request_review` konsumiert den aktuellen Zustand und gibt einen
 neuen Zustand zurück.
 
-Wir fügen die Methode `request_review` zum Merkmal `State` hinzu; alle Typen,
-die das Merkmal implementieren, müssen nun die Methode `request_review`
+Wir fügen die Methode `request_review` zum Trait `State` hinzu; alle Typen, die
+das Trait implementieren, müssen nun die Methode `request_review`
 implementieren. Beachte, dass wir statt `self`, `&self` oder `&mut self` als
 ersten Parameter der Methode `self: Box<Self>` haben. Diese Syntax bedeutet,
-dass die Methode nur gültig ist, wenn sie auf einer `Box` mit dem Typ
-aufgerufen wird. Diese Syntax übernimmt die Eigentümerschaft von `Box<Self>`,
-wodurch der alte Zustand ungültig wird, sodass der Zustandswert von `Post` in
-einen neuen Zustand transformiert werden kann.
+dass die Methode nur gültig ist, wenn sie auf einer `Box` mit dem Typ aufgerufen
+wird. Diese Syntax übernimmt die Eigentümerschaft von `Box<Self>`, wodurch der
+alte Zustand ungültig wird, sodass der Zustandswert von `Post` in einen neuen
+Zustand transformiert werden kann.
 
 Um den alten Zustand zu konsumieren, muss die Methode `request_review` die
 Eigentümerschaft des Zustandswerts übernehmen. Hier kommt die `Option` im Feld
@@ -469,19 +468,18 @@ impl State for Published {
 ```
 
 <span class="caption">Codeblock 18-16: Implementieren der Methode `approve` auf
-`Post` und des Merkmals `State`</span>
+`Post` und des Traits `State`</span>
 
-Wir fügen die Methode `approve` zum Merkmal `State` hinzu und fügen eine neue
-Struktur `Published` hinzu, die das Merkmal `State` implementiert.
+Wir fügen die Methode `approve` zum Trait `State` hinzu und fügen eine neue
+Struktur `Published` hinzu, die das Trait `State` implementiert.
 
 Ähnlich wie `request_review` bei `PendingReview` funktioniert, hat der Aufruf
 der Methode `approve` bei einem `Draft` keine Wirkung, weil `approve` den Wert
 `self` zurückgibt. Wenn wir die Methode `approve` bei `PendingReview` aufrufen,
 gibt sie eine neue, geschlossene Instanz der Struktur `Published` zurück. Die
-Struktur `Published` implementiert das Merkmal `State` und sowohl bei der
-Methode `request_review` als auch bei der Methode `approve` gibt sie sich
-selbst zurück, weil der Beitrag in diesen Fällen im Zustand `Published` bleiben
-sollte.
+Struktur `Published` implementiert das Trait `State` und sowohl bei der Methode
+`request_review` als auch bei der Methode `approve` gibt sie sich selbst zurück,
+weil der Beitrag in diesen Fällen im Zustand `Published` bleiben sollte.
 
 Jetzt müssen wir die Methode `content` auf `Post` aktualisieren: Wir wollen,
 dass der von `content` zurückgegebene Wert vom aktuellen Zustand von `Post`
@@ -595,8 +593,8 @@ Unterschied zum Compiler wissen, dass ein `None`-Wert niemals möglich ist.
 
 Wenn wir nun `content` auf `&Box<dyn State>` aufrufen, wird eine automatische
 Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode
-`content` letztlich auf dem Typ aufgerufen wird, der das Merkmal `State`
-implementiert. Das bedeutet, dass wir die Definition des Merkmals `State` um
+`content` letztlich auf dem Typ aufgerufen wird, der das Trait `State`
+implementiert. Das bedeutet, dass wir die Definition des Traits `State` um
 `content` erweitern müssen, und hier werden wir die Logik dafür unterbringen,
 welcher Inhalt je nach Zustand zurückgegeben wird, wie in Codeblock 18-18 zu
 sehen ist.
@@ -693,7 +691,7 @@ impl State for Published {
 ```
 
 <span class="caption">Codeblock 18-18: Hinzufügen der Methode `content` zum
-Merkmal `State`</span>
+Trait `State`</span>
 
 Wir fügen eine Standard-Implementierung für die Methode `content` hinzu, die
 einen leeren Zeichenkettenanteilstyp zurückgibt. Das bedeutet, dass wir
@@ -723,17 +721,17 @@ ist nicht über den gesamten `Post` verstreut.
 > einer Aufzählung ist, dass jede Stelle, die den Wert der Aufzählung prüft,
 > einen `match`-Ausdruck oder ähnliches benötigt, um jede mögliche Variante zu
 > behandeln. Dies könnte zu mehr Wiederholungen führen als die Lösung mit dem
-> Merkmals-Objekt.
+> Trait-Objekt.
 
 #### Bewerten des Zustandsmusters
 
 Wir haben gezeigt, dass Rust in der Lage ist, das objektorientierte
-Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die
-ein Beitrag im jeweiligen Zustand haben sollte, zu kapseln. Die Methoden auf
-`Post` wissen nichts über die verschiedenen Verhaltensweisen. So, wie wir den
-Code organisiert haben, müssen wir nur an einem einzigen Ort suchen, um zu
-wissen, wie sich ein veröffentlichter Beitrag verhalten kann: Die
-Implementierung des Merkmals `State` auf der Struktur `Published`.
+Zustandsmuster zu implementieren, um die verschiedenen Verhaltensweisen, die ein
+Beitrag im jeweiligen Zustand haben sollte, zu kapseln. Die Methoden auf `Post`
+wissen nichts über die verschiedenen Verhaltensweisen. So, wie wir den Code
+organisiert haben, müssen wir nur an einem einzigen Ort suchen, um zu wissen,
+wie sich ein veröffentlichter Beitrag verhalten kann: Die Implementierung des
+Traits `State` auf der Struktur `Published`.
 
 Wenn wir eine alternative Implementierung erstellen würden, die nicht das
 Zustandsmuster verwendet, könnten wir stattdessen `match`-Ausdrücke in den
@@ -742,10 +740,10 @@ Beitrags überprüfen und das Verhalten an diesen Stellen ändern. Das würde
 bedeuten, dass wir an mehreren Stellen nachschauen müssten, um alle
 Auswirkungen eines Beitrags im veröffentlichten Zustand zu verstehen!
 
-Mit dem Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir
-`Post` verwenden, brauchen wir keine `match`-Ausdrücke, und um einen neuen
-Zustand hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
-Merkmalsmethoden auf dieser einen Struktur an einer Stelle implementieren.
+Mit dem Zustandsmuster, den `Post`-Methoden und den Stellen, an denen wir `Post`
+verwenden, brauchen wir keine `match`-Ausdrücke, und um einen neuen Zustand
+hinzuzufügen, müssten wir nur eine neue Struktur hinzufügen und die
+Trait-Methoden auf dieser einen Struktur an einer Stelle implementieren.
 
 Die Implementierung unter Verwendung des Zustandsmusters ist leicht zu
 erweitern, um weitere Funktionalität hinzuzufügen. Um zu sehen, wie einfach es
@@ -773,11 +771,11 @@ Entwurfsmuster zu wechseln.
 Ein weiterer Nachteil ist, dass wir eine gewisse Logik dupliziert haben. Um
 einen Teil der Duplikation zu eliminieren, könnten wir versuchen,
 Standard-Implementierungen für die Methoden `request_review` und `approval` für
-das Merkmal `State` zu erstellen, die `self` zurückgeben; dies würde jedoch
-nicht funktionieren: Bei der Verwendung von `State` als Merkmals-Objekt weiß
-das Merkmal nicht, was das konkrete `self` genau sein wird, sodass der
-Rückgabetyp zur Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits
-erwähnten dyn-Kompatibilitätsregeln.)
+das Trait `State` zu erstellen, die `self` zurückgeben; dies würde jedoch nicht
+funktionieren: Bei der Verwendung von `State` als Trait-Objekt weiß das Trait
+nicht, was das konkrete `self` genau sein wird, sodass der Rückgabetyp zur
+Kompilierzeit nicht bekannt ist. (Dies ist eine der bereits erwähnten
+dyn-Kompatibilitätsregeln.)
 
 Eine weitere Duplikation sind die ähnlichen Implementierungen der Methoden
 `request_review` und `approve` auf `Post`. Beide Methoden verwenden
@@ -1028,15 +1026,15 @@ Eigentümerschaft nicht haben.
 ## Zusammenfassung
 
 Unabhängig davon, ob du nach der Lektüre dieses Kapitels der Meinung bist, dass
-Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Merkmalsobjekte
+Rust eine objektorientierte Sprache ist, weißt du jetzt, dass du Trait-Objekte
 verwenden kannst, um einige objektorientierte Funktionalitäten in Rust zu
 erhalten. Dynamische Aufrufe können deinem Code eine gewisse Flexibilität im
 Austausch gegen ein wenig Laufzeitperformanz verleihen. Du kannst diese
 Flexibilität nutzen, um objektorientierte Muster zu implementieren, die die
 Wartbarkeit deines Codes verbessern können. Rust hat auch andere
 Funktionalitäten wie die Eigentümerschaft, die objektorientierte Sprachen nicht
-haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um
-die Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.
+haben. Ein objektorientiertes Muster wird nicht immer der beste Weg sein, um die
+Stärken von Rust zu nutzen, aber es ist eine verfügbare Option.
 
 Als nächstes werden wir uns mit Mustern befassen, die eine weitere
 Funktionalität von Rust sind und viel Flexibilität ermöglichen. Wir haben sie

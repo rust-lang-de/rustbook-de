@@ -525,11 +525,11 @@ Programms hat der `Rc<Node>` in `branch` einen `strong_count` von 1 und einen
 `weak_count` von 0, da die Variable `branch` jetzt wieder die einzige Referenz
 auf `Rc<Node>` ist.
 
-Die gesamte Logik, die die Zähler und das Aufräumen des Wertes verwaltet, ist
-in `Rc<T>` und `Weak<T>` und deren Implementierung des Merkmals (trait) `Drop`
-integriert. Wenn man angibt, dass die Beziehung von einem Kind- zu seinem
-Eltern-Element eine `Weak<T>`-Referenz in der Definition von `Node` sein soll,
-können Eltern-Knoten auf Kind-Knoten referenzieren und umgekehrt, ohne einen
+Die gesamte Logik, die die Zähler und das Aufräumen des Wertes verwaltet, ist in
+`Rc<T>` und `Weak<T>` und deren Implementierung des Traits `Drop` integriert.
+Wenn man angibt, dass die Beziehung von einem Kind- zu seinem Eltern-Element
+eine `Weak<T>`-Referenz in der Definition von `Node` sein soll, können
+Eltern-Knoten auf Kind-Knoten referenzieren und umgekehrt, ohne einen
 Referenzzyklus oder Speicherlecks zu erzeugen.
 
 ## Zusammenfassung
@@ -545,7 +545,7 @@ wenn wir einen unveränderbaren Typ benötigen, aber einen inneren Wert dieses
 Typs ändern müssen. Außerdem werden die Ausleihregeln zur Laufzeit anstatt zur
 Kompilierzeit durchgesetzt.
 
-Ebenfalls diskutiert wurden die Merkmale `Deref` und `Drop`, die einen Großteil
+Ebenfalls diskutiert wurden die Traits `Deref` und `Drop`, die einen Großteil
 der Funktionalität von intelligenten Zeigern ermöglichen. Wir haben
 Referenzzyklen untersucht, die zu Speicherlecks führen können, und wie diese
 mithilfe von `Weak<T>` verhindert werden können.

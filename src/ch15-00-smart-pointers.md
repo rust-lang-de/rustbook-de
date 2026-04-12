@@ -29,14 +29,14 @@ der Daten, auf die sie zeigen.
 
 Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
 Im Unterschied zu einer gewöhnlichen Struktur (struct) implementieren
-intelligente Zeiger die Merkmale `Deref` und `Drop`. Das Merkmal `Deref`
-ermöglicht es einer Instanz eines intelligenten Zeigers, sich wie eine Referenz
-zu verhalten, sodass du Programmcode schreiben kannst, der entweder mit
-Referenzen oder intelligenten Zeigern funktioniert. Mit dem Merkmal `Drop`
-kannst du den Programmcode anpassen, der ausgeführt wird, wenn eine Instanz des
-intelligenten Zeigers den Gültigkeitsbereich (scope) verlässt. In diesem
-Kapitel werden wir beide Merkmale besprechen und zeigen, warum sie für
-intelligente Zeiger wichtig sind.
+intelligente Zeiger die Traits `Deref` und `Drop`. Das Trait `Deref` ermöglicht
+es einer Instanz eines intelligenten Zeigers, sich wie eine Referenz zu
+verhalten, sodass du Programmcode schreiben kannst, der entweder mit Referenzen
+oder intelligenten Zeigern funktioniert. Mit dem Trait `Drop` kannst du den
+Programmcode anpassen, der ausgeführt wird, wenn eine Instanz des intelligenten
+Zeigers den Gültigkeitsbereich (scope) verlässt. In diesem Kapitel werden wir
+beide Traits besprechen und zeigen, warum sie für intelligente Zeiger wichtig
+sind.
 
 Da das Muster des intelligenten Zeigers ein allgemeines Entwurfsmuster ist, das
 in Rust häufig verwendet wird, werden in diesem Kapitel nicht alle vorhandenen

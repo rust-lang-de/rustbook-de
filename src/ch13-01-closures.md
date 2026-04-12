@@ -438,16 +438,16 @@ aus dem Closure herausverschieben, den erfassten Wert verändern, den Wert weder
 verschieben noch verändern oder zunächst nichts aus der Umgebung erfassen.
 
 Die Art und Weise, wie ein Closure Werte aus der Umgebung erfasst und
-verarbeitet, wirkt sich darauf aus, welche Merkmale (traits) der Closure
-implementiert, und mit Hilfe von Merkmalen können Funktionen und Strukturen
-angeben, welche Arten von Closures sie verwenden können. Closures implementieren
-automatisch eine, zwei oder alle drei dieser `Fn`-Merkmale, und zwar in
-additiver Weise, je nachdem, wie der Closure-Rumpf die Werte behandelt:
+verarbeitet, wirkt sich darauf aus, welche Traits der Closure implementiert, und
+mit Hilfe von Traits können Funktionen und Strukturen angeben, welche Arten von
+Closures sie verwenden können. Closures implementieren automatisch eine, zwei
+oder alle drei dieser `Fn`-Traits, und zwar in additiver Weise, je nachdem, wie
+der Closure-Rumpf die Werte behandelt:
 
 * `FnOnce` gilt für Closures, die einmal aufgerufen werden können. Alle Closures
-  implementieren zumindest dieses Merkmal, weil alle Closures aufgerufen werden
+  implementieren zumindest dieses Trait, weil alle Closures aufgerufen werden
   können. Ein Closure, der erfasste Werte aus seinem Rumpf herausverschiebt,
-  implementiert nur `FnOnce` und keine der anderen `Fn`-Merkmale, weil er nur
+  implementiert nur `FnOnce` und keine der anderen `Fn`-Traits, weil er nur
   einmal aufgerufen werden kann.
 * `FnMut` gilt für Closures, die die erfassten Werte nicht aus ihrem Rumpf
   herausverschieben, aber die erfassten Werte möglicherweise verändern. Diese
@@ -485,10 +485,10 @@ zusätzlichen generischen Typ-Parameter `F` hat. Der Typ `F` ist der Typ des
 Parameters namens `f`, der der Closure ist, den wir beim Aufruf von
 `unwrap_or_else` bereitstellen.
 
-Die für den generischen Typ `F` spezifizierte Merkmalsabgrenzung ist `FnOnce()
+Die für den generischen Typ `F` spezifizierte Trait Bound ist `FnOnce()
 -> T`, was bedeutet, dass `F` mindestens einmal aufgerufen werden können muss,
 keine Argumente annimmt und ein `T` zurückgeben muss. Die Verwendung von
-`FnOnce` in der Merkmalsabgrenzung drückt die Einschränkung aus, dass
+`FnOnce` in der Trait Bound drückt die Einschränkung aus, dass
 `unwrap_or_else` `f` nicht mehr als ein Mal aufrufen wird. Im Rumpf von
 `unwrap_or_else` können wir sehen, dass, wenn die `Option` `Some` ist, `f` nicht
 aufgerufen wird. Wenn die `Option` `None` ist, wird `f` einmal aufgerufen. Da
@@ -500,7 +500,7 @@ Arten von Closures und ist so flexibel wie nur möglich.
 > verwenden. Zum Beispiel könnten wir `unwrap_or_else(Vec::new)` auf einem
 > `Option<Vec<T>>`-Wert aufrufen, um einen neuen, leeren Vektor zu erhalten,
 > wenn der Wert `None` ist. Der Compiler implementiert automatisch die
-> `Fn`-Merkmale, die für eine Funktionsdefinition anwendbar sind.
+> `Fn`-Traits, die für eine Funktionsdefinition anwendbar sind.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
 Anteilstypen (slices) definiert ist, um zu sehen, wie sie sich von
@@ -563,10 +563,10 @@ $ cargo run
 Der Grund, warum `sort_by_key` so definiert ist, dass es einen `FnMut`-Closure
 nimmt, ist, dass es den Closure mehrfach aufruft: Einmal für jedes Element im
 Anteilstyp. Der Closure `|r| r.width` erfasst, verändert oder verschiebt nichts
-aus seiner Umgebung, sodass er die Anforderungen der Merkmalsabgrenzung erfüllt.
+aus seiner Umgebung, sodass er die Anforderungen der Trait Bound erfüllt.
 
 Im Gegensatz dazu zeigt Codeblock 13-8 ein Beispiel für einen Closure, der nur
-das Merkmal `FnOnce` implementiert, weil er einen Wert aus der Umgebung
+das Trait `FnOnce` implementiert, weil er einen Wert aus der Umgebung
 verschiebt. Der Compiler lässt uns diesen Closure nicht mit `sort_by_key`
 verwenden.
 
@@ -675,7 +675,7 @@ fn main() {
 <span class="caption">Codeblock 13-9: Verwenden eines `FnMut`-Closure mit
 `sort_by_key` ist erlaubt</span>
 
-Die `Fn`-Merkmale sind wichtig bei der Definition oder Verwendung von Funktionen
+Die `Fn`-Traits sind wichtig bei der Definition oder Verwendung von Funktionen
 oder Typen, die Closures verwenden. Im nächsten Abschnitt besprechen wir
 Iteratoren. Viele Iterator-Methoden nehmen Closure-Argumente entgegen, also
 behalte diese Details von Closures im Kopf, wenn wir weitermachen!

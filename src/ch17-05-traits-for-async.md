@@ -1,18 +1,18 @@
-## Ein genauerer Blick auf die Merkmale für Async
+## Ein genauerer Blick auf die Traits für Async
 
-Im Laufe des Kapitels haben wir die Merkmale `Future`, `Stream` und `StreamExt`
+Im Laufe des Kapitels haben wir die Traits `Future`, `Stream` und `StreamExt`
 auf verschiedene Weise verwendet. Bis jetzt haben wir es jedoch vermieden, zu
 sehr ins Detail zu gehen, wie sie funktionieren oder wie sie zusammenpassen.
 Wenn wir Rust für den Alltag schreiben, ist das meist ausreichend. Manchmal
 stößt man jedoch auf Situationen, in denen du weitergehende Details dieser
-Merkmale verstehen musst, beispielsweise zum Typ `Pin` und zum Merkmal `Unpin`.
-In diesem Abschnitt werden wir nur so weit ins Detail gehen, wie es für diese
-Szenarien nötig ist, und überlassen die _wirklich_ tiefen Einblicke der
-weiteren Dokumentation.
+Traits verstehen musst, beispielsweise zum Typ `Pin` und zum Trait `Unpin`. In
+diesem Abschnitt werden wir nur so weit ins Detail gehen, wie es für diese
+Szenarien nötig ist, und überlassen die _wirklich_ tiefen Einblicke der weiteren
+Dokumentation.
 
-### Das Merkmal `Future`
+### Das Trait `Future`
 
-Lass uns zunächst einen genaueren Blick darauf werfen, wie das Merkmal `Future`
+Lass uns zunächst einen genaueren Blick darauf werfen, wie das Trait `Future`
 funktioniert. Rust definiert es wie folgt:
 
 ```rust
@@ -26,14 +26,14 @@ pub trait Future {
 }
 ```
 
-Diese Merkmals-Definition enthält eine Reihe neuer Typen und auch eine Syntax,
-die wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück
-für Stück durch.
+Diese Trait-Definition enthält eine Reihe neuer Typen und auch eine Syntax, die
+wir bisher noch nicht gesehen haben. Gehen wir also die Definition Stück für
+Stück durch.
 
 Erstens gibt der zugehörige Typ `Output` von `Future` an, was das Future
-zurückgibt. Dies ist analog zum Typ `Item` des Merkmals `Iterator`. Zweitens
-hat `Future` auch die Methode `poll`, die eine spezielle `Pin`-Referenz für
-ihren `self`-Parameter und eine veränderbare Referenz auf einen `Context`-Typ
+zurückgibt. Dies ist analog zum Typ `Item` des Traits `Iterator`. Zweitens hat
+`Future` auch die Methode `poll`, die eine spezielle `Pin`-Referenz für ihren
+`self`-Parameter und eine veränderbare Referenz auf einen `Context`-Typ
 entgegennimmt und `Poll<Self::Output>` zurückgibt. Wir werden gleich ein wenig
 mehr über `Pin` und `Context` sprechen. Für den Moment wollen wir uns auf das
 konzentrieren, was die Methode zurückgibt: Den Typ `Poll`:
@@ -106,15 +106,15 @@ eine der Hauptaufgaben einer Laufzeitumgebung.
 
 Im Abschnitt [“Datenaustausch zwischen zwei Aufgaben mit
 Nachrichtenübermittlung”][message-passing] haben wir das Warten auf `rx.recv`
-beschrieben. Der Aufruf `recv` gibt ein Future zurück und zum Warten darauf
-wird es es abgefragt. Wir haben angemerkt, dass eine Laufzeitumgebung das
-Future pausieren wird, bis es entweder mit `Some(message)` oder `None` bereit
-ist, wenn der Kanal geschlossen wird. Mit unserem tieferen Verständnis des
-Merkmals `Future` und insbesondere von `Future::poll` können wir sehen, wie das
-funktioniert. Die Laufzeitumgebung weiß, dass das Future nicht bereit ist, wenn
-es `Poll::Pending` zurückgibt. Umgekehrt weiß die Laufzeitumgebung, dass das
-Future _bereit_ ist und bevorzugt es, wenn `poll` den Wert
-`Poll::Ready(Some(message))` oder `Poll::Ready(None)` zurückgibt.
+beschrieben. Der Aufruf `recv` gibt ein Future zurück und zum Warten darauf wird
+es es abgefragt. Wir haben angemerkt, dass eine Laufzeitumgebung das Future
+pausieren wird, bis es entweder mit `Some(message)` oder `None` bereit ist, wenn
+der Kanal geschlossen wird. Mit unserem tieferen Verständnis des Traits `Future`
+und insbesondere von `Future::poll` können wir sehen, wie das funktioniert. Die
+Laufzeitumgebung weiß, dass das Future nicht bereit ist, wenn es `Poll::Pending`
+zurückgibt. Umgekehrt weiß die Laufzeitumgebung, dass das Future _bereit_ ist
+und bevorzugt es, wenn `poll` den Wert `Poll::Ready(Some(message))` oder
+`Poll::Ready(None)` zurückgibt.
 
 Die genauen Details, wie eine Laufzeitumgebung das macht, gehen über den Rahmen
 dieses Buches hinaus, aber der Schlüssel ist, die grundlegende Mechanik von
@@ -122,7 +122,7 @@ Futures zu verstehen: Eine Laufzeitumgebung fragt jedes Future ab, für das sie
 verantwortlich ist, und versetzt das Future zurück in den Schlaf, wenn es noch
 nicht bereit ist.
 
-### Der Typ `Pin` und das Merkmal `Unpin`
+### Der Typ `Pin` und das Trait `Unpin`
 
 In Codeblock 17-13 haben wir das Makro `trpl::join!` verwendet, um auf drei
 Futures zu warten. Es ist jedoch üblich, eine Sammlung wie einen Vektor zu
@@ -187,20 +187,19 @@ drei Futures in einen Vektor einfügt und stattdessen die Funktion
 <span class="caption">Codeblock 17-23: Warten auf Futures in einer
 Sammlung</span>
 
-Wir legen jedes Future in eine `Box`, um es zu _Merkmals-Objekten_ (trait
-objects) zu machen, genau wie wir es im Abschnitt [„Fehlerrückgabe aus
-`run`”][returning-errors] in Kapitel 12 getan haben. (Wir werden
-Merkmals-Objekte in Kapitel 18 ausführlich behandeln.) Durch die Verwendung von
-Merkmals-Objekten können wir jede der von diesen Typen erzeugten anonymen
-Futures als denselben Typ behandeln, da sie alle das Merkmal `Future`
-implementieren.
+Wir legen jedes Future in eine `Box`, um es zu _Trait-Objekten_ zu machen, genau
+wie wir es im Abschnitt [„Fehlerrückgabe aus `run`”][returning-errors] in
+Kapitel 12 getan haben. (Wir werden Trait-Objekte in Kapitel 18 ausführlich
+behandeln.) Durch die Verwendung von Trait-Objekten können wir jede der von
+diesen Typen erzeugten anonymen Futures als denselben Typ behandeln, da sie alle
+das Trait `Future` implementieren.
 
 Das mag überraschend sein. Schließlich gibt keiner der asynchronen Blöcke etwas
 zurück, d.h. jeder erzeugt ein `Future<Output = ()>`. Denke jedoch daran, dass
-`Future` ein Merkmal ist und dass der Compiler für jeden asynchronen Block eine
-eindeutige Aufzählung erstellt, selbst wenn diese identische Ausgabetypen
-haben. Genauso wie du nicht zwei verschiedene handgeschriebene Strukturen in
-einen `Vec` einfügen kannst, kannst du auch keine vom Compiler generierten
+`Future` ein Trait ist und dass der Compiler für jeden asynchronen Block eine
+eindeutige Aufzählung erstellt, selbst wenn diese identische Ausgabetypen haben.
+Genauso wie du nicht zwei verschiedene handgeschriebene Strukturen in einen
+`Vec` einfügen kannst, kannst du auch keine vom Compiler generierten
 Aufzählungen mischen.
 
 Dann übergeben wir die Sammlung von Futures an die Funktion `trpl::join_all`
@@ -228,29 +227,28 @@ note: required by a bound in `futures_util::future::join_all::JoinAll`
 ```
 
 Der Hinweis in dieser Fehlermeldung besagt, dass wir das Makro `pin!` verwenden
-sollten, um die Werte _anzuheften_ (pin), d.h. sie in den Typ `Pin`
-einzupacken, der garantiert, dass die Werte im Speicher nicht verschoben
-werden. Die Fehlermeldung besagt, dass das Anheften erforderlich ist, da `dyn
- Future<Output = ()>` das Merkmal `Unpin` implementieren muss, was derzeit
-nicht der Fall ist.
+sollten, um die Werte _anzuheften_ (pin), d.h. sie in den Typ `Pin` einzupacken,
+der garantiert, dass die Werte im Speicher nicht verschoben werden. Die
+Fehlermeldung besagt, dass das Anheften erforderlich ist, da `dyn Future<Output
+= ()>` das Trait `Unpin` implementieren muss, was derzeit nicht der Fall ist.
 
 Die Funktion `trpl::join_all` gibt eine Struktur namens `JoinAll` zurück. Diese
 Struktur ist generisch über einen Typ `F`, der auf die Implementierung des
-Merkmals `Future` beschränkt ist. Direktes Warten auf ein Future mit `await`
+Traits `Future` beschränkt ist. Direktes Warten auf ein Future mit `await`
 heftet das Future implizit an. Deshalb müssen wir `pin!` nicht überall
 verwenden, wo wir auf Futures warten wollen.
 
-Allerdings warten wir hier nicht direkt auf ein Future. Stattdessen
-konstruieren wir ein neues Future `JoinAll`, indem wir eine Kollektion von
-Futures an die Funktion `join_all` übergeben. Die Signatur für `join_all`
-erfordert, dass der Typ der Elemente in der Kollektion das Merkmal `Future`
-implementiert. `Box<T>` implementiert `Future` nur, wenn das `T`, das es
-umhüllt, ein Future ist, das das Merkmal `Unpin` implementiert.
+Allerdings warten wir hier nicht direkt auf ein Future. Stattdessen konstruieren
+wir ein neues Future `JoinAll`, indem wir eine Kollektion von Futures an die
+Funktion `join_all` übergeben. Die Signatur für `join_all` erfordert, dass der
+Typ der Elemente in der Kollektion das Trait `Future` implementiert. `Box<T>`
+implementiert `Future` nur, wenn das `T`, das es umhüllt, ein Future ist, das
+das Trait `Unpin` implementiert.
 
 Das ist eine Menge, die man verarbeiten muss! Um es wirklich zu verstehen,
-müssen wir ein wenig tiefer in die Funktionsweise des Merkmals `Future`
+müssen wir ein wenig tiefer in die Funktionsweise des Traits `Future`
 eintauchen, insbesondere in Bezug auf das Anheften (pinning). Schau dir noch
-einmal die Definition des Merkmals `Future` an:
+einmal die Definition des Traits `Future` an:
 
 ```rust
 use std::pin::Pin;
@@ -287,12 +285,12 @@ zu prüfen, ob es `Pending` oder `Ready(Output)` ist, eine mit `Pin` umhüllte
 veränderbare Referenz auf den Typ benötigen.
 
 `Pin` ist ein Wrapper für zeigerartige Typen wie `&`, `&mut`, `Box` und `Rc`.
-(Technisch gesehen arbeitet `Pin` mit Typen, die die Merkmale `Deref` oder
+(Technisch gesehen arbeitet `Pin` mit Typen, die die Traits `Deref` oder
 `DerefMut` implementieren, aber das ist effektiv gleichbedeutend damit, nur mit
 Zeigern zu arbeiten.) `Pin` ist selbst kein Zeiger und hat kein eigenes
-Verhalten wie `Rc` und `Arc` mit Referenzzählern; es ist lediglich ein
-Werkzeug, das der Compiler verwenden kann, um Einschränkungen bei der 
-Verwendung von Zeigern zu erzwingen.
+Verhalten wie `Rc` und `Arc` mit Referenzzählern; es ist lediglich ein Werkzeug,
+das der Compiler verwenden kann, um Einschränkungen bei der Verwendung von
+Zeigern zu erzwingen.
 
 Wenn du dich daran erinnerst, dass `await` in Form von Aufrufen von `poll`
 implementiert ist, erklärt das die Fehlermeldung, die wir oben gesehen haben,
@@ -395,13 +393,13 @@ Referenzen auf ihn gibt. Wir brauchen eine Möglichkeit, dem Compiler
 mitzuteilen, dass es in solchen Fällen in Ordnung ist, Elemente zu verschieben
 &ndash; und hier kommt `Unpin` ins Spiel.
 
-`Unpin` ist ein Markierungsmerkmal (marker trait), ähnlich wie die Merkmale
-`Send` und `Sync`, die wir in Kapitel 16 gesehen haben, und es hat keine eigene
-Funktionalität. Markierungsmerkmale existieren nur, um dem Compiler
-mitzuteilen, dass es sicher ist, den Typ zu verwenden, der ein bestimmtes
-Merkmal in einem bestimmten Kontext implementiert. `Unpin` teilt dem Compiler
-mit, dass ein gegebener Typ _keine_ besonderen Garantien aufrechterhalten muss,
-um den fraglichen Wert zu verschieben.
+`Unpin` ist ein Marker Trait, ähnlich wie die Traits `Send` und `Sync`, die wir
+in Kapitel 16 gesehen haben, und es hat keine eigene Funktionalität. Marker
+Traits existieren nur, um dem Compiler mitzuteilen, dass es sicher ist, den Typ
+zu verwenden, der ein bestimmtes Trait in einem bestimmten Kontext
+implementiert. `Unpin` teilt dem Compiler mit, dass ein gegebener Typ _keine_
+besonderen Garantien aufrechterhalten muss, um den fraglichen Wert zu
+verschieben.
 
 Genau wie bei `Send` und `Sync` implementiert der Compiler `Unpin` automatisch
 für alle Typen, bei denen er beweisen kann, dass sie sicher sind. Ein
@@ -424,8 +422,8 @@ einpacken, wie in Abbildung 17-8. Allerdings implementiert `String` automatisch
 
 <img alt="Concurrent work flow" src="img/trpl17-08.svg" />
 
-<span class="caption">Abbildung 17-8: Anheften eines `String`; die gestrichelte Linie
-deutet an, dass die Zeichenkette das Merkmal `Unpin` implementiert und daher
+<span class="caption">Abbildung 17-8: Anheften eines `String`; die gestrichelte
+Linie deutet an, dass die Zeichenkette das Trait `Unpin` implementiert und daher
 nicht angeheftet ist.</span>
 
 Infolgedessen können wir Dinge tun, die illegal wären, wenn `String`
@@ -443,14 +441,13 @@ völlig anderen `String` im Speicher.</span>
 Jetzt wissen wir genug, um die Fehler zu verstehen, die für den Aufruf
 `join_all` in Codeblock 17-23 gemeldet wurden. Ursprünglich haben wir versucht,
 die von asynchronen Blöcken erzeugten Futures in einen `Vec<Box<dyn
- Future<Output = ()>>>` zu verschieben, aber wie wir gesehen haben, können
-diese Futures interne Referenzen haben, sodass sie `Unpin` nicht
-implementieren. Sobald wir sie anpinnen, können wir den resultierenden Typ
-`Pin` an den `Vec` übergeben, in der Gewissheit, dass die zugrunde liegenden
-Daten in den Futures _nicht_ verschoben werden. Codeblock 17-24 zeigt, wie der
-Code korrigiert werden kann, indem das Makro `pin!` an der Stelle aufgerufen
-wird, an der die drei Futures definiert sind, und der Merkmals-Objekttyp
-angepasst wird.
+Future<Output = ()>>>` zu verschieben, aber wie wir gesehen haben, können diese
+Futures interne Referenzen haben, sodass sie `Unpin` nicht implementieren.
+Sobald wir sie anpinnen, können wir den resultierenden Typ `Pin` an den `Vec`
+übergeben, in der Gewissheit, dass die zugrunde liegenden Daten in den Futures
+_nicht_ verschoben werden. Codeblock 17-24 zeigt, wie der Code korrigiert werden
+kann, indem das Makro `pin!` an der Stelle aufgerufen wird, an der die drei
+Futures definiert sind, und der Trait-Objekttyp angepasst wird.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -519,10 +516,9 @@ Laufzeit Futures zum Vektor hinzufügen oder daraus entfernen und auf alle
 warten.
 
 `Pin` und `Unpin` sind vor allem wichtig für die Erstellung von
-Low-Level-Bibliotheken und wenn du eine Laufzeitumgebung erstellst, weniger
-bei alltäglichem Rust-Code. Wenn du diese Merkmale in Fehlermeldungen
-siehst, hast du jetzt eine bessere Vorstellung davon, wie du deinen Code
-korrigieren kannst!
+Low-Level-Bibliotheken und wenn du eine Laufzeitumgebung erstellst, weniger bei
+alltäglichem Rust-Code. Wenn du diese Traits in Fehlermeldungen siehst, hast du
+jetzt eine bessere Vorstellung davon, wie du deinen Code korrigieren kannst!
 
 > Anmerkung: Diese Kombination von `Pin` und `Unpin` macht es möglich, eine
 > ganze Klasse von komplexen Typen sicher in Rust zu implementieren, die sich
@@ -540,22 +536,22 @@ korrigieren kannst!
 > Tasks“][under-the-hood] und [„Pinning“][pinning] im Buch _Asynchronous
 > Programming in Rust_ an.
 
-### Das Merkmal `Stream`
+### Das Trait `Stream`
 
-Nachdem du nun ein tieferes Verständnis für die Merkmale `Future`, `Pin` und
-`Unpin` hast, können wir uns dem Merkmal `Stream` zuwenden. Wie du bereits in
+Nachdem du nun ein tieferes Verständnis für die Traits `Future`, `Pin` und
+`Unpin` hast, können wir uns dem Trait `Stream` zuwenden. Wie du bereits in
 diesem Kapitel gelernt hast, sind Ströme ähnlich wie asynchrone Iteratoren. Im
 Gegensatz zu `Iterator` und `Future` hat `Stream` derzeit keine Definition in
 der Standardbibliothek, aber es _gibt_ eine sehr verbreitete Definition in der
 Kiste `Futures`, die im gesamten Ökosystem verwendet wird.
 
-Schauen wir uns die Definitionen der Merkmale `Iterator` und `Future` an, bevor
-wir uns ansehen, wie ein Merkmal `Stream` aussehen könnte. Von `Iterator` haben
+Schauen wir uns die Definitionen der Traits `Iterator` und `Future` an, bevor
+wir uns ansehen, wie ein Trait `Stream` aussehen könnte. Von `Iterator` haben
 wir die Idee einer Sequenz: Seine Methode `next` liefert eine
 `Option<Self::Item>`. Von `Future` haben wir die Idee der zeitlichen
 Bereitschaft: Seine Methode `poll` liefert ein `Poll<Self::Output>`. Um eine
 Sequenz von Elementen darzustellen, die im Laufe der Zeit bereit sein werden,
-definieren wir ein Merkmal `Stream`, das diese Funktionalitäten zusammenführt:
+definieren wir ein Trait `Stream`, das diese Funktionalitäten zusammenführt:
 
 ```rust
 use std::pin::Pin;
@@ -571,8 +567,8 @@ trait Stream {
 }
 ```
 
-Das Merkmal `Stream` definiert einen zugehörigen Typ namens `Item` für den Typ
-der vom Strom erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`, wo es
+Das Trait `Stream` definiert einen zugehörigen Typ namens `Item` für den Typ der
+vom Strom erzeugten Elemente. Dies ist ähnlich wie bei `Iterator`, wo es
 beliebig viele Elemente geben kann, anders als bei `Future`, wo es immer nur
 einen einzigen `Output` gibt, selbst wenn es der Einheitstyp `()` ist.
 
@@ -593,10 +589,9 @@ Im Beispiel, das wir im Abschnitt [„Ströme (streams): Sequenz von
 Futures“][streams] gesehen haben, haben wir allerdings nicht `poll_next` _oder_
 `Stream` benutzt, sondern `next` und `StreamExt`. Wir _könnten_ direkt mit der
 `poll_next`-API arbeiten, indem wir unsere eigenen `Stream`-Zustandsautomaten
-schreiben, genauso wie wir mit Futures direkt über deren Methode `poll`
-arbeiten _können_. Die Verwendung von `await` ist jedoch viel schöner, und das
-Merkmal `StreamExt` stellt die Methode `next` bereit, sodass wir folgendes tun
-können:
+schreiben, genauso wie wir mit Futures direkt über deren Methode `poll` arbeiten
+_können_. Die Verwendung von `await` ist jedoch viel schöner, und das Trait
+`StreamExt` stellt die Methode `next` bereit, sodass wir folgendes tun können:
 
 ```rust
 # use std::pin::Pin;
@@ -621,7 +616,7 @@ trait StreamExt: Stream {
 
 > Anmerkung: Die tatsächliche Definition von `StreamExt` sieht etwas anders
 > aus, da sie Versionen von Rust unterstützt, die noch keine Verwendung von
-> asynchronen Funktionen in Merkmalen kennen. Infolgedessen sieht sie so aus:
+> asynchronen Funktionen in Traits kennen. Infolgedessen sieht sie so aus:
 >
 > ```rust,ignore
 > fn next(&mut self) -> Next<'_, Self> where Self: Unpin;
@@ -631,22 +626,21 @@ trait StreamExt: Stream {
 > die Lebensdauer der Referenz auf `self` mit `Next<'_, Self>` zu benennen,
 > sodass `await` mit dieser Methode arbeiten kann!
 
-Das Merkmal `StreamExt` ist auch die Heimat aller interessanten Methoden, die
-für die Verwendung mit Strömen zur Verfügung stehen. `StreamExt` wird
-automatisch für jeden Typ implementiert, der `Stream` implementiert, aber diese
-Merkmale werden separat definiert, um der Rust-Gemeinschaft die Möglichkeit zu
-geben, Komfort-APIs zu entwickeln, ohne die grundlegenden Merkmale zu
-beeinflussen.
+Das Trait `StreamExt` ist auch die Heimat aller interessanten Methoden, die für
+die Verwendung mit Strömen zur Verfügung stehen. `StreamExt` wird automatisch
+für jeden Typ implementiert, der `Stream` implementiert, aber diese Traits
+werden separat definiert, um der Rust-Gemeinschaft die Möglichkeit zu geben,
+Komfort-APIs zu entwickeln, ohne die grundlegenden Traits zu beeinflussen.
 
 In der Version von `StreamExt`, die in der Kiste `trpl` verwendet wird,
-definiert das Merkmal nicht nur die Methode `next`, sondern liefert auch eine
+definiert das Trait nicht nur die Methode `next`, sondern liefert auch eine
 Implementierung von `next`, die die Details des Aufrufs von `Stream::poll_next`
 korrekt behandelt. Das bedeutet, dass du selbst beim Schreiben deines eigenen
 Streaming-Datentyps _nur_ `Stream` implementieren musst, und dann kann jeder,
 der deinen Datentyp verwendet, `StreamExt` und seine Methoden automatisch mit
 ihm verwenden.
 
-Das ist alles, was wir für die tieferen Details zu diesen Merkmalen behandeln
+Das ist alles, was wir für die tieferen Details zu diesen Traits behandeln
 werden. Zum Abschluss wollen wir uns ansehen, wie Futures (einschließlich
 Ströme), Aufgaben und Stränge zusammenpassen!
 

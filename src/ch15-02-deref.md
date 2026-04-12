@@ -1,18 +1,18 @@
 ## Intelligente Zeiger wie normale Referenzen behandeln
 
-Durch die Implementierung des Merkmals `Deref` kann man das Verhalten des
+Durch die Implementierung des Trait `Deref` kann man das Verhalten des
 _Dereferenzierungsoperators_ (dereference operator) `*` (nicht zu verwechseln
-mit dem Multiplikations- oder Stern-Operator (glob operator)) anpassen. Indem
-du `Deref` so implementierst, dass ein intelligenter Zeiger wie eine reguläre
+mit dem Multiplikations- oder Stern-Operator (glob operator)) anpassen. Indem du
+`Deref` so implementierst, dass ein intelligenter Zeiger wie eine reguläre
 Referenz behandelt werden kann, kannst du Programmcode schreiben, der mit
 Referenzen arbeitet, und diesen Programmcode auch mit intelligenten Zeigern
 verwenden.
 
 Schauen wir uns zunächst an, wie der Dereferenzierungsoperator mit regulären
-Referenzen arbeitet. Dann werden wir versuchen, einen benutzerdefinierten Typ
-zu definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
+Referenzen arbeitet. Dann werden wir versuchen, einen benutzerdefinierten Typ zu
+definieren, der sich wie `Box<T>` verhält, und herausfinden, warum der
 Dereferenzierungsoperator nicht wie eine Referenz für unseren neu definierten
-Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Merkmals
+Typ funktioniert. Wir werden untersuchen, wie die Implementierung des Traits
 `Deref` es intelligenten Zeigern ermöglicht, auf ähnliche Weise wie Referenzen
 zu funktionieren, dann sehen wir uns an, wie wir mit Rusts _automatischer
 Umwandlung_ (deref coercion) mit Referenzen oder intelligenten Zeigern arbeiten
@@ -187,17 +187,17 @@ error: could not compile `deref-example` (bin "deref-example") due to 1 previous
 
 Unser Typ `MyBox<T>` kann nicht dereferenziert werden, da wir diese Fähigkeit
 für unseren Typ nicht implementiert haben. Um eine Dereferenzierung mit dem
-Operator `*` zu ermöglichen, implementieren wir das Merkmal `Deref`.
+Operator `*` zu ermöglichen, implementieren wir das Trait `Deref`.
 
-### Implementieren des Merkmals `Deref`
+### Implementieren des Traits `Deref`
 
-Wie in [„Ein Merkmal für einen Typ implementieren“][impl-trait1] in Kapitel 10
-beschrieben, müssen wir zur Implementierung eines Merkmals Implementierungen
-für die erforderlichen Methoden des Merkmals bereitstellen. Das von der
-Standardbibliothek bereitgestellte Merkmal `Deref` erfordert die
-Implementierung einer Methode namens `deref`, die `self` ausleiht (borrow) und
-eine Referenz auf die beinhalteten Daten zurückgibt. Codeblock 15-10 enthält
-eine Implementierung von `Deref`, um die Definition von `MyBox` zu ergänzen:
+Wie in [„Ein Trait für einen Typ implementieren“][impl-trait1] in Kapitel 10
+beschrieben, müssen wir zur Implementierung eines Traits Implementierungen für
+die erforderlichen Methoden des Traits bereitstellen. Das von der
+Standardbibliothek bereitgestellte Trait `Deref` erfordert die Implementierung
+einer Methode namens `deref`, die `self` ausleiht (borrow) und eine Referenz auf
+die beinhalteten Daten zurückgibt. Codeblock 15-10 enthält eine Implementierung
+von `Deref`, um die Definition von `MyBox` zu ergänzen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -232,7 +232,7 @@ impl<T> Deref for MyBox<T> {
 <span class="caption">Codeblock 15-10: `Deref` auf `MyBox<T>`
 implementieren</span>
 
-Die Syntax `type Target = T;` definiert einen assoziierten Typ, den das Merkmal
+Die Syntax `type Target = T;` definiert einen assoziierten Typ, den das Trait
 `Deref` verwenden soll. Assoziierte Typen sind eine andere Art, einen
 generischen Parameter zu deklarieren, aber darüber musst du dir vorerst noch
 keine Gedanken machen; in Kapitel 20 werden wir sie ausführlicher behandeln.
@@ -245,11 +245,10 @@ Tupel-Struktur zugreift. Die Funktion `main` in Codeblock 15-9, die `*` für
 den Wert `MyBox<T>` aufruft, kompiliert nun und die Zusicherungen werden
 erfüllt!
 
-Ohne das Merkmal `Deref` kann der Compiler nur `&`-Referenzen dereferenzieren.
-Die Methode `deref` gibt dem Compiler die Möglichkeit, einen Wert eines
-beliebigen Typs zu verwenden, der `Deref` implementiert, und die Methode
-`deref` aufzurufen, um eine `&`-Referenz zu erhalten, die er dereferenzieren
-kann.
+Ohne das Trait `Deref` kann der Compiler nur `&`-Referenzen dereferenzieren. Die
+Methode `deref` gibt dem Compiler die Möglichkeit, einen Wert eines beliebigen
+Typs zu verwenden, der `Deref` implementiert, und die Methode `deref`
+aufzurufen, um eine `&`-Referenz zu erhalten, die er dereferenzieren kann.
 
 Als wir in Codeblock 15-9 `*y` eingegeben haben, hat Rust hinter den Kulissen
 tatsächlich diesen Programmcode ausgeführt:
@@ -281,12 +280,12 @@ in `assert_eq!` in Codeblock 15-9 übereinstimmen.
 ### Automatische Umwandlung in Funktionen und Methoden verwenden
 
 Die _automatische Umwandlung_ (deref coercion) wandelt eine Referenz auf einen
-Typ, der das Merkmal `Deref` implementiert, in eine Referenz auf einen anderen
-Typ um. Zum Beispiel kann die automatische Umwandlung `&String` in `&str`
-konvertieren, da `String` das Merkmal `Deref` implementiert, sodass `&str`
+Typ, der das Trait `Deref` implementiert, in eine Referenz auf einen anderen Typ
+um. Zum Beispiel kann die automatische Umwandlung `&String` in `&str`
+konvertieren, da `String` das Trait `Deref` implementiert, sodass `&str`
 zurückgegeben wird. Die automatische Umwandlung ist eine Bequemlichkeit, die
 Rust auf Argumente für Funktionen und Methoden anwendet, und funktioniert nur
-bei Typen, die das Merkmal `Deref` implementieren. Die automatische Umwandlung
+bei Typen, die das Trait `Deref` implementieren. Die automatische Umwandlung
 erfolgt automatisch, wenn wir eine Referenz auf den Wert eines bestimmten Typs
 als Argument an eine Funktion oder Methode übergeben, die nicht mit dem
 Parametertyp in der Funktion oder Methodendefinition übereinstimmt. Eine Folge
@@ -359,7 +358,7 @@ fn main() {
 `MyBox<String>`-Wert, der aufgrund automatischer Umwandlung funktioniert</span>
 
 Hier rufen wir die Funktion `hello` mit dem Argument `&m` auf, das auf einen
-`MyBox<String>`-Wert referenziert. Da wir in Codeblock 15-10 das Merkmal
+`MyBox<String>`-Wert referenziert. Da wir in Codeblock 15-10 das Trait
 `Deref` für `MyBox<T>` implementiert haben, kann Rust `&MyBox<String>` durch
 Aufrufen von `deref` in `&String` verwandeln. Die Standardbibliothek bietet
 eine Implementierung von `Deref` auf `String`, die einen
@@ -412,20 +411,20 @@ automatische Umwandlung ist mit all den Symbolen schwerer zu lesen, zu
 schreiben und zu verstehen. Durch die automatische Umwandlung kann Rust diese
 Konvertierung automatisch für uns durchführen.
 
-Wenn das Merkmal `Deref` für die beteiligten Typen definiert ist, analysiert
-Rust die Typen und verwendet `Deref::deref` so oft wie nötig, um eine Referenz
-zu erhalten, die dem Typ des Parameters entspricht. Wie oft `Deref::deref`
+Wenn das Trait `Deref` für die beteiligten Typen definiert ist, analysiert Rust
+die Typen und verwendet `Deref::deref` so oft wie nötig, um eine Referenz zu
+erhalten, die dem Typ des Parameters entspricht. Wie oft `Deref::deref`
 eingefügt werden muss, wird zur Kompilierzeit ermittelt, sodass zur Laufzeit
 kein Nachteil durch die Nutzung der automatischen Umwandlung entsteht!
 
 ### Automatische Umwandlung mit veränderbaren Referenzen
 
-Ähnlich wie du das Merkmal `Deref` verwendest, um den `*`-Operator bei
-unveränderbaren Referenzen zu überschreiben, kannst du das Merkmal `DerefMut`
+Ähnlich wie du das Trait `Deref` verwendest, um den `*`-Operator bei
+unveränderbaren Referenzen zu überschreiben, kannst du das Trait `DerefMut`
 verwenden, um den `*`-Operator bei veränderbaren Referenzen zu überschreiben.
 
-Rust wendet die automatische Umwandlung bei Typen und Merkmalsimplementierungen
-in folgenden drei Fällen an:
+Rust wendet die automatische Umwandlung bei Typen und Trait-Implementierungen in
+folgenden drei Fällen an:
 
 1. Von `&T` zu `&U`, wenn `T: Deref<Target=U>`
 2. Von `&mutT` zu `&mutU`, wenn `T: DerefMut<Target=U>`
@@ -451,5 +450,5 @@ Ausleihregeln garantieren dies nicht.
 Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
 unveränderbaren Referenz in eine veränderbare Referenz möglich ist.
 
-[impl-trait1]: ch10-02-traits.html#ein-merkmal-für-einen-typ-implementieren
+[impl-trait1]: ch10-02-traits.html#ein-trait-für-einen-typ-implementieren
 [tuple-structs]: ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen

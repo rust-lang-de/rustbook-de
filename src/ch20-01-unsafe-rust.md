@@ -38,7 +38,7 @@ Superkräften gehören folgende Fähigkeiten:
 1. Dereferenzieren eines Rohzeigers
 2. Aufrufen einer unsicheren Funktion oder Methode
 3. Zugreifen auf oder Ändern einer veränderbaren statischen Variablen
-4. Implementieren eines unsicheren Merkmals (trait)
+4. Implementieren eines unsicheren Traits
 5. Zugreifen auf Feldern in `union`
 
 Es ist wichtig zu verstehen, dass `unsafe` weder den Ausleihenprüfer (borrow
@@ -630,14 +630,14 @@ ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken
 und Strang-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler
 prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.
 
-### Implementieren eines unsicheren Merkmals
+### Implementieren eines unsicheren Traits
 
-Wir können `unsafe` zum Implementieren eines unsicheren Merkmals (unsafe trait)
-verwenden. Ein Merkmal ist unsicher, wenn mindestens eine ihrer Methoden eine
-Invariante hat, die der Compiler nicht verifizieren kann. Wir können erklären,
-dass ein Merkmal `unsafe` ist, indem wir das Schlüsselwort `unsafe` vor `trait`
-einfügen und die Implementierung des Merkmals ebenfalls mit `unsafe` markieren,
-wie in Codeblock 20-12 gezeigt.
+Wir können `unsafe` zum Implementieren eines unsicheren Traits verwenden. Ein
+Trait ist unsicher, wenn mindestens eine ihrer Methoden eine Invariante hat, die
+der Compiler nicht verifizieren kann. Wir können erklären, dass ein Trait
+`unsafe` ist, indem wir das Schlüsselwort `unsafe` vor `trait` einfügen und die
+Implementierung des Traits ebenfalls mit `unsafe` markieren, wie in Codeblock
+20-12 gezeigt.
 
 ```rust
 unsafe trait Foo {
@@ -652,14 +652,14 @@ unsafe impl Foo for i32 {
 ```
 
 <span class="caption">Codeblock 20-12: Definition und Implementierung eines
-unsicheren Merkmals</span>
+unsicheren Traits</span>
 
 Indem wir `unsafe impl` verwenden, versprechen wir, dass wir die Invarianten
 aufrechterhalten, die der Compiler nicht verifizieren kann.
 
-Erinnere dich als Beispiel an die Marker-Merkmale `Send` und `Sync`, die wir im
+Erinnere dich als Beispiel an die Marker Trait `Send` und `Sync`, die wir im
 Abschnitt [„Erweiterbare Nebenläufigkeit mit `Send` und `Sync`“][send-and-sync]
-in Kapitel 16 besprochen haben: Der Compiler implementiert diese Merkmale
+in Kapitel 16 besprochen haben: Der Compiler implementiert diese Traits
 automatisch, wenn unsere Typen vollständig aus anderen Typen zusammengesetzt
 sind, die `Send` und `Sync` implementieren. Wenn wir einen Typ implementieren,
 der einen Typ enthält, der nicht `Send` oder `Sync` implementiert, z.B.

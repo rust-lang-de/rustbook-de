@@ -4,7 +4,7 @@ Wenn du große Programme schreibst, wird die Organisation deines Codes immer
 wichtiger. Durch die Gruppierung verwandter Funktionen und die Trennung von
 Code mit unterschiedlichen Funktionalitäten wird klar, wo der Code zu finden
 ist, der eine bestimmte Funktionalität implementiert, und an welcher Stelle
-die Funktionalität eines Merkmals zu ändern ist.
+die Funktionalität eines Traits zu ändern ist.
 
 Die Programme, die wir bisher geschrieben haben, waren in einem Modul in einer
 Datei. Wenn ein Projekt wächst, solltest du den Code organisieren, indem du ihn

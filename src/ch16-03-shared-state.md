@@ -281,11 +281,11 @@ error: could not compile `shared-state` (bin "shared-state") due to 1 previous e
 
 Toll, diese Fehlermeldung ist sehr wortreich! Hier ist der wichtige Teil, auf
 den wir uns konzentrieren müssen: `` `Rc<Mutex<i32>>` cannot be sent between
- threads safely`` Der Compiler teilt uns auch den Grund dafür mit: Das Merkmal
+threads safely`` Der Compiler teilt uns auch den Grund dafür mit: Das Trait
 (trait) `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Wir werden im
-nächsten Abschnitt über das Merkmal `Send` sprechen: Es ist eines der Merkmale,
-das sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die
-Verwendung in nebenläufigen Situationen gedacht sind.
+nächsten Abschnitt über das Trait `Send` sprechen: Es ist eines der Traits, das
+sicherstellt, dass die Typen, die wir mit Strängen verwenden, für die Verwendung
+in nebenläufigen Situationen gedacht sind.
 
 Leider ist es nicht sicher, `Rc<T>` über verschiedene Stränge hinweg gemeinsam
 zu nutzen. Wenn `Rc<T>` den Referenzzähler verwaltet, inkrementiert es den
@@ -401,7 +401,7 @@ von Deadlocks mit Mutexe in einer beliebigen Sprache und versuche, sie in Rust
 zu implementieren. Die Standardbibliotheks-API-Dokumentation für `Mutex<T>` und
 `MutexGuard` bietet nützliche Informationen.
 
-Wir runden dieses Kapitel ab, indem wir über die Merkmale `Send` und `Sync`
+Wir runden dieses Kapitel ab, indem wir über die Traits `Send` und `Sync`
 sprechen und wie wir sie mit benutzerdefinierten Typen verwenden können.
 
 [atomic]: https://doc.rust-lang.org/std/sync/atomic/index.html

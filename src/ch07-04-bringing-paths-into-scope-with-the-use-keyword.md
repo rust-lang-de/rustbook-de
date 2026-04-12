@@ -297,12 +297,11 @@ Paket `rand` und alle Abhängigkeiten von [crates.io](https://crates.io/)
 herunterzuladen und `rand` für unser Projekt verfügbar zu machen.
 
 Um dann Definitionen von `rand` in den Gültigkeitsbereich unseres Pakets
-aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem
-Kistennamen `rand` beginnt und die Elemente auflistet, die wir in den
-Gültigkeitsbereich bringen wollten. Erinnere dich, dass wir in [„Generieren
-einer Geheimzahl“][rand] in Kapitel 2 das Merkmal `Rng` in den
-Gültigkeitsbereich gebracht und die Funktion `rand::thread_rng` aufgerufen
-haben:
+aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem Kistennamen
+`rand` beginnt und die Elemente auflistet, die wir in den Gültigkeitsbereich
+bringen wollten. Erinnere dich, dass wir in [„Generieren einer
+Geheimzahl“][rand] in Kapitel 2 das Trait `Rng` in den Gültigkeitsbereich
+gebracht und die Funktion `rand::thread_rng` aufgerufen haben:
 
 ```rust
 # use std::io;

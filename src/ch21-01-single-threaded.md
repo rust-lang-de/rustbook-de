@@ -192,31 +192,30 @@ fn handle_connection(mut stream: TcpStream) {
 der Daten</span>
 
 Wir bringen `std::io::BufReader` und `std::io::prelude` in den
-Gültigkeitsbereich, um Zugang zu Merkmalen (traits) und Typen zu erhalten, die
-es uns ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In
-der `for`-Schleife in der Funktion `main` rufen wir jetzt, statt eine Nachricht
+Gültigkeitsbereich, um Zugang zu Traits und Typen zu erhalten, die es uns
+ermöglichen, aus dem Strom zu lesen und in den Strom zu schreiben. In der
+`for`-Schleife in der Funktion `main` rufen wir jetzt, statt eine Nachricht
 auszugeben, dass wir eine Verbindung hergestellt haben, die neue Funktion
 `handle_connection` auf und übergeben ihr den `stream`.
 
-In der Funktion `handle_connection` erstellen wir eine neue
-`BufReader`-Instanz, die eine Referenz auf den `stream` enthält. `BufReader`
-sorgt für die Pufferung, indem es die Aufrufe der Merkmals-Methoden von
-`std::io::Read` für uns verwaltet.
+In der Funktion `handle_connection` erstellen wir eine neue `BufReader`-Instanz,
+die eine Referenz auf den `stream` enthält. `BufReader` sorgt für die Pufferung,
+indem es die Aufrufe der Trait-Methoden von `std::io::Read` für uns verwaltet.
 
 Wir erstellen eine Variable namens `http_request`, um die Zeilen der Anfrage zu
 aufzusammeln, die der Browser an unseren Server sendet. Wir geben an, dass wir
 diese Zeilen in einem Vektor sammeln wollen, indem wir die Typ-Annotation
 `Vec<_>` hinzufügen.
 
-`BufReader` implementiert das Merkmal `std::io::BufRead`, das die Methode
-`lines` bereitstellt. Die Methode `lines` gibt einen Iterator von
-`Result<String, std::io::Error>` zurück, indem sie den Datenstrom immer dann
-aufteilt, wenn sie ein Neue-Zeile-Byte sieht. Um jeden `String` zu erhalten,
-wird jedes `Result` mit `map` abgebildet und `unwrap` aufgerufen. Das `Result`
-könnte einen Fehler darstellen, wenn die Daten kein gültiges UTF-8 sind oder
-wenn es ein Problem beim Lesen aus dem Strom gab. Auch hier sollte ein
-Produktivprogramm diese Fehler besser behandeln, aber der Einfachheit halber
-brechen wir das Programm im Fehlerfall ab.
+`BufReader` implementiert das Trait `std::io::BufRead`, das die Methode `lines`
+bereitstellt. Die Methode `lines` gibt einen Iterator von `Result<String,
+std::io::Error>` zurück, indem sie den Datenstrom immer dann aufteilt, wenn sie
+ein Neue-Zeile-Byte sieht. Um jeden `String` zu erhalten, wird jedes `Result`
+mit `map` abgebildet und `unwrap` aufgerufen. Das `Result` könnte einen Fehler
+darstellen, wenn die Daten kein gültiges UTF-8 sind oder wenn es ein Problem
+beim Lesen aus dem Strom gab. Auch hier sollte ein Produktivprogramm diese
+Fehler besser behandeln, aber der Einfachheit halber brechen wir das Programm im
+Fehlerfall ab.
 
 Der Browser signalisiert das Ende einer HTTP-Anfrage, indem er zwei
 Zeilenumbrüche hintereinander sendet. Um also eine Anfrage aus dem Strom zu

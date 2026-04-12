@@ -10,16 +10,16 @@ Typen besprechen.
 ### Typsicherheit und Abstraktion mit dem Newtype-Muster
 
 Der nächste Abschnitt geht davon aus, dass du den früheren Abschnitt [„Externe
-Merkmale mit dem Newtype-Muster implementieren“][newtype] gelesen hast. Das
+Traits mit dem Newtype-Muster implementieren“][newtype] gelesen hast. Das
 Newtype-Muster ist auch für Aufgaben nützlich, die über die bisher besprochenen
 hinausgehen, einschließlich statisch sicherzustellen, dass Werte niemals
-verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel
-für die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock
-20-16 gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und
-`Meters` `u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit
-einem Parameter vom Typ `Millimeters` schreiben würden, könnten wir kein
-Programm kompilieren, das versehentlich versucht, diese Funktion mit einem Wert
-vom Typ `Meters` oder einem einfachen `u32` aufzurufen.
+verwechselt werden, und dem Angeben von Einheiten eines Wertes. Ein Beispiel für
+die Verwendung von Newtypes zum Angeben von Einheiten hast du in Codeblock 20-16
+gesehen: Erinnere dich daran, dass die Strukturen `Millimeters` und `Meters`
+`u32`-Werte in einem Newtype einpacken. Wenn wir eine Funktion mit einem
+Parameter vom Typ `Millimeters` schreiben würden, könnten wir kein Programm
+kompilieren, das versehentlich versucht, diese Funktion mit einem Wert vom Typ
+`Meters` oder einem einfachen `u32` aufzurufen.
 
 Wir können auch das Newtype-Muster verwenden, um einige Implementierungsdetails
 eines Typs zu abstrahieren: Der neue Typ kann eine öffentliche API
@@ -137,7 +137,7 @@ Situationen zu behandeln, in denen Operationen nicht funktionieren. Diese
 Bibliothek hat eine Struktur `std::io::Error`, die alle möglichen E/A-Fehler
 repräsentiert. Viele der Funktionen in `std::io` geben `Result<T, E>` zurück,
 wobei für `E` der Typ `std::io::Error` verwendet wird, so wie bei diesen
-Funktionen im Merkmal (trait) `Write`:
+Funktionen im Trait `Write`:
 
 ```rust
 use std::fmt;
@@ -170,9 +170,9 @@ type Result<T> = std::result::Result<T, std::io::Error>;
 ```
 
 Da sich diese Deklaration im Modul `std::io` befindet, können wir den
-vollständig qualifizierten Alias `std::io::Result<T>` verwenden; das ist
-ein `Result<T, E>` mit `E` als `std::io::Error`. Die Funktionssignaturen des
-Merkmals `Write` sehen am Ende so aus:
+vollständig qualifizierten Alias `std::io::Result<T>` verwenden; das ist ein
+`Result<T, E>` mit `E` als `std::io::Error`. Die Funktionssignaturen des Traits
+`Write` sehen am Ende so aus:
 
 ```rust
 # use std::fmt;
@@ -339,7 +339,7 @@ Hier endet die Schleife nie, also ist `!` der Typ des Ausdrucks. Dies wäre
 jedoch nicht der Fall, wenn wir `break` einfügen würden, da die Schleife enden
 würde, wenn sie bei `break` ankommt.
 
-### Dynamisch große Typen und das Merkmal `Sized`
+### Dynamisch große Typen und das Trait `Sized`
 
 Rusts muss bestimmte Details über seine Typen kennen, z.B. wie viel Platz für
 einen Wert eines bestimmten Typs zuzuweisen ist. Das lässt eine Ecke des
@@ -388,20 +388,19 @@ dynamischer Größe immer hinter eine Art Zeiger stellen müssen.
 
 Wir können `str` mit allen Arten von Zeigern kombinieren: Zum Beispiel
 `Box<str>` oder `Rc<str>`. Tatsächlich hast du das schon einmal gesehen, aber
-mit einem anderen dynamisch großen Typ: Merkmale (traits). Jedes Merkmal ist
-ein dynamisch großer Typ, auf den wir uns beziehen können, indem wir den Namen
-des Merkmals verwenden. Im Abschnitt [„Verwendung von Merkmals-Objekten zur
-Abstraktion über gemeinsames Verhalten“][using-trait-objects] in Kapitel 18
-haben wir erwähnt, dass wir, um Merkmale als Merkmalsobjekte zu verwenden,
-diese hinter einen Zeiger setzen müssen, z.B. `&dyn Trait` oder `Box<dyn
-Trait>` (`Rc<dyn Trait>` würde auch funktionieren).
+mit einem anderen dynamisch großen Typ: Traits. Jedes Trait ist ein dynamisch
+großer Typ, auf den wir uns beziehen können, indem wir den Namen des Traits
+verwenden. Im Abschnitt [„Verwendung von Trait-Objekten zur Abstraktion über
+gemeinsames Verhalten“][using-trait-objects] in Kapitel 18 haben wir erwähnt,
+dass wir, um Traits als Trait-Objekte zu verwenden, diese hinter einen Zeiger
+setzen müssen, z.B. `&dyn Trait` oder `Box<dyn Trait>` (`Rc<dyn Trait>` würde
+auch funktionieren).
 
-Um mit DSTs zu arbeiten, hat Rust das Merkmal `Sized`, um zu bestimmen, ob die
-Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Merkmal wird
-automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt
-ist. Zusätzlich fügt Rust implizit jeder generischen Funktion eine
-Merkmalsabgrenzung auf `Sized` hinzu. Das heißt, eine generische
-Funktionsdefinition wie diese:
+Um mit DSTs zu arbeiten, hat Rust das Trait `Sized`, um zu bestimmen, ob die
+Größe eines Typs zur Kompilierzeit bekannt ist oder nicht. Dieses Trait wird
+automatisch für alles implementiert, dessen Größe zur Kompilierzeit bekannt ist.
+Zusätzlich fügt Rust implizit jeder generischen Funktion eine Trait Bound auf
+`Sized` hinzu. Das heißt, eine generische Funktionsdefinition wie diese:
 
 ```rust
 fn generic<T>(t: T) {
@@ -427,10 +426,10 @@ fn generic<T: ?Sized>(t: &T) {
 }
 ```
 
-Eine Merkmalsabgrenzung durch `?Sized` bedeutet „`T` kann `Sized` sein oder
-nicht“ und diese Notation hebt die Vorgabe auf, dass generische Typen zur
-Kompilierzeit eine bekannte Größe haben müssen. Die Syntax `?Trait` mit dieser
-Bedeutung ist nur für `Sized` verfügbar, nicht für andere Merkmale.
+Eine Trait Bound durch `?Sized` bedeutet „`T` kann `Sized` sein oder nicht“ und
+diese Notation hebt die Vorgabe auf, dass generische Typen zur Kompilierzeit
+eine bekannte Größe haben müssen. Die Syntax `?Trait` mit dieser Bedeutung ist
+nur für `Sized` verfügbar, nicht für andere Traits.
 
 Beachte auch, dass wir den Typ des Parameters `t` von `T` auf `&T` geändert
 haben. Da der Typ möglicherweise nicht `Sized` ist, müssen wir ihn hinter einer
@@ -441,5 +440,5 @@ Als nächstes werden wir über Funktionen und Closures sprechen!
 [encapsulation]: ch18-01-what-is-oo.html#kapselung-die-implementierungsdetails-verbirgt
 [match-operator]: ch06-02-match.html
 [string-slices]: ch04-03-slices.html#zeichenkettenanteilstypen-string-slices
-[newtype]: ch20-02-advanced-traits.html#externe-merkmale-mit-dem-newtype-muster-implementieren
+[newtype]: ch20-02-advanced-traits.html#externe-traits-mit-dem-newtype-muster-implementieren
 [using-trait-objects]: ch18-02-trait-objects.html

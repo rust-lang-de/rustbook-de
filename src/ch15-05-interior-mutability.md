@@ -157,15 +157,14 @@ darauf sendet, wie nahe der Maximalwert am aktuellen Wert liegt. Diese
 Bibliothek kann verwendet werden, um das Kontingent eines Benutzers für die
 Anzahl der API-Aufrufe zu verfolgen, die er beispielsweise ausführen darf.
 
-Unsere Bibliothek bietet nur die Funktionalität, zu verfolgen, wie nahe ein
-Wert am Maximum liegt und wie die Nachrichten zu bestimmten Zeiten sein
-sollten. Von Anwendungen, die unsere Bibliothek verwenden, wird erwartet, dass
-sie den Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung
-könnte die Nachricht dem Benutzer direkt zeigen, eine E-Mail senden, eine
-Textnachricht senden oder etwas anderes machen. Die Bibliothek muss dieses
-Detail nicht kennen. Alles, was es braucht, ist Code, der ein von uns
-bereitgestelltes Merkmal (trait) namens `Messenger` implementiert. Codeblock
-15-20 zeigt den Bibliothekscode.
+Unsere Bibliothek bietet nur die Funktionalität, zu verfolgen, wie nahe ein Wert
+am Maximum liegt und wie die Nachrichten zu bestimmten Zeiten sein sollten. Von
+Anwendungen, die unsere Bibliothek verwenden, wird erwartet, dass sie den
+Mechanismus zum Senden der Nachrichten bereitstellen: Die Anwendung könnte die
+Nachricht dem Benutzer direkt zeigen, eine E-Mail senden, eine Textnachricht
+senden oder etwas anderes machen. Die Bibliothek muss dieses Detail nicht
+kennen. Alles, was es braucht, ist Code, der ein von uns bereitgestelltes Trait
+namens `Messenger` implementiert. Codeblock 15-20 zeigt den Bibliothekscode.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -214,18 +213,18 @@ where
 ein Wert an einem Maximalwert liegt, und um zu warnen, wenn der Wert über
 bestimmten Schwellwerten liegt</span>
 
-Ein wichtiger Teil dieses Programmcodes ist, dass das Merkmal `Messenger` eine
+Ein wichtiger Teil dieses Programmcodes ist, dass das Trait `Messenger` eine
 Methode namens `send` hat, die eine unveränderbare Referenz auf `self` und den
-Text der Nachricht erhält. Dieses Merkmal ist die Schnittstelle, die unser
-Mock-Objekt implementieren muss, damit das Mock-Objekt auf die gleiche Weise
-wie ein reales Objekt verwendet werden kann. Der andere wichtige Teil ist, dass
-wir das Verhalten der Methode `set_value` von `LimitTracker` testen wollen. Wir
+Text der Nachricht erhält. Dieses Trait ist die Schnittstelle, die unser
+Mock-Objekt implementieren muss, damit das Mock-Objekt auf die gleiche Weise wie
+ein reales Objekt verwendet werden kann. Der andere wichtige Teil ist, dass wir
+das Verhalten der Methode `set_value` von `LimitTracker` testen wollen. Wir
 können ändern, was wir für den Parameter `value` übergeben, aber `set_value`
 gibt nichts zurück, auf das wir Zusicherungen machen können. Wir wollen in der
-Lage sein zu sagen, dass, wenn wir einen `LimitTracker` mit etwas erstellen,
-das das Merkmal `Messenger` und einen bestimmten Wert für `max` implementiert,
-der Messenger angewiesen wird, die entsprechenden Nachrichten zu senden. wenn
-wir verschiedene Zahlen für `value` übergeben.
+Lage sein zu sagen, dass, wenn wir einen `LimitTracker` mit etwas erstellen, das
+das Trait `Messenger` und einen bestimmten Wert für `max` implementiert, der
+Messenger angewiesen wird, die entsprechenden Nachrichten zu senden. wenn wir
+verschiedene Zahlen für `value` übergeben.
 
 Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von `send` nur die Nachrichten verfolgt, die
@@ -319,8 +318,8 @@ Dieser Testcode definiert eine Struktur `MockMessenger` mit einem Feld
 `sent_messages` mit einem `Vec` von `String`-Werten, um Nachrichten zu
 verfolgen, die gesendet werden sollen. Wir definieren auch eine zugehörige
 Funktion `new`, um das Erstellen neuer `MockMessenger`-Werte zu vereinfachen,
-die mit einer leeren Liste von Nachrichten beginnen. Wir implementieren dann
-das Merkmal `Messenger` für `MockMessenger`, damit wir `LimitTracker` einen
+die mit einer leeren Liste von Nachrichten beginnen. Wir implementieren dann das
+Trait `Messenger` für `MockMessenger`, damit wir `LimitTracker` einen
 `MockMessenger` übergeben können. Bei der Definition der Methode `send` nehmen
 wir die übergebene Nachricht als Parameter und speichern sie in der Liste
 `sent_messages` von `MockMessenger`.
@@ -359,13 +358,13 @@ For more information about this error, try `rustc --explain E0596`.
 error: could not compile `limit-tracker` (lib test) due to 1 previous error
 ```
 
-Wir können `MockMessenger` nicht so ändern, dass es die Nachrichten verfolgt,
-da die Methode `send` eine unveränderbare Referenz auf `self` benötigt. Wir
-können auch nicht den Vorschlag aus dem Fehlertext übernehmen, `&mut self`
-sowohl in der Methode `impl` als auch in der Merkmalsdefinition zu verwenden.
-Wir wollen das Merkmal `Messenger` nicht nur um des Testens willen ändern.
-Stattdessen müssen wir einen Weg finden, damit unser Testcode mit unserem
-bestehenden Design korrekt funktioniert.
+Wir können `MockMessenger` nicht so ändern, dass es die Nachrichten verfolgt, da
+die Methode `send` eine unveränderbare Referenz auf `self` benötigt. Wir können
+auch nicht den Vorschlag aus dem Fehlertext übernehmen, `&mut self` sowohl in
+der Methode `impl` als auch in der Trait-Definition zu verwenden. Wir wollen das
+Trait `Messenger` nicht nur um des Testens willen ändern. Stattdessen müssen wir
+einen Weg finden, damit unser Testcode mit unserem bestehenden Design korrekt
+funktioniert.
 
 Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
 speichern die `send_messages` in einer `RefCell<T>` und dann kann die Methode
@@ -460,12 +459,12 @@ Das Feld `sent_messages` ist jetzt vom Typ `RefCell<Vec<String>>` anstelle von
 `RefCell<Vec<Sting>>`-Instanz um den leeren Vektor.
 
 Für die Implementierung der Methode `send` ist der erste Parameter immer noch
-eine unveränderbare Ausleihe von `self`, die der Merkmalsdefinition entspricht.
+eine unveränderbare Ausleihe von `self`, die der Trait-Definition entspricht.
 Wir rufen `borrow_mut` auf der `RefCell<Vec<String>>` in `self.sent_messages`
-auf, um eine veränderbare Referenz auf den Wert in der `RefCell<Vec<String>>`
-zu erhalten, der der Vektor ist. Dann können wir `push` auf der veränderbaren
-Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten
-zu verfolgen.
+auf, um eine veränderbare Referenz auf den Wert in der `RefCell<Vec<String>>` zu
+erhalten, der der Vektor ist. Dann können wir `push` auf der veränderbaren
+Referenz zum Vektor aufrufen, um die während des Tests gesendeten Nachrichten zu
+verfolgen.
 
 Die letzte Änderung, die wir vornehmen müssen, betrifft die Zusicherung: Um zu
 sehen, wie viele Elemente sich im inneren Vektor befinden, rufen wir `borrow`

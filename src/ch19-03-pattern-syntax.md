@@ -438,13 +438,13 @@ Dieser Code ignoriert den als erstes Argument übergebenen Wert `3` vollständig
 und gibt `Dieser Code verwendet nur den Parameter y: 4` aus.
 
 In den meisten Fällen, wenn du einen bestimmten Funktionsparameter nicht mehr
-benötigst, würdest du die Signatur so ändern, dass sie den unbenutzten
-Parameter nicht mehr enthält. Das Ignorieren eines Funktionsparameters kann in
-einigen Fällen besonders nützlich sein, z.B. bei der Implementierung eines
-Merkmals (trait), wenn du eine bestimmte Typsignatur benötigst, der
-Funktionsrumpf in deiner Implementierung jedoch keinen der Parameter benötigt.
-Du kannst dann vermeiden, dass der Compiler vor unbenutzten Funktionsparametern
-warnt, wie es der Fall wäre, wenn du stattdessen einen Namen verwenden würdest.
+benötigst, würdest du die Signatur so ändern, dass sie den unbenutzten Parameter
+nicht mehr enthält. Das Ignorieren eines Funktionsparameters kann in einigen
+Fällen besonders nützlich sein, z.B. bei der Implementierung eines Traits, wenn
+du eine bestimmte Typsignatur benötigst, der Funktionsrumpf in deiner
+Implementierung jedoch keinen der Parameter benötigt. Du kannst dann vermeiden,
+dass der Compiler vor unbenutzten Funktionsparametern warnt, wie es der Fall
+wäre, wenn du stattdessen einen Namen verwenden würdest.
 
 #### Teile eines Wertes mit einem verschachtelten `_`
 

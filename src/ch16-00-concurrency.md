@@ -57,6 +57,6 @@ Hier sind die Themen, die wir in diesem Kapitel behandeln werden:
   zwischen Strängen senden.
 - Nebenläufigkeit mit _gemeinsamem Zustand_ (shared-state), bei der mehrere
   Stränge Zugriff auf bestimmte Daten haben.
-- Die Merkmale (traits) `Sync` und `Send`, die Rusts Nebenläufigkeitsgarantien
-  sowohl auf benutzerdefinierte Typen als auch auf von der Standardbibliothek
+- Die Traits `Sync` und `Send`, die Rusts Nebenläufigkeitsgarantien sowohl auf
+  benutzerdefinierte Typen als auch auf von der Standardbibliothek
   bereitgestellte Typen erweitern.

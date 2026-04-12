@@ -401,14 +401,14 @@ Schlüsselwort `return` verwendet hätten.
 
 Es gibt einen Unterschied zwischen dem, was der `match`-Ausdruck aus Codeblock
 9-6 tut, und dem, was der `?`-Operator tut: Fehlerwerte, bei denen der
-`?`-Operator aufgerufen wird, durchlaufen die Funktion `from`, die im Merkmal
-`From` der Standardbibliothek definiert ist und die zur Konvertierung von
-Werten eines Typs in einen anderen verwendet wird. Wenn der `?`-Operator die
-Funktion `from` aufruft, wird der empfangene Fehlertyp in den Fehlertyp
-umgewandelt, der als Rückgabetyp der aktuellen Funktion definiert ist. Das ist
-hilfreich, wenn eine Funktion einen einzigen Fehlertyp zurückgibt, um alle
-möglichen Fehlerarten einer Funktion darzustellen, auch wenn Teile aus vielen
-verschiedenen Gründen versagen könnten.
+`?`-Operator aufgerufen wird, durchlaufen die Funktion `from`, die im Trait
+`From` der Standardbibliothek definiert ist und die zur Konvertierung von Werten
+eines Typs in einen anderen verwendet wird. Wenn der `?`-Operator die Funktion
+`from` aufruft, wird der empfangene Fehlertyp in den Fehlertyp umgewandelt, der
+als Rückgabetyp der aktuellen Funktion definiert ist. Das ist hilfreich, wenn
+eine Funktion einen einzigen Fehlertyp zurückgibt, um alle möglichen Fehlerarten
+einer Funktion darzustellen, auch wenn Teile aus vielen verschiedenen Gründen
+versagen könnten.
 
 Wir könnten zum Beispiel die Funktion `read_username_from_file` in Codeblock
 9-7 so ändern, dass sie einen von uns definierten Fehlertyp namens `OurError`
@@ -639,16 +639,16 @@ fn main() -> Result<(), Box<dyn Error>> {
 `Result<(), E>` erlaubt die Verwendung des `?`-Operators für
 `Result`-Werte.</span>
 
-Der Typ `Box<dyn Error>` ist ein Merkmalsobjekt (trait object), über das wir in
-[„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
-Verhalten“][trait-objects] in Kapitel 18 sprechen werden. Vorerst kannst du
-`Box<dyn Error>` als „eine beliebige Fehlerart“ ansehen. Das Verwenden von `?`
-auf einen `Result`-Wert in einer Funktion `main` mit dem Fehlertyp `Box<dyn
-Error>` ist erlaubt, weil dadurch ein `Err`-Wert frühzeitig zurückgegeben
-werden kann. Obwohl der Rumpf dieser Funktion `main` nur Fehler des Typs
-`std::io::Error` zurückgibt, ist diese Signatur durch die Angabe von `Box<dyn
-Error>` auch dann noch korrekt, wenn weiterer Code, der andere Fehler
-zurückgibt, dem Rumpf von `main` hinzugefügt wird.
+Der Typ `Box<dyn Error>` ist ein Trait-Objekt, über das wir in [„Verwendung von
+Trait-Objekten zur Abstraktion über gemeinsames Verhalten“][trait-objects] in
+Kapitel 18 sprechen werden. Vorerst kannst du `Box<dyn Error>` als „eine
+beliebige Fehlerart“ ansehen. Das Verwenden von `?` auf einen `Result`-Wert in
+einer Funktion `main` mit dem Fehlertyp `Box<dyn Error>` ist erlaubt, weil
+dadurch ein `Err`-Wert frühzeitig zurückgegeben werden kann. Obwohl der Rumpf
+dieser Funktion `main` nur Fehler des Typs `std::io::Error` zurückgibt, ist
+diese Signatur durch die Angabe von `Box<dyn Error>` auch dann noch korrekt,
+wenn weiterer Code, der andere Fehler zurückgibt, dem Rumpf von `main`
+hinzugefügt wird.
 
 Wenn eine Funktion `main` ein `Result<(), E>` zurückgibt, beendet sich die
 ausführbare Datei mit einem Wert von `0`, wenn `main` den Wert `Ok(())`
@@ -659,11 +659,11 @@ zurück, und Programme, die einen Fehler machen, geben eine Zahl ungleich `0`
 zurück. Rust gibt ebenfalls ganze Zahlen aus ausführbaren Dateien zurück, um
 mit dieser Konvention kompatibel zu sein.
 
-Die Funktion `main` kann jeden Typ zurückgeben, der das [Merkmal
+Die Funktion `main` kann jeden Typ zurückgeben, der das [Trait
 `std::process::Termination`][termination] implementiert, das eine Funktion
 `report` enthält, die einen `ExitCode` zurückgibt. Weitere Informationen zur
-Implementierung des Merkmals `Termination` für deine eigenen Typen findest du
-in der Dokumentation der Standardbibliothek.
+Implementierung des Trait `Termination` für deine eigenen Typen findest du in
+der Dokumentation der Standardbibliothek.
 
 Nachdem wir nun die Einzelheiten des Aufrufs von `panic!` und der Rückgabe von
 `Result` besprochen haben, wollen wir zum Thema zurückkehren, wie wir

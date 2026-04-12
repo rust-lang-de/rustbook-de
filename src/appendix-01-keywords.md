@@ -6,14 +6,14 @@ sie nicht als Bezeichner verwendet werden (außer als Roh-Bezeichner, die wir im
 Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_
 sind Namen von Funktionen, Variablen, Parametern, Strukturfeldern
 (struct fields), Modulen, Kisten (crates), Konstanten, Makros, statischen
-Werten, Attributen, Typen, Merkmalen (traits) und Lebensdauern (lifetimes).
+Werten, Attributen, Typen, Traits und Lebensdauern (lifetimes).
 
 ### Derzeit verwendete Schlüsselwörter
 
 Nachstehend findest du eine Liste der derzeit verwendeten Schlüsselwörter mit
 einer Beschreibung ihrer Funktion.
 
-- `as` &ndash; primitive Typen umwandeln; ein spezifisches Merkmal mit einem
+- `as` &ndash; primitive Typen umwandeln; ein spezifisches Trait mit einem
   Element eindeutig machen; Elemente in `use`-Anweisungen umbenennen 
 - `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Strang
   (thread) zu blockieren
@@ -22,18 +22,16 @@ einer Beschreibung ihrer Funktion.
 - `const` &ndash; konstante Elemente oder konstante Roh-Referenzen definieren
 - `continue` &ndash; weiter zur nächsten Schleifeniteration
 - `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)
-- `dyn` &ndash; dynamischer Aufruf (dispatch) eines Merkmalsobjekts (trait
-  object)
+- `dyn` &ndash; dynamischer Aufruf (dispatch) eines Trait-Objekts
 - `else` &ndash; Ersatzkontrollflusszweig bei `if` und `if let`
 - `enum` &ndash; eine Aufzählung (enumeration) definieren
 - `extern` &ndash; externe Funktion oder Variable verlinken
 - `false` &ndash; Boolesches Literal für „falsch“
 - `fn` &ndash; Funktion oder Funktionsreferenztyp definieren
-- `for` &ndash; wiederhole über Elemente einer Iteration; ein Merkmal (trait)
+- `for` &ndash; wiederhole über Elemente einer Iteration; ein Trait
   implementieren; eine höherrangige Lebensdauer angeben
 - `if` &ndash; Verzweigen abhängig vom Ergebnis eines Bedingungsausdrucks
-- `impl` &ndash; Implementieren einer inhärenten oder Merkmalsfunktionalität
-  (trait functionality)
+- `impl` &ndash; Implementieren einer inhärenten oder Trait-Funktionalität
 - `in` &ndash; Teil der `for`-Schleifensyntax
 - `let` &ndash; eine Variable binden
 - `loop` &ndash; wiederhole bedingungslos
@@ -53,13 +51,13 @@ einer Beschreibung ihrer Funktion.
   Programmausführung
 - `struct` &ndash; eine Struktur definieren
 - `super` &ndash; Elternmodul des aktuellen Moduls
-- `trait` &ndash; ein Merkmal (trait) definieren
+- `trait` &ndash; ein Trait definieren
 - `true` &ndash; Boolesches Literal für „wahr“
 - `type` &ndash; einen Typ-Alias oder assoziierten Typ definieren
 - `union` &ndash; eine [Vereinigung (union)][union] definieren; ist nur ein
   Schlüsselwort innerhalb einer Vereinigungdeklaration
-- `unsafe` &ndash; Code, Funktionen, Merkmale (traits) und Implementierungen
-  als unsicher kennzeichnen
+- `unsafe` &ndash; Code, Funktionen, Trait und Implementierungen als unsicher
+  kennzeichnen
 - `use` &ndash; Symbole in den Gültigkeitsbereich bringen; genaue Spezifikation
   von generischen und Lebensdauer-Grenzen
 - `where` &ndash; Klauseln zur Typabgrenzung angeben

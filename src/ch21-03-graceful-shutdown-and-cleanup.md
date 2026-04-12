@@ -8,15 +8,15 @@ wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
 Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
 gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.
 
-Als Nächstes werden wir das Merkmal (trait) `Drop` implementieren, um `join`
-für jeden der Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen
-sie arbeiten, vor dem Schließen beenden können. Dann werden wir einen Weg
-implementieren, um den Strängen mitzuteilen, dass sie keine neuen Anfragen mehr
-annehmen und herunterfahren sollen. Um diesen Code in Aktion zu sehen, werden
-wir unseren Server so modifizieren, dass er nur zwei Anfragen annimmt, bevor er
-seinen Strang-Vorrat kontrolliert herunterfährt.
+Als Nächstes werden wir das Trait `Drop` implementieren, um `join` für jeden der
+Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen sie arbeiten, vor
+dem Schließen beenden können. Dann werden wir einen Weg implementieren, um den
+Strängen mitzuteilen, dass sie keine neuen Anfragen mehr annehmen und
+herunterfahren sollen. Um diesen Code in Aktion zu sehen, werden wir unseren
+Server so modifizieren, dass er nur zwei Anfragen annimmt, bevor er seinen
+Strang-Vorrat kontrolliert herunterfährt.
 
-### Implementieren des Merkmals `Drop` auf `ThreadPool`
+### Implementieren des Traits `Drop` auf `ThreadPool`
 
 Lass uns damit beginnen, `Drop` auf unseren Strang-Vorrat zu implementieren.
 Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
@@ -534,7 +534,7 @@ Du würdest nicht wollen, dass ein Webserver aus der realen Welt
 heruntergefahren wird, nachdem er nur zwei Anfragen bearbeitet hat. Dieser Code
 zeigt nur, dass das kontrollierte Herunterfahren und Aufräumen funktioniert.
 
-Die Methode `take` ist im Merkmal `Iterator` definiert und beschränkt die
+Die Methode `take` ist im Trait `Iterator` definiert und beschränkt die
 Iteration auf die ersten beiden Elemente. Der `ThreadPool` wird am Ende von
 `main` den Gültigkeitsbereich verlassen und die `drop`-Implementierung
 ausgeführt werden.

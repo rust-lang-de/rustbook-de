@@ -287,8 +287,7 @@ wie in Kapitel 6 besprochen.
 
 Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
 speichern kann, funktioniert der Aufzählungsansatz nicht. Stattdessen kannst du
-ein Merkmalsobjekt (trait object) verwenden, das wir in Kapitel 17 behandeln
-werden.
+ein Trait-Objekt verwenden, das wir in Kapitel 17 behandeln werden.
 
 Nachdem wir nun einige der gängigsten Methoden zur Verwendung von Vektoren
 besprochen haben, solltest du dir unbedingt die [API-Dokumentation][vec-api] zu

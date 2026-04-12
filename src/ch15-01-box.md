@@ -18,20 +18,20 @@ Situationen verwendet:
   (ownership) übertragen möchte und sicherstellen will, dass die Daten dabei
   nicht kopiert werden.
 - Wenn man einen Wert besitzen und sich nur darum kümmern möchte, dass es sich
-  um einen Typ handelt, der ein bestimmtes Merkmal implementiert, anstatt den
-  Typ zu spezifizieren.
+  um einen Typ handelt, der ein bestimmtes Trait implementiert, anstatt den Typ
+  zu spezifizieren.
 
 Wir werden die erste Situation in [„Ermöglichen rekursiver Typen mit
 Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
 die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
-die Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation
-zu verbessern, können wir die große Datenmenge auf dem Heap in einer Box
-speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack
-kopiert, während die Daten, auf die referenziert wird, im Heap an einer Stelle
-verbleiben. Der dritte Fall ist als _Merkmalsobjekt_ (trait object) bekannt,
-und [„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
-Verhalten“][trait-objects] in Kapitel 18 widmet sich diesem Thema. Was du hier
-lernst, wirst du in diesem Abschnitt erneut anwenden!
+die Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation zu
+verbessern, können wir die große Datenmenge auf dem Heap in einer Box speichern.
+Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack kopiert, während
+die Daten, auf die referenziert wird, im Heap an einer Stelle verbleiben. Der
+dritte Fall ist als _Trait-Objekt_ bekannt, und [„Verwendung von Trait-Objekten
+zur Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18 widmet
+sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt erneut
+anwenden!
 
 ### Daten im Heap speichern
 
@@ -327,12 +327,12 @@ ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen di
 Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
 Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.
 
-Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
+Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Trait `Deref`
 implementiert, mit dem `Box<T>`-Werte wie Referenzen behandelt werden können.
 Wenn ein `Box<T>`-Wert den Gültigkeitsbereich verlässt, werden die Daten am
-Heap, auf die die Box zeigt, aufgrund der Implementierung des Merkmals `Drop`
-ebenfalls aufgeräumt. Diese beiden Merkmale sind für die Funktionalität der
+Heap, auf die die Box zeigt, aufgrund der Implementierung des Traits `Drop`
+ebenfalls aufgeräumt. Diese beiden Traits sind für die Funktionalität der
 anderen intelligenten Zeigertypen, die wir im restlichen Kapitel erläutern,
-noch wichtiger. Lass uns diese beiden Merkmale genauer untersuchen.
+noch wichtiger. Lass uns diese beiden Traits genauer untersuchen.
 
 [trait-objects]: ch18-02-trait-objects.html

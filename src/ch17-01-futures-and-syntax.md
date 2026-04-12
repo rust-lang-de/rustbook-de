@@ -6,12 +6,11 @@ die Rust-Schlüsselwörter `async` und `await`.
 Ein _Future_ ist ein Wert, der vielleicht noch nicht verfügbar ist, aber
 irgendwann in der Zukunft verfügbar sein wird. (Das gleiche Konzept taucht in
 vielen Programmiersprachen auf, manchmal unter anderen Namen wie „task“ oder
-„promise“.) Rust hat ein Merkmal `Future` als Baustein, sodass verschiedene
+„promise“.) Rust hat ein Trait `Future` als Baustein, sodass verschiedene
 asynchrone Operationen mit verschiedenen Datenstrukturen, aber mit einer
 gemeinsamen Schnittstelle implementiert werden können. In Rust sind Futures
-Typen, die das Merkmal `Future` implementieren. Jedes Future hält seine eigenen
-Informationen über den Fortschritt, der gemacht wurde und was „fertig“
-bedeutet.
+Typen, die das Trait `Future` implementieren. Jedes Future hält seine eigenen
+Informationen über den Fortschritt, der gemacht wurde und was „fertig“ bedeutet.
 
 Das Schlüsselwort `async` kann auf Blöcke und Funktionen angewendet werden, um
 anzugeben, dass sie unterbrochen und fortgesetzt werden können. Innerhalb eines
@@ -31,14 +30,14 @@ werden!
 
 Wenn wir asynchrones Rust schreiben, verwenden wir meistens die Schlüsselwörter
 `async` und `await`. Rust kompiliert sie in äquivalenten Code unter Verwendung
-des Merkmals `Future`, genauso wie es `for`-Schleifen in äquivalenten Code
-unter Verwendung des Merkmals `Iterator` kompiliert. Da Rust das Merkmal
-`Future` bereitstellt, kannst du es bei Bedarf auch für deine eigenen
-Datentypen implementieren. Viele der Funktionen, die wir in diesem Kapitel
-sehen werden, geben Typen mit ihren eigenen Implementierungen von `Future`
-zurück. Wir werden am Ende des Kapitels noch einmal auf die Definition des
-Merkmals zurückkommen und mehr darüber erfahren, wie es funktioniert. Aber das
-sind vorerst genug Details, die wir brauchen.
+des Traits `Future`, genauso wie es `for`-Schleifen in äquivalenten Code unter
+Verwendung des Traits `Iterator` kompiliert. Da Rust das Trait `Future`
+bereitstellt, kannst du es bei Bedarf auch für deine eigenen Datentypen
+implementieren. Viele der Funktionen, die wir in diesem Kapitel sehen werden,
+geben Typen mit ihren eigenen Implementierungen von `Future` zurück. Wir werden
+am Ende des Kapitels noch einmal auf die Definition des Traits zurückkommen und
+mehr darüber erfahren, wie es funktioniert. Aber das sind vorerst genug Details,
+die wir brauchen.
 
 Das mag sich alles ein wenig abstrakt anfühlen, lass uns daher unser erstes
 asynchrones Programm schreiben: Einen kleinen Web Scraper. Wir geben zwei URLs
@@ -52,15 +51,14 @@ jeweiligen Zeitpunkt wissen musst.
 Um dieses Kapitel auf das Erlernen von async zu beschränken, anstatt mit Teilen
 des Ökosystems zu jonglieren, haben wir die Kiste `trpl` erstellt (`trpl` ist
 die Abkürzung für „The Rust Programming Language“). Sie re-exportiert alle
-Typen, Merkmale und Funktionen, die du benötigst, hauptsächlich aus den Kisten
+Typen, Traits und Funktionen, die du benötigst, hauptsächlich aus den Kisten
 [`futures`][futures-crate] und [`tokio`][tokio]. Die Kiste `futures` ist ein
-offizielles Zuhause für Rust-Experimente mit asynchronem Code und ist
-eigentlich der Ort, an dem das Merkmal `Future` ursprünglich entworfen wurde.
-Tokio ist heute die am häufigsten verwendete asynchrone Laufzeitumgebung in
-Rust, insbesondere für Webanwendungen. Es gibt noch andere großartige
-Laufzeitumgebungen, die für deine Zwecke evtl. besser geeignet sind. Wir
-verwenden unter der Haube die Kiste `tokio` für `trpl`, weil es gut getestet
-und weit verbreitet ist.
+offizielles Zuhause für Rust-Experimente mit asynchronem Code und ist eigentlich
+der Ort, an dem das Trait `Future` ursprünglich entworfen wurde. Tokio ist heute
+die am häufigsten verwendete asynchrone Laufzeitumgebung in Rust, insbesondere
+für Webanwendungen. Es gibt noch andere großartige Laufzeitumgebungen, die für
+deine Zwecke evtl. besser geeignet sind. Wir verwenden unter der Haube die Kiste
+`tokio` für `trpl`, weil es gut getestet und weit verbreitet ist.
 
 In einigen Fällen nennt `trpl` die ursprünglichen APIs um oder umschließt sie,
 damit wir uns auf die für dieses Kapitel relevanten Details konzentrieren
@@ -192,13 +190,12 @@ Damit haben wir erfolgreich unsere erste asynchrone Funktion geschrieben! Bevor
 wir etwas Code in `main` schreiben, um sie aufzurufen, wollen wir uns ansehen,
 was wir geschrieben haben und was es bedeutet.
 
-Wenn Rust einen mit dem Schlüsselwort `async` markierten Block sieht,
-kompiliert es ihn in einen eindeutigen, anonymen Datentyp, der das Merkmal
-`Future` implementiert. Wenn Rust eine mit dem Schlüsselwort `async`
-markierte Funktion sieht, kompiliert es sie zu einer nicht-asynchronen
-Funktion, deren Rumpf ein asynchroner Block ist. Der Rückgabetyp einer
-asynchronen Funktion ist der Typ des anonymen Datentyps, den der Compiler für
-diesen asynchronen Block erstellt.
+Wenn Rust einen mit dem Schlüsselwort `async` markierten Block sieht, kompiliert
+es ihn in einen eindeutigen, anonymen Datentyp, der das Trait `Future`
+implementiert. Wenn Rust eine mit dem Schlüsselwort `async` markierte Funktion
+sieht, kompiliert es sie zu einer nicht-asynchronen Funktion, deren Rumpf ein
+asynchroner Block ist. Der Rückgabetyp einer asynchronen Funktion ist der Typ
+des anonymen Datentyps, den der Compiler für diesen asynchronen Block erstellt.
 
 Die Angabe von `async fn` ist also gleichbedeutend mit dem Schreiben einer
 Funktion, die ein _Future_ des Rückgabetyps zurückgibt. Für den Compiler ist
@@ -221,12 +218,11 @@ fn page_title(url: &str) -> impl Future<Output = Option<String>> {
 
 Gehen wir die einzelnen Teile der umgewandelten Version durch:
 
-- Sie verwendet die Syntax `impl Trait`, die wir bereits in [„Merkmale als
-  Parameter verwenden“][impl-trait] in Kapitel 10 besprochen haben.
-- Das zurückgegebene Wert implementiert das Merkmal `Future` mit dem
-  assoziierten Typ von `Output`. Beachte, dass der `Output`-Typ
-  `Option<String>` ist, was dem ursprünglichen Rückgabetyp der `async
-  fn`-Version von `page_title` entspricht.
+- Sie verwendet die Syntax `impl Trait`, die wir bereits in [„Traits als
+  Parameter verwenden“][impl-trait] in Kapitel 10 besprochen haben. - Das
+  zurückgegebene Wert implementiert das Trait `Future` mit dem assoziierten Typ
+  von `Output`. Beachte, dass der `Output`-Typ `Option<String>` ist, was dem
+  ursprünglichen Rückgabetyp der `async fn`-Version von `page_title` entspricht.
 - Der gesamte im Rumpf der ursprünglichen Funktion wird in einen `async
   move`-Block eingepackt. Denke daran, dass Blöcke Ausdrücke sind. Dieser ganze
   Block ist der Ausdruck, der von der Funktion zurückgegeben wird.
@@ -514,7 +510,7 @@ können, die wir mit asynchroner Programmierung tun können.
 [cli-args]: ch12-01-accepting-command-line-arguments.html
 [crate-source]: https://github.com/rust-lang/book/tree/main/packages/trpl
 [futures-crate]: https://crates.io/crates/futures
-[impl-trait]: ch10-02-traits.html#merkmale-als-parameter-verwenden
+[impl-trait]: ch10-02-traits.html#traits-als-parameter-verwenden
 [iterators-lazy]: ch13-02-iterators.html
 [thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn
 [tokio]: https://tokio.rs

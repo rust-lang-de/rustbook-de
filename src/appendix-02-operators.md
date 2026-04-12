@@ -1,16 +1,16 @@
 ## Anhang B: Operatoren und Symbole
 
-Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren
-und anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
-Datentypen (generics), Merkmalsabgrenzungen (trait bounds), Makros, Attributen,
-Kommentaren, Tupeln und Klammern auftreten.
+Dieser Anhang enthält ein Glossar der Rust-Syntax, einschließlich Operatoren und
+anderer Symbole, die allein oder im Zusammenhang mit Pfaden, generischen
+Datentypen (generics), Trait Bounds, Makros, Attributen, Kommentaren, Tupeln und
+Klammern auftreten.
 
 ### Operatoren
 
 Tabelle B-1 enthält die Operatoren in Rust, ein Beispiel, wie der Operator im
 Kontext erscheinen würde, eine kurze Erklärung und ob dieser Operator überladen
-werden kann. Wenn ein Operator überladen werden kann, wird das relevante
-Merkmal (trait) aufgeführt, mit dem dieser Operator überladen werden kann.
+werden kann. Wenn ein Operator überladen werden kann, wird das relevante Trait
+aufgeführt, mit dem dieser Operator überladen werden kann.
 
 <span class="caption">Tabelle B-1: Operatoren</span>
 
@@ -110,9 +110,9 @@ Modulhierarchie eines Elements vorkommen.
 | `super::path` | Pfad relativ zum Elternmodul |
 | `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |
 | `<type>::...` | Zugehöriges Element für einen Typ,<br> der nicht direkt benannt werden kann<br> (z.B. `<&T>::...`, `<[T]>:::...` usw.) |
-| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals eindeutig machen |
+| `trait::method(...)` | Methodenaufruf durch Angeben des<br> Traits eindeutig machen |
 | `type::method(...)` | Methodenaufruf durch Angeben des<br> Typs eindeutig machen |
-| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Merkmals und Typs eindeutig machen |
+| `<type as trait>::method(...)` | Methodenaufruf durch Angeben des<br> Traits und Typs eindeutig machen |
 
 Tabelle B-4 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
 auftreten.
@@ -130,10 +130,10 @@ auftreten.
 | `for<...> type` | Höherstufige Lebensdauerbegrenzungen |
 | `type<ident=type>` | Generischer Typ, bei dem ein oder mehrere assoziierte Typen bestimmte Zuordnungen haben (z.B. `Iterator<Item=T>`) |
 
-Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern
-mit Merkmalsabgrenzung (trait bounds) auftreten.
+Tabelle B-5 zeigt Symbole, die im Zusammenhang mit generischen Typparametern mit
+Trait Bounds auftreten.
 
-<span class="caption">Tabelle B-5: Merkmalsabgrenzungen</span>
+<span class="caption">Tabelle B-5: Trait Bounds</span>
 
 | Symbol | Erklärung |
 |:-------|:-------------------|

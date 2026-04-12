@@ -50,9 +50,9 @@
   - [Behebbare Fehler mit `Result`](ch09-02-recoverable-errors-with-result.md)
   - [Wann `panic!` aufrufen und wann nicht?](ch09-03-to-panic-or-not-to-panic.md)
 
-- [Generische Typen, Merkmale (traits) und Lebensdauer](ch10-00-generics.md)
+- [Generische Typen, Traits und Lebensdauer](ch10-00-generics.md)
   - [Generische Datentypen](ch10-01-syntax.md)
-  - [Gemeinsames Verhalten definieren mit Merkmalen (traits)](ch10-02-traits.md)
+  - [Gemeinsames Verhalten definieren mit Traits](ch10-02-traits.md)
   - [Referenzen validieren mit Lebensdauern](ch10-03-lifetime-syntax.md)
 
 - [Automatisierte Tests schreiben](ch11-00-testing.md)
@@ -84,7 +84,7 @@
 - [Intelligente Zeiger](ch15-00-smart-pointers.md)
   - [Mit `Box<T>` auf Daten im Heap zeigen](ch15-01-box.md)
   - [Intelligente Zeiger wie normale Referenzen behandeln](ch15-02-deref.md)
-  - [Programmcode beim Aufräumen ausführen mit dem Merkmal (trait) `Drop`](ch15-03-drop.md)
+  - [Programmcode beim Aufräumen ausführen mit dem Trait `Drop`](ch15-03-drop.md)
   - [Der referenzzählende intelligente Zeiger `Rc<T>`](ch15-04-rc.md)
   - [`RefCell<T>` und das innere Veränderbarkeitsmuster](ch15-05-interior-mutability.md)
   - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
@@ -100,12 +100,12 @@
   - [Anwenden von Nebenläufigkeit mit async](ch17-02-concurrency-with-async.md)
   - [Abgeben (yielding) der Kontrolle an die Laufzeitumgebung](ch17-03-more-futures.md)
   - [Ströme (streams): Sequenz von Futures](ch17-04-streams.md)
-  - [Ein genauerer Blick auf die Merkmale für Async](ch17-05-traits-for-async.md)
+  - [Ein genauerer Blick auf die Traits für Async](ch17-05-traits-for-async.md)
   - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
 
 - [Objektorientierte Sprachelemente](ch18-00-oop.md)
   - [Charakteristiken objektorientierter Sprachen](ch18-01-what-is-oo.md)
-  - [Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
+  - [Verwendung von Trait-Objekten zur Abstraktion über gemeinsames Verhalten](ch18-02-trait-objects.md)
   - [Ein objektorientiertes Entwurfsmuster implementieren](ch18-03-oo-design-patterns.md)
 
 - [Muster (patterns) und Abgleich (matching)](ch19-00-patterns.md)
@@ -115,7 +115,7 @@
 
 - [Fortgeschrittene Sprachelemente](ch20-00-advanced-features.md)
   - [Unsicheres (unsafe) Rust](ch20-01-unsafe-rust.md)
-  - [Fortgeschrittene Merkmale (traits)](ch20-02-advanced-traits.md)
+  - [Fortgeschrittene Traits](ch20-02-advanced-traits.md)
   - [Fortgeschrittene Typen](ch20-03-advanced-types.md)
   - [Erweiterte Funktionen und Closures](ch20-04-advanced-functions-and-closures.md)
   - [Makros](ch20-05-macros.md)
@@ -128,7 +128,7 @@
 - [Anhang](appendix-00.md)
   - [A - Schlüsselwörter](appendix-01-keywords.md)
   - [B - Operatoren und Symbole](appendix-02-operators.md)
-  - [C - Ableitbare Merkmale (traits)](appendix-03-derivable-traits.md)
+  - [C - Ableitbare Traits](appendix-03-derivable-traits.md)
   - [D - Nützliche Entwicklungswerkzeuge](appendix-04-useful-development-tools.md)
   - [E - Editionen](appendix-05-editions.md)
   - [F - Übersetzungen des Buchs](appendix-06-translation.md)

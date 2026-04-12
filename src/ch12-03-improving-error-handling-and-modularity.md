@@ -719,13 +719,13 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das Merkmalsobjekt (trait object) `Box<dyn Error>`
-verwendet (und wir haben `std::error::Error` mit einer `use`-Anweisung am
-Anfang des Gültigkeitsbereichs eingebunden). Wir werden Merkmalsobjekte in
-[Kapitel 18][ch18] behandeln. Für den Moment solltest du nur wissen, dass
-`Box<dyn Error>` bedeutet, dass die Funktion einen Typ zurückgibt, der das
-Merkmal `Error` implementiert, aber wir müssen nicht angeben, welcher bestimmte
-Typ der Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
+Für den Fehlertyp haben wir das Trait-Objekten `Box<dyn Error>` verwendet (und
+wir haben `std::error::Error` mit einer `use`-Anweisung am Anfang des
+Gültigkeitsbereichs eingebunden). Wir werden Trait-Objekte in [Kapitel 18][ch18]
+behandeln. Für den Moment solltest du nur wissen, dass `Box<dyn Error>`
+bedeutet, dass die Funktion einen Typ zurückgibt, der das Trait `Error`
+implementiert, aber wir müssen nicht angeben, welcher bestimmte Typ der
+Rückgabewert sein wird. Das gibt uns die Flexibilität, Fehlerwerte
 zurückzugeben, die in verschiedenen Fehlerfällen von unterschiedlichem Typ sein
 können. Das Schlüsselwort `dyn` ist die Abkürzung für _dynamisch_.
 

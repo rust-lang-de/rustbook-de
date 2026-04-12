@@ -106,7 +106,7 @@ Blau: 10
 
 ### Verwalten der Eigentümerschaft in Hashtabellen
 
-Bei Typen wie `i32`, die das Merkmal `Copy` implementieren, werden die Werte in
+Bei Typen wie `i32`, die das Trait `Copy` implementieren, werden die Werte in
 die Hashtabelle kopiert. Bei aneigenbaren Werten wie `String` werden die Werte
 verschoben und die Hashtabelle ist Eigentümer dieser Werte, wie in Codeblock
 8-22 gezeigt wird.
@@ -266,18 +266,18 @@ und gemäß der Ausleihregeln zulässig sind.
 
 ### Hash-Funktionen
 
-Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die robust
-gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist. Dies
-ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der Kompromiss
-zugunsten einer höheren Sicherheit gegenüber einer geringeren Performanz ist es
-Wert. Wenn du eine Performanzanalyse deines Codes machst und feststellst, dass
-die Standard-Hash-Funktion für deine Zwecke zu langsam ist, kannst du zu einer
-anderen Funktion wechseln, indem du eine andere Hash-Funktion angibst. Eine
-_Hash-Funktion_ ist ein Typ, der das Merkmal `BuildHasher` implementiert. Wir
-werden in [Kapitel 10][traits] über Merkmale und ihre Implementierung sprechen.
-Du musst nicht unbedingt deine eigene Hash-Funktion von Grund auf
-implementieren; [crates.io][crates] verfügt über Bibliotheken, die von anderen
-Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
+Standardmäßig verwendet `HashMap` eine Hash-Funktion namens _SipHash_, die
+robust gegen Denial-of-Service-Angriffe (DoS) mit Hash-Tabellen[^siphash] ist.
+Dies ist nicht der schnellste verfügbare Hashing-Algorithmus, aber der
+Kompromiss zugunsten einer höheren Sicherheit gegenüber einer geringeren
+Performanz ist es Wert. Wenn du eine Performanzanalyse deines Codes machst und
+feststellst, dass die Standard-Hash-Funktion für deine Zwecke zu langsam ist,
+kannst du zu einer anderen Funktion wechseln, indem du eine andere Hash-Funktion
+angibst. Eine _Hash-Funktion_ ist ein Typ, der das Trait `BuildHasher`
+implementiert. Wir werden in [Kapitel 10][traits] über Traits und ihre
+Implementierung sprechen. Du musst nicht unbedingt deine eigene Hash-Funktion
+von Grund auf implementieren; [crates.io][crates] verfügt über Bibliotheken, die
+von anderen Rust-Nutzern bereitgestellt werden und viele gängige Hash-Funktionen
 implementieren.
 
 [^siphash]: <https://en.wikipedia.org/wiki/SipHash>

@@ -165,7 +165,7 @@ Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehun
 zueinander stehen, und gibt den Werten beschreibende Namen, ohne die
 Tupelindexwerte `0` und `1` zu verwenden. Das erhöht die Lesbarkeit.
 
-### Funktionalität mit abgeleiteten Merkmalen (derived traits) hinzufügen
+### Funktionalität mit abgeleiteten Traits hinzufügen
 
 Es wäre hilfreich, eine Instanz von `Rectangle` samt der Werte seiner Felder
 ausgeben zu können, während wir unser Programm debuggen. In Codeblock 5-11
@@ -222,7 +222,7 @@ finden:
 Lass es uns versuchen! Der Makroaufruf `println!` wird geändert in
 `println!("rect1 ist {rect1:?}");`. Wenn wir den Bezeichner `:?` innerhalb der
 geschweiften Klammern angeben, teilen wir `println!` mit, dass wir das
-Ausgabeformat `Debug` verwenden wollen. Das Merkmal `Debug` ermöglicht es, die
+Ausgabeformat `Debug` verwenden wollen. Das Trait `Debug` ermöglicht es, die
 Struktur so auszugeben, dass Entwickler ihren Wert erkennen können, während sie
 den Code debuggen.
 
@@ -264,8 +264,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 5-12: Attribut zum Verwenden des Merkmals
-`Debug` und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
+<span class="caption">Codeblock 5-12: Attribut zum Verwenden des Trait `Debug`
+und Ausgeben der Instanz `Rectangle` mittels Debug-Formatierung</span>
 
 Wenn wir das Programm nun ausführen, werden wir keinen Fehler mehr erhalten und
 folgende Ausgabe sehen:
@@ -357,12 +357,12 @@ von `&rect1` aus, der die Struktur `Rectangle` ist. Diese Ausgabe verwendet die
 hübsche `Debug`-Formatierung des Typs `Rectangle`. Das Makro `dbg!` kann sehr
 hilfreich sein, wenn du versuchst, herauszufinden, was dein Code macht!
 
-Zusätzlich zum Merkmal `Debug` hat Rust eine Reihe von Merkmalen für uns
+Zusätzlich zum Trait `Debug` hat Rust eine Reihe von Traits für uns
 bereitgestellt, die wir mit dem Attribut `derive` verwenden können und die
 unseren benutzerdefinierten Typen nützliches Verhalten verleihen können. Diese
-Merkmale und ihr Verhalten sind in [Anhang C][app-c] aufgeführt. In Kapitel 10
-werden wir behandeln, wie man diese Merkmale mit benutzerdefiniertem Verhalten
-implementiert und wie man eigene Merkmale erstellt. Es gibt auch viele andere
+Traits und ihr Verhalten sind in [Anhang C][app-c] aufgeführt. In Kapitel 10
+werden wir behandeln, wie man diese Traits mit benutzerdefiniertem Verhalten
+implementiert und wie man eigene Traits erstellt. Es gibt auch viele andere
 Attribute als `derive`; für weitere Informationen, siehe den [Abschnitt
 „Attribute“ in der Rust-Referenz][attributes].
 

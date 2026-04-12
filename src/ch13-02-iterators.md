@@ -58,10 +58,10 @@ verschiedene Arten von Sequenzen, nicht nur für Datenstrukturen, die du wie
 Vektoren indizieren kannst. Lass uns herausfinden, wie Iteratoren das
 bewerkstelligen.
 
-### Das Merkmal (trait) `Iterator` und die Methode `next`
+### Das Trait `Iterator` und die Methode `next`
 
-Alle Iteratoren implementieren ein Merkmal namens `Iterator` das in der
-Standardbibliothek definiert ist. Die Definition dieses Merkmals sieht wie folgt
+Alle Iteratoren implementieren ein Trait namens `Iterator` das in der
+Standardbibliothek definiert ist. Die Definition dieses Traits sieht wie folgt
 aus:
 
 ```rust
@@ -73,15 +73,16 @@ pub trait Iterator {
     // Methoden mit Standardimplementierung wurden elidiert
 }
 ```
+
 Beachte, dass in der Definition eine neue Syntax verwendet wird: `type Item` und
-`Self::Item` die einen zugeordneten Typ (associated type) mit diesem Merkmal 
+`Self::Item` die einen zugeordneten Typ (associated type) mit diesem Trait
 definieren. Wir werden zugeordnete Typen im Kapitel 20 besprechen. Im Moment
 musst du nur wissen, dass dieser Programmcode bedeutet, dass die Implementierung
-des `Iterator`-Merkmals erfordert, dass du auch einen `Item`-Typ definierst und
+des `Iterator`-Traits erfordert, dass du auch einen `Item`-Typ definierst und
 dieser `Item`-Typ im Rückgabetyp der Methode `next` benutzt wird. Mit anderen
 Worten wird der `Item`-Typ der vom Iterator zurückgegebene Typ sein.
 
-Für das `Iterator`-Merkmal muss man bei der Implementierung nur eine Methode
+Für das `Iterator`-Trait muss man bei der Implementierung nur eine Methode
 definieren: Die Methode `next`, die jeweils ein Element des Iterators verpackt
 in `Some` zurückgibt und nach Beendigung der Iteration `None` zurückgibt.
 
@@ -132,12 +133,12 @@ Referenzen iterieren möchten, können wir `iter_mut` statt `iter` aufrufen.
 
 ### Methoden die den Iterator verbrauchen
 
-Das `Iterator`-Merkmal verfügt über eine Vielzahl von Methoden, die in der
+Das Trait `Iterator` verfügt über eine Vielzahl von Methoden, die in der
 Standardbibliothek bereitgestellt werden. Du kannst dich über diese Methoden
 informieren, indem du in der Standardbibliothek-API-Dokumentation (standard
-library API documentation) nach dem `Iterator`-Merkmal suchst. Einige dieser
+library API documentation) nach dem Trait `Iterator` suchst. Einige dieser
 Methoden rufen in ihrer Definition die Methode `next` auf, daher musst du die
-Methode `next` bei der Implementierung des `Iterator`-Merkmals einbauen.
+Methode `next` bei der Implementierung des Trait `Iterator` einbauen.
 
 Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
@@ -175,7 +176,7 @@ Eigentümerschaft des Iterators übernimmt, auf dem sie aufgerufen wird.
 
 ### Methoden die andere Iteratoren erzeugen
 
-_Iterator-Adaptoren_ sind Methoden, die auf dem Merkmal `Iterator` definiert
+_Iterator-Adaptoren_ sind Methoden, die auf dem Trait `Iterator` definiert
 sind und den Iterator nicht verbrauchen. Stattdessen erzeugen sie andere
 Iteratoren, indem sie einen Aspekt des ursprünglichen Iterators verändern.
 
@@ -249,7 +250,7 @@ Iterator zu verbrauchen und einen Vektor zu erzeugen</span>
 Da `map` einen Closure als Parameter annimmt, können wir eine beliebige
 Operation spezifizieren, die wir auf jedes Element anwenden wollen. Dies ist ein
 gutes Beispiel dafür, wie man mit Closures ein Verhalten anpassen kann, während
-das vom `Iterator`-Merkmal bereitgestellte Iterationsverhalten wiederverwendet
+das vom Trait `Iterator` bereitgestellte Iterationsverhalten wiederverwendet
 wird.
 
 Du kannst mehrere Aufrufe von Iterator-Adaptoren verketten, um komplexe

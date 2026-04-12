@@ -162,7 +162,7 @@ Moduls (in diesem Fall `front_of_house`). Der Rumpf des Moduls steht dann in
 geschweiften Klammern. Innerhalb von Modulen können wir andere Module
 platzieren, wie in diesem Fall mit den Modulen `hosting` und `serving`. Module
 können auch Definitionen für andere Elemente enthalten, wie Strukturen,
-Aufzählungen, Konstanten, Merkmalen und &ndash; wie in Codeblock 7-1 &ndash;
+Aufzählungen, Konstanten, Traits und &ndash; wie in Codeblock 7-1 &ndash;
 Funktionen.
 
 Durch die Verwendung von Modulen können wir verwandte Definitionen gruppieren

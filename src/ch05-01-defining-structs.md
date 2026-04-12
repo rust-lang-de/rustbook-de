@@ -282,7 +282,7 @@ Zusammenspiel mit Move“][move] gesehen haben. In diesem Beispiel können wir
 `user2` neue `String`-Werte für beide Felder `email` und `username` gegeben und
 somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
 `user1` auch nach dem Erstellen von `user2` noch gültig. Die Typen `active` und
-`sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
+`sign_in_count` sind Typen, die das Trait `Copy` implementieren, sodass das
 Verhalten, das wir im Abschnitt [„Reine Stack-Daten: Copy“][copy] besprochen
 haben, zutreffen würde. Wir können in diesem Beispiel immer noch `user1.email`
 verwenden, da sein Wert _nicht_ aus `user1` verschoben wurde.
@@ -331,11 +331,11 @@ würden zum Beispiel `let Point(x, y, z) = origin;` schreiben, um die Werte in
 Du kannst auch Strukturen definieren, die gar keine Felder haben! Diese werden
 _Einheitstyp_ (unit-like structs) genannt, weil sie sich ähnlich zum leeren
 Tupel `()` verhalten, das wir im Abschnitt [„Der Tupel-Typ“][tuples] erwähnt
-haben. Einheitstypen können in Situationen nützlich sein, in denen du ein
-Merkmal (trait) zu einem Typ implementieren musst, du aber keine Daten hast,
-die im Typ gespeichert werden sollen. Wir werden Merkmale in Kapitel 10
-besprechen. Hier ist ein Beispiel für die Deklaration und Instanziierung einer
-Unit-Struktur namens `AlwaysEqual`:
+haben. Einheitstypen können in Situationen nützlich sein, in denen du ein Trait
+zu einem Typ implementieren musst, du aber keine Daten hast, die im Typ
+gespeichert werden sollen. Wir werden Traits in Kapitel 10 besprechen. Hier ist
+ein Beispiel für die Deklaration und Instanziierung einer Unit-Struktur namens
+`AlwaysEqual`:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -348,15 +348,15 @@ fn main() {
 ```
 
 Um `AlwaysEqual` zu definieren, verwenden wir das Schlüsselwort `struct`, den
-gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern
-sind nicht erforderlich! Dann können wir eine Instanz von `AlwaysEqual` in der
-Variable `subject` auf ähnliche Weise erhalten: Mit dem Namen, den wir
-definiert haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
+gewünschten Namen und dann ein Semikolon. Geschweifte Klammern und Klammern sind
+nicht erforderlich! Dann können wir eine Instanz von `AlwaysEqual` in der
+Variable `subject` auf ähnliche Weise erhalten: Mit dem Namen, den wir definiert
+haben, ohne geschweifte Klammern oder Klammern. Stell dir vor, wir
 implementieren ein Verhalten für diesen Typ, bei dem jede Instanz immer gleich
 ist mit jeder Instanz jedes anderen Typs, vielleicht um ein bekanntes Ergebnis
 für Testzwecke zu haben. Wir bräuchten keine Daten, um dieses Verhalten
-umzusetzen! In Kapitel 10 wirst du sehen, wie man Merkmale definiert und sie
-für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
+umzusetzen! In Kapitel 10 wirst du sehen, wie man Traits definiert und sie für
+jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 
 > ### Eigentümerschaft von Strukturdaten
 >

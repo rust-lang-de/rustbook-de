@@ -51,10 +51,9 @@ nimmt und ein `i32` zurückgibt. Wir können dann `f` im Rumpf von `do_twice`
 aufrufen. In `main` können wir den Funktionsnamen `add_one` als erstes Argument
 an `do_twice` übergeben.
 
-Im Gegensatz zu Closures ist `fn` ein Typ, nicht ein Merkmal, daher
-spezifizieren wir `fn` direkt als Parametertyp, anstatt einen generischen
-Typparameter mit einem Merkmal `Fn` als Merkmalsabgrenzung (trait bound) zu
-deklarieren.
+Im Gegensatz zu Closures ist `fn` ein Typ, kein Trait, daher spezifizieren wir
+`fn` direkt als Parametertyp, anstatt einen generischen Typparameter mit einem
+Trait `Fn` als Trait Bound zu deklarieren.
 
 Funktionszeiger implementieren alle drei Closure-Traits (`Fn`, `FnMut` und
 `FnOnce`), was bedeutet, dass du immer einen Funktionszeiger als Argument an
@@ -68,7 +67,7 @@ Funktionen als Argumente akzeptieren, aber C hat keine Closures.
 
 Als Beispiel dafür, wo du entweder einen inline definierten Closure oder eine
 benannte Funktion verwenden könntest, sehen wir uns die Verwendung der Methode
-`map` an, die vom Merkmal `Iterator` in der Standardbibliothek bereitgestellt
+`map` an, die vom Trait `Iterator` in der Standardbibliothek bereitgestellt
 wird. Um die Methode `map` zu verwenden, um einen Vektor von Zahlen in einen
 Vektor von Zeichenketten zu verwandeln, könnten wir einen Closure verwenden, wie
 in Codeblock 20-29.
@@ -95,12 +94,12 @@ let list_of_strings: Vec<String> =
 `String::to_string` zur Umwandlung von Zahlen in Zeichenketten</span>
 
 Beachte, dass wir die vollständig qualifizierte Syntax verwenden müssen, über
-die wir in Abschnitt [„Fortgeschrittene Merkmale (traits)“][advanced-traits]
-gesprochen haben, weil es mehrere Funktionen namens `to_string` gibt.
+die wir in Abschnitt [„Fortgeschrittene Traits“][advanced-traits] gesprochen
+haben, weil es mehrere Funktionen namens `to_string` gibt.
 
-Hier verwenden wir die Funktion `to_string`, die im Merkmal `ToString`
-definiert ist, welche die Standardbibliothek für jeden Typ implementiert hat,
-der `Display` implementiert.
+Hier verwenden wir die Funktion `to_string`, die im Trait `ToString` definiert
+ist, welche die Standardbibliothek für jeden Typ implementiert hat, der
+`Display` implementiert.
 
 Aus Abschnitt [„Werte in Aufzählungen“][enum-values] in Kapitel 6 wissen wir,
 dass der Name jeder definierten Aufzählungsvariante auch eine
@@ -130,9 +129,9 @@ verwende den Stil, der für dich am klarsten ist.
 
 ### Zurückgeben von Closures
 
-Closures werden durch Merkmale repräsentiert, was bedeutet, dass du Closures
-nicht direkt zurückgeben kannst. In den meisten Fällen, in denen du ein Merkmal
-zurückgeben möchtest, kannst du stattdessen den konkreten Typ, der das Merkmal
+Closures werden durch Traits repräsentiert, was bedeutet, dass du Closures nicht
+direkt zurückgeben kannst. In den meisten Fällen, in denen du ein Trait
+zurückgeben möchtest, kannst du stattdessen den konkreten Typ, der das Trait
 implementiert, als Rückgabewert der Funktion verwenden. Aber das kannst du bei
 Closures normalerweise nicht tun, weil sie keinen konkreten Typ haben, den man
 zurückgeben kann. Es ist dir beispielsweise nicht erlaubt, den Funktionszeiger
@@ -157,8 +156,8 @@ Wie wir jedoch im Abschnitt [„Herleiten und Annotieren von
 Closure-Typen“][closure-types] in Kapitel 13 festgestellt haben, ist jeder
 Closure auch ein eigener Typ. Wenn du mit mehreren Funktionen arbeiten musst,
 die dieselbe Signatur, aber unterschiedliche Implementierungen haben, musst du
-ein Merkmals-Objekt für sie verwenden. Überlege, was passiert, wenn du einen
-Code wie in Codeblock 20-33 schreibst.
+ein Trait-Objekt für sie verwenden. Überlege, was passiert, wenn du einen Code
+wie in Codeblock 20-33 schreibst.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -216,14 +215,14 @@ Die Fehlermeldung sagt uns, dass Rust jedes Mal, wenn wir ein `impl Trait`
 zurückgeben, einen eindeutigen _undurchsichtigen Typ_ (opaque type) erzeugt,
 einen Typ, bei dem wir weder die Details dessen sehen können, was Rust für uns
 konstruiert, noch den Typ erraten können, den Rust generieren wird. Obwohl diese
-Funktionen also beide Closures zurückgeben, die dasselbe Merkmal implementieren,
+Funktionen also beide Closures zurückgeben, die dasselbe Trait implementieren,
 nämlich `Fn(i32) -> i32`, sind die undurchsichtigen Typen, die Rust für jede
 Funktion erzeugt, unterschiedlich. (Dies ist vergleichbar mit der Art und Weise,
 wie Rust unterschiedliche konkrete Typen für verschiedene asynchrone Blöcke
 erzeugt, selbst wenn sie denselben Ausgabetyp haben, wie wir im Abschnitt [„Der
-Typ `Pin` und das Merkmal `Unpin`“][future-types] in Kapitel 17 gesehen haben.)
+Typ `Pin` und das Trait `Unpin`“][future-types] in Kapitel 17 gesehen haben.)
 Eine Lösung für dieses Problem haben wir jetzt schon ein paar Mal gesehen: Wir
-können ein Merkmals-Objekt verwenden, wie in Codeblock 20-34.
+können ein Trait-Objekt verwenden, wie in Codeblock 20-34.
 
 ```rust
 # fn main() {
@@ -248,13 +247,13 @@ die durch Funktionen definiert sind, die `Box<dyn Fn>` zurückgeben, damit sie
 denselben Typ haben</span>
 
 Dieser Code lässt sich sehr gut kompilieren. Weitere Informationen über
-Merkmalsobjekte findest du im Abschnitt [„Verwendung von Merkmals-Objekten zur
+Trait-Objekte findest du im Abschnitt [„Verwendung von Trait-Objekten zur
 Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18.
 
 Als nächstes wollen wir uns Makros ansehen!
 
 [advanced-traits]: ch20-02-advanced-traits.html
-[future-types]: ch17-05-traits-for-async.md#der-typ-pin-und-das-merkmal-unpin
+[future-types]: ch17-05-traits-for-async.md#der-typ-pin-und-das-trait-unpin
 [closure-types]: ch13-01-closures.html#herleiten-und-annotieren-von-closure-typen
 [enum-values]: ch06-01-defining-an-enum.html#werte-in-aufzählungen
 [trait-objects]: ch18-02-trait-objects.html

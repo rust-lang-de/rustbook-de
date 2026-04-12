@@ -889,10 +889,10 @@ aus einer Nichtübereinstimmung der verfügbaren Lebensdauern. In solchen Fälle
 besteht die Lösung darin, diese Probleme zu beheben und nicht darin, die
 Lebensdauer als `'static` festzulegen.
 
-## Generische Typparameter, Merkmalsabgrenzungen und Lebensdauern
+## Generische Typparameter, Trait Bounds und Lebensdauern
 
-Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter,
-Merkmalsabgrenzungen und Lebensdauern in einer Funktion an!
+Schauen wir uns kurz die Syntax zu Angabe generischer Typparameter, Trait Bounds
+und Lebensdauern in einer Funktion an!
 
 ```rust
 # fn main() {
@@ -929,9 +929,9 @@ where
 Dies ist die Funktion `longest` aus Codeblock 10-21, die die längere von zwei
 Zeichenkettenanteilstypen zurückgibt. Aber jetzt hat sie einen zusätzlichen
 Parameter namens `ann` vom generischen Typ `T`, der jeder beliebige Typ sein
-kann, der das Merkmal `Display` implementiert, wie in der `where`-Klausel
+kann, der das Trait `Display` implementiert, wie in der `where`-Klausel
 spezifiziert ist. Dieser zusätzliche Parameter wird unter Verwendung von
-`{ann}` ausgegeben, weshalb die Merkmalsabgrenzung `Display` erforderlich ist.
+`{ann}` ausgegeben, weshalb die Trait Bound `Display` erforderlich ist.
 Da die Lebensdauer ein generischer Typ ist, stehen die Deklarationen des
 Lebensdauer-Parameters `'a` und des generischen Typ-Parameters `T` in der
 gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.
@@ -939,20 +939,20 @@ gleichen Liste innerhalb spitzer Klammern hinter dem Funktionsnamen.
 ## Zusammenfassung
 
 Wir haben in diesem Kapitel viel behandelt! Jetzt, da du über generische
-Typparameter, Merkmale und Merkmalsabgrenzungen sowie generische
-Lebensdauerparameter Bescheid weißt, bist du bereit, Code ohne Wiederholungen
-zu schreiben, der in vielen verschiedenen Situationen funktioniert. Merkmale
-und Merkmalsabgrenzungen stellen sicher, dass die Typen, auch wenn sie
-generisch sind, das Verhalten haben, das der Code benötigt. Du hast gelernt,
-wie man Lebensdauer-Annotationen verwendet, um sicherzustellen, dass dieser
-flexible Code keine hängenden Referenzen hat. Und all diese Analysen finden zur
-Kompilierzeit statt, was die Laufzeitperformanz nicht beeinträchtigt!
+Typparameter, Traits und Trait Bounds sowie generische Lebensdauerparameter
+Bescheid weißt, bist du bereit, Code ohne Wiederholungen zu schreiben, der in
+vielen verschiedenen Situationen funktioniert. Traits und Trait Bounds stellen
+sicher, dass die Typen, auch wenn sie generisch sind, das Verhalten haben, das
+der Code benötigt. Du hast gelernt, wie man Lebensdauer-Annotationen verwendet,
+um sicherzustellen, dass dieser flexible Code keine hängenden Referenzen hat.
+Und all diese Analysen finden zur Kompilierzeit statt, was die
+Laufzeitperformanz nicht beeinträchtigt!
 
 Ob du es glaubst oder nicht, es gibt zu den Themen, die wir in diesem Kapitel
-besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Merkmalsobjekte
-erörtert, die eine weitere Möglichkeit zur Verwendung von Merkmalen darstellen.
-Es gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in
-sehr fortgeschrittenen Szenarien benötigst; für diese solltest du die
+besprochen haben, noch viel mehr zu sagen: In Kapitel 18 werden Trait-Objekte
+erörtert, die eine weitere Möglichkeit zur Verwendung von Traits darstellen. Es
+gibt auch komplexere Szenarien mit Lebensdauer-Annotationen, die du nur in sehr
+fortgeschrittenen Szenarien benötigst; für diese solltest du die
 [Rust-Referenz][reference] lesen. Aber als Nächstes wirst du lernen, wie man
 Tests in Rust schreibt, damit du sicherstellen kannst, dass dein Code so
 funktioniert, wie er es soll.

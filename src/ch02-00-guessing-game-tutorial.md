@@ -676,25 +676,24 @@ fn main() {
 <span class="caption">Codeblock 2-3: Hinzufügen von Code zum Generieren einer
 Zufallszahl</span>
 
-Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Merkmal (trait)
+Zuerst fügen wir die Zeile `use rand::Rng;` hinzu. Das Trait (engl. Merkmal)
 `Rng` definiert Methoden, die Zufallszahlengeneratoren implementieren, und
-dieses Merkmal muss im Gültigkeitsbereich sein, damit wir diese Methoden
-verwenden können. In Kapitel 10 werden Merkmale im Detail behandelt.
+dieses Trait muss im Gültigkeitsbereich sein, damit wir diese Methoden verwenden
+können. In Kapitel 10 werden Traits im Detail behandelt.
 
-Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile
-rufen wir die Funktion `rand::thread_rng` auf, die uns den speziellen
+Als nächstes fügen wir zwei Zeilen in der Mitte hinzu. In der ersten Zeile rufen
+wir die Funktion `rand::thread_rng` auf, die uns den speziellen
 Zufallszahlengenerator zurückgibt, den wir verwenden werden: Einen, der lokal
 zum aktuellen Ausführungsstrang (thread) ist und vom Betriebssystem
 initialisiert (seeded) wird. Dann rufen wir die Methode `gen_range` des
-Zufallszahlengenerators auf. Diese Methode wird durch das Merkmal `Rng`
-definiert, das wir mit der Anweisung `use rand::Rng;` in den Gültigkeitsbereich
-gebracht haben. Die Methode `gen_range` nimmt einen Bereichsausdruck als
-Argument und generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck
-hat die Form `start..=end` und er beinhaltet die Untergrenze und die
-Obergrenze, sodass wir `1..=100` angeben müssen, um eine Zahl zwischen 1 und 100
-zu erhalten.
+Zufallszahlengenerators auf. Diese Methode wird durch das Trait `Rng` definiert,
+das wir mit der Anweisung `use rand::Rng;` in den Gültigkeitsbereich gebracht
+haben. Die Methode `gen_range` nimmt einen Bereichsausdruck als Argument und
+generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck hat die Form
+`start..=end` und er beinhaltet die Untergrenze und die Obergrenze, sodass wir
+`1..=100` angeben müssen, um eine Zahl zwischen 1 und 100 zu erhalten.
 
-> Hinweis: Du wirst nicht immer wissen, welche Merkmale du verwenden sollst und
+> Hinweis: Du wirst nicht immer wissen, welche Traits du verwenden sollst und
 > welche Methoden und Funktionen einer Kiste du aufrufen musst, daher hat jede
 > Kiste eine Dokumentation mit einer Anleitungen zur Verwendung der Kiste.
 > Eine weitere nette Funktionalität von Cargo ist, dass das Ausführen des

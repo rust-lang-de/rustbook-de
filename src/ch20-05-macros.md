@@ -21,23 +21,23 @@ Funktionen haben.
 
 Im Grunde genommen sind Makros eine Möglichkeit, Code zu schreiben, der anderen
 Code schreibt, was als _Metaprogrammierung_ bekannt ist. In Anhang C besprechen
-wir das Attribut `derive`, das dir eine Implementierung verschiedener Merkmale
+wir das Attribut `derive`, das dir eine Implementierung verschiedener Traits
 (traits) generiert. Wir haben im ganzen Buch auch die Makros `println!` und
-`vec!` verwendet. All diese Makros werden _expandiert_, um mehr Code zu
-erzeugen als der Code, den du manuell geschrieben hast.
+`vec!` verwendet. All diese Makros werden _expandiert_, um mehr Code zu erzeugen
+als der Code, den du manuell geschrieben hast.
 
 Metaprogrammierung ist nützlich, um die Menge an Code zu reduzieren, die du
 schreiben und pflegen musst, was auch eine der Aufgaben von Funktionen ist.
 Makros haben jedoch einige zusätzliche Fähigkeiten, die Funktionen nicht haben.
 
 Eine Funktionssignatur muss die Anzahl und den Typ der Parameter deklarieren,
-die die Funktion hat. Makros hingegen können eine variable Anzahl von
-Parametern entgegennehmen: Wir können `println!("Hallo")` mit einem Argument
-oder `println!("Hallo {}", name)` mit zwei Argumenten aufrufen. Außerdem werden
+die die Funktion hat. Makros hingegen können eine variable Anzahl von Parametern
+entgegennehmen: Wir können `println!("Hallo")` mit einem Argument oder
+`println!("Hallo {}", name)` mit zwei Argumenten aufrufen. Außerdem werden
 Makros expandiert, bevor der Compiler die Bedeutung des Codes interpretiert,
-sodass ein Makro beispielsweise ein Merkmal auf einen bestimmten Typ
+sodass ein Makro beispielsweise ein Trait auf einen bestimmten Typ
 implementieren kann. Eine Funktion kann das nicht, weil sie zur Laufzeit
-aufgerufen wird und ein Merkmal zur Kompilierzeit implementiert werden muss.
+aufgerufen wird und ein Trait zur Kompilierzeit implementiert werden muss.
 
 Der Nachteil des Implementierens eines Makros anstelle einer Funktion besteht
 darin, dass Makrodefinitionen komplexer sind als Funktionsdefinitionen, weil du
@@ -220,14 +220,14 @@ Unterschiede, in denen sich die anderen Formen unterscheiden.
 
 ### Benutzerdefinierte Makro mit `derive`
 
-Lass uns eine Kiste namens `hello_macro` erstellen, die ein Merkmal namens
+Lass uns eine Kiste namens `hello_macro` erstellen, die ein Trait namens
 `HelloMacro` mit einer assoziierten Funktion namens `hello_macro` definiert.
-Anstatt unsere Benutzer dazu zu bringen, das Merkmal `HelloMacro` für jeden
-ihrer Typen zu implementieren, werden wir ein prozedurales Makro zur Verfügung
+Anstatt unsere Benutzer dazu zu bringen, das Trait `HelloMacro` für jeden ihrer
+Typen zu implementieren, werden wir ein prozedurales Makro zur Verfügung
 stellen, damit die Benutzer ihren Typ mit `#[derive(HelloMacro)]` annotieren
 können, um eine Standardimplementierung der Funktion `hello_macro` zu erhalten.
 Die Standardimplementierung gibt `Hallo Makro! Mein Name ist TypeName!` aus,
-wobei `TypeName` der Name des Typs ist, auf dem dieses Merkmal definiert wurde.
+wobei `TypeName` der Name des Typs ist, auf dem dieses Trait definiert wurde.
 Mit anderen Worten, wir werden eine Kiste schreiben, die es einem anderen
 Programmierer ermöglicht, mit unserer Kiste Code wie Codeblock 20-37 zu
 schreiben.
@@ -257,7 +257,7 @@ crate), etwa so:
 $ cargo new hello_macro --lib
 ```
 
-Als Nächstes definieren wir in Codeblock 20-38 das Merkmal `HelloMacro` und die
+Als Nächstes definieren wir in Codeblock 20-38 das Trait `HelloMacro` und die
 damit assoziierte Funktion.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -268,12 +268,12 @@ pub trait HelloMacro {
 }
 ```
 
-<span class="caption">Codeblock 20-38: Ein einfaches Merkmal, das wir mit dem
+<span class="caption">Codeblock 20-38: Ein einfaches Trait, das wir mit dem
 Makro `derive` verwenden werden</span>
 
-Wir haben ein Merkmal und seine Funktion. An diesem Punkt könnte unser
-Kistenbenutzer das Merkmal so implementieren, dass die gewünschte
-Funktionalität erreicht wird, wie in Codeblock 20-39.
+Wir haben ein Trait und seine Funktion. An diesem Punkt könnte unser
+Kistenbenutzer das Trait so implementieren, dass die gewünschte Funktionalität
+erreicht wird, wie in Codeblock 20-39.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -293,8 +293,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 20-39: Wie es aussehen würde, wenn Benutzer
-eine manuelle Implementierung des Merkmals `HelloMacro` schreiben würden</span>
+<span class="caption">Codeblock 20-39: Wie es aussehen würde, wenn Benutzer eine
+manuelle Implementierung des Traits `HelloMacro` schreiben würden</span>
 
 Allerdings müssten sie den Implementierungsblock für jeden Typ, den sie mit
 `hello_macro` verwenden wollten, schreiben; wir wollen ihnen diese Arbeit
@@ -302,9 +302,9 @@ ersparen.
 
 Außerdem können wir die Funktion `hello_macro` noch nicht mit einer
 Standardimplementierung versehen, die den Namen des Typs ausgibt, auf dem das
-Merkmal implementiert ist: Rust hat keine Reflektionsfähigkeiten, sodass es den
-Namen des Typs zur Laufzeit nicht nachschlagen kann. Wir benötigen ein Makro,
-um zur Kompilierzeit Code zu generieren.
+Trait implementiert ist: Rust hat keine Reflektionsfähigkeiten, sodass es den
+Namen des Typs zur Laufzeit nicht nachschlagen kann. Wir benötigen ein Makro, um
+zur Kompilierzeit Code zu generieren.
 
 Der nächste Schritt ist das Definieren des prozeduralen Makros. Zum Zeitpunkt
 der Abfassung dieses Dokuments müssen sich die prozeduralen Makros in einer
@@ -320,17 +320,16 @@ $ cargo new hello_macro_derive --lib
 ```
 
 Unsere beiden Kisten sind eng miteinander verwandt, daher erstellen wir die
-prozedurale Makrokiste innerhalb des Verzeichnisses unserer Kiste
-`hello_macro`. Wenn wir die Merkmalsdefinition in `hello_macro` ändern, müssen
-wir auch die Implementierung des prozeduralen Makros in `hello_macro_derive`
-ändern. Die beiden Kisten müssen getrennt veröffentlicht werden und
-Programmierer, die diese Kisten verwenden, müssen beide als Abhängigkeiten
-hinzufügen und beide in den Gültigkeitsbereich bringen. Wir könnten stattdessen
-die Kiste `hello_macro` als Abhängigkeit `hello_macro_derive` verwenden lassen
-und den prozeduralen Makrocode erneut exportieren. Wie auch immer, die Art und
-Weise, wie wir das Projekt strukturiert haben, ermöglicht es den
-Programmierern, `hello_macro`  zu benutzen, selbst wenn sie die
-`derive`-Funktionalität nicht wollen.
+prozedurale Makrokiste innerhalb des Verzeichnisses unserer Kiste `hello_macro`.
+Wenn wir die Trait-Definition in `hello_macro` ändern, müssen wir auch die
+Implementierung des prozeduralen Makros in `hello_macro_derive` ändern. Die
+beiden Kisten müssen getrennt veröffentlicht werden und Programmierer, die diese
+Kisten verwenden, müssen beide als Abhängigkeiten hinzufügen und beide in den
+Gültigkeitsbereich bringen. Wir könnten stattdessen die Kiste `hello_macro` als
+Abhängigkeit `hello_macro_derive` verwenden lassen und den prozeduralen
+Makrocode erneut exportieren. Wie auch immer, die Art und Weise, wie wir das
+Projekt strukturiert haben, ermöglicht es den Programmierern, `hello_macro`  zu
+benutzen, selbst wenn sie die `derive`-Funktionalität nicht wollen.
 
 Wir müssen die Kiste `hello_macro_derive` als prozedurale Makro-Kiste
 deklarieren. Wie du gleich sehen wirst, benötigen wir auch Funktionalität von
@@ -365,7 +364,7 @@ pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
     // den wir manipulieren können
     let ast = syn::parse(input).unwrap();
 
-    // Baue die Merkmal-Implementierung
+    // Baue die Trait-Implementierung
     impl_hello_macro(&ast)
 }
 ```
@@ -399,9 +398,8 @@ keine einfache Aufgabe.
 Die Funktion `hello_macro_derive` wird aufgerufen, wenn ein Benutzer unserer
 Bibliothek `#[derive(HelloMacro)]` an einen Typ spezifiziert. Dies ist möglich,
 weil wir die Funktion `hello_macro_derive` hier mit `proc_macro_derive`
-annotiert und den Namen `HelloMacro` angegeben haben, der unserem Merkmalsnamen
-entspricht; dies ist die Konvention, der die meisten prozeduralen Makros
-folgen.
+annotiert und den Namen `HelloMacro` angegeben haben, der unserem Trait-Namen
+entspricht; dies ist die Konvention, der die meisten prozeduralen Makros folgen.
 
 Die Funktion `hello_macro_derive` wandelt zunächst `input` aus einem
 `TokenStream` in eine Datenstruktur um, die wir dann interpretieren und
@@ -461,8 +459,8 @@ angeben, was schief gelaufen ist, indem du `panic!` oder `expect` verwendest.
 
 Da wir nun den Code haben, um den annotierten Rust-Code aus einem `TokenStream`
 in eine `DeriveInput`-Instanz zu verwandeln, lass uns den Code generieren, der
-das Merkmal `HelloMacro` auf dem annotierten Typ implementiert, wie in
-Codeblock 20-42 gezeigt.
+das Trait `HelloMacro` auf dem annotierten Typ implementiert, wie in Codeblock
+20-42 gezeigt.
 
 <span class="filename">Dateiname: hello_macro_derive/src/lib.rs</span>
 
@@ -476,7 +474,7 @@ Codeblock 20-42 gezeigt.
 #     // den wir manipulieren können
 #     let ast = syn::parse(input).unwrap();
 #
-#     // Baue die Merkmal-Implementierung
+#     // Baue die Trait-Implementierung
 #     impl_hello_macro(&ast)
 # }
 #
@@ -493,8 +491,8 @@ fn impl_hello_macro(ast: &syn::DeriveInput) -> TokenStream {
 }
 ```
 
-<span class="caption">Codeblock 20-42: Implementierung des Merkmals
-`HelloMacro` unter Verwendung des geparsten Rust-Codes</span>
+<span class="caption">Codeblock 20-42: Implementierung des Traits `HelloMacro`
+unter Verwendung des geparsten Rust-Codes</span>
 
 Wir erhalten eine `Ident`-Strukturinstanz, die den Namen (Bezeichner) des
 annotierten Typs enthält, indem wir `ast.ident` verwenden. Die Struktur in
@@ -517,9 +515,9 @@ können `#name` eingeben und `quote!` wird es durch den Wert in der Variablen
 normale Makros funktionieren. Schaue dir die [Dokumentation der Kiste
 `quote!`][quote-docs] für eine gründliche Einführung an.
 
-Wir wollen, dass unser prozedurales Makro eine Implementierung unseres Merkmals
+Wir wollen, dass unser prozedurales Makro eine Implementierung unseres Traits
 `HelloMacro` für den Typ, den der Benutzer annotiert hat, erzeugt, die wir mit
-`#name` erhalten können. Die Merkmalssimplementierung hat eine Funktion
+`#name` erhalten können. Die Trait-Implementierung hat eine Funktion
 `hello_macro`, deren Rumpf die Funktionalität enthält, die wir zur Verfügung
 stellen wollen: Ausgeben von `Hallo Makro! Mein Name ist` und dann der Name des
 annotierten Typs.
@@ -550,9 +548,9 @@ hello_macro_derive = { path = "../hello_macro/hello_macro_derive" }
 
 Gib den Code in Codeblock 20-37 in _src/main.rs_ ein und rufe `cargo run` auf:
 Es sollte `Hallo Makro! Mein Name ist Pancakes!` ausgeben. Die Implementierung
-des Merkmals `HelloMacro` aus dem prozeduralen Makro wurde eingefügt, ohne dass
-die Kiste `pancakes` es implementieren musste; `#[derive(HelloMacro)]` fügte
-die Merkmalsimplementierung hinzu.
+des Traits `HelloMacro` aus dem prozeduralen Makro wurde eingefügt, ohne dass
+die Kiste `pancakes` es implementieren musste; `#[derive(HelloMacro)]` fügte die
+Trait-Implementierung hinzu.
 
 Als Nächstes wollen wir untersuchen, inwiefern sich die anderen Arten
 prozeduraler Makros von den benutzerdefinierten derive-Makros unterscheiden.

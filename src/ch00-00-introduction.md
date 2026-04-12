@@ -136,8 +136,8 @@ gängige Kollektionsdatenstrukturen, die die Standardbibliothek zur Verfügung
 stellt, behandelt: Vektoren, Zeichenketten und Hashtabellen. **Kapitel 9**
 befasst sich mit Rusts Philosophie und Techniken der Fehlerbehandlung.
 
-**Kapitel 10** vertieft generische Datentypen, Merkmale und Lebensdauern, die
-dir die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
+**Kapitel 10** vertieft generische Datentypen, Traits und Lebensdauern, die dir
+die Möglichkeit geben, Code zu schreiben, der für mehrere Typen passt. In
 **Kapitel 11** dreht sich alles um das Testen, das selbst mit den
 Sicherheitsgarantien von Rust erforderlich ist, um eine korrekte Logik deines
 Programms sicherzustellen. In **Kapitel 12** werden wir unsere eigene
@@ -149,7 +149,7 @@ anwenden, die wir in den vorangegangenen Kapiteln kennengelernt haben.
 die von funktionalen Programmiersprachen stammen. In **Kapitel 14** werden wir
 einen genaueren Blick auf Cargo werfen und über bewährte Vorgehensweisen beim
 Bereitstellen deiner Bibliotheken für andere sprechen. In **Kapitel 15** werden
-intelligente Zeiger, die die Standardbibliothek bereitstellt, und Merkmale, die
+intelligente Zeiger, die die Standardbibliothek bereitstellt, und Traits, die
 ihre Funktionalität ermöglichen, erörtert.
 
 In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
@@ -160,24 +160,23 @@ Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
 ermöglichen, untersuchen.
 
 **Kapitel 18** befasst sich mit dem Vergleich von Rust-Idiomen mit
-objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut
-bist. **Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich,
-einem mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel
-20** enthält ein Sammelsurium an interessanten fortgeschrittenen Themen,
-darunter unsicheres Rust, Makros und mehr zu Lebensdauer, Merkmalen, Typen,
-Funktionen und Closures.
+objektorientierten Programmierprinzipien, mit denen du vielleicht vertraut bist.
+**Kapitel 19** ist ein Nachschlagewerk zu Muster und Musterabgleich, einem
+mächtigen Mittel zum Ausdrücken von Ideen in Rust-Programmen. **Kapitel 20**
+enthält ein Sammelsurium an interessanten fortgeschrittenen Themen, darunter
+unsicheres Rust, Makros und mehr zu Lebensdauer, Traits, Typen, Funktionen und
+Closures.
 
 In *Kapitel 21* werden wir ein Projekt abschließen, bei dem wir einen
 systemnahen, nebenläufigen Webdienst implementieren!
 
-Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache
-in einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörter
-von Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C**
-ableitbare Merkmalen, die von der Standardbibliothek mitgebracht werden,
-**Anhang D** nützliche Entwicklungswerkzeuge und **Anhang E** erläutert die
-Rust-Editionen. In **Anhang F** findest du Übersetzungen des Buches, und in
-**Anhang G* erfährst du, wie Rust erstellt wird und was nächtliches (nightly)
-Rust ist.
+Schließlich enthalten einige Anhänge nützliche Informationen über die Sprache in
+einem eher referenzartigen Format. **Anhang A** enthält die Schlüsselwörter von
+Rust, **Anhang B** die Operatoren und Symbole von Rust, **Anhang C** ableitbare
+Traits, die von der Standardbibliothek mitgebracht werden, **Anhang D** nützliche
+Entwicklungswerkzeuge und **Anhang E** erläutert die Rust-Editionen. In **Anhang
+F** findest du Übersetzungen des Buches, und in **Anhang G** erfährst du, wie Rust
+erstellt wird und was nächtliches (nightly) Rust ist.
 
 Es gibt keinen falschen Weg, dieses Buch zu lesen: Wenn du was überspringen
 willst, nur zu! Möglicherweise musst du zu früheren Kapiteln zurückkehren, wenn
