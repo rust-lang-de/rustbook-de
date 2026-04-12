@@ -283,10 +283,9 @@ Zusammenspiel mit Move“][move] gesehen haben. In diesem Beispiel können wir
 somit nur die Werte `active` und `sign_in_count` von `user1` verwendet, wäre
 `user1` auch nach dem Erstellen von `user2` noch gültig. Die Typen `active` und
 `sign_in_count` sind Typen, die das Merkmal `Copy` implementieren, sodass das
-Verhalten, das wir im Abschnitt [„Nur Stapelspeicher-Daten: Kopieren
-(copy)“][copy] besprochen haben, zutreffen würde. Wir können in diesem Beispiel
-immer noch `user1.email` verwenden, da sein Wert _nicht_ aus `user1` verschoben
-wurde.
+Verhalten, das wir im Abschnitt [„Reine Stack-Daten: Copy“][copy] besprochen
+haben, zutreffen würde. Wir können in diesem Beispiel immer noch `user1.email`
+verwenden, da sein Wert _nicht_ aus `user1` verschoben wurde.
 
 ### Mit Tupel-Strukturen verschiedene Typen erzeugen
 
@@ -435,6 +434,6 @@ für jeden Typ implementiert, auch für unit-ähnliche Strukturen.
 > vermeiden, indem wir Typen wie `String` anstelle von Referenzen wie `&str`
 > verwenden.
 
-[copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
+[copy]: ch04-01-what-is-ownership.html#reine-stack-daten-copy
 [move]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-move
 [tuples]: ch03-02-data-types.html#der-tupel-typ

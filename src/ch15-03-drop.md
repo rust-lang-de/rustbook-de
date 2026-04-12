@@ -9,8 +9,8 @@ Ressourcen wie Dateien oder Netzwerkverbindungen verwendet werden.
 Wir führen `Drop` im Kontext von intelligenten Zeigern ein, da die
 Funktionalität des Merkmals `Drop` fast immer bei der Implementierung eines
 intelligenten Zeigers verwendet wird. Wenn beispielsweise eine `Box<T>`
-aufgeräumt wird, wird der Speicherplatz auf dem Haldenspeicher freigegeben, auf
-den die Box zeigt.
+aufgeräumt wird, wird der Speicherplatz auf dem Heap freigegeben, auf den die
+Box zeigt.
 
 In einigen Programmiersprachen muss der Programmierer für manche Datentypen
 den Speicher oder die Ressourcen manuell freigeben, wenn die jeweiligen

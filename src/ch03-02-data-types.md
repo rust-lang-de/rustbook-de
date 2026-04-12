@@ -351,17 +351,17 @@ fn main() {
 }
 ```
 
-Arrays sind nützlich, wenn du deine Daten eher auf dem Stapelspeicher als im
-Haldenspeicher abgelegt haben möchtest, wie bei den anderen Typen, die wir
-bisher gesehen haben, (auf den Stapelspeicher und den Haldenspeicher gehen wir
-in [Kapitel 4][stack-and-heap] näher ein) oder wenn du sicherstellen willst,
-dass du immer eine feste Anzahl von Elementen hast. Ein Array ist jedoch nicht
-so flexibel wie der Vektortyp. Ein _Vektor_ ist ein ähnlicher Kollektionstyp,
-der von der Standardbibliothek zur Verfügung gestellt wird und der in seiner
-Größe wachsen oder schrumpfen kann, weil sein Inhalt auf dem Haldenspeicher
-liegt. Wenn du dir nicht sicher bist, ob du ein Array oder einen Vektor
-verwenden sollst, ist es wahrscheinlich, dass du einen Vektor verwenden
-solltest. In [Kapitel 8][vectors] werden Vektoren ausführlicher besprochen.
+Arrays sind nützlich, wenn du deine Daten eher auf dem Stack als im Heap
+abgelegt haben möchtest, wie bei den anderen Typen, die wir bisher gesehen
+haben, (auf den Stack und den Heap gehen wir in [Kapitel 4][stack-and-heap]
+näher ein) oder wenn du sicherstellen willst, dass du immer eine feste Anzahl
+von Elementen hast. Ein Array ist jedoch nicht so flexibel wie der Vektortyp.
+Ein _Vektor_ ist ein ähnlicher Kollektionstyp, der von der Standardbibliothek
+zur Verfügung gestellt wird und der in seiner Größe wachsen oder schrumpfen
+kann, weil sein Inhalt auf dem Heap liegt. Wenn du dir nicht sicher bist, ob du
+ein Array oder einen Vektor verwenden sollst, ist es wahrscheinlich, dass du
+einen Vektor verwenden solltest. In [Kapitel 8][vectors] werden Vektoren
+ausführlicher besprochen.
 
 Arrays sind jedoch hilfreicher, wenn du weißt, dass sich die Anzahl der
 Elemente nicht ändern wird. Wenn du z.B. die Monatsnamen in einem Programm
@@ -399,8 +399,8 @@ auf den Wert `3` gesetzt werden. Dies ist dasselbe wie das Schreiben von
 #### Zugriff auf Array-Elemente
 
 Ein Array ist ein einzelner Speicherbereich mit einer bekannten, festen Größe,
-der auf den Stapelspeicher gelegt wird. Du kannst auf Elemente eines Arrays mit
-Hilfe der Indizierung wie folgt zugreifen:
+der auf den Stack gelegt wird. Du kannst auf Elemente eines Arrays mit Hilfe
+der Indizierung wie folgt zugreifen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -486,7 +486,7 @@ Speicherzugriffe zulässt.
 [appendix_b]: appendix-02-operators.html
 [comparing-the-guess-to-the-secret-number]: ch02-00-guessing-game-tutorial.html#vergleichen-der-schätzung-mit-der-geheimzahl
 [control-flow]: ch03-05-control-flow.html
-[stack-and-heap]: ch04-01-what-is-ownership.html#stapelspeicher-stack-und-haldenspeicher-heap
+[stack-and-heap]: ch04-01-what-is-ownership.html#stack-und-heap
 [strings]: ch08-02-strings.html
 [twos-complement]: https://de.wikipedia.org/wiki/Zweierkomplement
 [unrecoverable-errors-with-panic]: ch09-01-unrecoverable-errors-with-panic.html

@@ -217,12 +217,12 @@ Index 6 von `s` mit dem Längenwert `4` enthält.
 
 Abbildung 4-7 stellt dies dar.
 
-<img alt="Drei Tabellen: Eine Tabelle, die die Stapelspeicher-Daten von s
-darstellt, die auf das Byte bei Index 0 in einer Tabelle der
-Zeichenketten-Daten &quot;Hallo Welt&quot; auf dem Haldenspeicher zeigt. Die
-dritte Tabelle repräsentiert die Stapelspeicher-Daten des Anteilstypen Welt,
-der den Längenwert 4 hat und auf Byte 6 der Haldenspeicher-Datentabelle zeigt."
-src="img/trpl04-07.svg" class="center" style="width: 50%;" />
+<img alt="Drei Tabellen: Eine Tabelle, die die Stack-Daten von s darstellt, die
+auf das Byte bei Index 0 in einer Tabelle der Zeichenketten-Daten &quot;Hallo
+Welt&quot; auf dem Heap zeigt. Die dritte Tabelle repräsentiert die Stack-Daten
+des Anteilstypen Welt, der den Längenwert 4 hat und auf Byte 6 der
+Heap-Datentabelle zeigt." src="img/trpl04-07.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Abbildung 4-7: Ein Zeichenkettenanteilstyp, der auf einen
 Teil eines `String` referenziert</span>

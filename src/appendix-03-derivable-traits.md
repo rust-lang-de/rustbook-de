@@ -126,8 +126,8 @@ Sortierreihenfolge der Werte speichert.
 
 Das Merkmal `Clone` erlaubt es dir, explizit eine tiefe Kopie eines Wertes zu
 erstellen, und der Vervielfältigungsprozess könnte die Ausführung von
-beliebigem Code und das Kopieren von Daten im Haldenspeicher beinhalten. Siehe
-den Abschnitt [„Variablen und Daten im Zusammenspiel mit
+beliebigem Code und das Kopieren von Daten im Heap beinhalten. Siehe
+Abschnitt [„Variablen und Daten im Zusammenspiel mit
 Clone“][ways-variables-and-data-interact-clone] in Kapitel 4 für weitere
 Informationen zu `Clone`.
 
@@ -143,9 +143,9 @@ Instanzen besitzen, also ruft `to_vec` bei jedem Element `clone` auf. Daher
 muss der im Anteilstyp gespeicherte Typ `Clone` implementieren.
 
 Das Merkmal `Copy` erlaubt es dir, einen Wert zu duplizieren, indem nur die auf
-dem Stapelspeicher gespeicherten Bits kopiert werden; es ist kein spezieller
-Code notwendig. Weitere Informationen zu `Copy` findest du im Abschnitt [„Nur
-Stapelspeicher-Daten: Kopieren (copy)“][stack-only-data-copy] in Kapitel 4.
+dem Stack gespeicherten Bits kopiert werden; es ist kein spezieller Code
+notwendig. Weitere Informationen zu `Copy` findest du im Abschnitt [„Reine
+Stack-Daten: Copy“][stack-only-data-copy] in Kapitel 4.
 
 Das Merkmal `Copy` definiert keine Methoden, um Programmierer daran zu hindern,
 diese Methoden zu überladen und die Annahme zu verletzen, dass kein spezieller
@@ -198,7 +198,7 @@ z.B. auf Instanzen von `Option<T>` verwendest. Wenn die `Option<T>` den Wert
 `Default::default` für den Typ `T` zurück, der in `Option<T>` gespeichert ist.
 
 [custom-derive-macros]: ch20-05-macros.html#benutzerdefinierte-makro-mit-derive
-[stack-only-data-copy]: ch04-01-what-is-ownership.html#nur-stapelspeicher-daten-kopieren-copy
+[stack-only-data-copy]: ch04-01-what-is-ownership.html#reine-stack-daten-copy
 [std-lib]: https://doc.rust-lang.org/std/index.html
 [struct-update-syntax]: ch05-01-defining-structs.html#instanzen-erzeugen-mit-der-strukturaktualisierungssyntax
 [ways-variables-and-data-interact-clone]: ch04-01-what-is-ownership.html#variablen-und-daten-im-zusammenspiel-mit-clone

@@ -276,14 +276,14 @@ let row = vec![
 verschiedener Typen in einem Vektor zu speichern</span>
 
 Rust muss wissen, welche Typen zur Kompilierzeit im Vektor enthalten sein
-werden, damit es genau weiß, wie viel Speicherplatz im Haldenspeicher
-benötigt wird, um alle Elemente zu speichern. Wir müssen auch eindeutig
-festlegen, welche Typen in diesem Vektor zulässig sind. Wenn Rust einen Vektor
-mit beliebigen Typen zuließe, bestünde die Möglichkeit, dass einer oder mehrere
-Typen Fehler bei den an den Elementen des Vektors durchgeführten Operationen
-verursachen würden. Das Verwenden einer Aufzählung zusammen mit einem
-`match`-Ausdruck bedeutet, dass Rust zur Kompilierzeit sicherstellt, dass jeder
-mögliche Fall behandelt wird, wie in Kapitel 6 besprochen.
+werden, damit es genau weiß, wie viel Speicherplatz im Heap benötigt wird, um
+alle Elemente zu speichern. Wir müssen auch eindeutig festlegen, welche Typen
+in diesem Vektor zulässig sind. Wenn Rust einen Vektor mit beliebigen Typen
+zuließe, bestünde die Möglichkeit, dass einer oder mehrere Typen Fehler bei den
+an den Elementen des Vektors durchgeführten Operationen verursachen würden. Das
+Verwenden einer Aufzählung zusammen mit einem `match`-Ausdruck bedeutet, dass
+Rust zur Kompilierzeit sicherstellt, dass jeder mögliche Fall behandelt wird,
+wie in Kapitel 6 besprochen.
 
 Wenn du nicht weißt, welche Typen ein Programm zur Laufzeit in einem Vektor
 speichern kann, funktioniert der Aufzählungsansatz nicht. Stattdessen kannst du

@@ -101,7 +101,7 @@ fn main() {
     println!("a Rc-Zählung nach Änderung von a = {}", Rc::strong_count(&a));
 
     // Kommentiere die nächste Zeile aus, um zu sehen, dass wir einen Zyklus haben;
-    // sie wird den Stapelspeicher (stack) überlaufen lassen.
+    // sie wird den Stack überlaufen lassen.
     // println!("a nächstes Element = {:?}", a.tail());
 }
 ```
@@ -143,8 +143,8 @@ Der Referenzzähler der `Rc<List>`-Instanzen in `a` und `b` beträgt 2, nachdem
 wir die Liste in `a` so geändert haben, dass sie auf `b` zeigt. Am Ende von
 `main` versucht Rust, zuerst `b` aufzuräumen, wodurch der Zähler der
 `Rc<List>`-Instanz in `b` um 1 verringert wird. Der Speicher, den `Rc<List>`
-auf dem Haldenspeicher (heap) hat, wird zu diesem Zeitpunkt nicht aufgeräumt,
-da seine Referenzanzahl 1 und nicht 0 ist. Dann räumt Rust `a` auf, was die
+auf dem Heap hat, wird zu diesem Zeitpunkt nicht aufgeräumt, da seine
+Referenzanzahl 1 und nicht 0 ist. Dann räumt Rust `a` auf, was die
 Referenzanzahl der `Rc<List>`-Instanz in `a` ebenfalls von 2 auf 1 reduziert.
 Der Speicher dieser Instanz kann ebenfalls nicht aufgeräumt werden, weil die
 andere `Rc<List>`-Instanz immer noch auf sie referenziert. Der der Liste
@@ -158,7 +158,7 @@ zugewiesene Speicher bleibt für immer unaufgeräumt. Das Diagramm in Abbildung
 
 Wenn man das letzte `println!` auskommentiert und das Programm ausführt,
 versucht Rust, diesen Zyklus mit `a` auszugeben, wobei `b` auf `a` zeigt, und
-so weiter, bis der Stapelspeicher (stack) überläuft.
+so weiter, bis der Stack überläuft.
 
 Im Vergleich zu einem realen Programm sind die Konsequenzen, die das Anlegen
 eines Referenzzyklus in diesem Beispiel hat, nicht sehr schlimm: Gleich nachdem
@@ -422,8 +422,8 @@ verwenden dann die Funktion `Rc::downgrade`, um eine `Weak<Node>`-Referenz auf
 Wenn wir das Eltern-Element von `leaf` erneut ausgeben, erhalten wir diesmal
 eine `Some`-Variante mit `branch`: Jetzt kann `leaf` auf das Eltern-Element
 zugreifen! Wenn wir `leaf` ausgeben, vermeiden wir auch den Zyklus, der
-schließlich zu einem Stapelspeicherüberlauf führte, wie wir ihn in Codeblock
-15-26 hatten. Die `Weak<Node>`-Referenzen werden als `(Weak)` ausgegeben:
+schließlich zu einem Stack führte, wie wir ihn in Codeblock 15-26 hatten. Die
+`Weak<Node>`-Referenzen werden als `(Weak)` ausgegeben:
 
 
 ```text
@@ -535,15 +535,15 @@ Referenzzyklus oder Speicherlecks zu erzeugen.
 ## Zusammenfassung
 
 In diesem Kapitel wurde beschrieben, wie man mithilfe intelligenter Zeiger
-andere Garantien und Kompromisse eingehen kann, als es standardmäßig mit gewöhnlichen
-Referenzen in Rust möglich ist. Der Typ `Box<T>` hat eine bekannte Größe und
-zeigt auf Daten die auf dem Haldenspeicher allokiert sind. Der Typ `Rc<T>`
-verfolgt die Anzahl der Referenzen von Daten auf dem Haldenspeicher, sodass
-Daten mehrere Eigentümer haben können. Der Typ `RefCell<T>` mit
-seiner inneren Veränderbarkeit stellt uns einen Typ zur Verfügung, den wir
-verwenden können, wenn wir einen unveränderbaren Typ benötigen, aber einen
-inneren Wert dieses Typs ändern müssen. Außerdem werden die Ausleihregeln zur
-Laufzeit anstatt zur Kompilierzeit durchgesetzt.
+andere Garantien und Kompromisse eingehen kann, als es standardmäßig mit
+gewöhnlichen Referenzen in Rust möglich ist. Der Typ `Box<T>` hat eine bekannte
+Größe und zeigt auf Daten die auf dem Heap allokiert sind. Der Typ `Rc<T>`
+verfolgt die Anzahl der Referenzen von Daten auf dem Heap, sodass Daten mehrere
+Eigentümer haben können. Der Typ `RefCell<T>` mit seiner inneren
+Veränderbarkeit stellt uns einen Typ zur Verfügung, den wir verwenden können,
+wenn wir einen unveränderbaren Typ benötigen, aber einen inneren Wert dieses
+Typs ändern müssen. Außerdem werden die Ausleihregeln zur Laufzeit anstatt zur
+Kompilierzeit durchgesetzt.
 
 Ebenfalls diskutiert wurden die Merkmale `Deref` und `Drop`, die einen Großteil
 der Funktionalität von intelligenten Zeigern ermöglichen. Wir haben

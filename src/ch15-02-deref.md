@@ -112,9 +112,9 @@ Dereferenzierungsoperators hinzufügen kann.
 
 > Hinweis: Es gibt einen großen Unterschied zwischen dem Typ `MyBox<T>`, den
 > wir gerade erstellen, und dem echten Typ `Box<T>`: Unsere Version speichert
-> ihre Daten nicht auf dem Haldenspeicher (heap). In diesem Beispiel
-> konzentrieren wir uns auf `Deref`, daher ist es weniger wichtig, wo die Daten
-> tatsächlich gespeichert sind als das zeigerähnliche Verhalten.
+> ihre Daten nicht auf dem Heap. In diesem Beispiel konzentrieren wir uns auf
+> `Deref`, daher ist es weniger wichtig, wo die Daten tatsächlich gespeichert
+> sind als das zeigerähnliche Verhalten.
 
 Der Typ `Box<T>` wird letztendlich als Tupel-Struktur (tuple struct) mit einem
 Element definiert. Codeblock 15-8 definiert den Typ `MyBox<T>` auf die gleiche

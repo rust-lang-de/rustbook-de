@@ -6,16 +6,16 @@ Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unsere
 Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
 durch den expliziten Aufruf des Makros `panic!`. In beiden Fällen brechen wir
 unser Programm ab. Standardmäßig geben diese Programmabbrüche eine
-Fehlermeldung aus, räumen den Stapelspeicher auf und beenden sich. Über eine
-Umgebungsvariable kannst du auch festlegen, dass Rust den Stapelspeicher
-anzeigt, wenn das Programm abbricht, damit du die Quelle des Abbruchs leichter
-aufspüren kannst.
+Fehlermeldung aus, räumen den Stack auf und beenden sich. Über eine
+Umgebungsvariable kannst du auch festlegen, dass Rust den Stack anzeigt, wenn
+das Programm abbricht, damit du die Quelle des Abbruchs leichter aufspüren
+kannst.
 
-> ### Auflösen des Stapelspeichers oder Abbrechen als Fehlerreaktion
+> ### Auflösen des Stack oder Abbrechen als Fehlerreaktion
 >
 > Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
-> _Abwickeln_, was bedeutet, dass Rust den Stapelspeicher wieder nach oben geht
-> und die Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
+> _Abwickeln_, was bedeutet, dass Rust den Stack wieder nach oben geht und die
+> Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
 > Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
 > Programm sofort _abzubrechen_, also das Programm ohne Aufräumen zu beenden.
 >

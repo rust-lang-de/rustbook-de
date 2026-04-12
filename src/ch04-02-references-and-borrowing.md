@@ -38,9 +38,8 @@ es dir, sich auf einen Wert zu beziehen, ohne dessen Eigentümerschaft zu
 übernehmen. Abbildung 4-6 zeigt die Speicherdarstellung.
 
 <img alt="Drei Tabellen: Die Tabelle für s enthält nur einen Zeiger auf die
-Tabelle für s1. Die Tabelle für s1 enthält die Stapelspeicher-Daten für s1 und
-zeigt auf die Zeichenketten-Daten auf dem Haldenspeicher."
-src="img/trpl04-06.svg" class="center" />
+Tabelle für s1. Die Tabelle für s1 enthält die Stack-Daten für s1 und zeigt auf
+die Zeichenketten-Daten auf dem Heap." src="img/trpl04-06.svg" class="center" />
 
 <span class="caption">Abbildung 4-6: Eine Grafik mit `&String s`, das auf
 `String s1` zeigt</span>

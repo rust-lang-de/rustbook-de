@@ -1,15 +1,15 @@
-## Mit `Box<T>` auf Daten im Haldenspeicher (heap) zeigen
+## Mit `Box<T>` auf Daten im Heap zeigen
 
 Der einfachste intelligente Zeiger ist Box, deren Typ `Box<T>` lautet. In
-_Boxen_ kann man Daten statt auf dem Stapelspeicher (stack) im Haldenspeicher
-(heap) speichern. Was auf dem Stapelspeicher verbleibt, ist der Zeiger auf die
-Daten im Haldenspeicher. In Kapitel 4 findest du Informationen zum Unterschied
-zwischen dem Stapelspeicher und dem Haldenspeicher.
+_Boxen_ kann man Daten im Heap (engl. Haldenspeicher) anstatt auf dem Stack
+(engl. Stapelspeicher) speichern. Was auf dem Stack verbleibt, ist der Zeiger
+auf die Daten im Heap. In Kapitel 4 findest du Informationen zum Unterschied
+zwischen Stack und Heap.
 
-Boxen haben keinen Performanz-Overhead, außer dass die Daten auf
-den Haldenspeicher anstatt auf dem Stapelspeicher gespeichert werden, aber
-sie haben auch nicht viele zusätzliche Funktionalitäten. Sie werden am
-häufigsten in folgenden Situationen verwendet:
+Boxen haben keinen Performanz-Overhead, außer dass die Daten auf den Heap
+anstatt auf dem Stack gespeichert werden, aber sie haben auch nicht viele
+zusätzliche Funktionalitäten. Sie werden am häufigsten in folgenden
+Situationen verwendet:
 
 - Wenn man einen Typ hat, dessen Größe zum Zeitpunkt der Kompilierung nicht
   bekannt ist, und man einen Wert dieses Typs in einem Kontext verwenden
@@ -24,24 +24,23 @@ häufigsten in folgenden Situationen verwendet:
 Wir werden die erste Situation in [„Ermöglichen rekursiver Typen mit
 Boxen“](#ermöglichen-rekursiver-typen-mit-boxen) zeigen. Im zweiten Fall kann
 die Übertragung der Eigentümerschaft einer großen Datenmenge lange dauern, da
-die Daten auf dem Stapelspeicher kopiert werden. Um die Performanz in dieser
-Situation zu verbessern, können wir die große Datenmenge auf dem Haldenspeicher
-in einer Box speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem
-Stapelspeicher kopiert, während die Daten, auf die referenziert wird, im
-Haldenspeicher an einer Stelle verbleiben. Der dritte Fall ist als
-_Merkmalsobjekt_ (trait object) bekannt, und [„Verwendung von Merkmals-Objekten
-zur Abstraktion über gemeinsames Verhalten“][trait-objects] in Kapitel 18
-widmet sich diesem Thema. Was du hier lernst, wirst du in diesem Abschnitt
-erneut anwenden!
+die Daten auf dem Stack kopiert werden. Um die Performanz in dieser Situation
+zu verbessern, können wir die große Datenmenge auf dem Heap in einer Box
+speichern. Dann wird nur die kleine Menge von Zeigerdaten auf dem Stack
+kopiert, während die Daten, auf die referenziert wird, im Heap an einer Stelle
+verbleiben. Der dritte Fall ist als _Merkmalsobjekt_ (trait object) bekannt,
+und [„Verwendung von Merkmals-Objekten zur Abstraktion über gemeinsames
+Verhalten“][trait-objects] in Kapitel 18 widmet sich diesem Thema. Was du hier
+lernst, wirst du in diesem Abschnitt erneut anwenden!
 
-### Daten im Haldenspeicher speichern
+### Daten im Heap speichern
 
-Bevor wir den Haldenspeicher-Anwendungsfall für `Box<T>` besprechen, werden wir
-die Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
+Bevor wir den Heap-Anwendungsfall für `Box<T>` besprechen, werden wir die
+Syntax und die Interaktion mit Werten behandeln, die in einer `Box<T>`
 gespeichert sind.
 
 Codeblock 15-1 zeigt, wie man mit einer Box einen `i32`-Wert auf dem
-Haldenspeicher speichert:
+Heap speichert:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -53,23 +52,22 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 15-1: Speichern eines `i32`-Wertes in einer Box
-im Haldenspeicher</span>
+im Heap</span>
 
 Wir definieren die Variable `b` so, dass sie den Wert einer `Box` hat, die
-auf den Wert `5` zeigt, der auf dem Haldenspeicher allokiert ist. Dieses
-Programm gibt `b = 5` aus, in diesem Fall können wir auf die Daten in der Box
-zugreifen, ähnlich als würden sich die Daten im Stapelspeicher befinden. Genau
-wie bei Werten mit Eigentümerschaft wird auch eine Box freigegeben, wenn sie
-den Gültigkeitsbereich verlässt, wie dies bei `b` am Ende von `main` der Fall
-ist. Die Freigabe erfolgt sowohl für die Box (gespeichert im Stapelspeicher)
-als auch für die Daten, auf die sie zeigt (gespeichert im Haldenspeicher).
+auf den Wert `5` zeigt, der auf dem Heap allokiert ist. Dieses Programm gibt
+`b = 5` aus, in diesem Fall können wir auf die Daten in der Box zugreifen,
+ähnlich als würden sich die Daten im Stack befinden. Genau wie bei Werten mit
+Eigentümerschaft wird auch eine Box freigegeben, wenn sie den
+Gültigkeitsbereich verlässt, wie dies bei `b` am Ende von `main` der Fall ist.
+Die Freigabe erfolgt sowohl für die Box (gespeichert im Stack) als auch für die
+Daten, auf die sie zeigt (gespeichert im Heap).
 
-Es ist nicht besonders hilfreich, einen einzelnen Wert im Haldenspeicher zu
-speichern, daher verwendet man Boxen selten alleine. Meistens ist es besser,
-Werte wie einen `i32` auf dem Stapelspeicher zu haben, wo sie standardmäßig
-gespeichert werden. Sehen wir uns einen Fall an, in dem Boxen es uns
-ermöglichen, Typen zu definieren, die wir nicht hätten, wenn es keine Boxen
-gäbe.
+Es ist nicht besonders hilfreich, einen einzelnen Wert im Heap zu speichern,
+daher verwendet man Boxen selten alleine. Meistens ist es besser, Werte wie
+einen `i32` auf dem Stack zu haben, wo sie standardmäßig gespeichert werden.
+Sehen wir uns einen Fall an, in dem Boxen es uns ermöglichen, Typen zu
+definieren, die wir nicht hätten, wenn es keine Boxen gäbe.
 
 ### Ermöglichen rekursiver Typen mit Boxen
 
@@ -279,9 +277,9 @@ Da eine `Box<T>` ein Zeiger ist, weiß Rust immer, wie viel Platz eine `Box<T>`
 benötigt: Die Größe eines Zeigers ändert sich nicht basierend auf der
 Datenmenge, auf die er zeigt. Dies bedeutet, dass wir anstelle eines anderen
 `List`-Wertes direkt eine `Box<T>` in die `Cons`-Variante einfügen können. Die
-`Box<T>` zeigt auf den nächsten `List`-Wert, der sich auf dem Haldenspeicher
-befindet und nicht in der `Cons`-Variante. Konzeptionell haben wir immer noch
-eine Liste, die mit Listen erstellt wurde, die andere Listen enthalten. Diese
+`Box<T>` zeigt auf den nächsten `List`-Wert, der sich auf dem Heap befindet und
+nicht in der `Cons`-Variante. Konzeptionell haben wir immer noch eine Liste,
+die mit Listen erstellt wurde, die andere Listen enthalten. Diese
 Implementierung ähnelt nun eher dem Platzieren der Elemente nebeneinander als
 ineinander.
 
@@ -322,20 +320,19 @@ eines Listenwerts erforderlich ist. Abbildung 15-2 zeigt, wie die Variante
 Größe hat, da `Cons` eine `Box` enthält</span>
 
 Boxen kümmern sich nur um die Dereferenzierung und Speicherallokation auf dem
-Haldenspeicher, haben aber keine weiteren speziellen Funktionalitäten, wie wir
-sie bei anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch
-keinen Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten
-verbunden ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in
-denen die Dereferenzierung die einzige Funktionalität ist, die wir benötigen.
-Weitere Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.
+Heap, haben aber keine weiteren speziellen Funktionalitäten, wie wir sie bei
+anderen intelligenten Zeigertypen sehen werden. Sie haben aber auch keinen
+Performanz-Overhead, der mit diesen zusätzlichen Funktionalitäten verbunden
+ist. Daher können sie in Fällen wie der Cons-Liste nützlich sein, in denen die
+Dereferenzierung die einzige Funktionalität ist, die wir benötigen. Weitere
+Anwendungsfälle für Boxen werden wir uns auch in Kapitel 18 ansehen.
 
 Der Typ `Box<T>` ist ein intelligenter Zeiger, da er das Merkmal `Deref`
 implementiert, mit dem `Box<T>`-Werte wie Referenzen behandelt werden können.
 Wenn ein `Box<T>`-Wert den Gültigkeitsbereich verlässt, werden die Daten am
-Haldenspeicher, auf die die Box zeigt, aufgrund der Implementierung des
-Merkmals `Drop` ebenfalls aufgeräumt. Diese beiden Merkmale sind für die
-Funktionalität der anderen intelligenten Zeigertypen, die wir im restlichen
-Kapitel erläutern, noch wichtiger. Lass uns diese beiden Merkmale genauer
-untersuchen.
+Heap, auf die die Box zeigt, aufgrund der Implementierung des Merkmals `Drop`
+ebenfalls aufgeräumt. Diese beiden Merkmale sind für die Funktionalität der
+anderen intelligenten Zeigertypen, die wir im restlichen Kapitel erläutern,
+noch wichtiger. Lass uns diese beiden Merkmale genauer untersuchen.
 
 [trait-objects]: ch18-02-trait-objects.html

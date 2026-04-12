@@ -24,84 +24,77 @@ lernst du Eigentümerschaft kennen, indem du einige Beispiele durcharbeitest,
 die sich auf eine sehr verbreitete Datenstruktur konzentrieren: Zeichenketten
 (strings).
 
-> ### Stapelspeicher (stack) und Haldenspeicher (heap)
+> ### Stack und Heap
 >
-> Viele Programmiersprachen erfordern nicht, dass du sehr oft über
-> Stapelspeicher und Haldenspeicher nachdenken musst. Aber in einer
-> Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
-> Stapelspeicher oder im Haldenspeicher liegt, einen größeren Einfluss darauf,
-> wie sich die Sprache verhält und warum du bestimmte Entscheidungen treffen
-> musst. Teile der Eigentümerschaft werden später in diesem Kapitel in Bezug
-> auf den Stapelspeicher und den Haldenspeicher beschrieben, daher hier eine
-> kurze Erklärung zur Vorbereitung.
+> Viele Programmiersprachen erfordern nicht, dass du sehr oft über Stack (egnl.
+> Stapelspeicher) und Heap (engl. Haldenspeicher) nachdenken musst. Aber in
+> einer Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
+> Stack oder im Heap liegt, einen größeren Einfluss darauf, wie sich die
+> Sprache verhält und warum du bestimmte Entscheidungen treffen musst. Teile
+> der Eigentümerschaft werden später in diesem Kapitel in Bezug auf den Stack
+> und den Heap beschrieben, daher hier eine kurze Erklärung zur Vorbereitung.
 >
-> Sowohl Stapelspeicher als auch Haldenspeicher sind Teile des
-> Arbeitsspeichers, die deinem Code zur Laufzeit zur Verfügung stehen, aber sie
-> sind unterschiedlich strukturiert. Der Stapelspeicher speichert Werte in der
-> Reihenfolge, in der er sie erhält, und entfernt die Werte in umgekehrter
-> Reihenfolge. Dies wird als _zuletzt herein, zuerst hinaus_ (last in, first
-> out (LIFO)) bezeichnet. Denke an einen Stapel Teller: Wenn du weitere Teller
-> hinzufügst, legst du sie auf den Stapel, und wenn du einen Teller benötigst,
-> nimmst du einen von oben. Das Hinzufügen oder Entfernen von Tellern aus der
-> Mitte oder von unten würde nicht so gut funktionieren! Das Hinzufügen von
-> Daten nennt man _auf den Stapel legen_, und das Entfernen von Daten nennt man
-> _vom Stapel nehmen_. Alle im Stapelspeicher gespeicherten Daten müssen eine
-> bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit unbekannten
-> Größe oder einer Größe, die sich ändern könnte, müssen stattdessen im
-> Haldenspeicher gespeichert werden.
+> Sowohl Stack als auch Heap sind Teile des Arbeitsspeichers, die deinem Code
+> zur Laufzeit zur Verfügung stehen, aber sie sind unterschiedlich
+> strukturiert. Der Stack speichert Werte in der Reihenfolge, in der er sie
+> erhält, und entfernt die Werte in umgekehrter Reihenfolge. Dies wird als
+> _last in, first out_ (LIFO) bezeichnet. Denke an einen Stapel Teller: Wenn du
+> weitere Teller hinzufügst, legst du sie auf den Stapel, und wenn du einen
+> Teller benötigst, nimmst du einen von oben. Das Hinzufügen oder Entfernen von
+> Tellern aus der Mitte oder von unten würde nicht so gut funktionieren! Das
+> Hinzufügen von Daten nennt man _auf den Stapel legen_, und das Entfernen von
+> Daten nennt man _vom Stapel nehmen_. Alle im Stack gespeicherten Daten müssen
+> eine bekannte, feste Größe haben. Daten mit einer zur Kompilierzeit
+> unbekannten Größe oder einer Größe, die sich ändern könnte, müssen
+> stattdessen im Heap gespeichert werden.
 >
-> Der Haldenspeicher ist weniger organisiert: Wenn du Daten in den
-> Haldenspeicher legst, forderst du eine bestimmte Menge an Speicherplatz an.
-> Der Speicher-Allokator (memory allocator) sucht eine leere Stelle im
-> Haldenspeicher, die groß genug ist, markiert sie als in Benutzung und gibt
-> einen _Zeiger_ (pointer) zurück, der die Adresse dieser Stelle ist. Dieser
-> Vorgang wird als _Allokieren im Haldenspeicher_ bezeichnet und manchmal mit
-> _Allokieren_ abgekürzt. (Das Legen von Werten auf den Stapelspeicher gilt
-> nicht als Allokieren.) Da es sich beim Zeiger um eine bekannte, feste Größe
-> handelt, kannst du den Zeiger auf den Stapelspeicher legen, aber wenn du die
-> eigentlichen Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du
-> sitzt in einem Restaurant. Wenn du hineingehst, gibst du die Anzahl der
-> Personen deiner Gruppe an, und der Restaurantbesitzer findet einen leeren,
-> ausreichend großen Tisch und führt euch dorthin. Wenn jemand aus deiner
-> Gruppe zu spät kommt, kann er fragen, wo ihr Platz genommen habt, um euch zu
-> finden.
+> Der Heap ist weniger organisiert: Wenn du Daten in den Heap legst, forderst
+> du eine bestimmte Menge an Speicherplatz an. Der Speicher-Allokator sucht
+> eine leere Stelle im Heap, die groß genug ist, markiert sie als in Benutzung
+> und gibt einen _Zeiger_ (pointer) zurück, der die Adresse dieser Stelle ist.
+> Dieser Vorgang wird als _Allokieren im Heap_ bezeichnet und manchmal mit
+> _Allokieren_ abgekürzt. (Das Legen von Werten auf den Stack gilt nicht als
+> Allokieren.) Da es sich beim Zeiger um eine bekannte, feste Größe handelt,
+> kannst du den Zeiger auf den Stack legen, aber wenn du die eigentlichen
+> Daten benötigst, musst du dem Zeiger folgen. Stell dir vor, du sitzt in einem
+> Restaurant. Wenn du hineingehst, gibst du die Anzahl der Personen deiner
+> Gruppe an, und der Restaurantbesitzer findet einen leeren, ausreichend großen
+> Tisch und führt euch dorthin. Wenn jemand aus deiner Gruppe zu spät kommt,
+> kann er fragen, wo ihr Platz genommen habt, um euch zu finden.
 >
-> Das Legen auf den Stapelspeicher ist schneller als das Allokieren im
-> Haldenspeicher, da der Speicher-Allokator nie nach Platz zum Speichern
-> neuer Daten suchen muss; dieser Ort ist immer ganz oben auf dem Stapel. Im
-> Vergleich dazu erfordert das Allokieren von Speicherplatz im dynamischen
-> Speicher mehr Arbeit, da der Speicher-Allokator zunächst einen ausreichend
-> großen Platz für die Daten finden und dann Buch führen muss, um die nächste
-> Allokation vorzubereiten.
+> Das Legen auf den Stack ist schneller als das Allokieren im Heap, da der
+> Speicher-Allokator nie nach Platz zum Speichern neuer Daten suchen muss;
+> dieser Ort ist immer ganz oben auf dem Stapel. Im Vergleich dazu erfordert
+> das Allokieren von Speicherplatz im Heap mehr Arbeit, da der
+> Speicher-Allokator zunächst einen ausreichend großen Platz für die Daten
+> finden und dann Buch führen muss, um die nächste Allokation vorzubereiten.
 >
-> Der Zugriff auf Daten im Haldenspeicher ist generell langsamer als der
-> Zugriff auf Daten auf dem Stapelspeicher, da du einem Zeiger folgen musst, um
-> dorthin zu gelangen. Heutige Prozessoren sind schneller, wenn sie weniger im
-> Speicher herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner
-> in einem Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
+> Der Zugriff auf Daten im Heap ist generell langsamer als der Zugriff auf
+> Daten auf dem Stack, da du einem Zeiger folgen musst, um dorthin zu gelangen.
+> Heutige Prozessoren sind schneller, wenn sie weniger im Speicher
+> herumspringen. Um die Analogie fortzusetzen, betrachte einen Kellner in einem
+> Restaurant, der an vielen Tischen Bestellungen aufnimmt. Es ist am
 > effizientesten, alle Bestellungen an einem Tisch aufzunehmen, bevor man zum
 > nächsten Tisch weitergeht. Eine Bestellung von Tisch A, dann eine Bestellung
 > von Tisch B, dann wieder eine von A und dann wieder eine von B aufzunehmen,
 > wäre ein viel langsamerer Vorgang. Umgekehrt kann ein Prozessor seine Arbeit
 > normalerweise besser erledigen, wenn er mit Daten arbeitet, die nahe
-> beieinander liegen (wie sie auf dem Stapelspeicher liegen) und nicht weiter
-> voneinander entfernt (wie sie im Haldenspeicher liegen können). Das
-> Allokieren einer großen Menge an Platz im Haldenspeicher kann ebenfalls Zeit
-> in Anspruch nehmen.
+> beieinander liegen (wie sie auf dem Stack liegen) und nicht weiter
+> voneinander entfernt (wie sie im Heap liegen können). Das Allokieren einer
+> großen Menge an Platz im Heap kann ebenfalls Zeit in Anspruch nehmen.
 >
 > Wenn dein Code eine Funktion aufruft, werden die an die Funktion übergebenen
-> Werte (einschließlich potentieller Zeiger auf Daten im Haldenspeicher)
-> und die lokalen Variablen der Funktion auf den Stapelspeicher gelegt. Wenn
-> die Funktion beendet ist, werden diese Werte vom Stapelspeicher genommen.
+> Werte (einschließlich potentieller Zeiger auf Daten im Heap) und die lokalen
+> Variablen der Funktion auf den Stack gelegt. Wenn die Funktion beendet ist,
+> werden diese Werte vom Stack genommen.
 >
-> Das Nachverfolgen, welche Codeteile welche Daten im Haldenspeicher
-> verwenden, das Minimieren der Menge an doppelten Daten im Haldenspeicher
-> und das Aufräumen ungenutzter Daten im Haldenspeicher, damit
-> dir der Speicherplatz nicht ausgeht, sind alles Probleme, die durch
-> Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft einmal verstanden
-> hast, brauchst du nicht mehr so oft über Stapelspeicher und Haldenspeicher 
+> Das Nachverfolgen, welche Codeteile welche Daten im Heap verwenden, das
+> Minimieren der Menge an doppelten Daten im Heap und das Aufräumen ungenutzter
+> Daten im Heap, damit dir der Speicherplatz nicht ausgeht, sind alles
+> Probleme, die durch Eigentümerschaft gelöst werden. Wenn du Eigentümerschaft
+> einmal verstanden hast, brauchst du nicht mehr so oft über Stack und Heap 
 > nachzudenken. Aber zu wissen, dass der Hauptzweck der Eigentümerschaft die
-> Verwaltung der Haldenspeicher-Daten ist, kann helfen zu erklären, warum es so
+> Verwaltung der Heap-Daten ist, kann helfen zu erklären, warum es so
 > funktioniert, wie es funktioniert.
 
 ### Eigentumsregeln
@@ -165,13 +158,13 @@ auf diesem Verständnis aufbauen, indem wir den Typ `String` einführen.
 Um die Eigentumsregeln zu veranschaulichen, benötigen wir einen Datentyp, der
 komplexer ist als die, die wir im Abschnitt [„Datentypen“][data-types] in
 Kapitel 3 behandelt haben. Die zuvor behandelten Typen haben eine bekannte
-Größe, können auf dem Stapelspeicher gelegt und vom Stapelspeicher entfernt
-werden, wenn ihr Gültigkeitsbereich beendet ist, und können schnell und trivial
-kopiert werden, um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer
-Teil des Codes denselben Wert in einem anderen Gültigkeitsbereich verwenden
-muss. Wir wollen uns jedoch Daten ansehen, die im Haldenspeicher gespeichert
-sind, und untersuchen, woher Rust weiß, wann es diese Daten aufräumen muss, und
-der Typ `String` ist ein gutes Beispiel dafür.
+Größe, können auf dem Stack gelegt und vom Stack entfernt werden, wenn ihr
+Gültigkeitsbereich beendet ist, und können schnell und trivial kopiert werden,
+um eine neue, unabhängige Instanz zu erzeugen, wenn ein anderer Teil des Codes
+denselben Wert in einem anderen Gültigkeitsbereich verwenden muss. Wir wollen
+uns jedoch Daten ansehen, die im Heap gespeichert sind, und untersuchen, woher
+Rust weiß, wann es diese Daten aufräumen muss, und der Typ `String` ist ein
+gutes Beispiel dafür.
 
 Wir werden uns auf die Teile von `String` konzentrieren, die sich auf die
 Eigentümerschaft beziehen. Diese Aspekte gelten auch für andere komplexe
@@ -187,8 +180,8 @@ anderer Grund ist, dass nicht jeder Zeichenkettenwert bekannt ist, wenn wir
 unseren Code schreiben: Was ist zum Beispiel, wenn wir Benutzereingaben
 entgegennehmen und speichern wollen? Für diese Situationen hat Rust den
 Zeichenkettentyp `String`. Dieser Typ verwaltet Daten, die auf dem
-Haldenspeicher allokiert sind, und kann so eine Textmenge speichern, die uns
-zur Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem
+Heap allokiert sind, und kann so eine Textmenge speichern, die uns zur
+Kompilierzeit unbekannt ist. Du kannst einen `String` aus einem
 Zeichenkettenliteral erzeugen, indem du die Funktion `from` wie folgt
 verwendest:
 
@@ -229,8 +222,8 @@ dessen Größe sich während der Ausführung des Programms ändern könnte, eine
 Speicherblock in die Binärdatei packen.
 
 Um mit dem Typ `String` einen veränderbaren, größenänderbaren Textabschnitt zu
-unterstützen, müssen wir Speicher im Haldenspeicher allokieren, dessen
-Größe zur Kompilierzeit unbekannt ist. Dies bedeutet:
+unterstützen, müssen wir Speicher im Heap allokieren, dessen Größe zur
+Kompilierzeit unbekannt ist. Dies bedeutet:
 
 - Der Speicher muss zur Laufzeit vom Speicher-Allokator angefordert werden.
 - Wir brauchen eine Möglichkeit, diesen Speicher an den Speicher-Allokator
@@ -302,7 +295,7 @@ Wir können wahrscheinlich erahnen, was das bewirkt: „Binde den Wert `5` an `x
 dann erstelle eine Kopie des Wertes in `x` und binde ihn an `y`.“ Wir haben
 jetzt zwei Variablen `x` und `y` und beide sind gleich `5`. Das ist in der Tat
 der Fall, denn ganze Zahlen sind einfache Werte mit einer bekannten, festen
-Größe, und diese beiden Werte `5` werden auf den Stapelspeicher gelegt.
+Größe, und diese beiden Werte `5` werden auf den Stack gelegt.
 
 Schauen wir uns nun die `String`-Variante an:
 
@@ -320,14 +313,14 @@ Betrachte Abbildung 4-1, um zu sehen, was mit dem `String` unter der Haube
 geschieht. Ein `String` besteht aus drei Teilen, die auf der linken Seite
 dargestellt sind: Einem Zeiger auf den Speicherbereich, der den Inhalt der
 Zeichenkette enthält, die Länge und die Kapazität. Dieser Datenblock wird auf
-dem Stapelspeicher gespeichert. Auf der rechten Seite ist der Speicherbereich
-im Haldenspeicher, der den Inhalt enthält.
+dem Stack gespeichert. Auf der rechten Seite ist der Speicherbereich im Heap,
+der den Inhalt enthält.
 
 <img alt="Zwei Tabellen: Die erste Tabelle enthält die Darstellung von s1 auf
-dem Stapelspeicher, bestehend aus seiner Länge (5), seiner Kapazität (5) und
-einem Zeiger auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle
-enthält die Darstellung der Zeichenkettendaten auf dem Haldenspeicher, Byte für
-Byte." src="img/trpl04-01.svg" class="center" style="width: 50%;" />
+dem Stack, bestehend aus seiner Länge (5), seiner Kapazität (5) und einem
+Zeiger auf den ersten Wert in der zweiten Tabelle. Die zweite Tabelle enthält
+die Darstellung der Zeichenkettendaten auf dem Heap, Byte für Byte."
+src="img/trpl04-01.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-1: Speicherdarstellung eines `String` mit dem
 Wert „Hallo“, gebunden an `s1`</span>
@@ -340,42 +333,37 @@ deshalb ist es im Moment in Ordnung, die Kapazität zu ignorieren.
 
 Wenn wir `s1` an `s2` zuweisen, werden die `String`-Daten kopiert, d.h. wir
 kopieren den Zeiger, die Länge und die Kapazität, die sich auf dem
-Stapelspeicher befinden. Wir kopieren nicht die Daten im Haldenspeicher,
-auf die sich der Zeiger bezieht. Die Speicherdarstellung sieht also wie in
-Abbildung 4-2 aus.
+Stack befinden. Wir kopieren nicht die Daten im Heap, auf die sich der Zeiger
+bezieht. Die Speicherdarstellung sieht also wie in Abbildung 4-2 aus.
 
 <img alt="Drei Tabellen: Die Tabellen s1 und s2, die die Zeichenketten auf dem
-Stapelspeicher repräsentieren und beide auf die gleichen Zeichenkettendaten auf
-dem Haldenspeicher verweisen." src="img/trpl04-02.svg" class="center"
-style="width: 50%;" />
+Stack repräsentieren und beide auf die gleichen Zeichenkettendaten auf dem Heap
+verweisen." src="img/trpl04-02.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-2: Speicherdarstellung der Variable `s2`, die
 eine Kopie des Zeigers, der Länge und der Kapazität von `s1` hat</span>
 
 Die Darstellung sieht _nicht_ wie Abbildung 4-3 aus, so wie der Speicher
-aussehen würde, wenn Rust stattdessen auch die Daten im Haldenspeicher
-kopieren würde. Würde Rust dies tun, könnte die Operation `s2 = s1` bei großen
-Datenmengen im Haldenspeicher sehr teuer hinsichtlich der
-Laufzeitperformanz werden.
+aussehen würde, wenn Rust stattdessen auch die Daten im Heap kopieren würde.
+Würde Rust dies tun, könnte die Operation `s2 = s1` bei großen Datenmengen im
+Heap sehr teuer hinsichtlich der Laufzeitperformanz werden.
 
-<img alt="Vier Tabellen: Zwei Tabellen, die die Stapelspeicher-Daten für s1 und
-s2 darstellen, und jede zeigt auf ihre eigene Kopie der Zeichenketten-Daten auf
-dem Haldenspeicher." src="img/trpl04-03.svg" class="center"
-style="width: 50%;" />
+<img alt="Vier Tabellen: Zwei Tabellen, die die Stack-Daten für s1 und s2
+darstellen, und jede zeigt auf ihre eigene Kopie der Zeichenketten-Daten auf
+dem Heap." src="img/trpl04-03.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-3: Eine weitere Möglichkeit für das, was
-`s2 = s1` tun könnte, falls Rust auch die Daten im Haldenspeicher
-kopieren würde</span>
+`s2 = s1` tun könnte, falls Rust auch die Daten im Heap kopieren würde</span>
 
 Vorhin sagten wir, dass Rust automatisch die Funktion `drop` aufruft und den
-Haldenspeicher für diese Variable aufräumt, wenn eine Variable den
-Gültigkeitsbereich verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger
-auf dieselbe Stelle zeigen. Das ist ein Problem: Wenn `s2` und `s1` den
-Gültigkeitsbereich verlassen, werden beide versuchen, den gleichen Speicher
-freizugeben. Dies wird als _doppelter Freigabefehler_ (double free error)
-bezeichnet und ist einer der Speichersicherheitsfehler, die wir zuvor erwähnt
-haben. Das zweimalige Freigeben des Speichers kann zu einer
-Speicherverfälschung führen, was potenziell zu Sicherheitslücken führen kann.
+Heap für diese Variable aufräumt, wenn eine Variable den Gültigkeitsbereich
+verlässt. Abbildung 4-2 zeigt jedoch, dass beide Datenzeiger auf dieselbe
+Stelle zeigen. Das ist ein Problem: Wenn `s2` und `s1` den Gültigkeitsbereich
+verlassen, werden beide versuchen, den gleichen Speicher freizugeben. Dies wird
+als _doppelter Freigabefehler_ (double free error) bezeichnet und ist einer der
+Speichersicherheitsfehler, die wir zuvor erwähnt haben. Das zweimalige
+Freigeben des Speichers kann zu einer Speicherverfälschung führen, was
+potenziell zu Sicherheitslücken führen kann.
 
 Um Speichersicherheit zu gewährleisten, betrachtet Rust nach der Zeile `let s2
 = s1;` die Variable `s1` als nicht mehr gültig. Daher braucht Rust nichts
@@ -426,11 +414,10 @@ _verschoben_ wurde. Was tatsächlich geschieht, ist in Abbildung 4-4
 dargestellt.
 
 <img alt="Drei Tabellen: Die Tabellen s1 und s2, die jeweils die Zeichenketten
-auf dem Stapelspeicher darstellen und beide auf dieselben Zeichenkettendaten
-auf dem Haldenspeicher referenzieren. Die Tabelle s1 ist durchgestrichen, weil
-s1 nicht mehr gültig ist; nur s2 kann für den Zugriff auf die
-Haldenspeicher-Daten verwendet werden." src="img/trpl04-04.svg" class="center"
-style="width: 50%;" />
+auf dem Stack darstellen und beide auf dieselben Zeichenkettendaten auf dem
+Heap referenzieren. Die Tabelle s1 ist durchgestrichen, weil s1 nicht mehr
+gültig ist; nur s2 kann für den Zugriff auf die Heap-Daten verwendet werden."
+src="img/trpl04-04.svg" class="center" style="width: 50%;" />
 
 <span class="caption">Abbildung 4-4: Speicherdarstellung, nachdem `s1` ungültig
 gemacht wurde</span>
@@ -464,14 +451,14 @@ Betrachte zum Beispiel diesen Code:
 Wir deklarieren zunächst eine Variable `s` und binden sie an einen `String` mit
 dem Wert `„Hallo“`. Danach erstellen wir eine neue Zeichenkette mit dem Wert
 „Ahoi“ und weisen sie der Variable „s“ zu. Zu diesem Zeitpunkt referenziert
-nichts mehr auf den ursprünglichen Wert im Haldenspeicher. Abbildung 4-5 zeigt
-die aktuellen Daten im Speicher:
+nichts mehr auf den ursprünglichen Wert im Heap. Abbildung 4-5 zeigt die
+aktuellen Daten im Speicher:
 
-<img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Haldenspeicher dar
-und zeigt auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem
-Haldenspeicher, wobei die ursprünglichen Zeichenketten-Daten (Hallo)
-durchgestrichen sind, weil auf sie nicht mehr zugegriffen werden kann."
-src="img/trpl04-05.svg" class="center" style="width: 50%;" />
+<img alt="Eine Tabelle stellt den Zeichenketten-Wert auf dem Heap dar und zeigt
+auf den zweiten Teil der Zeichenketten-Daten (Ahoi) auf dem Heap, wobei die
+ursprünglichen Zeichenketten-Daten (Hallo) durchgestrichen sind, weil auf sie
+nicht mehr zugegriffen werden kann." src="img/trpl04-05.svg" class="center"
+style="width: 50%;" />
 
 <span class="caption">Abbildung 4-5: Darstellung im Speicher, nachdem der
 ursprüngliche Wert vollständig ersetzt worden ist.</span>
@@ -482,11 +469,11 @@ Wenn wir den Wert am Ende ausgeben, lautet er „Ahoi Welt!“.
 
 #### Variablen und Daten im Zusammenspiel mit Clone
 
-Wenn wir die Daten von `String` im Haldenspeicher _tief_ kopieren wollen,
-nicht nur die Stapelspeicher-Daten, können wir eine gängige Methode namens
-`clone` verwenden. Wir werden die Methodensyntax in Kapitel 5 besprechen, aber
-da Methoden eine gängige Funktionalität vieler Programmiersprachen sind, hast
-du sie wahrscheinlich schon einmal gesehen.
+Wenn wir die Daten von `String` im Heap _tief_ kopieren wollen, nicht nur die
+Stack-Daten, können wir eine gängige Methode namens `clone` verwenden. Wir
+werden die Methodensyntax in Kapitel 5 besprechen, aber da Methoden eine
+gängige Funktionalität vieler Programmiersprachen sind, hast du sie
+wahrscheinlich schon einmal gesehen.
 
 Hier ist ein Beispiel für die Methode `clone`:
 
@@ -498,13 +485,13 @@ println!("s1 = {s1}, s2 = {s2}");
 ```
 
 Das funktioniert sehr gut und erzeugt explizit das in Abbildung 4-3 gezeigte
-Verhalten, bei dem die Daten im Haldenspeicher _kopiert_ werden.
+Verhalten, bei dem die Daten im Heap _kopiert_ werden.
 
 Wenn du einen Aufruf von `clone` siehst, weißt du, dass irgendein beliebiger
 Code ausgeführt wird und dass dieser Code teuer sein könnte. Es ist ein
 visueller Indikator dafür, dass etwas anderes vor sich geht.
 
-#### Nur Stapelspeicher-Daten: Kopieren (copy)
+#### Reine Stack-Daten: Copy
 
 Es gibt noch einen weiteren Kniff, über den wir noch nicht gesprochen haben.
 Folgender Code mit ganzen Zahlen, der teilweise in Codeblock 4-2 gezeigt wurde,
@@ -531,11 +518,11 @@ keinen Unterschied zwischen tiefen und flachen Kopien, also würde der Aufruf
 weglassen.
 
 Rust hat eine spezielle Annotation, das Merkmal `Copy`, die wir an Typen hängen
-können, die auf dem Stapelspeicher wie ganze Zahlen gespeichert sind (wir
-werden in [Kapitel 10][traits] mehr über Merkmale sprechen). Wenn ein Typ das
-Merkmal `Copy` implementiert, werden Variablen, die dieses Merkmal verwenden,
-nicht verschoben, sondern trivialerweise kopiert, sodass sie auch nach der
-Zuweisung an eine andere Variable noch gültig sind.
+können, die auf dem Stack wie ganze Zahlen gespeichert sind (wir werden in
+[Kapitel 10][traits] mehr über Merkmale sprechen). Wenn ein Typ das Merkmal
+`Copy` implementiert, werden Variablen, die dieses Merkmal verwenden, nicht
+verschoben, sondern trivialerweise kopiert, sodass sie auch nach der Zuweisung
+an eine andere Variable noch gültig sind.
 
 Rust lässt uns einen Typ nicht mit dem Merkmal `Copy` annotieren, wenn der Typ
 oder einer seiner Teile das Merkmal `Drop` implementiert. Wenn der Typ eine
@@ -653,9 +640,9 @@ fn takes_and_gives_back(a_string: String) -> String { // a_string kommt in den
 
 Die Eigentümerschaft an einer Variable folgt jedes Mal dem gleichen Muster: Das
 Zuweisen eines Wertes an eine andere Variable verschiebt diese. Wenn eine
-Variable, die Daten im Haldenspeicher enthält, den Gültigkeitsbereich
-verlässt, wird der Wert durch `drop` aufgeräumt, es sei denn, die
-Eigentümerschaft wurde auf eine andere Variable verschoben.
+Variable, die Daten im Heap enthält, den Gültigkeitsbereich verlässt, wird der
+Wert durch `drop` aufgeräumt, es sei denn, die Eigentümerschaft wurde auf eine
+andere Variable verschoben.
 
 Dies funktioniert zwar, allerdings ist es etwas mühsam, die Eigentümerschaft zu
 übernehmen und in jeder Funktion zurückzugeben. Was ist, wenn wir eine Funktion

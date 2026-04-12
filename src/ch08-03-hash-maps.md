@@ -48,10 +48,10 @@ gehört, die automatisch in den Gültigkeitsbereich aufgenommen werden.
 Hashtabellen werden auch weniger von der Standardbibliothek unterstützt; es
 gibt zum Beispiel kein eingebautes Makro, um sie zu erzeugen.
 
-Genau wie Vektoren speichern Hashtabellen ihre Daten im Haldenspeicher. 
-Obige `HashMap` hat Schlüssel vom Typ `String` und Werte vom Typ `i32`.
-Hashtabellen sind homogen wie Vektoren: Alle Schlüssel müssen denselben Typ
-haben und alle Werte müssen denselben Typ haben.
+Genau wie Vektoren speichern Hashtabellen ihre Daten im Heap. Obige `HashMap`
+hat Schlüssel vom Typ `String` und Werte vom Typ `i32`. Hashtabellen sind
+homogen wie Vektoren: Alle Schlüssel müssen denselben Typ haben und alle
+Werte müssen denselben Typ haben.
 
 ### Zugreifen auf Werte in einer Hashtabelle
 

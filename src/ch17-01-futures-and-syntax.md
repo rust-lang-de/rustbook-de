@@ -303,10 +303,10 @@ verschiedene asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen
 Anwendungsfall unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem
 Durchsatz, vielen CPU-Kernen und einer großen Menge an RAM hat zum Beispiel
 ganz andere Anforderungen als einen Mikrocontroller mit einem einzigen Kern,
-einer kleinen Menge an RAM und keiner Möglichkeit, Haldenspeicher-Allokationen
-(heap allocations) durchzuführen. Die Kisten, die diese Laufzeitumgebungen
-bereitstellen, bieten oft auch asynchrone Versionen gängiger Funktionen wie
-Datei- oder Netzwerkkommunikation.
+einer kleinen Menge an RAM und keiner Möglichkeit, Heap-Allokationen
+durchzuführen. Die Kisten, die diese Laufzeitumgebungen bereitstellen, bieten
+oft auch asynchrone Versionen gängiger Funktionen wie Datei- oder
+Netzwerkkommunikation.
 
 Hier und im Rest dieses Kapitels werden wir die Funktion `block_on` aus der
 Kiste `trpl` verwenden, die ein Future als Argument nimmt und den aktuellen
