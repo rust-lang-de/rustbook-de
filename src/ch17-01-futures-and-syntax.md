@@ -135,9 +135,9 @@ erlaubt es Rust, die Ausführung von asynchronem Code zu vermeiden, bis er
 tatsächlich benötigt wird.
 
 > Anmerkung: Dies unterscheidet sich von dem Verhalten, das wir gesehen haben,
-> als wir `thread::spawn` im Abschnitt [„Erstellen eines neuen Strangs mit
+> als wir `thread::spawn` im Abschnitt [„Erstellen eines neuen Threads mit
 > spawn“][thread-spawn] in Kapitel 16 verwendet haben und der Closure, den wir
-> an einen anderen Strang übergeben haben, sofort zu laufen begann. Es
+> an einen anderen Thread übergeben haben, sofort zu laufen begann. Es
 > unterscheidet sich auch davon, wie viele andere Sprachen die asynchrone
 > Programmierung umsetzen! Aber es ist wichtig für Rust, dass es seine
 > Leistungsgarantien gewährleisten kann, genau wie bei Iteratoren.
@@ -305,7 +305,7 @@ Versionen gängiger Funktionen wie Datei- oder Netzwerkkommunikation.
 
 Hier und im Rest dieses Kapitels werden wir die Funktion `block_on` aus der
 Crate `trpl` verwenden, die ein Future als Argument nimmt und den aktuellen
-Strang blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
+Thread blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
 wird durch den Aufruf von `block_on` eine Laufzeitumgebung mit Hilfe der Crate
 `tokio` eingerichtet, die das übergebene Future ausführt. (Das Verhalten von
 `block_on` in der Crate `trpl` ähnelt dem der `block_on`-Funktionen anderer
@@ -511,5 +511,5 @@ können, die wir mit asynchroner Programmierung tun können.
 [futures-crate]: https://crates.io/crates/futures
 [impl-trait]: ch10-02-traits.html#traits-als-parameter-verwenden
 [iterators-lazy]: ch13-02-iterators.html
-[thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn
+[thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-threads-mit-spawn
 [tokio]: https://tokio.rs

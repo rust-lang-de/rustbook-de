@@ -1,28 +1,28 @@
 ## Kontrolliertes Beenden und Aufräumen
 
 Der Code in Codeblock 21-20 antwortet auf Anfragen asynchron durch die
-Verwendung eines Strang-Vorrats (thread pool), wie von uns beabsichtigt. Wir
-erhalten einige Warnungen über die Felder `workers`, `id` und `thread`, die wir
-nicht direkt benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn
-wir die weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
-Hauptstrang (main thread) anzuhalten, werden auch alle anderen Stränge sofort
+Verwendung eines Thread-Pools, wie von uns beabsichtigt. Wir erhalten einige
+Warnungen über die Felder `workers`, `id` und `thread`, die wir nicht direkt
+benutzen, was uns daran erinnert, dass wir nichts aufräumen. Wenn wir die
+weniger elegante Methode <kbd>Strg</kbd>+<kbd>c</kbd> verwenden, um den
+Haupt-Thread (main thread) anzuhalten, werden auch alle anderen Threads sofort
 gestoppt, selbst wenn sie gerade dabei sind, eine Anfrage zu bedienen.
 
 Als Nächstes werden wir das Trait `Drop` implementieren, um `join` für jeden der
-Stränge im Vorrat aufzurufen, damit sie die Anfragen, an denen sie arbeiten, vor
+Threads im Pool aufzurufen, damit sie die Anfragen, an denen sie arbeiten, vor
 dem Schließen beenden können. Dann werden wir einen Weg implementieren, um den
-Strängen mitzuteilen, dass sie keine neuen Anfragen mehr annehmen und
+Threads mitzuteilen, dass sie keine neuen Anfragen mehr annehmen und
 herunterfahren sollen. Um diesen Code in Aktion zu sehen, werden wir unseren
 Server so modifizieren, dass er nur zwei Anfragen annimmt, bevor er seinen
-Strang-Vorrat kontrolliert herunterfährt.
+Thread-Pool kontrolliert herunterfährt.
 
 ### Implementieren des Traits `Drop` auf `ThreadPool`
 
-Lass uns damit beginnen, `Drop` auf unseren Strang-Vorrat zu implementieren.
-Wenn der Vorrat aufgeräumt wird, sollten wir auf das Ende unsere Stränge
-warten, um sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt
-einen ersten Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht
-ganz funktionieren.
+Lass uns damit beginnen, `Drop` auf unseren Thread-Pool zu implementieren. Wenn
+der Pool aufgeräumt wird, sollten wir auf das Ende unsere Threads warten, um
+sicherzustellen, dass sie ihre Arbeit beenden. Codeblock 21-22 zeigt einen
+ersten Versuch einer `Drop`-Implementierung; dieser Code wird noch nicht ganz
+funktionieren.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -42,7 +42,7 @@ ganz funktionieren.
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -104,13 +104,13 @@ impl Drop for ThreadPool {
 ```
 
 <span class="caption">Codeblock 21-22: Warten auf das Ende der einzelnen
-Stränge, wenn der Strang-Vorrat den Gültigkeitsbereich verlässt</span>
+Threads, wenn der Thread-Pool den Gültigkeitsbereich verlässt</span>
 
-Zuerst iterieren wir über alle `workers` im Strang-Vorrat. Wir verwenden dafür
+Zuerst iterieren wir über alle `workers` im Thread-Pool. Wir verwenden dafür
 `&mut`, weil `self` eine veränderbare Referenz ist und wir auch in der Lage
 sein müssen, `worker` zu verändern. Für jeden `worker` geben wir eine Nachricht
 aus, die besagt, dass diese bestimmte `worker`-Instanz heruntergefahren wird,
-und dann rufen wir auf dem Strang dieser `worker`-Instanz `join` auf. Wenn der
+und dann rufen wir auf dem Thread dieser `worker`-Instanz `join` auf. Wenn der
 Aufruf von `join` fehlschlägt, benutzen wir `unwrap`, um das Programm abstürzen
 zu lassen.
 
@@ -136,8 +136,8 @@ error: could not compile `hello` (lib) due to 1 previous error
 
 Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
 veränderbare Ausleihe von jedem `worker` haben und `join` die Eigentümerschaft
-für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Strang
-`thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Strang
+für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread
+`thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Thread
 konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
 Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn `Worker` ein
 `Option<Thread::JoinHandle<()>>` hielte, könnten wir die Methode `take` auf
@@ -145,7 +145,7 @@ Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn `Worker` ein
 eine Variante `None` an ihrer Stelle zu belassen. Mit anderen Worten, ein
 `Worker`, der läuft, würde eine Variante `Some` in `thread` haben, und wenn wir
 einen `Worker` aufräumen wollten, würden wir `Some` durch `None` ersetzen,
-sodass der `Worker` keinen Strang zum Laufen haben würde.
+sodass der `Worker` keinen Thread zum Laufen haben würde.
 
 Das _einzige_ Mal, dass dies der Fall wäre, wäre, wenn man den `Worker`
 aufräumt. Im Gegenzug müssten wir überall, wo wir auf `Worker.thread`
@@ -181,7 +181,7 @@ aktualisieren:
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -252,25 +252,25 @@ Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
 Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
 empfehlen.
 
-### Den Strängen signalisieren, nicht mehr nach Aufträgen zu lauschen
+### Den Threads signalisieren, nicht mehr nach Aufträgen zu lauschen
 
 Mit all den Änderungen, die wir vorgenommen haben, lässt sich unser Code ohne
 jede Warnung kompilieren. Aber die schlechte Nachricht ist, dass dieser Code
-noch nicht so funktioniert, wie wir es uns wünschen. Der Schlüssel ist die
-Logik in den Closures, die von den Strängen der `Worker`-Instanzen
-ausgeführt werden: Im Moment rufen wir `join` auf, aber das wird die Stränge
-nicht herunterfahren, weil sie sich in einer Endlosschleife auf der Suche nach
-Aufträgen befinden. Wenn wir versuchen, unseren `ThreadPool` mit unserer
-aktuellen Implementierung von `Drop` aufräumen zu lassen, wird der Hauptstrang
-für immer blockieren und auf das Beenden des ersten Strangs warten.
+noch nicht so funktioniert, wie wir es uns wünschen. Der Schlüssel ist die Logik
+in den Closures, die von den Threads der `Worker`-Instanzen ausgeführt werden:
+Im Moment rufen wir `join` auf, aber das wird die Threads nicht herunterfahren,
+weil sie sich in einer Endlosschleife auf der Suche nach Aufträgen befinden.
+Wenn wir versuchen, unseren `ThreadPool` mit unserer aktuellen Implementierung
+von `Drop` aufräumen zu lassen, wird der Haupt-Thread für immer blockieren und
+auf das Beenden des ersten Threads warten.
 
 Um dieses Problem zu beheben, brauchen wir eine Änderung in der Implementierung
 von `drop` in `ThreadPool` und dann eine Änderung in der `Worker`-Schleife.
 
 Zuerst ändern wir die Implementierung von `drop` in `ThreadPool`, um den
-`sender` explizit zu aufzuräumen, bevor wir auf das Ende der Stränge warten.
+`sender` explizit zu aufzuräumen, bevor wir auf das Ende der Threads warten.
 Codeblock 21-23 zeigt die Änderungen an `ThreadPool`, um den `sender` explizit
-aufzuräumen. Anders als beim Strang, _müssen_ wir hier eine `Option` verwenden,
+aufzuräumen. Anders als beim Thread, _müssen_ wir hier eine `Option` verwenden,
 um den `sender` mit `Option::take` aus dem `ThreadPool` herausnehmen zu können.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -292,7 +292,7 @@ pub struct ThreadPool {
 impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -366,15 +366,14 @@ impl Drop for ThreadPool {
 ```
 
 <span class="caption">Codeblock 21-23: `sender` vor dem Warten auf die
-`Worker`-Stränge explizit aufräumen</span>
+`Worker`-Threads explizit aufräumen</span>
 
-Das Aufräumen von `sender` schließt den Kanal, was bedeutet, dass keine
-weiteren Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe
-von `recv`, die die `Worker`-Instanzen in der Endlosschleife machen, einen
-Fehler zurück. In Codeblock 21-24 ändern wir die `Worker`-Schleife so, dass die
-Schleife in diesem Fall ordnungsgemäß beendet wird, was bedeutet, dass die
-Stränge beendet werden, wenn die Implementierung von `drop` in `ThreadPool`
-`join` für sie aufruft.
+Das Aufräumen von `sender` schließt den Kanal, was bedeutet, dass keine weiteren
+Nachrichten gesendet werden. Wenn das passiert, geben alle Aufrufe von `recv`,
+die die `Worker`-Instanzen in der Endlosschleife machen, einen Fehler zurück. In
+Codeblock 21-24 ändern wir die `Worker`-Schleife so, dass die Schleife in diesem
+Fall ordnungsgemäß beendet wird, was bedeutet, dass die Threads beendet werden,
+wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -394,7 +393,7 @@ Stränge beendet werden, wenn die Implementierung von `drop` in `ThreadPool`
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -569,23 +568,23 @@ anzunehmen, und die `Drop`-Implementierung auf `ThreadPool` beginnt mit der
 Ausführung, bevor `Worker 3` überhaupt seine Arbeit beginnt. Wenn man den
 `sender` aufräumt, werden alle `Worker`-Instanzen getrennt und angewiesen, sich
 zu beenden. Die `Worker`-Instanzen geben jeweils eine Nachricht aus, wenn sie
-die Verbindung trennen, und dann ruft der Strang-Vorrat `join` auf, um das Ende
-jedes `Worker`-Strangs zu warten.
+die Verbindung trennen, und dann ruft der Thread-Pool `join` auf, um das Ende
+jedes `Worker`-Threads zu warten.
 
 Beachte einen interessanten Aspekt diesem speziellen Programmlauf: Der
 `ThreadPool` hat den `sender` aufgeräumt, und bevor ein `Worker` einen Fehler
 erhalten hat, haben wir versucht, auf `Worker 0` zu warten. `Worker 0` hatte
-noch keinen Fehler von `recv` erhalten, also blockierte der Hauptstrang und
-wartete darauf, dass `Worker 0` fertig wird. In der Zwischenzeit erhielt
-`Worker 3` einen Auftrag, und dann erhielten alle Stränge einen Fehler. Als
-`Worker 0` fertig war, wartete der Hauptstrang darauf, dass die restlichen
+noch keinen Fehler von `recv` erhalten, also blockierte der Haupt-Thread und
+wartete darauf, dass `Worker 0` fertig wird. In der Zwischenzeit erhielt `Worker
+3` einen Auftrag, und dann erhielten alle Threads einen Fehler. Als `Worker 0`
+fertig war, wartete der Haupt-Thread darauf, dass die restlichen
 `Worker`-Instanzen fertig wurden. Zu diesem Zeitpunkt hatten sie alle ihre
 Schleifen verlassen und konnten sich beenden.
 
 Herzlichen Glückwunsch! Wir haben jetzt unser Projekt abgeschlossen; wir haben
-einen einfachen Webserver, der einen Strang-Vorrat verwendet, um asynchron zu
+einen einfachen Webserver, der einen Thread-Pool verwendet, um asynchron zu
 antworten. Wir sind in der Lage, den Server kontrolliert herunterzufahren,
-wodurch alle Stränge im Vorrat aufgeräumt werden.
+wodurch alle Threads im Pool aufgeräumt werden.
 
 Hier ist der vollständige Code als Referenz:
 
@@ -657,7 +656,7 @@ type Job = Box<dyn FnOnce() + Send + 'static>;
 impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
     ///
-    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+    /// Die Größe ist die Anzahl der Threads im Pool.
     ///
     /// # Panics
     ///
@@ -745,9 +744,9 @@ findest du hier einige Ideen:
 - Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
 - Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
   Web-Anfragen durchzuführen.
-- Suche eine Strang-Vorrats-Crate auf [crates.io][crates] und   implementiere
+- Suche eine Thread-Pool-Crate auf [crates.io][crates] und   implementiere
   damit einen ähnlichen Webserver unter Verwendung der Crate. Vergleiche dann
-  dessen API und Robustheit mit dem von uns implementierten Strang-Vorrat.
+  dessen API und Robustheit mit dem von uns implementierten Thread-Pool.
 
 ## Zusammenfassung
 

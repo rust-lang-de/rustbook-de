@@ -154,8 +154,8 @@ ihre Funktionalität ermöglichen, erörtert.
 
 In **Kapitel 16** gehen wir durch verschiedene Modelle der nebenläufigen
 Programmierung und sprechen darüber, wie Rust dir hilft, furchtlos mit mehreren
-Strängen zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir
-die async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
+Threads zu programmieren. In **Kapitel 17** bauen wir darauf auf, indem wir die
+async- und await-Syntax von Rust zusammen mit Aufgaben (tasks), Futures und
 Strömen (streams) und dem leichtgewichtigen Nebenläufigkeitsmodell, das sie
 ermöglichen, untersuchen.
 

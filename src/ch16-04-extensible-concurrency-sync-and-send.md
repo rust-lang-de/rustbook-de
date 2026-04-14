@@ -11,20 +11,20 @@ Zu den wichtigsten Nebenläufigkeitskonzepten, die in die Sprache und nicht in
 die Standardbibliothek eingebettet sind, gehören jedoch die Traits `Send` und
 `Sync` in `std::marker`.
 
-### Übertragen der Eigentümerschaft zwischen Strängen
+### Übertragen der Eigentümerschaft zwischen Threads
 
 Das Marker Trait `Send` zeigt an, dass die Eigentümerschaft an Werten des Typs,
-der `Send` implementiert, zwischen Strängen (threads) übertragen werden kann.
-Fast jeder Rust-Typ implementiert `Send`, aber es gibt einige Ausnahmen,
-einschließlich `Rc<T>`: Dieser kann nicht `Send` sein, denn wenn du einen
-`Rc<T>`-Wert geklont hast und versucht hast, die Eigentümerschaft am Klon auf
-einen anderen Strang zu übertragen, könnten beide Stränge gleichzeitig den
-Referenzzähler aktualisieren. Aus diesem Grund ist `Rc<T>` für die Verwendung in
-einsträngigen Situationen implementiert, in denen du nicht die Strang-sichere
-Performanzeinbuße zahlen willst.
+der `Send` implementiert, zwischen Threads übertragen werden kann. Fast jeder
+Rust-Typ implementiert `Send`, aber es gibt einige Ausnahmen, einschließlich
+`Rc<T>`: Dieser kann nicht `Send` sein, denn wenn du einen `Rc<T>`-Wert geklont
+hast und versucht hast, die Eigentümerschaft am Klon auf einen anderen Thread zu
+übertragen, könnten beide Threads gleichzeitig den Referenzzähler aktualisieren.
+Aus diesem Grund ist `Rc<T>` für die Verwendung in single-threaded Situationen
+implementiert, in denen du nicht die Thread-sichere Performanzeinbuße zahlen
+willst.
 
 Daher stellen das Typsystem und die Trait Bounds von Rust sicher, dass du
-niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen Strängen senden
+niemals versehentlich einen `Rc<T>`-Wert unsicher zwischen Threads senden
 kannst. Als wir dies in Codeblock 16-14 versuchten, erhielten wir folgenden
 Fehler: Das Trait `Send` ist für `Rc<Mutex<i32>>` nicht implementiert. Als wir
 zu `Arc<T>` wechselten, das `Send` implementiert, ließ sich der Code
@@ -34,13 +34,13 @@ Jeder Typ, der vollständig aus `Send`-Typen besteht, wird automatisch auch als
 `Send` markiert. Fast alle primitiven Typen implementieren `Send`, abgesehen
 von Roh-Zeigern, die wir in Kapitel 20 besprechen werden.
 
-### Zugriff von mehreren Strängen
+### Zugriff von mehreren Threads
 
 Das Marker Trait `Sync` zeigt an, dass es sicher ist, den Typ, der `Sync`
-implementiert, von mehreren Strängen zu referenzieren. Mit anderen Worten, jeder
+implementiert, von mehreren Threads zu referenzieren. Mit anderen Worten, jeder
 Typ `T` implementiert `Sync`, wenn `&T` (eine unveränderbare Referenz auf `T`)
 `Send` implementiert, was bedeutet, dass die Referenz sicher an einen anderen
-Strang gesendet werden kann. Ähnlich wie bei `Send` implementieren primitive
+Thread gesendet werden kann. Ähnlich wie bei `Send` implementieren primitive
 Typen `Sync`, und Typen, die vollständig aus Typen bestehen, die `Sync`
 implementieren, implementieren ebenfalls `Sync`.
 
@@ -49,10 +49,9 @@ denselben Gründen, warum er nicht `Send` implementiert. Der Typ `RefCell<T>`
 (über den wir in Kapitel 15 gesprochen haben) und die Familie der verwandten
 `Cell<T>`-Typen implementieren nicht `Sync`. Die Implementierung der
 Ausleihenprüfung (borrow checking), die `RefCell<T>` zur Laufzeit durchführt,
-ist nicht Strang-sicher. Der intelligente Zeiger `Mutex<T>` implementiert
-`Sync` und kann verwendet werden, um den Zugriff mit mehreren Strängen zu
-teilen, wie du in [„Gemeinsamer Zugriff auf `Mutex<T>`“][sharing-mutext]
-gesehen hast.
+ist nicht Thread-sicher. Der intelligente Zeiger `Mutex<T>` implementiert `Sync`
+und kann verwendet werden, um den Zugriff mit mehreren Threads zu teilen, wie du
+in [„Gemeinsamer Zugriff auf `Mutex<T>`“][sharing-mutext] gesehen hast.
 
 ### Manuelles Implementieren von `Send` und `Sync` ist unsicher
 
@@ -83,7 +82,7 @@ Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
 umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind in Crates
 implementiert. Diese entwickeln sich schneller als die Standardbibliothek.
 Stelle also sicher, dass du online nach den aktuellen, hochmodernen Crates
-suchst, die in mehrsträngigen Situationen verwendet werden können.
+suchst, die in multi-threaded Situationen verwendet werden können.
 
 Die Rust-Standardbibliothek bietet Kanäle (channels) für die
 Nachrichtenübermittlung und intelligente Zeigertypen wie `Mutex<T>` und
@@ -91,8 +90,8 @@ Nachrichtenübermittlung und intelligente Zeigertypen wie `Mutex<T>` und
 Typsystem und der Ausleihenprüfer stellen sicher, dass der Code, der diese
 Lösungen verwendet, nicht mit Daten-Wettlaufsituationen (data races) oder
 ungültigen Referenzen endet. Sobald du deinen Code zum Kompilieren gebracht
-hast, kannst du sicher sein, dass er problemlos mit mehreren Strängen läuft,
-ohne die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
+hast, kannst du sicher sein, dass er problemlos mit mehreren Threads läuft, ohne
+die schwer aufspürbaren Fehler, die in anderen Sprachen üblich sind.
 Nebenläufige Programmierung ist kein Konzept mehr, vor dem man sich fürchten
 muss: Gehe hinaus und mache deine Programme nebenläufig &ndash; furchtlos!
 

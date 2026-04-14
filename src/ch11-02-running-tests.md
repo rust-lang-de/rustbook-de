@@ -20,13 +20,12 @@ Optionen sind auch im [Abschnitt „Tests“ des rustc-Buchs][tests] dokumentier
 
 ### Tests parallel oder nacheinander ausführen
 
-Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in
-Strängen (threads) ausgeführt, das bedeutet, dass die Tests schneller
-abgeschlossen werden und du schneller Rückmeldung erhältst. Da die Tests
-gleichzeitig ausgeführt werden, musst du sicherstellen, dass deine Tests nicht
-voneinander oder von einem gemeinsam genutzten Zustand abhängen, einschließlich
-einer gemeinsam genutzten Umgebung, z.B. dem aktuellen Arbeitsverzeichnis oder
-Umgebungsvariablen.
+Wenn du mehrere Tests ausführst, werden diese standardmäßig parallel in Threads
+ausgeführt, das bedeutet, dass die Tests schneller abgeschlossen werden und du
+schneller Rückmeldung erhältst. Da die Tests gleichzeitig ausgeführt werden,
+musst du sicherstellen, dass deine Tests nicht voneinander oder von einem
+gemeinsam genutzten Zustand abhängen, einschließlich einer gemeinsam genutzten
+Umgebung, z.B. dem aktuellen Arbeitsverzeichnis oder Umgebungsvariablen.
 
 Angenommen, jeder deiner Tests führt einen Code aus, der eine Datei auf der
 Festplatte mit dem Namen *test-output.txt* erstellt und einige Daten in diese
@@ -41,8 +40,8 @@ schreibt; eine andere Lösung besteht darin, die Tests einzeln nacheinander
 auszuführen.
 
 Wenn du die Tests nicht parallel ausführen möchtest oder wenn du eine
-feingranularere Kontrolle über die Anzahl der verwendeten Stränge haben willst,
-kannst du den Schalter `--test-threads` mit der Anzahl der Stränge, die du
+feingranularere Kontrolle über die Anzahl der verwendeten Threads haben willst,
+kannst du den Schalter `--test-threads` mit der Anzahl der Threads, die du
 verwenden möchtest, an die Testbinärdatei übergeben. Sieh dir das folgende
 Beispiel an:
 
@@ -50,8 +49,8 @@ Beispiel an:
 $ cargo test -- --test-threads=1
 ```
 
-Wir setzen die Anzahl der Teststränge auf `1` und weisen das Programm an, keine
-Parallelität zu verwenden. Die Ausführung der Tests mit einem Strang dauert
+Wir setzen die Anzahl der Test-Threads auf `1` und weisen das Programm an, keine
+Parallelität zu verwenden. Die Ausführung der Tests mit einem Thread dauert
 länger als die parallele Ausführung, aber die Tests stören sich nicht
 gegenseitig, wenn sie den gleichen Zustand verwenden.
 

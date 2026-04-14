@@ -42,7 +42,7 @@ fn slow(name: &str, ms: u64) {
 Simulieren langsamer Abläufe</span>
 
 Dieser Code verwendet `std::thread::sleep` anstelle von `trpl::sleep`, sodass
-der Aufruf von `slow` den aktuellen Strang für eine bestimmte Anzahl von
+der Aufruf von `slow` den aktuellen Thread für eine bestimmte Anzahl von
 Millisekunden blockiert. Wir können `slow` benutzen, um reale Abläufe zu
 simulieren, die sowohl langwierig als auch blockierend sind.
 

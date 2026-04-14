@@ -209,7 +209,7 @@ haben, würde uns der Compiler nicht auf den möglichen Logikfehler hinweisen.
 Analog zu `if let` ermöglicht die bedingte Schleife `while let`, dass eine
 `while`-Schleife so lange ausgeführt wird, wie ein Muster weiterhin passt. Auf
 ähnliche Weise zeigen wir in Codeblock 19-4 eine `while let`-Schleife, die auf
-Nachrichten wartet, die zwischen Strängen gesendet werden. In aktuellen Fall
+Nachrichten wartet, die zwischen Threads gesendet werden. In aktuellen Fall
 prüfen wir ein `Result` statt einer einer `Option`.
 
 ```rust

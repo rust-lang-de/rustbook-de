@@ -380,14 +380,14 @@ der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des Closures nicht
 unbedingt Eigentümer sein muss, kannst du das Schlüsselwort `move` vor der
 Parameterliste verwenden.
 
-Diese Technik ist vor allem nützlich, wenn ein Closure an einen neuen Strang
-(thread) übergeben wird, um die Daten zu verschieben, sodass sie dem neuen
-Strang gehören. Wir werden in Kapitel 16, wenn wir über Nebenläufigkeit
-(concurrency) sprechen, detailliert auf Stränge eingehen und erläutern, warum
-man sie verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines
-neuen Strangs mithilfe eines Closures befassen, der das Schlüsselwort `move`
-benötigt. Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor in
-einem neuen Strang statt im Hauptstrang auszugeben.
+Diese Technik ist vor allem nützlich, wenn ein Closure an einen neuen Thread
+übergeben wird, um die Daten zu verschieben, sodass sie dem neuen Thread
+gehören. Wir werden in Kapitel 16, wenn wir über Nebenläufigkeit (concurrency)
+sprechen, detailliert auf Threads eingehen und erläutern, warum man sie
+verwenden sollte, aber jetzt wollen wir uns kurz mit dem Erzeugen eines neuen
+Threads mithilfe eines Closures befassen, der das Schlüsselwort `move` benötigt.
+Codeblock 13-6 zeigt Codeblock 13-4 modifiziert, um den Vektor in einem neuen
+Thread statt im Haupt-Thread auszugeben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -398,16 +398,16 @@ fn main() {
     let list = vec![1, 2, 3];
     println!("Vor der Closure-Definition: {list:?}");
 
-    thread::spawn(move || println!("Im Strang: {list:?}"))
+    thread::spawn(move || println!("Im Thread: {list:?}"))
         .join()
         .unwrap();
 }
 ```
 
 <span class="caption">Codeblock 13-6: Verwenden von `move`, um den Closure des
-Strangs zu zwingen, die Eigentümerschaft an `list` zu übernehmen</span>
+Threads zu zwingen, die Eigentümerschaft an `list` zu übernehmen</span>
 
-Wir starten einen neuen Strang und geben ihm einen Closure als Argument mit. Der
+Wir starten einen neuen Thread und geben ihm einen Closure als Argument mit. Der
 Rumps des Closures gibt die Liste aus. In Codeblock 13-4 hat der Closure nur
 `list` mit einer unveränderbaren Referenz erfasst, weil das die kleinste
 Zugriffmenge auf `list` ist, die benötigt wird, um sie auszugeben. In diesem
@@ -415,14 +415,14 @@ Beispiel müssen wir, obwohl der Closurer-Rumpf nur eine unveränderbare Referen
 benötigt, angeben, dass `list` in den Closure verschoben werden soll, indem wir
 das Schlüsselwort `move` an den Anfang der Closure-Definition setzen.
 
-Wenn der Hauptstrang vor dem Aufruf von `join` für den neuen Strang weitere
-Operationen ausgeführt hat, könnte der neue Strang beendet werden, bevor der
-Rest des Hauptstrangs beendet wird, oder der Hauptstrang könnte zuerst beendet
-werden. Wenn der Hauptstrang die Eigentümerschaft von `list` beibehält, aber vor
-dem neuen Strang endet und `list` aufräumt, wäre die unveränderbare Referenz im
-Strang ungültig. Daher verlangt der Compiler, dass `list` in den Closure im
-neuen Strang verschoben wird, damit die Referenz gültig bleibt. Versuche, das
-Schlüsselwort `move` zu entfernen oder `list` im Hauptstrang zu verwenden,
+Wenn der Haupt-Thread vor dem Aufruf von `join` für den neuen Thread weitere
+Operationen ausgeführt hat, könnte der neue Thread beendet werden, bevor der
+Rest des Haupt-Threads beendet wird, oder der Haupt-Thread könnte zuerst beendet
+werden. Wenn der Haupt-Thread die Eigentümerschaft von `list` beibehält, aber
+vor dem neuen Thread endet und `list` aufräumt, wäre die unveränderbare Referenz
+im Thread ungültig. Daher verlangt der Compiler, dass `list` in den Closure im
+neuen Thread verschoben wird, damit die Referenz gültig bleibt. Versuche, das
+Schlüsselwort `move` zu entfernen oder `list` im Haupt-Thread zu verwenden,
 nachdem der Closure definiert wurde, um zu sehen, welche Compilerfehler du
 erhältst!
 

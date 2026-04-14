@@ -36,27 +36,25 @@ Fehler zu erzeugen.
 > _nebenläufig_ verwenden.
 
 Viele Sprachen sind dogmatisch, was die Lösungen betrifft, die sie zur
-Behandlung von Nebenläufigkeitsproblemen anbieten. Beispielsweise verfügt
-Erlang über elegante Funktionen für die nachrichtenübermittelnde
-Nebenläufigkeit (message-passing concurrency), hat aber nur obskure
-Möglichkeiten, einen gemeinsamen Status mit mehreren Strängen (threads) zu
-teilen. Die Unterstützung nur einer Teilmenge möglicher Lösungen ist eine
-vernünftige Strategie für Hochsprachen, da eine Hochsprache Vorteile
-verspricht, wenn sie eine gewisse Kontrolle aufgibt, um Abstraktionen zu
-erhalten. Es wird jedoch erwartet, dass Sprachen auf niedrigeren Ebenen in
-jeder Situation die Lösung mit der besten Performanz bieten und weniger
-Abstraktionen der Hardware haben. Daher bietet Rust eine Vielzahl von
-Werkzeugen zur Modellierung von Problemen in der Art und Weise, die für deine
-Situation und deine Anforderungen geeignet ist.
+Behandlung von Nebenläufigkeitsproblemen anbieten. Beispielsweise verfügt Erlang
+über elegante Funktionen für die nachrichtenübermittelnde Nebenläufigkeit
+(message-passing concurrency), hat aber nur obskure Möglichkeiten, einen
+gemeinsamen Status mit mehreren Threads zu teilen. Die Unterstützung nur einer
+Teilmenge möglicher Lösungen ist eine vernünftige Strategie für Hochsprachen, da
+eine Hochsprache Vorteile verspricht, wenn sie eine gewisse Kontrolle aufgibt,
+um Abstraktionen zu erhalten. Es wird jedoch erwartet, dass Sprachen auf
+niedrigeren Ebenen in jeder Situation die Lösung mit der besten Performanz
+bieten und weniger Abstraktionen der Hardware haben. Daher bietet Rust eine
+Vielzahl von Werkzeugen zur Modellierung von Problemen in der Art und Weise, die
+für deine Situation und deine Anforderungen geeignet ist.
 
 Hier sind die Themen, die wir in diesem Kapitel behandeln werden:
 
-- Wie man Stränge (threads) erstellt, um mehrere Code-Abschnitte gleichzeitig
-  auszuführen.
+- Wie man Threads erstellt, um mehrere Code-Abschnitte gleichzeitig auszuführen.
 - _Nachrichtenübermittelnde_ Nebenläufigkeit, bei der Kanäle Nachrichten
-  zwischen Strängen senden.
+  zwischen Threads senden.
 - Nebenläufigkeit mit _gemeinsamem Zustand_ (shared-state), bei der mehrere
-  Stränge Zugriff auf bestimmte Daten haben.
+  Threads Zugriff auf bestimmte Daten haben.
 - Die Traits `Sync` und `Send`, die Rusts Nebenläufigkeitsgarantien sowohl auf
   benutzerdefinierte Typen als auch auf von der Standardbibliothek
   bereitgestellte Typen erweitern.

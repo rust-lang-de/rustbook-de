@@ -1,10 +1,10 @@
-## Einen einsträngigen (single-threaded) Webserver erstellen
+## Einen single-threaded Webserver erstellen
 
-Wir beginnen damit, einen einsträngigen Webserver zum Laufen zu bringen. Bevor
+Wir beginnen damit, einen single-threaded Webserver zum Laufen zu bringen. Bevor
 wir beginnen, wollen wir uns einen kurzen Überblick über die Protokolle
-verschaffen, die beim Aufbau von Webservern eine Rolle spielen. Die
-Einzelheiten dieser Protokolle sprengen den Rahmen dieses Buches, aber ein
-kurzer Überblick wird dir die Informationen geben, die du benötigst.
+verschaffen, die beim Aufbau von Webservern eine Rolle spielen. Die Einzelheiten
+dieser Protokolle sprengen den Rahmen dieses Buches, aber ein kurzer Überblick
+wird dir die Informationen geben, die du benötigst.
 
 Die beiden wichtigsten Protokolle, die bei Webservern zum Einsatz kommen, sind
 das _Hypertext-Übertragungsprotokoll_ (Hypertext Transfer Protocol, kurz
@@ -722,8 +722,7 @@ Fantastisch! Wir haben jetzt einen einfachen Webserver mit etwa 40 Zeilen
 Rust-Code, der auf eine Anfrage mit einer Inhaltsseite antwortet und auf alle
 anderen Anfragen mit einer 404-Antwort.
 
-Derzeit läuft unser Server in einem einzigen Strang (thread), d.h. er kann
-immer nur eine Anfrage gleichzeitig bedienen. Lass uns untersuchen, warum das
-ein Problem sein kann, indem wir einige langsame Anfragen simulieren. Dann
-werden wir es beheben, indem unser Server mehrere Anfragen auf einmal
-bearbeiten kann.
+Derzeit läuft unser Server in einem einzigen Thread, d.h. er kann immer nur eine
+Anfrage gleichzeitig bedienen. Lass uns untersuchen, warum das ein Problem sein
+kann, indem wir einige langsame Anfragen simulieren. Dann werden wir es beheben,
+indem unser Server mehrere Anfragen auf einmal bearbeiten kann.

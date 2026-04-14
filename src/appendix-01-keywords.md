@@ -15,8 +15,7 @@ einer Beschreibung ihrer Funktion.
 
 - `as` &ndash; primitive Typen umwandeln; ein spezifisches Trait mit einem
   Element eindeutig machen; Elemente in `use`-Anweisungen umbenennen 
-- `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Strang
-  (thread) zu blockieren
+- `async` &ndash; ein `Future` zurückgeben, anstatt den aktuellen Thread zu blockieren
 - `await` &ndash; Ausführung anhalten, bis das Ergebnis eines `Future` vorliegt
 - `break` &ndash; Schleife sofort verlassen
 - `const` &ndash; konstante Elemente oder konstante Roh-Referenzen definieren

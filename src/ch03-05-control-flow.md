@@ -336,12 +336,12 @@ das Programm anweist, jeden restlichen Code in dieser Iteration der Schleife zu
 
 Eine der Verwendungen von `loop` besteht darin, eine Operation, von der du
 weißt, dass sie fehlschlagen könnte, erneut zu versuchen, z.B. um zu prüfen, ob
-ein Strang (thread) seine Arbeit abgeschlossen hat. Möglicherweise musst du
-jedoch das Ergebnis dieser Operation aus der Schleife heraus an den Rest deines
-Codes weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll,
-hinter dem `break`-Ausdruck angeben, den du zum Beenden der Schleife
-verwendest; dieser Wert wird aus der Schleife zurückgegeben, sodass du ihn
-verwenden kannst, wie hier gezeigt:
+ein Thread seine Arbeit abgeschlossen hat. Möglicherweise musst du jedoch das
+Ergebnis dieser Operation aus der Schleife heraus an den Rest deines Codes
+weitergeben. Dazu kannst du den Wert, der zurückgegeben werden soll, hinter dem
+`break`-Ausdruck angeben, den du zum Beenden der Schleife verwendest; dieser
+Wert wird aus der Schleife zurückgegeben, sodass du ihn verwenden kannst, wie
+hier gezeigt:
 
 ```rust
 fn main() {

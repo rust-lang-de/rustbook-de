@@ -14,13 +14,13 @@ ausgeführt werden soll. _Asynchrone Programmierung_ ist eine Abstraktion, mit
 der wir unseren Code in Form von potenziellen Haltepunkten und Endergebnissen
 ausdrücken können, die die Details der Koordination für uns übernehmen.
 
-Dieses Kapitel baut auf Kapitel 16 auf, in dem Stränge (threads) für
-Parallelität und Nebenläufigkeit verwendet werden, und stellt einen alternativen
-Ansatz zum Schreiben von Code vor: Rusts Futures, Ströme (streams) und die
-Syntax `async` und `await`, mit denen wir ausdrücken können, wie Operationen
-asynchron sein könnten, sowie die Crate von Drittanbietern, die asynchrone
-Laufzeiten implementieren: Code, der die Ausführung asynchroner Operationen
-verwaltet und koordiniert.
+Dieses Kapitel baut auf Kapitel 16 auf, in dem Threads für Parallelität und
+Nebenläufigkeit verwendet werden, und stellt einen alternativen Ansatz zum
+Schreiben von Code vor: Rusts Futures, Ströme (streams) und die Syntax `async`
+und `await`, mit denen wir ausdrücken können, wie Operationen asynchron sein
+könnten, sowie die Crate von Drittanbietern, die asynchrone Laufzeiten
+implementieren: Code, der die Ausführung asynchroner Operationen verwaltet und
+koordiniert.
 
 Schauen wir uns ein Beispiel an. Nehmen wir an, du exportierst ein Video, das
 du von einer Familienfeier erstellt hast &ndash; ein Vorgang, der zwischen
@@ -77,9 +77,9 @@ sie verarbeiten, vollständig verfügbar sind.
 > Programm davon profitieren würde, wenn die Operation _nicht_ blockierend
 > wäre.
 
-Wir könnten das Blockieren unseres Hauptstrangs (main thread) vermeiden, indem
-wir einen dedizierten Strang zum Herunterladen jeder Datei erstellen.
-Allerdings würde der Overhead der von diesen Strang verwendeten
+Wir könnten das Blockieren unseres Haupt-Threads (main thread) vermeiden, indem
+wir einen dedizierten Thread zum Herunterladen jeder Datei erstellen.
+Allerdings würde der Overhead der von diesen Thread verwendeten
 Systemressourcen letztendlich zu einem Problem werden. Es wäre besser, wenn der
 Aufruf gar nicht erst blockiert würde und wir stattdessen eine Reihe von
 Aufgaben definieren könnten, die unser Programm ausführen soll, und es der
@@ -94,8 +94,8 @@ folgenden Themen behandeln:
   Funktionen mit einer Laufzeitumgebung ausführt
 - Wie man das asynchrone Modell verwendet, um einige der gleichen
   Herausforderungen zu lösen, die wir uns in Kapitel 16 angeschaut haben
-- Wie Mehrsträngigkeit (multithreading) und async komplementäre Lösungen
-  bieten, die man in vielen Fällen kombinieren kann
+- Wie Multithreading und async komplementäre Lösungen bieten, die man in vielen
+  Fällen kombinieren kann
 
 Bevor wir uns jedoch ansehen, wie async in der Praxis funktioniert, müssen wir
 einen kleinen Abstecher zu den Unterschieden zwischen Parallelität und
@@ -161,15 +161,15 @@ konzentrieren, um deinen Kollegen nicht weiter zu blockieren. Du und dein
 Kollege können nicht mehr parallel arbeiten, und du könntest auch nicht mehr
 nebenläufig an deinen eigenen Aufgaben arbeiten.
 
-Die gleiche grundlegende Dynamik kommt bei Software und Hardware zum Tragen.
-Auf einem Rechner mit einem einzigen CPU-Kern kann die CPU nur eine Operation
-zur gleichen Zeit ausführen, aber sie kann dennoch nebenläufig arbeiten.
-Mithilfe von Werkzeugen wie Strängen, Prozessen und async kann der Computer
-eine Aktivität unterbrechen und zu einer anderen wechseln, bis er schließlich
-wieder zur ersten Aktivität zurückkehrt. Auf einem Computer mit mehreren
-CPU-Kernen kann er auch parallel arbeiten. Ein Kern kann eine Aufgabe
-erledigen, während ein anderer Kern eine komplett unabhängige, andere Aufgabe
-erledigt, und das sogar zur gleichen Zeit.
+Die gleiche grundlegende Dynamik kommt bei Software und Hardware zum Tragen. Auf
+einem Rechner mit einem einzigen CPU-Kern kann die CPU nur eine Operation zur
+gleichen Zeit ausführen, aber sie kann dennoch nebenläufig arbeiten. Mithilfe
+von Werkzeugen wie Threads, Prozessen und async kann der Computer eine Aktivität
+unterbrechen und zu einer anderen wechseln, bis er schließlich wieder zur ersten
+Aktivität zurückkehrt. Auf einem Computer mit mehreren CPU-Kernen kann er auch
+parallel arbeiten. Ein Kern kann eine Aufgabe erledigen, während ein anderer
+Kern eine komplett unabhängige, andere Aufgabe erledigt, und das sogar zur
+gleichen Zeit.
 
 Die Ausführung von asynchronem Code in Rust erfolgt in der Regel nebenläufig.
 Abhängig von der Hardware, dem Betriebssystem und der verwendeten asynchronen

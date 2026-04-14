@@ -530,10 +530,9 @@ Diese Verwendung von `extern` erfordert `unsafe` nur im Attribut, nicht im
 ### Zugreifen oder Ändern einer veränderbaren, statischen Variable
 
 In diesem Buch haben wir noch nicht über _globale Variablen_ gesprochen, die
-Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust
-problematisch sein können. Wenn zwei Stränge (threads) auf dieselbe
-veränderbare, globale Variable zugreifen, kann dies zu einer
-Daten-Wettlaufsituation (data race) führen.
+Rust zwar unterstützt, die aber wegen der Eigentumsregeln von Rust problematisch
+sein können. Wenn zwei Threads auf dieselbe veränderbare, globale Variable
+zugreifen, kann dies zu einer Daten-Wettlaufsituation (data race) führen.
 
 In Rust werden globale Variablen als _statische_ Variablen bezeichnet.
 Codeblock 20-10 zeigt ein Beispiel für die Deklaration und Verwendung einer
@@ -575,9 +574,9 @@ sie zugreift und sie modifiziert.
 ```rust
 static mut COUNTER: u32 = 0;
 
-/// SAFETY: Der Aufruf aus mehr als einem Strang gleichzeitig führt zu
+/// SAFETY: Der Aufruf aus mehr als einem Thread gleichzeitig führt zu
 /// undefiniertem Verhalten, daher *musst* du sicherstellen, dass du sie nur
-/// aus einem einzigen Strang gleichzeitig aufrufst.
+/// aus einem einzigen Thread gleichzeitig aufrufst.
 unsafe fn add_to_count(inc: u32) {
     unsafe {
         COUNTER += inc;
@@ -586,7 +585,7 @@ unsafe fn add_to_count(inc: u32) {
 
 fn main() {
     unsafe {
-        // SAFETY: Aufruf aus nur von einem einzigen Strang in `main`.
+        // SAFETY: Aufruf aus nur von einem einzigen Thread in `main`.
         add_to_count(3);
         println!("COUNTER: {}", *(&raw const COUNTER));
     }
@@ -599,8 +598,8 @@ veränderbare, statische Variable ist unsicher</span>
 Wie bei regulären Variablen spezifizieren wir die Veränderbarkeit mit dem
 Schlüsselwort `mut`. Jeder Code, der `COUNTER` liest oder schreibt, muss
 innerhalb eines `unsafe`-Blocks liegen. Der Code in Codeblock 20-11 kompiliert
-und gibt `COUNTER: 3` so, wie wir es erwarten würden, weil er nur einen
-einzigen Strang hat. Wenn mehrere Stränge auf `COUNTER` zugreifen, würde dies
+und gibt `COUNTER: 3` so, wie wir es erwarten würden, weil er nur einen einzigen
+Thread hat. Wenn mehrere Threads auf `COUNTER` zugreifen, würde dies
 wahrscheinlich zu einer Daten-Wettlaufsituation führen, es handelt sich also um
 ein undefiniertes Verhalten. Daher müssen wir die gesamte Funktion als `unsafe`
 kennzeichnen und die Sicherheitseinschränkung dokumentieren, damit jeder, der
@@ -626,9 +625,9 @@ die Sicherheitsanforderungen deutlicher zu machen.
 Bei veränderbaren Daten, die global zugänglich sind, ist es schwierig,
 sicherzustellen, dass es keine Daten-Wettlaufsituationen gibt, weshalb Rust
 veränderbare, statische Variablen als unsicher betrachtet. Wann immer möglich,
-ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken
-und Strang-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler
-prüft, ob der Datenzugriff von verschiedenen Strängen sicher ist.
+ist es vorzuziehen, die in Kapitel 16 besprochenen Nebenläufigkeitstechniken und
+Thread-sicheren, intelligenten Zeiger zu verwenden, damit der Compiler prüft, ob
+der Datenzugriff von verschiedenen Threads sicher ist.
 
 ### Implementieren eines unsicheren Traits
 
@@ -665,7 +664,7 @@ sind, die `Send` und `Sync` implementieren. Wenn wir einen Typ implementieren,
 der einen Typ enthält, der nicht `Send` oder `Sync` implementiert, z.B.
 Rohzeiger, und wir diesen Typ als `Send` oder `Sync` markieren wollen, müssen
 wir `unsafe` verwenden. Rust kann nicht überprüfen, ob unser Typ die Garantien
-aufrechterhält, dass er sicher über Stränge gesendet oder von mehreren Strängen
+aufrechterhält, dass er sicher über Threads gesendet oder von mehreren Threads
 aus zugegriffen werden kann; daher müssen wir diese Prüfungen manuell
 durchführen und als solche mit `unsafe` kennzeichnen.
 

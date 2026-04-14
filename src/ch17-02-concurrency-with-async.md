@@ -1,23 +1,21 @@
 ## Anwenden von Nebenläufigkeit mit async
 
 In diesem Abschnitt werden wir async auf einige Nebenläufigkeitsprobleme
-anwenden, die wir in Kapitel 16 mit Strängen (threads) angegangen sind. Da wir
-dort bereits über viele Schlüsselideen gesprochen haben, werden wir uns in
-diesem Abschnitt auf die Unterschiede zwischen Strängen und Futures
-konzentrieren.
+anwenden, die wir in Kapitel 16 mit Threads angegangen sind. Da wir dort bereits
+über viele Schlüsselideen gesprochen haben, werden wir uns in diesem Abschnitt
+auf die Unterschiede zwischen Threads und Futures konzentrieren.
 
 In vielen Fällen sind die APIs für den Umgang mit Nebenläufigkeit mittels async
-sehr ähnlich zu denen mit Strängen. In anderen Fällen sind sie am Ende ganz
-anders. Selbst wenn die APIs von Strängen und async _ähnlich_ aussehen, haben
-sie oft ein anderes Verhalten und fast immer unterschiedliche
-Leistungsmerkmale.
+sehr ähnlich zu denen mit Threads. In anderen Fällen sind sie am Ende ganz
+anders. Selbst wenn die APIs von Threads und async _ähnlich_ aussehen, haben sie
+oft ein anderes Verhalten und fast immer unterschiedliche Leistungsmerkmale.
 
 ### Erstellen einer neuen Aufgabe mit `spawn_task`
 
-Die erste Operation, die wir im Abschnitt [„Erstellen eines neuen Strangs mit
+Die erste Operation, die wir im Abschnitt [„Erstellen eines neuen Threads mit
 `spawn`“][thread-spawn] in Kapitel 16 in Angriff genommen haben, war das
-Hochzählen in zwei separaten Strängen. Lass uns das Gleiche mit async machen.
-Die Crate `trpl` enthält eine Funktion `spawn_task`, die der API `thread::spawn`
+Hochzählen in zwei separaten Threads. Lass uns das Gleiche mit async machen. Die
+Crate `trpl` enthält eine Funktion `spawn_task`, die der API `thread::spawn`
 sehr ähnlich ist, und eine Funktion `sleep`, die eine async-Version der API
 `thread::sleep` ist. Wir können diese zusammen verwenden, um das Zählbeispiel zu
 implementieren, siehe Codeblock 17-6.
@@ -61,7 +59,7 @@ die nächste Nachricht gesendet wird. Wir platzieren die eine Schleife in den
 Rumpf des `trpl::spawn_task`-Aufrufs und die andere in eine `for`-Schleife auf
 oberster Ebene. Wir fügen auch ein `await` nach den `sleep`-Aufrufen ein.
 
-Dieser Code funktioniert ähnlich wie die Strang-basierte Implementierung
+Dieser Code funktioniert ähnlich wie die Thread-basierte Implementierung
 &ndash; einschließlich der Tatsache, dass die Meldungen in deinem Terminal in
 einer anderen Reihenfolge erscheinen, wenn du es ausführst:
 
@@ -81,10 +79,10 @@ Diese Version beendet sich, sobald die `for`-Schleife im Rumpf des asynchronen
 Blocks beendet ist, da die von `spawn_task` erzeugte Aufgabe beendet wird, wenn
 die Funktion `main` endet. Wenn du die Aufgabe bis zum Ende ausführen willst,
 musst du `JoinHandle` verwenden, um auf das Ende der ersten Aufgabe zu warten.
-Bei Strängen haben wir die Methode `join` verwendet, um zu „blockieren“, bis
-der Strang fertig ist. In Codeblock 17-7 können wir `await` verwenden, um
-dasselbe zu tun, weil `JoinHandle` selbst ein Future ist. Sein `Output`-Typ ist
-`Result`, also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.
+Bei Threads haben wir die Methode `join` verwendet, um zu „blockieren“, bis der
+Thread fertig ist. In Codeblock 17-7 können wir `await` verwenden, um dasselbe
+zu tun, weil `JoinHandle` selbst ein Future ist. Sein `Output`-Typ ist `Result`,
+also entpacken wir es ebenfalls, nachdem wir darauf gewartet haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -132,28 +130,27 @@ Hallo Nummer 8 von der ersten Aufgabe!
 Hallo Nummer 9 von der ersten Aufgabe!
 ```
 
-Bisher sieht es so aus, als ob async und Stränge zu ähnlichen Ergebnissen
-führen, nur mit einer anderen Syntax: Verwenden von `await` anstelle des
-Aufrufs von `join` auf `JoinHandle` und Abwarten der `sleep`-Aufrufe.
+Bisher sieht es so aus, als ob async und Threads zu ähnlichen Ergebnissen
+führen, nur mit einer anderen Syntax: Verwenden von `await` anstelle des Aufrufs
+von `join` auf `JoinHandle` und Abwarten der `sleep`-Aufrufe.
 
 Der größere Unterschied ist, dass wir dafür keinen weiteren
-Betriebssystem-Strang starten müssen. Tatsächlich brauchen wir hier nicht
+Betriebssystem-Thread starten müssen. Tatsächlich brauchen wir hier nicht
 einmal eine Aufgabe zu starten. Da asynchrone Blöcke zu anonymen Futures
 kompiliert werden, können wir beide Schleifen in einen asynchronen Block packen
 und von der Laufzeitumgebung mittels der Funktion `trpl::join` bis zum Ende
 ausführen lassen.
 
-Im Abschnitt [„Warten auf das Ende aller Stränge“][join-handles] in Kapitel 16
-haben wir gezeigt, wie man die Methode `join` auf den Typ `JoinHandle`
-anwendet, der beim Aufruf von `std::thread::spawn` zurückgegeben wird. Die
-Funktion `trpl::join` ist ähnlich, aber für Futures. Wenn du ihr zwei Futures
-gibst, erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe
-der beiden übergebenen Futures ist, sobald _beide_ abgeschlossen sind. In
-Codeblock 17-8 verwenden wir also `trpl::join`, um darauf zu warten, dass
-sowohl `fut1` als auch `fut2` fertig sind. Wir warten _nicht_ auf `fut1` und
-`fut2`, sondern auf das neue Future, das von `trpl::join` erzeugt wurde. Wir
-ignorieren die Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten
-handelt.
+Im Abschnitt [„Warten auf das Ende aller Threads“][join-handles] in Kapitel 16
+haben wir gezeigt, wie man die Methode `join` auf den Typ `JoinHandle` anwendet,
+der beim Aufruf von `std::thread::spawn` zurückgegeben wird. Die Funktion
+`trpl::join` ist ähnlich, aber für Futures. Wenn du ihr zwei Futures gibst,
+erzeugt sie ein neues Future, dessen Ausgabe ein Tupel mit der Ausgabe der
+beiden übergebenen Futures ist, sobald _beide_ abgeschlossen sind. In Codeblock
+17-8 verwenden wir also `trpl::join`, um darauf zu warten, dass sowohl `fut1`
+als auch `fut2` fertig sind. Wir warten _nicht_ auf `fut1` und `fut2`, sondern
+auf das neue Future, das von `trpl::join` erzeugt wurde. Wir ignorieren die
+Ausgabe, da es sich nur um ein Tupel mit zwei Einheitswerten handelt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -203,19 +200,19 @@ Hallo Nummer 9 von der ersten Aufgabe!
 ```
 
 Nun siehst du jedes Mal genau dieselbe Reihenfolge, was sich sehr von dem
-unterscheidet, was wir bei Strängen und mit `trpl::spawn_task` in Codeblock
-17-7 gesehen haben. Das liegt daran, dass die Funktion `trpl::join` _fair_ ist,
-d.h. sie prüft jedes Future gleich oft, wechselt zwischen ihnen ab und lässt
-nie eines vorauslaufen, wenn das andere bereit ist. Bei Strängen entscheidet
-das Betriebssystem, welcher Strang geprüft wird und wie lange er laufen darf.
-Bei asynchronem Rust entscheidet die Laufzeitumgebung, welche Aufgabe geprüft
-werden soll. (In der Praxis sind die Details komplizierter, weil eine
-asynchrone Laufzeitumgebung unter der Haube Betriebssystem-Stränge für die
-Verwaltung der Nebenläufigkeit verwenden könnte, sodass das Einhalten der
-Fairness mehr Aufwand für eine Laufzeitumgebung sein kann &ndash; aber es ist
-immer noch möglich!) Laufzeitumgebungen müssen nicht für jede beliebige
-Operation Fairness garantieren, und sie stellen oft mehrere APIs bereit, mit
-denen du wählen kannst, ob du Fairness wünschst oder nicht.
+unterscheidet, was wir bei Threads und mit `trpl::spawn_task` in Codeblock 17-7
+gesehen haben. Das liegt daran, dass die Funktion `trpl::join` _fair_ ist, d.h.
+sie prüft jedes Future gleich oft, wechselt zwischen ihnen ab und lässt nie
+eines vorauslaufen, wenn das andere bereit ist. Bei Threads entscheidet das
+Betriebssystem, welcher Thread geprüft wird und wie lange er laufen darf. Bei
+asynchronem Rust entscheidet die Laufzeitumgebung, welche Aufgabe geprüft werden
+soll. (In der Praxis sind die Details komplizierter, weil eine asynchrone
+Laufzeitumgebung unter der Haube Betriebssystem-Threads für die Verwaltung der
+Nebenläufigkeit verwenden könnte, sodass das Einhalten der Fairness mehr Aufwand
+für eine Laufzeitumgebung sein kann &ndash; aber es ist immer noch möglich!)
+Laufzeitumgebungen müssen nicht für jede beliebige Operation Fairness
+garantieren, und sie stellen oft mehrere APIs bereit, mit denen du wählen
+kannst, ob du Fairness wünschst oder nicht.
 
 Probiere einige dieser Varianten des Wartens auf das Future aus und sieh, was
 sie bewirken:
@@ -234,11 +231,11 @@ Auch die gemeinsame Nutzung von Daten zwischen Futures wird uns vertraut sein:
 Wir werden wieder die Nachrichtenübermittlung (message passing) verwenden,
 diesmal jedoch mit asynchronen Versionen der Typen und Funktionen. Wir werden
 einen etwas anderen Weg einschlagen als im Abschnitt [„Nachrichtenaustausch
-zwischen Strängen (threads)“][message-passing-threads] in Kapitel 16, um einige
-der wichtigsten Unterschiede zwischen Strang-basierter und Future-basierter
+zwischen Threads“][message-passing-threads] in Kapitel 16, um einige der
+wichtigsten Unterschiede zwischen Thread-basierter und Future-basierter
 Nebenläufigkeit zu veranschaulichen. In Codeblock 17-9 beginnen wir mit einem
-einzigen asynchronen Block &ndash; _ohne_ eine separate Aufgabe zu erstellen,
-da wir einen separaten Strang erstellt haben.
+einzigen asynchronen Block &ndash; _ohne_ eine separate Aufgabe zu erstellen, da
+wir einen separaten Thread erstellt haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -260,13 +257,13 @@ da wir einen separaten Strang erstellt haben.
 Zuweisen der beiden Enden an `tx` und `rx`</span>
 
 Hier verwenden wir `trpl::channel`, eine asynchrone Version des Kanals wie mit
-Strängen in Kapitel 16. Die asynchrone Version der API unterscheidet sich nur
-geringfügig von der Strang-basierten Version: Sie verwendet einen veränderbaren
-statt eines unveränderbaren Empfängers `rx`, und ihre Methode `recv` erzeugt
-ein Future, auf das wir warten müssen, anstatt den Wert direkt zu erzeugen.
-Jetzt können wir Nachrichten vom Sender zum Empfänger senden. Beachte, dass wir
-keinen separaten Strang oder gar eine Aufgabe erzeugen müssen; wir müssen
-lediglich auf den Aufruf von `rx.recv` warten.
+Threads in Kapitel 16. Die asynchrone Version der API unterscheidet sich nur
+geringfügig von der Thread-basierten Version: Sie verwendet einen veränderbaren
+statt eines unveränderbaren Empfängers `rx`, und ihre Methode `recv` erzeugt ein
+Future, auf das wir warten müssen, anstatt den Wert direkt zu erzeugen. Jetzt
+können wir Nachrichten vom Sender zum Empfänger senden. Beachte, dass wir keinen
+separaten Thread oder gar eine Aufgabe erzeugen müssen; wir müssen lediglich auf
+den Aufruf von `rx.recv` warten.
 
 Die synchrone Methode `Receiver::recv` in `std::mpsc::channel` blockiert, bis
 sie eine Nachricht erhält. Die Methode `trpl::Receiver::recv` tut dies nicht,
@@ -455,9 +452,9 @@ wir `tx` aber in den async-Block _verschieben_ könnten, würde es aufgeräumt
 werden, sobald der Block endet. Im Abschnitt [„Erfassen von Referenzen oder
 Verschieben der Eigentümerschaft“][capture-or-move] in Kapitel 13 haben wir
 gelernt, wie man das Schlüsselwort `move` mit Closures verwendet, und im
-Abschnitt [„Verwenden von `move`-Closures mit Strängen“][move-threads] in
-Kapitel 16 haben wir gesehen, dass wir oft Daten in Closures verschieben müssen,
-wenn wir mit Strängen arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende
+Abschnitt [„Verwenden von `move`-Closures mit Threads“][move-threads] in Kapitel
+16 haben wir gesehen, dass wir oft Daten in Closures verschieben müssen, wenn
+wir mit Threads arbeiten. Für asynchrone Blöcke gilt dieselbe grundlegende
 Dynamik, sodass das Schlüsselwort `move` mit asynchronen Blöcken genauso
 funktioniert wie mit Closures.
 
@@ -608,7 +605,7 @@ einer anderen Aufgabe wechseln kann.
 
 [capture-or-move]: ch13-01-closures.html#erfassen-von-referenzen-oder-verschieben-der-eigentümerschaft
 [if-let]: ch06-03-if-let.html
-[join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-stränge
+[join-handles]: ch16-01-threads.html#warten-auf-das-ende-aller-threads
 [message-passing-threads]: ch16-02-message-passing.html
-[move-threads]: ch16-01-threads.html#verwenden-von-move-closures-mit-strängen
-[thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-strangs-mit-spawn
+[move-threads]: ch16-01-threads.html#verwenden-von-move-closures-mit-threads
+[thread-spawn]: ch16-01-threads.html#erstellen-eines-neuen-threads-mit-spawn

@@ -90,8 +90,8 @@
   - [Referenzzyklen können zu einem Speicherleck führen](ch15-06-reference-cycles.md)
 
 - [Furchtlose Nebenläufigkeit](ch16-00-concurrency.md)
-  - [Mit Strängen (threads) Programmcode gleichzeitig ausführen](ch16-01-threads.md)
-  - [Nachrichtenaustausch zwischen Strängen (threads)](ch16-02-message-passing.md)
+  - [Mit Threads Programmcode gleichzeitig ausführen](ch16-01-threads.md)
+  - [Nachrichtenaustausch zwischen Threads](ch16-02-message-passing.md)
   - [Nebenläufigkeit mit gemeinsamem Zustand](ch16-03-shared-state.md)
   - [Erweiterbare Nebenläufigkeit mit `Send` und `Sync`](ch16-04-extensible-concurrency-sync-and-send.md)
 
@@ -101,7 +101,7 @@
   - [Abgeben (yielding) der Kontrolle an die Laufzeitumgebung](ch17-03-more-futures.md)
   - [Ströme (streams): Sequenz von Futures](ch17-04-streams.md)
   - [Ein genauerer Blick auf die Traits für Async](ch17-05-traits-for-async.md)
-  - [Futures, Aufgaben und Stränge](ch17-06-futures-tasks-threads.md)
+  - [Futures, Aufgaben und Threads](ch17-06-futures-tasks-threads.md)
 
 - [Objektorientierte Sprachelemente](ch18-00-oop.md)
   - [Charakteristiken objektorientierter Sprachen](ch18-01-what-is-oo.md)
@@ -120,9 +120,9 @@
   - [Erweiterte Funktionen und Closures](ch20-04-advanced-functions-and-closures.md)
   - [Makros](ch20-05-macros.md)
 
-- [Abschlussprojekt: Einen mehrsträngigen (multi-threaded) Webserver erstellen](ch21-00-final-project-a-web-server.md)
-  - [Einen einsträngigen (single-threaded) Webserver erstellen](ch21-01-single-threaded.md)
-  - [Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver](ch21-02-multithreaded.md)
+- [Abschlussprojekt: Einen multi-threaded Webserver erstellen](ch21-00-final-project-a-web-server.md)
+  - [Einen single-threaded Webserver erstellen](ch21-01-single-threaded.md)
+  - [Von einem single-threaded zu einem multi-threaded Webserver](ch21-02-multithreaded.md)
   - [Kontrolliertes Beenden und Aufräumen](ch21-03-graceful-shutdown-and-cleanup.md)
 
 - [Anhang](appendix-00.md)

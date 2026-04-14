@@ -62,11 +62,11 @@ kann. Der Typ `RefCell<T>` ist nützlich, wenn man sicher ist, dass der
 Programmcode den Ausleihregeln entspricht, der Compiler dies jedoch nicht
 verstehen und garantieren kann.
 
-Ähnlich wie `Rc<T>` ist `RefCell<T>` nur für die Verwendung in einsträngigen
-(single-threaded) Szenarien vorgesehen und verursacht einen Kompilierfehler,
-wenn man versucht, es in einem mehrsträngigen (multi-threaded) Kontext zu
-verwenden. Wir werden in Kapitel 16 darüber sprechen, wie man die Funktionalität 
-von `RefCell<T>` in einem mehrsträngigen Programm erhält.
+Ähnlich wie `Rc<T>` ist `RefCell<T>` nur für die Verwendung in single-threaded
+Szenarien vorgesehen und verursacht einen Kompilierfehler, wenn man versucht, es
+in einem multi-threaded Kontext zu verwenden. Wir werden in Kapitel 16 darüber
+sprechen, wie man die Funktionalität von `RefCell<T>` in einem multi-threaded
+Programm erhält.
 
 Eine Zusammenfassung der Gründe für die Wahl von `Box<T>`, `Rc<T>` oder
 `RefCell<T>`:
@@ -715,14 +715,14 @@ c nachher = Cons(RefCell { value: 4 }, Cons(RefCell { value: 15 }, Nil))
 ```
 
 Diese Technik ist ganz ordentlich! Durch die Verwendung von `RefCell<T>` haben
-wir einen nach außen unveränderbaren `List`-Wert. Wir können jedoch die
-Methoden für `RefCell<T>` verwenden, die den Zugriff auf die innere
-Veränderbarkeit ermöglichen, damit wir unsere Daten bei Bedarf ändern können.
-Die Laufzeitprüfungen der Ausleihregeln schützen uns vor
-Daten-Wettlaufsituationen (data races), und manchmal lohnt es sich, ein wenig
-Geschwindigkeit für diese Flexibilität in unseren Datenstrukturen
-einzutauschen. Beachte, dass `RefCell<T>` nicht bei nebenläufigem Code
-funktioniert! `Mutex<T>` ist die Strang-sichere (thread-safe) Version von
-`RefCell<T>` und wir werden `Mutex<T>` in Kapitel 16 besprechen.
+wir einen nach außen unveränderbaren `List`-Wert. Wir können jedoch die Methoden
+für `RefCell<T>` verwenden, die den Zugriff auf die innere Veränderbarkeit
+ermöglichen, damit wir unsere Daten bei Bedarf ändern können. Die
+Laufzeitprüfungen der Ausleihregeln schützen uns vor Daten-Wettlaufsituationen
+(data races), und manchmal lohnt es sich, ein wenig Geschwindigkeit für diese
+Flexibilität in unseren Datenstrukturen einzutauschen. Beachte, dass
+`RefCell<T>` nicht bei nebenläufigem Code funktioniert! `Mutex<T>` ist die
+Thread-sichere (thread-safe) Version von `RefCell<T>` und wir werden `Mutex<T>`
+in Kapitel 16 besprechen.
 
 [wheres-the-operator]: ch05-03-method-syntax.html#wo-ist-der-operator--

@@ -1,4 +1,4 @@
-## Von einem einsträngigen (single-threaded) zu einem mehrsträngigen (multi-threaded) Webserver
+## Von einem single-threaded zu einem multi-threaded Webserver
 
 Im Moment verarbeitet der Server jede Anfrage der Reihe nach, d.h. er wird erst
 dann eine zweite Verbindung verarbeiten, wenn die erste Verbindung
@@ -92,50 +92,49 @@ es geladen wird.
 
 Es gibt mehrere Techniken, um zu vermeiden, dass sich Anfragen hinter einer
 langsamen Anfrage stauen; diejenige, die wir implementieren werden, ist ein
-Strang-Vorrat (thread pool).
+Thread-Pool.
 
-### Verbessern des Durchsatzes mit einem Strang-Vorrat
+### Verbessern des Durchsatzes mit einem Thread-Pool
 
-Ein _Strang-Vorrat_ (thread pool) ist eine Gruppe von erzeugten Strängen, die
-bereit sind und warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue
-Aufgabe erhält, ordnet es einen der Stränge im Pool der Aufgabe zu, und dieser
-Strang wird die Aufgabe bearbeiten. Die verbleibenden Stränge im Pool stehen
-für alle anderen Aufgaben zur Verfügung, die während der Verarbeitung des
-ersten Strangs hereinkommen. Wenn der erste Strang mit der Verarbeitung seiner
-Aufgabe fertig ist, kehrt er in den Vorrat der unbeschäftigten Stränge zurück
-und ist bereit, eine neue Aufgabe zu bearbeiten. Ein Strang-Vorrat ermöglicht
-es dir, Verbindungen gleichzeitig zu verarbeiten und so den Durchsatz deines
-Servers zu erhöhen.
+Ein _Thread-Pool_ ist eine Gruppe von erzeugten Threads, die bereit sind und
+warten, eine Aufgabe zu bearbeiten. Wenn das Programm eine neue Aufgabe erhält,
+ordnet es einen der Threads im Pool der Aufgabe zu, und dieser Thread wird die
+Aufgabe bearbeiten. Die verbleibenden Threads im Pool stehen für alle anderen
+Aufgaben zur Verfügung, die während der Verarbeitung des ersten Threads
+hereinkommen. Wenn der erste Thread mit der Verarbeitung seiner Aufgabe fertig
+ist, kehrt er in den Pool der unbeschäftigten Threads zurück und ist bereit,
+eine neue Aufgabe zu bearbeiten. Ein Thread-Pool ermöglicht es dir, Verbindungen
+gleichzeitig zu verarbeiten und so den Durchsatz deines Servers zu erhöhen.
 
-Wir beschränken die Anzahl der Stränge im Vorrat auf eine kleine Anzahl, um uns
+Wir beschränken die Anzahl der Threads im Pool auf eine kleine Anzahl, um uns
 vor Dienstverweigerungsangriffen (Denial-of-Service, kurz DoS) zu schützen;
-wenn unser Programm für jede eingehende Anfrage einen neuen Strang erstellen
+wenn unser Programm für jede eingehende Anfrage einen neuen Thread erstellen
 würde, könnte jemand, der 10 Millionen Anfragen an unseren Server stellt, ein
 Chaos anrichten, indem er alle Ressourcen unseres Servers aufbraucht und die
 Bearbeitung der Anfragen zum Erliegen bringt.
 
-Anstatt unbegrenzt viele Stränge zu erzeugen, werden wir eine feste Anzahl von
-Strängen im Vorrat warten lassen. Wenn Anfragen eingehen, werden sie zur
-Verarbeitung an den Vorrat geschickt. Der Vorrat verwaltet eine Warteschlange
-für eingehende Anfragen. Jeder der Stränge im Vorrat wird eine Anfrage aus
-dieser Warteschlange holen, die Anfrage bearbeiten und dann die Warteschlange
-um eine weitere Anfrage fragen. Mit diesem Design können wir bis zu _`N`_
-Anfragen gleichzeitig bearbeiten, wobei _`N`_ die Anzahl der Stränge ist. Wenn
-jeder Strang auf eine lang laufende Anfrage antwortet, können sich nachfolgende
+Anstatt unbegrenzt viele Threads zu erzeugen, werden wir eine feste Anzahl von
+Threads im Pool warten lassen. Wenn Anfragen eingehen, werden sie zur
+Verarbeitung an den Pool geschickt. Der Pool verwaltet eine Warteschlange für
+eingehende Anfragen. Jeder der Threads im Pool wird eine Anfrage aus dieser
+Warteschlange holen, die Anfrage bearbeiten und dann die Warteschlange um eine
+weitere Anfrage fragen. Mit diesem Design können wir bis zu _`N`_ Anfragen
+gleichzeitig bearbeiten, wobei _`N`_ die Anzahl der Threads ist. Wenn jeder
+Thread auf eine lang laufende Anfrage antwortet, können sich nachfolgende
 Anfragen immer noch in der Warteschlange rückstauen, aber wir haben die Anzahl
 der lang laufenden Anfragen erhöht, die wir bearbeiten können, bevor wir diesen
 Punkt erreichen.
 
 Diese Technik ist nur eine von vielen Möglichkeiten, den Durchsatz eines
 Webservers zu verbessern. Weitere Optionen, die du untersuchen könntest, sind
-das _Fork/Join-Modell_, das _asynchrone E/A-Modell mit einem Strang_ und das
-_asynchrone E/A-Modell mit mehreren Strängen_. Wenn du an diesem Thema
+das _Fork/Join-Modell_, das _asynchrone E/A-Modell mit einem Thread_ und das
+_asynchrone E/A-Modell mit mehreren Threads_. Wenn du an diesem Thema
 interessiert bist, kannst du mehr über andere Lösungen lesen und versuchen, sie
 in Rust zu implementieren; mit einer systemnahen Sprache wie Rust sind alle
 diese Optionen möglich.
 
-Bevor wir mit der Implementierung eines Strang-Vorrats beginnen, lass uns
-darüber sprechen, wie die Verwendung des Vorrats aussehen sollte. Wenn du
+Bevor wir mit der Implementierung eines Thread-Pools beginnen, lass uns
+darüber sprechen, wie die Verwendung des Pools aussehen sollte. Wenn du
 versuchst, Code zu entwerfen, kann das Schreiben der Client-Benutzeroberfläche
 beim Entwurf helfen. Schreibe die API des Codes so, dass sie so strukturiert
 ist, wie du sie aufrufen möchtest; implementiere dann die Funktionalität
@@ -150,18 +149,18 @@ Nächstes ändern sollten, damit der Code funktioniert. Bevor wir das tun, werde
 wir jedoch die Technik erkunden, die wir nicht als Ausgangspunkt verwenden
 werden.
 
-#### Für jede Anfrage einen eigenen Strang erstellen
+#### Für jede Anfrage einen eigenen Thread erstellen
 
 Lass uns zunächst untersuchen, wie unser Code aussehen könnte, wenn er für jede
-Verbindung einen neuen Strang erstellen würde. Wie bereits erwähnt, ist dies
-nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen
-einer unbegrenzten Anzahl von Strängen gibt, aber es ist ein Ausgangspunkt, um
-zunächst einen funktionierenden mehrsträngigen Server zu erhalten. Dann fügen
-wir den Strang-Vorrat als Verbesserung hinzu, und es wird einfacher, die beiden
-Lösungen zu vergleichen.
+Verbindung einen neuen Thread erstellen würde. Wie bereits erwähnt, ist dies
+nicht unser endgültiger Plan, da es Probleme mit dem potenziellen Erzeugen einer
+unbegrenzten Anzahl von Threads gibt, aber es ist ein Ausgangspunkt, um zunächst
+einen funktionierenden multi-threaded Server zu erhalten. Dann fügen wir den
+Thread-Pool als Verbesserung hinzu, und es wird einfacher, die beiden Lösungen
+zu vergleichen.
 
 Codeblock 21-11 zeigt die Änderungen, die an `main` vorgenommen werden müssen,
-um einen neuen Strang zu erzeugen, der jeden Strom innerhalb der `for`-Schleife
+um einen neuen Thread zu erzeugen, der jeden Strom innerhalb der `for`-Schleife
 verarbeitet.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -210,24 +209,24 @@ fn main() {
 # }
 ```
 
-<span class="caption">Codeblock 21-11: Erstellen eines neuen Strangs für jeden
+<span class="caption">Codeblock 21-11: Erstellen eines neuen Threads für jeden
 Strom</span>
 
-Wie du in Kapitel 16 gelernt hast, wird `thread::spawn` einen neuen Strang
-erstellen und dann den Code im Closure im neuen Strang ausführen. Wenn du diesen
+Wie du in Kapitel 16 gelernt hast, wird `thread::spawn` einen neuen Thread
+erstellen und dann den Code im Closure im neuen Thread ausführen. Wenn du diesen
 Code ausführst und _/sleep_ in deinem Browser lädst, dann `/` in zwei weiteren
 Browser-Tabs, wirst du in der Tat sehen, dass die Anfragen an `/` nicht auf die
 Beendigung von _/sleep_ warten müssen. Aber wie wir bereits erwähnt haben, wird
-dies letztendlich das System überfordern, weil du neue Stränge ohne jede
+dies letztendlich das System überfordern, weil du neue Threads ohne jede
 Begrenzung erstellen würdest.
 
-#### Erstellen einer endlichen Anzahl von Strängen
+#### Erstellen einer endlichen Anzahl von Threads
 
-Wir möchten, dass unser Strang-Vorrat in einer ähnlichen, vertrauten Weise
-arbeitet, sodass der Wechsel von Strängen zu einem Strang-Vorrat keine großen
+Wir möchten, dass unser Thread-Pool in einer ähnlichen, vertrauten Weise
+arbeitet, sodass der Wechsel von Threads zu einem Thread-Pool keine großen
 Änderungen am Code erfordert, der unsere API verwendet. Codeblock 21-12 zeigt
-die hypothetische Schnittstelle für eine Struktur (struct) `ThreadPool`, die
-wir anstelle von `thread::spawn` verwenden wollen.
+die hypothetische Schnittstelle für eine Struktur (struct) `ThreadPool`, die wir
+anstelle von `thread::spawn` verwenden wollen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -279,12 +278,12 @@ fn main() {
 <span class="caption">Codeblock 21-12: Unsere ideale
 `ThreadPool`-Schnittstelle</span>
 
-Wir verwenden `ThreadPool::new`, um einen neuen Strang-Vorrat mit einer
-konfigurierbaren Anzahl von Strängen zu erstellen, in diesem Fall vier. In der
+Wir verwenden `ThreadPool::new`, um einen neuen Thread-Pool mit einer
+konfigurierbaren Anzahl von Threads zu erstellen, in diesem Fall vier. In der
 `for`-Schleife hat `pool.execute` eine ähnliche Schnittstelle wie
-`thread::spawn`, indem es einen Closure entgegennimmt, den der Vorrat für jeden
+`thread::spawn`, indem es einen Closure entgegennimmt, den der Pool für jeden
 Strom ausführen soll. Wir müssen `pool.execute` implementieren, sodass es den
-Closure entgegennimmt und ihn einem Strang im Vorrat zur Ausführung übergibt.
+Closure entgegennimmt und ihn einem Thread im Pool zur Ausführung übergibt.
 Dieser Code lässt sich noch nicht kompilieren, aber wir werden es versuchen,
 damit der Compiler uns anleiten kann, wie wir das Problem beheben können.
 
@@ -313,8 +312,8 @@ Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 Webservers sein. Lass uns also die Crate `hello` von einer binären Crate auf
 eine Bibliotheks-Crate umstellen, um unsere `ThreadPool`-Implementierung
 aufzunehmen. Nachdem wir zu einer Bibliotheks-Crate umgestellt haben, könnten
-wir die separate Strang-Vorrats-Bibliothek auch für alle Arbeiten verwenden, die
-wir mit einem Strang-Vorrat durchführen wollen, nicht nur für die Bedienung von
+wir die separate Thread-Pool-Bibliothek auch für alle Arbeiten verwenden, die
+wir mit einem Thread-Pool durchführen wollen, nicht nur für die Bedienung von
 Webanfragen.
 
 Erstelle eine Datei _src/lib.rs_, die das Folgende enthält, was die einfachste
@@ -412,9 +411,9 @@ impl ThreadPool {
 ```
 
 Wir haben `usize` als Typ des Parameters `size` gewählt, weil wir wissen, dass
-eine negative Anzahl von Strängen keinen Sinn macht. Wir wissen auch, dass wir
-diese `4` als die Anzahl der Elemente in einer Kollektion von Strängen
-verwenden werden, wofür der Typ `usize` gedacht ist, wie im Abschnitt
+eine negative Anzahl von Threads keinen Sinn macht. Wir wissen auch, dass wir
+diese `4` als die Anzahl der Elemente in einer Kollektion von Threads verwenden
+werden, wofür der Typ `usize` gedacht ist, wie im Abschnitt
 [„Ganzzahl-Typen“][integer-types] in Kapitel 3 besprochen.
 
 Lass uns den Code noch einmal überprüfen:
@@ -434,11 +433,11 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 
 Der Fehler tritt jetzt auf, weil wir keine Methode `execute` auf `ThreadPool`
 haben. Erinnere dich an Abschnitt [„Erstellen einer endlichen Anzahl von
-Strängen“][similar-interface], wo wir beschlossen haben, dass unser
-Strang-Vorrat eine ähnliche Schnittstelle wie `thread::spawn` haben sollte.
-Zusätzlich werden wir die Funktion `execute` implementieren, sodass sie den
-Closure, der ihr gegeben wird, nimmt und sie einem unbeschäftigten Strang im
-Vorrat zur Ausführung übergibt.
+Threads“][similar-interface], wo wir beschlossen haben, dass unser Thread-Pool
+eine ähnliche Schnittstelle wie `thread::spawn` haben sollte. Zusätzlich werden
+wir die Funktion `execute` implementieren, sodass sie den Closure, der ihr
+gegeben wird, nimmt und sie einem unbeschäftigten Thread im Pool zur Ausführung
+übergibt.
 
 Wir werden die Methode `execute` auf `ThreadPool` definieren, um einen Closure
 als Parameter zu nehmen. Aus Abschnitt [„Verschieben erfasster Werte aus
@@ -464,13 +463,13 @@ können sehen, dass `spawn` `FnOnce` als Trait verwendet, das an `F` gebunden
 ist. Das ist wahrscheinlich auch das, was wir wollen, denn wir werden das
 Argument, das wir bei `execute` bekommen, letztendlich an `spawn` weitergeben.
 Wir können weiterhin zuversichtlich sein, dass `FnOnce` das Trait ist, das wir
-verwenden wollen, weil der Strang zum Ausführen einer Anfrage den Closure dieser
+verwenden wollen, weil der Thread zum Ausführen einer Anfrage den Closure dieser
 Anfrage nur einmal ausführt, was zu `Once` in `FnOnce` passt.
 
 Der Parameter vom Typ `F` hat auch die Trait Bound `Send` und die Lebensdauer
 `'static`, die in unserer Situation nützlich sind: Wir brauchen `Send`, um die
-Trait Bound von einem Strang zu einem anderen zu übertragen und `'static`, weil
-wir nicht wissen, wie lange die Ausführung des Strangs dauern wird. Lass uns
+Trait Bound von einem Thread zu einem anderen zu übertragen und `'static`, weil
+wir nicht wissen, wie lange die Ausführung des Threads dauern wird. Lass uns
 eine Methode `execute` auf `ThreadPool` erstellen, die einen generischen
 Parameter vom Typ `F` mit diesen Abgrenzungen annimmt:
 
@@ -525,18 +524,17 @@ des Kapitels gesehen haben. Unsere Bibliothek ruft den Closure, den wir an
 Bedenke Folgendes: Was wäre hier anders, wenn wir statt eines Closures eine
 Future ausführen würden?
 
-#### Validieren der Anzahl der Stränge in `new`
+#### Validieren der Anzahl der Threads in `new`
 
 Wir tun nichts mit den Parametern von `new` und `execute`. Lass uns die Rümpfe
 dieser Funktionen mit dem Verhalten implementieren, das wir wollen. Lass uns
-zunächst über `new` nachdenken. Früher wählten wir einen vorzeichenlosen Typ
-für den Parameter `size`, weil ein Vorrat mit einer negativen Anzahl von
-Strängen keinen Sinn ergibt. Ein Vorrat mit null Strängen ergibt jedoch auch
-keinen Sinn, dennoch ist null ein vollkommen gültiges `usize`. Wir fügen Code
-hinzu, um zu prüfen, ob `size` größer als null ist, bevor wir eine
-`ThreadPool`-Instanz zurückgeben, und das Programm abstürzen lassen, wenn er
-eine Null erhält, indem wir das Makro `assert!` verwenden, wie in Codeblock
-21-13 gezeigt.
+zunächst über `new` nachdenken. Früher wählten wir einen vorzeichenlosen Typ für
+den Parameter `size`, weil ein Pool mit einer negativen Anzahl von Threads
+keinen Sinn ergibt. Ein Pool mit null Threads ergibt jedoch auch keinen Sinn,
+dennoch ist null ein vollkommen gültiges `usize`. Wir fügen Code hinzu, um zu
+prüfen, ob `size` größer als null ist, bevor wir eine `ThreadPool`-Instanz
+zurückgeben, und das Programm abstürzen lassen, wenn er eine Null erhält, indem
+wir das Makro `assert!` verwenden, wie in Codeblock 21-13 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -546,7 +544,7 @@ eine Null erhält, indem wir das Makro `assert!` verwenden, wie in Codeblock
 impl ThreadPool {
     /// Erzeuge einen neuen ThreadPool.
     ///
-    /// Die Größe ist die Anzahl der Stränge im Vorrat.
+    /// Die Größe ist die Anzahl der Threads im Pool.
     ///
     /// # Panics
     ///
@@ -581,7 +579,7 @@ generierte Dokumentation für `new` aussieht!
 Anstatt das Makro `assert!` hinzuzufügen, wie wir es hier getan haben, könnten
 wir `new` zu `build` ändern und ein `Result` zurückgeben lassen, wie wir es mit
 `Config::build` im E/A-Projekt in Codeblock 12-9 getan haben. Aber wir haben in
-diesem Fall entschieden, dass der Versuch, einen Strang-Vorrat ohne Stränge zu
+diesem Fall entschieden, dass der Versuch, einen Thread-Pool ohne Threads zu
 erstellen, ein nicht behebbarer Fehler sein sollte. Wenn du ehrgeizig bist,
 versuche, eine Funktion namens `build` mit der folgenden Signatur zu schreiben,
 um sie mit der Funktion `new` zu vergleichen:
@@ -590,12 +588,12 @@ um sie mit der Funktion `new` zu vergleichen:
 pub fn new(size: usize) -> Result<ThreadPool, PoolCreationError> {
 ```
 
-#### Platz zum Speichern der Stränge schaffen
+#### Platz zum Speichern der Threads schaffen
 
 Jetzt, da wir eine Möglichkeit haben, zu wissen, dass wir eine gültige Anzahl
-von Strängen im Vorrat haben, können wir diese Stränge erstellen und sie in der
+von Threads im Pool haben, können wir diese Threads erstellen und sie in der
 Struktur `ThreadPool` speichern, bevor wir die Struktur zurückgeben. Aber wie
-„speichern“ wir einen Strang? Werfen wir noch einmal einen Blick auf die
+„speichern“ wir einen Thread? Werfen wir noch einmal einen Blick auf die
 Signatur von `Thread::spawn`:
 
 ```rust,ignore
@@ -609,15 +607,15 @@ pub fn spawn<F, T>(f: F) -> JoinHandle<T>
 Die Funktion `spawn` gibt einen `JoinHandle<T>` zurück, wobei `T` der Typ ist,
 den der Closure zurückgibt. Lass uns versuchen, auch `JoinHandle` zu benutzen
 und sehen, was passiert. In unserem Fall werden die Closures, die wir an den
-Strang-Vorrat übergeben, die Verbindung behandeln und nichts zurückgeben, also
+Thread-Pool übergeben, die Verbindung behandeln und nichts zurückgeben, also
 wird `T` der Unit-Typ `()` sein.
 
 Der Code in Codeblock 21-14 lässt sich kompilieren, erzeugt aber noch keine
-Stränge. Wir haben die Definition von `ThreadPool` so geändert, dass sie einen
+Threads. Wir haben die Definition von `ThreadPool` so geändert, dass sie einen
 Vektor von `thread::JoinHandle<()>`-Instanzen enthält, den Vektor mit der
-Kapazität `size` initialisiert, eine `for`-Schleife eingerichtet, die etwas
-Code zum Erzeugen der Stränge ausführt, und eine `ThreadPool`-Instanz
-zurückgibt, die diese enthält.
+Kapazität `size` initialisiert, eine `for`-Schleife eingerichtet, die etwas Code
+zum Erzeugen der Threads ausführt, und eine `ThreadPool`-Instanz zurückgibt, die
+diese enthält.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -632,7 +630,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -643,7 +641,7 @@ impl ThreadPool {
         let mut threads = Vec::with_capacity(size);
 
         for _ in 0..size {
-            // einige Stränge erstellen und im Vektor speichern
+            // einige Threads erstellen und im Vektor speichern
         }
 
         ThreadPool { threads }
@@ -659,7 +657,7 @@ impl ThreadPool {
 ```
 
 <span class="caption">Codeblock 21-14: Erstellen eines Vektors für `ThreadPool`
-zum Aufnehmen der Stränge</span>
+zum Aufnehmen der Threads</span>
 
 Wir haben `std::thread` in der Bibliotheks-Crate in den Gültigkeitsbereich
 gebracht, weil wir `thread::JoinHandle` als den Typ der Elemente im Vektor in
@@ -675,45 +673,45 @@ Größe verändert, wenn Elemente eingefügt werden.
 
 Wenn du `cargo check` erneut ausführst, sollte es erfolgreich sein.
 
-#### Senden von Code vom `ThreadPool` an einen Strang
+#### Senden von Code vom `ThreadPool` an einen Thread
 
-Wir haben einen Kommentar in der `for`-Schleife in Codeblock 21-14 bezüglich
-der Erstellung von Strängen hinterlassen. Hier werden wir uns ansehen, wie wir
-tatsächlich Stränge erstellen. Die Standardbibliothek bietet `thread::spawn`
-als eine Möglichkeit, Stränge zu erstellen, und `thread::spawn` erwartet, dass
-es Code erhält, den der Strang ausführen soll, sobald der Strang erstellt ist.
-In unserem Fall wollen wir jedoch die Stränge erstellen und sie auf Code
-_warten_ lassen, den wir später senden werden. Die Implementierung von Strängen
-in der Standardbibliothek enthält keine Möglichkeit, dies zu tun; wir müssen
-sie manuell implementieren.
+Wir haben einen Kommentar in der `for`-Schleife in Codeblock 21-14 bezüglich der
+Erstellung von Threads hinterlassen. Hier werden wir uns ansehen, wie wir
+tatsächlich Threads erstellen. Die Standardbibliothek bietet `thread::spawn` als
+eine Möglichkeit, Threads zu erstellen, und `thread::spawn` erwartet, dass es
+Code erhält, den der Thread ausführen soll, sobald der Thread erstellt ist. In
+unserem Fall wollen wir jedoch die Threads erstellen und sie auf Code _warten_
+lassen, den wir später senden werden. Die Implementierung von Threads in der
+Standardbibliothek enthält keine Möglichkeit, dies zu tun; wir müssen sie
+manuell implementieren.
 
 Wir werden dieses Verhalten implementieren, indem wir eine neue Datenstruktur
-zwischen dem `ThreadPool` und den Strängen, die dieses neue Verhalten verwalten
+zwischen dem `ThreadPool` und den Threads, die dieses neue Verhalten verwalten
 werden, einführen. Wir nennen diese Datenstruktur `Worker`, was ein gängiger
-Begriff in Vorrats-Implementierungen ist. Der `Worker` holt den Code ab, der
-ausgeführt werden muss, und führt ihn in seinem Strang aus.
+Begriff in Pool-Implementierungen ist. Der `Worker` holt den Code ab, der
+ausgeführt werden muss, und führt ihn in seinem Thread aus.
 
 Denke an Menschen, die in der Küche eines Restaurants arbeiten: Die Arbeiter
 warten, bis Bestellungen von Kunden eingehen, und dann sind sie dafür
 verantwortlich, diese Bestellungen entgegenzunehmen und auszuführen.
 
-Anstatt einen Vektor von `JoinHandle<()>`-Instanzen im Strang-Vorrat zu
+Anstatt einen Vektor von `JoinHandle<()>`-Instanzen im Thread-Pool zu
 speichern, werden wir Instanzen der `Worker`-Struktur speichern. Jeder `Worker`
 wird eine einzelne `JoinHandle<()>`-Instanz speichern. Dann werden wir eine
 Methode auf `Worker` implementieren, die einen Closure zur Ausführung benötigt
-und ihn zur Ausführung an den bereits laufenden Strang sendet. Wir werden auch
+und ihn zur Ausführung an den bereits laufenden Thread sendet. Wir werden auch
 jedem `Worker` eine `id` geben, damit wir beim Protokollieren oder Debuggen
-zwischen den verschiedenen `Worker`-Instanzen im Vorrat unterscheiden können.
+zwischen den verschiedenen `Worker`-Instanzen im Pool unterscheiden können.
 
 Hier ist der neue Prozess, der abläuft, wenn wir einen `ThreadPool` erstellen.
-Wir werden den Code implementieren, der den Closure an den Strang sendet,
+Wir werden den Code implementieren, der den Closure an den Thread sendet,
 nachdem wir `Worker` auf diese Weise eingerichtet haben:
 
 1. Definiere eine Struktur `Worker`, die eine `id` und einen `JoinHandle<()>`
    enthält.
 2. Ändere `ThreadPool`, um einen Vektor von `Worker`-Instanzen zu halten.
 3. Definiere eine Funktion `Worker::new`, die eine `id`-Nummer nimmt und eine
-   `Worker`-Instanz zurückgibt, die die `id` enthält, sowie einen Strang, der
+   `Worker`-Instanz zurückgibt, die die `id` enthält, sowie einen Thread, der
     mit einem leeren Closure erzeugt wurde.
 4. Verwende in `ThreadPool::new` den `for`-Schleifenzähler, um eine `id` zu
    erzeugen, erzeuge einen neuen `Worker` mit dieser `id` und speichere den
@@ -738,7 +736,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -778,7 +776,7 @@ impl Worker {
 ```
 
 <span class="caption">Codeblock 21-15: Modifizieren von `ThreadPool`, um
-`Worker`-Instanzen zu halten, anstatt Stränge direkt zu halten</span>
+`Worker`-Instanzen zu halten, anstatt Threads direkt zu halten</span>
 
 Wir haben den Namen des Feldes in `ThreadPool` von `threads` in `workers`
 geändert, weil es jetzt `Worker`-Instanzen statt `JoinHandle<()>`-Instanzen
@@ -791,15 +789,15 @@ Implementierungsdetails bezüglich der Verwendung einer `Worker`-Struktur
 innerhalb von `ThreadPool` nicht kennen, also machen wir die `Worker`-Struktur
 und ihre Funktion `new` privat. Die Funktion `Worker::new` verwendet die `id`,
 die wir ihr geben, und speichert eine `JoinHandle<()>`-Instanz, die durch das
-Erzeugen eines neuen Strangs unter Verwendung eines leeren Closures erzeugt
+Erzeugen eines neuen Threads unter Verwendung eines leeren Closures erzeugt
 wird.
 
-> Hinweis: Wenn das Betriebssystem keinen Strang erstellen kann, weil nicht
+> Hinweis: Wenn das Betriebssystem keinen Thread erstellen kann, weil nicht
 > genügend Systemressourcen vorhanden sind, bringt `thread::spawn` das Programm
 > zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
-> die Erstellung einiger Stränge erfolgreich wäre. Der Einfachheit halber
+> die Erstellung einiger Threads erfolgreich wäre. Der Einfachheit halber
 > lassen wir es bei diesem Verhalten, aber in einer produktiven
-> Strang-Pool-Implementierung würdest du wahrscheinlich
+> Thread-Pool-Implementierung würdest du wahrscheinlich
 > [`std::thread::Builder`][builder] mit der Methode [`spawn`][builder-spawn]
 > verwenden wollen, die stattdessen `Result` zurückgibt.
 
@@ -808,7 +806,7 @@ als Argument für `ThreadPool::new` angegeben haben. Aber wir _verarbeiten_ noch
 nicht den Closure, den wir in `execute` erhalten. Schauen wir uns als Nächstes
 an, wie wir das machen.
 
-#### Senden von Anfragen an Stränge über Kanäle
+#### Senden von Anfragen an Threads über Kanäle
 
 Das nächste Problem, das wir angehen, ist dass die Closures bei `thread::spawn`
 absolut nichts bewirken. Gegenwärtig erhalten wir den Closure, den wir ausführen
@@ -818,14 +816,14 @@ Erstellung des `ThreadPool` erstellen.
 
 Wir möchten, dass die Struktur `Worker`, die wir gerade erstellt haben, um den
 Code aus einer Warteschlange im `ThreadPool` zu holen, diesen Code zur
-Ausführung an seinen Strang sendet.
+Ausführung an seinen Thread sendet.
 
 In Kapitel 16 hast du etwas über _Kanäle_ (channels) gelernt &ndash; eine
-einfache Art der Kommunikation zwischen zwei Strängen &ndash;, die für diesen
+einfache Art der Kommunikation zwischen zwei Threads &ndash;, die für diesen
 Anwendungsfall perfekt geeignet ist. Wir verwenden einen Kanal, der als
-Warteschlange von Aufträgen fungiert, und `execute` sendet einen Auftrag aus
-dem `ThreadPool` an die `Worker`-Instanzen, die den Auftrag an ihren Strang
-sendet. Hier ist der Plan:
+Warteschlange von Aufträgen fungiert, und `execute` sendet einen Auftrag aus dem
+`ThreadPool` an die `Worker`-Instanzen, die den Auftrag an ihren Thread sendet.
+Hier ist der Plan:
 
 1. Der `ThreadPool` erstellt einen Kanal und hält den Sender.
 2. Jeder `Worker` hält den Empfänger.
@@ -833,7 +831,7 @@ sendet. Hier ist der Plan:
    wir über den Kanal senden wollen.
 4. Die Methode `execute` sendet den Auftrag, der ausgeführt werden soll, durch
    den Sender.
-5. In seinem Strang wird der `Worker` auf den Empfänger warten und die Closures
+5. In seinem Thread wird der `Worker` auf den Empfänger warten und die Closures
    aller Aufträge, die er erhält, ausführen.
 
 Beginnen wir damit, einen Kanal in `ThreadPool::new` zu erstellen und den
@@ -857,7 +855,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -905,7 +903,7 @@ In `ThreadPool::new` erstellen wir unseren neuen Kanal und lassen den Pool das
 sendende Ende halten. Dies kompiliert erfolgreich.
 
 Lass uns versuchen, einen Empfänger an jeden `Worker` weiterzugeben, während der
-Strang-Vorrat den Kanal erstellt. Wir wissen, dass wir den Empfänger im Strang
+Thread-Pool den Kanal erstellt. Wir wissen, dass wir den Empfänger im Thread
 verwenden wollen, den die `Worker`-Instanzen erzeugen, also werden wir den
 Parameter `receiver` im Closure referenzieren. Der Code in Codeblock 21-17 lässt
 sich noch nicht ganz kompilieren.
@@ -926,7 +924,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -1015,18 +1013,17 @@ Kanalimplementierung, die Rust bietet, erlaubt mehrere _Produzenten_ und einen
 einzigen _Konsumenten_. Das bedeutet, dass wir nicht einfach das konsumierende
 Ende des Kanals klonen können, um diesen Code zu reparieren. Selbst wenn wir
 das könnten, ist das nicht die Technik, die wir anwenden wollen; stattdessen
-wollen wir die Aufträge auf mehrere Stränge verteilen, indem wir den einzigen
+wollen wir die Aufträge auf mehrere Threads verteilen, indem wir den einzigen
 `receiver` unter allen `Worker`-Instanzen aufteilen.
 
-Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des
-Kanals eine Mutation von `receiver`, sodass die Stränge einen sicheren Weg
-benötigen, um `receiver` gemeinsam zu nutzen und zu modifizieren; andernfalls
-könnten wir Wettlaufsituationen (race conditions) erhalten (wie in Kapitel 16
-behandelt).
+Außerdem erfordert das Entfernen eines Auftrags aus der Warteschlange des Kanals
+eine Mutation von `receiver`, sodass die Threads einen sicheren Weg benötigen,
+um `receiver` gemeinsam zu nutzen und zu modifizieren; andernfalls könnten wir
+Wettlaufsituationen (race conditions) erhalten (wie in Kapitel 16 behandelt).
 
-Erinnere dich an die Strang-sicheren intelligenten Zeiger, die in Kapitel 16
-besprochen wurden: Um die Eigentümerschaft über mehrere Stränge zu teilen und
-den Strängen zu erlauben, den Wert zu mutieren, müssen wir `Arc<Mutex<T>>`
+Erinnere dich an die Thread-sicheren intelligenten Zeiger, die in Kapitel 16
+besprochen wurden: Um die Eigentümerschaft über mehrere Threads zu teilen und
+den Threads zu erlauben, den Wert zu mutieren, müssen wir `Arc<Mutex<T>>`
 verwenden. Der Typ `Arc` ermöglicht es mehreren `Worker`-Instanzen, den
 Empfänger zu besitzen, und `Mutex` stellt sicher, dass immer nur ein `Worker`
 zur gleichen Zeit einen Auftrag vom Empfänger erhält. Der Codeblock 21-18 zeigt
@@ -1052,7 +1049,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -1141,7 +1138,7 @@ impl ThreadPool {
     // --abschneiden--
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -1197,10 +1194,10 @@ Kanal</span>
 Nachdem wir eine neue `Job`-Instanz unter Verwendung des Closures, den wir in
 `execute` erhalten, erstellt haben, senden wir diesen Auftrag an das sendende
 Ende des Kanals. Wir rufen `unwrap` auf `send` auf für den Fall, dass das Senden
-fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere Stränge von
+fehlschlägt. Das kann zum Beispiel passieren, wenn wir alle unsere Threads von
 der Ausführung abhalten, was bedeutet, dass das empfangende Ende keine neuen
-Nachrichten mehr empfängt. Im Moment können wir die Ausführung unserer Stränge
-nicht stoppen: Unsere Stränge werden so lange ausgeführt, wie der Vorrat
+Nachrichten mehr empfängt. Im Moment können wir die Ausführung unserer Threads
+nicht stoppen: Unsere Threads werden so lange ausgeführt, wie der Pool
 existiert. Der Grund, warum wir `unwrap` verwenden, ist, dass wir wissen, dass
 der Fehlerfall nicht passieren wird, aber der Compiler das nicht weiß.
 
@@ -1229,7 +1226,7 @@ Codeblock 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -1283,29 +1280,29 @@ impl Worker {
 ```
 
 <span class="caption">Codeblock 21-20: Empfangen und Ausführen der Aufträge im
-Strang des `Worker`</span>
+Thread des `Worker`</span>
 
 Hier rufen wir zuerst `lock` auf `receiver` auf, um den Mutex zu erwerben, und
 dann rufen wir `unwrap` auf, um das Programm bei eventuellen Fehlern abstürzen
 zu lassen. Das Akquirieren einer Sperre kann fehlschlagen, wenn sich der Mutex
 in einem _vergifteten_ Zustand befindet, was passieren kann, wenn ein anderer
-Strang abstürzt, während er die Sperre hält, anstatt sie freizugeben. In dieser
-Situation ist der Aufruf von `unwrap`, damit dieser Strang abstürzt, die
+Thread abstürzt, während er die Sperre hält, anstatt sie freizugeben. In dieser
+Situation ist der Aufruf von `unwrap`, damit dieser Thread abstürzt, die
 richtige Maßnahme. Fühle dich frei, dieses `unwrap` in ein `expect` mit einer
 Fehlermeldung zu ändern, die für dich von Bedeutung ist.
 
 Wenn wir die Sperre auf dem Mutex erhalten, rufen wir `recv` auf, um einen
 `Job` vom Kanal zu empfangen. Ein abschließendes `unwrap` geht auch hier an
-eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Strang, der
+eventuellen Fehlern vorbei, die auftreten könnten, wenn sich der Thread, der
 den Sender hält, beendet hat, ähnlich wie die Methode `send` den Wert `Err`
 zurückgibt, wenn der Empfänger abschaltet.
 
 Der Aufruf von `recv` blockiert, wenn also noch kein Auftrag vorhanden ist,
-wartet der aktuelle Strang, bis ein Auftrag verfügbar wird. Der `Mutex<T>`
-stellt sicher, dass immer nur ein `Worker`-Strang zur gleichen Zeit versucht,
+wartet der aktuelle Thread, bis ein Auftrag verfügbar wird. Der `Mutex<T>`
+stellt sicher, dass immer nur ein `Worker`-Thread zur gleichen Zeit versucht,
 einen Auftrag anzufordern.
 
-Unser Strang-Vorrat ist jetzt in einem funktionierenden Zustand! Führe `cargo
+Unser Thread-Pool ist jetzt in einem funktionierenden Zustand! Führe `cargo
 run` aus und stelle einige Anfragen:
 
 ```console
@@ -1346,11 +1343,11 @@ Worker 0 hat einen Auftrag erhalten; führe ihn aus.
 Worker 2 hat einen Auftrag erhalten; führe ihn aus.
 ```
 
-Erfolg! Wir haben jetzt einen Strang-Vorrat, der Verbindungen asynchron
-ausführt. Es werden nie mehr als vier Stränge erzeugt, sodass unser System
-nicht überlastet wird, wenn der Server viele Anfragen erhält. Wenn wir eine
-Anfrage an _/sleep_ stellen, ist der Server immer noch in der Lage, andere
-Anfragen zu bedienen, indem er sie von einem anderen Strang ausführen lässt.
+Erfolg! Wir haben jetzt einen Thread-Pool, der Verbindungen asynchron ausführt.
+Es werden nie mehr als vier Threads erzeugt, sodass unser System nicht
+überlastet wird, wenn der Server viele Anfragen erhält. Wenn wir eine Anfrage an
+_/sleep_ stellen, ist der Server immer noch in der Lage, andere Anfragen zu
+bedienen, indem er sie von einem anderen Thread ausführen lässt.
 
 > Hinweis: Wenn du _/sleep_ in mehreren Browser-Fenstern gleichzeitig öffnest,
 > werden diese möglicherweise in 5-Sekunden-Intervallen nacheinander geladen.
@@ -1359,7 +1356,7 @@ Anfragen zu bedienen, indem er sie von einem anderen Strang ausführen lässt.
 > nicht durch unseren Webserver verursacht.
 
 Nachdem du die `while let`-Schleife in den Kapiteln 17 und 19 kennengelernt
-hast, fragst du dich vielleicht, warum wir den Code für den `Worker`-Strang
+hast, fragst du dich vielleicht, warum wir den Code für den `Worker`-Thread
 nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -1380,7 +1377,7 @@ nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.
 # impl ThreadPool {
 #     /// Erzeuge einen neuen ThreadPool.
 #     ///
-#     /// Die Größe ist die Anzahl der Stränge im Vorrat.
+#     /// Die Größe ist die Anzahl der Threads im Pool.
 #     ///
 #     /// # Panics
 #     ///
@@ -1436,7 +1433,7 @@ impl Worker {
 `Worker::new` unter Verwendung von `while let`</span>
 
 Dieser Code wird kompiliert und ausgeführt, führt aber nicht zum gewünschten
-Strang-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
+Thread-Verhalten: Eine langsame Anfrage führt immer noch dazu, dass andere
 Anfragen auf ihre Bearbeitung warten. Der Grund dafür ist etwas subtil: Die
 Struktur `Mutex` hat keine öffentliche Methode `unlock`, weil die
 Eigentümerschaft der Sperre auf der Lebensdauer von `MutexGuard<T>` innerhalb
@@ -1461,5 +1458,5 @@ dass andere `Worker`-Instanzen keine Aufträge erhalten können.
 [builder-spawn]: https://doc.rust-lang.org/std/thread/struct.Builder.html#method.spawn
 [integer-types]: ch03-02-data-types.html#ganzzahl-typen
 [moving-out-of-closures]: ch13-01-closures.html#verschieben-erfasster-werte-aus-closures
-[similar-interface]: #erstellen-einer-endlichen-anzahl-von-strängen
+[similar-interface]: #erstellen-einer-endlichen-anzahl-von-threads
 [type-aliases]: ch20-03-advanced-types.html#typ-synonyme-und-typ-aliase

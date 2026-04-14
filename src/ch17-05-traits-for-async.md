@@ -642,7 +642,7 @@ ihm verwenden.
 
 Das ist alles, was wir für die tieferen Details zu diesen Traits behandeln
 werden. Zum Abschluss wollen wir uns ansehen, wie Futures (einschließlich
-Ströme), Aufgaben und Stränge zusammenpassen!
+Ströme), Aufgaben und Threads zusammenpassen!
 
 [ch-18]: ch18-00-oop.html
 [message-passing]: ch17-02-concurrency-with-async.md#datenaustausch-zwischen-zwei-aufgaben-mit-nachrichtenübermittlung
