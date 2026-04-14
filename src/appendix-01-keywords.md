@@ -3,10 +3,10 @@
 Die folgende Liste enthält Schlüsselwörter, die für die gegenwärtige oder
 zukünftige Verwendung durch die Sprache Rust reserviert sind. Als solche können
 sie nicht als Bezeichner verwendet werden (außer als Roh-Bezeichner, die wir im
-Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_
-sind Namen von Funktionen, Variablen, Parametern, Strukturfeldern
-(struct fields), Modulen, Kisten (crates), Konstanten, Makros, statischen
-Werten, Attributen, Typen, Traits und Lebensdauern (lifetimes).
+Abschnitt [„Roh-Bezeichner“][raw-identifiers] besprechen). _Bezeichner_ sind
+Namen von Funktionen, Variablen, Parametern, Strukturfeldern (struct fields),
+Modulen, Crates, Konstanten, Makros, statischen Werten, Attributen, Typen,
+Traits und Lebensdauern (lifetimes).
 
 ### Derzeit verwendete Schlüsselwörter
 
@@ -21,7 +21,7 @@ einer Beschreibung ihrer Funktion.
 - `break` &ndash; Schleife sofort verlassen
 - `const` &ndash; konstante Elemente oder konstante Roh-Referenzen definieren
 - `continue` &ndash; weiter zur nächsten Schleifeniteration
-- `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Kiste (crate)
+- `crate` &ndash; in einem Modulpfad verweist auf das Stammverzeichnis der Crate
 - `dyn` &ndash; dynamischer Aufruf (dispatch) eines Trait-Objekts
 - `else` &ndash; Ersatzkontrollflusszweig bei `if` und `if let`
 - `enum` &ndash; eine Aufzählung (enumeration) definieren
@@ -139,7 +139,7 @@ uns mehr Freiheit bei der Wahl der Bezeichner und ermöglicht uns die
 Integration in Programme, die in einer Sprache geschrieben wurden, in der diese
 Wörter keine Schlüsselwörter sind. Darüber hinaus ermöglicht dir der
 Roh-Bezeichner das Verwenden von Bibliotheken, die in einer anderen
-Rust-Edition, als deine Kiste verwendet, geschrieben wurden. Zum Beispiel ist
+Rust-Edition, als deine Crate verwendet, geschrieben wurden. Zum Beispiel ist
 `try` in Edition 2015 kein Schlüsselwort, in den Editionen 2018, 2021 und 2024
 aber schon. Wenn du auf eine Bibliothek angewiesen bist, die mit Edition 2015
 geschrieben wurde und eine Funktion `try` hat, musst du die

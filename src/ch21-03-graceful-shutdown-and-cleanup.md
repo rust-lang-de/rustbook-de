@@ -745,8 +745,8 @@ findest du hier einige Ideen:
 - Ändere Aufrufe von `unwrap` in eine robustere Fehlerbehandlung.
 - Verwende `ThreadPool`, um eine andere Aufgabe als das Beantworten von
   Web-Anfragen durchzuführen.
-- Suche eine Strang-Vorrats-Kiste auf [crates.io][crates] und   implementiere
-  damit einen ähnlichen Webserver unter Verwendung der Kiste. Vergleiche dann
+- Suche eine Strang-Vorrats-Crate auf [crates.io][crates] und   implementiere
+  damit einen ähnlichen Webserver unter Verwendung der Crate. Vergleiche dann
   dessen API und Robustheit mit dem von uns implementierten Strang-Vorrat.
 
 ## Zusammenfassung

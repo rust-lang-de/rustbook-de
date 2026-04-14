@@ -33,11 +33,11 @@ pub fn eat_at_restaurant() {
 <span class="caption">Codeblock 7-11: Ein Modul mit `use` in den
 Gültigkeitsbereich bringen</span>
 
-Das Angeben von `use` und einem Pfad in einem Gültigkeitsbereich ist ähnlich
-dem Erstellen eines symbolischen Links im Dateisystem. Durch Hinzufügen von
-`use crate::front_of_house::hosting` in der Kistenwurzel ist `hosting` nun ein
+Das Angeben von `use` und einem Pfad in einem Gültigkeitsbereich ist ähnlich dem
+Erstellen eines symbolischen Links im Dateisystem. Durch Hinzufügen von `use
+crate::front_of_house::hosting` in der Crate-Wurzel ist `hosting` nun ein
 gültiger Name in diesem Gültigkeitsbereich, so als wäre das Modul `hosting` in
-der Kistenwurzel definiert worden. Pfade, die mit `use` in den
+der Crate-Wurzel definiert worden. Pfade, die mit `use` in den
 Gültigkeitsbereich gebracht werden, überprüfen wie alle anderen Pfade auch die
 Privatsphäre.
 
@@ -142,7 +142,7 @@ wird. Im Code in Codeblock 7-13 ist unklar, wo `add_to_waitlist` definiert ist.
 Wenn andererseits Strukturen, Aufzählungen und andere Elemente mit `use`
 eingebracht werden, ist es idiomatisch, den vollständigen Pfad anzugeben.
 Codeblock 7-14 zeigt den idiomatischen Weg, die Struktur `HashMap` der
-Standardbibliothek in den Gültigkeitsbereich einer binären Kiste zu bringen.
+Standardbibliothek in den Gültigkeitsbereich einer binären Crate zu bringen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -269,16 +269,16 @@ hat, kann externer Code nun stattdessen den Pfad
 `restaurant::hosting::add_to_waitlist()` verwenden.
 
 Der Rück-Export ist nützlich, wenn sich die interne Struktur deines Codes von
-dem unterscheidet, wie Programmierer, die deinen Code
-aufrufen, über die Domäne denken würden. In der Restaurantmetapher denken die
-Betreiber des Restaurants zum Beispiel an die „Vorderseite des Hauses“ und die
-„Rückseite des Hauses“. Mit `pub use` können wir unseren Code mit einer
-Struktur schreiben, aber eine andere Struktur veröffentlichen. Auf diese Weise
-ist unsere Bibliothek für Programmierer, die an der Bibliothek arbeiten, und
-Programmierer, die die Bibliothek aufrufen, gut organisiert. Ein weiteres
-Beispiel für `pub use` und wie es sich auf die Dokumentation deiner Kiste
-auswirkt, werden wir in [„Exportieren einer komfortablen öffentlichen
-API“][ch14-pub-use] in Kapitel 14 betrachten.
+dem unterscheidet, wie Programmierer, die deinen Code aufrufen, über die Domäne
+denken würden. In der Restaurantmetapher denken die Betreiber des Restaurants
+zum Beispiel an die „Vorderseite des Hauses“ und die „Rückseite des Hauses“. Mit
+`pub use` können wir unseren Code mit einer Struktur schreiben, aber eine andere
+Struktur veröffentlichen. Auf diese Weise ist unsere Bibliothek für
+Programmierer, die an der Bibliothek arbeiten, und Programmierer, die die
+Bibliothek aufrufen, gut organisiert. Ein weiteres Beispiel für `pub use` und
+wie es sich auf die Dokumentation deiner Crate auswirkt, werden wir in
+[„Exportieren einer komfortablen öffentlichen API“][ch14-pub-use] in Kapitel 14
+betrachten.
 
 ### Verwenden externer Pakete
 
@@ -297,7 +297,7 @@ Paket `rand` und alle Abhängigkeiten von [crates.io](https://crates.io/)
 herunterzuladen und `rand` für unser Projekt verfügbar zu machen.
 
 Um dann Definitionen von `rand` in den Gültigkeitsbereich unseres Pakets
-aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem Kistennamen
+aufzunehmen, haben wir eine Zeile mit `use` hinzugefügt, die mit dem Crate-Namen
 `rand` beginnt und die Elemente auflistet, die wir in den Gültigkeitsbereich
 bringen wollten. Erinnere dich, dass wir in [„Generieren einer
 Geheimzahl“][rand] in Kapitel 2 das Trait `Rng` in den Gültigkeitsbereich
@@ -328,11 +328,11 @@ fn main() {
 
 Mitglieder der Rust-Gemeinschaft haben viele Pakete unter
 [crates.io](https://crates.io/) zur Verfügung gestellt und wenn du eines davon
-in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie
-in der Datei _Cargo.toml_ deines Pakets auf und verwende `use`, um Elemente aus
-ihren Kisten in den Gültigkeitsbereich zu bringen.
+in dein Paket aufnimmst, sind die gleichen Schritte erforderlich: Liste sie in
+der Datei _Cargo.toml_ deines Pakets auf und verwende `use`, um Elemente aus
+ihren Crates in den Gültigkeitsbereich zu bringen.
 
-Beachte, dass die Standardbibliothek `std` ebenfalls eine Kiste ist, die nicht
+Beachte, dass die Standardbibliothek `std` ebenfalls eine Crate ist, die nicht
 zu unserem Paket gehört. Da die Standardbibliothek mit der Sprache Rust
 ausgeliefert wird, brauchen wir _Cargo.toml_ nicht zu ändern, um `std`
 einzubinden. Aber wir müssen `use` verwenden, um Elemente von dort in den
@@ -344,15 +344,15 @@ use std::collections::HashMap;
 ```
 
 Dies ist ein absoluter Pfad, der mit `std`, dem Namen der
-Standard-Bibliothekskiste, beginnt.
+Standard-Bibliotheks-Crate, beginnt.
 
 ### Verschachtelte Pfade verwenden, um `use`-Listen zu vereinfachen
 
-Wenn wir mehrere in der gleichen Kiste oder im gleichen Modul definierte
+Wenn wir mehrere in der gleichen Crate oder im gleichen Modul definierte
 Elemente verwenden, kann das Auflisten jedes Elements in einer eigenen Zeile
 viel vertikalen Platz in unseren Dateien einnehmen. Zum Beispiel bringen diese
-beiden `use`-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten,
-Elemente aus `std` in den Gültigkeitsbereich:
+beiden `use`-Anweisungen, die wir im Ratespiel in Codeblock 2-4 hatten, Elemente
+aus `std` in den Gültigkeitsbereich:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -381,7 +381,7 @@ use std::{cmp::Ordering, io};
 mehrere Elemente mit demselben Präfix in den Gültigkeitsbereich zu
 bringen</span>
 
-In größeren Programmen kann das Einbeziehen vieler Elemente aus derselben Kiste
+In größeren Programmen kann das Einbeziehen vieler Elemente aus derselben Crate
 oder demselben Modul in den Gültigkeitsbereich durch verschachtelte Pfade die
 Anzahl der separaten `use`-Anweisungen um ein Vielfaches reduzieren!
 

@@ -23,16 +23,15 @@ Hier ist unser Plan zum Bauen des Webservers:
 
 Bevor wir anfangen, sollten wir ein Detail erwähnen. Die Methode, die wir
 verwenden werden, wird nicht der beste Weg sein, einen Webserver mit Rust zu
-bauen. Gemeinschaftsmitglieder haben eine Reihe von produktionsreifen Kisten
-auf [crates.io][crates] veröffentlicht, die umfassendere Webserver- und
-Strang-Vorrats-Implementierungen bereitstellen, als wir sie bauen werden.
-Unsere Absicht in diesem Kapitel ist es jedoch, dir beim Lernen zu helfen, und
-nicht, den einfachen Weg zu gehen. Da es sich bei Rust um eine
-Systemprogrammiersprache handelt, können wir die Abstraktionsebene wählen, mit
-der wir arbeiten wollen, und können auf eine niedrigere Ebene gehen, als dies
-in anderen Sprachen möglich oder zweckmäßig ist. Wir werden daher den
-grundlegenden HTTP-Server und den Strang-Vorrat manuell schreiben, damit du die
-allgemeinen Ideen und Techniken hinter den Kisten lernst, die du in Zukunft
-verwenden kannst.
+bauen. Gemeinschaftsmitglieder haben eine Reihe von produktionsreifen Crates auf
+[crates.io][crates] veröffentlicht, die umfassendere Webserver- und
+Strang-Vorrats-Implementierungen bereitstellen, als wir sie bauen werden. Unsere
+Absicht in diesem Kapitel ist es jedoch, dir beim Lernen zu helfen, und nicht,
+den einfachen Weg zu gehen. Da es sich bei Rust um eine Systemprogrammiersprache
+handelt, können wir die Abstraktionsebene wählen, mit der wir arbeiten wollen,
+und können auf eine niedrigere Ebene gehen, als dies in anderen Sprachen möglich
+oder zweckmäßig ist. Wir werden daher den grundlegenden HTTP-Server und den
+Strang-Vorrat manuell schreiben, damit du die allgemeinen Ideen und Techniken
+hinter den Crates lernst, die du in Zukunft verwenden kannst.
 
 [crates]: https://crates.io/

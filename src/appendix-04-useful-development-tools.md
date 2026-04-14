@@ -24,7 +24,7 @@ formatieren, gibst du Folgendes ein:
 $ cargo fmt
 ```
 
-Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Kiste neu
+Mit diesem Befehl wird der gesamte Rust-Code in der aktuellen Crate neu
 formatiert. Dies sollte nur den Stil des Codes ändern, nicht die Semantik des
 Codes. Weitere Informationen zu `rustfmt` findest du in [seiner
 Dokumentation][rustfmt].

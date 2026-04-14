@@ -1,9 +1,9 @@
-## Kisten (crate) auf crates.io veröffentlichen
+## Crates auf crates.io veröffentlichen
 
 Wir haben Pakete von [crates.io][crates] als Abhängigkeiten (dependencies)
 unseres Projekts verwendet. Du kannst deinen Programmcode jedoch auch für
 andere Personen freigeben, indem du eigene Pakete veröffentlichst. Die
-Registrierung von Kisten auf [crates.io][crates] verteilt den Quellcode deiner
+Registrierung von Crates auf [crates.io][crates] verteilt den Quellcode deiner
 Pakete, daher wird primär Open Source Programmcode gehostet.
 
 Rust und Cargo verfügen über Funktionalitäten, die es Benutzern erleichtern,
@@ -13,21 +13,20 @@ veröffentlicht wird.
 
 ### Sinnvolle Dokumentationskommentare erstellen
 
-Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen,
-wie diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
+Die genaue Dokumentation deiner Pakete hilft anderen Benutzern zu verstehen, wie
+diese zu verwenden sind, daher lohnt es sich, Zeit in das Schreiben von
 Dokumentationen zu investieren. In Kapitel 3 haben wir besprochen, wie man
 Rust-Code mit zwei Schrägstrichen `//` kommentiert. Rust hat auch eine eigene
 Art von Kommentar für die Dokumentation, die passenderweise als
-_Dokumentationskommentar_ bezeichnet wird und HTML-Dokumentation generiert.
-Der HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
-API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten,
-wie deine Kiste _benutzt_ wird, und nicht, wie deine Kiste _implementiert_
-ist.
+_Dokumentationskommentar_ bezeichnet wird und HTML-Dokumentation generiert. Der
+HTML-Code zeigt den Inhalt von Dokumentationskommentaren für öffentliche
+API-Elemente an, die für Programmierer bestimmt sind, die wissen möchten, wie
+deine Crate _benutzt_ wird, und nicht, wie deine Crate _implementiert_ ist.
 
 Dokumentationskommentare verwenden drei Schrägstriche `///` anstelle von zwei
 und unterstützen Markdown-Notation zum Formatieren des Textes. Platziere
 Dokumentationskommentare nur vor dem zu dokumentierenden Element. Codeblock
-14-1 zeigt Dokumentationskommentare für eine Funktion `add_one` in einer Kiste
+14-1 zeigt Dokumentationskommentare für eine Funktion `add_one` in einer Crate
 mit dem Namen `my_crate`.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -60,8 +59,8 @@ die HTML-Dokumentation aus diesem Dokumentationskommentar generieren, indem wir
 _target/doc_ ab.
 
 Wenn du `cargo doc --open` ausführst, wird der HTML-Code für die Dokumentation
-deiner aktuellen Kiste (und auch die Dokumentation aller Abhängigkeiten
-(dependencies) deiner Kiste) erstellt und das Ergebnis in einem Webbrowser
+deiner aktuellen Crate (und auch die Dokumentation aller Abhängigkeiten
+(dependencies) deiner Crate) erstellt und das Ergebnis in einem Webbrowser
 geöffnet. Wenn du zur Funktion `add_one` navigierst, wirst du sehen wie der Text
 in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
@@ -74,19 +73,19 @@ in den Dokumentationskommentaren gerendert wird. Siehe Abbildung 14-1.
 
 Wir haben die Markdown-Überschrift `# Examples` in Codeblock 14-1 verwendet um
 einen Abschnitt im HTML-Code mit dem Titel `Examples` zu erstellen. Hier sind
-einige andere Abschnitte, die Autoren von Kisten häufig in ihrer Dokumentation
+einige andere Abschnitte, die Autoren von Crates häufig in ihrer Dokumentation
 verwenden:
 
-- **Panics**: Das sind die Szenarien, in denen die dokumentierte Funktion
+- **Panics:** Das sind die Szenarien, in denen die dokumentierte Funktion
   abstürzt. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
   abstürzen, sollten sicherstellen, dass sie die Funktion in solchen
   Situationen nicht aufrufen.
-- **Errors**: Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
+- **Errors:** Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
   Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese
   Fehler auftreten können, dies kann für Aufrufende hilfreich sein, um
   Programmcode zu schreiben der die verschiedenen Arten von Fehlern auf
   unterschiedliche Art behandelt.
-- **Safety**: Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
+- **Safety:** Wenn die Funktion aufzurufen unsicher (`unsafe`) ist (wir
   behandeln die Unsicherheit im Kapitel 20), sollte ein Abschnitt existieren,
   in dem erläutert wird, warum die Funktion unsicher ist, und die Invarianten
   behandelt werden die die Funktion vom Aufrufenden erwartet.
@@ -126,9 +125,9 @@ Der Stil des Dokumentationskommentars `//!` fügt dem Element, das die
 Kommentare *enthält*, Dokumentation hinzu, anstatt den Elementen die auf die
 Kommentare *folgen*. Wir verwenden diese Dokumentationskommentare üblicherweise
 in der Wurzeldatei (laut Konvention _src/lib.rs_) oder in einem Modul, um die
-Kiste oder das Modul als Ganzes zu dokumentieren.
+Crate oder das Modul als Ganzes zu dokumentieren.
 
-Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Kiste
+Um beispielsweise eine Dokumentation hinzuzufügen, die den Zweck der Crate
 `my_crate` beschreibt, die die Funktion `add_one` enthält, können wir am Anfang
 der Datei _src/lib.rs_ Dokumentationskommentare hinzufügen die mit `//!`
 beginnen. Siehe Codeblock 14-2.
@@ -157,43 +156,43 @@ beginnen. Siehe Codeblock 14-2.
 # }
 ```
 
-<span class="caption">Codeblock 14-2: Dokumentation für die gesamte
-`my_crate`-Kiste</span>
+<span class="caption">Codeblock 14-2: Dokumentation für die gesamte Crate
+`my_crate`</span>
 
 Beachte, dass nach der letzten Zeile, die mit `//!` beginnt, kein Programmcode
 mehr vorhanden ist. Da wir die Kommentare mit `//!` anstatt `///` begonnen
 haben, dokumentieren wir das Element, das diesen Kommentar enthält und nicht
 ein Element, das diesem Kommentar folgt. In diesem Fall ist dieses Element die
-Datei _src/lib.rs_, dabei handelt es sich um das Wurzelverzeichnis der Kiste.
-Diese Kommentare beschreiben die gesamte Kiste.
+Datei _src/lib.rs_, dabei handelt es sich um das Wurzelverzeichnis der Crate.
+Diese Kommentare beschreiben die gesamte Crate.
 
 Wenn wir `cargo doc --open` ausführen, werden diese Kommentare auf der
 Startseite der Dokumentation für `my_crate` angezeigt, oberhalb der Liste der
-veröffentlichten Elemente in der Kiste. Siehe Abbildung 14-2.
+veröffentlichten Elemente in der Crate. Siehe Abbildung 14-2.
 
 Dokumentationskommentare innerhalb von Elementen sind besonders nützlich, um
-Kisten und Module zu beschreiben. Erkläre anhand dieser Informationen den
-allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Kiste
+Crates und Module zu beschreiben. Erkläre anhand dieser Informationen den
+allgemeinen Zweck des Containers, damit seine Benutzer die Aufteilung der Crate
 besser verstehen können.
 
-<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Kiste" src="img/trpl14-02.png" class="center" />
+<img alt="Gerenderte HTML-Dokumentation mit einem Kommentar für die gesamte Crate" src="img/trpl14-02.png" class="center" />
 
 <span class="caption">Abbildung 14-2: Gerenderte Dokumentation für `my_crate`,
-einschließlich des Kommentars, der die Kiste als Ganzes beschreibt</span>
+einschließlich des Kommentars, der die Crate als Ganzes beschreibt</span>
 
 ### Exportieren einer komfortablen öffentlichen API
 
-Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Kiste
-eine wichtige Rolle. Personen, die deine Kiste verwenden, sind mit der Struktur
+Die Struktur deiner öffentlichen API spielt beim Veröffentlichen einer Crate
+eine wichtige Rolle. Personen, die deine Crate verwenden, sind mit der Struktur
 weniger vertraut als du und haben vielleicht Schwierigkeiten, die Teile zu
-finden, die sie verwenden möchten, wenn deine Kiste eine große Modulhierarchie
+finden, die sie verwenden möchten, wenn deine Crate eine große Modulhierarchie
 aufweist.
 
 In Kapitel 7 wurde erläutert, wie wir unseren Programmcode mithilfe des
 Schlüsselworts `mod` in Module organisieren, Elemente mit dem Schlüsselwort
 `pub` veröffentlichen und Elemente mit dem Schlüsselwort `use` in einen
 Gültigkeitsbereich (scope) bringen. Die Struktur, die für dich während der
-Entwicklung einer Kiste sinnvoll ist, ist für ihre Benutzer jedoch
+Entwicklung einer Crate sinnvoll ist, ist für ihre Benutzer jedoch
 möglicherweise nicht sehr benutzerfreundlich. Vielleicht möchtest du Strukturen
 in einer Hierarchie mit mehreren Ebenen organisieren, aber Personen, die einen
 Typ verwenden möchten, den du tief in der Hierarchie definiert hast, haben
@@ -254,10 +253,10 @@ pub mod utils {
 <span class="caption">Codeblock 14-3: Eine Bibliothek `art` mit Elementen die in
 Modulen `kinds` und `utils` organisiert sind</span>
 
-Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Kiste
+Abbildung 14-3 zeigt wie die Startseite der Dokumentation für diese Crate
 generiert von `cargo doc` aussehen würde.
 
-<img alt="Gerenderte Dokumentation für die Kiste `art` mit den Modulen `kinds` und `utils`" src="img/trpl14-03.png" class="center" />
+<img alt="Gerenderte Dokumentation für die Crate `art` mit den Modulen `kinds` und `utils`" src="img/trpl14-03.png" class="center" />
 
 <span class="caption">Abbildung 14-3: Startseite der Dokumentation für `art`
 mit den Modulen `kinds` und `utils` auflistet</span>
@@ -266,10 +265,10 @@ Beachte, dass die Typen `PrimaryColor`, `SecondaryColor` und die Funktion `mix`
 nicht auf der Startseite angeführt sind. Wir müssen auf `kinds` und `utils`
 klicken um sie zu sehen.
 
-Eine Kiste, die von dieser Bibliothek abhängt, würde `use`-Anweisungen
+Eine Crate, die von dieser Bibliothek abhängt, würde `use`-Anweisungen
 benötigen, die die Elemente aus `art` in den Gültigkeitsbereich bringen und die
 derzeit definierte Modulstruktur angeben. Codeblock 14-4 zeigt ein Beispiel für
-eine Kiste, in der die Elemente `PrimaryColor` und `mix` aus der `art`-Kiste
+eine Crate, in der die Elemente `PrimaryColor` und `mix` aus der Crate `art`
 verwendet werden.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -285,21 +284,21 @@ fn main() {
 }
 ```
 
-<span class="caption">Codeblock 14-4: Eine Kiste, die die Gegenstände der 
-`art`-Kiste mit ihrer internen Struktur exportiert</span>
+<span class="caption">Codeblock 14-4: Eine Crate, die die Gegenstände der Crate
+`art` mit ihrer internen Struktur exportiert</span>
 
-Der Autor des Programmcodes in Codeblock 14-4, der die Kiste `art` verwendet,
-musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im Modul
-`utils` befindet. Die Modulstruktur der `art`-Kiste ist für Entwickler, die an
-der `art`-Kiste arbeiten, relevanter als für Entwickler die die `art`-Kiste
-verwenden. Die interne Struktur enthält keine nützlichen Informationen für jemanden,
-der diese benutzen möchte, sondern sorgt für Verwirrung, da diese herausfinden
-müssen wo sie suchen müssen und die Struktur ist unpraktisch, da Entwickler die
-Modulnamen in den `use`-Anweisungen angeben müssen.
+Der Autor des Programmcodes in Codeblock 14-4, der die Crate `art` verwendet,
+musste herausfinden, dass sich `PrimaryColor` im Modul `kinds` und `mix` im
+Modul `utils` befindet. Die Modulstruktur der Crate `art` ist für Entwickler,
+die an der Crate `art` arbeiten, relevanter als für Entwickler die die Crate
+`art` verwenden. Die interne Struktur enthält keine nützlichen Informationen für
+jemanden, der diese benutzen möchte, sondern sorgt für Verwirrung, da diese
+herausfinden müssen wo sie suchen müssen und die Struktur ist unpraktisch, da
+Entwickler die Modulnamen in den `use`-Anweisungen angeben müssen.
 
-Um die interne Organisation aus der öffentlichen API zu entfernen, können wir den
-Programmcode der `art`-Kiste ändern, um `pub use`-Anweisungen hinzuzufügen, um
-die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
+Um die interne Organisation aus der öffentlichen API zu entfernen, können wir
+den Programmcode der Crate `art` ändern, um `pub use`-Anweisungen hinzuzufügen,
+um die Elemente der obersten Ebene erneut zu exportieren, wie in Codeblock 14-5
 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -355,10 +354,10 @@ Abbildung 14-4 ersichtlich, angezeigt, so sind die Typen `PrimaryColor` und
 <span class="caption">Abbildung 14-4: Die Startseite der Dokumentation von
 `art` mit den aufgelisteten erneuten Exporten</span>
 
-Die Benutzer der `art`-Kiste können weiterhin die interne Struktur aus
-Codeblock 14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde,
-oder sie können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden,
-wie es im Codeblock 14-6 gezeigt wurde.
+Die Benutzer der Crate `art` können weiterhin die interne Struktur aus Codeblock
+14-3 sehen und verwenden, wie es in Codeblock 14-4 gezeigt wurde, oder sie
+können die benutzerfreundliche Struktur in Codeblock 14-5 verwenden, wie es im
+Codeblock 14-6 gezeigt wurde.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -375,34 +374,34 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 14-6: Ein Programm, das die erneut exportierten
-Elemente der `art`-Kiste verwendet</span>
+Elemente der Crate `art` verwendet</span>
 
-In Fällen, in denen es viele verschachtelte Module gibt, kann das erneute 
+In Fällen, in denen es viele verschachtelte Module gibt, kann das erneute
 Exportieren der Typen auf der obersten Ebene mit `pub use` die Erfahrung der
-Benutzer der Kiste signifikant verbessern. Eine andere häufige Verwendung von
-`pub use` ist es, Definitionen einer Abhängigkeit in der aktuellen Kiste zu
-re-exportieren, um die Definitionen dieser Kiste zu einem Teil der öffentlichen
-API deiner Kiste zu machen.
+Benutzer der Crate signifikant verbessern. Eine andere häufige Verwendung von
+`pub use` ist es, Definitionen einer Abhängigkeit in der aktuellen Crate zu
+re-exportieren, um die Definitionen dieser Crate zu einem Teil der öffentlichen
+API deiner Crate zu machen.
 
 
-Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst
-als eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
+Das Erstellen einer sinnvollen öffentlichen API-Struktur ist eher eine Kunst als
+eine Wissenschaft, und du kannst iterieren, um die API zu finden, die für
 Benutzer am besten geeignet ist. Wenn man `pub use` wählt, erhält man
-Flexibilität bei der internen Strukturierung einer Kiste und entkoppelt diese
-interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir
-einige der Programmcodes von Kisten an die du installiert hast, um
-festzustellen, ob sie intern strukturiert sind und ob sich ihre interne
-Struktur von der öffentlichen API unterscheidet.
+Flexibilität bei der internen Strukturierung einer Crate und entkoppelt diese
+interne Struktur von dem, was man ihren Benutzern präsentiert. Sieh dir einige
+der Programmcodes von Crates an die du installiert hast, um festzustellen, ob
+sie intern strukturiert sind und ob sich ihre interne Struktur von der
+öffentlichen API unterscheidet.
 
 
 ### Einrichten eines Accounts auf crates.io
 
-Bevor man eine Kiste veröffentlichen kann, muss man einen Account auf 
+Bevor man eine Crate veröffentlichen kann, muss man einen Account auf
 [crates.io][crates] erstellen, um ein API-Token zu erhalten. Besuche dazu die
 Homepage auf [crates.io][crates] und melde dich über einen GitHub-Account an.
 (Derzeit ist ein GitHub-Account eine Voraussetzung, aber die Seite wird
 möglicherweise in Zukunft andere Wege anbieten, um einen Account zu erstellen.)
-Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf 
+Sobald du angemeldet bist, gehe zu Kontoeinstellungen (account settings) auf
 [https://crates.io/me/][crates-me] und erhalte deinen API-Schlüssel. Rufe
 anschließend das Kommando `cargo login` mit deinem API-Schlüssel auf:
 
@@ -417,21 +416,21 @@ es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem
 geteils hast, solltest du es widerrufen und ein neues Token auf
 [crates.io][crates] erzeugen.
 
-### Metadaten zu einer neuen Kiste hinzufügen
+### Metadaten zu einer neuen Crate hinzufügen
 
-Angenommen, du hast eine Kiste, die du veröffentlichen möchtest. Vor dem
-Veröffentlichen musst du deiner Kiste einige Metadaten im Abschnitt `[package]`
-der Datei _Cargo.toml_ der Kiste hinzufügen.
+Angenommen, du hast eine Crate, die du veröffentlichen möchtest. Vor dem
+Veröffentlichen musst du deiner Crate einige Metadaten im Abschnitt `[package]`
+der Datei _Cargo.toml_ der Crate hinzufügen.
 
-Deine Kiste benötigt einen eindeutigen Namen. Während du vor Ort an einer Kiste
-arbeitest, kannst du eine Kiste beliebig benennen. Allerdings werden
-Kistennamen auf [crates.io][crates] nach Verfügbarkeit vergeben. Sobald ein
-Kistenname vergeben ist, kann niemand mehr eine Kiste mit diesem Namen
-veröffentlichen. Suche vor dem Versuch, eine Kiste zu veröffentlichen, nach dem
-Namen, den du verwenden möchtest. Wenn der Name von einer anderen Kiste
-verwendet wurde, wirst du einen anderen Namen suchen müssen und das Feld `name`
-in der Datei _Cargo.toml_ im Abschnitt `[package]` bearbeiten, um den neuen
-Namen für die Veröffentlichung zu verwenden:
+Deine Crate benötigt einen eindeutigen Namen. Während du vor Ort an einer Crate
+arbeitest, kannst du eine Crate beliebig benennen. Allerdings werden Crate-Namen
+auf [crates.io][crates] nach Verfügbarkeit vergeben. Sobald ein Crate-Name
+vergeben ist, kann niemand mehr eine Crate mit diesem Namen veröffentlichen.
+Suche vor dem Versuch, eine Crate zu veröffentlichen, nach dem Namen, den du
+verwenden möchtest. Wenn der Name von einer anderen Crate verwendet wurde, wirst
+du einen anderen Namen suchen müssen und das Feld `name` in der Datei
+_Cargo.toml_ im Abschnitt `[package]` bearbeiten, um den neuen Namen für die
+Veröffentlichung zu verwenden:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -440,7 +439,7 @@ Namen für die Veröffentlichung zu verwenden:
 name = "guessing_game"
 ```
 Selbst wenn du einen eindeutigen Namen gewählt hast, wird beim Ausführen von
-`cargo publish` zum Veröffentlichen der Kiste an dieser Stelle eine Warnung und
+`cargo publish` zum Veröffentlichen der Crate an dieser Stelle eine Warnung und
 anschließend ein Fehler angezeigt:
 
 ```console
@@ -457,14 +456,14 @@ Caused by:
 
 Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine
 Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
-deine Kiste tut und unter welchen Bedingungen man sie verwenden kann. Ergänze
-in der Datei _Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze
-umfasst, da sie zusammen mit deiner Kiste in den Suchergebnissen angezeigt
-wird. Für das Feld `license` musst du einen _Lizenzkennungswert_ (licence
-identifier value) angeben. In [Linux Foundation's Software Package Data
-Exchange (SPDX)][spdx] sind die Bezeichner aufgeführt, die Sie für diesen Wert
-verwenden können. Um beispielsweise anzugeben, dass du deine Kiste mit der
-MIT-Lizenz lizenziert hast, füge die `MIT`-Identifikation hinzu:
+deine Crate tut und unter welchen Bedingungen man sie verwenden kann. Ergänze in
+der Datei _Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze
+umfasst, da sie zusammen mit deiner Crate in den Suchergebnissen angezeigt wird.
+Für das Feld `license` musst du einen _Lizenzkennungswert_ (licence identifier
+value) angeben. In [Linux Foundation's Software Package Data Exchange
+(SPDX)][spdx] sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden
+können. Um beispielsweise anzugeben, dass du deine Crate mit der MIT-Lizenz
+lizenziert hast, füge die `MIT`-Identifikation hinzu:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -502,25 +501,24 @@ license = "MIT OR Apache-2.0"
 [dependencies]
 ```
 
-Die [Cargo-Documentation][cargo-doc] beschreibt andere Metadaten, die du
-angeben kannst, um sicherzustellen, dass andere deine Kiste leichter entdecken
-und verwenden können.
+Die [Cargo-Documentation][cargo-doc] beschreibt andere Metadaten, die du angeben
+kannst, um sicherzustellen, dass andere deine Crate leichter entdecken und
+verwenden können.
 
 ### Veröffentlichen auf crates.io
 
 Nachdem man einen Account erstellt, den API-Token gespeichert, einen Namen für
-seine Kiste ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
-sie veröffentlichen! Durch das Veröffentlichen einer Kiste wird eine bestimmte
+seine Crate ausgewählt und die erforderlichen Metadaten angegeben hat, kann man
+sie veröffentlichen! Durch das Veröffentlichen einer Crate wird eine bestimmte
 Version auf [crates.io][crates] hochgeladen, damit andere sie verwenden können.
 
 Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
 niemals überschrieben und der Programmcode nur in spezielle Fällen gelöscht
 werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
-fungieren, sodass alle Projekte die erstellt werden und von Kisten aus
+fungieren, sodass alle Projekte die erstellt werden und von Crates aus
 [crates.io][crates] abhängen weiter funktionieren werden. Das Zulassen von
-Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die
-Anzahl der Kistenversionen, die man veröffentlichen kann, ist jedoch
-unbegrenzt.
+Versionslöschungen würde das Erreichen dieses Ziels unmöglich machen. Die Anzahl
+der Crate-Versionen, die man veröffentlichen kann, ist jedoch unbegrenzt.
 
 Rufe `cargo publish` erneut auf. Diesmal sollte es funktionieren:
 
@@ -540,13 +538,14 @@ note: waiting for `guessing_game v0.1.0` to be available at registry
 You may press ctrl-c to skip waiting; the crate should be available shortly.
    Published guessing_game v0.1.0 at registry `crates-io`
 ```
+
 Herzlichen Glückwunsch! Du hast deinen Programmcode nun für die
-Rust-Gemeinschaft freigegeben. Jeder kann deine Kiste einfach als Abhängigkeit
+Rust-Gemeinschaft freigegeben. Jeder kann deine Crate einfach als Abhängigkeit
 für sein Projekt hinzufügen.
 
-### Veröffentlichen einer neuen Version einer vorhandenen Kiste
+### Veröffentlichen einer neuen Version einer vorhandenen Crate
 
-Wenn du Änderungen an deiner Kiste vorgenommen hast und bereit bist, eine neue
+Wenn du Änderungen an deiner Crate vorgenommen hast und bereit bist, eine neue
 Version zu veröffentlichen, ändere den in der _Cargo.toml_-Datei angegebenen
 Versionswert und veröffentliche ihn erneut. Verwende die [Regeln für die
 semantische Versionierung][semver], um auf den von dir vorgenommenen Änderungen
@@ -555,11 +554,11 @@ aus, um die neue Version hochzuladen.
 
 ### Versionen auf crates.io als veraltet kennzeichnen
 
-Obwohl man frühere Versionen einer Kiste nicht entfernen kann, kann man
+Obwohl man frühere Versionen einer Crate nicht entfernen kann, kann man
 verhindern, dass zukünftige Projekte sie als neue Abhängigkeit hinzufügen. Dies
-ist nützlich, wenn eine Kistenversion aus dem einen oder anderen Grund defekt
+ist nützlich, wenn eine Crate-Version aus dem einen oder anderen Grund defekt
 ist. In solchen Situationen unterstützt Cargo das Herausziehen (yanking) einer
-Kistenversion.
+Crate-Version.
 
 Durch das _Herausziehen_ einer Version wird verhindert, dass neue Projekte von
 dieser Version abhängen, während alle vorhandenen Projekte, die davon abhängen,
@@ -568,11 +567,11 @@ weiterhin heruntergeladen werden können. Im Wesentlichen bedeutet Herausziehen
 zukünftige generierte _Cargo.lock_-Dateien nicht die herausgezogene Version
 verwenden.
 
-Um eine Version einer Kiste herauszuziehen, rufe `cargo yank` auf und
-spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel
-eine Kiste mit dem Namen `guessing_game` in Version 1.0.1 veröffentlicht haben
-und sie herausziehen wollen, würden wir im Projektverzeichnis für
-`guessing_game` folgendes ausführen:
+Um eine Version einer Crate herauszuziehen, rufe `cargo yank` auf und
+spezifiziere welche Version du herausziehen möchtest. Wenn wir zum Beispiel eine
+Crate mit dem Namen `guessing_game` in Version 1.0.1 veröffentlicht haben und
+sie herausziehen wollen, würden wir im Projektverzeichnis für `guessing_game`
+folgendes ausführen:
 
 ```console
 $ cargo yank --vers 1.0.1

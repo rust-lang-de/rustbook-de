@@ -790,21 +790,21 @@ um sie in Sternchen eingerahmt anzuzeigen.
 In [„Ein Trait für einen Typ implementieren“][implementing-a-trait-on-a-type] in
 Kapitel 10 erwähnten wir die Waisenregel, bei der wir ein Trait nur dann auf
 einem Typ implementieren dürfen, wenn entweder das Trait oder der Typ oder
-beides lokal in unserer Kiste (crate) vorhanden ist. Es ist möglich, diese
-Einschränkung zu umgehen, indem man das _Newtype-Muster_ (newtype pattern)
-verwendet, bei dem ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir haben
-Tupelstrukturen in [„Mit Tupel-Strukturen verschiedene Typen
-erzeugen“][tuple-structs] in Kapitel 5 behandelt.) Die Tupelstruktur wird ein
-Feld haben und eine dünne Verpackung um den Typ sein, für den wir ein Trait
-implementieren wollen. Dann ist der Verpackungstyp lokal in unserer Kiste und
-wir können das Trait auf dem Verpackungstyp (wrapper type) implementieren.
-_Newtype_ ist ein Begriff, der aus der Programmiersprache Haskell stammt. Beim
-Verwenden dieses Musters gibt es keine Beeinträchtigung der Laufzeitperformanz
-und der Verpackungstyp wird zur Kompilierzeit elidiert.
+beides lokal in unserer Crate vorhanden ist. Es ist möglich, diese Einschränkung
+zu umgehen, indem man das _Newtype-Muster_ (newtype pattern) verwendet, bei dem
+ein neuer Typ in einer Tupelstruktur erzeugt wird. (Wir haben Tupelstrukturen in
+[„Mit Tupel-Strukturen verschiedene Typen erzeugen“][tuple-structs] in Kapitel 5
+behandelt.) Die Tupelstruktur wird ein Feld haben und eine dünne Verpackung um
+den Typ sein, für den wir ein Trait implementieren wollen. Dann ist der
+Verpackungstyp lokal in unserer Crate und wir können das Trait auf dem
+Verpackungstyp (wrapper type) implementieren. _Newtype_ ist ein Begriff, der aus
+der Programmiersprache Haskell stammt. Beim Verwenden dieses Musters gibt es
+keine Beeinträchtigung der Laufzeitperformanz und der Verpackungstyp wird zur
+Kompilierzeit elidiert.
 
 Nehmen wir als Beispiel an, wir wollen `Display` auf `Vec<T>` implementieren,
 was uns die Waisenregel direkt verbietet, weil das Trait `Display` und der Typ
-`Vec<T>` außerhalb unserer Kiste definiert sind. Wir können eine Struktur
+`Vec<T>` außerhalb unserer Crate definiert sind. Wir können eine Struktur
 `Wrapper` erstellen, die eine Instanz von `Vec<T>` enthält; dann können wir
 `Display` auf `Wrapper` implementieren und den Wert `Vec<T>` verwenden, wie in
 Codeblock 20-24 gezeigt.

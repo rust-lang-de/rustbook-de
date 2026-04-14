@@ -49,25 +49,25 @@ jeweiligen Zeitpunkt wissen musst.
 ## Unser erstes asynchrones Programm
 
 Um dieses Kapitel auf das Erlernen von async zu beschränken, anstatt mit Teilen
-des Ökosystems zu jonglieren, haben wir die Kiste `trpl` erstellt (`trpl` ist
+des Ökosystems zu jonglieren, haben wir die Crate `trpl` erstellt (`trpl` ist
 die Abkürzung für „The Rust Programming Language“). Sie re-exportiert alle
-Typen, Traits und Funktionen, die du benötigst, hauptsächlich aus den Kisten
-[`futures`][futures-crate] und [`tokio`][tokio]. Die Kiste `futures` ist ein
+Typen, Traits und Funktionen, die du benötigst, hauptsächlich aus den Crates
+[`futures`][futures-crate] und [`tokio`][tokio]. Die Crate `futures` ist ein
 offizielles Zuhause für Rust-Experimente mit asynchronem Code und ist eigentlich
 der Ort, an dem das Trait `Future` ursprünglich entworfen wurde. Tokio ist heute
 die am häufigsten verwendete asynchrone Laufzeitumgebung in Rust, insbesondere
 für Webanwendungen. Es gibt noch andere großartige Laufzeitumgebungen, die für
-deine Zwecke evtl. besser geeignet sind. Wir verwenden unter der Haube die Kiste
+deine Zwecke evtl. besser geeignet sind. Wir verwenden unter der Haube die Crate
 `tokio` für `trpl`, weil es gut getestet und weit verbreitet ist.
 
 In einigen Fällen nennt `trpl` die ursprünglichen APIs um oder umschließt sie,
 damit wir uns auf die für dieses Kapitel relevanten Details konzentrieren
-können. Wenn du verstehen willst, was die Kiste tut, empfehlen wir dir, sich
-den [trpl-Quellcode][crate-source] anzusehen. Du wirst sehen können, aus
-welcher Kiste jeder Re-Export stammt, und wir haben ausführliche Kommentare
-angegeben, die erklären, was die Kiste tut.
+können. Wenn du verstehen willst, was die Crate tut, empfehlen wir dir, sich den
+[trpl-Quellcode][crate-source] anzusehen. Du wirst sehen können, aus welcher
+Crate jeder Re-Export stammt, und wir haben ausführliche Kommentare angegeben,
+die erklären, was die Crate tut.
 
-Erstelle ein neues Binärprojekt mit dem Namen `hello-async` und füge die Kiste
+Erstelle ein neues Binärprojekt mit dem Namen `hello-async` und füge die Crate
 `trpl` als Abhängigkeit hinzu:
 
 ```console
@@ -286,31 +286,30 @@ error[E0752]: `main` function is not allowed to be `async`
 ```
 
 Der Grund, warum `main` nicht mit `async` markiert werden kann, ist, dass
-asynchroner Code eine _Laufzeitumgebung_ benötigt: eine Rust-Kiste, die die
-Details der Ausführung von asynchronem Code verwaltet. Die Funktion `main`
-eines Programms kann eine Laufzeitumgebung _initialisieren_, aber sie ist
-nicht _selbst_ eine Laufzeitumgebung. (Warum das so ist, werden wir später
-sehen.) Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine
-Stelle, an der es eine Laufzeitumgebung einrichtet, die die Futures ausführt.
+asynchroner Code eine _Laufzeitumgebung_ benötigt: eine Rust-Crate, die die
+Details der Ausführung von asynchronem Code verwaltet. Die Funktion `main` eines
+Programms kann eine Laufzeitumgebung _initialisieren_, aber sie ist nicht
+_selbst_ eine Laufzeitumgebung. (Warum das so ist, werden wir später sehen.)
+Jedes Rust-Programm, das asynchronen Code ausführt, hat mindestens eine Stelle,
+an der es eine Laufzeitumgebung einrichtet, die die Futures ausführt.
 
-Die meisten Sprachen, die asynchrone Programmierung unterstützen, enthalten
-eine Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele
-verschiedene asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen
-Anwendungsfall unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem
-Durchsatz, vielen CPU-Kernen und einer großen Menge an RAM hat zum Beispiel
-ganz andere Anforderungen als einen Mikrocontroller mit einem einzigen Kern,
-einer kleinen Menge an RAM und keiner Möglichkeit, Heap-Allokationen
-durchzuführen. Die Kisten, die diese Laufzeitumgebungen bereitstellen, bieten
-oft auch asynchrone Versionen gängiger Funktionen wie Datei- oder
-Netzwerkkommunikation.
+Die meisten Sprachen, die asynchrone Programmierung unterstützen, enthalten eine
+Laufzeitumgebung, Rust hat das nicht. Stattdessen gibt es viele verschiedene
+asynchrone Laufzeitumgebungen, von denen jede für den jeweiligen Anwendungsfall
+unterschiedliche Kompromisse eingeht. Ein Webserver mit hohem Durchsatz, vielen
+CPU-Kernen und einer großen Menge an RAM hat zum Beispiel ganz andere
+Anforderungen als einen Mikrocontroller mit einem einzigen Kern, einer kleinen
+Menge an RAM und keiner Möglichkeit, Heap-Allokationen durchzuführen. Die
+Crates, die diese Laufzeitumgebungen bereitstellen, bieten oft auch asynchrone
+Versionen gängiger Funktionen wie Datei- oder Netzwerkkommunikation.
 
 Hier und im Rest dieses Kapitels werden wir die Funktion `block_on` aus der
-Kiste `trpl` verwenden, die ein Future als Argument nimmt und den aktuellen
+Crate `trpl` verwenden, die ein Future als Argument nimmt und den aktuellen
 Strang blockiert, bis das Future zu Ende ausgeführt ist. Hinter den Kulissen
-wird durch den Aufruf von `block_on` eine Laufzeitumgebung mit Hilfe der Kiste
+wird durch den Aufruf von `block_on` eine Laufzeitumgebung mit Hilfe der Crate
 `tokio` eingerichtet, die das übergebene Future ausführt. (Das Verhalten von
-`block_on` in der Kiste `trpl` ähnelt dem der `block_on`-Funktionen anderer
-Laufzeitumgebungs-Kisten.) Sobald das Future abgeschlossen ist, gibt `block_on`
+`block_on` in der Crate `trpl` ähnelt dem der `block_on`-Funktionen anderer
+Laufzeitumgebungs-Crates.) Sobald das Future abgeschlossen ist, gibt `block_on`
 den Wert zurück, den das Future erzeugt hat.
 
 Wir könnten das von `page_title` zurückgegebene Future direkt an `block_on`
@@ -466,8 +465,8 @@ und wir haben noch nicht auf sie gewartet. Dann übergeben wir die Futures an
 Futures zuerst fertig wurde.
 
 > Anmerkung: Unter der Haube ist `trpl::select` auf der allgemeineren Funktion
-> `select` aufgebaut, die in der Kiste `futures` definiert ist. Die Funktion
-> `select` der Kiste `futures` kann viele Dinge tun, die die Funktion
+> `select` aufgebaut, die in der Crate `futures` definiert ist. Die Funktion
+> `select` der Crate `futures` kann viele Dinge tun, die die Funktion
 > `trpl::select` nicht kann, aber sie bringt auch zusätzliche Komplexität mit
 > sich, was wir hier jedoch vorerst außer Acht lassen können.
 

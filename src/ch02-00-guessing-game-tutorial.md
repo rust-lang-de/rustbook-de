@@ -3,9 +3,9 @@
 Lass uns den Sprung in Rust wagen, indem wir gemeinsam ein praktisches Projekt
 durcharbeiten! Dieses Kapitel führt dich in einige gängige Rust-Konzepte ein,
 indem es dir zeigt, wie du diese in einem realen Programm verwenden kannst. Du
-lernst `let`, `match`, Methoden, assoziierte Funktionen, externe Kisten
-(crates) und mehr kennen! In den folgenden Kapiteln werden wir diese Ideen
-ausführlicher behandeln. In diesem Kapitel wirst du nur die Grundlagen üben.
+lernst `let`, `match`, Methoden, assoziierte Funktionen, externe Crates und mehr
+kennen! In den folgenden Kapiteln werden wir diese Ideen ausführlicher
+behandeln. In diesem Kapitel wirst du nur die Grundlagen üben.
 
 Wir werden ein klassisches Programmierproblem für Anfänger implementieren: Ein
 Ratespiel. Und so funktioniert es: Das Programm erzeugt eine zufällige ganze
@@ -464,29 +464,28 @@ eine Eingabe über die Tastatur und geben sie dann aus.
 
 ## Generieren einer Geheimzahl
 
-Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht 
-zu erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
+Als Nächstes müssen wir eine Geheimzahl generieren, die der Benutzer versucht zu
+erraten. Die Geheimzahl sollte jedes Mal anders sein, damit das Spiel mehr als
 einmal Spaß macht. Wir werden eine Zufallszahl zwischen 1 und 100 verwenden,
 damit das Spiel nicht zu schwierig wird. Rust enthält noch keine
 Zufallszahl-Funktionalität in seiner Standardbibliothek. Das Rust-Team stellt
-jedoch eine [Kiste `rand`][randcrate] mit besagter Funktionalität zur
-Verfügung.
+jedoch eine [Crate `rand`][randcrate] mit besagter Funktionalität zur Verfügung.
 
-### Mehr Funktionalität mit einer Kiste
+### Mehr Funktionalität mit einer Crate
 
-Denke daran, dass eine Kiste eine Sammlung von Rust-Quellcode-Dateien ist. Unser
-Projekt "Ratespiel" ist eine _binäre Kiste_ (binary crate), die eine
-ausführbare Datei ist. Die Kiste `rand` ist eine _Bibliotheks-Kiste_ (library
-crate), die Code enthält, der in anderen Programmen verwendet werden soll.
+Denke daran, dass eine Crate eine Sammlung von Rust-Quellcode-Dateien ist. Unser
+Projekt „Ratespiel“ ist eine _binäre Crate_, die eine ausführbare Datei ist. Die
+Crate `rand` ist eine _Bibliotheks-Crate_ (library crate), die Code enthält, der
+in anderen Programmen verwendet werden soll.
 
-Das Koordinieren von externen Kisten ist der Bereich, in dem Cargo glänzt.
-Bevor wir Code schreiben können, der `rand` benutzt, müssen wir die Datei
-_Cargo.toml_ so modifizieren, dass die Kiste `rand` als Abhängigkeit
-eingebunden wird. Öffne jetzt diese Datei und füge die folgende Zeile unten
-unter der Überschrift des Abschnitts `[dependencies]` hinzu, den Cargo für dich
-erstellt hat. Stelle sicher, dass du `rand` genau so angibst, wie wir es hier
-getan haben, andernfalls funktionieren die Codebeispiele in dieser Anleitung
-möglicherweise nicht.
+Das Koordinieren von externen Crates ist der Bereich, in dem Cargo glänzt. Bevor
+wir Code schreiben können, der `rand` benutzt, müssen wir die Datei _Cargo.toml_
+so modifizieren, dass die Crate `rand` als Abhängigkeit eingebunden wird. Öffne
+jetzt diese Datei und füge die folgende Zeile unten unter der Überschrift des
+Abschnitts `[dependencies]` hinzu, den Cargo für dich erstellt hat. Stelle
+sicher, dass du `rand` genau so angibst, wie wir es hier getan haben,
+andernfalls funktionieren die Codebeispiele in dieser Anleitung möglicherweise
+nicht.
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -497,14 +496,13 @@ rand = "0.8.5"
 
 In der Datei _Cargo.toml_ ist alles, was nach einer Überschrift folgt, Teil
 dieses Abschnitts, der so lange andauert, bis ein anderer Abschnitt beginnt. Im
-Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Kisten
-dein Projekt abhängt und welche Versionen dieser Kisten du benötigst. In diesem
-Fall spezifizieren wir die Kiste `rand` mit dem semantischen
-Versionsspezifikator `0.8.5`. Cargo versteht [semantische
-Versionierung][semver] (manchmal auch _SemVer_ genannt), was ein Standard zum
-Schreiben von Versionsnummern ist. Die Angabe `0.8.5` ist eigentlich die
-Abkürzung für `^0.8.5`, was für alle Versionen ab `0.8.5` und kleiner als
-`0.9.0` steht.
+Abschnitt `[dependencies]` teilst du Cargo mit, von welchen externen Crates dein
+Projekt abhängt und welche Versionen dieser Crates du benötigst. In diesem Fall
+spezifizieren wir die Crate `rand` mit dem semantischen Versionsspezifikator
+`0.8.5`. Cargo versteht [semantische Versionierung][semver] (manchmal auch
+_SemVer_ genannt), was ein Standard zum Schreiben von Versionsnummern ist. Die
+Angabe `0.8.5` ist eigentlich die Abkürzung für `^0.8.5`, was für alle Versionen
+ab `0.8.5` und kleiner als `0.9.0` steht.
 
 Cargo geht davon aus, dass die öffentliche API dieser Versionen kompatibel zur
 Version 0.8.5 ist und diese Angabe stellt sicher, dass du die neueste
@@ -539,7 +537,7 @@ $ cargo build
 ```
 
 <span class="caption">Codeblock 2-2: Die Ausgabe beim Ausführen von `cargo
-build` nach dem Hinzufügen der Kiste `rand` als Abhängigkeit</span>
+build` nach dem Hinzufügen der Crate `rand` als Abhängigkeit</span>
 
 Möglicherweise siehst du unterschiedliche Versionsnummern (aber dank SemVer
 sind sie alle mit dem Code kompatibel!) und unterschiedliche Zeilen (je nach
@@ -552,10 +550,10 @@ die Menschen im Rust-Ökosystem ihre Open-Source-Rustprojekte für andere zur
 Nutzung bereitstellen.
 
 Nach dem Aktualisieren der Registry überprüft Cargo den Abschnitt
-`[dependencies]` und lädt alle aufgelisteten Kisten herunter, die noch nicht
+`[dependencies]` und lädt alle aufgelisteten Crates herunter, die noch nicht
 heruntergeladen wurden. Obwohl wir nur `rand` als Abhängigkeit aufgelistet
-haben, hat sich Cargo in diesem Fall auch andere Kisten geschnappt, von denen
-`rand` abhängig ist, um zu funktionieren. Nachdem die Kisten heruntergeladen
+haben, hat sich Cargo in diesem Fall auch andere Crates geschnappt, von denen
+`rand` abhängig ist, um zu funktionieren. Nachdem die Crates heruntergeladen
 wurden, kompiliert Rust sie und kompiliert dann das Projekt mit den verfügbaren
 Abhängigkeiten.
 
@@ -583,13 +581,13 @@ heruntergeladen und kompiliert hat.
 #### Sicherstellen reproduzierbarer Builds
 
 Cargo verfügt über einen Mechanismus, der sicherstellt, dass du jedes Mal, wenn
-du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen
-kannst: Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten
-verwenden, bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass
-nächste Woche Version 0.8.6 der Kiste `rand` herauskommt und eine wichtige
-Fehlerkorrektur enthält, aber auch eine Regression, die deinen Code bricht. Um
-dies zu handhaben, erstellt Rust die Datei _Cargo.lock_ beim ersten Mal, wenn
-du `cargo build` ausführst, die nun im _guessing_game_-Verzeichnis liegt.
+du oder jemand anderes deinen Code baut, dasselbe Artefakt neu erstellen kannst:
+Cargo wird nur die Versionen der von dir angegebenen Abhängigkeiten verwenden,
+bis du etwas anderes angibst. Nehmen wir beispielsweise an, dass nächste Woche
+Version 0.8.6 der Crate `rand` herauskommt und eine wichtige Fehlerkorrektur
+enthält, aber auch eine Regression, die deinen Code bricht. Um dies zu
+handhaben, erstellt Rust die Datei _Cargo.lock_ beim ersten Mal, wenn du `cargo
+build` ausführst, die nun im _guessing_game_-Verzeichnis liegt.
 
 Wenn du ein Projekt zum ersten Mal baust, ermittelt Cargo alle Versionen der
 Abhängigkeiten, die den Kriterien entsprechen, und schreibt sie dann in die
@@ -602,14 +600,14 @@ explizit die Versionsnummer erhöhst. Da die Datei _Cargo.lock_ für das
 reproduzierbare Bauen wichtig ist, wird sie oft zusammen mit dem restlichen
 Code deines Projekts in die Versionskontrolle eingecheckt.
 
-#### Aktualisieren einer Kiste, um eine neue Version zu erhalten
+#### Aktualisieren einer Crate, um eine neue Version zu erhalten
 
-Wenn du eine Kiste aktualisieren _willst_, bietet Cargo den Befehl `update` an,
+Wenn du eine Crate _aktualisieren_ willst, bietet Cargo den Befehl `update` an,
 der die Datei _Cargo.lock_ ignoriert und alle neuesten Versionen, die deinen
 Spezifikationen entsprechen, in _Cargo.toml_ herausfindet. Cargo schreibt diese
 Versionen dann in die Datei _Cargo.lock_. Andernfalls wird Cargo standardmäßig
-nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die
-Kiste `rand` zwei neue Versionen 0.8.6 und 0.999.0 veröffentlicht hat, würdest du
+nur nach Versionen größer als 0.8.5 und kleiner als 0.9.0 suchen. Wenn die Crate
+`rand` zwei neue Versionen 0.8.6 und 0.999.0 veröffentlicht hat, würdest du
 folgendes sehen, wenn du `cargo update` ausführst:
 
 ```console
@@ -620,12 +618,12 @@ $ cargo update
 ```
 
 Cargo ignoriert die Version 0.999.0. An diesem Punkt würdest du auch eine
-Änderung in deiner Datei _Cargo.lock_ bemerken, die feststellt, dass die
-Version der Kiste `rand`, die du jetzt benutzt, 0.8.6 ist. Um die
-`rand`-Version 0.999.0 oder irgendeine Version aus der 0.999._x_-Serie zu
-verwenden, müsstest du stattdessen die Datei _Cargo.toml_ anpassen, damit sie
-wie folgt aussieht. (Führe diese Änderung nicht durch, da die folgenden
-Beispiele davon ausgehen, dass du `rand` 0.8 verwendest.)
+Änderung in deiner Datei _Cargo.lock_ bemerken, die feststellt, dass die Version
+der Crate `rand`, die du jetzt benutzt, 0.8.6 ist. Um die `rand`-Version 0.999.0
+oder irgendeine Version aus der 0.999._x_-Serie zu verwenden, müsstest du
+stattdessen die Datei _Cargo.toml_ anpassen, damit sie wie folgt aussieht.
+(Führe diese Änderung nicht durch, da die folgenden Beispiele davon ausgehen,
+dass du `rand` 0.8 verwendest.)
 
 ```toml
 [dependencies]
@@ -633,8 +631,8 @@ rand = "0.999.0"
 ```
 
 Wenn du das nächste Mal `cargo build` ausführst, wird Cargo die Registry der
-verfügbaren Kisten aktualisieren und deine `rand`-Anforderungen entsprechend
-der von dir angegebenen neuen Version neu bewerten.
+verfügbaren Crates aktualisieren und deine `rand`-Anforderungen entsprechend der
+von dir angegebenen neuen Version neu bewerten.
 
 Es gibt noch viel mehr über [Cargo][doccargo] und [seinem
 Ökosystem][doccratesio] zu sagen, das wir in Kapitel 14 besprechen werden, aber
@@ -694,14 +692,13 @@ generiert eine Zufallszahl in diesem Bereich. Ein Bereichsausdruck hat die Form
 `1..=100` angeben müssen, um eine Zahl zwischen 1 und 100 zu erhalten.
 
 > Hinweis: Du wirst nicht immer wissen, welche Traits du verwenden sollst und
-> welche Methoden und Funktionen einer Kiste du aufrufen musst, daher hat jede
-> Kiste eine Dokumentation mit einer Anleitungen zur Verwendung der Kiste.
-> Eine weitere nette Funktionalität von Cargo ist, dass das Ausführen des
-> Kommandos `cargo doc --open` die von all deinen Abhängigkeiten
-> bereitgestellte Dokumentation lokal zusammenstellt und in deinem Browser
-> öffnet. Wenn du an anderen Funktionen der Kiste `rand` interessiert bist,
-> führe zum Beispiel `cargo doc --open` aus und klicke auf `rand` in der
-> Seitenleiste links.
+> welche Methoden und Funktionen einer Crate du aufrufen musst, daher hat jede
+> Crate eine Dokumentation mit einer Anleitungen zur Verwendung der Crate. Eine
+> weitere nette Funktionalität von Cargo ist, dass das Ausführen des Kommandos
+> `cargo doc --open` die von all deinen Abhängigkeiten bereitgestellte
+> Dokumentation lokal zusammenstellt und in deinem Browser öffnet. Wenn du an
+> anderen Funktionen der Crate `rand` interessiert bist, führe zum Beispiel `cargo
+> doc --open` aus und klicke auf `rand` in der Seitenleiste links.
 
 Die zweite neue Zeile gibt die Geheimzahl aus. Das ist hilfreich während wir
 das Programm entwickeln, um es testen zu können, aber wir werden es aus der
@@ -1294,14 +1291,14 @@ Glückwunsch!
 ## Zusammenfassung
 
 Dieses Projekt war eine praktische Möglichkeit, dich mit vielen neuen
-Rust-Konzepten vertraut zu machen: `let`, `match`, Funktionen, das Verwenden
-von externen Kisten und mehr. In den nächsten Kapiteln erfährst du mehr über
-diese Konzepte. Kapitel 3 behandelt Konzepte, über die die meisten
-Programmiersprachen verfügen, z.B. Variablen, Datentypen und Funktionen, und
-zeigt, wie man sie in Rust verwendet. Kapitel 4 untersucht die
-Eigentümerschaft, eine Funktionalität, die Rust von anderen Sprachen
-unterscheidet. In Kapitel 5 werden Strukturen (structs) und die Methodensyntax
-besprochen und in Kapitel 6 wird die Funktionsweise von Aufzählungen erläutert.
+Rust-Konzepten vertraut zu machen: `let`, `match`, Funktionen, das Verwenden von
+externen Crates und mehr. In den nächsten Kapiteln erfährst du mehr über diese
+Konzepte. Kapitel 3 behandelt Konzepte, über die die meisten Programmiersprachen
+verfügen, z.B. Variablen, Datentypen und Funktionen, und zeigt, wie man sie in
+Rust verwendet. Kapitel 4 untersucht die Eigentümerschaft, eine Funktionalität,
+die Rust von anderen Sprachen unterscheidet. In Kapitel 5 werden Strukturen
+(structs) und die Methodensyntax besprochen und in Kapitel 6 wird die
+Funktionsweise von Aufzählungen erläutert.
 
 [cratesio]: https://crates.io/
 [doccargo]: https://doc.rust-lang.org/cargo/

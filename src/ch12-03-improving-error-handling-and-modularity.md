@@ -855,7 +855,7 @@ ausgepackten Wert zurückzugeben, der nur `()` wäre.
 Die Rümpfe von `if let` und der `unwrap_or_else`-Funktionen sind in beiden
 Fällen gleich: Wir geben den Fehler aus und beenden.
 
-### Code in eine Bibliothekskiste aufteilen
+### Code in eine Bibliotheks-Crate aufteilen
 
 Unser `minigrep`-Projekt sieht soweit gut aus! Jetzt teilen wir die Datei
 _src/main.rs_ auf und fügen etwas Code in die Datei _src/lib.rs_ ein. Auf
@@ -884,12 +884,12 @@ pub fn search<'a>(query: &str, contents: &'a str) -> Vec<&'a str> {
 _src/lib.rs_</span>
 
 Wir haben das Schlüsselwort `pub` in der Funktionsdefinition verwendet, um
-`search` als Teil der öffentlichen API unserer Bibliothekskiste zu
-kennzeichnen. Wir haben nun eine Bibliothekskiste, die wir aus unserer
-Binärkiste heraus verwenden und testen können!
+`search` als Teil der öffentlichen API unserer Bibliotheks-Crate zu
+kennzeichnen. Wir haben nun eine Bibliotheks-Crate, die wir aus unserer binären
+Crate heraus verwenden und testen können!
 
 Jetzt müssen wir den in _src/lib.rs_ definierten Code in den Gültigkeitsbereich
-der Binärkiste in _src/main.rs_ bringen und ihn aufrufen, wie in Codeblock
+der binären Crate in _src/main.rs_ bringen und ihn aufrufen, wie in Codeblock
 12-14 zu sehen ist.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -949,11 +949,11 @@ fn run(config: Config) -> Result<(), Box<dyn Error>> {
 }
 ```
 
-<span class="caption">Codeblock 12-14: Verwenden der
-`minigrep`-Bibliothekskiste in _src/main.rs_</span>
+<span class="caption">Codeblock 12-14: Verwenden der Bibliotheks-Crate
+`minigrep` in _src/main.rs_</span>
 
 Wir fügen eine Zeile `use minigrep::Config` hinzu, um den Typ `Config` aus der
-Bibliothekskiste in den Gültigkeitsbereich der Binärkiste zu bringen. Dann
+Bibliotheks-Crate in den Gültigkeitsbereich der binären Crate zu bringen. Dann
 rufen wir in der Funktion `run` anstatt den Inhalt der Datei auszugeben die
 Funktion `search` auf und übergeben den Wert `config.query` und `contents` als
 Argumente. Anschließend verwendet `run` eine `for`-Schleife, um jede von

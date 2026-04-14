@@ -17,10 +17,10 @@ Leistungsmerkmale.
 Die erste Operation, die wir im Abschnitt [„Erstellen eines neuen Strangs mit
 `spawn`“][thread-spawn] in Kapitel 16 in Angriff genommen haben, war das
 Hochzählen in zwei separaten Strängen. Lass uns das Gleiche mit async machen.
-Die Kiste `trpl` enthält eine Funktion `spawn_task`, die der API
-`thread::spawn` sehr ähnlich ist, und eine Funktion `sleep`, die eine
-async-Version der API `thread::sleep` ist. Wir können diese zusammen verwenden,
-um das Zählbeispiel zu implementieren, siehe Codeblock 17-6.
+Die Crate `trpl` enthält eine Funktion `spawn_task`, die der API `thread::spawn`
+sehr ähnlich ist, und eine Funktion `sleep`, die eine async-Version der API
+`thread::sleep` ist. Wir können diese zusammen verwenden, um das Zählbeispiel zu
+implementieren, siehe Codeblock 17-6.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

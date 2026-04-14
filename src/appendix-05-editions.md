@@ -10,7 +10,7 @@ neuer Funktionen erhalten. Andere Programmiersprachen geben weniger oft größer
 Änderungen heraus; Rust gibt häufiger kleinere Aktualisierungen heraus. Nach
 einer Weile summieren sich all diese kleinen Änderungen. Aber von
 Veröffentlichung zu Veröffentlichung kann es schwierig sein, zurückzublicken
-und zu sagen: "Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr
+und zu sagen: Wow, zwischen Rust 1.10 und Rust 1.31 hat sich Rust sehr
 verändert!
 
 Etwa alle drei Jahre gibt das Rust-Team eine neue _Rust-Edition_
@@ -45,13 +45,13 @@ Code weiterhin kompilieren, auch wenn du die verwendete
 Rust-Compiler-Version aktualisierst.
 
 Alle Rust-Compiler-Versionen unterstützen jede Edition, die vor der
-Veröffentlichung dieses Compilers existierte, und es können Kisten (crates)
-aller unterstützten Editionen miteinander verknüpft werden. Editionsänderungen
-wirken sich nur auf die Art und Weise aus, wie der Compiler anfangs den Code
+Veröffentlichung dieses Compilers existierte, und es können Crates aller
+unterstützten Editionen miteinander verknüpft werden. Editionsänderungen wirken
+sich nur auf die Art und Weise aus, wie der Compiler anfangs den Code
 analysiert. Wenn du also Rust 2015 verwendest und eine deiner Abhängigkeiten
-Rust 2018 verwendet, wird dein Projekt diese Abhängigkeit kompilieren und
-nutzen können. Die umgekehrte Situation, in der dein Projekt Rust 2018
-und eine Abhängigkeit Rust 2015 verwendet, funktioniert ebenfalls.
+Rust 2018 verwendet, wird dein Projekt diese Abhängigkeit kompilieren und nutzen
+können. Die umgekehrte Situation, in der dein Projekt Rust 2018 und eine
+Abhängigkeit Rust 2015 verwendet, funktioniert ebenfalls.
 
 Um es klar zu sagen: Die meisten Funktionen werden in allen Editionen verfügbar
 sein. Entwickler, die eine beliebige Rust-Edition verwenden, werden auch

@@ -481,7 +481,7 @@ können.
 
 Die Ermittlung von Graphemgruppen aus Zeichenketten wie bei der
 Devanagari-Schrift ist komplex, sodass diese Funktionalität nicht von der
-Standardbibliothek bereitgestellt wird. Kisten (crates) sind unter
+Standardbibliothek bereitgestellt wird. Crates sind unter
 [crates.io](https://crates.io/) verfügbar, falls du diese Funktionalität
 benötigst.
 

@@ -7,8 +7,8 @@ Um eine Funktion aufzurufen, müssen wir ihren Pfad kennen.
 Ein Pfad kann zwei Formen annehmen:
 
 - Ein _absoluter Pfad_ ist der vollständige Pfad ausgehend von einer
-  Kistenwurzel; für Code aus einer externen Kiste beginnt der absolute Pfad mit
-  der Kistenwurzel, und für Code aus der aktuellen Kiste beginnt er mit dem
+  Crate-Wurzel; für Code aus einer externen Crate beginnt der absolute Pfad mit
+  der Crate-Wurzel, und für Code aus der aktuellen Crate beginnt er mit dem
   Literal `crate`.
 - Ein _relativer Pfad_ startet beim aktuellen Modul und benutzt `self`, `super`
   oder einen Bezeichner im aktuellen Modul.
@@ -23,12 +23,12 @@ einige Module und Funktionen entfernt wurden.
 
 Wir zeigen zwei Möglichkeiten, wie die Funktion `add_to_waitlist` von einer
 neuen Funktion `eat_at_restaurant` aus aufgerufen werden kann, die in der
-Kistenwurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
+Crate-Wurzel definiert ist. Diese Pfade sind korrekt, aber es gibt noch ein
 weiteres Problem, das verhindert, dass dieses Beispiel in dieser Form
 kompiliert. Wir werden gleich erklären, warum.
 
 Die Funktion `eat_at_restaurant` ist Teil der öffentlichen
-Programmierschnittstelle (API) unserer Bibliothekskiste, daher markieren wir
+Programmierschnittstelle (API) unserer Bibliotheks-Crate, daher markieren wir
 sie mit dem Schlüsselwort `pub`. Im Abschnitt [„Pfade mit dem Schlüsselwort
 `pub` öffentlich machen“][pub] gehen wir näher auf `pub` ein.
 
@@ -55,13 +55,13 @@ mittels absoluter und relativer Pfade</span>
 
 Beim ersten Aufruf der Funktion `add_to_waitlist` in `eat_at_restaurant`
 verwenden wir einen absoluten Pfad. Die Funktion `add_to_waitlist` ist in der
-gleichen Kiste definiert wie `eat_at_restaurant`, daher können wir das
-Schlüsselwort `crate` verwenden, um einen absoluten Pfad zu beginnen. Dann
-geben wir jedes der aufeinanderfolgenden Module an, bis wir `add_to_waitlist`
+gleichen Crate definiert wie `eat_at_restaurant`, daher können wir das
+Schlüsselwort `crate` verwenden, um einen absoluten Pfad zu beginnen. Dann geben
+wir jedes der aufeinanderfolgenden Module an, bis wir `add_to_waitlist`
 erreichen. Du kannst dir ein Dateisystem mit der gleichen Struktur vorstellen:
 Wir würden den Pfad `/front_of_house/hosting/add_to_waitlist` angeben, um das
-Programm `add_to_waitlist` auszuführen; das Verwenden des Namens `crate`, um
-von der Kistenwurzel aus zu beginnen, ist analog zu `/`, um vom
+Programm `add_to_waitlist` auszuführen; das Verwenden des Namens `crate`, um von
+der Crate-Wurzel aus zu beginnen, ist analog zu `/`, um vom
 Dateisystem-Wurzelverzeichnis in deinem Terminal aus zu beginnen.
 
 Beim zweiten Aufruf von `add_to_waitlist` in `eat_at_restaurant` verwenden wir
@@ -266,68 +266,67 @@ Datenschutzregeln zu verwenden, sehen wir uns die absoluten und relativen Pfade
 an.
 
 Auf dem absoluten Pfad beginnen wir mit `crate`, der Wurzel des Modulbaums
-unserer Kiste. Dann wird das Modul `front_of_house` in der Kistenwurzel
+unserer Crate. Dann wird das Modul `front_of_house` in der Crate-Wurzel
 definiert. Während das Modul `front_of_house` nicht öffentlich ist, weil die
 Funktion `eat_at_restaurant` im gleichen Modul wie `front_of_house` definiert
-ist (d.h. `eat_at_restaurant` und `front_of_house` sind Geschwister), können
-wir auf `front_of_house` von `eat_at_restaurant` aus zugreifen. Als nächstes
-wird das Modul `hosting` mit `pub` gekennzeichnet. Wir können auf das
-übergeordnete Modul von `hosting` zugreifen, also können wir auf `hosting`
-zugreifen. Schließlich wird die Funktion `add_to_waitlist` mit `pub` markiert
-und wir können auf ihr Elternmodul zugreifen, sodass dieser Funktionsaufruf
-klappt!
+ist (d.h. `eat_at_restaurant` und `front_of_house` sind Geschwister), können wir
+auf `front_of_house` von `eat_at_restaurant` aus zugreifen. Als nächstes wird
+das Modul `hosting` mit `pub` gekennzeichnet. Wir können auf das übergeordnete
+Modul von `hosting` zugreifen, also können wir auf `hosting` zugreifen.
+Schließlich wird die Funktion `add_to_waitlist` mit `pub` markiert und wir
+können auf ihr Elternmodul zugreifen, sodass dieser Funktionsaufruf klappt!
 
 Beim relativen Pfad ist die Logik die gleiche wie beim absoluten Pfad, mit
-Ausnahme des ersten Schritts: Anstatt von der Kistenwurzel auszugehen, beginnt
+Ausnahme des ersten Schritts: Anstatt von der Crate-Wurzel auszugehen, beginnt
 der Pfad mit `front_of_house`. Das Modul `front_of_house` wird innerhalb
 desselben Moduls wie `eat_at_restaurant` definiert, sodass der relative Pfad
 ausgehend vom Modul, in dem `eat_at_restaurant` definiert ist, funktioniert.
 Weil `hosting` und `add_to_waitlist` nun mit `pub` markiert sind, funktioniert
 der Rest des Pfades, und dieser Funktionsaufruf ist gültig!
 
-Wenn du vorhast, deine Bibliothekskiste weiterzugeben, damit andere Projekte
-deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit den
-Benutzern deiner Kiste, die festlegt, wie sie mit deinem Code interagieren
+Wenn du vorhast, deine Bibliotheks-Crate weiterzugeben, damit andere Projekte
+deinen Code verwenden können, ist deine öffentliche API deine Übereinkunft mit
+den Benutzern deiner Crate, die festlegt, wie sie mit deinem Code interagieren
 können. Es gibt viele Überlegungen zum Umgang mit Änderungen an deiner
-öffentlichen API, um es für andere einfacher zu machen, sich auf deine Kiste zu
+öffentlichen API, um es für andere einfacher zu machen, sich auf deine Crate zu
 verlassen. Diese Überlegungen gehen über den Rahmen dieses Buches hinaus; wenn
 du an diesem Thema interessiert bist, lies die [Rust API
 Guidelines][api-guidelines].
 
 > #### Bewährte Praktiken für Pakete mit einer Binärdatei und einer Bibliothek
 >
-> Wir haben bereits erwähnt, dass ein Paket sowohl eine Binärkistenwurzel
-> _src/main.rs_ als auch eine Bibliothekskistenwurzel _src/lib.rs_ enthalten
-> kann, und beide Kisten tragen standardmäßig den Paketnamen. Normalerweise
-> haben Pakete mit diesem Muster, die sowohl eine Bibliothek als auch eine
-> Binärkiste enthalten, gerade genug Code in der Binärkiste, um eine
-> ausführbare Datei zu starten, die Code aus der Bibliothekskiste aufruft.
+> Wir haben bereits erwähnt, dass ein Paket sowohl eine binäre Crate-Wurzel
+> _src/main.rs_ als auch eine Bibliotheks-Crate-Wurzel _src/lib.rs_ enthalten
+> kann, und beide Crates tragen standardmäßig den Paketnamen. Normalerweise haben
+> Pakete mit diesem Muster, die sowohl eine Bibliotheks-Crate als auch eine
+> binäere Crate enthalten, gerade genug Code in der binären Crate, um eine
+> ausführbare Datei zu starten, die Code aus der Bibliotheks-Crate aufruft.
 > Dadurch können andere Projekte von den meisten Funktionen des Pakets
-> profitieren, da der Code der Bibliothekskiste gemeinsam genutzt werden kann.
+> profitieren, da der Code der Bibliotheks-Crate gemeinsam genutzt werden kann.
 >
 > Der Modulbaum sollte in _src/lib.rs_ definiert werden. Dann können alle
-> öffentlichen Elemente in der Binärkiste verwendet werden, indem die Pfade
-> mit dem Namen des Pakets beginnen. Die binäre Kiste wird zu einem Benutzer
-> der Bibliothekskiste, so wie eine vollständig externe Kiste die
-> Bibliothekskiste verwenden würde: Sie kann nur die öffentliche API
+> öffentlichen Elemente in der binären Crate verwendet werden, indem die Pfade
+> mit dem Namen des Pakets beginnen. Die binäre Crate wird zu einem Benutzer
+> der Bibliotheks-Crate, so wie eine vollständig externe Crate die
+> Bibliotheks-Crate verwenden würde: Sie kann nur die öffentliche API
 > verwenden. Dies hilft dir, eine gute API zu entwerfen; Du bist nicht nur der
 > Autor, sondern auch ein Kunde!
 >
 > In [Kapitel 12][ch12] werden wir diese organisatorische Praxis anhand eines
-> Befehlszeilenprogramms demonstrieren, das sowohl eine Binärkiste als auch
-> eine Bibliothekskiste enthält.
+> Befehlszeilenprogramms demonstrieren, das sowohl eine binäre Crate als auch
+> eine Bibliotheks-Crate enthält.
 
 ### Relative Pfade mit `super` beginnen
 
-Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen
-und nicht im aktuellen Modul oder der Kistenwurzel, indem wir `super` am Anfang
-des Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
+Wir können relative Pfade konstruieren, die im übergeordneten Modul beginnen und
+nicht im aktuellen Modul oder der Crate-Wurzel, indem wir `super` am Anfang des
+Pfades verwenden. Dies ist so, als würde man einen Dateisystempfad mit der
 Syntax `..` beginnen, wodurch man ins übergeordnete Verzeichnis kommt. Das
 Verwenden von `super` erlaubt es uns, auf ein Element zu referenzieren, von dem
 wir wissen, dass es sich im übergeordneten Modul befindet, was die Neuordnung
-des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten
-Modul verwandt ist, aber das übergeordnete Modul eines Tages an eine andere
-Stelle im Modulbaum verschoben werden könnte.
+des Modulbaums erleichtern kann, wenn das Modul eng mit dem übergeordneten Modul
+verwandt ist, aber das übergeordnete Modul eines Tages an eine andere Stelle im
+Modulbaum verschoben werden könnte.
 
 Betrachte den Code in Codeblock 7-8, der die Situation nachbildet, in der ein
 Koch eine falsche Bestellung korrigiert und persönlich zum Kunden bringt. Die
@@ -357,8 +356,9 @@ Die Funktion `fix_incorrect_order` befindet sich im Modul `back_of_house`,
 sodass wir `super` benutzen können, um zum Elternmodul von `back_of_house` zu
 gelangen, was in diesem Fall die Wurzel `crate` ist. Von dort aus suchen wir
 nach `deliver_order` und finden es. Erfolg! Wir denken, dass das Modul
-`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
-entschließen, den Modulbaum der Kiste neu zu organisieren. Deshalb haben wir
+`back_of_house` und die Funktion `deliver_order` wahrscheinlich in der gleichen
+Beziehung zueinander stehen und zusammen verschoben werden, sollten wir uns dazu
+entschließen, den Modulbaum der Crate neu zu organisieren. Deshalb haben wir
 `super` verwendet, sodass wir in Zukunft weniger Codestellen zu aktualisieren
 haben, wenn dieser Code in ein anderes Modul verschoben wird.
 

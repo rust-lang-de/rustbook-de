@@ -55,9 +55,9 @@ Lösungen vergleichen, um die Vor- und Nachteile einer anderen Gestaltung von
 Rust-Code im Vergleich zu Code in anderen Sprachen zu verdeutlichen.
 
 Codeblock 18-11 zeigt diesen Workflow in Codeform: Dies ist eine
-Beispielverwendung der API, die wir in einer Bibliothekskiste (library crate)
-`blog` implementieren werden. Dieser Code wird sich noch nicht kompilieren
-lassen, da wir die Kiste (crate) `blog` noch nicht implementiert haben.
+Beispielverwendung der API, die wir in einer Bibliotheks-Crate `blog`
+implementieren werden. Dieser Code wird sich noch nicht kompilieren lassen, da
+wir die Crate `blog` noch nicht implementiert haben.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -79,7 +79,7 @@ fn main() {
 ```
 
 <span class="caption">Codeblock 18-11: Code, der das gewünschte Verhalten
-demonstriert, das wir für unsere Kiste `blog` haben wollen</span>
+demonstriert, das wir für unsere Crate `blog` haben wollen</span>
 
 Wir möchten dem Benutzer erlauben, einen neuen Entwurf eines Blog-Beitrags mit
 `Post::new` zu erstellen. Wir möchten dem Blog-Beitrag erlauben, Text
@@ -96,15 +96,15 @@ auf die Überprüfung warten. Wenn der Beitrag die Genehmigung erhält, soll er
 veröffentlicht werden, d.h. der Text des Beitrags wird zurückgegeben, wenn
 `content` aufgerufen wird.
 
-Beachte, dass der einzige Typ, mit dem wir von der Kiste aus interagieren, der
+Beachte, dass der einzige Typ, mit dem wir von der Crate aus interagieren, der
 Typ `Post` ist. Dieser Typ verwendet das Zustandsmuster und enthält einen Wert,
 der eines von drei Zustandsobjekten ist, die die verschiedenen Zustände
 repräsentieren, in denen sich ein Beitrag im Entwurf befinden, auf eine
 Überprüfung warten oder veröffentlicht werden kann. Der Wechsel von einem
 Zustand in einen anderen wird intern innerhalb des Typs `Post` verwaltet. Die
 Zustände ändern sich als Reaktion auf die Methoden, die von den Benutzern
-unserer Bibliothek auf der `Post`-Instanz aufgerufen werden, aber sie müssen
-die Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
+unserer Bibliothek auf der `Post`-Instanz aufgerufen werden, aber sie müssen die
+Zustandsänderungen nicht direkt verwalten. Auch können die Benutzer keinen
 Fehler mit den Zuständen machen, z.B. einen Beitrag veröffentlichen, bevor er
 überprüft wurde.
 
@@ -789,7 +789,7 @@ Makro zu definieren, um die Wiederholung zu eliminieren (siehe Abschnitt
 Indem wir das Zustandsmuster genau so implementieren, wie es für
 objektorientierte Sprachen definiert ist, nutzen wir die Stärken Rusts nicht so
 aus, wie wir es könnten. Sehen wir uns einige Änderungen an, die wir an der
-Kiste `blog` vornehmen können, die ungültige Zustände und Übergänge in
+Crate `blog` vornehmen können, die ungültige Zustände und Übergänge in
 Kompilierzeitfehler verwandeln können.
 
 ### Kodieren von Zuständen und Verhalten als Typen
@@ -1008,9 +1008,9 @@ sichergestellt, dass bestimmte Fehler, z.B. das Anzeigen des Inhalts eines
 unveröffentlichten Beitrags, entdeckt werden, bevor sie in die Produktion
 gelangen.
 
-Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die
-Kiste `blog` nach Codeblock 18-20 erwähnt haben, um zu sehen, was du über das
-Design dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
+Versuche es mit den Aufgaben, die wir zu Beginn dieses Abschnitts über die Crate
+`blog` nach Codeblock 18-20 erwähnt haben, um zu sehen, was du über das Design
+dieser Version des Codes denkst. Beachte, dass einige der Aufgaben
 möglicherweise bereits in diesem Entwurf abgeschlossen sind.
 
 Wir haben gesehen, dass, obwohl Rust in der Lage ist, objektorientierte

@@ -33,8 +33,8 @@
   - [Das Kontrollflusskonstrukt `match`](ch06-02-match.md)
   - [Prägnanter Kontrollfluss mit `if let` und `let...else`](ch06-03-if-let.md)
 
-- [Pakete (packages), Kisten (crates) und Module](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
-  - [Pakete (packages) und Kisten (crates)](ch07-01-packages-and-crates.md)
+- [Pakete (packages), Crates und Module](ch07-00-managing-growing-projects-with-packages-crates-and-modules.md)
+  - [Pakete (packages) und Crates](ch07-01-packages-and-crates.md)
   - [Kontrollumfang und Datenschutz mit Modulen](ch07-02-defining-modules-to-control-scope-and-privacy.md)
   - [Mit Pfaden auf ein Element im Modulbaum verweisen](ch07-03-paths-for-referring-to-an-item-in-the-module-tree.md)
   - [Pfade in den Gültigkeitsbereich bringen mit dem Schlüsselwort `use`](ch07-04-bringing-paths-into-scope-with-the-use-keyword.md)
@@ -76,7 +76,7 @@
 
 - [Mehr über Cargo und Crates.io](ch14-00-more-about-cargo.md)
   - [Bauvorgang anpassen mit Freigabeprofilen (release profiles)](ch14-01-release-profiles.md)
-  - [Kisten (crate) auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
+  - [Crates auf crates.io veröffentlichen](ch14-02-publishing-to-crates-io.md)
   - [Cargo-Arbeitsbereiche](ch14-03-cargo-workspaces.md)
   - [Installieren von Binärdateien mit  `cargo install`](ch14-04-installing-binaries.md)
   - [Cargo um benutzerdefinierte Befehle erweitern](ch14-05-extending-cargo.md)

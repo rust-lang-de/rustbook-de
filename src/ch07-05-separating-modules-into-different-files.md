@@ -6,10 +6,10 @@ separate Datei verschieben, um die Navigation im Code zu erleichtern.
 
 Gehen wir zum Beispiel von dem Code in Codeblock 7-17 aus, der mehrere
 Restaurantmodule enthält. Wir verschieben das Modul `front_of_house` in seine
-eigene Datei _src/front_of_house.rs_, indem wir die Kistenwurzeldatei so
-ändern, dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall
-ist die Kistenwurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert
-auch mit binären Kisten, deren Kistenwurzeldatei _src/main.rs_ ist.
+eigene Datei _src/front_of_house.rs_, indem wir die Crate-Wurzeldatei so ändern,
+dass sie den in Codeblock 7-21 gezeigten Code enthält. In diesem Fall ist die
+Crate-Wurzeldatei _src/lib.rs_, aber diese Vorgehensweise funktioniert auch mit
+binären Crate, deren Crate-Wurzeldatei _src/main.rs_ ist.
 
 Zuerst extrahieren wir das Modul `front_of_house` in eine eigene Datei.
 Entferne den Code innerhalb der geschweiften Klammern des Moduls
@@ -36,7 +36,7 @@ dessen Rumpf sich in _src/front_of_house.rs_ befinden wird</span>
 Als nächstes fügst du den Code in den geschweiften Klammern in eine neue Datei
 namens _src/front_of_house.rs_ ein, wie in Codeblock 7-22 zu sehen ist. Der
 Compiler weiß, dass er in dieser Datei suchen muss, weil er auf die
-Moduldeklaration in der Kistenwurzel mit dem Namen `front_of_house` gestoßen
+Moduldeklaration in der Crate-Wurzel mit dem Namen `front_of_house` gestoßen
 ist.
 
 <span class="filename">Dateiname: src/front_of_house.rs</span>
@@ -86,18 +86,18 @@ pub fn add_to_waitlist() {}
 ```
 
 Wenn wir stattdessen _hosting.rs_ in das _src_-Verzeichnis legen, würde der
-Compiler erwarten, dass der _hosting.rs_-Code in einem `hosting`-Modul
-enthalten ist, das im Stammverzeichnis der Kiste deklariert ist, und nicht als
-Kind des `front_of_house`-Moduls. Die Regeln des Compilers dafür, welche
-Dateien auf den Code welcher Module zu prüfen sind, bedeuten, dass die
-Verzeichnisse und Dateien dem Modulbaum besser entsprechen.
+Compiler erwarten, dass der _hosting.rs_-Code in einem `hosting`-Modul enthalten
+ist, das im Stammverzeichnis der Crate deklariert ist, und nicht als Kind des
+`front_of_house`-Moduls. Die Regeln des Compilers dafür, welche Dateien auf den
+Code welcher Module zu prüfen sind, bedeuten, dass die Verzeichnisse und Dateien
+dem Modulbaum besser entsprechen.
 
 > ### Alternative Dateipfade
 >
 > Bis jetzt haben wir die idiomatischsten Dateipfade behandelt, die der
 > Rust-Compiler verwendet, aber Rust unterstützt auch eine ältere Art von
 > Dateipfaden. Für ein Modul mit dem Namen `front_of_house`, das in der
-> Kistenwurzel deklariert ist, sucht der Compiler den Code des Moduls in:
+> Crate-Wurzel deklariert ist, sucht der Compiler den Code des Moduls in:
 >
 > - _src/front_of_house.rs_ (was wir behandelt haben)
 > - _src/front_of_house/mod.rs_ (älterer Stil, noch unterstützter Pfad)
@@ -126,13 +126,13 @@ verschieben, wenn diese größer werden.
 
 Beachte, dass sich die Anweisung `pub use crate::front_of_house::hosting` in
 _src/lib.rs_ ebenfalls nicht geändert hat und dass `use` keinen Einfluss darauf
-hat, welche Dateien als Teil der Kiste kompiliert werden. Das Schlüsselwort
+hat, welche Dateien als Teil der Crate kompiliert werden. Das Schlüsselwort
 `mod` deklariert Module und Rust sucht in einer Datei mit dem Modulnamen nach
 dem Code, der zu diesem Modul gehört.
 
 ## Zusammenfassung
 
-Mit Rust kannst du ein Paket in mehrere Kisten und eine Kiste in Module
+Mit Rust kannst du ein Paket in mehrere Crates und eine Crate in Module
 aufteilen, sodass du auf in einem Modul definierte Elemente aus einem anderen
 Modul verweisen kannst. Du kannst dies tun, indem du absolute oder relative
 Pfade angibst. Diese Pfade können mit einer `use`-Anweisung in den

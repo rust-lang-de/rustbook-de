@@ -105,7 +105,7 @@ Modulhierarchie eines Elements vorkommen.
 | Symbol | Erklärung |
 |:-----------------|:---------------------------------------------|
 | `ident::ident` | Namensraum-Pfad |
-| `::path` | Pfad relativ zur Kistenwurzel, auf dem alle anderen Kisten basieren<br> (d.h. ein explizit absoluter Pfad inklusive Kistenname) |
+| `::path` | Pfad relativ zur Crate-Wurzel, auf dem alle anderen Crates basieren<br> (d.h. ein explizit absoluter Pfad inklusive Crate-Name) |
 | `self::path` | Pfad relativ zum aktuellen Modul<br> (d.h. ein explizit relativer Pfad) |
 | `super::path` | Pfad relativ zum Elternmodul |
 | `type::ident`,<br> `<type as trait>::ident` | Zugehörige Konstanten, Funktionen<br> und Typen |

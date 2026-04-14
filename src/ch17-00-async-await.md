@@ -15,12 +15,12 @@ der wir unseren Code in Form von potenziellen Haltepunkten und Endergebnissen
 ausdrücken können, die die Details der Koordination für uns übernehmen.
 
 Dieses Kapitel baut auf Kapitel 16 auf, in dem Stränge (threads) für
-Parallelität und Nebenläufigkeit verwendet werden, und stellt einen
-alternativen Ansatz zum Schreiben von Code vor: Rusts Futures, Ströme (streams)
-und die Syntax `async` und `await`, mit denen wir ausdrücken können, wie
-Operationen asynchron sein könnten, sowie die Kisten (crates) von
-Drittanbietern, die asynchrone Laufzeiten implementieren: Code, der die
-Ausführung asynchroner Operationen verwaltet und koordiniert.
+Parallelität und Nebenläufigkeit verwendet werden, und stellt einen alternativen
+Ansatz zum Schreiben von Code vor: Rusts Futures, Ströme (streams) und die
+Syntax `async` und `await`, mit denen wir ausdrücken können, wie Operationen
+asynchron sein könnten, sowie die Crate von Drittanbietern, die asynchrone
+Laufzeiten implementieren: Code, der die Ausführung asynchroner Operationen
+verwaltet und koordiniert.
 
 Schauen wir uns ein Beispiel an. Nehmen wir an, du exportierst ein Video, das
 du von einer Familienfeier erstellt hast &ndash; ein Vorgang, der zwischen

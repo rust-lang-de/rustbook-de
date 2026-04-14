@@ -310,12 +310,12 @@ error: could not compile `hello` (bin "hello") due to 1 previous error
 Großartig! Dieser Fehler sagt uns, dass wir einen Typ oder ein Modul
 `ThreadPool` benötigen, also werden wir jetzt eines bauen. Unsere
 `ThreadPool`-Implementierung wird unabhängig von der Art der Arbeit unseres
-Webservers sein. Lass uns also die Kiste (crate) `hello` von einer Binärkiste
-(binary crate) auf eine Bibliothekskiste (library crate) umstellen, um unsere
-`ThreadPool`-Implementierung aufzunehmen. Nachdem wir zu einer Bibliothekskiste
-umgestellt haben, könnten wir die separate Strang-Vorrats-Bibliothek auch für
-alle Arbeiten verwenden, die wir mit einem Strang-Vorrat durchführen wollen,
-nicht nur für die Bedienung von Webanfragen.
+Webservers sein. Lass uns also die Crate `hello` von einer binären Crate auf
+eine Bibliotheks-Crate umstellen, um unsere `ThreadPool`-Implementierung
+aufzunehmen. Nachdem wir zu einer Bibliotheks-Crate umgestellt haben, könnten
+wir die separate Strang-Vorrats-Bibliothek auch für alle Arbeiten verwenden, die
+wir mit einem Strang-Vorrat durchführen wollen, nicht nur für die Bedienung von
+Webanfragen.
 
 Erstelle eine Datei _src/lib.rs_, die das Folgende enthält, was die einfachste
 Definition einer `ThreadPool`-Struktur ist, die wir im Moment haben können:
@@ -327,7 +327,7 @@ pub struct ThreadPool;
 ```
 
 Bearbeite dann die Datei _main.rs_, um `ThreadPool` in den Gültigkeitsbereich
-der Bibliothekskiste zu bringen, indem du den folgenden Code am Anfang von
+der Bibliotheks-Crate zu bringen, indem du den folgenden Code am Anfang von
 _src/main.rs_ hinzufügst:
 
 <span class="filename">Dateiname: src/bin/main.rs</span>
@@ -661,7 +661,7 @@ impl ThreadPool {
 <span class="caption">Codeblock 21-14: Erstellen eines Vektors für `ThreadPool`
 zum Aufnehmen der Stränge</span>
 
-Wir haben `std::thread` in der Bibliothekskiste in den Gültigkeitsbereich
+Wir haben `std::thread` in der Bibliotheks-Crate in den Gültigkeitsbereich
 gebracht, weil wir `thread::JoinHandle` als den Typ der Elemente im Vektor in
 `ThreadPool` verwenden.
 

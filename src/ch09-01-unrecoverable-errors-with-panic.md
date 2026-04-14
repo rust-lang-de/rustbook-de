@@ -128,12 +128,12 @@ Die Zeile `note:` sagt uns, dass wir die Umgebungsvariable `RUST_BACKTRACE`
 setzen können, um eine Aufrufhistorie zu erhalten, was genau passiert ist und
 den Fehler verursacht hat. Eine _Aufrufhistorie_ ist eine Liste aller
 Funktionen, die aufgerufen wurden, um an diesen Punkt zu gelangen.
-Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel
-zum Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du
-Dateien siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
+Aufrufhistorien in Rust funktionieren wie in anderen Sprachen: Der Schlüssel zum
+Lesen der Aufrufhistorie ist, von oben zu beginnen und zu lesen, bis du Dateien
+siehst, die du geschrieben hast. Das ist die Stelle, an der das Problem
 entstanden ist. Die Zeilen darüber sind Code, den dein Code aufgerufen hat; die
 Zeilen darunter sind Code, der deinen Code aufgerufen hat. Diese Zeilen können
-Core-Rust-Code, Code der Standardbibliothek oder Kisten, enthalten, die du
+Core-Rust-Code, Code der Standardbibliothek oder Crate, enthalten, die du
 verwendest. Versuchen wir, eine Aufrufhistorie zu erhalten, indem wir die
 Umgebungsvariable `RUST_BACKTRACE` auf einen beliebigen Wert außer `0` setzen.
 Codeblock 9-2 zeigt eine ähnliche Ausgabe wie die, die du sehen wirst.

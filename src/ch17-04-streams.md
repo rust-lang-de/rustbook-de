@@ -99,7 +99,7 @@ Das Trait `Stream` definiert eine Low-Level-Schnittstelle, die die Traits
 APIs auf höherer Ebene ab, die auf `Stream` basieren, darunter die Methode
 `next` sowie andere Hilfsmethoden, die denen des Traits `Iterator` ähneln.
 `Stream` und `StreamExt` sind noch nicht Teil der Standardbibliothek von Rust,
-aber die meisten Kisten des Ökosystems verwenden ähnliche Definitionen.
+aber die meisten Crates des Ökosystems verwenden ähnliche Definitionen.
 
 Um den Compilerfehler zu beheben, fügen wir eine `use`-Anweisung für
 `trpl::StreamExt` hinzu, wie in Codeblock 17-22.

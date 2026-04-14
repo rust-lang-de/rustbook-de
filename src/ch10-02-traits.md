@@ -26,13 +26,13 @@ die eine Nachricht enthält, die sich auf einen bestimmten Ort bezieht, und ein
 angeben, ob es sich um eine neue Nachricht, eine Wiederholung oder eine Antwort
 auf eine andere Nachricht handelt.
 
-Wir wollen eine Medienaggregator-Bibliothekskiste namens `aggregator` erstellen,
-die Zusammenfassungen von Daten anzeigen kann, die in einer `NewsArticle`- oder
-`SocialPost`-Instanz gespeichert sein könnten. Dazu brauchen wir eine
-Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung anfordern,
-indem wir eine Methode `summarize` auf einer Instanz aufrufen. Codeblock 10-12
-zeigt die Definition eines öffentlichen Traits `Summary`, das dieses Verhalten
-zum Ausdruck bringt.
+Wir wollen eine Medienaggregator-Bibliotheks-Crate namens `aggregator`
+erstellen, die Zusammenfassungen von Daten anzeigen kann, die in einer
+`NewsArticle`- oder `SocialPost`-Instanz gespeichert sein könnten. Dazu brauchen
+wir eine Zusammenfassung von jedem Typ, und wir werden diese Zusammenfassung
+anfordern, indem wir eine Methode `summarize` auf einer Instanz aufrufen.
+Codeblock 10-12 zeigt die Definition eines öffentlichen Traits `Summary`, das
+dieses Verhalten zum Ausdruck bringt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -47,7 +47,7 @@ der Methode `summarize` besteht</span>
 
 Hier deklarieren wir ein Trait mit dem Schlüsselwort `trait` und dann den Namen
 des Traits, der in diesem Fall `Summary` lautet. Wir deklarieren das Trait auch
-als `pub`, sodass Kisten, die von dieser Kiste abhängen, dieses Trait ebenfalls
+als `pub`, sodass Crates, die von dieser Crate abhängen, dieses Trait ebenfalls
 nutzen können, wie wir in einigen Beispielen sehen werden. Innerhalb der
 geschweiften Klammern deklarieren wir die Methodensignaturen, die das Verhalten
 der Typen beschreiben, die dieses Trait implementieren, was in diesem Fall `fn
@@ -121,12 +121,12 @@ Methodenrumpf mit dem spezifischen Verhalten, das die Methoden des Traits für
 den jeweiligen Typ haben sollen.
 
 Da die Bibliothek nun das Trait `Summary` auf `NewsArticle` und `SocialPost`
-implementiert hat, können Benutzer der Kiste die Trait-Methoden auf Instanzen
+implementiert hat, können Benutzer der Crate die Trait-Methoden auf Instanzen
 von `NewsArticle` und `SocialPost` auf die gleiche Weise aufrufen, wie wir
 reguläre Methoden aufrufen. Der einzige Unterschied besteht darin, dass der
 Benutzer das Trait sowie die Typen in den Gültigkeitsbereich bringen muss, um
 die zusätzlichen Trait-Methoden zu erhalten. Hier ist ein Beispiel dafür, wie
-eine binäre Kiste unsere `aggregator`-Bibliothekskiste verwenden könnte:
+eine binäre Crate unsere Bibliotheks-Crate `aggregator` verwenden könnte:
 
 ```rust,ignore
 use aggregator::{self, Summary, SocialPost};
@@ -146,26 +146,26 @@ fn main() {
 Dieser Code gibt `1 neue Nachricht: horse_ebooks: natürlich, wie du
 wahrscheinlich schon weißt` aus.
 
-Andere Kisten, die von der `aggregator`-Kiste abhängen, können auch das Trait
+Andere Crates, die von der Crate `aggregator` abhängen, können auch das Trait
 `Summary` in den Gültigkeitsbereich bringen, um `Summary` auf ihren eigenen
 Typen zu implementieren. Eine Einschränkung ist, dass wir ein Trait für einen
 Typ nur dann implementieren können, wenn entweder das Trait und/oder der Typ
-lokal in unserer Kiste vorhanden ist. Zum Beispiel können wir
+lokal in unserer Crate vorhanden ist. Zum Beispiel können wir
 Standardbibliotheks-Traits wie `Display` auf einem benutzerdefinierten Typ wie
-`SocialPost` als Teil unserer `aggregator`-Kistenfunktionalität implementieren,
-weil der Typ `SocialPost` lokal zu unserer `aggregator`-Kiste gehört. Wir können
-auch `Summary` auf `Vec<T>` in unserer `aggregator`-Kiste implementieren, weil
-das Trait `Summary` lokal zu unserer `aggregator`-Kiste gehört.
+`SocialPost` als Teil unserer `aggregator`-Crate-Funktionalität implementieren,
+weil der Typ `SocialPost` lokal zu unserer Crate `aggregator` gehört. Wir können
+auch `Summary` auf `Vec<T>` in unserer Crate `aggregator` implementieren, weil
+das Trait `Summary` lokal zu unserer Crate `aggregator` gehört.
 
 Aber wir können externe Traits nicht auf externe Typen anwenden. Zum Beispiel
-können wir das Trait `Display` auf `Vec<T>` in unserer `aggregator`-Kiste nicht
+können wir das Trait `Display` auf `Vec<T>` in unserer Crate `aggregator` nicht
 implementieren, weil `Display` und `Vec<T>` in der Standardbibliothek definiert
-sind und nicht lokal zu unserer `aggregator`-Kiste gehören. Diese Beschränkung
+sind und nicht lokal zu unserer Crate `aggregator` gehören. Diese Beschränkung
 ist Teil einer Eigenschaft von Programmen namens _Kohärenz_ (coherence), genauer
 gesagt der _Waisenregel_ (orphan rule), die so genannt wird, weil der
 übergeordnete Typ nicht vorhanden ist. Diese Regel stellt sicher, dass der Code
 anderer Personen deinen Code nicht brechen kann und umgekehrt. Ohne diese Regel
-könnten zwei Kisten dasselbe Trait für denselben Typ implementieren und Rust
+könnten zwei Crates dasselbe Trait für denselben Typ implementieren und Rust
 wüsste nicht, welche Implementierung es verwenden sollte.
 
 ### Standard-Implementierungen verwenden

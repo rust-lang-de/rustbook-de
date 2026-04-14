@@ -80,11 +80,10 @@ realistischeren Situation anwenden als die hier besprochenen kleineren
 Beispiele.
 
 Wie bereits erwähnt, ist nur sehr wenig davon, wie Rust mit Nebenläufigkeit
-umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind in Kisten
-(crates) implementiert. Diese entwickeln sich schneller als die
-Standardbibliothek. Stelle also sicher, dass du online nach den aktuellen,
-hochmodernen Kisten suchst, die in mehrsträngigen Situationen verwendet werden
-können.
+umgeht, Teil der Sprache; viele Nebenläufigkeitslösungen sind in Crates
+implementiert. Diese entwickeln sich schneller als die Standardbibliothek.
+Stelle also sicher, dass du online nach den aktuellen, hochmodernen Crates
+suchst, die in mehrsträngigen Situationen verwendet werden können.
 
 Die Rust-Standardbibliothek bietet Kanäle (channels) für die
 Nachrichtenübermittlung und intelligente Zeigertypen wie `Mutex<T>` und

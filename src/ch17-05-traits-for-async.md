@@ -543,7 +543,7 @@ Nachdem du nun ein tieferes Verständnis für die Traits `Future`, `Pin` und
 diesem Kapitel gelernt hast, sind Ströme ähnlich wie asynchrone Iteratoren. Im
 Gegensatz zu `Iterator` und `Future` hat `Stream` derzeit keine Definition in
 der Standardbibliothek, aber es _gibt_ eine sehr verbreitete Definition in der
-Kiste `Futures`, die im gesamten Ökosystem verwendet wird.
+Crate `Futures`, die im gesamten Ökosystem verwendet wird.
 
 Schauen wir uns die Definitionen der Traits `Iterator` und `Future` an, bevor
 wir uns ansehen, wie ein Trait `Stream` aussehen könnte. Von `Iterator` haben
@@ -632,7 +632,7 @@ für jeden Typ implementiert, der `Stream` implementiert, aber diese Traits
 werden separat definiert, um der Rust-Gemeinschaft die Möglichkeit zu geben,
 Komfort-APIs zu entwickeln, ohne die grundlegenden Traits zu beeinflussen.
 
-In der Version von `StreamExt`, die in der Kiste `trpl` verwendet wird,
+In der Version von `StreamExt`, die in der Crate `trpl` verwendet wird,
 definiert das Trait nicht nur die Methode `next`, sondern liefert auch eine
 Implementierung von `next`, die die Details des Aufrufs von `Stream::poll_next`
 korrekt behandelt. Das bedeutet, dass du selbst beim Schreiben deines eigenen

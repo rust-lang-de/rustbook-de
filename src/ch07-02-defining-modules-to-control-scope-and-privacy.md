@@ -16,18 +16,18 @@ ihren Code organisieren. Wir werden im Laufe dieses Kapitels Beispiele für jede
 dieser Regeln durchgehen, aber dies ist ein guter Ort, um sich daran zu
 erinnern, wie Module funktionieren.
 
-- **Beginne bei der Kistenwurzel (crate root)**: Beim Kompilieren einer Kiste
-  sucht der Compiler zuerst in der Wurzeldatei der Kiste (normalerweise
-  _src/lib.rs_ für eine Bibliothekskiste und _src/main.rs_ für eine
-  Binärkiste).
-- **Module deklarieren**: In der Kisten-Stammdatei kannst du neue Module
+- **Beginne bei der Crate-Wurzel (crate root):** Beim Kompilieren einer Crate
+  sucht der Compiler zuerst in der Wurzeldatei der Crate (normalerweise
+  _src/lib.rs_ für eine Bibliotheks-Crate und _src/main.rs_ für eine
+  binäre Crate).
+- **Module deklarieren:** In der Crate-Wurzel kannst du neue Module
   deklarieren; z.B. deklarierst du ein „Garten“-Modul mit `mod garden;`. Der
   Compiler wird an diesen Stellen nach dem Code des Moduls suchen:
     - In der Zeile direkt nach `mod garden`, in geschweiften Klammern anstelle
       des Semikolons
     - In der Datei _src/garden.rs_
     - In der Datei _src/garden/mod.rs_
-- **Submodule deklarieren**: In jeder anderen Datei als der Kistenwurzel
+- **Submodule deklarieren:** In jeder anderen Datei als der Crate-Wurzel
   kannst du Untermodule deklarieren. Du kannst zum Beispiel `mod vegetables;`
   in _src/garden.rs_ deklarieren. Der Compiler sucht den Code des Submoduls in
   dem Verzeichnis, das nach dem übergeordneten Modul benannt ist, an folgenden
@@ -36,18 +36,18 @@ erinnern, wie Module funktionieren.
       anstelle des Semikolons
     - In der Datei _src/garden/vegetables.rs_
     - In der Datei _src/garden/vegetables/mod.rs_
-- **Pfade zum Code in Modulen**: Sobald ein Modul Teil deiner Kiste ist, kannst
-  du auf den Code in diesem Modul von jedem anderen Ort in derselben Kiste aus
+- **Pfade zum Code in Modulen:** Sobald ein Modul Teil deiner Crate ist, kannst
+  du auf den Code in diesem Modul von jedem anderen Ort in derselben Crate aus
   referenzieren, solange die Datenschutzregeln dies zulassen, indem du den Pfad
   zum Code verwendest. Zum Beispiel würde ein Typ `Asparagus` (engl. Spargel)
   im Gartengemüse-Modul unter `crate::garden::vegetables::Asparagus` zu finden
   sein.
-- **Privat vs. öffentlich**: Der Code innerhalb eines Moduls ist standardmäßig
+- **Privat vs. öffentlich:** Der Code innerhalb eines Moduls ist standardmäßig
   für seine übergeordneten Module nicht zugänglich. Um ein Modul öffentlich zu
   machen, deklariere es mit `pub mod` anstelle von `mod`. Um Elemente innerhalb
   eines öffentlichen Moduls ebenfalls öffentlich zu machen, verwende `pub` vor
   ihren Deklarationen.
-- **Das Schlüsselwort `use`**: Innerhalb eines Gültigkeitsbereichs werden mit
+- **Das Schlüsselwort `use`:** Innerhalb eines Gültigkeitsbereichs werden mit
   dem Schlüsselwort `use` Verknüpfungen zu Elementen erstellt, um die
   Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
   auf `crate::garden::vegetables::Asparagus` referenzieren kann, kann man eine
@@ -55,8 +55,8 @@ erinnern, wie Module funktionieren.
   da an braucht man nur noch `Asparagus` zu schreiben, um diesen Typ im
   Gültigkeitsbereich zu verwenden.
 
-Hier erstellen wir eine binäre Kiste namens `backyard` (Hinterhof), die diese
-Regeln veranschaulicht. Das Verzeichnis der Kiste, ebenfalls _backyard_
+Hier erstellen wir eine binäre Crate namens `backyard` (Hinterhof), die diese
+Regeln veranschaulicht. Das Verzeichnis der Crate, ebenfalls _backyard_
 genannt, enthält diese Dateien und Verzeichnisse:
 
 ```text
@@ -70,7 +70,7 @@ backyard
     └── main.rs
 ```
 
-Die Stammdatei der Kiste ist in diesem Fall _src/main.rs_, und sie enthält:
+Die Wurzel der Crate ist in diesem Fall _src/main.rs_, und sie enthält:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -106,16 +106,16 @@ Lass uns nun auf die Einzelheiten dieser Regeln eingehen und sie in der Praxis d
 
 ### Gruppierung von zugehörigem Code in Modulen
 
-_Module_ ermöglichen es uns, den Code innerhalb einer Kiste zu organisieren,
-damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch
-den _Datenschutz_ (privacy) von Elementen kontrollieren, da Code innerhalb
-eines Moduls standardmäßig privat ist. Private Elemente sind interne
-Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung
-stehen. Wir können uns dafür entscheiden, Module und die darin enthaltenen
-Elemente öffentlich zu machen, damit externer Code sie verwenden und von ihnen
-abhängen kann.
+_Module_ ermöglichen es uns, den Code innerhalb einer Crate zu organisieren,
+damit er lesbar und leicht wiederverwendbar ist. Mit Modulen können wir auch den
+_Datenschutz_ (privacy) von Elementen kontrollieren, da Code innerhalb eines
+Moduls standardmäßig privat ist. Private Elemente sind interne
+Implementierungsdetails, die nicht für die externe Nutzung zur Verfügung stehen.
+Wir können uns dafür entscheiden, Module und die darin enthaltenen Elemente
+öffentlich zu machen, damit externer Code sie verwenden und von ihnen abhängen
+kann.
 
-Als Beispiel schreiben wir eine Bibliothekskiste, die die Funktionalität eines
+Als Beispiel schreiben wir eine Bibliotheks-Crate, die die Funktionalität eines
 Restaurants bietet. Wir werden die Signaturen der Funktionen definieren, aber
 ihre Rümpfe leer lassen, um uns auf die Organisation des Codes zu konzentrieren
 und nicht auf die Implementierung eines Restaurants.
@@ -128,11 +128,11 @@ Getränke. Auf der _Hinterseite des Hauses_ arbeiten die Küchenchefs und Köche
 in der Küche, Geschirrspüler waschen ab und Manager erledigen
 Verwaltungsarbeiten.
 
-Um unsere Kiste auf diese Weise zu strukturieren, können wir ihre Funktionen in
+Um unsere Crate auf diese Weise zu strukturieren, können wir ihre Funktionen in
 verschachtelten Modulen organisieren. Erstelle eine neue Bibliothek namens
-`restaurant`, indem du `cargo new --lib restaurant` ausführst. Gib dann den
-Code in Codeblock 7-1 in _src/lib.rs_ ein, um einige Module und
-Funktionssignaturen zu definieren. Hier ist der vordere Teil des Hauses:
+`restaurant`, indem du `cargo new --lib restaurant` ausführst. Gib dann den Code
+in Codeblock 7-1 in _src/lib.rs_ ein, um einige Module und Funktionssignaturen
+zu definieren. Hier ist der vordere Teil des Hauses:
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -172,10 +172,10 @@ lesen zu müssen, und finden so leichter die für sie relevanten Definitionen.
 Programmierer, die diesem Code neue Funktionalität hinzufügen, wissen, wo sie
 den Code platzieren müssen, damit das Programm übersichtlich bleibt.
 
-Vorhin haben wir erwähnt, dass _src/main.rs_ und _src/lib.rs_ als
-_Kistenwurzel_ bezeichnet werden. Der Grund für ihren Namen ist, dass der
-Inhalt dieser beiden Dateien ein Modul namens `crate` an der Wurzel der
-Modulstruktur der Kiste bilden, die als _Modulbaum_ bekannt ist.
+Vorhin haben wir erwähnt, dass _src/main.rs_ und _src/lib.rs_ als _Crate-Wurzel_
+bezeichnet werden. Der Grund für ihren Namen ist, dass der Inhalt dieser beiden
+Dateien ein Modul namens `crate` an der Wurzel der Modulstruktur der Crate
+bilden, die als _Modulbaum_ bekannt ist.
 
 Codeblock 7-2 zeigt den Modulbaum für die Struktur in Codeblock 7-1.
 

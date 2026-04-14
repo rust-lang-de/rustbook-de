@@ -16,12 +16,12 @@ erweitern. Um zu zeigen, wie wir dies erreichen können, werden wir ein Beispiel
 für ein GUI-Werkzeug (Graphical User Interface) erstellen, das über eine Liste
 von Elementen iteriert, wobei auf jedem Element eine Methode `draw` aufgerufen
 wird, um es auf den Bildschirm zu zeichnen &ndash; eine übliche Technik bei
-GUI-Werkzeugen. Wir werden eine Bibliothekskiste (library crate) namens `gui`
-erstellen, die die Struktur einer GUI-Bibliothek enthält. Diese Kiste (crate)
-könnte einige Typen enthalten, die Leute benutzen können, z.B. `Button` und
-`TextField`. Darüber hinaus werden `gui`-Benutzer ihre eigenen Typen erstellen
-wollen, die gezeichnet werden können: Zum Beispiel könnte ein Programmierer ein
-`Image` und ein anderer eine `SelectBox` hinzufügen.
+GUI-Werkzeugen. Wir werden eine Bibliotheks-Crate namens `gui` erstellen, die
+die Struktur einer GUI-Bibliothek enthält. Diese Crate könnte einige Typen
+enthalten, die Leute benutzen können, z.B. `Button` und `TextField`. Darüber
+hinaus werden `gui`-Benutzer ihre eigenen Typen erstellen wollen, die gezeichnet
+werden können: Zum Beispiel könnte ein Programmierer ein `Image` und ein anderer
+eine `SelectBox` hinzufügen.
 
 Zum Zeitpunkt des Schreibens der Bibliothek können wir nicht alle Typen kennen
 und definieren, die andere Programmierer vielleicht erstellen möchten. Aber wir
@@ -262,7 +262,7 @@ impl Draw for SelectBox {
 # fn main() {}
 ```
 
-<span class="caption">Codeblock 18-8: Eine andere Kiste, die `gui` verwendet und
+<span class="caption">Codeblock 18-8: Eine andere Crate, die `gui` verwendet und
 das Trait `Draw` auf einer Struktur `SelectBox` implementiert</span>
 
 Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um

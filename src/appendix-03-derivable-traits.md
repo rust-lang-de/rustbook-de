@@ -103,7 +103,7 @@ Strukturdefinition erscheinen. Beim Ableiten auf Aufzählungen werden Varianten,
 die in der Aufzählungsdefinition früher deklariert sind, als kleiner als die
 später aufgeführten Varianten betrachtet.
 
-Das Trait `PartialOrd` ist z.B. für die Methode `gen_range` aus der Kiste `rand`
+Das Trait `PartialOrd` ist z.B. für die Methode `gen_range` aus der Crate `rand`
 erforderlich, die einen Zufallswert aus einem Wertebereich erzeugt, der durch
 einen Bereichsausdruck festgelegt wird.
 
