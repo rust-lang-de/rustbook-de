@@ -65,7 +65,7 @@ _src/main.rs_ nicht erwähnt wird. Cargo folgt der Konvention, dass _src/main.rs
 die Crate-Wurzel einer binären Crate mit dem gleichen Namen wie das Paket ist.
 Ebenso weiß Cargo, dass, wenn das Paketverzeichnis _src/lib.rs_ enthält, das
 Paket eine Bibliotheks-Crate mit dem gleichen Namen wie das Paket enthält, und
-_src/lib.rs_ deren Crate-Wurzel ist. Cargo übergibt die Crate-Wurzel-Dateien an
+_src/lib.rs_ deren Crate-Wurzel ist. Cargo übergibt die Crate-Wurzeldateien an
 `rustc`, um die Bibliothek oder Binärdatei zu bauen.
 
 Hier haben wir ein Paket, das nur _src/main.rs_ enthält, d.h. es enthält nur
