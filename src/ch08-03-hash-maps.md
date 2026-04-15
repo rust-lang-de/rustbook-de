@@ -208,12 +208,12 @@ println!("{scores:?}");
 <span class="caption">Codeblock 8-24: Verwenden der Methode `entry` zum
 Einfügen, nur wenn der Schlüssel nicht bereits einen Wert hat</span>
 
-Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine
-veränderbare Referenz auf den Wert des entsprechenden `Entry`-Schlüssels
-zurückgibt, wenn dieser Schlüssel existiert, andernfalls fügt sie den Parameter
-als neuen Wert für diesen Schlüssel ein und gibt eine veränderbare Referenz
-auf den neuen Wert zurück. Diese Technik ist viel sauberer, als die Logik
-selbst zu schreiben, und sie harmoniert besser mit dem Ausleihenprüfer.
+Die Methode `or_insert` von `Entry` ist so definiert, dass sie eine veränderbare
+Referenz auf den Wert des entsprechenden `Entry`-Schlüssels zurückgibt, wenn
+dieser Schlüssel existiert, andernfalls fügt sie den Parameter als neuen Wert
+für diesen Schlüssel ein und gibt eine veränderbare Referenz auf den neuen Wert
+zurück. Diese Technik ist viel sauberer, als die Logik selbst zu schreiben, und
+sie harmoniert besser mit dem Borrow Checker.
 
 Der Code in Codeblock 8-24 gibt `{"Gelb": 50, "Blau": 10}` aus. Beim ersten
 Aufruf von `entry` wird der Schlüssel von Team Gelb mit dem Wert `50`
@@ -259,10 +259,10 @@ Die Methode `split_whitespace` gibt einen Iterator über durch Leerzeichen
 getrennte Sub-Anteilstypen des Wertes in `text` zurück. Die Methode `or_insert`
 gibt eine veränderbare Referenz (`&mut V`) auf den Wert für den angegebenen
 Schlüssel zurück. Hier speichern wir diese veränderbaren Referenz in der
-Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count`
-mit dem Stern (`*`) derefenzieren. Die veränderbare Referenz verlässt am Ende
-der `for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher
-und gemäß der Ausleihregeln zulässig sind.
+Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count` mit
+dem Stern (`*`) derefenzieren. Die veränderbare Referenz verlässt am Ende der
+`for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher und
+gemäß der Borrowing-Regeln zulässig sind.
 
 ### Hash-Funktionen
 

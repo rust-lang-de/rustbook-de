@@ -539,10 +539,10 @@ andere Garantien und Kompromisse eingehen kann, als es standardmäßig mit
 gewöhnlichen Referenzen in Rust möglich ist. Der Typ `Box<T>` hat eine bekannte
 Größe und zeigt auf Daten die auf dem Heap allokiert sind. Der Typ `Rc<T>`
 verfolgt die Anzahl der Referenzen von Daten auf dem Heap, sodass Daten mehrere
-Eigentümer haben können. Der Typ `RefCell<T>` mit seiner inneren
-Veränderbarkeit stellt uns einen Typ zur Verfügung, den wir verwenden können,
-wenn wir einen unveränderbaren Typ benötigen, aber einen inneren Wert dieses
-Typs ändern müssen. Außerdem werden die Ausleihregeln zur Laufzeit anstatt zur
+Eigentümer haben können. Der Typ `RefCell<T>` mit seiner inneren Veränderbarkeit
+stellt uns einen Typ zur Verfügung, den wir verwenden können, wenn wir einen
+unveränderbaren Typ benötigen, aber einen inneren Wert dieses Typs ändern
+müssen. Außerdem werden die Borrowing-Regeln zur Laufzeit anstatt zur
 Kompilierzeit durchgesetzt.
 
 Ebenfalls diskutiert wurden die Traits `Deref` und `Drop`, die einen Großteil

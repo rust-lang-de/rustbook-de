@@ -1438,12 +1438,11 @@ Anfragen auf ihre Bearbeitung warten. Der Grund dafür ist etwas subtil: Die
 Struktur `Mutex` hat keine öffentliche Methode `unlock`, weil die
 Eigentümerschaft der Sperre auf der Lebensdauer von `MutexGuard<T>` innerhalb
 von `LockResult<MutexGuard<T>>` basiert, die die Methode `lock` zurückgibt. Zur
-Kompilierzeit kann der Ausleihenprüfer (borrow checker) dann die Regel
-durchsetzen, dass auf eine von einem `Mutex` bewachte Ressource nicht
-zugegriffen werden kann, wenn wir die Sperre nicht halten. Diese
-Implementierung kann aber auch dazu führen, dass die Sperre länger als
-beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die Lebensdauer von
-`MutexGuard<T>` nachdenken. 
+Kompilierzeit kann der Borrow Checker dann die Regel durchsetzen, dass auf eine
+von einem `Mutex` bewachte Ressource nicht zugegriffen werden kann, wenn wir die
+Sperre nicht halten. Diese Implementierung kann aber auch dazu führen, dass die
+Sperre länger als beabsichtigt gehalten wird, wenn wir nicht sorgfältig über die
+Lebensdauer von `MutexGuard<T>` nachdenken.
 
 Der Code in Codeblock 21-20, der `let job =
 receiver.lock().unwrap().recv().unwrap();` verwendet, funktioniert, weil mit

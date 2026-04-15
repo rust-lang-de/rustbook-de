@@ -299,23 +299,22 @@ aber die bezog sich auf `Unpin`, nicht auf `Pin`. Wie genau verhält sich also
 sein, um `poll` aufzurufen?
 
 Erinnere dich an den Anfang dieses Kapitels: Eine Reihe von await-Punkten in
-einem Future wird zu einem Zustandsautomaten kompiliert, und der Compiler
-stellt sicher, dass dieser Zustandsautomat alle normalen Sicherheitsregeln von
-Rust befolgt, einschließlich Ausleihen (borrowing) und Eigentümerschaft
-(ownership). Damit das funktioniert, prüft Rust, welche Daten zwischen einem
-await-Punkt und entweder dem nächsten await-Punkt oder dem Ende des
-asynchronen Blocks benötigt werden. Anschließend wird eine entsprechende
-Variante in der kompilierten Zustandsmaschine erstellt. Jede Variante erhält
-den erforderlichen Zugriff auf die Daten, die in diesem Abschnitt des
-Quellcodes verwendet werden, entweder durch Übernahme der Eigentümerschaft an
-diesen Daten oder durch Erhalt einer veränderbaren oder unveränderbaren
-Referenz darauf.
+einem Future wird zu einem Zustandsautomaten kompiliert, und der Compiler stellt
+sicher, dass dieser Zustandsautomat alle normalen Sicherheitsregeln von Rust
+befolgt, einschließlich Borrowing und Eigentümerschaft (ownership). Damit das
+funktioniert, prüft Rust, welche Daten zwischen einem await-Punkt und entweder
+dem nächsten await-Punkt oder dem Ende des asynchronen Blocks benötigt werden.
+Anschließend wird eine entsprechende Variante in der kompilierten
+Zustandsmaschine erstellt. Jede Variante erhält den erforderlichen Zugriff auf
+die Daten, die in diesem Abschnitt des Quellcodes verwendet werden, entweder
+durch Übernahme der Eigentümerschaft an diesen Daten oder durch Erhalt einer
+veränderbaren oder unveränderbaren Referenz darauf.
 
 So weit, so gut: Wenn wir bei der Eigentümerschaft oder den Referenzen in einem
-bestimmten asynchronen Block etwas falsch machen, wird uns der Ausleihenprüfer
-(borrow checker) dies mitteilen. Wenn wir das Future, das diesem Block
-entspricht, verschieben wollen &ndash; etwa in einen `Vec`, um es an `join_all`
-zu übergeben &ndash; wird es schwieriger.
+bestimmten asynchronen Block etwas falsch machen, wird uns der Borrow Checker
+dies mitteilen. Wenn wir das Future, das diesem Block entspricht, verschieben
+wollen &ndash; etwa in einen `Vec`, um es an `join_all` zu übergeben &ndash;
+wird es schwieriger.
 
 Wenn wir ein Future verschieben &ndash; sei es durch Verschieben in eine
 Datenstruktur, um es als Iterator mit `join_all` zu verwenden oder durch
@@ -350,8 +349,8 @@ aktualisieren, wenn es verschoben wird. Das würde potenziell eine Menge
 zusätzlicher Performance-Overhead bedeuten, vor allem wenn man bedenkt, dass es
 ein ganzes Netz von Referenzen geben kann, die aktualisiert werden müssen. Wenn
 wir stattdessen sicherstellen können, dass die betreffende Datenstruktur _nicht
-im Speicher verschoben wird_, müssen wir keine Referenzen aktualisieren. Das
-ist genau das, was der Rust-Ausleihenprüfer verlangt: In sicherem Code kann man
+im Speicher verschoben wird_, müssen wir keine Referenzen aktualisieren. Das ist
+genau das, was der Borrow Checker von Rust verlangt: In sicherem Code kann man
 kein ein Element, auf das aktive Referenzen bestehen, verschieben.
 
 `Pin` baut darauf auf, um uns genau die Garantie zu geben, die wir brauchen.

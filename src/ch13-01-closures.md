@@ -286,10 +286,10 @@ benutzen.
 
 Closures können Werte aus ihrer Umgebung auf drei Arten erfassen, die direkt den
 drei Möglichkeiten entsprechen, wie eine Funktion einen Parameter aufnehmen
-kann: Unveränderbare Ausleihen (borrowing immutably), veränderbare Ausleihen
-(borrowing mutably) und Eigentümerschaft übernehmen (taking ownership). Der
-Closure entscheidet, welche dieser Möglichkeiten verwendet wird, je nachdem, was
-der Rumpf der Funktion mit den erfassten Werten macht.
+kann: Unveränderbare Borrows, veränderbare Borrows und Eigentümerschaft
+übernehmen (taking ownership). Der Closure entscheidet, welche dieser
+Möglichkeiten verwendet wird, je nachdem, was der Rumpf der Funktion mit den
+erfassten Werten macht.
 
 In Codeblock 13-4 definieren wir einen Closure, der eine unveränderbare Referenz
 an den Vektor mit dem Namen `list` erfasst, weil er nur eine unveränderbare
@@ -369,11 +369,11 @@ Nach dem Closure-Aufruf: [1, 2, 3, 7]
 Beachte, dass es kein `println!` mehr zwischen der Definition und dem Aufruf des
 Closures `borrows_mutably` gibt: Wenn `borrows_mutably` definiert ist, erfasst
 es eine veränderbare Referenz auf `list`. Der Closure wird nicht mehr verwendet,
-nachdem er aufgerufen wurde, daher endet die veränderbare Ausleihe. Zwischen der
-Closure-Definition und dem Closureaufruf ist eine unveränderbare Ausleihe für
-die Ausgabe nicht erlaubt, weil keine anderen Ausleihen erlaubt sind, wenn es
-eine veränderbare Ausleihe gibt. Versuche, dort ein `println!` hinzuzufügen, um
-zu sehen, welche Fehlermeldung du erhältst!
+nachdem er aufgerufen wurde, daher endet die veränderbare Borrow. Zwischen der
+Closure-Definition und dem Closureaufruf ist eine unveränderbare Borrow für die
+Ausgabe nicht erlaubt, weil keine anderen Borrows erlaubt sind, wenn es eine
+veränderbare Borrow gibt. Versuche, dort ein `println!` hinzuzufügen, um zu
+sehen, welche Fehlermeldung du erhältst!
 
 Wenn du den Closure zwingen willst, die Eigentümerschaft der Werte, die er in
 der Umgebung verwendet, zu übernehmen, obwohl der Rumpf des Closures nicht

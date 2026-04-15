@@ -135,8 +135,8 @@ error: could not compile `hello` (lib) due to 1 previous error
 ```
 
 Der Fehler sagt uns, dass wir `join` nicht aufrufen können, weil wir nur eine
-veränderbare Ausleihe von jedem `worker` haben und `join` die Eigentümerschaft
-für sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread
+veränderbare Borrow von jedem `worker` haben und `join` die Eigentümerschaft für
+sein Argument übernimmt. Um dieses Problem zu lösen, müssen wir den Thread
 `thread` aus der `Worker`-Instanz herausnehmen, damit `join` den Thread
 konsumieren kann. Eine Möglichkeit, dies zu tun, besteht darin, den gleichen
 Ansatz wie in Codeblock 18-15 zu verfolgen. Wenn `Worker` ein

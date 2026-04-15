@@ -5,13 +5,13 @@ bereits verwendet haben. Anstatt sicherzustellen, dass ein Typ das von uns
 gewünschte Verhalten hat, stellen wir durch die Lebensdauer sicher, dass
 Referenzen so lange gültig sind, wie wir sie brauchen.
 
-Ein Detail, das wir im Abschnitt [„Referenzen und Ausleihen
-(borrowing)“][references-and-borrowing] in Kapitel 4 nicht erörtert haben, ist,
+Ein Detail, das wir im Abschnitt [„Referenzen und
+Borrowing“][references-and-borrowing] in Kapitel 4 nicht erörtert haben, ist,
 dass jede Referenz in Rust eine Lebensdauer (lifetime) hat, d.h. einen
-Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen
-sind Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen
-Typen abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen,
-wenn mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
+Gültigkeitsbereich, in dem diese Referenz gültig ist. In den meisten Fällen sind
+Lebensdauern implizit und abgeleitet, ebenso wie in den meisten Fällen Typen
+abgeleitet werden. Wir müssen Typen nur dann mit Annotationen versehen, wenn
+mehrere Typen möglich sind. In ähnlicher Weise müssen wir Lebensdauern
 annotieren, wenn die Lebensdauern von Referenzen auf verschiedene Weise
 miteinander in Beziehung gesetzt werden könnten. Rust verlangt von uns, die
 Beziehungen mit generischen Lebensdauerparametern zu annotieren, um
@@ -91,12 +91,12 @@ sagen wir, dass es „länger lebt“. Wenn Rust diesen Code funktionieren ließ
 würde `r` auf Speicher verweisen, der freigegeben wurde, als `x` den
 Gültigkeitsbereich verlassen hat, und alles, was wir mit `r` tun würden, würde
 nicht korrekt funktionieren. Wie stellt Rust also fest, dass dieser Code
-ungültig ist? Es verwendet einen Ausleihenprüfer (borrow checker).
+ungültig ist? Es verwendet einen Borrow Checker.
 
-### Der Ausleihenprüfer
+### Der Borrow Checker
 
-Der Rust-Compiler verfügt über einen _Ausleihenprüfer_ (borrow checker), der
-Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Ausleihen gültig
+Der Rust-Compiler verfügt über einen _Borrow Checker_ (engl. Ausleihenprüfer), der
+Gültigkeitsbereiche vergleicht, um festzustellen, ob alle Borrows gültig
 sind. Codeblock 10-17 zeigt den gleichen Code wie Codeblock 10-16, jedoch mit
 Annotationen, die die Lebensdauer der Variablen angeben.
 
@@ -236,17 +236,17 @@ zurückgegebene Referenz auf `x` oder auf `y` bezieht. Eigentlich wissen wir es
 auch nicht, weil der `if`-Zweig im Funktionsrumpf eine Referenz auf `x` und der
 `else`-Zweig eine Referenz auf `y` zurückgibt!
 
-Wenn wir diese Funktion definieren, kennen wir die konkreten Werte nicht, die
-an diese Funktion übergeben werden, also wissen wir nicht, ob der `if`-Zweig
-oder der `else`-Zweig ausgeführt wird. Wir kennen auch nicht die konkreten
+Wenn wir diese Funktion definieren, kennen wir die konkreten Werte nicht, die an
+diese Funktion übergeben werden, also wissen wir nicht, ob der `if`-Zweig oder
+der `else`-Zweig ausgeführt wird. Wir kennen auch nicht die konkreten
 Lebensdauern der Referenzen, die weitergegeben werden, sodass wir nicht wie in
 den Codeblöcken 10-17 und 10-18 die Gültigkeitsbereiche betrachten können, um
 festzustellen, ob die von uns zurückgegebene Referenz immer gültig sein wird.
-Der Ausleihenprüfer kann dies auch nicht feststellen, weil er nicht weiß, wie
-die Lebensdauer von `x` und `y` mit der Lebensdauer des Rückgabewertes
+Der Borrow Checker kann dies auch nicht feststellen, weil er nicht weiß, wie die
+Lebensdauer von `x` und `y` mit der Lebensdauer des Rückgabewertes
 zusammenhängt. Um diesen Fehler zu beheben, geben wir generische
 Lebensdauerparameter an, die die Beziehung zwischen den Referenzen definieren,
-damit der Ausleihenprüfer seine Analyse durchführen kann.
+damit der Borrow Checker seine Analyse durchführen kann.
 
 ### Lebensdauer-Annotationssyntax
 
@@ -334,7 +334,7 @@ verwendet werden, wenn es diesen Code analysiert.
 
 Denke daran, indem wir die Lebensdauerparameter in dieser Funktionssignatur
 angeben, ändern wir nicht die Lebensdauer der übergebenen oder zurückgegebenen
-Werte. Vielmehr legen wir fest, dass der Ausleihenprüfer alle Werte ablehnen
+Werte. Vielmehr legen wir fest, dass der Borrow Checker alle Werte ablehnen
 soll, die sich nicht an diese Bedingung halten. Beachte, dass die Funktion
 `longest` nicht genau wissen muss, wie lange `x` und `y` leben werden, nur dass
 ein gewisser Gültigkeitsbereich für `'a` eingesetzt werden kann, der dieser
@@ -395,7 +395,7 @@ In diesem Beispiel ist `string1` bis zum Ende des äußeren Gültigkeitsbereichs
 gültig, `string2` ist bis zum Ende des inneren Gültigkeitsbereichs gültig, und
 `result` referenziert auf etwas, das bis zum Ende des inneren
 Gültigkeitsbereichs gültig ist. Führe diesen Code aus und du wirst sehen, dass
-der Ausleihenprüfer diesen Code akzeptiert; er kompiliert und gibt `Die längere
+der Borrow Checker diesen Code akzeptiert; er kompiliert und gibt `Die längere
 Zeichenkette ist lange Zeichenkette ist lang` aus.
 
 Versuchen wir als nächstes ein Beispiel, das zeigt, dass die Lebensdauer der
@@ -461,16 +461,16 @@ Als Menschen können wir uns diesen Code ansehen und erkennen, dass `string1`
 länger als `string2` ist und deshalb wird `result` eine Referenz auf `string1`
 enthalten. Da `string1` den Gültigkeitsbereich noch nicht verlassen hat, wird
 eine Referenz auf `string1` in der `println!`-Anweisung noch gültig sein. Der
-Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig
-ist. Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der
-Funktion `longest` zurückgegeben wird, die gleiche ist wie die kürzere der
-Lebensdauern der entgegengenommenen Referenzen. Daher lehnt der Ausleihenprüfer
-den Code in Codeblock 10-23 als möglicherweise ungültige Referenz ab.
+Compiler kann jedoch nicht sehen, dass die Referenz in diesem Fall gültig ist.
+Wir haben Rust gesagt, dass die Lebensdauer der Referenz, die von der Funktion
+`longest` zurückgegeben wird, die gleiche ist wie die kürzere der Lebensdauern
+der entgegengenommenen Referenzen. Daher lehnt der Borrow Checker den Code in
+Codeblock 10-23 als möglicherweise ungültige Referenz ab.
 
 Versuche, dir weitere Experimente auszudenken, die die Werte und die
 Lebensdauern der an die Funktion `longest` übergebenen Referenzen variieren und
 wie die zurückgegebene Referenz verwendet wird. Stelle Hypothesen darüber auf,
-ob deine Experimente den Ausleihenprüfer bestehen oder nicht, bevor du
+ob deine Experimente den Borrow Checker bestehen oder nicht, bevor du
 kompilierst; prüfe dann, ob du Recht hast!
 
 ### Beziehungen
@@ -660,13 +660,13 @@ benötigte. Damals wäre die Funktionssignatur so geschrieben worden:
 fn first_word<'a>(s: &'a str) -> &'a str {
 ```
 
-Nachdem jede Menge Rust-Code geschrieben wurde, stellte das Rust-Team fest,
-dass die Rust-Programmierer in bestimmten Situationen immer wieder die gleichen
+Nachdem jede Menge Rust-Code geschrieben wurde, stellte das Rust-Team fest, dass
+die Rust-Programmierer in bestimmten Situationen immer wieder die gleichen
 Lebensdauer-Annotationen angaben. Diese Situationen waren vorhersehbar und
-folgten einigen wenigen deterministischen Mustern. Die Entwickler
-programmierten diese Muster in den Code des Compilers, sodass der
-Ausleihenprüfer in diesen Situationen auf die Lebensdauer schließen konnte und
-keine expliziten Annotationen benötigte.
+folgten einigen wenigen deterministischen Mustern. Die Entwickler programmierten
+diese Muster in den Code des Compilers, sodass der Borrow Checker in diesen
+Situationen auf die Lebensdauer schließen konnte und keine expliziten
+Annotationen benötigte.
 
 Dieses Stück Rust-Geschichte ist relevant, weil es möglich ist, dass weitere
 deterministische Muster auftauchen und dem Compiler hinzugefügt werden. In

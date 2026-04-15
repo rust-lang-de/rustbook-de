@@ -366,16 +366,16 @@ For more information about this error, try `rustc --explain E0502`.
 error: could not compile `ownership` (bin "ownership") due to 1 previous error
 ```
 
-Erinnere dich an die Ausleihregeln, durch die wir, wenn wir eine
-unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare
-Referenz anlegen können. Da `clear` den `String` abschneiden muss, muss es
-eine veränderbare Referenz erhalten. Das `println!` nach dem Aufruf von
-`clear` verwendet die Referenz in `word`, sodass die unveränderbare Referenz
-zu diesem Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die
-veränderbare Referenz in `clear` und die unveränderbare Referenz in `word`
-nicht gleichzeitig existieren, und die Kompilierung schlägt fehl. Rust hat
-nicht nur die Benutzung unserer API vereinfacht, sondern auch eine ganze Klasse
-von Fehlern zur Kompilierzeit beseitigt!
+Erinnere dich an die Borrowing-Regeln, durch die wir, wenn wir eine
+unveränderbare Referenz auf etwas haben, nicht noch eine veränderbare Referenz
+anlegen können. Da `clear` den `String` abschneiden muss, muss es eine
+veränderbare Referenz erhalten. Das `println!` nach dem Aufruf von `clear`
+verwendet die Referenz in `word`, sodass die unveränderbare Referenz zu diesem
+Zeitpunkt noch aktiv sein muss. Rust verbietet, dass die veränderbare Referenz
+in `clear` und die unveränderbare Referenz in `word` nicht gleichzeitig
+existieren, und die Kompilierung schlägt fehl. Rust hat nicht nur die Benutzung
+unserer API vereinfacht, sondern auch eine ganze Klasse von Fehlern zur
+Kompilierzeit beseitigt!
 
 #### Zeichenkettenliterale als Anteilstypen
 
@@ -522,13 +522,13 @@ besprechen, wenn wir in Kapitel 8 über Vektoren sprechen.
 
 ## Zusammenfassung
 
-Die Konzepte von Eigentümerschaft, Ausleihen und Anteilstypen gewährleisten
+Die Konzepte von Eigentümerschaft, Borrowing und Anteilstypen gewährleisten
 Speichersicherheit zur Kompilierzeit in Rust-Programmen. Die Sprache Rust gibt
 dir Kontrolle über die Speicherverwendung auf die gleiche Weise wie andere
 Systemprogrammiersprachen, aber dadurch, dass der Eigentümer der Daten diese
 automatisch aufräumt, wenn der Eigentümer den Gültigkeitsbereich verlässt,
-bedeutet dies, dass du keinen zusätzlichen Code schreiben und debuggen musst,
-um diese Kontrolle zu erhalten.
+bedeutet dies, dass du keinen zusätzlichen Code schreiben und debuggen musst, um
+diese Kontrolle zu erhalten.
 
 Die Eigentümerschaft wirkt sich auf die Funktionsweise vieler anderer Teile von
 Rust aus, deshalb werden wir im weiteren Verlauf des Buchs weiter über diese

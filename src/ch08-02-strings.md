@@ -20,13 +20,13 @@ ist, weil Menschen und Computer `String`-Daten unterschiedlich interpretieren.
 ### Zeichenketten definieren
 
 Zuerst werden wir definieren, was wir mit dem Begriff _Zeichenkette_ (string)
-meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache,
-nämlich den Zeichenkettenanteilstyp `str`, der üblicherweise in seiner
-Ausleihenform `&str` zu sehen ist. In Kapitel 4 sprachen wir über
-Zeichenkettenanteilstypen (string slices), die Referenzen auf einige
-UTF-8-kodierte Zeichenkettendaten sind, die anderswo gespeichert sind.
-Zeichenkettenliterale werden beispielsweise in der Binärdatei des Programms
-gespeichert und sind daher Zeichenkettenanteilstypen.
+meinen. Rust hat nur einen einzigen Zeichenkettentyp in der Kernsprache, nämlich
+den Zeichenkettenanteilstyp `str`, der üblicherweise in seiner Borrow-Form
+`&str` zu sehen ist. In Kapitel 4 sprachen wir über Zeichenkettenanteilstypen
+(string slices), die Referenzen auf einige UTF-8-kodierte Zeichenkettendaten
+sind, die anderswo gespeichert sind. Zeichenkettenliterale werden beispielsweise
+in der Binärdatei des Programms gespeichert und sind daher
+Zeichenkettenanteilstypen.
 
 Der Typ `String`, der von Rusts Standardbibliothek zur Verfügung gestellt wird
 und nicht in die Kernsprache kodiert ist, ist ein größenänderbarer,

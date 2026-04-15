@@ -21,11 +21,11 @@ ermöglicht es, dass Daten mehrere Eigentümer (owner) haben können, indem er d
 Anzahl der Eigentümer verfolgt und die Daten erst dann aufräumt, wenn keine
 Eigentümer mehr vorhanden sind.
 
-Da Rust das Konzept der Eigentümerschaft (ownership) und Ausleihen
-(borrowing) verwendet, besteht ein zusätzlicher Unterschied zwischen Referenzen
-und intelligenten Zeigern: Während Referenzen Zeiger sind, die Daten nur
-ausleihen, _besitzen_ intelligente Zeiger in vielen Fällen die Eigentümerschaft
-der Daten, auf die sie zeigen.
+Da Rust das Konzept der Eigentümerschaft (ownership) und Borrowing verwendet,
+besteht ein zusätzlicher Unterschied zwischen Referenzen und intelligenten
+Zeigern: Während Referenzen Zeiger sind, die Daten nur ausleihen, _besitzen_
+intelligente Zeiger in vielen Fällen die Eigentümerschaft der Daten, auf die sie
+zeigen.
 
 Intelligente Zeiger werden normalerweise mithilfe von Strukturen implementiert.
 Im Unterschied zu einer gewöhnlichen Struktur (struct) implementieren
@@ -49,8 +49,7 @@ behandeln:
 - `Rc<T>`, ein Typ der Referenzen zählt und dadurch mehrfache Eigentümerschaft
   ermöglicht
 - `Ref<T>` und `RefMut<T>` mit Zugriff über `RefCell<T>`, ein Typ, der das
-  Einhalten der Ausleihregel zur Laufzeit (runtime) statt zur Kompilierzeit
-  erzwingt.
+  Einhalten der Borrowing-Regeln zur Laufzeit statt zur Kompilierzeit erzwingt.
 
 Darüber hinaus wird das _innere Veränderbarkeitsmuster_ (interior mutability
 pattern) behandelt, bei dem ein unveränderbarer Typ eine API zum Verändern

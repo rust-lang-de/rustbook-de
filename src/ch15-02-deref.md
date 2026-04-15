@@ -195,9 +195,9 @@ Wie in [„Ein Trait für einen Typ implementieren“][impl-trait1] in Kapitel 1
 beschrieben, müssen wir zur Implementierung eines Traits Implementierungen für
 die erforderlichen Methoden des Traits bereitstellen. Das von der
 Standardbibliothek bereitgestellte Trait `Deref` erfordert die Implementierung
-einer Methode namens `deref`, die `self` ausleiht (borrow) und eine Referenz auf
-die beinhalteten Daten zurückgibt. Codeblock 15-10 enthält eine Implementierung
-von `Deref`, um die Definition von `MyBox` zu ergänzen:
+einer Methode namens `deref`, die `self` ausleiht und eine Referenz auf die
+beinhalteten Daten zurückgibt. Codeblock 15-10 enthält eine Implementierung von
+`Deref`, um die Definition von `MyBox` zu ergänzen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -438,17 +438,17 @@ bei veränderbaren Referenzen erfolgt.
 
 Der dritte Fall ist schwieriger: Rust wird auch eine veränderbare Referenz in
 eine unveränderbare umwandeln. Das Gegenteil ist jedoch _nicht_ möglich:
-Unveränderbare Referenzen werden niemals zu veränderbaren gemacht. Wenn man
-eine veränderbare Referenz hat, muss diese veränderbare Referenz aufgrund der
-Ausleihregeln (borrowing rules) die einzige Referenz auf diese Daten sein
-(anderenfalls würde das Programm nicht kompilieren). Das Konvertieren einer
-veränderbaren Referenz in eine unveränderbare verstößt niemals gegen die
-Ausleihregeln. Das Konvertieren einer unveränderbaren Referenz in eine
-veränderbare Referenz, würde erfordern, dass die ursprüngliche unveränderbare
-Referenz die einzige unveränderbare Referenz auf diese Daten ist, aber die
-Ausleihregeln garantieren dies nicht.
-Daher kann Rust nicht davon ausgehen, dass die Konvertierung einer
-unveränderbaren Referenz in eine veränderbare Referenz möglich ist.
+Unveränderbare Referenzen werden niemals zu veränderbaren gemacht. Wenn man eine
+veränderbare Referenz hat, muss diese veränderbare Referenz aufgrund der
+Borrowing-Regeln die einzige Referenz auf diese Daten sein (anderenfalls würde
+das Programm nicht kompilieren). Das Konvertieren einer veränderbaren Referenz
+in eine unveränderbare verstößt niemals gegen die Borrowing-Regeln. Das
+Konvertieren einer unveränderbaren Referenz in eine veränderbare Referenz, würde
+erfordern, dass die ursprüngliche unveränderbare Referenz die einzige
+unveränderbare Referenz auf diese Daten ist, aber die Borrowing-Regeln
+garantieren dies nicht. Daher kann Rust nicht davon ausgehen, dass die
+Konvertierung einer unveränderbaren Referenz in eine veränderbare Referenz
+möglich ist.
 
 [impl-trait1]: ch10-02-traits.html#ein-trait-für-einen-typ-implementieren
 [tuple-structs]: ch05-01-defining-structs.html#mit-tupel-strukturen-verschiedene-typen-erzeugen

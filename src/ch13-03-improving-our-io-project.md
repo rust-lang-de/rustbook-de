@@ -102,9 +102,9 @@ wird deutlich, was die Funktion `Config::build` bewirkt, da der Iterator auf
 Werte zugreift.
 
 Sobald `Config::build` die Eigentümerschaft des Iterators hat und keine
-ausleihenden Indexierungsoperationen mehr verwendet, können wir die
-`String`-Werte vom `Iterator` in `Config` verschieben anstatt `clone`
-aufzurufen und eine neue Zuweisung vorzunehmen.
+Indexierungsoperationen mehr verwendet, die ausleihen, können wir die
+`String`-Werte vom `Iterator` in `Config` verschieben anstatt `clone` aufzurufen
+und eine neue Zuweisung vorzunehmen.
 
 #### Direktes Verwenden des zurückgegebenen Iterators
 

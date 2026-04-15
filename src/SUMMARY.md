@@ -20,7 +20,7 @@
 
 - [Eigentümerschaft (ownership) verstehen](ch04-00-understanding-ownership.md)
   - [Was ist Eigentümerschaft (ownership)?](ch04-01-what-is-ownership.md)
-  - [Referenzen und Ausleihen (borrowing)](ch04-02-references-and-borrowing.md)
+  - [Referenzen und Borrowing](ch04-02-references-and-borrowing.md)
   - [Der Anteilstyp (slice)](ch04-03-slices.md)
 
 - [Strukturen (structs) für zusammenhängende Daten verwenden](ch05-00-structs.md)

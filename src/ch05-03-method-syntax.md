@@ -178,7 +178,7 @@ wir in [Kapitel 7][public] behandeln.
 > `self`. Wenn man den Empfänger und den Namen einer Methode angibt, kann Rust
 > eindeutig herausfinden, ob die Methode lesend (`&self`), veränderbar
 > (`&mut self`) oder konsumierend (`self`) ist. Die Tatsache, dass Rust das
-> Ausleihen für die Methodenempfänger implizit macht, ist ein großer Beitrag
+> Borrowing für die Methodenempfänger implizit macht, ist ein großer Beitrag
 > zur Ergonomie der Eigentümerschaft in der Praxis.
 
 ### Methoden mit mehreren Parametern
@@ -225,19 +225,19 @@ rect1 umschließt rect2? true
 rect1 umschließt rect3? false
 ```
 
-Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb
-des Blocks `impl Rectangle` liegen. Die Methode wird `can_hold` heißen und sie
-wird einen weiteren Parameter vom Typ `Rectangle` unveränderbar ausleihen. Wir
-können den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die
-Methode aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
-unveränderbare Ausleihe von `rect2` vom Typ `Rectangle`. Das macht Sinn, da
-wir `rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine
-veränderbare Ausleihe bräuchten) und `main` die Eigentümerschaft an `rect2`
-zurückerhalten soll, sodass wir es nach dem Aufruf der Methode `can_hold`
-weiter verwenden können. Der Rückgabewert von `can_hold` ist ein boolescher
-Wert und die Implementierung prüft, ob Breite und Höhe von `self` jeweils
-größer als von `Rectangle` sind. Fügen wir die neue Methode `can_hold` zum
-Block `impl` aus Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
+Wir wissen, dass wir eine Methode definieren wollen, also wird sie innerhalb des
+Blocks `impl Rectangle` liegen. Die Methode wird `can_hold` heißen und sie wird
+einen weiteren Parameter vom Typ `Rectangle` unveränderbar ausleihen. Wir können
+den Typ des Parameters erkennen, indem wir uns den Code ansehen, der die Methode
+aufruft: `rect1.can_hold(&rect2)` nimmt `&rect2` entgegen, also eine
+unveränderbare Borrow von `rect2` vom Typ `Rectangle`. Das macht Sinn, da wir
+`rect2` nur lesen müssen (anstatt zu schreiben, wofür wir eine veränderbare
+Borrow bräuchten) und `main` die Eigentümerschaft an `rect2` zurückerhalten
+soll, sodass wir es nach dem Aufruf der Methode `can_hold` weiter verwenden
+können. Der Rückgabewert von `can_hold` ist ein boolescher Wert und die
+Implementierung prüft, ob Breite und Höhe von `self` jeweils größer als von
+`Rectangle` sind. Fügen wir die neue Methode `can_hold` zum Block `impl` aus
+Codeblock 5-13 hinzu, wie in Codeblock 5-15 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

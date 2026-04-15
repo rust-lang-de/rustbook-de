@@ -149,16 +149,15 @@ die beide den Typ `u32` haben. Dann erzeugten wir in `main` eine Instanz von
 `Rectangle` mit der Breite `30` und Höhe `50`.
 
 Unsere Funktion `area` hat nun einen Parameter, den wir `rectangle` genannt
-haben und dessen Typ eine unveränderbare Ausleihe (immutable borrow) einer
-Strukturinstanz `Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die
-Struktur nur ausleihen, nicht aber deren Eigentümerschaft (ownership)
-übernehmen. Auf diese Weise behält `main` seine Eigentümerschaft und kann
-weiterhin `rect1` verwenden, weshalb wir `&` in der Funktionssignatur und an
-der Aufrufstelle verwenden.
+haben und dessen Typ eine unveränderbare Borrow einer Strukturinstanz
+`Rectangle` ist. Wie in Kapitel 4 erwähnt, wollen wir die Struktur nur
+ausleihen, nicht aber deren Eigentümerschaft (ownership) übernehmen. Auf diese
+Weise behält `main` seine Eigentümerschaft und kann weiterhin `rect1` verwenden,
+weshalb wir `&` in der Funktionssignatur und an der Aufrufstelle verwenden.
 
 Die Funktion `area` greift auf die Felder `width` und `height` der Instanz
 `Rectangle` zu. (Beachte, dass der Zugriff auf Felder einer ausgeliehenen
-Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Ausleihen
+Struktur-Instanz die Feldwerte nicht verschiebt, weshalb du häufig Borrowing
 von Strukturen siehst.) Unsere Funktionssignatur für `area` sagt jetzt genau,
 was wir meinen: Berechne die Fläche von `Rectangle` unter Verwendung seiner
 Felder `width` und `height`. Dies drückt aus, dass Breite und Höhe in Beziehung

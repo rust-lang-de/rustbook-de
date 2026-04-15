@@ -400,14 +400,14 @@ error: could not compile `threads` (bin "threads") due to 1 previous error
 ```
 
 Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
-Fehler im Code in Codeblock 16-3 erhalten, weil Rust konservativ war und nur
-`v` für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
+Fehler im Code in Codeblock 16-3 erhalten, weil Rust konservativ war und nur `v`
+für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
 Referenz des erzeugte Threads ungültig machen konnte. Indem wir Rust anweisen,
 die Eigentümerschaft von `v` in den erzeugte Thread zu verlagern, garantieren
 wir Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Codeblock
 16-4 auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
 versuchen, `v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
-konservative Standardausleihe außer Kraft; es lässt uns nicht gegen die
+konservativen Borrowing-Standard außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.
 
 Nachdem wir uns nun damit beschäftigt haben, was Threads sind und welche

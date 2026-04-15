@@ -13,16 +13,16 @@ leicht zu beweisen. Das Typsystem von Rust trägt einen großen Teil dieser Last
 aber das Typsystem kann nicht alles erkennen. Rust beinhaltet Unterstützung für
 das Schreiben automatisierter Softwaretests.
 
-Nehmen wir an, wir schreiben eine Funktion namens `add_two`, die 2 zu jeder
-Zahl addiert, die ihr übergeben wird. Die Signatur dieser Funktion akzeptiert
-eine ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück.
-Wenn wir diese Funktion implementieren und kompilieren, führt Rust die gesamte
-Typ- und Ausleihenprüfung durch, die du bisher kennengelernt hast, um
-sicherzustellen, dass wir z.B. keinen `String`-Wert oder eine ungültige
-Referenz an diese Funktion übergeben. Aber Rust kann _nicht_ überprüfen, ob
-diese Funktion genau das tut, was wir beabsichtigen, nämlich den Parameter plus
-2 zurückzugeben und nicht etwa den Parameter plus 10 oder den Parameter minus
-50! Hier kommen Tests ins Spiel.
+Nehmen wir an, wir schreiben eine Funktion namens `add_two`, die 2 zu jeder Zahl
+addiert, die ihr übergeben wird. Die Signatur dieser Funktion akzeptiert eine
+ganze Zahl als Parameter und gibt als Ergebnis eine ganze Zahl zurück. Wenn wir
+diese Funktion implementieren und kompilieren, führt Rust die gesamte Typprüfung
+und Borrow Checking durch, die du bisher kennengelernt hast, um sicherzustellen,
+dass wir z.B. keinen `String`-Wert oder eine ungültige Referenz an diese
+Funktion übergeben. Aber Rust kann _nicht_ überprüfen, ob diese Funktion genau
+das tut, was wir beabsichtigen, nämlich den Parameter plus 2 zurückzugeben und
+nicht etwa den Parameter plus 10 oder den Parameter minus 50! Hier kommen Tests
+ins Spiel.
 
 Wir können Tests schreiben, die zum Beispiel sicherstellen, dass der
 Rückgabewert `5` ist, wenn wir `3` an die Funktion `add_two` übergeben. Wir

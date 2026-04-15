@@ -21,8 +21,8 @@ aufgeführt, mit dem dieser Operator überladen werden kann.
 | `!=` | `expr != expr` | Vergleich auf Ungleichheit | `PartialEq` |
 | `%` | `expr % expr` | Arithmetischer Restbetrag | `Rem` |
 | `%=` | `var %= expr` | Arithmetischer Restbetrag und Zuweisung | `RemAssign` |
-| `&` | `&expr`,<br> `&mut expr` | Ausleihe | |
-| `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Ausleih-Referenz-Typ | |
+| `&` | `&expr`,<br> `&mut expr` | Borrow | |
+| `&` | `&type`,<br> `&mut type`,<br> `&'a type`,<br> `&'a mut type` | Borrowed-Zeigertyp | |
 | `&` | `expr & expr` | Bitweises UND | `BitAnd` |
 | `&=` | `var &= expr` | Bitweises UND und Zuweisung | `BitAndAssign` |
 | `&&` | `expr && expr` | Logisches UND mit Kurzschlussauswertung | |

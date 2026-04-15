@@ -1,4 +1,4 @@
-## Referenzen und Ausleihen (borrowing)
+## Referenzen und Borrowing
 
 Das Problem mit dem Tupelcode in Codeblock 4-5 ist, dass wir der aufrufenden
 Funktion den `String` zurückgeben müssen, damit wir den `String` nach dem
@@ -90,19 +90,20 @@ fn calculate_length(s: &String) -> usize { // s ist eine Referenz
   // Eigentümerschaft an dem hat, worauf es referenziert, passiert nichts.
 ```
 
-Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie
-der Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
+Der Gültigkeitsbereich, in dem die Variable `s` gültig ist, ist derselbe wie der
+Gültigkeitsbereich eines Funktionsparameters, aber der Wert, auf den die
 Referenz zeigt, wird nicht aufgeräumt, wenn `s` nicht mehr verwendet wird, weil
 `s` keine Eigentümerschaft hat. Wenn Funktionen statt der tatsächlichen Werte
 Referenzen als Parameter haben, brauchen wir die Werte nicht zurückzugeben, um
 die Eigentümerschaft zurückzugeben, denn wir hatten nie die Eigentümerschaft.
 
-Wir nennen den Vorgang des Erstellens einer Referenz _Ausleihen_ (borrowing).
-Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von ihr
-ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir nicht.
+Wir nennen den Vorgang des Erstellens einer Referenz _Borrowing_ (engl.
+Ausleihen). Wenn eine Person im richtigen Leben etwas besitzt, kannst du es von
+ihr ausleihen. Wenn du fertig bist, musst du es zurückgeben. Es gehört dir
+nicht.
 
-Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns
-ausleihen? Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
+Was passiert nun, wenn wir versuchen, etwas zu verändern, das wir uns ausleihen?
+Versuche den Code in Codeblock 4-6. Achtung: Es funktioniert nicht!
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -209,7 +210,7 @@ error: could not compile `playground` (bin "playground") due to 1 previous error
 
 Dieser Fehler besagt, dass dieser Code ungültig ist, weil wir `s` nicht mehr
 als einmal zur gleichen Zeit als veränderbar ausleihen können. Die erste
-veränderbare Ausleihe ist in `r1` und muss beibehalten werden, bis sie in
+veränderbare Borrow ist in `r1` und muss beibehalten werden, bis sie in
 `println!` verwendet wird, aber zwischen dem Erstellen dieser veränderbaren
 Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
@@ -314,11 +315,11 @@ veränderbare Referenz `r3` erstellt wird. Diese Gültigkeitsbereiche
 erkennen, dass die Referenz bereits vor dem Ende des Gültigkeitsbereichs nicht
 mehr verwendet wird.
 
-Auch wenn Fehler durch Ausleihen manchmal frustrierend sein können, denke
-daran, dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und
-nicht zur Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo
-das Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so
-sind, wie du dachtest.
+Auch wenn Fehler durch Borrowing manchmal frustrierend sein können, denke daran,
+dass es der Rust-Compiler ist, der frühzeitig (zur Kompilierzeit und nicht zur
+Laufzeit) auf einen möglichen Fehler hinweist und dir genau zeigt, wo das
+Problem liegt. Dann musst du nicht aufspüren, warum deine Daten nicht so sind,
+wie du dachtest.
 
 ### Hängende Referenzen
 

@@ -137,15 +137,15 @@ Vektor befinden und ihm eine weitere Chance geben, einen gültigen Wert
 einzugeben. Das wäre benutzerfreundlicher, als das Programm wegen eines
 Tippfehlers abstürzen zu lassen!
 
-Wenn das Programm über eine gültige Referenz verfügt, stellt der
-Ausleihenprüfer mittels Eigentümerschafts- und Ausleihregeln (siehe Kapitel 4)
-sicher, dass diese Referenz und alle anderen Referenzen auf den Inhalt des
-Vektors gültig bleiben. Erinnere dich an die Regel, die besagt, dass du keine
-veränderbaren und unveränderbaren Referenzen im gleichen Gültigkeitsbereich
-haben kannst. Diese Regel trifft in Codeblock 8-6 zu, wo wir eine
-unveränderbare Referenz auf das erste Element in einem Vektor halten und
-versuchen, am Ende ein Element hinzuzufügen. Das wird nicht funktionieren, wenn
-wir später in der Funktion versuchen auch auf dieses Element zuzugreifen.
+Wenn das Programm über eine gültige Referenz verfügt, stellt der Borrow Checker
+mittels Eigentümerschafts- und Borrowing-Regeln (siehe Kapitel 4) sicher, dass
+diese Referenz und alle anderen Referenzen auf den Inhalt des Vektors gültig
+bleiben. Erinnere dich an die Regel, die besagt, dass du keine veränderbaren und
+unveränderbaren Referenzen im gleichen Gültigkeitsbereich haben kannst. Diese
+Regel trifft in Codeblock 8-6 zu, wo wir eine unveränderbare Referenz auf das
+erste Element in einem Vektor halten und versuchen, am Ende ein Element
+hinzuzufügen. Das wird nicht funktionieren, wenn wir später in der Funktion
+versuchen auch auf dieses Element zuzugreifen.
 
 ```rust,does_not_compile
 let mut v = vec![1, 2, 3, 4, 5];
@@ -182,15 +182,15 @@ error: could not compile `collections` (bin "collections") due to 1 previous err
 ```
 
 Der Code in Codeblock 8-6 sieht so aus, als könnte er funktionieren: Warum
-sollte sich eine Referenz auf das erste Element darum kümmern, was sich am
-Ende des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
-begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte
-das Hinzufügen eines neuen Elements am Ende des Vektors die Allokation neuen
-Speichers und das Kopieren der alten Elemente an die neue Stelle erfordern,
-wenn nicht genügend Platz vorhanden ist, um alle Elemente nebeneinander an der
+sollte sich eine Referenz auf das erste Element darum kümmern, was sich am Ende
+des Vektors ändert? Dieser Fehler ist in der Funktionsweise von Vektoren
+begründet: Weil Vektoren die Werte nebeneinander im Speicher ablegen, könnte das
+Hinzufügen eines neuen Elements am Ende des Vektors die Allokation neuen
+Speichers und das Kopieren der alten Elemente an die neue Stelle erfordern, wenn
+nicht genügend Platz vorhanden ist, um alle Elemente nebeneinander an der
 aktuellen Stelle des Vektors zu platzieren. In diesem Fall würde die Referenz
 auf das erste Element auf einen freigegebenen Speicherplatz verweisen. Die
-Ausleihregeln verhindern, dass Programme in diese Situation geraten.
+Borrowing-Regeln verhindern, dass Programme in diese Situation geraten.
 
 > Anmerkung: Weitere Einzelheiten zu den Implementierungsdetails des Typs
 > `Vec<T>` findest du in [„Das Rustonomicon“][nomicon1].
@@ -233,13 +233,13 @@ kommen, bevor wir den Operator `+=` verwenden können. Wir werden mehr über den
 Dereferenzierungsoperator im Abschnitt [„Der Referenz zum Wert folgen“][deref]
 in Kapitel 15 sprechen.
 
-Die Iteration über einen Vektor, ob unveränderbar oder veränderbar, ist
-aufgrund der Regeln des Ausleihenprüfers sicher. Wenn wir versuchen würden,
-Elemente in den `for`-Schleifenrümpfen in Codeblock 8-7 und Codeblock 8-8
-einzufügen oder zu entfernen, würden wir einen Compilerfehler erhalten, ähnlich
-dem, den wir mit dem Code in Codeblock 8-6 erhalten haben. Die Referenz auf den
-Vektor, den die `for`-Schleife enthält, verhindert eine gleichzeitige Änderung
-des gesamten Vektors.
+Die Iteration über einen Vektor, ob unveränderbar oder veränderbar, ist aufgrund
+der Regeln des Borrow Checkers sicher. Wenn wir versuchen würden, Elemente in
+den `for`-Schleifenrümpfen in Codeblock 8-7 und Codeblock 8-8 einzufügen oder zu
+entfernen, würden wir einen Compilerfehler erhalten, ähnlich dem, den wir mit
+dem Code in Codeblock 8-6 erhalten haben. Die Referenz auf den Vektor, den die
+`for`-Schleife enthält, verhindert eine gleichzeitige Änderung des gesamten
+Vektors.
 
 ### Verwenden einer Aufzählung zum Speichern mehrerer Typen
 
@@ -311,10 +311,10 @@ Gültigkeitsbereich verlässt, wie in Codeblock 8-10 kommentiert wird.
 <span class="caption">Codeblock 8-10: Zeigt, wo der Vektor und seine Elemente
 aufgeräumt werden</span>
 
-Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt,
-d.h. die ganzen Zahlen, die er enthält, werden beseitigt. Der Ausleihenprüfer
-stellt sicher, dass alle Referenzen auf den Inhalt eines Vektors nur verwendet
-werden, solange der Vektor selbst gültig ist.
+Wenn der Vektor aufgeräumt wird, wird auch sein gesamter Inhalt aufgeräumt, d.h.
+die ganzen Zahlen, die er enthält, werden beseitigt. Der Borrow Checker stellt
+sicher, dass alle Referenzen auf den Inhalt eines Vektors nur verwendet werden,
+solange der Vektor selbst gültig ist.
 
 Lass uns zum nächsten Kollektionstyp übergehen: `String`!
 

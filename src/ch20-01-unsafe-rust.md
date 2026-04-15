@@ -41,13 +41,12 @@ Superkräften gehören folgende Fähigkeiten:
 4. Implementieren eines unsicheren Traits
 5. Zugreifen auf Feldern in `union`
 
-Es ist wichtig zu verstehen, dass `unsafe` weder den Ausleihenprüfer (borrow
-checker) abschaltet noch andere Sicherheitsprüfungen von Rust deaktiviert: Wenn
-du eine Referenz in einem unsicheren Code verwendest, wird diese trotzdem
-geprüft. Das Schlüsselwort `unsafe` gibt dir nur Zugriff auf diese fünf
-Funktionalitäten, die dann vom Compiler nicht auf Speichersicherheit geprüft
-werden. In einem unsicheren Block erhältst du immer noch ein gewisses Maß an
-Sicherheit.
+Es ist wichtig zu verstehen, dass `unsafe` weder den Borrow Checker abschaltet
+noch andere Sicherheitsprüfungen von Rust deaktiviert: Wenn du eine Referenz in
+einem unsicheren Code verwendest, wird diese trotzdem geprüft. Das Schlüsselwort
+`unsafe` gibt dir nur Zugriff auf diese fünf Funktionalitäten, die dann vom
+Compiler nicht auf Speichersicherheit geprüft werden. In einem unsicheren Block
+erhältst du immer noch ein gewisses Maß an Sicherheit.
 
 Darüber hinaus bedeutet `unsafe` nicht, dass der Code innerhalb des Blocks
 notwendigerweise gefährlich ist oder dass er definitiv
@@ -90,7 +89,7 @@ werden kann.
 
 Rohzeiger sind anders als Referenzen und intelligente Zeiger:
 
-- Sie dürfen die Ausleihregeln ignorieren, indem sie sowohl unveränderbare als
+- Sie dürfen die Borrowing-Regeln ignorieren, indem sie sowohl unveränderbare als
   auch veränderbare Zeiger oder mehrere veränderbare Zeiger auf die gleiche
   Stelle haben.
 - Sie zeigen nicht garantiert auf gültigen Speicher.
@@ -183,10 +182,10 @@ Daten-Wettlaufsituation (data race) entsteht. Sei vorsichtig!
 
 Warum solltest du bei all diesen Gefahren jemals Rohzeiger verwenden? Ein
 Hauptanwendungsfall ist die Kopplung mit C-Code, wie du im nächsten Abschnitt
-sehen wirst. Ein anderer Fall ist der Aufbau von sicheren Abstraktionen, die
-der Ausleihenprüfer nicht versteht. Wir stellen unsichere Funktionen vor und
-betrachten dann ein Beispiel für eine sichere Abstraktion, die unsicheren
-Code verwendet.
+sehen wirst. Ein anderer Fall ist der Aufbau von sicheren Abstraktionen, die der
+Borrow Checker nicht versteht. Wir stellen unsichere Funktionen vor und
+betrachten dann ein Beispiel für eine sichere Abstraktion, die unsicheren Code
+verwendet.
 
 ### Aufrufen einer unsicheren Funktion oder Methode
 
@@ -325,13 +324,12 @@ For more information about this error, try `rustc --explain E0499`.
 error: could not compile `unsafe-example` (bin "unsafe-example") due to 1 previous error
 ```
 
-Der Ausleihenprüfer von Rust kann nicht verstehen, dass wir verschiedene Teile
+Der Borrow Checker von Rust kann nicht verstehen, dass wir verschiedene Teile
 des Anteilstyps ausleihen; er weiß nur, dass wir zweimal vom selben Anteilstyp
-ausleihen. Das Ausleihen verschiedener Teile eines Anteilstyps ist
-grundsätzlich in Ordnung, weil sich die beiden Anteilstypen nicht überlappen,
-aber Rust ist nicht schlau genug, um das zu wissen. Wenn wir wissen, dass der
-Code in Ordnung ist, Rust aber nicht, ist es an der Zeit, unsicheren Code zu
-verwenden.
+ausleihen. Das Borrowing verschiedener Teile eines Anteilstyps ist grundsätzlich
+in Ordnung, weil sich die beiden Anteilstypen nicht überlappen, aber Rust ist
+nicht schlau genug, um das zu wissen. Wenn wir wissen, dass der Code in Ordnung
+ist, Rust aber nicht, ist es an der Zeit, unsicheren Code zu verwenden.
 
 Codeblock 20-6 zeigt, wie man einen `unsafe`-Block, einen Rohzeiger und einige
 Aufrufe unsicherer Funktionen verwendet, um die Implementierung von
@@ -614,10 +612,10 @@ beginnt, um zu erklären, wie die Sicherheitsregeln eingehalten werden.
 Darüber hinaus lehnt der Compiler durch die Compiler-Lint-Prüfung jeden Versuch
 ab, Referenzen auf eine veränderbare statische Variable zu erstellen. Du musst
 entweder die Schutzmaßnahmen der Lint-Prüfung explizit deaktivieren, indem du
-eine Anmerkung `#[allow(static_mut_refs)]` hinzufügst, oder auf die
-veränderbare statische Variable über einen Roh-Zeiger zugreifst, der mit einem
-der Roh-Ausleihen-Operatoren erstellt wurde. Dies gilt auch für Fälle, in denen
-die Referenz unsichtbar erstellt wird, wie beispielsweise bei der Verwendung in
+eine Anmerkung `#[allow(static_mut_refs)]` hinzufügst, oder auf die veränderbare
+statische Variable über einen Roh-Zeiger zugreifst, der mit einem der
+Roh-Borrow-Operatoren erstellt wurde. Dies gilt auch für Fälle, in denen die
+Referenz unsichtbar erstellt wird, wie beispielsweise bei der Verwendung in
 `println!` in diesem Codeblock. Die Anforderung, dass Referenzen auf statische
 veränderbare Variablen über Roh-Zeiger erstellt werden müssen, trägt dazu bei,
 die Sicherheitsanforderungen deutlicher zu machen.
@@ -684,10 +682,10 @@ garantieren kann. Weitere Informationen über Vereinigung findest du in der
 Wenn du unsicheren Code schreibst, möchtest du vielleicht überprüfen, ob das,
 was du geschrieben hast, tatsächlich sicher und korrekt ist. Eine der besten
 Möglichkeiten, dies zu tun, ist die Verwendung von Miri, einem offiziellen
-Rust-Werkzeug zur Erkennung von undefiniertem Verhalten. Während der
-Ausleihenprüfer ein _statisches_ Werkzeug ist, das zur Kompilierzeit arbeitet,
-ist Miri ein _dynamisches_ Werkzeug, das zur Laufzeit arbeitet. Es prüft deinen
-Code, indem es dein Programm oder deine Testfälle ausführt und erkennt, ob du
+Rust-Werkzeug zur Erkennung von undefiniertem Verhalten. Während der Borrow
+Checker ein _statisches_ Werkzeug ist, das zur Kompilierzeit arbeitet, ist Miri
+ein _dynamisches_ Werkzeug, das zur Laufzeit arbeitet. Es prüft deinen Code,
+indem es dein Programm oder deine Testfälle ausführt und erkennt, ob du
 Rust-Regeln verletzt.
 
 Die Verwendung von Miri erfordert einen Nightly-Build von Rust (über das wir in

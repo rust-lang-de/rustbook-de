@@ -190,14 +190,14 @@ Rückgabe einer Instanz einer `Config`-Struktur</span>
 
 Wir haben eine Struktur namens `Config` hinzugefügt, die so definiert ist, dass
 sie Felder mit den Namen `query` und `file_path` enthält. Die Signatur von
-`parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im
-Rumpf von `parse_config`, wo wir früher Zeichenkettenanteilstypen (string
-slices) zurückgegeben haben, die auf `String`-Werte in `args` referenzieren,
-definieren wir `Config` jetzt so, dass es aneigenbare (owned) `String`-Werte
-enthält. Die `args`-Variable in `main` ist der Eigentümer der Argumentwerte und
-lässt die Funktion `parse_config` diese nur ausleihen, was bedeutet, dass wir
-Rusts Regeln für das Ausleihen verletzen würden, wenn `Config` versucht, die
-Eigentümerschaft für die Werte in `args` zu nehmen.
+`parse_config` zeigt nun an, dass sie einen `Config`-Wert zurückgibt. Im Rumpf
+von `parse_config`, wo wir früher Zeichenkettenanteilstypen (string slices)
+zurückgegeben haben, die auf `String`-Werte in `args` referenzieren, definieren
+wir `Config` jetzt so, dass es aneigenbare (owned) `String`-Werte enthält. Die
+`args`-Variable in `main` ist der Eigentümer der Argumentwerte und lässt die
+Funktion `parse_config` diese nur ausleihen, was bedeutet, dass wir Rusts Regeln
+für das Borrowing verletzen würden, wenn `Config` versucht, die Eigentümerschaft
+für die Werte in `args` zu nehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
 einfachste, wenn auch etwas ineffiziente Weg ist es, die Methode `clone` der
