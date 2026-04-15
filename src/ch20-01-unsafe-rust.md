@@ -550,12 +550,12 @@ fn main() {
 unveränderbaren, statischen Variablen</span>
 
 Statische Variablen ähneln Konstanten, die wir in [„Konstanten
-deklarieren“][constants] in Kapitel 3 besprochen haben. Die Namen von
-statischen Variablen stehen per Konvention in `SCHREIENDER_SCHLANGENSCHRIFT`.
-Statische Variablen können nur Referenzen mit der Lebensdauer `'static`
-speichern, was bedeutet, dass der Rust-Compiler die Lebensdauer herausfinden
-kann, und wir brauchen sie nicht explizit anzugeben. Der Zugriff auf eine
-unveränderbare, statische Variable ist sicher.
+deklarieren“][constants] in Kapitel 3 besprochen haben. Die Namen von statischen
+Variablen stehen per Konvention in `SCREAMING_SNAKE_CASE`. Statische Variablen
+können nur Referenzen mit der Lebensdauer `'static` speichern, was bedeutet,
+dass der Rust-Compiler die Lebensdauer herausfinden kann, und wir brauchen sie
+nicht explizit anzugeben. Der Zugriff auf eine unveränderbare, statische
+Variable ist sicher.
 
 Ein feiner Unterschied zwischen Konstanten und unveränderbaren, statischen
 Variablen besteht darin, dass Werte in einer statischen Variable eine feste

@@ -5,10 +5,10 @@ wichtigsten Funktionen in der Sprache gesehen: Die Funktion `main`, die der
 Einstiegspunkt vieler Programme ist. Du hast auch das Schlüsselwort `fn`
 gesehen, mit dem du neue Funktionen deklarieren kannst.
 
-Rust-Code verwendet die _Schlangenschrift_-Stil-Konvention (snake case) für
-Funktions- und Variablennamen, bei der alle Buchstaben klein geschrieben sind
-und Unterstriche Wörter separieren. Hier ist ein Programm, das eine
-Beispiel-Funktionsdefinition enthält:
+Rust-Code verwendet die _Snake Case_-Konvention für Funktions- und
+Variablennamen, bei der alle Buchstaben klein geschrieben sind und Unterstriche
+Wörter separieren. Hier ist ein Programm, das eine Beispiel-Funktionsdefinition
+enthält:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
