@@ -299,7 +299,7 @@ Schleife, sodass wir im `Err`-Fall `guess` niemals einen Wert zuweisen.
 
 Der Niemals-Typ ist auch beim Makro `panic!` nützlich. Erinnere dich an die
 Funktion `unwrap`, die wir auf `Option<T>` Werte aufrufen, um einen Wert zu
-erzeugen oder das Programm abstürzen zu lassen. Hier ist ihre Definition:
+erzeugen oder das Programm abzubrechen. Hier ist ihre Definition:
 
 ```rust,ignore
 # enum Option<T> {
@@ -322,7 +322,7 @@ impl<T> Option<T> {
 In diesem Code geschieht dasselbe wie bei `match` in Codeblock 20-27: Rust
 sieht, dass `val` den Typ `T` und `panic!` den Typ `!` hat, sodass das Ergebnis
 des gesamten `match`-Ausdrucks `T` ist. Dieser Code funktioniert, weil `panic!`
-keinen Wert produziert; es beendet das Programm. Im Fall von `None` geben wir
+keinen Wert produziert; es bricht das Programm ab. Im Fall von `None` geben wir
 keinen Wert von `unwrap` zurück, also ist dieser Code gültig.
 
 Ein letzter Ausdruck, der den Typ `!` hat, ist `loop`:

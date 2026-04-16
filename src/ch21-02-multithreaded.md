@@ -533,8 +533,8 @@ den Parameter `size`, weil ein Pool mit einer negativen Anzahl von Threads
 keinen Sinn ergibt. Ein Pool mit null Threads ergibt jedoch auch keinen Sinn,
 dennoch ist null ein vollkommen gültiges `usize`. Wir fügen Code hinzu, um zu
 prüfen, ob `size` größer als null ist, bevor wir eine `ThreadPool`-Instanz
-zurückgeben, und das Programm abstürzen lassen, wenn er eine Null erhält, indem
-wir das Makro `assert!` verwenden, wie in Codeblock 21-13 gezeigt.
+zurückgeben, und das Programm abzubrechen, wenn er eine Null erhält, indem wir
+das Makro `assert!` verwenden, wie in Codeblock 21-13 gezeigt.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 
@@ -548,7 +548,7 @@ impl ThreadPool {
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -565,14 +565,14 @@ impl ThreadPool {
 }
 ```
 
-<span class="caption">Codeblock 21-13: Implementierung von `ThreadPool::new`
-stürzt ab, wenn `size` gleich Null ist</span>
+<span class="caption">Codeblock 21-13: Die Implementierung von `ThreadPool::new`
+bricht ab, wenn `size` gleich Null ist</span>
 
 Wir haben auch etwas Dokumentation für unseren `ThreadPool` mit
 Dokumentationskommentaren (doc comments) hinzugefügt. Beachte, dass wir uns an
 gute Dokumentationspraktiken gehalten haben, indem wir einen Abschnitt
 hinzugefügt haben, der die Situationen aufzeigt, in denen unsere Funktion
-abstürzen kann, wie in Kapitel 14 besprochen. Versuche, `cargo doc --open`
+abbrechen kann, wie in Kapitel 14 besprochen. Versuche, `cargo doc --open`
 auszuführen und die Struktur `ThreadPool` anzuklicken, um zu sehen, wie die
 generierte Dokumentation für `new` aussieht!
 
@@ -634,7 +634,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -740,7 +740,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -793,13 +793,12 @@ Erzeugen eines neuen Threads unter Verwendung eines leeren Closures erzeugt
 wird.
 
 > Hinweis: Wenn das Betriebssystem keinen Thread erstellen kann, weil nicht
-> genügend Systemressourcen vorhanden sind, bringt `thread::spawn` das Programm
-> zum Abstürzen. Das führt dazu, dass unser gesamter Server abstürzt, auch wenn
-> die Erstellung einiger Threads erfolgreich wäre. Der Einfachheit halber
-> lassen wir es bei diesem Verhalten, aber in einer produktiven
-> Thread-Pool-Implementierung würdest du wahrscheinlich
-> [`std::thread::Builder`][builder] mit der Methode [`spawn`][builder-spawn]
-> verwenden wollen, die stattdessen `Result` zurückgibt.
+> genügend Systemressourcen vorhanden sind, bricht `thread::spawn` das Programm
+> ab. Das führt dazu, dass unser gesamter Server abbricht, auch wenn die
+> Erstellung einiger Threads erfolgreich wäre. Der Einfachheit halber lassen wir
+> es bei diesem Verhalten, aber in einer produktiven Thread-Pool-Implementierung
+> würdest du wahrscheinlich [`std::thread::Builder`][builder] mit der Methode
+> [`spawn`][builder-spawn] verwenden wollen, die stattdessen `Result` zurückgibt.
 
 Dieser Code kompiliert und speichert die Anzahl der `Worker`-Instanzen, die wir
 als Argument für `ThreadPool::new` angegeben haben. Aber wir _verarbeiten_ noch
@@ -859,7 +858,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -928,7 +927,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -1053,7 +1052,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 
@@ -1142,7 +1141,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -1230,7 +1229,7 @@ Codeblock 21-20 gezeigte Änderung in `Worker::new` vornehmen.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -1283,13 +1282,13 @@ impl Worker {
 Thread des `Worker`</span>
 
 Hier rufen wir zuerst `lock` auf `receiver` auf, um den Mutex zu erwerben, und
-dann rufen wir `unwrap` auf, um das Programm bei eventuellen Fehlern abstürzen
-zu lassen. Das Akquirieren einer Sperre kann fehlschlagen, wenn sich der Mutex
+dann rufen wir `unwrap` auf, um das Programm bei eventuellen Fehlern
+abzubrechen. Das Akquirieren einer Sperre kann fehlschlagen, wenn sich der Mutex
 in einem _vergifteten_ Zustand befindet, was passieren kann, wenn ein anderer
-Thread abstürzt, während er die Sperre hält, anstatt sie freizugeben. In dieser
-Situation ist der Aufruf von `unwrap`, damit dieser Thread abstürzt, die
-richtige Maßnahme. Fühle dich frei, dieses `unwrap` in ein `expect` mit einer
-Fehlermeldung zu ändern, die für dich von Bedeutung ist.
+Thread abbricht, während er die Sperre hält, anstatt sie freizugeben. In dieser
+Situation ist der Aufruf von `unwrap` sinnvoll, damit dieser Thread abbricht.
+Fühle dich frei, dieses `unwrap` in ein `expect` mit einer Fehlermeldung zu
+ändern, die für dich von Bedeutung ist.
 
 Wenn wir die Sperre auf dem Mutex erhalten, rufen wir `recv` auf, um einen
 `Job` vom Kanal zu empfangen. Ein abschließendes `unwrap` geht auch hier an
@@ -1381,7 +1380,7 @@ nicht geschrieben haben, wie in Codeblock 21-21 gezeigt.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #

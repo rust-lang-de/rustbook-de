@@ -53,12 +53,12 @@ nachsehen muss. Die Variante `Ready` zeigt an, dass das `Future` seine Arbeit
 beendet hat und der Wert `T` verfügbar ist.
 
 > Hinweis: Es kommt selten vor, dass man `poll` direkt aufrufen muss, aber wenn
-> doch, sollte man bedenken, dass man bei den meisten Futures `poll` nicht
-> erneut aufrufen darf, nachdem das Future `Ready` zurückgegeben hat. Viele
-> Futures werden das Programm zum Absturz bringen, wenn sie erneut abgefragt
-> werden, obwohl sie bereit sind! Futures, bei denen eine erneute Abfrage
-> sicher ist, werden dies in ihrer Dokumentation explizit erwähnen. Dies ist
-> ähnlich zum Verhalten von `Iterator::next`!
+> doch, sollte man bedenken, dass man bei den meisten Futures `poll` nicht erneut
+> aufrufen darf, nachdem das Future `Ready` zurückgegeben hat. Viele Futures
+> werden das Programm abbrechen, wenn sie erneut abgefragt werden, obwohl sie
+> bereit sind! Futures, bei denen eine erneute Abfrage sicher ist, werden dies in
+> ihrer Dokumentation explizit erwähnen. Dies ist ähnlich zum Verhalten von
+> `Iterator::next`!
 
 Rust kompiliert Code mit `await` unter der Haube zu Code, der `poll` aufruft.
 Wenn du dir Codeblock 17-4 ansiehst, wo wir den Seitentitel für eine einzelne

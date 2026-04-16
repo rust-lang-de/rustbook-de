@@ -433,8 +433,8 @@ byte index 1 is not a char boundary; it is inside 'З' (bytes 0..2) of `Здра
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen
-ist Vorsicht geboten, da dies zum Absturz deines Programms führen kann.
+Bei der Verwendung von Bereichen zum Erstellen von Zeichenkettenanteilstypen ist
+Vorsicht geboten, da dies zum Abbruch deines Programms führen kann.
 
 ### Iterieren über Zeichenketten
 

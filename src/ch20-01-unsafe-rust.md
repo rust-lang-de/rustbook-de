@@ -292,10 +292,10 @@ fn split_at_mut(values: &mut [i32], mid: usize) -> (&mut [i32], &mut [i32]) {
 
 Diese Funktion ermittelt zunächst die Gesamtlänge des Anteilstypen. Dann stellt
 sie fest, dass der als Parameter angegebene Index innerhalb des Anteilstypen
-liegt, indem sie prüft, ob er kleiner oder gleich der Länge ist. Die
-Zusicherung (assertion) bedeutet, dass die Funktion abstürzt, wenn wir einen
-Index übergeben, der größer als die Länge ist, bei der der Anteilstyp geteilt
-werden soll, bevor sie versucht, diesen Index zu verwenden.
+liegt, indem sie prüft, ob er kleiner oder gleich der Länge ist. Die Zusicherung
+(assertion) bedeutet, dass die Funktion abbricht, wenn wir einen Index
+übergeben, der größer als die Länge ist, bei der der Anteilstyp geteilt werden
+soll, bevor sie versucht, diesen Index zu verwenden.
 
 Dann geben wir zwei veränderbare Anteilstypen in einem Tupel zurück: Einen vom
 Anfang des ursprünglichen Anteilstyps bis zum Index `mid` und einen weiteren
@@ -397,7 +397,7 @@ verwendet, weil sie nur gültige Zeiger aus den Daten erzeugt, auf die diese
 Funktion Zugriff hat.
 
 Im Gegensatz dazu würde die Verwendung von `slice::from_raw_parts_mut` in
-Codeblock 20-7 wahrscheinlich abstürzen, wenn der Anteilstyp verwendet wird.
+Codeblock 20-7 wahrscheinlich abbrechen, wenn der Anteilstyp verwendet wird.
 Dieser Code nimmt einen beliebigen Speicherplatz und erzeugt einen Anteilstyp
 mit einer Länge von 10.000 Elementen.
 

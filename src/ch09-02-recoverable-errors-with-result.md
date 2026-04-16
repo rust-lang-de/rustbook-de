@@ -3,13 +3,13 @@
 Die meisten Fehler sind nicht so schwerwiegend, dass das Programm ganz
 abgebrochen werden müsste. Manchmal, wenn eine Funktion fehlschlägt, hat das
 einen Grund, den man leicht erkennen und darauf reagieren kann. Wenn du
-beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt
-fehl, weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt
-den Vorgang zu beenden.
+beispielsweise versuchst, eine Datei zu öffnen, und dieser Vorgang schlägt fehl,
+weil die Datei nicht existiert, könntest du die Datei erstellen, anstatt den
+Vorgang abzubrechen.
 
-Erinnere dich an [„Behandeln potentieller Fehler mit
-`Result`“][handle_failure] in Kapitel 2, das die Aufzählung `Result` mit zwei
-Varianten `Ok` und `Err` definiert, wie nachfolgend zu sehen ist:
+Erinnere dich an [„Behandeln potentieller Fehler mit `Result`“][handle_failure]
+in Kapitel 2, das die Aufzählung `Result` mit zwei Varianten `Ok` und `Err`
+definiert, wie nachfolgend zu sehen ist:
 
 ```rust
 enum Result<T, E> {
@@ -354,13 +354,13 @@ Fehlerwert in `match` zurückgegeben haben, das den Rückgabewert von
 `File::open` behandelt hat. Wir brauchen jedoch nicht ausdrücklich `return`
 anzugeben, weil dies der letzte Ausdruck in der Funktion ist.
 
-Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder
-einen `Ok`-Wert zu erhalten, der einen Benutzernamen enthält, oder einen
-`Err`-Wert, der einen `io::Error` enthält. Es ist Sache des aufrufenden Codes,
-zu entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
-einen `Err`-Wert erhält, könnte er `panic!` aufrufen und das Programm zum
-Absturz bringen, einen Standardbenutzernamen verwenden oder den Benutzernamen
-von irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
+Der Code, der diesen Code aufruft, wird dann damit zurechtkommen, entweder einen
+`Ok`-Wert zu erhalten, der einen Benutzernamen enthält, oder einen `Err`-Wert,
+der einen `io::Error` enthält. Es ist Sache des aufrufenden Codes, zu
+entscheiden, was mit diesen Werten geschehen soll. Wenn der aufrufende Code
+einen `Err`-Wert erhält, könnte er `panic!` aufrufen und das Programm
+abzubrechen, einen Standardbenutzernamen verwenden oder den Benutzernamen von
+irgendwo anders als z.B. einer Datei nachschlagen. Wir haben nicht genug
 Informationen darüber, was der aufrufende Code tatsächlich versucht, also
 propagieren wir alle Erfolgs- und Fehlerinformationen nach oben, damit sie
 angemessen behandelt werden.

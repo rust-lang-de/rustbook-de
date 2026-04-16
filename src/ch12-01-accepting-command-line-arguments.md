@@ -70,14 +70,13 @@ werden könnte, die im aktuellen Modul definiert ist.
 
 > ### Die Funktion `args` und ungültiger Unicode
 >
-> Beachte, dass `std::env::args` abstürzt, wenn ein Argument einen ungültigen
-> Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode
-> akzeptieren muss, verwende stattdessen `std::env::args_os`. Diese Funktion
-> gibt einen Iterator zurück, der `OsString`-Werte anstelle von `String`-Werten
-> erzeugt. Wir haben uns hier aus Gründen der Einfachheit für die Verwendung
-> von `std::env::args` entschieden, weil `OsString`-Werte sich je nach
-> Plattform unterscheiden und die Arbeit mit ihnen komplexer ist als mit
-> `String`-Werten.
+> Beachte, dass `std::env::args` abbricht, wenn ein Argument einen ungültigen
+> Unicode enthält. Wenn dein Programm Argumente mit ungültigem Unicode akzeptieren
+> muss, verwende stattdessen `std::env::args_os`. Diese Funktion gibt einen
+> Iterator zurück, der `OsString`-Werte anstelle von `String`-Werten erzeugt. Wir
+> haben uns hier aus Gründen der Einfachheit für die Verwendung von
+> `std::env::args` entschieden, weil `OsString`-Werte sich je nach Plattform
+> unterscheiden und die Arbeit mit ihnen komplexer ist als mit `String`-Werten.
 
 In der ersten Zeile von `main` rufen wir `env::args` auf und wir verwenden
 sofort `collect`, um den Iterator in einen Vektor zu verwandeln, der alle vom

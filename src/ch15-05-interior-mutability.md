@@ -494,7 +494,7 @@ veränderbare Borrow haben.
 
 Wenn wir versuchen, diese Regeln zu verletzen, erhalten wir keinen
 Kompilierfehler wie bei Referenzen, sondern die Implementierung von `RefCell<T>`
-wird zur Laufzeit abstürzen. Codeblock 15-23 zeigt eine Modifikation der
+wird zur Laufzeit abbrechen. Codeblock 15-23 zeigt eine Modifikation der
 Implementierung von `send` in Codeblock 15-22. Wir versuchen absichtlich, zwei
 veränderbare Borrows im selben Gültigkeitsbereich zu erstellen, um zu
 veranschaulichen, dass `RefCell<T>` uns daran hindert, dies zur Laufzeit zu tun.
@@ -579,9 +579,10 @@ veranschaulichen, dass `RefCell<T>` uns daran hindert, dies zur Laufzeit zu tun.
 #     }
 # }
 ```
+
 <span class="caption">Codeblock 15-23: Wir erstellen zwei veränderbare
 Referenzen im selben Gültigkeitsbereich, um zu sehen, dass `RefCell<T>`
-abstürzt</span>
+abbricht</span>
 
 Wir erstellen eine Variable `one_borrow` für den intelligenten Zeiger
 `RefMut<T>`, der von `borrow_mut` zurückgegeben wird. Dann erstellen wir auf die
@@ -617,8 +618,8 @@ error: test failed, to rerun pass `--lib`
 ```
 
 Beachte, dass der Programmcode mit der Meldung `already borrowed:
-BorrowMutError` abstürzt. Auf diese Weise behandelt `RefCell<T>` zur
-Laufzeit Verstöße gegen die Borrowing-Regeln.
+BorrowMutError` abbricht. Auf diese Weise behandelt `RefCell<T>` zur Laufzeit
+Verstöße gegen die Borrowing-Regeln.
 
 Wenn du dich dafür entscheidest, Borrowing-fehler zur Laufzeit und nicht zur
 Kompilierzeit abzufangen, wie wir es hier getan haben, bedeutet das, dass du

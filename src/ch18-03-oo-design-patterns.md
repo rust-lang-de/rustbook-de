@@ -584,12 +584,12 @@ bekämen wir einen Fehler, weil wir `state` nicht aus dem ausgeliehenen `&self`
 im Funktionsparameter herausverschieben können.
 
 Wir rufen dann die Methode `unwrap` auf, von der wir wissen, dass sie das
-Programm niemals abstürzen lassen wird, weil wir wissen, dass die Methoden auf
-`Post` sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese
-Methoden fertig ausgeführt sind. Dies ist einer der Fälle, über die wir im
-Abschnitt [„Wenn du mehr Informationen als der Compiler
-hast“][more-info-than-rustc] in Kapitel 9 gesprochen haben, bei denen wir im
-Unterschied zum Compiler wissen, dass ein `None`-Wert niemals möglich ist.
+Programm abbrechen wird, weil wir wissen, dass die Methoden auf `Post`
+sicherstellen, dass `state` stets einen `Some`-Wert enthält, wenn diese Methoden
+fertig ausgeführt sind. Dies ist einer der Fälle, über die wir im Abschnitt
+[„Wenn du mehr Informationen als der Compiler hast“][more-info-than-rustc] in
+Kapitel 9 gesprochen haben, bei denen wir im Unterschied zum Compiler wissen,
+dass ein `None`-Wert niemals möglich ist.
 
 Wenn wir nun `content` auf `&Box<dyn State>` aufrufen, wird eine automatische
 Umwandlung (deref coercion) auf `&` und `Box` stattfinden, sodass die Methode

@@ -2,14 +2,13 @@
 
 Manchmal passieren schlimme Dinge in deinem Code und du kannst nichts dagegen
 tun. Für diese Fälle hat Rust das Makro `panic!`. In der Praxis gibt es zwei
-Möglichkeiten, ein Programm abstürzen zu lassen: Durch eine Aktion, die unseren
-Code abstürzen lässt (z.B. Zugriff auf ein Array über das Ende hinaus) oder
-durch den expliziten Aufruf des Makros `panic!`. In beiden Fällen brechen wir
-unser Programm ab. Standardmäßig geben diese Programmabbrüche eine
-Fehlermeldung aus, räumen den Stack auf und beenden sich. Über eine
-Umgebungsvariable kannst du auch festlegen, dass Rust den Stack anzeigt, wenn
-das Programm abbricht, damit du die Quelle des Abbruchs leichter aufspüren
-kannst.
+Möglichkeiten, ein Programm abzubrechen: Durch eine Aktion, die unseren Code
+abbricht (z.B. Zugriff auf ein Array über das Ende hinaus) oder durch den
+expliziten Aufruf des Makros `panic!`. In beiden Fällen brechen wir unser
+Programm ab. Standardmäßig geben diese Programmabbrüche eine Fehlermeldung aus,
+räumen den Stack auf und beenden sich. Über eine Umgebungsvariable kannst du
+auch festlegen, dass Rust den Stack anzeigt, wenn das Programm abbricht, damit
+du die Quelle des Abbruchs leichter aufspüren kannst.
 
 > ### Auflösen des Stack oder Abbrechen als Fehlerreaktion
 >
@@ -38,7 +37,7 @@ Versuchen wir `panic!` in einem einfachen Programm aufzurufen:
 
 ```rust,should_panic,panics
 fn main() {
-    panic!("abstürzen und verbrennen");
+    panic!("abbrechen und verbrennen");
 }
 ```
 

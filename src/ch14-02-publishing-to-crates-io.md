@@ -77,8 +77,8 @@ einige andere Abschnitte, die Autoren von Crates häufig in ihrer Dokumentation
 verwenden:
 
 - **Panics:** Das sind die Szenarien, in denen die dokumentierte Funktion
-  abstürzt. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
-  abstürzen, sollten sicherstellen, dass sie die Funktion in solchen
+  abbricht. Aufrufer der Funktion, die nicht möchten, dass ihre Programme
+  abbrechen, sollten sicherstellen, dass sie die Funktion in solchen
   Situationen nicht aufrufen.
 - **Errors:** Wenn die Funktion einen Typ `Result` zurückgibt, der die Arten von
   Fehlern die auftreten können beschreibt und unter welchen Bedingungen diese

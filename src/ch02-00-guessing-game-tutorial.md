@@ -360,7 +360,7 @@ Informationen darüber, wie oder warum die Operation fehlgeschlagen ist.
 Für Werte vom Typ `Result` sind, wie für Werte jedes Typs, Methoden definiert.
 Eine Instanz von `Result` hat eine [Methode `expect`][expect], die du
 aufrufen kannst. Wenn diese `io::Result`-Instanz ein `Err`-Wert ist, wird
-`expect` das Programm zum Absturz bringen und die Meldung anzeigen, die du als
+`expect` das Programm abbrechen und die Meldung anzeigen, die du als
 Argument an `expect` übergeben hast. Wenn die Methode `read_line` ein `Err`
 zurückgibt, ist dies wahrscheinlich das Ergebnis eines Fehlers, der vom
 zugrundeliegenden Betriebssystem herrührt. Wenn diese `io::Result`-Instanz ein
@@ -396,9 +396,9 @@ verwendet hast, was darauf hinweist, dass das Programm einen möglichen Fehler
 nicht behandelt hat.
 
 Der richtige Weg, die Warnung zu unterdrücken, ist eine Fehlerbehandlung zu
-schreiben, aber da wir dieses Programm einfach nur abstürzen lassen wollen,
-wenn ein Problem auftritt, können wir `expect` verwenden. In [Kapitel
-9][recover] erfährst du, wie man sich von Fehlern erholt.
+schreiben, aber da wir dieses Programm einfach nur abbrechen wollen, wenn ein
+Problem auftritt, können wir `expect` verwenden. In [Kapitel 9][recover]
+erfährst du, wie man sich von Fehlern erholt.
 
 ### Ausgeben von Werten mit `println!`-Platzhaltern
 
@@ -951,12 +951,11 @@ umgewandelt werden können und kann daher leicht Fehler verursachen. Wenn die
 Zeichenkette zum Beispiel `A👍%` enthielte, gäbe es keine Möglichkeit, dies in
 eine Zahl umzuwandeln. Da dies fehlschlagen könnte, gibt die Methode `parse`
 einen `Result`-Typ zurück, ähnlich wie die Methode `read_line` (weiter oben in
-[„Behandeln potentieller Fehler mit
-`Result`“](#behandeln-potentieller-fehler-mit-result)). Wir werden dieses
-`Result` auf die gleiche Weise behandeln, indem wir erneut `expect` verwenden.
-Wenn `parse` eine `Err`-Variante von `Result` zurückgibt, weil es keine Zahl
-aus der Zeichenkette erzeugen konnte, wird der `expect`-Aufruf das Spiel zum
-Absturz bringen und die Nachricht ausgeben, die wir ihm geben. Wenn `parse` die
+[„Behandeln potentieller Fehler mit `Result`“][result-behandeln]). Wir werden
+dieses `Result` auf die gleiche Weise behandeln, indem wir erneut `expect`
+verwenden. Wenn `parse` eine `Err`-Variante von `Result` zurückgibt, weil es
+keine Zahl aus der Zeichenkette erzeugen konnte, wird der `expect`-Aufruf das
+Spiel abbrechen und die Nachricht ausgeben, die wir ihm geben. Wenn `parse` die
 Zeichenkette erfolgreich in eine Zahl umwandeln kann, gibt es die `Ok`-Variante
 von `Result` zurück, und `expect` gibt die Zahl zurück, die wir vom `Ok`-Wert
 erwarten.
@@ -1042,7 +1041,7 @@ Der Benutzer könnte das Programm jederzeit mit dem Tastaturkürzel
 Möglichkeit, diesem unersättlichen Monster zu entkommen, wie in der
 `parse`-Diskussion in [„Vergleichen der Schätzung mit der
 Geheimzahl“](#vergleichen-der-schätzung-mit-der-geheimzahl) erwähnt: Wenn der
-Benutzer eine Antwort ohne Zahl eingibt, stürzt das Programm ab. Wir können das
+Benutzer eine Antwort ohne Zahl eingibt, bricht das Programm ab. Wir können das
 ausnutzen, um dem Benutzer zu erlauben das Programm zu beenden, wie hier
 gezeigt:
 
@@ -1073,15 +1072,15 @@ Please type a number!: ParseIntError { kind: InvalidDigit }
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Mit der Eingabe von `quit` wird das Spiel beendet, aber das gilt
-auch für alle anderen Eingaben, die keine Zahlen sind. Dies ist jedoch, gelinde
-gesagt, suboptimal. Wir wollen, dass das Spiel automatisch beendet wird, wenn
-die richtige Zahl erraten wird.
+Mit der Eingabe von `quit` wird das Spiel beendet, aber das gilt auch für alle
+anderen Eingaben, die keine Zahlen sind. Dies ist jedoch, gelinde gesagt,
+suboptimal. Wir wollen, dass das Spiel automatisch beendet wird, wenn die
+richtige Zahl erraten wird.
 
 ### Beenden nach einer korrekten Schätzung
 
-Programmieren wir das Spiel so, dass es beendet wird, wenn der Benutzer
-gewinnt, indem wir eine `break`-Anweisung hinzufügen:
+Programmieren wir das Spiel so, dass es beendet wird, wenn der Benutzer gewinnt,
+indem wir eine `break`-Anweisung hinzufügen:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1131,11 +1130,11 @@ Schleife der letzte Teil von `main` ist.
 
 ### Behandeln ungültiger Eingaben
 
-Um das Verhalten des Spiels weiter zu verfeinern, sollten wir das Programm
-nicht abstürzen lassen, wenn der Benutzer keine gültige Zahl eingibt, sondern
-dafür sorgen, dass das Spiel ungültige Zahlen ignoriert, damit der Benutzer
-weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in der
-`guess` von `String` in `u32` umgewandelt wird, wie in Codeblock 2-5 gezeigt.
+Um das Verhalten des Spiels weiter zu verfeinern, sollten wir das Programm nicht
+abbrechen, wenn der Benutzer keine gültige Zahl eingibt, sondern dafür sorgen,
+dass das Spiel ungültige Zahlen ignoriert, damit der Benutzer weiter raten kann.
+Das können wir erreichen, indem wir die Zeile ändern, in der `guess` von
+`String` in `u32` umgewandelt wird, wie in Codeblock 2-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -1184,14 +1183,13 @@ weiter raten kann. Das können wir erreichen, indem wir die Zeile ändern, in de
 ```
 
 <span class="caption">Codeblock 2-5: Ignorieren einer ungültigen Zahl und
-Auffordern zu einer weiteren Schätzung, anstatt das Programm zum Absturz zu
-bringen</span>
+Auffordern zu einer weiteren Schätzung, anstatt das Programm abzubrechen</span>
 
 Das Umstellen von einem `expect`-Aufruf zu einem `match`-Ausdruck ist eine
-Möglichkeit für den Übergang vom Absturz bei einem Fehler zur Behandlung des
-Fehlers. Denke daran, dass `parse` einen `Result`-Typ zurückgibt und `Result`
-eine Aufzählung ist, die die Varianten `Ok` und `Err` hat. Wir benutzen hier
-einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der Methode
+Möglichkeit für den Übergang vom Programmabbruch bei einem Fehler zur Behandlung
+des Fehlers. Denke daran, dass `parse` einen `Result`-Typ zurückgibt und
+`Result` eine Aufzählung ist, die die Varianten `Ok` und `Err` hat. Wir benutzen
+hier einen `match`-Ausdruck, wie wir es mit dem `Ordering`-Ergebnis der Methode
 `cmp` getan haben.
 
 Wenn `parse` in der Lage ist, die Zeichenkette erfolgreich in eine Zahl
@@ -1314,6 +1312,7 @@ Funktionsweise von Aufzählungen erläutert.
 [read_line]: https://doc.rust-lang.org/std/io/struct.Stdin.html#method.read_line
 [recover]: ch09-02-recoverable-errors-with-result.html
 [result]: https://doc.rust-lang.org/std/result/enum.Result.html
+[result-behandeln]: #behandeln-potentieller-fehler-mit-result
 [semver]: https://semver.org/lang/de/
 [shadowing]: ch03-01-variables-and-mutability.html#verschatten-shadowing
 [string]: https://doc.rust-lang.org/std/string/struct.String.html

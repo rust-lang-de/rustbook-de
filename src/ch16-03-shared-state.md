@@ -87,9 +87,9 @@ aktuellen Thread, sodass er keine Arbeit verrichten kann, bis wir an der Reihe
 sind und die Sperre bekommen.
 
 Der Aufruf von `lock` würde fehlschlagen, wenn ein anderer Thread, der die
-Sperre hält, abstürzte. In diesem Fall wäre niemand jemals in der Lage, die
+Sperre hält, abbricht. In diesem Fall wäre niemand jemals in der Lage, die
 Sperre zu erhalten, also haben wir uns entschieden, `unwrap` zu benutzen und
-diesen Thread abstürzen zu lassen, wenn wir uns in dieser Situation befinden.
+diesen Thread abzubrechen, wenn wir uns in dieser Situation befinden.
 
 Nachdem wir die Sperre bekommen haben, können wir den Rückgabewert, in diesem
 Fall `num` genannt, als veränderbare Referenz auf die darin enthaltenen Daten

@@ -464,10 +464,10 @@ index out of bounds: the len is 5 but the index is 10
 note: run with `RUST_BACKTRACE=1` environment variable to display a backtrace
 ```
 
-Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein
-ungültiger Wert in der Index-Operation verwendet wurde. Das Programm wurde mit
-einer Fehlermeldung beendet und hat die abschließende `println!`-Anweisung
-nicht ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
+Das Programm führte zu einem Laufzeitfehler an der Stelle, an der ein ungültiger
+Wert in der Index-Operation verwendet wurde. Das Programm wurde mit einer
+Fehlermeldung abgebrochen und hat die abschließende `println!`-Anweisung nicht
+ausgeführt. Wenn du versuchst, mit Hilfe der Indizierung auf ein Element
 zuzugreifen, prüft Rust, ob der angegebene Index kleiner als die Array-Länge
 ist. Wenn der Index größer oder gleich der Länge ist, wird Rust das Programm
 abbrechen. Diese Prüfung muss zur Laufzeit erfolgen, insbesondere in diesem
@@ -477,10 +477,10 @@ eingeben wird, wenn er den Code ausführt.
 Dies ist ein Beispiel für die Umsetzung der Speichersicherheitsprinzipien von
 Rust. In vielen Low-Level-Sprachen wird diese Art der Überprüfung nicht
 durchgeführt und wenn du einen falschen Index angibst, kann auf ungültigen
-Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern,
-indem es das Programm sofort beendet, anstatt den Speicherzugriff zuzulassen
-und fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
-lesbaren, sicheren Code schreiben kannst, der weder abstürzt noch ungültige
+Speicher zugegriffen werden. Rust schützt dich vor dieser Art von Fehlern, indem
+es das Programm sofort abbricht, anstatt den Speicherzugriff zuzulassen und
+fortzusetzen. Kapitel 9 behandelt die Fehlerbehandlung in Rust und wie du
+lesbaren, sicheren Code schreiben kannst, der weder abbricht noch ungültige
 Speicherzugriffe zulässt.
 
 [appendix_b]: appendix-02-operators.html

@@ -306,10 +306,10 @@ kompilieren, um sicherzustellen, dass er funktioniert.
 ### Korrigieren der Fehlerbehandlung
 
 Jetzt werden wir daran arbeiten, unsere Fehlerbehandlung zu korrigieren.
-Erinnere dich, dass der Versuch, auf die Werte im `args`-Vektor bei Index 1
-oder Index 2 zuzugreifen, das Programm zum Absturz bringt, wenn der Vektor
-weniger als drei Elemente enthält. Versuche, das Programm ohne irgendwelche
-Argumente laufen zu lassen; es wird so aussehen:
+Erinnere dich, dass der Versuch, auf die Werte im `args`-Vektor bei Index 1 oder
+Index 2 zuzugreifen, das Programm abbrechen, wenn der Vektor weniger als drei
+Elemente enthält. Versuche, das Programm ohne irgendwelche Argumente laufen zu
+lassen; es wird so aussehen:
 
 ```console
 $ cargo run
@@ -330,7 +330,7 @@ korrigieren.
 
 In Codeblock 12-8 fügen wir eine Prüfung in der Funktion `new` hinzu, die
 überprüft, ob der Anteilstyp lang genug ist, bevor auf Index 1 und Index 2
-zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, stürzt das Programm
+zugegriffen wird. Wenn der Anteilstyp nicht lang genug ist, bricht das Programm
 ab und zeigt eine bessere Fehlermeldung an.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -379,12 +379,12 @@ der Argumente</span>
 
 Dieser Code ähnelt [der Funktion `Guess::new`, die wir in Codeblock
 9-13][ch9-custom-types] geschrieben haben, wo wir `panic!` aufgerufen haben,
-wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt
-hier auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args`
-mindestens `3` beträgt und der Rest der Funktion unter der Annahme arbeiten
-kann, dass diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente
-hat, wird diese Bedingung `true` und wir rufen das Makro `panic!` auf, um das
-Programm sofort zu beenden.
+wenn das Argument `value` außerhalb des gültigen Wertebereichs lag. Anstatt hier
+auf einen Wertebereich zu prüfen, prüfen wir, ob die Länge von `args` mindestens
+`3` beträgt und der Rest der Funktion unter der Annahme arbeiten kann, dass
+diese Bedingung erfüllt ist. Wenn `args` weniger als drei Elemente hat, wird
+diese Bedingung `true` und wir rufen das Makro `panic!` auf, um das Programm
+sofort abzubrechen.
 
 Mit diesen zusätzlichen wenigen Zeilen Code in `new` lassen wir das Programm
 ohne Argumente erneut laufen, um zu sehen, wie der Fehler jetzt aussieht:
@@ -651,14 +651,14 @@ beginnend mit dem Lesen der Datei. Die Funktion `run` nimmt die
 
 #### Fehlerrückgabe aus `run`
 
-Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird,
-können wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in
-Codeblock 12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect`
-abstürzen zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn
-etwas schief läuft. Auf diese Weise können wir in `main` die Logik rund um den
-Umgang mit Fehlern auf benutzerfreundliche Weise weiter konsolidieren.
-Codeblock 12-12 zeigt die Änderungen, die wir an der Signatur und dem Rumpf von
-`run` vornehmen müssen.
+Wenn die verbleibende Programmlogik in die Funktion `run` separiert wird, können
+wir die Fehlerbehandlung verbessern, wie wir es mit `Config::build` in Codeblock
+12-9 getan haben. Anstatt das Programm durch den Aufruf von `expect` abbrechen
+zu lassen, gibt die Funktion `run` ein `Result<T, E>` zurück, wenn etwas schief
+läuft. Auf diese Weise können wir in `main` die Logik rund um den Umgang mit
+Fehlern auf benutzerfreundliche Weise weiter konsolidieren. Codeblock 12-12
+zeigt die Änderungen, die wir an der Signatur und dem Rumpf von `run` vornehmen
+müssen.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

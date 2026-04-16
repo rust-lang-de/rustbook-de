@@ -46,7 +46,7 @@ funktionieren.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -107,12 +107,12 @@ impl Drop for ThreadPool {
 Threads, wenn der Thread-Pool den Gültigkeitsbereich verlässt</span>
 
 Zuerst iterieren wir über alle `workers` im Thread-Pool. Wir verwenden dafür
-`&mut`, weil `self` eine veränderbare Referenz ist und wir auch in der Lage
-sein müssen, `worker` zu verändern. Für jeden `worker` geben wir eine Nachricht
-aus, die besagt, dass diese bestimmte `worker`-Instanz heruntergefahren wird,
-und dann rufen wir auf dem Thread dieser `worker`-Instanz `join` auf. Wenn der
-Aufruf von `join` fehlschlägt, benutzen wir `unwrap`, um das Programm abstürzen
-zu lassen.
+`&mut`, weil `self` eine veränderbare Referenz ist und wir auch in der Lage sein
+müssen, `worker` zu verändern. Für jeden `worker` geben wir eine Nachricht aus,
+die besagt, dass diese bestimmte `worker`-Instanz heruntergefahren wird, und
+dann rufen wir auf dem Thread dieser `worker`-Instanz `join` auf. Wenn der
+Aufruf von `join` fehlschlägt, benutzen wir `unwrap`, um das Programm
+abzubrechen.
 
 Hier ist der Fehler, den wir erhalten, wenn wir diesen Code kompilieren:
 
@@ -185,7 +185,7 @@ aktualisieren:
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -245,8 +245,8 @@ impl Drop for ThreadPool {
 ```
 
 Dadurch wird der Compilerfehler behoben, und es sind keine weiteren Änderungen
-an unserem Code erforderlich. Beachte, das `drop` bei einem Programmabsturz
-aufgerufen werden kann, und wenn dann auch `unwrap` abstürzt, eine doppelte
+an unserem Code erforderlich. Beachte, das `drop` bei einem Programmabbruch
+aufgerufen werden kann, und wenn dann auch `unwrap` abbricht, eine doppelte
 Fehlersituation verursacht werden könnte, was sofort zum Programmende und zum
 Abbruch aller laufenden Bereinigungsvorgänge führen würde. Für ein
 Beispielprogramm ist dies in Ordnung, für Produktionscode jedoch nicht zu
@@ -296,7 +296,7 @@ impl ThreadPool {
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
           // --abschneiden--
 
@@ -397,7 +397,7 @@ wenn die Implementierung von `drop` in `ThreadPool` `join` für sie aufruft.
 #     ///
 #     /// # Panics
 #     ///
-#     /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+#     /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
 #     pub fn new(size: usize) -> ThreadPool {
 #         assert!(size > 0);
 #
@@ -660,7 +660,7 @@ impl ThreadPool {
     ///
     /// # Panics
     ///
-    /// Die Funktion `new` stürzt ab, wenn die Größe Null ist.
+    /// Die Funktion `new` bricht ab, wenn die Größe Null ist.
     pub fn new(size: usize) -> ThreadPool {
         assert!(size > 0);
 

@@ -120,22 +120,22 @@ let does_not_exist = v.get(100);
 <span class="caption">Codeblock 8-5: Versuch, auf das Element mit Index 100 in
 einem Vektor zuzugreifen, der fünf Elemente enthält</span>
 
-Wenn wir diesen Code ausführen, wird die erste `[]` Variante das Programm abbrechen
-lassen, weil es auf ein nicht existierendes Element verweist. Diese Methode
-wird vorzugsweise verwendet, wenn du dein Programm abstürzen lassen möchtest,
-wenn versucht wird, auf ein Element hinter dem Ende des Vektors zuzugreifen.
+Wenn wir diesen Code ausführen, wird die erste `[]` Variante das Programm
+abbrechen, weil es auf ein nicht existierendes Element verweist. Diese Methode
+wird vorzugsweise verwendet, wenn du dein Programm abbrechen möchtest, wenn
+versucht wird, auf ein Element hinter dem Ende des Vektors zuzugreifen.
 
 Wenn der Methode `get` ein Index außerhalb des Vektors übergeben wird, gibt sie
 `None` zurück, ohne abzubrechen. Du würdest diese Methode verwenden, wenn der
 Zugriff auf ein Element außerhalb des Bereichs des Vektors unter normalen
 Umständen gelegentlich vorkommt. Dein Code wird dann eine Logik haben, die mit
-`Some(&element)` und `None` umgehen kann, wie in Kapitel 6 besprochen. Der
-Index könnte zum Beispiel von einer Person stammen, die eine Zahl eingibt. Wenn
-sie versehentlich eine zu große Zahl eingibt und das Programm einen `None`-Wert
+`Some(&element)` und `None` umgehen kann, wie in Kapitel 6 besprochen. Der Index
+könnte zum Beispiel von einer Person stammen, die eine Zahl eingibt. Wenn sie
+versehentlich eine zu große Zahl eingibt und das Programm einen `None`-Wert
 erhält, kannst du dem Benutzer mitteilen, wie viele Elemente sich aktuell im
 Vektor befinden und ihm eine weitere Chance geben, einen gültigen Wert
 einzugeben. Das wäre benutzerfreundlicher, als das Programm wegen eines
-Tippfehlers abstürzen zu lassen!
+Tippfehlers abzubrechen!
 
 Wenn das Programm über eine gültige Referenz verfügt, stellt der Borrow Checker
 mittels Eigentümerschafts- und Borrowing-Regeln (siehe Kapitel 4) sicher, dass

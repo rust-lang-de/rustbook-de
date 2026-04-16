@@ -94,7 +94,7 @@ Verbindung der Reihe nach verarbeiten und eine Reihe von Strömen erzeugen, die
 wir verarbeiten müssen.
 
 Im Moment besteht unsere Behandlung des Stroms darin, dass wir `unwrap`
-aufrufen, um unser Programm zu beenden, wenn der Strom Fehler aufweist; wenn
+aufrufen, um unser Programm abzubrechen, wenn der Strom Fehler aufweist; wenn
 keine Fehler vorliegen, gibt das Programm eine Nachricht aus. Wir werden im
 nächsten Codeblock mehr Funktionalität für den Erfolgsfall hinzufügen. Der
 Grund, warum wir Fehler von der Methode `incoming` erhalten könnten, wenn sich
@@ -103,8 +103,8 @@ Verbindungen iterieren. Stattdessen iterieren wir über _Verbindungsversuche_.
 Die Verbindung kann aus einer Reihe von Gründen nicht erfolgreich sein, viele
 davon sind betriebssystemspezifisch. Zum Beispiel haben viele Betriebssysteme
 ein Limit für die Anzahl der gleichzeitig offenen Verbindungen, die sie
-unterstützen können; neue Verbindungsversuche über diese Anzahl hinaus führen
-zu einem Fehler, bis einige der offenen Verbindungen geschlossen werden.
+unterstützen können; neue Verbindungsversuche über diese Anzahl hinaus führen zu
+einem Fehler, bis einige der offenen Verbindungen geschlossen werden.
 
 Lass uns versuchen, diesen Code auszuführen! Rufe `cargo run` im Terminal auf
 und öffne dann _127.0.0.1:7878_ in einem Web-Browser. Der Browser sollte eine
@@ -142,11 +142,11 @@ indem du den privaten Modus verwendest oder einen anderen Browser nutzt.
 Der wichtige Punkt ist, dass wir erfolgreich eine TCP-Verbindung hergestellt
 haben!
 
-Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd> zu
-beenden, wenn du mit der Ausführung einer bestimmten Version des Codes fertig
-bist. Starte dann das Programm neu, indem du den Befehl `cargo run` aufrufst,
-nachdem du die einzelnen Codeänderungen vorgenommen hast, um sicherzustellen,
-dass du den neuesten Code ausführst.
+Denke daran, das Programm durch Drücken von <kbd>Strg</kbd>+<kbd>c</kbd>
+abzubrechen, wenn du mit der Ausführung einer bestimmten Version des Codes
+fertig bist. Starte dann das Programm neu, indem du den Befehl `cargo run`
+aufrufst, nachdem du die einzelnen Codeänderungen vorgenommen hast, um
+sicherzustellen, dass du den neuesten Code ausführst.
 
 ### Lesen der Anfrage
 

@@ -449,13 +449,13 @@ zusätzliche Funktionalität, die wir im modifizierten `TokenStream` zur Verfüg
 stellen.
 
 Du hast vielleicht bemerkt, dass wir `unwrap` aufrufen, um die Funktion
-`hello_macro_derive` abstürzen zu lassen, wenn der Aufruf der Funktion
-`syn::parse` hier fehlschlägt. Es ist notwendig, dass unser prozedurales Makro
-bei Fehlern abstürzt, weil `proc_macro_derive`-Funktionen einen `TokenStream`
-zurückgeben müssen, kein `Result`, um mit der prozeduralen Makro-API konform zu
-sein. Wir haben dieses Beispiel vereinfacht, indem wir `unwrap` verwendet
-haben; in Produktionscode solltest du spezifischere Fehlermeldungen darüber
-angeben, was schief gelaufen ist, indem du `panic!` oder `expect` verwendest.
+`hello_macro_derive` abzubrechen, wenn der Aufruf der Funktion `syn::parse` hier
+fehlschlägt. Es ist notwendig, dass unser prozedurales Makro bei Fehlern
+abbricht, weil `proc_macro_derive`-Funktionen einen `TokenStream` zurückgeben
+müssen, kein `Result`, um mit der prozeduralen Makro-API konform zu sein. Wir
+haben dieses Beispiel vereinfacht, indem wir `unwrap` verwendet haben; in
+Produktionscode solltest du spezifischere Fehlermeldungen darüber angeben, was
+schief gelaufen ist, indem du `panic!` oder `expect` verwendest.
 
 Da wir nun den Code haben, um den annotierten Rust-Code aus einem `TokenStream`
 in eine `DeriveInput`-Instanz zu verwandeln, lass uns den Code generieren, der
