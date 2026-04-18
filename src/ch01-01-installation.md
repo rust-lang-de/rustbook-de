@@ -46,7 +46,7 @@ Installation erscheint folgende Zeile:
 Rust is installed now. Great!
 ```
 
-Außerdem benötigst du einen _Programmbinder_ (linker), ein Programm, das Rust
+Außerdem benötigst du einen _Linker_ (engl. Bindelader), ein Programm, das Rust
 verwendet, um die kompilierten Dateien in eine Datei zusammenzuführen.
 Wahrscheinlich hast du bereits einen. Wenn du Linker-Fehler erhältst, solltest
 du einen C-Compiler installieren, der in der Regel auch einen Linker enthält.
