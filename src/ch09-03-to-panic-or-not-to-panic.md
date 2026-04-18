@@ -166,7 +166,7 @@ Eine Möglichkeit, dies zu tun, wäre, die Eingabe als `i32` statt nur als `u32`
 zu parsen, um potenziell negative Zahlen zuzulassen, und dann eine
 Bereichsprüfung der Zahl zu ergänzen, etwa so:
 
-<span class="Dateiname">Dateiname: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 # use rand::Rng;
@@ -231,7 +231,7 @@ erhaltenen Werte bedenkenlos zu nutzen. Listing 9-13 zeigt eine Möglichkeit,
 einen Typ `Guess` zu definieren, der nur dann eine Instanz von `Guess` erzeugt,
 wenn die Funktion `new` einen Wert zwischen 1 und 100 erhält.
 
-<span class="Dateiname">Dateiname: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust
 pub struct Guess {
@@ -262,21 +262,21 @@ wir hier nicht gezeigt haben. In dieser neuen Moduldatei definieren wir eine
 Struktur namens `Guess` mit einem Feld `value`, das einen `i32` enthält. Hier
 wird die Zahl gespeichert.
 
-Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die
-Instanzen von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie
-einen Parameter `value` vom Typ `i32` entgegen nimmt und eine `Guess`-Instanz
+Dann implementieren wir die zugehörige Funktion `new` für `Guess`, die Instanzen
+von `Guess` erzeugt. Die Funktion `new` ist so definiert, dass sie einen
+Parameter `value` vom Typ `i32` entgegennimmt und eine `Guess`-Instanz
 zurückgibt. Der Code im Funktionsrumpf von `new` testet den Wert in `value`, um
 sicherzustellen, dass er zwischen 1 und 100 liegt. Wenn `value` diesen Test
 nicht besteht, rufen wir `panic!` auf, was den Programmierer des aufrufenden
 Codes darauf aufmerksam macht, dass er einen Fehler hat, den er beheben muss,
-denn ein `Guess` mit einem Wert außerhalb dieses Bereichs zu erzeugen, würde
-den Vertrag verletzen, auf den sich `Guess::new` verlässt. Die Bedingungen,
-unter denen `Guess::new` das Programm abbricht, sollten in der öffentlich
-zugänglichen API-Dokumentation genannt werden; wir werden die
-Dokumentationskonventionen, die auf die Möglichkeit eines `panic!`-Aufrufs
-hinweisen, in der API-Dokumentation behandeln, die du in Kapitel 14 erstellst. 
-Wenn `value` den Test besteht, erstellen wir eine neue `Guess`-Instanz, deren
-Feld `value` den Parameterwert `value` erhält, und geben die Instanz zurück.
+denn ein `Guess` mit einem Wert außerhalb dieses Bereichs zu erzeugen, würde den
+Vertrag verletzen, auf den sich `Guess::new` verlässt. Die Bedingungen, unter
+denen `Guess::new` das Programm abbricht, sollten in der öffentlich zugänglichen
+API-Dokumentation genannt werden; wir werden die Dokumentationskonventionen, die
+auf die Möglichkeit eines `panic!`-Aufrufs hinweisen, in der API-Dokumentation
+behandeln, die du in Kapitel 14 erstellst. Wenn `value` den Test besteht,
+erstellen wir eine neue `Guess`-Instanz, deren Feld `value` den Parameterwert
+`value` erhält, und geben die Instanz zurück.
 
 Als nächstes implementieren wir eine Methode namens `value`, die `self`
 ausleiht, keine anderen Parameter hat und ein `i32` zurückgibt. Diese

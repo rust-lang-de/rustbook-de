@@ -283,7 +283,7 @@ Kanal, in den wir die Nachricht senden, ist unlimitiert.
 
 Beachte bei diesem Beispiel zwei Dinge. Erstens: Die Nachricht wird sofort
 ankommen! Zweitens: Obwohl wir hier ein Future verwenden, gibt es noch keine
-Nebenläufigkeit. Alles im Listing geschieht der Reihe nach, so wie es auch
+Nebenläufigkeit. Alles im Codeblock geschieht der Reihe nach, so wie es auch
 geschehen würde, wenn keine Futures beteiligt wären.
 
 Der erste Teil besteht darin, eine Reihe von Nachrichten zu senden und
@@ -434,7 +434,7 @@ mit `trpl::join` interagiert:
   übergebene Futures erledigt sind.
 - Das Future `tx_fut` ist erledigt, sobald es die Pause nach dem Senden der
   letzten Nachricht in `vals` beendet hat.
-- Das Future `tx_fut` ist erst nach dem Ende der `while let`-Schleife erledigt.
+- Das Future `rx_fut` ist erst nach dem Ende der `while let`-Schleife erledigt.
 - Die `while let`-Schleife endet erst, wenn das Ergebnis von `rx.recv` `None`
   ist.
 - Das Ergebnis von `rx.recv` ist nur dann `None`, wenn das andere Ende des

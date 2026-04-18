@@ -30,7 +30,7 @@ implementieren wir `drop` zunächst mit `println!`-Anweisungen.
 
 Listing 15-14 zeigt eine Struktur (struct) `CustomSmartPointer`, deren einzige
 benutzerdefinierte Funktionalität darin besteht, `CustomSmartPointer mit Daten
-aufräumen` auszugegeben, sobald die Instanz den Gültigkeitsbereich verlässt.
+aufräumen` auszugeben, sobald die Instanz den Gültigkeitsbereich verlässt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

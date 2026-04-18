@@ -90,8 +90,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 15-7: Using the dereference operator on a
-`Box<i32>`</span>
+<span class="caption">Listing 15-7: Verwenden des Dereferenzierungsoperators auf
+ein `Box<i32>`</span>
 
 Der Hauptunterschied zwischen Listing 15-7 und 15-6 besteht darin, dass wir
 hier `y` als Instanz einer `Box<T>` festlegen, das auf einen kopierten Wert von

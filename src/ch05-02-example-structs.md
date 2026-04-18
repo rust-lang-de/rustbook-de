@@ -72,8 +72,7 @@ vorgestellt: Der Einsatz von Tupeln.
 
 ### Refaktorierung mit Tupeln
 
-Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel
-verwendet.
+Listing 5-9 zeigt eine weitere Version unseres Programms, die Tupel verwendet.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -282,7 +281,7 @@ dieser Instanz, was bei der Fehlersuche definitiv hilfreich ist. Bei größeren
 Strukturen ist es hilfreich, eine leichter lesbare Ausgabe zu erhalten.
 In diesen Fällen können wir `{:#?}` anstelle von `{:?}` in der
 `println!`-Meldung verwenden. In diesem Beispiel wird bei Verwendung von
-`{:#?}` folgendes ausgegeben:
+`{:#?}` Folgendes ausgegeben:
 
 ```console
 $ cargo run

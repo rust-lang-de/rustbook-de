@@ -100,7 +100,7 @@ fn main() {
 #     let contents = fs::read_to_string(file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 }
 
 fn parse_config(args: &[String]) -> (&str, &str) {
@@ -169,7 +169,7 @@ fn main() {
 
     // --abschneiden--
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 }
 
 struct Config {
@@ -196,7 +196,7 @@ von `parse_config`, wo wir früher String Slices zurückgegeben haben, die auf
 es aneigenbare (owned) `String`-Werte enthält. Die `args`-Variable in `main` ist
 der Eigentümer der Argumentwerte und lässt die Funktion `parse_config` diese nur
 ausleihen, was bedeutet, dass wir Rusts Regeln für das Borrowing verletzen
-würden, wenn `Config` versucht, das Eigentum an den Werte in `args` zu
+würden, wenn `Config` versucht, das Eigentum an den Werten in `args` zu
 übernehmen.
 
 Wir könnten die `String`-Daten auf verschiedene Weise verwalten, aber der
@@ -271,7 +271,7 @@ fn main() {
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 #
     // --abschneiden--
 }
@@ -306,7 +306,7 @@ kompilieren, um sicherzustellen, dass er funktioniert.
 
 Jetzt werden wir daran arbeiten, unsere Fehlerbehandlung zu korrigieren.
 Erinnere dich, dass der Versuch, auf die Werte im `args`-Vektor bei Index 1 oder
-Index 2 zuzugreifen, das Programm abbrechen, wenn der Vektor weniger als drei
+Index 2 zuzugreifen, das Programm abbrecht, wenn der Vektor weniger als drei
 Elemente enthält. Versuche, das Programm ohne irgendwelche Argumente laufen zu
 lassen; es wird so aussehen:
 
@@ -349,7 +349,7 @@ und zeigt eine bessere Fehlermeldung an.
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -442,7 +442,7 @@ wir auch `main` aktualisieren, was wir im nächsten Listing tun werden.
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -515,7 +515,7 @@ fn main() {
 #     let contents = fs::read_to_string(config.file_path)
 #         .expect("Etwas ging beim Lesen der Datei schief");
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 # }
 #
 # struct Config {
@@ -617,7 +617,7 @@ fn run(config: Config) {
     let contents = fs::read_to_string(config.file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 }
 
 // --abschneiden--
@@ -686,7 +686,7 @@ use std::error::Error;
 fn run(config: Config) -> Result<(), Box<dyn Error>> {
     let contents = fs::read_to_string(config.file_path)?;
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 
     Ok(())
 }
@@ -718,8 +718,8 @@ Rückgabetyp der Funktion `run` in `Result<(), Box<dyn Error>>` geändert. Diese
 Funktion gab zuvor den Einheitstyp `()` zurück und wir behalten diesen als
 Rückgabewert im Fall `Ok` bei.
 
-Für den Fehlertyp haben wir das Trait-Objekten `Box<dyn Error>` verwendet (und
-wir haben `std::error::Error` mit einer `use`-Anweisung am Anfang des
+Für den Fehlertyp haben wir das Trait-Objekt `Box<dyn Error>` verwendet (und wir
+haben `std::error::Error` mit einer `use`-Anweisung am Anfang des
 Gültigkeitsbereichs eingebunden). Wir werden Trait-Objekte in [Kapitel 18][ch18]
 behandeln. Für den Moment solltest du nur wissen, dass `Box<dyn Error>`
 bedeutet, dass die Funktion einen Typ zurückgibt, der das Trait `Error`
@@ -765,7 +765,7 @@ warning: `minigrep` (bin "minigrep") generated 1 warning
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
-Mit text:
+Mit Text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!
@@ -819,7 +819,7 @@ fn main() {
 # fn run(config: Config) -> Result<(), Box<dyn Error>> {
 #     let contents = fs::read_to_string(config.file_path)?;
 #
-#     println!("Mit text:\n{contents}");
+#     println!("Mit Text:\n{contents}");
 #
 #     Ok(())
 # }

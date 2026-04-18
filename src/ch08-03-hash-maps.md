@@ -258,9 +258,9 @@ willkürlichen Reihenfolge erfolgt.
 Die Methode `split_whitespace` gibt einen Iterator über Sub-Slices zurück, die
 durch Leerzeichen getrennte Werte in `text` enthalten. Die Methode `or_insert`
 gibt eine veränderbare Referenz (`&mut V`) auf den Wert für den angegebenen
-Schlüssel zurück. Hier speichern wir diese veränderbaren Referenz in der
+Schlüssel zurück. Hier speichern wir diese veränderbare Referenz in der
 Variablen `count`. Um diesen Wert zuzuweisen, müssen wir also zuerst `count` mit
-dem Stern (`*`) derefenzieren. Die veränderbare Referenz verlässt am Ende der
+dem Stern (`*`) dereferenzieren. Die veränderbare Referenz verlässt am Ende der
 `for`-Schleife dem Gültigkeitsbereich, sodass alle diese Änderungen sicher und
 gemäß der Borrowing-Regeln zulässig sind.
 

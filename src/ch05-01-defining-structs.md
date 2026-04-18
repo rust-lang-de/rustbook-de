@@ -68,8 +68,8 @@ Um auf einen bestimmten Wert in einer Struktur zuzugreifen, verwenden wir die
 Punktnotation. Um beispielsweise auf die E-Mail-Adresse dieses Benutzers
 zuzugreifen, verwenden wir `user1.email`. Wenn die Instanz veränderbar ist,
 können wir einen Wert ändern, indem wir die Punktnotation verwenden und ihn
-einem bestimmten Feld zuweisen. Listing 5-3 gezeigt, wie der Wert im Feld
-`email` einer veränderbaren `User`-Instanz geändert werden kann.
+einem bestimmten Feld zuweisen. Listing 5-3 zeigt, wie der Wert im Feld `email`
+einer veränderbaren `User`-Instanz geändert werden kann.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -268,11 +268,11 @@ Strukturaktualisierungssyntax, um einen neuen Wert für `email` in der
 
 Der Code in Listing 5-7 erzeugt auch eine Instanz `user2`, die einen anderen
 Wert für `email` hat, aber die gleichen Werte der Felder `username`, `active`
-und `sign_in_count` wie `user1`. Das `..user1` muss an letzter Stelle stehen um
+und `sign_in_count` wie `user1`. Das `..user1` muss an letzter Stelle stehen, um
 festzulegen, dass alle verbleibenden Felder ihre Werte von den entsprechenden
-Feldern in `user1` beziehen sollen, aber wir können Werte für so viele Felder
-in beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in
-der Strukturdefinition.
+Feldern in `user1` beziehen sollen, aber wir können Werte für so viele Felder in
+beliebiger Reihenfolge angeben, unabhängig von der Reihenfolge der Felder in der
+Strukturdefinition.
 
 Beachte, dass die Strukturaktualisierungssyntax wie eine Zuweisung mit `=` ist,
 da sie die Daten verschiebt, wie wir im Abschnitt [„Variablen und Daten im

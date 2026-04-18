@@ -16,8 +16,7 @@ Projekt namens _variables_ in deinem _projects_-Verzeichnis an, indem du
 `cargo new variables` aufrufst.
 
 Öffne dann in deinem neuen Verzeichnis _variables_ die Datei _src/main.rs_ und
-ersetze dessen Code durch folgenden Code, der sich sich noch nicht kompilieren
-lässt:
+ersetze dessen Code durch folgenden Code, der sich noch nicht kompilieren lässt:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -203,7 +202,7 @@ Klammern geschaffen wird, verschattet die dritte `let`-Anweisung dann ebenfalls
 `x` und erzeugt eine neue Variable, wobei der vorherige Wert mit `2`
 multipliziert wird, um `x` einen Wert von `12` zu geben. Wenn dieser
 Gültigkeitsbereich zu Ende ist, endet die innere Verschattung und `x` wird
-wieder zu `6`. Wenn wir dieses Programm ausführen, wird es folgendes ausgeben:
+wieder zu `6`. Wenn wir dieses Programm ausführen, wird Folgendes ausgegeben:
 
 ```console
 $ cargo run

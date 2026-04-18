@@ -25,7 +25,7 @@ sich auf eine sehr verbreitete Datenstruktur konzentrieren: Strings.
 
 > ### Stack und Heap
 >
-> Viele Programmiersprachen erfordern nicht, dass du sehr oft über Stack (egnl.
+> Viele Programmiersprachen erfordern nicht, dass du sehr oft über Stack (engl.
 > Stapelspeicher) und Heap (engl. Haldenspeicher) nachdenken musst. Aber in
 > einer Systemprogrammiersprache wie Rust hat die Frage, ob ein Wert auf dem
 > Stack oder im Heap liegt, einen größeren Einfluss darauf, wie sich die
@@ -459,7 +459,7 @@ werden kann." src="img/trpl04-05.svg" class="center" style="width: 50%;" />
 <span class="caption">Abbildung 4-5: Darstellung im Speicher, nachdem der
 ursprüngliche Wert vollständig ersetzt worden ist.</span>
 
-Der ursprünglich String verlässt damit den Gültigkeitsbereich. Rust führt die
+Der ursprüngliche String verlässt damit den Gültigkeitsbereich. Rust führt die
 Funktion `drop` aus und ihr Speicher wird sofort freigegeben. Wenn wir den Wert
 am Ende ausgeben, lautet er „Ahoi Welt!“.
 
@@ -647,8 +647,8 @@ ist ziemlich lästig, dass alles, was wir übergeben, auch wieder zurückgegeben
 werden muss, wenn wir es wieder verwenden wollen, zusätzlich zu den Daten, die
 sich aus dem Funktionsrumpf ergeben, die wir vielleicht auch zurückgeben wollen.
 
-Rust macht es es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben,
-wie in Listing 4-5 gezeigt.
+Rust macht es möglich, mehrere Werte mit Hilfe eines Tupels zurückzugeben, wie
+in Listing 4-5 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

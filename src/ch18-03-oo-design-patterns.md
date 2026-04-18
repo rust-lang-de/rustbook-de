@@ -706,10 +706,10 @@ Argument und geben eine Referenz auf einen Teil dieses `post` zurück, sodass
 die Lebensdauer der zurückgegebenen Referenz mit der Lebensdauer des Arguments
 `post` zusammenhängt.
 
-Nun sind wir fertig &ndash; der Listing 18-11 funktioniert jetzt! Wir haben
-das Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert.
-Die Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und
-ist nicht über den gesamten `Post` verstreut.
+Nun sind wir fertig &ndash; Listing 18-11 funktioniert jetzt! Wir haben das
+Zustandsmuster mit den Regeln des Blog-Beitrags-Workflows implementiert. Die
+Logik, die sich auf die Regeln bezieht, lebt in den Zustandsobjekten und ist
+nicht über den gesamten `Post` verstreut.
 
 > ### Warum keine Aufzählung?
 >

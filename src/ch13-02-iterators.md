@@ -143,7 +143,7 @@ Methode `next` bei der Implementierung des Trait `Iterator` einbauen.
 
 Methoden die `next` aufrufen werden als _konsumierende Adapter_ (consuming
 adapters) bezeichnet, da deren Aufruf den Iterator verbraucht. Ein Beispiel ist
-die Methode `sum`, sie übernimmt das Eigentum am Iterators und durchläuft die
+die Methode `sum`, sie übernimmt das Eigentum am Iterator und durchläuft die
 Elemente durch wiederholtes Aufrufen von `next`, wodurch der Iterator verbraucht
 wird. Jedes Element wird während der Iteration zu einer Summe hinzugefügt, die
 zurückgegeben wird, sobald die Iteration abgeschlossen ist. Listing 13-13
@@ -173,7 +173,7 @@ enthält einen Test, der die Methode `sum` veranschaulicht:
 Summe aller Elemente zu erhalten</span>
 
 Man kann `v1_iter` nach dem Aufruf von `sum` nicht verwenden, da `sum` das
-Eigentum am Iterators übernimmt, auf dem es aufgerufen wird.
+Eigentum am Iterator übernimmt, auf dem es aufgerufen wird.
 
 ### Methoden die andere Iteratoren erzeugen
 
@@ -226,7 +226,7 @@ aufgerufen. Die Warnung erinnert uns daran, dass Iteratoradapter faul sind und
 dass wir den Iterator verwenden müssen, um etwas zu bewirken.
 
 Um das zu beheben, werden wir die Methode `collect` verwenden, die wir mit
-`env::args` im Listing 12-1 benutzt haben. Diese Methode konsumiert den
+`env::args` in Listing 12-1 benutzt haben. Diese Methode konsumiert den
 Iterator und sammelt die Ergebniswerte in einen Kollektionsdatentyp (collection
 data type).
 
@@ -270,7 +270,7 @@ zurück. Wenn der Closure `true` zurückgibt, wird der Wert in die von `filter`
 erzeugte Iteration aufgenommen. Wenn der Closure `false` zurückgibt, wird der
 Wert nicht aufgenommen.
 
-Im Listing 13-16 benutzen wir `filter` mit einem Closure, der die Variable
+In Listing 13-16 benutzen wir `filter` mit einem Closure, der die Variable
 `shoe_size` aus seiner Umgebung erfasst, um über eine Kollektion von
 `Shoe`-Strukturinstanzen zu iterieren. Er wird nur Schuhe (shoes) einer
 bestimmten Größe zurückgeben.
@@ -342,9 +342,9 @@ Elemente enthält, für die der Closure `true` zurückgibt.
 
 Der Closure erfasst den `shoe_size`-Parameter aus seiner Umgebung und vergleicht
 dessen Wert mit der jeweiligen Schuhgröße und behält nur Schuhe der gewählten
-Größe. Zuletzt sammelt der Aufruf der Methode `collect` die zurückgegeben Werte
-des angeschlossenen Adapters in den Vektor, der von der Funktion zurückgegeben
-wird.
+Größe. Zuletzt sammelt der Aufruf der Methode `collect` die zurückgegebenen
+Werte des angeschlossenen Adapters in den Vektor, der von der Funktion
+zurückgegeben wird.
 
 Der Test zeigt, wenn wir `shoes_in_size` aufrufen, bekommen wir nur Schuhe
 der spezifizierten Größe zurück.

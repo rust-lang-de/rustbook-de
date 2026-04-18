@@ -7,7 +7,7 @@ Methoden unterscheiden sich jedoch von Funktionen dadurch, dass sie im Kontext
 einer Struktur (struct) (oder einer Aufzählung (enum) oder eines Trait-Objekts,
 die wir in [Kapitel 6][enums] und [Kapitel 18][trait-objects] behandeln)
 definiert werden und ihr erster Parameter stets `self` ist. `self` repräsentiert
-die Instanz der Struktur, zu der die Methode aufgerufen wird.
+die Instanz der Struktur, auf der die Methode aufgerufen wird.
 
 ### Methoden-Syntax
 

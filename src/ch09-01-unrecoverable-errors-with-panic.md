@@ -14,7 +14,7 @@ du die Quelle des Abbruchs leichter aufspüren kannst.
 >
 > Wenn ein Programmabbruch auftritt, beginnt das Programm standardmäßig mit dem
 > _Abwickeln_, was bedeutet, dass Rust den Stack wieder nach oben geht und die
-> Daten aller Funktion aufräumt. Allerdings ist dieses Zurückgehen und
+> Daten aller Funktionen aufräumt. Allerdings ist dieses Zurückgehen und
 > Aufräumen eine Menge Arbeit. Rust bietet dir als Alternative daher an, das
 > Programm sofort _abzubrechen_, also das Programm ohne Aufräumen zu beenden.
 >

@@ -137,7 +137,7 @@ fn main() {
 <span class="caption">Listing 16-8: Empfangen des Wertes „hallo“ im
 Haupt-Thread und Ausgeben des Wertes</span>
 
-Das Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
+Der Empfänger hat zwei nützliche Methoden: `recv` und `try_recv`. Wir benutzen
 `recv`, kurz für _empfangen_ (receive), was die Ausführung des Haupt-Threads
 blockiert und wartet, bis ein Wert in den Kanal geschickt wird. Sobald ein Wert
 gesendet wurde, wird er von `recv` in einem `Result<T, E>` zurückgegeben. Wenn
@@ -363,7 +363,7 @@ Listing 16-11 gezeigt:
 Produzenten</span>
 
 Bevor wir den ersten Thread erzeugen, rufen wir dieses Mal `clone` auf dem
-Sender auf. Dadurch erhalten wir einen weiteren Sender, das wir an den ersten
+Sender auf. Dadurch erhalten wir einen weiteren Sender, den wir an den ersten
 erzeugten Thread weitergeben können. Wir übergeben den ursprüngliche Sender an
 einen zweiten erzeugten Thread. Dadurch erhalten wir zwei Threads, die jeweils
 unterschiedliche Nachrichten an den Empfänger senden.

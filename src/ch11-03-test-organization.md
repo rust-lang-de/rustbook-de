@@ -220,7 +220,7 @@ Integrationstest-Abschnitte geben.
 
 Wir können immer noch eine bestimmte Integrationstestfunktion ausführen, indem
 wir den Namen der Testfunktion als Argument bei `cargo test` angeben. Um alle
-Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden bei
+Tests in einer bestimmten Integrationstestdatei auszuführen, verwenden wir bei
 `cargo test` das Argument `--test`, gefolgt vom Namen der Datei:
 
 ```console

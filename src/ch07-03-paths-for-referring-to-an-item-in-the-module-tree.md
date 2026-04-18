@@ -297,7 +297,7 @@ Guidelines][api-guidelines].
 > _src/main.rs_ als auch eine Bibliotheks-Crate-Wurzel _src/lib.rs_ enthalten
 > kann, und beide Crates tragen standardmäßig den Paketnamen. Normalerweise haben
 > Pakete mit diesem Muster, die sowohl eine Bibliotheks-Crate als auch eine
-> binäere Crate enthalten, gerade genug Code in der binären Crate, um eine
+> binäre Crate enthalten, gerade genug Code in der binären Crate, um eine
 > ausführbare Datei zu starten, die Code aus der Bibliotheks-Crate aufruft.
 > Dadurch können andere Projekte von den meisten Funktionen des Pakets
 > profitieren, da der Code der Bibliotheks-Crate gemeinsam genutzt werden kann.

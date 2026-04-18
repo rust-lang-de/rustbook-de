@@ -17,14 +17,14 @@ uns einige der wichtigsten Nutzergruppen an.
 ### Entwicklerteams
 
 Rust erweist sich als produktives Werkzeug in der Zusammenarbeit großer
-Entwicklerteams mit unterschiedlichem Kenntnisstand in der
-Systemprogrammierung. Systemnaher Code ist anfällig für eine Vielzahl subtiler
-Fehler, die in den meisten anderen Sprachen nur durch ausgiebige Tests und
-sorgfältige Überprüfung des Codes durch erfahrene Entwickler erkannt werden
-können. In Rust spielt der Compiler eine Art Pförtnerrolle, indem er Code
-mit diesen schwer fassbaren Fehlern verweigert zu kompilieren, darunter auch
-Nebenläufigkeitsfehler. Mit der Arbeit an der Seite des Compilers kann sich
-das Team auf die Programmlogik konzentrieren, anstatt Fehler zu suchen.
+Entwicklerteams mit unterschiedlichem Kenntnisstand in der Systemprogrammierung.
+Systemnaher Code ist anfällig für eine Vielzahl subtiler Fehler, die in den
+meisten anderen Sprachen nur durch ausgiebige Tests und sorgfältige Überprüfung
+des Codes durch erfahrene Entwickler erkannt werden können. In Rust spielt der
+Compiler eine Art Pförtnerrolle, indem er Code mit diesen schwer fassbaren
+Fehlern zu kompilieren verweigert, darunter auch Nebenläufigkeitsfehler. Mit der
+Arbeit an der Seite des Compilers kann sich das Team auf die Programmlogik
+konzentrieren, anstatt Fehler zu suchen.
 
 Rust bringt auch zeitgemäße Entwicklerwerkzeuge in die Welt der
 Systemprogrammierung:

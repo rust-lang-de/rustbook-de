@@ -48,7 +48,7 @@ fn main() {
     let contents = fs::read_to_string(file_path)
         .expect("Etwas ging beim Lesen der Datei schief");
 
-    println!("Mit text:\n{contents}");
+    println!("Mit Text:\n{contents}");
 }
 ```
 
@@ -78,7 +78,7 @@ $ cargo run -- the poem.txt
      Running `target/debug/minigrep the poem.txt`
 Suche nach the
 In Datei poem.txt
-Mit text:
+Mit Text:
 I'm nobody! Who are you?
 Are you nobody, too?
 Then there's a pair of us - don't tell!

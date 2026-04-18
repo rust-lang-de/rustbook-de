@@ -15,7 +15,7 @@ wir hier das gleiche tun!
 > mittels `rust-analyzer` zu ermöglichen. Siehe [Anhang D][devtools] für
 > weitere Details.
 
-### Projektverzeichniss aufsetzen
+### Projektverzeichnis aufsetzen
 
 Du beginnst damit, ein Verzeichnis zum Speichern deines Rust-Codes zu
 erstellen. Es ist Rust egal, wo dein Code lebt, aber für die Übungen und
@@ -66,7 +66,7 @@ fn main() {
 ausgibt</span>
 
 Speichere die Datei und gehe zurück zu deinem Terminalfenster im Verzeichnis
-_~/projects/hello_world_. Gib unter Linux oder MacOS die folgenden Befehle ein,
+_~/projects/hello_world_. Gib unter Linux oder macOS die folgenden Befehle ein,
 um die Datei zu kompilieren und auszuführen:
 
 ```console
@@ -103,14 +103,13 @@ fn main() {
 }
 ```
 
-Diese Zeilen definieren eine Funktion namens `main` in Rust. Die Funktion
-`main` ist eine Besonderheit: Sie ist immer der erste Code, der in jedem
-ausführbaren Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste
-Zeile eine Funktion mit dem namen `main`, die keine Parameter hat und nichts
-zurückgibt. Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()`
-stehen.
+Diese Zeilen definieren eine Funktion namens `main` in Rust. Die Funktion `main`
+ist eine Besonderheit: Sie ist immer der erste Code, der in jedem ausführbaren
+Rust-Programm ausgeführt wird. In diesem Fall deklariert die erste Zeile eine
+Funktion mit dem Namen `main`, die keine Parameter hat und nichts zurückgibt.
+Wenn es Parameter gäbe, würden sie innerhalb der Klammern `()` stehen.
 
-Der Funktionsrumpf in geschweifte Klammern `{}` eingehüllt. Rust erfordert
+Der Funktionsrumpf ist in geschweifte Klammern `{}` eingehüllt. Rust erfordert
 diese um alle Funktionsrümpfe. Es ist guter Stil, die öffnende geschweifte
 Klammer in dieselbe Zeile wie die Funktionsdeklaration zu platzieren und
 dazwischen ein Leerzeichen einzufügen.
@@ -163,7 +162,7 @@ Wenn du einen C- oder C++-Hintergrund hast, wirst du feststellen, dass dies
 ähnlich wie `gcc` oder `clang` ist. Nach erfolgreicher Kompilierung gibt Rust
 eine ausführbare Binärdatei aus.
 
-Unter Linux, MacOS und PowerShell unter Windows kannst du die ausführbare Datei
+Unter Linux, macOS und PowerShell unter Windows kannst du die ausführbare Datei
 sehen, indem du den Befehl `ls` in deinem Terminal eingibst:
 
 ```console
@@ -171,7 +170,7 @@ $ ls
 main  main.rs
 ```
 
-Unter Linux und MacOS siehst du zwei Dateien. Mit PowerShell unter Windows
+Unter Linux und macOS siehst du zwei Dateien. Mit PowerShell unter Windows
 siehst du die gleichen drei Dateien, die du mit CMD sehen würdest. Bei CMD
 unter Windows würdest du folgendes eingeben:
 

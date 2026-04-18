@@ -215,7 +215,7 @@ veränderbare Borrow ist in `r1` und muss beibehalten werden, bis sie in
 Referenz und ihrer Verwendung haben wir versucht, eine andere veränderbare
 Referenz in `r2` zu erstellen, der die gleichen Daten wie `r1` ausleiht.
 
-Die Beschränkung, die mehrere veränderbare Referenz auf dieselben Daten zur
+Die Beschränkung, die mehrere veränderbare Referenzen auf dieselben Daten zur
 gleichen Zeit verhindert, erlaubt Veränderung, aber in einer sehr kontrollierten
 Weise. Das ist etwas, womit Rust-Neulinge zu kämpfen haben, denn in den meisten
 Sprachen kann man verändern wann immer man will. Diese Beschränkung hat den

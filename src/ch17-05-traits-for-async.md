@@ -351,7 +351,7 @@ ein ganzes Netz von Referenzen geben kann, die aktualisiert werden müssen. Wenn
 wir stattdessen sicherstellen können, dass die betreffende Datenstruktur _nicht
 im Speicher verschoben wird_, müssen wir keine Referenzen aktualisieren. Das ist
 genau das, was der Borrow Checker von Rust verlangt: In sicherem Code kann man
-kein ein Element, auf das aktive Referenzen bestehen, verschieben.
+kein Element, auf das aktive Referenzen bestehen, verschieben.
 
 `Pin` baut darauf auf, um uns genau die Garantie zu geben, die wir brauchen.
 Wenn wir einen Wert _anheften_, indem wir einen Zeiger auf diesen Wert in `Pin`
@@ -542,7 +542,7 @@ Nachdem du nun ein tieferes Verständnis für die Traits `Future`, `Pin` und
 diesem Kapitel gelernt hast, sind Ströme ähnlich wie asynchrone Iteratoren. Im
 Gegensatz zu `Iterator` und `Future` hat `Stream` derzeit keine Definition in
 der Standardbibliothek, aber es _gibt_ eine sehr verbreitete Definition in der
-Crate `Futures`, die im gesamten Ökosystem verwendet wird.
+Crate `futures`, die im gesamten Ökosystem verwendet wird.
 
 Schauen wir uns die Definitionen der Traits `Iterator` und `Future` an, bevor
 wir uns ansehen, wie ein Trait `Stream` aussehen könnte. Von `Iterator` haben

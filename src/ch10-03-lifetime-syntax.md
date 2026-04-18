@@ -257,15 +257,15 @@ indem sie einen generischen Lebensdauerparameter angeben.
 Lebensdauer-Annotationen haben eine etwas ungewöhnliche Syntax: Die Namen der
 Lebensdauer-Parameter müssen mit einem Apostroph (`'`) beginnen und sind
 normalerweise kleingeschrieben und sehr kurz, wie generische Typen. Die meisten
-Menschen verwenden den Namen `'a` für die erste Lebensdauer-Annotationen. Wir
+Menschen verwenden den Namen `'a` für die erste Lebensdauer-Annotation. Wir
 platzieren Lebensdauer-Parameter-Annotationen hinter dem `&` einer Referenz,
 wobei wir ein Leerzeichen verwenden, um die Annotation vom Typ der Referenz zu
 trennen.
 
 Hier sind einige Beispiele: Eine Referenz auf einen `i32` ohne
 Lebensdauer-Parameter, eine Referenz auf einen `i32`, die einen
-Lebensdauer-Parameter namens `'a` hat, und eine veränderbarer Referenz auf
-einen `i32`, die ebenfalls die Lebensdauer `'a` hat:
+Lebensdauer-Parameter namens `'a` hat, und eine veränderbare Referenz auf einen
+`i32`, die ebenfalls die Lebensdauer `'a` hat:
 
 ```rust,ignore
 &i32        // eine Referenz
@@ -583,8 +583,8 @@ fn main() {
 }
 ```
 
-<span class="caption">Listing 10-24: Eine Struktur, die eine Referenz
-enthält, sodass ihre Definition eine Lebensdauer-Annotationen benötigt</span>
+<span class="caption">Listing 10-24: Eine Struktur, die eine Referenz enthält,
+sodass ihre Definition eine Lebensdauer-Annotation benötigt</span>
 
 Diese Struktur hat das einzige Feld `part`, das einen String Slice enthält, der
 eine Referenz ist. Wie bei generischen Datentypen deklarieren wir den Namen des

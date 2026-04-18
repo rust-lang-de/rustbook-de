@@ -20,7 +20,7 @@ Beispiel ist das Attribut `derive`, das wir in Kapitel 5 bei Strukturen
 verwendet haben. Um eine Funktion in eine Testfunktion zu verwandeln, füge
 `#[test]` oberhalb der Zeile mit `fn` ein. Wenn du deine Tests mit dem Befehl
 `cargo test` ausführst, erstellt Rust eine Testausführungs-Binärdatei (test
-runner binary), die die annotierte Funktionen ausführt und darüber berichtet,
+runner binary), die die annotierten Funktionen ausführt und darüber berichtet,
 ob jede Testfunktion erfolgreich war oder nicht.
                                            
 Wann immer wir ein neues Bibliotheksprojekt mit Cargo durchführen, wird für uns
@@ -552,16 +552,15 @@ Unsere Tests haben den Fehler entdeckt! Da `larger.width` gleich `8` ist und
 
 Eine übliche Methode zum Verifizieren von Funktionalität besteht darin, das
 Ergebnis des zu testenden Codes auf Gleichheit mit dem Wert zu testen, den du
-vom Code erwartest, um sicherzustellen. Du könntest dies mit dem Makro
-`assert!` tun und ihm einen Ausdruck mit dem Operator `==` übergeben. Dies ist
-jedoch ein so häufiger Testfall, dass die Standardbibliothek zwei Makros zur
-Verfügung stellt, um diesen Test bequemer durchzuführen: `assert_eq!` und
-`assert_ne!`. Diese Makros vergleichen zwei Argumente auf Gleichheit bzw.
-Ungleichheit. Sie geben auch die beiden Werte aus, wenn die Zusicherung
-fehlschlägt, was es einfacher macht zu erkennen, _warum_ der Test
-fehlgeschlagen ist; umgekehrt zeigt das Makro `assert!` nur an, dass der
-Ausdruck `==` den Wert `false` ergeben hat, ohne die Werte auszugeben, die zum
-falschen Testergebnis geführt haben.
+vom Code erwartest. Du könntest dies mit dem Makro `assert!` tun und ihm einen
+Ausdruck mit dem Operator `==` übergeben. Dies ist jedoch ein so häufiger
+Testfall, dass die Standardbibliothek zwei Makros zur Verfügung stellt, um
+diesen Test bequemer durchzuführen: `assert_eq!` und `assert_ne!`. Diese Makros
+vergleichen zwei Argumente auf Gleichheit bzw. Ungleichheit. Sie geben auch die
+beiden Werte aus, wenn die Zusicherung fehlschlägt, was es einfacher macht zu
+erkennen, _warum_ der Test fehlgeschlagen ist; umgekehrt zeigt das Makro
+`assert!` nur an, dass der Ausdruck `==` den Wert `false` ergeben hat, ohne die
+Werte auszugeben, die zum falschen Testergebnis geführt haben.
 
 In Listing 11-7 schreiben wir eine Funktion namens `add_two`, die zu ihrem
 Parameter `2` addiert, und dann testen wir diese Funktion mit dem Makro
@@ -709,11 +708,11 @@ ableitbare Traits.
 ### Benutzerdefinierte Fehlermeldungen angeben
 
 Du kannst den Makros `assert!`, `assert_eq!` und `assert_ne!` optional auch eine
-benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldungen ausgegeben
+benutzerdefinierte Nachricht mitgeben, die mit der Fehlermeldung ausgegeben
 wird. Alle Argumente, die nach den erforderlichen Argumenten angegeben werden,
 werden an das Makro `format!` übergeben (siehe [„Aneinanderhängen mit `+` und
 `format!`“][concatenation-plus-format] in Kapitel 8), sodass du einen
-Formatierungs-String übergeben kannst, die Platzhalter `{}` und Werte enthält,
+Formatierungs-String übergeben kannst, der Platzhalter `{}` und Werte enthält,
 die in diese Platzhalter gehören. Benutzerdefinierte Nachrichten sind nützlich,
 um zu dokumentieren, was eine Zusicherung bedeutet; wenn ein Test fehlschlägt,
 hast du eine bessere Vorstellung davon, wo das Problem im Code liegt.
@@ -799,7 +798,7 @@ error: test failed, to rerun pass `--lib`
 Dieses Ergebnis zeigt nur an, dass die Zusicherung fehlgeschlagen ist und in
 welcher Zeile die Zusicherung steht. Eine nützlichere Fehlermeldung würde den
 Wert der Funktion `greeting` ausgeben. Fügen wir eine benutzerdefinierte
-Fehlermeldung hinzu, die aus einen Formatierungs-String mit einem Platzhalter
+Fehlermeldung hinzu, die aus einem Formatierungs-String mit einem Platzhalter
 besteht, der mit dem tatsächlichen Wert aus der Funktion `greeting` gefüllt ist:
 
 ```rust
@@ -862,7 +861,7 @@ den Typ `Guess`, den wir in Kapitel 9 in Listing 9-13 erstellt haben. Anderer
 Code, der `Guess` verwendet, hängt von der Garantie ab, dass `Guess`-Instanzen
 nur Werte zwischen 1 und 100 enthalten. Wir können einen Test schreiben, der
 sicherstellt, dass der Versuch, eine `Guess`-Instanz mit einem Wert außerhalb
-dieses Bereichs zu erzeugen, zum Programmabbrucht führt.
+dieses Bereichs zu erzeugen, zum Programmabbruch führt.
 
 Wir tun dies, indem wir das Attribut `should_panic` zu unserer Testfunktion
 hinzufügen. Der Test gilt als bestanden, wenn der Code innerhalb der Funktion
@@ -988,14 +987,14 @@ ist. Der Fehler, den wir erhielten, bedeutet, dass der Code in der Testfunktion
 keinen Programmabbruch verursacht hat.
 
 Tests, die `should_panic` verwenden, können ungenau sein. Ein Test mit
-`should_panic` würde auch dann bestanden werden, wenn der Test aus einem
-anderen Grund zum Programmabbrucht führt als dem, den wir erwartet haben. Um
-Tests mit `should_panic` präziser zu machen, können wir beim
-`should_panic`-Attribut einen optionalen Parameter `expected` ergänzen. Das
-Testsystem stellt sicher, dass die Fehlermeldung den angegebenen Text enthält.
-Betrachte zum Beispiel den modifizierten Code für `Guess` in Listing 11-9, wo
-die Funktion `new` mit unterschiedlichen Meldungen das Programm abbricht, je
-nachdem, ob der Wert zu klein oder zu groß ist.
+`should_panic` würde auch dann bestanden werden, wenn der Test aus einem anderen
+Grund zum Programmabbruch führt als dem, den wir erwartet haben. Um Tests mit
+`should_panic` präziser zu machen, können wir beim `should_panic`-Attribut einen
+optionalen Parameter `expected` ergänzen. Das Testsystem stellt sicher, dass die
+Fehlermeldung den angegebenen Text enthält. Betrachte zum Beispiel den
+modifizierten Code für `Guess` in Listing 11-9, wo die Funktion `new` mit
+unterschiedlichen Meldungen das Programm abbricht, je nachdem, ob der Wert zu
+klein oder zu groß ist.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

@@ -1,19 +1,19 @@
 ## Ströme: Sequenz von Futures
 
-Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals
-weiter in Abschnitt [„Datenaustausch zwischen zwei Aufgaben mit
+Erinnere dich daran, wie wir den Empfänger unseres asynchronen Kanals weiter in
+Abschnitt [„Datenaustausch zwischen zwei Aufgaben mit
 Nachrichtenübermittlung“][17-02-messages] oben in diesem Kapitel verwendet
 haben. Die asynchrone Methode `recv` erzeugt eine Sequenz von Elementen. Dies
-ist ein Beispiel eines viel allgemeineren Musters, bekannt als _Strom_
-(stream). Viele Konzepte lassen sich ganz natürlich als Ströme darstellen:
-Elemente, die in einer Warteschlange verfügbar werden, Datenblöcke, die
-schrittweise aus dem Dateisystem eingelesen werden, wenn der gesamte Datensatz
-zu große für den Arbeitsspeicher des Computers ist, oder Daten, die nach und
-nach über das Netzwerk eintreffen. Da Ströme Futures sind, können wir sie mit
-jeder anderen Art von Future verwenden und auf interessante Weise kombinieren.
-Beispielsweise können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu
-vermeiden, Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse
-der Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.
+ist ein Beispiel eines viel allgemeineren Musters, bekannt als _Strom_ (stream).
+Viele Konzepte lassen sich ganz natürlich als Ströme darstellen: Elemente, die
+in einer Warteschlange verfügbar werden, Datenblöcke, die schrittweise aus dem
+Dateisystem eingelesen werden, wenn der gesamte Datensatz zu groß für den
+Arbeitsspeicher des Computers ist, oder Daten, die nach und nach über das
+Netzwerk eintreffen. Da Ströme Futures sind, können wir sie mit jeder anderen
+Art von Future verwenden und auf interessante Weise kombinieren. Beispielsweise
+können wir Ereignisse bündeln, um zu viele Netzwerkaufrufe zu vermeiden,
+Zeitlimits für lang andauernde Vorgänge festlegen oder Ereignisse der
+Benutzeroberfläche drosseln, um unnötige Arbeit zu vermeiden.
 
 Wir haben eine Sequenz von Elementen in Kapitel 13 gesehen, als das Trait
 `Iterator` im Abschnitt [„Das Trait `Iterator` und die Methode

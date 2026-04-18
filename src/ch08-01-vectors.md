@@ -103,7 +103,7 @@ werden. Mit `&` und `[]` erhalten wir eine Referenz auf das Element mit dem
 Indexwert. Wenn wir die Methode `get` mit dem Index als Argument verwenden,
 erhalten wir eine `Option<&T>`, die wir mit `match` verwenden können.
 
-Rust bietet diese beide Möglichkeiten, um auf ein Element zu referenzieren. Du
+Rust bietet diese beiden Möglichkeiten, um auf ein Element zu referenzieren. Du
 kannst nun ausprobieren, wie sich das Programm verhält, wenn du einen Indexwert
 außerhalb des Bereichs der vorhandenen Elemente zu verwendest. Als Beispiel
 wollen wir sehen, was passiert, wenn wir bei einem Vektor mit fünf Elementen

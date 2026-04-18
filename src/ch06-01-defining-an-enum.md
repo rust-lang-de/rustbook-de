@@ -335,7 +335,7 @@ vorhanden ist. In Sprachen mit null können sich Variablen immer in einem von
 zwei Zuständen befinden: null oder nicht null.
 
 In seinem Vortrag „Nullreferenzen: Der milliardenschwere Fehler“ von 2009 hat
-Tony Hoare, der Erfinder von null, folgendes gesagt:
+Tony Hoare, der Erfinder von null, Folgendes gesagt:
 
 > Ich nenne es meinen milliardenschweren Fehler. Zu dieser Zeit entwarf ich das
 > erste umfangreiche Typsystem für Referenzen in einer objektorientierten

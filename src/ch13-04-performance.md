@@ -4,7 +4,7 @@ Um festzustellen, ob man besser Schleifen oder Iteratoren verwendet, solltest
 du wissen, welche Implementierung schneller ist: Die Version der Funktion
 `search` mit einer expliziten `for`-Schleife oder die Version mit Iteratoren.
 
-Wir haben einen Benchmark durchführt, der den gesamten Inhalt von _The
+Wir haben einen Benchmark durchgeführt, der den gesamten Inhalt von _The
 Adventures of Sherlock Holmes_ von Sir Arthur Conan Doyle in einen `String` lädt
 und nach dem Wort „the“ im Inhalt sucht. Hier sind die Ergebnisse des Benchmarks
 für die Version von `search` mit `for`-Schleife und der Version die Iteratoren
@@ -38,7 +38,7 @@ ETAPS-Keynote-Präsentation „Foundations of C++” aus dem Jahr 2012 gegeben h
 > hättest du von Hand nicht besser programmieren können.
 
 In vielen Fällen wird Rust-Code, der Iteratoren verwendet, zu demselben
-Assembler-Code kompiliert, die du von Hand schreiben würdest. Optimierungen wie
+Assembler-Code kompiliert, den du von Hand schreiben würdest. Optimierungen wie
 Schleifen-Abrollen und Entfernen von Bereichsprüfungen beim Array-Zugriff machen
 den resultierenden Code äußerst effizient. Jetzt, da du das weißt, kannst du
 Iteratoren und Closures ohne Bedenken verwenden! Sie lassen den Code abstrakter

@@ -5,7 +5,7 @@ Mit _Slices_ kannst du auf eine zusammenhängende Folge von Elementen in einer
 daher kein Eigentum.
 
 Hier ist ein kleines Programmierproblem: Schreibe eine Funktion, die einen
-String mit durch Leerzeichen getrennte Wörter entgegennimmt und das erste Wort
+String mit durch Leerzeichen getrennten Wörtern entgegennimmt und das erste Wort
 zurückgibt, das sie in diesem String findet. Wenn die Funktion kein Leerzeichen
 im String findet, muss der gesamte String ein Wort sein, also sollte der gesamte
 String zurückgegeben werden.
@@ -223,9 +223,9 @@ zeigt." src="img/trpl04-07.svg" class="center" style="width: 50%;" />
 <span class="caption">Abbildung 4-7: Ein String Slice, der auf einen Teil eines
 `String` referenziert</span>
 
-Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst,
-kannst du den Wert vor den zwei Punkte weglassen. Mit anderen Worten sind diese
-gleich:
+Wenn du mit der Bereichssyntax `..` in Rust beim Index 0 beginnen willst, kannst
+du den Wert vor den zwei Punkten weglassen. Mit anderen Worten sind diese
+Audrücke gleich:
 
 ```rust
 let s = String::from("Hallo");

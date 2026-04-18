@@ -364,10 +364,10 @@ use std::io;
 ```
 
 Stattdessen können wir verschachtelte Pfade verwenden, um die gleichen Elemente
-in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir
-den gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und
-dann geschweiften Klammern um Liste der Pfadteile, die sich unterscheiden, wie
-in Listing 7-18 gezeigt.
+in einer Zeile in den Gültigkeitsbereich zu bringen. Wir tun dies, indem wir den
+gemeinsamen Teil des Pfades angeben, gefolgt von zwei Doppelpunkten und dann
+geschweiften Klammern um die Liste der Pfadteile, die sich unterscheiden, wie in
+Listing 7-18 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

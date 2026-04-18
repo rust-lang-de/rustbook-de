@@ -299,8 +299,8 @@ langsamen Future.
 # }
 ```
 
-<span class="caption">Listing 17-18: Verwendeng unseres imaginären `timeout`,
-um eine langsame Operation mit einem Zeitlimit durchzuführen</span>
+<span class="caption">Listing 17-18: Verwenden unseres imaginären `timeout`, um
+eine langsame Operation mit einem Zeitlimit durchzuführen</span>
 
 Lass es uns implementieren! Denken wir zunächst über die API für `timeout`
 nach:
@@ -407,10 +407,10 @@ sehr kurze Dauer hat. Wenn `future_to_try` zuerst fertig ist, gibt `select`
 `Left` mit der Ausgabe von `future_to_try` zurück. Wenn `timer` zuerst fertig
 ist, gibt `select` `Right` mit der Ausgabe des Timers `()` zurück.
 
-Wenn `Future_to_try` erfolgreich war und wir `Left(output)` erhalten, geben wir
+Wenn `future_to_try` erfolgreich war und wir `Left(output)` erhalten, geben wir
 `Ok(output)` zurück. Wenn stattdessen der Sleep-Timer abgelaufen ist und wir
-`Right(())` erhalten, ignorieren wir der Wert `()` mit `_` und geben
-stattdessen `Err(max_time)` zurück.
+`Right(())` erhalten, ignorieren wir der Wert `()` mit `_` und geben stattdessen
+`Err(max_time)` zurück.
 
 Damit haben wir ein funktionierendes `timeout`, das aus zwei anderen
 asynchronen Helfern besteht. Wenn wir unseren Code ausführen, wird er als

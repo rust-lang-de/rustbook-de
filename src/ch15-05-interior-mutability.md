@@ -128,7 +128,7 @@ zur inneren Veränderbarkeit zu erhalten, allerdings umgeht `RefCell<T>` die
 Borrowing-Regeln nicht vollständig: Der Borrow Checker im Compiler ermöglicht
 diese innere Veränderbarkeit, und die Borrowing-Regeln werden stattdessen zur
 Laufzeit überprüft. Wenn man gegen die Regeln verstößt, führt das zu `panic!`
-anstelle eines Compilerfehler.
+anstelle eines Compilerfehlers.
 
 Lass uns ein praktisches Beispiel durcharbeiten, in dem wir `RefCell<T>`
 verwenden, um einen unveränderbaren Wert zu ändern und um herauszufinden, warum
@@ -228,7 +228,7 @@ verschiedene Zahlen für `value` übergeben.
 
 Wir benötigen ein Mock-Objekt, das anstelle einer E-Mail oder einer
 Textnachricht beim Aufrufen von `send` nur die Nachrichten verfolgt, die
-gesendet werden sollen. Wir können eine neue Instanz des Mock-Objekts estellen,
+gesendet werden sollen. Wir können eine neue Instanz des Mock-Objekts erstellen,
 einen `LimitTracker` erstellen, der das Mock-Objekt verwendet, die Methode
 `set_value` für `LimitTracker` aufrufen und dann überprüfen, ob das Mock-Objekt
 die erwarteten Nachrichten enthält. Listing 15-21 zeigt den Versuch, ein
@@ -367,7 +367,7 @@ einen Weg finden, damit unser Testcode mit unserem bestehenden Design korrekt
 funktioniert.
 
 Dies ist eine Situation, in der innere Veränderbarkeit helfen kann! Wir
-speichern die `send_messages` in einer `RefCell<T>` und dann kann die Methode
+speichern die `sent_messages` in einer `RefCell<T>` und dann kann die Methode
 `send` den Wert `sent_messages` ändern, um Nachrichten zu speichern, die wir
 gesehen haben. Listing 15-22 zeigt, wie das aussieht.
 
@@ -455,8 +455,8 @@ Wert zu verändern, während der äußere Wert als unveränderbar betrachtet
 wird</span>
 
 Das Feld `sent_messages` ist jetzt vom Typ `RefCell<Vec<String>>` anstelle von
-`Vec<String>`. In der Funktion `new` erstellen wir eine neue 
-`RefCell<Vec<Sting>>`-Instanz um den leeren Vektor.
+`Vec<String>`. In der Funktion `new` erstellen wir eine neue
+`RefCell<Vec<String>>`-Instanz um den leeren Vektor.
 
 Für die Implementierung der Methode `send` ist der erste Parameter immer noch
 eine unveränderbare Borrow von `self`, die der Trait-Definition entspricht. Wir

@@ -41,7 +41,7 @@ gelernt hast:
   10][chap10])
 - Schreiben von Tests ([Kapitel 11][chap11])
 
-Wir werden auch kurz Closures, Iteratoren und Trait-Objekten vorstellen, die in
+Wir werden auch kurz Closures, Iteratoren und Trait-Objekte vorstellen, die in
 den [Kapitel 13][chap13] und [Kapitel 18][chap18] ausführlich behandelt werden.
 
 [chap7]: ch07-00-managing-growing-projects-with-packages-crates-and-modules.html

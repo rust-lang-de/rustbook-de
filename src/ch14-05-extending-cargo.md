@@ -11,7 +11,7 @@ diese dann wie die integrierten Werkzeuge von Cargo auszuführen, ist ein
 
 ## Zusammenfassung
 
-Das veröffentlichen von Programmcode mit Cargo und [crates.io][crates] ist Teil
+Das Veröffentlichen von Programmcode mit Cargo und [crates.io][crates] ist Teil
 dessen, was das Rust-Ökosystem für viele verschiedene Aufgaben nützlich macht.
 Die Standardbibliothek von Rust ist klein und stabil, aber Crates können einfach
 geteilt, verwendet und auf einer von der Sprache unterschiedlichen Zeitlinie

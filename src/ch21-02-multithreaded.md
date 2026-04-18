@@ -1024,8 +1024,8 @@ besprochen wurden: Um das Eigentum über mehrere Threads zu teilen und den
 Threads zu erlauben, den Wert zu mutieren, müssen wir `Arc<Mutex<T>>` verwenden.
 Der Typ `Arc` ermöglicht es mehreren `Worker`-Instanzen, den Empfänger zu
 besitzen, und `Mutex` stellt sicher, dass immer nur ein `Worker` zur gleichen
-Zeit einen Auftrag vom Empfänger erhält. Der Listing 21-18 zeigt die Änderungen,
-die wir vornehmen müssen.
+Zeit einen Auftrag vom Empfänger erhält. Listing 21-18 zeigt die Änderungen, die
+wir vornehmen müssen.
 
 <span class="filename">Dateiname: src/lib.rs</span>
 

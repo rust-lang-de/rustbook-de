@@ -100,10 +100,10 @@ zu wechseln.
 
 ### Warten auf das Ende aller Threads
 
-Der Code in Listing 16-1 beendet nicht nur den erzeugten Thread meist
-vorzeitig, weil der Haupt-Threads endet, sondern weil es keine Garantie für die
-Reihenfolge gibt, in der Threads laufen. Wir können auch nicht garantieren, dass
-der erzeugte Thread überhaupt zum Laufen kommt!
+Der Code in Listing 16-1 beendet nicht nur den erzeugten Thread meist vorzeitig,
+weil der Haupt-Thread endet, sondern weil es keine Garantie für die Reihenfolge
+gibt, in der Threads laufen. Wir können auch nicht garantieren, dass der
+erzeugte Thread überhaupt zum Laufen kommt!
 
 Wir können das Problem, dass der erzeugte Thread nicht läuft oder vorzeitig
 beendet wird, beheben, indem wir den Rückgabewert von `thread::spawn` in einer
@@ -359,10 +359,10 @@ fn main() {
 ```
 
 <span class="caption">Listing 16-5: Durch Verwenden des Schlüsselwortes `move`
-zwigen wir den Closure, das Eigentum an den von ihm verwendeten Werten zu
+zwingen wir den Closure, das Eigentum an den von ihm verwendeten Werten zu
 übernehmen</span>
 
-Wir könnten versuchen, den Code in Listing 16-4 auf diesselbe Weise zu
+Wir könnten versuchen, den Code in Listing 16-4 auf dieselbe Weise zu
 reparieren, wo der Haupt-Thread `drop` aufruft, während wir einen `move`-Closure
 verwenden. Diese Lösung wird jedoch nicht funktionieren, weil das, was Listing
 16-4 versucht, aus einem anderen Grund nicht erlaubt ist. Wenn wir dem Closure
@@ -402,10 +402,10 @@ Die Eigentumsregeln von Rust haben uns wieder einmal gerettet! Wir haben einen
 Fehler im Code in Listing 16-3 erhalten, weil Rust konservativ war und nur `v`
 für den Thread auslieh, was bedeutete, dass der Haupt-Thread theoretisch die
 Referenz des erzeugte Threads ungültig machen konnte. Indem wir Rust anweisen,
-das Eigentum an `v` in den erzeugte Thread zu verschieben, garantieren wir Rust,
-dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing 16-4 auf
-die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir versuchen,
-`v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
+das Eigentum an `v` in den erzeugten Thread zu verschieben, garantieren wir
+Rust, dass der Haupt-Thread `v` nicht mehr benutzen wird. Wenn wir Listing 16-4
+auf die gleiche Weise ändern, verletzen wir die Eigentumsregeln, wenn wir
+versuchen, `v` im Haupt-Thread zu benutzen. Das Schlüsselwort `move` setzt Rusts
 konservativen Borrowing-Standard außer Kraft; es lässt uns nicht gegen die
 Eigentumsregeln verstoßen.
 

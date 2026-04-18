@@ -14,7 +14,7 @@ sowie dasselbe Ausgabeverzeichnis (output directory) verwenden. Lass uns
 mithilfe eines Arbeitsbereiches ein Projekt erstellen. Wir verwenden einfachen
 Programmcode, damit wir uns auf die Struktur des Arbeitsbereiches konzentrieren
 können. Es gibt verschiedene Möglichkeiten, einen Arbeitsbereich zu
-strukturieren. Wir werden nur einen einen üblichen Weg zeigen. Wir haben einen
+strukturieren. Wir werden nur einen üblichen Weg zeigen. Wir haben einen
 Arbeitsbereich mit einer Binärdatei und zwei Bibliotheken. Die Binärdatei stellt
 die Hauptfunktion bereit und hängt von den beiden Bibliotheken ab. Eine
 Bibliothek stellt die Funktion `add_one` und eine andere Bibliothek die Funktion
@@ -27,12 +27,12 @@ $ cd add
 ```
 
 Als Nächstes erstellen wir im Verzeichnis _add_ die Datei _Cargo.toml_, mit der
-der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keine
+der gesamte Arbeitsbereich konfiguriert wird. Diese Datei enthält keinen
 Abschnitt `[package]`. Stattdessen beginnt sie mit einem Abschnitt
 `[workspace]`, in dem wir Mitglieder zum Arbeitsbereich hinzufügen können. Wir
 stellen außerdem sicher, dass wir die neueste und beste Version des
-Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir
-den Wert von `resolver` auf `"3"` setzen:
+Cargo-Auflösungsalgorithmus in unserem Arbeitsbereich verwenden, indem wir den
+Wert von `resolver` auf `"3"` setzen:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 

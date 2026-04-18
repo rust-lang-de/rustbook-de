@@ -1,19 +1,19 @@
 ## Das Kontrollflusskonstrukt `match`
 
 Rust verfügt über ein extrem leistungsfähiges Kontrollflusskonstrukt namens
-`match`, der es dir ermöglicht, einen Wert mit einer Reihe von Mustern
+`match`, das es dir ermöglicht, einen Wert mit einer Reihe von Mustern
 abzugleichen und dann Code zum jeweils passenden Muster auszuführen. Muster
 können sich aus Literalen, Variablennamen, Platzhaltern und vielen anderen
 Dingen zusammensetzen. [Kapitel 19][ch19-00-patterns] befasst sich mit all den
-verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von
-`match` kommt von der Ausdruckskraft der Muster und der Tatsache, dass der
-Compiler sicherstellt, dass alle möglichen Fälle behandelt werden.
+verschiedenen Musterarten und wie sie funktionieren. Die Mächtigkeit von `match`
+kommt von der Ausdruckskraft der Muster und der Tatsache, dass der Compiler
+sicherstellt, dass alle möglichen Fälle behandelt werden.
 
 Stelle dir einen `match`-Ausdruck wie eine Münzsortiermaschine vor:  Die Münzen
 rutschen eine Bahn mit unterschiedlich großen Löchern entlang, und jede Münze
 fällt durch das erste Loch, in das sie hineinpasst. Auf die gleiche Weise
 durchlaufen die Werte die Muster in einem `match`-Ausdruck und beim ersten
-„passenden“ Muster fällt der Wert in den zugehörigen Listing, der ausgeführt
+„passenden“ Muster fällt der Wert in den zugehörigen Codeblock, der ausgeführt
 werden soll.
 
 Apropos Münzen, nehmen wir sie als Beispiel für die Verwendung von `match`! Wir
@@ -53,7 +53,7 @@ hier kann ein beliebiger Typ zurückgegeben werden. Der Typ von `coin` ist in
 diesem Beispiel die Aufzählung `Coin`, die wir in der ersten Zeile definiert
 haben.
 
-Als nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
+Als Nächstes kommen die `match`-Zweige. Ein Zweig hat zwei Teile: Ein Muster
 und etwas Code. Der erste Zweig hat als Muster den Wert `Coin::Penny`, dann den
 Operator `=>`, der das Muster und den auszuführenden Code trennt. Der Code ist
 in diesem Fall nur der Wert `1`. Jeder Zweig wird durch ein Komma vom nächsten
@@ -367,8 +367,8 @@ fn move_player(num_spaces: u8) {}
 ```
 
 Bei den ersten beiden Zweigen sind die Muster die literalen Werte `3` und `7`.
-Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster
-die Variable die wir als `other` bezeichnet haben. Der Code, der für den
+Beim letzten Zweig, der alle anderen möglichen Werte abdeckt, ist das Muster die
+Variable, die wir als `other` bezeichnet haben. Der Code, der für den
 `other`-Zweig läuft, verwendet die Variable, indem er sie an die Funktion
 `move_player` übergibt.
 

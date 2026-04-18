@@ -93,11 +93,11 @@ fn largest<T>(list: &[T]) -> &T {
 
 Wir lesen diese Definition wie folgt: „Die Funktion `largest` ist generisch über
 einen Typ `T`.“ Sie hat einen Parameter namens `list`, der ein Slice von Werten
-des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf denn Wert des
+des Typs `T` ist. Die Funktion `largest` gibt eine Referenz auf den Wert des
 gleichen Typs `T` zurück.
 
 Listing 10-5 zeigt die kombinierte Funktionsdefinition `largest`, die den
-generischen Datentyp in ihrer Signatur verwendet. Der Listing zeigt auch, wie
+generischen Datentyp in ihrer Signatur verwendet. Das Listing zeigt auch, wie
 wir die Funktion entweder mit einem Slice von `i32`-Werten oder `char`-Werten
 aufrufen können. Beachte, dass sich dieser Code noch nicht kompilieren lässt.
 

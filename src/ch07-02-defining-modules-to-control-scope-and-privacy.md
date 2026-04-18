@@ -49,7 +49,7 @@ erinnern, wie Module funktionieren.
   ihren Deklarationen.
 - **Das Schlüsselwort `use`:** Innerhalb eines Gültigkeitsbereichs werden mit
   dem Schlüsselwort `use` Verknüpfungen zu Elementen erstellt, um die
-  Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereichs, der
+  Wiederholung langer Pfade zu reduzieren. In jedem Gültigkeitsbereich, der
   auf `crate::garden::vegetables::Asparagus` referenzieren kann, kann man eine
   Verknüpfung mit `use crate::garden::vegetables::Asparagus` erstellen und von
   da an braucht man nur noch `Asparagus` zu schreiben, um diesen Typ im

@@ -112,10 +112,9 @@ ungültigen Wert darstellt.
 
 Die Cons-Liste ist keine häufig verwendete Datenstruktur in Rust. Wenn man in
 Rust eine Liste von Elementen hat, ist `Vec<T>` die bessere Wahl. Andere,
-komplexere rekursive Datentypen sind in verschiedenen Situationen nützlich.
-Wenn wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen
-es uns ermöglichen, ohne grosse Ablenkung einen rekursiven Datentyp zu
-definieren.
+komplexere rekursive Datentypen sind in verschiedenen Situationen nützlich. Wenn
+wir jedoch mit der Cons-Liste beginnen, können wir untersuchen, wie Boxen es uns
+ermöglichen, ohne große Ablenkung einen rekursiven Datentyp zu definieren.
 
 Listing 15-2 enthält eine Aufzählungsdefinition (enum) für eine Cons-Liste.
 Beachte, dass dieser Code nicht kompiliert werden kann, da der Typ `List` keine

@@ -269,8 +269,8 @@ Der Benutzer unserer Bibliothek kann nun seine Funktion `main` schreiben, um
 eine `Screen`-Instanz zu erzeugen. Der `Screen`-Instanz kann er eine `SelectBox`
 und einen `Button` hinzufügen, indem er sie in eine `Box<T>` legt, um ein
 Trait-Objekt zu werden. Er kann dann die Methode `run` auf der `Screen`-Instanz
-aufrufen, die dann `draw` auf jeder der Komponenten aufruft. Der Listing 18-9
-zeigt diese Umsetzung.
+aufrufen, die dann `draw` auf jeder der Komponenten aufruft. Listing 18-9 zeigt
+diese Umsetzung.
 
 <span class="filename">Dateiname: src/main.rs</span>
 

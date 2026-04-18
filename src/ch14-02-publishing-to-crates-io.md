@@ -412,8 +412,8 @@ abcdefghijklmnopqrstuvwxyz012345
 ```
 
 Dieses Kommando informiert Cargo über dein API-Token und speichert es lokal in
-_~/.cargo/credentials.toml_. Beachte, dass dieses Token ein _eheimnis ist: Gib
-es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem geteils
+_~/.cargo/credentials.toml_. Beachte, dass dieses Token ein Geheimnis ist: Gib
+es nicht an andere weiter. Wenn du es aus irgendeinem Grund mit jemandem geteilt
 hast, solltest du es widerrufen und ein neues Token auf crates.io erzeugen.
 
 ### Metadaten zu einer neuen Crate hinzufügen
@@ -455,16 +455,16 @@ Caused by:
   the remote server responded with an error (status 400 Bad Request): missing or empty metadata fields: description, license. Please see https://doc.rust-lang.org/cargo/reference/manifest.html for more information on configuring these field
 ```
 
-Dies schlägt fehlt, weile einige wichtige Informationen fehlen: Eine
-Beschreibung und eine Lizenz sind erforderlich, damit die Benutzer wissen, was
-deine Crate tut und unter welchen Bedingungen man sie verwenden kann. Ergänze in
-der Datei _Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze
-umfasst, da sie zusammen mit deiner Crate in den Suchergebnissen angezeigt wird.
-Für das Feld `license` musst du einen _Lizenzkennungswert_ (licence identifier
-value) angeben. In [Linux Foundation's Software Package Data Exchange
-(SPDX)][spdx] sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden
-können. Um beispielsweise anzugeben, dass du deine Crate mit der MIT-Lizenz
-lizenziert hast, füge die `MIT`-Identifikation hinzu:
+Dies schlägt fehl, weil einige wichtige Informationen fehlen: Eine Beschreibung
+und eine Lizenz sind erforderlich, damit die Benutzer wissen, was deine Crate
+tut und unter welchen Bedingungen man sie verwenden kann. Ergänze in der Datei
+_Cargo.toml_ eine Beschreibung hinzu, die nur ein oder zwei Sätze umfasst, da
+sie zusammen mit deiner Crate in den Suchergebnissen angezeigt wird. Für das
+Feld `license` musst du einen _Lizenzkennungswert_ (licence identifier value)
+angeben. In [Linux Foundation's Software Package Data Exchange (SPDX)][spdx]
+sind die Bezeichner aufgeführt, die Sie für diesen Wert verwenden können. Um
+beispielsweise anzugeben, dass du deine Crate mit der MIT-Lizenz lizenziert
+hast, füge die `MIT`-Identifikation hinzu:
 
 <span class="filename">Dateiname: Cargo.toml</span>
 
@@ -514,7 +514,7 @@ sie veröffentlichen! Durch das Veröffentlichen einer Crate wird eine bestimmte
 Version auf crates.io hochgeladen, damit andere sie verwenden können.
 
 Sei vorsichtig, da eine Veröffentlichung _dauerhaft_ ist. Die Version kann
-niemals überschrieben und der Programmcode nur in spezielle Fällen gelöscht
+niemals überschrieben und der Programmcode nur in speziellen Fällen gelöscht
 werden. Ein Hauptziel von crates.io ist es, als permanentes Archiv von Code zu
 fungieren, sodass alle Projekte die erstellt werden und von Crates aus crates.io
 abhängen weiter funktionieren werden. Das Zulassen von Versionslöschungen würde

@@ -49,12 +49,11 @@ Und es stellt sich heraus, dass Threads und Aufgaben oft sehr gut
 zusammenarbeiten, weil Aufgaben (zumindest in einigen Laufzeitumgebungen)
 zwischen Threads verschoben werden können. Unter der Haube ist die
 Laufzeitumgebung, die wir verwenden &ndash; einschließlich der Funktionen
-`spawn_blocking` und `spawn_task` &ndash; standardmäßig mehrstängig
-(multithreaded)! Viele Laufzeitumgebungen verwenden einen Ansatz namens _Work
-Stealing_, um Aufgaben transparent zwischen Threads zu verschieben, je nachdem,
-wie die Threads gerade ausgelastet sind, um die Gesamtleistung des Systems zu
-verbessern. Dieser Ansatz erfordert eigentlich Threads _und_ Aufgaben, und damit
-Futures.
+`spawn_blocking` und `spawn_task` &ndash; standardmäßig multi-threaded! Viele
+Laufzeitumgebungen verwenden einen Ansatz namens _Work Stealing_, um Aufgaben
+transparent zwischen Threads zu verschieben, je nachdem, wie die Threads gerade
+ausgelastet sind, um die Gesamtleistung des Systems zu verbessern. Dieser Ansatz
+erfordert eigentlich Threads _und_ Aufgaben, und damit Futures.
 
 Wenn du überlegst, welche Methode du wann anwenden solltest, beachte diese
 Daumenregeln:
@@ -102,9 +101,9 @@ Block</span>
 
 Wir beginnen mit der Erstellung eines asynchronen Kanals. Dann legen wir einen
 Thread an, der für die Senderseite des Kanals zuständig ist, indem wir das
-Schlüsselword `move` verwenden. Innerhalb des Threads senden wir die Zahlen 1
-bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen
-wir ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
+Schlüsselwort `move` verwenden. Innerhalb des Threads senden wir die Zahlen 1
+bis 10 und schlafen dazwischen jeweils eine Sekunde lang. Schließlich führen wir
+ein Future aus, das mit einem asynchronen Block erstellt wurde, der an
 `trpl::block_on` übergeben wurde, so wie wir es im ganzen Kapitel getan haben.
 In diesem Future warten wir auf diese Nachrichten, genau wie in den anderen
 Beispielen mit Nachrichten-Weitergabe, die wir gesehen haben.

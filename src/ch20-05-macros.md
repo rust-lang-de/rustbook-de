@@ -121,7 +121,7 @@ Makrodefinition kennzeichnen.
 Die Struktur im `vec!` -Rumpf ähnelt der Struktur eines `match`-Ausdrucks. Hier
 haben wir einen Zweig mit dem Muster `( $( $x:expr ),* )`, gefolgt von `=>` und
 dem mit diesem Muster verknüpften Listing. Wenn das Muster passt, wird der
-zugehörige Listing ausgegeben. Da dies das einzige Muster in diesem Makro
+zugehörige Codeblock ausgegeben. Da dies das einzige Muster in diesem Makro
 ist, kann es nur einen passenden Zweig geben; jedes andere Muster führt
 zu einem Fehler. Komplexere Makros werden mehr als einen Zweig haben.
 

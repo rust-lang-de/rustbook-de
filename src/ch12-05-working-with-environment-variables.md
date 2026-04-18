@@ -172,7 +172,7 @@ in Kleinbuchstaben umzuwandeln</span>
 
 Zuerst wandeln wir den String `query` in Kleinbuchstaben um und speichern ihn in
 einer neuen Variablen mit dem gleichen Namen, die die ursprüngliche Variable
-`query` verschattetet. Der Aufruf von `to_lowercase` beim Abfragetext ist
+`query` verschattet. Der Aufruf von `to_lowercase` beim Abfragetext ist
 notwendig, sodass wir unabhängig davon, ob die Abfrage des Benutzers `"rust"`,
 `"RUST"`, `"RUST"` oder `"rUsT"` ist, die Abfrage so behandeln, als ob sie
 `"rust"` wäre, und die Groß-/Kleinschreibung nicht beachten. Obwohl

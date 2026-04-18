@@ -10,11 +10,11 @@ kontrollieren kannst, sind `if`-Ausdrücke und Schleifen.
 
 Ein `if`-Ausdruck erlaubt es dir, deinen Code abhängig von Bedingungen zu
 verzweigen. Du gibst eine Bedingung an und legst dann fest: „Wenn diese
-Bedingung erfüllt ist, führe diesen Listing aus. Wenn die Bedingung nicht
-erfüllt ist, darf dieser Listing nicht ausgeführt werden.“
+Bedingung erfüllt ist, führe diesen Codeblock aus. Wenn die Bedingung nicht
+erfüllt ist, darf dieser Codeblock nicht ausgeführt werden.“
 
 Erstelle in deinem _projects_-Verzeichnis ein neues Projekt namens _branches_,
-um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ folgendes
+um den `if`-Ausdruck zu erforschen. Gibt in der Datei _src/main.rs_ Folgendes
 ein:
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -33,7 +33,7 @@ fn main() {
 
 Alle `if`-Ausdrücke beginnen mit dem Schlüsselwort `if`, gefolgt von einer
 Bedingung. In diesem Fall prüft die Bedingung, ob die Variable `number` einen
-Wert kleiner als 5 hat oder nicht. Der Listing, den wir ausführen wollen,
+Wert kleiner als 5 hat oder nicht. Der Codeblock, den wir ausführen wollen,
 wenn die Bedingung `true` ist, wird unmittelbar nach der Bedingung in
 geschweifte Klammern gesetzt. Codeblöcke, die mit den Bedingungen in
 `if`-Ausdrücken verbunden sind, werden manchmal auch als _Zweige_ (arms)
@@ -43,7 +43,7 @@ Geheimzahl“][comparing-the-guess-to-the-secret-number] in Kapitel 2 besprochen
 haben.
 
 Optional können wir auch einen `else`-Ausdruck angeben, was wir hier gemacht
-haben, um dem Programm einen alternativen Listing zur Ausführung zu geben,
+haben, um dem Programm einen alternativen Codeblock zur Ausführung zu geben,
 falls die Bedingung zu `false` ausgewertet wird. Wenn du keinen `else`-Ausdruck
 angibst und die Bedingung `false` ist, überspringt das Programm einfach den
 `if`-Block und geht zum nächsten Codeteil über.
@@ -115,12 +115,12 @@ For more information about this error, try `rustc --explain E0308`.
 error: could not compile `branches` (bin "branches") due to 1 previous error
 ```
 
-Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl
-erhalten hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
+Der Fehler gibt an, dass Rust ein `bool` erwartet, aber eine ganze Zahl erhalten
+hat. Im Gegensatz zu Sprachen wie Ruby und JavaScript wird Rust nicht
 automatisch versuchen, nicht-boolsche Typen in ein Boolean zu konvertieren. Du
-musst explizit sein und immer `if` mit einer Booleschen Bedingung versehen.
-Wenn wir beispielsweise wollen, dass der `if`-Listing nur ausgeführt wird,
-wenn eine Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
+musst explizit sein und immer `if` mit einer Booleschen Bedingung versehen. Wenn
+wir beispielsweise wollen, dass der `if`-Codeblock nur ausgeführt wird, wenn
+eine Zahl ungleich `0` ist, können wir den `if`-Ausdruck wie folgt ändern:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -217,7 +217,7 @@ Der Wert der Zahl ist: 5
 
 Denke daran, dass Codeblöcke bis zum letzten Ausdruck in ihnen ausgewertet
 werden, und auch Zahlen an sich sind Ausdrücke. In diesem Fall hängt der Wert
-des gesamten `if`-Ausdrucks davon ab, welcher Listing ausgeführt wird. Dies
+des gesamten `if`-Ausdrucks davon ab, welcher Codeblock ausgeführt wird. Dies
 bedeutet, dass die Werte, die potentielle Ergebnisse eines `if`-Zweigs sein
 können, vom gleichen Typ sein müssen; in Listing 3-2 waren die Ergebnisse
 sowohl des `if`-Zweigs als auch des `else`-Zweigs `i32`-Ganzzahlen. Wenn die
@@ -267,7 +267,7 @@ müsste.
 
 ### Wiederholung mit Schleifen
 
-Es ist oft hilfreich, einen Listing mehr als einmal auszuführen. Für diese
+Es ist oft hilfreich, einen Codeblock mehr als einmal auszuführen. Für diese
 Aufgabe stellt Rust mehrere _Schleifen_ (loops) zur Verfügung, die den Code
 innerhalb des Schleifenrumpfs bis zum Ende durchläuft und dann sofort wieder am
 Anfang beginnt. Um mit Schleifen zu experimentieren, machen wir ein neues
@@ -278,9 +278,9 @@ jede einzelne aus.
 
 #### Wiederholen von Code mit `loop`
 
-Das Schlüsselwort `loop` weist Rust an, einen Listing immer und immer wieder
-auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er
-aufhören soll.
+Das Schlüsselwort `loop` weist Rust an, einen Codeblock immer und immer wieder
+auszuführen, und zwar für immer oder bis du ihm explizit sagst, dass er aufhören
+soll.
 
 Als Beispiel änderst du die Datei _src/main.rs_ in deinem _loops_-Verzeichnis
 so, dass sie wie folgt aussieht:

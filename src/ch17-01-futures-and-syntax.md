@@ -162,7 +162,7 @@ den du wartest, nicht vor ihm. Das heißt, es ist ein _Postfix_-Schlüsselwort.
 Dies mag sich von dem unterscheiden, was du vielleicht gewohnt bist, wenn du
 async in anderen Sprachen verwendet hast. Rust hat sich dafür entschieden, weil
 es die Arbeit mit Methodenketten viel angenehmer macht. Als Ergebnis können wir
-den Rumpf von `page_url_for` ändern, um die Funktionsaufrufe `trpl::get` und
+den Rumpf von `page_title` ändern, um die Funktionsaufrufe `trpl::get` und
 `text` mit `await` dazwischen zu verketten, wie in Listing 17-2 gezeigt.
 
 <span class="filename">Dateiname: src/main.rs</span>
@@ -264,13 +264,12 @@ async fn main() {
 <span class="caption">Listing 17-3: Aufruf der Funktion `page_title` aus
 `main` mit einem vom Benutzer angegebenen Argument</span>
 
-Wir folgen wir dem gleichen Muster, das wir zum Einlesen von
-Kommandozeilenargumenten in [„Kommandozeilenargumente
-entgegennehmen“][cli-args] in Kapitel 12 verwendet haben. Dann übergeben wir
-die erste URL an `page_title` und warten das Ergebnis ab. Da der vom Future
-erzeugte Wert ein `Option<String>` ist, verwenden wir einen `match`-Ausdruck,
-um verschiedene Meldungen auszugeben, je nachdem ob die Seite einen `<title>`
-hatte oder nicht.
+Wir folgen dem gleichen Muster, das wir zum Einlesen von
+Kommandozeilenargumenten in [„Kommandozeilenargumente entgegennehmen“][cli-args]
+in Kapitel 12 verwendet haben. Dann übergeben wir die erste URL an `page_title`
+und warten das Ergebnis ab. Da der vom Future erzeugte Wert ein `Option<String>`
+ist, verwenden wir einen `match`-Ausdruck, um verschiedene Meldungen auszugeben,
+je nachdem ob die Seite einen `<title>` hatte oder nicht.
 
 Der einzige Ort, an dem wir das Schlüsselwort `await` verwenden können, ist in
 asynchronen Funktionen oder Blöcken, und Rust lässt uns die spezielle Funktion
@@ -390,8 +389,8 @@ hilfreiche Fehlermeldungen aus. Ein paar davon werden wir später im Kapitel
 durcharbeiten.
 
 Letztendlich muss etwas diese Zustandsmaschine ausführen, und dieses Etwas ist
-eine Laufzeitumgebung. (Aus diesem Grund wirst auf _Executors_ stoßen, wenn du
-dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
+eine Laufzeitumgebung. (Aus diesem Grund wirst du auf _Executors_ stoßen, wenn
+du dich mit Laufzeitumgebungen befasst: Ein Executor ist der Teil einer
 Laufzeitumgebung, der für die Ausführung des asynchronen Codes verantwortlich
 ist.)
 

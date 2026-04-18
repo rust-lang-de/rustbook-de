@@ -108,7 +108,7 @@ dem Modulbaum besser entsprechen.
 > - _src/front_of_house/hosting.rs_ (was wir behandelt haben)
 > - _src/front_of_house/hosting/mod.rs_ (älterer Stil, noch unterstützter Pfad)
 >
-> Wenn du beide Stile für dasselbe Modul verwendest, erhältst einen
+> Wenn du beide Stile für dasselbe Modul verwendest, erhältst du einen
 > Compilerfehler. Die Verwendung einer Mischung beider Stile für verschiedene
 > Module im selben Projekt ist zulässig, kann aber für die Benutzer verwirrend
 > sein, die durch dein Projekt navigieren.

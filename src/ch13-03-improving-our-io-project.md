@@ -7,11 +7,11 @@ Funktion `Config::build` und der Funktion `search` optimieren können.
 
 ### Ein `clone` durch Verwendung eines Iterators entfernen
 
-Im Listing 12-6 haben wir Programmcode hinzugefügt, der einen Slice von
+In Listing 12-6 haben wir Programmcode hinzugefügt, der einen Slice von
 `String`-Werten nimmt, und erzeugten eine `Config`-Struktur indem wir den Slice
 indexierten und die Werte klonten und der `Config`-Struktur das Eigentum an
-diesen Werten gaben. Im Listing 13-17 haben wir die Implementierung der Funktion
-`Config::build` so reproduziert wie sie im Listing 12-23 aussah.
+diesen Werten gaben. In Listing 13-17 haben wir die Implementierung der Funktion
+`Config::build` so reproduziert wie sie in Listing 12-23 aussah.
 
 <span class="filename">Dateiname: src/main.rs</span>
 
@@ -177,7 +177,7 @@ fn main() {
 ```
 
 Wir werden zuerst den Anfang der Funktion `main` von Listing 12-24 in den 
-Programmcode im Listing 13-18 ändern, der dieses Mal einen Iterator
+Programmcode in Listing 13-18 ändern, der dieses Mal einen Iterator
 verwendet. Dieser Code wird erst kompilieren, wenn wir auch `Config::build`
 abgeändert haben.
 
@@ -250,13 +250,13 @@ fn main() {
 <span class="caption">Listing 13-18: Übergabe des Rückgabewerts von 
 `env::args` an `Config::build`</span>
 	
-Die Funktion `env::arg` gibt einen Iterator zurück! Anstatt die Werte des
+Die Funktion `env::args` gibt einen Iterator zurück! Anstatt die Werte des
 Iterators in einem Vektor zu sammeln und dann einen Slice an `Config::build` zu
 übergeben, geben wir nun das Eigentum am Iterator, der von `env::args`
 zurückgegeben wird, direkt an `Config::build`.
 
 Als Nächstes müssen wir die Definition von `Config::build` aktualisieren.
-Ändere die Signatur von `Config::build`, damit sie so wie im Listing 13-26
+Ändere die Signatur von `Config::build`, damit sie so wie in Listing 13-26
 aussieht. Dies wird noch immer nicht kompilieren, da der Funktionsrumpf
 aktualisiert werden muss.
 
@@ -432,7 +432,7 @@ zum nächsten Wert zu gelangen und den ersten Rückgabewert zu überspringen. Al
 Nächstes rufen wir `next` auf, um den Wert zu erhalten, den wir in das Feld
 `query` von `Config` einfügen möchten. Falls `next` ein `Some` zurückgibt,
 benutzen wir `match`, um den Wert zu extrahieren, wenn es jedoch `None`
-zurückgibt, bedeutet dies, das nicht genügend Argumente eingegeben wurden und
+zurückgibt, bedeutet dies, dass nicht genügend Argumente eingegeben wurden und
 wir kehren vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert
 `file_path`.
 
@@ -440,7 +440,7 @@ wir kehren vorzeitig mit einem `Err` zurück. Dasselbe machen wir für den Wert
 
 
 Wir können die Vorteile der Iteratoren auch in der Funktion `search` unseres
-E/A-Projekts nutzen, die hier im Listing 13-21 wiedergegeben ist, wie im
+E/A-Projekts nutzen, die hier in Listing 13-21 wiedergegeben ist, wie im
 Listing 12-19.
 
 <span class="filename">Dateiname: src/lib.rs</span>
@@ -552,7 +552,7 @@ bei der Implementierung der Funktion `search`</span>
 
 Denke daran, der Zweck der Funktion `search` besteht darin, alle Zeilen in
 `contents` zurückzugeben, die die `query` enthalten. So ähnlich wie im Beispiel
-`filter` im Listing 13-16 verwendet dieser Programmcode den `filter`-Adapter,
+`filter` in Listing 13-16 verwendet dieser Programmcode den `filter`-Adapter,
 um nur die Zeilen beizubehalten, für die `line.contains(query)` den Wert `true`
 zurückgibt. Wir sammeln dann die passenden Zeilen mit `collect` in einen
 anderen Vektor. Viel einfacher! Nimm die gleiche Änderung vor, um
@@ -572,8 +572,8 @@ der Änderung werden die Ergebnisse jedoch ausgegeben, sobald eine
 ### Zwischen Schleifen und Iteratoren wählen
 
 Die nächste logische Frage wäre, welchen Stil du in deinem eigenen Programmcode
-wählen solltest und warum. Die ursprüngliche Implementierung im Listing 13-21
-oder die Version die Iteratoren verwendet im Listing 13-22 (vorausgesetzt,
+wählen solltest und warum. Die ursprüngliche Implementierung in Listing 13-21
+oder die Version die Iteratoren verwendet in Listing 13-22 (vorausgesetzt,
 wir sammeln alle Ergebnisse, bevor wir sie zurückgeben, anstatt den Iterator
 zurückzugeben). Die meisten Rust-Programmierer bevorzugen den Iterator-Stil.
 Zunächst ist es zwar schwieriger, den Überblick zu behalten, aber sobald du ein

@@ -448,15 +448,15 @@ wäre, wenn du stattdessen einen Namen verwenden würdest.
 
 #### Teile eines Wertes mit einem verschachtelten `_`
 
-Wir können `_` auch innerhalb eines anderen Musters verwenden, um nur einen
-Teil eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes
-testen wollen, aber keine Verwendung für die anderen Teile in dem
-entsprechenden Code haben, den wir ausführen wollen. Der Listing 19-18 zeigt
-den Code, der für die Verwaltung des Wertes einer Einrichtung verantwortlich
-ist. Die Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht
-erlaubt sein soll, eine bestehende Anpassung einer Einstellung zu
-überschreiben, sondern dass er die Einstellung rückgängig machen kann und ihr
-einen Wert zuweisen kann, wenn sie derzeit nicht gesetzt ist.
+Wir können `_` auch innerhalb eines anderen Musters verwenden, um nur einen Teil
+eines Wertes zu ignorieren, z.B. wenn wir nur auf einen Teil eines Wertes testen
+wollen, aber keine Verwendung für die anderen Teile in dem entsprechenden Code
+haben, den wir ausführen wollen. Listing 19-18 zeigt den Code, der für die
+Verwaltung des Wertes einer Einrichtung verantwortlich ist. Die
+Geschäftsanforderungen bestehen darin, dass es dem Benutzer nicht erlaubt sein
+soll, eine bestehende Anpassung einer Einstellung zu überschreiben, sondern dass
+er die Einstellung rückgängig machen kann und ihr einen Wert zuweisen kann, wenn
+sie derzeit nicht gesetzt ist.
 
 ```rust
 let mut setting_value = Some(5);

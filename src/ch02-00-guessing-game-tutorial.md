@@ -692,7 +692,7 @@ müssen, um eine Zahl zwischen 1 und 100 zu erhalten.
 
 > Hinweis: Du wirst nicht immer wissen, welche Traits du verwenden sollst und
 > welche Methoden und Funktionen einer Crate du aufrufen musst, daher hat jede
-> Crate eine Dokumentation mit einer Anleitungen zur Verwendung der Crate. Eine
+> Crate eine Dokumentation mit einer Anleitung zur Verwendung der Crate. Eine
 > weitere nette Funktionalität von Cargo ist, dass das Ausführen des Kommandos
 > `cargo doc --open` die von all deinen Abhängigkeiten bereitgestellte
 > Dokumentation lokal zusammenstellt und in deinem Browser öffnet. Wenn du an
@@ -910,7 +910,7 @@ vorherigen Wert von `guess` mit einem neuen Wert zu verschatten (shadow). Durch
 das _Verschatten_ können wir den Variablennamen `guess` wiederverwenden, anstatt
 uns zu zwingen, zwei eindeutige Variablen zu erstellen, z.B. `guess_str` und
 `guess`. Wir werden dies in [Kapitel 3][shadowing] ausführlicher behandeln,
-aber für den Moment solltst du wissen, dass diese Funktionalität oft verwendet
+aber für den Moment solltest du wissen, dass diese Funktionalität oft verwendet
 wird, wenn du einen Wert von einem Typ in einen anderen Typ konvertieren
 willst.
 

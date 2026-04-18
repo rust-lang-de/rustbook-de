@@ -12,7 +12,7 @@ erreicht und die Werte niemals aufgeräumt werden.
 
 ### Einen Referenzzyklus erstellen
 
-Schauen wir uns an, wie ein Referenzzyklus passieren und wie er verhindert
+Schauen wir uns an, wie ein Referenzzyklus passieren kann und wie er verhindert
 werden kann, beginnend mit der Definition der Aufzählung `List` und einer
 Methode `tail` in Listing 15-25.
 
@@ -132,7 +132,7 @@ $ cargo run
      Running `target/debug/cons-list`
 a anfängliche Rc-Zählung = 1
 a nächstes Element = Some(RefCell { value: Nil })
-a Rc-Zählung nach erstellen von b = 2
+a Rc-Zählung nach Erstellen von b = 2
 b anfängliche Rc-Zählung = 1
 b nächstes Element = Some(RefCell { value: Cons(5, RefCell { value: Nil }) })
 b Rc-Zählung nach Änderung von a = 2

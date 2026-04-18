@@ -92,8 +92,8 @@ und `Err` angeben müssen.
 
 Wenn das Ergebnis `Ok` ist, gibt dieser Code den inneren `file`-Wert aus der
 `Ok`-Variante zurück, und wir weisen diese Dateiressource der Variablen
-`greeting_file ` zu. Nach dem `match` können wir die Dateiressource zum Lesen
-und Schreiben verwenden.
+`greeting_file` zu. Nach dem `match` können wir die Dateiressource zum Lesen und
+Schreiben verwenden.
 
 Der andere Zweig von `match` behandelt den Fall, dass wir einen `Err`-Wert von
 `File::open` erhalten. In diesem Beispiel haben wir uns dafür entschieden, das
@@ -312,13 +312,13 @@ fn read_username_from_file() -> Result<String, io::Error> {
 <span class="caption">Listing 9-6: Eine Funktion, die mit `match` Fehler an
 den aufrufenden Code zurückgibt</span>
 
-Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden,
-aber wir wollen für den Anfang viel davon manuell machen, um die
-Fehlerbehandlung kennen zu lernen; am Ende werden wir den kürzeren Weg zeigen. Sehen
-wir uns zunächst den Rückgabetyp der Funktion an: `Result<String, io::Error>`.
-Das bedeutet, dass die Funktion einen Wert vom Typ `Result<T, E>` zurückgibt,
-wobei der generische Typ `T` mit dem konkreten Typ `String` und der generische
-Typ `E` mit dem konkreten Typ `io::Error` gefüllt wurde.
+Diese Funktion kann auf eine viel kürzere Art und Weise geschrieben werden, aber
+wir wollen für den Anfang viel davon manuell machen, um die Fehlerbehandlung
+kennenzulernen; am Ende werden wir den kürzeren Weg zeigen. Sehen wir uns
+zunächst den Rückgabetyp der Funktion an: `Result<String, io::Error>`. Das
+bedeutet, dass die Funktion einen Wert vom Typ `Result<T, E>` zurückgibt, wobei
+der generische Typ `T` mit dem konkreten Typ `String` und der generische Typ `E`
+mit dem konkreten Typ `io::Error` gefüllt wurde.
 
 Wenn diese Funktion erfolgreich ist, erhält der aufrufende Code einen
 `Ok`-Wert, der einen `String` enthält &ndash; den Benutzernamen, den diese
@@ -621,7 +621,7 @@ Glücklicherweise kann `main` auch ein `Result<(), E>` zurückgeben. Listing
 `main` in `Result<(), Box<dyn Error>>` geändert und am Ende einen Rückgabewert
 `Ok(())` hinzugefügt. Dieser Code wird nun kompilieren:
 
-<span class="filename">Filename: src/main.rs</span>
+<span class="filename">Dateiname: src/main.rs</span>
 
 ```rust,ignore
 use std::error::Error;

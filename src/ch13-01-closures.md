@@ -104,7 +104,7 @@ die Variante `None` ist, ruft `unwrap_or_else` den Closure auf und gibt den Wert
 zurück, der vom Closure zurückgegeben wurde.
 
 Wir geben den Closure-Ausdruck `|| self.most_stocked()` als Argument bei
-`unwrap_or_else` an. Dies ist ein Closure, die selbst keine Parameter hat (wenn
+`unwrap_or_else` an. Dies ist ein Closure, der selbst keine Parameter hat (wenn
 der Closure Parameter hätte, würden sie zwischen den beiden vertikalen Strichen
 erscheinen). Der Rumpf des Closures ruft `self.most_stocked()` auf. Wir
 definieren den Closure hier, und die Implementierung von `unwrap_or_else` wird
@@ -408,10 +408,10 @@ fn main() {
 Threads zu zwingen, das Eigentum an `list` zu übernehmen</span>
 
 Wir starten einen neuen Thread und geben ihm einen Closure als Argument mit. Der
-Rumps des Closures gibt die Liste aus. In Listing 13-4 hat der Closure nur
+Rumpf des Closures gibt die Liste aus. In Listing 13-4 hat der Closure nur
 `list` mit einer unveränderbaren Referenz erfasst, weil das die kleinste
-Zugriffmenge auf `list` ist, die benötigt wird, um sie auszugeben. In diesem
-Beispiel müssen wir, obwohl der Closurer-Rumpf nur eine unveränderbare Referenz
+Zugriffsmenge auf `list` ist, die benötigt wird, um sie auszugeben. In diesem
+Beispiel müssen wir, obwohl der Closure-Rumpf nur eine unveränderbare Referenz
 benötigt, angeben, dass `list` in den Closure verschoben werden soll, indem wir
 das Schlüsselwort `move` an den Anfang der Closure-Definition setzen.
 
@@ -504,14 +504,13 @@ Arten von Closures und ist so flexibel wie nur möglich.
 
 Schauen wir uns nun die Standard-Bibliotheksmethode `sort_by_key` an, die auf
 Slice definiert ist, um zu sehen, wie sie sich von `unwrap_or_else`
-unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die
-Mermalsabgrenzung verwendet. Der Closure erhält ein Argument, eine Referenz auf
-das aktuelle Element im betrachteten Slice, und gibt einen Wert vom Typ `K`
-zurück, der geordnet werden kann. Diese Funktion ist nützlich, wenn man einen
-Slice nach einem bestimmten Attribut der einzelnen Elemente sortieren will. In
-Listing 13-7 haben wir eine Liste von `Rectangle`-Instanzen und benutzen
-`sort_by_key`, um sie nach ihrem `width`-Attribut von niedrig nach hoch zu
-sortieren:
+unterscheidet und warum `sort_by_key` `FnMut` statt `FnOnce` für die Trait Bound
+verwendet. Der Closure erhält ein Argument, eine Referenz auf das aktuelle
+Element im betrachteten Slice, und gibt einen Wert vom Typ `K` zurück, der
+geordnet werden kann. Diese Funktion ist nützlich, wenn man einen Slice nach
+einem bestimmten Attribut der einzelnen Elemente sortieren will. In Listing 13-7
+haben wir eine Liste von `Rectangle`-Instanzen und benutzen `sort_by_key`, um
+sie nach ihrem `width`-Attribut von niedrig nach hoch zu sortieren:
 
 <span class="filename">Dateiname: src/main.rs</span>
 
